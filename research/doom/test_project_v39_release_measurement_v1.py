@@ -1,4 +1,7 @@
+import hashlib
+import json
 import unittest
+from pathlib import Path
 
 from project_v39_release_measurement_v1 import project
 
@@ -46,6 +49,44 @@ def valid_pair():
 
 
 class StrictProjectionTests(unittest.TestCase):
+    def test_accepts_input_admission_events_without_redundant_operation(self):
+        records = valid_pair()
+        del records[0]["operation"]
+
+        result = project(records)
+
+        self.assertTrue(result["measurement_ready"])
+
+    def test_rejects_explicit_non_down_admission_operation(self):
+        records = valid_pair()
+        records[0]["operation"] = "up"
+
+        self.assertFalse(project(records)["measurement_ready"])
+
+    def test_rejects_explicitly_unavailable_owner_state_sample(self):
+        records = valid_pair()
+        records[1]["owner_sample_after_batch_available"] = False
+
+        self.assertFalse(project(records)["measurement_ready"])
+
+    def test_projects_per_key_timings_from_retained_v15_raw_events(self):
+        source = (Path(__file__).parent
+                  / "v39_live_recovery_exploratory_a14_20261008"
+                    "/raw/runtime/events.jsonl")
+        raw = source.read_bytes()
+        self.assertEqual(len(raw), 457736)
+        self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                         "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a")
+        records = [json.loads(line) for line in raw.decode("utf-8").splitlines()]
+
+        result = project(records)
+
+        self.assertTrue(result["measurement_ready"])
+        self.assertEqual(len(result["rows"]), 10)
+        self.assertTrue(all(row["application_consumption"] == "unobserved"
+                            and row["physical_verification_authoritative"] is False
+                            for row in result["rows"]))
+
     def test_projects_identity_bound_owner_release_without_claiming_app_consumption(self):
         result = project(valid_pair())
         self.assertTrue(result["measurement_ready"])

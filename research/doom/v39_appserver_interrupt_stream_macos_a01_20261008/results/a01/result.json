@@ -1,0 +1,59 @@
+{
+  "disposition": "FAIL_STREAM_NOT_CLOSED_BEFORE_RELEASE",
+  "app_server_version": "codex-cli 0.146.1",
+  "run_started_at_utc": "2026-10-08T01:13:45.479377+00:00",
+  "credentials_passed_to_app_server": false,
+  "pending_request_observed": true,
+  "interrupt_sent_at_ns": 61165365511875,
+  "interrupt_ack_at_ns": 61165378089583,
+  "interrupt_rpc_accepted": true,
+  "interrupt_rpc_error": false,
+  "pre_release_wait_seconds": 2.0,
+  "response_release_at_ns": 61167381691458,
+  "provider_socket_close_kind_before_release": null,
+  "provider_socket_closed_before_release": false,
+  "provider_socket_close_at_ns": null,
+  "matching_turn_completion_observed": true,
+  "turn_completion_status": "interrupted",
+  "turn_completion_at_ns": 61165366591250,
+  "completion_thread_matches": true,
+  "completion_turn_matches": true,
+  "mock_request_count": 1,
+  "mock_requests": [
+    {
+      "path": "/v1/responses",
+      "peer_ip": "127.0.0.1",
+      "peer_port": 56998,
+      "received_monotonic_ns": 61165360596958,
+      "body_sha256": "2a87090cf666d3ff110224665e118741985e16266808e2bba0ff0cfd39ece7a3",
+      "model": "mock-model"
+    }
+  ],
+  "mock_events": [
+    {
+      "event": "responses_request_received",
+      "monotonic_ns": 61165360690958,
+      "index": 0
+    },
+    {
+      "event": "mock_response_created_sent",
+      "monotonic_ns": 61165360889125
+    },
+    {
+      "event": "interrupt_rpc_acknowledged",
+      "monotonic_ns": 61165378093083,
+      "accepted": true
+    },
+    {
+      "event": "response_release_gate_set",
+      "monotonic_ns": 61167381694041
+    }
+  ],
+  "mock_errors": [],
+  "mock_listener_ip": "127.0.0.1",
+  "mock_listener_port": 56995,
+  "app_server_stderr_nonempty": true,
+  "app_server_stderr_sha256": "7b6c306a8562c009f872820c96997a5af007606c3a36d2dd1926add28faa1a2b",
+  "app_server_exit_code": 0,
+  "run_finished_at_utc": "2026-10-08T01:13:47.726974+00:00"
+}

@@ -1,0 +1,17 @@
+{
+  "disposition": "FAIL_A01_AUDIT",
+  "checks": {
+    "expected_cli_version": true,
+    "fresh_isolated_mock_request": true,
+    "no_user_credentials_passed": true,
+    "interrupt_rpc_accepted": true,
+    "provider_connection_closed_before_release": false,
+    "turn_completed_after_interrupt": true,
+    "matching_turn_completed_interrupted": true,
+    "one_request_no_mock_errors": true,
+    "processes_exit_zero": false,
+    "reported_scoped_pass": false
+  },
+  "check_count": 10,
+  "method_note": "EOF/reset is observed on the accepted loopback TCP socket before the response-release event; this does not establish remote provider inference or billing cancellation."
+}

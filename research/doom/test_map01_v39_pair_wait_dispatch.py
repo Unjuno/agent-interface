@@ -1,5 +1,6 @@
 """Exercise the production wait dispatcher and paired monitor on full rows."""
 import ast
+import inspect
 import os
 from pathlib import Path
 import queue
@@ -85,6 +86,51 @@ def load_controller_dispatch(source_path):
 
 
 class PairWaitDispatchTests(unittest.TestCase):
+    def test_acceptance_wait_preserves_typed_observation_for_action_guard(self):
+        build_wait, monitor_type = load_controller_dispatch(CONTROLLER)
+        monitor = monitor_type(
+            {"health": Guard("health", 100, 10, 1_000_000_000, 80),
+             "ammo": Guard("ammo", 4, 10, 1_000_000_000, 1)},
+            Reader("health"), Reader("ammo"))
+        typed = {
+            "event": "typed_observation", "schema": "doom-typed-observation-v1",
+            "id": "plan-1", "step": 0, "sequence": 11,
+            "capture_ns": 1_100_000_000, "pointer_binding": dict(BINDING),
+            "frame_rgb_sha256": "b" * 64,
+            "signals": {"health": signal("health", 70, 11, 1_100_000_000),
+                        "ammo": signal("ammo", 4, 11, 1_100_000_000)},
+        }
+        accepted = {"event": "accepted", "id": "plan-1", "accepted_ns": 1_200_000_000}
+        incoming = queue.Queue()
+        incoming.put(typed)
+        incoming.put(accepted)
+        wait = build_wait(incoming, Process())
+
+        self.assertIn("deferred_observation_events", inspect.signature(wait).parameters)
+        deferred = []
+        result = wait(lambda row: row["event"] == "accepted", timeout=0.2,
+                      deferred_observation_events=deferred)
+
+        self.assertEqual(result, accepted)
+        self.assertEqual(deferred, [typed])
+        invalidation = monitor.observe(deferred[0])
+        self.assertEqual(invalidation["reason"], "health:below_hard_minimum")
+
+    def test_action_acceptance_wires_deferred_events_before_terminal_wait(self):
+        tree = ast.parse(CONTROLLER.read_text(encoding="utf-8"))
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        execute = next(node for node in ast.walk(main)
+                       if isinstance(node, ast.FunctionDef) and node.name == "execute_segment")
+        source = CONTROLLER.read_text(encoding="utf-8")
+        segment = ast.get_source_segment(source, execute)
+        self.assertIn("deferred_observation_events", segment)
+        self.assertIn("action_monitor.observe(observation)", segment)
+        self.assertLess(segment.index("running_guard.admit_program"),
+                        segment.index("action_monitor.observe(observation)"))
+        self.assertLess(segment.index("action_monitor.observe(observation)"),
+                        segment.index("observation_monitor=action_monitor"))
+
     def test_full_observation_dispatches_zero_ammo_invalidation(self):
         build_wait, monitor_type = load_controller_dispatch(CONTROLLER)
         monitor = monitor_type(

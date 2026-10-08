@@ -1,0 +1,66 @@
+{
+  "schema": "issue59-v39-ammo-validity-boundary-result-v1",
+  "status": "CONSTRUCTION_OBSERVATION",
+  "main_commit": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "source_ammo": 50,
+  "source_health": 100,
+  "critical_health_minimum": 80,
+  "maximum_health_loss": 12,
+  "rows": [
+    {
+      "sequence": 2,
+      "health": 100,
+      "ammo": 39,
+      "health_hard_minimum": 88,
+      "ammo_hard_minimum": 1,
+      "disposition": "soft_change",
+      "invalidation_reason": null,
+      "soft_event_count": 1,
+      "latest_soft_event": {
+        "signal_id": "ammo",
+        "value": 39,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope"
+      },
+      "requires_new_decision": false,
+      "grants_input_authority": false
+    },
+    {
+      "sequence": 3,
+      "health": 100,
+      "ammo": 1,
+      "health_hard_minimum": 88,
+      "ammo_hard_minimum": 1,
+      "disposition": "soft_change",
+      "invalidation_reason": null,
+      "soft_event_count": 2,
+      "latest_soft_event": {
+        "signal_id": "ammo",
+        "value": 1,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope"
+      },
+      "requires_new_decision": false,
+      "grants_input_authority": false
+    },
+    {
+      "sequence": 4,
+      "health": 100,
+      "ammo": 0,
+      "health_hard_minimum": 88,
+      "ammo_hard_minimum": 1,
+      "disposition": "hard_invalidation",
+      "invalidation_reason": "ammo:below_hard_minimum",
+      "soft_event_count": 2,
+      "latest_soft_event": {
+        "signal_id": "ammo",
+        "value": 1,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope"
+      },
+      "requires_new_decision": true,
+      "grants_input_authority": false
+    }
+  ],
+  "scope": "Synthetic paired typed-HUD monitor behavior only; no live or tactical efficacy claim."
+}
