@@ -322,6 +322,11 @@ Allocation 01 is retained as `STOP_AUDITOR_FREEZE_KEY` before fixture/raw input.
 
 # Research index
 
+# Issue #8618 T0 A02 — recipient-bound cross-task disclosure gate (2026-10-09)
+
+`PASS_METHOD_SCOPED`: on 14 finite synthetic cases, unauthorized secret-specific effects fell from 7 instruction-only baseline effects to 0 gated effects; exact grants released red/blue, seven equivalent general routes completed, and public/capability controls passed. Four construction binding/effect mutations were rejected. A01's pre-candidate runner STOP is separately preserved; no candidate or auditor was run under A01. No model, GUI, live, production, broad noninterference, or covert-channel claim. See [A02 report and checksums](research/analysis/cross_task_disclosure_8618_t0_a02_20261009/REPORT.md), [A01 STOP report](research/analysis/cross_task_disclosure_8618_t0_a01_20261009/REPORT.md), and [Issue #8618](https://github.com/Unjuno/agent-interface/issues/8618).
+
+
 ### Issue #6613 successor: EDF deadline scheduling A01 (2026-10-03)
 
 The fresh 40-seed × 3-stratum × 3-policy WSL CPU experiment returned
