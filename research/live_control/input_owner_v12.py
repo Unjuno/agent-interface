@@ -415,6 +415,7 @@ class InputOwner:
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down and not unknown_keys and not key_state_errors, buttons_down=buttons_down,
                           keys_down=down, keys_unknown=unknown_keys, key_state_errors=key_state_errors, verified_ns=time.perf_counter_ns(),
                           valid_until_ns=active.deadline if active else None,
+                          intent_token=getattr(active, 'intent_token', None) if active else None,
                           key_release_attempts=key_release_attempts,
                           key_release_intervals_ns=[
                               {"keycode": int(code), "interval_ns": [

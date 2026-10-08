@@ -151,6 +151,9 @@ class InputOwner:
                 and cleanup.get("keys_unknown") == []
                 and cleanup.get("key_state_errors") == []
                 and cleanup.get("valid_until_ns") == getattr(lease, "deadline", None)
+                and type(self._intent_token(lease)) is str
+                and bool(self._intent_token(lease))
+                and cleanup.get("intent_token") == self._intent_token(lease)
                 and type(cleanup.get("verified_ns")) is int
                 and all(
                     marker[0] is lease
