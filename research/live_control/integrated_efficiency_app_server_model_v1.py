@@ -105,15 +105,32 @@ class PersistentGroundingModel:
         elapsed = time.perf_counter_ns() - started
         self.calls += 1
         if not turn.answer_eligible:
+            usage_error = None
+            try:
+                failure_usage = per_turn_usage(turn.usage)
+            except ValueError as error:
+                failure_usage = None
+                usage_error = str(error)
             failure = {
                 "thread_id": handle.thread_id, "turn_id": handle.turn_id,
                 "status": turn.status, "answer_eligible": False,
-                "error": turn.error, "usage": per_turn_usage(turn.usage),
+                "error": turn.error, "usage": failure_usage,
+                "usage_error": usage_error,
                 "runner_ns": elapsed,
             }
-            (root / "failure.json").write_text(
-                json.dumps(failure, indent=2) + "\n", encoding="utf-8", newline="\n")
-            raise RuntimeError("persistent grounding answer ineligible; no retry")
+            error = RuntimeError("persistent grounding answer ineligible; no retry")
+            error.call_id = handle.turn_id
+            error.thread_id = handle.thread_id
+            error.usage = failure_usage
+            error.wait_ns = elapsed
+            error.visible_images_submitted = 1
+            try:
+                (root / "failure.json").write_text(
+                    json.dumps(failure, indent=2) + "\n", encoding="utf-8", newline="\n")
+            except Exception as publication_error:
+                error.publication_error = publication_error
+                raise error from publication_error
+            raise error
         raw = turn.answer
         normalized = validator(raw)
         result = {
