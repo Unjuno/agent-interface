@@ -15,6 +15,7 @@
 - [Issue #8592 T0 A03 bounded DPOR validation](bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`: 45,360 exhaustive schedules matched against 217 DPOR representatives; 5/5 auditor rejection controls passed in construction tests. WSLc finite authored-model evidence only; no runtime-speed or live-safety claim. A01/A02 execution STOPs preserved.
 
 - [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 12 finite cases independently reconstructed, 6/6 output mutations rejected; WSLc CPU method evidence only, no human-benefit claim.
+- [Issue #8576 T0 A02 executed mutation-gate requalification](resume_plan_suggestions_8576_t0_a02_20261009/README.md) — separately addresses the A01 hardcoded mutation count; A01 remains unchanged.
 
 - [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 cases independently reconstructed, 5/5 mutations rejected, zero dispatches; synthetic DAG only, no GUI/runtime/effect-dispatch claim.
 - [Issue #8583 T0 A01 principal-stratum bounds](principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: four finite synthetic cases exactly reconstructed, 5/5 candidate mutations rejected; WSLc CPU method evidence only, no empirical causal or product claim.
@@ -998,6 +999,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`residual_dependence_6096_t0_20261001/`](residual_dependence_6096_t0_20261001/)
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`resume_plan_suggestions_8576_t0_a01_20261008/`](resume_plan_suggestions_8576_t0_a01_20261008/)
+- [`resume_plan_suggestions_8576_t0_a02_20261009/`](resume_plan_suggestions_8576_t0_a02_20261009/)
 - [`retained_row_adjudication_5229_v1/`](retained_row_adjudication_5229_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
