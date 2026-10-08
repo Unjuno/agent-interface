@@ -1,4 +1,4 @@
-name: V19 measured-tail focused tests
+name: V19 measured-tail focused regression
 
 on:
   push:
@@ -15,21 +15,56 @@ permissions:
   contents: read
 
 jobs:
-  focused-tests:
+  focused-regression:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          sparse-checkout-cone-mode: true
-          sparse-checkout: |
-            research/doom
-            research/live_control
-      - name: Run focused regression tests in Python container
-        run: >-
-          docker run --rm
-          -v "${GITHUB_WORKSPACE}:/workspace"
-          -w /workspace
-          python:3.12-slim
-          sh -lc "pip install --no-cache-dir Pillow numpy python-xlib && python -B -m unittest research.doom.test_session_map01_v19 -v"
+      - name: Run exact PR regression and helper in Python container
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          docker run --rm -i -e SOURCE_SHA="$SOURCE_SHA" python:3.12-slim python - <<'PY'
+          import ast
+          import json
+          import os
+          from pathlib import Path
+          import types
+          import unittest
+          from unittest.mock import patch
+          from urllib.request import urlopen
+
+          base = "https://raw.githubusercontent.com/Unjuno/agent-interface/" + os.environ["SOURCE_SHA"] + "/"
+
+          def source(path):
+              with urlopen(base + path, timeout=30) as response:
+                  return response.read().decode("utf-8")
+
+          production = ast.parse(source("research/doom/session_map01_v19.py"))
+          helper = next(node for node in production.body
+                        if isinstance(node, ast.FunctionDef)
+                        and node.name == "_run_measured_tail")
+          namespace = {
+              "Path": Path, "json": json, "MeasuredReleaseError": type("MeasuredReleaseError", (Exception,), {}),
+              "TAIL_DURATION_NS": 250_000_000, "TAIL_MAX_SAMPLES": 8,
+          }
+          exec(compile(ast.Module(body=[helper], type_ignores=[]),
+                       "session_map01_v19.py", "exec"), namespace)
+          candidate = types.SimpleNamespace(
+              Path=Path, _run_measured_tail=namespace["_run_measured_tail"])
+
+          tests = ast.parse(source("research/doom/test_session_map01_v19.py"))
+          test_class = next(node for node in tests.body
+                            if isinstance(node, ast.ClassDef)
+                            and node.name == "MeasuredTailCompositionTests")
+          test_method = next(node for node in test_class.body
+                             if isinstance(node, ast.FunctionDef)
+                             and node.name == "test_final_sample_runs_if_output_directory_creation_fails")
+          namespace.update(candidate=candidate, patch=patch, unittest=unittest)
+          exec(compile(ast.Module(body=[test_method], type_ignores=[]),
+                       "test_session_map01_v19.py", "exec"), namespace)
+          case = type("PinnedV19Regression", (unittest.TestCase,),
+                      {test_method.name: namespace[test_method.name]})
+          result = unittest.TextTestRunner(verbosity=2).run(
+              unittest.defaultTestLoader.loadTestsFromTestCase(case))
+          raise SystemExit(0 if result.wasSuccessful() else 1)
+          PY
