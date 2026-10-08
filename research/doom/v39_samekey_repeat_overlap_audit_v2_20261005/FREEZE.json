@@ -1,0 +1,29 @@
+{
+  "schema": "v39_samekey_overlap_audit_v2_freeze_v1",
+  "run_id": "V39-REPEAT-SAME-KEY-A03-OVERLAP-AUDIT-V2-20261005",
+  "main_sha": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "source_pr": 7917,
+  "source_pr_head": "6991ec9e6d75907da626597bed0dd16e982e8410",
+  "source_raw_path": "research/doom/v39_samekey_repeat_a03_20261005/results/RAW.json",
+  "source_raw_git_blob": "fbf4d0e888ba1b1b927e1160eaaff4e7fa5583bd",
+  "source_raw_sha256": "96AE3571E00C1E3FE02894C1204BD47D0B883871F3CE57A2D6AF55BE06E6FA6F",
+  "source_freeze_path": "research/doom/v39_samekey_repeat_a03_20261005/FREEZE.json",
+  "source_freeze_git_blob": "b46fdd80908a75a1c659e309fdebc3dc867ebd94",
+  "source_freeze_sha256": "FCC46DDA094C2AD7C658EABBD1BF6E43475ACE58294A18DF8006E4DAF36CB40D",
+  "audit_sha256": "18B667242738AE8856E76716A82E4FEAE2EE7BFA755915B4F2898B1E561D2EC8",
+  "test_sha256": "EB9A0DA3A29D3073D08C6BF0BC67EE3FDDC1D8D2A7F3648341EAE736D530CE80",
+  "candidate_invocations": 0,
+  "audit_invocations_after_freeze": 1,
+  "test_suite_runs_after_freeze": {
+    "normal": 1,
+    "optimized": 1
+  },
+  "mutations": [
+    "both overlap admission acknowledgements later than the sole release receipt",
+    "foreign ID, step, intent token, and owner ID on second admission",
+    "foreign owner ID on nested release receipt",
+    "malformed overlap event row"
+  ],
+  "pass_condition": "unchanged raw has no audit errors and remains HOLD_NON_BIJECTIVE; each corruption returns FAIL_AUDIT with the corresponding predicate error",
+  "scope": "read-only raw chronology/context audit of a retained fake-X trace; no source-closure or candidate rerun"
+}
