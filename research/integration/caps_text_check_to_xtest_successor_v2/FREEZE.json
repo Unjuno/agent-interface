@@ -1,0 +1,137 @@
+{
+  "study_id": "caps-text-query-xtest-a02-20261008",
+  "issue": "Unjuno/agent-interface#8328",
+  "status": "PROTOCOL_DRAFT_NOT_ALLOCATED",
+  "source_base": {
+    "ref": "d6b3376aaabb6738dbf8e6a8184fe10e66aa937d",
+    "backend_path": "runtime/backends/x11_v1/backend.py",
+    "backend_sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "candidate_backend_sha256": "1862b9cff0bfcb11027c816ce5b269e3bc1d515c0dc6a094059bb26928fc265d",
+    "predecessor_candidate_patch": "research/integration/caps_text_boundary_k8n4_v1/study/candidate.patch",
+    "predecessor_candidate_patch_sha256": "86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65",
+    "fixture_instrumentation_patch": "research/integration/caps_text_check_to_xtest_successor_v2/barrier_instrumentation.patch",
+    "fixture_instrumentation_sha256": "3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e"
+  },
+  "hypothesis": "After the #8255 per-text LockMask query and before its first XTEST request, a separate XKB client can set Caps Lock and make the first requested lowercase character arrive uppercase while dispatch reports completed.",
+  "treatment_arms": [
+    {
+      "id": "current",
+      "expected_entry": "aB2",
+      "expected_lockmask_after": 0
+    },
+    {
+      "id": "guard-stable",
+      "expected_entry": "aB2",
+      "expected_lockmask_after": 0
+    },
+    {
+      "id": "guard-interposed",
+      "expected_entry": "Ab2",
+      "expected_lockmask_after": 1
+    }
+  ],
+  "payload": "aB2",
+  "allocation": {
+    "blocks": 3,
+    "cases_per_block": 3,
+    "total_cases": 9,
+    "fixed_order": [
+      "current",
+      "guard-stable",
+      "guard-interposed"
+    ],
+    "case_ids": [
+      "C01",
+      "G01",
+      "I01",
+      "C02",
+      "G02",
+      "I02",
+      "C03",
+      "G03",
+      "I03"
+    ],
+    "fresh_xvfb_per_case": true,
+    "replacement_or_rerun": false,
+    "tuning_after_first_case": false,
+    "stop_on_first_unexpected_or_ambiguous_case": true
+  },
+  "environment": {
+    "type": "dedicated isolated OrbStack Ubuntu Noble ARM64 VM with private TCP-disabled Xvfb",
+    "container_claim": false,
+    "vm": "caps-text-xtest-a02-20261008",
+    "host_mount": false,
+    "host_or_peer_network_route": "none inside the per-run network namespace; VM setup networking is separate",
+    "installed": {
+      "xvfb": "21.1.12",
+      "python": "3.12.3",
+      "python_xlib": "0.33",
+      "tk": "8.6.14",
+      "libx11_dev": "1.8.7",
+      "gcc": "13.2.0",
+      "git": "2.43.0"
+    },
+    "network_during_cases": "disabled by per-run network namespace with no non-loopback route or up interface; acquire packages and sources before allocation",
+    "expected_xvfb_stderr_sha256": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+    "expected_xvfb_stderr_scope": "Ubuntu Noble Xvfb emits the captured nonfatal xkbcomp unresolved-XF86-keysym warning block. Exact bytes are retained per server; only one or two exact concatenated copies are allowed because the preallocation VM produced two copies on one start. Any other bytes or count STOP. The single-block file hash remains the identity of each block.",
+    "expected_xvfb_stderr_blocks": [
+      1,
+      2
+    ],
+    "display_allocation": "Select the first currently absent lock/socket pair in :99 through :109; start Xvfb with the explicit display argument. The -displayfd path is excluded after preallocation STOP evidence."
+  },
+  "per_case_evidence": [
+    "exact program and response; dispatch completion",
+    "private Xvfb display and independent before/after LockMask and 32-byte keymap snapshots",
+    "Tk Entry event and exact final value",
+    "separate actor IPC request, verified pre/post lock state, mutation sync and ACK monotonic timestamps for interposed arm",
+    "all process argv, PIDs, exits, stderr, and cleanup state",
+    "runtime imported source paths and SHA-256 values"
+  ],
+  "decision": {
+    "pass": "All 9 cases match the frozen arm outcomes; every dispatch reports completed; the interposed actor verifies OFF->ON and ACK precedes first KeyPress; each Xvfb starts fresh; keymaps are all released; process/error/source audits pass; all effective corruption controls reject.",
+    "fail": "A complete, unambiguous case contradicts its frozen expected outcome or the candidate does not exhibit the interposed first-character change.",
+    "stop_hold": "Any missing identity, ordering, event/value, process, cleanup, environment, or audit evidence; infrastructure failure; or first unexpected/ambiguous case. No replacement or retry."
+  },
+  "mutation_controls": [
+    "wrong arm label",
+    "wrong final Entry value",
+    "non-completed dispatch",
+    "actor ACK not before first KeyPress",
+    "wrong candidate sampled/pre-lock state",
+    "wrong actor post-lock state",
+    "non-neutral final keymap",
+    "nonzero app exit",
+    "nonempty app stderr",
+    "recorded process/fixture error",
+    "wrong study identity",
+    "wrong freeze identity",
+    "missing runtime backend source identity",
+    "nonzero actor exit",
+    "nonempty actor stderr"
+  ],
+  "scope_limits": [
+    "one VM, Xvfb/Tk Entry, XKB map, and source closure only",
+    "deterministic injected interposition; no natural occurrence-rate estimate",
+    "no live desktop, other GUI applications/layouts, IME, physical HID, model utility, latency, prevention, recovery correctness, production safety, or product claim",
+    "does not adjudicate open PR #8308; tested arms hold no modifiers or nonmodifier keys, so that PR's held-key semantics remain out of scope"
+  ],
+  "artifacts": {
+    "case_root": "research/integration/caps_text_check_to_xtest_successor_v2/formal_runs/",
+    "auditor": "research/integration/caps_text_check_to_xtest_successor_v2/audit_formal.py",
+    "runner": "research/integration/caps_text_check_to_xtest_successor_v2/public_dispatch_probe.py",
+    "allocation_runner": "research/integration/caps_text_check_to_xtest_successor_v2/run_formal.py",
+    "source_manifest": "research/integration/caps_text_check_to_xtest_successor_v2/SOURCE_MANIFEST.json",
+    "preallocation_amendment": "This is a successor draft after the v1 formal allocation stopped at C01 because its event auditor mishandled modifier KeyPress records. The v1 raw allocation remains immutable; v2 is a new allocation and will require a fresh source readback and independent protocol review.",
+    "protocol_predecessor": "research/integration/caps_text_check_to_xtest_successor_v1/formal_runs/run_20261008_a01/STOP_AUDIT.md",
+    "protocol_review_gate": "Do not switch status to FROZEN_NOT_STARTED or execute until this auditor and protocol draft receive independent review and a clean immutable commit is read back."
+  },
+  "protocol_predecessor": {
+    "study": "research/integration/caps_text_check_to_xtest_successor_v1",
+    "formal_run": "research/integration/caps_text_check_to_xtest_successor_v1/formal_runs/run_20261008_a01",
+    "stopped_at": "C01",
+    "disposition": "STOP due to auditor predicate counting modifier KeyPress char=\"\" as payload and not requiring balanced KeyRelease keycodes; no remaining cases were run and none of that allocation is reused.",
+    "raw_record_sha256": "899f1fa5883c0563f458aae42da7f56ab3157c4c5699d71c9ea06c91a84289e3"
+  },
+  "audit_event_contract": "Compare payload against KeyPress events with a nonempty char field, preserving event order. Independently require a keycode-multiset balance between every KeyPress and KeyRelease, including modifiers."
+}
