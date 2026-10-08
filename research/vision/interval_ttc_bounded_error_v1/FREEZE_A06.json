@@ -1,0 +1,49 @@
+{
+  "issue": 8157,
+  "allocation": "interval-ttc-posthoc-independent-score-a06-20261007",
+  "base_main_sha": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "formal_a02_disposition_preserved": "FAIL_METHOD_UNSCORABLE",
+  "a03_disposition_preserved": "STOP_AUDITOR_RUNTIME_ERROR",
+  "a04_disposition": "PASS_RAW_RECONCILIATION_ONLY",
+  "a04_freeze_sha256": "4b21d3d1e3a9e6dee6499ab984f6e7a6b78731d99721c27aeaf07ebc7ffaf577",
+  "a05_freeze_sha256": "9a83f331502feea6fa826561f1b560099f0e6e210d24ae952f5a3b3cf9bb646a",
+  "a04_report_sha256": "aacd1864216bdef5431e15bf48c344024f7194b5b7ab7f5f0e42466c6cbedcf5",
+  "a02_protocol_sha256": "38bb8cd79fa7c51bdc1df3ef1f20bf33dd01479bbfefa149f776b52d1b8a34f1",
+  "protocol": "PROTOCOL_A06_POSTHOC_SCORE_AUDIT.md",
+  "protocol_sha256": "8ad4173111760345a8b1808b33a3486b3049aabcc867c3ca45365b2484ac7ebd",
+  "program": "audit_only_a06.py",
+  "program_sha256": "82c4dde0f997655bc36ab553eee260b36847e58eaf5299d5044478fa0a9ded96",
+  "construction_tests": "test_audit_only_a06.py",
+  "construction_tests_sha256": "dde89805096afa11dd57d5539bee9e2ef1a8b1ba1c758db9fb5474a594dad6e0",
+  "construction_test_result": "PASS_4_OF_4",
+  "construction_test_command": "python3 -I -S -B -m unittest discover -v -s research/vision/interval_ttc_bounded_error_v1 -p test_audit_only_a06.py",
+  "initial_construction_invocation": {
+    "command": "python3 -I -S -B -m unittest -v research.vision.interval_ttc_bounded_error_v1.test_audit_only_a06",
+    "exit": 1,
+    "reason": "isolated unittest module path was not discoverable; no test body ran; corrected by explicit discovery path"
+  },
+  "a02_artifact_sha256": {
+    "public": "c04d597eb90483b51e055704dbfd72429d83fb9f804d78b0470fee97192315d9",
+    "oracle": "298fbe931ae91ebbf31abb89f17ad0e652cb9418cb5d2b108c7f9d2a14d3410c",
+    "candidate": "c35b44be558110784b94a92d9b0d2df83db75c519218fd6ea88a65055cd54557"
+  },
+  "runtime": {
+    "name": "native macOS host",
+    "python": "3.14.5",
+    "mode": "read-only standard-library diagnostic",
+    "container": false,
+    "network": "unused",
+    "model_gui_input_authority": false
+  },
+  "invocation_budget": {
+    "a06_scorer": 1,
+    "a06_retries": 0,
+    "candidate": 0,
+    "generator": 0,
+    "a02_auditor": 0,
+    "a03_auditor": 0,
+    "a04_auditor": 0,
+    "a05_auditor": 0
+  },
+  "decision_scope": "posthoc descriptive scoring only; cannot alter prior formal dispositions"
+}
