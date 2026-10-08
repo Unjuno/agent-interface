@@ -110,26 +110,47 @@ class PersistentPlannerAdapter:
             self._output_schema = output_schema
         return handle
 
-    def interrupt(self, handle):
+    def interrupt(self, handle, *, before_transport=None):
         with self._lock:
             self._require_active(handle)
-            if self._terminal_status is not None:
-                return {"outcome": "already_terminal", "status": self._terminal_status}
-            if self._cancellation_requested:
-                return {"outcome": "already_requested", "response": self._interrupt_response}
-            # This flag is the semantic boundary: any later answer belongs to a
-            # stale observation even if server completion wins the wire race.
-            self._cancellation_requested = True
-        try:
-            response = self.client.interrupt_turn(handle.thread_id, handle.turn_id)
-        except Exception as error:
-            response = {"error": repr(error)}
-            outcome = "request_error"
+            terminal_status = self._terminal_status
+            already_requested = self._cancellation_requested
+            interrupt_response = self._interrupt_response
+            should_request = terminal_status is None and not already_requested
+            if should_request:
+                # This flag is the semantic boundary: any later answer belongs to a
+                # stale observation even if server completion wins the wire race.
+                self._cancellation_requested = True
+
+        # A caller may provide urgent local cleanup (for example, cancel the active
+        # input program). Run it after invalidating the answer but before a blocking
+        # App Server interrupt request. Run it even when the turn is already terminal.
+        before_transport_error = None
+        if before_transport is not None:
+            try:
+                before_transport()
+            except BaseException as error:
+                before_transport_error = error
+
+        if terminal_status is not None:
+            result = {"outcome": "already_terminal", "status": terminal_status}
+        elif already_requested:
+            result = {"outcome": "already_requested", "response": interrupt_response}
         else:
-            outcome = "requested"
-        with self._lock:
-            self._interrupt_response = response
-        return {"outcome": outcome, "response": response}
+            try:
+                response = self.client.interrupt_turn(handle.thread_id, handle.turn_id)
+            except Exception as error:
+                response = {"error": repr(error)}
+                outcome = "request_error"
+            else:
+                outcome = "requested"
+            with self._lock:
+                self._interrupt_response = response
+            result = {"outcome": outcome, "response": response}
+
+        if before_transport_error is not None:
+            result["before_transport_error"] = repr(before_transport_error)
+        return result
 
     def abort_pending_turn(self):
         """Close the transport when a fatal session error leaves a turn pending."""

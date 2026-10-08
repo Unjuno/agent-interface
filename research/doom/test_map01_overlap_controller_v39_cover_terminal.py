@@ -296,6 +296,138 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertIn("abort_transport", trace["timeline"])
         self.assertLess(trace["main_elapsed_ns"], 100_000_000)
 
+    def test_cover_cancel_is_written_before_planner_interrupt_can_block(self):
+        trace = []
+        interrupt_entered = threading.Event()
+        release_interrupt = threading.Event()
+        cancel_written = threading.Event()
+        failures = []
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": dict(NEUTRAL)}
+        testcase = self
+
+        class Stdin:
+            def write(self, value):
+                command = json.loads(value)
+                trace.append("write:" + command["op"])
+                if command["op"] == "cancel":
+                    cancel_written.set()
+            def flush(self):
+                trace.append("flush")
+
+        class Process:
+            stdin = Stdin()
+
+        class Planner:
+            def interrupt(self, handle, before_transport=None):
+                if before_transport is not None:
+                    before_transport()
+                trace.append("interrupt_enter")
+                interrupt_entered.set()
+                if not release_interrupt.wait(2):
+                    raise TimeoutError("test did not release interrupt")
+                trace.append("interrupt_return")
+                return {"status": "interrupted"}
+
+        def wait(predicate):
+            trace.append("terminal_wait")
+            testcase.assertTrue(predicate(terminal))
+            return terminal
+
+        def cancel():
+            try:
+                controller.cancel_invalidated_cover(
+                    Planner(), object(), Process(), wait, "cover-0")
+            except BaseException as error:
+                failures.append(error)
+
+        worker = threading.Thread(target=cancel)
+        worker.start()
+        try:
+            self.assertTrue(interrupt_entered.wait(2), "planner interrupt did not start")
+            self.assertTrue(
+                cancel_written.wait(0.2),
+                "planner interrupt blocked before executor cancel was written")
+        finally:
+            release_interrupt.set()
+            worker.join(2)
+
+        self.assertFalse(worker.is_alive(), "cancel helper did not finish")
+        self.assertEqual(failures, [])
+        self.assertEqual(trace, ["write:cancel", "flush", "interrupt_enter",
+                                 "interrupt_return", "terminal_wait"])
+
+    def test_planner_interrupt_is_attempted_if_cover_cancel_write_fails(self):
+        trace = []
+
+        class Stdin:
+            def write(self, value):
+                trace.append("cancel_write")
+                raise OSError("synthetic executor pipe failure")
+            def flush(self):
+                trace.append("flush")
+
+        class Process:
+            stdin = Stdin()
+
+        class Planner:
+            def interrupt(self, handle, before_transport=None):
+                trace.append("planner_interrupt")
+                before_transport_error = None
+                if before_transport is not None:
+                    try:
+                        before_transport()
+                    except Exception as error:
+                        before_transport_error = repr(error)
+                result = {"status": "interrupted"}
+                if before_transport_error is not None:
+                    result["before_transport_error"] = before_transport_error
+                return result
+
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": dict(NEUTRAL)}
+
+        def wait(predicate):
+            trace.append("terminal_wait")
+            return terminal if predicate(terminal) else None
+
+        with self.assertRaisesRegex(RuntimeError, "synthetic executor pipe failure"):
+            controller.cancel_invalidated_cover(
+                Planner(), object(), Process(), wait, "cover-0")
+
+        self.assertEqual(trace, ["planner_interrupt", "cancel_write", "terminal_wait"])
+
+    def test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails(self):
+        trace = []
+
+        class Stdin:
+            def write(self, value):
+                trace.append("cancel_write")
+                raise OSError("synthetic executor pipe failure")
+            def flush(self):
+                trace.append("flush")
+
+        class Process:
+            stdin = Stdin()
+
+        class Planner:
+            def interrupt(self, handle, before_transport=None):
+                trace.append("planner_interrupt")
+                try:
+                    before_transport()
+                except BaseException:
+                    raise TimeoutError("synthetic interrupt failure")
+                raise AssertionError("cancel callback unexpectedly succeeded")
+
+        with self.assertRaisesRegex(OSError, "synthetic executor pipe failure") as raised:
+            controller.cancel_invalidated_cover(
+                Planner(), object(), Process(), lambda predicate: None, "cover-0")
+
+        self.assertEqual(trace, ["planner_interrupt", "cancel_write"])
+        self.assertIsInstance(raised.exception.__cause__, TimeoutError)
+        self.assertIn("planner interrupt also failed: TimeoutError",
+                      getattr(raised.exception, "__notes__", []))
+
     def test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary(self):
         trace = self.exercise("interrupt-exception", "failed", NEUTRAL,
                               interrupt_failure=True, planner_wait_cap=0.15)
