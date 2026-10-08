@@ -1,0 +1,42 @@
+{
+  "format": "v39-preacceptance-stale-replan-a01",
+  "disposition": "PASS_CANDIDATE_COMPOSITION",
+  "main_sha": "3d5f91f4409a79eabb332187d7ad2639ec8106c9",
+  "source_blobs": {
+    "controller": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "adapter": "879736562aa5c0637319616c9f01df22af087b15",
+    "source_refresh": "6b5add0fa29865de64afcfa1da4a272d9a216e8d"
+  },
+  "trigger": {
+    "submitted_sequence": 1,
+    "producer_sequence_at_rejection": 2,
+    "rejection_before_full_observation_delivery": true
+  },
+  "first_turn": {
+    "answer": "stale-turn-answer",
+    "used_after_rejection": false
+  },
+  "recovery": {
+    "fresh_sequence": 2,
+    "fresh_capture_ns": 200,
+    "planner_turn_count": 2,
+    "fresh_image_used": "fixture/sequence-2.png",
+    "fresh_hud_in_prompt": {
+      "health": 86,
+      "ammo": 12
+    },
+    "action_resubmissions_after_rejection": 0,
+    "controller_wait_advanced_latest": true
+  },
+  "existing_source_refresh": {
+    "status": "already_observed",
+    "submit_count": 0,
+    "returned_sequence": 1
+  },
+  "controls": {
+    "non_stale_rejection": "refused",
+    "binding_change": "refused",
+    "no_fresh_observation": "refused"
+  },
+  "scope": "source-bound synthetic construction; candidate recovery policy, not current runtime behavior"
+}

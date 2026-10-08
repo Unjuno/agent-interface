@@ -1,0 +1,15 @@
+{
+  "schema": "v39-preacceptance-stale-replan-a04-freeze-v1",
+  "experiment": "v39-preacceptance-stale-replan-a04-20261008",
+  "main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+  "sources": {
+    "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "research/doom/doom_typed_coast_backend_v1.py": "d95d382ee9c234dab652fa8af93b233baa5225a4",
+    "research/doom/doom_typed_observation_v1.py": "930e1c78511b57999a0a2176cb94a31a32d166a8",
+    "research/live_control/action_validity_admission_v1.py": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+    "research/live_control/persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15",
+    "research/live_control/executor_v11.py": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+    "research/live_control/executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9"
+  },
+  "scope": "Exact producer snapshot, controller wait/turn/compiler, planner adapter, and Executor.submit; deterministic image/reader/planner/backend/lease/thread stubs; worker start is inert and performs no input."
+}
