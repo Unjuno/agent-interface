@@ -2,10 +2,11 @@
 import ast
 import subprocess
 
+SOURCE_REF = "708ca59a8128f07fdb7e13a36704c6b2f79c9fb6"
 PINS = {
-    "research/doom/map01_overlap_controller_v39.py": "e9b437979e87347f6aa4dbefffcc84e9a2d01752",
-    "research/live_control/persistent_planner_adapter_v2.py": "1a09c8752dff6a87bf8c180cb2e6fa7f43d4ad77",
-    "research/live_control/codex_app_server_client_v2.py": "2eecb3de2d1a3d72c3276d13e148564e9c31481b",
+    "research/doom/map01_overlap_controller_v39.py": "fcd97a2483327fc6812b4cd134816cfe5193bf4f",
+    "research/live_control/persistent_planner_adapter_v2.py": "e2566d063f9aeba77ea74a3996625fe80425d9f6",
+    "research/live_control/codex_app_server_client_v2.py": "8553874221761a7807c846c7dcd66c22fc6340ff",
 }
 
 
@@ -26,9 +27,9 @@ def call_name(node):
 
 def main():
     for path, blob in PINS.items():
-        actual = git("rev-parse", f"HEAD:{path}").strip()
+        actual = git("rev-parse", f"{SOURCE_REF}:{path}").strip()
         assert actual == blob, (path, actual, blob)
-    controller = ast.parse(git("show", "HEAD:research/doom/map01_overlap_controller_v39.py"))
+    controller = ast.parse(git("show", f"{SOURCE_REF}:research/doom/map01_overlap_controller_v39.py"))
     helper = method(controller, "cancel_invalidated_cover")
     interrupt_i = next(i for i, n in enumerate(helper.body)
                        if isinstance(n, ast.Assign) and isinstance(n.value, ast.Call)
@@ -38,13 +39,13 @@ def main():
                    and call_name(n.value) == "write")
     assert interrupt_i < write_i
 
-    adapter = ast.parse(git("show", "HEAD:research/live_control/persistent_planner_adapter_v2.py"))
+    adapter = ast.parse(git("show", f"{SOURCE_REF}:research/live_control/persistent_planner_adapter_v2.py"))
     interrupt = method(adapter, "interrupt")
     assert isinstance(interrupt, ast.FunctionDef)
     assert any(isinstance(n, ast.Call) and call_name(n) == "interrupt_turn"
                for n in ast.walk(interrupt))
 
-    client = ast.parse(git("show", "HEAD:research/live_control/codex_app_server_client_v2.py"))
+    client = ast.parse(git("show", f"{SOURCE_REF}:research/live_control/codex_app_server_client_v2.py"))
     request = method(client, "request")
     assert ast.literal_eval(request.args.defaults[-1]) == 30
     assert any(isinstance(n, ast.Call) and call_name(n) == "wait"
