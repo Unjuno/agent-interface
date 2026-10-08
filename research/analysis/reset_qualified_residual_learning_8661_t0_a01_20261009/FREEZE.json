@@ -1,0 +1,30 @@
+{
+  "allocation_id": "8661-T0-A01-20261009",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8661",
+  "freeze_time_utc": "2026-10-08T19:50:34Z",
+  "source_commit": "decfe816f5e3b1de34790be9d7b00a1595be86b0",
+  "branch": "research/8661-reset-residual-t0-a01-20261009",
+  "fixture_sha256": "657a86e8bde00d7f0c30030f0a35b7997cd2b4bb8bb50d4da279bc404f15c19a",
+  "candidate_sha256": "ad08f8a6601b94faf90b575bf6164bc6ffcd794d8bbfd62baadc5e1e7fa62992",
+  "auditor_sha256": "bc746d3190178d431a210d8f6549b9002564c5b86df587e01db728541583365f",
+  "runtime": "macOS 27.0 ARM64, CPython 3.14.5; observed before candidate execution",
+  "dependencies": "Python standard library only",
+  "execution_boundary": "No GUI, model, network, application runtime, OS input, game, or effect dispatch. No container image required by this finite standard-library method test.",
+  "input": "input/fixture.json; 8 fixed training seeds 100-107, 24 disjoint held-out seeds 200-223, fixed deterministic noise, one scalar plant, and nine boundary probes",
+  "parameters": {
+    "target": 1.0,
+    "plant_bias": 0.35,
+    "gain": 0.7,
+    "tolerance": 0.05,
+    "actuator_bounds": [-1.0, 1.0],
+    "trust_radius": 0.25,
+    "safe_action_max": 0.9,
+    "reset_id": "R0",
+    "target_generation": "G0"
+  },
+  "candidate_command": "python3 src/candidate.py input/fixture.json raw/candidate.json",
+  "auditor_command": "python3 src/auditor.py input/fixture.json raw/candidate.json audit/audit.json",
+  "invocation_rule": "One candidate invocation and one independent raw-only auditor invocation. No scientific reruns.",
+  "decision_gate": "PASS_METHOD_SCOPED only if exact candidate updates match the independent oracle on all training states; all 5 seeded mutation controls are rejected; reset, generation, residual freshness, terminal, release, safety, action-bound, and trust-region gates hold; and held-out median pre-correction absolute error and median correction actions both improve over fixed control with zero hard-gate regression. FAIL_METHOD on any update mismatch or hard-gate regression. NO_DISCRIMINATION if the preregistered held-out objectives do not improve.",
+  "scope": "Synthetic finite scalar-control method result only; no real GUI, control convergence, task success, safety, or product claim."
+}
