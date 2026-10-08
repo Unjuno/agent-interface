@@ -2,7 +2,7 @@
 
 **H:** A row-only adapter cannot distinguish a current stream with `release_batch_delivery_position` deleted from all release rows from a valid legacy-shaped stream when both carry the same `input-release-batch-v3` marker.
 
-**T:** Compare one valid two-member current-format stream (delivery positions 0,1), its all-fields-deleted form, and the identical legacy-shaped input using the frozen T5 adapter. Source: current `main` `2a9052efdd155b8cdc173d216a969ea5f64a1ce9`; backend blob `193c2bd231795e7ee57de64aedfd741c8b814013`; adapter SHA-256 `6f0ad1eb378b8269d596b6d7f38ec21c3e447c7f41814b974f6aa19a7250b58c`.
+**T:** Compare one valid two-member current-format stream (delivery positions 0,1), its all-fields-deleted form, and the identical legacy-shaped input using the frozen T5 adapter. Source: current `main` `e627b8954ecfbdd90ccfe35a81441a00d88047c8`; backend blob `193c2bd231795e7ee57de64aedfd741c8b814013`; adapter SHA-256 `6f0ad1eb378b8269d596b6d7f38ec21c3e447c7f41814b974f6aa19a7250b58c`.
 
 **D:** If total-loss rows equal legacy rows on adapter inputs and both yield `SOURCE_ROWS_JOINED / TEMPORALLY_UNIQUE`, report `UNIDENTIFIABLE_WITH_ROW_FIELDS_ONLY`; this is a representational limit, not proof of live corruption. Otherwise identify the row-level discriminator.
 
@@ -24,4 +24,5 @@ python -B -O -m unittest discover -s ..\package -p test_*.py -v
 python -B probe.py
 python -B audit.py
 ```
+
 

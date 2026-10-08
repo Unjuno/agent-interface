@@ -3,7 +3,7 @@
   "frozen_at": "2026-10-08",
   "hypothesis": "A row-only adapter cannot distinguish a current stream whose release_batch_delivery_position field was deleted from every release row from a valid legacy-shaped stream when both retain input-release-batch-v3.",
   "source": {
-    "main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+    "main_commit": "e627b8954ecfbdd90ccfe35a81441a00d88047c8",
     "release_backend_path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
     "release_backend_blob": "193c2bd231795e7ee57de64aedfd741c8b814013",
     "source_sha256": "e2bd846c4702eca17187f175ca629481f8c7f99beef1b2c980a1f87591aaa3d8",
@@ -24,4 +24,5 @@
     "python -B audit.py"
   ]
 }
+
 
