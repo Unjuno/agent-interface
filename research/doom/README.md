@@ -476,3 +476,8 @@ gates remain open; this archive makes no code promotion.
 ## App Server interrupt cancellation portability (#59)
 
 - [macOS 0.146.1 stream-cancel A01](v39_appserver_interrupt_stream_macos_a01_20261008/README.md) — interrupted turn completed promptly, but no provider-socket EOF/reset was observed before the held mock response release; unexpected featured-plugin metadata egress makes the overall environment disposition HOLD. One bounded run; no live/game/input claim.
+
+
+## Camera-compensated visual-change screen A01 (#59)
+
+- [Translation registration against retained V39 health-loss pairs](camera_compensated_motion_a01_20261008/README.md) — 52 adjacent pairs; residual AUC 0.406 versus raw 0.417, with only 1/4 health-loss pairs above the no-loss median. Fixed translation-only cue rejected for this scoped screen; no semantic threat or live-control claim.
