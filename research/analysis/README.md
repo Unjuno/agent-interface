@@ -317,6 +317,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
+- [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
+
 <details>
 <summary><strong>Expand all retained result/failure directories</strong></summary>
 
