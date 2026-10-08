@@ -1,13 +1,13 @@
 {
   "schema": "v39-inflight-observation-terminal-order-freeze-v1",
   "experiment": "v39-inflight-observation-terminal-order-a01-20261008",
-  "current_main_commit": "dcf24013fb85304f513054a3a28ae4c8dfc70c00",
+  "current_main_commit": "b52e37574debe61196b951624a4a0e06c67ac829",
   "source": {
     "path": "research/doom/map01_overlap_controller_v39.py",
-    "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "git_blob": "2241c65be63cd50165954312f4c0af2e9062dd5a",
     "local_path": "source/map01_overlap_controller_v39.py",
-    "bytes": 85952,
-    "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
+    "bytes": 86689,
+    "sha256": "f40019dbb5bc5d23521b73f35b9b06ff18eb3c0e4d1ff7dab807835a39c9f452"
   },
   "hypothesis": "If a hard-invalidating observation line precedes the matching cover terminal but is decoded just before the completed-future snapshot, current session emission and reader enqueue preserve FIFO; audit every active session route, including the v15 release-batch backend override, for observation producers after terminal.",
   "scope": "Current-main V39 helper/wait/final-admission plus pinned default and opt-in session/backend/executor source chain. Deterministic delayed-queue test; AST audit includes the v15 telemetry backend override and release-batch inheritance. No live game/model/GUI/OS input or physical release.",
