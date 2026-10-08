@@ -1,0 +1,86 @@
+{
+  "schema": "unjuno.issue8493.temporal-recurrence-fixture.v1",
+  "issue": 8493,
+  "predecessor": 8152,
+  "base_main": "6ceb8552df13a188f6aad9cbfed88eba6eb70689",
+  "target_fingerprint": "TARGET_STALE_GUARD",
+  "competing_fingerprint": "COMPETING_WIDGET_CRASH",
+  "same_exit_code": 17,
+  "no_failure_fingerprint": "NO_FAILURE",
+  "competing_rate": 0.08,
+  "target_salt": "target",
+  "competing_salt": "competitor",
+  "base_trace": ["reset", "lease", "observation", "commit", "timing_guard", "warmup", "telemetry", "poll_a", "poll_b", "repaint", "context_note", "competing_fault", "release"],
+  "reduced_trace": ["reset", "lease", "observation", "commit", "timing_guard", "telemetry", "poll_a", "poll_b", "repaint", "context_note", "competing_fault", "release"],
+  "mandatory_events": ["reset", "lease", "release"],
+  "dependencies": {
+    "lease": ["reset"],
+    "observation": ["lease"],
+    "commit": ["observation"],
+    "timing_guard": ["commit"],
+    "warmup": ["reset"],
+    "telemetry": ["reset"],
+    "poll_a": ["reset"],
+    "poll_b": ["reset"],
+    "repaint": ["reset"],
+    "context_note": ["reset"],
+    "competing_fault": ["lease"],
+    "release": ["lease"]
+  },
+  "noninferiority_margin": 0.2,
+  "familywise_alpha": 0.05,
+  "familywise_contrasts": 20,
+  "minimum_block_support": 64,
+  "cases": [
+    {
+      "id": "stable_no_shift",
+      "role": "negative_control",
+      "windows": [
+        {"id": "early", "kind": "identified", "start": 0, "n": 256, "base_rate": 0.86, "reduced_rate": 0.82, "seed_start": 9000000},
+        {"id": "late", "kind": "identified", "start": 256, "n": 256, "base_rate": 0.86, "reduced_rate": 0.82, "seed_start": 9001000}
+      ]
+    },
+    {
+      "id": "abrupt_shift_masked_pooled",
+      "role": "planted_harmful_regime",
+      "windows": [
+        {"id": "early", "kind": "identified", "start": 0, "n": 1024, "base_rate": 0.94, "reduced_rate": 0.92, "seed_start": 9100000},
+        {"id": "late", "kind": "identified", "start": 1024, "n": 256, "base_rate": 0.80, "reduced_rate": 0.18, "seed_start": 9102000}
+      ]
+    },
+    {
+      "id": "gradual_shift_masked_pooled",
+      "role": "planted_harmful_regime",
+      "windows": [
+        {"id": "early", "kind": "identified", "start": 0, "n": 1024, "base_rate": 0.94, "reduced_rate": 0.93, "seed_start": 9200000},
+        {"id": "middle", "kind": "identified", "start": 1024, "n": 512, "base_rate": 0.86, "reduced_rate": 0.78, "seed_start": 9202000},
+        {"id": "late", "kind": "identified", "start": 1536, "n": 256, "base_rate": 0.76, "reduced_rate": 0.21, "seed_start": 9204000}
+      ]
+    },
+    {
+      "id": "sparse_late_block",
+      "role": "insufficient_support_control",
+      "windows": [
+        {"id": "early", "kind": "identified", "start": 0, "n": 1024, "base_rate": 0.92, "reduced_rate": 0.90, "seed_start": 9300000},
+        {"id": "late", "kind": "identified", "start": 1024, "n": 24, "base_rate": 0.78, "reduced_rate": 0.08, "seed_start": 9302000}
+      ]
+    },
+    {
+      "id": "ambiguous_transition_window",
+      "role": "transition_ambiguity_control",
+      "windows": [
+        {"id": "early", "kind": "identified", "start": 0, "n": 1024, "base_rate": 0.92, "reduced_rate": 0.90, "seed_start": 9400000},
+        {"id": "transition", "kind": "ambiguous", "start": 1024, "n": 128, "base_rate": 0.86, "reduced_rate": 0.56, "seed_start": 9402000},
+        {"id": "late", "kind": "identified", "start": 1152, "n": 128, "base_rate": 0.76, "reduced_rate": 0.16, "seed_start": 9403000}
+      ]
+    },
+    {
+      "id": "competing_fingerprint_no_shift",
+      "role": "fingerprint_identity_control",
+      "windows": [
+        {"id": "early", "kind": "identified", "start": 0, "n": 256, "base_rate": 0.86, "reduced_rate": 0.82, "seed_start": 9500000},
+        {"id": "late", "kind": "identified", "start": 256, "n": 256, "base_rate": 0.86, "reduced_rate": 0.82, "seed_start": 9501000}
+      ]
+    }
+  ]
+}
