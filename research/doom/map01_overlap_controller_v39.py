@@ -376,11 +376,46 @@ def build_cover_monitor(reader, source_observation, authored_validity, index,
     return monitor, receipt
 
 
+def require_cover_terminal(terminal, *, cancellation_requested=False):
+    """Require neutral closure before renewing cover or using a planner answer."""
+    allowed = ("completed", "expired", "cancelled") if cancellation_requested else (
+        "completed", "expired")
+    release = terminal.get("release") if type(terminal) is dict else None
+    if (type(terminal) is not dict or terminal.get("event") != "terminal" or
+            terminal.get("status") not in allowed or type(release) is not dict or
+            release.get("verified") is not True or release.get("keys_down") != [] or
+            release.get("buttons_down") != []):
+        raise RuntimeError(f"cover terminal lacks allowed status and verified empty release: {terminal!r}")
+
+
 def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
-    planner_interrupt = planner.interrupt(planner_handle)
-    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
-    process.stdin.flush()
-    terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+    cancel_error = None
+
+    def cancel_executor_program():
+        nonlocal cancel_error
+        try:
+            process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+            process.stdin.flush()
+        except BaseException as error:
+            cancel_error = error
+            raise
+
+    try:
+        planner_interrupt = planner.interrupt(
+            planner_handle, before_transport=cancel_executor_program)
+    except BaseException as interrupt_error:
+        if cancel_error is not None:
+            cancel_error.add_note(
+                "planner interrupt also failed: " + type(interrupt_error).__name__)
+            raise cancel_error from interrupt_error
+        raise
+    try:
+        terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+    except BaseException as terminal_error:
+        if cancel_error is not None:
+            terminal_error.add_note(
+                "executor cancel write also failed: " + type(cancel_error).__name__)
+        raise
     release = terminal.get("release", {})
     # The bounded cover can naturally finish or lease-expire between policy
     # invalidation and delivery of the cancel request. Accept those terminal
@@ -389,6 +424,14 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
             release.get("verified") is not True or
             release.get("buttons_down") != [] or release.get("keys_down") != []):
         raise RuntimeError("invalidated cover did not verify empty release")
+    if cancel_error is not None:
+        raise RuntimeError(
+            "executor cancel write failed before planner interruption: "
+            + repr(cancel_error)) from cancel_error
+    if "before_transport_error" in planner_interrupt:
+        raise RuntimeError(
+            "executor cancel write failed before planner interruption: "
+            + planner_interrupt["before_transport_error"])
     return planner_interrupt, terminal
 
 
@@ -709,6 +752,29 @@ def temporal_sheet(sources, target):
     sheet.save(target,optimize=True)
 
 
+def drain_pending_observation_events(incoming, observation_monitor, terminal_id):
+    """Process events already queued when a planner future becomes done."""
+    latest = None
+    terminal = None
+    invalidation = None
+    event_types = (getattr(observation_monitor, "event_types", {"observation"})
+                   if observation_monitor is not None else set())
+    # Snapshot the finite backlog so a live producer cannot make this drain unbounded.
+    for _ in range(incoming.qsize()):
+        try:
+            row = incoming.get_nowait()
+        except queue.Empty:
+            break
+        if row.get("event") == "observation":
+            latest = row
+        if (invalidation is None and observation_monitor is not None and
+                row.get("event") in event_types):
+            invalidation = observation_monitor.observe(row)
+        if row.get("event") == "terminal" and row.get("id") == terminal_id:
+            terminal = row
+    return {"latest": latest, "terminal": terminal, "invalidation": invalidation}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -883,12 +949,57 @@ def main():
                         break
                     current_terminal=boundary
                     cover_terminals.append(current_terminal)
+                    failure_cleanup.set_stage("cover_terminal_validation")
+                    try:
+                        require_cover_terminal(current_terminal)
+                    except RuntimeError as error:
+                        # The fatal cover error ends this control session. An
+                        # interrupt ACK does not complete await_turn, so retire
+                        # its transport if the future is still pending before
+                        # pool shutdown joins it. Keep the cover failure primary.
+                        if not future.done():
+                            try:
+                                interrupt_result = planner.interrupt(planner_handle)
+                            except BaseException as interrupt_error:
+                                error.add_note("planner interrupt failed: " +
+                                               type(interrupt_error).__name__)
+                            else:
+                                if (isinstance(interrupt_result, dict) and
+                                        interrupt_result.get("outcome") == "request_error"):
+                                    error.add_note("planner interrupt transport failed")
+                            if not future.done():
+                                try:
+                                    abort_result = planner.abort_pending_turn()
+                                except BaseException as abort_error:
+                                    error.add_note("planner transport abort failed: " +
+                                                   type(abort_error).__name__)
+                                else:
+                                    if (isinstance(abort_result, dict) and
+                                            abort_result.get("outcome") == "aborted"):
+                                        error.add_note("pending planner turn transport aborted")
+                        raise
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     next_accepted=submit_cover(next_cover)
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
+                if future.done() and invalidation is None:
+                    drained = drain_pending_observation_events(
+                        incoming, invalidation_monitor, current_cover)
+                    if drained["latest"] is not None:
+                        latest = drained["latest"]
+                    if drained["terminal"] is not None and current_terminal is None:
+                        current_terminal = drained["terminal"]
+                        cover_terminals.append(current_terminal)
+                        failure_cleanup.set_stage("cover_terminal_validation")
+                        require_cover_terminal(current_terminal)
+                    if drained["invalidation"] is not None:
+                        invalidation = drained["invalidation"]
+                        if current_terminal is None:
+                            planner_interrupt,current_terminal=cancel_invalidated_cover(
+                                planner,planner_handle,process,wait,current_cover)
+                            cover_terminals.append(current_terminal)
                 planner_result=future.result()
                 failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
@@ -911,6 +1022,8 @@ def main():
                     else:
                         current_terminal=boundary
                 cover_terminals.append(current_terminal)
+            failure_cleanup.set_stage("cover_terminal_validation")
+            require_cover_terminal(current_terminal, cancellation_requested=True)
             final_action_admission=final_admission_from_planner_result(
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())
