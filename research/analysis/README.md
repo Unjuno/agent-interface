@@ -465,6 +465,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`constraint_elicitation_6380_t0_v1/`](constraint_elicitation_6380_t0_v1/)
 - [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/)
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/)
+- [`context_return_renewal_8432_t0_a01_20261008/`](context_return_renewal_8432_t0_a01_20261008/)
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
 - [`controlled_feedback_8072_a02_20261005/`](controlled_feedback_8072_a02_20261005/)
