@@ -1,0 +1,6 @@
+CONTAINER STOP
+Attempted: docker image inspect python:3.14
+Observed: OrbStack Docker daemon reported that the image did not exist locally.
+Decision: no pull, build, or container start; no shared/running VM was repurposed.
+Fallback performed: host-only test on macOS arm64 with Python 3.14.5.
+Impact: test result is valid only for the host fake-backend execution; container parity is unverified.

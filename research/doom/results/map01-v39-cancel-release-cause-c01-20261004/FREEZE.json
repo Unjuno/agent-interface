@@ -1,0 +1,16 @@
+{
+  "run_id": "MAP01-V39-CANCEL-RELEASE-CAUSE-C01-20261004",
+  "hypothesis": "On the exact current-main v10 owner, a cancellation becoming visible after release dequeue but before dispatch is attached to the active lease release record; ordinary release remains unchanged.",
+  "treatment": "Run one deterministic owner-thread queue interleaving against exact input_owner_v10.py with fake Xlib. A queue hook sets lease.cancel only after the owner loop's pre-dequeue check and after it retrieves the explicit release request. Run one ordinary-release positive control.",
+  "decision": "C01 supports the defect if cancel case reports reason release while verified-empty; ordinary control must report release. A later versioned candidate must report cancelled for the cancel case and release for ordinary control.",
+  "scope": "Actual v10 owner thread and request handler, deterministic scheduler hook, fake Xlib state. No ExecutorV12 wrapper or game integration.",
+  "limits": "No X server, device input, application, game, model, useful task feedback, bounded recovery guarantee, matched performance comparison, or formal/live allocation.",
+  "source": "research/live_control/input_owner_v10.py",
+  "source_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+  "test": "research/doom/results/map01-v39-cancel-release-cause-c01-20261004/test_cancel_release_cause.py",
+  "test_sha256": "2d490167f67e9552385d483bc573463923adde9aa37c1d502174ed910b86593b",
+  "host_image": "Local Windows host; CPython 3.11 (no container, selected because WSLc currently has another active study container)",
+  "command": "python -B test_cancel_release_cause.py",
+  "invocations": 1,
+  "retry_policy": "no retry"
+}

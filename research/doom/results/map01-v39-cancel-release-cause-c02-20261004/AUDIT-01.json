@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "backend_v5_preserves_v4_except_owner_base": true,
+    "c01_independent_audit_pass": true,
+    "cancel_case_passes": true,
+    "candidate_delta_is_only_cause_selection": true,
+    "candidate_exit_zero": true,
+    "frozen_candidate_source_hash_matches": true,
+    "frozen_test_hash_matches": true,
+    "ordinary_control_passes": true,
+    "session_manifest_hashes_all_new_sources": true,
+    "session_v14_differs_only_by_versioned_owner_chain": true,
+    "transition_v4_differs_only_by_v12_base": true,
+    "v10_parent_hash_matches_c01_freeze": true
+  },
+  "pass": true,
+  "schema": "map01-v39-cancel-release-cause-c02-audit-v2",
+  "scope": "frozen candidate raw + post-run exact-delta source-chain audit"
+}
