@@ -1,6 +1,6 @@
 // Independent raw-only audit for Issue #8654 C06.
 "use strict";
-function auditC06(files) {
+function auditC06(files, skipMutations=false) {
   const regimes=["STABLE","REVERSAL","GLOBAL_SHIFT"];
   const D=(4n**8n)*(20n**8n);
   function qNum(r,c,a) {
@@ -55,7 +55,19 @@ function auditC06(files) {
     if(policy==="D"&&htNumer[key]*320n!==D*12n*BigInt(oracleNum[r])) throw Error("ips_expectation:"+key);
   }
   if(rows!==197376||seen.size!==197376||greedyUnident!==768) throw Error("total_or_greedy");
-  return {rows,unique:seen.size,groups:Object.fromEntries(Object.entries(mass).map(([k,v])=>[k,v===D?"unit_mass":"bad"])),
+  let mutationsRejected=0;
+  if(!skipMutations) {
+    const path=Object.keys(files).sort()[0];
+    const mutations=[
+      copy=>{const a=copy[path].trimEnd().split("\\n");a.pop();copy[path]=a.join("\\n")+"\\n";},
+      copy=>{const a=copy[path].trimEnd().split("\\n");a[1]=a[0];copy[path]=a.join("\\n")+"\\n";},
+      copy=>{const a=copy[path].trimEnd().split("\\n");const p=a[0].split("|");p[4]=(BigInt(p[4])+1n).toString();a[0]=p.join("|");copy[path]=a.join("\\n")+"\\n";},
+      copy=>{const a=copy[path].trimEnd().split("\\n");a[0]+="|oracle";copy[path]=a.join("\\n")+"\\n";}
+    ];
+    for(const mutate of mutations){const copy={...files};mutate(copy);try{auditC06(copy,true)}catch{mutationsRejected++}}
+    if(mutationsRejected!==4) throw Error("mutation_controls");
+  }
+  return {rows,unique:seen.size,mutations_rejected:mutationsRejected,groups:Object.fromEntries(Object.entries(mass).map(([k,v])=>[k,v===D?"unit_mass":"bad"])),
     diagnostic_identified_probability_by_regime:Object.fromEntries(regimes.map(r=>[r,Number(identified)/3/Number(D)])),
     exact_known_propensity_expectation:true,greedy_unidentifiable_rows:greedyUnident,
     diagnostic_expected_absolute_error:absError,diagnostic_max_absolute_error:maxError};
