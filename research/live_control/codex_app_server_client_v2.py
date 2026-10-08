@@ -60,6 +60,8 @@ class CodexAppServerClient:
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._journal_order_lock = threading.Lock()
+        self._send_marker_pending = False
+        self._deferred_received = deque()
         self._send_uncertain = False
         self._stdin_fd = None
         self._closing = False
@@ -75,8 +77,7 @@ class CodexAppServerClient:
         try:
             for line in self.process.stdout:
                 message = json.loads(line)
-                with self._journal_order_lock:
-                    self._record("received", message)
+                self._record_received(message)
                 with self._condition:
                     if ("id" in message and "method" not in message and
                             type(message["id"]) in (int, float) and
@@ -90,6 +91,22 @@ class CodexAppServerClient:
             with self._condition:
                 self._closed = True
                 self._condition.notify_all()
+
+    def _record_received(self, message):
+        with self._journal_order_lock:
+            if self._send_marker_pending:
+                # Keep draining/dispatching replies while the final pipe write
+                # is in flight; only defer their journal rows until its result
+                # determines whether `sent` or `send_uncertain` comes first.
+                self._deferred_received.append(json.loads(json.dumps(message)))
+            else:
+                self._record("received", message)
+
+    def _flush_deferred_received(self):
+        while self._deferred_received:
+            message = self._deferred_received[0]
+            self._record("received", message)
+            self._deferred_received.popleft()
 
     def _write(self, message, *, deadline=None, request_id=None):
         # This client exclusively owns stdin. Never mix buffered TextIO writes
@@ -129,36 +146,42 @@ class CodexAppServerClient:
                     self._pending.add(request_id)
             sent = 0
             write_attempted = False
+            journal_order_timeout = False
             view = memoryview(data)
-            journal_order_locked = False
             try:
                 while sent < len(data):
                     if self._closing:
                         raise AppServerError("app-server closed during pipe send")
                     if deadline <= time.monotonic():
                         raise TimeoutError("app-server pipe send timed out")
-                    end = min(sent + 65536, len(data))
-                    final_chunk = end == len(data)
-                    if final_chunk:
+                    write_end = min(sent + 65536, len(data))
+                    final_write_attempt = write_end == len(data)
+                    if final_write_attempt:
+                        # The reader queues journal rows while continuing to
+                        # drain and dispatch a response produced by this write.
                         remaining = deadline - time.monotonic()
                         if remaining <= 0 or not self._journal_order_lock.acquire(timeout=max(0, remaining)):
-                            raise TimeoutError("app-server journal ordering lock timed out; no final send attempted")
-                        journal_order_locked = True
-                        if deadline <= time.monotonic():
+                            journal_order_timeout = True
+                            raise TimeoutError(
+                                "app-server journal ordering lock timed out; no final send attempted")
+                        try:
+                            self._send_marker_pending = True
+                        finally:
                             self._journal_order_lock.release()
-                            journal_order_locked = False
-                            raise TimeoutError("app-server send budget expired; no final send attempted")
                     try:
                         # Bound each syscall, not the size of the JSON record.
                         write_attempted = True
-                        count = os.write(self._stdin_fd, view[sent:end])
+                        count = os.write(self._stdin_fd, view[sent:write_end])
                         if count <= 0:
                             raise OSError("app-server pipe write made no progress")
                         sent += count
                     except BlockingIOError:
-                        if journal_order_locked:
-                            self._journal_order_lock.release()
-                            journal_order_locked = False
+                        if final_write_attempt:
+                            with self._journal_order_lock:
+                                try:
+                                    self._flush_deferred_received()
+                                finally:
+                                    self._send_marker_pending = False
                         remaining = deadline - time.monotonic()
                         if remaining <= 0:
                             raise TimeoutError("app-server pipe send timed out")
@@ -172,43 +195,48 @@ class CodexAppServerClient:
                             waiter = select.poll()
                             waiter.register(self._stdin_fd, select.POLLOUT)
                             waiter.poll(min(remaining, 1) * 1000)
+                        continue
                     if sent == len(data):
-                        # Hold ordering from the final write attempt through its
-                        # durable completion row so a fast reply cannot overtake it.
-                        self._record("sent", snapshot)
-                    elif journal_order_locked:
-                        # A partial final-chunk write cannot have completed a
-                        # newline-terminated message. Let the reader drain while
-                        # waiting for the remaining bytes.
-                        self._journal_order_lock.release()
-                        journal_order_locked = False
+                        with self._journal_order_lock:
+                            self._record("sent", snapshot)
+                            try:
+                                self._flush_deferred_received()
+                            finally:
+                                self._send_marker_pending = False
+                    elif final_write_attempt:
+                        # A short write cannot have delivered the trailing
+                        # newline, so queued rows precede the next attempt.
+                        with self._journal_order_lock:
+                            try:
+                                self._flush_deferred_received()
+                            finally:
+                                self._send_marker_pending = False
             except BaseException as error:
-                if write_attempted:
-                    self._send_uncertain = True
-                    try:
-                        if journal_order_locked:
-                            self._record("send_uncertain", {
-                                "message": snapshot, "sent_bytes": sent,
-                                "total_bytes": len(data), "reason": type(error).__name__,
-                            })
+                self._send_uncertain = True
+                try:
+                    if write_attempted:
+                        uncertain = {
+                            "message": snapshot, "sent_bytes": sent,
+                            "total_bytes": len(data), "reason": type(error).__name__,
+                        }
+                        if journal_order_timeout:
+                            # The final write was never attempted. Do not wait
+                            # on the ordering lock again just to journal that
+                            # partial transmission is uncertain.
+                            self._record("send_uncertain", uncertain)
                         else:
-                            # A failed bounded order-lock acquisition must not
-                            # turn uncertainty reporting into an unbounded wait.
-                            # _record still serializes journal bytes itself.
-                            self._record("send_uncertain", {
-                                "message": snapshot, "sent_bytes": sent,
-                                "total_bytes": len(data), "reason": type(error).__name__,
-                            })
-                    except Exception:
-                        pass
+                            with self._journal_order_lock:
+                                self._record("send_uncertain", uncertain)
+                                if self._send_marker_pending or self._deferred_received:
+                                    try:
+                                        self._flush_deferred_received()
+                                    finally:
+                                        self._send_marker_pending = False
+                except Exception:
+                    pass
                 if not isinstance(error, Exception):
                     raise
-                if not write_attempted:
-                    raise
                 raise AppServerWriteUncertain(sent, len(data), type(error).__name__) from error
-            finally:
-                if journal_order_locked:
-                    self._journal_order_lock.release()
         finally:
             self._write_lock.release()
 

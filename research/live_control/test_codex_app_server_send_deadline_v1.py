@@ -349,6 +349,60 @@ class AppServerSendDeadlineTests(unittest.TestCase):
             directions = [row["direction"] for row in rows]
             self.assertLess(directions.index("sent"), directions.index("received"), rows)
 
+    def test_fast_reply_after_final_write_cannot_overtake_sent_marker(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal_path = os.path.join(directory, "protocol.jsonl")
+            with owned_client(journal_path=journal_path) as (client, _read_fd):
+                original_write = module.os.write
+                receive_started = threading.Event()
+                receive_done = threading.Event()
+                receiver_errors = queue.Queue()
+                receivers = []
+
+                def receive_fast_reply():
+                    try:
+                        message = {"id": 1, "result": {"value": "original"}}
+                        record_received = getattr(client, "_record_received", None)
+                        if record_received is None:
+                            with client._journal_order_lock:
+                                client._record("received", message)
+                        else:
+                            record_received(message)
+                        message["result"]["value"] = "mutated"
+                    except BaseException as error:
+                        receiver_errors.put(error)
+                    finally:
+                        receive_started.set()
+                        receive_done.set()
+
+                def write_then_schedule_reply(fd, data):
+                    count = original_write(fd, data)
+                    receiver = threading.Thread(target=receive_fast_reply)
+                    receivers.append(receiver)
+                    receiver.start()
+                    # The reader must finish draining and dispatching the
+                    # reply before the final write call returns.
+                    self.assertTrue(receive_started.wait(1))
+                    self.assertTrue(receive_done.is_set())
+                    return count
+
+                with patch.object(module.os, "write", side_effect=write_then_schedule_reply):
+                    client._write({"method": "fast-reply", "id": 1},
+                                  deadline=time.monotonic() + 1)
+
+                for receiver in receivers:
+                    receiver.join(timeout=1)
+                    self.assertFalse(receiver.is_alive())
+                self.assertTrue(receive_done.wait(1))
+                self.assertTrue(receiver_errors.empty())
+
+            with open(journal_path, encoding="utf-8") as stream:
+                rows = [json.loads(line) for line in stream]
+            directions = [row["direction"] for row in rows]
+            self.assertLess(directions.index("sent"), directions.index("received"), rows)
+            received = next(row["message"] for row in rows if row["direction"] == "received")
+            self.assertEqual(received, {"id": 1, "result": {"value": "original"}})
+
     def test_request_spends_one_budget_on_send_and_response_wait(self):
         clock = Clock()
         captured = []
