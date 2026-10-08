@@ -1,0 +1,22 @@
+{
+  "allocation": "BP-7822-MAC-A02-20261006",
+  "base_main": "4670a6fb5bc152087054ad84ff15cc8148f7683c",
+  "host": "Darwin arm64 macOS",
+  "python": "CPython 3.14.5",
+  "network": false,
+  "container": false,
+  "formal_invocations": {
+    "candidate": {"count": 1, "command": "python3 -B candidate.py public_cases.json", "exit_code": 0},
+    "auditor": {"count": 1, "command": "python3 -B auditor.py public_cases.json oracle_cases.json results/candidate.raw.json", "exit_code": 0},
+    "retries": 0
+  },
+  "construction_tests": {"command": "python3 -B -m unittest discover -s research/analysis/bounded_progress_7822_a02_20261006 -p 'test_*.py' -v", "passed": 7, "failed": 0, "stage": "before formal freeze"},
+  "formal_artifacts": {
+    "candidate_raw_sha256": "c507d934aa2bd8d344413957fa277ec82d647178665bfb1485fee3f084064363",
+    "candidate_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit_sha256": "253865074fbed046e37605685e18343e1c296d30741bcbff22e77da286a8f11e",
+    "auditor_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "limits": ["finite authored graphs", "no GUI/model/input/application effect", "no wall-clock guarantee", "no container isolation claim"]
+}
