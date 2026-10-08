@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8583 T0 A01 principal-stratum bounds](principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: four finite synthetic cases exactly reconstructed, 5/5 candidate mutations rejected; WSLc CPU method evidence only, no empirical causal or product claim.
+
 - [Issue #8488 PSI-triggered work-shedding T0 A01](psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — `HOLD_DEADLINE_SEMANTICS_MISMATCH`: strict-bound raw recheck gives fixed 4 / queue 3 / free-memory 4 / PSI 1 primary misses, so the zero-miss gate fails. The original `NO_RESIDUAL` reading is withdrawn; no runtime/container claim.
 
 - [Issue #8553 T0 A01 counterexample-guided recovery refinement](counterexample_guided_recovery_refinement_8553_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 5/5 finite cases independently reconstructed; safe separator refined with `p_color` (one predicate vs fixed-fine's three); planted optimistic false recovery returned `UNKNOWN`; 5/5 mutations rejected. Hand-authored CPU-only model; no GUI/runtime/product claim.
@@ -904,6 +906,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`primary_refusal_terminality_59_spine07_20261001/`](primary_refusal_terminality_59_spine07_20261001/)
 - [`primary_refusal_terminality_59_spine07_v2_20261001/`](primary_refusal_terminality_59_spine07_v2_20261001/)
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
+- [`principal_stratum_bounds_8583_t0_a01_20261008/`](principal_stratum_bounds_8583_t0_a01_20261008/)
 - [`priority_inheritance_5370_t7_composition_20261002_01/`](priority_inheritance_5370_t7_composition_20261002_01/)
 - [`priority_inheritance_nested_5370_t6_20261001/`](priority_inheritance_nested_5370_t6_20261001/)
 - [`privacy_conditional_kernel_5420_t0_20261004/`](privacy_conditional_kernel_5420_t0_20261004/)
