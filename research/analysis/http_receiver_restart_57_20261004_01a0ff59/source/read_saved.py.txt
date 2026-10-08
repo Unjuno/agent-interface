@@ -1,0 +1,72 @@
+import base64,copy,hashlib,json,shutil,sqlite3,tempfile
+from pathlib import Path
+P=Path(__file__).resolve().parent;sha=lambda b:hashlib.sha256(b).hexdigest()
+freeze=json.loads((P/'FREEZE.json').read_bytes())
+for n,h in freeze['sources'].items():assert sha((P/n).read_bytes())==h
+reference=(P/'reference-experiment.py.txt').read_bytes();assert hashlib.sha1(b'blob '+str(len(reference)).encode()+b'\0'+reference).hexdigest()==freeze['reference_blob']
+result=json.loads((P/'RESULT.json').read_bytes());driver=json.loads((P/'DRIVER_RECEIPT.json').read_bytes())
+assert type(driver['exit']) is int and driver['exit']==0 and driver['timed_out'] is False and driver['reaped'] is True
+for kind,v in driver['streams'].items():b=(P/('driver.'+kind)).read_bytes();assert len(b)==v['bytes'] and sha(b)==v['sha256']
+assert driver['elapsed_ns']==driver['ended_ns']-driver['started_ns']>0
+names=['original_restart','restartable_after_commit','restartable_before_commit'];assert [r['case'] for r in result['rows']]==names
+def saved_db(directory):
+    original={f.name:f.read_bytes() for f in directory.iterdir()};assert set(original)<= {'receiver.sqlite','receiver.sqlite-wal','receiver.sqlite-shm'}
+    with tempfile.TemporaryDirectory(dir=P,prefix='saved-only-') as tmp:
+        d=Path(tmp)
+        for n,b in original.items():(d/n).write_bytes(b)
+        c=sqlite3.connect((d/'receiver.sqlite').as_uri()+'?mode=ro',uri=True)
+        try:
+            a={'effects':c.execute('SELECT * FROM effects ORDER BY seq').fetchall(),'requests':c.execute('SELECT * FROM requests ORDER BY seq').fetchall(),'integrity':c.execute('PRAGMA integrity_check').fetchall()}
+            a=json.loads(json.dumps(a))
+        finally:c.close()
+    assert original=={f.name:f.read_bytes() for f in directory.iterdir()}
+    return a
+def check(row,before,after):
+    name=row['case'];root=P/name;assert row['state']==after and before['integrity']==after['integrity']==[['ok']]
+    first,second=row['first'],row['second'];assert first['pid']!=second['pid'] and first['end_ns']<=second['start_ns']
+    for phase,r in [('first',first),('second',second)]:
+        assert type(r['exit']) is int and r['reaped'] is True and r['fallback_termination'] is False and r['start_ns']<r['end_ns']
+        assert json.loads((root/(phase+'-receipt.json')).read_bytes())==r
+        for k,v in r['streams'].items():b=(root/(phase+'.'+k)).read_bytes();assert len(b)==v['bytes'] and sha(b)==v['sha256']
+    intent=json.loads((root/'INTENT.json').read_bytes());key='own-'+name;assert intent['command_id']==key
+    expected_payload={'target':'A','append':'追加行'};requests=row['http_attempts'];assert len(requests)==(3 if name=='restartable_after_commit' else 2 if name=='restartable_before_commit' else 1)
+    events=[]
+    for phase in ['first','second']:
+        f=root/(phase+'-events.jsonl')
+        if f.exists():events += [json.loads(l) for l in f.read_bytes().splitlines()]
+    received=[e for e in events if e['event']=='http_received'];assert [e['body_base64'] for e in received]==[r['request_body_base64'] for r in requests]
+    for i,r in enumerate(requests):
+        body=base64.b64decode(r['request_body_base64']);value=json.loads(body);assert value['command_id']==key and value['payload']==({'target':'B','append':'別の変更'} if i==2 else expected_payload)
+        assert r['start_ns']<=r['end_ns'] and r['phase']==(['first','second','second_conflict'][i])
+        receipt=first if i==0 else second;assert receipt['start_ns']<=r['start_ns']<=r['end_ns']<=receipt['end_ns']
+    assert len(after['effects'])==1 and after['effects'][0][0:2]==[1,key] and json.loads(after['effects'][0][2])==expected_payload
+    if name=='original_restart':
+        assert first['exit']==0 and second['exit']==1 and row['second_ready'] is False and before==after
+        assert b'table effects already exists' in (root/'second.stderr').read_bytes()
+        statuses=['applied'];responses=[(200,'applied')]
+    else:
+        assert first['exit']==23 and second['exit']==0 and row['second_ready'] is True
+        assert requests[0]['status'] is None and requests[0]['error']=='ConnectionResetError' and requests[0]['body_base64'] is None
+        if name=='restartable_after_commit':
+            assert len(before['effects'])==1 and before['effects']==after['effects'];assert [e['event'] for e in events].count('crash_after_commit_before_reply')==1
+            statuses=['applied','duplicate','conflict'];responses=[(None,None),(200,'duplicate'),(409,'conflict')]
+        else:
+            assert before['effects']==before['requests']==[] and [e['event'] for e in events].count('crash_before_commit')==1
+            statuses=['applied'];responses=[(None,None),(200,'applied')]
+    assert [r[3] for r in after['requests']]==statuses
+    for r,(code,status) in zip(requests,responses):
+        assert r['status']==code
+        if status is not None:assert json.loads(base64.b64decode(r['body_base64']))=={'effect_seq':1,'status':status} and r['error'] is None
+    return {'case':name,'first_exit':first['exit'],'second_exit':second['exit'],'first_effect_rows':len(before['effects']),'final_effect_rows':len(after['effects']),'persisted_request_statuses':statuses}
+rows=[];views=[]
+for row in result['rows']:
+    root=P/row['case'];assert json.loads((root/'RESULT.json').read_bytes())==row
+    before=saved_db(root/'after_first_raw');after=saved_db(root/'after_second_raw');views.append((before,after));rows.append(check(row,before,after))
+rejected=[]
+for label,mutate in [('false_first_ack',lambda r:r['http_attempts'][0].__setitem__('status',200)),('false_double_effect',lambda r:r['state']['effects'].append(copy.deepcopy(r['state']['effects'][0]))),('false_conflict_success',lambda r:r['http_attempts'][2].__setitem__('status',200)),('unreaped_first',lambda r:r['first'].__setitem__('reaped',False))]:
+    r=copy.deepcopy(result['rows'][1]);mutate(r)
+    try:check(r,*views[1])
+    except AssertionError:rejected.append(label)
+    else:raise AssertionError('copied contradiction accepted '+label)
+review={'status':'QUALIFIED_NATIVE_WINDOWS_RECEIVER_RESTART_CONSTRUCTION','rows':rows,'rejected_copied_contradictions':rejected,'source_identity_verified':True,'full_saved_db_wal_shm_views_joined':True,'source_and_original_raw_unchanged':True,'model_calls':0,'old_formal_or_browser_replay':False,'subject_replay_in_reader':False,'main_writes':0,'votes':0,'whole_goal_complete':False}
+(P/'SAVED_REVIEW.json').write_text(json.dumps(review,indent=2));print(json.dumps(review))

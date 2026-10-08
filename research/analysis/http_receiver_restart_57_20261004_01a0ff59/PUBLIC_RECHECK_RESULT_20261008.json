@@ -1,0 +1,52 @@
+{
+  "full_saved_db_wal_shm_views_joined": true,
+  "main_writes": 0,
+  "model_calls": 0,
+  "old_formal_or_browser_replay": false,
+  "rejected_copied_contradictions": [
+    "false_first_ack",
+    "false_double_effect",
+    "false_conflict_success",
+    "unreaped_first"
+  ],
+  "rows": [
+    {
+      "case": "original_restart",
+      "final_effect_rows": 1,
+      "first_effect_rows": 1,
+      "first_exit": 0,
+      "persisted_request_statuses": [
+        "applied"
+      ],
+      "second_exit": 1
+    },
+    {
+      "case": "restartable_after_commit",
+      "final_effect_rows": 1,
+      "first_effect_rows": 1,
+      "first_exit": 23,
+      "persisted_request_statuses": [
+        "applied",
+        "duplicate",
+        "conflict"
+      ],
+      "second_exit": 0
+    },
+    {
+      "case": "restartable_before_commit",
+      "final_effect_rows": 1,
+      "first_effect_rows": 0,
+      "first_exit": 23,
+      "persisted_request_statuses": [
+        "applied"
+      ],
+      "second_exit": 0
+    }
+  ],
+  "source_and_original_raw_unchanged": true,
+  "source_identity_verified": true,
+  "status": "QUALIFIED_NATIVE_WINDOWS_RECEIVER_RESTART_CONSTRUCTION",
+  "subject_replay_in_reader": false,
+  "votes": 0,
+  "whole_goal_complete": false
+}

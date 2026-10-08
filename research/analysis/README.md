@@ -1,5 +1,7 @@
 # Analytical research
 
+- [#57 native HTTP receiver restart construction — additive public-capsule recheck](http_receiver_restart_57_20261004_01a0ff59/PUBLIC_RECHECK_20261008.md) — Saved-only audit of the unchanged #7316 archive and all 69 capsule members passes with one explicit stderr public-projection limitation. This does not rerun the candidate, authenticate private original bytes, or establish current runtime/application behavior.
+
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
 
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
