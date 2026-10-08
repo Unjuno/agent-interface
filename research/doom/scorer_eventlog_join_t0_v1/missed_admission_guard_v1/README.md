@@ -63,10 +63,10 @@ pass in normal and optimized Python. First RED outputs are preserved in the
 private source-repair evidence packet; no historical result was overwritten.
 
 ```sh
-python -m unittest discover -s research/doom/scorer_eventlog_join_t0_v1/missed_admission_guard_v1 -p test_boundary.py -v
-python -O -m unittest discover -s research/doom/scorer_eventlog_join_t0_v1/missed_admission_guard_v1 -p test_boundary.py -v
-python -m unittest discover -s research/doom/scorer_eventlog_join_t0_v1/missed_admission_guard_v1 -p 'test_*.py' -v
-python -m unittest discover -s research/doom/scorer_eventlog_join_t0_v1/saved_record_audit_v2 -p test_audit.py -v
+python research/doom/scorer_eventlog_join_t0_v1/missed_admission_guard_v1/test_boundary.py -v
+python -O research/doom/scorer_eventlog_join_t0_v1/missed_admission_guard_v1/test_boundary.py -v
+python research/doom/scorer_eventlog_join_t0_v1/missed_admission_guard_v1/test_compatibility.py -v
+python research/doom/scorer_eventlog_join_t0_v1/saved_record_audit_v2/test_audit.py -v
 python research/doom/scorer_eventlog_join_t0_v1/saved_record_audit_v2/audit.py
 ```
 

@@ -63,8 +63,8 @@ Run from the repository root:
 
 ```sh
 python research/doom/scorer_eventlog_join_t0_v1/saved_record_audit_v2/audit.py
-python -m unittest discover -s research/doom/scorer_eventlog_join_t0_v1/saved_record_audit_v2 -p test_audit.py -v
-python -O -m unittest discover -s research/doom/scorer_eventlog_join_t0_v1/saved_record_audit_v2 -p test_audit.py -v
+python research/doom/scorer_eventlog_join_t0_v1/saved_record_audit_v2/test_audit.py -v
+python -O research/doom/scorer_eventlog_join_t0_v1/saved_record_audit_v2/test_audit.py -v
 ```
 
 The CLI emits JSON to stdout and never writes historical artifacts. The test
