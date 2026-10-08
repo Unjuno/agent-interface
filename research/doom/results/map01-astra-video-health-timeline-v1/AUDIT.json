@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "all_source_hashes": true,
+    "attempt01_crops_preserved": true,
+    "calibration_frame_hash": true,
+    "calibration_pixel_match": true,
+    "crop_hashes": true,
+    "decision_frame_health_reference": true,
+    "decision_values_present_in_video_states": true,
+    "frame_count": true,
+    "manual_endpoint_and_pickup": true,
+    "model_mode_totals": true,
+    "model_windows": true,
+    "scope_limited": true,
+    "source_video_sha256": true,
+    "source_video_size": true,
+    "transition_count": true,
+    "transition_frames": true,
+    "video_metadata": true
+  },
+  "pass": true,
+  "schema": "map01-astra-video-health-timeline-audit-v1",
+  "scope": "source hash, exact video transitions and crop integrity; health numerals were manually transcribed"
+}

@@ -1,0 +1,3 @@
+python -B research/doom/results/map01-astra-video-health-timeline-v1/audit_timeline.py
+exit=1
+failed check: scope_limited. The case-sensitive wording assertion required `not causal`; the README instead said `no causal damage attribution`, so the exact token was absent. Source/video/frame/transition/crop/endpoint/model-window checks all passed. This was a scope-text assertion mismatch, not a video-result failure.
