@@ -1,0 +1,28 @@
+{
+  "schema": "v39-v15-startup-release-closure-a02-result-v1",
+  "status": "FAIL_FROZEN_AUDITOR_MANIFEST_CHECK",
+  "candidate_started": true,
+  "candidate_exit": 0,
+  "auditor_started": true,
+  "auditor_exit": 0,
+  "frozen_auditor_status": "FAIL",
+  "frozen_auditor_failed_check": "v15_recorded_exact_source_manifest",
+  "posthoc_status": "RAW_COMPOSITION_CONFIRMED_AUDITOR_SCOPE_MISMATCH",
+  "observed": {
+    "v15_selected_release_backend": "doom_owner_thread_release_batch_backend_v1.Backend",
+    "verified_empty_batch": true,
+    "v15_selected_executor": "executor_v13.Executor",
+    "no_keymap_between_up_injections": true,
+    "release_rows": 2
+  },
+  "scope": "Synthetic V15 startup composition with a fake V12 main/session and FakeXlib only. No actual V12 CLI/session, X11, game, model, GUI, OS input or live V39 exposure.",
+  "resource_note": "WSLc warned swap/cgroup memory accounting is unavailable; no memory enforcement claim.",
+  "artifacts": {
+    "frozen_audit": "AUDIT.json",
+    "runner_output": "RUNNER_OUTPUT.json",
+    "run_result": "RUN_RESULT.md",
+    "freeze": "FREEZE.json",
+    "protocol": "PROTOCOL.md",
+    "posthoc_audit": "POSTHOC_AUDIT.json"
+  }
+}
