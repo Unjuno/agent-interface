@@ -27,3 +27,11 @@ This is a deterministic unit-level source repair. It does not claim that a live 
 - Pull request: [#8441](https://github.com/Unjuno/agent-interface/pull/8441), open and not merged at record creation.
 - Local result: 3 focused tests passed in normal Python and 3 passed under `-O`; `py_compile` and `git diff --check` passed.
 - Status: scoped construction/repair PASS; live/integrated behavior HOLD. No formal allocation was used or retried.
+
+## Applicability correction (2026-10-08)
+
+The typed-before-accepted queue order used by the original helper regression is not reachable on the audited V39 session routes, so the helper-level PASS does not establish a production observation-loss defect.
+
+The current-main route check covers both the default `session_map01_v12.py` path and the opt-in measurement `session_map01_v15.py` wrapper. V12's executor emits the accepted row through the session's shared emitter before starting its worker. The v15 executor delegates to that v12 submit path before starting its release watcher. The same session emitter prints and flushes each JSON line under a lock. Active typed observations are emitted synchronously from the backend snapshot called during worker execution. The controller's single stdout reader decodes and enqueues each line before reading the next. Thus the accepted row is enqueued before any typed observation produced by that accepted program on these pinned routes.
+
+A source-order regression now checks the live repository files for both routes and the shared FIFO path. It passes on current `main` under normal and optimized Python. This is static source-order evidence; it does not establish live timing, HUD correctness, physical release, or task outcome. The retained construction still demonstrates how buffering would handle an artificial pre-ACK row. It does not justify that buffer in the current V39 runtime. A follow-up PR proposes reverting the unnecessary runtime and helper-test additions while retaining this evidence and the source-order regression.

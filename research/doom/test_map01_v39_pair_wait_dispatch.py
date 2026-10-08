@@ -107,7 +107,26 @@ class PairWaitDispatchTests(unittest.TestCase):
 
         session = source("research/doom/session_map01_v12.py")
         session_main = function(session, "main")
+        self.assertTrue(any(isinstance(node, ast.ImportFrom)
+                            and node.module == "executor_v12"
+                            and any(alias.name == "Executor"
+                                    for alias in node.names)
+                            for node in session.body))
+        self.assertTrue(any(isinstance(node, ast.ImportFrom)
+                            and node.module == "doom_typed_release_backend_v1"
+                            and any(alias.name == "Backend"
+                                    for alias in node.names)
+                            for node in session.body))
         emit = function(session, "emit", session_main)
+        for component in ("Executor", "Backend"):
+            wired = [node for node in ast.walk(session_main)
+                     if isinstance(node, ast.Call)
+                     and isinstance(node.func, ast.Name)
+                     and node.func.id == component
+                     and any(isinstance(argument, ast.Name)
+                             and argument.id == "emit"
+                             for argument in node.args)]
+            self.assertEqual(len(wired), 1, component)
         lock_scope = next(node for node in ast.walk(emit)
                           if isinstance(node, ast.With)
                           and any(isinstance(item.context_expr, ast.Name)
@@ -140,6 +159,40 @@ class PairWaitDispatchTests(unittest.TestCase):
         self.assertEqual(len(worker_starts), 1)
         self.assertLess(accepted_emits[0].lineno, worker_starts[0].lineno)
 
+        measured_session = source("research/doom/session_map01_v15.py")
+        self.assertTrue(any(isinstance(node, ast.Import)
+                            and any(alias.name == "session_map01_v12"
+                                    and alias.asname == "base"
+                                    for alias in node.names)
+                            for node in ast.walk(measured_session)))
+        self.assertTrue(any(
+            isinstance(node, ast.Assign)
+            and any(isinstance(target, ast.Attribute)
+                    and target.attr == "Executor"
+                    for target in node.targets)
+            and isinstance(node.value, ast.Name)
+            and node.value.id == "ReleaseOrderedExecutor"
+            for node in ast.walk(measured_session)))
+        executor_v13 = source("research/live_control/executor_v13.py")
+        self.assertTrue(any(isinstance(node, ast.ImportFrom)
+                            and node.module == "executor_v12"
+                            and any(alias.name == "Executor"
+                                    and alias.asname == "Previous"
+                                    for alias in node.names)
+                            for node in executor_v13.body))
+        executor_v13_class = next(node for node in executor_v13.body
+                                  if isinstance(node, ast.ClassDef)
+                                  and node.name == "Executor")
+        measured_submit = function(executor_v13, "submit", executor_v13_class)
+        parent_submit = [node for node in calls(measured_submit, "submit")
+                         if isinstance(node.func.value, ast.Call)
+                         and isinstance(node.func.value.func, ast.Name)
+                         and node.func.value.func.id == "super"]
+        watcher_starts = calls(measured_submit, "start")
+        self.assertEqual(len(parent_submit), 1)
+        self.assertEqual(len(watcher_starts), 1)
+        self.assertLess(parent_submit[0].lineno, watcher_starts[0].lineno)
+
         typed = source("research/doom/doom_typed_coast_backend_v1.py")
         typed_backend = next(node for node in typed.body
                              if isinstance(node, ast.ClassDef)
@@ -153,8 +206,27 @@ class PairWaitDispatchTests(unittest.TestCase):
         execute = function(coast, "execute", coast_backend)
         self.assertTrue(calls(execute, "snapshot"))
 
+        release = source("research/doom/doom_typed_release_backend_v1.py")
+        self.assertTrue(any(isinstance(node, ast.ImportFrom)
+                            and node.module == "doom_typed_coast_backend_v1"
+                            for node in release.body))
+        self.assertTrue(any(isinstance(node, ast.ImportFrom)
+                            and node.module == "coast_backend_v1"
+                            for node in typed.body))
+
         controller = source("research/doom/map01_overlap_controller_v39.py")
         controller_main = function(controller, "main")
+        session_command = function(controller, "session_command")
+        session_names = {node.value for node in ast.walk(session_command)
+                         if isinstance(node, ast.Constant)
+                         and isinstance(node.value, str)}
+        self.assertTrue({"session_map01_v12.py", "session_map01_v15.py"}
+                        <= session_names)
+        session_launches = [node for node in calls(controller_main, "Popen")
+                            if node.args and isinstance(node.args[0], ast.Call)
+                            and isinstance(node.args[0].func, ast.Name)
+                            and node.args[0].func.id == "session_command"]
+        self.assertEqual(len(session_launches), 1)
         reader = function(controller, "reader", controller_main)
         stdout_loop = next(node for node in ast.walk(reader)
                            if isinstance(node, ast.For)
