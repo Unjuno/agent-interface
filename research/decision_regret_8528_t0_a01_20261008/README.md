@@ -12,6 +12,7 @@ This is synthetic method evidence only. The toy 0/1 loss is an exact finite fixt
 - `audit.py`: separate exact enumerator; does not import or execute candidate code.
 - `test_candidate.py`, `test_audit.py`: construction tests; not formal-run counts.
 - `PROTOCOL.md`: frozen hypotheses, gates, and run order.
+- `FREEZE_AMENDMENT.md`: transparent pre-formal correction history.
 - `CONSTRUCTION_LOG.md`: chronological development/test history.
 
 ## Local reproduction
