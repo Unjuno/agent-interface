@@ -1,0 +1,274 @@
+[
+    {
+        "Id": "f59ce4c6fc22750967b0bc120f0afb8f2bc133b1335700fd910acb1bdc5fe191",
+        "Created": "2026-10-08T16:03:34.748187254Z",
+        "Path": "python",
+        "Args": [
+            "-B",
+            "/audit.py",
+            "--protocol",
+            "/protocol.json",
+            "--raw",
+            "/raw.jsonl",
+            "--out",
+            "-",
+            "--self-test"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-08T16:03:34.771202401Z",
+            "FinishedAt": "2026-10-08T16:03:35.081152941Z"
+        },
+        "Image": "sha256:df18428df8a0f9189c84e7424d214b4c50092af1f9dca5842a00c41c39bda316",
+        "ResolvConfPath": "/var/lib/docker/containers/f59ce4c6fc22750967b0bc120f0afb8f2bc133b1335700fd910acb1bdc5fe191/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/f59ce4c6fc22750967b0bc120f0afb8f2bc133b1335700fd910acb1bdc5fe191/hostname",
+        "HostsPath": "/var/lib/docker/containers/f59ce4c6fc22750967b0bc120f0afb8f2bc133b1335700fd910acb1bdc5fe191/hosts",
+        "LogPath": "/var/lib/docker/containers/f59ce4c6fc22750967b0bc120f0afb8f2bc133b1335700fd910acb1bdc5fe191/f59ce4c6fc22750967b0bc120f0afb8f2bc133b1335700fd910acb1bdc5fe191-json.log",
+        "Name": "/determined_kowalevski",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "/home/runner/work/_temp/evidence/auditor.cid",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,noexec,nosuid,nodev,size=8m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 134217728,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 268435456,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 32,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/home/runner/work/_temp/src/research/analysis/observation_response_factorial_8651_a05_20261009/audit.py",
+                    "Target": "/audit.py",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/home/runner/work/_temp/src/research/analysis/observation_response_factorial_8651_a05_20261009/PROTOCOL.json",
+                    "Target": "/protocol.json",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/home/runner/work/_temp/input/RAW.jsonl",
+                    "Target": "/raw.jsonl",
+                    "ReadOnly": true
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "ID": "f59ce4c6fc22750967b0bc120f0afb8f2bc133b1335700fd910acb1bdc5fe191",
+                "LowerDir": "/var/lib/docker/overlay2/daab489563ddf4c8eec9da42e67d820ba4b55421e6f7ee48af675463e6f83091-init/diff:/var/lib/docker/overlay2/05e82156f8b5a4c7118f2b50e35511069133b1f9fa0a3bc67b293330c822c19c/diff:/var/lib/docker/overlay2/e1f20fcdc91efda3659fafd3c9429f398b9d72e1638c8374495d2ae9c35b1425/diff:/var/lib/docker/overlay2/e789a95a74b6d3b8ed9b7bb02fc9fa7e7a12740d169b1f29146cdf8bb0e61c88/diff:/var/lib/docker/overlay2/db86dff56f5785462f17a52c3a85a05a125f460c43ebf94ca0d6d825c1456ea6/diff",
+                "MergedDir": "/var/lib/docker/overlay2/daab489563ddf4c8eec9da42e67d820ba4b55421e6f7ee48af675463e6f83091/merged",
+                "UpperDir": "/var/lib/docker/overlay2/daab489563ddf4c8eec9da42e67d820ba4b55421e6f7ee48af675463e6f83091/diff",
+                "WorkDir": "/var/lib/docker/overlay2/daab489563ddf4c8eec9da42e67d820ba4b55421e6f7ee48af675463e6f83091/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/home/runner/work/_temp/src/research/analysis/observation_response_factorial_8651_a05_20261009/audit.py",
+                "Destination": "/audit.py",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/runner/work/_temp/src/research/analysis/observation_response_factorial_8651_a05_20261009/PROTOCOL.json",
+                "Destination": "/protocol.json",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/runner/work/_temp/input/RAW.jsonl",
+                "Destination": "/raw.jsonl",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "f59ce4c6fc22",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": true,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": true,
+            "StdinOnce": true,
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.15",
+                "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a"
+            ],
+            "Cmd": [
+                "python",
+                "-B",
+                "/audit.py",
+                "--protocol",
+                "/protocol.json",
+                "--raw",
+                "/raw.jsonl",
+                "--out",
+                "-",
+                "--self-test"
+            ],
+            "Image": "python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "MacAddress": "",
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "970808d014ab7f69dcf39e1b3bc9ceaa5b02b8a264fea188751318bee1a1d8f9",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        }
+    }
+]
