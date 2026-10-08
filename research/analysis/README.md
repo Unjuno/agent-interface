@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #5309 A08 effect-witness preservation](dual_control_5309_witness_a08_20261007/REPORT.md) — `PASS_WITNESS_BOUNDARY_SCOPED`: isolated candidate/oracle mounts; 56 rows independently reconstructed. A04–A07 STOP/method-failure lineage remains preserved; synthetic-only, no GUI/runtime/product claim.
+
 - [Issue #8502 T0 A03 corrected paired-cutpoint successor](measurement_invariance_8502_t0_a03_20261008/RESULT.md) — `PASS_METHOD_SCOPED`: fresh five-case seed set independently reconstructed with zero errors; 6/6 mutations rejected. This is synthetic method evidence only; A01 `FAIL_METHOD` and A02 `FAIL_AUDIT_ONLY` remain unchanged, with no human-workload comparability claim.
 
 - [Issue #8502 T0 A02 audit-only result](measurement_invariance_8502_t0_a02_20261008/RESULT.md) — `FAIL_AUDIT_ONLY`: saved-data reconstruction emitted the five fixture labels and rejected six controls, but A02's own README source digest was frozen incorrectly; do not promote its diagnostic map.
@@ -546,6 +548,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
 - [`dual_control_5309_precapture_control_a13b_20261007/`](dual_control_5309_precapture_control_a13b_20261007/)
+- [`dual_control_5309_witness_a04_20261007/`](dual_control_5309_witness_a04_20261007/)
+- [`dual_control_5309_witness_a05_20261007/`](dual_control_5309_witness_a05_20261007/)
+- [`dual_control_5309_witness_a06_20261007/`](dual_control_5309_witness_a06_20261007/)
+- [`dual_control_5309_witness_a07_20261007/`](dual_control_5309_witness_a07_20261007/)
+- [`dual_control_5309_witness_a08_20261007/`](dual_control_5309_witness_a08_20261007/)
 - [`dual_control_5309_witness_a09_20261007/`](dual_control_5309_witness_a09_20261007/)
 - [`dual_control_5309_witness_a10_20261007/`](dual_control_5309_witness_a10_20261007/)
 - [`dual_control_5309_witness_a11_20261007/`](dual_control_5309_witness_a11_20261007/)
