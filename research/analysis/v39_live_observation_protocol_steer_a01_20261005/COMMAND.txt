@@ -1,0 +1,4 @@
+Candidate command (execute once, from the experiment directory):
+python3 probe.py --frame fixtures/v39-seq200.png --pending-window-s 2.0 > results/candidate.stdout 2> results/candidate.stderr
+
+The invoking runner records its returned process exit code in results/candidate.exit.
