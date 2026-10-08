@@ -14,7 +14,7 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "e01b14533bc196bbe97f4651c73565caef46c34d711b09c84aa2aaef7a805b23"
+FROZEN_PLAN_SHA256 = "976a3edbc5e32f9a1bb4954f4769181a48808fd0ce9b7b05715d5a0d612bb174"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
 EXPECTED_XVFB_STDERR_SHA256 = FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]
 
