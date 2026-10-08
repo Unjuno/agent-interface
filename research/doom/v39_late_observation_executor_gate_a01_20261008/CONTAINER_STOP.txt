@@ -1,0 +1,9 @@
+Container attempt: STOP
+
+Requested runtime context: `docker context show` returned `orbstack`; `docker info --format '{{.ServerVersion}} {{.OperatingSystem}}'` returned `29.4.0 OrbStack`.
+
+The next read-only `docker image ls --format '{{.Repository}}:{{.Tag}}'` failed before listing images with:
+
+`rpc error: code = Unknown desc = blob sha256:edadb620ecb19dfd8dc5b020e4e134b68188e2bf3902e7d15ae50af55e1af46f expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/edadb620ecb19dfd8dc5b020e4e134b68188e2bf3902e7d15ae50af55e1af46f: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/edadb620ecb19dfd8dc5b020e4e134b68188e2bf3902e7d15ae50af55e1af46f: operation not supported`
+
+No container was started and no pruning, repair, or storage mutation was attempted. The reproducible Python construction/audit ran on the host; the requested container-backed repeat is unavailable in this environment state.
