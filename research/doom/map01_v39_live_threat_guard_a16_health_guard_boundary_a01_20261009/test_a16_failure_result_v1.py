@@ -60,8 +60,8 @@ class A16FailureResultTests(unittest.TestCase):
         self.custody = {
             "custody_pass": True, "matched_cancellations": 12,
             "accounted_cancellations": 12, "unaccounted_cancellations": 0,
-            "per_key_release_transitions": 32,
-            "owner_keyups_matching_key_and_token": 32,
+            "per_key_release_transitions": 1,
+            "owner_keyups_matching_key_and_token": 1,
             "terminals": 16, "terminals_with_verified_empty_release": 16,
         }
         self.host = {"guest_exit": 1, "app_server_exit": 0,
@@ -124,6 +124,11 @@ class A16FailureResultTests(unittest.TestCase):
             lambda refresh, events: refresh.__setitem__("reason", "transport_error"),
             lambda refresh, events: events[1]["signals"]["health"].__setitem__(
                 "value", 97),
+            lambda refresh, events: events[0]["signals"]["health"].__setitem__(
+                "value", False),
+            lambda refresh, events: events[1]["signals"]["health"].__setitem__(
+                "value", False),
+            lambda refresh, events: refresh.__setitem__("source_sequence", 338.0),
             lambda refresh, events: events[1]["signals"]["health"].__setitem__(
                 "signal_id", "ammo"),
         )
@@ -168,6 +173,17 @@ class A16FailureResultTests(unittest.TestCase):
                 self.assertEqual(result["status"], "FAIL")
                 self.assertFalse(result[
                     "owner_event_log_reconciled_by_event_schema"]["closed"])
+
+    def test_missing_owner_keyups_do_not_match_custody_or_close_log(self):
+        owner_rows = [row for row in self.owner_rows
+                      if row.get("event") != "owner_explicit_keyup"]
+        result = build_result(self.freeze, self.audit, self.custody, self.host,
+                              self.score, self.failure, self.refresh,
+                              self.events, owner_rows, report_present=False)
+        owner_log = result["owner_event_log_reconciled_by_event_schema"]
+        self.assertEqual(result["status"], "FAIL")
+        self.assertFalse(owner_log["closed"])
+        self.assertFalse(owner_log["explicit_keyup_count_matches_custody"])
 
 
 if __name__ == "__main__":

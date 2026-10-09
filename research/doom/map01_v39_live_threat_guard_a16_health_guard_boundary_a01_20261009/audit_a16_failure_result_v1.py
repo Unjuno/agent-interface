@@ -33,7 +33,7 @@ def sha256(path):
     return digest.hexdigest()
 
 
-def reconcile_owner_log(owner_rows):
+def reconcile_owner_log(owner_rows, expected_keyup_count):
     if not isinstance(owner_rows, list) or not owner_rows:
         return {"closed": False, "reason": "missing_or_empty_log"}
     keyups = [row for row in owner_rows if row.get("event") == "owner_explicit_keyup"]
@@ -47,12 +47,19 @@ def reconcile_owner_log(owner_rows):
                       row.get("buttons_down") == [] and row.get("keys_unknown") == []
                       and row.get("key_state_errors") == []
                       for row in releases)
-    closed = (owner_rows[-1] in close and len(close) == 1 and keyups_ok and releases_ok)
+    keyup_count_matches_custody = (
+        type(expected_keyup_count) is int and expected_keyup_count >= 0 and
+        len(keyups) == expected_keyup_count)
+    closed = (owner_rows[-1] in close and len(close) == 1 and keyups_ok and releases_ok
+              and keyup_count_matches_custody)
     return {
         "closed": closed,
         "close_receipt_count": len(close),
         "final_event_is_close": owner_rows[-1] in close,
         "explicit_keyup_count": len(keyups),
+        "expected_explicit_keyup_count": (expected_keyup_count
+                                           if type(expected_keyup_count) is int else None),
+        "explicit_keyup_count_matches_custody": keyup_count_matches_custody,
         "verified_explicit_keyups": sum(
             row.get("server_keyup_verified") is True and
             row.get("server_sync_completed") is True and
@@ -109,7 +116,8 @@ def build_result(freeze, audit, custody, host, score, failure, source_refresh,
     provenance_ok = all(checks.get(key) is True for key in PROVENANCE)
     safety_ok = all(checks.get(key) is True for key in SAFETY)
     custody_ok = custody.get("custody_pass") is True
-    owner_log = reconcile_owner_log(owner_rows)
+    owner_log = reconcile_owner_log(
+        owner_rows, custody.get("owner_keyups_matching_key_and_token"))
     zero_health_join = observed_zero_matches(events, source_refresh)
     status = "FAIL" if not (provenance_ok and safety_ok and custody_ok and
                              owner_log["closed"] and zero_health_join) else "STOP"
