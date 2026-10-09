@@ -68,14 +68,37 @@ def reconcile_owner_log(owner_rows):
 
 
 def observed_zero_matches(events, source_refresh):
-    sequence = source_refresh.get("source_sequence")
-    matches = [row for row in events if row.get("event") == "typed_observation" and
-               row.get("sequence") == 325]
-    if len(matches) != 1:
+    if not isinstance(source_refresh, dict):
         return False
-    signal = matches[0].get("signals", {}).get("health", {})
-    return (sequence == 338 and signal.get("status") == "observed" and
-            type(signal.get("value")) is int and signal.get("value") == 0)
+
+    def typed_zero_at(sequence):
+        matches = [row for row in events
+                   if row.get("event") == "typed_observation" and
+                   type(row.get("sequence")) is int and
+                   row.get("sequence") == sequence]
+        if len(matches) != 1:
+            return False
+        row = matches[0]
+        signal = row.get("signals", {}).get("health", {})
+        return (
+            signal.get("signal_id") == "health" and
+            signal.get("status") == "observed" and
+            type(signal.get("value")) is int and signal.get("value") == 0 and
+            type(signal.get("sequence")) is int and
+            signal.get("sequence") == sequence and
+            type(row.get("capture_ns")) is int and
+            type(signal.get("capture_ns")) is int and
+            signal.get("capture_ns") == row.get("capture_ns")
+        )
+
+    return (
+        type(source_refresh.get("iteration")) is int and
+        source_refresh.get("iteration") == 12 and
+        type(source_refresh.get("source_sequence")) is int and
+        source_refresh.get("source_sequence") == 338 and
+        source_refresh.get("reason") == "invalid_observed_health" and
+        typed_zero_at(325) and typed_zero_at(338)
+    )
 
 
 def build_result(freeze, audit, custody, host, score, failure, source_refresh,

@@ -1,9 +1,33 @@
+import copy
+import json
 import unittest
+from pathlib import Path
 
 from audit_a16_failure_result_v1 import build_result
 
 
 class A16FailureResultTests(unittest.TestCase):
+    def test_public_trace_excerpt_pseudonymizes_x11_binding_ids(self):
+        trace = json.loads(Path(__file__).with_name(
+            "A16_TRACE_EXCERPTS.json").read_text())
+        ids = []
+
+        def collect(value):
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    if key in ("focus", "surface"):
+                        ids.append(child)
+                    collect(child)
+            elif isinstance(value, list):
+                for child in value:
+                    collect(child)
+
+        collect(trace)
+        self.assertTrue(trace["binding_ids_pseudonymized"])
+        self.assertTrue(ids)
+        self.assertTrue(all(type(value) is int and 1 <= value <= 16
+                            for value in ids))
+
     def setUp(self):
         self.freeze = {"runtime": {"iterations": 24}, "source_hashes": {
             "research/doom/doom_signal_value_domain_v1.py": "abc123"}}
@@ -51,8 +75,14 @@ class A16FailureResultTests(unittest.TestCase):
                         "owner_events_closed": False}
         self.refresh = {"iteration": 12, "source_sequence": 338,
                         "reason": "invalid_observed_health"}
-        self.events = [{"event": "typed_observation", "sequence": 325,
-                        "signals": {"health": {"status": "observed", "value": 0}}}]
+        self.events = [
+            {"event": "typed_observation", "sequence": sequence,
+             "capture_ns": sequence * 10,
+             "signals": {"health": {"status": "observed", "value": 0,
+                                      "signal_id": "health", "sequence": sequence,
+                                      "capture_ns": sequence * 10}}}
+            for sequence in (325, 338)
+        ]
         self.owner_rows = [
             {"event": "owner_explicit_keyup", "server_keyup_verified": True,
              "server_sync_completed": True, "server_key_down_after_keyup": False},
@@ -89,12 +119,25 @@ class A16FailureResultTests(unittest.TestCase):
         self.assertEqual(result["status"], "FAIL")
 
     def test_sequence_and_health_join_must_match_frozen_failure(self):
-        self.refresh["source_sequence"] = 337
-        result = build_result(self.freeze, self.audit, self.custody, self.host,
-                              self.score, self.failure, self.refresh,
-                              self.events, self.owner_rows,
-                              report_present=False)
-        self.assertEqual(result["status"], "FAIL")
+        mutations = (
+            lambda refresh, events: refresh.__setitem__("source_sequence", 337),
+            lambda refresh, events: refresh.__setitem__("reason", "transport_error"),
+            lambda refresh, events: events[1]["signals"]["health"].__setitem__(
+                "value", 97),
+            lambda refresh, events: events[1]["signals"]["health"].__setitem__(
+                "signal_id", "ammo"),
+        )
+        for mutate in mutations:
+            with self.subTest(mutate=mutate):
+                refresh = copy.deepcopy(self.refresh)
+                events = copy.deepcopy(self.events)
+                mutate(refresh, events)
+                result = build_result(self.freeze, self.audit, self.custody,
+                                      self.host, self.score, self.failure,
+                                      refresh, events, self.owner_rows,
+                                      report_present=False)
+                self.assertEqual(result["status"], "FAIL")
+                self.assertFalse(result["source_refresh_zero_health_matches_typed_event"])
 
     def test_failure_reconciler_refuses_to_replace_a_present_report(self):
         with self.assertRaises(ValueError):
