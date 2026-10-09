@@ -118,7 +118,8 @@ def audit(case: dict) -> dict:
             release.get("intent_token") is None and release.get("verified") is True and
             release.get("keys_down") == [] and release.get("buttons_down") == [] and
             release.get("keys_unknown") == [] and release.get("key_state_errors") == []
-            and release.get("reason") == "release"
+            and release.get("event") == "owner_release" and
+            release.get("reason") == "release"
         ),
         "original_runtime_refused_this_case": (
             case.get("original_refusal", {}).get("status") == "refused" and

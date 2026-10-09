@@ -74,6 +74,8 @@ def refresh_source(observation, health_reader, ammo_reader, send, wait, prefix,
         no_lease_empty_passive_release = (
             command['steps'] == [{'op':'observe'}] and
             release.get('intent_token') is None and
+            release.get('event') == 'owner_release' and
+            release.get('reason') == 'release' and
             release_empty_verified)
         if (terminal.get('status') != 'completed' or not release_empty_verified
                 or type(accepted.get('intent_token')) is not str or not accepted['intent_token']

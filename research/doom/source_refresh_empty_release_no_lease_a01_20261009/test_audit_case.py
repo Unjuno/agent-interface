@@ -102,6 +102,23 @@ class IndependentNoLeaseAuditTests(unittest.TestCase):
                 case["terminal_event"]["release"][field] = value
                 self.assertEqual(audit(case)["status"], "FAIL")
 
+    def test_tokenless_passive_release_event_and_reason_must_be_exact(self):
+        mutations = (
+            ("event", "wrong-event"),
+            ("event", None),
+            ("reason", "cancelled"),
+            ("reason", None),
+        )
+        for field, value in mutations:
+            with self.subTest(field=field, value=value):
+                case = copy.deepcopy(CASE)
+                release = case["terminal_event"]["release"]
+                if value is None:
+                    release.pop(field)
+                else:
+                    release[field] = value
+                self.assertEqual(audit(case)["status"], "FAIL")
+
     def test_nonobserve_command_fails_closed(self):
         case = copy.deepcopy(CASE)
         case["refresh_command"]["steps"] = [{"op": "press", "key": "space"}]

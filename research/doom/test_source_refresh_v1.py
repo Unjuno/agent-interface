@@ -20,7 +20,8 @@ class Harness:
         self.events.append({'event':'rejected' if self.reject else 'accepted','id':identifier,'intent_token':'lease'})
         row=dict(self.images.pop(0)); row['id']=identifier if row['id'] is None else row['id']
         self.events.extend([row, {'event':'terminal','id':identifier,'status':'completed',
-          'release':{'verified':self.release,'keys_down':[],'buttons_down':[],
+          'release':{'event':'owner_release','reason':'release',
+          'verified':self.release,'keys_down':[],'buttons_down':[],
           'keys_unknown':[],'key_state_errors':[],'intent_token':self.release_token}}])
     def wait(self, predicate, timeout):
         while self.events:
@@ -94,6 +95,30 @@ class SourceRefreshTests(unittest.TestCase):
                     ]))
                 with self.assertRaises(SourceRefreshRefused): self.run_refresh(h)
                 self.assertEqual(len(h.commands),1)
+    def test_passive_refresh_rejects_wrong_or_missing_release_event_and_reason_without_owner_token(self):
+        for field, values in (
+            ('event', ('wrong-event', None)),
+            ('reason', ('cancelled', None)),
+        ):
+            for value in values:
+                with self.subTest(field=field, value=value):
+                    release = {'verified':True,'keys_down':[],'buttons_down':[],
+                               'keys_unknown':[],'key_state_errors':[],
+                               'intent_token':None,'event':'owner_release','reason':'release'}
+                    if value is None:
+                        release.pop(field)
+                    else:
+                        release[field] = value
+                    h=Harness([observation(2,health=97,ammo=47)],release_token=None)
+                    h.send=lambda command, release=release: (
+                        h.commands.append(command),
+                        h.events.extend([
+                            {'event':'accepted','id':command['id'],'intent_token':'lease'},
+                            dict(h.images.pop(0),id=command['id']),
+                            {'event':'terminal','id':command['id'],'status':'completed',
+                             'release':release},
+                        ]))
+                    with self.assertRaises(SourceRefreshRefused): self.run_refresh(h)
     def test_wrong_frame_identity_never_recovers(self):
         with self.assertRaises(SourceRefreshRefused): self.run_refresh(Harness([observation(2,'other',97,47)]))
     def test_stale_sequence_refuses(self):
