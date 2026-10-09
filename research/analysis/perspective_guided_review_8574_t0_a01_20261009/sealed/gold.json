@@ -1,0 +1,330 @@
+[
+  {
+    "case_id": "Q01",
+    "source_case_id": "L04",
+    "stratum": "low",
+    "gold_class": "unsupported_addition",
+    "source_obligations": [
+      {
+        "clause_id": "Q01-S01",
+        "requirement": "Change the profile display name to Kai."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q02",
+    "source_case_id": "L01",
+    "stratum": "low",
+    "gold_class": "control",
+    "source_obligations": [
+      {
+        "clause_id": "Q02-S01",
+        "requirement": "Set the Preferences theme to Dark."
+      },
+      {
+        "clause_id": "Q02-S02",
+        "requirement": "After closing and reopening Preferences, Theme remains Dark."
+      },
+      {
+        "clause_id": "Q02-S03",
+        "requirement": "Every other preference remains unchanged."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q03",
+    "source_case_id": "H03",
+    "stratum": "high",
+    "gold_class": "wrong_target",
+    "source_obligations": [
+      {
+        "clause_id": "Q03-S01",
+        "requirement": "Change C-104 contact email to kai@example.test."
+      },
+      {
+        "clause_id": "Q03-S02",
+        "requirement": "No other customer is edited."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q04",
+    "source_case_id": "H01",
+    "stratum": "high",
+    "gold_class": "cross_invariant_identity_persistence_collateral",
+    "source_obligations": [
+      {
+        "clause_id": "Q04-S01",
+        "requirement": "Change D-41 Status to Approved."
+      },
+      {
+        "clause_id": "Q04-S02",
+        "requirement": "The same D-41 remains Approved after closing and reopening."
+      },
+      {
+        "clause_id": "Q04-S03",
+        "requirement": "Every other document remains unchanged."
+      },
+      {
+        "clause_id": "Q04-S04",
+        "requirement": "The D-41 identity must be bound across current and reopened views."
+      }
+    ],
+    "cross_clause_relations": [
+      "The document whose state is checked after reopening must be the same D-41 changed before reopening; also preserve all non-target documents."
+    ]
+  },
+  {
+    "case_id": "Q05",
+    "source_case_id": "H12",
+    "stratum": "high",
+    "gold_class": "control",
+    "source_obligations": [
+      {
+        "clause_id": "Q05-S01",
+        "requirement": "Change P-22 timeout from 30 to 45 seconds."
+      },
+      {
+        "clause_id": "Q05-S02",
+        "requirement": "After reopening, P-22 timeout remains 45 seconds."
+      },
+      {
+        "clause_id": "Q05-S03",
+        "requirement": "Every other P-22 setting remains unchanged."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q06",
+    "source_case_id": "H06",
+    "stratum": "high",
+    "gold_class": "unknown_and_authority_mishandled",
+    "source_obligations": [
+      {
+        "clause_id": "Q06-S01",
+        "requirement": "Submit release only after independent source verifies R-18 state Validated."
+      },
+      {
+        "clause_id": "Q06-S02",
+        "requirement": "If source unavailable, return UNKNOWN."
+      },
+      {
+        "clause_id": "Q06-S03",
+        "requirement": "If source unavailable, do not submit release."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q07",
+    "source_case_id": "H09",
+    "stratum": "high",
+    "gold_class": "control_paraphrase",
+    "source_obligations": [
+      {
+        "clause_id": "Q07-S01",
+        "requirement": "Rename C-8 to Archive."
+      },
+      {
+        "clause_id": "Q07-S02",
+        "requirement": "After reopening, same C-8 retains name."
+      },
+      {
+        "clause_id": "Q07-S03",
+        "requirement": "Peer C-9 remains unchanged."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q08",
+    "source_case_id": "H11",
+    "stratum": "high",
+    "gold_class": "single_clause_omission",
+    "source_obligations": [
+      {
+        "clause_id": "Q08-S01",
+        "requirement": "Add Ctrl+K for Search to S-4."
+      },
+      {
+        "clause_id": "Q08-S02",
+        "requirement": "After relaunch, the binding remains."
+      },
+      {
+        "clause_id": "Q08-S03",
+        "requirement": "No existing shortcut changes."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q09",
+    "source_case_id": "L03",
+    "stratum": "low",
+    "gold_class": "ambiguous",
+    "source_obligations": [
+      {
+        "clause_id": "Q09-S01",
+        "requirement": "Move the selected task from Inbox to Later."
+      },
+      {
+        "clause_id": "Q09-S02",
+        "requirement": "The target is ambiguous because three tasks are highlighted and no selection rule is supplied."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q10",
+    "source_case_id": "H06",
+    "stratum": "high",
+    "gold_class": "unknown_mishandled",
+    "source_obligations": [
+      {
+        "clause_id": "Q10-S01",
+        "requirement": "Submit release only after independent source verifies R-18 state Validated."
+      },
+      {
+        "clause_id": "Q10-S02",
+        "requirement": "If source unavailable, return UNKNOWN."
+      },
+      {
+        "clause_id": "Q10-S03",
+        "requirement": "If source unavailable, do not submit release."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q11",
+    "source_case_id": "H08",
+    "stratum": "high",
+    "gold_class": "cross_invariant_same_target_across_views",
+    "source_obligations": [
+      {
+        "clause_id": "Q11-S01",
+        "requirement": "Set R-22 Status to Approved."
+      },
+      {
+        "clause_id": "Q11-S02",
+        "requirement": "Set R-22 Owner to Lee."
+      },
+      {
+        "clause_id": "Q11-S03",
+        "requirement": "In compact and detail views after reopening, the same R-22 has both values."
+      },
+      {
+        "clause_id": "Q11-S04",
+        "requirement": "Every other record remains unchanged."
+      },
+      {
+        "clause_id": "Q11-S05",
+        "requirement": "The identity and both changed fields must be conjoined across views."
+      }
+    ],
+    "cross_clause_relations": [
+      "The status and owner assertions must refer to the same R-22 across both views after reopening; identity must be preserved across the conjunction."
+    ]
+  },
+  {
+    "case_id": "Q12",
+    "source_case_id": "H04",
+    "stratum": "high",
+    "gold_class": "persistence_omission",
+    "source_obligations": [
+      {
+        "clause_id": "Q12-S01",
+        "requirement": "Set E-2 Enabled to false."
+      },
+      {
+        "clause_id": "Q12-S02",
+        "requirement": "After close and reopen, E-2 remains disabled."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q13",
+    "source_case_id": "H02",
+    "stratum": "high",
+    "gold_class": "single_clause_omission",
+    "source_obligations": [
+      {
+        "clause_id": "Q13-S01",
+        "requirement": "Set J-08 Status to Complete."
+      },
+      {
+        "clause_id": "Q13-S02",
+        "requirement": "Preserve J-08 assigned Owner."
+      },
+      {
+        "clause_id": "Q13-S03",
+        "requirement": "Add one audit entry recording the status change."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q14",
+    "source_case_id": "H10",
+    "stratum": "high",
+    "gold_class": "ambiguous",
+    "source_obligations": [
+      {
+        "clause_id": "Q14-S01",
+        "requirement": "Make the shared queue state final."
+      },
+      {
+        "clause_id": "Q14-S02",
+        "requirement": "Preserve existing work."
+      },
+      {
+        "clause_id": "Q14-S03",
+        "requirement": "The source does not define which queue item is shared or what state is final; ambiguity must remain unresolved."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q15",
+    "source_case_id": "L02",
+    "stratum": "low",
+    "gold_class": "control_paraphrase",
+    "source_obligations": [
+      {
+        "clause_id": "Q15-S01",
+        "requirement": "Enable billing notifications for project P-31."
+      },
+      {
+        "clause_id": "Q15-S02",
+        "requirement": "The dashboard shows P-31 notifications enabled after save."
+      }
+    ],
+    "cross_clause_relations": []
+  },
+  {
+    "case_id": "Q16",
+    "source_case_id": "H07",
+    "stratum": "high",
+    "gold_class": "control",
+    "source_obligations": [
+      {
+        "clause_id": "Q16-S01",
+        "requirement": "Set L-7 value to Ready."
+      },
+      {
+        "clause_id": "Q16-S02",
+        "requirement": "After reopening, L-7 remains Ready."
+      },
+      {
+        "clause_id": "Q16-S03",
+        "requirement": "L-8 remains unchanged."
+      }
+    ],
+    "cross_clause_relations": []
+  }
+]
