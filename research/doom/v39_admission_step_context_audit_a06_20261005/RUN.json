@@ -1,0 +1,48 @@
+{
+  "failed_attempts": [
+    {
+      "cause": "WSLc cannot resolve digest-qualified python:3.12-slim@sha256 reference although local image digest matches",
+      "phase": "pre-execution",
+      "status": "no container created"
+    },
+    {
+      "retained_logs": "formal_01/STOP_INITIAL.log",
+      "phase": "container execution 1",
+      "cleanup": "exact stopped container removed after evidence capture",
+      "status": "STOP_INFRA",
+      "cause": "git executable absent in python:3.12-slim; initial auditor attempted git show",
+      "container_id": "f6508504f0cb4f1a92b6a2f6a6f45bf3c5547a33a15f6a0f81fa1b3ace771577",
+      "retained_inspect": "formal_01/STOP_INITIAL_INSPECT.json"
+    },
+    {
+      "container_id": "a91c06f60febd5025cec584227b9fe810758e2a406db65d8e4115c104cf38ec7",
+      "phase": "container execution 2",
+      "status": "exit 0; initial output preserved as superseded",
+      "issue": "input-hash boolean was vacuously true because frozen manifest was not loaded"
+    }
+  ],
+  "allocation": "ISSUE59-V39-ADMISSION-STEP-CONTEXT-A06-20261005",
+  "planned_strict_auditor_invocations": 1,
+  "exit_zero_invocations": 2,
+  "deviation": "Two additional container executions were required: the first failed because git was absent in the minimal image; after a successful reconstruction, review found the A05 input-hash check was vacuous. That first audit output is preserved as superseded. The final corrected run separately verifies all five frozen A05 input files and source provenance.",
+  "retries": 2,
+  "candidate_invocations": 0,
+  "completed_utc": "2026-10-04T17:07:08.553529629Z",
+  "final_execution": {
+    "requested_memory_bytes": 536870912,
+    "network": "none",
+    "container_id": "1336f64b2082",
+    "memory_limit_enforcement": "not assumed; kernel warning says swap-limit/cgroup accounting unavailable",
+    "requested_cpus": 1,
+    "image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "evidence": "formal_02/AUDIT.json",
+    "full_id": "1336f64b2082ea6789e85fe103fcc052db3b40a69bb2320589c04b2768fc9b50",
+    "status": "exit 0",
+    "finished_utc": "2026-10-04T17:07:08.553529629Z"
+  },
+  "schema": "map01-v39-admission-step-context-a06-run-v1",
+  "source_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+  "gpu": "not used; saved-result audit is CPU-only",
+  "strict_auditor_container_invocations": 3,
+  "result": "PASS_SAVED_RESULT_AUDIT_SCOPED"
+}

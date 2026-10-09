@@ -1,0 +1,31 @@
+{
+  "allocation": "ISSUE59-V39-ADMISSION-STEP-CONTEXT-A06-20261005",
+  "source_main": "109cedcf1fafc150e235c91141eb47bbc7396b43",
+  "a05_pr": 7692,
+  "a05_head": "0cc79dc4614b97751949960842013bd954c99dd7",
+  "a05_input_files": [
+    "FREEZE.json",
+    "RESULT.json",
+    "analyze.py",
+    "audit.py",
+    "FILES.sha256.json"
+  ],
+  "source_commit": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+  "source_path": "research/doom/results/v39-control-telemetry-gap-audit-20261004/events.jsonl",
+  "expected_raw_rows": 634,
+  "expected_admissions": 39,
+  "expected_mutation_controls": 15,
+  "runner": "strict_audit.py",
+  "candidate_invocations": 0,
+  "strict_auditor_invocations": 1,
+  "retries": 0,
+  "runtime": {
+    "wslc": "3.0.1.0",
+    "image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "network": "none",
+    "cpu_requested": 1,
+    "memory_requested": "512m; enforcement not assumed"
+  },
+  "gpu": "not used; audit is CPU-only",
+  "live_game_model_gui_input": false
+}
