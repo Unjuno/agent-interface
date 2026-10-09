@@ -74,3 +74,4 @@ This is a navigation model derived from the retained studies, not a new runtime 
 - Research workspace map: [`../README.md`](../README.md)
 - [Expired predicate retry and deadline-first qualification](predicate_retry_deadline_17_20261003_b64b/REPORT.md): retained finite counterexample and fresh-match tradeoff; private comparator only, no production adoption or hard-deadline claim.
 - [Shared-result custody and retained delivery-to-return audit repair](singleflight_result_custody_6501_01a0ff35/REPORT.md) — original finite Windows characterization and later causal-join correction; not runtime adoption or native-effect proof.
+- [#17 selected-missing matching retry](selected_missing_17_20261003_e0cc/README.md): prospective inert source-projected pure-True matching-churn quotient; new matching-witness gate, no runtime/native/task adoption.
