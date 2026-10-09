@@ -133,6 +133,28 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         receipt = self.run_cleanup()
         self.assertTrue(receipt["input_release_verified_empty"])
 
+    def test_malformed_present_accepted_token_fails_closed_without_input(self):
+        for accepted_token in (None, 7, "", [], {}):
+            accepted = {"event": "accepted", "id": "source-refresh-0",
+                        "intent_token": accepted_token}
+            terminal = {"event": "terminal", "id": "source-refresh-0",
+                        "release": {"verified": True, "keys_down": [],
+                                    "buttons_down": [], "keys_unknown": [],
+                                    "key_state_errors": []}}
+            with self.subTest(accepted_token=accepted_token):
+                receipt = self.run_cleanup_events([accepted, terminal])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertFalse(receipt["input_release_verified_empty"])
+
+    def test_absent_accepted_token_retains_legacy_id_binding(self):
+        accepted = {"event": "accepted", "id": "source-refresh-0"}
+        terminal = {"event": "terminal", "id": "source-refresh-0",
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
+        receipt = self.run_cleanup_events([accepted, terminal])
+        self.assertTrue(receipt["input_releases_verified_empty"])
+
     def test_cancelled_without_admission_accepts_null_lease_token(self):
         accepted = {"event": "accepted", "id": "source-refresh-0",
                     "intent_token": "accepted-lease"}
