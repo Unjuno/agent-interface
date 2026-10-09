@@ -1,0 +1,49 @@
+{
+  "schema": "map01-v39-live-threat-guard-a16-health-guard-boundary-custody-reconciliation-v3",
+  "allocation": "map01-v39-live-threat-guard-a16-health-guard-boundary-20261009",
+  "status": "STOP",
+  "original_audit_status_preserved": "STOP",
+  "original_audit_sha256": "a5b7fbb6d0c16886021f65498e7ef89046b5e06ec72897c4110ff91b801430ca",
+  "custody": {
+    "matched_cancel_count": 12,
+    "accounted_cancel_count": 12,
+    "no_active_lease_ids": [
+      "cover-0",
+      "cover-11",
+      "cover-2",
+      "cover-3",
+      "cover-4",
+      "cover-5",
+      "cover-6",
+      "cover-7"
+    ],
+    "active_lease_ids": [
+      "cover-1",
+      "cover-10",
+      "cover-8",
+      "cover-9"
+    ],
+    "unaccounted_cancel_ids": [],
+    "all_cancellations_custodied": true
+  },
+  "controller_failure_receipt_present": true,
+  "hard_health_guard_exposed": false,
+  "useful_feedback_during_pending_model": false,
+  "bounded_fresh_recovery_after_guard": false,
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": true,
+    "player_dead": true,
+    "wall_control_ns": 66315410182,
+    "death_count": 1,
+    "kill_count": 1,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1
+  },
+  "interpretation": "The original audit is preserved unchanged. A verified-empty terminal accounts for a cancellation with no admitted input or interruption lease; active input requires matching token-bound owner release. Missing failure receipts are normal when the controller completed without a runtime error. The allocation status remains scoped to this episode."
+}

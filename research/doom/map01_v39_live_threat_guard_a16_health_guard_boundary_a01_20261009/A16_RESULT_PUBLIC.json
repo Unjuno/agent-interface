@@ -1,0 +1,41 @@
+{
+  "schema": "map01-v39-live-threat-guard-a16-health-guard-boundary-public-v2",
+  "allocation": "map01-v39-live-threat-guard-a16-health-guard-boundary-20261009",
+  "issue": 59,
+  "status": "STOP",
+  "source_main_sha": "57337e95ecbecf7e762c8ec8091472b79e8ad49f",
+  "experiment_tree_commit": "be5b31e2ef0d8ff02fbb07b13d4d15b92d917c19",
+  "fixture_seed": 990626,
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "runtime": {
+    "model_turns_started": 12,
+    "model_turns_completed": 12,
+    "guest_exit": 1,
+    "app_server_exit": 0,
+    "retry_count": 0,
+    "elapsed_seconds": 70.96014070899764
+  },
+  "episode": {
+    "health_min": 0,
+    "health_max": 97,
+    "ammo_min": 40,
+    "ammo_max": 48,
+    "kill_count": 1,
+    "death_count": 1,
+    "player_dead": true,
+    "map_exit": false,
+    "episode_finished": true
+  },
+  "hard_health_guard_count": 0,
+  "source_refresh_failure": {
+    "iteration": 12,
+    "source_sequence": 338,
+    "reason": "invalid_observed_health"
+  },
+  "controller_cleanup_complete": false,
+  "all_cancellation_and_key_release_custody_reconciled": true,
+  "owner_event_log_closed_by_event_schema": true,
+  "report_present": false,
+  "scope": "One descriptive live episode. STOP after player death and out-of-domain health 0; no authored-cover hard guard was exposed, no report was emitted, and no recovery or task-completion claim is made. The allocation is consumed; no retry."
+}
