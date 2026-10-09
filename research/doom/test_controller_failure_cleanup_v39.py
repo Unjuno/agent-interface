@@ -431,6 +431,25 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                 self.assertFalse(receipt["input_event_identities_unambiguous"])
                 self.assertEqual(receipt["invalid_event_record_count"], 1)
 
+    def test_missing_or_invalid_event_discriminator_fails_closed(self):
+        accepted = {"event": "accepted", "id": "command-1",
+                    "intent_token": "lease-1"}
+        terminal = {
+            "event": "terminal", "id": "command-1",
+            "release": {"verified": True, "keys_down": [],
+                        "buttons_down": [], "keys_unknown": [],
+                        "key_state_errors": [], "intent_token": "lease-1"},
+        }
+        for malformed in ({}, {"event": None}, {"event": 7},
+                          {"event": ""}):
+            with self.subTest(malformed=malformed):
+                receipt = self.run_cleanup_events(
+                    [accepted, malformed, terminal])
+                self.assertEqual(receipt["invalid_event_record_count"], 1)
+                self.assertFalse(receipt["input_event_identities_unambiguous"])
+                self.assertFalse(receipt["input_terminals_complete"])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -140,7 +140,10 @@ class ControllerFailureCleanup:
         receipt['stdout_reader_errors']=list(self.reader_errors)
         event_collection_valid=type(self.events) is list
         events=self.events if event_collection_valid else []
-        invalid_event_records=sum(type(row) is not dict for row in events)
+        invalid_event_records=sum(
+            type(row) is not dict or
+            type(row.get('event')) is not str or not row.get('event')
+            for row in events)
         if not event_collection_valid:
             invalid_event_records=1
         accepted_rows=[row for row in events if type(row) is dict and
