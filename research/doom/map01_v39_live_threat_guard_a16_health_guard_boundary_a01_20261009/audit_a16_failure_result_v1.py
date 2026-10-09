@@ -45,6 +45,7 @@ def reconcile_owner_log(owner_rows):
                     for row in keyups)
     releases_ok = all(row.get("verified") is True and row.get("keys_down") == [] and
                       row.get("buttons_down") == [] and row.get("keys_unknown") == []
+                      and row.get("key_state_errors") == []
                       for row in releases)
     closed = (owner_rows[-1] in close and len(close) == 1 and keyups_ok and releases_ok)
     return {
@@ -59,7 +60,8 @@ def reconcile_owner_log(owner_rows):
         "owner_release_count": len(releases),
         "verified_empty_owner_releases": sum(
             row.get("verified") is True and row.get("keys_down") == [] and
-            row.get("buttons_down") == [] and row.get("keys_unknown") == []
+            row.get("buttons_down") == [] and row.get("keys_unknown") == [] and
+            row.get("key_state_errors") == []
             for row in releases),
         "physical_key_state_authoritative": False,
     }

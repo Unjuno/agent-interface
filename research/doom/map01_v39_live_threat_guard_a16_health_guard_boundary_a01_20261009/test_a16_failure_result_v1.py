@@ -57,7 +57,8 @@ class A16FailureResultTests(unittest.TestCase):
             {"event": "owner_explicit_keyup", "server_keyup_verified": True,
              "server_sync_completed": True, "server_key_down_after_keyup": False},
             {"event": "owner_release", "reason": "close", "verified": True,
-             "keys_down": [], "buttons_down": [], "keys_unknown": []},
+             "keys_down": [], "buttons_down": [], "keys_unknown": [],
+             "key_state_errors": []},
         ]
 
     def test_missing_report_and_death_remain_scoped_stop(self):
@@ -109,6 +110,21 @@ class A16FailureResultTests(unittest.TestCase):
                               self.events, self.owner_rows,
                               report_present=False)
         self.assertEqual(result["status"], "FAIL")
+
+    def test_owner_release_key_state_errors_fail_closed(self):
+        for errors in (["readback failed"], None):
+            with self.subTest(errors=errors):
+                if errors is None:
+                    self.owner_rows[1].pop("key_state_errors")
+                else:
+                    self.owner_rows[1]["key_state_errors"] = errors
+                result = build_result(self.freeze, self.audit, self.custody,
+                                      self.host, self.score, self.failure,
+                                      self.refresh, self.events, self.owner_rows,
+                                      report_present=False)
+                self.assertEqual(result["status"], "FAIL")
+                self.assertFalse(result[
+                    "owner_event_log_reconciled_by_event_schema"]["closed"])
 
 
 if __name__ == "__main__":
