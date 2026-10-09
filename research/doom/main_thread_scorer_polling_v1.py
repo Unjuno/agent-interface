@@ -20,7 +20,85 @@ ClockNs = Callable[[], int]
 ReadFn = Callable[[int, int], bytes]
 
 
+def _windows_api():
+    """Load the small Win32 handle API surface used for redirected stdin."""
+    import ctypes
+    import ctypes.wintypes
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    wintypes = ctypes.wintypes
+    kernel32.GetFileType.argtypes = [wintypes.HANDLE]
+    kernel32.GetFileType.restype = wintypes.DWORD
+    kernel32.PeekNamedPipe.argtypes = [
+        wintypes.HANDLE, ctypes.c_void_p, wintypes.DWORD, ctypes.c_void_p,
+        ctypes.POINTER(wintypes.DWORD), ctypes.c_void_p,
+    ]
+    kernel32.PeekNamedPipe.restype = wintypes.BOOL
+    kernel32.WaitForSingleObject.argtypes = [wintypes.HANDLE, wintypes.DWORD]
+    kernel32.WaitForSingleObject.restype = wintypes.DWORD
+    kernel32.SetLastError.argtypes = [wintypes.DWORD]
+    kernel32.GetLastError.restype = wintypes.DWORD
+    return kernel32, wintypes
+
+
+def _wait_windows_readable(fd: int, timeout_s: float) -> bool:
+    """Wait for CRT stdin handles without passing pipes to Winsock select()."""
+    import ctypes
+    import msvcrt
+    import time
+
+    kernel32, wintypes = _windows_api()
+    handle = wintypes.HANDLE(msvcrt.get_osfhandle(fd))
+    kernel32.SetLastError(0)
+    file_type = int(kernel32.GetFileType(handle))
+
+    if file_type == 0:  # FILE_TYPE_UNKNOWN
+        error = int(kernel32.GetLastError())
+        if error:
+            raise OSError(error, "GetFileType failed")
+        raise OSError("stdin handle has an unknown Windows file type")
+
+    if file_type == 1:  # FILE_TYPE_DISK
+        return True
+
+    if file_type == 2:  # FILE_TYPE_CHAR, commonly a console input handle
+        milliseconds = max(0, min(0xFFFFFFFE, int(timeout_s * 1000 + 0.999)))
+        result = int(kernel32.WaitForSingleObject(handle, milliseconds))
+        if result == 0:  # WAIT_OBJECT_0
+            return True
+        if result == 0x102:  # WAIT_TIMEOUT
+            return False
+        if result == 0xFFFFFFFF:  # WAIT_FAILED
+            error = int(kernel32.GetLastError())
+            raise OSError(error, "WaitForSingleObject failed")
+        raise OSError(f"unexpected WaitForSingleObject result: {result}")
+
+    if file_type == 3:  # FILE_TYPE_PIPE, including CRT anonymous stdin pipes
+        deadline = time.monotonic() + max(0.0, timeout_s)
+        while True:
+            available = wintypes.DWORD()
+            ok = kernel32.PeekNamedPipe(
+                handle, None, 0, None, ctypes.byref(available), None)
+            if ok:
+                if available.value:
+                    return True
+            else:
+                error = int(kernel32.GetLastError())
+                if error == 109:  # ERROR_BROKEN_PIPE: let os.read() observe EOF
+                    return True
+                raise OSError(error, "PeekNamedPipe failed")
+
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return False
+            time.sleep(min(0.001, remaining))
+
+    raise OSError(f"unsupported Windows stdin handle type: {file_type}")
+
+
 def _wait_readable(fd: int, timeout_s: float) -> bool:
+    if os.name == "nt":
+        return _wait_windows_readable(fd, timeout_s)
     ready, _, _ = select.select([fd], [], [], timeout_s)
     return bool(ready)
 
