@@ -19,7 +19,8 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
-from doom_controller_failure_cleanup_v1 import ControllerFailureCleanup
+from doom_controller_failure_cleanup_v1 import (
+    ControllerFailureCleanup, reject_duplicate_json_members)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
@@ -1113,7 +1114,9 @@ def main():
         def reader():
             try:
                 for line in process.stdout:
-                    row = json.loads(line); all_events.append(row); incoming.put(row)
+                    row = json.loads(
+                        line, object_pairs_hook=reject_duplicate_json_members)
+                    all_events.append(row); incoming.put(row)
             except BaseException as error:
                 reader_errors.append(f"{type(error).__name__}: {error}")
         latest = None
