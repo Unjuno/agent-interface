@@ -1,0 +1,250 @@
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1) ... ERROR
+test_capture_deselects_before_readout (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_capture_deselects_before_readout) ... ok
+test_capture_failed_deselection_prevents_readout (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_capture_failed_deselection_prevents_readout) ... ok
+test_capture_failures_release_resources (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_capture_failures_release_resources) ... ok
+test_capture_initial_selection_failure_prevents_drawing (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_capture_initial_selection_failure_prevents_drawing) ... ok
+test_unicode_delivery_compensation_failure_retains (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_compensation_failure_retains) ... ok
+test_unicode_delivery_down_failure (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_down_failure) ... ok
+test_unicode_delivery_failure_still_releases_regular_key (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_failure_still_releases_regular_key) ... ok
+test_unicode_delivery_healthy (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_healthy) ... ok
+test_unicode_delivery_pending_refuses_new_text (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_pending_refuses_new_text) ... ok
+test_unicode_delivery_surrogate_first_unit_failure_stops (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_surrogate_first_unit_failure_stops) ... ok
+test_unicode_delivery_up_failure_and_compensation (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unicode_delivery_up_failure_and_compensation) ... ok
+test_unverified_explicit_up_stops_following_operations (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_unverified_explicit_up_stops_following_operations) ... ok
+test_utf16_units (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_utf16_units) ... ok
+test_virtual_keys_fail_closed (runtime.backends.win32_v1.test_integration.PureWin32HelperTests.test_virtual_keys_fail_closed) ... ok
+test_expired_lease_emits_zero_input (runtime.backends.win32_v1.test_integration.Win32IntegrationTests.test_expired_lease_emits_zero_input) ... skipped 'requires native Windows'
+test_invalid_unicode_refuses_before_input (runtime.backends.win32_v1.test_integration.Win32IntegrationTests.test_invalid_unicode_refuses_before_input) ... skipped 'requires native Windows'
+test_manifest_is_office_ready_with_explicit_boundary (runtime.backends.win32_v1.test_integration.Win32IntegrationTests.test_manifest_is_office_ready_with_explicit_boundary) ... skipped 'requires native Windows'
+test_stale_binding_emits_zero_input (runtime.backends.win32_v1.test_integration.Win32IntegrationTests.test_stale_binding_emits_zero_input) ... skipped 'requires native Windows'
+test_stale_observation_emits_zero_input (runtime.backends.win32_v1.test_integration.Win32IntegrationTests.test_stale_observation_emits_zero_input) ... skipped 'requires native Windows'
+test_unknown_target_refuses_before_input (runtime.backends.win32_v1.test_integration.Win32IntegrationTests.test_unknown_target_refuses_before_input) ... skipped 'requires native Windows'
+test_unsupported_coordinate_frame_refuses_in_core (runtime.backends.win32_v1.test_integration.Win32IntegrationTests.test_unsupported_coordinate_frame_refuses_in_core) ... skipped 'requires native Windows'
+test_valid_program_has_independent_effect_capture_and_release (runtime.backends.win32_v1.test_integration.Win32IntegrationTests.test_valid_program_has_independent_effect_capture_and_release) ... skipped 'requires native Windows'
+test_repeated_preflight_refusal_without_emission_does_not_quarantine (runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_repeated_preflight_refusal_without_emission_does_not_quarantine) ... ok
+test_unverified_failure_cleanup_still_quarantines (runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_unverified_failure_cleanup_still_quarantines) ... ok
+test_verified_failure_cleanup_does_not_quarantine_or_block_next_dispatch (runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests.test_verified_failure_cleanup_does_not_quarantine_or_block_next_dispatch) ... ok
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: guarded_win32_v1 (unittest.loader._FailedTest.guarded_win32_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: guarded_win32_v1
+Traceback (most recent call last):
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/__init__.py", line 2, in <module>
+    from .fresh import FreshWin32Reference
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/fresh.py", line 2, in <module>
+    from .reference import ReferencedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/reference.py", line 2, in <module>
+    from .retained import RetainedWin32Observation
+  File "/private/tmp/unjuno-notification-identity-20261008/runtime/guarded_win32_v1/retained.py", line 3, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.138s
+
+FAILED (errors=11, skipped=8)

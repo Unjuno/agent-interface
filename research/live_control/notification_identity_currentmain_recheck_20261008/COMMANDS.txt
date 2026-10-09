@@ -1,0 +1,35 @@
+PYTHONPATH=research/live_control python -m unittest \
+  test_codex_app_server_notification_arrival \
+  test_codex_app_server_notification_identity \
+  test_app_server_eof_stop \
+  test_appserver_bounded_close_e0cc \
+  test_appserver_journal_close_01a0ff2d \
+  test_appserver_process_tree_cleanup_20261004 \
+  test_appserver_reader_retirement_01a0ff2d \
+  test_appserver_utf8_2d0b
+PASS: 39 tests
+
+PYTHONPATH=research/live_control python -O -m unittest \
+  test_codex_app_server_notification_arrival \
+  test_codex_app_server_notification_identity \
+  test_app_server_eof_stop \
+  test_appserver_bounded_close_e0cc \
+  test_appserver_journal_close_01a0ff2d \
+  test_appserver_process_tree_cleanup_20261004 \
+  test_appserver_reader_retirement_01a0ff2d \
+  test_appserver_utf8_2d0b
+PASS: 39 tests
+
+python runtime/integration_checks/native.py --output <fresh-nonexistent-temp-path>
+FAIL: details in results/local_native_ci/result.json and runner logs
+
+python research/check_workspace_index.py --git-tree
+PASS: 161 top-level directories reachable
+
+python research/analysis/check_index.py --strict
+PASS: 775 retained result/failure directories indexed
+
+git diff --check origin/main...HEAD
+PASS
+
+Latest-main composition (main bfcc14e08fbfe5f2f04cd0237d13559e5d62538b; local merge 8319fe2025a45bd1fe8556b9e523ba867b6424e2): the same two unittest commands above were rerun on this exact tree; both returned 39/39 PASS. Archive checksum command: `(cd research/concurrency/notification_identity_repair_17_20261003_b64b && sha256sum -c SHA256SUMS)`; 16/16 PASS. Current workspace and strict analysis indexes: 161 and 791 PASS. Scoped diff check covered the active client, the two new tests, this report/command record, and the archive subtree. The unrestricted diff check flags trailing whitespace in the preserved historical `harness.stderr.log`; it was not edited.
