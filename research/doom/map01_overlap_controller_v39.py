@@ -392,7 +392,9 @@ def require_cover_terminal(terminal, *, cancellation_requested=False):
     if (type(terminal) is not dict or terminal.get("event") != "terminal" or
             terminal.get("status") not in allowed or type(release) is not dict or
             release.get("verified") is not True or release.get("keys_down") != [] or
-            release.get("buttons_down") != []):
+            release.get("buttons_down") != [] or
+            release.get("keys_unknown") != [] or
+            release.get("key_state_errors") != []):
         raise RuntimeError(f"cover terminal lacks allowed status and verified empty release: {terminal!r}")
 
 
@@ -424,13 +426,17 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
             terminal_error.add_note(
                 "executor cancel write also failed: " + type(cancel_error).__name__)
         raise
-    release = terminal.get("release", {})
+    release = terminal.get("release") if type(terminal) is dict else None
     # The bounded cover can naturally finish or lease-expire between policy
     # invalidation and delivery of the cancel request. Accept those terminal
     # races only when they independently verify that no input remains held.
-    if (terminal.get("status") not in ("cancelled", "completed", "expired") or
+    if (type(terminal) is not dict or
+            terminal.get("status") not in ("cancelled", "completed", "expired") or
+            type(release) is not dict or
             release.get("verified") is not True or
-            release.get("buttons_down") != [] or release.get("keys_down") != []):
+            release.get("buttons_down") != [] or release.get("keys_down") != [] or
+            release.get("keys_unknown") != [] or
+            release.get("key_state_errors") != []):
         raise RuntimeError("invalidated cover did not verify empty release")
     if cancel_error is not None:
         raise RuntimeError(

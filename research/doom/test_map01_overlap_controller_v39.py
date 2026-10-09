@@ -270,7 +270,9 @@ class Map01V39CoastTests(unittest.TestCase):
                 self.interrupted.append(handle)
                 return {"status": "interrupted"}
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
         process, planner, handle = Process(), Planner(), object()
 
         interruption, result = controller.cancel_invalidated_cover(
@@ -292,7 +294,8 @@ class Map01V39CoastTests(unittest.TestCase):
         terminal = {"event": "terminal", "id": "cover-0",
                     "status": "cancelled",
                     "release": {"verified": True, "keys_down": [],
-                                "buttons_down": []}}
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
         process = Process()
         result = controller.cancel_initial_cover_before_planner(
             process, lambda predicate: terminal if predicate(terminal) else None,
@@ -301,7 +304,8 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertIs(result, terminal)
         self.assertIn('"op": "cancel"', process.stdin.writes[0])
         for release in (
-            {"verified": False, "keys_down": [], "buttons_down": []},
+            {"verified": False, "keys_down": [], "buttons_down": [],
+             "keys_unknown": [], "key_state_errors": []},
             {"verified": True, "keys_down": ["W"], "buttons_down": []},
             {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
         ):
@@ -328,7 +332,8 @@ class Map01V39CoastTests(unittest.TestCase):
         terminal = {"event": "terminal", "id": "cover-0",
                     "status": "cancelled",
                     "release": {"verified": True, "keys_down": [],
-                                "buttons_down": []}}
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
 
         before_admission = controller.cover_submission_invalidation_receipt(rejected)
         after_admission = controller.cover_submission_invalidation_receipt(
@@ -468,7 +473,9 @@ class Map01V39CoastTests(unittest.TestCase):
         for status in ("completed", "expired"):
             neutral_terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                "release": {"verified": True, "keys_down": [],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             result = controller.cancel_invalidated_cover(
                 Planner(), object(), Process(), wait_for_matching_terminal(neutral_terminal),
                 "cover-0")
@@ -476,7 +483,9 @@ class Map01V39CoastTests(unittest.TestCase):
 
             held_terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": ["space"], "buttons_down": []}}
+                "release": {"verified": True, "keys_down": ["space"],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                 controller.cancel_invalidated_cover(
                     Planner(), object(), Process(), wait_for_matching_terminal(held_terminal),
@@ -485,7 +494,9 @@ class Map01V39CoastTests(unittest.TestCase):
         for status in ("failed", "needs_decision"):
             terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                "release": {"verified": True, "keys_down": [],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             with self.subTest(status=status):
                 with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                     controller.cancel_invalidated_cover(
@@ -504,8 +515,10 @@ class Map01V39CoastTests(unittest.TestCase):
                 return {"status": "interrupted"}
         for release in (
             {"verified": False, "keys_down": [], "buttons_down": []},
-            {"verified": True, "keys_down": ["W"], "buttons_down": []},
-            {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
+            {"verified": True, "keys_down": ["W"], "buttons_down": [],
+             "keys_unknown": [], "key_state_errors": []},
+            {"verified": True, "keys_down": [], "buttons_down": ["fire"],
+             "keys_unknown": [], "key_state_errors": []},
         ):
             terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
                         "release": release}
