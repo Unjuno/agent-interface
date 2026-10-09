@@ -64,10 +64,22 @@ def refresh_source(observation, health_reader, ammo_reader, send, wait, prefix,
             raise SourceRefreshRefused(receipt) from error
         remaining()
         release = terminal.get('release',{})
-        if (terminal.get('status') != 'completed' or release.get('verified') is not True
-                or release.get('keys_down') != [] or release.get('buttons_down') != []
+        release_empty_verified = (
+            release.get('verified') is True and
+            release.get('keys_down') == [] and
+            release.get('buttons_down') == [] and
+            release.get('keys_unknown') == [] and
+            release.get('key_state_errors') == [])
+        token_matched_release = release.get('intent_token') == accepted.get('intent_token')
+        no_lease_empty_passive_release = (
+            command['steps'] == [{'op':'observe'}] and
+            release.get('intent_token') is None and
+            release.get('event') == 'owner_release' and
+            release.get('reason') == 'release' and
+            release_empty_verified)
+        if (terminal.get('status') != 'completed' or not release_empty_verified
                 or type(accepted.get('intent_token')) is not str or not accepted['intent_token']
-                or release.get('intent_token') != accepted['intent_token']):
+                or not (token_matched_release or no_lease_empty_passive_release)):
             refuse('refresh_release_unqualified')
         if (type(fresh.get('sequence')) is not int or fresh['sequence'] <= current['sequence']
                 or type(fresh.get('capture_ns')) is not int or fresh['capture_ns'] <= current['capture_ns']

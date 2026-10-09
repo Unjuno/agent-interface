@@ -101,9 +101,10 @@ class Map01V39CoastTests(unittest.TestCase):
             sent = []
             replies = [
                 {"event": "accepted", "id": "refresh-0", "intent_token": "refresh-lease"},
-                dict(refresh_source, event="observation", id="refresh-0"),
-                {"event": "terminal", "id": "refresh-0", "status": "completed",
+                 dict(refresh_source, event="observation", id="refresh-0"),
+                 {"event": "terminal", "id": "refresh-0", "status": "completed",
                  "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                             "keys_unknown": [], "key_state_errors": [],
                              "intent_token": "refresh-lease"}},
             ]
             def refresh_wait(predicate, **kwargs):

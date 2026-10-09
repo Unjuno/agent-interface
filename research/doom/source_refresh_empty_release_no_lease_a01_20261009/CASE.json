@@ -1,0 +1,186 @@
+{
+  "schema": "source-refresh-no-lease-empty-release-case-v1",
+  "provenance": {
+    "allocation": "map01-v39-live-threat-guard-a17-health-policy-boundary-20261009",
+    "source_main": "6ceb8552df13a188f6aad9cbfed88eba6eb70689",
+    "raw_events_sha256": "47523e3a70987765a73ddb92130535aa2c77ced515aa800aaa0956900bd68a9f",
+    "raw_refreshes_sha256": "a0327f9c7ac3e1631bb63870966841f3b72d78171f219b618ba9132cfb4bd7ee",
+    "raw_event_id": "source-refresh-2-0"
+  },
+  "source_observation": {
+    "sequence": 30,
+    "signals": {
+      "ammo": {
+        "status": "unknown",
+        "value": null,
+        "binding": {
+          "focus": 1,
+          "surface": 1,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "capture_ns": 24811647094297,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+        "signal_id": "ammo",
+        "format": "observable-signal-v1",
+        "sequence": 30,
+        "reason": "invalid_right_aligned_number"
+      },
+      "health": {
+        "status": "unknown",
+        "value": null,
+        "binding": {
+          "focus": 1,
+          "surface": 1,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "capture_ns": 24811647094297,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+        "signal_id": "health",
+        "format": "observable-signal-v1",
+        "sequence": 30,
+        "reason": "invalid_right_aligned_number"
+      }
+    }
+  },
+  "refresh_command": {
+    "op": "submit",
+    "id": "source-refresh-2-0",
+    "expected_sequence": 30,
+    "valid_until_ns": 24813811968415,
+    "steps": [
+      {
+        "op": "observe"
+      }
+    ]
+  },
+  "accepted_event": {
+    "event": "accepted",
+    "id": "source-refresh-2-0",
+    "intent_token": "opaque-intent-token-1"
+  },
+  "fresh_observation": {
+    "event": "typed_observation",
+    "id": "source-refresh-2-0",
+    "sequence": 31,
+    "capture_ns": 24811817251826,
+    "signals": {
+      "ammo": {
+        "status": "observed",
+        "value": 47,
+        "binding": {
+          "focus": 1,
+          "surface": 1,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "capture_ns": 24811817251826,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+        "signal_id": "ammo",
+        "format": "observable-signal-v1",
+        "sequence": 31
+      },
+      "health": {
+        "status": "observed",
+        "value": 90,
+        "binding": {
+          "focus": 1,
+          "surface": 1,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "capture_ns": 24811817251826,
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+        "signal_id": "health",
+        "format": "observable-signal-v1",
+        "sequence": 31
+      }
+    }
+  },
+  "matching_input_admission_count": 0,
+  "terminal_event": {
+    "event": "terminal",
+    "id": "source-refresh-2-0",
+    "status": "completed",
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "verified_ns": 24811869115344,
+      "valid_until_ns": null,
+      "intent_token": null,
+      "key_release_attempts": {},
+      "key_release_intervals_ns": [],
+      "key_state_source": "x11_query_keymap",
+      "release_call_started_ns": 24811868841592,
+      "release_call_returned_ns": 24811869150761
+    }
+  },
+  "preceding_active_program": {
+    "id": "cover-1",
+    "accepted_token": "opaque-intent-token-2",
+    "input_admissions": [
+      {
+        "event": "input_admission",
+        "id": "cover-1",
+        "key": "a",
+        "intent_token": "opaque-intent-token-2"
+      }
+    ],
+    "cancel_requested": {
+      "id": "cover-1",
+      "matched": true,
+      "requested_ns": 24811663379407
+    },
+    "input_release": {
+      "event": "input_released",
+      "id": "cover-1",
+      "intent_token": "opaque-intent-token-2",
+      "owner_release": {
+        "event": "owner_release",
+        "reason": "cancelled",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "keys_unknown": [],
+        "key_state_errors": [],
+        "verified_ns": 24811665159211,
+        "intent_token": "opaque-intent-token-2"
+      }
+    },
+    "terminal": {
+      "id": "cover-1",
+      "status": "cancelled",
+      "terminal_ns": 24811704829688,
+      "interruption_token": "opaque-intent-token-2"
+    }
+  },
+  "original_refusal": {
+    "status": "refused",
+    "reason": "refresh_release_unqualified",
+    "iteration": 2
+  },
+  "refresh_command_received_ns": 24811812066874
+}
