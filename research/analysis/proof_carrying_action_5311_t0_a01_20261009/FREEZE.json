@@ -1,0 +1,38 @@
+{
+  "allocation": "5311-T0-A01-20261009",
+  "artifact_sha256": {
+    "PROTOCOL.md": "ddf5b34e9e815cb41f6b428c43c641b460ea7bc8045aff1a05dcdcd2212890e7",
+    "auditor.py": "f7c17d147eeebd8b26934e6517839ac0e70961cd838673785592b320f8a4f907",
+    "candidate.py": "d2d109e52c0379480e42865f1ec8757254dadd443f536cf0021f757a54011e1d",
+    "cases.json": "42463d7f914a34ed905b7de2774dcbdfac9ccfd2b2f14eb127aea30a1f529b37",
+    "test_construction.py": "d290f3c709ee2786d53f240855d126cb5cbc9e0b57fe93b5c14b36653705bdcd"
+  },
+  "auditor_invocations": 1,
+  "candidate_invocations": 1,
+  "current_main": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "docker_inspection": "failed: containerd content blob open returned operation not supported; host-only execution permitted by issue scope; no isolation claim",
+  "formal_commands": [
+    "python3 candidate.py cases.json results/candidate.json",
+    "python3 auditor.py cases.json results/candidate.json results/audit.json"
+  ],
+  "issue": 5311,
+  "primary_measure": "explicit primitive policy-field inspections; excludes serialization, hashing, proof production, downstream effect verification, and elapsed time",
+  "retries": 0,
+  "runtime": {
+    "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "implementation": "CPython",
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "version": "3.14.5"
+  },
+  "scope": "finite synthetic method test only",
+  "thresholds": {
+    "all_invalid_certificates_rejected_by_certificate_gate": true,
+    "all_valid_accepted_by_both": true,
+    "certificate_cost_strictly_lower": true,
+    "invalid_certificates": 7,
+    "unsafe_certificate_admissions": 0,
+    "valid_effects_identical": true,
+    "valid_plans": 8
+  }
+}

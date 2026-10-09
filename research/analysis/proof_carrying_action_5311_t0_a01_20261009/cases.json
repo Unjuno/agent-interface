@@ -1,0 +1,677 @@
+{
+  "allocation": "5311-T0-A01-20261009",
+  "policy": {
+    "required_predicates": [
+      "target",
+      "epoch",
+      "footprint",
+      "lease",
+      "release"
+    ],
+    "allowed_predicates": [
+      "target",
+      "epoch",
+      "footprint",
+      "lease",
+      "release"
+    ],
+    "target": "window-17",
+    "epoch": 42,
+    "footprint": [
+      "button:save"
+    ],
+    "lease_expires_at": 120,
+    "release_required": true,
+    "now": 100
+  },
+  "cases": [
+    {
+      "id": "valid-01",
+      "expected_effect": "saved",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "valid-02",
+      "expected_effect": "submitted",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "valid-03",
+      "expected_effect": "saved",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "valid-04",
+      "expected_effect": "submitted",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "valid-05",
+      "expected_effect": "saved",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "valid-06",
+      "expected_effect": "submitted",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "valid-07",
+      "expected_effect": "saved",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "valid-08",
+      "expected_effect": "submitted",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "negative-missing-predicate",
+      "expected_effect": "not-dispatched",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "negative-wrong-target",
+      "expected_effect": "not-dispatched",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-99",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "negative-stale-epoch",
+      "expected_effect": "not-dispatched",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 41,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 41,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 41,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "913fb942cc0a1d713dd08d32693f9678d3ba5f9754f9fd88831c8129e65d215d"
+      }
+    },
+    {
+      "id": "negative-widened-footprint",
+      "expected_effect": "not-dispatched",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save",
+              "button:delete"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save",
+              "button:delete"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save",
+          "button:delete"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "66ef3626177851dcbe302d30eecbfa2987f80e41db57ca6bf6bc538470bd6075"
+      }
+    },
+    {
+      "id": "negative-expired-lease",
+      "expected_effect": "not-dispatched",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 90,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 90,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 90,
+        "release_required": true,
+        "plan_sha256": "433fd598b1a90df4d04c24cd74cb5d195b4f0139f930dcdc954d498e1eb793fc"
+      }
+    },
+    {
+      "id": "negative-unsupported-predicate",
+      "expected_effect": "not-dispatched",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release",
+          "magic"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "87673a44860d58c6b3284d37904a3cd722c10628c48fa956ab8edc354a2af333"
+      }
+    },
+    {
+      "id": "negative-plan-certificate-mismatch",
+      "expected_effect": "not-dispatched",
+      "plan": {
+        "actions": [
+          {
+            "target": "window-17",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          },
+          {
+            "target": "window-99",
+            "epoch": 42,
+            "footprint": [
+              "button:save"
+            ],
+            "lease_expires_at": 120,
+            "release_required": true
+          }
+        ]
+      },
+      "certificate": {
+        "predicates": [
+          "target",
+          "epoch",
+          "footprint",
+          "lease",
+          "release"
+        ],
+        "target": "window-17",
+        "epoch": 42,
+        "footprint": [
+          "button:save"
+        ],
+        "lease_expires_at": 120,
+        "release_required": true,
+        "plan_sha256": "ef83f0dc17369caa0f7cd741030db15cb3f7662889befe91fe69762a61080b2b"
+      }
+    }
+  ]
+}
