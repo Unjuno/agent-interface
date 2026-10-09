@@ -19,7 +19,8 @@ sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
 
 
-NEUTRAL = {"verified": True, "keys_down": [], "buttons_down": []}
+NEUTRAL = {"verified": True, "keys_down": [], "buttons_down": [],
+           "keys_unknown": [], "key_state_errors": []}
 
 
 class NextBoundary(RuntimeError):
@@ -259,6 +260,9 @@ class CoverTerminalTests(unittest.TestCase):
                     "numeric_verified": dict(NEUTRAL, verified=1),
                     "keys": dict(NEUTRAL, keys_down=["a"]),
                     "buttons": dict(NEUTRAL, buttons_down=[1]),
+                    "unknown_keys": dict(NEUTRAL, keys_unknown=["a"]),
+                    "key_state_errors": dict(NEUTRAL,
+                                              key_state_errors=[{"source": "keymap_after"}]),
                     "missing_lists": {"verified": True}, "null": None}
         for name, release in releases.items():
             with self.subTest(release=name):
@@ -444,6 +448,9 @@ class CoverTerminalTests(unittest.TestCase):
                  "unverified": ("cancelled", dict(NEUTRAL, verified=False)),
                  "keys": ("completed", dict(NEUTRAL, keys_down=["a"])),
                  "buttons": ("expired", dict(NEUTRAL, buttons_down=[1])),
+                 "unknown_keys": ("completed", dict(NEUTRAL, keys_unknown=["a"])),
+                 "key_state_errors": ("expired", dict(
+                     NEUTRAL, key_state_errors=[{"source": "keymap_after"}])),
                  "null": ("cancelled", None)}
         for name, (status, release) in cases.items():
             with self.subTest(case=name):
