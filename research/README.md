@@ -6,7 +6,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
-- Issue #5311 T0 A01: [proof-carrying action admission finite test](analysis/proof_carrying_action_5311_t0_a01_20261009/README.md) — `FAIL_COST_GATE_SCOPED`; 80 vs 136 inspections, with all 7 invalid certificates rejected. Host-only synthetic evidence; no runtime/product claim.
+- Issue #5311 T0 A01: [proof-carrying action admission finite test](analysis/proof_carrying_action_5311_t0_a01_20261009/README.md) — `FAIL_COST_GATE_SCOPED`; post-run correction gives 96 vs 136 inspections (41.7% more); all 7 invalid certificates were rejected. The retained auditor/earlier 7 CI passes missed the same counter omission; frozen outputs were not rerun. Host-only synthetic evidence; no runtime/product claim.
 
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
 
