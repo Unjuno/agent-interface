@@ -1,0 +1,11 @@
+Command: py -3.11 audit_pipe_a02.py
+Exit: 1
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-7\work\pr7662-audit-20261005\research\doom\v39_session_pipe_composition_a01_20261005\audit_pipe_a02.py", line 165, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-7\work\pr7662-audit-20261005\research\doom\v39_session_pipe_composition_a01_20261005\audit_pipe_a02.py", line 57, in main
+    expected_sha256 = freeze["source_sha256"][Path(path).name]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'published-events.jsonl'

@@ -1,0 +1,57 @@
+{
+  "cases": [
+    {
+      "call_elapsed_ns": 29300,
+      "case": "ready_at_entry",
+      "commands_delivered": 1,
+      "deadline_overrun": false,
+      "delivered_command": "{\"op\":\"finish\"}",
+      "disposition": "CENSORED",
+      "readiness_checks": 2,
+      "resume_samples": 1,
+      "samples_before_resume": 0,
+      "samples_total_after_resume": 1,
+      "sender_error": null,
+      "tail_samples": 0,
+      "termination": "command_ready",
+      "unread_command_after_tail": "{\"op\":\"finish\"}\n"
+    },
+    {
+      "call_elapsed_ns": 25455700,
+      "case": "slow_callback",
+      "commands_delivered": 1,
+      "deadline_overrun": false,
+      "delivered_command": "{\"op\":\"finish\"}",
+      "disposition": "CENSORED",
+      "readiness_checks": 3,
+      "resume_samples": 1,
+      "samples_before_resume": 1,
+      "samples_total_after_resume": 2,
+      "sender_error": null,
+      "tail_samples": 1,
+      "termination": "command_ready",
+      "unread_command_after_tail": "{\"op\":\"finish\"}\n"
+    },
+    {
+      "call_elapsed_ns": 2294500,
+      "case": "normal_wait",
+      "commands_delivered": 1,
+      "deadline_overrun": false,
+      "delivered_command": "{\"op\":\"finish\"}",
+      "disposition": "CENSORED",
+      "readiness_checks": 3,
+      "resume_samples": 0,
+      "samples_before_resume": 1,
+      "samples_total_after_resume": 1,
+      "sender_error": null,
+      "tail_samples": 1,
+      "termination": "command_ready",
+      "unread_command_after_tail": "{\"op\":\"finish\"}\n"
+    }
+  ],
+  "classification": "one-shot Windows socketpair construction",
+  "run_id": "MAP01-V39-SCORER-TAIL-COMMAND-PRIORITY-A03-20261005",
+  "schema": "issue59-scorer-tail-command-priority-result-v3",
+  "scope": "OS socket readiness only; no real stdin, game, GUI, OS input, model, or live allocation",
+  "source_commit": "3cc9fb83d15c8066386c4c4af3c10699f1829417"
+}

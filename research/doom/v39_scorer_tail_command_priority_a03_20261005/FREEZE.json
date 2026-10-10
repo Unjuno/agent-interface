@@ -1,0 +1,58 @@
+{
+  "cases": {
+    "delayed_send_ns": 2000000,
+    "expected_commands_delivered": [
+      1,
+      1,
+      1
+    ],
+    "expected_tail_samples": [
+      0,
+      1,
+      1
+    ],
+    "fast_callback_ns": 1000000,
+    "sample_period_ns": 10000000,
+    "slow_callback_ns": 25000000,
+    "tail_deadline_ns": 100000000
+  },
+  "decision": "all cases return command_ready before any additional tail sample; command bytes remain unread during tail and are consumed exactly once by the normal iterator",
+  "environment": {
+    "clock": "time.perf_counter_ns",
+    "container": false,
+    "game_or_gui": false,
+    "network_listener": false,
+    "os": "Windows",
+    "python": "CPython 3.11",
+    "readiness": "socketpair + select.select"
+  },
+  "run_id": "MAP01-V39-SCORER-TAIL-COMMAND-PRIORITY-A03-20261005",
+  "schema": "issue59-scorer-tail-command-priority-freeze-v3",
+  "source_commit": "3cc9fb83d15c8066386c4c4af3c10699f1829417",
+  "source_files": [
+    {
+      "bytes": 13701,
+      "git_blob": "9d5de6f5e5342fbbdd2a1add0da73c8e153a76de",
+      "path": "research/doom/map01_scorer_stdio_adapter_v1.py",
+      "sha256": "418fb27072c486825b0d66c90768ec87e9169e91a0b6be7b38dab9f0b3953c92"
+    },
+    {
+      "bytes": 2542,
+      "git_blob": "ca65174801413c4d79c6a60009cef652148a6a2e",
+      "path": "research/doom/map01_scorer_stdio_adapter_v2.py",
+      "sha256": "d2ce2d01d8bed7d69736940f9092e05ef3f87389a1b9b34414168847ff605e2c"
+    },
+    {
+      "bytes": 6011,
+      "git_blob": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+      "path": "research/doom/main_thread_scorer_polling_v1.py",
+      "sha256": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84"
+    },
+    {
+      "bytes": 8754,
+      "git_blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "path": "research/doom/independent_progress_clock_v2.py",
+      "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+    }
+  ]
+}

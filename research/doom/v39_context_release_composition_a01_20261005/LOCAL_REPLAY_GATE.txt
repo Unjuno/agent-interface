@@ -1,0 +1,14 @@
+Command: wsl.exe -d Ubuntu -- bash -lc 'cd /mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-7/work/pr7662-audit-20261005 && python3 -m unittest -v research/doom/test_map01_scorer_scheduler_replay_3270.py'
+Environment: Ubuntu WSL, Python 3.12.3
+Exit: 0
+test_observed_single_overdue_period_is_local_and_non_catchup ... ok
+test_replay_preserves_sample_cardinality ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+
+The hosted workflow wraps this deterministic unittest in python:3.12-slim
+Docker. Docker Desktop's Linux engine was unavailable on this host, so this was
+a WSL Python run of the same test, not a container-equivalent execution.

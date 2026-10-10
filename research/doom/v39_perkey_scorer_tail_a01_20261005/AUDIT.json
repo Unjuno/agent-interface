@@ -1,0 +1,33 @@
+{
+  "auditor": "audit.py independent raw JSON/hash/output checks",
+  "checks": [
+    {
+      "detail": "20 frozen files compared by SHA-256",
+      "name": "frozen_source_and_input_hashes",
+      "passed": true
+    },
+    {
+      "detail": "event pair=True; boundary_ns=87811364949416; raw event labels and authority/consumption flags preserved",
+      "name": "raw_event_join_and_release_boundary",
+      "passed": false
+    },
+    {
+      "detail": "{\"windows_compatibility\": {\"exit_code\": 0, \"test_count\": 46}, \"wsl_core\": {\"exit_code\": 0, \"test_count\": 43}}",
+      "name": "retained_test_run_outputs",
+      "passed": true
+    },
+    {
+      "detail": "result identity, PASS gate, expected boundary, and construction-only scope agree",
+      "name": "result_scope_and_preregistered_decision",
+      "passed": true
+    }
+  ],
+  "disposition": "FAIL_AUDIT",
+  "experiment_id": "v39-perkey-scorer-tail-a01-20261005",
+  "limits": [
+    "fake-display input trace",
+    "no live game or OS input",
+    "no application-consumption or task-effect evidence"
+  ],
+  "schema": "v39-perkey-scorer-tail-a01-independent-audit-v1"
+}

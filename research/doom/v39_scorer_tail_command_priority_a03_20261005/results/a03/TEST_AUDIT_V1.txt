@@ -1,0 +1,21 @@
+test_command_delivery_loss_is_rejected (test_audit_v1.AuditTests.test_command_delivery_loss_is_rejected) ... ok
+test_consumed_command_bytes_are_rejected (test_audit_v1.AuditTests.test_consumed_command_bytes_are_rejected) ... ok
+test_extra_tail_sample_is_rejected (test_audit_v1.AuditTests.test_extra_tail_sample_is_rejected) ... ok
+test_frozen_result_reconstructs (test_audit_v1.AuditTests.test_frozen_result_reconstructs) ... FAIL
+test_wrong_termination_is_rejected (test_audit_v1.AuditTests.test_wrong_termination_is_rejected) ... ok
+
+======================================================================
+FAIL: test_frozen_result_reconstructs (test_audit_v1.AuditTests.test_frozen_result_reconstructs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-7\work\pr7662-audit-20261005\research\doom\v39_scorer_tail_command_priority_a03_20261005\test_audit_v1.py", line 17, in test_frozen_result_reconstructs
+    self.assertEqual(report["disposition"],
+AssertionError: 'FAIL_OR_STOP' != 'PASS_COMMAND_PRIORITY_REPAIR_CONSTRUCTION'
+- FAIL_OR_STOP
++ PASS_COMMAND_PRIORITY_REPAIR_CONSTRUCTION
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.061s
+
+FAILED (failures=1)

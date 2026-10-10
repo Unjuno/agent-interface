@@ -1,0 +1,49 @@
+{
+  "schema": "v39-session-child-pipe-freeze-v1",
+  "run_id": "v39-session-child-pipe-a02-20261005",
+  "attempt": "A02",
+  "frozen_at": "2026-10-05T05:41:04.2429110+09:00",
+  "main": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "components": {
+    "pr_7602": "4c0123339e43bd80333118a32bc1ce625b79ff3f",
+    "pr_7750": "4c7ab51a4512015a70e0e9ab90510b256b8b9cfd",
+    "pr_7769": "905816607eef1552b5e8073d95db1975de00776d"
+  },
+  "composition_tree": "22615a96e2166619933cd7fb375fc612ec30579d",
+  "source_blobs": {
+    "research/doom/session_map01_v12.py": "e2d596984ce5403f37634ced4c9a3e2537e5f1a7",
+    "research/doom/map01_overlap_controller_v39.py": "5aa386667c447d84a04c280ea9e4a7f0f306ae92",
+    "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/results/a08/published-events.jsonl": "0a17bfa98f4ffbb63fd2d08995a5eb290a462918"
+  },
+  "source_sha256": {
+    "session_map01_v12.py": "ef89fa60d5ae71b6d5b4633d0d92820f8ce2f032cd59f142542ec00d4fd1db0d",
+    "map01_overlap_controller_v39.py": "c1cf7f17ac4cbbeb47222243d5baeeb419fd2d6db7a26cf0db295b01a3a03621"
+  },
+  "input": {
+    "file": "INPUT_EVENT.json",
+    "source_blob": "0a17bfa98f4ffbb63fd2d08995a5eb290a462918",
+    "sha256": "4028ca3a1dc908dc6375f840e2acd6d05f294ca67b1dc7696b4359fd085f59d7",
+    "bytes": 2249,
+    "event": "input_released",
+    "per_key_release_count": 2,
+    "grants_input_authority": false
+  },
+  "candidate": {
+    "file": "run_pipe_a02.py",
+    "sha256": "f52a89f1893ad643649140eecafd8de8ba34fd88090aeee63780297bc1957f04"
+  },
+  "auditor": {
+    "file": "audit_pipe_a02.py",
+    "sha256": "27e0196c3c7862ba3a307ed764de5b6061e1f9294bbebf85f7f5fea7fc5bcc27"
+  },
+  "python_version": "3.11.9",
+  "environment": {
+    "host": "Windows 11 desktop",
+    "python": "3.11.9",
+    "live_resources_used": false,
+    "output_directory": "results/a02 (must not exist before run)"
+  },
+  "command": "py -3.11 run_pipe_a02.py --source-tree 22615a96e2166619933cd7fb375fc612ec30579d",
+  "decision": "PASS_CHILD_PIPE_TRANSPORT_SCOPED only if the exact emitted input row with integer emit_ns is received unchanged by exact controller reader/wait over one actual child stdout pipe; one row in each writer/pipe/reader path; child exit 0; empty stderr; joined reader; two per-key rows; authority false. Otherwise FAIL_TRANSPORT or HOLD_CONSTRUCTION per PROTOCOL.md.",
+  "scope": "Source-extracted exact functions and one synthetic retained event over a local child process pipe only; no session main, VizDoom, model, planner, X server, GUI, OS input, task-effect, useful-feedback, recovery, efficacy, or MAP01 claim."
+}

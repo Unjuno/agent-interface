@@ -1,0 +1,30 @@
+{
+  "schema": "v39-perkey-scorer-tail-a01-local-validation-v1",
+  "checkout_head": "c40584ac78521ffad015560b760a536b1313fd53",
+  "observed_main": "a9352dc53c783f1501046d762bc36c34bc6ab480",
+  "workspace_tests": {
+    "command": "python -B -m unittest discover -s research -p test_*workspace*.py -v",
+    "environment": "Windows CPython 3.11.9",
+    "exit_code": 0,
+    "tests_passed": 22
+  },
+  "workspace_index": {
+    "command": "python research/check_workspace_index.py --git-tree",
+    "environment": "Windows host Git worktree",
+    "exit_code": 0,
+    "reachable_top_level_directories": 159
+  },
+  "replay_gate": {
+    "command": "cd /mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-7/work/pr7662-audit-20261005 && python3 -B -m unittest -v research/doom/test_map01_scorer_scheduler_replay_3270.py",
+    "environment": "Ubuntu WSL2 Python 3.12.3",
+    "exit_code": 0,
+    "tests_passed": 2
+  },
+  "wsl_workspace_index_attempt": {
+    "command": "python3 research/check_workspace_index.py --git-tree",
+    "environment": "Ubuntu WSL2 over Windows worktree",
+    "exit_code": 2,
+    "disposition": "GIT_COMMAND_FAILED because WSL Git interpreted the Windows absolute .git worktree pointer as a relative C:/ path",
+    "windows_host_check_passed": true
+  }
+}

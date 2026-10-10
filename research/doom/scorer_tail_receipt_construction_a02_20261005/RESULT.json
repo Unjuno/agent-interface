@@ -1,0 +1,85 @@
+{
+  "cells": 6,
+  "classification": "offline construction; no live allocation",
+  "negative_identity_controls_rejected": {
+    "boolean_step": true,
+    "empty_id": true,
+    "nested_key_mismatch": true,
+    "nested_token_mismatch": true
+  },
+  "receipts": [
+    {
+      "accepted": true,
+      "cell": "01-pulse",
+      "disposition": "CENSORED",
+      "id": "window",
+      "key": "d",
+      "samples": 0,
+      "step": 0,
+      "termination": "deadline"
+    },
+    {
+      "accepted": true,
+      "cell": "01-pulse",
+      "disposition": "CENSORED",
+      "id": "window",
+      "key": "d",
+      "samples": 0,
+      "step": 2,
+      "termination": "deadline"
+    },
+    {
+      "accepted": true,
+      "cell": "02-pulse",
+      "disposition": "CENSORED",
+      "id": "window",
+      "key": "d",
+      "samples": 0,
+      "step": 0,
+      "termination": "deadline"
+    },
+    {
+      "accepted": true,
+      "cell": "02-pulse",
+      "disposition": "CENSORED",
+      "id": "window",
+      "key": "d",
+      "samples": 0,
+      "step": 2,
+      "termination": "deadline"
+    },
+    {
+      "accepted": true,
+      "cell": "05-pulse",
+      "disposition": "CENSORED",
+      "id": "window",
+      "key": "d",
+      "samples": 0,
+      "step": 0,
+      "termination": "deadline"
+    },
+    {
+      "accepted": true,
+      "cell": "05-pulse",
+      "disposition": "CENSORED",
+      "id": "window",
+      "key": "d",
+      "samples": 0,
+      "step": 2,
+      "termination": "deadline"
+    }
+  ],
+  "release_counts": {
+    "00-coast": 0,
+    "01-pulse": 2,
+    "02-pulse": 2,
+    "03-coast": 0,
+    "04-coast": 0,
+    "05-pulse": 2
+  },
+  "result": "STRICT_RECEIPT_IDENTITY_COMPATIBLE_ZERO_SAMPLES",
+  "schema": "map01-scorer-tail-receipt-construction-result-v2",
+  "scope": "retained receipt identity only; no scorer timing or controller/game effect",
+  "verified_d_receipts_accepted": 6,
+  "zero_duration_tail_samples": 0
+}

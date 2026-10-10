@@ -1,0 +1,20 @@
+Exploratory invocation before A01 freeze; not included in the A01 result.
+
+Command: py -3.11 -m unittest research.doom.test_map01_v39_typed_state_feedback -v
+Exit: 1
+Result: ImportError; ModuleNotFoundError: No module named 'running_action_guard_v1'
+Cause: research/live_control was absent from PYTHONPATH in the exported source root.
+
+Command: py -3.11 -m unittest discover -s research/live_control/owner_keyup_admission_id_5156_a03_20261005 -p 'test_*.py' -v
+Exit: 0
+Ran 3 tests in 0.040s
+OK
+
+Command: py -3.11 -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p 'test_*.py' -v
+Exit: 0
+Ran 3 tests in 0.047s
+OK
+
+The A01 protocol was then frozen with the required import paths, followed by
+one fresh execution of all three suites. The failed setup attempt and these
+two exploratory passes are retained separately and are not pooled into A01.

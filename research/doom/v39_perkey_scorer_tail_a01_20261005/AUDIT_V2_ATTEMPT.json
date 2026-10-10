@@ -1,0 +1,44 @@
+{
+  "auditor_sha256": "ef63219f72c197ec0069cf7f775f6a9c9d0820d5b69f8b7c06f4f571b2ee7b61",
+  "checks": [
+    {
+      "detail": "checked 20 frozen files",
+      "name": "frozen_source_and_input_hashes",
+      "passed": true
+    },
+    {
+      "detail": "distinct labels=input_admission/input_release_measurement; physical-up upper endpoint=87811364949416",
+      "name": "raw_pair_identity_actuation_and_measured_boundary",
+      "passed": true
+    },
+    {
+      "detail": "{\"windows_compatibility\": {\"exit_code\": 0, \"passed\": true, \"test_count\": 46}, \"wsl_core\": {\"exit_code\": 0, \"passed\": false, \"test_count\": 43}}",
+      "name": "retained_platform_test_outputs",
+      "passed": false
+    },
+    {
+      "detail": "result identity, decision boundary, and construction-only limit",
+      "name": "result_identity_decision_and_scope",
+      "passed": true
+    },
+    {
+      "detail": "version-one audit failure remains available as a separate artifact",
+      "name": "first_audit_failure_preserved",
+      "passed": true
+    }
+  ],
+  "disposition": "FAIL_AUDIT",
+  "experiment_id": "v39-perkey-scorer-tail-a01-20261005",
+  "limits": [
+    "fake-display source trace",
+    "no live game or OS input",
+    "no application-consumption, useful-feedback, recovery, or task-effect evidence"
+  ],
+  "prior_audit": {
+    "artifact": "AUDIT_ATTEMPT_V1.json",
+    "cause": "v1 required an explicit top-level false authority flag; input_admission omits it and schema defaults it to false",
+    "disposition": "FAIL_AUDIT"
+  },
+  "schema": "v39-perkey-scorer-tail-a01-independent-audit-v2",
+  "scope": "Independent reconstruction of frozen source, event, and test-result claims; construction-only."
+}

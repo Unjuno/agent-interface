@@ -1,0 +1,43 @@
+{
+  "schema": "v39-owner-timeout-late-drain-freeze-v1",
+  "run_id": "v39-owner-timeout-barrier-a02-20261005",
+  "frozen_at": "2026-10-05T00:02:03Z",
+  "base_main": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "candidate_pr_7805_head": "61502e45d40b67b6d588b4e8357e42fde05a9dbe",
+  "a01_freeze_sha256": "644e291ae82ca85bf861a73716974cd3a59bb06b0d53877f94f3146ce65862b4",
+  "environment": "Native Windows fake-display run; WSLc and Docker Linux engine unavailable. No live allocation.",
+  "locked_files": [
+    {
+      "path": "PROTOCOL-A02.md",
+      "sha256": "752ff281691f68907989b0be684f574107a5bd906384cff224b7fb541246a1f8",
+      "bytes": 1905
+    },
+    {
+      "path": "probe_a02.py",
+      "sha256": "8f34791381ad7f629a88cc8f44b8aaaf5959061eacc3d5edc597723b734b0ace",
+      "bytes": 7172
+    },
+    {
+      "path": "FREEZE.json",
+      "sha256": "644e291ae82ca85bf861a73716974cd3a59bb06b0d53877f94f3146ce65862b4",
+      "bytes": 4092
+    },
+    {
+      "path": "candidate_snapshot/a08/bridge_v2_candidate.py",
+      "sha256": "0fd353ed0b61037a97f965b334fe639f551afe5846a3beb6f5d7e31e86b40779",
+      "bytes": 3733
+    },
+    {
+      "path": "candidate_snapshot/a08/input_owner_v13_candidate.py",
+      "sha256": "8468a63973ea46ca11267679fe15e077eff22750cd0d9536f5809b49ba8d758b",
+      "bytes": 32367
+    },
+    {
+      "path": "candidate_snapshot/a08/test_cancel_release.py",
+      "sha256": "83229cfd99c198755e6ddf74bc476744a77c4a1c285e2eddee801e4f9c87a5e9",
+      "bytes": 24221
+    }
+  ],
+  "command": "py -3.11 probe_a02.py",
+  "decision": "Apply PROTOCOL-A02.md exactly. Run paired baseline/candidate once; preserve both outcomes; do not retry."
+}

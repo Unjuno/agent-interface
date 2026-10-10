@@ -1,0 +1,34 @@
+{
+  "timing": {
+    "call_start_ns": 170752375887000,
+    "call_error": "RuntimeError('input owner reply timed out; cleanup unverified')",
+    "call_end_ns": 170754364981800,
+    "barrier_elapsed_ns": 1989094800
+  },
+  "at_terminal": {
+    "terminal_status": "failed",
+    "release_verified": false,
+    "bridge_held": [
+      "F8"
+    ],
+    "owner_release_records": 0,
+    "physical": [],
+    "up_receipts": 0
+  },
+  "after_owner_stop": {
+    "bridge_held": [
+      "F8"
+    ],
+    "owner_release_records": 3,
+    "physical": [],
+    "up_receipts": 0,
+    "owner_stopped": true
+  },
+  "events": [
+    "accepted",
+    "step_started",
+    "input_admission",
+    "terminal"
+  ],
+  "scope": "one frozen fake-display owner-thread timeout schedule; no real X11, OS input, game, model, useful-feedback, recovery-efficacy, or live MAP01 evidence"
+}

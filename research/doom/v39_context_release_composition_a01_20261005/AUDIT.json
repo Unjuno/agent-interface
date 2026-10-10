@@ -1,0 +1,105 @@
+{
+  "schema": "v39-context-release-composition-audit-v1",
+  "disposition": "PASS_AUDIT",
+  "checks": [
+    {
+      "check": "base_main_ref",
+      "pass": true,
+      "actual": "86a2694c6251c2d7df2f69dbea490ec037903ff7"
+    },
+    {
+      "check": "pr_7602_ref",
+      "pass": true,
+      "actual": "4c0123339e43bd80333118a32bc1ce625b79ff3f"
+    },
+    {
+      "check": "pr_7750_ref",
+      "pass": true,
+      "actual": "4c7ab51a4512015a70e0e9ab90510b256b8b9cfd"
+    },
+    {
+      "check": "pr_7769_ref",
+      "pass": true,
+      "actual": "905816607eef1552b5e8073d95db1975de00776d"
+    },
+    {
+      "check": "synthetic_tree",
+      "pass": true,
+      "actual": "22615a96e2166619933cd7fb375fc612ec30579d"
+    },
+    {
+      "check": "merge_1_tree",
+      "pass": true,
+      "actual": "329d1ea710dcd7957298300acac2a6c97b9856a9"
+    },
+    {
+      "check": "merge_2_tree",
+      "pass": true,
+      "actual": "e74d0dd8992f9d515ea5f534eda84eef2d083bb5"
+    },
+    {
+      "check": "merge_3_tree",
+      "pass": true,
+      "actual": "22615a96e2166619933cd7fb375fc612ec30579d"
+    },
+    {
+      "check": "source_blob:research/doom/map01_overlap_controller_v39.py",
+      "pass": true,
+      "actual": "5aa386667c447d84a04c280ea9e4a7f0f306ae92"
+    },
+    {
+      "check": "source_blob:research/doom/test_map01_v39_typed_state_feedback.py",
+      "pass": true,
+      "actual": "d32c8bf117facf021cace85724bcd467b9c55ec4"
+    },
+    {
+      "check": "source_blob:research/live_control/owner_keyup_admission_id_5156_a03_20261005/test_admission_id_construct.py",
+      "pass": true,
+      "actual": "58cc816fd8aeee01af3734b8c21391c089250bad"
+    },
+    {
+      "check": "source_blob:research/doom/map01_v39_perkey_bridge_a01/test_bridge.py",
+      "pass": true,
+      "actual": "503711bf2de39668955b2bae433c1917b9758ff8"
+    },
+    {
+      "check": "v39_typed_state_output",
+      "pass": true
+    },
+    {
+      "check": "owner_admission_output",
+      "pass": true
+    },
+    {
+      "check": "cleanup_bridge_output",
+      "pass": true
+    },
+    {
+      "check": "result_scope_and_count",
+      "pass": true
+    }
+  ],
+  "raw_outputs": {
+    "v39_typed_state": {
+      "file": "V39_TEST_OUTPUT.txt",
+      "sha256": "10bc431a63e51ffc368d2ce9aade81191e65c628b9d1e434bc7922b238e3b627",
+      "expected_tests": 35,
+      "reported_tests": 35,
+      "pass": true
+    },
+    "owner_admission": {
+      "file": "OWNER_ADMISSION_TEST_OUTPUT.txt",
+      "sha256": "a955a595f918b06088f28ebde0937a5ea3479e44b9b25edd8b04524931ff9374",
+      "expected_tests": 3,
+      "reported_tests": 3,
+      "pass": true
+    },
+    "cleanup_bridge": {
+      "file": "CLEANUP_BRIDGE_TEST_OUTPUT.txt",
+      "sha256": "800c1c562d49f7e3cc674b014ee096fe79a9b9d13b5370a7445897ea15147b4b",
+      "expected_tests": 3,
+      "reported_tests": 3,
+      "pass": true
+    }
+  }
+}
