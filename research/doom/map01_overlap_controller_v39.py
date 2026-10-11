@@ -682,11 +682,8 @@ def app_server_command():
         command = [NODE, CLI, "app-server", "--stdio"]
     for feature in DISABLED_FEATURES:
         command += ["--disable", feature]
-    if direct_executable:
-        command += ["-c", "mcp_servers={}"]
-    else:
-        for name in DISABLED_MCPS:
-            command += ["-c", f"mcp_servers.{name}.enabled=false"]
+    for name in DISABLED_MCPS:
+        command += ["-c", f"mcp_servers.{name}.enabled=false"]
     return command
 
 

@@ -15,7 +15,7 @@ import map01_overlap_controller_v39 as controller
 
 
 class AppServerCommandTests(unittest.TestCase):
-    def test_direct_codex_executable_uses_stdio_and_an_empty_mcp_config(self):
+    def test_direct_codex_executable_disables_configured_mcps_individually(self):
         executable = str(Path(controller.__file__).resolve())
         with patch.dict(os.environ, {"AGENT_INTERFACE_CODEX_APP_SERVER_EXE": executable}):
             command = controller.app_server_command()
@@ -23,9 +23,10 @@ class AppServerCommandTests(unittest.TestCase):
         self.assertEqual(command[:3], [executable, "app-server", "--stdio"])
         for feature in controller.DISABLED_FEATURES:
             self.assertIn(feature, command)
-        self.assertIn("mcp_servers={}", command)
+        for name in controller.DISABLED_MCPS:
+            self.assertIn(f"mcp_servers.{name}.enabled=false", command)
+        self.assertNotIn("mcp_servers={}", command)
         self.assertNotIn(controller.CLI, command)
-        self.assertFalse(any("mcp_servers." in item for item in command))
 
     def test_legacy_node_and_cli_path_remain_the_default(self):
         with patch.dict(os.environ, {}, clear=True):
