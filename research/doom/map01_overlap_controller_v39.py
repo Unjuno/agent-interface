@@ -5,6 +5,7 @@ from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
+import os
 import queue
 import subprocess
 import sys
@@ -674,11 +675,18 @@ def win(path):
 
 
 def app_server_command():
-    command = [NODE, CLI, "app-server", "--stdio"]
+    direct_executable = os.environ.get("AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
+    if direct_executable:
+        command = [direct_executable, "app-server", "--stdio"]
+    else:
+        command = [NODE, CLI, "app-server", "--stdio"]
     for feature in DISABLED_FEATURES:
         command += ["--disable", feature]
-    for name in DISABLED_MCPS:
-        command += ["-c", f"mcp_servers.{name}.enabled=false"]
+    if direct_executable:
+        command += ["-c", "mcp_servers={}"]
+    else:
+        for name in DISABLED_MCPS:
+            command += ["-c", f"mcp_servers.{name}.enabled=false"]
     return command
 
 
