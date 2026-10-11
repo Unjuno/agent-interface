@@ -2,13 +2,12 @@
 import ast
 import copy
 import json
-import os
 from pathlib import Path
 import unittest
 
 
 DEFAULT_SOURCE = Path(__file__).with_name("map01_overlap_controller_v39.py")
-SOURCE = Path(os.environ.get("V39_CONTROLLER_SOURCE", DEFAULT_SOURCE))
+SOURCE = DEFAULT_SOURCE
 TREE = ast.parse(SOURCE.read_text(encoding="utf-8"))
 NAMES = {
     "terminal_release_is_known_empty",
@@ -120,7 +119,7 @@ class StaleInitialCoverReleaseCompositionTests(unittest.TestCase):
                 wait=lambda *_args, **_kwargs: self.fail("must not wait"),
                 observation_monitor=ObservationMonitor())
 
-    def test_rejected_cover_recovers_fresh_source_then_next_invalidated_cover_requires_known_empty_release(self):
+    def test_stale_cover_recovers_then_next_cover_requires_known_empty_release(self):
         old = {"event": "observation", "sequence": 11, "image": "old.png"}
         fresh = {"event": "observation", "sequence": 12, "image": "fresh.png"}
         after_fresh = {"event": "observation", "sequence": 13,
