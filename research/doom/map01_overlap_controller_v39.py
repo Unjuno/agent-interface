@@ -49,7 +49,6 @@ DISABLED_FEATURES = [
     "apps", "plugins", "remote_plugin", "browser_use", "browser_use_external",
     "computer_use", "in_app_browser", "code_mode", "code_mode_host",
 ]
-DISABLED_MCPS = ["blender", "chrome-devtools", "node_repl", "playwright", "puppeteer"]
 WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 MAX_AUTHORED_HEALTH_LOSS = 20
 
@@ -682,7 +681,22 @@ def app_server_command():
         command = [NODE, CLI, "app-server", "--stdio"]
     for feature in DISABLED_FEATURES:
         command += ["--disable", feature]
-    for name in DISABLED_MCPS:
+    if os.environ.get("CODEX_HOME"):
+        codex_home = Path(os.environ["CODEX_HOME"])
+    else:
+        user_home = (os.environ.get("USERPROFILE") or os.environ.get("HOME") or
+                     os.environ.get("HOMEDRIVE", "") + os.environ.get("HOMEPATH", ""))
+        codex_home = Path(user_home) / ".codex" if user_home else Path.home() / ".codex"
+    config = codex_home / "config.toml"
+    configured_mcps = []
+    if config.is_file():
+        try:
+            import tomllib
+            with config.open("rb") as source:
+                configured_mcps = list(tomllib.load(source).get("mcp_servers", {}))
+        except (OSError, ValueError):
+            configured_mcps = []
+    for name in configured_mcps:
         command += ["-c", f"mcp_servers.{name}.enabled=false"]
     return command
 
