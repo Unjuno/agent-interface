@@ -48,6 +48,7 @@ class CodexAppServerClient:
         _require_pipe_runtime()
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
+        self._owns_process_streams = process_factory is subprocess.Popen
         self._owns_process_group = os.name == "posix" and process_factory is subprocess.Popen
         process_options = {
             "cwd": cwd, "stdin": subprocess.PIPE, "stdout": subprocess.PIPE,
@@ -369,7 +370,7 @@ class CodexAppServerClient:
                 raise TimeoutError("app-server reader close timed out")
         # Custom process factories own their stream wrappers and may provide
         # lightweight proxies without the IOBase ``closed``/``close`` API.
-        if owns_process_group:
+        if getattr(self, "_owns_process_streams", owns_process_group):
             # Terminate first so a backpressured writer can finish. Never close
             # or recycle its raw descriptor while that writer still owns it.
             write_lock = self._write_lock

@@ -1,11 +1,9 @@
 """Runner command configuration tests for the MAP01 V39 controller."""
 import json
 import os
-import subprocess
 import tempfile
 from pathlib import Path
 import sys
-import threading
 import unittest
 from unittest.mock import patch
 
@@ -50,7 +48,7 @@ class AppServerCommandTests(unittest.TestCase):
                 command = controller.app_server_command()
         self.assertFalse(any(arg.startswith("mcp_servers.") for arg in command))
 
-    def test_direct_codex_command_initializes_with_an_isolated_profile(self):
+    def test_direct_codex_command_initializes_with_production_client(self):
         if os.name != "nt":
             self.skipTest("direct executable smoke test requires Windows")
         executable = os.environ.get("AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
@@ -61,50 +59,36 @@ class AppServerCommandTests(unittest.TestCase):
             Path(codex_home, "config.toml").write_text(
                 '[mcp_servers."probe"]\nenabled = true\ncommand = "py"\nargs = []\n',
                 encoding="utf-8")
-            with patch.dict(os.environ, {
-                    "CODEX_HOME": codex_home,
-                    "AGENT_INTERFACE_CODEX_APP_SERVER_EXE": executable,
-            }):
-                process = subprocess.Popen(
-                    controller.app_server_command(), stdin=subprocess.PIPE,
-                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-                    encoding="utf-8", errors="replace", bufsize=1)
-                stdout_lines = []
-                reader = threading.Thread(
-                    target=lambda: stdout_lines.append(process.stdout.readline()),
-                    daemon=True)
-                reader.start()
-                try:
-                    process.stdin.write(json.dumps({
-                        "method": "initialize", "id": 1,
-                        "params": {
-                            "clientInfo": {
-                                "name": "agent-interface-smoke-test",
-                                "title": "Agent Interface", "version": "1",
-                            },
-                            "capabilities": {
-                                "experimentalApi": False,
-                                "requestAttestation": False,
-                            },
-                        },
-                    }, separators=(",", ":")) + "\n")
-                    process.stdin.flush()
-                    reader.join(timeout=10)
-                    self.assertFalse(reader.is_alive(), "initialize response timed out")
-                    self.assertTrue(stdout_lines[0], "App Server exited before initialize")
-                    response = json.loads(stdout_lines[0])
-                    self.assertEqual(response["id"], 1)
-                    self.assertEqual(
-                        Path(response["result"]["codexHome"]), Path(codex_home))
-                    process.stdin.write('{"method":"initialized"}\n')
-                    process.stdin.flush()
-                finally:
-                    process.terminate()
-                    process.wait(timeout=5)
-                    reader.join(timeout=1)
-                    process.stdin.close()
-                    process.stdout.close()
-                    process.stderr.close()
+            with tempfile.TemporaryDirectory(prefix="v39-journal-") as journal_dir:
+                journal = Path(journal_dir, "app-server.jsonl")
+                with patch.dict(os.environ, {
+                        "CODEX_HOME": codex_home,
+                        "AGENT_INTERFACE_CODEX_APP_SERVER_EXE": executable,
+                }):
+                    client = controller.CodexAppServerClient(
+                        controller.app_server_command(), cwd=str(HERE),
+                        journal_path=str(journal))
+                    try:
+                        result = client.initialize()
+                    finally:
+                        client.close()
+
+                self.assertTrue(client.process.stdin.closed)
+                self.assertTrue(client.process.stdout.closed)
+                self.assertTrue(client.process.stderr.closed)
+                self.assertEqual(Path(result["codexHome"]), Path(codex_home))
+                self.assertTrue(journal.is_file())
+                rows = [json.loads(line) for line in journal.read_text(
+                    encoding="utf-8").splitlines()]
+                self.assertTrue(any(
+                    row["direction"] == "received" and
+                    row["message"].get("id") == 1 and
+                    row["message"].get("result", {}).get("codexHome") == codex_home
+                    for row in rows))
+                self.assertTrue(any(
+                    row["direction"] == "sent" and
+                    row["message"].get("method") == "initialized"
+                    for row in rows))
 
     def test_legacy_node_and_cli_path_remain_the_default(self):
         with patch.dict(os.environ, {
