@@ -30,6 +30,6 @@ The first A02 draft proposed `-c mcp_servers={}` based on the A01 local prefligh
 - Source: `research/doom/map01_overlap_controller_v39.py` at main blob `000d206310afe054fcddf66d9c417da46e0b3b2d`; the follow-up also edits `research/live_control/codex_app_server_client_v2.py` to close Windows-owned process streams.
 - Added regression: `research/doom/test_map01_overlap_controller_v39_appserver_command.py`.
 - Branch base: `f185a9059d485a4f8d5a65e9e7f6782897f67eae`.
-- A01 preflight record: `research/doom/v39_windows_appserver_portability_a01_20261008.md` in the retained local worktree; A02 did not rerun the App Server handshake.
+- A01 preflight record: `research/doom/v39_windows_appserver_portability_a01_20261008.md` in the retained local worktree; A02 reran the App Server handshake directly and through the production V39 client against credential-free isolated config homes.
 - Issue #59 was OPEN and unassigned at the time of the current-state check. PR #8837 is the review candidate for this launcher change; the existing PR #8835 is a separate release-receipt change.
 - Local raw stdout/stderr and source hashes are retained at `D:\codex-research\win-appserver-launch-a05`.
