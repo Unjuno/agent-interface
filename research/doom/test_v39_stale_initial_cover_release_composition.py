@@ -86,9 +86,11 @@ class Process:
 class StaleInitialCoverReleaseCompositionTests(unittest.TestCase):
     def setUp(self):
         self.original_recovery = NAMESPACE["recover_pending_observation_backlog"]
+        self.original_settle = NAMESPACE["settle_pending_observation_backlog"]
 
     def tearDown(self):
         NAMESPACE["recover_pending_observation_backlog"] = self.original_recovery
+        NAMESPACE["settle_pending_observation_backlog"] = self.original_settle
 
     def test_stale_recovery_fails_closed_when_freshness_or_budget_gate_fails(self):
         source = {"event": "observation", "sequence": 11, "image": "old.png"}
