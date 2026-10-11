@@ -84,37 +84,39 @@ class Process:
 
 
 class StaleInitialCoverReleaseCompositionTests(unittest.TestCase):
+    def setUp(self):
+        self.original_recovery = NAMESPACE["recover_pending_observation_backlog"]
+
+    def tearDown(self):
+        NAMESPACE["recover_pending_observation_backlog"] = self.original_recovery
+
     def test_stale_recovery_fails_closed_when_freshness_or_budget_gate_fails(self):
         source = {"event": "observation", "sequence": 11, "image": "old.png"}
         ack = {"event": "rejected", "id": "cover-old",
                "reason": "latest observation sequence required before input"}
-        original_recovery = NAMESPACE["recover_pending_observation_backlog"]
 
         def rejected_submit(_consumed):
             return ack
 
-        try:
-            NAMESPACE["recover_pending_observation_backlog"] = (
-                lambda *_args, **_kwargs: {
-                    "latest": source, "batches": 4, "exhausted": True})
-            with self.assertRaisesRegex(RuntimeError, "recovery budget exhausted"):
-                NAMESPACE["submit_initial_cover_with_recovery"](
-                    rejected_submit, identifier="cover-old",
-                    latest_reader=lambda: source, incoming=object(),
-                    wait=lambda *_args, **_kwargs: self.fail("must not wait"),
-                    observation_monitor=ObservationMonitor())
+        NAMESPACE["recover_pending_observation_backlog"] = (
+            lambda *_args, **_kwargs: {
+                "latest": source, "batches": 4, "exhausted": True})
+        with self.assertRaisesRegex(RuntimeError, "recovery budget exhausted"):
+            NAMESPACE["submit_initial_cover_with_recovery"](
+                rejected_submit, identifier="cover-old",
+                latest_reader=lambda: source, incoming=object(),
+                wait=lambda *_args, **_kwargs: self.fail("must not wait"),
+                observation_monitor=ObservationMonitor())
 
-            NAMESPACE["recover_pending_observation_backlog"] = (
-                lambda *_args, **_kwargs: {
-                    "latest": source, "batches": 1, "exhausted": False})
-            with self.assertRaisesRegex(RuntimeError, "requires a newer observation"):
-                NAMESPACE["submit_initial_cover_with_recovery"](
-                    rejected_submit, identifier="cover-old",
-                    latest_reader=lambda: source, incoming=object(),
-                    wait=lambda *_args, **_kwargs: self.fail("must not wait"),
-                    observation_monitor=ObservationMonitor())
-        finally:
-            NAMESPACE["recover_pending_observation_backlog"] = original_recovery
+        NAMESPACE["recover_pending_observation_backlog"] = (
+            lambda *_args, **_kwargs: {
+                "latest": source, "batches": 1, "exhausted": False})
+        with self.assertRaisesRegex(RuntimeError, "requires a newer observation"):
+            NAMESPACE["submit_initial_cover_with_recovery"](
+                rejected_submit, identifier="cover-old",
+                latest_reader=lambda: source, incoming=object(),
+                wait=lambda *_args, **_kwargs: self.fail("must not wait"),
+                observation_monitor=ObservationMonitor())
 
     def test_rejected_cover_recovers_fresh_source_then_next_invalidated_cover_requires_known_empty_release(self):
         old = {"event": "observation", "sequence": 11, "image": "old.png"}
