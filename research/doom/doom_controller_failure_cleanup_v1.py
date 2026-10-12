@@ -127,10 +127,17 @@ class ControllerFailureCleanup:
                 receipt['stdout_reader_retired']=not receipt['stages'][-1]['result']
         receipt['stdout_reader_errors']=list(self.reader_errors)
         events=self.events if type(self.events) is list else []
-        accepted_rows=[row for row in events if type(row) is dict and
-                       row.get('event')=='accepted' and type(row.get('id')) is str]
-        terminal_rows=[row for row in events if type(row) is dict and
-                       row.get('event')=='terminal' and type(row.get('id')) is str]
+        accepted_event_rows=[row for row in events if type(row) is dict and
+                             row.get('event')=='accepted']
+        terminal_event_rows=[row for row in events if type(row) is dict and
+                             row.get('event')=='terminal']
+        def valid_event_identity(row):
+            return type(row.get('id')) is str and bool(row['id'])
+        accepted_rows=[row for row in accepted_event_rows if valid_event_identity(row)]
+        terminal_rows=[row for row in terminal_event_rows if valid_event_identity(row)]
+        invalid_event_identity_counts={
+            'accepted':len(accepted_event_rows)-len(accepted_rows),
+            'terminal':len(terminal_event_rows)-len(terminal_rows)}
         accepted_counts={}
         for row in accepted_rows:
             accepted_counts[row['id']]=accepted_counts.get(row['id'],0)+1
@@ -142,10 +149,16 @@ class ControllerFailureCleanup:
         terminal_duplicate_ids=sorted(identifier for identifier,count in terminal_counts.items()
                                        if count>1)
         accepted_ids=set(accepted_counts)
+        orphan_terminal_ids=sorted(set(terminal_counts)-accepted_ids)
         accepted_by_id={row['id']:row for row in accepted_rows}
         terminal_by_id={row['id']:row for row in terminal_rows}
-        event_identity_ambiguous=bool(accepted_duplicate_ids or terminal_duplicate_ids)
+        event_identity_ambiguous=bool(accepted_duplicate_ids or terminal_duplicate_ids or
+                                       invalid_event_identity_counts['accepted'] or
+                                       invalid_event_identity_counts['terminal'] or
+                                       orphan_terminal_ids)
         receipt['event_identity_ambiguous']=event_identity_ambiguous
+        receipt['invalid_event_identity_counts']=invalid_event_identity_counts
+        receipt['orphan_terminal_ids']=orphan_terminal_ids
         receipt['accepted_duplicate_ids']=accepted_duplicate_ids
         receipt['terminal_duplicate_ids']=terminal_duplicate_ids
         event_set_complete=(receipt['stdout_reader_retired'] and

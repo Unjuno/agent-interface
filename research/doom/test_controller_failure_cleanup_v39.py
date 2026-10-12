@@ -97,5 +97,71 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                 self.assertFalse(receipt["input_release_verified_empty"])
 
 
+    def test_invalid_acceptance_identity_is_not_dropped(self):
+        invalid_values = [None, 7, True, [], {}, '']
+        for invalid_id in invalid_values:
+            with self.subTest(invalid_id=invalid_id):
+                receipt = self.run_cleanup(events=[
+                    {'event': 'accepted', 'id': invalid_id, 'intent_token': 'lease-x'}])
+                self.assertTrue(receipt['event_identity_ambiguous'])
+                self.assertEqual(receipt['invalid_event_identity_counts']['accepted'], 1)
+                self.assertFalse(receipt['input_terminals_complete'])
+                self.assertFalse(receipt['input_releases_verified_empty'])
+                self.assertFalse(receipt['input_release_verified_empty'])
+
+    def test_missing_acceptance_identity_is_not_dropped(self):
+        receipt = self.run_cleanup(events=[{'event': 'accepted', 'intent_token': 'lease-x'}])
+        self.assertTrue(receipt['event_identity_ambiguous'])
+        self.assertEqual(receipt['invalid_event_identity_counts']['accepted'], 1)
+        self.assertFalse(receipt['input_terminals_complete'])
+        self.assertFalse(receipt['input_releases_verified_empty'])
+
+    def test_malformed_terminal_identity_blocks_empty_release_claim(self):
+        accepted = {'event': 'accepted', 'id': 'source-refresh-0',
+                    'intent_token': 'accepted-lease'}
+        released = {'event': 'terminal', 'id': 'source-refresh-0',
+                    'release': {'verified': True, 'keys_down': [],
+                                'buttons_down': [], 'intent_token': 'accepted-lease'}}
+        malformed = {'event': 'terminal', 'id': None,
+                     'release': {'verified': False, 'keys_down': [38], 'buttons_down': []}}
+        receipt = self.run_cleanup(events=[accepted, released, malformed])
+        self.assertTrue(receipt['event_identity_ambiguous'])
+        self.assertEqual(receipt['invalid_event_identity_counts']['terminal'], 1)
+        self.assertFalse(receipt['input_terminals_complete'])
+        self.assertFalse(receipt['input_releases_verified_empty'])
+        self.assertFalse(receipt['input_release_verified_empty'])
+
+
+    def test_malformed_acceptance_amid_valid_pair_blocks_empty_release(self):
+        accepted = {'event': 'accepted', 'id': 'source-refresh-0',
+                    'intent_token': 'accepted-lease'}
+        malformed = {'event': 'accepted', 'id': None, 'intent_token': 'unknown'}
+        terminal = {'event': 'terminal', 'id': 'source-refresh-0',
+                    'release': {'verified': True, 'keys_down': [],
+                                'buttons_down': [], 'intent_token': 'accepted-lease'}}
+        receipt = self.run_cleanup(events=[accepted, malformed, terminal])
+        self.assertTrue(receipt['event_identity_ambiguous'])
+        self.assertEqual(receipt['invalid_event_identity_counts']['accepted'], 1)
+        self.assertFalse(receipt['input_terminals_complete'])
+        self.assertFalse(receipt['input_releases_verified_empty'])
+        self.assertFalse(receipt['input_release_verified_empty'])
+
+
+    def test_orphan_terminal_identity_blocks_empty_release_claim(self):
+        accepted = {'event': 'accepted', 'id': 'accepted-1',
+                    'intent_token': 'token-1'}
+        matched = {'event': 'terminal', 'id': 'accepted-1',
+                   'release': {'verified': True, 'keys_down': [],
+                               'buttons_down': [], 'intent_token': 'token-1'}}
+        orphan = {'event': 'terminal', 'id': 'orphan-2',
+                  'release': {'verified': False, 'keys_down': [38], 'buttons_down': []}}
+        receipt = self.run_cleanup(events=[accepted, matched, orphan])
+        self.assertTrue(receipt['event_identity_ambiguous'])
+        self.assertEqual(receipt['orphan_terminal_ids'], ['orphan-2'])
+        self.assertFalse(receipt['input_terminals_complete'])
+        self.assertFalse(receipt['input_releases_verified_empty'])
+        self.assertFalse(receipt['input_release_verified_empty'])
+
+
 if __name__ == "__main__":
     unittest.main()
