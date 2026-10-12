@@ -38,8 +38,9 @@ class AppServerWriteUncertain(AppServerError):
 
 def wsl_environment_for_windows_executable(command, environ):
     """Forward WSL CODEX_HOME through WSL path translation to a Windows exe."""
-    if (not environ.get("WSL_INTEROP") or not command or
-            not str(command[0]).lower().endswith(".exe")):
+    if (not environ.get("WSL_INTEROP") or len(command) < 2 or
+            not str(command[0]).lower().endswith(".exe") or
+            command[1] != "app-server"):
         return None
     codex_home = environ.get("CODEX_HOME")
     if not codex_home or not codex_home.startswith("/"):

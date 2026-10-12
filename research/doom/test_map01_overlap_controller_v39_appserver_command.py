@@ -54,6 +54,21 @@ class AppServerCommandTests(unittest.TestCase):
                     app_server_client.wsl_environment_for_windows_executable(
                         command, environment)
 
+    def test_wsl_node_cli_fallback_does_not_require_windows_codex_home(self):
+        command = [
+            "/mnt/c/Program Files/nodejs/node.exe",
+            r"C:\Users\example\AppData\Roaming\npm\node_modules\@openai\codex\bin\codex.js",
+            "app-server", "--stdio",
+        ]
+        environment = {"WSL_INTEROP": "/run/WSL/123_interop"}
+
+        try:
+            result = app_server_client.wsl_environment_for_windows_executable(
+                command, environment)
+        except app_server_client.AppServerError as error:
+            self.fail(f"legacy Node/npm fallback was rejected: {error}")
+        self.assertIsNone(result)
+
     def test_direct_codex_executable_disables_configured_mcps_individually(self):
         executable = str(Path(controller.__file__).resolve())
         with tempfile.TemporaryDirectory() as codex_home:
