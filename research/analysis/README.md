@@ -954,6 +954,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`processor_demand_witness_7748_duplicate_id_a01_20261005/`](processor_demand_witness_7748_duplicate_id_a01_20261005/)
 - [`processor_demand_witness_7748_duplicate_id_a02_20261005/`](processor_demand_witness_7748_duplicate_id_a02_20261005/)
 - [`processor_demand_witness_7748_t0_20261005/`](processor_demand_witness_7748_t0_20261005/)
+- [`proof_carrying_action_5311_t0_a01_20261009/`](proof_carrying_action_5311_t0_a01_20261009/)
 - [`protective_local_adaptation_6367_reaudit_v1/`](protective_local_adaptation_6367_reaudit_v1/)
 - [`protective_local_adaptation_6367_t0_20261004/`](protective_local_adaptation_6367_t0_20261004/)
 - [`provenance_defeasible_obligations_7817_a01_20261005/`](provenance_defeasible_obligations_7817_a01_20261005/)
