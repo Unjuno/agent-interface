@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8636 oracle-boundary construction patch](relative_view_rotation_oracle_boundary_construction_20261012/README.md) — prospective runner/auditor arm-isolation patch; four focused regressions and 13 applicable A04 construction tests pass in normal and optimized Python. No formal candidate/auditor run; A04 remains `HOLD_UNCERTAIN`.
+
 - [Issue #8574 T0 A01 perspective-guided review](perspective_guided_review_8574_t0_a01_20261009/REPORT.md) — `NO_INCREMENTAL_VALUE_SCOPED`: all three arms found the same cross-view identity omission in Q11 (2/2 per arm); no incremental PBR rescue. Synthetic source-contract review only; no human or GUI inference.
 
 - [Issue #1998 A04 Pillow PNG focused-payload economics](pillow_focused_observation_payload_1998_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: main ImageArtifactSink/Pillow 12.3.0 exact-pixel audit on 21 retained GUI frames and 441 requests; 420 crops saved 9,617,403 serialized bytes, 21 full-bounds controls fell back, and 6/6 mutations were rejected. Finite byte accounting only; ROI quality, model, latency, GUI/task effect, and product benefit remain untested.
