@@ -73,6 +73,7 @@
   ],
   "retained_hard_event_context": {
     "sequence": 218,
+    "cover_id": "cover-5",
     "health": 48,
     "hard_minimum": 51,
     "capture_to_typed_ready_ms": 11.810954,
@@ -80,11 +81,16 @@
     "typed_emit_to_artifact_ready_ms": 111.11915,
     "capture_to_guard_monitor_ms": 133.689927,
     "typed_emit_to_guard_monitor_ms": 117.90999800000002,
+    "guard_monitor_to_verified_release_ms": 32.06227,
+    "verified_release_to_terminal_ms": 14.183481,
+    "accepted_steps": 16,
+    "completed_steps": 11,
     "pending_turn_status": "interrupted",
     "pending_answer_eligible": false,
+    "cover_cancelled": true,
+    "owner_release_verified": true,
     "cover_terminal_before_plan": true,
-    "executor_admission": null,
-    "revocation": null
+    "new_plan_admitted": false
   },
   "checks": [
     "20/20 WSLc exits=0",
@@ -93,13 +99,14 @@
     "all 20 pending answers ineligible",
     "event ordering checked",
     "frozen source/input hashes match",
-    "seq-218 retained hard-event context independently reconciled"
+    "retention manifest authenticates the 634-row live event log",
+    "seq-218 live cover cancellation and verified release reconciled before planner terminal"
   ],
   "limits": [
-    "synthetic in-memory fake X only",
-    "wait injected rather than native artifact pipeline",
-    "retained seq-218 event had no Executor admission/revocation and cover was terminal before plan",
-    "no live GUI/game/physical input or task outcome",
+    "paired comparison is synthetic in-memory fake X and injects delay",
+    "retained MAP01 trace is one finite episode, with no MAP01 exit",
+    "the retained live row does not record a per-key down-before snapshot at the exact invalidation instant",
+    "no claim of repeated reliability, causal survival benefit, or successful bounded recovery",
     "WSLc swap limit unsupported warning; resource enforcement beyond reported observations not inferred"
   ]
 }

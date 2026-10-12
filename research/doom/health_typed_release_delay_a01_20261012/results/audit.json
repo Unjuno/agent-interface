@@ -7,15 +7,16 @@
     "all 20 pending answers ineligible",
     "event ordering checked",
     "frozen source/input hashes match",
-    "seq-218 retained hard-event context independently reconciled"
+    "retention manifest authenticates the 634-row live event log",
+    "seq-218 live cover cancellation and verified release reconciled before planner terminal"
   ],
   "delayed_median_ms": 150.484494,
   "early_median_ms": 2.0709865,
   "limits": [
-    "synthetic in-memory fake X only",
-    "wait injected rather than native artifact pipeline",
-    "retained seq-218 event had no Executor admission/revocation and cover was terminal before plan",
-    "no live GUI/game/physical input or task outcome",
+    "paired comparison is synthetic in-memory fake X and injects delay",
+    "retained MAP01 trace is one finite episode, with no MAP01 exit",
+    "the retained live row does not record a per-key down-before snapshot at the exact invalidation instant",
+    "no claim of repeated reliability, causal survival benefit, or successful bounded recovery",
     "WSLc swap limit unsupported warning; resource enforcement beyond reported observations not inferred"
   ],
   "monitor_file_sha256": "6dde213edf3a77c4de7dd24c4ee98d919436d73964a3307fdb0778880e8c7263",
@@ -86,19 +87,25 @@
     }
   ],
   "retained_hard_event_context": {
+    "accepted_steps": 16,
     "capture_to_guard_monitor_ms": 133.689927,
     "capture_to_typed_ready_ms": 11.810954,
+    "completed_steps": 11,
+    "cover_cancelled": true,
+    "cover_id": "cover-5",
     "cover_terminal_before_plan": true,
-    "executor_admission": null,
+    "guard_monitor_to_verified_release_ms": 32.06227,
     "hard_minimum": 51,
     "health": 48,
+    "new_plan_admitted": false,
+    "owner_release_verified": true,
     "pending_answer_eligible": false,
     "pending_turn_status": "interrupted",
-    "revocation": null,
     "sequence": 218,
     "typed_emit_to_artifact_ready_ms": 111.11915,
     "typed_emit_to_guard_monitor_ms": 117.90999800000002,
-    "typed_ready_to_emit_ms": 3.968975
+    "typed_ready_to_emit_ms": 3.968975,
+    "verified_release_to_terminal_ms": 14.183481
   },
   "source_report_sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
   "status": "PASS"

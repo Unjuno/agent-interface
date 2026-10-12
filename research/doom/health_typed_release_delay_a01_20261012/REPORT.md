@@ -8,7 +8,11 @@ This isolates one effect: when the typed signal reaches the monitor, the existin
 
 ## Context from the retained live trace
 
-The same source report contains a hard health event at sequence 218: health 48 below hard minimum 51. Its typed payload was ready 11.811 ms after capture and emitted 3.969 ms later; artifact readiness followed typed emission by 111.119 ms, while the full guard monitor received it 133.690 ms after capture (117.910 ms after typed emission). That planner turn was interrupted and its answer rejected. However, the cover was already terminal before the plan and the admission record has no Executor admission or revocation. Thus the retained event does not itself show a held key being cut off by the guard. The active-key experiment above tests that counterfactual composition; it does not retroactively establish a live held-input effect.
+The same retained MAP01 episode has a hard health event at sequence 218 while `cover-5` was running. The accepted cover contained 16 steps; the event arrived at step 11 with health 48 below hard minimum 51. The exact 634-row event log is preserved at `inputs/runtime-events.jsonl` and its SHA-256 is authenticated by the retained manifest (`2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381`). The prior corrected audit records `dynamic_revocation_exposed=true` for this one episode.
+
+The typed event emitted 15.780 ms after capture. Artifact readiness followed 111.119 ms later; the full guard received the event 117.910 ms after typed emission. It cancelled the cover; the owner verified an empty key/button state 32.062 ms after monitor receipt, and the cancelled cover terminal followed. The planner turn then ended interrupted with its answer ineligible. This is direct evidence that the retained integrated MAP01 path once cancelled a running cover and verified release on a hard health invalidation. The terminal was 13.140 ms before the planner terminal.
+
+Two limits remain. The log does not snapshot an individual key as down immediately before this event, so the empty release receipt alone does not prove that a physical key was held at that instant. This was one finite episode, not repeated reliability evidence; it did not exit MAP01. The 10-pair comparison above is still a synthetic in-memory fake-X test of the latency potentially removed by early typed dispatch; it did not replay the live game event or the native artifact pipeline.
 
 ## Reproduction
 
@@ -26,6 +30,6 @@ The source snapshot under `worktree/` contains the exact controller helpers, PR 
 - The delay (150.031473 ms) is the maximum `typed_emit_to_artifact_ready_ms` in the retained 218-observation report at `inputs/source-report.json` (SHA-256 `719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687`).
 - `results/` retains each raw result JSON, WSLc stdout/stderr log, run order, and independent audit.
 - WSLc emitted that swap-limit support is unavailable. The configured 1 CPU/512 MiB limits and warning are preserved; this report does not infer full cgroup or swap enforcement.
-- Fake X is in-memory. No physical input, GUI, game, live allocation, useful feedback, threat response, survival, task success, or successful bounded recovery was tested.
-- The result was recorded on [Issue #59](https://github.com/Unjuno/agent-interface/issues/59#issuecomment-6118247767); the exact update is preserved in `ISSUE_UPDATE.md`. The decisive #59 gate remains a separately authorized fresh threat-exposure run on the integrated real-time path. This construction result does not consume or authorize that allocation.
+- The paired comparison uses in-memory fake X; it does not itself exercise physical input, GUI/game feedback, survival, or recovery. The retained one-off MAP01 trace supplies a scoped live cancellation/release observation, but not MAP01 exit, repeated reliability, or successful bounded recovery.
+- The experiment result is recorded on [Issue #59](https://github.com/Unjuno/agent-interface/issues/59#issuecomment-6118247767). A correction to the retained-event interpretation is recorded [here](https://github.com/Unjuno/agent-interface/issues/59#issuecomment-6118323112) and preserved in `RETAINED_EVENT_CORRECTION.md`. Issue #59 remains open; a fresh bounded run is still needed to test repeatability and task outcome. This work does not consume or authorize a new live allocation.
 
