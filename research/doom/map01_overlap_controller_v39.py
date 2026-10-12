@@ -702,6 +702,14 @@ def session_command(args, runtime):
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
 
 
+def require_release_receipt_session(args):
+    """Reject the V10 default, whose receipts cannot satisfy the strict gate."""
+    if not getattr(args, "measurement_session", False):
+        raise ValueError(
+            "strict release-receipt validation requires --measurement-session "
+            "(V15/V12 producer); the V12 default uses V10 receipts")
+
+
 def validate_action(action):
     if action["state"] == "active" and not action["commands"]:
         raise ValueError("active state requires a motor command")
@@ -1094,6 +1102,10 @@ def main():
     parser.add_argument("--measurement-session", action="store_true",
                         help="opt into V15 scorer-only and per-key release telemetry")
     args = parser.parse_args()
+    try:
+        require_release_receipt_session(args)
+    except ValueError as error:
+        parser.error(str(error))
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
         app_server_command(), cwd=REPO,
