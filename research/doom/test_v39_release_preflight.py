@@ -1,6 +1,10 @@
 """Preflight tests for the strict V39 release-receipt producer contract."""
 import ast
+import argparse
+import contextlib
+import io
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -37,27 +41,41 @@ class ReleasePreflightTests(unittest.TestCase):
             Path("runtime"))
         self.assertEqual(Path(command[1]).name, "session_map01_v15.py")
 
-    def test_preflight_runs_before_output_creation_and_child_process(self):
+    def test_cli_rejects_default_before_output_creation_or_child_launch(self):
         main = next(node for node in TREE.body
                     if isinstance(node, ast.FunctionDef) and node.name == "main")
-        calls = [(node.lineno, node.func.id if isinstance(node.func, ast.Name)
-                  else node.func.attr if isinstance(node.func, ast.Attribute) else "")
-                 for node in ast.walk(main) if isinstance(node, ast.Call)]
-        preflight = [line for line, name in calls
-                     if name == "require_release_receipt_session"]
-        output_creation = [node.lineno for node in ast.walk(main)
-                           if isinstance(node, ast.Call)
-                           and isinstance(node.func, ast.Attribute)
-                           and node.func.attr == "mkdir"
-                           and isinstance(node.func.value, ast.Attribute)
-                           and node.func.value.attr == "out"]
-        child_launch = [line for line, name in calls
-                        if name == "Popen"]
-        self.assertEqual(len(preflight), 1)
-        self.assertEqual(len(output_creation), 1)
-        self.assertEqual(len(child_launch), 1)
-        self.assertLess(preflight[0], output_creation[0])
-        self.assertLess(preflight[0], child_launch[0])
+        helper = next(node for node in TREE.body
+                      if isinstance(node, ast.FunctionDef)
+                      and node.name == "require_release_receipt_session")
+        namespace = {
+            "argparse": argparse,
+            "Path": Path,
+            "ValueError": ValueError,
+            "sys": sys,
+        }
+        exec(compile(ast.Module(body=[helper], type_ignores=[]), str(SOURCE), "exec"),
+             namespace)
+        exec(compile(ast.Module(body=[main], type_ignores=[]), str(SOURCE), "exec"),
+             namespace)
+
+        original_argv = sys.argv
+        try:
+            with tempfile.TemporaryDirectory() as temporary:
+                output = Path(temporary) / "must-not-be-created"
+                sys.argv = [
+                    str(SOURCE), "--out", str(output), "--model", "fixture",
+                    "--effort", "low", "--load-fixture-manifest",
+                    str(Path(temporary) / "fixture.json"),
+                ]
+                stderr = io.StringIO()
+                with contextlib.redirect_stderr(stderr):
+                    with self.assertRaises(SystemExit) as raised:
+                        namespace[main.name]()
+                self.assertEqual(raised.exception.code, 2)
+                self.assertIn("--measurement-session", stderr.getvalue())
+                self.assertFalse(output.exists())
+        finally:
+            sys.argv = original_argv
 
 
 if __name__ == "__main__":
