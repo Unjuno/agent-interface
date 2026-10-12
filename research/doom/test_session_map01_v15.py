@@ -18,6 +18,69 @@ from executor_v13 import Executor as ReleaseOrderedExecutor
 
 
 class SessionSelectionTests(unittest.TestCase):
+    def test_process_owner_flag_selects_backend_and_is_removed_from_base_cli(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            (out / "sources.json").write_text("{}", encoding="utf-8")
+            base = types.ModuleType("session_map01_v12")
+            base.vd = types.SimpleNamespace(DoomGame=object)
+            base.sys = sys
+            base.Backend = type("DefaultBackend", (), {})
+            base.main = lambda: self.assertNotIn("--process-owner", sys.argv)
+            process_backend = types.ModuleType(
+                "doom_owner_thread_release_batch_backend_process_v1")
+            process_backend.Backend = type("ProcessBackend", (), {})
+            previous_base = sys.modules.get("session_map01_v12")
+            previous_backend = sys.modules.get(
+                "doom_owner_thread_release_batch_backend_process_v1")
+            sys.modules["session_map01_v12"] = base
+            sys.modules["doom_owner_thread_release_batch_backend_process_v1"] = process_backend
+            oldargv, oldstdin = sys.argv, sys.stdin
+            try:
+                with patch.object(candidate, "MainThreadScorerStdin") as polling, \
+                     patch.object(candidate, "ScorerFileSink") as sink:
+                    polling.return_value.stats.return_value = {}
+                    sys.argv = ["session", "--out", str(out), "--process-owner"]
+                    candidate.main()
+                self.assertIs(base.Backend, process_backend.Backend)
+                manifest = json.loads((out / "sources.json").read_text(encoding="utf-8"))
+                manifest = {name.replace("\\", "/"): value
+                            for name, value in manifest.items()}
+                self.assertIn("doom/doom_owner_thread_release_batch_backend_process_v1.py", manifest)
+                self.assertIn("live_control/input_owner_process_v1.py", manifest)
+            finally:
+                sys.argv, sys.stdin = oldargv, oldstdin
+                if previous_base is None:
+                    sys.modules.pop("session_map01_v12", None)
+                else:
+                    sys.modules["session_map01_v12"] = previous_base
+                if previous_backend is None:
+                    sys.modules.pop("doom_owner_thread_release_batch_backend_process_v1", None)
+                else:
+                    sys.modules["doom_owner_thread_release_batch_backend_process_v1"] = previous_backend
+
+    def test_process_owner_source_closure_is_recorded_only_for_opt_in(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            sources = out / "sources.json"
+            sources.write_text("{}", encoding="utf-8")
+            oldargv = sys.argv
+            try:
+                sys.argv = ["session"]
+                candidate._merge_sources(out)
+                default = {name.replace("\\", "/") for name in
+                           json.loads(sources.read_text(encoding="utf-8"))}
+                self.assertNotIn("doom/doom_owner_thread_release_batch_backend_process_v1.py", default)
+                sys.argv = ["session", "--process-owner"]
+                candidate._merge_sources(out)
+                measured = {name.replace("\\", "/"): digest for name, digest in
+                            json.loads(sources.read_text(encoding="utf-8")).items()}
+                for name in ("doom/doom_owner_thread_release_batch_backend_process_v1.py",
+                             "live_control/input_owner_process_v1.py"):
+                    self.assertEqual(len(measured[name]), 64)
+            finally:
+                sys.argv = oldargv
+
     def test_v15_selects_release_ordered_executor_and_hashes_sources(self):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)

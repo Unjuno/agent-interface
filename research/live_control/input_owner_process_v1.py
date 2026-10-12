@@ -251,7 +251,7 @@ def _exception_from_payload(payload):
 def _receipt_is_verified(receipt):
     releases = receipt.get("release_records") if type(receipt) is dict else None
     return bool(
-        type(releases) is list and len(releases) == 1
+        type(releases) is list and len(releases) >= 1
         and receipt.get("schema") == "input-owner-recovery-v1"
         and receipt.get("receipt_fsynced") is True
         and receipt.get("owner_thread_stopped") is True
@@ -263,6 +263,7 @@ def _receipt_is_verified(receipt):
             and row.get("key_state_errors") == []
             for row in releases
         )
+        and releases[-1].get("reason") == "close"
     )
 
 

@@ -191,6 +191,15 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(Path(measured[1]).name, "session_map01_v15.py")
         self.assertEqual(measured[2:], default[2:])
 
+        args.measurement_owner_process = True
+        process_owned = controller.session_command(args, Path("runtime"))
+        self.assertEqual(Path(process_owned[1]).name, "session_map01_v15.py")
+        self.assertEqual(process_owned[:-1], measured)
+        self.assertEqual(process_owned[-1], "--process-owner")
+        args.measurement_session = False
+        with self.assertRaisesRegex(ValueError, "requires the V15"):
+            controller.session_command(args, Path("runtime"))
+
     def test_rejected_action_followup_keeps_model_turn_alive_on_damage(self):
         previous = {"iteration": 1, "model_action_discarded": True,
                     "action": {"state": "active", "next_cover": [

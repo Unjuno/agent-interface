@@ -25,6 +25,9 @@ def _merge_sources(out):
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
     additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
+    if '--process-owner' in sys.argv:
+        additions.extend((HERE/'doom_owner_thread_release_batch_backend_process_v1.py',
+                          RESEARCH/'live_control/input_owner_process_v1.py'))
     for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
 
@@ -108,9 +111,16 @@ class _GameProxy:
 def main():
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
     if timeout_seconds<10:raise ValueError('timeout must leave scoring slack')
+    process_owner='--process-owner' in sys.argv
+    original_argv=sys.argv
+    if process_owner:
+        sys.argv=[arg for arg in sys.argv if arg!='--process-owner']
     import session_map01_v12 as base
     from executor_v13 import Executor as ReleaseOrderedExecutor
-    from doom_owner_thread_release_batch_backend_v1 import Backend as TelemetryBackend
+    if process_owner:
+        from doom_owner_thread_release_batch_backend_process_v1 import Backend as TelemetryBackend
+    else:
+        from doom_owner_thread_release_batch_backend_v1 import Backend as TelemetryBackend
     holder={};sink=ScorerFileSink(out)
     def sample_game():
         game=holder.get('game')
@@ -124,5 +134,6 @@ def main():
     try:base.main()
     finally:
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
+        sys.argv=original_argv
         sink.finalize(polling.stats());_merge_sources(out)
 if __name__=='__main__':main()

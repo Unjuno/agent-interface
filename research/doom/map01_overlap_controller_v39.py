@@ -19,7 +19,8 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
-from doom_controller_failure_cleanup_v1 import ControllerFailureCleanup
+from doom_controller_failure_cleanup_v1 import (
+    ControllerFailureCleanup, verify_owner_process_recovery)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
@@ -689,10 +690,15 @@ def session_command(args, runtime):
     session = ("session_map01_v15.py"
                if getattr(args, "measurement_session", False)
                else "session_map01_v12.py")
-    return [sys.executable, str(HERE / session),
+    command = [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
+    if getattr(args, "measurement_owner_process", False):
+        if not getattr(args, "measurement_session", False):
+            raise ValueError("process-owner mode requires the V15 measurement session")
+        command.append("--process-owner")
+    return command
 
 
 def validate_action(action):
@@ -1086,13 +1092,19 @@ def main():
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
     parser.add_argument("--measurement-session", action="store_true",
                         help="opt into V15 scorer-only and per-key release telemetry")
+    parser.add_argument("--measurement-owner-process", action="store_true",
+                        help="opt into the V15 process-owned input adapter and recovery gate")
     args = parser.parse_args()
+    if args.measurement_owner_process and not args.measurement_session:
+        parser.error("--measurement-owner-process requires --measurement-session")
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
         app_server_command(), cwd=REPO,
         journal_path=args.out / "planner-protocol.jsonl")
     atexit.register(planner_client.close)
-    with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:
+    with ControllerFailureCleanup(
+            planner_client, args.out,
+            owner_process_recovery=args.measurement_owner_process) as failure_cleanup:
         failure_cleanup.set_stage("planner_initialize")
         planner_client.initialize()
         planner = PersistentPlannerAdapter(
@@ -1847,6 +1859,13 @@ def main():
         score=wait(lambda r:r["event"]=="post_control_score")
         failure_cleanup.set_stage("session_reap")
         process.wait(timeout=20)
+        owner_recovery = None
+        if args.measurement_owner_process:
+            reader_thread.join(timeout=5)
+            if reader_thread.is_alive() or reader_errors:
+                raise RuntimeError("session event stream did not close cleanly before owner receipt gate")
+            failure_cleanup.set_stage("owner_process_recovery")
+            owner_recovery = verify_owner_process_recovery(runtime, all_events)
         failure_cleanup.set_stage("planner_close")
         planner_client.close()
         atexit.unregister(planner_client.close)
@@ -1875,6 +1894,17 @@ def main():
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
+          "measurement_owner_process":args.measurement_owner_process,
+          "owner_process_recovery_verified":owner_recovery is not None,
+          "owner_process_recovery":(None if owner_recovery is None else {
+              "owner_id":owner_recovery["owner_id"],
+              "service_pid":owner_recovery["service_pid"],
+              "display":owner_recovery["display"],
+              "trigger":owner_recovery["trigger"],
+              "receipt_path":str(runtime/"input-owner-process"/
+                                  "input-owner-recovery-v1.json"),
+              "receipt_sha256":hashlib.sha256((runtime/"input-owner-process"/
+                  "input-owner-recovery-v1.json").read_bytes()).hexdigest()}),
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",

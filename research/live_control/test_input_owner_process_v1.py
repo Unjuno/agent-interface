@@ -95,15 +95,19 @@ class InputOwnerProcessProtocolTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unique allowlisted"):
             validate_request(request, expected_id=1)
 
-    def test_recovery_receipt_requires_one_verified_release_record(self):
-        release = {"event": "owner_release", "verified": True,
+    def test_recovery_receipt_accepts_cancel_then_final_close(self):
+        release = {"event": "owner_release", "reason": "close", "verified": True,
                    "keys_down": [], "buttons_down": [], "keys_unknown": [],
                    "key_state_errors": []}
         receipt = {"schema": "input-owner-recovery-v1", "receipt_fsynced": True,
                    "owner_thread_stopped": True, "close_error": None,
                    "release_records": [release]}
         self.assertTrue(_receipt_is_verified(receipt))
-        receipt["release_records"] = [release, release]
+        cancelled = dict(release, reason="cancelled")
+        closed = dict(release, reason="close")
+        receipt["release_records"] = [cancelled, closed]
+        self.assertTrue(_receipt_is_verified(receipt))
+        receipt["release_records"] = [cancelled]
         self.assertFalse(_receipt_is_verified(receipt))
 
 

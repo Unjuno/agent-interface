@@ -1,5 +1,8 @@
 """Best-effort owned cleanup preserving the controller's primary failure."""
 import atexit,json,os,select,threading,time
+from pathlib import Path
+
+from input_owner_process_v1 import read_recovery_receipt
 
 def send_failure_finish(stream, timeout=0.25):
     """Attempt finish on an owned POSIX pipe without an unbounded flush.
@@ -29,9 +32,49 @@ def send_failure_finish(stream, timeout=0.25):
         os.set_blocking(fd,blocking)
 
 
+def verify_owner_process_recovery(runtime, events, *, timeout=8.0,
+                                  clock=time.monotonic, sleep=time.sleep,
+                                  kill=os.kill):
+    """Require the session-published owner identity and durable close receipt."""
+    ready = [row for row in events if type(row) is dict and
+             row.get("event") == "input_owner_process_ready"]
+    if len(ready) != 1:
+        raise RuntimeError("expected exactly one process-owner ready event")
+    row = ready[0]
+    if (row.get("schema") != "input-owner-process-ready-v1" or
+            not isinstance(row.get("owner_id"), str) or not row["owner_id"] or
+            type(row.get("service_pid")) is not int or row["service_pid"] <= 1 or
+            not isinstance(row.get("display"), str) or not row["display"]):
+        raise RuntimeError("process-owner ready identity is malformed")
+    expected = (Path(runtime) / "input-owner-process" /
+                "input-owner-recovery-v1.json").resolve()
+    supplied = Path(row.get("receipt_path", "")).resolve()
+    if supplied != expected:
+        raise RuntimeError("process-owner receipt path is outside session runtime")
+    deadline = clock() + timeout
+    receipt = None
+    while clock() < deadline:
+        try:
+            receipt = read_recovery_receipt(supplied, expected_display=row["display"])
+        except (FileNotFoundError, json.JSONDecodeError, ValueError, RuntimeError):
+            receipt = None
+        try:
+            kill(row["service_pid"], 0)
+            service_exited = False
+        except ProcessLookupError:
+            service_exited = True
+        if (receipt is not None and service_exited and
+                receipt.get("service_pid") == row["service_pid"] and
+                receipt.get("owner_id") == row["owner_id"]):
+            return receipt
+        sleep(min(.05, max(0, deadline - clock())))
+    raise TimeoutError("verified process-owner receipt and service exit not observed")
+
+
 class ControllerFailureCleanup:
     def __init__(self, planner, out, finish_timeout=0.5,
-                 child_wait_timeout=5, escalation_wait_timeout=1):
+                 child_wait_timeout=5, escalation_wait_timeout=1,
+                 owner_process_recovery=False):
         self.planner=planner;self.out=out;self.process=None
         self.finish_timeout=finish_timeout
         self.child_wait_timeout=child_wait_timeout
@@ -39,6 +82,7 @@ class ControllerFailureCleanup:
         self.failed_stage='controller_setup'
         self.events=None;self.reader=None;self.event_wait=None;self.runtime=None
         self.reader_errors=[]
+        self.owner_process_recovery=bool(owner_process_recovery)
     def track(self, process):
         self.process=process
     def set_stage(self, name):
@@ -54,6 +98,9 @@ class ControllerFailureCleanup:
                  'failed_stage':self.failed_stage,'stages':[], 'input_release_verified':False,
                  'input_releases_verified_empty':False,
                  'scope':'owned child process only; no physical release or scorer certificate'}
+        receipt['owner_process_recovery_required']=self.owner_process_recovery
+        receipt['owner_process_recovery_verified']=False
+        receipt['display_reuse_allowed']=not self.owner_process_recovery
         def attempt(name, operation):
             try:
                 result=operation()
@@ -174,6 +221,19 @@ class ControllerFailureCleanup:
                                           'error_type':type(secondary).__name__})
                 try: error.add_note('owner_events_read cleanup failed: '+type(secondary).__name__)
                 except BaseException: pass
+        if self.owner_process_recovery:
+            child_exit=receipt.get('child_exit_code') is not None
+            if child_exit and type(events) is list and self.runtime is not None:
+                try:
+                    owner_receipt=verify_owner_process_recovery(self.runtime,events)
+                    receipt['owner_process_recovery_verified']=True
+                    receipt['owner_recovery_receipt']=owner_receipt
+                    receipt['display_reuse_allowed']=True
+                except BaseException as secondary:
+                    receipt['stages'].append({'stage':'owner_process_recovery','status':'failed',
+                                              'error_type':type(secondary).__name__})
+                    try:error.add_note('owner process recovery failed: '+type(secondary).__name__)
+                    except BaseException:pass
         child_exit=receipt.get('child_exit_code') is not None
         planner_closed=any(row.get('stage')=='planner_close' and row.get('status')=='returned'
                            for row in receipt['stages'])
@@ -182,6 +242,7 @@ class ControllerFailureCleanup:
             not receipt['stdout_reader_errors'],receipt['input_terminals_complete'],
             receipt['input_releases_verified_empty'],receipt['scorer_terminal_observed'],
             receipt['score_file_present'],receipt['owner_events_closed'],
+            receipt['display_reuse_allowed'],
             all(row.get('status')=='returned' for row in receipt['stages'])))
         attempt('failure_receipt_write',lambda:(self.out/'controller-failure.json').write_text(json.dumps(receipt,indent=2)+'\n'))
         return False
