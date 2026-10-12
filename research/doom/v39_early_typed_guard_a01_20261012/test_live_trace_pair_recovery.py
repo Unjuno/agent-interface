@@ -142,13 +142,32 @@ class LiveTracePairRecoveryTests(unittest.TestCase):
                 wait=lambda predicate, observation_monitor: None,
                 observation_monitor=monitor)
 
-        fresh_capture = full["capture_ns"] + 1_000_000
+        unknown_capture = full["capture_ns"] + 1_000_000
+        changed_binding = dict(binding, focus=binding["focus"] + 1)
+        unknown_signals = {
+            "health": signal("health", 51, 219, unknown_capture, changed_binding),
+            "ammo": signal("ammo", 37, 219, unknown_capture, changed_binding),
+        }
+        unknown = {"event": "observation", "sequence": 219,
+                   "capture_ns": unknown_capture,
+                   "pointer_binding": changed_binding,
+                   "frame_rgb_sha256": "b" * 64,
+                   "signals": unknown_signals,
+                   "replay_signals": unknown_signals}
+        unknown_result = monitor.observe(unknown)
+        self.assertEqual(unknown_result["reason"], "health:binding_changed")
+        self.assertFalse(unknown_result["grants_input_authority"])
+        self.assertEqual(monitor.last_sequence, 219)
+        self.assertEqual(monitor.last_pair_sequence, 218,
+                         "unknown guard outcome must not advance coherent watermark")
+
+        fresh_capture = full["capture_ns"] + 2_000_000
         fresh_binding = dict(binding)
         fresh_signals = {
-            "health": signal("health", 51, 219, fresh_capture, fresh_binding),
-            "ammo": signal("ammo", 37, 219, fresh_capture, fresh_binding),
+            "health": signal("health", 51, 220, fresh_capture, fresh_binding),
+            "ammo": signal("ammo", 37, 220, fresh_capture, fresh_binding),
         }
-        fresh = {"event": "observation", "sequence": 219,
+        fresh = {"event": "observation", "sequence": 220,
                  "capture_ns": fresh_capture,
                  "pointer_binding": fresh_binding,
                  "frame_rgb_sha256": "a" * 64,
@@ -157,7 +176,7 @@ class LiveTracePairRecoveryTests(unittest.TestCase):
         fresh_result = monitor.observe(fresh)
         self.assertIsNone(fresh_result, repr(fresh_result))
         latest[0] = fresh
-        self.assertEqual(monitor.last_pair_sequence, 219,
+        self.assertEqual(monitor.last_pair_sequence, 220,
                          f"monitor last={monitor.last_sequence} event={monitor.last_event_kind}; "
                          f"signals={fresh_signals!r}")
         recovered, receipt = api["recover_coherent_source_after_observation"](
@@ -165,9 +184,9 @@ class LiveTracePairRecoveryTests(unittest.TestCase):
             wait=lambda predicate, observation_monitor: self.fail(
                 "already-coherent fresh pair must recover without waiting"),
             observation_monitor=monitor)
-        self.assertEqual(recovered["sequence"], 219)
+        self.assertEqual(recovered["sequence"], 220)
         self.assertEqual(receipt["required_after_sequence"], 218)
-        self.assertEqual(receipt["fresh_sequence"], 219)
+        self.assertEqual(receipt["fresh_sequence"], 220)
         self.assertEqual(receipt["additional_invalidations"], [])
 
 

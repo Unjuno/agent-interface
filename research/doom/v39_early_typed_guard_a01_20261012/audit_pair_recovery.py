@@ -17,6 +17,8 @@ FILES = {
     "report": TRACE / "report.json",
     "replay_output": BASE / "out/pair-recovery-replay.txt",
     "replay_exit": BASE / "out/pair-recovery-replay-exit.txt",
+    "related_tests_exit": BASE / "out/pair-recovery-related-tests-exit.txt",
+    "related_tests_output": BASE / "out/pair-recovery-related-tests.txt",
 }
 EXPECTED = {
     "controller": "704c8c8a35f88765f207e4be18b4e32979fdcb6960aaea fcb867dcee4cb8eed0".replace(" ", ""),
@@ -43,6 +45,10 @@ def main():
     output = FILES["replay_output"].read_text()
     if "Ran 1 test" not in output or "OK" not in output:
         raise SystemExit("FAIL replay output is not a passing one-test run")
+    related_output = FILES["related_tests_output"].read_text()
+    if (FILES["related_tests_exit"].read_text().strip() != "0" or
+            "Ran 43 tests" not in related_output or "OK" not in related_output):
+        raise SystemExit("FAIL related V39 test output is not a passing 43-test run")
     report = json.loads(FILES["report"].read_text(encoding="utf-8"))
     decision = next(row for row in report["decisions"] if row.get("iteration") == 5)
     if decision["cover_validity_admission"]["effective"]["hard_minimum"] != 51:
