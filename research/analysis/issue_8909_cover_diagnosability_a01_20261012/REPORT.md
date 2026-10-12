@@ -7,7 +7,8 @@
 - Repository base: `main` at `964c9197d5083ab55ea7fdc9105427623e89e677` (2026-10-12).
 - Hypothesis owner: [Issue #8909](https://github.com/Unjuno/agent-interface/issues/8909).
 - Candidate source: `a01.mjs`; dependency-free ES module / Node-compatible script.
-- Execution in this session: the exact source body was evaluated in the JavaScript V8 isolate with `process` unavailable; no filesystem, external state, GUI, model, or container was used. For local reproduction, run `node a01.mjs`.
+- Execution 1 (session construction): exact source evaluated in the JavaScript V8 isolate with `process` unavailable; no filesystem, GUI, model, or container was used.
+- Execution 2 (reproduction): fetched this branch's raw `a01.mjs` and piped it directly to Windows Node `v24.6.0` (`curl.exe ... | node -`); exit code 0 and stdout matched the retained `result.json` fields. No local source/evidence file was created. For reproduction, run `node a01.mjs`.
 - Frozen state space: 5 states × 3 policies, horizon 2 observation ticks = 15 traces.
 - Policies: no-cover; protective-cover; protective-cover plus passive sentinel.
 - Independent oracle: separately authored literal state/event table and trace calculation; it does not call candidate transition/enumeration code. The checker compares every trace, safety prefix and next-response label and separately checks the predeclared equivalence pairs.
