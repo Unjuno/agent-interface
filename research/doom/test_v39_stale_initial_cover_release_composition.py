@@ -37,6 +37,7 @@ exec(compile(ast.Module(body=FUNCTIONS, type_ignores=[]), str(SOURCE), "exec"),
 
 
 BASE_RELEASE = {
+    "event": "owner_release",
     "verified": True,
     "keys_down": [],
     "buttons_down": [],

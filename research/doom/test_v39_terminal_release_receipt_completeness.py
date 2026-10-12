@@ -43,6 +43,7 @@ class Planner:
 
 
 BASE_RELEASE = {
+    "event": "owner_release",
     "verified": True,
     "keys_down": [],
     "buttons_down": [],
@@ -73,6 +74,27 @@ class TerminalReleaseReceiptTests(unittest.TestCase):
             Process(), wait_for(terminal()), "cover-a")
         NAMESPACE["cancel_invalidated_cover"](
             Planner(), object(), Process(), wait_for(terminal()), "cover-a")
+
+    def test_nested_release_event_must_be_owner_release_on_every_terminal_path(self):
+        paths = (
+            lambda row: NAMESPACE["require_cover_terminal"](row),
+            lambda row: NAMESPACE["cancel_initial_cover_before_planner"](
+                Process(), wait_for(row), "cover-a"),
+            lambda row: NAMESPACE["cancel_invalidated_cover"](
+                Planner(), object(), Process(), wait_for(row), "cover-a"),
+        )
+        for mutation in ("missing", "input_admission"):
+            release = copy.deepcopy(BASE_RELEASE)
+            if mutation == "missing":
+                release.pop("event")
+            else:
+                release["event"] = mutation
+            row = terminal(release)
+            self.assertFalse(NAMESPACE["terminal_release_is_known_empty"](row))
+            for path_index, exercise in enumerate(paths):
+                with self.subTest(mutation=mutation, path=path_index):
+                    with self.assertRaises(RuntimeError):
+                        exercise(row)
 
     def test_missing_or_nonempty_unknown_error_fields_are_rejected(self):
         mutations = (

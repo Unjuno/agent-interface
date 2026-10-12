@@ -388,7 +388,8 @@ def terminal_release_is_known_empty(terminal):
     """Return true only for an explicit, verified, known-empty terminal release."""
     release = terminal.get("release") if type(terminal) is dict else None
     return (type(terminal) is dict and terminal.get("event") == "terminal" and
-            type(release) is dict and release.get("verified") is True and
+            type(release) is dict and release.get("event") == "owner_release" and
+            release.get("verified") is True and
             release.get("keys_down") == [] and release.get("buttons_down") == [] and
             release.get("keys_unknown") == [] and
             release.get("key_state_errors") == [])
