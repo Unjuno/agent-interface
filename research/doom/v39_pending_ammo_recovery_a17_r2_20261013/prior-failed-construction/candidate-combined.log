@@ -1,0 +1,30 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_no_ammo_recovery_rejects_at_current_value (test_a17_pending_ammo_recovery.PendingAmmoStalenessTests.test_no_ammo_recovery_rejects_at_current_value) ... FAIL
+test_pending_turn_uses_recovered_current_ammo_for_returned_action (test_a17_pending_ammo_recovery.PendingAmmoStalenessTests.test_pending_turn_uses_recovered_current_ammo_for_returned_action) ... FAIL
+
+======================================================================
+FAIL: test_no_ammo_recovery_rejects_at_current_value (test_a17_pending_ammo_recovery.PendingAmmoStalenessTests.test_no_ammo_recovery_rejects_at_current_value)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/a17/test_a17_pending_ammo_recovery.py", line 89, in test_no_ammo_recovery_rejects_at_current_value
+    result=self.run_case(False)
+  File "/opt/a17/test_a17_pending_ammo_recovery.py", line 64, in run_case
+    self.assertIn("Current locally verified ammo: 4.",client.inputs[0][0]["text"])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Current locally verified ammo: 4.' not found in 'Select the next bounded MAP01 action from the new temporal sheet.\nCurrent locally verified health: 70.\nCurrent locally verified ammo: 6.\nNewest typed soft event from the preceding control interval: {}\nPrevious no-visible-effect actions: []\n'
+
+======================================================================
+FAIL: test_pending_turn_uses_recovered_current_ammo_for_returned_action (test_a17_pending_ammo_recovery.PendingAmmoStalenessTests.test_pending_turn_uses_recovered_current_ammo_for_returned_action)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/a17/test_a17_pending_ammo_recovery.py", line 81, in test_pending_turn_uses_recovered_current_ammo_for_returned_action
+    result=self.run_case(True)
+  File "/opt/a17/test_a17_pending_ammo_recovery.py", line 64, in run_case
+    self.assertIn("Current locally verified ammo: 4.",client.inputs[0][0]["text"])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Current locally verified ammo: 4.' not found in 'Select the next bounded MAP01 action from the new temporal sheet.\nCurrent locally verified health: 70.\nCurrent locally verified ammo: 6.\nNewest typed soft event from the preceding control interval: {}\nPrevious no-visible-effect actions: []\n'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.018s
+
+FAILED (failures=2)
