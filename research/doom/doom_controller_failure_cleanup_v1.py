@@ -126,11 +126,21 @@ class ControllerFailureCleanup:
             if reader_alive:
                 receipt['stdout_reader_retired']=not receipt['stages'][-1]['result']
         receipt['stdout_reader_errors']=list(self.reader_errors)
+        malformed_event_stream=type(self.events) is not list
         events=self.events if type(self.events) is list else []
+        for row in events:
+            if type(row) is not dict or type(row.get('event')) is not str:
+                malformed_event_stream=True
+                continue
+            if row['event'] in ('accepted','terminal') and (
+                    type(row.get('id')) is not str or not row['id']):
+                malformed_event_stream=True
         accepted_rows=[row for row in events if type(row) is dict and
-                       row.get('event')=='accepted' and type(row.get('id')) is str]
+                       row.get('event')=='accepted' and type(row.get('id')) is str and
+                       bool(row.get('id'))]
         terminal_rows=[row for row in events if type(row) is dict and
-                       row.get('event')=='terminal' and type(row.get('id')) is str]
+                       row.get('event')=='terminal' and type(row.get('id')) is str and
+                       bool(row.get('id'))]
         accepted_counts={}
         for row in accepted_rows:
             accepted_counts[row['id']]=accepted_counts.get(row['id'],0)+1
@@ -144,7 +154,8 @@ class ControllerFailureCleanup:
         accepted_ids=set(accepted_counts)
         accepted_by_id={row['id']:row for row in accepted_rows}
         terminal_by_id={row['id']:row for row in terminal_rows}
-        event_identity_ambiguous=bool(accepted_duplicate_ids or terminal_duplicate_ids)
+        event_identity_ambiguous=bool(accepted_duplicate_ids or terminal_duplicate_ids or
+                                      malformed_event_stream)
         receipt['event_identity_ambiguous']=event_identity_ambiguous
         receipt['accepted_duplicate_ids']=accepted_duplicate_ids
         receipt['terminal_duplicate_ids']=terminal_duplicate_ids
