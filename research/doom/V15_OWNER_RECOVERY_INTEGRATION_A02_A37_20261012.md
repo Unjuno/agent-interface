@@ -47,9 +47,9 @@ Interpretation is limited to private TCP-disabled Xvfb using core XTest: the ser
 
 ## A36: XI2 Raw source IDs versus XTest client identity (2026-10-12)
 
-`PASS_METHOD_SCOPED`. XI2 2.0 RawKeyPress and RawKeyRelease events were captured for the real process owner's XTest requests and a separate X client’s same-key XTest request. All three phases reported `sourceid=5`, which the XI2 device inventory identifies as `Virtual core XTEST keyboard`; both the XTEST device (`deviceid=5`) and virtual core keyboard (`deviceid=3`) Raw event records carried that same source ID. The actual owner verified KeyRelease, the core focus observer saw the release, and the global keymap became up while the external client's test-side hold flag remained true. Freeze, source, runner, raw, and receipt hashes are audited. One invocation, no retries. Full evidence: `research/doom/v39_v15_xvfb_shared_key_source_a36_20261012/`.
+Audit status: `STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH`. The frozen/plan allocation is `V39-XI2-XTEST-CLIENT-SOURCE-A36-20261012-01`, but candidate RAW says `V39-X11-SHARED-KEY-SOURCE-A36-20261012-01`. Source, manifest, runner, raw, and receipt hashes are retained, but the candidate's `pass=true` is not accepted. Do not retry A36.
 
-This establishes only that in the tested Xvfb/core-XTest path, XI2 identifies the shared XTEST source device but does not distinguish the separate X client connections. It does not establish whether physical devices can be distinguished from XTest on a real Xorg desktop, whether a physical held key survives an XTest release, or whether a desktop/application receives useful task effects. A35/A36 refine the input-source attribution risk; they do not replace the current-main integrated MAP01 evidence required by Issue #59.
+Exploratory values: XI2 2.0 RawKeyPress and RawKeyRelease events from the owner and a separate X client reported `sourceid=5` (`Virtual core XTEST keyboard`); both deviceid 5 and virtual-core deviceid 3 records carried sourceid 5. This cannot be called a formal pass because of the allocation identity mismatch. It remains limited to private Xvfb/core-XTest and does not establish physical-device behavior. Full evidence: `research/doom/v39_v15_xvfb_shared_key_source_a36_20261012/`.
 
 ## A37: separate XI device held-key interaction (2026-10-12)
 
@@ -58,3 +58,7 @@ Audit status: `STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH`. The preregistratio
 Exploratory values point opposite to the hypothesis: XI2 reported XTEST source 5 pressed `a`, then the separate synthetic `Xvfb keyboard` source 7 pressed it and remained in the candidate's held interval through owner-up. The owner emitted RawKeyRelease from source 5, reported key-up verified, and the global keymap became up before source 7 emitted RawKeyRelease. Source 7 was then released and the display closed cleanly. These values are retained in `research/doom/v39_v15_xvfb_shared_key_source_a37_20261012/` but remain unqualified because the identity gate was missed.
 
 For any future distinct allocation, make the runner validate that the candidate's embedded allocation ID equals FREEZE.json before starting Xvfb or any owner. Keep this STOP as evidence of an audit-gate defect; it does not establish physical-keyboard behavior or alter Issue #59's live MAP01 requirement.
+
+## Audit correction (2026-10-12)
+
+A37's identity-gate review found the same candidate-versus-freeze allocation mismatch in A36. A36 has been reclassified from PASS_METHOD_SCOPED to STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH; the XI2 sourceid values remain exploratory only. A35's candidate and freeze allocation IDs match. Never infer a formal outcome from a candidate self-reported pass bit without checking the raw identity against the preregistration.

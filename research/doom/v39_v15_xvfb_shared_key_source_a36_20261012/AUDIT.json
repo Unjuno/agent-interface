@@ -1,11 +1,11 @@
 {
   "schema": "v39-xi2-xstest-client-source-a36-audit-v1",
   "allocation_id": "V39-XI2-XTEST-CLIENT-SOURCE-A36-20261012-01",
-  "status": "PASS_METHOD_SCOPED",
+  "status": "STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH",
   "candidate_invocations": 1,
   "retries": 0,
   "frozen_before_invocation": true,
-  "freeze_sha256": null,
+  "freeze_sha256": "5867d9f7cd047cfb54390b69b0de764bfb5e9ea3c95b672e7ca77b80d62aba0a",
   "freeze_matches_harness": true,
   "runner_sha256": "8d599561ee4e1ab4ecf902c03b79cd1b4de8aeec581c02cef16e71924a756993",
   "runner_matches_harness": true,
@@ -171,6 +171,10 @@
   "owner_exit": 0,
   "owner_receipt_verified": true,
   "xvfb_exit": 0,
-  "decision": "PASS_METHOD_SCOPED: XI2 Raw exposed the Virtual core XTEST keyboard source ID (5) for owner and separate external-client XTest requests. Both client phases shared sourceid 5; XI2 device attribution did not distinguish X client connections in this tested path.",
-  "scope": "Private TCP-disabled Xvfb, Python-Xlib 0.33, XI2 2.0 and core XTest only. No physical keyboard, game, model, or shared X server. Does not establish physical input/XTEST source attribution or desktop safety."
+  "decision": "Candidate raw recorded pass=true, but its allocation_id differs from FREEZE.json and PLAN.md. Do not accept this as a formal pass. Preserve XI2 sourceid observations as exploratory only; do not retry A36.",
+  "scope": "Private TCP-disabled Xvfb, Python-Xlib 0.33, XI2 2.0 and core XTest only. No physical keyboard, game, model, or shared X server. Does not establish physical input/XTEST source attribution or desktop safety.",
+  "candidate_allocation_id": "V39-X11-SHARED-KEY-SOURCE-A36-20261012-01",
+  "frozen_allocation_id": "V39-XI2-XTEST-CLIENT-SOURCE-A36-20261012-01",
+  "candidate_recorded_pass": true,
+  "id_match": false
 }
