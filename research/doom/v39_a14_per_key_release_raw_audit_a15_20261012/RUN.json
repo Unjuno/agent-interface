@@ -17,8 +17,11 @@
   },
   "swap_warning": "WSL kernel reports swap limit capabilities unsupported; no swap enforcement claim",
   "tests": {
-    "normal": "5/5",
-    "optimized": "5/5"
+    "normal": "6/6",
+    "optimized": "6/6",
+    "retained_input_analyzer": "measurement_ready; 10 bounded admissions; 0 unmatched; 0 invalid"
   },
-  "scope": "Saved raw audit only. No game, GUI, OS physical keyboard, model, or live allocation was started."
+  "scope": "Saved raw audit only. No game, GUI, OS physical keyboard, model, or live allocation was started.",
+  "analyzer_result_file": "derived/direct-retained-input.json",
+  "analyzer_command": "wslc run --rm --pull never --network none --cpus 1 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume <package>:/src:ro --volume <package>/derived:/out:rw --workdir /src python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd python analyze_map01_direct_retained_input_v1.py inputs/events.jsonl --out /out/direct-retained-input.json"
 }

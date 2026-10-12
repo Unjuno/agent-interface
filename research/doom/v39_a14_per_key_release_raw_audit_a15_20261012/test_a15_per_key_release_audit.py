@@ -135,5 +135,16 @@ class A14PerKeyRawAuditTests(unittest.TestCase):
                 del mutated['release'][field]
                 self.assertFalse(predicate(mutated))
 
+    def test_existing_direct_retained_input_analyzer_bounds_all_ten_admissions(self):
+        from analyze_map01_direct_retained_input_v1 import analyze
+        result = analyze(self.events)
+        self.assertTrue(result['measurement_ready'])
+        self.assertEqual(result['hold_count'], 10)
+        self.assertEqual(result['unmatched_admission_count'], 0)
+        self.assertEqual(result['invalid_release_count'], 0)
+        self.assertLess(min(r['censor_width_ms'] for r in result['holds']), 0.5)
+        self.assertGreater(max(r['censor_width_ms'] for r in result['holds']), 0.9)
+        self.assertTrue(all(r['retained_lower_ms'] <= r['retained_upper_ms'] for r in result['holds']))
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

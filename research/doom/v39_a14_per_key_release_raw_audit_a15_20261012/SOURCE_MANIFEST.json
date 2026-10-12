@@ -7,13 +7,25 @@
   "strict_release_git_blob": "9a499364b07a1224ae4201dadb5cd45ec2e03fa0",
   "wslc_image": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
   "files": {
+    "analyze_map01_direct_retained_input_v1.py": {
+      "sha256": "c4f95e0e8bb3c25f871ec5c4723d5fbdad633fb8a6f955b5449145d01aeb53c1",
+      "bytes": 3272
+    },
     "audit.py": {
-      "sha256": "e4ec582c5a546ec0c3a6a232793987d300cdef9e2d770e32221b1261884cc4b2",
-      "bytes": 1981
+      "sha256": "9ab6ea864db62eb99a3f019b92524a1fa00f345552489f8e66e73d7b0e5bb657",
+      "bytes": 2766
     },
     "container-inventory-after.txt": {
       "sha256": "41c2049d2b3c043110772181e76d772dcf06c92b922aeaef85add573b3fa7a43",
       "bytes": 89
+    },
+    "derived/direct-retained-input.json": {
+      "sha256": "310d757f1d2c33bd83060198d3c00658dd331496befe39045bee320162bca3a6",
+      "bytes": 3240
+    },
+    "direct-retained-input.json": {
+      "sha256": "c8e740e84e9a36eb6702f5790d3f8879449bbbbdb699a134308d86ab9a8009de",
+      "bytes": 3360
     },
     "FREEZE.json": {
       "sha256": "81b34b387e43c8c8a251caf1f56e0468d04b606deede2a3d63a8edb8ce004fd7",
@@ -56,36 +68,48 @@
       "bytes": 113094
     },
     "README.md": {
-      "sha256": "3b6a07607303b17775f59bdb6811bc8263974f43714f77603fc781d4501b0483",
-      "bytes": 2122
+      "sha256": "bade8215b851dab31be8f2d53c3f75332f7caea6dcbe5a8f702ab45d806315a0",
+      "bytes": 2435
     },
     "REPRODUCE.md": {
       "sha256": "7b6e9402b9b366ec565eecd5c304f5a664aff215640478a1c1e215155f5c7aff",
       "bytes": 810
     },
     "RUN.json": {
-      "sha256": "134c24c332d265bd1b635812fd57772cc0eab092d10b1ac29a474df55ed25348",
-      "bytes": 1066
+      "sha256": "e51a2382c1681f97bbd41cf7bd8a76888abd54408655f2908023fc2eea1034e0",
+      "bytes": 1636
+    },
+    "stdout-direct-retained.exit": {
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "bytes": 1
+    },
+    "stdout-direct-retained.txt": {
+      "sha256": "90dec1998fb2ad985fed62b1e5fa7f711d4c5011ead85cafd389df43747eb26a",
+      "bytes": 3478
     },
     "test_a15_per_key_release_audit.py": {
-      "sha256": "be0bed1a8ecc656df9638d7a7d53f09f124bc1e731f03a6cc7a016b1616df781",
-      "bytes": 8362
+      "sha256": "3c9e2e999f6f6a781227d9e4322bcfc7702acb0e809c93d3d1ac2f8fea84682f",
+      "bytes": 9053
     },
     "wslc-normal.exit": {
       "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
       "bytes": 1
     },
     "wslc-normal.txt": {
-      "sha256": "71dee70fa7487d5a98132a9adddba9d7f43cf96fad06de8eb4d5c851a3bd3343",
-      "bytes": 1115
+      "sha256": "239f5dc88b00f28d7090949df2aa25358190400b6ed7b623d27218f5179decab",
+      "bytes": 1321
     },
     "wslc-optimized.exit": {
       "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
       "bytes": 1
     },
     "wslc-optimized.txt": {
-      "sha256": "2a39c2b468e443d57c31c7ccec5b2c99842ef85bec824e6e7160ab63cea4aa4c",
-      "bytes": 1115
+      "sha256": "469611cedf7f2356fcc299daa8c2e5bbc3d0dfcc0f39311e832384ad514b1394",
+      "bytes": 1321
     }
+  },
+  "direct_retained_input_analyzer": {
+    "source": "research/doom/analyze_map01_direct_retained_input_v1.py",
+    "git_blob": "8aa3842d4d10744107408a367622498857263827"
   }
 }
