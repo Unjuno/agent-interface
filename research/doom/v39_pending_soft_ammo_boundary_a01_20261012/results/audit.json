@@ -1,0 +1,77 @@
+{
+  "checks": [
+    {
+      "name": "source_commit",
+      "pass": true
+    },
+    {
+      "name": "controller_sha256",
+      "pass": true
+    },
+    {
+      "name": "guard_sha256",
+      "pass": true
+    },
+    {
+      "name": "controller_git_blob",
+      "pass": true
+    },
+    {
+      "name": "guard_git_blob",
+      "pass": true
+    },
+    {
+      "name": "normal_matches_raw",
+      "pass": true
+    },
+    {
+      "name": "optimized_matches_raw",
+      "pass": true
+    },
+    {
+      "name": "runner_pending_loop_control_flow",
+      "pass": true
+    },
+    {
+      "name": "runner_soft_case_admitted",
+      "pass": true
+    },
+    {
+      "name": "runner_soft_case_below_action_floor",
+      "pass": true
+    },
+    {
+      "name": "runner_cover_hard_floor_is_one",
+      "pass": true
+    },
+    {
+      "name": "runner_soft_change_queued_no_invalidation",
+      "pass": true
+    },
+    {
+      "name": "runner_soft_change_does_not_cancel_pending",
+      "pass": true
+    },
+    {
+      "name": "runner_hard_change_emits_invalidation",
+      "pass": true
+    },
+    {
+      "name": "runner_hard_change_triggers_cancel_condition",
+      "pass": true
+    },
+    {
+      "name": "soft_boundary_decision",
+      "pass": true
+    },
+    {
+      "name": "hard_boundary_decision",
+      "pass": true
+    }
+  ],
+  "passed": 17,
+  "schema": "issue59-pending-soft-boundary-independent-audit-v1",
+  "scope": "frozen source identity and synthetic control-flow replay only",
+  "status": "PASS_SYNTHETIC_BOUNDARY",
+  "total": 17
+}
