@@ -1,0 +1,236 @@
+{
+  "child_return_code": 0,
+  "child_stderr": "",
+  "controller_failure": {
+    "child_exit_code": 0,
+    "cleanup_complete": true,
+    "display_reuse_allowed": true,
+    "failed_stage": "controller_setup",
+    "format": "controller-failure-cleanup-v1",
+    "input_release_verified": false,
+    "input_release_verified_empty": true,
+    "input_releases_verified_empty": true,
+    "input_terminals_complete": true,
+    "owner_events_closed": true,
+    "owner_events_present": true,
+    "owner_process_emergency_recovery_verified": false,
+    "owner_process_recovery_required": true,
+    "owner_process_recovery_verified": true,
+    "owner_recovery_receipt": {
+      "close_error": null,
+      "closed_ns": 6221829079482,
+      "display": ":77",
+      "event_publisher_errors": [],
+      "owner_id": "3baddef6830947e5b69872bdd1fcbdcd",
+      "owner_records": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": null,
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "close",
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 6221817460947
+        }
+      ],
+      "owner_thread_stopped": true,
+      "receipt_fsynced": true,
+      "recovery_mode": "owner_process_verified_receipt",
+      "recovery_verified": true,
+      "release_records": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": null,
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "close",
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 6221817460947
+        }
+      ],
+      "schema": "input-owner-recovery-v1",
+      "service_pid": 4314,
+      "service_start_ticks": 622161,
+      "trigger": "requested_close"
+    },
+    "primary_error_type": "RuntimeError",
+    "scope": "owned child process only; no physical release or scorer certificate",
+    "score_file_present": true,
+    "scorer_terminal_observed": true,
+    "stages": [
+      {
+        "result": null,
+        "stage": "child_poll_before",
+        "status": "returned"
+      },
+      {
+        "result": null,
+        "stage": "finish_send",
+        "status": "returned"
+      },
+      {
+        "result": {
+          "event": "post_control_score",
+          "fixture": "synthetic"
+        },
+        "stage": "post_control_score_wait",
+        "status": "returned"
+      },
+      {
+        "result": 0,
+        "stage": "child_wait",
+        "status": "returned"
+      },
+      {
+        "result": null,
+        "stage": "child_stdin_close_worker_start",
+        "status": "returned"
+      },
+      {
+        "result": null,
+        "stage": "child_stdin_close",
+        "status": "returned"
+      },
+      {
+        "result": 0,
+        "stage": "child_poll_after",
+        "status": "returned"
+      },
+      {
+        "result": null,
+        "stage": "planner_close_worker_start",
+        "status": "returned"
+      },
+      {
+        "result": null,
+        "stage": "planner_close",
+        "status": "returned"
+      },
+      {
+        "result": null,
+        "stage": "atexit_unregister",
+        "status": "returned"
+      },
+      {
+        "result": null,
+        "stage": "stdout_reader_join",
+        "status": "returned"
+      },
+      {
+        "result": false,
+        "stage": "stdout_reader_alive",
+        "status": "returned"
+      },
+      {
+        "result": true,
+        "stage": "score_file_presence",
+        "status": "returned"
+      },
+      {
+        "result": true,
+        "stage": "owner_events_presence",
+        "status": "returned"
+      }
+    ],
+    "stdout_reader_errors": [],
+    "stdout_reader_retired": true
+  },
+  "display": ":77",
+  "events": [
+    {
+      "display": ":77",
+      "event": "input_owner_process_ready",
+      "owner_id": "3baddef6830947e5b69872bdd1fcbdcd",
+      "receipt_path": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a32_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json",
+      "schema": "input-owner-process-ready-v1",
+      "service_pid": 4314,
+      "service_start_ticks": 622161
+    },
+    {
+      "event": "post_control_score",
+      "fixture": "synthetic"
+    }
+  ],
+  "game_or_model": false,
+  "identity_match": true,
+  "owner_receipt": {
+    "close_error": null,
+    "closed_ns": 6221829079482,
+    "display": ":77",
+    "event_publisher_errors": [],
+    "owner_id": "3baddef6830947e5b69872bdd1fcbdcd",
+    "owner_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": null,
+        "key_release_attempts": {},
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 6221817460947
+      }
+    ],
+    "owner_thread_stopped": true,
+    "receipt_fsynced": true,
+    "recovery_verified": true,
+    "release_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": null,
+        "key_release_attempts": {},
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 6221817460947
+      }
+    ],
+    "schema": "input-owner-recovery-v1",
+    "service_pid": 4314,
+    "service_start_ticks": 622161,
+    "trigger": "requested_close"
+  },
+  "owner_receipt_sha256": "c0820db360063f69a524251339bd5c2cc6f2d7ee05471b43908ad270441090bc",
+  "pass": true,
+  "physical_input": false,
+  "ready_identity": {
+    "display": ":77",
+    "event": "input_owner_process_ready",
+    "owner_id": "3baddef6830947e5b69872bdd1fcbdcd",
+    "receipt_path": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a32_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json",
+    "schema": "input-owner-process-ready-v1",
+    "service_pid": 4314,
+    "service_start_ticks": 622161
+  },
+  "schema": "v39-v15-process-owner-xvfb-a32-raw-v1",
+  "stdout_reader_errors": [],
+  "stdout_reader_joined": true,
+  "synthetic_score_and_owner_events": true,
+  "xvfb_return_code": 0,
+  "xvfb_stderr": "The XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\nThe XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\n",
+  "xvfb_tcp_disabled": true,
+  "xvfb_tcp_enabled": false
+}
