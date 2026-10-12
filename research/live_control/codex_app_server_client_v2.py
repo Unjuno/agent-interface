@@ -36,6 +36,31 @@ class AppServerWriteUncertain(AppServerError):
         super().__init__(f"app-server write uncertain: {sent}/{total} bytes ({reason})")
 
 
+def wsl_environment_for_windows_executable(command, environ):
+    """Forward WSL CODEX_HOME through WSL path translation to a Windows exe."""
+    if (not environ.get("WSL_INTEROP") or not command or
+            not str(command[0]).lower().endswith(".exe")):
+        return None
+    codex_home = environ.get("CODEX_HOME")
+    if not codex_home or not codex_home.startswith("/"):
+        return None
+
+    result = dict(environ)
+    entries = [entry for entry in environ.get("WSLENV", "").split(":") if entry]
+    retained = []
+    path_flags = "p"
+    for entry in entries:
+        name, separator, flags = entry.partition("/")
+        if name == "CODEX_HOME":
+            if separator:
+                path_flags = "".join(dict.fromkeys(flags + "p"))
+            continue
+        retained.append(entry)
+    retained.append("CODEX_HOME/" + path_flags)
+    result["WSLENV"] = ":".join(retained)
+    return result
+
+
 def _deadline(timeout):
     if (type(timeout) not in (int, float) or not 0 <= timeout <= threading.TIMEOUT_MAX
             or not math.isfinite(timeout)):
@@ -55,6 +80,10 @@ class CodexAppServerClient:
             "stderr": subprocess.PIPE, "text": True, "encoding": "utf-8",
             "errors": "strict", "bufsize": 1,
         }
+        interop_environment = wsl_environment_for_windows_executable(
+            command, os.environ)
+        if interop_environment is not None:
+            process_options["env"] = interop_environment
         if self._owns_process_group:
             process_options["start_new_session"] = True
         self.process = process_factory(command, **process_options)

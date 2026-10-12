@@ -13,13 +13,23 @@
 The initial baseline test reproduced the defect: the direct-executable case returned the WSL Node/npm command. The change and two focused regression tests pass alongside the existing V39 controller tests:
 
 - With `AGENT_INTERFACE_CODEX_APP_SERVER_EXE` empty and `CODEX_CLI_PATH` set to the installed Codex 0.162.0-alpha.17.2 executable, `py -m unittest discover -s research/doom -p 'test_map01_overlap_controller_v39*.py' -v`: **21 passed**, including initialize and ephemeral thread start through the production client, with an explicitly enabled fake MCP not launched.
-- The same command under `py -O`: **21 passed**.
+- The Windows run after the WSL interop regression: `py -m unittest discover -s research/doom -p 'test_map01_overlap_controller_v39*.py' -q`: **22 passed**; the same command under `py -O`: **22 passed**.
 - `py -m py_compile map01_overlap_controller_v39.py`: **passed**.
 - `git diff --check`: **passed**.
 
 Tests ran on Windows with Python 3.13. The added tests validate direct executable selection, configured-only MCP disable overrides, actual Windows initialization through the production client against an isolated config, closed stdio wrappers after shutdown, and unchanged legacy fallback. PR/local test success is not a live-control result.
 
 The isolated runtime probe directly confirmed the config behavior that the older startup study recorded: an empty-table `-c` override leaves the explicitly enabled fake MCP active, while its individual `enabled=false` override prevents startup. Earlier probe artifacts are retained alongside the corrected condition-specific rerun and its raw output. A real-profile attempt without a copied config failed before initialization because Codex fell back to the real Windows profile and rejected nonexistent override names; no real MCP was started. The current regression writes a minimal MCP config only into an isolated `CODEX_HOME`, uses no auth file, resolves the executable from `CODEX_CLI_PATH`, verifies `initialize` reports that isolated home, starts an ephemeral thread, and confirms the fake MCP sentinel remains absent. A retained A/B probe proves the same fake server starts without the override and is suppressed by the production V39 client command.
+
+## WSL Windows-executable interop follow-up
+
+- **H:** When V39 runs under WSL but launches the Windows Codex executable, an explicit Linux `CODEX_HOME` must reach the Windows process with drive-path translation. Without that bridge, the Windows process can select its default profile instead of the isolated profile that the launcher inspected.
+- **T:** First wrote a regression for the WSL child environment and observed it fail because no environment builder existed. Added a bounded `WSLENV` merge for `CODEX_HOME/p` only when `WSL_INTEROP` is present and the child command is a Windows `.exe`. Then ran the production V39 client from WSL2 Ubuntu/Python 3.12.3 against Codex `0.162.0-alpha.17.2` (SHA256 `d13914ced6c7af174d8d638db938284231227312104b06a25e9608c632a7daec`) and a dedicated, credential-free temporary `CODEX_HOME` containing an explicitly enabled fake MCP.
+- **D:** PASS. The App Server reported the isolated Windows profile path, initialized, started an ephemeral thread with a `wslpath -w` directory, returned the three stdio streams closed after client shutdown, and did not create the fake-MCP sentinel. The test did not start a model turn, GUI, game process, or Doom input. The Windows-focused V39 suite also passes after this change.
+- **C:** An earlier diagnostic used a Windows-formatted `CODEX_HOME` string inside the Linux Python process; that path was not readable by the launcher and did not reach the Windows child as intended. Its initialize response reported the default Windows profile, so the probe was stopped before `thread/start`; no such result is counted as isolated-profile evidence. The corrected test uses a Linux path plus WSL path translation and verifies the reported Windows profile exactly.
+- **U:** WSL launcher compatibility is now established for initialize, ephemeral thread start, selected profile propagation, declared-MCP suppression, and pipe closure. Live health/ammo observations, interruption timing, physical key release, useful feedback, recovery, ammunition/progress, terminal result, and Issue #59 successor acceptance remain unverified. WSLc containers were not used; the current Issue #7924 ownership hold and separate live-lane gate remain in force.
+
+The extra regression and raw WSL artifacts are retained at `D:\codex-research\v39-wsl-appserver-smoke-20261012`; the raw journal is `wslenv-mcp.jsonl` and the executable probe is `wslenv-mcp-probe.py`. The recorded source SHA in the raw probe identifies the pre-fix V39 controller file; the interop change itself is in the client.
 
 ## Review correction
 

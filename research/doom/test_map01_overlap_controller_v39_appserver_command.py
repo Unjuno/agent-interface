@@ -15,9 +15,31 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(LIVE_CONTROL))
 
 import map01_overlap_controller_v39 as controller
+import codex_app_server_client_v2 as app_server_client
 
 
 class AppServerCommandTests(unittest.TestCase):
+    def test_wsl_windows_codex_receives_path_translated_codex_home(self):
+        build_environment = getattr(
+            app_server_client, "wsl_environment_for_windows_executable", None)
+        self.assertIsNotNone(
+            build_environment,
+            "WSL interop must forward CODEX_HOME to the Windows App Server")
+        source = {
+            "WSL_INTEROP": "/run/WSL/123_interop",
+            "CODEX_HOME": "/mnt/c/Users/example/.codex",
+            "WSLENV": "KEEP_ME/u",
+            "PATH": "/usr/bin",
+        }
+        result = build_environment(
+            ["/mnt/c/Program Files/Codex/codex.exe", "app-server", "--stdio"],
+            source)
+
+        self.assertEqual(result["WSLENV"], "KEEP_ME/u:CODEX_HOME/p")
+        self.assertEqual(result["CODEX_HOME"], source["CODEX_HOME"])
+        self.assertEqual(result["PATH"], source["PATH"])
+        self.assertEqual(source["WSLENV"], "KEEP_ME/u")
+
     def test_direct_codex_executable_disables_configured_mcps_individually(self):
         executable = str(Path(controller.__file__).resolve())
         with tempfile.TemporaryDirectory() as codex_home:
