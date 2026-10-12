@@ -1,0 +1,40 @@
+{
+  "allocation": "ALERT-TIMING-8549-METHOD-T0-A01-20261009",
+  "base_main_sha": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "branch": "research/8549-alert-timing-method-t0-a01-20261009",
+  "claim_scope": "METHOD_ONLY_SYNTHETIC_FIXTURE",
+  "commands": {
+    "auditor": "sh run_auditor_once.sh (only if the one candidate exits 0 and candidate.json exists)",
+    "candidate": "sh run_candidate_once.sh",
+    "construction": "python3 -m unittest -v test_construction.py"
+  },
+  "decision": {
+    "failure": "FAIL_METHOD for any schedule/scoring mismatch or missed mutation control.",
+    "pass": "PASS_METHOD_SCOPED iff the independent auditor reports zero errors, reconstructs all 24 factorial schedules and all 6 synthetic response scores, and rejects all 4 frozen mutation controls.",
+    "retry_policy": "Candidate and auditor each run once; no retry, pooling, or post-result threshold change."
+  },
+  "files_sha256": {
+    "CONSTRUCTION_REPAIR.md": "41470f269b24fd9d700508f014c01d544b2a411c19f085aaaa14563c45c8c142",
+    "README.md": "ec3d78aeaebb1b26bf9701a3a5fc7a1f015b5396f2b6b847827d6a7b8e7367bc",
+    "auditor.py": "635a80d64901da6f21b3c97aafd0e7bd23d0ee94460f4a8681e6ca76d704b0fe",
+    "candidate.py": "7dfdd1fa6bbe1c1a4e4f581b1de8bd0225882c22330a6b08844082b8024cd7cc",
+    "fixture.json": "116790d0b5b77ef532cdab6d1cf81878ac0ac486c4b8ca590e0f62c92a554483",
+    "protocol.json": "2611b50a5925ed2992cba328dc907da3e5488c73f79843f3ff259500e55a8887",
+    "run_auditor_once.sh": "b7f424d22e07a51c713d3b5bce6e86f0f7a92534dd8854b778ef812eba53ee3e",
+    "run_candidate_once.sh": "033f9714e826bd6c58fdf944120555137e351f7be17790c888e585310734a7ff",
+    "test_construction.py": "d770d66ddd70ed01f381f13e2ec85d0e9be3205f765fd10e112ca88d8b520304"
+  },
+  "runtime": {
+    "container_attempted": false,
+    "container_reason": "OrbStack Docker daemon returned a containerd content-store error to read-only docker ps; this allocation is CPU/file-only and uses the host method boundary.",
+    "docker_info": "29.4.0 linux/aarch64",
+    "docker_ps_error": "rpc error: code = Unknown desc = blob sha256:22e459a4d5c99f66cecfe52cbb4f94ddff3f1f6788c6ad84a83fda24fafb002a expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/22e459a4d5c99f66cecfe52cbb4f94ddff3f1f6788c6ad84a83fda24fafb002a: open ...: operation not supported",
+    "external_dependencies": [],
+    "network_during_candidate_or_audit": false,
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14"
+  },
+  "schema": "alert-timing-8549-method-t0-freeze-v1",
+  "state_before_formal_run": "FROZEN"
+}

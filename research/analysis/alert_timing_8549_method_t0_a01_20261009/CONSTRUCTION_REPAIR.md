@@ -1,0 +1,3 @@
+# Construction-only first check
+
+Before formal freeze, `python3 -m unittest -v test_construction.py` first ran 3 tests and failed 1/3. The failing assertion incorrectly expected both event orders inside each individual block. The frozen design counterbalances order across the four blocks for each demand-gap cell, so each block has one order and each cell receives both orders over the full schedule. The test was corrected to assert that contract and to check screen-position balance. The candidate logic was not changed in response to a formal outcome; no formal candidate/auditor invocation had occurred. The corrected construction suite passed 3/3 under host CPython 3.14.5 before freeze.
