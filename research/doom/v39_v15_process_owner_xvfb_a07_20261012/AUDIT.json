@@ -1,0 +1,20 @@
+{
+  "candidate_invocations": 1,
+  "classification": "Harness probe configuration STOP after admission; process-death hypothesis not tested",
+  "finding": "The owner readiness and armed event were observed, and the backend emitted input_admission for allowlisted a at X keycode 38. The supervisor still queried/filtered keycode_w=25, so the independent down gate failed and the harness terminated owner with SIGTERM. No session SIGKILL or recovery assertion occurred. The recovery receipt is not verified. A07 is not retried; A08 will derive the probe keycode from admitted key a under a new frozen allocation.",
+  "hashes": {
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/FREEZE.json": "2afa60a68543ec6c174e4ae2d1c2a810e08b68c8f8cf397412e4b1557d658372",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/PLAN.md": "4c96e2c8a9f293625daf3f952a8700314c510996ffd6d06ebda49108b8e9a974",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/candidate.py": "d9b322258e602b1e739a028b39e8530fe834334a4388ada07dd50fb378cb7d53",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/results/A01/RAW.json": "7a5295fb30004ab158c25f272eafae5dcebf48d407fde316775eca804b3e48c4",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/results/A01/input-owner-process/input-owner-recovery-v1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/results/A01/session-events.jsonl": "218fb626e84fc2a555a3c688b6459c2e571769b990a1fcfa8244665d7d02ea2b",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/results/A01/session.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/run_candidate.sh": "1fd93d10b484eefec5415c23f58d2598513a518c7c10f8a0b641cdcf6efcf018"
+  },
+  "raw_sha256": "7a5295fb30004ab158c25f272eafae5dcebf48d407fde316775eca804b3e48c4",
+  "receipt_sha256": null,
+  "retries": 0,
+  "schema": "v39-v15-process-owner-xvfb-a07-audit-v1",
+  "status": "STOP_HARNESS_PROBE_KEYCODE_MISMATCH"
+}
