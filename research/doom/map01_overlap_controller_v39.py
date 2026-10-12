@@ -675,6 +675,10 @@ def win(path):
 
 def app_server_command():
     direct_executable = os.environ.get("AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
+    if not direct_executable and os.name == "nt":
+        candidate = os.environ.get("CODEX_CLI_PATH")
+        if candidate and Path(candidate).suffix.lower() == ".exe" and Path(candidate).is_file():
+            direct_executable = candidate
     if direct_executable:
         command = [direct_executable, "app-server", "--stdio"]
     else:

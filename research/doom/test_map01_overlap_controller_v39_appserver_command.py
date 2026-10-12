@@ -1,6 +1,5 @@
 """Runner command configuration tests for the MAP01 V39 controller."""
 import json
-import json
 import os
 import tempfile
 import time
@@ -50,10 +49,23 @@ class AppServerCommandTests(unittest.TestCase):
                 command = controller.app_server_command()
         self.assertFalse(any(arg.startswith("mcp_servers.") for arg in command))
 
+    def test_codex_cli_path_is_used_when_explicit_override_is_absent(self):
+        with tempfile.TemporaryDirectory() as codex_home:
+            executable = str(Path(codex_home, "codex.exe"))
+            Path(executable).write_bytes(b"test executable placeholder")
+            with patch.dict(os.environ, {
+                    "CODEX_HOME": codex_home,
+                    "AGENT_INTERFACE_CODEX_APP_SERVER_EXE": "",
+                    "CODEX_CLI_PATH": executable,
+            }):
+                command = controller.app_server_command()
+        self.assertEqual(command[:3], [executable, "app-server", "--stdio"])
+
     def test_direct_codex_command_starts_thread_without_configured_mcp(self):
         if os.name != "nt":
             self.skipTest("direct executable smoke test requires Windows")
-        executable = os.environ.get("AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
+        executable = (os.environ.get("AGENT_INTERFACE_CODEX_APP_SERVER_EXE") or
+                      os.environ.get("CODEX_CLI_PATH"))
         if not executable or not Path(executable).is_file():
             self.skipTest("codex.exe not available for handshake smoke test")
 
@@ -83,7 +95,8 @@ class AppServerCommandTests(unittest.TestCase):
                 journal = Path(journal_dir, "app-server.jsonl")
                 with patch.dict(os.environ, {
                         "CODEX_HOME": codex_home,
-                        "AGENT_INTERFACE_CODEX_APP_SERVER_EXE": executable,
+                        "AGENT_INTERFACE_CODEX_APP_SERVER_EXE": "",
+                        "CODEX_CLI_PATH": executable,
                 }):
                     client = controller.CodexAppServerClient(
                         controller.app_server_command(), cwd=str(HERE),
