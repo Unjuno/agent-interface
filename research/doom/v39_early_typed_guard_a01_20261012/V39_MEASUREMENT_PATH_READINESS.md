@@ -9,7 +9,8 @@ The v15 composition selects Executor v13 and the release-batch backend. Per-key 
 
 ## Frozen source identities (SHA-256)
 
-- `research/doom/map01_overlap_controller_v39.py`: `704c8c8a35f88765f207e4be18b4e32979fdcb6960aaeafcb867dcee4cb8eed0`
+- `origin/main` base `f185a9059d485a4f8d5a65e9e7f6782897f67eae`, controller `research/doom/map01_overlap_controller_v39.py`: `51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607`
+- Repaired branch overlay of that controller: `704c8c8a35f88765f207e4be18b4e32979fdcb6960aaeafcb867dcee4cb8eed0` (the only production-code delta is the `last_pair_sequence` success-path update; the measurement-session flag is unchanged).
 - `research/doom/session_map01_v15.py`: `661b3ac311f72517670a8fe37bc2901e9479963afc9db0a219ed83ea48601724`
 - `research/doom/doom_owner_thread_release_batch_backend_v1.py`: `2df84b632456388a488f2595347b6b37def29f66b47f97a44d89ed5c11b8d418`
 - `research/doom/doom_typed_release_backend_v2.py`: `7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4`
