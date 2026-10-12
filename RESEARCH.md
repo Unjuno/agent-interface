@@ -2488,3 +2488,7 @@ This is construction evidence only. It does not establish producer authenticity,
 ## Issue #59 V39 strict-release pending-cancel composition A11 (2026-10-12)
 
 A source-frozen WSLc test composes PR #8835 strict terminal-release acceptance with PR #8843 paired-health invalidation and pending-turn cancellation. Normal and optimized CPython 3.14.8 each pass 2/2; four incomplete/adverse receipt variants are accepted by legacy main but rejected by the strict candidate. Saved-artifact audit passes 24/24. This remains synthetic construction evidence; no physical release, live game response, recovery benefit, or MAP01 completion is established. See [the evidence report](research/doom/v39_strict_release_pending_cancel_a11_20261012/REPORT.md).
+
+## Issue #59 A14 per-key release raw re-audit A15 (2026-10-12)
+
+Read-only WSLc re-analysis of preserved A14 artifacts verifies 10 identity-bound per-key XTest KeyRelease/XSync receipts with X11 keymap down-before/up-after and no recorded cleanup interference. The five transitions in the two cancelled covers precede strict known-empty cancellation terminal receipts; missing `keys_unknown` or `key_state_errors` mutations fail the exact PR #8835 predicate. Normal and optimized modes pass 5/5; artifact audit 26/26. A14 remains a protocol deviation; the evidence is X-server state, not physical keyboard observation or efficacy. No live allocation was retried. See [A15 report](research/doom/v39_a14_per_key_release_raw_audit_a15_20261012/README.md).
