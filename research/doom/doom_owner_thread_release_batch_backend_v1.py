@@ -16,6 +16,7 @@ class Backend(Previous):
         self.owner = InputOwner(session.name)
         self._release_batch = threading.local()
         self._last_release_batch_delivery = None
+        self._admission_receipts = {}
 
     def _delivery_ledger(self, context):
         ledger = context.get("delivery_ledger")
@@ -165,6 +166,12 @@ class Backend(Previous):
                 pass
 
     def release_all(self):
+        try:
+            return self._release_all_with_batch()
+        finally:
+            self._admission_receipts.clear()
+
+    def _release_all_with_batch(self):
         context = getattr(self._release_batch, "context", None)
         if context is not None:
             self._flush_pending_ups(context)
@@ -247,6 +254,8 @@ class Backend(Previous):
                 row["id"], row["step"] = input_context
                 row.setdefault("owner_id", self.owner.owner_id)
                 row.setdefault("intent_token", getattr(self.lease, "intent_token", None))
+                if row.get("event") == "input_admission":
+                    self._admission_receipts.setdefault(key, []).append(dict(row))
                 self.emit(row)
             return None
 
@@ -303,6 +312,26 @@ class Backend(Previous):
             row["release_batch_step"] = context["step"]
             row["id"], row["step"] = item["input_context"]
             row["owner_cleanup_record_count_before_release"] = record_count
+            candidates = self._admission_receipts.pop(item["key"], [])
+            admission = candidates[0] if len(candidates) == 1 else None
+            valid_admission = bool(
+                isinstance(admission, dict)
+                and admission.get("event") == "input_admission"
+                and admission.get("key") == item["key"] == row.get("key")
+                and admission.get("owner_id") == row.get("owner_id")
+                and admission.get("intent_token") == row.get("intent_token")
+                and admission.get("valid_until_ns") == row.get("valid_until_ns")
+                and type(admission.get("admitted_ns")) is int
+                and type(admission.get("input_ack_ns")) is int
+                and type(row.get("release_call_started_ns")) is int
+                and admission["admitted_ns"] <= admission["input_ack_ns"]
+                < row["release_call_started_ns"] < admission["valid_until_ns"]
+            )
+            linked_admission = dict(admission) if valid_admission else None
+            if linked_admission is not None:
+                linked_admission["operation"] = "down"
+            row["admission_receipt"] = linked_admission
+            row["admission_receipt_valid"] = valid_admission
             context["rows"].append(row)
         if not self.held:
             self._publish_release_batch(context)
