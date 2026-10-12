@@ -4,6 +4,9 @@ import unittest
 import queue
 import tempfile
 import ast
+import json
+import os
+from unittest.mock import patch
 from argparse import Namespace
 from pathlib import Path
 
@@ -190,6 +193,60 @@ class Map01V39CoastTests(unittest.TestCase):
         measured = controller.session_command(args, Path("runtime"))
         self.assertEqual(Path(measured[1]).name, "session_map01_v15.py")
         self.assertEqual(measured[2:], default[2:])
+
+    def test_app_server_command_only_disables_configured_known_mcps(self):
+        command = controller.app_server_command(
+            configured_mcp_names={"node_repl", "chrome-devtools", "custom"})
+        overrides = [command[index + 1] for index, value in enumerate(command[:-1])
+                     if value == "-c"]
+        self.assertEqual(overrides, [
+            "mcp_servers.chrome-devtools.enabled=false",
+            "mcp_servers.node_repl.enabled=false",
+        ])
+        self.assertNotIn("-c", controller.app_server_command(set()))
+
+    def test_mcp_listing_parser_returns_names_only(self):
+        self.assertEqual(controller.parse_mcp_listing(json.dumps([
+            {"name": "node_repl", "enabled": True, "transport": {"command": "hidden"}},
+            {"name": "custom", "enabled": True},
+        ])), {"node_repl", "custom"})
+
+    def test_mcp_listing_parser_rejects_malformed_json(self):
+        with self.assertRaises(ValueError):
+            controller.parse_mcp_listing("not-json")
+
+    def test_mcp_preflight_timeout_writes_failure_receipt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "run"
+            argv = ["controller", "--out", str(out), "--model", "unused",
+                    "--effort", "low", "--load-fixture-manifest",
+                    str(Path(tmp) / "missing.json")]
+            failure = controller.subprocess.TimeoutExpired(
+                "codex mcp list --json", controller.MCP_LIST_TIMEOUT_SECONDS)
+            with patch.object(controller, "configured_mcp_names",
+                              side_effect=failure):
+                with patch.object(sys, "argv", argv):
+                    with self.assertRaises(controller.subprocess.TimeoutExpired):
+                        controller.main()
+            self.assertTrue(out.is_dir())
+            receipt = json.loads(
+                (out / "mcp-preflight-failure.json").read_text(encoding="utf-8"))
+            self.assertEqual(receipt, {
+                "schema": "map01-mcp-preflight-failure-v1",
+                "stage": "codex_mcp_configuration_listing",
+                "status": "failed",
+                "error": {
+                    "type": "TimeoutExpired",
+                    "reason": "timeout",
+                    "timeout_seconds": controller.MCP_LIST_TIMEOUT_SECONDS,
+                },
+            })
+
+    def test_codex_command_prefix_accepts_explicit_host_executable(self):
+        with patch.dict(os.environ, {
+                "AGENT_INTERFACE_CODEX_EXECUTABLE": "/mnt/c/Codex/codex.exe"}):
+            self.assertEqual(controller.codex_command_prefix(),
+                             ["/mnt/c/Codex/codex.exe"])
 
     def test_rejected_action_followup_keeps_model_turn_alive_on_damage(self):
         previous = {"iteration": 1, "model_action_discarded": True,

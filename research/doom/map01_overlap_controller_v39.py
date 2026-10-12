@@ -5,6 +5,7 @@ from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
+import os
 import queue
 import subprocess
 import sys
@@ -49,6 +50,7 @@ DISABLED_FEATURES = [
     "computer_use", "in_app_browser", "code_mode", "code_mode_host",
 ]
 DISABLED_MCPS = ["blender", "chrome-devtools", "node_repl", "playwright", "puppeteer"]
+MCP_LIST_TIMEOUT_SECONDS = 5
 WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 MAX_AUTHORED_HEALTH_LOSS = 20
 
@@ -673,12 +675,46 @@ def win(path):
                           check=True, capture_output=True, text=True).stdout.strip()
 
 
-def app_server_command():
-    command = [NODE, CLI, "app-server", "--stdio"]
+def codex_command_prefix():
+    executable = os.environ.get("AGENT_INTERFACE_CODEX_EXECUTABLE")
+    return [executable] if executable else [NODE, CLI]
+
+
+def parse_mcp_listing(output):
+    try:
+        entries = json.loads(output)
+    except (TypeError, json.JSONDecodeError) as error:
+        raise ValueError("Codex MCP listing was not valid JSON") from error
+    if not isinstance(entries, list):
+        raise ValueError("Codex MCP listing must be a JSON array")
+    names = set()
+    for entry in entries:
+        if (not isinstance(entry, dict) or
+                not isinstance(entry.get("name"), str) or
+                not entry["name"]):
+            raise ValueError("Codex MCP listing entry must have a nonempty name")
+        names.add(entry["name"])
+    return names
+
+
+def configured_mcp_names():
+    # `mcp list --json` reads configuration without starting MCP processes.
+    # Pass only matching configured names to app_server_command so absent
+    # names do not become invalid, transport-less configuration entries.
+    result = subprocess.run(
+        codex_command_prefix() + ["mcp", "list", "--json"], cwd=REPO,
+        capture_output=True, text=True, timeout=MCP_LIST_TIMEOUT_SECONDS,
+        check=True)
+    return parse_mcp_listing(result.stdout)
+
+
+def app_server_command(configured_mcp_names):
+    command = codex_command_prefix() + ["app-server", "--stdio"]
     for feature in DISABLED_FEATURES:
         command += ["--disable", feature]
     for name in DISABLED_MCPS:
-        command += ["-c", f"mcp_servers.{name}.enabled=false"]
+        if name in configured_mcp_names:
+            command += ["-c", f"mcp_servers.{name}.enabled=false"]
     return command
 
 
@@ -1088,8 +1124,33 @@ def main():
                         help="opt into V15 scorer-only and per-key release telemetry")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
+    try:
+        configured_mcps = configured_mcp_names()
+    except Exception as error:
+        if isinstance(error, subprocess.TimeoutExpired):
+            detail = {"type": type(error).__name__, "reason": "timeout",
+                      "timeout_seconds": error.timeout}
+        elif isinstance(error, subprocess.CalledProcessError):
+            detail = {"type": type(error).__name__, "reason": "nonzero_exit",
+                      "returncode": error.returncode}
+        elif isinstance(error, FileNotFoundError):
+            detail = {"type": type(error).__name__, "reason": "executable_not_found"}
+        elif isinstance(error, ValueError):
+            detail = {"type": type(error).__name__, "reason": "invalid_listing"}
+        else:
+            detail = {"type": type(error).__name__, "reason": "unexpected_preflight_error"}
+        receipt = {
+            "schema": "map01-mcp-preflight-failure-v1",
+            "stage": "codex_mcp_configuration_listing",
+            "status": "failed",
+            "error": detail,
+        }
+        (args.out / "mcp-preflight-failure.json").write_text(
+            json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        raise
     planner_client = CodexAppServerClient(
-        app_server_command(), cwd=REPO,
+        app_server_command(configured_mcps), cwd=REPO,
         journal_path=args.out / "planner-protocol.jsonl")
     atexit.register(planner_client.close)
     with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:
