@@ -1,0 +1,110 @@
+{
+  "cases": [
+    {
+      "benign": true,
+      "case_id": "clean",
+      "expected_boundary": null,
+      "expected_classification": "CONSISTENT",
+      "injected_fault": null
+    },
+    {
+      "benign": false,
+      "case_id": "client_duplicate",
+      "expected_boundary": "CLIENT",
+      "expected_classification": "FAULT",
+      "injected_fault": "client_duplicate"
+    },
+    {
+      "benign": false,
+      "case_id": "toolkit_drop",
+      "expected_boundary": "CLIENT_TO_TOOLKIT",
+      "expected_classification": "FAULT",
+      "injected_fault": "toolkit_drop"
+    },
+    {
+      "benign": false,
+      "case_id": "toolkit_duplicate",
+      "expected_boundary": "TOOLKIT",
+      "expected_classification": "FAULT",
+      "injected_fault": "toolkit_duplicate"
+    },
+    {
+      "benign": false,
+      "case_id": "os_duplicate",
+      "expected_boundary": "OS",
+      "expected_classification": "FAULT",
+      "injected_fault": "os_duplicate"
+    },
+    {
+      "benign": false,
+      "case_id": "os_drop",
+      "expected_boundary": "TOOLKIT_TO_OS",
+      "expected_classification": "FAULT",
+      "injected_fault": "os_drop"
+    },
+    {
+      "benign": false,
+      "case_id": "os_delay",
+      "expected_boundary": "OS",
+      "expected_classification": "FAULT",
+      "injected_fault": "os_delay"
+    },
+    {
+      "benign": false,
+      "case_id": "wrong_window",
+      "expected_boundary": "TOOLKIT",
+      "expected_classification": "FAULT",
+      "injected_fault": "wrong_window"
+    },
+    {
+      "benign": false,
+      "case_id": "generation_reset",
+      "expected_boundary": "TOOLKIT",
+      "expected_classification": "FAULT",
+      "injected_fault": "generation_reset"
+    },
+    {
+      "benign": false,
+      "case_id": "missing_correlation",
+      "expected_boundary": null,
+      "expected_classification": "UNKNOWN_CORRELATION",
+      "injected_fault": "missing_correlation"
+    },
+    {
+      "benign": false,
+      "case_id": "os_truncated",
+      "expected_boundary": null,
+      "expected_classification": "UNKNOWN_SOURCE_COVERAGE",
+      "injected_fault": "truncated_os"
+    },
+    {
+      "benign": true,
+      "case_id": "benign_coalescing",
+      "expected_boundary": null,
+      "expected_classification": "CONSISTENT",
+      "injected_fault": "coalesced_redraw"
+    },
+    {
+      "benign": true,
+      "case_id": "concurrent_reorder",
+      "expected_boundary": null,
+      "expected_classification": "CONSISTENT",
+      "injected_fault": "concurrent_reorder"
+    },
+    {
+      "benign": true,
+      "case_id": "independent_os_event",
+      "expected_boundary": null,
+      "expected_classification": "CONSISTENT",
+      "injected_fault": "independent_os_event"
+    },
+    {
+      "benign": true,
+      "case_id": "irrelevant_redraw",
+      "expected_boundary": null,
+      "expected_classification": "CONSISTENT",
+      "injected_fault": "irrelevant_redraw"
+    }
+  ],
+  "schema": "multisource-event-oracle-v1"
+}
