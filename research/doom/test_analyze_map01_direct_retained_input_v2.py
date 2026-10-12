@@ -106,6 +106,36 @@ class Tests(unittest.TestCase):
         self.assertEqual(result.get("invalid_release_count"), 1)
         self.assertEqual(result.get("unmatched_admission_count"), 1)
 
+    def test_rejects_float_release_deadline_even_when_value_matches(self):
+        start = admission("a", 100, 110, deadline=1000)
+        malformed = release(
+            "a", admission_receipt(start), 120, 130, deadline=1000.0)
+        result = candidate.analyze([start, malformed])
+        self.assertIs(result.get("measurement_ready"), False)
+        self.assertEqual(result.get("hold_count"), 0)
+        self.assertEqual(result.get("invalid_release_count"), 1)
+        self.assertEqual(result.get("unmatched_admission_count"), 1)
+
+    def test_rejects_non_integer_pointer_release_button(self):
+        start = {
+            "event": "pointer_admission", "operation": "button_down", "payload": 1,
+            "intent_token": "t", "owner_id": "o", "valid_until_ns": 1000,
+            "admitted_ns": 100, "input_ack_ns": 110,
+        }
+        malformed = {
+            "event": "input_release_transition", "operation": "button_up",
+            "button": True, "intent_token": "t", "owner_id": "o",
+            "valid_until_ns": 1000, "admission_receipt": start,
+            "admission_receipt_valid": True, "owner_transition_verified": True,
+            "ordinary_release_candidate": True, "release_call_started_ns": 120,
+            "release_call_returned_ns": 130,
+        }
+        result = candidate.analyze([start, malformed])
+        self.assertIs(result.get("measurement_ready"), False)
+        self.assertEqual(result.get("hold_count"), 0)
+        self.assertEqual(result.get("invalid_release_count"), 1)
+        self.assertEqual(result.get("unmatched_admission_count"), 1)
+
 
 if __name__ == "__main__":
     unittest.main()
