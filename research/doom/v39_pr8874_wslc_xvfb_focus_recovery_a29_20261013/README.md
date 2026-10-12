@@ -1,0 +1,1 @@
+Read and verify the preregistration and source manifest, then run the fixed WSLc candidate once. Preserve raw/log/exit/inventory. Do not rerun after any key event. Independent audit only reads the retained files.
