@@ -1,0 +1,36 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A02-20261009",
+  "auditor": {
+    "command": "/usr/bin/sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py run-01/candidate.json > run-01/audit.json 2> run-01/auditor.stderr",
+    "exit_status": 0,
+    "invocations": 1,
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 1455,
+    "stdout_sha256": "1c43e952cf98530a123a013da425b031c56c19709abd366af5f9c06e0d87d51a"
+  },
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "branch": "research/8668-phase-control-delays-a02-20261009",
+  "candidate": {
+    "command": "/usr/bin/sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > run-01/candidate.json 2> run-01/candidate.stderr",
+    "exit_status": 0,
+    "invocations": 1,
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 1364320,
+    "stdout_sha256": "7cab3b4c4bab70ae56e46c7bff2396d94158d7cf9ac3883317fffb6281e8d4c5"
+  },
+  "decision": "SUPPORT_FOR_PHASE_REFINEMENT_SCOPED",
+  "formal_retries": 0,
+  "freeze_commit": "6fcc7330c4a7ee4a8e6ce092d684f24da29c0289",
+  "method_gate": "PASS_METHOD_SCOPED",
+  "mutation_controls_rejected": 5,
+  "oracle_errors": 0,
+  "policy_count_per_schedule": 4,
+  "recorded_at_utc": "2026-10-08T20:48:58.239661+00:00",
+  "safe_removal_opportunities": 228,
+  "safe_removal_opportunities_with_retry_requested": 114,
+  "schedule_count": 481,
+  "schema": "phase-control-delay-8668-a02-execution-record-v1",
+  "scope": "Authored deterministic finite model only; no runtime, OS, GUI, application, model, GPU, or task-effect evidence."
+}

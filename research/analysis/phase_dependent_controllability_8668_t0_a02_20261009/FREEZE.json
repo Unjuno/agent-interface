@@ -1,0 +1,44 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A02-20261009",
+  "auditor_command": "/usr/bin/sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py run-01/candidate.json > run-01/audit.json 2> run-01/auditor.stderr",
+  "auditor_invocations_if_candidate_exit_zero": 1,
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "branch": "research/8668-phase-control-delays-a02-20261009",
+  "candidate_command": "/usr/bin/sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > run-01/candidate.json 2> run-01/candidate.stderr",
+  "candidate_invocations": 1,
+  "experiment": "Policy-specific counterfactual replay over a finite interface-operation plant with phase-dependent cancellation and bounded control/receipt delay.",
+  "issue": 8668,
+  "output_path": "research/analysis/phase_dependent_controllability_8668_t0_a02_20261009/run-01/",
+  "protocol": {
+    "candidate_exit_nonzero": "Preserve candidate stdout/stderr and STOP; do not invoke auditor or retry.",
+    "candidate_exit_zero": "Invoke independent raw-only auditor once; preserve both first outputs.",
+    "construction_tests_are_nonformal": true,
+    "expected_method_gate": "PASS_METHOD_SCOPED only if oracle equality, phase-refined invariants, safe-removal preservation, and all five mutation controls pass.",
+    "hypothesis_decision": "SUPPORT_FOR_PHASE_REFINEMENT_SCOPED only if method gate passes and both preregistered static contrasts occur; otherwise apply the frozen D rule.",
+    "source_and_design_freeze_precedes_candidate": true,
+    "source_manifest_verified_by_candidate_and_auditor": true
+  },
+  "retry": false,
+  "run_directory_must_be_empty_before_candidate": true,
+  "runtime": {
+    "container": false,
+    "container_reason": "Adjacent current macOS CPU allocation #8638 recorded OrbStack read-only inventory failing on a containerd content-blob error before any container action. This finite deterministic enumeration needs no container-specific API; run in a network-deny sandbox instead.",
+    "dependencies": "Python standard library only",
+    "gpu": false,
+    "gui": false,
+    "model_endpoint": false,
+    "network": "Denied; pre-freeze loopback connection probe returned EPERM under this sandbox.",
+    "os": "Darwin 27.0 arm64",
+    "python": "CPython 3.14.5",
+    "sandbox_command": "/usr/bin/sandbox-exec -p (version 1) (deny network*) (allow default)"
+  },
+  "schema": "phase-controllability-freeze-v2",
+  "source_sha256": {
+    "README.md": "14f0eff10ccef2403d29672a7ff3870d047d91a8df38d0f2ef6a1877813a4659",
+    "auditor.py": "b02bede30e5a3a3b06848a0ed7b04268a0eef01a86a195670621dfc890b289c1",
+    "candidate.py": "ab14096860897e050b7c281fc259af6a441c4becec62081dfbe3f39ce0cb1293",
+    "design.json": "d5eae6fda4c737b8b9e4e2e0045d9f3d6724288320a2615acd84a68f30b1ec8a",
+    "test_model.py": "24beec2fbcf0f725a6492484e5bfea0d58ee7c26db739c0033db97b6c31ed640"
+  },
+  "status_at_freeze": "NOT_RUN"
+}
