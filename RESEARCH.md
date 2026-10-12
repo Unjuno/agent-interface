@@ -2483,3 +2483,8 @@ On then-current main `0455b0079ca29bcfe85153f280e592f5e96528f6` (all seven input
 The exact current-main controller snapshot failed at test-module import because it lacks the strict known-empty release predicate. PR #8835 head `33cde2476fee40c3e6b74405435d0a9106fd83ac` passed seven focused receipt, stale-cover composition, and V15 startup-preflight tests in both normal and optimized CPython 3.14.8 within WSLc 3.0.1.0. The initial independent-audit script failure is retained separately; its corrected read-only audit passes all 16 checks.
 
 This is construction evidence only. It does not establish producer authenticity, physical key-up timing, live input, gameplay effect, recovery benefit, threat response, or MAP01 completion; no live allocation was started. See the [report and retained raw/source bundle](research/doom/v39_strict_release_wslc_a10_20261012/REPORT.md), [Issue #59](https://github.com/Unjuno/agent-interface/issues/59), and [PR #8835](https://github.com/Unjuno/agent-interface/pull/8835).
+
+
+## Issue #59 V39 strict-release pending-cancel composition A11 (2026-10-12)
+
+A source-frozen WSLc test composes PR #8835 strict terminal-release acceptance with PR #8843 paired-health invalidation and pending-turn cancellation. Normal and optimized CPython 3.14.8 each pass 2/2; four incomplete/adverse receipt variants are accepted by legacy main but rejected by the strict candidate. Saved-artifact audit passes 24/24. This remains synthetic construction evidence; no physical release, live game response, recovery benefit, or MAP01 completion is established. See [the evidence report](research/doom/v39_strict_release_pending_cancel_a11_20261012/REPORT.md).
