@@ -185,6 +185,7 @@ class CoverTerminalTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             argv = ["controller", "--out", str(Path(temp) / "out"),
                     "--iterations", "1", "--model", "synthetic", "--effort", "low",
+                    "--measurement-session",
                     "--load-fixture-manifest", str(Path(temp) / "fixture.json")]
             original_read = Path.read_text
 
