@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "n_pairs": 10,
+  "source_report_sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+  "monitor_file_sha256": "6dde213edf3a77c4de7dd24c4ee98d919436d73964a3307fdb0778880e8c7263",
+  "artifact_delay_ms": 150.031473,
+  "early_median_ms": 2.0709865,
+  "delayed_median_ms": 150.484494,
+  "paired_reduction_median_ms": 148.408259,
+  "paired_reduction_min_ms": 148.318855,
+  "paired_reduction_max_ms": 150.042028,
+  "per_pair": [
+    {
+      "pair": 1,
+      "early_ms": 2.080541,
+      "delayed_ms": 152.122569,
+      "reduction_ms": 150.042028
+    },
+    {
+      "pair": 2,
+      "early_ms": 2.06168,
+      "delayed_ms": 150.390563,
+      "reduction_ms": 148.328883
+    },
+    {
+      "pair": 3,
+      "early_ms": 2.079842,
+      "delayed_ms": 150.530986,
+      "reduction_ms": 148.451144
+    },
+    {
+      "pair": 4,
+      "early_ms": 2.071873,
+      "delayed_ms": 150.42369,
+      "reduction_ms": 148.35181699999998
+    },
+    {
+      "pair": 5,
+      "early_ms": 1.936167,
+      "delayed_ms": 151.047195,
+      "reduction_ms": 149.11102799999998
+    },
+    {
+      "pair": 6,
+      "early_ms": 2.106117,
+      "delayed_ms": 150.823144,
+      "reduction_ms": 148.717027
+    },
+    {
+      "pair": 7,
+      "early_ms": 2.0701,
+      "delayed_ms": 152.107256,
+      "reduction_ms": 150.037156
+    },
+    {
+      "pair": 8,
+      "early_ms": 2.058647,
+      "delayed_ms": 150.407507,
+      "reduction_ms": 148.34886
+    },
+    {
+      "pair": 9,
+      "early_ms": 2.072628,
+      "delayed_ms": 150.438002,
+      "reduction_ms": 148.365374
+    },
+    {
+      "pair": 10,
+      "early_ms": 2.058723,
+      "delayed_ms": 150.377578,
+      "reduction_ms": 148.318855
+    }
+  ],
+  "checks": [
+    "20/20 WSLc exits=0",
+    "10/10 paired differences > 0",
+    "all 20 hard-invalidations and verified empty releases",
+    "all 20 pending answers ineligible",
+    "event ordering checked",
+    "frozen source/input hashes match"
+  ],
+  "limits": [
+    "synthetic in-memory fake X only",
+    "wait injected rather than native artifact pipeline",
+    "no live GUI/game/physical input or task outcome",
+    "WSLc swap limit unsupported warning; resource enforcement beyond reported observations not inferred"
+  ]
+}

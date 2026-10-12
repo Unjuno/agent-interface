@@ -1,3 +1,7 @@
+# Issue #59 T0 A01 — typed-health early-dispatch occupancy comparison (2026-10-12)
+
+`PASS_CONSTRUCTION_SCOPED`: ten paired WSLc CPU runs compared immediate typed-health handling with a fixed 150.031473 ms wait taken from the maximum of 218 retained typed-to-artifact delays. Median fake-X key-down→verified-owner-release was 2.071 ms vs 150.484 ms; every pair favored early handling (median reduction 148.408 ms). All 20 cases hard-invalidated, cancelled before planner interruption, verified empty release, and rejected the pending answer. The wait was injected; this is not the native artifact pipeline, physical input, GUI/game, threat response, useful feedback, recovery, or task-success evidence. See the [frozen protocol, raw results and audit](research/doom/health_typed_release_delay_a01_20261012/REPORT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)
