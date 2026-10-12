@@ -10,5 +10,5 @@ python -O .\run.py > .\results\optimized.stdout.txt
 python .\audit.py
 ```
 
-Expected: each mode reports 8/8 runner predicates; the independent audit reports 17/17. The boundary is synthetic. It does not establish whether a running cover contains fire, whether continuing fire below an action minimum is harmful, or any live task effect. See `HYPOTHESIS.md` for decision limits.
+Expected: each mode reports 8/8 runner predicates; the independent audit reports 34/34 across A01 and the A02 cover-fire composition probe. The boundary is synthetic. It does not establish whether a running cover contains fire, whether continuing fire below an action minimum is harmful, or any live task effect. See `HYPOTHESIS.md` for decision limits.
 

@@ -67,11 +67,79 @@
     {
       "name": "hard_boundary_decision",
       "pass": true
+    },
+    {
+      "name": "schema_sha256",
+      "pass": true
+    },
+    {
+      "name": "schema_git_blob",
+      "pass": true
+    },
+    {
+      "name": "followup_probe_sha256",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_stdout_matches_raw",
+      "pass": true
+    },
+    {
+      "name": "followup_source_commit",
+      "pass": true
+    },
+    {
+      "name": "compiled_fire_schedule",
+      "pass": true
+    },
+    {
+      "name": "schema_separates_cover_and_action_floors",
+      "pass": true
+    },
+    {
+      "name": "pending_loop_renews_cover",
+      "pass": true
+    },
+    {
+      "name": "soft_event_composes_with_cover_schedule",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_schema_allows_fire_in_next_cover",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_cover_validity_has_no_ammo_floor",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_next_action_has_ammo_floor",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_fire_pulse_compiles_eight_repetitions",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_bounded_cover_sums_to_ten_seconds",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_cover_fire_dwell_is_eight_hundred_ms",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_pending_planner_loop_contains_cover_renewal",
+      "pass": true
+    },
+    {
+      "name": "cover_probe_soft_ammo_case_does_not_cancel",
+      "pass": true
     }
   ],
-  "passed": 17,
+  "passed": 34,
   "schema": "issue59-pending-soft-boundary-independent-audit-v1",
   "scope": "frozen source identity and synthetic control-flow replay only",
   "status": "PASS_SYNTHETIC_BOUNDARY",
-  "total": 17
+  "total": 34
 }

@@ -19,3 +19,15 @@ Date: 2026-10-12 JST. Exact source snapshot: current `main` `f185a9059d485a4f8d5
 Both cases passed. At ammo 4, the monitor returned no invalidation and recorded one soft event; the pending-turn cancel condition remained false. At ammo 0, the monitor returned `ammo:below_hard_minimum`, matching the controller cancellation branch. The independent audit is 14/14. This narrows the live question: does an already-running cover keep issuing fire after ammo falls below its authored next-action floor, and is that behavior useful or harmful under threat?
 
 This does not close Issue #59 or establish that the observed contract is a bug.
+
+## A02 follow-up: fire cover across the soft-ammo boundary
+
+**H.** If a model-authored next cover contains `fire pulse`, current main compiles that cover into repeated fire holds. Since the cover validity schema has no ammo minimum, a 6→4 soft change does not invalidate it; while inference remains pending, natural cover expiry can lead to another renewal.
+
+**T.** Execute exact-main `compile_cover` for one `fire pulse`, inspect the exact schema split between `next_cover_validity` and `action_validity`, and independently verify the pending loop's renewal call alongside A01's executed soft case.
+
+**D.** Pass the source-level construction condition if the fire cover contains repeated holds within the ten-second bound, the schema omits an ammo floor for cover, the next-action floor is separate, and pending renewal is present without soft invalidation. A pass identifies a live measurement target; it does not by itself justify a production repair.
+
+**C.** The separate cover policy may intentionally continue firing down to the positive-ammo hard floor. The schema may distinguish “next action preference” from “currently authorized cover”; no harm, ammo waste, or threat outcome is established here.
+
+**U.** No real Executor/session, live app-server turn, Doom environment, ammunition consumption, or threat response was run. The result is a conditional contract composition, not a claim that a real model will author this policy.
