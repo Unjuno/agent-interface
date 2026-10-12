@@ -242,6 +242,26 @@ class Map01V39CoastTests(unittest.TestCase):
                 },
             })
 
+    def test_mcp_preflight_receipt_write_failure_preserves_primary_error(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "run"
+            argv = ["controller", "--out", str(out), "--model", "unused",
+                    "--effort", "low", "--load-fixture-manifest",
+                    str(Path(tmp) / "missing.json")]
+            failure = controller.subprocess.TimeoutExpired(
+                "codex mcp list --json", controller.MCP_LIST_TIMEOUT_SECONDS)
+            with patch.object(controller, "configured_mcp_names",
+                              side_effect=failure):
+                with patch.object(Path, "write_text",
+                                  side_effect=OSError("receipt disk failure")):
+                    with patch.object(sys, "argv", argv):
+                        with self.assertRaises(
+                                controller.subprocess.TimeoutExpired) as caught:
+                            controller.main()
+            self.assertIs(caught.exception, failure)
+            self.assertTrue(any("OSError" in note
+                                for note in failure.__notes__))
+
     def test_codex_command_prefix_accepts_explicit_host_executable(self):
         with patch.dict(os.environ, {
                 "AGENT_INTERFACE_CODEX_EXECUTABLE": "/mnt/c/Codex/codex.exe"}):

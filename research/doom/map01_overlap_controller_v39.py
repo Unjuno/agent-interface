@@ -1145,9 +1145,14 @@ def main():
             "status": "failed",
             "error": detail,
         }
-        (args.out / "mcp-preflight-failure.json").write_text(
-            json.dumps(receipt, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8")
+        try:
+            (args.out / "mcp-preflight-failure.json").write_text(
+                json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8")
+        except Exception as receipt_error:
+            error.add_note(
+                "MCP preflight failure receipt could not be written: " +
+                type(receipt_error).__name__)
         raise
     planner_client = CodexAppServerClient(
         app_server_command(configured_mcps), cwd=REPO,
