@@ -1,0 +1,215 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "name": "raw_schema",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "allocation_identity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "base_main_identity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "all_source_and_runner_hashes_frozen",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "source_hash_agrees_with_raw",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "promoted_hash_fields_agree",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "prohibited_claims_false",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "case_set_exact",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "distinct_pair_case_shape",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "distinct_pair_terminals_complete_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "distinct_pair_verified_empty_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "distinct_pair_ambiguity_metadata_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_accept_one_terminal_case_shape",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_accept_one_terminal_terminals_complete_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_accept_one_terminal_verified_empty_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_accept_one_terminal_ambiguity_metadata_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_failed_then_verified_case_shape",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_failed_then_verified_terminals_complete_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_failed_then_verified_verified_empty_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_failed_then_verified_ambiguity_metadata_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_failed_then_verified_terminals_conflict",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_verified_then_failed_case_shape",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_verified_then_failed_terminals_complete_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_verified_then_failed_verified_empty_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_verified_then_failed_ambiguity_metadata_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "duplicate_terminal_verified_then_failed_terminals_conflict",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "legacy_tokenless_case_shape",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "legacy_tokenless_terminals_complete_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "legacy_tokenless_verified_empty_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "legacy_tokenless_ambiguity_metadata_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "legacy_tokenless_actually_tokenless",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "mismatched_token_case_shape",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "mismatched_token_terminals_complete_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "mismatched_token_verified_empty_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "mismatched_token_ambiguity_metadata_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "mismatched_token_actually_mismatched",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "valid_single_case_shape",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "valid_single_terminals_complete_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "valid_single_verified_empty_recomputed",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "valid_single_ambiguity_metadata_recomputed",
+      "pass": true
+    }
+  ],
+  "hashes": {
+    "auditor": "d13bd51d460387c57d4741ef87a6801c12ea6adf1db489fa3eda320d4957b51f",
+    "candidate": "15b9caa3e4754d3bc0ae1697581e426a590273b8f3c8526b72fd5927fdddf09e",
+    "production_source": "5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c",
+    "regression_tests": "03b1fee332f56a2413b6d606129a82ce09e0cd6f371d60741829f0113906b049"
+  },
+  "passed": 40,
+  "schema": "issue8681-cleanup-identity-a05-audit-v1",
+  "scope": "synthetic event reconstruction only; no production-occurrence or physical-release claim",
+  "status": "PASS_CONSTRUCTION_AUDIT",
+  "total": 40
+}
