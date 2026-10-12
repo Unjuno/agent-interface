@@ -62,3 +62,7 @@ For any future distinct allocation, make the runner validate that the candidate'
 ## Audit correction (2026-10-12)
 
 A37's identity-gate review found the same candidate-versus-freeze allocation mismatch in A36. A36 has been reclassified from PASS_METHOD_SCOPED to STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH; the XI2 sourceid values remain exploratory only. A35's candidate and freeze allocation IDs match. Never infer a formal outcome from a candidate self-reported pass bit without checking the raw identity against the preregistration.
+
+## Frozen candidate identity gate — back-check (2026-10-12)
+
+Added `research/doom/frozen_candidate_gate_v1.py`, a no-import/no-execution preflight that verifies manifest-listed file hashes, manifest and runner hashes, candidate presence in the manifest, and exactly one literal candidate `allocation_id` matching the freeze. Back-checks against retained artifacts: A35 returns `PASS`; A36 and A37 return `STOP` with the candidate/freeze ID mismatch. The gate did not launch any candidate or alter the historical outcomes. Use it before starting Xvfb or an owner in future allocations.
