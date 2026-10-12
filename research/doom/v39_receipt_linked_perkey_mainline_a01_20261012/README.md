@@ -22,6 +22,7 @@ Python 3.11.9, base `f185a9059d485a4f8d5a65e9e7f6782897f67eae`.
 
 - Owner V3/V4, V15, and V39 controller suites: 43 tests passed in normal and optimized mode.
 - Receipt-linked analyzer suite: 4 tests passed in normal and optimized mode.
+- Owner-to-analyzer composition suite: 1 test passed in normal and optimized mode; the V3 transition receipt is consumed by the candidate analyzer and yields the expected per-key censored interval.
 - Python compilation and `git diff --check`: passed.
 - Deterministic cancellation comparison: matching keycode is preserved as a non-ordinary verified cleanup on current `main`; the mismatched keycode control is rejected. The PR #8108 source propagates the cancellation `ValueError` for the matching case.
 
@@ -34,6 +35,8 @@ From the repository root:
 ```powershell
 python -m unittest -v research.live_control.test_input_transition_owner_v3 research.live_control.test_input_transition_owner_v4 research.doom.test_session_map01_v15 research.doom.test_map01_overlap_controller_v39
 python -O -m unittest -q research.live_control.test_input_transition_owner_v3 research.live_control.test_input_transition_owner_v4 research.doom.test_session_map01_v15 research.doom.test_map01_overlap_controller_v39
+python -m unittest -v research.doom.test_map01_direct_retained_input_owner_integration_v1
+python -O -m unittest -q research.doom.test_map01_direct_retained_input_owner_integration_v1
 ```
 
 From `research/doom`:
