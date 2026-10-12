@@ -1,0 +1,21 @@
+{
+  "candidate_invocations": 1,
+  "finding": "After owner service SIGKILL and unchanged focus identity, a separate supervisor XTEST connection released only recorded keycodes 38/40 and Button1. Independent observer confirmed both keys and button up while session remained alive. No owner receipt exists; this is a recovery primitive only.",
+  "raw_sha256": "f170fb60c12a3f236777f79cbc13db328f3d7666306e9cc73aa14d2e2e23aa3a",
+  "receipt_sha256": null,
+  "retries": 0,
+  "schema": "v39-v15-process-owner-xvfb-a15_audit-v1",
+  "source_and_evidence_sha256": {
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/FREEZE.json": "6926c0110e97e1aff3e92b72ffb7d2f9225914c6271e21a801e1a1866417fe0e",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/PLAN.md": "4bb9842cb2c01c0ae782dca8b0bf32c900983c317e5cfb44762f2d0cc73bba99",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/__pycache__/candidate.cpython-311.pyc": "64c3e26db1c29574475df325830aa6aeda9cd9f739d282360787039ad379256c",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/candidate.py": "74d55dbc2524124dda1804c50159ddc6d221ca81dd5c00ff5262fc3c81024ba6",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/results/A01/RAW.json": "f170fb60c12a3f236777f79cbc13db328f3d7666306e9cc73aa14d2e2e23aa3a",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/results/A01/input-owner-process/input-owner-recovery-v1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/results/A01/session-events.jsonl": "cef1b3c0422a84ed2885a73bf4082204e6915c3230b773fa31cf615973b3c189",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/results/A01/session.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/results/A01/session.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a15_20261012/run_candidate.sh": "29ec709e972305a3401b4d9ef2bf4e4057149227d337b44e7c26dd5676f56424"
+  },
+  "status": "PASS_SUPERVISOR_EMERGENCY_RELEASE"
+}
