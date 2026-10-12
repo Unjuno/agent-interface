@@ -71,17 +71,34 @@
       "reduction_ms": 148.318855
     }
   ],
+  "retained_hard_event_context": {
+    "sequence": 218,
+    "health": 48,
+    "hard_minimum": 51,
+    "capture_to_typed_ready_ms": 11.810954,
+    "typed_ready_to_emit_ms": 3.968975,
+    "typed_emit_to_artifact_ready_ms": 111.11915,
+    "capture_to_guard_monitor_ms": 133.689927,
+    "typed_emit_to_guard_monitor_ms": 117.90999800000002,
+    "pending_turn_status": "interrupted",
+    "pending_answer_eligible": false,
+    "cover_terminal_before_plan": true,
+    "executor_admission": null,
+    "revocation": null
+  },
   "checks": [
     "20/20 WSLc exits=0",
     "10/10 paired differences > 0",
     "all 20 hard-invalidations and verified empty releases",
     "all 20 pending answers ineligible",
     "event ordering checked",
-    "frozen source/input hashes match"
+    "frozen source/input hashes match",
+    "seq-218 retained hard-event context independently reconciled"
   ],
   "limits": [
     "synthetic in-memory fake X only",
     "wait injected rather than native artifact pipeline",
+    "retained seq-218 event had no Executor admission/revocation and cover was terminal before plan",
     "no live GUI/game/physical input or task outcome",
     "WSLc swap limit unsupported warning; resource enforcement beyond reported observations not inferred"
   ]

@@ -6,6 +6,10 @@ In a 10-pair WSLc CPU construction comparison, immediate typed-health handling r
 
 This isolates one effect: when the typed signal reaches the monitor, the existing cancellation and owner-release path can remove roughly the injected artifact-wait period from held-input occupancy in this synthetic composition. The delayed arm injects a wait; it does not run the native image artifact pipeline. The result supports preserving and validating early typed handoff, but it does not prove that the full controller process delivers these events with the same timing or improves game outcomes.
 
+## Context from the retained live trace
+
+The same source report contains a hard health event at sequence 218: health 48 below hard minimum 51. Its typed payload was ready 11.811 ms after capture and emitted 3.969 ms later; artifact readiness followed typed emission by 111.119 ms, while the full guard monitor received it 133.690 ms after capture (117.910 ms after typed emission). That planner turn was interrupted and its answer rejected. However, the cover was already terminal before the plan and the admission record has no Executor admission or revocation. Thus the retained event does not itself show a held key being cut off by the guard. The active-key experiment above tests that counterfactual composition; it does not retroactively establish a live held-input effect.
+
 ## Reproduction
 
 From this directory in PowerShell, with WSLc and the frozen image already available locally:
