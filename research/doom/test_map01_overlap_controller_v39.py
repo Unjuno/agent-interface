@@ -220,7 +220,7 @@ class Map01V39CoastTests(unittest.TestCase):
             out = Path(tmp) / "run"
             argv = ["controller", "--out", str(out), "--model", "unused",
                     "--effort", "low", "--load-fixture-manifest",
-                    str(Path(tmp) / "missing.json")]
+                    str(Path(tmp) / "missing.json"), "--measurement-session"]
             failure = controller.subprocess.TimeoutExpired(
                 "codex mcp list --json", controller.MCP_LIST_TIMEOUT_SECONDS)
             with patch.object(controller, "configured_mcp_names",
@@ -247,7 +247,7 @@ class Map01V39CoastTests(unittest.TestCase):
             out = Path(tmp) / "run"
             argv = ["controller", "--out", str(out), "--model", "unused",
                     "--effort", "low", "--load-fixture-manifest",
-                    str(Path(tmp) / "missing.json")]
+                    str(Path(tmp) / "missing.json"), "--measurement-session"]
             failure = controller.subprocess.TimeoutExpired(
                 "codex mcp list --json", controller.MCP_LIST_TIMEOUT_SECONDS)
             with patch.object(controller, "configured_mcp_names",
