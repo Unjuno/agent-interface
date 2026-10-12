@@ -103,7 +103,8 @@ class Map01V39CoastTests(unittest.TestCase):
                 {"event": "accepted", "id": "refresh-0", "intent_token": "refresh-lease"},
                  dict(refresh_source, event="observation", id="refresh-0"),
                  {"event": "terminal", "id": "refresh-0", "status": "completed",
-                 "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                 "release": {"event": "owner_release", "verified": True,
+                             "keys_down": [], "buttons_down": [],
                              "keys_unknown": [], "key_state_errors": [],
                              "intent_token": "refresh-lease"}},
             ]
@@ -136,7 +137,8 @@ class Map01V39CoastTests(unittest.TestCase):
                 {"event": "accepted", "id": "bad-refresh-0", "intent_token": "lease-a"},
                 dict(refresh_source, event="observation", id="bad-refresh-0"),
                 {"event": "terminal", "id": "bad-refresh-0", "status": "completed",
-                 "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                 "release": {"event": "owner_release", "verified": True,
+                             "keys_down": [], "buttons_down": [],
                              "intent_token": "different-lease"}},
             ]
             def bad_refresh_wait(predicate, **kwargs):
@@ -270,7 +272,7 @@ class Map01V39CoastTests(unittest.TestCase):
                 self.interrupted.append(handle)
                 return {"status": "interrupted"}
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [],
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
                                 "buttons_down": [], "keys_unknown": [],
                                 "key_state_errors": []}}
         process, planner, handle = Process(), Planner(), object()
@@ -293,7 +295,7 @@ class Map01V39CoastTests(unittest.TestCase):
 
         terminal = {"event": "terminal", "id": "cover-0",
                     "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [],
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
                                 "buttons_down": [], "keys_unknown": [],
                                 "key_state_errors": []}}
         process = Process()
@@ -307,7 +309,8 @@ class Map01V39CoastTests(unittest.TestCase):
             {"verified": False, "keys_down": [], "buttons_down": [],
              "keys_unknown": [], "key_state_errors": []},
             {"verified": True, "keys_down": ["W"], "buttons_down": []},
-            {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
+            {"event": "owner_release", "verified": True,
+             "keys_down": [], "buttons_down": ["fire"]},
         ):
             unsafe_terminal = dict(terminal, release=release)
             with self.subTest(release=release), self.assertRaisesRegex(
@@ -331,7 +334,7 @@ class Map01V39CoastTests(unittest.TestCase):
                     "coherent_source_recovery": coherent}
         terminal = {"event": "terminal", "id": "cover-0",
                     "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [],
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
                                 "buttons_down": [], "keys_unknown": [],
                                 "key_state_errors": []}}
 
@@ -473,7 +476,7 @@ class Map01V39CoastTests(unittest.TestCase):
         for status in ("completed", "expired"):
             neutral_terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [],
+                "release": {"event": "owner_release", "verified": True, "keys_down": [],
                             "buttons_down": [], "keys_unknown": [],
                             "key_state_errors": []}}
             result = controller.cancel_invalidated_cover(
@@ -494,7 +497,7 @@ class Map01V39CoastTests(unittest.TestCase):
         for status in ("failed", "needs_decision"):
             terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [],
+                "release": {"event": "owner_release", "verified": True, "keys_down": [],
                             "buttons_down": [], "keys_unknown": [],
                             "key_state_errors": []}}
             with self.subTest(status=status):
@@ -517,7 +520,8 @@ class Map01V39CoastTests(unittest.TestCase):
             {"verified": False, "keys_down": [], "buttons_down": []},
             {"verified": True, "keys_down": ["W"], "buttons_down": [],
              "keys_unknown": [], "key_state_errors": []},
-            {"verified": True, "keys_down": [], "buttons_down": ["fire"],
+            {"event": "owner_release", "verified": True,
+             "keys_down": [], "buttons_down": ["fire"],
              "keys_unknown": [], "key_state_errors": []},
         ):
             terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
