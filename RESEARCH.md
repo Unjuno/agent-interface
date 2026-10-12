@@ -1,3 +1,7 @@
+# Issue #8609 T0 A01 — versioned semantic degradation (2026-10-09)
+
+`PASS_METHOD_SCOPED`: the frozen host-CPU candidate and independent auditor each ran once over 1,024 finite service/guarantee states; all rows reconstructed and 6/6 corruptions were rejected. The versioned contract retained a supported read-only outcome in 320 authored rows versus 1 for the all-or-nothing comparator. This does not establish deployed-interface usefulness, action safety, task effects, or authorize a runtime fallback. OrbStack preflight hit a containerd content-blob read error; no image or container was started. See [report and artifacts](research/analysis/versioned_semantic_degradation_8609_t0_a01_20261009/REPORT.md), [protocol](research/analysis/versioned_semantic_degradation_8609_t0_a01_20261009/PROTOCOL.md), and [Issue #8609](https://github.com/Unjuno/agent-interface/issues/8609).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)
