@@ -1,0 +1,176 @@
+{
+  "schema": "v39-xi2-xstest-client-source-a36-audit-v1",
+  "allocation_id": "V39-XI2-XTEST-CLIENT-SOURCE-A36-20261012-01",
+  "status": "PASS_METHOD_SCOPED",
+  "candidate_invocations": 1,
+  "retries": 0,
+  "frozen_before_invocation": true,
+  "freeze_sha256": null,
+  "freeze_matches_harness": true,
+  "runner_sha256": "8d599561ee4e1ab4ecf902c03b79cd1b4de8aeec581c02cef16e71924a756993",
+  "runner_matches_harness": true,
+  "source_hashes_match": true,
+  "source_hash_checks": [
+    {
+      "actual": "324fb4e9cff9d2d0579881d06d844d203c52f88975bc86368056885cc9115867",
+      "expected": "324fb4e9cff9d2d0579881d06d844d203c52f88975bc86368056885cc9115867",
+      "path": "research/doom/v39_v15_xvfb_shared_key_source_a36_20261012/candidate.py",
+      "match": true
+    },
+    {
+      "actual": "82b8f2ddbc69ee56033686bf48df9575f8db2acb104c336fc1c7640e61624052",
+      "expected": "82b8f2ddbc69ee56033686bf48df9575f8db2acb104c336fc1c7640e61624052",
+      "path": "research/doom/v39_v15_xvfb_shared_key_source_a36_20261012/PLAN.md",
+      "match": true
+    },
+    {
+      "actual": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "expected": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "path": "research/live_control/input_owner_process_v1.py",
+      "match": true
+    },
+    {
+      "actual": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+      "expected": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+      "path": "research/live_control/lease_release_v1.py",
+      "match": true
+    }
+  ],
+  "raw_sha256": "010fedbcb7cb23cf95a13e65a17f5f0ec118fe1f088de7dd6129cd75991aeb92",
+  "owner_receipt_sha256": "54c6503baf1641c4a751ac2c72138605ec0c8aa97bb8735017119376e0cfaf42",
+  "xi2_version": {
+    "major": 2,
+    "minor": 0
+  },
+  "device_inventory": [
+    {
+      "attachment": 3,
+      "deviceid": 2,
+      "enabled": true,
+      "name": "Virtual core pointer",
+      "use": 1
+    },
+    {
+      "attachment": 2,
+      "deviceid": 3,
+      "enabled": true,
+      "name": "Virtual core keyboard",
+      "use": 2
+    },
+    {
+      "attachment": 2,
+      "deviceid": 4,
+      "enabled": true,
+      "name": "Virtual core XTEST pointer",
+      "use": 3
+    },
+    {
+      "attachment": 3,
+      "deviceid": 5,
+      "enabled": true,
+      "name": "Virtual core XTEST keyboard",
+      "use": 4
+    },
+    {
+      "attachment": 2,
+      "deviceid": 6,
+      "enabled": true,
+      "name": "Xvfb mouse",
+      "use": 3
+    },
+    {
+      "attachment": 3,
+      "deviceid": 7,
+      "enabled": true,
+      "name": "Xvfb keyboard",
+      "use": 4
+    }
+  ],
+  "events": {
+    "owner_press": [
+      {
+        "detail": 38,
+        "deviceid": 5,
+        "flags": 2,
+        "sourceid": 5,
+        "time": 7295588,
+        "type": "RawKeyPress",
+        "valuators_mask_len": 0
+      },
+      {
+        "detail": 38,
+        "deviceid": 3,
+        "flags": 2,
+        "sourceid": 5,
+        "time": 7295588,
+        "type": "RawKeyPress",
+        "valuators_mask_len": 0
+      }
+    ],
+    "external_press": [
+      {
+        "detail": 38,
+        "deviceid": 5,
+        "flags": 2,
+        "sourceid": 5,
+        "time": 7295593,
+        "type": "RawKeyPress",
+        "valuators_mask_len": 0
+      },
+      {
+        "detail": 38,
+        "deviceid": 3,
+        "flags": 2,
+        "sourceid": 5,
+        "time": 7295593,
+        "type": "RawKeyPress",
+        "valuators_mask_len": 0
+      }
+    ],
+    "owner_release": [
+      {
+        "detail": 38,
+        "deviceid": 5,
+        "flags": 2,
+        "sourceid": 5,
+        "time": 7295597,
+        "type": "RawKeyRelease",
+        "valuators_mask_len": 0
+      },
+      {
+        "detail": 38,
+        "deviceid": 3,
+        "flags": 2,
+        "sourceid": 5,
+        "time": 7295597,
+        "type": "RawKeyRelease",
+        "valuators_mask_len": 0
+      }
+    ]
+  },
+  "raw_source_ids_by_phase": {
+    "external_press": [
+      5
+    ],
+    "owner_press": [
+      5
+    ],
+    "owner_release": [
+      5
+    ]
+  },
+  "same_xi2_source_for_both_clients": true,
+  "global_state": {
+    "initial_down": false,
+    "after_owner_press": true,
+    "after_external_press": true,
+    "after_owner_release": false,
+    "core_keyrelease_observations": 2
+  },
+  "owner_verified": true,
+  "owner_exit": 0,
+  "owner_receipt_verified": true,
+  "xvfb_exit": 0,
+  "decision": "PASS_METHOD_SCOPED: XI2 Raw exposed the Virtual core XTEST keyboard source ID (5) for owner and separate external-client XTest requests. Both client phases shared sourceid 5; XI2 device attribution did not distinguish X client connections in this tested path.",
+  "scope": "Private TCP-disabled Xvfb, Python-Xlib 0.33, XI2 2.0 and core XTest only. No physical keyboard, game, model, or shared X server. Does not establish physical input/XTEST source attribution or desktop safety."
+}
