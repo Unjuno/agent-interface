@@ -1,7 +1,9 @@
 """Runner command configuration tests for the MAP01 V39 controller."""
 import json
+import json
 import os
 import tempfile
+import time
 from pathlib import Path
 import sys
 import unittest
@@ -48,7 +50,7 @@ class AppServerCommandTests(unittest.TestCase):
                 command = controller.app_server_command()
         self.assertFalse(any(arg.startswith("mcp_servers.") for arg in command))
 
-    def test_direct_codex_command_initializes_with_production_client(self):
+    def test_direct_codex_command_starts_thread_without_configured_mcp(self):
         if os.name != "nt":
             self.skipTest("direct executable smoke test requires Windows")
         executable = os.environ.get("AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
@@ -56,9 +58,27 @@ class AppServerCommandTests(unittest.TestCase):
             self.skipTest("codex.exe not available for handshake smoke test")
 
         with tempfile.TemporaryDirectory(prefix="v39-codex-home-") as codex_home:
-            Path(codex_home, "config.toml").write_text(
-                '[mcp_servers."probe"]\nenabled = true\ncommand = "py"\nargs = []\n',
+            home = Path(codex_home)
+            sentinel = home / "mcp-started"
+            fake_server = home / "fake_mcp.py"
+            fake_server.write_text(
+                "import json, sys\n"
+                "from pathlib import Path\n"
+                "Path(sys.argv[1]).write_text('started', encoding='utf-8')\n"
+                "for line in sys.stdin:\n"
+                "    try: request = json.loads(line)\n"
+                "    except Exception: continue\n"
+                "    if request.get('method') == 'initialize':\n"
+                "        print(json.dumps({'jsonrpc':'2.0','id':request.get('id'),'result':{'protocolVersion':'2024-11-05','capabilities':{'tools':{}},'serverInfo':{'name':'probe','version':'1'}}}), flush=True)\n"
+                "    elif request.get('method') == 'tools/list':\n"
+                "        print(json.dumps({'jsonrpc':'2.0','id':request.get('id'),'result':{'tools':[]}}), flush=True)\n",
                 encoding="utf-8")
+            config = (
+                '[mcp_servers.probe]\nenabled = true\ncommand = ' +
+                json.dumps(sys.executable) + '\nargs = [' +
+                json.dumps(str(fake_server)) + ', ' + json.dumps(str(sentinel)) +
+                ']\nstartup_timeout_sec = 3\n')
+            Path(codex_home, "config.toml").write_text(config, encoding="utf-8")
             with tempfile.TemporaryDirectory(prefix="v39-journal-") as journal_dir:
                 journal = Path(journal_dir, "app-server.jsonl")
                 with patch.dict(os.environ, {
@@ -70,6 +90,10 @@ class AppServerCommandTests(unittest.TestCase):
                         journal_path=str(journal))
                     try:
                         result = client.initialize()
+                        thread = client.start_thread(cwd=codex_home, ephemeral=True)
+                        deadline = time.monotonic() + 1
+                        while time.monotonic() < deadline and not sentinel.exists():
+                            time.sleep(.02)
                     finally:
                         client.close()
 
@@ -77,6 +101,8 @@ class AppServerCommandTests(unittest.TestCase):
                 self.assertTrue(client.process.stdout.closed)
                 self.assertTrue(client.process.stderr.closed)
                 self.assertEqual(Path(result["codexHome"]), Path(codex_home))
+                self.assertIsInstance(thread.get("thread", {}).get("id"), str)
+                self.assertFalse(sentinel.exists(), "disabled fake MCP was launched")
                 self.assertTrue(journal.is_file())
                 rows = [json.loads(line) for line in journal.read_text(
                     encoding="utf-8").splitlines()]
@@ -88,6 +114,10 @@ class AppServerCommandTests(unittest.TestCase):
                 self.assertTrue(any(
                     row["direction"] == "sent" and
                     row["message"].get("method") == "initialized"
+                    for row in rows))
+                self.assertTrue(any(
+                    row["direction"] == "sent" and
+                    row["message"].get("method") == "thread/start"
                     for row in rows))
 
     def test_legacy_node_and_cli_path_remain_the_default(self):
