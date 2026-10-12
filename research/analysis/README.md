@@ -397,6 +397,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`alert_actionability_5435_t4/`](alert_actionability_5435_t4/)
 - [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
 - [`amendment_effect_6219_publication_recovery_20261003/`](amendment_effect_6219_publication_recovery_20261003/)
+- [`anchoring_vignette_identifiability_8522_t0_a02_20261009/`](anchoring_vignette_identifiability_8522_t0_a02_20261009/)
 - [`answer_surface_audit_6173_factored_axes_t0_20261002/`](answer_surface_audit_6173_factored_axes_t0_20261002/)
 - [`anytime_fidelity_typed_admission_r0_v1/`](anytime_fidelity_typed_admission_r0_v1/)
 - [`anytime_t5/`](anytime_t5/)
