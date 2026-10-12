@@ -194,6 +194,7 @@ class CoverTerminalTests(unittest.TestCase):
 
             replacements = [
                 patch.object(sys, "argv", argv),
+                patch.object(controller, "configured_mcp_names", return_value=set()),
                 patch.object(controller, "CodexAppServerClient", return_value=planner),
                 patch.object(controller, "PersistentPlannerAdapter", return_value=planner),
                 patch.object(controller, "ThreadPoolExecutor", Pool),
