@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-8636-rotation-a02-20261009/research/analysis/relative_view_rotation_features_8636_t0_a02_20261009/auditor.py", line 346, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "/private/tmp/agent-interface-8636-rotation-a02-20261009/research/analysis/relative_view_rotation_features_8636_t0_a02_20261009/auditor.py", line 345, in main
+    summary=audit(Path(a.output)); Path(a.result).write_text(json.dumps(summary,indent=2,sort_keys=True)+"\n"); print(json.dumps(summary,sort_keys=True))
+  File "/private/tmp/agent-interface-8636-rotation-a02-20261009/research/analysis/relative_view_rotation_features_8636_t0_a02_20261009/auditor.py", line 280, in audit
+    if r["status"]!=expected_status: raise ValueError("status does not match independent decision")
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: status does not match independent decision

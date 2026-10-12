@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8636 T0 A02: [rotation-feature audit correction HOLD](analysis/relative_view_rotation_features_8636_t0_a02_20261009/FORMAL_FAILURE.md) — candidate 360 trials; auditor exited 1 before summary, and frozen/formal Python versions differ. First output retained, retries 0. A01 HOLD preserved; no feature-method or live/product claim.
+
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
 
 - Issue #8259: [release-batch alias cleanup evidence rescue](doom/release_batch_alias_rescue_8259_20261009/README.md) — nine preserved fake-X/private-Xvfb experiment packages and a separate measurement-publication custody record; scoped construction only, with first STOP/FAIL outcomes retained. No live/game claim.
