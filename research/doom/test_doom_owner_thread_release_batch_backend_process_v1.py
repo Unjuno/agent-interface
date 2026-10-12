@@ -28,6 +28,7 @@ class ProcessBackendCompositionTests(unittest.TestCase):
             def __init__(self, display, out):
                 self.owner_id = "owner-7"
                 self.service_pid = 45678
+                self.service_start_ticks = 98765
                 self.receipt_path = Path(out) / "input-owner-recovery-v1.json"
                 self.calls = []
                 instances.append((display, Path(out), self))
@@ -58,6 +59,7 @@ class ProcessBackendCompositionTests(unittest.TestCase):
                     "event": "input_owner_process_ready",
                     "schema": "input-owner-process-ready-v1",
                     "owner_id": "owner-7", "service_pid": 45678,
+                    "service_start_ticks": 98765,
                     "display": ":201",
                     "receipt_path": str(instances[0][2].receipt_path),
                 }])

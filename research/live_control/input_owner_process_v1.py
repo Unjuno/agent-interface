@@ -289,6 +289,9 @@ class InputOwnerProcess:
         self.receipt_path = self.out / "input-owner-recovery-v1.json"
         if self.receipt_path.exists():
             raise FileExistsError("input-owner receipt path already exists")
+        self.state_ledger_path = self.out / "input-owner-state-v1.jsonl"
+        if self.state_ledger_path.exists():
+            raise FileExistsError("input-owner state ledger path already exists")
         self.rpc_timeout = rpc_timeout
         if owner_service_class not in {
                 "input_transition_owner_v4.InputOwner",
@@ -344,6 +347,7 @@ class InputOwnerProcess:
                 raise RuntimeError("input-owner service readiness handshake invalid")
             self.owner_id = ready["owner_id"]
             self.service_pid = ready["pid"]
+            self.service_start_ticks = _process_start_ticks(self.service_pid)
             self._sync_records(ready.get("records_version", 0), ready.get("records", []))
         except BaseException:
             self._rpc.close(); self._events.close()
@@ -512,6 +516,36 @@ def _write_receipt(path, receipt):
         raise
 
 
+def _append_owner_state(path, row, *, create=False):
+    """Append one crash-durable owner-state transition before/after an RPC."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    flags = os.O_WRONLY | os.O_APPEND | os.O_CREAT
+    if create:
+        flags |= os.O_EXCL
+    fd = os.open(path, flags, 0o600)
+    try:
+        data = (json.dumps(row, separators=(",", ":"), sort_keys=True) + "\n").encode("utf-8")
+        view = memoryview(data)
+        while view:
+            written = os.write(fd, view)
+            if written <= 0:
+                raise OSError("owner-state ledger write made no progress")
+            view = view[written:]
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def _process_start_ticks(pid):
+    """Return Linux /proc start ticks, distinguishing a reused service PID."""
+    stat = Path(f"/proc/{pid}/stat").read_text(encoding="ascii")
+    fields = stat[stat.rfind(")") + 2:].split()  # starts at field 3 (state)
+    if len(fields) <= 19 or not fields[19].isdecimal():
+        raise RuntimeError("owner process start identity unavailable")
+    return int(fields[19])
+
+
 def _owner_service(display_name, receipt_path, rpc_fd, event_fd):
     rpc = socket.socket(fileno=rpc_fd)
     events = socket.socket(fileno=event_fd)
@@ -537,6 +571,36 @@ def _owner_service(display_name, receipt_path, rpc_fd, event_fd):
     leases = {}
     expected_id = 1
     records_lock = threading.Lock()
+    state_ledger_path = Path(receipt_path).with_name("input-owner-state-v1.jsonl")
+    state_sequence = [0]
+    service_start_ticks = _process_start_ticks(os.getpid())
+
+    def append_state(operation, phase, request_id=None, lease=None, key=None,
+                     result=None, error=None):
+        state_sequence[0] += 1
+        if type(lease) is dict:
+            binding = {name: lease.get(name) for name in (
+                "intent_token", "expected_focus", "expected_surface",
+                "expected_geometry")}
+        else:
+            binding = {"intent_token": None, "expected_focus": None,
+                       "expected_surface": None, "expected_geometry": None}
+        _append_owner_state(state_ledger_path, {
+            "schema": "input-owner-state-ledger-v1",
+            "record_type": "transition", "sequence": state_sequence[0],
+            "request_id": request_id, "operation": operation, "phase": phase,
+            "display": display_name, "service_pid": os.getpid(),
+            "service_start_ticks": service_start_ticks,
+            "owner_id": owner.owner_id, **binding, "key": key,
+            "result": result, "error_type": error,
+        })
+
+    _append_owner_state(state_ledger_path, {
+        "schema": "input-owner-state-ledger-v1", "record_type": "header",
+        "display": display_name, "service_pid": os.getpid(),
+        "service_start_ticks": service_start_ticks,
+        "owner_id": owner.owner_id, "created_ns": time.perf_counter_ns(),
+    }, create=True)
 
     def publish_records():
         while not stop_events.is_set():
@@ -559,6 +623,7 @@ def _owner_service(display_name, receipt_path, rpc_fd, event_fd):
     records = owner.records
     _send_frame(rpc, {"schema": READY_SCHEMA, "owner_id": owner.owner_id,
                       "display": display_name, "pid": os.getpid(),
+                      "service_start_ticks": service_start_ticks,
                       "records_version": len(records), "records": records})
     event_thread.start()
     buffer = bytearray()
@@ -593,23 +658,59 @@ def _owner_service(display_name, receipt_path, rpc_fd, event_fd):
         expected_id += 1
         if request["op"] == "close":
             reason = "requested_close"
+            append_state("close", "intent", request["request_id"],
+                         request["lease"], None)
             try:
                 owner.close()
                 result = None
+                append_state("close", "ack", request["request_id"],
+                             request["lease"], None,
+                             {"release_verified": True})
             except BaseException as exc:
                 close_error = _error_payload(exc)
                 result = None
+                append_state("close", "error", request["request_id"],
+                             request["lease"], None, error=type(exc).__name__)
                 exit_code = 1
             closed = True
             pending_response = {"request_id": request["request_id"],
                                 "ok": close_error is None, "result": result,
                                 "error": close_error}
             break
+        operation = request["op"]
+        stateful = operation in {"down", "up", "up_batch", "button_down",
+                                 "button_up", "release"}
+        if stateful:
+            append_state(operation, "intent", request["request_id"],
+                         request["lease"], request["key"])
         try:
-            result = owner.call(request["op"], lease, request["key"])
+            result = owner.call(operation, lease, request["key"])
+            summary = None
+            if operation == "down" and type(result) is dict:
+                summary = {"keycode": result.get("keycode")}
+            elif operation == "up" and type(result) is dict:
+                summary = {"verified": result.get("owner_thread_keyup_verified") is True,
+                           "keycode": result.get("keycode")}
+            elif operation == "up_batch" and type(result) is list:
+                summary = {"keys": request["key"], "verified": bool(result) and all(
+                    type(item) is dict and item.get("owner_thread_keyup_verified") is True
+                    for item in result)}
+            elif operation == "button_down":
+                summary = {"button": request["key"]}
+            elif operation == "release" and type(result) is dict:
+                summary = {"verified": result.get("verified") is True,
+                           "keys_down": result.get("keys_down"),
+                           "buttons_down": result.get("buttons_down")}
+            if stateful:
+                append_state(operation, "ack", request["request_id"],
+                             request["lease"], request["key"], summary)
             response = {"request_id": request["request_id"], "ok": True,
                         "result": result}
         except BaseException as exc:
+            if stateful:
+                append_state(operation, "error", request["request_id"],
+                             request["lease"], request["key"],
+                             error=type(exc).__name__)
             response = {"request_id": request["request_id"], "ok": False,
                         "result": None, "error": _error_payload(exc)}
         current_records = owner.records
@@ -623,10 +724,14 @@ def _owner_service(display_name, receipt_path, rpc_fd, event_fd):
             break
 
     if not closed:
+        append_state("rpc_eof_close", "intent")
         try:
             owner.close()
+            append_state("rpc_eof_close", "ack",
+                         result={"release_verified": True})
         except BaseException as exc:
             close_error = _error_payload(exc)
+            append_state("rpc_eof_close", "error", error=type(exc).__name__)
             exit_code = 1
     stop_events.set()
     event_thread.join(timeout=2)

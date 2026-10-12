@@ -20,7 +20,7 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
 from doom_controller_failure_cleanup_v1 import (
-    ControllerFailureCleanup, verify_owner_process_recovery)
+    ControllerFailureCleanup, verify_or_recover_owner_process)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
@@ -1865,7 +1865,7 @@ def main():
             if reader_thread.is_alive() or reader_errors:
                 raise RuntimeError("session event stream did not close cleanly before owner receipt gate")
             failure_cleanup.set_stage("owner_process_recovery")
-            owner_recovery = verify_owner_process_recovery(runtime, all_events)
+            owner_recovery = verify_or_recover_owner_process(runtime, all_events)
         failure_cleanup.set_stage("planner_close")
         planner_client.close()
         atexit.unregister(planner_client.close)
@@ -1896,15 +1896,26 @@ def main():
                                   if args.measurement_session else "v12_default"),
           "measurement_owner_process":args.measurement_owner_process,
           "owner_process_recovery_verified":owner_recovery is not None,
+          "owner_process_emergency_recovery_verified":(
+              owner_recovery is not None and owner_recovery.get("recovery_mode") ==
+              "supervisor_xtest_after_owner_process_death"),
           "owner_process_recovery":(None if owner_recovery is None else {
               "owner_id":owner_recovery["owner_id"],
               "service_pid":owner_recovery["service_pid"],
               "display":owner_recovery["display"],
-              "trigger":owner_recovery["trigger"],
+              "recovery_mode":owner_recovery.get("recovery_mode"),
+              "trigger":owner_recovery.get("trigger"),
               "receipt_path":str(runtime/"input-owner-process"/
-                                  "input-owner-recovery-v1.json"),
+                  ("input-owner-emergency-recovery-v1.json"
+                   if owner_recovery.get("recovery_mode") ==
+                   "supervisor_xtest_after_owner_process_death"
+                   else "input-owner-recovery-v1.json")),
               "receipt_sha256":hashlib.sha256((runtime/"input-owner-process"/
-                  "input-owner-recovery-v1.json").read_bytes()).hexdigest()}),
+                  ("input-owner-emergency-recovery-v1.json"
+                   if owner_recovery.get("recovery_mode") ==
+                   "supervisor_xtest_after_owner_process_death"
+                   else "input-owner-recovery-v1.json")).read_bytes()).hexdigest(),
+              "ledger_sha256":owner_recovery.get("ledger_sha256")}),
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",

@@ -22,6 +22,7 @@ class Backend(Previous):
                 "schema": "input-owner-process-ready-v1",
                 "owner_id": self.owner.owner_id,
                 "service_pid": self.owner.service_pid,
+                "service_start_ticks": self.owner.service_start_ticks,
                 "display": session.name,
                 "receipt_path": str(self.owner.receipt_path),
             })
