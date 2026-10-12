@@ -71,6 +71,54 @@ class ReleaseInner(FakeInner):
         return None
 
 
+class CancelUpBatchInner(FakeInner):
+    def __init__(self, display_name=':fake', *, cleanup_keycode=42):
+        super().__init__(display_name)
+        self.cleanup_keycode = cleanup_keycode
+
+    def call(self, operation, lease=None, key=None):
+        self.calls.append((operation, key))
+        if operation == 'down':
+            return {'event': 'input_admission', 'key': key, 'keycode': 42,
+                    'admitted_ns': 80, 'input_ack_ns': 90,
+                    'valid_until_ns': lease.deadline,
+                    'intent_token': lease.intent_token}
+        if operation == 'up_batch':
+            self.records.append({
+                'event': 'owner_release', 'reason': 'cancelled',
+                'verified': True, 'verified_ns': 120,
+                'keys_down': [], 'buttons_down': [], 'keys_unknown': [],
+                'key_state_errors': [], 'valid_until_ns': lease.deadline,
+                'intent_token': lease.intent_token,
+                'key_release_attempts': {
+                    str(self.cleanup_keycode): {
+                        'verified': True,
+                        'attempts': [{'server_key_down_after': False}],
+                    },
+                },
+            })
+            lease.cancel.set()
+            raise ValueError('up_batch requires the active input lease')
+        return None
+
+
+class ExplicitUpBatchInner(FakeInner):
+    def call(self, operation, lease=None, key=None):
+        self.calls.append((operation, key))
+        if operation == 'down':
+            return {'event': 'input_admission', 'key': key, 'keycode': 42,
+                    'admitted_ns': 80, 'input_ack_ns': 90,
+                    'valid_until_ns': lease.deadline,
+                    'intent_token': lease.intent_token}
+        if operation == 'up_batch':
+            receipt = {'event': 'owner_explicit_keyup', 'operation': 'up',
+                       'key': key[0], 'owner_id': self.owner_id,
+                       'server_keyup_verified': True}
+            self.records.append(receipt)
+            return [receipt]
+        return None
+
+
 base = types.ModuleType('input_owner_v10')
 base.InputOwner = FakeInner
 sys.modules['input_owner_v10'] = base
@@ -90,6 +138,43 @@ class Lease:
 
 
 class Tests(unittest.TestCase):
+    def test_up_batch_receipt_retains_keycode_marker_and_joins_admission(self):
+        owner = mod.InputOwner(':fake', _owner_cls=ExplicitUpBatchInner)
+        lease = Lease(deadline=1000)
+        owner.call('down', lease, 'w')
+
+        marker = owner._admission_records[(id(lease), 'w')]
+        with mock.patch.object(mod.time, 'perf_counter_ns', side_effect=[100, 140]):
+            row = owner.call('up_batch', lease, ['w'])[0]
+
+        self.assertEqual(marker[4], 42)
+        self.assertEqual(marker[5]['key'], 'w')
+        self.assertEqual(row['admission_receipt']['key'], 'w')
+        self.assertTrue(row['admission_receipt_valid'])
+        self.assertTrue(row['ordinary_release_candidate'])
+
+    def test_cancelled_up_batch_joins_matching_keycode_cleanup(self):
+        owner = mod.InputOwner(':fake', _owner_cls=CancelUpBatchInner)
+        lease = Lease(deadline=1000)
+        owner.call('down', lease, 'w')
+
+        row = owner.call('up_batch', lease, ['w'])[0]
+
+        self.assertTrue(row['cancelled_cleanup_join'])
+        self.assertTrue(row['owner_cleanup_release_verified'])
+        self.assertFalse(row['ordinary_release_candidate'])
+        self.assertIs(row['grants_input_authority'], False)
+
+    def test_cancelled_up_batch_rejects_cleanup_for_different_keycode(self):
+        owner = mod.InputOwner(
+            ':fake', _owner_cls=lambda name: CancelUpBatchInner(
+                name, cleanup_keycode=43))
+        lease = Lease(deadline=1000)
+        owner.call('down', lease, 'w')
+
+        with self.assertRaisesRegex(ValueError, 'active input lease'):
+            owner.call('up_batch', lease, ['w'])
+
     def test_successful_release_prunes_admission_markers_for_lease(self):
         owner = mod.InputOwner(':fake', _owner_cls=ReleaseInner)
         lease = Lease(deadline=1000)
