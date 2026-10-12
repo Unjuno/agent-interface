@@ -83,7 +83,7 @@ class CodexAppServerClient:
             "errors": "strict", "bufsize": 1,
         }
         interop_environment = wsl_environment_for_windows_executable(
-            command, os.environ)
+            command, getattr(os, "environ", {}))
         if interop_environment is not None:
             process_options["env"] = interop_environment
         if self._owns_process_group:
