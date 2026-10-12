@@ -335,6 +335,7 @@ def verify_owner_process_recovery(runtime, events, *, timeout=8.0,
     if (row.get("schema") != "input-owner-process-ready-v1" or
             not isinstance(row.get("owner_id"), str) or not row["owner_id"] or
             type(row.get("service_pid")) is not int or row["service_pid"] <= 1 or
+            type(row.get("service_start_ticks")) is not int or
             not isinstance(row.get("display"), str) or not row["display"]):
         raise RuntimeError("process-owner ready identity is malformed")
     expected = (Path(runtime) / "input-owner-process" /
@@ -349,15 +350,14 @@ def verify_owner_process_recovery(runtime, events, *, timeout=8.0,
             receipt = read_recovery_receipt(supplied, expected_display=row["display"])
         except (FileNotFoundError, json.JSONDecodeError, ValueError, RuntimeError):
             receipt = None
-        try:
-            kill(row["service_pid"], 0)
-            service_exited = False
-        except ProcessLookupError:
-            service_exited = True
+        service_exited = _service_process_is_gone(row, kill=kill)
         if (receipt is not None and service_exited and
                 receipt.get("service_pid") == row["service_pid"] and
+                receipt.get("service_start_ticks") == row["service_start_ticks"] and
                 receipt.get("owner_id") == row["owner_id"]):
             return receipt
+        if service_exited:
+            raise TimeoutError("owner process exited without a matching verified receipt")
         sleep(min(.05, max(0, deadline - clock())))
     raise TimeoutError("verified process-owner receipt and service exit not observed")
 

@@ -745,6 +745,7 @@ def _owner_service(display_name, receipt_path, rpc_fd, event_fd):
         "schema": "input-owner-recovery-v1",
         "display": display_name,
         "service_pid": os.getpid(),
+        "service_start_ticks": service_start_ticks,
         "trigger": reason,
         "closed_ns": time.perf_counter_ns(),
         "owner_id": owner.owner_id,
