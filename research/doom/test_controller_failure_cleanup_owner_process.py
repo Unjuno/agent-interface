@@ -2,12 +2,13 @@
 import json
 import os
 from pathlib import Path
+from types import SimpleNamespace
 import tempfile
 import unittest
 from unittest.mock import patch
 
 from doom_controller_failure_cleanup_v1 import (
-    read_owner_state_ledger, verify_or_recover_owner_process,
+    ControllerFailureCleanup, read_owner_state_ledger, verify_or_recover_owner_process,
     verify_owner_process_recovery)
 
 
@@ -22,6 +23,41 @@ def receipt(display, pid, owner):
 
 
 class OwnerRecoveryGateTests(unittest.TestCase):
+    class Planner:
+        def close(self, timeout=1):
+            return None
+
+    def _cleanup_receipt(self, temp, recovery_result):
+        out = Path(temp)
+        runtime = out / "runtime"
+        runtime.mkdir()
+        cleanup = ControllerFailureCleanup(
+            self.Planner(), out, owner_process_recovery=True)
+        cleanup.process = SimpleNamespace(poll=lambda: -9)
+        cleanup.events = [{"event": "input_owner_process_ready"}]
+        cleanup.runtime = runtime
+        error = RuntimeError("primary failure")
+        with patch("doom_controller_failure_cleanup_v1.verify_or_recover_owner_process") as verify:
+            if isinstance(recovery_result, BaseException):
+                verify.side_effect = recovery_result
+            elif recovery_result == "USE_RESULT":
+                verify.return_value = {"recovery_mode": "supervisor_xtest_after_owner_process_death"}
+            cleanup.__exit__(RuntimeError, error, None)
+        return json.loads((out / "controller-failure.json").read_text())
+
+    def test_failure_cleanup_allows_display_reuse_only_after_verified_emergency_recovery(self):
+        with tempfile.TemporaryDirectory() as temp:
+            receipt = self._cleanup_receipt(temp, "USE_RESULT")
+            self.assertTrue(receipt["owner_process_recovery_verified"])
+            self.assertTrue(receipt["owner_process_emergency_recovery_verified"])
+            self.assertTrue(receipt["display_reuse_allowed"])
+
+    def test_failure_cleanup_keeps_display_closed_when_owner_recovery_fails(self):
+        with tempfile.TemporaryDirectory() as temp:
+            receipt = self._cleanup_receipt(temp, RuntimeError("focus mismatch"))
+            self.assertFalse(receipt["owner_process_recovery_verified"])
+            self.assertFalse(receipt["display_reuse_allowed"])
+
     def test_emergency_recovery_runs_only_after_normal_receipt_timeout(self):
         emergency = {"recovery_mode": "supervisor_xtest_after_owner_process_death"}
         with patch("doom_controller_failure_cleanup_v1.verify_owner_process_recovery",
