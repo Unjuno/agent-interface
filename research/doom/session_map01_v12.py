@@ -105,7 +105,13 @@ def main():
                 stream.write(encoded + "\n")
             with (args.out / "delivered.jsonl").open("a") as stream:
                 stream.write(encoded + "\n")
-            print(encoded, flush=True)
+            if row.get("event") == "typed_observation":
+                # emit_ns is producer-side log start. The handoff marker is
+                # after both raw appends and before stdout serialization/write.
+                row["stdout_handoff_started_ns"] = time.perf_counter_ns()
+                print(json.dumps(row), flush=True)
+            else:
+                print(encoded, flush=True)
 
     sources = {}
     for path in (Path(__file__), HERE.parent / "live_control/session_v8.py",

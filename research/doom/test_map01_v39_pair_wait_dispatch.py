@@ -271,7 +271,7 @@ class PairWaitDispatchTests(unittest.TestCase):
         enqueues = calls(stdout_loop, "put")
         self.assertEqual(len(decodes), 1)
         self.assertEqual(len(enqueues), 1)
-        self.assertEqual(decodes[0].lineno, enqueues[0].lineno)
+        self.assertLess(decodes[0].lineno, enqueues[0].lineno)
 
     def test_full_observation_dispatches_zero_ammo_invalidation(self):
         build_wait, monitor_type = load_controller_dispatch(CONTROLLER)

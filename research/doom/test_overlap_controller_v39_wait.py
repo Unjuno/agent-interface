@@ -45,10 +45,15 @@ class ScriptQueue:
 class Clock:
     def __init__(self):
         self.value = 0
+        self.value_ns = 0
 
     def monotonic(self):
         self.value += .01
         return self.value
+
+    def perf_counter_ns(self):
+        self.value_ns += 1
+        return self.value_ns
 
 
 def extract_wait(process, rows):
