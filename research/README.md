@@ -6,6 +6,9 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #7078 T0 A02: [elective plan-note method result](analysis/elective_plan_note_offloading_7078_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`; 3 authored cases independently audited and 11 construction mutations rejected. A01 auditor-coverage HOLD is preserved; no model-calibration or user-benefit claim.
+- Issue #7078 T0 A01: [first allocation audit-coverage HOLD](analysis/elective_plan_note_offloading_7078_t0_a01_20261009/REPORT.md) — first candidate/auditor outcomes retained; no rerun and no method-pass promotion.
+
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
 
 - Issue #8259: [release-batch alias cleanup evidence rescue](doom/release_batch_alias_rescue_8259_20261009/README.md) — nine preserved fake-X/private-Xvfb experiment packages and a separate measurement-publication custody record; scoped construction only, with first STOP/FAIL outcomes retained. No live/game claim.

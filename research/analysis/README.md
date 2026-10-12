@@ -606,6 +606,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`effect_terminal_feedback_6301_t0_20261002/`](effect_terminal_feedback_6301_t0_20261002/)
 - [`effect_terminal_feedback_6301_t0_successor_20261002/`](effect_terminal_feedback_6301_t0_successor_20261002/)
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
+- [`elective_plan_note_offloading_7078_t0_a01_20261009/`](elective_plan_note_offloading_7078_t0_a01_20261009/)
+- [`elective_plan_note_offloading_7078_t0_a02_20261009/`](elective_plan_note_offloading_7078_t0_a02_20261009/)
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
 - [`episodic_memory_schedule_8406_a02_20261008/`](episodic_memory_schedule_8406_a02_20261008/)
