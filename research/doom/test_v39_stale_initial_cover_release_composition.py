@@ -18,6 +18,7 @@ NAMES = {
     "prefer_observation_invalidation",
     "observe_cover_submission_events",
     "recover_pending_observation_backlog",
+    "recover_coherent_source_after_observation",
     "recover_stale_cover_submission",
     "submit_initial_cover_with_recovery",
 }
@@ -63,6 +64,20 @@ class ObservationMonitor:
         self.seen.append(row["sequence"])
         return {"event": "paired_signal_invalidation",
                 "reason": "health:below_hard_minimum",
+                "sequence": row["sequence"]}
+
+
+class PairObservationMonitor:
+    event_types = {"typed_observation"}
+
+    def __init__(self):
+        self.last_pair_sequence = 12
+        self.seen = []
+
+    def observe(self, row):
+        self.seen.append(row["sequence"])
+        return {"event": "paired_signal_invalidation",
+                "reason": "signal_pair_duplicate_epoch_mismatch",
                 "sequence": row["sequence"]}
 
 
@@ -122,11 +137,12 @@ class StaleInitialCoverReleaseCompositionTests(unittest.TestCase):
     def test_stale_cover_recovers_then_next_cover_requires_known_empty_release(self):
         old = {"event": "observation", "sequence": 11, "image": "old.png"}
         fresh = {"event": "observation", "sequence": 12, "image": "fresh.png"}
-        after_fresh = {"event": "observation", "sequence": 13,
+        after_fresh = {"event": "observation", "sequence": 14,
                        "image": "after-fresh.png"}
         latest = [old]
         consumed_sequences = []
         monitor = ObservationMonitor()
+        pair_monitor = PairObservationMonitor()
 
         def settle(_incoming, _latest, _identifier, observation_monitor):
             return {"latest": fresh, "batches": 1, "exhausted": False,
@@ -171,17 +187,25 @@ class StaleInitialCoverReleaseCompositionTests(unittest.TestCase):
         # handoff still waits for the strict, known-empty terminal receipt.
         latest[0] = fresh
 
+        pair_latest_reads = [0]
+
+        def paired_latest_reader():
+            pair_latest_reads[0] += 1
+            if pair_latest_reads[0] >= 2:
+                latest[0] = after_fresh
+                pair_monitor.last_pair_sequence = after_fresh["sequence"]
+            return latest[0]
+
         def accepted_submit(consumed):
-            consumed.append({"event": "observation", "sequence": 13})
+            consumed.append({"event": "typed_observation", "sequence": 13})
             consumed_sequences.append(latest[0]["sequence"])
-            latest[0] = after_fresh
             return {"event": "accepted", "id": "cover-next"}
 
         accepted = NAMESPACE["submit_initial_cover_with_recovery"](
-            accepted_submit, identifier="cover-next", latest_reader=lambda: latest[0],
+            accepted_submit, identifier="cover-next", latest_reader=paired_latest_reader,
             incoming=object(), wait=lambda *_args, **_kwargs: self.fail(
-                "non-paired observation invalidation should not wait here"),
-            observation_monitor=monitor)
+                "the already-current coherent pair should satisfy recovery"),
+            observation_monitor=pair_monitor)
 
         process = Process()
         known_empty = terminal("cover-next")
@@ -194,7 +218,15 @@ class StaleInitialCoverReleaseCompositionTests(unittest.TestCase):
         self.assertEqual(consumed_sequences, [11, 12])
         self.assertEqual(accepted["submitted_sequence"], 12)
         self.assertEqual(accepted["latest"], after_fresh)
-        self.assertEqual(monitor.seen, [12, 13])
+        self.assertEqual(accepted["invalidation"]["reason"],
+                         "signal_pair_duplicate_epoch_mismatch")
+        self.assertEqual(accepted["coherent_source_recovery"], {
+            "required_after_sequence": 13,
+            "invalidated_sequence": 13,
+            "fresh_sequence": 14,
+            "additional_invalidations": [],
+        })
+        self.assertEqual(pair_monitor.seen, [13])
         self.assertEqual(receipt["ack"]["event"], "accepted")
         self.assertEqual(receipt["cover_cancel_terminal"]["id"], "cover-next")
         self.assertEqual(len(process.stdin.writes), 1)
