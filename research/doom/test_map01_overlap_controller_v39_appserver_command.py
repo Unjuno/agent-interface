@@ -40,6 +40,20 @@ class AppServerCommandTests(unittest.TestCase):
         self.assertEqual(result["PATH"], source["PATH"])
         self.assertEqual(source["WSLENV"], "KEEP_ME/u")
 
+    def test_wsl_windows_codex_rejects_missing_or_windows_style_codex_home(self):
+        command = ["/mnt/c/Program Files/Codex/codex.exe", "app-server", "--stdio"]
+        base = {"WSL_INTEROP": "/run/WSL/123_interop"}
+        for codex_home in (None, r"C:\Users\example\.codex"):
+            with self.subTest(codex_home=codex_home):
+                environment = dict(base)
+                if codex_home is not None:
+                    environment["CODEX_HOME"] = codex_home
+                with self.assertRaisesRegex(
+                        app_server_client.AppServerError,
+                        "requires CODEX_HOME as an absolute WSL path"):
+                    app_server_client.wsl_environment_for_windows_executable(
+                        command, environment)
+
     def test_direct_codex_executable_disables_configured_mcps_individually(self):
         executable = str(Path(controller.__file__).resolve())
         with tempfile.TemporaryDirectory() as codex_home:

@@ -43,7 +43,8 @@ def wsl_environment_for_windows_executable(command, environ):
         return None
     codex_home = environ.get("CODEX_HOME")
     if not codex_home or not codex_home.startswith("/"):
-        return None
+        raise AppServerError(
+            "WSL Windows App Server requires CODEX_HOME as an absolute WSL path")
 
     result = dict(environ)
     entries = [entry for entry in environ.get("WSLENV", "").split(":") if entry]
