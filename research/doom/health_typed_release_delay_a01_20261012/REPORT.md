@@ -23,4 +23,5 @@ The source snapshot under `worktree/` contains the exact controller helpers, PR 
 - `results/` retains each raw result JSON, WSLc stdout/stderr log, run order, and independent audit.
 - WSLc emitted that swap-limit support is unavailable. The configured 1 CPU/512 MiB limits and warning are preserved; this report does not infer full cgroup or swap enforcement.
 - Fake X is in-memory. No physical input, GUI, game, live allocation, useful feedback, threat response, survival, task success, or successful bounded recovery was tested.
-- The decisive #59 gate remains a separately authorized fresh threat-exposure run on the integrated real-time path. This construction result does not consume or authorize that allocation.
+- The result was recorded on [Issue #59](https://github.com/Unjuno/agent-interface/issues/59#issuecomment-6118247767); the exact update is preserved in `ISSUE_UPDATE.md`. The decisive #59 gate remains a separately authorized fresh threat-exposure run on the integrated real-time path. This construction result does not consume or authorize that allocation.
+
