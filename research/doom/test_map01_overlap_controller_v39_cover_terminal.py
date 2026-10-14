@@ -19,7 +19,9 @@ sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
 
 
-NEUTRAL = {"verified": True, "keys_down": [], "buttons_down": []}
+NEUTRAL = {"event": "owner_release", "verified": True,
+           "keys_down": [], "buttons_down": [],
+           "keys_unknown": [], "key_state_errors": []}
 
 
 class NextBoundary(RuntimeError):
@@ -184,6 +186,7 @@ class CoverTerminalTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             argv = ["controller", "--out", str(Path(temp) / "out"),
                     "--iterations", "1", "--model", "synthetic", "--effort", "low",
+                    "--measurement-session",
                     "--load-fixture-manifest", str(Path(temp) / "fixture.json")]
             original_read = Path.read_text
 
@@ -257,8 +260,14 @@ class CoverTerminalTests(unittest.TestCase):
     def test_pending_rejects_bad_release(self):
         releases = {"unverified": dict(NEUTRAL, verified=False),
                     "numeric_verified": dict(NEUTRAL, verified=1),
+                    "wrong_event": dict(NEUTRAL, event="input_admission"),
+                    "missing_event": {key: value for key, value in NEUTRAL.items()
+                                      if key != "event"},
                     "keys": dict(NEUTRAL, keys_down=["a"]),
                     "buttons": dict(NEUTRAL, buttons_down=[1]),
+                    "unknown_keys": dict(NEUTRAL, keys_unknown=["a"]),
+                    "key_state_errors": dict(NEUTRAL,
+                                              key_state_errors=[{"source": "keymap_after"}]),
                     "missing_lists": {"verified": True}, "null": None}
         for name, release in releases.items():
             with self.subTest(release=name):
@@ -444,6 +453,9 @@ class CoverTerminalTests(unittest.TestCase):
                  "unverified": ("cancelled", dict(NEUTRAL, verified=False)),
                  "keys": ("completed", dict(NEUTRAL, keys_down=["a"])),
                  "buttons": ("expired", dict(NEUTRAL, buttons_down=[1])),
+                 "unknown_keys": ("completed", dict(NEUTRAL, keys_unknown=["a"])),
+                 "key_state_errors": ("expired", dict(
+                     NEUTRAL, key_state_errors=[{"source": "keymap_after"}])),
                  "null": ("cancelled", None)}
         for name, (status, release) in cases.items():
             with self.subTest(case=name):

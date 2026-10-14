@@ -384,15 +384,24 @@ def build_cover_monitor(reader, source_observation, authored_validity, index,
     return monitor, receipt
 
 
+def terminal_release_is_known_empty(terminal):
+    """Return true only for an explicit, verified, known-empty terminal release."""
+    release = terminal.get("release") if type(terminal) is dict else None
+    return (type(terminal) is dict and terminal.get("event") == "terminal" and
+            type(release) is dict and release.get("event") == "owner_release" and
+            release.get("verified") is True and
+            release.get("keys_down") == [] and release.get("buttons_down") == [] and
+            release.get("keys_unknown") == [] and
+            release.get("key_state_errors") == [])
+
+
 def require_cover_terminal(terminal, *, cancellation_requested=False):
     """Require neutral closure before renewing cover or using a planner answer."""
     allowed = ("completed", "expired", "cancelled") if cancellation_requested else (
         "completed", "expired")
-    release = terminal.get("release") if type(terminal) is dict else None
     if (type(terminal) is not dict or terminal.get("event") != "terminal" or
-            terminal.get("status") not in allowed or type(release) is not dict or
-            release.get("verified") is not True or release.get("keys_down") != [] or
-            release.get("buttons_down") != []):
+            terminal.get("status") not in allowed or
+            not terminal_release_is_known_empty(terminal)):
         raise RuntimeError(f"cover terminal lacks allowed status and verified empty release: {terminal!r}")
 
 
@@ -424,13 +433,12 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
             terminal_error.add_note(
                 "executor cancel write also failed: " + type(cancel_error).__name__)
         raise
-    release = terminal.get("release", {})
     # The bounded cover can naturally finish or lease-expire between policy
     # invalidation and delivery of the cancel request. Accept those terminal
     # races only when they independently verify that no input remains held.
-    if (terminal.get("status") not in ("cancelled", "completed", "expired") or
-            release.get("verified") is not True or
-            release.get("buttons_down") != [] or release.get("keys_down") != []):
+    if (type(terminal) is not dict or
+            terminal.get("status") not in ("cancelled", "completed", "expired") or
+            not terminal_release_is_known_empty(terminal)):
         raise RuntimeError("invalidated cover did not verify empty release")
     if cancel_error is not None:
         raise RuntimeError(
@@ -693,6 +701,14 @@ def session_command(args, runtime):
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
+
+
+def require_release_receipt_session(args):
+    """Reject the V10 default, whose receipts cannot satisfy the strict gate."""
+    if not getattr(args, "measurement_session", False):
+        raise ValueError(
+            "strict release-receipt validation requires --measurement-session "
+            "(V15/V12 producer); the V12 default uses V10 receipts")
 
 
 def validate_action(action):
@@ -1087,6 +1103,10 @@ def main():
     parser.add_argument("--measurement-session", action="store_true",
                         help="opt into V15 scorer-only and per-key release telemetry")
     args = parser.parse_args()
+    try:
+        require_release_receipt_session(args)
+    except ValueError as error:
+        parser.error(str(error))
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
         app_server_command(), cwd=REPO,
@@ -1684,14 +1704,13 @@ def main():
                 if boundary["event"]=="running_action_invalidation":
                     persist_running_invalidation(args.out,identifier,boundary)
                     terminal=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier)
-                    release=terminal.get("release",{})
-                    if (terminal.get("status")!="completed" or release.get("verified") is not True or
-                            release.get("keys_down")!=[] or release.get("buttons_down")!=[]):
+                    if (terminal.get("status")!="completed" or
+                            not terminal_release_is_known_empty(terminal)):
                         raise RuntimeError("passive refresh did not verify empty release")
                     return False
-                terminal=boundary;release=terminal.get("release",{})
-                if (terminal.get("status")!="completed" or release.get("verified") is not True or
-                        release.get("keys_down")!=[] or release.get("buttons_down")!=[] or
+                terminal=boundary
+                if (terminal.get("status")!="completed" or
+                        not terminal_release_is_known_empty(terminal) or
                         running_guard.receipt()["state"]!=RUNNING_READY):
                     raise RuntimeError("passive refresh did not establish current action")
                 return True
