@@ -133,22 +133,62 @@ class ControllerFailureCleanup:
                         row.get('event')=='accepted' and type(row.get('id')) is str}
         terminal_by_id={row.get('id'):row for row in events if type(row) is dict and
                         row.get('event')=='terminal' and type(row.get('id')) is str}
+        admissions_by_id={identifier:[row for row in events if type(row) is dict and
+                                      row.get('event')=='input_admission' and
+                                      row.get('id')==identifier]
+                          for identifier in accepted_ids}
+        released_by_id={identifier:[row for row in events if type(row) is dict and
+                                    row.get('event')=='input_released' and
+                                    row.get('id')==identifier]
+                        for identifier in accepted_ids}
+        transitions_by_id={identifier:[row for row in events if type(row) is dict and
+                                       row.get('event')=='input_release_transition' and
+                                       row.get('id')==identifier]
+                           for identifier in accepted_ids}
         event_set_complete=(receipt['stdout_reader_retired'] and
                             not receipt['stdout_reader_errors'])
         receipt['input_terminals_complete']=(event_set_complete and
                                               accepted_ids.issubset(terminal_by_id))
+        def empty_release(record):
+            return (type(record) is dict and record.get('verified') is True and
+                    record.get('keys_down')==[] and record.get('buttons_down')==[] and
+                    ('keys_unknown' not in record or record.get('keys_unknown')==[]) and
+                    ('key_state_errors' not in record or record.get('key_state_errors')==[]))
+        def matching_input_release(identifier, token):
+            for row in released_by_id[identifier]:
+                owner=row.get('owner_release')
+                if (row.get('intent_token')==token and type(owner) is dict and
+                        owner.get('intent_token')==token and empty_release(owner)):
+                    return True
+            return False
+        def release_is_verified(identifier):
+            terminal=terminal_by_id[identifier]
+            release=terminal.get('release')
+            if not empty_release(release):
+                return False
+            accepted_token=accepted_by_id[identifier].get('intent_token')
+            if 'intent_token' in release and release.get('intent_token') not in (None, accepted_token):
+                return False
+            admissions=admissions_by_id[identifier]
+            transitions=transitions_by_id[identifier]
+            released=released_by_id[identifier]
+            has_active_input=bool(admissions or transitions or released)
+            if admissions:
+                if (type(accepted_token) is not str or not accepted_token or
+                        any(row.get('intent_token')!=accepted_token for row in admissions)):
+                    return False
+            if terminal.get('status')=='cancelled' and has_active_input:
+                return (type(accepted_token) is str and bool(accepted_token) and
+                        matching_input_release(identifier, accepted_token))
+            if 'intent_token' in release and release.get('intent_token') is None and has_active_input:
+                return False
+            if 'intent_token' in release and release.get('intent_token') is not None:
+                return (type(accepted_token) is str and bool(accepted_token) and
+                        release.get('intent_token')==accepted_token)
+            return True
         receipt['input_releases_verified_empty']=(
-            receipt['input_terminals_complete'] and all(
-                type(terminal_by_id[identifier].get('release')) is dict and
-                terminal_by_id[identifier]['release'].get('verified') is True and
-                terminal_by_id[identifier]['release'].get('keys_down')==[] and
-                terminal_by_id[identifier]['release'].get('buttons_down')==[] and
-                ('intent_token' not in terminal_by_id[identifier]['release'] or
-                 (type(accepted_by_id[identifier].get('intent_token')) is str and
-                  bool(accepted_by_id[identifier]['intent_token']) and
-                  terminal_by_id[identifier]['release'].get('intent_token') ==
-                  accepted_by_id[identifier]['intent_token']))
-            for identifier in accepted_ids))
+            receipt['input_terminals_complete'] and
+            all(release_is_verified(identifier) for identifier in accepted_ids))
         receipt['input_release_verified_empty']=receipt['input_releases_verified_empty']
         receipt['scorer_terminal_observed']=any(
             type(row) is dict and row.get('event')=='post_control_score' for row in events)

@@ -22,7 +22,7 @@ class RetiredReader:
 
 
 class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
-    def run_cleanup(self, release_token=OMIT_TOKEN):
+    def run_cleanup(self, release_token=OMIT_TOKEN, extra_events=(), status="failed"):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
             accepted = {
@@ -40,11 +40,12 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             terminal = {
                 "event": "terminal",
                 "id": "source-refresh-0",
+                "status": status,
                 "release": release,
             }
             scope = ControllerFailureCleanup(Planner(), output)
             scope.observe_output(
-                [accepted, terminal], RetiredReader(),
+                [accepted, *extra_events, terminal], RetiredReader(),
                 lambda predicate, timeout: None, None, [])
             with self.assertRaisesRegex(RuntimeError, "refresh refused"):
                 with scope:
@@ -64,6 +65,63 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         receipt = self.run_cleanup()
         self.assertTrue(receipt["input_release_verified_empty"])
 
+
+    def test_cancelled_without_admission_accepts_empty_terminal_without_lease_token(self):
+        receipt = self.run_cleanup(None, status="cancelled")
+        self.assertTrue(receipt["input_releases_verified_empty"])
+
+    def test_cancelled_admitted_input_requires_matching_owner_release_receipt(self):
+        admission = {
+            "event": "input_admission",
+            "id": "source-refresh-0",
+            "intent_token": "accepted-lease",
+        }
+        released = {
+            "event": "input_released",
+            "id": "source-refresh-0",
+            "intent_token": "accepted-lease",
+            "owner_release": {
+                "verified": True,
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "key_state_errors": [],
+                "intent_token": "accepted-lease",
+            },
+        }
+        receipt = self.run_cleanup(None, [admission, released], status="cancelled")
+        self.assertTrue(receipt["input_releases_verified_empty"])
+
+    def test_cancelled_admitted_input_without_matching_release_is_not_certified(self):
+        admission = {
+            "event": "input_admission",
+            "id": "source-refresh-0",
+            "intent_token": "accepted-lease",
+        }
+        receipt = self.run_cleanup(None, [admission], status="cancelled")
+        self.assertFalse(receipt["input_releases_verified_empty"])
+
+    def test_cancelled_admitted_input_rejects_wrong_release_token(self):
+        admission = {
+            "event": "input_admission",
+            "id": "source-refresh-0",
+            "intent_token": "accepted-lease",
+        }
+        released = {
+            "event": "input_released",
+            "id": "source-refresh-0",
+            "intent_token": "other-lease",
+            "owner_release": {
+                "verified": True,
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "key_state_errors": [],
+                "intent_token": "other-lease",
+            },
+        }
+        receipt = self.run_cleanup(None, [admission, released], status="cancelled")
+        self.assertFalse(receipt["input_releases_verified_empty"])
 
 if __name__ == "__main__":
     unittest.main()
