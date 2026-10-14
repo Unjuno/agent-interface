@@ -50,11 +50,18 @@ def _release_matches(receipt, release):
     event, admission_operation, field, value, owner, token, deadline, admitted_ns, ack_ns = identity
     release_operation = "up" if admission_operation == "down" else "button_up"
     release_identity_field = "key" if admission_operation == "down" else "button"
-    if (release.get("operation") != release_operation
-            or release.get(release_identity_field) != value
-            or release.get("owner_id") != owner
-            or release.get("intent_token") != token
-            or release.get("valid_until_ns") != deadline):
+    release_value = release.get(release_identity_field)
+    if release_identity_field == "button" and type(release_value) is not int:
+        return None
+    release_deadline = release.get("valid_until_ns")
+    if type(release_deadline) is not int or release_deadline != deadline:
+        return None
+    if (
+        release.get("operation") != release_operation
+        or release_value != value
+        or release.get("owner_id") != owner
+        or release.get("intent_token") != token
+    ):
         return None
     started_ns = release.get("release_call_started_ns")
     returned_ns = release.get("release_call_returned_ns")
