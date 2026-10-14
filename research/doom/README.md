@@ -37,6 +37,7 @@ flowchart TD
 
 | Theme | Representative entry points |
 |---|---|
+| V39 WSLc synthetic X11 app effect and expiry A34 | [`v39_wslc_xvfb_app_effect_a34_20261014/README.md`](v39_wslc_xvfb_app_effect_a34_20261014/README.md) — independent audit 14/14 for one synthetic keypress, counter change, expiry release, strict empty receipt, and cleanup; A30–A33 first HOLD/STOP/FAIL outcomes retained; no game/MAP01/physical-input claim |
 | Release-batch alias-cleanup evidence rescue (#8259) | [`release_batch_alias_rescue_8259_20261009/README.md`](release_batch_alias_rescue_8259_20261009/README.md) — preserves nine A04–A10/J6q8 experiment packages plus measurement-publication custody; fake-X/Xvfb construction only, with STOP/FAIL history retained and no live/game claim |
 | V39 typed-observation raw retention boundary A01 (#8258) | [`typed_observation_retention_a01_20261007/README.md`](typed_observation_retention_a01_20261007/README.md) — preserved synthetic 2-row event-sink result with independent raw audit 5/5; historical freeze only (3/5 implementation sources still match current main), no live/game claim |
 | V39 expiry-receipt auditor correction A02 (#8257) | [`map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/README.md`](map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/README.md) — reproduces three A01 auditor false accepts, then rejects ten mutations in normal/optimized Python (11 cases, 22 subprocesses); retained raw audit only, no candidate or live-control claim |
