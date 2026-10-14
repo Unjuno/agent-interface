@@ -1,0 +1,82 @@
+{
+  "admission": {
+    "admitted_ns": 32604409206,
+    "event": "input_admission",
+    "input_ack_ns": 32604616478,
+    "intent_token": "MAP01-V39-WSLC-A33-20261014-01",
+    "key": "a",
+    "keycode": 38,
+    "valid_until_ns": null
+  },
+  "cleanup": {
+    "finished_ns": 32618124924,
+    "owner_close_error": "RuntimeError: input owner stopped before reply",
+    "xvfb_exit": 0,
+    "xvfb_runtime_ns": 281687942
+  },
+  "errors": [
+    "RuntimeError: admission identity did not match owner/key"
+  ],
+  "experiment_id": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A33-20261014-01",
+  "image_identity": {
+    "architecture": "amd64",
+    "id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "name": "a09-owner-close-xvfb:20261012",
+    "os": "linux",
+    "pull": "never",
+    "python": "3.14.8"
+  },
+  "input_dispatch_attempted": true,
+  "key_events": [],
+  "lease": {
+    "app_response_bound_ns": 200000000,
+    "cancel_requested_before_expiry": false,
+    "deadline_ns": null,
+    "duration_ns": 300000000,
+    "intent_token": "MAP01-V39-WSLC-A33-20261014-01",
+    "recovery_bound_ns": 1000000000
+  },
+  "owner_id": "bbcfc7d0469f48f0baf48fc08626d699",
+  "owner_records": [],
+  "runtime": {
+    "display": ":143",
+    "python": "3.14.8 (main, Oct  6 2026, 04:36:55) [GCC 14.2.0]",
+    "uid": 0
+  },
+  "schema": "map01-v39-wslc-xvfb-app-effect-raw-a30-v1",
+  "scope": "synthetic X11 app; no game, model, physical input, or desktop control",
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "map01_overlap_controller_v39.py": "7b83183cca7e70bbc33f58afacd367c54e49740b5281d98005d0ebabf76c8cf7"
+  },
+  "status": "STOP",
+  "target_app": {
+    "counter_property": "_A33_TASK_COUNTER",
+    "focus_id": 2097152,
+    "initial_counter_verified_by_second_connection": 0,
+    "window_id": 2097152
+  },
+  "task_effect": {
+    "after_keypress": null,
+    "after_release": null,
+    "initial_counter": 0
+  },
+  "xvfb": {
+    "argv": [
+      "Xvfb",
+      ":143",
+      "-screen",
+      "0",
+      "640x480x24",
+      "-nolisten",
+      "tcp",
+      "-noreset",
+      "-ac"
+    ],
+    "pid": 9,
+    "started_ns": 32336436982
+  }
+}
