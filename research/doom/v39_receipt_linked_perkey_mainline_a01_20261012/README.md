@@ -16,16 +16,19 @@ The mainline adaptation stores the admission receipt in marker slot 6 while pres
 
 The existing release-batch owner-race integration test now asserts that the admission event and cancellation release event retain the same key, owner, and intent receipt through the real V12/V3/V4/backend composition. It passes on this adaptation and fails against PR #8108's old V3 source, which leaks the cancellation `ValueError` through the backend.
 
-The analyzer uses `key` for keyboard releases and `button` for pointer-button releases, matching the runtime event shape. The pointer positive-control is schema-only: current V39 owner code does not provide a verified pointer-button release transition, so no live pointer measurement claim is made.
+The analyzer uses `key` for keyboard releases and `button` for pointer-button releases, matching the runtime event shape. The pointer positive-control is schema-only: current V39 owner code does not provide a verified pointer-button release transition, so no live pointer measurement claim is made. The type-strictness correction and validation are detailed in [FOLLOWUP_VALIDATION.md](FOLLOWUP_VALIDATION.md).
+
+Follow-up review found two release-side type-coercion holes: a float `valid_until_ns` equal to the admitted integer deadline, and a boolean pointer `button` equal to admitted payload `1`, were accepted by Python value equality. The analyzer now requires an exact integer release deadline and exact integer pointer button before joining the receipt. Both malformed controls fail closed.
 
 ## Validation
 
 Python 3.11.9, base `f185a9059d485a4f8d5a65e9e7f6782897f67eae`.
 
 - Owner V3/V4, V15, V39 controller, owner-to-analyzer, and release-batch backend race suites: 45 tests passed in normal and optimized mode.
-- Receipt-linked analyzer suite: 4 tests passed in normal and optimized mode.
+- Receipt-linked analyzer suite: 6 tests passed in normal and optimized mode; the two follow-up cases reject a float release deadline and boolean pointer button.
 - Owner-to-analyzer composition suite: 1 test passed in normal and optimized mode; the V3 transition receipt is consumed by the candidate analyzer and yields the expected per-key censored interval.
 - Python compilation and `git diff --check`: passed.
+- Follow-up analyzer plus owner-to-analyzer suites: 7/7 passed in normal and optimized CPython 3.14.8 on WSLc using image `python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd`, `--network none`, 1 CPU, and 512 MiB configured memory. WSLc reported swap cgroup support unavailable; no swap limit is claimed. The first WSLc invocation omitted the source `PYTHONPATH` and ran the test fallback; it is classified as an invocation error, not a code result. The corrected invocation passed.
 - Deterministic cancellation comparison: matching keycode is preserved as a non-ordinary verified cleanup on current `main`; the mismatched keycode control is rejected. The PR #8108 source propagates the cancellation `ValueError` for the matching case.
 
 The test suites are construction evidence only. Live control remains unverified.
@@ -49,3 +52,5 @@ From `research/doom`:
 python -m unittest -v test_analyze_map01_direct_retained_input_v2
 python -O -m unittest -q test_analyze_map01_direct_retained_input_v2
 ```
+
+The WSLc follow-up also sets `PYTHONPATH=/src/research/doom:/src` when the repository is mounted at `/src`; without it, the standalone analyzer test imports its fallback stub instead of the target module.
