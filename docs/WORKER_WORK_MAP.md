@@ -48,8 +48,9 @@ metadata. This is separate from public guarded MCP's process-identity path.
 The [opt-in MAP01 process identity integration](maintenance/map01-process-identity-20261016.md)
 is now in main via #8950: observation-to-lease-to-owner checks use independent
 readers and preserve release telemetry. This is Fake X construction evidence;
-window incarnation, blocking native input/readback, and task-effect gates remain
-open. Run the [local affected regression entry](../research/doom/check_map01_control_regressions.py)
+the separately linked window-lifecycle transfer covers only its selected Fake X
+composition. Native window continuity, blocking input/readback and task-effect
+gates remain open. Run the [local affected regression entry](../research/doom/check_map01_control_regressions.py)
 in a fresh external output directory when modifying that path.
 
 In a sparse checkout, the saved-auditor test also needs its committed fixture:
