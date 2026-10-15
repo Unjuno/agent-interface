@@ -156,7 +156,7 @@ class _WorkerAdmission:
 
 
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot",
-                  guarded_process_identity=False, guarded_query_worker=False):
+                  guarded_process_identity=False, guarded_query_worker=False, guarded_observation_worker=False):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11"):
         raise ValueError("unknown session mode")
     if type(guarded_process_identity) is not bool:
@@ -166,6 +166,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if (type(guarded_query_worker) is not bool
             or (guarded_query_worker and (session_mode != 'guarded-x11' or not guarded_process_identity))):
         raise ValueError('query worker requires guarded-x11 with explicit process identity')
+    if (type(guarded_observation_worker) is not bool
+            or (guarded_observation_worker and not guarded_query_worker)):
+        raise ValueError('observation worker requires explicit guarded query worker')
     if (not isinstance(targets, dict) or not targets or
             any(not isinstance(k, str) or not k or type(v) is not int or v <= 0
                 for k, v in targets.items())):
@@ -182,7 +185,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if guarded:
         from .mcp_guarded import GuardedSessionOwner
         owner = GuardedSessionOwner(targets, root, display_name,
-                                    process_identity=guarded_process_identity,query_worker=guarded_query_worker)
+                                    process_identity=guarded_process_identity,query_worker=guarded_query_worker,
+                                    observation_worker=guarded_observation_worker)
     shutting_down = False
     server_instance_id = uuid.uuid4().hex
 
@@ -709,13 +713,18 @@ def main():
                         help='require sampled Linux/XRes process identity in guarded-x11 mode; trusted local PID namespace required')
     parser.add_argument('--guarded-query-worker',action='store_true',
                         help='isolate active focus/process queries; requires guarded-x11 and process identity, qualified same local X server')
+    parser.add_argument('--guarded-observation-worker',action='store_true',
+                        help='isolate active visual checks; requires guarded query worker and qualified same local X server')
     args = parser.parse_args()
     if args.guarded_process_identity and args.session_mode != 'guarded-x11':
         parser.error('--guarded-process-identity requires --session-mode guarded-x11')
     if args.guarded_query_worker and (args.session_mode != 'guarded-x11' or not args.guarded_process_identity):
         parser.error('--guarded-query-worker requires guarded-x11 and --guarded-process-identity')
+    if args.guarded_observation_worker and not args.guarded_query_worker:
+        parser.error('--guarded-observation-worker requires --guarded-query-worker')
     options = {'guarded_process_identity':args.guarded_process_identity}
     if args.guarded_query_worker: options['guarded_query_worker'] = True
+    if args.guarded_observation_worker: options['guarded_observation_worker'] = True
     create_server(json.loads(args.targets.read_text(encoding='utf-8')),
                   args.output_directory, display_name=args.display, session_mode=args.session_mode,
                   **options).run(transport='stdio')

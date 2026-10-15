@@ -31,19 +31,22 @@ class InputFeedback(BaseModel):
         return self
 
 
-def open_bridge(display_name, targets, target, directory, *, process_identity=False, query_worker=False):
+def open_bridge(display_name, targets, target, directory, *, process_identity=False, query_worker=False, observation_worker=False):
     # Optional Pillow/Xlib dependencies are loaded only for this explicit mode.
     from runtime.guarded_x11_v1.bridge import NativeHandleBridge
-    return NativeHandleBridge(display_name, targets, target, directory,
-                              process_identity=process_identity,query_worker=query_worker)
+    options = dict(process_identity=process_identity,query_worker=query_worker)
+    if observation_worker: options['observation_worker'] = True
+    return NativeHandleBridge(display_name, targets, target, directory,**options)
 
 
 class GuardedSessionOwner(MCPSessionOwner):
-    def __init__(self, targets, directory, display_name=None, *, process_identity=False, query_worker=False):
+    def __init__(self, targets, directory, display_name=None, *, process_identity=False, query_worker=False, observation_worker=False):
         if type(process_identity) is not bool:
             raise ValueError('process_identity must be a boolean')
         if type(query_worker) is not bool or (query_worker and not process_identity):
             raise ValueError('query_worker requires explicit process_identity=True')
+        if type(observation_worker) is not bool or (observation_worker and not query_worker):
+            raise ValueError('observation_worker requires explicit query_worker=True')
         if len(targets) != 1:
             raise ValueError('guarded-x11 requires exactly one explicitly configured target')
         super().__init__(targets, display_name)
@@ -53,6 +56,7 @@ class GuardedSessionOwner(MCPSessionOwner):
         self.binding_revision = 0
         self.process_identity = process_identity
         self.query_worker = query_worker
+        self.observation_worker = observation_worker
 
     def get(self):
         if self.state == 'open':
@@ -63,6 +67,7 @@ class GuardedSessionOwner(MCPSessionOwner):
         try:
             options = {'process_identity':True} if self.process_identity else {}
             if self.query_worker: options['query_worker'] = True
+            if self.observation_worker: options['observation_worker'] = True
             self.bridge = open_bridge(self.display_name, self.targets, self.target, self.directory, **options)
             self.session = self.bridge.session
             self.state = 'open'
@@ -77,6 +82,9 @@ class GuardedSessionOwner(MCPSessionOwner):
         row['mode'] = 'guarded-x11'
         row['process_identity'] = self.process_identity
         row['query_worker'] = self.query_worker
+        row['observation_worker'] = self.observation_worker
+        observations = getattr(self.bridge,'_observations',None)
+        row['observations'] = observations.snapshot() if observations is not None else None
         worker = getattr(self.bridge,'_target_queries',None)
         row['target_queries'] = worker.snapshot() if worker is not None else None
         row['target'] = self.target

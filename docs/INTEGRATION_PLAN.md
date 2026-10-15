@@ -54,16 +54,21 @@ live task and matched comparison.
   standard guarded MCP, preserving source/generation/original deadline. Fake X
   checks cancellation/expiry cleanup while either query is blocked, discarded
   late replies, sticky transport failures and abandoned-open closure. This is
-  a narrower integration than the probe's full observation loop: capture,
-  persistence and input transport remain synchronous. Qualify those remaining
-  boundaries and independent task effect next; no physical bound is established.
+  a narrower integration than the probe's full observation loop; no physical
+  bound is established.
   The [remaining-boundary characterization](../research/live_control/guarded_sync_boundaries_20261015/RESULT.md)
   confirms that capture, observation persistence and trusted callbacks inside an
-  additional Python input guard can still hold CTRL after cancellation/expiry,
-  even with the query worker idle. All six fault cells release only after the
+  additional Python input guard, with only target-query isolation selected, can
+  still hold CTRL after cancellation/expiry. All six fault cells release only after the
   harness resumes the blocked dependency; eventual cleanup is not bounded recovery.
-  Separate acquisition/reply association and side effects before claiming full
-  observation/control-plane isolation.
+  The further opt-in [active visual-check worker](../runtime/guarded_x11_v1/OBSERVATION_WORKER.md)
+  separates those visual checks using its own read-only client. Actual Python
+  bridge Fake X tests release the held prefix before the three dependencies
+  resume, fence late publication, and reject changed source context/generation.
+  Standard guarded MCP explicitly selects the mode; new-window review requests
+  carry the current XID and resolve it on the reader's own connection. This is
+  not all platform-I/O isolation: input transport/readback/close, idle observation,
+  arbitrary caller behavior and physical release remain separate boundaries.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.
