@@ -117,6 +117,7 @@ class NativeHandleBridge:
             raise ValueError('observation_worker requires explicit query_worker=True')
         self._target_queries = None
         self._observations = None
+        self._closed = False
         self._cancel_lock = threading.Lock()
         self._cancel_ticket = None
         self._used_cancel_tokens = set()
@@ -157,8 +158,14 @@ class NativeHandleBridge:
             raise
 
     def close(self):
+        if self._consume_close(): self.backend.close()
+
+    def _consume_close(self):
+        if getattr(self,'_closed',False): return False
+        # Closure/failed closure cannot be reused as an open input owner.
+        self._closed = True
         self.stop_target_queries()
-        self.backend.close()
+        return True
 
     def stop_target_queries(self):
         observations = getattr(self,'_observations',None)
@@ -459,6 +466,8 @@ class NativeHandleBridge:
         """
         refused = dict(status='refused',release_attempted=False,authority_granted=False,
                        task_success=None,replay_allowed=False,binding_revision=self.binding_revision)
+        if getattr(self,'_closed',False):
+            return dict(refused,error='RECOVERY_REQUIRES_OPEN_SESSION')
         if self.active is not None:
             return dict(refused,error='INPUT_OWNER_BUSY')
         if type(current_binding_revision) is not int or current_binding_revision!=self.binding_revision:

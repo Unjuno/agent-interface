@@ -10,6 +10,19 @@ from runtime.guarded_x11_v1.bridge import NativeHandleBridge
 
 
 class GuardedRecoveryTests(unittest.IsolatedAsyncioTestCase):
+    async def test_mcp_close_also_consumes_python_bridge_recovery(self):
+        fake=FakeX(self)
+        with tempfile.TemporaryDirectory() as td:
+            server=create_server({'app':20},td,session_mode='guarded-x11')
+            await server.call_tool('interface_guarded_observe',{})
+            bridge=fake.backend.owner
+            bridge.session.recovery_required=True
+            await server.call_tool('interface_close',{})
+            before=list(fake.emissions)
+            row=bridge.recover_input(bridge.binding_revision)
+            self.assertEqual(row['error'],'RECOVERY_REQUIRES_OPEN_SESSION')
+            self.assertFalse(row['release_attempted']);self.assertEqual(fake.emissions,before)
+
     async def test_recovery_does_not_open_a_session(self):
         with tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_guarded.open_bridge') as opened:
             server=create_server({'app':20},td,session_mode='guarded-x11')
@@ -98,6 +111,32 @@ class GuardedRecoveryTests(unittest.IsolatedAsyncioTestCase):
 
 
 class PythonRecoveryTests(unittest.TestCase):
+    def exercise_closed(self,close_error):
+        fake=FakeX(self)
+        with tempfile.TemporaryDirectory() as td:
+            bridge=NativeHandleBridge(None,{'app':20},'app',td+'/bridge')
+            source=bridge.observe()
+            bridge.mint('field',source['sequence'],[8,8],region_size=[12,12])
+            bridge.session.recovery_required=True
+            fake.backend.held_keycodes={'CTRL':1};fake.down.add(1)
+            revision,scope,store,history=bridge.binding_revision,bridge.scope,bridge.store,list(bridge.history)
+            if close_error:
+                fake.backend.close.side_effect=OSError('fake close failed')
+                with self.assertRaises(OSError): bridge.close()
+            else: bridge.close()
+            before=list(fake.emissions)
+            refused=bridge.recover_input(revision)
+            self.assertEqual(refused['status'],'refused',refused)
+            self.assertEqual(refused['error'],'RECOVERY_REQUIRES_OPEN_SESSION')
+            self.assertFalse(refused['release_attempted'])
+            self.assertEqual(fake.emissions,before)
+            self.assertEqual((bridge.binding_revision,bridge.scope,list(bridge.history)),(revision,scope,history))
+            self.assertIs(bridge.store,store)
+            self.assertTrue(bridge.session.recovery_required)
+
+    def test_closed_python_bridge_refuses_recovery_without_mutation(self): self.exercise_closed(False)
+    def test_close_error_still_consumes_python_owner(self): self.exercise_closed(True)
+
     def test_pending_recovery_owns_bridge_and_retired_reader_stays_retired(self):
         fake=FakeX(self)
         fake.backend.d.get_display_name=lambda:':fake-only'

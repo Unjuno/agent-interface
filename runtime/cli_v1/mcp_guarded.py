@@ -95,8 +95,10 @@ class GuardedSessionOwner(MCPSessionOwner):
         return row
 
     def close(self):
-        if self.bridge is not None and self.query_worker:
-            self.bridge.stop_target_queries()
+        if self.bridge is not None:
+            consume_close = getattr(self.bridge,'_consume_close',None)
+            if callable(consume_close): consume_close()
+            elif self.query_worker: self.bridge.stop_target_queries()
         return super().close()
 
     def cancel_guarded(self, token):
