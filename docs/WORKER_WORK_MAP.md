@@ -35,6 +35,14 @@ distinguishes stack merges from main integration and lists the completion criter
 
 ## What a worker leaves
 
+For MAP01/V39 recovery-during-cancel, use the
+[saved #8792 correction](../research/integration/v39_hard_recovery_convergence_20261016/README.md).
+Hard invalidation must survive later health recovery, but the old normal/-O
+records lack the latest candidate's full recovered-source fields. Use v2 final
+admission checks, not the reproduced v1 false pass; neither historical source
+equals current main. Preserve the property for a new current-path qualification
+without replaying the old producer or treating fixture release as physical.
+
 The [primary presentation failure record](../research/integration/primary_presentation_convergence_20261016/README.md)
 qualifies the current host's outer STOP latch after an effect but failed reply/
 presentation publication. Explicit close remains possible; input resend is
