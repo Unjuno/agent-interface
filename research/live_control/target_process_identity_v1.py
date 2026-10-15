@@ -23,18 +23,29 @@ class IdentityReader:
     def close(self):
         return self.worker.close()
 
-    def read(self, xid, *, perf_deadline_ns, cancelled=lambda: False):
+    def _query(self, operation, xid, perf_deadline_ns, cancelled):
         if type(xid) is not int or xid <= 0 or type(perf_deadline_ns) is not int:
             raise ValueError('explicit surface and original perf-counter deadline required')
         monotonic_origin = time.monotonic_ns()
         remaining = perf_deadline_ns - time.perf_counter_ns()
         if remaining <= 0:
             raise RuntimeError('identity source expired')
-        value = self.worker.read('process_identity', xid,
+        value = self.worker.read(operation, xid,
             deadline_ns=monotonic_origin + remaining, cancelled=cancelled)
         if cancelled() or time.perf_counter_ns() >= perf_deadline_ns:
             self.close()
             raise RuntimeError('late identity reply')
+        return value
+
+    def read_focus(self, xid, *, perf_deadline_ns, cancelled=lambda: False):
+        value = self._query('focus_id', xid, perf_deadline_ns, cancelled)
+        if type(value) is not int or value < 0:
+            self.close()
+            raise RuntimeError('focus proof unavailable')
+        return value
+
+    def read(self, xid, *, perf_deadline_ns, cancelled=lambda: False):
+        value = self._query('process_identity', xid, perf_deadline_ns, cancelled)
         if (type(value) is not str or len(value) != 64 or
                 any(c not in '0123456789abcdef' for c in value)):
             self.close()

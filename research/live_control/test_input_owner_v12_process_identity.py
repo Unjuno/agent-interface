@@ -22,6 +22,8 @@ class Reader:
         self.block = False
         self.entered, self.resume, self.closed = threading.Event(), threading.Event(), threading.Event()
     def read(self, operation, xid):
+        if operation == 'focus_id':
+            return self.focus().focus
         self.entered.set()
         if self.block and not self.resume.wait(3):
             raise RuntimeError('test reader not resumed')
@@ -34,6 +36,7 @@ class Reader:
 def fixture():
     import input_owner_v12 as native
     display, reader = FakeDisplay(), Reader()
+    reader.focus = lambda: display.get_input_focus()
     events = []
     def emit(connection, event, code):
         events.append((event, code))
@@ -58,6 +61,66 @@ def fixture():
 
 
 class OwnerIdentityTests(unittest.TestCase):
+    def test_blocked_focus_read_does_not_prevent_cancel_cleanup(self):
+        with fixture() as (owner, lease, display, reader, events):
+            block, entered, resume = threading.Event(), threading.Event(), threading.Event()
+            def focus():
+                if block.is_set():
+                    entered.set()
+                    self.assertNotEqual(threading.get_ident(), owner.thread.ident)
+                    if not resume.wait(3): raise RuntimeError('test focus not resumed')
+                return SimpleNamespace(focus=41)
+            display.get_input_focus = focus
+            try:
+                owner.call('down', lease, 'W')
+                block.set()
+                self.assertTrue(entered.wait(1))
+                lease.set()
+                self.assertIsNotNone(lease.wait_interruption(.2))
+                self.assertEqual(display.down, set())
+                self.assertFalse(resume.is_set())
+                self.assertTrue(owner.identity_reader.worker.snapshot()['retired'])
+                self.assertTrue(owner.identity_reader.worker.snapshot()['pending'])
+                self.assertTrue(lease.interruption_snapshot()['record']['target_focus_query_failed'])
+            finally:
+                resume.set()
+
+    def test_blocked_focus_original_expiry_releases_before_resume(self):
+        with fixture() as (owner, lease, display, reader, events):
+            block, entered, resume = threading.Event(), threading.Event(), threading.Event()
+            lease.deadline = time.perf_counter_ns() + 100_000_000
+            lease.target_process_identity = (1, 41, 'a' * 64, lease.deadline)
+            def focus():
+                if block.is_set():
+                    entered.set()
+                    if not resume.wait(3): raise RuntimeError('test focus not resumed')
+                return SimpleNamespace(focus=41)
+            display.get_input_focus = focus
+            try:
+                owner.call('down', lease, 'W')
+                block.set()
+                self.assertTrue(entered.wait(1))
+                self.assertIsNotNone(lease.wait_interruption(1))
+                self.assertEqual(lease.interruption_snapshot()['record']['reason'], 'expired')
+                self.assertEqual(display.down, set())
+                self.assertFalse(resume.is_set())
+            finally:
+                resume.set()
+
+    def test_held_focus_failure_is_distinct_from_observed_change(self):
+        for mode in ('transport', 'malformed', 'changed'):
+            with self.subTest(mode=mode), fixture() as (owner, lease, display, reader, events):
+                owner.call('down', lease, 'W')
+                def focus():
+                    if mode == 'transport': raise OSError('focus unavailable')
+                    return SimpleNamespace(focus=None if mode == 'malformed' else 42)
+                display.get_input_focus = focus
+                self.assertIsNotNone(lease.wait_interruption(1))
+                reason = 'focus_changed' if mode == 'changed' else 'target_query_invalidated'
+                self.assertEqual(lease.interruption_snapshot()['record']['reason'], reason)
+                self.assertEqual(display.down, set())
+                self.assertEqual(owner.identity_reader.worker.snapshot()['retired'], mode != 'changed')
+
     def test_final_focus_read_cannot_change_cancel_or_source_before_press(self):
         for mode in ('cancel', 'source', 'deadline'):
             with self.subTest(mode=mode), fixture() as (owner, lease, display, reader, events):

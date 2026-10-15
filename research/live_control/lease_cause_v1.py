@@ -4,7 +4,7 @@ import threading
 import uuid
 from lease import Lease as Previous
 
-REASONS = frozenset(('focus_changed', 'surface_changed', 'target_generation_invalidated', 'expired', 'cancelled', 'stop_requested'))
+REASONS = frozenset(('focus_changed', 'surface_changed', 'target_generation_invalidated', 'target_query_invalidated', 'expired', 'cancelled', 'stop_requested'))
 
 
 class Lease(Previous):

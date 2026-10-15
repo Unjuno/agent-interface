@@ -1,6 +1,7 @@
 from contextlib import contextmanager
 from pathlib import Path
 import sys
+import threading
 import tempfile
 import time
 from types import SimpleNamespace
@@ -33,7 +34,8 @@ def backend_fixture():
     fake, events, generation = FakeDisplay(), [], ['a' * 64]
     fake.keysym_to_keycode = lambda value: {ord('a'): 38}.get(value, 0)
     class Reader:
-        def read(self, operation, xid): return generation[0]
+        def read(self, operation, xid):
+            return fake.get_input_focus().focus if operation == 'focus_id' else generation[0]
         def close(self): pass
     def emit(connection, event, code):
         if event == 2: fake.down.add(code)
@@ -55,6 +57,34 @@ def backend_fixture():
 
 
 class ProcessBackendTests(unittest.TestCase):
+    def test_actual_executor_cancel_releases_while_selected_focus_reader_stalls(self):
+        with backend_fixture() as (backend, events, generation, fake):
+            backend.snapshot('source', 0)
+            entered, resume = threading.Event(), threading.Event()
+            def focus():
+                if fake.down:
+                    entered.set()
+                    if not resume.wait(3): raise RuntimeError('test focus not resumed')
+                return SimpleNamespace(focus=41)
+            fake.get_input_focus = focus
+            executor = Executor(backend, events.append)
+            try:
+                executor.submit('blocked-focus', [{'op': 'hold', 'keys': ['a'], 'duration_ms': 500}],
+                                backend.sequence, time.perf_counter_ns() + 2_000_000_000)
+                self.assertTrue(entered.wait(1))
+                backend.lease.set()
+                executor.active[2].join(1) if executor.active else None
+                terminals = [row for row in events if row.get('event') == 'terminal']
+                self.assertTrue(terminals)
+                self.assertNotEqual(terminals[-1]['status'], 'completed')
+                self.assertTrue(terminals[-1]['release']['verified'])
+                self.assertEqual(fake.down, set())
+                self.assertFalse(resume.is_set())
+                self.assertTrue(backend.owner._inner.identity_reader.worker.snapshot()['retired'])
+            finally:
+                resume.set()
+                executor.close()
+
     def test_actual_capture_and_executor_admission_reach_selected_owner(self):
         with backend_fixture() as (backend, events, generation, fake):
             backend.snapshot('source', 0)

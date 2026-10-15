@@ -52,6 +52,7 @@ class QueryWorkerTests(unittest.TestCase):
             worker = TargetQueryWorker(lambda:X11TargetQueries(':frozen-name'))
             try:
                 self.assertIs(worker.read('focus',20,deadline_ns=time.monotonic_ns()+1_000_000_000,cancelled=lambda:False),True)
+                self.assertEqual(worker.read('focus_id',20,deadline_ns=time.monotonic_ns()+1_000_000_000,cancelled=lambda:False),20)
                 self.assertEqual(worker.read('process_identity',20,deadline_ns=time.monotonic_ns()+1_000_000_000,cancelled=lambda:False),'a'*64)
             finally: worker.close()
             self.assertTrue(closed.wait(2))

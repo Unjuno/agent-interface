@@ -284,14 +284,28 @@ class InputOwner:
                 release_pending = True
             return receipts
 
-        def focus_id():
+        focus_query_failed = False
+
+        def focus_id(lease=None):
+            if self.identity_reader is not None and lease is not None:
+                return self.identity_reader.read_focus(lease.expected_surface,
+                    perf_deadline_ns=lease.deadline,
+                    cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
             value=d.get_input_focus().focus
             return value.id if hasattr(value,'id') else value
 
         def invalid_focus(lease, pointer=False):
+            nonlocal focus_query_failed
+            focus_query_failed = False
             if not hasattr(lease,'expected_focus'):
                 raise ValueError('observed input focus required')
-            actual=focus_id()
+            try:
+                actual=focus_id(lease)
+            except Exception:
+                if self.identity_reader is None:
+                    raise
+                focus_query_failed = True
+                return True
             if not pointer:return actual != lease.expected_focus
             surface=getattr(lease,'expected_surface',None)
             if surface in (None,0,1) or actual in (None,0,1) or lease.expected_focus in (None,0,1):return True
@@ -483,6 +497,7 @@ class InputOwner:
             if self.identity_reader is not None:
                 record['target_process_identity'] = list(active_identity) if active_identity is not None else None
                 record['target_process_identity_reader'] = self.identity_reader.worker.snapshot()
+                record['target_focus_query_failed'] = focus_query_failed
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
@@ -509,6 +524,8 @@ class InputOwner:
                 if active is not None:
                     expired = time.perf_counter_ns() >= active.deadline
                     changed=invalid_focus(active,pointer=active_pointer)
+                    query_invalidated = self.identity_reader is not None and focus_query_failed
+                    expired = time.perf_counter_ns() >= active.deadline
                     generation_changed = False
                     if (not expired and not changed and not active.cancel.is_set() and
                             self.identity_reader is not None and time.perf_counter_ns() >= next_identity_check):
@@ -526,8 +543,9 @@ class InputOwner:
                         try:
                             release('expired' if expired else (
                                 ('stop_requested' if self.stop_requested.is_set() else
-                                 ('cancelled' if active.cancel.is_set() else 'target_generation_invalidated'))
-                                if generation_changed else
+                                 ('cancelled' if active.cancel.is_set() else
+                                  ('target_query_invalidated' if query_invalidated else 'target_generation_invalidated')))
+                                if generation_changed or query_invalidated else
                                 ('surface_changed' if surface_changed else ('focus_changed' if changed else 'cancelled'))))
                         except Exception as exc:
                             fault = exc

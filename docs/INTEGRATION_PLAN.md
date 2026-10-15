@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [MAP01 selected process identity](maintenance/map01-process-identity-20261016.md)
+  now connects V39/V15 capture, one-time Executor admission and V12 held checks.
+  The selected exact-focus check is also isolated on the read-only target worker:
+  Fake X owner/composed checks release on cancel/original expiry while focus
+  remains blocked. Unavailable query evidence is distinct from observed focus
+  change. Native send/sync/readback and pointer geometry/hit tests remain blocking;
+  window incarnation, physical timing and independent task effect are unqualified.
+
 - The scoped public Python bridge now has an explicit
   [process-identity option](../runtime/guarded_x11_v1/PROCESS_IDENTITY.md).
   It binds a Linux/XRes process digest to observations/aliases and rechecks it
