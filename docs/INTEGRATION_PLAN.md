@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Current MAP01 native-I/O custody](../research/doom/map01_native_io_custody_local_checks_20261016/README.md)
+  reproduces failed/unverified cleanup followed by a second accepted program
+  across four Fake X stalls. Executor now retains original release/source custody
+  before terminal publication and refuses later admission even after a fresh
+  observation or late owner cleanup. Healthy verified cleanup still permits
+  subsequent work. This fences one Executor, not a replacement session, native
+  I/O or physical release; explicit task recovery remains unqualified.
+
 - [Historical GIL/Xlib boundary convergence](../research/concurrency/xlib_boundary_consolidation_20261016/README.md)
   preserves #7109's source/raw and verifies all 274 public envelope members.
   A new saved-only reader checks server-global stop and socket-timeout ordering
