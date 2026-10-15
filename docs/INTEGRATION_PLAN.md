@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Saved V39 hard-recovery convergence from #8792](../research/integration/v39_hard_recovery_convergence_20261016/README.md)
+  preserves all31 original files and separates corrected final-admission audit
+  results: the latest saved candidate passes, but older normal/-O records lack
+  fresh-source fields and fail. The v1 false pass is reproduced; six authority
+  contradictions reject under v2. Both frozen controller/guard sources differ
+  from current main, so this historical fixture does not qualify current live
+  recovery. No original producer was rerun or raw record repaired.
+
 - [Primary presentation failure convergence from #8786](../research/integration/primary_presentation_convergence_20261016/README.md)
   adopts its missing regression and checks actual exchange/caller paths for
   both supported routes. Four synthetic host/file-effect cells retain one A,

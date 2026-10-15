@@ -1,0 +1,34 @@
+"""Separate literal raw/authority reader; no import of actor or either auditor."""
+import hashlib,json
+from pathlib import Path
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+P=ROOT/'research/integration/v39_hard_recovery_convergence_20261016'
+OUT=Path(__file__).parent/'v39-hard-recovery-saved-r2-20261016'
+manifest=json.loads((P/'ORIGINAL_FILES.json').read_text())
+for row in manifest['files']:
+ assert hashlib.sha256((P/row['archive']).read_bytes()).hexdigest()==row['sha256']
+results=P/'original-pr/results'
+for name in ('candidate.json','candidate-normal.json','candidate-optimized.json'):
+ r=json.loads((results/name).read_text());a=r['final_admission']
+ assert a['status']=='REJECTED_POLICY_INVALIDATED'
+ assert a['input_authority_admitted'] is False and a['grants_input_authority'] is False
+ assert a['executor_admission'] is None and a['action_validity'] is None
+ assert a['policy_invalidation']['outcome']['status']=='HARD_INVALIDATED'
+ assert a['controller_decided_ns']>=a['planner_terminal']['terminal_observed_ns']
+ assert r['event_order']==['executor_cancel','planner_interrupt']
+ if name=='candidate.json':
+  assert r['recovered_fresh_source']==dict(sequence=12,health=96,ammo=4,cover_admission='admitted',guard_source_sequence=12,guard_source_value=96)
+ else:assert 'recovered_fresh_source' not in r and 'recovery_observation' not in r
+for mode in ('normal','optimized'):
+ for name in ('candidate.json','candidate-normal.json','candidate-optimized.json'):
+  result=json.loads((OUT/'checks'/(mode+'-'+name)/'audit.json').read_text())
+  assert result['status']==('PASS_SCOPED_REPLAY' if name=='candidate.json' else 'FAIL')
+  assert result['errors']==([] if name=='candidate.json' else ['fresh recovery admission'])
+ r=json.loads((OUT/'checks'/(mode+'-current-source')/'audit.json').read_text())
+ assert r['status']=='FAIL' and set(r['errors'])=={'controller sha','guard sha'}
+for name in ('admission_ready','input_authority'):
+ assert json.loads((OUT/'checks'/('v1-false-pass-'+name)/'stdout').read_text())['status']=='PASS_SCOPED_REPLAY'
+ assert json.loads((OUT/'checks'/('mutation-'+name)/'audit.json').read_text())['status']=='FAIL'
+print(json.dumps(dict(original_images=31,raw_cases_authority_refused=3,latest_complete_fresh_record=1,
+ older_records_missing_fresh_fields=2,historical_auditor_false_passes_confirmed=2,current_source_equivalence=False,
+ scope='saved historical fixture evidence only; no producer/control runtime import or execution'),indent=2))
