@@ -14,6 +14,11 @@
 | [#8929](https://github.com/Unjuno/agent-interface/pull/8929) | settle timeout後の予定holdを停止し、期限後のcapture返答をquiet成功にしない。修理前に3件を再現し、関連15件が通常・最適化Pythonで成功。実Executorとinert backendによる構成試験であり、blocked I/Oの割込みや物理解放期限を証明しない。 |
 | [#8931](https://github.com/Unjuno/agent-interface/pull/8931) | mainのsource-attribution監査で5件のエラーを再現。改行属性の指定順により変換されていた凍結ソース3件を元Git blobから復元した。監査18件が通常・最適化Pythonで成功し、20件のsource hashはindexからのcheckout後も一致。元freeze/result/auditは不変。 |
 | [#8932](https://github.com/Unjuno/agent-interface/pull/8932) | 古い準備作業ツリーに残っていた708ca固定ソースの未公開回帰記録11ファイルを既存probeへ追加。原checksum10件、exit 4件、source pin 2件を照合。過去の記録であり、新規ライブ実験ではない。 |
+| [#8933](https://github.com/Unjuno/agent-interface/pull/8933) | #8801/#8814の共通health-guard証拠と各独自追試を統合し、重複PRを閉じた。原checksum20件、凍結runtime20件、raw監査13件、監査回帰6件を照合。現在sourceで過去のライブ結果を更新しない。 |
+| [#8934](https://github.com/Unjuno/agent-interface/pull/8934) | #2/#10/#14/#15/#16/#17を安全制御の研究agendaへ接続し、公開dispatch/session/backendのFake X blocking A01を保持。入力保持と返答/検証の遅延を区別し、物理解放の期限保証は未達とした。 |
+| [#8764](https://github.com/Unjuno/agent-interface/pull/8764) | #7049/#7296由来のwake-pipe saturation packetを統合。元214ファイル・checksum213件、保存済み18行とmutation拒否4件を照合。#7296を後継へ収束。collectorやnative inputは再実行していない。 |
+| [#8935](https://github.com/Unjuno/agent-interface/pull/8935) | 公開Python bridgeに明示的process identity optionを接続。XRes canonical client baseの混同とarchive同梱漏れを検出・修理。guarded 102件は通常・最適化、distribution 21件、backend 64件（実X14件skip）、core 142件が成功。ライブ世代変更・blocked I/O有限解放は未検証。 |
+| [#8834](https://github.com/Unjuno/agent-interface/pull/8834) | Windows実機の匿名pipeでmainのselect失敗を再現し、候補のPeekNamedPipeを検証して統合。17件が通常・最適化、依存3スイート11件が成功。[条件・元失敗・成功ログ](../../research/doom/windows_pipe_readiness_20261015/README.md)を保全。GUI/ゲーム/モデル/WSLは動かしていない。 |
 
 追加照合ではmain `4062116ea4d70f1904cdea9669c8c2226acd7b9d`のcontroller・planner・release関連9スイート98件が通常・最適化Pythonで成功した。この構成試験を、blocked I/O中の有限解放やライブ回復の証明には使わない。
 
@@ -56,3 +61,9 @@
 4. 各PR/branchの固有差分と依存を照合し、検証済み統合と重複解消を進める。別作業ツリーのHEADがmainに含まれるだけでは、未保存・無視対象・現在の利用まで消してよい根拠にならない。
 
 全体の整理は未完了。入力解放・task effect・有限回復・効率比較の残差も継続している。新しい必須レビュー人数や、整理が終わるまで全ワーカーを止める条件は追加しない。
+
+### 13:32 UTCの再確認
+
+main `e29b4df41e1268c57bb5cff980dfedf8518959af`までprimaryをfast-forwardし、14作業ツリーの追跡変更・未追跡ファイルが全てゼロであることを再確認した。保全候補と無視対象は引き続き別扱いであり、全研究の統合完了とはしない。#8935と#8834のheadはmainに保持され、open PRのhead/base依存と作業ツリーへのattachがないことを確認し、対応するremote branchとこの整理作業のlocal branchだけを削除した。
+
+Windows packetのCRLFログは原byteを保持し、diffの改行判定だけをscoped attributeで明示する。現在の整理対象・未検証境界はこの記録と[worker work map](../WORKER_WORK_MAP.md)から選べる。新しいワーカーはprimaryの更新済みmainから開始し、ローカル保全commitや古い「current-main」実験を現行の実証と混同しない。
