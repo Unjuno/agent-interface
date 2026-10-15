@@ -22,8 +22,12 @@ It adds no requirement to read all 1,678 Issues before working.
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
 metadata. This is separate from public guarded MCP's process-identity path.
-The next MAP01 integration must preserve V12 release receipts and avoid blocking
-its cleanup writer on a new identity read; see the source/caller seam in that result.
+The [opt-in MAP01 process identity integration](maintenance/map01-process-identity-20261016.md)
+is now in main via #8950: observation-to-lease-to-owner checks use independent
+readers and preserve release telemetry. This is Fake X construction evidence;
+window incarnation, blocking native input/readback, and task-effect gates remain
+open. Run the [local affected regression entry](../research/doom/check_map01_control_regressions.py)
+in a fresh external output directory when modifying that path.
 
 - The owning Issue and narrow question; exact branch/source and additive output.
 - Executed command/test, result scope, retained raw/conditions/audit as applicable.
