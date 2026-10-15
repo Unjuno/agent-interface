@@ -1,0 +1,90 @@
+test_assigning_false_cannot_clear_backend_or_wrapper_obligation (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_assigning_false_cannot_clear_backend_or_wrapper_obligation) ... FAIL
+test_direct_cleanup_does_not_reset_and_each_old_wrapper_acknowledges_recovery (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_direct_cleanup_does_not_reset_and_each_old_wrapper_acknowledges_recovery) ... FAIL
+test_empty_ledger_does_not_erase_failed_release_evidence (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_empty_ledger_does_not_erase_failed_release_evidence) ... FAIL
+test_failed_and_interrupted_recovery_remain_shared (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_failed_and_interrupted_recovery_remain_shared) ... 
+  test_failed_and_interrupted_recovery_remain_shared (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_failed_and_interrupted_recovery_remain_shared) (interruption='OSError') ... FAIL
+  test_failed_and_interrupted_recovery_remain_shared (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_failed_and_interrupted_recovery_remain_shared) (interruption='KeyboardInterrupt') ... FAIL
+test_healthy_replacement_remains_usable (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_healthy_replacement_remains_usable) ... ok
+test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release) ... 
+  test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release) (preexisting=False) ... FAIL
+  test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release) (preexisting=True) ... FAIL
+
+======================================================================
+FAIL: test_assigning_false_cannot_clear_backend_or_wrapper_obligation (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_assigning_false_cannot_clear_backend_or_wrapper_obligation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_session_recovery_custody.py", line 117, in test_assigning_false_cannot_clear_backend_or_wrapper_obligation
+    with self.assertRaisesRegex(ValueError, 'explicit verified'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_direct_cleanup_does_not_reset_and_each_old_wrapper_acknowledges_recovery (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_direct_cleanup_does_not_reset_and_each_old_wrapper_acknowledges_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_session_recovery_custody.py", line 72, in test_direct_cleanup_does_not_reset_and_each_old_wrapper_acknowledges_recovery
+    self.assertTrue(session.recovery_required)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_empty_ledger_does_not_erase_failed_release_evidence (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_empty_ledger_does_not_erase_failed_release_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_session_recovery_custody.py", line 60, in test_empty_ledger_does_not_erase_failed_release_evidence
+    self.assertEqual(row['error'], 'INPUT_RECOVERY_REQUIRED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'BACKEND_EXECUTION_FAILED' != 'INPUT_RECOVERY_REQUIRED'
+- BACKEND_EXECUTION_FAILED
++ INPUT_RECOVERY_REQUIRED
+
+
+======================================================================
+FAIL: test_failed_and_interrupted_recovery_remain_shared (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_failed_and_interrupted_recovery_remain_shared) (interruption='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_session_recovery_custody.py", line 99, in test_failed_and_interrupted_recovery_remain_shared
+    self.assertEqual(other.recover_input()['status'], 'recovery_failed')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'refused' != 'recovery_failed'
+- refused
++ recovery_failed
+
+
+======================================================================
+FAIL: test_failed_and_interrupted_recovery_remain_shared (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_failed_and_interrupted_recovery_remain_shared) (interruption='KeyboardInterrupt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_session_recovery_custody.py", line 96, in test_failed_and_interrupted_recovery_remain_shared
+    with self.assertRaises(KeyboardInterrupt):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: KeyboardInterrupt not raised
+
+======================================================================
+FAIL: test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release) (preexisting=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_session_recovery_custody.py", line 45, in test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release
+    self.assertEqual(row['status'], 'refused')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'execution_failed' != 'refused'
+- execution_failed
++ refused
+
+
+======================================================================
+FAIL: test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release) (preexisting=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_session_recovery_custody.py", line 45, in test_new_and_preexisting_wrappers_cannot_dispatch_during_failed_release
+    self.assertEqual(row['status'], 'refused')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'execution_failed' != 'refused'
+- execution_failed
++ refused
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.014s
+
+FAILED (failures=7)

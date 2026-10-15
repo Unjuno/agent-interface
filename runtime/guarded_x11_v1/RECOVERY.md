@@ -1,5 +1,11 @@
 # Explicit guarded input recovery
 
+[Same-backend custody](../../research/live_control/x11_backend_recovery_custody_20261016/README.md)
+survives session-wrapper replacement. A sibling's verified recovery does not
+acknowledge the guarded wrapper's old source context. Its own explicit recovery
+is still required, preserving binding/history revocation and review/fresh grounding.
+Callers serialize all wrappers; this is not cross-backend or process-wide authority.
+
 The [interrupt-custody repair](../../research/live_control/x11_interrupt_custody_checks_20261016/README.md)
 also quarantines propagated KeyboardInterrupt/SystemExit on the selected X11
 session/execute path. Cleanup is attempted on the same owner and the original

@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [X11 same-backend recovery custody](../research/live_control/x11_backend_recovery_custody_20261016/README.md)
+  now survives serialized session-wrapper replacement, including empty-ledger
+  failures. Per-wrapper recovery epochs prevent a sibling's neutralization from
+  reviving old guarded aliases. Direct cleanup/false assignment do not acknowledge
+  recovery; healthy replacement remains usable. Seven new Fake X/public-Python
+  methods and base/no-epoch controls retain the distinction. Concurrent use,
+  distinct backend/process authority, native release bounds and live task recovery
+  remain unqualified.
+
 - [MCP interruption receipts](../research/live_control/mcp_interruption_receipts_20261016/README.md)
   connect the worker's propagated stop to retained same-call evidence. Existing
   backend reports survive; a failed interruption receipt cannot fall back to
