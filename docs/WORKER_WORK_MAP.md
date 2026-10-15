@@ -5,6 +5,13 @@ then record your narrow scope. This map is a maintained navigation aid, not an
 assignment, lock, resource grant, global scheduler, or evidence of idle workers.
 It adds no requirement to read all 1,678 Issues before working.
 
+The public guarded MCP caller now has opt-in
+[direct-window lifecycle evidence](../runtime/guarded_x11_v1/WINDOW_LIFECYCLE.md),
+with [Fake X construction results](../research/live_control/window_lifecycle_local_checks_20261016/README.md).
+It does not qualify native subscriptions or add lifecycle checks to MAP01/V12.
+Use its remaining protocol/atomicity and caller-transfer boundaries rather than
+repeating the process-only stale-alias characterization.
+
 For repository cleanup, use the [2026-10-16 status and ordered batches](maintenance/consolidation-status-20261016.md),
 with the refreshed [Issue](maintenance/open-issues-20261016.csv) and
 [PR](maintenance/open-prs-20261016.csv) inventories. These are navigation snapshots,
