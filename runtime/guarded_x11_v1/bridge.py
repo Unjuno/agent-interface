@@ -7,8 +7,6 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from copy import deepcopy
-import hashlib
-import io
 import json
 from pathlib import Path
 import time
@@ -20,16 +18,12 @@ from .handles import TargetHandleStore
 from .history import ObservationHistory
 from .process_identity import read_linux_x11_process_identity
 from .target_queries import TargetQueryWorker, focus_within_target
+from .observation_worker import CaptureBindingChanged, acquire_observation
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
-from runtime.core_v1.compiled_gui import ObservationAssociationChanged
 from runtime.cli_v1.api import dispatch_in_session
 from runtime.cli_v1.observe import observe_in_session
-
-
-class CaptureBindingChanged(X11BackendError, ObservationAssociationChanged):
-    """Exact before/after binding mismatch; retains the existing X11 error type."""
 
 
 def read_window_title(connection, window):
@@ -114,12 +108,15 @@ class _GuardedBackend(X11Backend):
 
 
 class NativeHandleBridge:
-    def __init__(self, display_name, targets, target, out, *, process_identity=False, query_worker=False):
+    def __init__(self, display_name, targets, target, out, *, process_identity=False, query_worker=False, observation_worker=False):
         if type(process_identity) is not bool:
             raise ValueError('process_identity must be a boolean')
         if type(query_worker) is not bool or (query_worker and not process_identity):
             raise ValueError('query_worker requires explicit process_identity=True')
+        if type(observation_worker) is not bool or (observation_worker and not query_worker):
+            raise ValueError('observation_worker requires explicit query_worker=True')
         self._target_queries = None
+        self._observations = None
         self._cancel_lock = threading.Lock()
         self._cancel_ticket = None
         self._used_cancel_tokens = set()
@@ -150,6 +147,11 @@ class NativeHandleBridge:
                 from . import target_queries
                 resolved_display = self.backend.d.get_display_name()
                 self._target_queries = TargetQueryWorker(lambda:target_queries.X11TargetQueries(resolved_display))
+                if observation_worker:
+                    from . import observation_worker as observations
+                    pinned_targets = dict(targets)
+                    self._observations = TargetQueryWorker(lambda:observations.X11ObservationReader(
+                        resolved_display,pinned_targets,target,self.out/'isolated-observations'))
         except Exception:
             self.backend.close()
             raise
@@ -159,6 +161,8 @@ class NativeHandleBridge:
         self.backend.close()
 
     def stop_target_queries(self):
+        observations = getattr(self,'_observations',None)
+        if observations is not None: observations.close()
         worker = getattr(self,'_target_queries',None)
         return worker.close() if worker is not None else None
 
@@ -215,6 +219,8 @@ class NativeHandleBridge:
         (self.out / name).write_text(json.dumps(value, indent=2) + "\n")
 
     def _binding(self):
+        if self._isolated_observation_active():
+            return self._observation_query('binding',None)
         focus = self.backend.d.get_input_focus().focus
         geometry = self.backend.geometry(self.target)
         binding = {"focus": getattr(focus, "id", focus),
@@ -223,6 +229,28 @@ class NativeHandleBridge:
         if getattr(self, '_process_identity_guard', False):
             binding['process_generation'] = self._read_process_identity()
         return binding
+
+    def _isolated_observation_active(self):
+        return (getattr(self,'_observations',None) is not None
+                and self.active is not None and self.deadline is not None)
+
+    def _observation_query(self,operation,request):
+        context = (self.scope,self.binding_revision,self.backend.targets[self.target].id,
+                   self.sequence,deepcopy(self.active),self.deadline)
+        try:
+            value = self._observations.read(operation,request,deadline_ns=self.deadline,cancelled=self._cancel_requested)
+            if context!=(self.scope,self.binding_revision,self.backend.targets[self.target].id,
+                         self.sequence,self.active,self.deadline):
+                raise RuntimeError('observation context changed')
+            self._check_cancelled()
+            if time.monotonic_ns()>=self.deadline: raise RuntimeError('late observation discarded')
+            return value
+        except Exception as error:
+            self._observations.close()
+            self.review_required = True
+            if isinstance(error.__cause__,CaptureBindingChanged):
+                raise error.__cause__
+            raise X11BackendError('isolated visual check unavailable; close session and review fresh source') from error
 
     def _read_process_identity(self):
         try:
@@ -254,52 +282,20 @@ class NativeHandleBridge:
         return focus_within_target(self.backend.d,window_id)
 
     def observe(self):
-        started_ns = time.monotonic_ns()
-        before = self._binding()
-        screen = self.backend.d.screen()
-        report = observe_in_session(self.session, target=self.target,
-            frame="screen_physical_px",
-            region=[0, 0, screen.width_in_pixels, screen.height_in_pixels])
-        public_returned_ns = time.monotonic_ns()
-        self._save("public-observation-" + report["observation_id"] + ".json", report)
-        if report["status"] != "returned":
-            raise X11BackendError("public observation failed; inspect retained report: "
-                                  + str(report.get("error", report["status"])))
-        native = report["observation"]
-        after = self._binding()
-        if before != after:
+        isolated = self._isolated_observation_active()
+        try:
+            if isolated:
+                observation,image = self._observation_query('capture',dict(
+                    sequence=self.sequence+1,revision=self.binding_revision))
+            else:
+                observation,image = acquire_observation(self.backend,self.target,self._binding,
+                    self.sequence+1,self.binding_revision,self._save,observe=observe_in_session,session=self.session)
+        except CaptureBindingChanged:
             self.review_required = True
-            self._save("capture-binding-changed-" + report["observation_id"] + ".json", {
-                "reason": "association_changed", "before": before, "after": after,
-                "public_report": "public-observation-" + report["observation_id"] + ".json",
-                "last_valid_sequence": self.sequence, "authority_granted": False,
-                "replay_allowed": False})
-            raise CaptureBindingChanged("binding changed during native capture")
-        binding_checked_ns = time.monotonic_ns()
-        artifact = native["artifact"]
-        data = Path(artifact["path"]).read_bytes()
-        if (hashlib.sha256(data).hexdigest() != artifact["sha256"] or
-                artifact["source_raw_sha256"] != native["sha256"]):
-            raise X11BackendError("native artifact identity mismatch")
-        artifact_verified_ns = time.monotonic_ns()
-        # Use the very RGB pixels that produced this verified PNG. No new
-        # capture, older-frame reuse or reduced target revalidation occurs.
-        image = self.backend.take_capture_rgb(artifact)
-        decoded_ns = time.monotonic_ns()
-        self.sequence += 1
-        observation = {"sequence": self.sequence, "observation_id": report["observation_id"],
-                       "binding_revision": self.binding_revision,
-                       "capture_ns": native["capture_started_ns"],
-                       "image_source": "exact_capture_rgb_handoff",
-                       "pointer_binding": before, "native": native,
-                       # Ends before history publication; not model-visible latency.
-                       "timing_ns": {"started": started_ns,
-                                     "public_returned": public_returned_ns,
-                                     "binding_checked": binding_checked_ns,
-                                     "artifact_verified": artifact_verified_ns,
-                                     "decoded": decoded_ns}}
+            raise
+        self.sequence = observation['sequence']
         self.history[self.sequence] = (observation, image)
-        self._save(f"observation-{self.sequence}.json", observation)
+        if not isolated: self._save(f"observation-{self.sequence}.json", observation)
         return observation
 
     def focused_client_window(self):
@@ -415,6 +411,10 @@ class NativeHandleBridge:
         if getattr(self,'_target_queries',None) is not None and self._target_queries.snapshot()['retired']:
             self.review_required = True
             return {'status':'needs_review','error':'TARGET_QUERY_WORKER_RETIRED_CLOSE_SESSION',
+                    'authority_granted':False,'input_dispatched':False,'replay_allowed':False}
+        if getattr(self,'_observations',None) is not None and self._observations.snapshot()['retired']:
+            self.review_required = True
+            return {'status':'needs_review','error':'OBSERVATION_WORKER_RETIRED_CLOSE_SESSION',
                     'authority_granted':False,'input_dispatched':False,'replay_allowed':False}
         if type(window_id) is not int or window_id <= 0:
             raise ValueError('explicit positive window ID required')
@@ -540,7 +540,9 @@ class NativeHandleBridge:
         try:
             if self.scope != guard['scope'] or self.binding_revision != guard['revision']:
                 raise X11BackendError('input guard binding changed')
-            decision = guard['verify'](stage, deepcopy(source), image.copy())
+            arguments = (guard['verify'],stage,deepcopy(source),image.copy())
+            decision = (self._observation_query('verify',arguments) if self._isolated_observation_active()
+                        else guard['verify'](*arguments[1:]))
             if decision is not True:
                 raise X11BackendError('additional input dependency refused')
             if (self.sequence != sequence or self.active != active
