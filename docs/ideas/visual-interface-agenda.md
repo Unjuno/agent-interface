@@ -4,7 +4,17 @@
 [window lifecycle option](../../runtime/guarded_x11_v1/WINDOW_LIFECYCLE.md)を接続した。
 [Fake X構成結果](../../research/live_control/window_lifecycle_local_checks_20261016/README.md)で、
 process-onlyの旧alias受理と、対象自身への購読によるDestroy拒否・prefix解放を区別した。
-実機の購読・最終check/use競合、MAP01/V12への移植、task effect・回復・効率は未検証であり、#5全体は完了しない。
+続く[#8969](https://github.com/Unjuno/agent-interface/pull/8969)で、選択されたMAP01/V12経路にも
+[capture→lease→入力ownerの構成結果](../../research/doom/map01_window_lifecycle_local_checks_20261016/README.md)を残した。
+captureと入力は一つのcanonical lifecycle readerを共有する。readerごとの不透明tokenを別reader間で比較しない。
+実機の購読・可用性・最終check/use競合、task effect・回復・効率は未検証であり、#5全体は完了しない。
+
+関連する[#4008](https://github.com/Unjuno/agent-interface/issues/4008)の36ケースは、
+共有接続のmask置換による通知喪失、unionと別接続の条件付き保持を報告している。
+2026-10-16の照合では予定パス`research/integration/x11_subscription_composition_v1/`の
+公開packetをmain `2b9df51535c7662d76ac29477bb14e2219eb9865`に確認できず、
+完全原本の公開・読み戻しが残る。コメントのPASSだけで統合済み・終了可能とはしない。
+原217ファイルの保全先を確認して公開する作業を#4008に残し、消費済み実験は再実行しない。
 
 対象：[#3](https://github.com/Unjuno/agent-interface/issues/3)、[#5](https://github.com/Unjuno/agent-interface/issues/5)、[#8](https://github.com/Unjuno/agent-interface/issues/8)。[元の仮説と制約](visual-interface.md)を維持し、既存成果との照合から実験へ進める。3件を保存しただけで研究対象から外さない。
 
