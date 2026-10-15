@@ -49,6 +49,7 @@ SUITES["protocol"].append("test_adaptive_acquisition_caller_verify_progress_v3")
 SUITES["protocol"].append("test_grounding_failure_accounting")
 SUITES["protocol"].append("test_compiled_caller_handoff_v2")
 SUITES["harness"].append("test_compiled_form_guarded_x11")
+SUITES["harness"].append("test_compiled_native_caller_composition")
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
