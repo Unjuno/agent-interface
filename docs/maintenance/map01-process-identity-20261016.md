@@ -89,3 +89,9 @@ optimized each report 33 modules / 244 methods, zero failures, one deliberate
 handshake skip (243 executed). [Retained logs and conditions](../../research/doom/map01_process_identity_local_checks_20261016/README.md)
 include all per-module outputs, original repeat-bind RED and exact-base fixture
 RED. This resolves the local fixture task above without qualifying live gates.
+
+The subsequent [selected focus isolation](../../research/doom/map01_focus_isolation_local_checks_20261016/README.md)
+also routes lease-bound exact-focus reads through the independent worker. Actual
+composed Fake X cancellation and original-expiry controls release while that
+read remains blocked; late pre-press replies cannot inject input. Native input
+I/O, pointer geometry/hit checks, physical and task-effect limits still apply.

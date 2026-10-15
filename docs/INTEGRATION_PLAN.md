@@ -29,6 +29,8 @@ live task and matched comparison.
   remains blocked. Unavailable query evidence is distinct from observed focus
   change. Native send/sync/readback and pointer geometry/hit tests remain blocking;
   window incarnation, physical timing and independent task effect are unqualified.
+  [Retained focus isolation checks](../research/doom/map01_focus_isolation_local_checks_20261016/README.md)
+  preserve the first blocked-focus RED and exact-source normal/-O module outputs.
 
 - The scoped public Python bridge now has an explicit
   [process-identity option](../runtime/guarded_x11_v1/PROCESS_IDENTITY.md).
