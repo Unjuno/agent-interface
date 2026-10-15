@@ -214,7 +214,7 @@ class PureWin32HelperTests(unittest.TestCase):
             def GetAsyncKeyState(self, vk):
                 if self.raises:
                     raise OSError("inert state query failure")
-                return 0x8000 if vk in self.stuck else 0
+                return 0x8000 if vk in self.stuck else 1
 
         cases = (
             ([{"op": "key_state", "key": "SHIFT", "down": True},
