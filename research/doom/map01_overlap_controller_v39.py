@@ -2,6 +2,7 @@
 import argparse
 import atexit
 from collections import Counter
+from copy import deepcopy
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
@@ -657,24 +658,101 @@ def persist_running_invalidation(root, identifier, boundary):
     return path
 
 
-def cancel_invalidated_action(process, wait, identifier, guard):
-    """Publish physical release first, then require terminal lifecycle closure."""
-    process.stdin.write(json.dumps({"op": "cancel", "id": identifier}) + "\n")
-    process.stdin.flush()
-    event = wait(lambda row: row.get("event") == "cancel_requested" and
-                 row.get("id") == identifier)
-    guard.record_cancel_requested({
-        "event": "cancel_requested", "id": event["id"],
-        "matched": event["matched"], "requested_ns": event["requested_ns"]})
-    released = wait(lambda row: row.get("event") == "input_released" and
-                    row.get("id") == identifier)
-    release_receipt = guard.record_input_released({key: released[key] for key in (
-        "event", "id", "intent_token", "owner_release", "published_ns",
-        "program_terminal_pending", "grants_input_authority")})
-    terminal = wait(lambda row: row.get("event") == "terminal" and
-                    row.get("id") == identifier)
-    receipt = guard.record_cancelled_terminal(terminal)
-    return event, released, release_receipt, terminal, receipt
+class CancellationReleaseFailed(RuntimeError):
+    def __init__(self, receipt):
+        self._receipt = deepcopy(receipt)
+        super().__init__('cancellation release boundary failed: ' + receipt['reason'])
+
+    @property
+    def receipt(self):
+        return deepcopy(self._receipt)
+
+
+def cancel_invalidated_action(process, wait, identifier, guard, *, failure_root=None):
+    """Keep every matching boundary; unverified release never grants authority."""
+    phase = 'cancel_send'
+    observed = []
+    event = released = release_receipt = buffered_release = None
+
+    def fail(reason, row=None, cause=None):
+        try:
+            guard_receipt = guard.receipt()
+        except Exception as guard_error:
+            guard_receipt = {'receipt_error': type(guard_error).__name__}
+        receipt = {'schema': 'running-cancel-release-failure-v1', 'id': identifier,
+            'phase': phase, 'reason': reason, 'failure_event': deepcopy(row),
+            'observed_boundaries': deepcopy(observed), 'guard': deepcopy(guard_receipt),
+            'input_recovery_required': True, 'physical_input_state': 'unverified',
+            'grants_input_authority': False, 'task_effect': 'unknown',
+            'error': None if cause is None else {'type': type(cause).__name__, 'message': str(cause)[:200]}}
+        failure = CancellationReleaseFailed(receipt)
+        if failure_root is not None:
+            try:
+                path = Path(failure_root) / 'running-cancel-release-failure.json'
+                with path.open('x', encoding='utf-8', newline='\n') as stream:
+                    json.dump(receipt, stream, indent=2, allow_nan=False)
+                    stream.write('\n')
+            except Exception as save_error:
+                failure.add_note('failure receipt save failed: ' + type(save_error).__name__)
+        raise failure from cause
+
+    def record_release(row):
+        try:
+            return guard.record_input_released({key: row[key] for key in (
+                'event', 'id', 'intent_token', 'owner_release', 'published_ns',
+                'program_terminal_pending', 'grants_input_authority')})
+        except Exception as error:
+            fail('release_invalid', row, error)
+
+    try:
+        process.stdin.write(json.dumps({'op': 'cancel', 'id': identifier}) + '\n')
+        process.stdin.flush()
+    except Exception as error:
+        fail('cancel_send_failed', cause=error)
+    phase = 'cancel_ack'
+    boundary_types = ('cancel_requested', 'input_released', 'input_release_unverified', 'terminal')
+    while True:
+        try:
+            row = deepcopy(wait(lambda row: row.get('id') == identifier and row.get('event') in boundary_types))
+        except Exception as error:
+            fail('boundary_wait_failed', cause=error)
+        observed.append(deepcopy(row))
+        kind = row.get('event')
+        if kind == 'input_release_unverified':
+            fail('release_unverified', row)
+        if kind == 'cancel_requested':
+            if event is not None:
+                fail('duplicate_cancel_ack', row)
+            try:
+                guard.record_cancel_requested({key: row[key] for key in
+                    ('event', 'id', 'matched', 'requested_ns')})
+            except Exception as error:
+                fail('cancel_ack_invalid', row, error)
+            event = row
+            phase = 'release'
+            if buffered_release is not None:
+                released = buffered_release
+                release_receipt = record_release(released)
+                phase = 'terminal'
+        elif kind == 'input_released':
+            if released is not None or buffered_release is not None:
+                fail('duplicate_release_event', row)
+            if event is None:
+                buffered_release = row
+            else:
+                released = row
+                release_receipt = record_release(row)
+                phase = 'terminal'
+        elif kind == 'terminal':
+            if event is None:
+                fail('terminal_before_cancel_ack', row)
+            if released is None:
+                fail('terminal_without_release', row)
+            try:
+                receipt = guard.record_cancelled_terminal(row)
+            except Exception as error:
+                fail('terminal_invalid', row, error)
+            return event, released, release_receipt, row, receipt
 
 
 def win(path):
@@ -1711,7 +1789,7 @@ def main():
                     persist_running_invalidation(args.out,identifier,boundary)
                     (cancel_event,physical_release_event,release_pending_receipt,
                      terminal,guard_receipt)=cancel_invalidated_action(
-                        process,wait,identifier,running_guard)
+                        process,wait,identifier,running_guard,failure_root=args.out)
                 else:
                     terminal=boundary
                     if terminal["status"]!="completed":raise RuntimeError(terminal)
