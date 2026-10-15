@@ -10,6 +10,13 @@ imported or executed**. It does not match the `test*.py` discovery convention.
 Other producer/native sources remain in inert text/envelopes. No workflow,
 runtime, dependency or input permission is changed.
 
+The first local archive import converted line endings in 241 paths. Custody
+verification detected that mismatch before publication. A corrective commit
+restored raw bytes directly from Git blobs; all 261 now match. The mismatch list
+is retained in the host consolidation directory as
+`pr7109-first-import-custody-failure.json`. The auditor also recomputes every
+original Git blob ID from file bytes, without invoking Git or any producer.
+
 Historical C01 HOLD, C02 dummy-FD finite PASS, C04 STOP and C05 finite comparison
 remain separate. C05's metric ends when the owned key is up while the bystander
 remains held; whole-map neutrality is only after fixture cleanup. Two samples

@@ -23,6 +23,23 @@ def load_json(value):
     return json.loads(value, object_pairs_hook=unique_object)
 
 
+def verify_original_paths(repository):
+    raw = (Path(__file__).resolve().parent / 'ORIGINAL_PATHS.json').read_bytes()
+    require(hashlib.sha256(raw).hexdigest() ==
+            '424e184805c3fedf9e4a444346f16d9c1df7a9e96cc915b3fd32c4ba383b622c', 'original path pin')
+    pins = load_json(raw)
+    require(pins['source_ref'] == '8394ab7f4a82cafc29a851c28afd56d7a1c8f804' and
+            pins['original_paths'] == len(pins['paths']) == 261, 'original source/count')
+    for name, digest in pins['paths'].items():
+        path = PurePosixPath(name)
+        require(name.startswith('research/concurrency/') and '..' not in path.parts and
+                ':' not in name and '\\' not in name, 'original path')
+        data = repository.joinpath(*path.parts).read_bytes()
+        blob = b'blob ' + str(len(data)).encode('ascii') + b'\0' + data
+        require(hashlib.sha1(blob).hexdigest() == digest, 'original blob mismatch: ' + name)
+    return 261
+
+
 def decode_packet(root):
     manifest = load_json((root / 'MANIFEST.json').read_bytes())
     encoded = b''.join((root / 'EVIDENCE.json.gz.b64.txt').read_bytes().split())
@@ -146,7 +163,9 @@ def verify_boundaries(files):
 
 if __name__ == '__main__':
     packet = Path(__file__).resolve().parent.parent / 'python_xlib_boundary_17_20261004_70ab'
+    original_paths = verify_original_paths(Path(__file__).resolve().parents[3])
     members = verify_members(decode_packet(packet))
     print(json.dumps(dict(status='PASS_SAVED_BOUNDARIES', public_members=len(members),
+                          original_paths=original_paths,
                           checked=verify_boundaries(members), producer_replays=0,
                           scope='saved historical read-only evidence; no held-input/physical bound'), indent=2))

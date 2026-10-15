@@ -18,6 +18,7 @@ class SavedBoundaryTests(unittest.TestCase):
         self.files = audit.verify_members(self.document)
 
     def test_original_members_and_named_boundaries(self):
+        self.assertEqual(audit.verify_original_paths(HERE.parents[2]), 261)
         self.assertEqual(len(self.files), 274)
         self.assertEqual(audit.verify_boundaries(self.files),
                          ['server_global_stop', 'socket_timeout_not_logical_deadline'])
