@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Public MCP blocked transport custody](../research/integration/mcp_transport_cancellation_20261016/README.md)
+  runs the actual in-process public guarded tools with all read-worker options.
+  Four Fake X press/release send/sync barriers remain pending after cancel;
+  additional input/close/recovery stays busy. A press already in send can arrive
+  after acknowledgement, while empty bitmap at release-sync is still unverified.
+  The 449-method selection passes normal/-O, preserving these limits. A qualified
+  input/release transport bound remains necessary for finite physical release.
+
 - [Compiled semantic callback cancellation](../research/integration/compiled_observation_cancellation_20261016/README.md)
   connects the explicit observation-worker option to the actual v3 caller and
   native semantic guard. In six Fake X conditions, isolated cancel/expiry returns

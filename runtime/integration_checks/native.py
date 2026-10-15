@@ -52,6 +52,7 @@ SUITES["harness"].append("test_compiled_form_guarded_x11")
 SUITES["harness"].append("test_compiled_native_caller_composition")
 SUITES["harness"].append("runtime.guarded_x11_v1.test_compiled_native_dependencies")
 SUITES["harness"].append("test_compiled_observation_cancellation")
+SUITES["protocol"].append("runtime.cli_v1.test_mcp_transport_cancellation")
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
