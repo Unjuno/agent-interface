@@ -18,6 +18,12 @@ The reader hashes the target XID, server-reported owner PID and Linux process
 start ticks with a versioned scheme. Observations retain only the digest in
 `pointer_binding.process_generation`; they do not retain the PID/start values.
 Only the fixed XRes version handshake is cached, never the owner identity.
+The reader requests one resource and the local-PID mask, and requires exactly
+one well-formed reply. The server associates that resource with its owner;
+the returned canonical client resource base need not equal the window XID
+([Xorg implementation](https://raw.githubusercontent.com/mirror/xserver/master/Xext/xres.c)).
+The protocol regression parses a real Python-Xlib reply with distinct window
+and client-base IDs. Extra records and malformed masks/client IDs refuse.
 
 The digest participates in before/after capture association and target-handle
 resolution. A changed or removed digest cannot reuse a previously grounded alias,

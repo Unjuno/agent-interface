@@ -244,21 +244,24 @@ class ReaderTests(unittest.TestCase):
     def test_real_xlib_protocol_reply_shape_reaches_reader(self):
         from Xlib.ext import res
         from runtime.guarded_x11_v1.process_identity import read_linux_x11_process_identity
-        request = res.QueryClientIds._request.to_binary(opcode=200, specs=[{'client': 20, 'mask': 2}])
+        xid, client_base = 0x400001, 0x400000
+        request = res.QueryClientIds._request.to_binary(opcode=200, specs=[{'client': xid, 'mask': 2}])
         self.assertEqual(len(request), 16)
-        parsed, rest = res.ClientIdValue.parse_binary(struct.pack('=IIII', 20, 2, 4, 42), None)
+        parsed, rest = res.ClientIdValue.parse_binary(struct.pack('=IIII', client_base, 2, 4, 42), None)
         self.assertEqual(rest, b'')
         connection = self.connection()
         connection.res_query_client_ids.return_value.ids = [parsed]
         stat = '42 (name) ' + ' '.join(['S'] + ['0'] * 18 + ['123'])
         with patch('runtime.guarded_x11_v1.process_identity.Path.read_text', return_value=stat):
-            self.assertEqual(len(read_linux_x11_process_identity(connection, 20)), 64)
+            self.assertEqual(len(read_linux_x11_process_identity(connection, xid)), 64)
+        connection.res_query_client_ids.assert_called_once_with([{'client': xid, 'mask': 2}])
 
     def test_invalid_protocol_and_process_evidence_refuses(self):
         from runtime.guarded_x11_v1.process_identity import read_linux_x11_process_identity
         valid = '42 (name) ' + ' '.join(['S'] + ['0'] * 18 + ['123'])
         for fault in ('old_version', 'boolean_version', 'no_pid', 'duplicate_pid',
-                      'boolean_pid', 'zero_pid', 'wrong_proc_pid', 'zombie', 'missing_start', 'negative_start'):
+                      'wrong_mask', 'boolean_mask', 'boolean_client', 'zero_client', 'overflow_client',
+                      'extra_record', 'boolean_pid', 'zero_pid', 'wrong_proc_pid', 'zombie', 'missing_start', 'negative_start'):
             with self.subTest(fault=fault):
                 connection = self.connection()
                 stat = valid
@@ -266,6 +269,13 @@ class ReaderTests(unittest.TestCase):
                 elif fault == 'boolean_version': connection.res_query_version.return_value.server_major = True
                 elif fault == 'no_pid': connection.res_query_client_ids.return_value.ids = []
                 elif fault == 'duplicate_pid': connection.res_query_client_ids.return_value.ids *= 2
+                elif fault == 'wrong_mask': connection.res_query_client_ids.return_value.ids[0].spec.mask = 1
+                elif fault == 'boolean_mask': connection.res_query_client_ids.return_value.ids[0].spec.mask = True
+                elif fault == 'boolean_client': connection.res_query_client_ids.return_value.ids[0].spec.client = True
+                elif fault == 'zero_client': connection.res_query_client_ids.return_value.ids[0].spec.client = 0
+                elif fault == 'overflow_client': connection.res_query_client_ids.return_value.ids[0].spec.client = 2**32
+                elif fault == 'extra_record': connection.res_query_client_ids.return_value.ids.append(
+                    SimpleNamespace(spec=SimpleNamespace(client=30, mask=1), value=[]))
                 elif fault == 'boolean_pid': connection.res_query_client_ids.return_value.ids[0].value = [True]
                 elif fault == 'zero_pid': connection.res_query_client_ids.return_value.ids[0].value = [0]
                 elif fault == 'wrong_proc_pid': stat = valid.replace('42 (', '43 (')

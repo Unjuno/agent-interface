@@ -67,3 +67,5 @@
 [明示的なprocess-identity mode](../../runtime/guarded_x11_v1/PROCESS_IDENTITY.md)は、XResのclient PIDとLinux process start ticksのdigestをcapture前後・alias解決・新規押下直前へ結ぶ。同じXID/画像でも観測されたprocess変化や欠落は拒否し、押下済みmodifierは既存cleanupへ進む。照合自身が期限を消費した場合も新しい押下を拒否する。既定modeとCLI/MCP設定は変えない。
 
 Fake Xによる実際のhandle/public dispatch/session/backend compositionとprotocol parserの19件を追加し、guarded suite 102件が通常・最適化Pythonで成功した。これは元研究候補のライブ結果を移したものではなく、この公開sourceの構成試験である。trusted local X serverと同じPID namespaceが前提で、その対応自体は実装が認証していない。同一process内のclient/window再利用、読取後の競合、blocked I/Oからの有限解放、ライブ効果・回復・効率は未検証または未解決であり、#5/#17の残差として続ける。
+
+統合前のレビューで、XResのcanonical client baseとwindow XIDの混同を検出した。異なるIDの実際のPython-Xlib replyを使い、修理前の拒否と修理後の成功を確認した。単一resource/PID-mask要求への単一応答だけを受理し、余分なrecord・不正なmask/client IDを拒否する。また配布archiveのmodule一覧への追加漏れを既存archive testが検出し、同梱を修理した。修理後のguarded 102件は通常・最適化で成功し、distribution 21件、backend 78件中64件（実X14件skip）、core 142件が成功した。いずれもライブ実行ではない。

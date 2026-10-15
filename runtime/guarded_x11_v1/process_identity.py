@@ -12,7 +12,7 @@ def read_linux_x11_process_identity(connection, xid):
     Same-process resource/client reuse and changes after this read are not
     excluded by this evidence.
     """
-    if type(xid) is not int or xid <= 1:
+    if type(xid) is not int or not 1 < xid < 2**32:
         raise RuntimeError('invalid target resource')
     if not connection.has_extension('X-Resource'):
         raise RuntimeError('X-Resource unavailable')
@@ -29,10 +29,18 @@ def read_linux_x11_process_identity(connection, xid):
         raise RuntimeError('X-Resource 1.2 required')
     reply = connection.res_query_client_ids([{'client': xid, 'mask': 2}])
     try:
-        matches = [item for item in reply.ids if item.spec.client == xid and item.spec.mask == 2]
-        if len(matches) != 1 or len(matches[0].value) != 1:
+        # One resource and one mask were requested. XRes returns the owning
+        # client's canonical resource base, not necessarily the window XID.
+        # Association comes from this single-resource query to the trusted
+        # server; do not derive a client mask from this connection's resources.
+        if len(reply.ids) != 1:
             raise RuntimeError('ambiguous local client PID')
-        pid = matches[0].value[0]
+        item = reply.ids[0]
+        if (type(item.spec.client) is not int or not 0 < item.spec.client < 2**32
+                or type(item.spec.mask) is not int or item.spec.mask != 2
+                or len(item.value) != 1):
+            raise RuntimeError('invalid local client PID response')
+        pid = item.value[0]
     except (AttributeError, TypeError) as error:
         raise RuntimeError('invalid local client PID response') from error
     if type(pid) is not int or pid <= 0:
