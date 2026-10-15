@@ -1,3 +1,9 @@
+# Issue #59 A01 — cross-client key holds on a shared XTEST device (2026-10-05)
+
+On a private Xvfb server, two independent X clients injected overlapping presses through the same server-provided `Virtual core XTEST keyboard` (id 5). The legacy device-specific `XTestFakeDeviceKeyEvent` path produced the same observable sequence as core `XTestFakeKeyEvent`: after A-DOWN and B-DOWN, A-UP made the global keymap neutral and delivered KeyRelease while B had not released; B-UP then produced no core event. Disposition: `FAIL_CROSS_CLIENT_ISOLATION` for this one shared-device route. Candidate ran once (exit 0); the raw-only independent auditor ran once (exit 0, 30/30).
+
+This supports the concern that separate client connections to one virtual XTEST keyboard do not isolate overlapping same-key holds. It does not test separately created devices, the full Agent Interface runtime, a production GUI/game, physical input, model behavior, useful feedback, recovery, or task success. The outer shell's exit 1 occurred after candidate completion when its result-copy destination was missing; unchanged raw bytes were copied afterward and hash-verified, with no candidate rerun. See [the complete plan, frozen package, raw result, audit, and scope limits](research/doom/map01_v39_x11_device_cross_client_a01_20261005/RUN_RESULT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)
