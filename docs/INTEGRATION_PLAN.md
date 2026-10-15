@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Semantic change after compiled admission](../research/integration/compiled_semantic_press_boundary_20261016/README.md)
+  retains two Fake X counterexamples per normal/-O mode: a selected True Submit
+  value becomes False/unknown in the native pre-input capture, yet current graph
+  execution sends the second chord. The outer effect stays unverified. An explicit
+  existing keyboard input-guard control refuses both and preserves the prefix;
+  general click/move/keyboard dependency integration is the next repair. No
+  production patch or real application/native guarantee is adopted here.
+
 - [Caller through actual native bridge, Fake X transport](../research/integration/compiled_native_caller_composition_20261016/README.md)
   connects the explicit v3 caller, promoted final aliases, form, guarded adapter,
   actual handle store/bridge/backend/session. Eight new cases retain generation
