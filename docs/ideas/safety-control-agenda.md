@@ -7,6 +7,13 @@
 
 ## 問い・依存・次の検証
 
+2026-10-16：[X11 custody候補の保全](../../research/integration/x11_custody_convergence_20261016/README.md)で、
+閉じた未統合#7148の391公開ファイルと22省略原本を区別した。
+V4の構成PASSの後に、読取制限による条件付きfalse-clearとdevice世代・routingの不足が見つかり、
+採用が保留された。修理を再開する際は反例・初回失敗・source crosswalkから始める。
+緑の旧テストだけで候補を再採用せず、N02の要約を未取得のnative原rawの代用にしない。
+公開バイトの新しい保存専用検証であり、実機実験や過去producerを実行した結果ではない。
+
 | Issue / 仮説 | 既存成果と今回の照合 | 残る問い・次の有限な作業 | 判断へのつながり |
 |---|---|---|---|
 | [#17 安全経路をdata/planner経路から独立させる](https://github.com/Unjuno/agent-interface/issues/17) | V39のcancel-before-planner-ack修理は#8392で統合済み。今回の公開経路Fake Xではfocus query停止中の保持が残った。 | 単一の入力権限を守って、blocked observationから独立した取消し・期限・cleanupを構成する。遅い返答と不確かなrelease readbackも検証。 | 最優先の修理。呼出し元への早い返答だけで有限解放の達成にしない。 |
