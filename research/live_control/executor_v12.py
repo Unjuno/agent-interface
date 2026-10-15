@@ -22,6 +22,13 @@ class Executor(Previous):
         self.admission_callback_ids = set()
         self._admission_context = None
         self._release_obligation = None
+        self._backend_custody_token = object()
+        self._backend_custody_claimed = False
+        self._backend_custody_released = False
+        claim_custody = getattr(backend, "claim_executor_custody", None)
+        if claim_custody is not None:
+            claim_custody(self._backend_custody_token)
+            self._backend_custody_claimed = True
 
     def release_obligation_snapshot(self):
         with self.lock:
@@ -39,6 +46,9 @@ class Executor(Previous):
                         self._release_obligation = dict(copy.deepcopy(context),
                             release=copy.deepcopy(release), grants_input_authority=False)
                 if self._release_obligation is not None:
+                    if self._backend_custody_claimed:
+                        self.backend.retain_executor_release_obligation(
+                            self._backend_custody_token, self._release_obligation)
                     event["input_recovery_required"] = True
                     event["release_obligation"] = copy.deepcopy(self._release_obligation)
         if type(event) is dict and event.get("event") == "terminal":
@@ -261,3 +271,8 @@ class Executor(Previous):
                 job[2].join()
         for watcher in self.release_watchers:
             watcher.join()
+        with self.lock:
+            if (self._backend_custody_claimed and not self._backend_custody_released and
+                    self.active is None and self._release_obligation is None):
+                self.backend.release_executor_custody(self._backend_custody_token)
+                self._backend_custody_released = True
