@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [V39 cancellation failure custody](../research/doom/v39_cancel_failure_local_checks_20261016/README.md)
+  now handles matching unverified release/failed terminal rather than discarding
+  them while waiting only for successful release. Actual selected Fake X
+  Executor/V4/V12 and running-guard composition saves the failure while keycode 38
+  is still held. Healthy guard validation is retained. This is the active-action
+  helper with a direct cloned-message stream, not real-process transport, physical
+  release, cover cancellation, or bounded task recovery.
+
 - [Current MAP01 native-I/O custody](../research/doom/map01_native_io_custody_local_checks_20261016/README.md)
   reproduces failed/unverified cleanup followed by a second accepted program
   across four Fake X stalls. Executor now retains original release/source custody
