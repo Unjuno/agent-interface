@@ -633,3 +633,14 @@ even on failure. Verified neutrality still requires window review and fresh
 aliases for grounded editing. Pending native I/O remains pending; the busy slot
 prevents concurrent recovery/cleanup writers. Real platform timing and task
 effects remain unqualified.
+
+## Explicit response wait budget
+
+Guarded input and release-only recovery accept optional `wait_for_result_ms`
+(0..10000; default null preserves full await). [Wait semantics](WAIT_BUDGET.md)
+return either the original terminal result or pending with one call ID, unknown
+effects and no release/task confirmation. Queued/running work retains custody
+and may still execute; ending this wait does not cancel or permit replay. Read
+the original `interface_results(call_id)`. Other input/recovery/close remains busy
+until the writer finishes. This is a cooperative response wait, not a hard
+transport/OS/physical-release bound or a task-success predicate.
