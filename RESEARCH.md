@@ -1,3 +1,7 @@
+# Issue #59 — saved A11/A12 CPU regression convergence (2026-10-16)
+
+PR #8812's original 48 files are preserved with the first A11 harness-count FAIL and A12's historical CPU-fixture PASS unchanged. A separate saved-only reader verifies 46 checksums, 34 source pins and carry-forward claims; 11 reader tests pass normal and optimized with ten coherently rehashed corruption controls. At the convergence base, 11/34 sources have changed, so these historical runs do not qualify current main. No producer, historical suite, GUI/input/model/WSLc allocation was executed. See [custody, applicability, results and next boundary](research/doom/v39_saved_regression_convergence_20261016/README.md).
+
 # Issue #59 A01 — cross-client key holds on a shared XTEST device (2026-10-05)
 
 On a private Xvfb server, two independent X clients injected overlapping presses through the same server-provided `Virtual core XTEST keyboard` (id 5). The legacy device-specific `XTestFakeDeviceKeyEvent` path produced the same observable sequence as core `XTestFakeKeyEvent`: after A-DOWN and B-DOWN, A-UP made the global keymap neutral and delivered KeyRelease while B had not released; B-UP then produced no core event. Disposition: `FAIL_CROSS_CLIENT_ISOLATION` for this one shared-device route. Candidate ran once (exit 0); the raw-only independent auditor ran once (exit 0, 30/30).

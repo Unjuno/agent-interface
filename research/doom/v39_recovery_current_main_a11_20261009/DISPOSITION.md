@@ -1,0 +1,3 @@
+# A11 disposition
+
+The first runner completed all eight suite/mode invocations with exit code 0, but returned `FAIL` because its copied A10 expected-count gate (controller 15, pending drain 20) was stale on exact main `a6343bb76e4dc0a4afa32a29c8a485a617faeff8`. Retained actual counts are controller 16 and pending drain 22; final-action admission 9 and running-action guard 7. Both normal and optimized modes agree. No individual test failed. Preserve this first result; do not rewrite it to PASS. This is a harness/count-gate failure, not a controller regression verdict. A separately frozen corrected-count confirmation is recorded under A12.

@@ -34,6 +34,11 @@ visual addressing/feedback全体の完了ではない。原議論と既存agenda
 
 個別merge/終了時刻・元headはCSVから辿る。終了件数だけを採用成果やmain反映件数に換算しない。
 
+後続の[#8812収束記録](../../research/doom/v39_saved_regression_convergence_20261016/README.md)では、
+A11の初回FAILとA12の保存済みCPU結果を原48ファイルのまま保全した。
+当時のsource 34件中11件は現在の基準mainから変わっており、現行制御の検証として再利用しない。
+保存結果の別監査と改変拒否を使い、消費済みのproducerは再実行しない。
+
 ## 実行する整理バッチ
 
 既存の[作業マップ](../WORKER_WORK_MAP.md)のテーマを使う。新しい調整Issueやサービスは作らない。
