@@ -39,15 +39,16 @@ review quorum or live-resource grant is introduced by this plan.
 
 ## Tasks and evidence
 
-- [ ] Add failing owner tests: fresh/stale/unbound, prefix release, held revocation,
+- [x] Add failing owner tests: fresh/stale/unbound, prefix release, held revocation,
   stalled identity with cancellation/expiry, late reply retirement, release bypass.
-- [ ] Add shared reader + opt-in V12 check; retain V4/V3 telemetry and interruption wake.
-- [ ] Add selected backend capture→source hook and Executor admission integration.
+- [x] Add shared reader + opt-in V12 check; retain V4/V3 telemetry and interruption wake.
+- [x] Add selected backend capture→source hook and Executor admission integration.
   Test mismatch during capture, missing source, source mutation after acceptance,
   and actual selected owner input/refusal/cleanup.
-- [ ] Add explicit standard caller/session selection and selected source manifest.
+- [x] Add explicit standard caller/session selection and selected source manifest.
   Test flags, invalid nonmeasurement selection and default compatibility.
-- [ ] Run focused and affected normal/-O suites. Preserve first failures and scoped
+- [x] Run focused and affected normal/-O suites. Preserve first failures and scoped
   limits, obtain available read-only review, repair findings without rerunning raw.
 - [ ] Publish/integrate exact source under actual protection, update #59/#17 as
   appropriate, retain original generation-gap packet and clean only own refs.
+

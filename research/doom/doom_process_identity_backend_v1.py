@@ -67,6 +67,8 @@ class Backend(Previous):
             self._capture_samples = None
 
     def bind_lease_source(self, lease, expected_sequence):
+        if hasattr(lease, 'target_process_identity'):
+            raise DecisionRequired('lease process identity is already bound')
         source = self._source_identity
         binding = deepcopy(self.observed_pointer)
         if (type(source) is not tuple or source[0] != expected_sequence or

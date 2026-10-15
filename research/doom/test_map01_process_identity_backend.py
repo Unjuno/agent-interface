@@ -107,6 +107,8 @@ class ProcessBackendTests(unittest.TestCase):
                 if row.get('event') == 'accepted':
                     generation[0] = 'b' * 64
                     backend.snapshot('new-source', 0)
+                    with self.assertRaises(DecisionRequired):
+                        backend.bind_lease_source(backend.lease, backend.sequence)
             executor = Executor(backend, emit)
             try:
                 executor.submit('pinned', [{'op': 'hold', 'keys': ['a'], 'duration_ms': 5}],
