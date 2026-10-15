@@ -145,6 +145,10 @@ The existing five-second guarded lease includes admission captures, pointer
 checks, typing and explicit waits. Every new key press now checks that deadline;
 key release remains permitted afterward. A fixed wait ends at the earlier of
 its requested end or the original lease deadline, without renewing the lease.
+Key and button presses also recheck the original deadline immediately before
+the XTest press request, after focus, key-mapping and pointer queries return.
+A successful but slow query does not renew authority or permit a late press.
+This final fence performs no server query; releases bypass it even after expiry.
 At expiry, execution fails, retains the completed prefix and interrupted wait,
 attempts release and does not start the remaining input. The public guarded
 MCP default still returns one post-result observation, including after this

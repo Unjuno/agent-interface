@@ -175,11 +175,20 @@ class X11Backend:
         self.emissions += 1
         self.d.sync()
 
+    def _before_input_press(self) -> None:
+        """Optional local admission fence after potentially blocking lookups.
+
+        The ordinary backend has no admission policy. Guarded adapters can
+        recheck their existing authority here, immediately before a new press.
+        Releases never invoke this fence.
+        """
+
     def pointer_button(self, button: str, down: bool) -> None:
         number = BUTTON_MAP[button]
         # A request can reach the server even if sending/synchronizing raises.
         # Own the cleanup obligation before attempting the press.
         if down:
+            self._before_input_press()
             self.held_buttons.add(button)
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
@@ -211,6 +220,7 @@ class X11Backend:
         if code is None:
             code = self._keycode(key)
         if down:
+            self._before_input_press()
             self.held_keycodes[key] = code
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
