@@ -60,3 +60,32 @@ matched efficiency result is claimed. #59 and the broader goal remain open.
 Repair the two old release-composition fixtures against the current batch
 protocol while preserving provenance, malformed-receipt and delivery-ledger
 assertions. This is a concrete outstanding cleanup item for the next worker.
+
+### Fixture cleanup follow-up
+
+The stale fixtures now implement the supported `up_batch` protocol and retain
+its ordered owner receipt fields. Tests of errors *after completed release*
+explicitly flush before injecting the error. A separate new case verifies that
+an UP buffered before an exception remains unknown/unverified. Manually injected
+incomplete rows no longer coexist with a duplicate pending UP. Existing key,
+cancellation, provenance, sink mutation and cumulative delivery assertions remain.
+Production input/release code is unchanged by this follow-up.
+
+The local sweep is reproducible with the same Python/dependencies used for the
+tests (including python-xlib and Pillow):
+
+```sh
+python research/doom/check_map01_control_regressions.py --output-dir /absolute/fresh/normal
+python research/doom/check_map01_control_regressions.py --optimized --output-dir /absolute/fresh/optimized
+```
+
+Each module runs in a separate process with explicit import paths. The runner
+retains per-module logs, exact HEAD/dirty status and summary, refuses to reuse an
+output directory, and deliberately skips the optional real-Codex handshake.
+It does not launch a display, container, model or live allocation.
+
+Final clean source `22633a3171cd72f6cef92ec1e5e1e2ab93de53c5`: normal and
+optimized each report 33 modules / 244 methods, zero failures, one deliberate
+handshake skip (243 executed). [Retained logs and conditions](../../research/doom/map01_process_identity_local_checks_20261016/README.md)
+include all per-module outputs, original repeat-bind RED and exact-base fixture
+RED. This resolves the local fixture task above without qualifying live gates.
