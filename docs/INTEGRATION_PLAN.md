@@ -22,6 +22,16 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Win32 custody convergence](../research/integration/win32_custody_convergence_20261016/README.md)
+  connects #6934's remaining zero-state and replacement-wrapper fences without
+  reverting newer guarded APIs or compiled fixes. Zero GetAsyncKeyState replies
+  retain unknown key/button custody; ordinary and BoundView sessions reject task
+  input on a pending backend ledger. Selected inert/core/guarded checks pass 112
+  methods normal/-O; the native integration class is excluded. All 184 original
+  evidence files already match main. Healthy zero can quarantine indefinitely;
+  native availability, physical bounds, new-backend/process custody, task effect
+  and efficiency remain unqualified.
+
 - [Controller retirement-failure connection](../research/doom/controller_retirement_checks_20261016/README.md)
   now makes the actual V39 wait stop on session control-boundary failure before
   monitor/predicate success. Cleanup preserves copied failures and cannot certify
