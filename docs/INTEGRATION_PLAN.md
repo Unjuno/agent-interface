@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Historical GIL/Xlib boundary convergence](../research/concurrency/xlib_boundary_consolidation_20261016/README.md)
+  preserves #7109's source/raw and verifies all 274 public envelope members.
+  A new saved-only reader checks server-global stop and socket-timeout ordering
+  with copied-corruption controls. Independent connections do not complete during
+  the retained server stop; local shutdown retires one request without proving
+  input release. Current native input transport/reuse and physical bounds remain
+  unqualified; no producer was rerun or historical result rewritten.
+
 - [MAP01 selected process identity](maintenance/map01-process-identity-20261016.md)
   now connects V39/V15 capture, one-time Executor admission and V12 held checks.
   The selected exact-focus check is also isolated on the read-only target worker:

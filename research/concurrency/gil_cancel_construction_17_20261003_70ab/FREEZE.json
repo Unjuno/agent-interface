@@ -1,0 +1,20 @@
+{
+  "allocation": "17-GIL-CANCEL-CONSTRUCTION-C01-20261003-70ab",
+  "probe_sha256": "6487c058ee4c41364d6bfaf3c7a9fcd1a8219007fc58be10e354425bda992564",
+  "auditor_sha256": "c1dfbdce679331530c06348d133f8b8b4087cb3286632360af2c51b41e21aaaf",
+  "case_count": 4,
+  "sequence": [
+    "released",
+    "held",
+    "held",
+    "released"
+  ],
+  "foreign_wait_us": 300000,
+  "cancel_nominal_offset_seconds": 0.05,
+  "clock": "same-host time.monotonic_ns, no wall-clock rate claim",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "prepared_utc": "2026-10-03T14:39:01.481526+00:00",
+  "limits": "first4 construction cases once; no discarded/replacement cells; no GUI/model/container/formal study; HOLD if cancellation send outside observed foreign-call bracket",
+  "decision": "PASS only all4 exact raw streams, exits, closure, observed send within call interval; both CDLL closes before foreign return and both PyDLL closes after return; this discriminates thread reachability under intentional GIL retention only"
+}

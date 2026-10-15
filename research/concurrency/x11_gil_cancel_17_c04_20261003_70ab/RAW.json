@@ -1,0 +1,92 @@
+{
+  "allocation": "17-X11-GIL-CANCEL-C04-20261003-70ab",
+  "freeze_sha256": "2f4b6914ce4756476e6b0beeb47535f4d660b729bde4c6725117a865ab3a676e",
+  "pid": 1,
+  "utc": "2026-10-03T16:08:35.173602+00:00",
+  "rows": [
+    {
+      "case": 0,
+      "mode": "thread_cdll",
+      "observations": [],
+      "cleanup": [
+        {
+          "before_ns": 53928797919331,
+          "after_sync_ns": 53928798047749,
+          "rc": 1,
+          "key": 50,
+          "held": false
+        },
+        {
+          "before_ns": 53928798049832,
+          "after_sync_ns": 53928798070666,
+          "rc": 1,
+          "key": 75,
+          "held": false
+        }
+      ],
+      "fds_before": 7,
+      "initial": {
+        "before_ns": 53926512760379,
+        "after_ns": 53926512837839,
+        "rc": 1,
+        "hex": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "arm": [
+        {
+          "before_ns": 53926512848089,
+          "after_sync_ns": 53926513054841,
+          "rc": 1,
+          "key": 50,
+          "held": true
+        },
+        {
+          "before_ns": 53926513057341,
+          "after_sync_ns": 53926513089716,
+          "rc": 1,
+          "key": 75,
+          "held": true
+        }
+      ],
+      "armed": {
+        "before_ns": 53926513092008,
+        "after_ns": 53926513118925,
+        "rc": 1,
+        "hex": "0000000000000400000800000000000000000000000000000000000000000000"
+      },
+      "error": "AssertionError('child result timeout')",
+      "retired": [
+        {
+          "pid": 13,
+          "exit": -15,
+          "alive": false
+        }
+      ],
+      "fds_after": 10,
+      "final": {
+        "before_ns": 53928798073457,
+        "after_ns": 53928798144500,
+        "rc": 1,
+        "hex": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    }
+  ],
+  "keys": {
+    "owned": 50,
+    "bystander": 75
+  },
+  "error": "AssertionError('child result timeout')",
+  "status": "STOP_FIRST_OUTCOME",
+  "server": {
+    "pid": 7,
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "cgroup": {
+    "cpu.max": "25000 100000",
+    "memory.max": "134217728",
+    "memory.swap.max": "0",
+    "pids.max": "32"
+  },
+  "end_utc": "2026-10-03T16:08:37.668848+00:00"
+}
