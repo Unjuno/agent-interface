@@ -8,8 +8,8 @@
 
 **Constraints:** Local Node processes/file fixtures only. No GUI/native/model/provider/WSL/container, no scientific replay. Synthetic release/image metadata is not physical proof. No app task success/economics claim.
 
-- [ ] Adopt original regression and add both-route post-return/partial-effect failure checks, including explicit close and no resend.
-- [ ] Run selected host suites, retain full source/conditions/streams and per-cell files; directed missing-STOP control must fail meaningful assertions. Separate saved-only reader rejects contradictory copies.
+- [x] Adopt original regression and add both-route post-return/partial-effect failure checks, including explicit close and no resend.
+- [x] Run selected host suites, retain full source/conditions/streams and per-cell files; directed missing-STOP control must fail meaningful assertions. Separate saved-only reader rejects contradictory copies.
 - [ ] Publish scope, check original/source joins, review immutable patch and integrate. Verify merge before closing PR8786 with continuation, preserve old refs.
 
 The document recovery prototype remains unconnected to full-body/selected-target editor semantics. This narrows failure delivery/custody on an existing supported path, not application recovery or finite physical release.

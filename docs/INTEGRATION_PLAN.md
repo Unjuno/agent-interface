@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Primary presentation failure convergence from #8786](../research/integration/primary_presentation_convergence_20261016/README.md)
+  adopts its missing regression and checks actual exchange/caller paths for
+  both supported routes. Four synthetic host/file-effect cells retain one A,
+  refuse another input and permit explicit close after presentation/reply
+  failure. Removing the exchange STOP latch repeats two effects as AA.
+  The selected 126 Node tests pass; this does not qualify native cleanup,
+  application success, stdio/model delivery or document recovery integration.
+
 - [Finite role recovery convergence from #7264/#8370](../research/integration/finite_role_recovery_convergence_20261016/README.md)
   preserves both proposals' original files and adopts their identical explicit
   prototype. The 26 original methods and ten file-backed recovery cells pass
