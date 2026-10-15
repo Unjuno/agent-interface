@@ -36,6 +36,13 @@ verified-empty cleanupでexecution_failedとなった。raw-only監査は各26�
 
 ## 故障の境界を分ける
 
+[別backendへの受理比較](../../research/doom/map01_cross_backend_custody_20261016/README.md)では、
+同じbackendは解放未確認時に拒否するが、同じFake X対象の別backendは新しいintentを受理した。
+同じsession・別sessionの両条件で元key38は保持されたままで、probeが受理直後に止めたため
+2本目のworker・入力送信はゼロ。通常・最適化PythonでこのFAILを保全した。
+責務をreplaceable backendの外で保持するauthority、対象incarnation、late writerの排除と
+独立した解放/回復の証拠が必要である。物理解放・別process・ライブ回復の達成にはしない。
+
 [保存済みwake-pipe比較の再確認](../../runtime/results/cancel_wake_rescue_17d0/README.md)
 では、元packetの213チェックサム、18個のfirst-outcomeと個別row、元freezeを通常・最適化
 Pythonで照合し、各4個の保存データ改変を拒否した。元native実験・collector・auditor CLI・

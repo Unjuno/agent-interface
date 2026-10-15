@@ -22,6 +22,16 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Distinct-backend admission characterization](../research/doom/map01_cross_backend_custody_20261016/README.md)
+  now distinguishes the retained same-backend fence from shared-domain custody.
+  With original failed release/key38 held, preconstructed distinct backends
+  accept an intent through the same or a new session object. The probe stops
+  acceptance before the alternate worker starts; no second input is sent.
+  Normal/-O retain this FAIL, eventual fake cleanup and unchanged original
+  obligation. Caller/supervisor authority outside replaceable backend objects,
+  incarnation binding and verified recovery remain necessary; native/process
+  failure and physical release bounds are not qualified.
+
 - [Calc saved transfer convergence](../research/live_control/calc_saved_convergence_20261016/README.md)
   reconnects the completed four-case publication, independent XLSX scoring and
   joint usage accounting to current navigation. The old README is a preserved
