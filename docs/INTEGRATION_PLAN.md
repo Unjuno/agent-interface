@@ -69,6 +69,11 @@ live task and matched comparison.
   carry the current XID and resolve it on the reader's own connection. This is
   not all platform-I/O isolation: input transport/readback/close, idle observation,
   arbitrary caller behavior and physical release remain separate boundaries.
+  [Actual stdio composition](../research/live_control/guarded_stdio_cancel_20261015/RESULT.md)
+  now carries discovery/input/cancel/results/close through separate client/server
+  processes with Fake X. Isolated cancel/expiry returns verified fake cleanup
+  before capture resumes; query-only controls stay held/pending. This qualifies
+  the named local transport path, not live X or provider/model receipt.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.

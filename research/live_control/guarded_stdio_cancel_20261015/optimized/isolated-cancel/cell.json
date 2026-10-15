@@ -1,0 +1,438 @@
+{
+  "arm": "isolated",
+  "condition": "cancel",
+  "before_gate_release": {
+    "gate": {
+      "pid": 35276,
+      "original_deadline_ns": 5001000000,
+      "fake_keys_down": [
+        1
+      ]
+    },
+    "input_result_received": true,
+    "ack": {
+      "status": "cancel_requested",
+      "already_requested": false,
+      "input_dispatched": false,
+      "release_confirmed": false,
+      "replay_allowed": false
+    },
+    "wrong": {
+      "status": "not_active",
+      "input_dispatched": false,
+      "release_confirmed": false
+    },
+    "state": {
+      "pid": 35276,
+      "fake_keys_down": [],
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    "release_flag_exists": false,
+    "call_id": "cdd5c09d6c77429f8b66861c0ae87ea2"
+  },
+  "result": {
+    "operation": "guarded_input",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "execution_failed",
+    "result": {
+      "status": "execution_failed",
+      "admission": "accepted",
+      "error": "BACKEND_EXECUTION_FAILED",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 1000000,
+        "ended_ns": 1000000,
+        "emissions": 2,
+        "program_emissions": 2,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 1000000
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0
+        ],
+        "error": "X11BackendError('isolated visual check unavailable; close session and review fresh source')",
+        "failed_op": 1,
+        "failed_op_effect": "unknown; may have emitted partial input"
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            8,
+            8
+          ],
+          "observed_box": [
+            2,
+            2,
+            12,
+            12
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 1501000000,
+          "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_key_press:CTRL",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "field",
+          "point": [
+            8,
+            8
+          ],
+          "observed_box": [
+            2,
+            2,
+            12,
+            12
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 1501000000,
+          "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ],
+      "additional_input_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "scope": "native-x11:902b976af82a48fbb4d7df4222ab2182",
+          "binding_revision": 0,
+          "started_ns": 1000000,
+          "eligible": true,
+          "authority_granted": false,
+          "ended_ns": 1000000
+        },
+        {
+          "stage": "before_key_press:CTRL",
+          "observation_sequence": 3,
+          "scope": "native-x11:902b976af82a48fbb4d7df4222ab2182",
+          "binding_revision": 0,
+          "started_ns": 1000000,
+          "eligible": true,
+          "authority_granted": false,
+          "ended_ns": 1000000
+        }
+      ]
+    },
+    "feedback_status": "not_requested",
+    "session": {
+      "session_id": "c28fd3838a6149c899d181fa95dcfdb9",
+      "mode": "guarded-x11",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 20
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": true,
+      "observations": {
+        "retired": true,
+        "pending": true,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target_queries": {
+        "retired": false,
+        "pending": false,
+        "thread_alive": true,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": true
+    },
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\guarded_stdio_cancel_20261015\\optimized\\isolated-cancel\\runtime\\cdd5c09d6c77429f8b66861c0ae87ea2",
+    "call_id": "cdd5c09d6c77429f8b66861c0ae87ea2"
+  },
+  "retained_result": {
+    "status": "execution_failed",
+    "admission": "accepted",
+    "error": "BACKEND_EXECUTION_FAILED",
+    "required_capabilities": [
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 1000000,
+      "ended_ns": 1000000,
+      "emissions": 2,
+      "program_emissions": 2,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 1000000
+        }
+      ],
+      "waits": [],
+      "activations": [],
+      "completed_ops": [
+        0
+      ],
+      "error": "X11BackendError('isolated visual check unavailable; close session and review fresh source')",
+      "failed_op": 1,
+      "failed_op_effect": "unknown; may have emitted partial input"
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 2,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "field",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "field",
+        "point": [
+          8,
+          8
+        ],
+        "observed_box": [
+          2,
+          2,
+          12,
+          12
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 2,
+        "valid_until_ns": 1501000000,
+        "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_key_press:CTRL",
+        "observation_sequence": 3,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "field",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "field",
+        "point": [
+          8,
+          8
+        ],
+        "observed_box": [
+          2,
+          2,
+          12,
+          12
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 3,
+        "valid_until_ns": 1501000000,
+        "patch_sha256": "7f4059f22fa13f4aef85fa42f2ed176eae8b497b90cf2af7bdc6af3338e3c2df",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ],
+    "additional_input_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 2,
+        "scope": "native-x11:902b976af82a48fbb4d7df4222ab2182",
+        "binding_revision": 0,
+        "started_ns": 1000000,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 1000000
+      },
+      {
+        "stage": "before_key_press:CTRL",
+        "observation_sequence": 3,
+        "scope": "native-x11:902b976af82a48fbb4d7df4222ab2182",
+        "binding_revision": 0,
+        "started_ns": 1000000,
+        "eligible": true,
+        "authority_granted": false,
+        "ended_ns": 1000000
+      }
+    ]
+  },
+  "state_after": {
+    "pid": 35276,
+    "fake_keys_down": [],
+    "emissions": [
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        1
+      ]
+    ]
+  },
+  "state_after_lookup": {
+    "pid": 35276,
+    "fake_keys_down": [],
+    "emissions": [
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        1
+      ]
+    ]
+  },
+  "close": {
+    "status": "closed",
+    "session_id": "c28fd3838a6149c899d181fa95dcfdb9",
+    "authority_granted": false,
+    "restart_allowed": false,
+    "release_attempted": true,
+    "connection_close_attempted": true,
+    "release": {
+      "keys_down": [],
+      "buttons_down": [],
+      "verified": true,
+      "monotonic_ns": 1000000
+    },
+    "session": {
+      "session_id": "c28fd3838a6149c899d181fa95dcfdb9",
+      "mode": "guarded-x11",
+      "state": "closed",
+      "binding_revision": 0,
+      "targets": {
+        "app": 20
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "process_identity": true,
+      "query_worker": true,
+      "observation_worker": true,
+      "observations": {
+        "retired": true,
+        "pending": false,
+        "thread_alive": false,
+        "close_error": null
+      },
+      "target_queries": {
+        "retired": true,
+        "pending": false,
+        "thread_alive": false,
+        "close_error": null
+      },
+      "target": "app",
+      "observation_sequence": 3,
+      "review_required": true
+    },
+    "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\guarded_stdio_cancel_20261015\\optimized\\isolated-cancel\\runtime\\c6b7522fbd7a4dbca117a50591c322a5",
+    "call_id": "c6b7522fbd7a4dbca117a50591c322a5"
+  },
+  "tools": [
+    "interface_clock",
+    "interface_close",
+    "interface_guarded_activate_window",
+    "interface_guarded_cancel",
+    "interface_guarded_input",
+    "interface_guarded_mint",
+    "interface_guarded_mint_many",
+    "interface_guarded_observe",
+    "interface_guarded_review_window",
+    "interface_results",
+    "interface_validate"
+  ],
+  "parent_perf_counter_ns": {
+    "start": 309161749018400,
+    "input_sent": 309162977126700,
+    "trigger_sent": 309163008229100,
+    "trigger_returned": 309163011057700,
+    "input_result_received": 309163020291300,
+    "gate_release": 309163024899900,
+    "transport_closed": 309163110220600
+  },
+  "child_command": [
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+    "-B",
+    "-O",
+    "-m",
+    "research.live_control.guarded_stdio_cancel_20261015.server",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\guarded_stdio_cancel_20261015\\optimized\\isolated-cancel",
+    "isolated",
+    "cancel"
+  ],
+  "transport_context_closed": true
+}
