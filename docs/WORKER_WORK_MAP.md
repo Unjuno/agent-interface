@@ -90,6 +90,13 @@ the synchronous control still holds input until its callback returns. Reuse this
 distinction for blocked input/release transport work. Neither route establishes
 native physical timing, process-death cleanup or independent semantic recovery.
 
+The [public MCP transport boundary](../research/integration/mcp_transport_cancellation_20261016/README.md)
+now distinguishes pending press/send/sync and release/send/sync with query and
+observation isolation enabled. Cancel acknowledgement can precede an in-flight
+press; empty bitmap can precede verified release. Reuse same-call custody and
+busy refusal while qualifying transport/server authority; another read worker
+or response timeout cannot establish a physical release bound.
+
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
 metadata. This is separate from public guarded MCP's process-identity path.

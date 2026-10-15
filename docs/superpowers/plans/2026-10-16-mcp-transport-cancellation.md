@@ -11,10 +11,10 @@ fake bitmap versus backend ledger separately. Never add another input writer.
 **Constraints:** No native display/input, provider, WSL/container or allocation.
 Fake transport barriers and host event order are not physical latency bounds.
 
-- [ ] Execute four blocked boundaries plus stable control. While the original
+- [x] Execute four blocked boundaries plus stable control. While the original
   worker is live, require pending lookup, no release confirmation, unchanged
   original deadline, and busy refusal for new input/close/recovery.
-- [ ] Resume the exact in-flight call; verify suffix refusal, same-call result
+- [x] Resume the exact in-flight call; verify suffix refusal, same-call result
   retrieval, verified fake cleanup and old-authority refusal. Preserve the late
   press possibility after cancel acknowledgement and the empty-bitmap versus
   unverified-release distinction.
