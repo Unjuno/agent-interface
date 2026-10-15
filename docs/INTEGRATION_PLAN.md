@@ -26,6 +26,12 @@ live task and matched comparison.
   key/button press when a returned lookup has consumed the original lease
   ([PR #8927](https://github.com/Unjuno/agent-interface/pull/8927)). It still uses
   cooperative enforcement; a stuck X11 call can delay release.
+- [Public-path Fake X A01](../research/live_control/public_guard_blocking_a01_20261015/RESULT.md)
+  now reproduces that boundary through actual dispatch/session/backend cleanup:
+  blocked focus retains a modifier past expiry; blocked cleanup sync has fake
+  empty state without a returned verified result. It adds no physical bound or
+  cancellation result. Follow the [safety/evidence agenda](ideas/safety-control-agenda.md)
+  toward independent cleanup with one input authority and late-reply fencing.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.

@@ -37,6 +37,8 @@ closeコメントには **理由、保存先、科学的状態、残る問い、
 
 最初のバッチは#3/#5/#8。[実行計画](ideas/visual-interface-agenda.md)に沿って既存成果との照合、残差の検証、比較実験へ進める。それ以外の1,675件は未判定であり、この棚卸しだけでは閉じない。
 
+次のバッチでは[#2/#10/#14/#15/#16/#17の安全制御・証拠・回復](ideas/safety-control-agenda.md)の関連部分を整理し、公開経路のblocked-I/O残差をFake Xで実行確認した。各Issue全体の達成や、残り全件の判定を済ませたという意味ではない。
+
 ## 2. 研究の見取り図を作る
 
 既存の`IDEAS_AND_OUTCOMES.md`、`RESEARCH_MAP.md`、`RESEARCH_ISSUE_INDEX.md`、`RESEARCH.md`を入口として、次のテーマに研究項目をまとめる。
