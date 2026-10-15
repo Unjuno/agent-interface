@@ -83,3 +83,9 @@ Each module runs in a separate process with explicit import paths. The runner
 retains per-module logs, exact HEAD/dirty status and summary, refuses to reuse an
 output directory, and deliberately skips the optional real-Codex handshake.
 It does not launch a display, container, model or live allocation.
+
+Final clean source `22633a3171cd72f6cef92ec1e5e1e2ab93de53c5`: normal and
+optimized each report 33 modules / 244 methods, zero failures, one deliberate
+handshake skip (243 executed). [Retained logs and conditions](../../research/doom/map01_process_identity_local_checks_20261016/README.md)
+include all per-module outputs, original repeat-bind RED and exact-base fixture
+RED. This resolves the local fixture task above without qualifying live gates.

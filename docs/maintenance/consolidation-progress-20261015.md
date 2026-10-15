@@ -55,6 +55,14 @@
 
 ## 次の有限な整理
 
+MAP01の観測→lease→V12 process identity経路は#8950で取り込んだ。
+Fake Xで受理済み観測の再結合を再現して修理し、独立した読み取りworkerにより
+identity読み取りを入力接続から分離した。続く旧release構成fixtureの修理では、
+未送信UPをunknownとする確認も追加した。通常・最適化Pythonとも関連33モジュール、
+244件、失敗ゼロ（実Codex handshakeの1件は明示的skip）。
+[条件・初回失敗・修正後ログ](../../research/doom/map01_process_identity_local_checks_20261016/README.md)を保全した。
+物理解放時間・window incarnation・task effect・有限回復・効率比較は引き続き未検証。
+
 [V39 MCP preflightの収束](v39-mcp-preflight-convergence-20261016.md)では、
 #8839を現在の#8837由来launcherと照合し、既存のconfigured-name修理を維持した。
 未反映だった起動前失敗の保全と設定不良の拒否、literal TOML keyの指定を追加し、
