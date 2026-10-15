@@ -35,6 +35,13 @@ distinguishes stack merges from main integration and lists the completion criter
 
 ## What a worker leaves
 
+The [current V39 cancel/recovery record](../research/integration/v39_current_cancel_recovery_20261016/README.md)
+now tests current helper functions and exact wait AST, rather than transferring
+the historical #8792 PASS. Ten inert rows retain old refusal, recovered full
+source and failed-cleanup quarantine;44 normal/-O methods pass. Use this as the
+starting property for actual controller/Executor transport composition. It is
+not full-main execution, screen recognition, native release or live task success.
+
 For MAP01/V39 recovery-during-cancel, use the
 [saved #8792 correction](../research/integration/v39_hard_recovery_convergence_20261016/README.md).
 Hard invalidation must survive later health recovery, but the old normal/-O

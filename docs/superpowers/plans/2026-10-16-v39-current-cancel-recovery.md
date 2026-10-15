@@ -8,6 +8,6 @@
 
 **Constraints:** Local inert tests only, no native input/game/model/provider/WSL/container/allocation or old scientific producer. AST-extracted wait is named scope, not full main-loop/process integration; fixture release is not physical proof.
 
-- [ ] Add current-source composed tests and preserve raw rows; include positive no-invalidation control.
-- [ ] Run affected local selection normal/-O; directed dropped-invalidation control must fail; independently read retained authority/order/freshness evidence.
+- [x] Add current-source composed tests and preserve raw rows; include positive no-invalidation control.
+- [x] Run affected local selection normal/-O; directed dropped-invalidation control must fail; independently read retained authority/order/freshness evidence.
 - [ ] Publish source/conditions/raw and limitations, review and integrate through current permissions.
