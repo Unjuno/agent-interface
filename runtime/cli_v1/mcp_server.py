@@ -459,7 +459,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if worker.done():
                 revoked = admission.revoke_pending()
                 if revoked: finish_unentered_record('executor handle terminated before invocation')
-            if wait_for_result_ms is not None and isinstance(error,Exception):
+            handle_cancelled = (isinstance(error,asyncio.CancelledError) and worker.cancelled()
+                                and asyncio.current_task().cancelling()==0)
+            if wait_for_result_ms is not None and (isinstance(error,Exception) or handle_cancelled):
                 with calls_lock: record = deepcopy(calls[registered_call_id])
                 return content(dict(status='worker_handle_failed',call_id=registered_call_id,call=record,
                     error=repr(error),operation_invoked=None,input_dispatched=None,effect_status='unknown',

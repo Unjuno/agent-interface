@@ -1,7 +1,10 @@
 import asyncio
 from concurrent.futures import Future,ThreadPoolExecutor
+from pathlib import Path
+import sys
 import tempfile
 import threading
+import time
 import unittest
 from unittest.mock import patch
 from mcp.server.fastmcp.exceptions import ToolError
@@ -11,6 +14,38 @@ from runtime.cli_v1.test_mcp_process_identity import FakeX,metadata
 
 
 class WaitBudgetTests(unittest.IsolatedAsyncioTestCase):
+    async def test_real_stdio_returns_pending_before_blocked_release_sync_resumes(self):
+        from mcp import ClientSession,StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        with tempfile.TemporaryDirectory() as td:
+            directory=Path(td)
+            flags=['-B']+(['-O'] if sys.flags.optimize else [])
+            params=StdioServerParameters(command=sys.executable,args=flags+['-m',
+                'runtime.cli_v1.test_mcp_wait_budget',td],cwd=str(Path(__file__).resolve().parents[2]))
+            with (directory/'stderr.log').open('w',encoding='utf-8') as stderr:
+                async with stdio_client(params,errlog=stderr) as (reader,writer):
+                    async with ClientSession(reader,writer) as client:
+                        await client.initialize()
+                        try:
+                            arguments=await self.ground(client)
+                            pending=metadata(await asyncio.wait_for(client.call_tool('interface_guarded_input',
+                                dict(arguments,wait_for_result_ms=20)),3))
+                            self.assertEqual(pending['status'],'pending',pending)
+                            self.assertFalse(pending['release_confirmed']);self.assertFalse(pending['replay_allowed'])
+                            async def gate_entered():
+                                while not (directory/'entered').exists(): await asyncio.sleep(.005)
+                            await asyncio.wait_for(gate_entered(),2)
+                            self.assertFalse((directory/'resume').exists())
+                            self.assertEqual(metadata(await client.call_tool('interface_results',
+                                dict(call_id=pending['call_id'])))['status'],'pending')
+                            self.assertEqual(metadata(await client.call_tool('interface_close',{}))['status'],'busy')
+                            (directory/'resume').touch()
+                            result=await self.terminal(client,pending['call_id'])
+                            self.assertEqual(result['status'],'execution_failed',result)
+                            self.assertTrue(result['result']['execution']['releases'][-1]['verified'])
+                            self.assertEqual(result['result']['execution']['program_emissions'],2)
+                            await client.call_tool('interface_close',{})
+                        finally: (directory/'resume').touch()
     async def ground(self,server):
         source=metadata(await server.call_tool('interface_guarded_observe',{}))
         minted=metadata(await server.call_tool('interface_guarded_mint',dict(alias='field',
@@ -158,6 +193,7 @@ class WaitBudgetTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 resume.set();await server.call_tool('interface_close',{})
 
+
     async def test_invalid_wait_budget_does_not_open_or_register_input(self):
         with tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_guarded.open_bridge') as opened:
             server=create_server({'app':20},td,session_mode='guarded-x11')
@@ -168,11 +204,12 @@ class WaitBudgetTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(metadata(await server.call_tool('interface_results',{}))['calls'],[])
             opened.assert_not_called()
 
-    async def test_failed_handle_before_entry_has_terminal_discoverable_record(self):
+    async def exercise_handle_before_entry(self,cancelled):
         with tempfile.TemporaryDirectory() as td:
             server=create_server({'app':20},td,session_mode='guarded-x11')
             failed=asyncio.get_running_loop().create_future()
-            failed.set_exception(RuntimeError('terminal executor handle'))
+            if cancelled: failed.cancel()
+            else: failed.set_exception(RuntimeError('terminal executor handle'))
             with patch.object(asyncio.get_running_loop(),'run_in_executor',return_value=failed):
                 row=metadata(await server.call_tool('interface_guarded_input',dict(alias='field',offset=[1,1],
                     tail=[dict(op='key_chord',keys=['a'])],wait_for_result_ms=0)))
@@ -181,7 +218,10 @@ class WaitBudgetTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(row['call']['backend_attempted'])
             self.assertFalse(row['release_confirmed']);self.assertFalse(row['replay_allowed'])
 
-    async def test_failed_executor_handle_after_entry_keeps_live_writer_custody(self):
+    async def test_failed_handle_before_entry_has_terminal_discoverable_record(self): await self.exercise_handle_before_entry(False)
+    async def test_cancelled_handle_before_entry_returns_call_id(self): await self.exercise_handle_before_entry(True)
+
+    async def exercise_handle_after_entry(self,cancelled):
         fake=FakeX(self);fake.flip=True
         entered,resume=threading.Event(),threading.Event()
         def keymap():
@@ -193,7 +233,10 @@ class WaitBudgetTests(unittest.IsolatedAsyncioTestCase):
             def submit(pool,function,*args,**kwargs):
                 pool.actual=super().submit(function,*args,**kwargs)
                 if not entered.wait(2): raise RuntimeError('worker did not enter')
-                failed=Future();failed.set_exception(RuntimeError('failed handle after entry'));return failed
+                failed=Future()
+                if cancelled: failed.cancel()
+                else: failed.set_exception(RuntimeError('failed handle after entry'))
+                return failed
         loop=asyncio.get_running_loop();pool=FailedHandlePool(max_workers=1)
         with tempfile.TemporaryDirectory() as td:
             server=create_server({'app':20},td,session_mode='guarded-x11',guarded_process_identity=True)
@@ -216,3 +259,55 @@ class WaitBudgetTests(unittest.IsolatedAsyncioTestCase):
                 resume.set();loop.set_default_executor(previous or ThreadPoolExecutor(max_workers=1))
                 pool.shutdown(wait=True)
                 await server.call_tool('interface_close',{})
+
+    async def test_failed_executor_handle_after_entry_keeps_live_writer_custody(self): await self.exercise_handle_after_entry(False)
+    async def test_cancelled_executor_handle_after_entry_returns_unknown_with_custody(self): await self.exercise_handle_after_entry(True)
+
+    async def test_optin_transport_cancellation_still_propagates_and_keeps_writer(self):
+        fake=FakeX(self);fake.flip=True
+        entered,resume=threading.Event(),threading.Event()
+        def keymap():
+            entered.set()
+            if not resume.wait(5): raise TimeoutError('test did not resume input')
+            return fake.keymap()
+        fake.backend.d.query_keymap=keymap
+        with tempfile.TemporaryDirectory() as td:
+            server=create_server({'app':20},td,session_mode='guarded-x11',guarded_process_identity=True)
+            arguments=await self.ground(server)
+            caller=asyncio.create_task(server.call_tool('interface_guarded_input',dict(arguments,wait_for_result_ms=10000)))
+            try:
+                self.assertTrue(await asyncio.to_thread(entered.wait,1))
+                listing=metadata(await server.call_tool('interface_results',{}))
+                call_id=next(r['call_id'] for r in listing['calls'] if r['operation']=='guarded_input')
+                caller.cancel()
+                with self.assertRaises(asyncio.CancelledError): await caller
+                self.assertEqual(metadata(await server.call_tool('interface_close',{}))['status'],'busy')
+                resume.set()
+                result=await self.terminal(server,call_id)
+                self.assertEqual(result['status'],'execution_failed')
+            finally:
+                resume.set();await server.call_tool('interface_close',{})
+
+
+def run_fake_stdio_server(directory):
+    """Current-source unit fixture; never executes a frozen research collector."""
+    from runtime.cli_v1.mcp_server import main
+    case=unittest.TestCase();fake=FakeX(case);fake.flip=True
+    directory=Path(directory)
+    (directory/'targets.json').write_text('{"app":20}',encoding='utf-8')
+    def sync():
+        if fake.emissions and fake.emissions[-1][0]==3:
+            (directory/'entered').touch()
+            until=time.monotonic()+5
+            while not (directory/'resume').exists():
+                if time.monotonic()>=until: raise TimeoutError('test did not resume fake sync')
+                time.sleep(.005)
+    fake.backend.d.sync=sync
+    argv=['mcp','--targets',str(directory/'targets.json'),'--output-directory',str(directory/'runtime'),
+          '--session-mode','guarded-x11','--guarded-process-identity']
+    try:
+        with patch('sys.argv',argv): main()
+    finally: case.doCleanups()
+
+
+if __name__=='__main__': run_fake_stdio_server(sys.argv[1])
