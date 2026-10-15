@@ -1,0 +1,42 @@
+{
+  "cgroup": {
+    "cpu.max": "25000 100000",
+    "memory.max": "134217728",
+    "memory.swap.max": "0",
+    "pids.max": "32"
+  },
+  "end_ns": 53387112494090,
+  "formal_cases": 0,
+  "keycode": 50,
+  "packages": "libx11-6:arm64\t2:1.8.12-1\nlibxtst6:arm64\t2:1.2.5-1\nxvfb\t2:21.1.16-1.3+deb13u4\n",
+  "pid": 1,
+  "result": "PASS_CONSTRUCTION",
+  "scope": "private Xvfb construction only",
+  "server_exit": 0,
+  "server_stderr": "",
+  "server_stdout": "",
+  "start_ns": 53386823502880,
+  "states": [
+    {
+      "held": false,
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "label": "initial",
+      "ns": 53387107438877,
+      "query_rc": 1
+    },
+    {
+      "held": true,
+      "keymap_hex": "0000000000000400000000000000000000000000000000000000000000000000",
+      "label": "pressed",
+      "ns": 53387107612628,
+      "query_rc": 1
+    },
+    {
+      "held": false,
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "label": "released",
+      "ns": 53387107656337,
+      "query_rc": 1
+    }
+  ]
+}

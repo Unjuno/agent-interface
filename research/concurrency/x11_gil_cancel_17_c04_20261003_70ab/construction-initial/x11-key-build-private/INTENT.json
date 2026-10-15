@@ -1,0 +1,17 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-key-build-private",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && mkdir /root/17-x11-key-release-70ab && docker run --pull never --cpus 0.5 --memory 256m --memory-swap 256m --pids-limit 64 --name 17-x11-key-build-70ab sha256:fef7d1263cba47f4d15d2cee01b4dee380d5f6270275d8ef2d85e6732bf941f5 bash -c \"export DEBIAN_FRONTEND=noninteractive; apt-get update -qq && apt-get install -y -qq --no-install-recommends xvfb libxtst6 && Xvfb -version\""
+  ],
+  "launcher_pid": 60109,
+  "start_utc": "2026-10-03T15:51:55.894402+00:00",
+  "start_ns": 53680731040041
+}

@@ -1,0 +1,37 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c04-ready-diagnosis",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && mkdir /root/17-x11-c04-70ab/diagnosis && tar -xf - -C /root/17-x11-c04-70ab/diagnosis && docker run --pull never --network none --cpus 0.25 --memory 128m --memory-swap 128m --pids-limit 32 --tmpfs /tmp:rw,size=32m -v /root/17-x11-c04-70ab/src:/src:ro -v /root/17-x11-c04-70ab/diagnosis:/diag:ro -v /root/17-x11-c04-70ab/out:/out --name 17-x11-c04-ready-diagnosis-70ab sha256:f9b71334f027006dd318eb947a40358f02118657641b35611fa360fcdb74637f python -B /diag/diagnose_ready.py"
+  ],
+  "launcher_pid": 65584,
+  "start_utc": "2026-10-03T16:10:50.717765+00:00",
+  "start_ns": 54815545950625,
+  "stdin": {
+    "path": "work/x11-gil-cancel-c04-70ab/diagnose.tar",
+    "bytes": 10240,
+    "sha256": "244a2faa498b7dfb10374e6126252f09ba8d68b9e7e8e5af41da91e189c7f751"
+  },
+  "pid": 65588,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T16:10:58.000153+00:00",
+  "end_ns": 54822828119666,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 753,
+      "sha256": "b02050525594c13a2764f8b6e66ed0fbd7123dbe4ae99ce8a2d3644309314106"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

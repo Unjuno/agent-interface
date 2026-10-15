@@ -1,0 +1,252 @@
+"""Private X11 key release under an intentionally GIL-retaining foreign wait."""
+import ctypes as C
+import ctypes.util
+import datetime
+import hashlib
+import json
+import multiprocessing as M
+import os
+import pathlib
+import subprocess
+import threading
+import time
+
+SRC = pathlib.Path(__file__).resolve().parent
+HELPER = SRC / 'helper.so'
+
+
+def clock():
+    lib = C.CDLL(str(HELPER))
+    lib.native_now_ns.restype = C.c_uint64
+    return lib.native_now_ns
+
+
+class X:
+    def __init__(self):
+        self.lib = C.CDLL(ctypes.util.find_library('X11'))
+        self.xt = C.CDLL(ctypes.util.find_library('Xtst'))
+        for name, args, ret in [
+            ('XOpenDisplay', [C.c_char_p], C.c_void_p),
+            ('XCloseDisplay', [C.c_void_p], C.c_int),
+            ('XStringToKeysym', [C.c_char_p], C.c_ulong),
+            ('XKeysymToKeycode', [C.c_void_p, C.c_ulong], C.c_ubyte),
+            ('XQueryKeymap', [C.c_void_p, C.c_void_p], C.c_int),
+            ('XSync', [C.c_void_p, C.c_int], C.c_int),
+        ]:
+            fn = getattr(self.lib, name)
+            fn.argtypes, fn.restype = args, ret
+        self.xt.XTestFakeKeyEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
+        self.xt.XTestFakeKeyEvent.restype = C.c_int
+        self.d = self.lib.XOpenDisplay(b':77')
+        assert self.d, 'display absent'
+        self.now = clock()
+
+    def key(self, name):
+        k = self.lib.XKeysymToKeycode(self.d, self.lib.XStringToKeysym(name.encode()))
+        assert k
+        return k
+
+    def query(self):
+        a = self.now()
+        buf = (C.c_ubyte * 32)()
+        rc = self.lib.XQueryKeymap(self.d, buf)
+        return {'before_ns': a, 'after_ns': self.now(), 'rc': rc, 'hex': bytes(buf).hex()}
+
+    def emit(self, key, held):
+        a = self.now()
+        rc = self.xt.XTestFakeKeyEvent(self.d, key, int(held), 0)
+        self.lib.XSync(self.d, 0)
+        return {'before_ns': a, 'after_sync_ns': self.now(), 'rc': rc, 'key': key, 'held': held}
+
+    def close(self):
+        self.lib.XCloseDisplay(self.d)
+
+
+def safety(conn, key, report, ready, armed):
+    x = X()
+    try:
+        ready.set()
+        assert conn.poll(20), 'ARM absent'
+        assert conn.recv() == 'ARM'
+        armed.set()
+        assert conn.poll(2), 'cancel absent'
+        command = conn.recv()
+        got = x.now()
+        assert command == 'C'
+        result = {'pid': os.getpid(), 'received_ns': got, 'release': x.emit(key, False), 'confirmed': x.query()}
+        report.append(result)
+    finally:
+        x.close()
+        conn.close()
+
+
+def watchdog(conn, key, result):
+    reports = []
+    # A separate process owns its own connection; no thread is needed here.
+    x = X()
+    result.send({'ready': True, 'pid': os.getpid()})
+    try:
+        assert conn.poll(20)
+        assert conn.recv() == 'ARM'
+        result.send({'armed': True, 'pid': os.getpid(), 'armed_ns': x.now()})
+        assert conn.poll(2)
+        assert conn.recv() == 'C'
+        reports.append({'pid': os.getpid(), 'received_ns': x.now(), 'release': x.emit(key, False), 'confirmed': x.query()})
+        result.send(reports[0])
+    finally:
+        x.close()
+        conn.close()
+        result.close()
+
+
+def worker(mode, control, result, cancel, bounds, key):
+    now = clock()
+    reports = []
+    thread = None
+    if mode != 'process_pydll':
+        ready = threading.Event()
+        armed = threading.Event()
+        thread = threading.Thread(target=safety, args=(cancel, key, reports, ready, armed))
+        thread.start()
+        assert ready.wait(2)
+    lib = (C.CDLL if mode == 'thread_cdll' else C.PyDLL)(str(HELPER))
+    lib.marked_wait.argtypes = [C.c_uint, C.POINTER(C.c_uint64)]
+    lib.marked_wait.restype = C.c_int
+    result.send({'ready': True, 'pid': os.getpid()})
+    assert control.poll(20) and control.recv() == 'ARM'
+    if thread:
+        assert armed.wait(2)
+    result.send({'armed': True, 'pid': os.getpid(), 'armed_ns': now()})
+    assert control.poll(2) and control.recv() == 'G'
+    rc = lib.marked_wait(300000, C.cast(bounds, C.POINTER(C.c_uint64)))
+    after = now()
+    if thread:
+        thread.join(2)
+        assert not thread.is_alive()
+        assert len(reports) == 1
+    result.send({'pid': os.getpid(), 'rc': rc, 'bounds': list(bounds), 'after_ns': after, 'safety': reports, 'thread_joined': thread is None or not thread.is_alive()})
+    control.close()
+    result.close()
+
+
+def receive(conn, timeout=2):
+    assert conn.poll(timeout), 'child result timeout'
+    return conn.recv()
+
+
+def main():
+    freeze = json.loads((SRC / 'FREEZE.json').read_text())
+    for name, digest in freeze['hashes'].items():
+        assert hashlib.sha256((SRC / name).read_bytes()).hexdigest() == digest
+    out = pathlib.Path('/out')
+    assert not (out / 'RAW.json').exists()
+    raw = {'allocation': freeze['allocation'], 'freeze_sha256': hashlib.sha256((SRC / 'FREEZE.json').read_bytes()).hexdigest(), 'pid': os.getpid(), 'utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'rows': []}
+    server = subprocess.Popen(['Xvfb', ':77', '-screen', '0', '64x64x24', '-nolisten', 'tcp', '-noreset', '+extension', 'XTEST'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    x = None
+    try:
+        deadline = time.monotonic() + 2
+        while not pathlib.Path('/tmp/.X11-unix/X77').exists() and time.monotonic() < deadline:
+            time.sleep(.01)
+        x = X()
+        key, bystander = x.key('Shift_L'), x.key('F9')
+        raw['keys'] = {'owned': key, 'bystander': bystander}
+        ctx = M.get_context('spawn')
+        for index, mode in enumerate(freeze['modes']):
+            row = {'case': index, 'mode': mode, 'observations': [], 'cleanup': []}
+            children = []
+            connections = []
+            row['fds_before'] = len(list(pathlib.Path('/proc/self/fd').iterdir()))
+            raw['rows'].append(row)
+            try:
+                row['initial'] = x.query()
+                assert row['initial']['hex'] == '00' * 32
+                bounds = ctx.Array(C.c_uint64, 2, lock=False)
+                ctrl_worker, ctrl_parent = ctx.Pipe(False)
+                cancel_reader, cancel_writer = ctx.Pipe(False)
+                result_parent, result_child = ctx.Pipe(False)
+                connections.extend([ctrl_worker, ctrl_parent, cancel_reader, cancel_writer, result_parent, result_child])
+                if mode == 'process_pydll':
+                    watch_parent, watch_child = ctx.Pipe(False)
+                    connections.extend([watch_parent, watch_child])
+                    q = ctx.Process(target=watchdog, args=(cancel_reader, key, watch_child))
+                    q.start()
+                    children.append(q)
+                    row['watchdog_ready'] = receive(watch_parent, 20)
+                p = ctx.Process(target=worker, args=(mode, ctrl_worker, result_child, cancel_reader, bounds, key))
+                p.start()
+                children.append(p)
+                row['worker_ready'] = receive(result_parent, 20)
+                row['all_ready_ns'] = x.now()
+                cancel_writer.send('ARM')
+                ctrl_parent.send('ARM')
+                row['worker_arm_ack'] = receive(result_parent)
+                assert row['worker_arm_ack']['armed'] is True and row['worker_arm_ack']['pid'] == p.pid
+                if mode == 'process_pydll':
+                    row['watchdog_arm_ack'] = receive(watch_parent)
+                    assert row['watchdog_arm_ack']['armed'] is True and row['watchdog_arm_ack']['pid'] == q.pid
+                row['all_armed_ns'] = x.now()
+                row['prearm_neutral'] = x.query()
+                assert row['prearm_neutral']['hex'] == '00' * 32
+                row['arm'] = [x.emit(key, True), x.emit(bystander, True)]
+                row['armed'] = x.query()
+                ctrl_parent.send('G')
+                deadline = time.monotonic() + 2
+                while not bounds[0] and time.monotonic() < deadline:
+                    time.sleep(.001)
+                assert bounds[0], 'native entry absent'
+                time.sleep(.05)
+                row['before_cancel'] = x.query()
+                row['send_before_ns'] = x.now()
+                cancel_writer.send('C')
+                row['send_after_ns'] = x.now()
+                deadline = time.monotonic() + 2
+                while time.monotonic() < deadline:
+                    obs = x.query()
+                    row['observations'].append(obs)
+                    b = bytes.fromhex(obs['hex'])
+                    if not b[key // 8] & (1 << (key % 8)):
+                        break
+                    time.sleep(.002)
+                row['worker'] = receive(result_parent)
+                if mode == 'process_pydll':
+                    row['watchdog'] = receive(watch_parent)
+                for child in children:
+                    child.join(2)
+                row['children'] = [{'pid': c.pid, 'exit': c.exitcode, 'alive': c.is_alive()} for c in children]
+                row['post'] = x.query()
+            except BaseException as e:
+                row['error'] = repr(e)
+                raise
+            finally:
+                for child in children:
+                    if child.is_alive():
+                        child.terminate()
+                    child.join(2)
+                row['retired'] = [{'pid': c.pid, 'exit': c.exitcode, 'alive': c.is_alive()} for c in children]
+                for c in children:
+                    c.close()
+                for conn in connections:
+                    conn.close()
+                row['fds_after'] = len(list(pathlib.Path('/proc/self/fd').iterdir()))
+                row['cleanup'] = [x.emit(key, False), x.emit(bystander, False)]
+                row['final'] = x.query()
+                (out / 'RAW.json').write_text(json.dumps(raw, indent=2) + '\n')
+        raw['status'] = 'COMPLETE_FIRST_SIX'
+    except BaseException as e:
+        raw['error'] = repr(e)
+        raw['status'] = 'STOP_FIRST_OUTCOME'
+        raise
+    finally:
+        if x:
+            x.close()
+        server.terminate()
+        so, se = server.communicate(timeout=2)
+        raw['server'] = {'pid': server.pid, 'exit': server.returncode, 'stdout': so.decode(), 'stderr': se.decode()}
+        raw['cgroup'] = {n: pathlib.Path('/sys/fs/cgroup/' + n).read_text().strip() for n in ['cpu.max', 'memory.max', 'memory.swap.max', 'pids.max']}
+        raw['end_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        (out / 'RAW.json').write_text(json.dumps(raw, indent=2) + '\n')
+    print(json.dumps({'status': raw['status'], 'rows': len(raw['rows'])}))
+
+
+if __name__ == '__main__':
+    main()
