@@ -82,3 +82,10 @@ now registers frozen keyboard/click/move guards that re-evaluate admitted symbol
 identity/dependencies on fresh native captures. False/unknown refuse before
 later input, with prefix/release evidence retained. Trusted recognizer accuracy,
 capture-to-press changes and real application effects remain unqualified.
+
+[Compiled callback isolation evidence](../integration/compiled_observation_cancellation_20261016/README.md)
+exercises the explicit bridge observation-worker option through this helper.
+Fake X cancel/expiry permits owner cleanup while a semantic callback stays
+blocked; late completion preserves receipts and cannot revive admission. The
+synchronous control remains blocked until resume. This does not change defaults,
+freeze late diagnostic files or bound native input/release transport.

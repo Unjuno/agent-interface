@@ -14,10 +14,10 @@ before-resume thread/bitmap/receipt snapshots and real host event order.
 formal allocation. Fake cleanup timing is not physical release timing. Keep
 late result rejection, unknown task effect and sticky review distinct.
 
-- [ ] Execute six conditions: stable synchronous/isolated, and cancel/expiry
+- [x] Execute six conditions: stable synchronous/isolated, and cancel/expiry
   under each. Require the isolated owner to return verified fake cleanup before
   the blocked reader resumes, and retain the synchronous blocked-owner control.
-- [ ] Verify late callback completion cannot mutate the returned caller/core
+- [x] Verify late callback completion cannot mutate the returned caller/core
   receipt, advance published sequence, emit suffix input or revive admission.
   Close and join all owned threads. Run affected normal/-O checks.
 - [ ] Preserve source pins, raw/conditions/process streams and saved-only
