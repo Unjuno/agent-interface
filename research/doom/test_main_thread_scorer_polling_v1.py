@@ -1,8 +1,9 @@
 import os
 import threading
+import time
 import unittest
 
-from main_thread_scorer_polling_v1 import MainThreadScorerPolling
+from main_thread_scorer_polling_v1 import MainThreadScorerPolling, _wait_readable
 
 
 class FakeClock:
@@ -214,6 +215,74 @@ class PollingTests(unittest.TestCase):
             )
             self.assertEqual(seen, ["X", "STOP"])
             self.assertEqual(set(thread_ids), {stats.owner_thread_id})
+        finally:
+            os.close(read_fd)
+            os.close(write_fd)
+
+    def test_real_empty_pipe_times_out_without_reading(self):
+        read_fd, write_fd = os.pipe()
+        try:
+            started = time.monotonic()
+            self.assertFalse(_wait_readable(read_fd, 0.01))
+            elapsed = time.monotonic() - started
+            self.assertGreaterEqual(elapsed, 0.005)
+            self.assertLess(elapsed, 2.0)  # Gross hang detection, not a latency claim.
+            self.assertFalse(_wait_readable(read_fd, 0))
+            os.write(write_fd, b'X')
+            self.assertTrue(_wait_readable(read_fd, 0))
+            self.assertEqual(os.read(read_fd, 1), b'X')
+        finally:
+            os.close(read_fd)
+            os.close(write_fd)
+
+    def test_real_pipe_closed_writer_drains_data_then_reports_eof(self):
+        read_fd, write_fd = os.pipe()
+        os.write(write_fd, b'X\n')
+        os.close(write_fd)
+        try:
+            seen = []
+            loop = MainThreadScorerPolling(sample_hz=100)
+            stats = loop.run(read_fd, sample_fn=lambda: None,
+                scorer_sink=lambda _row: None,
+                command_handler=lambda line: seen.append(line))
+            self.assertEqual(seen, ['X'])
+            self.assertTrue(stats.eof)
+            self.assertEqual(stats.commands, 1)
+            self.assertFalse(stats.stopped_by_command)
+        finally:
+            os.close(read_fd)
+
+    def test_real_pipe_invalid_descriptor_raises(self):
+        with self.assertRaises((OSError, ValueError)):
+            _wait_readable(-1, 0)
+
+    def test_real_pipe_callbacks_follow_run_thread_not_constructor_thread(self):
+        read_fd, write_fd = os.pipe()
+        loop = MainThreadScorerPolling(sample_hz=100)
+        constructor_thread = threading.get_ident()
+        os.write(write_fd, b'STOP\n')
+        stats, errors, callbacks = [], [], []
+
+        def run():
+            try:
+                stats.append(loop.run(read_fd,
+                    sample_fn=lambda: callbacks.append(threading.get_ident()),
+                    scorer_sink=lambda _row: callbacks.append(threading.get_ident()),
+                    command_handler=lambda _line: callbacks.append(threading.get_ident()) or False,
+                    max_samples=100))
+            except BaseException as error:
+                errors.append(error)
+
+        worker = threading.Thread(target=run, daemon=True)
+        try:
+            worker.start()
+            worker.join(2)
+            self.assertFalse(worker.is_alive())
+            self.assertEqual(errors, [])
+            self.assertEqual(len(stats), 1)
+            self.assertTrue(stats[0].stopped_by_command)
+            self.assertNotEqual(stats[0].owner_thread_id, constructor_thread)
+            self.assertEqual(set(callbacks), {stats[0].owner_thread_id})
         finally:
             os.close(read_fd)
             os.close(write_fd)
