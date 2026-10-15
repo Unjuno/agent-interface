@@ -35,6 +35,13 @@ distinguishes stack merges from main integration and lists the completion criter
 
 ## What a worker leaves
 
+The [primary presentation failure record](../research/integration/primary_presentation_convergence_20261016/README.md)
+qualifies the current host's outer STOP latch after an effect but failed reply/
+presentation publication. Explicit close remains possible; input resend is
+refused. Both-route synthetic file controls discriminate repeated effects.
+Use this custody boundary when connecting recovery; it does not provide a
+selected-document reader, physical cleanup or application success oracle.
+
 For finite semantic recovery, reuse the explicit
 [role-recovery prototype and convergence record](../research/integration/finite_role_recovery_convergence_20261016/README.md).
 PR7264/8370 package/tests are identical and their parent README contexts are
