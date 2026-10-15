@@ -56,6 +56,16 @@ fake backend; no production compatibility fallback hides missing initialization.
 Pillow 12.2.0, MCP 1.30.0, openpyxl 3.1.5. `MANIFEST.json` hashes retained files.
 No GUI/display/game/container/model/WSLc allocation was launched.
 
+### Standard session rejection follow-up
+
+Caller inspection found that the initial `RuntimeError` refusal would escape
+session V12's per-command rejection handler. The fence now raises `ValueError`,
+which that existing handler reports as `rejected`; no session exit or new input
+is required. `protocol-normal/` and `protocol-optimized/` retain the final runs
+at clean `64b830fb019fb6a5ebe8b47b822aedf371a536f3`: both 34 modules / 251 methods,
+zero failures, one deliberate handshake skip. Earlier runs above remain intact.
+Bounded correction review confirms the caller catch path and all 22 drain tests.
+
 ## Remaining requirements
 
 This is an Executor-lifetime reuse fence, not native-I/O interruption, physical
@@ -71,3 +81,8 @@ original resource/owner retirement, verified release and fresh authority without
 replaying unknown effects. Independent task effect, finite task recovery, window
 incarnation, atomic server acceptance and matched efficiency remain open in
 #17/#59. Historical raw and first outcomes remain unchanged.
+
+The outer V39 `cancel_invalidated_action` still waits specifically for
+`input_released` before terminal closure. Its failed-terminal/unverified-release
+classification needs a separate composed fault check; this Executor fence does
+not qualify that outer wait as bounded recovery.
