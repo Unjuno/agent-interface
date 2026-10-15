@@ -40,6 +40,9 @@ Additional `qualified-observation-N.json` records contain the token transported
 into owner history and MCP results. Qualification persistence uses the visual
 worker and original action deadline/cancellation. Raw persistence alone is not
 qualified delivery.
+Qualified files are also intermediate records: a late save may remain after
+cancellation. Only the subsequent owner-history publication and delivered
+receipt establish observation publication; file existence does not certify it.
 
 The assumptions are a trusted local X server, reliable ordered connection,
 honest native events, and exclusive use of this query connection by its reader.

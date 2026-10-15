@@ -17,7 +17,7 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
         fake = FakeX(self)
         fake.backend.d.get_display_name = lambda: ':fake-lifecycle'
         connection = LifecycleConnection()
-        entered, resume = threading.Event(), threading.Event()
+        entered, resume, visual_closed = threading.Event(), threading.Event(), threading.Event()
         now = [1_000_000]
         def attributes():
             if fault == 'blocked' and 1 in fake.down:
@@ -40,6 +40,17 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
                 from types import SimpleNamespace
                 backend = reader_backend(fake, lambda *args: SimpleNamespace(data=fake.raw, depth=24, visual=1))
                 backend.d.create_resource_object = lambda kind, xid: SimpleNamespace(id=xid)
+                backend.d.close = visual_closed.set
+                if fault == 'qualified':
+                    from runtime.guarded_x11_v1.observation_worker import X11ObservationReader
+                    save = X11ObservationReader._save
+                    def held_save(reader, name, value):
+                        if name.startswith('qualified-observation-') and 1 in fake.down:
+                            entered.set()
+                            if not resume.wait(5): raise TimeoutError('test did not resume qualified save')
+                        return save(reader, name, value)
+                    item = patch.object(X11ObservationReader, '_save', held_save)
+                    item.start(); self.addCleanup(item.stop)
                 for target, kwargs in [
                     ('runtime.guarded_x11_v1.observation_worker.open_readonly_backend', dict(return_value=backend)),
                     ('runtime.guarded_x11_v1.observation_worker.read_linux_x11_process_identity', dict(side_effect=fake.read))]:
@@ -60,8 +71,15 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
                     for kind in (X.UnmapNotify, X.ReparentNotify, X.MapNotify): connection.event(kind)
                 args = dict(alias='field', offset=minted['offset'], interaction='keyboard', observe_after=False,
                     tail=[{'op':'key_chord','keys':['CTRL','a']}])
+                if fault == 'qualified':
+                    # The trusted additional-input path recaptures before the
+                    # second chord key, while the first modifier is still held.
+                    guard = fake.backend.owner.input_guard('field', minted['offset'],
+                        tail=args['tail'], verify=lambda *arguments: True)
+                    guard.__enter__()
+                    self.addCleanup(guard.__exit__, None, None, None)
                 task = asyncio.create_task(server.call_tool('interface_guarded_input', args))
-                if fault == 'blocked':
+                if fault in ('blocked','qualified'):
                     self.assertTrue(await asyncio.to_thread(entered.wait, 2))
                     self.assertEqual(fake.down, {1})
                     if trigger == 'expiry': now[0] = fake.backend.owner.deadline
@@ -71,7 +89,7 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
                         cancelled = metadata(await server.call_tool('interface_guarded_cancel', {'call_id':call_id}))
                         self.assertEqual(cancelled['status'], 'cancel_requested')
                 result = metadata(await asyncio.wait_for(task, 3))
-                expected = 'refused' if fault == 'stale' and selected else 'execution_failed' if fault in ('modifier','blocked') else 'completed'
+                expected = 'refused' if fault == 'stale' and selected else 'execution_failed' if fault in ('modifier','blocked','qualified') else 'completed'
                 self.assertEqual(result['status'], expected, result)
                 if expected == 'completed': self.assertEqual(fake.emissions, [(2,1),(2,2),(3,2),(3,1)])
                 elif fault == 'stale': self.assertEqual(fake.emissions, [])
@@ -79,14 +97,15 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(fake.emissions, [(2,1),(3,1)])
                     self.assertTrue(result['result']['execution']['releases'][-1]['verified'])
                 self.assertEqual(fake.down, set())
-                if fault == 'blocked':
+                if fault in ('blocked','qualified'):
                     self.assertFalse(resume.is_set())
                     sequence = fake.backend.owner.sequence
                     resume.set()
                     for _ in range(100):
-                        if connection.closed: break
+                        done = connection.closed if fault=='blocked' else visual_closed.is_set()
+                        if done: break
                         await asyncio.sleep(.005)
-                    self.assertTrue(connection.closed)
+                    self.assertTrue(connection.closed if fault=='blocked' else visual_closed.is_set())
                     self.assertEqual(fake.backend.owner.sequence, sequence)
                     retried = metadata(await server.call_tool('interface_guarded_input', args))
                     self.assertEqual(retried['status'], 'refused')
@@ -110,6 +129,8 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
     async def test_expire_blocked_lifecycle(self): await self.exercise('blocked', 'expiry')
     async def test_isolated_observation_healthy(self): await self.exercise(isolated=True)
     async def test_isolated_observation_modifier_released(self): await self.exercise('modifier', isolated=True)
+    async def test_cancel_blocked_qualified_persistence(self): await self.exercise('qualified', 'cancel', isolated=True)
+    async def test_expire_blocked_qualified_persistence(self): await self.exercise('qualified', 'expiry', isolated=True)
 
 
 class LifecycleBoundaries(unittest.TestCase):
