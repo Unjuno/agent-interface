@@ -1,6 +1,6 @@
 # Ideas and outcomes
 
-This is a concise, Issue-centered index of ideas proposed in `Unjuno/agent-interface` and what happened to them. Issues remain the place to submit and discuss new ideas; this page does not replace or close them. Closed issues are included where useful. An Issue's closed state alone does not mean its hypothesis passed or failed.
+This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` and what happened to them. Issues remain the place to submit and discuss new ideas. Unscheduled idea menus may be preserved in the [idea ledger](ideas/README.md) and closed as `not planned` under the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md); concrete execution work remains tracked in Issues. Closed issues are included where useful. An Issue's closed state alone does not mean its hypothesis passed or failed.
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
