@@ -34,7 +34,7 @@ is correct. Source pipeline inspection, not this raw, establishes the caller gap
 records and thread-exit state. The reference predicate compares the exact supplied
 generation tuple plus focus. `audit.py` reads saved bytes only and never imports
 an owner. Normal and optimized checks reproduce the same failure disposition;
-two test methods pass in each mode and reject six inconsistent saved claims.
+three test methods pass in each mode and reject ten inconsistent saved claims.
 Audit success validates the recorded gap, not input safety. The owner probe ran
 once; optimized verification re-reads raw instead of repeating it.
 
@@ -77,3 +77,11 @@ python -O -m unittest discover -s research/live_control/v12_generation_boundary_
 The probe requires an exclusive new `--output` path and verifies frozen source
 hashes before fake input; ordinary later regression runs are distinct from the
 retained first outcome. Raw is not silently refreshed to new main source.
+
+Review found that the first auditor checked aggregate stale-admission count
+without validating each named cell's reference axes. A corrected-axis regression
+first reproduced three false accepts (`v12-generation-axis-red-first.log` in
+local outputs). The auditor now checks typed identity/PID/start association,
+common source, same-XID PID change, same-XID/PID start change and changed-focus
+control separately. Raw and probe are unchanged; only saved-data auditing was
+repaired. Initial six corruption controls and four axis controls are all retained.

@@ -28,6 +28,18 @@ class SavedBoundaryTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     audit(raw)
 
+    def test_named_reference_axes_cannot_change(self):
+        for change in (
+                lambda raw: raw['rows'][1]['fixture_current_generation'].update(xid=99),
+                lambda raw: raw['rows'][2]['fixture_current_generation'].update(pid=456),
+                lambda raw: raw['rows'][0].update(fixture_focus=71, reference_eligible=False),
+                lambda raw: raw['rows'][3]['fixture_current_generation'].update(pid=456)):
+            with self.subTest(change=change):
+                raw = self.raw()
+                change(raw)
+                with self.assertRaises(ValueError):
+                    audit(raw)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -14,6 +14,28 @@ def audit(raw):
     stale = 0
     for row in rows:
         expected, current = row['source_generation'], row['fixture_current_generation']
+        for identity in (expected, current):
+            require(type(identity) is dict and set(identity) == {'xid', 'pid', 'process_identity'},
+                    'exact fixture identity fields')
+            require(all(type(identity[k]) is int and identity[k] > 0 for k in ('xid', 'pid')) and
+                    type(identity['process_identity']) is str, 'typed fixture identity')
+            parts = identity['process_identity'].split(':')
+            require(len(parts) == 2 and parts[0] == str(identity['pid']) and
+                    parts[1].isascii() and parts[1].isdigit(), 'fixture PID/start identity association')
+        require(expected == rows[0]['source_generation'] and
+                type(row['fixture_focus']) is int and row['fixture_focus'] > 0, 'common source and typed focus')
+        if row['case'] == 'stable':
+            axes = current == expected and row['fixture_focus'] == expected['xid']
+        elif row['case'] == 'same_xid_new_pid':
+            axes = (current['xid'] == expected['xid'] == row['fixture_focus'] and
+                    current['pid'] != expected['pid'])
+        elif row['case'] == 'same_xid_pid_new_start':
+            axes = (current['xid'] == expected['xid'] == row['fixture_focus'] and
+                    current['pid'] == expected['pid'] and
+                    current['process_identity'] != expected['process_identity'])
+        else:
+            axes = current == expected and row['fixture_focus'] != expected['xid']
+        require(axes, 'named reference axes: ' + row['case'])
         eligible = expected == current and row['fixture_focus'] == expected['xid']
         require(row['reference_eligible'] is eligible, 'reference predicate')
         presses = [event for event in row['events'] if event['kind'] == 2]
