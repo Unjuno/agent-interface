@@ -628,8 +628,8 @@ class NativeHandleBridge:
         return row
 
     @contextmanager
-    def input_guard(self, alias, offset, *, tail, verify):
-        """Explicit additional check for one frozen keyboard program.
+    def input_guard(self, alias, offset, *, tail, verify, interaction='keyboard'):
+        """Explicit additional check for one frozen guarded interaction.
 
         Trusted synchronous caller code, never authority or automatic renewal.
         The caller serializes this context with all other use of the owner.
@@ -639,13 +639,17 @@ class NativeHandleBridge:
             raise RuntimeError('input guard requires an idle, unguarded bridge')
         if self.review_required or self.session.recovery_required:
             raise RuntimeError('input guard requires reviewed, recovered bridge')
+        if interaction not in ('keyboard','click','move'):
+            raise ValueError('explicit keyboard/click/move interaction required')
         if (not isinstance(alias, str) or not alias or not isinstance(offset, list)
                 or len(offset) != 2 or any(type(v) is not int or v < 0 for v in offset)
-                or not isinstance(tail, (list, tuple)) or not tail or not callable(verify)):
+                or not isinstance(tail, (list, tuple))
+                or (interaction == 'keyboard' and not tail) or not callable(verify)):
             raise ValueError('explicit alias, integer offset, frozen tail and callable check required')
         self._input_guard = {'alias':alias, 'offset':deepcopy(offset),
                              'tail':deepcopy(list(tail)), 'verify':verify,
-                             'scope':self.scope, 'revision':self.binding_revision}
+                             'scope':self.scope, 'revision':self.binding_revision,
+                             'interaction':interaction}
         try:
             yield
         finally:
@@ -740,9 +744,9 @@ class NativeHandleBridge:
         if protected:
             if self.scope != guard['scope'] or self.binding_revision != guard['revision']:
                 raise X11BackendError('input guard binding changed before dispatch')
-            if (interaction != 'keyboard' or offset != guard['offset']
+            if (interaction != guard['interaction'] or offset != guard['offset']
                     or list(tail) != guard['tail']):
-                raise ValueError('protected input differs from frozen keyboard program')
+                raise ValueError('protected input differs from frozen guarded interaction')
         # An outer method may shorten, never renew, this input lease. The caller
         # must use this process's monotonic clock domain (not wall-clock time).
         if expires_at_ns is not None:
