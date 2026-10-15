@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Fresh native compiled dependency repair](../research/integration/compiled_native_dependency_repair_20261016/README.md)
+  connects admitted symbol identity/dependencies to fresh native input guards
+  for keyboard/click/move, preserving original deadlines and release bypass.
+  Eighteen new direct rows and original/repaired caller controls narrow the
+  False/unknown pre-input gap. The affected 385-method selection passes normal/-O;
+  the original compiled module fails 18 assertions without test errors. Real
+  semantic perception/effect, capture-to-press races, blocked I/O bounds, recovery
+  and economics remain unqualified.
+
 - [Semantic change after compiled admission](../research/integration/compiled_semantic_press_boundary_20261016/README.md)
   retains two Fake X counterexamples per normal/-O mode: a selected True Submit
   value becomes False/unknown in the native pre-input capture, yet current graph

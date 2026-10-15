@@ -212,3 +212,12 @@ caller-owned predicates, revalidates each alias and forwards the shorter method
 budget into ordinary guarded input. The [primary live trial](../results/compiled-x11-live-01/README.md)
 retains one correct Save and a changed-control stop with no Save. This does not
 promote a generic text verifier or establish efficiency gains.
+
+Compiled execution now connects the symbol's identity/dependencies to fresh
+native input checks using a frozen `input_guard`. Its explicit `interaction`
+supports keyboard/click/move; omitted interaction preserves keyboard behavior.
+False, unknown or callback failure refuses later task input, while releases
+bypass the callback. The [local repair evidence](../../research/integration/compiled_native_dependency_repair_20261016/README.md)
+uses Fake X transport and synthetic semantics. Trusted callback accuracy,
+capture-to-press changes, native I/O bounds and independent task effects remain
+separate qualifications.
