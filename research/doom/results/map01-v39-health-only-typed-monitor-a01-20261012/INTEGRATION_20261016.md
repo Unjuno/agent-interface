@@ -45,3 +45,30 @@ physical release bounds, repeated recovery, MAP01 exit, matched efficiency or
 independently verified task success. The retained 150 ms injected-delay study in
 PR #8871 is a separate comparison, not new live evidence for this source.
 Issue #59 and the overarching goal remain open.
+
+## Review repair: typed numeric domains
+
+Review found that the candidate checked integer type without applying the shared
+DOOM domains. Synthetic health 201 and invalid ammo could preserve the policy.
+The new domain regression first reproduced three failures; its raw is retained
+as `health-typed-domain-red-first.log`. The fix calls the existing shared
+`signal_value_in_domain` for both typed projections. Out-of-domain values become
+UNKNOWN, require a new decision and do not invoke artifact readers. Health zero
+is outside this typed observed-value domain; the controller's separate terminal
+health handling remains unchanged.
+
+Final executable source `d478afc3e3d343111d1be58870d18a011bacf37f` passes
+**139 tests normally and 139 optimized**, no skips, including four new epoch/domain/
+caller test methods. The four retained sample outcomes also reproduce on this
+source in `integration-domain-repair-replay-20261016.json`; the earlier integration
+replay is retained separately. No formal experiment was rerun and no post-fix
+live performance is inferred.
+
+The first domain-repair replay invocation omitted the original README's
+`PYTHONPATH=research/doom;research/live_control` prerequisite and failed to import
+the shared domain module. That invocation produced no result JSON; its empty
+stdout log remains separate and the tool transcript retains the import error.
+The successful new output uses the documented path prerequisite, with additive
+`health-typed-domain-repair-with-path-replay.*` local files. The source was not
+changed to relabel this environment failure. Package tests and the direct DOOM
+entry use the same shared validator through their existing import paths.
