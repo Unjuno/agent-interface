@@ -1,5 +1,12 @@
 # Public MCP transport
 
+[Worker interruption receipts](../../research/live_control/mcp_interruption_receipts_20261016/README.md)
+preserve a separate `interruption.json` before propagating non-Exception stops.
+Result lookup returns that receipt, or unavailable if it could not be saved;
+it never substitutes a prior completed report or replays the action. Existing
+backend reports remain unchanged. An interrupted worker's terminal state is not
+proof of physical release, task success, or server restart/recovery readiness.
+
 For optional same-process XID continuity checks in guarded-x11 mode, see
 [direct-window lifecycle evidence](../guarded_x11_v1/WINDOW_LIFECYCLE.md).
 `--guarded-window-lifecycle` requires the process-identity and query-worker flags;

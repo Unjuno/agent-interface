@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [MCP interruption receipts](../research/live_control/mcp_interruption_receipts_20261016/README.md)
+  connect the worker's propagated stop to retained same-call evidence. Existing
+  backend reports survive; a failed interruption receipt cannot fall back to
+  completed status, and old execution snapshots are excluded. Six new Fake X
+  methods cover pending→fatal worker→lookup→explicit recovery and separate owned
+  Python fatal-stop probes. Native/process-death release bounds, restart discovery,
+  independent task effects and matched economics remain unqualified.
+
 - [X11 interruption custody](../research/live_control/x11_interrupt_custody_checks_20261016/README.md)
   repairs the selected session/backend's missing KeyboardInterrupt/SystemExit
   cleanup/quarantine. Seven new Fake X/public-Python methods distinguish same-owner
