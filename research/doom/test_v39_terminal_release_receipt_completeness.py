@@ -18,7 +18,7 @@ NAMES = {
 FUNCTIONS = [node for node in TREE.body
              if isinstance(node, ast.FunctionDef) and node.name in NAMES]
 assert {node.name for node in FUNCTIONS} == NAMES
-NAMESPACE = {"json": json, "RuntimeError": RuntimeError}
+NAMESPACE = {"json": json, "RuntimeError": RuntimeError, "deepcopy": copy.deepcopy, "Path": Path}
 exec(compile(ast.Module(body=FUNCTIONS, type_ignores=[]), str(SOURCE), "exec"),
      NAMESPACE)
 
@@ -36,6 +36,8 @@ class Process:
 
 
 class Planner:
+    def invalidate_turn(self, handle):
+        return {"outcome": "locally_invalidated"}
     def interrupt(self, _handle, before_transport=None):
         if before_transport is not None:
             before_transport()

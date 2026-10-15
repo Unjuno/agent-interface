@@ -22,13 +22,21 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Local cover invalidation and failure custody](../research/doom/v39_cover_local_invalidation_checks_20261016/README.md)
+  now checks invalidated cover release before synchronous planner interrupt ACK.
+  Failed/wait boundaries retain a copied receipt before planner abort, and the
+  planner rechecks invalidation when publishing a result. Selected Fake X
+  Executor/V4/V12 composition saves the original failed obligation while keycode
+  38 is still held, without a remote interrupt. Healthy ACK, other fatal-terminal
+  paths, close/I/O bounds, physical release and finite task recovery remain open.
+
 - [Cover cancellation convergence](../research/doom/v39_cover_cancel_convergence_20261016/README.md)
   preserves #8384's original 15 files and reconstructs its saved ten-case result
-  with a separate exact-inventory/type auditor. Current helper checks now expose
-  a remaining synchronous dependency: while planner interrupt transport is held,
-  even an available failed cover terminal is not inspected. Local invalidation
-  and cancel send precede that wait; finite recovery and physical release do not
-  follow. The old partial release fixtures are repaired without weakening checks.
+  with a separate exact-inventory/type auditor. Its retained current-helper check
+  exposed a synchronous dependency that the local-invalidation repair above
+  addresses. That historical result remains unchanged; neither packet establishes
+  physical release or finite task recovery. Old partial release fixtures were
+  repaired without weakening checks.
 
 - [V39 cancellation failure custody](../research/doom/v39_cancel_failure_local_checks_20261016/README.md)
   now handles matching unverified release/failed terminal rather than discarding

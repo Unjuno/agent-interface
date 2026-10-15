@@ -407,45 +407,70 @@ def require_cover_terminal(terminal, *, cancellation_requested=False):
         raise RuntimeError(f"cover terminal lacks allowed status and verified empty release: {terminal!r}")
 
 
-def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
+def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id, *, failure_root=None):
+    # Answer invalidation does not need an App Server acknowledgement. Inspect
+    # input closure before entering that unrelated blocking transport.
+    local_invalidation = planner.invalidate_turn(planner_handle)
     cancel_error = None
+    terminal = None
 
-    def cancel_executor_program():
-        nonlocal cancel_error
+    def fail(error, *, cause=None):
+        receipt = {"schema": "cover-cancel-failure-v1", "id": cover_id,
+                   "terminal": deepcopy(terminal), "local_invalidation": deepcopy(local_invalidation),
+                   "failure": {"type": type(error).__name__, "message": str(error)[:200]},
+                   "physical_input_state": "unverified", "grants_input_authority": False,
+                   "task_effect": "unknown", "input_recovery_required": True}
+        error.cover_cancellation_receipt = deepcopy(receipt)
+        if failure_root is not None:
+            try:
+                with (Path(failure_root) / "cover-cancel-failure.json").open(
+                        "x", encoding="utf-8", newline="\n") as stream:
+                    json.dump(receipt, stream, indent=2, allow_nan=False)
+                    stream.write("\n")
+            except BaseException as save_error:
+                error.add_note("cover failure receipt save failed: " + type(save_error).__name__)
+        # Retire await_turn before its enclosing ThreadPoolExecutor joins it.
+        # The close operation itself is not a proven hard-time bound.
         try:
-            process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
-            process.stdin.flush()
-        except BaseException as error:
-            cancel_error = error
-            raise
-
+            planner.abort_pending_turn()
+        except BaseException as abort_error:
+            error.add_note("planner transport abort failed: " + type(abort_error).__name__)
+        if cause is not None:
+            raise error from cause
+        raise error
     try:
-        planner_interrupt = planner.interrupt(
-            planner_handle, before_transport=cancel_executor_program)
-    except BaseException as interrupt_error:
-        if cancel_error is not None:
-            cancel_error.add_note(
-                "planner interrupt also failed: " + type(interrupt_error).__name__)
-            raise cancel_error from interrupt_error
-        raise
+        process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+        process.stdin.flush()
+    except BaseException as error:
+        cancel_error = error
     try:
         terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
     except BaseException as terminal_error:
         if cancel_error is not None:
-            terminal_error.add_note(
-                "executor cancel write also failed: " + type(cancel_error).__name__)
-        raise
+            cancel_error.add_note("cover terminal wait also failed: " + type(terminal_error).__name__)
+        fail(cancel_error if cancel_error is not None else terminal_error)
     # The bounded cover can naturally finish or lease-expire between policy
     # invalidation and delivery of the cancel request. Accept those terminal
     # races only when they independently verify that no input remains held.
     if (type(terminal) is not dict or
             terminal.get("status") not in ("cancelled", "completed", "expired") or
             not terminal_release_is_known_empty(terminal)):
-        raise RuntimeError("invalidated cover did not verify empty release")
+        error = RuntimeError("invalidated cover did not verify empty release")
+        if cancel_error is not None:
+            cancel_error.add_note(str(error))
+            fail(cancel_error)
+        fail(error)
+    try:
+        planner_interrupt = planner.interrupt(planner_handle)
+    except BaseException as interrupt_error:
+        if cancel_error is not None:
+            cancel_error.add_note("planner interrupt also failed: " + type(interrupt_error).__name__)
+            fail(cancel_error, cause=interrupt_error)
+        fail(interrupt_error)
     if cancel_error is not None:
-        raise RuntimeError(
+        fail(RuntimeError(
             "executor cancel write failed before planner interruption: "
-            + repr(cancel_error)) from cancel_error
+            + repr(cancel_error)), cause=cancel_error)
     if "before_transport_error" in planner_interrupt:
         raise RuntimeError(
             "executor cancel write failed before planner interruption: "
@@ -1463,7 +1488,7 @@ def main():
                     if boundary["event"] == "policy_invalidation":
                         invalidation=boundary["invalidation"]
                         planner_interrupt,current_terminal=cancel_invalidated_cover(
-                            planner,planner_handle,process,wait,current_cover)
+                            planner,planner_handle,process,wait,current_cover,failure_root=args.out)
                         cover_terminals.append(current_terminal)
                         break
                     current_terminal=boundary
@@ -1519,7 +1544,7 @@ def main():
                         invalidation = drained["invalidation"]
                         if current_terminal is None and current_cover is not None:
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
-                                planner,planner_handle,process,wait,current_cover)
+                                planner,planner_handle,process,wait,current_cover,failure_root=args.out)
                             cover_terminals.append(current_terminal)
                     elif drained["pending_events"]:
                         invalidation = {
@@ -1529,7 +1554,7 @@ def main():
                         }
                         if current_terminal is None and current_cover is not None:
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
-                                planner,planner_handle,process,wait,current_cover)
+                                planner,planner_handle,process,wait,current_cover,failure_root=args.out)
                             cover_terminals.append(current_terminal)
                 planner_result=future.result()
                 failure_cleanup.set_stage("planner_result_validation")

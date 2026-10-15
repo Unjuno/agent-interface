@@ -108,6 +108,8 @@ class CoverTerminalTests(unittest.TestCase):
                                   poll=lambda: None)
 
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             thread_id = "synthetic-thread"
             def initialize(self): pass
             def start_session(self): pass
@@ -329,6 +331,8 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 if before_transport is not None:
                     before_transport()
@@ -364,8 +368,8 @@ class CoverTerminalTests(unittest.TestCase):
 
         self.assertFalse(worker.is_alive(), "cancel helper did not finish")
         self.assertEqual(failures, [])
-        self.assertEqual(trace, ["write:cancel", "flush", "interrupt_enter",
-                                 "interrupt_return", "terminal_wait"])
+        self.assertEqual(trace, ["write:cancel", "flush", "terminal_wait",
+                                 "interrupt_enter", "interrupt_return"])
 
     def test_planner_interrupt_is_attempted_if_cover_cancel_write_fails(self):
         trace = []
@@ -381,6 +385,8 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 trace.append("planner_interrupt")
                 before_transport_error = None
@@ -405,7 +411,7 @@ class CoverTerminalTests(unittest.TestCase):
             controller.cancel_invalidated_cover(
                 Planner(), object(), Process(), wait, "cover-0")
 
-        self.assertEqual(trace, ["planner_interrupt", "cancel_write", "terminal_wait"])
+        self.assertEqual(trace, ["cancel_write", "terminal_wait", "planner_interrupt"])
 
     def test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails(self):
         trace = []
@@ -421,6 +427,8 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 trace.append("planner_interrupt")
                 try:
@@ -431,9 +439,11 @@ class CoverTerminalTests(unittest.TestCase):
 
         with self.assertRaisesRegex(OSError, "synthetic executor pipe failure") as raised:
             controller.cancel_invalidated_cover(
-                Planner(), object(), Process(), lambda predicate: None, "cover-0")
+                Planner(), object(), Process(), lambda predicate: {
+                    "event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": dict(NEUTRAL)}, "cover-0")
 
-        self.assertEqual(trace, ["planner_interrupt", "cancel_write"])
+        self.assertEqual(trace, ["cancel_write", "planner_interrupt"])
         self.assertIsInstance(raised.exception.__cause__, TimeoutError)
         self.assertIn("planner interrupt also failed: TimeoutError",
                       getattr(raised.exception, "__notes__", []))
