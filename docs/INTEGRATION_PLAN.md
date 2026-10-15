@@ -74,6 +74,12 @@ live task and matched comparison.
   processes with Fake X. Isolated cancel/expiry returns verified fake cleanup
   before capture resumes; query-only controls stay held/pending. This qualifies
   the named local transport path, not live X or provider/model receipt.
+  [Explicit guarded recovery](../runtime/guarded_x11_v1/RECOVERY.md) now exposes
+  the existing session's release/readback attempt through Python and standard
+  guarded MCP. Fake X tests retain uncertain obligations, fence stale revision
+  retries, serialize pending cleanup and require review/fresh aliases after
+  verified release. One attempt is a policy bound, not a native-I/O time bound;
+  independent task effect and live recovery remain unqualified.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.
