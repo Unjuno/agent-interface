@@ -57,6 +57,13 @@ live task and matched comparison.
   a narrower integration than the probe's full observation loop: capture,
   persistence and input transport remain synchronous. Qualify those remaining
   boundaries and independent task effect next; no physical bound is established.
+  The [remaining-boundary characterization](../research/live_control/guarded_sync_boundaries_20261015/RESULT.md)
+  confirms that capture, observation persistence and trusted callbacks inside an
+  additional Python input guard can still hold CTRL after cancellation/expiry,
+  even with the query worker idle. All six fault cells release only after the
+  harness resumes the blocked dependency; eventual cleanup is not bounded recovery.
+  Separate acquisition/reply association and side effects before claiming full
+  observation/control-plane isolation.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.
