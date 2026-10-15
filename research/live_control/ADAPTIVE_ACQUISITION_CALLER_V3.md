@@ -10,6 +10,12 @@ also tests the actual model/planner/caller boundary with an inert RPC client:
 known failed-call accounting survives before the caller skips input/effect stages.
 This does not qualify live provider usage or independent application effects.
 
+The [explicit compiled v3 connection](COMPILED_CALLER_V3.md) builds from the final
+selected target and retains a returned core receipt across auxiliary sink
+failure. Trusted execute adapters can use `ExecutionReceiptError` with a
+validated detached decision; ordinary error attributes do not grant progress
+evidence. The caller records known delivery without promoting task success.
+
 ## Problem
 
 The retained matched v3 comparison established one narrow case in which a

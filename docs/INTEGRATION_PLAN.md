@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Explicit v3 compiled handoff repair](../research/integration/compiled_caller_v3_repair_20261016/README.md)
+  supplies an explicit selected-target interface builder and preserves returned
+  core evidence, completed prefix and unresolved input across sink/journal
+  failure. Fourteen new methods and the affected 223-method selection pass
+  normal/-O, with legacy/capture/stale-builder controls retained. The joined
+  model/planner/caller/core case uses inert RPC/input/effect. Actual domain
+  mapping, native release, independent app effect and live comparison remain
+  unqualified. Legacy v1 and historical frozen outcomes remain unchanged.
+
 - [Compiled execution/caller handoff counterexamples](../research/integration/compiled_caller_handoff_20261016/README.md)
   show that the legacy helper's fixed v2 import does not inherit v3 receipt
   retention. Twelve inert cells per normal/-O mode retain eight composition
