@@ -91,6 +91,11 @@ closeコメントには **理由、保存先、科学的状態、残る問い、
 
 ## 進捗と次の整理対象
 
+[Calc移植の証拠と次の課題](../research/live_control/calc_saved_convergence_20261016/README.md)では、
+古い1ケース時点のREADMEから、完了した4ケース・保存ファイル採点・joint usageへ入口を接続した。
+保存済み監査を通常・最適化Pythonで再確認し、Windowsのmutation overlayのパス差を別runnerで修理した。
+原本568ファイルは変更せず、経路別費用・有限回復・現行sourceでのライブ検証は未達として残す。
+
 [カバー取消の収束記録](../research/doom/v39_cover_cancel_convergence_20261016/README.md)では、
 未統合PR #8384の15ファイルを元のblobのまま保全し、重複ケースを見逃す監査の指摘を
 別版で検証した。現行テストの古いfixtureも修理し、planner割込み応答待ちが解放失敗の

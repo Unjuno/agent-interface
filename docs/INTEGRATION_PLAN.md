@@ -22,6 +22,16 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Calc saved transfer convergence](../research/live_control/calc_saved_convergence_20261016/README.md)
+  reconnects the completed four-case publication, independent XLSX scoring and
+  joint usage accounting to current navigation. The old README is a preserved
+  one-case checkpoint. Saved-only normal/-O checks verify 567 publication hashes,
+  all four cases, 18 portable semantic mutations and 359 usage records/20 images.
+  Windows overlay path repair is separate from the unchanged historical source.
+  This is app-local transfer evidence with HOLD efficiency/general readiness;
+  per-route costs, matched cold/warm/change/repair and current-source live gates
+  remain unmet. No new GUI/provider allocation was run.
+
 - [MAP01 backend Executor custody](../research/doom/map01_backend_custody_checks_20261016/README.md)
   now prevents wrapper replacement from erasing unverified release state on the
   same backend. The first Fake X counterexample accepted an observation-only

@@ -19,6 +19,13 @@ It adds no requirement to read all 1,678 Issues before working.
 
 ## What a worker leaves
 
+For Calc transfer/economics, start with the
+[saved four-case crosswalk](../research/live_control/calc_saved_convergence_20261016/README.md)
+and final publication, rather than the historical partial README. Saved workbook
+effects and wrong-input refusal are qualified within that familiar recipe;
+joint usage is not a matched route cost comparison. Reuse the recipe and identify
+the missing #57 phases rather than repeat its four consumed cases.
+
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
 metadata. This is separate from public guarded MCP's process-identity path.
