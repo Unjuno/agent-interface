@@ -54,7 +54,7 @@ def child(version,unknown):
         try:relative=path.relative_to(HERE.parents[1]).as_posix()
         except ValueError:continue
         pins.append(dict(path=relative,sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
-    emit({'event':'fixture_ready','pid':__import__('os').getpid(),'executor':version,
+    emit({'event':'fixture_ready','pid':__import__('os').getpid(),'parent_pid':__import__('os').getppid(),'executor':version,
           'optimize':sys.flags.optimize,'source_pins':sorted(pins,key=lambda p:p['path'])})
     try:
         for line in sys.stdin:
