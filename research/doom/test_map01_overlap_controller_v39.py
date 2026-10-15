@@ -266,6 +266,8 @@ class Map01V39CoastTests(unittest.TestCase):
         class Process:
             def __init__(self): self.stdin = Stdin()
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def __init__(self): self.interrupted = []
             def interrupt(self, handle, before_transport=None):
                 if before_transport is not None: before_transport()
@@ -500,6 +502,8 @@ class Map01V39CoastTests(unittest.TestCase):
         class Process:
             stdin = Stdin()
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 if before_transport is not None: before_transport()
                 return {"status": "interrupted"}
@@ -553,6 +557,8 @@ class Map01V39CoastTests(unittest.TestCase):
         class Process:
             stdin = Stdin()
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 if before_transport is not None: before_transport()
                 return {"status": "interrupted"}

@@ -46,6 +46,7 @@ class PersistentPlannerAdapter:
         self._active = None
         self._terminal_status = None
         self._cancellation_requested = False
+        self._interrupt_requested = False
         self._interrupt_response = None
         self._transport_aborted = False
 
@@ -77,6 +78,7 @@ class PersistentPlannerAdapter:
             self._active = None
             self._terminal_status = None
             self._cancellation_requested = False
+            self._interrupt_requested = False
             self._interrupt_response = None
             self._transport_aborted = False
             return thread_id
@@ -105,19 +107,30 @@ class PersistentPlannerAdapter:
             self._active = handle
             self._terminal_status = None
             self._cancellation_requested = False
+            self._interrupt_requested = False
             self._interrupt_response = None
             self._transport_aborted = False
             self._output_schema = output_schema
         return handle
 
+    def invalidate_turn(self, handle):
+        """Fence a matching turn's answer locally without waiting on transport."""
+        with self._lock:
+            self._require_active(handle)
+            self._cancellation_requested = True
+            return {"outcome": "locally_invalidated", "thread_id": handle.thread_id,
+                    "turn_id": handle.turn_id, "session_generation": handle.session_generation}
+
     def interrupt(self, handle, *, before_transport=None):
         with self._lock:
             self._require_active(handle)
             terminal_status = self._terminal_status
-            already_requested = self._cancellation_requested
+            already_requested = self._interrupt_requested
             interrupt_response = self._interrupt_response
-            should_request = terminal_status is None and not already_requested
+            transport_aborted = self._transport_aborted
+            should_request = terminal_status is None and not already_requested and not transport_aborted
             if should_request:
+                self._interrupt_requested = True
                 # This flag is the semantic boundary: any later answer belongs to a
                 # stale observation even if server completion wins the wire race.
                 self._cancellation_requested = True
@@ -134,6 +147,8 @@ class PersistentPlannerAdapter:
 
         if terminal_status is not None:
             result = {"outcome": "already_terminal", "status": terminal_status}
+        elif transport_aborted:
+            result = {"outcome": "already_aborted"}
         elif already_requested:
             result = {"outcome": "already_requested", "response": interrupt_response}
         else:

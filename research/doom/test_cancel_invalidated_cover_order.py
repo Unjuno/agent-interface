@@ -16,6 +16,7 @@ class CancelOrderingTests(unittest.TestCase):
         events = []
         interrupt_entered = threading.Event()
         release_interrupt = threading.Event()
+        terminal_inspected = threading.Event()
 
         class Stdin:
             def write(self, _value):
@@ -62,14 +63,20 @@ class CancelOrderingTests(unittest.TestCase):
         }
         result = {}
 
+        def wait(predicate):
+            self.assertTrue(predicate(terminal))
+            terminal_inspected.set()
+            return terminal
+
         def run_helper():
             result["value"] = controller.cancel_invalidated_cover(
-                planner, handle, Process(), lambda _predicate: terminal, "cover-1")
+                planner, handle, Process(), wait, "cover-1")
 
         worker = threading.Thread(target=run_helper)
         worker.start()
         try:
             self.assertTrue(interrupt_entered.wait(1), "planner interrupt was not entered")
+            self.assertTrue(terminal_inspected.is_set(), "release verification must precede planner ACK wait")
             self.assertEqual(
                 events,
                 ["cancel_write", "cancel_flush", "interrupt_request"],
@@ -127,10 +134,10 @@ class CancelOrderingTests(unittest.TestCase):
             controller.cancel_invalidated_cover(
                 planner, handle, Process(), wait, "cover-2")
 
-        self.assertEqual(events, ["interrupt_request", "terminal_wait"])
+        self.assertEqual(events, ["terminal_wait", "interrupt_request"])
 
-    def test_ready_failed_terminal_is_not_inspected_during_blocked_planner_interrupt(self):
-        """Characterize the unresolved synchronous planner dependency, not a bound."""
+    def test_ready_failed_terminal_is_inspected_without_entering_planner_interrupt(self):
+        """Failure retires the pending turn without a remote interrupt ACK."""
         entered = threading.Event()
         resume = threading.Event()
         inspected = threading.Event()
@@ -155,6 +162,9 @@ class CancelOrderingTests(unittest.TestCase):
                     raise TimeoutError("test gate was not released")
                 events.append("planner_interrupt_returned")
                 return {}
+
+            def close(self, timeout=5):
+                events.append("planner_transport_closed")
 
         class Stdin:
             def write(self, value):
@@ -191,12 +201,13 @@ class CancelOrderingTests(unittest.TestCase):
         worker = threading.Thread(target=run_helper)
         worker.start()
         try:
-            self.assertTrue(entered.wait(1))
+            worker.join(1)
+            self.assertFalse(worker.is_alive())
+            self.assertFalse(entered.is_set())
             self.assertTrue(planner._cancellation_requested)
-            self.assertTrue(worker.is_alive())
-            self.assertFalse(inspected.is_set())
+            self.assertTrue(inspected.is_set())
             print(json.dumps({"case": "ready-failed-cover-terminal-planner-interrupt-held",
-                              "terminal_ready": terminal, "terminal_inspected": False,
+                              "terminal_ready": terminal, "terminal_inspected": True,
                               "planner_transport_resumed": False,
                               "answer_locally_invalidated": True,
                               "events": list(events),
@@ -210,8 +221,7 @@ class CancelOrderingTests(unittest.TestCase):
         self.assertIsInstance(result["error"], RuntimeError)
         self.assertIn("did not verify empty release", str(result["error"]))
         self.assertEqual(events, ["cancel_written", "cancel_flushed",
-                                 "planner_interrupt_entered", "planner_interrupt_returned",
-                                 "failed_terminal_inspected"])
+                                 "failed_terminal_inspected", "planner_transport_closed"])
 
 
 if __name__ == "__main__":
