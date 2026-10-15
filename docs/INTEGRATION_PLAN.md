@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Persistent grounding failure accounting](../research/integration/grounding_failure_accounting_20261016/README.md)
+  now carries known turn/usage/image/wait metadata through ineligible answers,
+  await, validation and result-publication failures into the shared caller.
+  Nine new real model/planner/caller composition methods use an inert RPC client;
+  104 affected methods pass normal/-O, while the pinned old model fails eight
+  assertions. Unknown usage/start admission remains unknown, with no retry.
+  Durable publication, provider telemetry, independent application effect and
+  matched live comparison remain separate unmet gates.
+
 - [X11 same-backend recovery custody](../research/live_control/x11_backend_recovery_custody_20261016/README.md)
   now survives serialized session-wrapper replacement, including empty-ledger
   failures. Per-wrapper recovery epochs prevent a sibling's neutralization from

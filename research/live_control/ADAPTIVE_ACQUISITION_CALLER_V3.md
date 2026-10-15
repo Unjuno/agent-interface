@@ -5,6 +5,11 @@ records the already-composed #7289/#7310 repair family, later effect receipts,
 76 selected normal/-O local methods and the remaining live provider/task-effect
 gates. The original evidence count below is historical, not the current total.
 
+The [persistent grounding failure-accounting repair](../integration/grounding_failure_accounting_20261016/README.md)
+also tests the actual model/planner/caller boundary with an inert RPC client:
+known failed-call accounting survives before the caller skips input/effect stages.
+This does not qualify live provider usage or independent application effects.
+
 ## Problem
 
 The retained matched v3 comparison established one narrow case in which a
