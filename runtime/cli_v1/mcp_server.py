@@ -235,6 +235,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         if not admission.enter():
             return None  # A rejected/cancelled queued submission must never invoke.
         call_id = registered_call_id
+        previous_interrupted_execution = getattr(
+            getattr(getattr(owner, 'session', None), 'backend', None), 'interrupted_execution', None)
         try:
             call_root = root / (registered_call_id or uuid.uuid4().hex)
             call_root.mkdir(exist_ok=False)
@@ -370,6 +372,40 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','recovery_failed')
                  or (report.get('status') == 'needs_review' and not inspection_ready)
                  or report.get('feedback_status') == 'observation_failed')))
+        except BaseException as error:
+            if not isinstance(error, Exception) and call_id is not None:
+                with calls_lock:
+                    record = calls.get(call_id)
+                    if record is not None:
+                        record['worker_interrupted'] = type(error).__name__
+                        record['interruption_receipt'] = False
+                if record is not None:
+                    try:
+                        interruption = dict(status='runtime_interrupted', error=repr(error),
+                            exception_type=type(error).__name__, operation=operation,
+                            operation_invoked=record['backend_attempted'], effect_status='unknown',
+                            release_confirmed=False, task_success=None, replay_allowed=False,
+                            authority_granted=False,
+                            report_artifact_present=(call_root / 'report.json').is_file())
+                        if owner is not None:
+                            interruption['session'] = owner.snapshot()
+                            execution = getattr(getattr(owner.session, 'backend', None),
+                                                'interrupted_execution', None)
+                            # A prior recovered call's snapshot is not evidence
+                            # for this interruption, including presentation faults.
+                            if isinstance(execution, dict) and execution is not previous_interrupted_execution:
+                                interruption['interrupted_execution'] = deepcopy(execution)
+                        # Keep any completed backend report byte-for-byte. A
+                        # separate receipt records the interrupted call boundary.
+                        _write_json(call_root / 'interruption.json', interruption)
+                        with calls_lock:
+                            record['interruption_receipt'] = True
+                    except BaseException as persistence_error:
+                        # Receipt failures cannot replace the worker's original
+                        # stop or trigger input/recovery/reconnect.
+                        with calls_lock:
+                            record['interruption_persistence_failure'] = repr(persistence_error)
+            raise
         finally:
             if call_id is not None:
                 with calls_lock:
@@ -722,9 +758,14 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'unknown_call', 'operation_invoked': False}, error=True)
         if record['state'] != 'finished':
             return content({'status': 'pending', 'call': record, 'operation_invoked': False})
+        if record.get('worker_interrupted') and not record.get('interruption_receipt'):
+            return content({'status': 'receipt_unavailable', 'call': record,
+                'error': 'INTERRUPTION_RECEIPT_UNAVAILABLE', 'operation_invoked': False,
+                'replay_allowed': False}, error=True)
         call_root = root / call_id  # Only IDs minted and held by this server are accepted.
         try:
-            report = json.loads(await asyncio.to_thread((call_root / 'report.json').read_text,
+            receipt = call_root / ('interruption.json' if record.get('interruption_receipt') else 'report.json')
+            report = json.loads(await asyncio.to_thread(receipt.read_text,
                                                        encoding='utf-8'))
         except (OSError, ValueError) as error:
             return content({'status': 'receipt_unavailable', 'call': record,
