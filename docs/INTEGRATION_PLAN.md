@@ -43,6 +43,13 @@ live task and matched comparison.
   empty state without a returned verified result. It adds no physical bound or
   cancellation result. Follow the [safety/evidence agenda](ideas/safety-control-agenda.md)
   toward independent cleanup with one input authority and late-reply fencing.
+- The [single-writer Fake X separation spike](../research/live_control/fake_x_single_writer_spike_20261015/REPORT.md)
+  now distinguishes observation blockage from stalled release send/readback.
+  Separated observation permits cancellation/expiry cleanup in its finite
+  schedules, with actual backend primitives and no second writer; input-transport
+  blockage still prevents confirmation/progress. The actor/proof/clock are
+  probe-owned. No public caller integration or physical bound follows from it.
+  Integrate the request/reply seam with actual source/generation/deadline next.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.

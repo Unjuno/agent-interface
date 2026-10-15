@@ -53,6 +53,20 @@ FD操作は再実行していない。native auditorのPID/monotonic記録が欠
 late reply fencing・unknown readbackを組み合わせて進める。旧rescue文書の委員人数/投票条件は
 歴史へ保存し、現在の運用はユーザーのFINAL v5 8.1に従う。人数条件を新たな停止理由にしない。
 
+## 単一writerと観測分離のFake X spike
+
+[凍結した構成試験](../../research/live_control/fake_x_single_writer_spike_20261015/REPORT.md)
+では、実際のbackend key/button/release primitiveを使い、問い合わせをwriterと分けた。
+通常・最適化Pythonで各10条件を実行し、保存データだけの監査で各11改変を拒否した。
+観測停止中の取消・期限切れ・重複取消では、単一writerのままfake cleanupを返し、遅い
+epochの返答から後続入力を復活させなかった。解放送信停止では保持が残り、sync停止では
+fake neutralでも返却済み確認がなく、readback失敗はunknownと追跡義務を保った。
+
+これは採用runtimeやguardianの完成ではない。program loop・epoch・時計・観測proofはprobe
+所有で、公開bridge/MCP経路・実X・独立アプリ効果は実行していない。次は採用callerへ
+観測request/reply境界を接続し、実際のsource/generation/deadlineを保って同じ故障を通す。
+backend自体の停止、有限の物理解放、回復・task effect・効率は別の未達gateとして残す。
+
 ## Issueを閉じる条件
 
 この6件は今回の整理では閉じない。各原文の独自の問いと評価軸は残っている。
