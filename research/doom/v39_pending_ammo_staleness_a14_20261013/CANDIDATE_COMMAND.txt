@@ -1,0 +1,1 @@
+wslc run --rm --name pending-ammo-staleness-a14-20261013 --pull never --network none --cpus 1 --memory 512M --volume "<absolute-study-path>/results/a14-01:/out:rw" --workdir /opt/a14 a14-pending-ammo-staleness:20261012 python3 -m unittest -v test_a14_pending_ammo_staleness

@@ -1,0 +1,23 @@
+{
+  "experiment_id": "v39_strict_release_pending_cancel_integration_a11_20261012",
+  "classification": "CONSTRUCTION_ONLY_SOURCE_COMPOSITION",
+  "hypothesis": "The strict known-empty terminal receipt gate composes with V39 paired-health invalidation and pending planner-turn cancellation: a complete receipt permits the cancel boundary to return while the old planner response remains ineligible; each missing or adverse unknown/error receipt remains rejected, even where the legacy main predicate accepts it.",
+  "sources": {
+    "main_base": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+    "strict_release_candidate_pr8835": "5d3fe94c6f4b8934e2d05012467545cbe55cd615",
+    "authored_pair_cancel_candidate_pr8843": "4a9baf2d5e362de64c73c51cbfa18a2667c5f352"
+  },
+  "test_sha256": "29c0ccbf5a92ace7ee2538c5f35c732f9827c8386ffef2067035d1b8de312b54",
+  "image": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+  "requested_container_constraints": {
+    "network": "none",
+    "cpus": "1",
+    "memory": "512m",
+    "user": "65534:65534",
+    "source_mount": "read-only",
+    "swap": "host limitation reported; no enforcement claim"
+  },
+  "decision_rule": "PASS only when the full receipt is accepted; legacy main accepts the four incomplete/adverse release variants but PR #8835 candidate rejects all four; the paired health floor invalidates and cancels, executor cancel is written/flushed before interrupt request/ACK, and any completed old planner turn is answer_eligible=false with no answer.",
+  "formal_or_live_allocation": false,
+  "no_retry": true
+}

@@ -1,0 +1,212 @@
+{
+  "schema": "v39-pending-ammo-a16-independent-audit-v1",
+  "decision": "PASS_CONSTRUCTION_SOFT_HARD_PENDING_TURN_BOUNDARY",
+  "checks": {
+    "frozen_sources_match_current_main": true,
+    "image_digest_matches": true,
+    "candidate_exit_zero": true,
+    "two_tests_passed": true,
+    "soft_ammo_preserves_turn_and_rejects_minimum": true,
+    "hard_ammo_invalidates_before_response_eligibility": true,
+    "no_executor_or_input_authority": true,
+    "container_removed": true
+  },
+  "source_closure": [
+    {
+      "path": "research/live_control/final_action_admission_v1.py",
+      "bytes_match": true,
+      "sha256_match": true,
+      "current_main_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "current_main_blob_match": true
+    },
+    {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "bytes_match": true,
+      "sha256_match": true,
+      "current_main_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "current_main_blob_match": true
+    },
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "bytes_match": true,
+      "sha256_match": true,
+      "current_main_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+      "current_main_blob_match": true
+    },
+    {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "bytes_match": true,
+      "sha256_match": true,
+      "current_main_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "current_main_blob_match": true
+    },
+    {
+      "path": "research/doom/doom_signal_value_domain_v1.py",
+      "bytes_match": true,
+      "sha256_match": true,
+      "current_main_blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+      "current_main_blob_match": true
+    },
+    {
+      "path": "research/live_control/final_action_admission_v2.py",
+      "bytes_match": true,
+      "sha256_match": true,
+      "current_main_blob": "2078194e704d603c6bd864030cc570abc542455c",
+      "current_main_blob_match": true
+    },
+    {
+      "path": "research/live_control/action_validity_admission_v1.py",
+      "bytes_match": true,
+      "sha256_match": true,
+      "current_main_blob": "db37e92c75d04dcd3f725e8507314f6fb64b6b8c",
+      "current_main_blob_match": true
+    },
+    {
+      "path": "research/doom/doom_action_validity_contract_v1.py",
+      "bytes_match": true,
+      "sha256_match": true,
+      "current_main_blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+      "current_main_blob_match": true
+    }
+  ],
+  "current_main": "964c9197d5083ab55ea7fdc9105427623e89e677",
+  "frozen_main": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "image_id": "sha256:3fdfb56e36e335629eb0442de560c4d78a199dd7443ad99de6c33cfab087460d",
+  "arms": {
+    "A16_HARD": {
+      "event_order": [
+        "turn_started",
+        "typed_observation",
+        "monitor_invalidation",
+        "pre_interrupt_callback",
+        "interrupt_request"
+      ],
+      "executor_admission": null,
+      "final_admission": null,
+      "input_authority_admitted": false,
+      "monitor_invalidation": {
+        "event": "paired_signal_invalidation",
+        "grants_input_authority": false,
+        "monitor_received_ns": 24181495634,
+        "outcome": {
+          "current_value": 0,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "map01-a16-ammo",
+          "hard_minimum": 1,
+          "keep_existing_policy": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "below_hard_minimum",
+          "requires_new_decision": true,
+          "semantic_change_identified": true,
+          "signal_id": "ammo",
+          "source_age_ms": 200.0,
+          "source_value": 6,
+          "status": "HARD_INVALIDATED",
+          "task_success_verified": false
+        },
+        "outcome_evaluated_ns": 24181525912,
+        "outcomes": {
+          "ammo": {
+            "current_value": 0,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "map01-a16-ammo",
+            "hard_minimum": 1,
+            "keep_existing_policy": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "below_hard_minimum",
+            "requires_new_decision": true,
+            "semantic_change_identified": true,
+            "signal_id": "ammo",
+            "source_age_ms": 200.0,
+            "source_value": 6,
+            "status": "HARD_INVALIDATED",
+            "task_success_verified": false
+          },
+          "health": {
+            "current_value": 70,
+            "format": "observable-signal-guard-outcome-v1",
+            "grants_input_authority": false,
+            "guard_id": "map01-a16",
+            "hard_minimum": 62,
+            "keep_existing_policy": true,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_unchanged",
+            "requires_new_decision": false,
+            "semantic_change_identified": false,
+            "signal_id": "health",
+            "source_age_ms": 200.0,
+            "source_value": 70,
+            "status": "UNCHANGED",
+            "task_success_verified": false
+          }
+        },
+        "reason": "ammo:below_hard_minimum",
+        "requires_new_decision": true,
+        "sequence": 11,
+        "signals": {
+          "ammo": {
+            "binding": {
+              "focus": 7,
+              "geometry": [
+                0,
+                0,
+                1280,
+                720
+              ],
+              "surface": 9
+            },
+            "capture_ns": 1200000000,
+            "format": "observable-signal-v1",
+            "sequence": 11,
+            "signal_id": "ammo",
+            "status": "observed",
+            "value": 0
+          },
+          "health": {
+            "binding": {
+              "focus": 7,
+              "geometry": [
+                0,
+                0,
+                1280,
+                720
+              ],
+              "surface": 9
+            },
+            "capture_ns": 1200000000,
+            "format": "observable-signal-v1",
+            "sequence": 11,
+            "signal_id": "health",
+            "status": "observed",
+            "value": 70
+          }
+        }
+      },
+      "observed_ammo": 0,
+      "pending_source_ammo": 6,
+      "soft_event_count": 0,
+      "turn_answer_eligible": false,
+      "turn_error": "answer belongs to an invalidated observation"
+    },
+    "A16_SOFT": {
+      "event_order": [
+        "turn_started",
+        "typed_observation",
+        "monitor_preserved_pending_turn"
+      ],
+      "executor_admission": null,
+      "final_admission": "REJECTED_ACTION_NOT_CURRENT",
+      "final_reason": "ammo_minimum_failed",
+      "input_authority_admitted": false,
+      "monitor_invalidation": null,
+      "observed_ammo": 4,
+      "pending_source_ammo": 6,
+      "soft_event_count": 1,
+      "turn_answer_eligible": true,
+      "turn_error": null
+    }
+  },
+  "scope": "Synthetic planner and typed observations through frozen current-main V39 monitor, persistent planner adapter, and final action admission. No model inference, game, OS input, executor authority, physical release, recovery, task effect, or live allocation."
+}

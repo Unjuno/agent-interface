@@ -1,0 +1,78 @@
+{
+  "experiment_id": "v39_pr8874_wslc_xvfb_receipt_a27_20261013",
+  "decision": "PASS_METHOD_SCOPED",
+  "checks": {
+    "keypress_then_same_key_release_same_window": true,
+    "independent_keymap_down_then_up": true,
+    "observed_recovery_within_preregistered_two_seconds": true,
+    "owner_cancel_receipt_verified_empty": true,
+    "queued_up_not_attempted_and_not_replayed": true,
+    "terminal_release_empty_and_cache_cleared": true,
+    "owner_stopped_and_xvfb_clean": true,
+    "candidate_exit_and_container_removed": true,
+    "frozen_sources_match": true,
+    "analyzer_did_not_claim_up_measurement": true
+  },
+  "source_checks": [
+    {
+      "path": "research/doom/analyze_map01_direct_retained_input_v2.py",
+      "ok": true,
+      "sha256": "f6ee0bfbc6c4b0cadea7eaaf19caed8836b084adf5636b86f8fdd2554b0cb616"
+    },
+    {
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "ok": true,
+      "sha256": "7c1bb501f1999b58d2d7a4f9d419455e236b96ebadf51651747b19ffd1f6ac11"
+    },
+    {
+      "path": "research/doom/experiment_candidate.py",
+      "ok": true,
+      "sha256": "bd30cc142810db281af793d24a036bff5158711fd56060e08fc0dc0a4ed5b365"
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "ok": true,
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+    },
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "ok": true,
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "ok": true,
+      "sha256": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "ok": true,
+      "sha256": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "ok": true,
+      "sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "ok": true,
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    }
+  ],
+  "raw_sha256": "2ac94b0b86caf024849ace173fc7db43d4319097d95d45d8e0e34c4e1c63c461",
+  "cancel_to_keyrelease_ms": 2.228861,
+  "cancel_to_owner_verified_ms": 2.609937,
+  "analyzer_recomputed": {
+    "schema": "map01-direct-retained-input-v2",
+    "measurement_ready": false,
+    "hold_count": 0,
+    "unmatched_admission_count": 1,
+    "malformed_admission_count": 0,
+    "ambiguous_admission_count": 0,
+    "invalid_release_count": 0,
+    "holds": [],
+    "decision": "FAIL: admission receipts do not form a complete verified release trace"
+  },
+  "scope": "One virtual X11 key cancellation recovery. It establishes bounded X-server release and owner cleanup only; no explicit-UP retention measurement, application response, model, live threat, or task effect."
+}
