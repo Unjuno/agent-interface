@@ -124,6 +124,9 @@ class X11Backend:
             raise X11BackendError('activation target is not a managed client')
         return win
 
+    def _before_activation_request(self,target,window_id):
+        """Scoped subclasses may fence after all request-preparation queries."""
+
     def activate(self, target, timeout_ms, receipt):
         win = self._activation_target(target)
         started = time.monotonic_ns()
@@ -136,6 +139,7 @@ class X11Backend:
             client_type=self.d.intern_atom('_NET_ACTIVE_WINDOW'),
             data=(32, [2, X.CurrentTime, 0, 0, 0]))
         try:
+            self._before_activation_request(target,win.id)
             receipt['request_attempted'] = True
             self.root.send_event(event, event_mask=X.SubstructureRedirectMask | X.SubstructureNotifyMask)
             self.d.flush()

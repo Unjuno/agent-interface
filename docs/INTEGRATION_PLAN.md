@@ -86,6 +86,13 @@ live task and matched comparison.
   from fake-neutral unconfirmed sync/readback, queued work and executor-handle
   failures; real stdio checks pending-before-sync-resumption. This bounds only a
   cooperative await policy, never physical release or independent task effect.
+  Explicit activation now requires a retained source with matching sequence,
+  revision, target surface and host capture clock. Recovery-cleared history
+  cannot be relabelled with the new revision. The actual Python/MCP Fake X path
+  checks a fresh observation succeeds after recovery, while the old one refuses.
+  A final local fence checks pinned context, selected process generation and the
+  original expiry after WM-request preparation. This does not establish current
+  pixels, atomic server acceptance, physical timing or independent task effect.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.
