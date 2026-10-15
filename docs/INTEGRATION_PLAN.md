@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Compiled execution/caller handoff counterexamples](../research/integration/compiled_caller_handoff_20261016/README.md)
+  show that the legacy helper's fixed v2 import does not inherit v3 receipt
+  retention. Twelve inert cells per normal/-O mode retain eight composition
+  failures: outer-effect receipt loss, sink failure after known completion, and
+  loss of completed prefix/current-input uncertainty on unverified release.
+  An import-only v3 control fixes the outer-effect loss, but not the other two
+  boundaries. No runtime is adopted; an explicit composed-path repair is needed
+  before using this helper for a new current-source #57 comparison.
+
 - [Persistent grounding failure accounting](../research/integration/grounding_failure_accounting_20261016/README.md)
   now carries known turn/usage/image/wait metadata through ineligible answers,
   await, validation and result-publication failures into the shared caller.
