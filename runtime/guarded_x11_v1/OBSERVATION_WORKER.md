@@ -44,3 +44,7 @@ MCP reports policy and worker state as `session.observation_worker` and
 Retired observation readers require closing this session and reviewing a fresh
 one. Window review cannot revive a retired reader. A saved observation artifact
 from an abandoned request is retained evidence, not a published owner source.
+The mode adds one capture client alongside the existing target-query client;
+neither is the input connection. Each request carries the current reviewed XID
+and resolves a window resource on the capture client's own connection. Successful
+window review retains this policy; it does not restore a retired worker.
