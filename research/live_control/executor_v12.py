@@ -70,6 +70,10 @@ class Executor(Previous):
             copied = copy.deepcopy(steps)
             self.backend.validate(copied)
             lease.check()
+            bind_source = getattr(self.backend, 'bind_lease_source', None)
+            if bind_source is not None:
+                bind_source(lease, expected_sequence)
+                lease.check()
             attestation = program_sha256(copied)
             self.backend.lease = lease
             worker = threading.Thread(
