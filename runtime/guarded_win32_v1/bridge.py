@@ -12,6 +12,18 @@ class BoundView:
     def emissions(self):
         return self.owner.backend.emissions
 
+    @property
+    def held_keys(self):
+        return self.owner.backend.held_keys
+
+    @property
+    def held_buttons(self):
+        return self.owner.backend.held_buttons
+
+    @property
+    def pending_unicode_ups(self):
+        return getattr(self.owner.backend, 'pending_unicode_ups', ())
+
     def monotonic_ns(self):
         return time.monotonic_ns()
 

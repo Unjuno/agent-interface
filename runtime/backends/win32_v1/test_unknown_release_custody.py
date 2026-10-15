@@ -1,11 +1,13 @@
 """Actual Win32 methods with inert endpoints; construction/native DLL forbidden."""
 import json
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 from runtime.backends.win32_v1 import backend as native
 from runtime.backends.win32_v1.session import Win32RuntimeSession
 from runtime.backends.win32_v1.test_release_ledger import InertAPI
 from runtime.core_v1.contract import SCHEMA_PROGRAM
+from runtime.guarded_win32_v1.bridge import BoundView
 
 
 class UnknownReleaseTests(unittest.TestCase):
@@ -92,6 +94,36 @@ class UnknownReleaseTests(unittest.TestCase):
         self.assertFalse(session.recovery_required)
         self.assertIsNone(recovered['task_success'])
         self.assertIs(recovered['replay_allowed'],False)
+
+    def test_new_wrapper_cannot_bypass_backend_pending_custody(self):
+        backend=self.backend(); first=Win32RuntimeSession(backend)
+        # This pending state belongs to the backend, not just the first wrapper.
+        self.assertFalse(backend.release_all()['verified'])
+        second=Win32RuntimeSession(backend)
+        program={'schema':SCHEMA_PROGRAM,'program_id':'replacement',
+                 'source':{'observation_seq':7,'binding_revision':3},
+                 'authority':{'lease_id':'inert','expires_at_ns':100},
+                 'terminal':{'release_all_required':True},
+                 'ops':[{'op':'key_state','key':'Q','down':True},{'op':'release_all'}]}
+        sent=len(backend.user32.sends)
+        reply=second.dispatch(program,current_observation_seq=7,current_binding_revision=3,now_ns=1)
+        self.assertEqual(reply['error'],'INPUT_RECOVERY_REQUIRED')
+        self.assertIs(reply['input_dispatched'],False)
+        self.assertEqual(len(backend.user32.sends),sent)
+        self.assertTrue(second.recovery_required)
+        self.assertFalse(first.recovery_required)
+
+    def test_bound_view_cannot_hide_native_pending_custody(self):
+        backend=self.backend()
+        session=Win32RuntimeSession(BoundView(SimpleNamespace(backend=backend)))
+        program={'schema':SCHEMA_PROGRAM,'program_id':'bound-replacement',
+                 'source':{'observation_seq':7,'binding_revision':3},
+                 'authority':{'lease_id':'inert','expires_at_ns':100},
+                 'terminal':{'release_all_required':True},
+                 'ops':[{'op':'key_state','key':'Q','down':True},{'op':'release_all'}]}
+        reply=session.dispatch(program,current_observation_seq=7,current_binding_revision=3,now_ns=1)
+        self.assertEqual(reply['error'],'INPUT_RECOVERY_REQUIRED')
+        self.assertEqual(backend.user32.sends,[])
 
 
 if __name__=='__main__': unittest.main()
