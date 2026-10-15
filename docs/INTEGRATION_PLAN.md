@@ -22,6 +22,17 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [X11 custody proposal convergence](../research/integration/x11_custody_convergence_20261016/README.md)
+  recovers 391 public projected members from closed/unmerged #7148, preserving
+  its V4 pass and later conditional false-clear counterexample/suspension.
+  All 22 omitted originals remain explicit. A new saved-only reader verifies
+  published compressed/JSON/member pins; it does not replay old actors or
+  certify omitted native N02 raw. The 32-source main crosswalk has 23 byte
+  matches, six changed files and three missing historical tests. Do not re-adopt
+  the old XI2 patch from its 57-method green suite: strict read access, input
+  source/device incarnation, routing and competing-owner custody remain design
+  constraints for the actual caller's release/recovery path.
+
 - [Win32 custody convergence](../research/integration/win32_custody_convergence_20261016/README.md)
   connects #6934's remaining zero-state and replacement-wrapper fences without
   reverting newer guarded APIs or compiled fixes. Zero GetAsyncKeyState replies
