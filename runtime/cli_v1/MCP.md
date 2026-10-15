@@ -1,5 +1,10 @@
 # Public MCP transport
 
+For optional same-process XID continuity checks in guarded-x11 mode, see
+[direct-window lifecycle evidence](../guarded_x11_v1/WINDOW_LIFECYCLE.md).
+`--guarded-window-lifecycle` requires the process-identity and query-worker flags;
+it has Fake X construction evidence, not native/live qualification.
+
 This optional adapter exposes the existing public `observe` and `dispatch` APIs
 to an MCP host. It returns metadata as text and the selected PNG as a separate
 image block, so the host need not parse base64 out of CLI text. It launches no

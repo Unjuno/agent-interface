@@ -2,8 +2,9 @@
 import queue
 import threading
 import time
+import secrets
 from types import SimpleNamespace
-from Xlib import display
+from Xlib import X, display
 from .process_identity import read_linux_x11_process_identity
 
 
@@ -32,8 +33,56 @@ def focus_within_target(connection, window_id, *, raise_errors=False):
 class X11TargetQueries:
     def __init__(self, display_name):
         self.connection = display.Display(display_name)
+        self._windows = {}
+        self._lifecycle_retired = False
+
+    def _window_incarnation(self, xid):
+        if self._lifecycle_retired:
+            raise QueryUnavailable('window lifecycle reader retired')
+        try:
+            if type(xid) is not int or xid <= 1:
+                raise ValueError('explicit target window required')
+            window = self.connection.create_resource_object('window', xid)
+            if xid not in self._windows:
+                errors = []
+                window.change_attributes(event_mask=X.StructureNotifyMask,
+                                         onerror=lambda *args: errors.append(True))
+                self.connection.sync()
+                if errors:
+                    raise QueryUnavailable('window subscription failed')
+                self._windows[xid] = secrets.token_hex(32)
+            attrs = window.get_attributes()
+            mask = attrs.your_event_mask
+            if type(mask) is not int or not mask & X.StructureNotifyMask:
+                raise QueryUnavailable('direct window subscription missing')
+            self.connection.sync()
+            stable = {X.UnmapNotify, X.MapNotify, X.ReparentNotify,
+                      X.ConfigureNotify, X.GravityNotify, X.CirculateNotify}
+            for _ in range(256):
+                if not self.connection.pending_events():
+                    break
+                event = self.connection.next_event()
+                kind = event.type
+                if type(kind) is not int or event.send_event not in (False, 0):
+                    raise QueryUnavailable('synthetic or malformed lifecycle event')
+                # MappingNotify is delivered independently of window selection.
+                if kind == X.MappingNotify:
+                    continue
+                window_id = getattr(event.window, 'id', event.window)
+                receiver = getattr(event.event, 'id', event.event)
+                if (type(window_id) is not int or window_id not in self._windows
+                        or receiver != window_id or kind not in stable):
+                    raise QueryUnavailable('destroyed window or unqualified lifecycle event')
+            if self.connection.pending_events():
+                raise QueryUnavailable('window lifecycle event budget exceeded')
+            return self._windows[xid]
+        except BaseException as error:
+            self._lifecycle_retired = True
+            raise QueryUnavailable('window lifecycle unavailable; fresh session required') from error
 
     def read(self, operation, xid):
+        if operation == 'window_incarnation':
+            return self._window_incarnation(xid)
         if operation == 'focus_id':
             focus = self.connection.get_input_focus().focus
             return getattr(focus, 'id', focus)
@@ -44,6 +93,7 @@ class X11TargetQueries:
         raise ValueError('unknown target query')
 
     def close(self):
+        self._lifecycle_retired = True
         self.connection.close()
 
 

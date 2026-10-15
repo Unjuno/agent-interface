@@ -116,13 +116,17 @@ class _GuardedBackend(X11Backend):
 
 
 class NativeHandleBridge:
-    def __init__(self, display_name, targets, target, out, *, process_identity=False, query_worker=False, observation_worker=False):
+    def __init__(self, display_name, targets, target, out, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False):
         if type(process_identity) is not bool:
             raise ValueError('process_identity must be a boolean')
         if type(query_worker) is not bool or (query_worker and not process_identity):
             raise ValueError('query_worker requires explicit process_identity=True')
         if type(observation_worker) is not bool or (observation_worker and not query_worker):
             raise ValueError('observation_worker requires explicit query_worker=True')
+        if type(window_lifecycle) is not bool or (window_lifecycle and not query_worker):
+            raise ValueError('window_lifecycle requires explicit query_worker=True')
+        self._window_lifecycle_guard = window_lifecycle
+        self._active_window_identity = None
         self._target_queries = None
         self._observations = None
         self._closed = False
@@ -218,10 +222,11 @@ class NativeHandleBridge:
             self.review_required = True
             raise X11BackendError('guarded input cancellation requested; review required')
 
-    def _target_query(self, operation, xid):
+    def _target_query(self, operation, xid, *, idle_deadline_ns=None):
         context = (self.scope,self.binding_revision,self.backend.targets[self.target].id)
         try:
-            value = self._target_queries.read(operation,xid,deadline_ns=self.deadline,cancelled=self._cancel_requested)
+            deadline = self.deadline if self.active is not None else idle_deadline_ns
+            value = self._target_queries.read(operation,xid,deadline_ns=deadline,cancelled=self._cancel_requested)
             if context != (self.scope,self.binding_revision,self.backend.targets[self.target].id):
                 self._target_queries.close()
                 raise RuntimeError('target query context changed')
@@ -235,15 +240,27 @@ class NativeHandleBridge:
 
     def _binding(self):
         if self._isolated_observation_active():
-            return self._observation_query('binding',None)
-        focus = self.backend.d.get_input_focus().focus
-        geometry = self.backend.geometry(self.target)
-        binding = {"focus": getattr(focus, "id", focus),
+            binding = self._observation_query('binding',None)
+        else:
+            focus = self.backend.d.get_input_focus().focus
+            geometry = self.backend.geometry(self.target)
+            binding = {"focus": getattr(focus, "id", focus),
                 "surface": self.backend.targets[self.target].id,
                 "geometry": [geometry[k] for k in ("x", "y", "width", "height")]}
-        if getattr(self, '_process_identity_guard', False):
-            binding['process_generation'] = self._read_process_identity()
+            if getattr(self, '_process_identity_guard', False):
+                binding['process_generation'] = self._read_process_identity()
+        if getattr(self, '_window_lifecycle_guard', False):
+            binding['window_generation'] = self._read_window_identity()
         return binding
+
+    def _read_window_identity(self):
+        value = self._target_query('window_incarnation',self.backend.targets[self.target].id,
+                                  idle_deadline_ns=time.monotonic_ns()+1_000_000_000)
+        if type(value) is not str or len(value)!=64 or any(c not in '0123456789abcdef' for c in value):
+            self.review_required = True
+            self._target_queries.close()
+            raise X11BackendError('window lifecycle token unavailable')
+        return value
 
     def _isolated_observation_active(self):
         return (getattr(self,'_observations',None) is not None
@@ -288,6 +305,11 @@ class NativeHandleBridge:
         if self.active is None or expected is None or self._read_process_identity() != expected:
             self.review_required = True
             raise X11BackendError('process identity changed or unbound before input press')
+        if getattr(self,'_window_lifecycle_guard',False):
+            expected_window = self._active_window_identity
+            if expected_window is None or self._read_window_identity()!=expected_window:
+                self.review_required = True
+                raise X11BackendError('window incarnation changed or unbound before input press')
 
     def _focus_within_target(self, window_id=None):
         """Read-only X11 ancestry, not title/PID similarity or input authority."""
@@ -299,13 +321,23 @@ class NativeHandleBridge:
 
     def observe(self):
         isolated = self._isolated_observation_active()
+        lifecycle = getattr(self,'_window_lifecycle_guard',False)
         try:
+            before_window = self._read_window_identity() if lifecycle else None
             if isolated:
                 observation,image = self._observation_query('capture',dict(
                     sequence=self.sequence+1,revision=self.binding_revision))
             else:
                 observation,image = acquire_observation(self.backend,self.target,self._binding,
                     self.sequence+1,self.binding_revision,self._save,observe=observe_in_session,session=self.session)
+            if lifecycle:
+                if self._read_window_identity()!=before_window:
+                    raise CaptureBindingChanged('window incarnation changed during capture')
+                observation['pointer_binding']['window_generation'] = before_window
+                if isolated:
+                    self._observation_query('qualified',observation)
+                    if self._read_window_identity()!=before_window:
+                        raise CaptureBindingChanged('window incarnation changed during qualified persistence')
         except CaptureBindingChanged:
             self.review_required = True
             raise
@@ -403,6 +435,7 @@ class NativeHandleBridge:
         self.active = ('activation', None)
         self.deadline = expires_at_ns
         self._active_process_identity = source['pointer_binding'].get('process_generation')
+        self._active_window_identity = source['pointer_binding'].get('window_generation')
         self._activation_context = (self.scope,current_binding_revision,source_sequence,window_id,expires_at_ns,source)
         try:
             # Any thrown exception here may follow a WM request. Keep editing
@@ -424,6 +457,7 @@ class NativeHandleBridge:
             self.active = None
             self.deadline = None
             self._active_process_identity = None
+            self._active_window_identity = None
             self._activation_context = None
 
     def _activation_evidence(self,window_id,sequence,revision):
@@ -438,6 +472,10 @@ class NativeHandleBridge:
             digest = source['pointer_binding'].get('process_generation')
             if type(digest) is not str or len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest):
                 raise X11BackendError('retained activation process generation required')
+        if getattr(self,'_window_lifecycle_guard',False):
+            digest = source['pointer_binding'].get('window_generation')
+            if type(digest) is not str or len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest):
+                raise X11BackendError('retained activation window incarnation required')
         return deepcopy(source)
 
     def _check_activation_context(self,target,window_id):
@@ -727,6 +765,7 @@ class NativeHandleBridge:
             raise ValueError('keyboard continuation requires explicit keyboard input')
         self.active = (alias, offset)
         self._active_process_identity = None
+        self._active_window_identity = None
         self.checks = []
         self.additional_checks = []
         self.deadline = time.monotonic_ns() + 5_000_000_000
@@ -738,6 +777,8 @@ class NativeHandleBridge:
                 point = self.check("before_admission")["point"]
                 if getattr(self, '_process_identity_guard', False):
                     self._active_process_identity = self.history[self.sequence][0]['pointer_binding']['process_generation']
+                if getattr(self, '_window_lifecycle_guard', False):
+                    self._active_window_identity = self.history[self.sequence][0]['pointer_binding']['window_generation']
                 if time.monotonic_ns() >= self.deadline:
                     raise X11BackendError('native target guard lease expired before dispatch')
             except Exception as error:
@@ -777,3 +818,4 @@ class NativeHandleBridge:
             self.active = None
             self.deadline = None
             self._active_process_identity = None
+            self._active_window_identity = None

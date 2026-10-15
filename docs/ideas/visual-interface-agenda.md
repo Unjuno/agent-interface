@@ -1,5 +1,11 @@
 # 視覚インターフェースの研究実行計画
 
+2026-10-16：標準guarded MCP callerへ明示的な
+[window lifecycle option](../../runtime/guarded_x11_v1/WINDOW_LIFECYCLE.md)を接続した。
+[Fake X構成結果](../../research/live_control/window_lifecycle_local_checks_20261016/README.md)で、
+process-onlyの旧alias受理と、対象自身への購読によるDestroy拒否・prefix解放を区別した。
+実機の購読・最終check/use競合、MAP01/V12への移植、task effect・回復・効率は未検証であり、#5全体は完了しない。
+
 対象：[#3](https://github.com/Unjuno/agent-interface/issues/3)、[#5](https://github.com/Unjuno/agent-interface/issues/5)、[#8](https://github.com/Unjuno/agent-interface/issues/8)。[元の仮説と制約](visual-interface.md)を維持し、既存成果との照合から実験へ進める。3件を保存しただけで研究対象から外さない。
 
 ## 最初に行うこと

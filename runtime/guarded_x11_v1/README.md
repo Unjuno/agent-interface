@@ -1,5 +1,10 @@
 # Scoped X11 Python API
 
+Optional [direct-window lifecycle evidence](WINDOW_LIFECYCLE.md) adds a separate
+same-process XID continuity check to the process/query-worker policy. It is
+qualified with Fake X through the standard MCP caller; native behavior and the
+final check/use race remain unqualified.
+
 The portable runtime includes the same scoped target handles and guarded input
 implementation used by the native research callers. This is an explicit Linux/X11
 API requiring Pillow and python-xlib. It does not open a connection on import and
