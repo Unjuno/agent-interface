@@ -19,6 +19,12 @@ It adds no requirement to read all 1,678 Issues before working.
 
 ## What a worker leaves
 
+The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
+records two same-focus fake admissions despite probe-supplied stale generation
+metadata. This is separate from public guarded MCP's process-identity path.
+The next MAP01 integration must preserve V12 release receipts and avoid blocking
+its cleanup writer on a new identity read; see the source/caller seam in that result.
+
 - The owning Issue and narrow question; exact branch/source and additive output.
 - Executed command/test, result scope, retained raw/conditions/audit as applicable.
 - Adoption/repair/rejection decision and an actual next action or named missing gate.
