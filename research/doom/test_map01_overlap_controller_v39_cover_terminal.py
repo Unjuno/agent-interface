@@ -197,6 +197,7 @@ class CoverTerminalTests(unittest.TestCase):
 
             replacements = [
                 patch.object(sys, "argv", argv),
+                patch.object(controller, "app_server_command", return_value=["offline-app-server"]),
                 patch.object(controller, "CodexAppServerClient", return_value=planner),
                 patch.object(controller, "PersistentPlannerAdapter", return_value=planner),
                 patch.object(controller, "ThreadPoolExecutor", Pool),

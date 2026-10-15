@@ -701,17 +701,41 @@ def app_server_command():
                      os.environ.get("HOMEDRIVE", "") + os.environ.get("HOMEPATH", ""))
         codex_home = Path(user_home) / ".codex" if user_home else Path.home() / ".codex"
     config = codex_home / "config.toml"
-    configured_mcps = []
-    if config.is_file():
-        try:
-            import tomllib
-            with config.open("rb") as source:
-                configured_mcps = list(tomllib.load(source).get("mcp_servers", {}))
-        except (OSError, ValueError):
-            configured_mcps = []
+    import tomllib
+    try:
+        with config.open("rb") as source:
+            configured_mcps = tomllib.load(source).get("mcp_servers", {})
+    except FileNotFoundError:
+        configured_mcps = {}
+    if (type(configured_mcps) is not dict or any(
+            type(name) is not str or not name or type(server) is not dict
+            for name, server in configured_mcps.items())):
+        raise ValueError("MCP configuration must contain named server tables")
     for name in configured_mcps:
-        command += ["-c", f"mcp_servers.{name}.enabled=false"]
+        command += ["-c", f"mcp_servers.{json.dumps(name)}.enabled=false"]
     return command
+
+
+def app_server_command_for_run(output):
+    """Retain bounded pre-start custody without configuration/exception text."""
+    try:
+        return app_server_command()
+    except Exception as error:
+        receipt = {
+            "schema": "map01-mcp-preflight-failure-v1",
+            "stage": "codex_mcp_configuration_read",
+            "status": "failed",
+            "error": {"type": type(error).__name__,
+                      "reason": "configuration_unavailable"},
+        }
+        try:
+            (output / "mcp-preflight-failure.json").write_text(
+                json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8")
+        except Exception as receipt_error:
+            error.add_note("MCP preflight failure receipt could not be written: " +
+                           type(receipt_error).__name__)
+        raise
 
 
 def session_command(args, runtime):
@@ -1133,7 +1157,7 @@ def main():
         parser.error(str(error))
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
-        app_server_command(), cwd=REPO,
+        app_server_command_for_run(args.out), cwd=REPO,
         journal_path=args.out / "planner-protocol.jsonl")
     atexit.register(planner_client.close)
     with ControllerFailureCleanup(planner_client, args.out) as failure_cleanup:

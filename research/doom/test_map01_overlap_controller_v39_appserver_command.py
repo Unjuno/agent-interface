@@ -84,7 +84,7 @@ class AppServerCommandTests(unittest.TestCase):
         self.assertEqual(command[:3], [executable, "app-server", "--stdio"])
         for feature in controller.DISABLED_FEATURES:
             self.assertIn(feature, command)
-        self.assertIn("mcp_servers.sample_server.enabled=false", command)
+        self.assertIn('mcp_servers."sample_server".enabled=false', command)
         self.assertNotIn("mcp_servers={}", command)
         self.assertNotIn(controller.CLI, command)
 
