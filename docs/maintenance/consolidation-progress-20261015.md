@@ -25,24 +25,32 @@
 
 ## ローカル作業ツリーの保全
 
-14作業ツリーを確認した。primary mainと整理用作業ツリーはクリーンで、primary mainも上記基準へfast-forwardした。クリーンな作業ツリーにも未統合commitはあり、削除可否は別途確認する。
+14作業ツリーを再確認し、全件で追跡変更・未追跡ファイルがゼロになった（2026-10-15 12:32 UTC、基準main `734543f4488b30b1dcae52f7f9d6dd139db867fe`）。primary mainもその基準へfast-forward済み。クリーンな作業ツリーにもローカル保全commit・無視対象・未採用の研究候補はあり、全成果のmain採用や削除可能性とは別である。
 
 `pr8771-currentmain-integration`にあった11追跡変更と400未追跡ファイルは、元base `993f96e61a5a5f44496295836097dc68b1f1255f`を親とするローカル保全commit `50a863b314a3454d6b8e293d9d6523ff943c0808`へ保存した。保全refは`preserve/vizdoom-local-state-20261015`。増分bundleのSHA256は`8d1b11d8c42b048169fa58f0a1bbb068ca6967b8960fe119253816c4c4036c89`。411ファイルと無視対象456ファイルを再照合し、ソースを書き換えずindex/branchを保全commitへ揃えた。作業ツリーはクリーンだが、世代確認・scorer・過去実験はmain未採用の候補である。
 
-残る4作業ツリーも、未保存・無視対象のファイル、binary diff、元HEAD/statusを外部ZIPへ保全し、全ファイルをハッシュ照合した。元ファイル・HEAD・statusは変更していない。
+残る4作業ツリーも、未保存・無視対象のファイル、binary diff、元HEAD/statusを外部ZIPへ保全し、全ファイルをハッシュ照合した。その後、0バイトのcontrollerだけを自身の元HEADから復旧した。他の3作業ツリーはソースを書き換えずローカル保全commitへindex/branchを揃え、検証済み増分bundleも保存した。Gitによるtext正規化とは別に、正確なraw原本はZIPへ保持している。
 
 | 作業ツリー名 | 未保存差分 | 次の処理 |
 |---|---|---|
-| issue59-v39-renewal-invalidation-a01 | 未追跡7ファイル。無視対象込み54ファイルを保全 | probe本体・初回結果はmainと一致（sourceは改行差のみ）。古いREADME/checksumの独自原本も外部保全済み。作業ツリーの引退処理はまだ行っていない。 |
-| issue59-current-main-live-prep | 未追跡27ファイル。無視対象込み101ファイルを保全 | 既存mainと一致する記録と、未公開708ca記録を区別し、後者を#8932で追加。旧READMEの時点付き状態は現行割当として使わない。作業ツリーの引退処理は未実施。 |
-| issue59-main-576d | controllerの追跡変更1件。現在0バイト、元HEADから1,435行減 | 0バイト原本も保全済み。意図した変更か中断による破損かを履歴と照合し、判定前に完了扱いしない。 |
-| issue59-v39-guard-crossing-replay-a01-20261008 | 追跡変更5件、未追跡4件。無視対象込み16ファイルを保全 | audit v2/v3、freeze変更と公開済み証拠の一致を確認して統合を判断する。 |
+| issue59-v39-renewal-invalidation-a01 | 元の未追跡7ファイル。無視対象込み54ファイルを保全 | probe本体・初回結果はmainと一致（sourceは改行差のみ）。保全commit `fb85369328f20caf8d079c688d5cfa0db11320d6`でクリーン。古いREADME/checksum原本も保全済み。 |
+| issue59-current-main-live-prep | 元の未追跡27ファイル。無視対象込み101ファイルを保全 | 既存mainの記録と未公開708ca記録を区別し、後者は#8932で追加。保全commit `dc5c1bc3721ad03ccb749fdb04bd2c97d97c98a6`でクリーン。旧状態は現行割当として使わない。 |
+| issue59-main-576d | controllerの元追跡変更1件。0バイト原本と差分を保全 | 元HEAD `2d16f5ff6387e3cdc8a6bb985c1b7a55bdcc0a34`から83,848バイトを復旧。SHA256 `c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95`と構文を確認。HEAD不変でクリーン。 |
+| issue59-v39-guard-crossing-replay-a01-20261008 | 元の追跡変更5件、未追跡4件。無視対象込み16ファイルを保全 | 保全commit `215f48237e91e880a4170eb5ef8347db4d25c81d`でクリーン。監査v2/v3の候補は未採用。mainの後続A02・source attributionと照合し、古い変更で上書きしない。 |
 
 外部保全の所在は、この作業ホストの`C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\`。`vizdoom-dirty-preservation/PRESERVATION.json`、`CLEAN_WORKTREE.json`、`snapshot.bundle`と、`remaining-worktree-preservation/SUMMARY.json`、各作業ツリーの`MANIFEST.json`/`files.zip`/`changes.patch`に復元情報がある。これらはローカル保全であり、この文書だけで他ホストから復元できる公開rawではない。
 
+3件の保全ref・bundle hashは`remaining-worktree-preservation/FINALIZED_SNAPSHOTS.json`と各`SNAPSHOT.json`、controller復旧は`issue59-main-576d/RESTORATION.json`に記録した。作業ツリー自体は削除していない。新しいワーカーの基準にはprimary mainを使い、保全commitを採用実装と取り違えない。
+
+## 同じ実験を持つPRの収束
+
+#8801と#8814は同じhealth-boundary実験のrawを持つが、前者のfinal-admission mutation追試と後者のsource revalidationは独自だった。[統合説明](../../research/doom/v39_currentmain_health_guard_boundary_a01_20261009/CONSOLIDATION_20261015.md)に両方を保持し、元checksum20件（原testを明示的に履歴へ対応付け）、当時のruntime source20件、raw監査13件を照合した。
+
+現行mainに一致するruntime sourceは15/20であり、当時の「current main」を今日の証明として使わない。保存rawの監査テストは他の同名moduleのimportと現在sourceへの誤依存を修正し、誤ったsource hashの拒否も含む6件が通常・最適化Pythonで成功した。元candidate・raw・freeze・監査は再実行/上書きしていない。
+
 ## 次の有限な整理
 
-1. 上の4作業ツリーの差分を既存成果へ照合し、独自の未公開証拠を届ける。消失や0バイト化を空の変更として消さない。
+1. ローカル候補のうち未採用の世代確認・scorer・監査差分を後続成果と照合し、独自の残差だけを統合する。保全commitだけで研究完了とはしない。
 2. #8701を保管元の保存済みrawで監査し、結果に従って統合または修理する。
 3. 未判定Issueを一つの研究テーマずつ読み、仮説・既存結果・依存・次の実験を[整理計画](../REPOSITORY_CONSOLIDATION.md)へ接続する。保存だけで閉じない。
 4. 各PR/branchの固有差分と依存を照合し、検証済み統合と重複解消を進める。別作業ツリーのHEADがmainに含まれるだけでは、未保存・無視対象・現在の利用まで消してよい根拠にならない。
