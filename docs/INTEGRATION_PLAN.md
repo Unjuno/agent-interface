@@ -109,6 +109,13 @@ single-pair coalescing checks. Current-caller early hard-health invalidation is
 qualified offline; post-fix live cancellation timing, recovery and task success
 remain unproved.
 
+The separate [retained delay comparison](../research/doom/health_typed_release_delay_a01_20261012/CUSTODY_20261016.md)
+preserves ten historical fake-X pairs and one live-trace context. Twenty omitted
+stdout/stderr logs were recovered and matched to saved JSON; the read-only
+consistency audit checks source/raw/order/release fields. Its injected-delay
+durations are recorder-provided, with no independent key-down timestamp retained.
+It does not measure current-source performance or integrated efficiency.
+
 An archive merge, unit PASS or closed Issue is not integrated task success.
 Keep [#57](https://github.com/Unjuno/agent-interface/issues/57),
 [#59](https://github.com/Unjuno/agent-interface/issues/59) and

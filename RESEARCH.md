@@ -4,6 +4,10 @@ On a private Xvfb server, two independent X clients injected overlapping presses
 
 This supports the concern that separate client connections to one virtual XTEST keyboard do not isolate overlapping same-key holds. It does not test separately created devices, the full Agent Interface runtime, a production GUI/game, physical input, model behavior, useful feedback, recovery, or task success. The outer shell's exit 1 occurred after candidate completion when its result-copy destination was missing; unchanged raw bytes were copied afterward and hash-verified, with no candidate rerun. See [the complete plan, frozen package, raw result, audit, and scope limits](research/doom/map01_v39_x11_device_cross_client_a01_20261005/RUN_RESULT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
 
+# Issue #59 T0 A01 — typed-health early-dispatch occupancy comparison (2026-10-12)
+
+`PASS_CONSTRUCTION_SCOPED`: ten paired WSLc CPU runs compared immediate typed-health handling with a fixed 150.031473 ms wait taken from the maximum of 218 retained typed-to-artifact delays. Median fake-X key-down→verified-owner-release was 2.071 ms vs 150.484 ms; every pair favored early handling (median reduction 148.408 ms). All 20 cases hard-invalidated, cancelled before planner interruption, verified empty release, and rejected the pending answer. The wait was injected; this is not the native artifact pipeline, physical input, GUI/game, threat response, useful feedback, recovery, or task-success evidence. See the [frozen protocol, raw results and audit](research/doom/health_typed_release_delay_a01_20261012/REPORT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)
