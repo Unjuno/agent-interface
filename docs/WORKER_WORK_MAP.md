@@ -42,6 +42,13 @@ effects and wrong-input refusal are qualified within that familiar recipe;
 joint usage is not a matched route cost comparison. Reuse the recipe and identify
 the missing #57 phases rather than repeat its four consumed cases.
 
+For caller accounting, use the [current-main convergence crosswalk](../research/integration/caller_current_main_convergence_20261016/README.md).
+The closed #7289/#7310 repair family is already composed into main; 76 selected
+local methods pass normal/-O at its pinned source. Reuse that caller and qualify
+the actual task/provider/effect adapters rather than rebuilding the old union or
+reviving its historical reviewer quorum. Synthetic accounting and compiled-core
+refusal checks do not establish live task success or matched economics.
+
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
 metadata. This is separate from public guarded MCP's process-identity path.
