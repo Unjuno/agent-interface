@@ -101,6 +101,14 @@ live task and matched comparison.
 
 ## Completion and history
 
+Health-only MAP01 cover now consumes validated early typed health via the current
+controller rather than requiring a full artifact first. The
+[current-main integration record](../research/doom/results/map01-v39-health-only-typed-monitor-a01-20261012/INTEGRATION_20261016.md)
+retains the original four-sample replay and adds advancing capture-time and
+single-pair coalescing checks. Current-caller early hard-health invalidation is
+qualified offline; post-fix live cancellation timing, recovery and task success
+remain unproved.
+
 An archive merge, unit PASS or closed Issue is not integrated task success.
 Keep [#57](https://github.com/Unjuno/agent-interface/issues/57),
 [#59](https://github.com/Unjuno/agent-interface/issues/59) and
