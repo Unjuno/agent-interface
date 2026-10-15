@@ -112,9 +112,21 @@ After loss of target focus, Python callers may explicitly request
 `bridge.activate_window(window_id=..., source_sequence=...,
 current_binding_revision=..., expires_at_ns=..., timeout_ms=...)`; MCP callers
 use `interface_guarded_activate_window` with the same required fields. Only the
-currently registered window and latest delivered source/current revision are
-accepted. The caller supplies its expiry on `interface_clock`'s execution-host
-clock. The existing core lease/capability checks still apply.
+currently registered window and latest retained bridge source/current revision
+are accepted. The retained source must match its sequence, revision, target
+surface and execution-host capture clock. Recovery-cleared history cannot be
+relabelled with the new revision: explicitly observe again first. Retention does
+not establish model receipt or current pixels. The caller supplies its expiry
+on `interface_clock`'s execution-host clock. The existing core lease/capability
+checks still apply.
+
+Immediately before sending the WM request, after request preparation, the bridge
+rechecks the pinned source, scope, revision, target and original caller expiry.
+When process identity is selected, it also rechecks the source's process
+generation. Focus may differ because this operation explicitly restores focus.
+This adds no observation-age TTL and never extends the caller's expiry. These
+are local request fences, not atomic server acceptance or a physical timing
+guarantee; a process can still change after the final check.
 
 Activation sends an EWMH request, not text/clicks. Successful or uncertain
 activation blocks guarded editing until explicit window review. Review that

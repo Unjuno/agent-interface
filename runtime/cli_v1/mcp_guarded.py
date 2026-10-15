@@ -372,9 +372,12 @@ def register_guarded_tools(server, submit, *, cancel=None):
             review_after_activation: StrictBool=False) -> CallToolResult:
         """Explicitly activate the registered target through ordinary admission.
 
-        Requires exact target window ID, latest delivered source sequence,
+        Requires exact target window ID, latest retained bridge source sequence,
         current binding revision and caller-supplied expiry on interface_clock's
-        host clock. EWMH activation must be supported by the window manager.
+        host clock. Recovery-cleared history requires a new observation. Pinned
+        source context, selected process generation and original expiry are
+        rechecked before the WM request; this is not atomic server acceptance
+        or a current-pixel guarantee. EWMH must be supported by the window manager.
         Sends no text/click. Success is a momentary focus
         check, not visual or task confirmation. After admitted or uncertain
         activation, explicitly review the window with guarded_review_window,
