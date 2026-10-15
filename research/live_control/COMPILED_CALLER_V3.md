@@ -1,5 +1,11 @@
 # Compiled execution through the adaptive v3 caller
 
+The [current #7954 convergence](../integration/compiled_callback_convergence_20261016/README.md)
+adds returned core receipts for ordinary verifier/post-input journal failures.
+This lets the helper retain known prefix/release where the old core threw before
+returning. Other malformed-return/adapter exceptions and raw publication faults
+remain outside that repair; a null receipt is still possible on those paths.
+
 Use `integrated_efficiency_compiled_execution_v2.py` for the explicit v3
 composition. Legacy `integrated_efficiency_compiled_execution_v1.py` retains its
 v2 contract; old frozen sources/results are not migrated by importing this file.

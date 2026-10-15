@@ -35,6 +35,12 @@ distinguishes stack merges from main integration and lists the completion criter
 
 ## What a worker leaves
 
+The [#7954 callback convergence](../research/integration/compiled_callback_convergence_20261016/README.md)
+now retains verifier/post-input journal failures as typed core receipts without
+losing prefix/release or the second failure cause. Its old six files and tests
+are preserved; use the current repair rather than reapply the old core snapshot.
+Pre-input propagation, malformed returns and durable publication remain separate.
+
 For Calc transfer/economics, start with the
 [saved four-case crosswalk](../research/live_control/calc_saved_convergence_20261016/README.md)
 and final publication, rather than the historical partial README. Saved workbook
