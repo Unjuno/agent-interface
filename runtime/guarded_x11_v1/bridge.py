@@ -238,7 +238,8 @@ class NativeHandleBridge:
         context = (self.scope,self.binding_revision,self.backend.targets[self.target].id,
                    self.sequence,deepcopy(self.active),self.deadline)
         try:
-            value = self._observations.read(operation,request,deadline_ns=self.deadline,cancelled=self._cancel_requested)
+            value = self._observations.read(operation,dict(window_id=context[2],payload=request),
+                deadline_ns=self.deadline,cancelled=self._cancel_requested)
             if context!=(self.scope,self.binding_revision,self.backend.targets[self.target].id,
                          self.sequence,self.active,self.deadline):
                 raise RuntimeError('observation context changed')

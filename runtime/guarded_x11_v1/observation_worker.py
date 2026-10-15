@@ -90,6 +90,11 @@ class X11ObservationReader:
             process_generation=read_linux_x11_process_identity(backend.d,backend.targets[self.target].id))
 
     def read(self,operation,request):
+        xid = request['window_id']
+        if type(xid) is not int or xid<=0: raise ValueError('current context target required')
+        if self.backend.targets[self.target].id!=xid:
+            self.backend.targets[self.target] = self.backend.d.create_resource_object('window',xid)
+        request = request['payload']
         if operation=='binding': return self._binding()
         if operation=='verify':
             callback,stage,source,image = request

@@ -32,6 +32,9 @@ class ObservationWorkerTests(unittest.TestCase):
     def exercise(self,boundary,trigger):
         from .observation_worker import X11ObservationReader
         fake = FakeX(self)
+        focus = [20]
+        fake.backend.d.get_input_focus = lambda:SimpleNamespace(focus=SimpleNamespace(id=focus[0]))
+        fake.backend.d.create_resource_object = lambda kind,xid:SimpleNamespace(id=xid)
         fake.backend.d.get_display_name = lambda:':fake-qualified'
         entered,resume,closed = [threading.Event() for _ in range(3)]
         now = [1_000_000]
@@ -44,6 +47,8 @@ class ObservationWorkerTests(unittest.TestCase):
             if boundary=='capture' and 1 in fake.down: gate()
             return SimpleNamespace(data=fake.raw,depth=24,visual=1)
         backend = reader_backend(fake,image)
+        backend.d.get_input_focus = lambda:SimpleNamespace(focus=SimpleNamespace(id=focus[0]))
+        backend.d.create_resource_object = lambda kind,xid:SimpleNamespace(id=xid)
         backend.d.close = lambda:closed.set()
         saved = X11ObservationReader._save
         def save(reader,name,value):
@@ -74,7 +79,7 @@ class ObservationWorkerTests(unittest.TestCase):
             worker = threading.Thread(target=invoke)
             worker.start()
             try:
-                if boundary!='healthy':
+                if boundary not in ('healthy','retarget'):
                     self.assertTrue(entered.wait(2),(results,errors))
                     sequence = bridge.sequence
                     self.assertEqual(fake.down,{1})
@@ -100,11 +105,21 @@ class ObservationWorkerTests(unittest.TestCase):
                     self.assertEqual(results[0]['status'],'completed')
                     self.assertEqual(fake.emissions,[(2,1),(2,2),(3,2),(3,1)])
                     self.assertEqual(fake.down,set())
+                    if boundary=='retarget':
+                        focus[0] = 21
+                        reviewed = bridge.review_window(21)
+                        self.assertEqual(reviewed['status'],'reviewed',reviewed)
+                        offset = bridge.mint('reviewed',reviewed['observation']['sequence'],[8,8],region_size=[12,12])
+                        with bridge.cancellation_scope('new-call'):
+                            second = bridge.keyboard('reviewed',offset,tail=tail)
+                        self.assertEqual(second['status'],'completed',second)
+                        self.assertEqual(backend.targets['app'].id,21)
                 self.assertNotIn(worker.ident,reader_threads)
             finally:
                 resume.set();worker.join(5);bridge.close()
 
     def test_healthy(self): self.exercise('healthy','none')
+    def test_reviewed_new_window_uses_current_target_on_reader_client(self): self.exercise('retarget','none')
     def test_capture_cancel(self): self.exercise('capture','cancel')
     def test_capture_expiry(self): self.exercise('capture','expiry')
     def test_persistence_cancel(self): self.exercise('persistence','cancel')

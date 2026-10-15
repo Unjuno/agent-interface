@@ -613,3 +613,12 @@ needed one explicit final observation because the first final frame was stale.
 separate initial partial-presentation STOP. These cases do not qualify generic
 render reliability, wait defaults, speed or token savings, and do not certify
 provider MCP conversion of the Python route.
+
+## Active visual-check worker
+
+Explicit `--guarded-observation-worker` additionally selects
+[active visual-check isolation](../guarded_x11_v1/OBSERVATION_WORKER.md), requiring
+the existing guarded process-identity and query-worker flags. It keeps active
+capture/observation persistence on a separate read-only client and fences late
+replies before source publication. Defaults retain existing behavior. This is
+Fake X qualified construction, not physical release, live recovery or task success.

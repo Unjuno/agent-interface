@@ -33,3 +33,14 @@ operations, pointer transport or arbitrary trusted caller behavior. Local fences
 are not atomic with server acceptance. Live server/PID namespace, physical
 release, independent application effect, finite recovery and efficiency remain
 unqualified. Existing explicit review/recovery policies remain in force.
+
+Select explicitly in Python with `NativeHandleBridge(...,
+process_identity=True, query_worker=True, observation_worker=True)`, or at
+standard MCP startup with `--session-mode guarded-x11
+--guarded-process-identity --guarded-query-worker --guarded-observation-worker`.
+The corresponding server constructor option is `guarded_observation_worker=True`.
+MCP reports policy and worker state as `session.observation_worker` and
+`session.observations`; cancellation still uses the original guarded call ID.
+Retired observation readers require closing this session and reviewing a fresh
+one. Window review cannot revive a retired reader. A saved observation artifact
+from an abandoned request is retained evidence, not a published owner source.
