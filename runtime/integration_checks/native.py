@@ -51,6 +51,7 @@ SUITES["protocol"].append("test_compiled_caller_handoff_v2")
 SUITES["harness"].append("test_compiled_form_guarded_x11")
 SUITES["harness"].append("test_compiled_native_caller_composition")
 SUITES["harness"].append("runtime.guarded_x11_v1.test_compiled_native_dependencies")
+SUITES["harness"].append("test_compiled_observation_cancellation")
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)

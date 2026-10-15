@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Compiled semantic callback cancellation](../research/integration/compiled_observation_cancellation_20261016/README.md)
+  connects the explicit observation-worker option to the actual v3 caller and
+  native semantic guard. In six Fake X conditions, isolated cancel/expiry returns
+  verified fake cleanup before the blocked reader resumes; synchronous controls
+  remain held/live until resume. Prefix1 and late admission refusal survive.
+  The 391-method selection passes normal/-O. Default synchronous behavior,
+  blocked input/release transport, native bounds and real effects remain open.
+
 - [Fresh native compiled dependency repair](../research/integration/compiled_native_dependency_repair_20261016/README.md)
   connects admitted symbol identity/dependencies to fresh native input guards
   for keyboard/click/move, preserving original deadlines and release bypass.

@@ -84,6 +84,12 @@ The 385-method selection and original/repaired caller controls cover the local
 gap; real perception accuracy, capture-to-press changes and bounded semantic
 recovery remain to qualify. Do not infer live semantic safety from #8980 alone.
 
+The [compiled callback isolation check](../research/integration/compiled_observation_cancellation_20261016/README.md)
+qualifies selected Fake X cancel/expiry composition with observation_worker=True;
+the synchronous control still holds input until its callback returns. Reuse this
+distinction for blocked input/release transport work. Neither route establishes
+native physical timing, process-death cleanup or independent semantic recovery.
+
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
 metadata. This is separate from public guarded MCP's process-identity path.
