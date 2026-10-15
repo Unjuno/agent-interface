@@ -1,5 +1,10 @@
 # Adaptive acquisition caller v3: local-first semantic repair
 
+Current-source navigation (2026-10-16): the [caller convergence crosswalk](../integration/caller_current_main_convergence_20261016/README.md)
+records the already-composed #7289/#7310 repair family, later effect receipts,
+76 selected normal/-O local methods and the remaining live provider/task-effect
+gates. The original evidence count below is historical, not the current total.
+
 ## Problem
 
 The retained matched v3 comparison established one narrow case in which a

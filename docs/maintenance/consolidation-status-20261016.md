@@ -43,6 +43,19 @@ A11の初回FAILとA12の保存済みCPU結果を原48ファイルのまま保�
 
 ### 後続の統合・証拠所在の照合
 
+後続のmain `de7bcbf86316b312e3a34c9b15b07336caaa14ff`では、#8971の保存専用X11候補保全、
+#8972の割込み時cleanup、#8973のMCP割込み証拠、#8974の同一backend内session回復custodyを統合済み。
+各packetのFake X・単一process等の限定を維持し、実機の有限解放やtask effectの達成とはしない。
+このmainで14作業ツリーの追跡変更・未追跡ファイルがゼロであることを確認したが、
+無視対象・他者の所有権・リポジトリ全体の整理完了を証明するものではない。
+
+[caller一族の現行照合](../../research/integration/caller_current_main_convergence_20261016/README.md)では、
+#7289/#7310はclosedで、両headと合成commitがこのmainの祖先であることを確認した。
+PR自体のmergeとは区別し、現行callerで19モジュール・76テストを通常/-Oで実行、
+各221保存行の会計・完了prefix・未検証効果の整合を別読取処理で確認した。
+古いcaller合成待ちやレビュー人数待ちは現在の不足ではない。#57はアプリ効果・実provider会計・
+同条件比較と移植の未達を維持し、新たなIssue closureは行わない。
+
 main `2b9df51535c7662d76ac29477bb14e2219eb9865`までに、次の有限な整理を進めた。
 
 | 対象 | 現在の処理と残差 |
