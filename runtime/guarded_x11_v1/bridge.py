@@ -17,6 +17,7 @@ import uuid
 from PIL import Image
 from .handles import TargetHandleStore
 from .history import ObservationHistory
+from .process_identity import read_linux_x11_process_identity
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
@@ -41,10 +42,16 @@ def read_window_title(connection, window):
 class _GuardedBackend(X11Backend):
     def _before_input_press(self):
         # Focus, pointer and key mapping queries can consume the original
-        # deadline. Keep this last fence local: no further server round trip.
+        # deadline. The opt-in identity read has its own final local fence.
         if (self.owner.active is not None and self.owner.deadline is not None
                 and time.monotonic_ns() >= self.owner.deadline):
             raise X11BackendError('native target guard lease expired before input press')
+        if getattr(self.owner, '_process_identity_guard', False):
+            self.owner._verify_process_identity_for_press()
+            # The identity query itself may consume the original deadline.
+            if (self.owner.deadline is None
+                    or time.monotonic_ns() >= self.owner.deadline):
+                raise X11BackendError('native target guard lease expired during process identity check')
 
     def key_state(self, key, down):
         # Text expands to key chords, so check each new press, including a
@@ -100,7 +107,11 @@ class _GuardedBackend(X11Backend):
 
 
 class NativeHandleBridge:
-    def __init__(self, display_name, targets, target, out):
+    def __init__(self, display_name, targets, target, out, *, process_identity=False):
+        if type(process_identity) is not bool:
+            raise ValueError('process_identity must be a boolean')
+        self._process_identity_guard = process_identity
+        self._active_process_identity = None
         self.out = Path(out)
         self.out.mkdir(parents=True, exist_ok=False)
         self.target = target
@@ -135,9 +146,30 @@ class NativeHandleBridge:
     def _binding(self):
         focus = self.backend.d.get_input_focus().focus
         geometry = self.backend.geometry(self.target)
-        return {"focus": getattr(focus, "id", focus),
+        binding = {"focus": getattr(focus, "id", focus),
                 "surface": self.backend.targets[self.target].id,
                 "geometry": [geometry[k] for k in ("x", "y", "width", "height")]}
+        if getattr(self, '_process_identity_guard', False):
+            binding['process_generation'] = self._read_process_identity()
+        return binding
+
+    def _read_process_identity(self):
+        try:
+            value = read_linux_x11_process_identity(
+                self.backend.d, self.backend.targets[self.target].id)
+            if (type(value) is not str or len(value) != 64
+                    or any(c not in '0123456789abcdef' for c in value)):
+                raise ValueError('invalid process identity digest')
+            return value
+        except Exception as error:
+            self.review_required = True
+            raise X11BackendError('process identity unavailable; explicit review required') from error
+
+    def _verify_process_identity_for_press(self):
+        expected = getattr(self, '_active_process_identity', None)
+        if self.active is None or expected is None or self._read_process_identity() != expected:
+            self.review_required = True
+            raise X11BackendError('process identity changed or unbound before input press')
 
     def _focus_within_target(self, window_id=None):
         """Read-only X11 ancestry, not title/PID similarity or input authority."""
@@ -538,6 +570,7 @@ class NativeHandleBridge:
         if interaction == 'keyboard' and not any(op.get('op') in {'text', 'key_chord'} for op in tail):
             raise ValueError('keyboard continuation requires explicit keyboard input')
         self.active = (alias, offset)
+        self._active_process_identity = None
         self.checks = []
         self.additional_checks = []
         self.deadline = time.monotonic_ns() + 5_000_000_000
@@ -547,6 +580,8 @@ class NativeHandleBridge:
         try:
             try:
                 point = self.check("before_admission")["point"]
+                if getattr(self, '_process_identity_guard', False):
+                    self._active_process_identity = self.history[self.sequence][0]['pointer_binding']['process_generation']
                 if time.monotonic_ns() >= self.deadline:
                     raise X11BackendError('native target guard lease expired before dispatch')
             except Exception as error:
@@ -585,3 +620,4 @@ class NativeHandleBridge:
         finally:
             self.active = None
             self.deadline = None
+            self._active_process_identity = None

@@ -35,6 +35,12 @@ fails; successful review does not infer semantic equivalence of windows.
 Call `close()` in a finally block. It closes this connection, not the application.
 The object is synchronous and intended for one caller; it is not a concurrent queue.
 
+An explicit Python-only `process_identity=True` option adds
+[Linux/XRes process-incarnation checks](PROCESS_IDENTITY.md) to observations,
+aliases and new presses. It assumes a trusted local server with matching PID
+namespace; it is not window-incarnation proof or a bounded-I/O release mechanism.
+The default and CLI/MCP configuration are unchanged.
+
 Observations and raw input receipts are retained in the fresh output directory.
 History is session-local. At most two decoded full-screen images are retained
 by its cache; older observations reload their exact hash-checked PNG when needed
