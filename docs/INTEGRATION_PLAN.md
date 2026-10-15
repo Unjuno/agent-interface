@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Controller retirement-failure connection](../research/doom/controller_retirement_checks_20261016/README.md)
+  now makes the actual V39 wait stop on session control-boundary failure before
+  monitor/predicate success. Cleanup preserves copied failures and cannot certify
+  release/completion from later score/neutral-owner artifacts. Owned Python
+  stdio and pinned-base controls retain the prior misclassification; final
+  normal/-O checks pass 56 modules/413 methods with 12 explicit skips. Four
+  dependent modules pass 35 methods with three POSIX skips. Full game/controller
+  startup, undelivered-event retrieval, physical release and recovery remain open.
+
 - [MAP01 session retirement gate](../research/doom/map01_session_retirement_checks_20261016/README.md)
   now refuses finish refresh/score and fixture Save when close leaves an active
   intent or unverified release obligation. Actual-command-loop/Fake X controls
