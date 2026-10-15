@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Current V39 cancel/recovered-source qualification](../research/integration/v39_current_cancel_recovery_20261016/README.md)
+  uses current functions and the exact nested wait AST, retaining ten synthetic
+  rows across health/ammo recovery, three neutral terminal races, failed closure/
+  write and a clean planner control. Old invalidation survives; latest full
+  observation seeds a new monitor without admitting old input.44 selected methods
+  pass normal/-O; dropping invalidation fails nine subtest assertions per mode.
+  Full main/Executor transport, native release and independent task effects remain open.
+
 - [Saved V39 hard-recovery convergence from #8792](../research/integration/v39_hard_recovery_convergence_20261016/README.md)
   preserves all31 original files and separates corrected final-admission audit
   results: the latest saved candidate passes, but older normal/-O records lack

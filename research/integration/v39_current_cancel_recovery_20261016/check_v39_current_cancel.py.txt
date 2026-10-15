@@ -1,0 +1,64 @@
+import ast,hashlib,importlib,json,os,subprocess,sys,unittest
+from pathlib import Path
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT=Path(__file__).parent/'v39-current-cancel-final-r2-20261016'
+TESTS=['test_map01_v39_cancel_recovery_composition','test_map01_overlap_controller_v39_dual_signal','test_map01_v39_pending_observation_drain']
+if len(sys.argv)>1 and sys.argv[1]=='child':
+ root=Path(sys.argv[2]);folder=Path(sys.argv[3]);selected=json.loads(sys.argv[4])
+ sys.path[:0]=[str(root),str(root/'research/doom'),str(root/'research/live_control')]
+ modules=[importlib.import_module(name) for name in selected]
+ suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromModule(m) for m in modules)
+ def ids(suite):
+  for t in suite:
+   if isinstance(t,unittest.TestSuite):yield from ids(t)
+   else:yield t.id()
+ selected_ids=list(ids(suite));result=unittest.TextTestRunner(verbosity=2).run(suite)
+ rows=modules[0].ROWS
+ pins=[]
+ for module in tuple(sys.modules.values()):
+  path=getattr(module,'__file__',None)
+  if not path or not path.endswith('.py'):continue
+  path=Path(path).resolve()
+  try:name=path.relative_to(root).as_posix()
+  except ValueError:continue
+  pins.append(dict(path=name,sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
+ (folder/'RAW.json').write_text(json.dumps(dict(rows=rows,method_ids=selected_ids,
+  tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skips=len(result.skipped),
+  optimize=sys.flags.optimize,pid=os.getpid(),pins=sorted(pins,key=lambda r:r['path'])),indent=2))
+ sys.exit(0 if result.wasSuccessful() else 1)
+
+OUT.mkdir(exist_ok=False)
+commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+# Materialized local dependency set is copied as data; only named test imports run.
+names=subprocess.check_output(['git','ls-files','research/doom/*.py','research/live_control/*.py'],cwd=ROOT,text=True).splitlines()
+names=[name for name in names if len(Path(name).parts)==3 and (ROOT/name).is_file()]
+control=OUT/'control-root'
+for name in names:
+ p=control/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((ROOT/name).read_bytes())
+path=control/'research/doom/map01_overlap_controller_v39.py';b=path.read_bytes();old=b'}, policy_invalidation, decided_ns)';new=b'}, None, decided_ns)'
+assert b.count(old)==1;path.write_bytes(b.replace(old,new))
+(OUT/'CONTROL.json').write_text(json.dumps(dict(path=path.relative_to(control).as_posix(),
+ old=old.decode(),new=new.decode(),sha256=hashlib.sha256(path.read_bytes()).hexdigest()),indent=2))
+receipts=[]
+for arm,root,selected in [('current',ROOT,TESTS),('drop-invalidation',control,TESTS[:1])]:
+ for mode,flags in [('normal',[]),('optimized',['-O'])]:
+  name=arm+'-'+mode;folder=OUT/name;folder.mkdir()
+  command=[sys.executable,'-I',*flags,str(Path(__file__)),'child',str(root),str(folder),json.dumps(selected)]
+  with (folder/'stdout').open('wb') as stdout,(folder/'stderr').open('wb') as stderr:
+   p=subprocess.Popen(command,stdout=stdout,stderr=stderr,cwd=ROOT);code=p.wait(timeout=60)
+  row=dict(name=name,pid=p.pid,command=command,exit_code=code);receipts.append(row)
+  (folder/'PROCESS.json').write_text(json.dumps(row,indent=2))
+  raw=json.loads((folder/'RAW.json').read_text())
+  if arm=='current':assert code==0 and raw['failures']==raw['errors']==raw['skips']==0
+  else:assert code==1 and raw['failures']==9 and raw['errors']==raw['skips']==0
+  assert len(raw['rows'])==10
+  print(json.dumps(dict(name=name,tests=raw['tests'],failures=raw['failures'],errors=raw['errors'],source_pins=len(raw['pins']))))
+normal=json.loads((OUT/'current-normal/RAW.json').read_text())
+joins=[]
+for row in normal['pins']:
+ b=subprocess.check_output(['git','show',commit+':'+row['path']],cwd=ROOT);w=(ROOT/row['path']).read_bytes()
+ assert b.replace(b'\r\n',b'\n')==w.replace(b'\r\n',b'\n')
+ joins.append(dict(**row,git_sha256=hashlib.sha256(b).hexdigest(),lf_equal=True))
+(OUT/'CONDITIONS.json').write_text(json.dumps(dict(tested_commit=commit,python=sys.version,executable=sys.executable,
+ source_joins=joins,scope='current functions/nested wait AST with synthetic queue/process/planner; no native input or old producer'),indent=2))
+(OUT/'PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2))
