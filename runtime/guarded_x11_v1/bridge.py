@@ -39,6 +39,13 @@ def read_window_title(connection, window):
     return window.get_wm_name()
 
 class _GuardedBackend(X11Backend):
+    def _before_input_press(self):
+        # Focus, pointer and key mapping queries can consume the original
+        # deadline. Keep this last fence local: no further server round trip.
+        if (self.owner.active is not None and self.owner.deadline is not None
+                and time.monotonic_ns() >= self.owner.deadline):
+            raise X11BackendError('native target guard lease expired before input press')
+
     def key_state(self, key, down):
         # Text expands to key chords, so check each new press, including a
         # modifier's following key. Releases must remain possible after expiry.

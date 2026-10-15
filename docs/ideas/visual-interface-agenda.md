@@ -55,3 +55,9 @@
 明示的critical eventは出力候補に残ったが、同じfocusの一時的な警告観測はcompact表示から省略された。送信前BrokenPipeErrorではstdoutは空でも`delivered.jsonl`は残る。v15のflush記録は成功時だけ作られるため、この既存機構を再利用する。ただしモデル受信、実際の警告検知、GUI入力・task effectは未検証である。
 
 **判断の更新：** state/event projectionとローカルflush記録は新設せず既存成果を使う。次は実際に採用する公開callerの検知→保持→配信→acknowledgement/decisionを追跡し、不足部分だけをcompositionで検証する。#5の全体達成やcompactの一般採用は未成立なのでIssueは継続する。
+
+### 実装修理：公開X11経路で問い合わせ後の期限を再確認する
+
+観測に束縛した操作の公開経路を調べると、`runtime/guarded_x11_v1/bridge.py`はfocusを確認した後、キー変換やpointer問い合わせが元の期限を消費しても、新しい押下へ進めた。`test_deadline.py`に、focus・key mapping・pointerの各返答でclockを期限へ進める3件のテストを追加し、修理前に全件が期待どおり失敗した。
+
+`runtime/backends/x11_v1/backend.py`の押下直前に、guarded adapterが既存の期限を再確認するローカルfenceを追加した。問い合わせを追加せず、期限後の新規キー/ボタン押下を拒否し、解放は許可する。期限関連19件が通常・最適化Pythonで成功した。これは公開経路にあった具体的な残差の修理であり、停止したX11問い合わせの割込み、保持中入力の有限解放、target generationの統合やタスク成功を証明するものではない。
