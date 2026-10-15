@@ -95,8 +95,10 @@ class GuardedSessionOwner(MCPSessionOwner):
         return row
 
     def close(self):
-        if self.bridge is not None and self.query_worker:
-            self.bridge.stop_target_queries()
+        if self.bridge is not None:
+            consume_close = getattr(self.bridge,'_consume_close',None)
+            if callable(consume_close): consume_close()
+            elif self.query_worker: self.bridge.stop_target_queries()
         return super().close()
 
     def cancel_guarded(self, token):
@@ -184,6 +186,14 @@ class GuardedSessionOwner(MCPSessionOwner):
                 'session':self.snapshot(), 'task_success':None, 'replay_allowed':False}
 
     def invoke_guarded(self, operation, arguments, call_root):
+        if operation == 'guarded_recover_input':
+            if self.state != 'open' or self.bridge is None or self.session is None:
+                return dict(operation=operation,status='refused',error='RECOVERY_REQUIRES_OPEN_SESSION',
+                            release_attempted=False,authority_granted=False,task_success=None,replay_allowed=False)
+            report = self.bridge.recover_input(arguments['current_binding_revision'])
+            if report.get('release_attempted'): self.dispatch_attempted = True
+            self.binding_revision = self.bridge.binding_revision
+            return dict(report,operation=operation)
         cue = None
         if operation == 'guarded_input' and arguments.get('feedback') is not None:
             cue = InputFeedback.model_validate(arguments['feedback'])
@@ -323,6 +333,22 @@ class GuardedSessionOwner(MCPSessionOwner):
 
 
 def register_guarded_tools(server, submit, *, cancel=None):
+    @server.tool()
+    async def interface_guarded_recover_input(current_binding_revision: StrictInt) -> CallToolResult:
+        """Explicitly attempt tracked-input release once on this open guarded owner.
+
+        Requires recovery_required=true and the current binding revision. The
+        serialized input slot prevents a second writer during pending input or
+        cleanup. Accepted recovery consumes the revision and revokes old aliases
+        before one release/readback attempt, including on failure. A stale
+        request cannot repeat it. Verified neutrality clears only the input
+        recovery block; review the window and mint fresh aliases before choosing
+        new input. No capture, reconnect, program replay, task success or lease.
+        Blocking platform I/O can leave this call pending; inspect results and
+        never replay an uncertain request automatically. Retired workers remain
+        retired and require explicitly closing the session.
+        """
+        return await submit('guarded_recover_input',dict(current_binding_revision=current_binding_revision),False,False)
     if cancel is not None:
         @server.tool()
         async def interface_guarded_cancel(call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:

@@ -622,3 +622,14 @@ the existing guarded process-identity and query-worker flags. It keeps active
 capture/observation persistence on a separate read-only client and fences late
 replies before source publication. Defaults retain existing behavior. This is
 Fake X qualified construction, not physical release, live recovery or task success.
+
+## Guarded release-only recovery
+
+`interface_guarded_recover_input(current_binding_revision=...)` exposes
+[one explicit recovery attempt](../guarded_x11_v1/RECOVERY.md) on an already open,
+idle guarded owner with unverified cleanup. It does not open/reconnect, observe or
+replay a task. Accepted attempts revoke old grounding and consume the revision
+even on failure. Verified neutrality still requires window review and fresh
+aliases for grounded editing. Pending native I/O remains pending; the busy slot
+prevents concurrent recovery/cleanup writers. Real platform timing and task
+effects remain unqualified.
