@@ -34,6 +34,25 @@ verified-empty cleanupでexecution_failedとなった。raw-only監査は各26�
 検証する必要がある。guarded bridge全体のvisual binding、実際のcancel、OS入力、ライブ回復、
 タスク成功・効率の証拠は追加していない。
 
+## 故障の境界を分ける
+
+[保存済みwake-pipe比較の再確認](../../runtime/results/cancel_wake_rescue_17d0/README.md)
+では、元packetの213チェックサム、18個のfirst-outcomeと個別row、元freezeを通常・最適化
+Pythonで照合し、各4個の保存データ改変を拒否した。元native実験・collector・auditor CLI・
+FD操作は再実行していない。native auditorのPID/monotonic記録が欠ける限界も保持した。
+
+| 故障 | 関連する証拠 | 次の修理で混同しない点 |
+|---|---|---|
+| 通知pipeが満杯 / EAGAINを捨てる | #7049→#7296→#8764の保存済み18セル。retained Eventを先に公開する比較を限定的に支持 | owner loopが動いている通知経路の比較。blocked platform queryを中断できるとは示さない。 |
+| focus/identity等の問い合わせでinput ownerが停止 | 今回の公開経路Fake X A01。保持中のCTRLと結果未返却を区別 | Eventを記録するだけでは、止まっているwriterにcleanupを実行させられない。 |
+| input owner processが死亡 | #821の報告したcleanup-only watchdog | 単一の権限とlate writerの排除を保ち、backendが応答する条件を別に確認する。今回は元raw未再監査。 |
+| X server/backend自体が停止 | #823の報告した確認遅延 | cleanup要求とbackendが受理・検証した解放を区別。process分離だけで物理解放期限を保証しない。今回は元raw未再監査。 |
+
+したがって、retained cancellation stateは再利用候補だが、それだけで#17全体を閉じない。
+現行の[入力解放計画](../INTEGRATION_PLAN.md)は、観測停止から独立したcleanup・単一writer・
+late reply fencing・unknown readbackを組み合わせて進める。旧rescue文書の委員人数/投票条件は
+歴史へ保存し、現在の運用はユーザーのFINAL v5 8.1に従う。人数条件を新たな停止理由にしない。
+
 ## Issueを閉じる条件
 
 この6件は今回の整理では閉じない。各原文の独自の問いと評価軸は残っている。
