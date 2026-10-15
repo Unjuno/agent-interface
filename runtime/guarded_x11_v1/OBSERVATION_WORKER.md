@@ -48,3 +48,9 @@ The mode adds one capture client alongside the existing target-query client;
 neither is the input connection. Each request carries the current reviewed XID
 and resolves a window resource on the capture client's own connection. Successful
 window review retains this policy; it does not restore a retired worker.
+
+[Saved stdio composition](../../research/live_control/guarded_stdio_cancel_20261015/RESULT.md)
+also executes actual client/server processes, standard startup flags and public
+input/cancel/results/close with Fake X. It checks result-before-capture-resumption
+ordering against query-only controls. Real X/input, provider/model delivery,
+physical release and task effect remain unqualified.
