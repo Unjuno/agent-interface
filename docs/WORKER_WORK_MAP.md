@@ -77,6 +77,12 @@ changes before/during/between input and retained prefix/release distinctions.
 Its 374-method selection is local construction evidence. Actual domain semantics,
 native transport timing, bounded semantic recovery and matched tasks remain open.
 
+Next address the [retained semantic recheck counterexamples](../research/integration/compiled_semantic_press_boundary_20261016/README.md):
+current compiled admission can select True before a newer native input capture
+shows False/unknown, yet still dispatch Submit. The existing keyboard-only
+input-guard control stops this; general binding integration remains to be built.
+Use those raw/control rows rather than inferring semantic safety from #8980.
+
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
 metadata. This is separate from public guarded MCP's process-identity path.
