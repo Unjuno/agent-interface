@@ -36,6 +36,14 @@ def read_window_title(connection, window):
     return window.get_wm_name()
 
 class _GuardedBackend(X11Backend):
+    def _before_activation_request(self,target,window_id):
+        self.owner._check_activation_context(target,window_id)
+        self._before_input_press()
+        self.owner._check_activation_context(target,window_id)
+        self.owner._check_cancelled()
+        if self.owner.deadline is None or time.monotonic_ns()>=self.owner.deadline:
+            raise X11BackendError('native activation lease expired before request')
+
     def _before_input_press(self):
         check_cancelled = getattr(self.owner, '_check_cancelled', None)
         if check_cancelled is not None:
@@ -369,7 +377,7 @@ class NativeHandleBridge:
         Uses ordinary admission and the caller's lease. No editing, automatic
         replay, alias renewal or successful-task assertion follows activation.
         """
-        if (self.active is not None or self.session.recovery_required or
+        if (getattr(self,'_closed',False) or self.active is not None or self.session.recovery_required or
                 type(window_id) is not int or window_id != self.backend.targets[self.target].id or
                 type(source_sequence) is not int or source_sequence < 1 or source_sequence != self.sequence or
                 type(current_binding_revision) is not int or current_binding_revision != self.binding_revision or
@@ -377,6 +385,11 @@ class NativeHandleBridge:
                 type(timeout_ms) is not int or not 0 <= timeout_ms <= 2000):
             return {'status': 'refused', 'error': 'ACTIVATION_CONTEXT_MISMATCH',
                     'input_dispatched': False, 'task_success': None, 'replay_allowed': False}
+        try:
+            source = self._activation_evidence(window_id,source_sequence,current_binding_revision)
+        except Exception as error:
+            return dict(status='refused',error='ACTIVATION_SOURCE_UNAVAILABLE',detail=repr(error),
+                        input_dispatched=False,task_success=None,replay_allowed=False)
         program = {
             'schema': SCHEMA_PROGRAM, 'program_id': 'activate-' + uuid.uuid4().hex,
             'source': {'observation_seq': source_sequence, 'binding_revision': current_binding_revision},
@@ -388,6 +401,9 @@ class NativeHandleBridge:
         self._save('program-' + program['program_id'] + '.json', program)
         previous_review_required = self.review_required
         self.active = ('activation', None)
+        self.deadline = expires_at_ns
+        self._active_process_identity = source['pointer_binding'].get('process_generation')
+        self._activation_context = (self.scope,current_binding_revision,source_sequence,window_id,expires_at_ns,source)
         try:
             # Any thrown exception here may follow a WM request. Keep editing
             # blocked until the caller explicitly reviews the current window.
@@ -406,6 +422,35 @@ class NativeHandleBridge:
             return result
         finally:
             self.active = None
+            self.deadline = None
+            self._active_process_identity = None
+            self._activation_context = None
+
+    def _activation_evidence(self,window_id,sequence,revision):
+        source = self.history[sequence][0]
+        capture_ns = source['capture_ns']
+        if (type(source['sequence']) is not int or type(source['binding_revision']) is not int
+                or source['sequence']!=sequence or source['binding_revision']!=revision
+                or source['pointer_binding']['surface']!=window_id
+                or type(capture_ns) is not int or capture_ns<0 or capture_ns>time.monotonic_ns()):
+            raise X11BackendError('retained activation source association invalid')
+        if getattr(self,'_process_identity_guard',False):
+            digest = source['pointer_binding'].get('process_generation')
+            if type(digest) is not str or len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest):
+                raise X11BackendError('retained activation process generation required')
+        return deepcopy(source)
+
+    def _check_activation_context(self,target,window_id):
+        context = getattr(self,'_activation_context',None)
+        if (context is None or self.active!=('activation',None) or getattr(self,'_closed',False)
+                or target!=self.target or context[:5]!=(self.scope,self.binding_revision,self.sequence,window_id,self.deadline)
+                or self.backend.targets[self.target].id!=window_id):
+            raise X11BackendError('guarded activation context changed')
+        try:
+            source = self._activation_evidence(window_id,self.sequence,self.binding_revision)
+            if source!=context[5]: raise X11BackendError('guarded activation source changed')
+        except Exception as error:
+            raise X11BackendError('guarded activation source unavailable before request') from error
 
     def review_window(self, window_id):
         """Explicit read-only handoff on this connection; revoke old aliases.
