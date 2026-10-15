@@ -13,7 +13,13 @@ from executor_v3 import Cancelled, DecisionRequired
 
 
 class InputOwner:
-    def __init__(self, display_name):
+    def __init__(self, display_name, *, process_identity=False):
+        if type(process_identity) is not bool:
+            raise ValueError('process_identity must be a boolean')
+        self.identity_reader = None
+        if process_identity:
+            from target_process_identity_v1 import IdentityReader
+            self.identity_reader = IdentityReader(display_name)
         self.requests = queue.Queue()
         self.owner_id = uuid.uuid4().hex
         self.records = []
@@ -40,6 +46,8 @@ class InputOwner:
             self.error = exc
             self.records.append(dict(event='owner_failed', error=repr(exc), verified=False))
         finally:
+            if self.identity_reader is not None:
+                self.identity_reader.close()
             self.ready.set()
             self.stopped.set()
 
@@ -63,6 +71,8 @@ class InputOwner:
 
     def close(self):
         if not self.closed:
+            if self.identity_reader is not None:
+                self.identity_reader.close()
             try:
                 if not self.stopped.is_set() and not self.stop_requested.is_set():
                     self.call('close')
@@ -341,6 +351,42 @@ class InputOwner:
                 node = child
             return False
 
+        active_identity = None
+        checked_identity = None
+        next_identity_check = 0
+
+        def identity_matches(lease):
+            nonlocal checked_identity
+            if self.identity_reader is None:
+                return True
+            from target_process_identity_v1 import valid_source
+            source = getattr(lease, 'target_process_identity', None)
+            if (not valid_source(source) or source[3] != lease.deadline or
+                    source[1] != getattr(lease, 'expected_surface', None) or
+                    (active is lease and source != active_identity)):
+                return False
+            try:
+                current = self.identity_reader.read(source[1], perf_deadline_ns=source[3],
+                    cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
+                valid = (current == source[2] and source == lease.target_process_identity and
+                         source[3] == lease.deadline)
+                if valid:
+                    checked_identity = source
+                return valid
+            except Exception:
+                return False
+
+        def final_identity_fence(lease):
+            if self.identity_reader is None:
+                return
+            lease.check()
+            if lease.cancel.is_set():
+                raise Cancelled()
+            if (lease.target_process_identity != checked_identity or
+                    lease.deadline != checked_identity[3] or getattr(lease, 'focus_invalid', False)):
+                lease.focus_invalid = True
+                raise DecisionRequired('target process source changed before input')
+
         def pointer_guard(lease, x, y):
             if fault is not None:
                 raise RuntimeError('input owner failed closed') from fault
@@ -355,6 +401,15 @@ class InputOwner:
             lease.check()
             if lease.cancel.is_set():
                 raise Cancelled()
+            if not identity_matches(lease):
+                lease.focus_invalid = True
+                raise DecisionRequired('target process identity unavailable or changed')
+            if self.identity_reader is not None and (
+                    invalid_focus(lease, pointer=True) or not geometry_matches(lease) or
+                    not hit_surface(lease, x, y)):
+                lease.focus_invalid = True
+                raise DecisionRequired('pointer binding changed during identity read')
+            final_identity_fence(lease)
 
         def release(reason):
             nonlocal active,revision,fault,release_pending
@@ -425,6 +480,9 @@ class InputOwner:
                               if (attempts := value["attempts"])
                           ],
                           key_state_source='x11_query_keymap')
+            if self.identity_reader is not None:
+                record['target_process_identity'] = list(active_identity) if active_identity is not None else None
+                record['target_process_identity_reader'] = self.identity_reader.worker.snapshot()
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
@@ -451,6 +509,13 @@ class InputOwner:
                 if active is not None:
                     expired = time.perf_counter_ns() >= active.deadline
                     changed=invalid_focus(active,pointer=active_pointer)
+                    generation_changed = False
+                    if (not expired and not changed and not active.cancel.is_set() and
+                            self.identity_reader is not None and time.perf_counter_ns() >= next_identity_check):
+                        generation_changed = not identity_matches(active)
+                        next_identity_check = time.perf_counter_ns() + 20_000_000
+                        changed = generation_changed
+                        expired = time.perf_counter_ns() >= active.deadline
                     surface_changed=False
                     if buttons and not changed:
                         point=d.screen().root.query_pointer()
@@ -459,7 +524,11 @@ class InputOwner:
                     if changed:active.focus_invalid=True
                     if expired or active.cancel.is_set() or changed:
                         try:
-                            release('expired' if expired else ('surface_changed' if surface_changed else ('focus_changed' if changed else 'cancelled')))
+                            release('expired' if expired else (
+                                ('stop_requested' if self.stop_requested.is_set() else
+                                 ('cancelled' if active.cancel.is_set() else 'target_generation_invalidated'))
+                                if generation_changed else
+                                ('surface_changed' if surface_changed else ('focus_changed' if changed else 'cancelled'))))
                         except Exception as exc:
                             fault = exc
                             active = None
@@ -537,6 +606,7 @@ class InputOwner:
                             if continuation and time.perf_counter_ns()>=reply_deadline:raise DecisionRequired('continuation response expired')
                             active = lease
                             active_pointer = True
+                            active_identity = checked_identity
                             admitted = time.perf_counter_ns()
                             if op == 'move':
                                 xtest.fake_input(d,X.MotionNotify,x=x,y=y)
@@ -558,6 +628,8 @@ class InputOwner:
                             result = dict(event='pointer_admission', operation=op, payload=key,
                                           admitted_ns=admitted,input_ack_ns=time.perf_counter_ns(),
                                           valid_until_ns=lease.deadline, surface=lease.expected_surface)
+                            if self.identity_reader is not None:
+                                result['target_process_identity'] = list(checked_identity)
                     elif op == 'up_batch':
                         result = release_keys_batch(lease, key)
                     elif op in ('down', 'up'):
@@ -575,15 +647,25 @@ class InputOwner:
                             lease.check()
                             if lease.cancel.is_set():
                                 raise Cancelled()
+                            if not identity_matches(lease):
+                                lease.focus_invalid = True
+                                raise DecisionRequired('target process identity unavailable or changed')
+                            if self.identity_reader is not None and invalid_focus(lease):
+                                lease.focus_invalid = True
+                                raise DecisionRequired('focus changed during identity read')
+                            final_identity_fence(lease)
                             admitted = time.perf_counter_ns()
                             active = lease
                             active_pointer = False
+                            active_identity = checked_identity
                             touched.add(code)
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
                             result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
                                           input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
+                            if self.identity_reader is not None:
+                                result['target_process_identity'] = list(checked_identity)
                         else:
                             # Cleanup from an old intent must never release a newer hold.
                             if code in held and held[code] is not lease:

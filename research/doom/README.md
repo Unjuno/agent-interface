@@ -4,6 +4,8 @@
 
 ## Navigate
 
+- [Opt-in MAP01 process identity integration](../../docs/maintenance/map01-process-identity-20261016.md): capture-to-lease-to-owner Fake X checks, first failures and remaining boundaries.
+
 | Need | Read |
 |---|---|
 | Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |

@@ -20,12 +20,27 @@ def _option(name,default=None):
     if i+1>=len(args):raise ValueError(f'option requires value: {name}')
     return args[i+1]
 def _sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-def _merge_sources(out):
+def _merge_sources(out, *, process_identity=False):
     path=Path(out)/'sources.json'
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
     additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
     for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
+    if process_identity:
+        identity_files = (HERE/'doom_process_identity_backend_v1.py',
+                       RESEARCH/'live_control/target_process_identity_v1.py',
+                       RESEARCH/'live_control/lease_cause_v1.py',
+                       RESEARCH/'live_control/lease_cause_v2.py',
+                       RESEARCH/'live_control/lease_release_v1.py')
+        for source in identity_files:
+            data[str(source.relative_to(RESEARCH))]=_sha(source)
+        files = {source.relative_to(RESEARCH.parent).as_posix(): _sha(source)
+                 for source in (*additions, *identity_files)}
+        for relative in ('runtime/guarded_x11_v1/process_identity.py', 'runtime/guarded_x11_v1/target_queries.py'):
+            files[relative]=_sha(RESEARCH.parent/relative)
+        (Path(out)/'target-process-identity-sources.json').write_text(json.dumps(
+            {'schema':'map01-process-identity-sources-v1','path_root':'repository','files':files},
+            indent=2,sort_keys=True)+'\n',encoding='utf-8')
     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
 
 def _coherent_progress_sample(game,game_variable,timeout_seconds,clock_ns=time.perf_counter_ns,attempts=3):
@@ -111,6 +126,9 @@ def main():
     import session_map01_v12 as base
     from executor_v13 import Executor as ReleaseOrderedExecutor
     from doom_owner_thread_release_batch_backend_v1 import Backend as TelemetryBackend
+    process_identity = '--target-process-identity' in sys.argv[1:]
+    if process_identity:
+        from doom_process_identity_backend_v1 import Backend as TelemetryBackend
     holder={};sink=ScorerFileSink(out)
     def sample_game():
         game=holder.get('game')
@@ -121,8 +139,12 @@ def main():
     def ctor(*args,**kwargs):
         proxy=_GameProxy(original_ctor(*args,**kwargs),final_sample);holder['game']=proxy;return proxy
     base.vd.DoomGame=ctor;base.Backend=TelemetryBackend;base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
+    original_argv = sys.argv
+    if process_identity:
+        sys.argv = [arg for arg in original_argv if arg != '--target-process-identity']
     try:base.main()
     finally:
+        sys.argv = original_argv
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
-        sink.finalize(polling.stats());_merge_sources(out)
+        sink.finalize(polling.stats());_merge_sources(out,process_identity=process_identity)
 if __name__=='__main__':main()

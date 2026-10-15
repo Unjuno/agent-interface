@@ -744,16 +744,22 @@ def app_server_command_for_run(output):
 
 
 def session_command(args, runtime):
+    identity = getattr(args, "target_process_identity", False)
+    if identity and not getattr(args, "measurement_session", False):
+        raise ValueError("target process identity requires --measurement-session")
     # Keep the established v12 session as the default. The opt-in v15 wrapper
     # adds scorer-only progress sampling and per-key release telemetry without
     # exposing scorer state through the controller event stream.
     session = ("session_map01_v15.py"
                if getattr(args, "measurement_session", False)
                else "session_map01_v12.py")
-    return [sys.executable, str(HERE / session),
+    command = [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
+    if identity:
+        command.append("--target-process-identity")
+    return command
 
 
 def require_release_receipt_session(args):
@@ -1155,6 +1161,8 @@ def main():
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
     parser.add_argument("--measurement-session", action="store_true",
                         help="opt into V15 scorer-only and per-key release telemetry")
+    parser.add_argument("--target-process-identity", action="store_true",
+                        help="select trusted-local XRes/Linux process evidence in V15 input owner")
     args = parser.parse_args()
     try:
         require_release_receipt_session(args)
@@ -1963,6 +1971,7 @@ def main():
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
+          "target_process_identity":args.target_process_identity,
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(
               row["model_session_id"] for row in decisions if "model_session_id" in row)),
