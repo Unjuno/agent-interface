@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Exact-value form / guarded admission repair](../research/integration/compiled_form_guarded_admission_20261016/README.md)
+  removes the contradictory requirement that a field already match before entry.
+  Actual guarded-adapter composition now admits the missing-value entry while
+  retaining post-entry and Submit exact-value gates. Seven new memory-bridge
+  methods and original/incorrect-repair controls pass their stated checks;
+  the affected 366-method selection passes normal/-O. NativeHandleBridge, actual
+  pixels/input/effect, the full v3 domain connection and economics remain open.
+
 - [Explicit v3 compiled handoff repair](../research/integration/compiled_caller_v3_repair_20261016/README.md)
   supplies an explicit selected-target interface builder and preserves returned
   core evidence, completed prefix and unresolved input across sink/journal

@@ -65,6 +65,12 @@ affected normal/-O methods. Use its explicit API for future qualification of
 actual domain/admission/effect adapters; legacy v1 remains unchanged. Do not
 transfer inert construction to live qualification or rerun historical allocations.
 
+The [form/guarded-admission repair](../research/integration/compiled_form_guarded_admission_20261016/README.md)
+closes a separate real contract mismatch: entry no longer requires its own
+post-entry effect to be True. Submit still requires exact observed value. Its
+seven new tests use the actual guarded adapter with a memory-only bridge; native
+scope/alias/perception/effect and full v3 connection still need qualification.
+
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
 metadata. This is separate from public guarded MCP's process-identity path.
