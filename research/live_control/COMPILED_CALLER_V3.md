@@ -68,3 +68,9 @@ For the exact-value form, the [guarded-admission compatibility repair](../integr
 keeps field identity separate from its post-entry value effect. Submit retains
 the exact-value dependency. Actual guarded-adapter/memory-bridge tests cover
 that distinction; they do not qualify the full native domain path.
+
+[The Fake X native-bridge composition](../integration/compiled_native_caller_composition_20261016/README.md)
+now traverses the actual handle store, NativeHandleBridge and session from this
+helper. Generation fences and retained prefixes are exercised with fake
+transport/process evidence and synthetic phase recognition. Real application
+perception/effect, live model/MCP routes and physical release remain unqualified.

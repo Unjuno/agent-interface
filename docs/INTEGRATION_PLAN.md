@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Caller through actual native bridge, Fake X transport](../research/integration/compiled_native_caller_composition_20261016/README.md)
+  connects the explicit v3 caller, promoted final aliases, form, guarded adapter,
+  actual handle store/bridge/backend/session. Eight new cases retain generation
+  refusal before/during/between input, prefix/release distinctions, wrong/unknown
+  value, outer unverified effect and sink failure. The 374-method selection passes
+  normal/-O, with original-compiler countercontrols and saved-only joins. Native
+  transport, semantic application effects, recovery and economics remain open.
+
 - [Exact-value form / guarded admission repair](../research/integration/compiled_form_guarded_admission_20261016/README.md)
   removes the contradictory requirement that a field already match before entry.
   Actual guarded-adapter composition now admits the missing-value entry while

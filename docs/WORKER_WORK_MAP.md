@@ -71,6 +71,12 @@ post-entry effect to be True. Submit still requires exact observed value. Its
 seven new tests use the actual guarded adapter with a memory-only bridge; native
 scope/alias/perception/effect and full v3 connection still need qualification.
 
+The [Fake X caller/native-bridge composition](../research/integration/compiled_native_caller_composition_20261016/README.md)
+now checks final aliases through the actual store/bridge/session with generation
+changes before/during/between input and retained prefix/release distinctions.
+Its 374-method selection is local construction evidence. Actual domain semantics,
+native transport timing, bounded semantic recovery and matched tasks remain open.
+
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
 metadata. This is separate from public guarded MCP's process-identity path.
