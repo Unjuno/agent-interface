@@ -1,0 +1,89 @@
+FFFFFFFF.
+======================================================================
+FAIL: test_cleanup_interrupt_propagates_instead_of_ordinary_failure (runtime.backends.x11_v1.test_interrupt_custody.InterruptCustodyTests.test_cleanup_interrupt_propagates_instead_of_ordinary_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_interrupt_custody.py", line 68, in test_cleanup_interrupt_propagates_instead_of_ordinary_failure
+    self.assertIs(cleanup.__cause__, original)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not OSError('input failed')
+
+======================================================================
+FAIL: test_interrupted_preflight_cleanup_also_retains_quarantine (runtime.backends.x11_v1.test_interrupt_custody.InterruptCustodyTests.test_interrupted_preflight_cleanup_also_retains_quarantine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_interrupt_custody.py", line 96, in test_interrupted_preflight_cleanup_also_retains_quarantine
+    self.assertTrue(session.recovery_required)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_primary_interrupt_survives_cleanup_and_quarantines (runtime.backends.x11_v1.test_interrupt_custody.InterruptCustodyTests.test_primary_interrupt_survives_cleanup_and_quarantines) (exception='KeyboardInterrupt', cleanup='NoneType')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_interrupt_custody.py", line 49, in test_primary_interrupt_survives_cleanup_and_quarantines
+    b.release_all.assert_called_once()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 958, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_primary_interrupt_survives_cleanup_and_quarantines (runtime.backends.x11_v1.test_interrupt_custody.InterruptCustodyTests.test_primary_interrupt_survives_cleanup_and_quarantines) (exception='KeyboardInterrupt', cleanup='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_interrupt_custody.py", line 49, in test_primary_interrupt_survives_cleanup_and_quarantines
+    b.release_all.assert_called_once()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 958, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_primary_interrupt_survives_cleanup_and_quarantines (runtime.backends.x11_v1.test_interrupt_custody.InterruptCustodyTests.test_primary_interrupt_survives_cleanup_and_quarantines) (exception='KeyboardInterrupt', cleanup='SystemExit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_interrupt_custody.py", line 49, in test_primary_interrupt_survives_cleanup_and_quarantines
+    b.release_all.assert_called_once()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 958, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_primary_interrupt_survives_cleanup_and_quarantines (runtime.backends.x11_v1.test_interrupt_custody.InterruptCustodyTests.test_primary_interrupt_survives_cleanup_and_quarantines) (exception='SystemExit', cleanup='NoneType')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_interrupt_custody.py", line 49, in test_primary_interrupt_survives_cleanup_and_quarantines
+    b.release_all.assert_called_once()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 958, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_primary_interrupt_survives_cleanup_and_quarantines (runtime.backends.x11_v1.test_interrupt_custody.InterruptCustodyTests.test_primary_interrupt_survives_cleanup_and_quarantines) (exception='SystemExit', cleanup='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_interrupt_custody.py", line 49, in test_primary_interrupt_survives_cleanup_and_quarantines
+    b.release_all.assert_called_once()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 958, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+======================================================================
+FAIL: test_primary_interrupt_survives_cleanup_and_quarantines (runtime.backends.x11_v1.test_interrupt_custody.InterruptCustodyTests.test_primary_interrupt_survives_cleanup_and_quarantines) (exception='SystemExit', cleanup='SystemExit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_interrupt_custody.py", line 49, in test_primary_interrupt_survives_cleanup_and_quarantines
+    b.release_all.assert_called_once()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 958, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'mock' to have been called once. Called 0 times.
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.005s
+
+FAILED (failures=8)
