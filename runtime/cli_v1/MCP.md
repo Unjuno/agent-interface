@@ -273,6 +273,12 @@ transport with process identity remains unqualified. Namespace correspondence
 is a caller precondition, not authenticated by this flag. Same-process resource
 reuse, sampling races and synchronous blocked-I/O release remain unresolved.
 
+The experimental `--guarded-query-worker` option additionally separates active
+focus/process queries and exposes call-ID-scoped `interface_guarded_cancel`
+outside the busy slot. It requires `--guarded-process-identity`; see the
+[exact coverage and remaining synchronous boundaries](../guarded_x11_v1/TARGET_QUERIES.md).
+It does not establish a physical release deadline or isolate all observations.
+
 ```sh
 python /absolute/agent-interface-runtime.pyz mcp \
   --targets /absolute/one-target.json \
