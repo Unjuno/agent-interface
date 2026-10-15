@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [MAP01 session retirement gate](../research/doom/map01_session_retirement_checks_20261016/README.md)
+  now refuses finish refresh/score and fixture Save when close leaves an active
+  intent or unverified release obligation. Actual-command-loop/Fake X controls
+  retain the original bypass, save-before-emission evidence, collision/delivery
+  faults and healthy paths. Normal/-O affected checks pass 54 modules/395 methods
+  with 11 explicit skips. This is one session's logical effect boundary; native
+  close/release time, shared authority, independent live effect and recovery
+  remain unqualified.
+
 - [Distinct-backend admission characterization](../research/doom/map01_cross_backend_custody_20261016/README.md)
   now distinguishes the retained same-backend fence from shared-domain custody.
   With original failed release/key38 held, preconstructed distinct backends

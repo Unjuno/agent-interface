@@ -40,6 +40,8 @@ MODULES = [
     'research.doom.test_map01_process_identity_backend',
     'research.doom.test_map01_unverified_release_custody',
     'research.doom.test_map01_backend_executor_custody',
+    'research.doom.test_map01_session_retirement_boundary',
+    'research.doom.test_session_map01_v12_cleanup',
     'research.doom.test_v39_cancel_release_failure',
     'research.doom.test_v39_cover_local_invalidation',
     'research.doom.test_v39_terminal_release_receipt_completeness',
