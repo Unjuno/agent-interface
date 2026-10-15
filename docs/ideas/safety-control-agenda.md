@@ -62,10 +62,16 @@ late reply fencing・unknown readbackを組み合わせて進める。旧rescue�
 epochの返答から後続入力を復活させなかった。解放送信停止では保持が残り、sync停止では
 fake neutralでも返却済み確認がなく、readback失敗はunknownと追跡義務を保った。
 
-これは採用runtimeやguardianの完成ではない。program loop・epoch・時計・観測proofはprobe
+この凍結spike自体は採用runtimeやguardianの完成ではない。program loop・epoch・時計・観測proofはprobe
 所有で、公開bridge/MCP経路・実X・独立アプリ効果は実行していない。次は採用callerへ
 観測request/reply境界を接続し、実際のsource/generation/deadlineを保って同じ故障を通す。
 backend自体の停止、有限の物理解放、回復・task effect・効率は別の未達gateとして残す。
+
+後続の[active target-query worker](../../runtime/guarded_x11_v1/TARGET_QUERIES.md)は、
+公開Python bridgeと標準guarded MCPへfocus/process問い合わせの分離を明示的optionで接続した。
+Fake Xで両問い合わせ停止中の取消・原期限切れ・cleanup、遅い返答の破棄、世代変更拒否を通す。
+通信エラーのsticky retirementと、取消済み接続開始後に追加問い合わせを始めない回帰も確認する。
+capture・保存・input transport等は同期のままで、spike全体の採用や物理解放の保証とはしない。
 
 ## Issueを閉じる条件
 
