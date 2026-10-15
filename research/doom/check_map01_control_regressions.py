@@ -32,6 +32,8 @@ MODULES = [
     'research.doom.test_map01_process_identity_backend',
     'research.doom.test_map01_unverified_release_custody',
     'research.doom.test_v39_cancel_release_failure',
+    'research.doom.test_cancel_invalidated_cover_order',
+    'research.doom.test_v39_cancel_composition_saved_v2',
     'research.doom.test_map01_identity_selection',
     'research.doom.test_session_map01_v15',
     'research.doom.test_doom_typed_release_backend_v2',
