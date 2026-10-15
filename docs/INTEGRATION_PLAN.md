@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [MAP01 backend Executor custody](../research/doom/map01_backend_custody_checks_20261016/README.md)
+  now prevents wrapper replacement from erasing unverified release state on the
+  same backend. The first Fake X counterexample accepted an observation-only
+  replacement and changed lease while key38 remained held. Backend ownership now
+  serializes attachment and retains the first obligation before publication;
+  healthy verified close can hand off, failed closure cannot. New backend/process
+  instances, durable authority and physical/finite recovery remain unqualified.
+
 - [Explicit transport close fence](../research/doom/appserver_close_waiter_checks_20261016/README.md)
   now wakes request/notification/planner waiters before receiver retirement and
   serializes closing with cached publication, including predicate reentry. A
@@ -67,8 +75,9 @@ live task and matched comparison.
   across four Fake X stalls. Executor now retains original release/source custody
   before terminal publication and refuses later admission even after a fresh
   observation or late owner cleanup. Healthy verified cleanup still permits
-  subsequent work. This fences one Executor, not a replacement session, native
-  I/O or physical release; explicit task recovery remains unqualified.
+  subsequent work. The initial fence was per Executor; backend custody above
+  extends it across wrappers sharing that backend. Replacement sessions with new
+  backends/processes, native I/O, physical release and task recovery remain open.
 
 - [Historical GIL/Xlib boundary convergence](../research/concurrency/xlib_boundary_consolidation_20261016/README.md)
   preserves #7109's source/raw and verifies all 274 public envelope members.
