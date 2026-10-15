@@ -109,7 +109,8 @@ class CompiledNativeCallerTests(unittest.TestCase):
                 ROWS.append(row)
                 self.assertEqual(row['down'], [])
                 self.assertEqual(row['pending_authorizations'], 0)
-                self.assertTrue(all(t['release']['verified'] for t in terminals))
+                self.assertTrue(all(t['release']['verified'] for t in terminals
+                    if t['status'] == 'completed'))
                 return row
             finally:
                 bridge.close()
@@ -143,12 +144,16 @@ class CompiledNativeCallerTests(unittest.TestCase):
         self.assertEqual(row['result']['compiled_execution_receipt']['completed_transitions'], 0)
         self.assertNotEqual(row['result']['outcome'], 'TASK_SUCCEEDED')
         self.assertEqual(row['outer_checks'], [])
+        self.assertTrue(row['terminals'][0]['release']['verified'])
 
     def test_generation_change_between_actions_preserves_entry_prefix(self):
         row = self.cell('between')
         self.assertEqual(row['emissions'], [(2, 1), (2, 2), (3, 2), (3, 1)])
         self.assertEqual(row['result']['compiled_execution_receipt']['completed_transitions'], 1)
         self.assertEqual(row['outer_checks'], [])
+        refusal = next(t for t in row['terminals'] if t['status'] == 'refused')
+        self.assertIs(refusal['input_dispatched'], False)
+        self.assertIs(refusal['release']['verified'], False)
 
     def test_wrong_value_prevents_submit(self):
         row = self.cell('wrong')
