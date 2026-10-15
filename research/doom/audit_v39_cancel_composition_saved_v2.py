@@ -25,6 +25,17 @@ def require(condition, message):
         raise ValueError(message)
 
 
+def exact(left, right):
+    """JSON booleans and numbers are different evidence even under Python ==."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return left.keys() == right.keys() and all(exact(left[key], right[key]) for key in left)
+    if type(left) is list:
+        return len(left) == len(right) and all(exact(a, b) for a, b in zip(left, right))
+    return left == right
+
+
 def audit(data):
     require(data.get('format') == 'v39-interrupt-cancel-composition-a03-v1', 'format')
     require(data.get('source_main') == SOURCE, 'source')
@@ -39,7 +50,7 @@ def audit(data):
         status, release, accepted = CASES[name]
         failed_interrupt = name == 'interrupt-transport-error'
         outcome = 'request_error' if failed_interrupt else 'requested'
-        require(row.get('status') == status and row.get('release') == release,
+        require(row.get('status') == status and exact(row.get('release'), release),
                 f'{name}: frozen stimulus')
         require(row.get('interrupt_fails') is failed_interrupt and
                 row.get('interrupt_outcome') == outcome, f'{name}: interrupt summary')
@@ -50,7 +61,7 @@ def audit(data):
                 f'{name}: old summary')
         fresh = {'thread_id': 'thread-1', 'answer_eligible': True,
                  'answer': {'action': 'fresh'}} if accepted else None
-        require(row.get('fresh_result') == fresh, f'{name}: fresh summary')
+        require(exact(row.get('fresh_result'), fresh), f'{name}: fresh summary')
 
         # These are producer-recorded logical events, not wire/physical timestamps.
         expected = [
@@ -81,7 +92,7 @@ def audit(data):
                 {'event': 'turn_answer_arrived', 'thread_id': 'thread-1', 'turn_id': 'turn-2'},
                 {'event': 'fresh_turn_result', **fresh},
             ])
-        require(events == expected, f'{name}: event inventory/order/summary disagreement')
+        require(exact(events, expected), f'{name}: event inventory/order/summary disagreement')
         accepted_count += accepted
     return {'schema': 'v39-cover-cancel-saved-audit-v2', 'cases': len(rows),
             'accepted': accepted_count, 'rejected': len(rows) - accepted_count,
