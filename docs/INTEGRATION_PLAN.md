@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [V39 cancellation through owned Executor pipes](../research/integration/v39_executor_pipe_recovery_20261016/README.md)
+  connects current cancel/wait/final helpers to actual Executor v12/v13 workers
+  across real child stdin/stdout, with synthetic backend/protocol shim. Eight
+  cells per mode separate owner release from withheld terminal, retain recovered
+  full observations and unknown-cleanup custody, and discriminate dropped old
+  invalidation.67 selected methods pass normal/-O; joined final children/readers
+  leave32 named launcher/interpreter PIDs absent. Actual session main/backend,
+  native release, full controller and independent task effects remain open.
+
 - [Current V39 cancel/recovered-source qualification](../research/integration/v39_current_cancel_recovery_20261016/README.md)
   uses current functions and the exact nested wait AST, retaining ten synthetic
   rows across health/ammo recovery, three neutral terminal races, failed closure/
