@@ -264,7 +264,12 @@ class CodexAppServerClient:
         try:
             self._write(message, deadline=deadline, request_id=identifier)
             with self._condition:
-                while identifier not in self._responses:
+                while True:
+                    if self._closing:
+                        raise AppServerError("app-server close requested during " + method +
+                                             ": retirement unverified")
+                    if identifier in self._responses:
+                        break
                     remaining = deadline - time.monotonic()
                     if remaining <= 0:
                         raise TimeoutError(f"app-server request timed out: {method}")
@@ -292,8 +297,13 @@ class CodexAppServerClient:
         deadline = time.monotonic() + timeout
         with self._condition:
             while True:
+                if self._closing:
+                    raise AppServerError("app-server close requested while waiting: retirement unverified")
                 for index, message in enumerate(self._notifications):
-                    if predicate(message):
+                    matched = predicate(message)
+                    if self._closing:
+                        raise AppServerError("app-server close requested while matching: retirement unverified")
+                    if matched:
                         del self._notifications[index]
                         return message
                 remaining = deadline - time.monotonic()
@@ -371,7 +381,11 @@ class CodexAppServerClient:
             time.sleep(0.01 if remaining is None else min(0.01, remaining))
 
     def close(self, timeout=5):
-        self._closing = True
+        # Stop logical waiters even if process/reader/journal retirement fails.
+        # This is a terminal session fence, not a successful-close receipt.
+        with self._condition:
+            self._closing = True
+            self._condition.notify_all()
         deadline = None if timeout is None else time.monotonic() + max(0, timeout)
         owns_process_group = getattr(self, "_owns_process_group", False)
         if owns_process_group:

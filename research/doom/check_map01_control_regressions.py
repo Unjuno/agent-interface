@@ -11,6 +11,14 @@ import subprocess
 import sys
 
 MODULES = [
+    'research.live_control.test_appserver_close_waiter_stop',
+    'research.live_control.test_app_server_eof_stop',
+    'research.live_control.test_app_server_known_eof',
+    'research.live_control.test_app_server_reply_id_5156',
+    'research.live_control.test_appserver_bounded_close_e0cc',
+    'research.live_control.test_codex_app_server_send_deadline_v1',
+    'research.live_control.test_appserver_journal_close_01a0ff2d',
+    'research.live_control.test_appserver_process_tree_cleanup_20261004',
     'research.live_control.test_input_owner_v12_process_identity',
     'research.live_control.test_input_owner_v12_explicit_up_cancel',
     'research.live_control.test_input_owner_v12_cleanup_after_explicit_up',

@@ -1,0 +1,49 @@
+test_explicit_close_refuses_retained_notification_without_consuming_it (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_explicit_close_refuses_retained_notification_without_consuming_it) ... FAIL
+{"case": "owned-python-peer-planner", "peer_exited": true, "closing": true, "closed": false, "reader_alive": true, "waiter_alive": true, "journal_held": true, "errors": [], "answer_invalidated": true}
+test_real_pipe_planner_wait_stops_while_receive_journal_is_held (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_real_pipe_planner_wait_stops_while_receive_journal_is_held) ... FAIL
+{"case": "request", "closing": true, "closed": false, "waiter_alive": true, "reader_alive": true, "journal_held": true, "errors": []}
+test_request_and_notification_wait_stop_before_blocked_reader_retires (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_request_and_notification_wait_stop_before_blocked_reader_retires) ... 
+  test_request_and_notification_wait_stop_before_blocked_reader_retires (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_request_and_notification_wait_stop_before_blocked_reader_retires) (mode='request') ... FAIL
+{"case": "notification", "closing": true, "closed": false, "waiter_alive": true, "reader_alive": true, "journal_held": true, "errors": []}
+  test_request_and_notification_wait_stop_before_blocked_reader_retires (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_request_and_notification_wait_stop_before_blocked_reader_retires) (mode='notification') ... FAIL
+
+======================================================================
+FAIL: test_explicit_close_refuses_retained_notification_without_consuming_it (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_explicit_close_refuses_retained_notification_without_consuming_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_appserver_close_waiter_stop.py", line 69, in test_explicit_close_refuses_retained_notification_without_consuming_it
+    with self.assertRaises(AppServerError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AppServerError not raised
+
+======================================================================
+FAIL: test_real_pipe_planner_wait_stops_while_receive_journal_is_held (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_real_pipe_planner_wait_stops_while_receive_journal_is_held)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_appserver_close_waiter_stop.py", line 129, in test_real_pipe_planner_wait_stops_while_receive_journal_is_held
+    self.assertFalse(worker.is_alive(), snapshot)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : {'case': 'owned-python-peer-planner', 'peer_exited': True, 'closing': True, 'closed': False, 'reader_alive': True, 'waiter_alive': True, 'journal_held': True, 'errors': [], 'answer_invalidated': True}
+
+======================================================================
+FAIL: test_request_and_notification_wait_stop_before_blocked_reader_retires (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_request_and_notification_wait_stop_before_blocked_reader_retires) (mode='request')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_appserver_close_waiter_stop.py", line 55, in test_request_and_notification_wait_stop_before_blocked_reader_retires
+    self.assertFalse(worker.is_alive(), snapshot)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : {'case': 'request', 'closing': True, 'closed': False, 'waiter_alive': True, 'reader_alive': True, 'journal_held': True, 'errors': []}
+
+======================================================================
+FAIL: test_request_and_notification_wait_stop_before_blocked_reader_retires (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_request_and_notification_wait_stop_before_blocked_reader_retires) (mode='notification')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_appserver_close_waiter_stop.py", line 55, in test_request_and_notification_wait_stop_before_blocked_reader_retires
+    self.assertFalse(worker.is_alive(), snapshot)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : {'case': 'notification', 'closing': True, 'closed': False, 'waiter_alive': True, 'reader_alive': True, 'journal_held': True, 'errors': []}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.813s
+
+FAILED (failures=4)
