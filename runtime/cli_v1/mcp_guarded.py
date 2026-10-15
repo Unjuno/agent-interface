@@ -31,14 +31,17 @@ class InputFeedback(BaseModel):
         return self
 
 
-def open_bridge(display_name, targets, target, directory):
+def open_bridge(display_name, targets, target, directory, *, process_identity=False):
     # Optional Pillow/Xlib dependencies are loaded only for this explicit mode.
     from runtime.guarded_x11_v1.bridge import NativeHandleBridge
-    return NativeHandleBridge(display_name, targets, target, directory)
+    return NativeHandleBridge(display_name, targets, target, directory,
+                              process_identity=process_identity)
 
 
 class GuardedSessionOwner(MCPSessionOwner):
-    def __init__(self, targets, directory, display_name=None):
+    def __init__(self, targets, directory, display_name=None, *, process_identity=False):
+        if type(process_identity) is not bool:
+            raise ValueError('process_identity must be a boolean')
         if len(targets) != 1:
             raise ValueError('guarded-x11 requires exactly one explicitly configured target')
         super().__init__(targets, display_name)
@@ -46,6 +49,7 @@ class GuardedSessionOwner(MCPSessionOwner):
         self.directory = Path(directory)/('guarded-session-'+self.session_id)
         self.bridge = None
         self.binding_revision = 0
+        self.process_identity = process_identity
 
     def get(self):
         if self.state == 'open':
@@ -54,7 +58,8 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise RuntimeError('guarded session unavailable: '+self.state)
         self.state = 'opening'
         try:
-            self.bridge = open_bridge(self.display_name, self.targets, self.target, self.directory)
+            options = {'process_identity':True} if self.process_identity else {}
+            self.bridge = open_bridge(self.display_name, self.targets, self.target, self.directory, **options)
             self.session = self.bridge.session
             self.state = 'open'
             return self.session
@@ -66,6 +71,7 @@ class GuardedSessionOwner(MCPSessionOwner):
     def snapshot(self):
         row = super().snapshot()
         row['mode'] = 'guarded-x11'
+        row['process_identity'] = self.process_identity
         row['target'] = self.target
         row['observation_sequence'] = self.bridge.sequence if self.bridge else None
         row['review_required'] = self.bridge.review_required if self.bridge else None
