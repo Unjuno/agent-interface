@@ -61,6 +61,35 @@ def fixture():
 
 
 class OwnerIdentityTests(unittest.TestCase):
+    def test_first_focus_wait_cancel_discards_late_reply_without_press(self):
+        with fixture() as (owner, lease, display, reader, events):
+            entered, resume = threading.Event(), threading.Event()
+            errors = []
+            def focus():
+                entered.set()
+                if not resume.wait(3): raise RuntimeError('test focus not resumed')
+                return SimpleNamespace(focus=41)
+            display.get_input_focus = focus
+            def invoke():
+                try: owner.call('down', lease, 'W')
+                except BaseException as error: errors.append(error)
+            caller = threading.Thread(target=invoke)
+            caller.start()
+            try:
+                self.assertTrue(entered.wait(1))
+                lease.set()
+                caller.join(1)
+                self.assertFalse(caller.is_alive())
+                self.assertEqual(len(errors), 1)
+                self.assertIsInstance(errors[0], DecisionRequired)
+                self.assertEqual(events, [])
+                resume.set()
+                self.assertTrue(reader.closed.wait(1))
+                self.assertEqual(events, [])
+            finally:
+                resume.set()
+                caller.join(1)
+
     def test_blocked_focus_read_does_not_prevent_cancel_cleanup(self):
         with fixture() as (owner, lease, display, reader, events):
             block, entered, resume = threading.Event(), threading.Event(), threading.Event()
