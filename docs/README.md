@@ -7,6 +7,7 @@ This directory is the public documentation map for Agent Interface. It organizes
 | Question | Canonical document |
 |---|---|
 | How are the repository and Issue backlog being consolidated? | [REPOSITORY_CONSOLIDATION.md](REPOSITORY_CONSOLIDATION.md) |
+| What finite work can a worker select without reading all history? | [WORKER_WORK_MAP.md](WORKER_WORK_MAP.md) |
 | How should a worker start, avoid overlap, and hand off safely? | [WORKER_QUICKSTART.md](WORKER_QUICKSTART.md) |
 | What is the project trying to do? | [Project README](../README.md) and [principles](principles.md) |
 | What is the current research objective? | [CURRENT_GOAL.md](CURRENT_GOAL.md) |
@@ -80,6 +81,7 @@ Use current/canonical documents for present project direction and architecture. 
 | Document / area | Role | Authority for current state |
 |---|---|---|
 | [`CURRENT_GOAL.md`](CURRENT_GOAL.md) | Governing objective and newest direction | **Canonical** |
+| [`WORKER_WORK_MAP.md`](WORKER_WORK_MAP.md) | Narrow work candidates, exit evidence and collision boundaries | Navigation; not assignments or resource grants |
 | [`principles.md`](principles.md) | Thesis and durable design constraints | **Canonical design guidance** |
 | [`architecture.md`](architecture.md) | Current promoted architecture description | **Canonical architecture guidance** |
 | [`RESEARCH_METHOD.md`](RESEARCH_METHOD.md) | Analysis-vs-experiment workflow | **Canonical research-method guidance** |
@@ -99,7 +101,7 @@ Use current/canonical documents for present project direction and architecture. 
 
 ### Living history documents
 
-`CURRENT_GOAL.md` and `LOCAL_RESEARCH_HANDOFF.md` are living documents with retained history. Their newest governing/current material stays visible at the top; older direction and legacy document bodies are preserved under expandable sections. Read the visible freshness notes before using a checkpoint as current status, and expand history only when tracing provenance.
+`CURRENT_GOAL.md`, `INTEGRATION_PLAN.md` and `WORKER_QUICKSTART.md` are short current entry points. Their exact pre-cleanup Git contents are preserved alongside them in [goal history](CURRENT_GOAL_HISTORY_20261015.md), [integration history](INTEGRATION_HISTORY_20261015.md) and [quickstart history](WORKER_QUICKSTART_HISTORY_20261015.md), with [source identities](maintenance/entry-history-20261015.json). Keeping the archives in the same directory preserves relative-path resolution. Historical directions and allocations are not fresh worker instructions. `LOCAL_RESEARCH_HANDOFF.md` remains a detailed chronology; open it only for the selected question.
 ### Current status
 
 - [CURRENT_GOAL.md](CURRENT_GOAL.md) — current governing invariant and active research direction.
