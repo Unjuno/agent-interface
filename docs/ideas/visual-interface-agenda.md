@@ -69,3 +69,11 @@
 Fake Xによる実際のhandle/public dispatch/session/backend compositionとprotocol parserの19件を追加し、guarded suite 102件が通常・最適化Pythonで成功した。これは元研究候補のライブ結果を移したものではなく、この公開sourceの構成試験である。trusted local X serverと同じPID namespaceが前提で、その対応自体は実装が認証していない。同一process内のclient/window再利用、読取後の競合、blocked I/Oからの有限解放、ライブ効果・回復・効率は未検証または未解決であり、#5/#17の残差として続ける。
 
 統合前のレビューで、XResのcanonical client baseとwindow XIDの混同を検出した。異なるIDの実際のPython-Xlib replyを使い、修理前の拒否と修理後の成功を確認した。単一resource/PID-mask要求への単一応答だけを受理し、余分なrecord・不正なmask/client IDを拒否する。また配布archiveのmodule一覧への追加漏れを既存archive testが検出し、同梱を修理した。修理後のguarded 102件は通常・最適化で成功し、distribution 21件、backend 78件中64件（実X14件skip）、core 142件が成功した。いずれもライブ実行ではない。
+
+### MCPの標準callerへ明示的選択を接続する
+
+上記のPython optionだけでは標準MCP callerが選択できなかったため、既存のguarded-x11起動設定に`--guarded-process-identity`を追加した。設定は起動時だけ選び、他のsession modeや不正な型は起動時に拒否する。tool引数からは変更できず、identityが読めなくても再接続や従来modeへのfallbackを行わない。`session.process_identity`は選択されたpolicyを表し、資格確認の成功ではない。
+
+新規9テストが通常・最適化Pythonで成功した。実際のMCP server→owner→bridge→handle→public dispatch→session/backendと保存・表示経路を通し、同じXID/画像での旧alias拒否、modifier押下後の変化とprefix解放、保存/配信digest一致、結果再取得時の再入力なし、既定modeと確認不能時の動作を確認した。X I/Oとplatform初期化はFake Xであり、実サーバーのnamespace一致、ライブMCPとモデル受信、有限の物理解放、task effect・回復・効率を示す結果ではない。
+
+統合確認ではCLI/MCP全体377件が通常・最適化Pythonで成功した（各5件skip）。実行はrootから`python -B [-O] -m unittest discover -s runtime/cli_v1 -t . -p 'test*.py'`、Windows/Python 3.13.14、MCP 1.30.0。最初の広範囲実行はpackage指定と隔離依存の不足で失敗したため、元ログを保全し環境を修正した。また既存のfailed-accepted-Future testはmainでも失敗し、未実行workerの解放callbackが返答に遅れて次のcallをbusyにしていた。終了済みhandleだけは返答前にpending admissionを取り消し、実行中/queued workerはtransport取消しだけでは奪わない修理を含む。実行が始まったworkerや遅い呼出しの既存回帰も含めて確認した。

@@ -253,6 +253,26 @@ image-grounded aliases on one retained connection. It reuses the shared
 rejection, result retrieval and close lifecycle. It selects no actions and
 requires no helper model. The default remains one-shot.
 
+For a qualified trusted local Linux X server in the caller's PID namespace,
+add `--guarded-process-identity` at startup to require the
+[XRes/process-incarnation digest](../guarded_x11_v1/PROCESS_IDENTITY.md).
+The Python constructor equivalent is
+`create_server(..., session_mode='guarded-x11', guarded_process_identity=True)`.
+Other session modes reject this selection. The default is false; it cannot be
+changed by a tool call. `session.process_identity` reports the selected policy,
+not successful identity qualification. A captured source's
+`pointer_binding.process_generation` carries its sampled digest.
+
+Missing evidence refuses the observation/input and requires review; the server
+does not reopen the connection or fall back to the legacy mode. A changed digest
+refuses old aliases and is checked again before each new key/button press;
+cleanup releases remain available. Raw retained reports and delivered source
+metadata retain the same digest. This has Fake X composition coverage through
+the public MCP server, bridge, handle resolution and session/backend. Live MCP
+transport with process identity remains unqualified. Namespace correspondence
+is a caller precondition, not authenticated by this flag. Same-process resource
+reuse, sampling races and synchronous blocked-I/O release remain unresolved.
+
 ```sh
 python /absolute/agent-interface-runtime.pyz mcp \
   --targets /absolute/one-target.json \

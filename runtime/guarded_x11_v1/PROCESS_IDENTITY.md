@@ -49,9 +49,11 @@ reliability or efficiency. The independent-cleanup work in
 [#17](https://github.com/Unjuno/agent-interface/issues/17) remains required.
 
 Default `process_identity=False` preserves the earlier geometry/focus/pixel
-contract and makes no process-identity claim. No CLI/MCP selection flag is added
-here. Do not infer that those callers enabled this Python-only option. The
-portable archive contains the same module and API.
+contract and makes no process-identity claim. The public MCP server can select
+this policy at startup with `--session-mode guarded-x11 --guarded-process-identity`
+([MCP guide](../cli_v1/MCP.md#opt-in-scoped-x11-mode)); individual tool calls cannot
+toggle it. Ordinary one-shot CLI and persistent-x11 calls do not select this
+option. The portable archive contains the same module and API.
 
 ## Validation and provenance
 
@@ -66,5 +68,9 @@ same-XID process changes, capture changes, held-prefix cleanup, unavailable or
 malformed proof, deadline consumption, key/button release bypass, legacy mode,
 constructor selection and real Python-Xlib protocol serialization/parsing.
 The tests use no real display, process identity read, GUI, model or allocation.
+`runtime/cli_v1/test_mcp_process_identity.py` also covers explicit MCP startup
+selection, raw/delivered digest preservation, actual bridge/handle/session
+composition, stale alias refusal, prefix cleanup, result lookup without replay,
+and failure without reconnect or policy downgrade, with Fake X only.
 They do not qualify a live transport, generation change during a held live
 input, finite recovery, independent task effect or full computer control.

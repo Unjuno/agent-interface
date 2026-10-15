@@ -28,7 +28,10 @@ live task and matched comparison.
   before new presses. Fake X composition covers refusal and prefix cleanup.
   Trusted local server/PID-namespace correspondence is a precondition; same-process
   resource reuse, post-read races, live qualification and bounded I/O remain open.
-  CLI/MCP configuration and the default Python mode do not select this option.
+  Scoped MCP can explicitly select this option at startup; ordinary one-shot CLI,
+  persistent-x11 and default Python/MCP configurations do not. The public MCP
+  Fake X composition checks retained/delivered digest, stale-alias refusal and
+  held-prefix cleanup. Live transport qualification is still required.
 
 - [Public guarded X11](../runtime/guarded_x11_v1/README.md) now refuses a new
   key/button press when a returned lookup has consumed the original lease

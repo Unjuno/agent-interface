@@ -155,9 +155,14 @@ class _WorkerAdmission:
         self.completed()
 
 
-def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot"):
+def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot",
+                  guarded_process_identity=False):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11"):
         raise ValueError("unknown session mode")
+    if type(guarded_process_identity) is not bool:
+        raise ValueError('guarded_process_identity must be a boolean')
+    if guarded_process_identity and session_mode != 'guarded-x11':
+        raise ValueError('process identity requires guarded-x11 mode')
     if (not isinstance(targets, dict) or not targets or
             any(not isinstance(k, str) or not k or type(v) is not int or v <= 0
                 for k, v in targets.items())):
@@ -173,7 +178,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     guarded = session_mode == 'guarded-x11'
     if guarded:
         from .mcp_guarded import GuardedSessionOwner
-        owner = GuardedSessionOwner(targets, root, display_name)
+        owner = GuardedSessionOwner(targets, root, display_name,
+                                    process_identity=guarded_process_identity)
     shutting_down = False
     server_instance_id = uuid.uuid4().hex
 
@@ -401,7 +407,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 task.exception()
         worker.add_done_callback(finished)
         # A cancelled transport must not cancel a queued worker and strand its lock.
-        return await asyncio.shield(worker)
+        try:
+            return await asyncio.shield(worker)
+        except BaseException:
+            # A terminal executor handle can surface its error before its done
+            # callback runs. Revoke unentered work before returning to a caller
+            # that may immediately submit again. A live/queued worker retains
+            # custody when only this transport await was cancelled.
+            if worker.done():
+                admission.revoke_pending()
+            raise
 
     if owner is not None and not guarded:
         @server.tool()
@@ -679,9 +694,14 @@ def main():
     parser.add_argument('--output-directory', type=Path, required=True)
     parser.add_argument('--display')
     parser.add_argument('--session-mode', choices=('one-shot', 'persistent-x11', 'guarded-x11'), default='one-shot')
+    parser.add_argument('--guarded-process-identity', action='store_true',
+                        help='require sampled Linux/XRes process identity in guarded-x11 mode; trusted local PID namespace required')
     args = parser.parse_args()
+    if args.guarded_process_identity and args.session_mode != 'guarded-x11':
+        parser.error('--guarded-process-identity requires --session-mode guarded-x11')
     create_server(json.loads(args.targets.read_text(encoding='utf-8')),
-                  args.output_directory, display_name=args.display, session_mode=args.session_mode).run(transport='stdio')
+                  args.output_directory, display_name=args.display, session_mode=args.session_mode,
+                  guarded_process_identity=args.guarded_process_identity).run(transport='stdio')
 
 
 if __name__ == '__main__':
