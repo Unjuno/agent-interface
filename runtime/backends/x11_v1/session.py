@@ -1,23 +1,50 @@
 """Admission wrapper connecting runtime core v1 to the X11 backend."""
 from __future__ import annotations
 from typing import Any
+from dataclasses import dataclass
 
 from runtime.core_v1.contract import admit_program
 from .backend import X11Backend, X11BackendError, X11ExecutionError
 
 
+@dataclass
+class _RecoveryCustody:
+    required: bool = False
+    epoch: int = 0
+
+
 class X11RuntimeSession:
     def __init__(self, backend: X11Backend):
         self.backend = backend
-        # Sticky for this connection owner. A new image/window binding is not
-        # evidence that physical controls have returned to neutral.
-        self.recovery_required = False
+        # Caller-serialized, backend-object custody. Constructing a wrapper
+        # neither clears an obligation nor acknowledges another wrapper's old
+        # source/alias context. Distinct backends/processes remain separate.
+        self._recovery = backend.__dict__.setdefault('_x11_session_recovery', _RecoveryCustody())
+        if not isinstance(self._recovery, _RecoveryCustody):
+            raise ValueError('invalid backend recovery custody')
+        self._recovery_epoch = self._recovery.epoch
+
+    @property
+    def recovery_required(self):
+        return self._recovery.required or self._recovery_epoch != self._recovery.epoch
+
+    @recovery_required.setter
+    def recovery_required(self, required):
+        if type(required) is not bool:
+            raise ValueError('recovery_required must be bool')
+        if required:
+            if not self._recovery.required:
+                self._recovery.epoch += 1
+            self._recovery.required = True
+        elif self.recovery_required:
+            raise ValueError('explicit verified input recovery required')
 
     def _record_release(self, releases):
         verified = isinstance(releases, list) and bool(releases) and all(
             isinstance(row, dict) and row.get("verified") is True and row.get("keys_down") == []
             and row.get("buttons_down") == [] for row in releases)
-        self.recovery_required = self.recovery_required or not verified
+        if not verified:
+            self.recovery_required = True
         return verified
 
     def recover_input(self):
@@ -35,7 +62,8 @@ class X11RuntimeSession:
                     'release_attempted': True, 'recovery_required': True}
         verified = self._record_release([release])
         if verified:
-            self.recovery_required = False
+            self._recovery.required = False
+            self._recovery_epoch = self._recovery.epoch
         return {'status': 'input_recovered' if verified else 'recovery_failed',
                 'release_attempted': True, 'release': release,
                 'recovery_required': self.recovery_required,

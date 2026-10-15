@@ -1,0 +1,14 @@
+.F....
+======================================================================
+FAIL: test_direct_cleanup_does_not_reset_and_each_old_wrapper_acknowledges_recovery (runtime.backends.x11_v1.test_session_recovery_custody.SessionRecoveryCustodyTests.test_direct_cleanup_does_not_reset_and_each_old_wrapper_acknowledges_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\x11_v1\test_session_recovery_custody.py", line 82, in test_direct_cleanup_does_not_reset_and_each_old_wrapper_acknowledges_recovery
+    self.assertFalse(other.recovery_required)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.008s
+
+FAILED (failures=1)
