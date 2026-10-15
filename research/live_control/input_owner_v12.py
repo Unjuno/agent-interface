@@ -13,13 +13,25 @@ from executor_v3 import Cancelled, DecisionRequired
 
 
 class InputOwner:
-    def __init__(self, display_name, *, process_identity=False):
+    def __init__(self, display_name, *, process_identity=False, window_lifecycle=False, _window_reader=None):
         if type(process_identity) is not bool:
             raise ValueError('process_identity must be a boolean')
+        if type(window_lifecycle) is not bool or (window_lifecycle and not process_identity):
+            raise ValueError('window lifecycle requires explicit process identity')
+        if _window_reader is not None and not window_lifecycle:
+            raise ValueError('borrowed window reader requires lifecycle selection')
+        self.window_reader = None
+        self._owns_window_reader = False
         self.identity_reader = None
         if process_identity:
             from target_process_identity_v1 import IdentityReader
             self.identity_reader = IdentityReader(display_name)
+            if window_lifecycle:
+                if _window_reader is not None and not isinstance(_window_reader, IdentityReader):
+                    self.identity_reader.close()
+                    raise ValueError('canonical IdentityReader required')
+                self.window_reader = _window_reader or IdentityReader(display_name)
+                self._owns_window_reader = _window_reader is None
         self.requests = queue.Queue()
         self.owner_id = uuid.uuid4().hex
         self.records = []
@@ -48,6 +60,8 @@ class InputOwner:
         finally:
             if self.identity_reader is not None:
                 self.identity_reader.close()
+            if self.window_reader is not None and self._owns_window_reader:
+                self.window_reader.close()
             self.ready.set()
             self.stopped.set()
 
@@ -367,10 +381,12 @@ class InputOwner:
 
         active_identity = None
         checked_identity = None
+        active_window_identity = None
+        checked_window_identity = None
         next_identity_check = 0
 
         def identity_matches(lease):
-            nonlocal checked_identity
+            nonlocal checked_identity, checked_window_identity
             if self.identity_reader is None:
                 return True
             from target_process_identity_v1 import valid_source
@@ -384,6 +400,18 @@ class InputOwner:
                     cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
                 valid = (current == source[2] and source == lease.target_process_identity and
                          source[3] == lease.deadline)
+                if self.window_reader is not None:
+                    window_source = getattr(lease, 'target_window_identity', None)
+                    if (not valid_source(window_source) or window_source[:2] != source[:2]
+                            or window_source[3] != source[3]
+                            or (active is lease and window_source != active_window_identity)):
+                        return False
+                    window = self.window_reader.read_window(source[1], perf_deadline_ns=source[3],
+                        cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
+                    valid = (valid and window == window_source[2]
+                             and window_source == lease.target_window_identity
+                             and source == lease.target_process_identity and source[3] == lease.deadline)
+                    if valid: checked_window_identity = window_source
                 if valid:
                     checked_identity = source
                 return valid
@@ -400,6 +428,9 @@ class InputOwner:
                     lease.deadline != checked_identity[3] or getattr(lease, 'focus_invalid', False)):
                 lease.focus_invalid = True
                 raise DecisionRequired('target process source changed before input')
+            if self.window_reader is not None and getattr(lease, 'target_window_identity', None) != checked_window_identity:
+                lease.focus_invalid = True
+                raise DecisionRequired('target window source changed before input')
 
         def pointer_guard(lease, x, y):
             if fault is not None:
@@ -498,6 +529,9 @@ class InputOwner:
                 record['target_process_identity'] = list(active_identity) if active_identity is not None else None
                 record['target_process_identity_reader'] = self.identity_reader.worker.snapshot()
                 record['target_focus_query_failed'] = focus_query_failed
+            if self.window_reader is not None:
+                record['target_window_identity'] = list(active_window_identity) if active is not None and active_window_identity is not None else None
+                record['target_window_identity_reader'] = self.window_reader.worker.snapshot()
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
@@ -625,6 +659,7 @@ class InputOwner:
                             active = lease
                             active_pointer = True
                             active_identity = checked_identity
+                            active_window_identity = checked_window_identity
                             admitted = time.perf_counter_ns()
                             if op == 'move':
                                 xtest.fake_input(d,X.MotionNotify,x=x,y=y)
@@ -648,6 +683,8 @@ class InputOwner:
                                           valid_until_ns=lease.deadline, surface=lease.expected_surface)
                             if self.identity_reader is not None:
                                 result['target_process_identity'] = list(checked_identity)
+                            if self.window_reader is not None:
+                                result['target_window_identity'] = list(checked_window_identity)
                     elif op == 'up_batch':
                         result = release_keys_batch(lease, key)
                     elif op in ('down', 'up'):
@@ -676,6 +713,7 @@ class InputOwner:
                             active = lease
                             active_pointer = False
                             active_identity = checked_identity
+                            active_window_identity = checked_window_identity
                             touched.add(code)
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
@@ -684,6 +722,8 @@ class InputOwner:
                                           input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
                             if self.identity_reader is not None:
                                 result['target_process_identity'] = list(checked_identity)
+                            if self.window_reader is not None:
+                                result['target_window_identity'] = list(checked_window_identity)
                         else:
                             # Cleanup from an old intent must never release a newer hold.
                             if code in held and held[code] is not lease:

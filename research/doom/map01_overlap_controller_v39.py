@@ -889,6 +889,9 @@ def app_server_command_for_run(output):
 
 def session_command(args, runtime):
     identity = getattr(args, "target_process_identity", False)
+    lifecycle = getattr(args, 'target_window_lifecycle', False)
+    if lifecycle and not identity:
+        raise ValueError('target window lifecycle requires --target-process-identity')
     if identity and not getattr(args, "measurement_session", False):
         raise ValueError("target process identity requires --measurement-session")
     # Keep the established v12 session as the default. The opt-in v15 wrapper
@@ -903,6 +906,8 @@ def session_command(args, runtime):
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
     if identity:
         command.append("--target-process-identity")
+    if lifecycle:
+        command.append('--target-window-lifecycle')
     return command
 
 
@@ -1305,11 +1310,15 @@ def main():
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
     parser.add_argument("--measurement-session", action="store_true",
                         help="opt into V15 scorer-only and per-key release telemetry")
+    parser.add_argument('--target-window-lifecycle', action='store_true',
+                        help='require shared direct-window continuity evidence; requires target process identity')
     parser.add_argument("--target-process-identity", action="store_true",
                         help="select trusted-local XRes/Linux process evidence in V15 input owner")
     args = parser.parse_args()
     try:
         require_release_receipt_session(args)
+        if args.target_window_lifecycle and not args.target_process_identity:
+            raise ValueError('target window lifecycle requires --target-process-identity')
     except ValueError as error:
         parser.error(str(error))
     args.out.mkdir(parents=True, exist_ok=False)
@@ -2093,6 +2102,7 @@ def main():
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
           "target_process_identity":args.target_process_identity,
+          "target_window_lifecycle":getattr(args,'target_window_lifecycle',False),
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(
               row["model_session_id"] for row in decisions if "model_session_id" in row)),

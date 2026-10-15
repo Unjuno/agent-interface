@@ -38,6 +38,7 @@ MODULES = [
     'research.live_control.test_running_action_guard_v2',
     'research.live_control.test_running_action_guard_v3',
     'research.doom.test_map01_process_identity_backend',
+    'research.doom.test_map01_window_lifecycle',
     'research.doom.test_map01_unverified_release_custody',
     'research.doom.test_map01_backend_executor_custody',
     'research.doom.test_map01_session_retirement_boundary',
@@ -67,6 +68,7 @@ MODULES = [
     'research.doom.test_doom_typed_artifact_reconciliation_v1',
     'runtime.guarded_x11_v1.test_target_queries',
     'runtime.guarded_x11_v1.test_process_identity',
+    'runtime.guarded_x11_v1.test_window_lifecycle',
 ]
 
 

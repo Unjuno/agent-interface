@@ -20,7 +20,7 @@ def _option(name,default=None):
     if i+1>=len(args):raise ValueError(f'option requires value: {name}')
     return args[i+1]
 def _sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-def _merge_sources(out, *, process_identity=False):
+def _merge_sources(out, *, process_identity=False, window_lifecycle=False):
     path=Path(out)/'sources.json'
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
@@ -39,7 +39,8 @@ def _merge_sources(out, *, process_identity=False):
         for relative in ('runtime/guarded_x11_v1/process_identity.py', 'runtime/guarded_x11_v1/target_queries.py'):
             files[relative]=_sha(RESEARCH.parent/relative)
         (Path(out)/'target-process-identity-sources.json').write_text(json.dumps(
-            {'schema':'map01-process-identity-sources-v1','path_root':'repository','files':files},
+            {'schema':'map01-process-identity-sources-v1','path_root':'repository','files':files,
+             'window_lifecycle':window_lifecycle},
             indent=2,sort_keys=True)+'\n',encoding='utf-8')
     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
 
@@ -121,6 +122,9 @@ class _GameProxy:
         return result
 
 def main():
+    window_lifecycle = '--target-window-lifecycle' in sys.argv[1:]
+    if window_lifecycle and '--target-process-identity' not in sys.argv[1:]:
+        raise ValueError('target window lifecycle requires target process identity')
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
     if timeout_seconds<10:raise ValueError('timeout must leave scoring slack')
     import session_map01_v12 as base
@@ -129,6 +133,9 @@ def main():
     process_identity = '--target-process-identity' in sys.argv[1:]
     if process_identity:
         from doom_process_identity_backend_v1 import Backend as TelemetryBackend
+        if window_lifecycle:
+            from functools import partial
+            TelemetryBackend = partial(TelemetryBackend, window_lifecycle=True)
     holder={};sink=ScorerFileSink(out)
     def sample_game():
         game=holder.get('game')
@@ -141,10 +148,10 @@ def main():
     base.vd.DoomGame=ctor;base.Backend=TelemetryBackend;base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
     original_argv = sys.argv
     if process_identity:
-        sys.argv = [arg for arg in original_argv if arg != '--target-process-identity']
+        sys.argv = [arg for arg in original_argv if arg not in ('--target-process-identity','--target-window-lifecycle')]
     try:base.main()
     finally:
         sys.argv = original_argv
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
-        sink.finalize(polling.stats());_merge_sources(out,process_identity=process_identity)
+        sink.finalize(polling.stats());_merge_sources(out,process_identity=process_identity,window_lifecycle=window_lifecycle)
 if __name__=='__main__':main()
