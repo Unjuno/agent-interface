@@ -5,6 +5,7 @@ from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
+import os
 import queue
 import subprocess
 import sys
@@ -19,7 +20,8 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
-from doom_controller_failure_cleanup_v1 import ControllerFailureCleanup
+from doom_controller_failure_cleanup_v1 import (
+    ControllerFailureCleanup, reject_duplicate_json_members)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
@@ -48,7 +50,6 @@ DISABLED_FEATURES = [
     "apps", "plugins", "remote_plugin", "browser_use", "browser_use_external",
     "computer_use", "in_app_browser", "code_mode", "code_mode_host",
 ]
-DISABLED_MCPS = ["blender", "chrome-devtools", "node_repl", "playwright", "puppeteer"]
 WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 MAX_AUTHORED_HEALTH_LOSS = 20
 
@@ -384,15 +385,24 @@ def build_cover_monitor(reader, source_observation, authored_validity, index,
     return monitor, receipt
 
 
+def terminal_release_is_known_empty(terminal):
+    """Return true only for an explicit, verified, known-empty terminal release."""
+    release = terminal.get("release") if type(terminal) is dict else None
+    return (type(terminal) is dict and terminal.get("event") == "terminal" and
+            type(release) is dict and release.get("event") == "owner_release" and
+            release.get("verified") is True and
+            release.get("keys_down") == [] and release.get("buttons_down") == [] and
+            release.get("keys_unknown") == [] and
+            release.get("key_state_errors") == [])
+
+
 def require_cover_terminal(terminal, *, cancellation_requested=False):
     """Require neutral closure before renewing cover or using a planner answer."""
     allowed = ("completed", "expired", "cancelled") if cancellation_requested else (
         "completed", "expired")
-    release = terminal.get("release") if type(terminal) is dict else None
     if (type(terminal) is not dict or terminal.get("event") != "terminal" or
-            terminal.get("status") not in allowed or type(release) is not dict or
-            release.get("verified") is not True or release.get("keys_down") != [] or
-            release.get("buttons_down") != []):
+            terminal.get("status") not in allowed or
+            not terminal_release_is_known_empty(terminal)):
         raise RuntimeError(f"cover terminal lacks allowed status and verified empty release: {terminal!r}")
 
 
@@ -424,13 +434,12 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
             terminal_error.add_note(
                 "executor cancel write also failed: " + type(cancel_error).__name__)
         raise
-    release = terminal.get("release", {})
     # The bounded cover can naturally finish or lease-expire between policy
     # invalidation and delivery of the cancel request. Accept those terminal
     # races only when they independently verify that no input remains held.
-    if (terminal.get("status") not in ("cancelled", "completed", "expired") or
-            release.get("verified") is not True or
-            release.get("buttons_down") != [] or release.get("keys_down") != []):
+    if (type(terminal) is not dict or
+            terminal.get("status") not in ("cancelled", "completed", "expired") or
+            not terminal_release_is_known_empty(terminal)):
         raise RuntimeError("invalidated cover did not verify empty release")
     if cancel_error is not None:
         raise RuntimeError(
@@ -674,10 +683,33 @@ def win(path):
 
 
 def app_server_command():
-    command = [NODE, CLI, "app-server", "--stdio"]
+    direct_executable = os.environ.get("AGENT_INTERFACE_CODEX_APP_SERVER_EXE")
+    if not direct_executable and os.name == "nt":
+        candidate = os.environ.get("CODEX_CLI_PATH")
+        if candidate and Path(candidate).suffix.lower() == ".exe" and Path(candidate).is_file():
+            direct_executable = candidate
+    if direct_executable:
+        command = [direct_executable, "app-server", "--stdio"]
+    else:
+        command = [NODE, CLI, "app-server", "--stdio"]
     for feature in DISABLED_FEATURES:
         command += ["--disable", feature]
-    for name in DISABLED_MCPS:
+    if os.environ.get("CODEX_HOME"):
+        codex_home = Path(os.environ["CODEX_HOME"])
+    else:
+        user_home = (os.environ.get("USERPROFILE") or os.environ.get("HOME") or
+                     os.environ.get("HOMEDRIVE", "") + os.environ.get("HOMEPATH", ""))
+        codex_home = Path(user_home) / ".codex" if user_home else Path.home() / ".codex"
+    config = codex_home / "config.toml"
+    configured_mcps = []
+    if config.is_file():
+        try:
+            import tomllib
+            with config.open("rb") as source:
+                configured_mcps = list(tomllib.load(source).get("mcp_servers", {}))
+        except (OSError, ValueError):
+            configured_mcps = []
+    for name in configured_mcps:
         command += ["-c", f"mcp_servers.{name}.enabled=false"]
     return command
 
@@ -693,6 +725,14 @@ def session_command(args, runtime):
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
+
+
+def require_release_receipt_session(args):
+    """Reject the V10 default, whose receipts cannot satisfy the strict gate."""
+    if not getattr(args, "measurement_session", False):
+        raise ValueError(
+            "strict release-receipt validation requires --measurement-session "
+            "(V15/V12 producer); the V12 default uses V10 receipts")
 
 
 def validate_action(action):
@@ -1087,6 +1127,10 @@ def main():
     parser.add_argument("--measurement-session", action="store_true",
                         help="opt into V15 scorer-only and per-key release telemetry")
     args = parser.parse_args()
+    try:
+        require_release_receipt_session(args)
+    except ValueError as error:
+        parser.error(str(error))
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
         app_server_command(), cwd=REPO,
@@ -1113,7 +1157,9 @@ def main():
         def reader():
             try:
                 for line in process.stdout:
-                    row = json.loads(line); all_events.append(row); incoming.put(row)
+                    row = json.loads(
+                        line, object_pairs_hook=reject_duplicate_json_members)
+                    all_events.append(row); incoming.put(row)
             except BaseException as error:
                 reader_errors.append(f"{type(error).__name__}: {error}")
         latest = None
@@ -1155,6 +1201,7 @@ def main():
         latest = wait(lambda r:r["event"] == "observation")
         decisions=[];model_session_id=planner.thread_id
         source_refreshes=[]
+        terminal_health_observation=None
         program_admissions=0
         for index in range(args.iterations):
             failure_cleanup.set_stage("source_refresh")
@@ -1167,7 +1214,11 @@ def main():
             try:
                 latest, source_refresh = refresh_source(
                     latest, signal_reader, ammo_reader, send_source_refresh, wait,
-                    f"source-refresh-{index}")
+                    f"source-refresh-{index}",
+                    terminal_predicate=lambda row, health, ammo: (
+                        row.get("event") == "observation" and
+                        health.get("status") == "observed" and
+                        type(health.get("value")) is int and health.get("value") == 0))
             except SourceRefreshRefused as error:
                 source_refreshes.append(dict(error.receipt, iteration=index))
                 try:
@@ -1180,6 +1231,15 @@ def main():
             source_refreshes.append(dict(source_refresh, iteration=index))
             (args.out/"source-refreshes.json").write_text(
                 json.dumps(source_refreshes,indent=2)+"\n")
+            if source_refresh.get("status") == "terminal":
+                terminal_health_observation = {
+                    "iteration": index,
+                    "status": "observed",
+                    "health": latest.get("signals", {}).get("health", {}).get("value"),
+                    "sequence": latest.get("sequence"),
+                    "source_refresh": dict(source_refresh, iteration=index),
+                }
+                break
             failure_cleanup.set_stage("cover_validity_admission")
             cover_semantic, cover_validity_semantic, cover_policy_source_iteration = reusable_cover(decisions)
             validity_monitor, validity_admission = build_cover_monitor(
@@ -1684,14 +1744,13 @@ def main():
                 if boundary["event"]=="running_action_invalidation":
                     persist_running_invalidation(args.out,identifier,boundary)
                     terminal=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier)
-                    release=terminal.get("release",{})
-                    if (terminal.get("status")!="completed" or release.get("verified") is not True or
-                            release.get("keys_down")!=[] or release.get("buttons_down")!=[]):
+                    if (terminal.get("status")!="completed" or
+                            not terminal_release_is_known_empty(terminal)):
                         raise RuntimeError("passive refresh did not verify empty release")
                     return False
-                terminal=boundary;release=terminal.get("release",{})
-                if (terminal.get("status")!="completed" or release.get("verified") is not True or
-                        release.get("keys_down")!=[] or release.get("buttons_down")!=[] or
+                terminal=boundary
+                if (terminal.get("status")!="completed" or
+                        not terminal_release_is_known_empty(terminal) or
                         running_guard.receipt()["state"]!=RUNNING_READY):
                     raise RuntimeError("passive refresh did not establish current action")
                 return True
@@ -1876,7 +1935,8 @@ def main():
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
           "model_session_span":args.session_span,
-          "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
+          "model_session_ids":list(dict.fromkeys(
+              row["model_session_id"] for row in decisions if "model_session_id" in row)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
           "soft_event_context_contract":"expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
@@ -1948,7 +2008,11 @@ def main():
           "model_authored_cover_validity_envelopes":sum(isinstance(x.get("action"),dict) and
               x["action"]["state"]=="active" and len(x["action"].get("next_cover_validity",[]))==1 and
               not x.get("model_action_discarded",False) for x in decisions),
-          "model_wall_seconds":sum(x["model_ns"] for x in decisions)/1e9}
+          "model_wall_seconds":sum(x.get("model_ns", 0) for x in decisions)/1e9,
+          "terminal_health_observation":terminal_health_observation,
+          "terminal_health_policy_boundary":(
+              "Observed health zero ends the episode before another model turn or input; "
+              "it is a post-terminal reporting/custody path and does not claim death prevention.")}
         failure_cleanup.set_stage("report_write")
         (args.out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
         print(json.dumps({"iterations":len(decisions),"score":score,

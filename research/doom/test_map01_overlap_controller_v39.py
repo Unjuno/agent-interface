@@ -101,9 +101,11 @@ class Map01V39CoastTests(unittest.TestCase):
             sent = []
             replies = [
                 {"event": "accepted", "id": "refresh-0", "intent_token": "refresh-lease"},
-                dict(refresh_source, event="observation", id="refresh-0"),
-                {"event": "terminal", "id": "refresh-0", "status": "completed",
-                 "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                 dict(refresh_source, event="observation", id="refresh-0"),
+                 {"event": "terminal", "id": "refresh-0", "status": "completed",
+                 "release": {"event": "owner_release", "verified": True,
+                             "keys_down": [], "buttons_down": [],
+                             "keys_unknown": [], "key_state_errors": [],
                              "intent_token": "refresh-lease"}},
             ]
             def refresh_wait(predicate, **kwargs):
@@ -135,7 +137,8 @@ class Map01V39CoastTests(unittest.TestCase):
                 {"event": "accepted", "id": "bad-refresh-0", "intent_token": "lease-a"},
                 dict(refresh_source, event="observation", id="bad-refresh-0"),
                 {"event": "terminal", "id": "bad-refresh-0", "status": "completed",
-                 "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                 "release": {"event": "owner_release", "verified": True,
+                             "keys_down": [], "buttons_down": [],
                              "intent_token": "different-lease"}},
             ]
             def bad_refresh_wait(predicate, **kwargs):
@@ -269,7 +272,9 @@ class Map01V39CoastTests(unittest.TestCase):
                 self.interrupted.append(handle)
                 return {"status": "interrupted"}
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
         process, planner, handle = Process(), Planner(), object()
 
         interruption, result = controller.cancel_invalidated_cover(
@@ -290,8 +295,9 @@ class Map01V39CoastTests(unittest.TestCase):
 
         terminal = {"event": "terminal", "id": "cover-0",
                     "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [],
-                                "buttons_down": []}}
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
         process = Process()
         result = controller.cancel_initial_cover_before_planner(
             process, lambda predicate: terminal if predicate(terminal) else None,
@@ -300,9 +306,11 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertIs(result, terminal)
         self.assertIn('"op": "cancel"', process.stdin.writes[0])
         for release in (
-            {"verified": False, "keys_down": [], "buttons_down": []},
+            {"verified": False, "keys_down": [], "buttons_down": [],
+             "keys_unknown": [], "key_state_errors": []},
             {"verified": True, "keys_down": ["W"], "buttons_down": []},
-            {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
+            {"event": "owner_release", "verified": True,
+             "keys_down": [], "buttons_down": ["fire"]},
         ):
             unsafe_terminal = dict(terminal, release=release)
             with self.subTest(release=release), self.assertRaisesRegex(
@@ -326,8 +334,9 @@ class Map01V39CoastTests(unittest.TestCase):
                     "coherent_source_recovery": coherent}
         terminal = {"event": "terminal", "id": "cover-0",
                     "status": "cancelled",
-                    "release": {"verified": True, "keys_down": [],
-                                "buttons_down": []}}
+                    "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": []}}
 
         before_admission = controller.cover_submission_invalidation_receipt(rejected)
         after_admission = controller.cover_submission_invalidation_receipt(
@@ -374,6 +383,46 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertIsNone(reset["receipt"])
         self.assertEqual(calls[0], ("build", fresh))
         self.assertEqual(calls[1][2:], ([], None))
+
+    def test_production_source_refresh_stops_loop_on_terminal_health_zero(self):
+        source_path = Path(__file__).resolve().parent / "map01_overlap_controller_v39.py"
+        source = source_path.read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        refresh = source.index("latest, source_refresh = refresh_source(", execute)
+        terminal_predicate = source.index("terminal_predicate=lambda row, health, ammo:", refresh)
+        terminal_break = source.index('if source_refresh.get("status") == "terminal":', terminal_predicate)
+        loop_break = source.index("break", terminal_break)
+        next_input_path = source.index('failure_cleanup.set_stage("cover_validity_admission")', loop_break)
+        finish_path = source.index('failure_cleanup.set_stage("session_finish")', next_input_path)
+        report_path = source.index('failure_cleanup.set_stage("report_write")', finish_path)
+        model_session_filter = source.index('row["model_session_id"] for row in decisions if "model_session_id" in row', report_path - 8000)
+        model_wall_sum = source.index('x.get("model_ns", 0)', report_path - 1000)
+        self.assertLess(refresh, terminal_predicate)
+        self.assertLess(terminal_predicate, terminal_break)
+        self.assertLess(terminal_break, loop_break)
+        self.assertLess(loop_break, next_input_path)
+        self.assertLess(next_input_path, finish_path)
+        self.assertLess(finish_path, report_path)
+        self.assertLess(model_session_filter, report_path)
+        self.assertLess(model_wall_sum, report_path)
+
+    def test_terminal_health_observation_is_reported_outside_planner_decisions(self):
+        source_path = Path(__file__).resolve().parent / "map01_overlap_controller_v39.py"
+        source = source_path.read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        loop = source.index("for index in range(args.iterations):", execute)
+        terminal_branch = source.index('if source_refresh.get("status") == "terminal":', loop)
+        terminal_break = source.index("break", terminal_branch)
+        next_input_path = source.index('failure_cleanup.set_stage("cover_validity_admission")', terminal_break)
+        report_path = source.index('"terminal_health_observation":terminal_health_observation', next_input_path)
+        branch = source[terminal_branch:terminal_break]
+        self.assertIn("terminal_health_observation =", branch)
+        self.assertNotIn("decisions.append", branch)
+        self.assertLess(terminal_branch, terminal_break)
+        self.assertLess(terminal_break, next_input_path)
+        self.assertLess(next_input_path, report_path)
+        self.assertIn('"planner_turns":len(decisions)', source[report_path - 5000:report_path])
+        self.assertIn('x["final_action_admission"]["status"] for x in decisions', source[report_path - 3000:report_path])
 
     def test_production_initial_cover_rejection_branch_uses_caller_reset(self):
         source = Path(controller.__file__).read_text(encoding="utf-8")
@@ -467,7 +516,9 @@ class Map01V39CoastTests(unittest.TestCase):
         for status in ("completed", "expired"):
             neutral_terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             result = controller.cancel_invalidated_cover(
                 Planner(), object(), Process(), wait_for_matching_terminal(neutral_terminal),
                 "cover-0")
@@ -475,7 +526,9 @@ class Map01V39CoastTests(unittest.TestCase):
 
             held_terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": ["space"], "buttons_down": []}}
+                "release": {"verified": True, "keys_down": ["space"],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                 controller.cancel_invalidated_cover(
                     Planner(), object(), Process(), wait_for_matching_terminal(held_terminal),
@@ -484,7 +537,9 @@ class Map01V39CoastTests(unittest.TestCase):
         for status in ("failed", "needs_decision"):
             terminal = {
                 "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
+                "release": {"event": "owner_release", "verified": True, "keys_down": [],
+                            "buttons_down": [], "keys_unknown": [],
+                            "key_state_errors": []}}
             with self.subTest(status=status):
                 with self.assertRaisesRegex(RuntimeError, "verify empty release"):
                     controller.cancel_invalidated_cover(
@@ -503,8 +558,11 @@ class Map01V39CoastTests(unittest.TestCase):
                 return {"status": "interrupted"}
         for release in (
             {"verified": False, "keys_down": [], "buttons_down": []},
-            {"verified": True, "keys_down": ["W"], "buttons_down": []},
-            {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
+            {"verified": True, "keys_down": ["W"], "buttons_down": [],
+             "keys_unknown": [], "key_state_errors": []},
+            {"event": "owner_release", "verified": True,
+             "keys_down": [], "buttons_down": ["fire"],
+             "keys_unknown": [], "key_state_errors": []},
         ):
             terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
                         "release": release}

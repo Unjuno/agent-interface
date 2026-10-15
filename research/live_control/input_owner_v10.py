@@ -185,7 +185,8 @@ class InputOwner:
             bitmap = d.query_keymap()
             down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
-                          keys_down=down, verified_ns=time.perf_counter_ns(),
+                          keys_down=down, keys_unknown=[], key_state_errors=[],
+                          verified_ns=time.perf_counter_ns(),
                           valid_until_ns=active.deadline if active else None)
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)

@@ -704,6 +704,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`image_jacobian_adaptation_7765_t0b_20261005/`](image_jacobian_adaptation_7765_t0b_20261005/)
 - [`image_jacobian_adaptation_7765_t0b_cal_a02_20261005/`](image_jacobian_adaptation_7765_t0b_cal_a02_20261005/)
 - [`ime_commit_effect_6523_t0_v1/`](ime_commit_effect_6523_t0_v1/)
+- [`importance_sampling_6018_t0_a01_20261009/`](importance_sampling_6018_t0_a01_20261009/)
 - [`incidental_state_legacy_6655_t0_20261002/`](incidental_state_legacy_6655_t0_20261002/)
 - [`incorrect_belief_exposure_7986_t0_a01_20261005/`](incorrect_belief_exposure_7986_t0_a01_20261005/)
 - [`incremental_focus_fold_z7r2_v1/`](incremental_focus_fold_z7r2_v1/)

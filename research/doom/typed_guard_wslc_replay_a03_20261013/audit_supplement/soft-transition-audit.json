@@ -1,0 +1,76 @@
+{
+  "complete_reconstructed_soft_sequences": [
+    96,
+    158,
+    160
+  ],
+  "disposition": "PASS_RAW_SOFT_TRANSITION_RECONSTRUCTION_SCOPED",
+  "events_sha256": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a",
+  "method": "manual raw-only transition reconstruction; imports neither candidate nor guard implementation",
+  "original_candidate_or_audit_modified": false,
+  "original_wslc_allocation_rerun": false,
+  "package_manifest_all_match": true,
+  "package_manifest_entries_verified": 28,
+  "per_decision": [
+    {
+      "decision_index": 2,
+      "iteration": 2,
+      "reconstructed_count": 1,
+      "reported_count": 1,
+      "sequences": [
+        96
+      ]
+    },
+    {
+      "decision_index": 5,
+      "iteration": 5,
+      "reconstructed_count": 2,
+      "reported_count": 2,
+      "sequences": [
+        158,
+        160
+      ]
+    }
+  ],
+  "previously_unselected_soft_sequences": [
+    158
+  ],
+  "reconstructed_soft_transition_count": 3,
+  "report_sha256": "cf089fa6119f0ca6d2174adff9503cd0b200115d5d2f6255ee11f050b0a4d121",
+  "reported_cumulative_soft_count": 3,
+  "schema": "wslc-typed-policy-replay-a03-soft-transition-supplement-v1",
+  "scope_limit": "Reconstructs retained ammo value transitions under the frozen source signal, binding, hard minimum, age limit, and raw typed sequence. Does not add a WSLc result, production wiring, live invalidation, task effect, recovery, survival, or product claim.",
+  "selected_latest_soft_sequences": [
+    96,
+    160
+  ],
+  "soft_transitions": [
+    {
+      "current_value": 42,
+      "decision_index": 2,
+      "iteration": 2,
+      "sequence": 96,
+      "signal_id": "ammo",
+      "source_age_ms": 828.707193,
+      "source_value": 43
+    },
+    {
+      "current_value": 40,
+      "decision_index": 5,
+      "iteration": 5,
+      "sequence": 158,
+      "signal_id": "ammo",
+      "source_age_ms": 327.690771,
+      "source_value": 41
+    },
+    {
+      "current_value": 39,
+      "decision_index": 5,
+      "iteration": 5,
+      "sequence": 160,
+      "signal_id": "ammo",
+      "source_age_ms": 577.914788,
+      "source_value": 41
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 This directory is the compact history of ideas raised in Agent Interface.
 
-It is not a task tracker and does not replace GitHub Issues. Issues remain the intake, discussion, experiment, and execution surface. This area records only what ideas existed and what happened to them.
+Use this directory to connect ideas to existing evidence, dependencies, priorities and executable experiments. GitHub Issues remain the discussion and execution surface. Preserving an idea here does not remove it from research consideration or justify closing its Issue. Close only for verified completion, evidence-based rejection, or an actual successor that carries the remaining research forward. See the [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md).
 
 ## What belongs here
 
@@ -34,4 +34,6 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
-No entries have been consolidated into this ledger yet. Add entries only after checking the originating Issue and any retained evidence, and keep the summary outcome-focused.
+- [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, dependencies and executed public-path Fake X blocking characterization. These parent ideas remain open.
+
+- [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). Original bodies and provenance are preserved; all three source Issues were reopened after correcting premature consolidation closures.

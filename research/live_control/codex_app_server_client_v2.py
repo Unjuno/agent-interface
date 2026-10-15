@@ -36,6 +36,33 @@ class AppServerWriteUncertain(AppServerError):
         super().__init__(f"app-server write uncertain: {sent}/{total} bytes ({reason})")
 
 
+def wsl_environment_for_windows_executable(command, environ):
+    """Forward WSL CODEX_HOME through WSL path translation to a Windows exe."""
+    if (not environ.get("WSL_INTEROP") or len(command) < 2 or
+            not str(command[0]).lower().endswith(".exe") or
+            command[1] != "app-server"):
+        return None
+    codex_home = environ.get("CODEX_HOME")
+    if not codex_home or not codex_home.startswith("/"):
+        raise AppServerError(
+            "WSL Windows App Server requires CODEX_HOME as an absolute WSL path")
+
+    result = dict(environ)
+    entries = [entry for entry in environ.get("WSLENV", "").split(":") if entry]
+    retained = []
+    path_flags = "p"
+    for entry in entries:
+        name, separator, flags = entry.partition("/")
+        if name == "CODEX_HOME":
+            if separator:
+                path_flags = "".join(dict.fromkeys(flags + "p"))
+            continue
+        retained.append(entry)
+    retained.append("CODEX_HOME/" + path_flags)
+    result["WSLENV"] = ":".join(retained)
+    return result
+
+
 def _deadline(timeout):
     if (type(timeout) not in (int, float) or not 0 <= timeout <= threading.TIMEOUT_MAX
             or not math.isfinite(timeout)):
@@ -48,12 +75,17 @@ class CodexAppServerClient:
         _require_pipe_runtime()
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
+        self._owns_process_streams = process_factory is subprocess.Popen
         self._owns_process_group = os.name == "posix" and process_factory is subprocess.Popen
         process_options = {
             "cwd": cwd, "stdin": subprocess.PIPE, "stdout": subprocess.PIPE,
             "stderr": subprocess.PIPE, "text": True, "encoding": "utf-8",
             "errors": "strict", "bufsize": 1,
         }
+        interop_environment = wsl_environment_for_windows_executable(
+            command, getattr(os, "environ", {}))
+        if interop_environment is not None:
+            process_options["env"] = interop_environment
         if self._owns_process_group:
             process_options["start_new_session"] = True
         self.process = process_factory(command, **process_options)
@@ -369,7 +401,7 @@ class CodexAppServerClient:
                 raise TimeoutError("app-server reader close timed out")
         # Custom process factories own their stream wrappers and may provide
         # lightweight proxies without the IOBase ``closed``/``close`` API.
-        if owns_process_group:
+        if getattr(self, "_owns_process_streams", owns_process_group):
             # Terminate first so a backpressured writer can finish. Never close
             # or recycle its raw descriptor while that writer still owns it.
             write_lock = self._write_lock

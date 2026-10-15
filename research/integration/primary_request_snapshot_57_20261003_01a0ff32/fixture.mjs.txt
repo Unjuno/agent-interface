@@ -1,0 +1,19 @@
+import {createInterface} from 'node:readline';
+import {writeFileSync,appendFileSync} from 'node:fs';
+import {join} from 'node:path';
+const dir=process.argv[2];let requests=0;
+writeFileSync(join(dir,'fixture-start.json'),JSON.stringify({pid:process.pid,ppid:process.ppid})+'\n',{flag:'wx'});
+process.on('exit',code=>writeFileSync(join(dir,'fixture-exit.json'),JSON.stringify({pid:process.pid,ppid:process.ppid,code,requests})+'\n',{flag:'wx'}));
+const lines=createInterface({input:process.stdin,terminal:false});
+lines.on('line',line=>{
+  const r=JSON.parse(line);requests++;appendFileSync(join(dir,'fixture-requests.jsonl'),line+'\n');
+  const args=r.arguments;let meta;
+  if(r.tool==='interface_guarded_mint_many')meta={status:'minted',source_sequence:args.source_sequence,minted:args.references.map(x=>({alias:x.alias}))};
+  else if(r.tool==='interface_guarded_input')meta={status:'completed',image_status:'image',
+    result:{execution:{releases:[{verified:true,keys_down:[],buttons_down:[]}]}},
+    feedback:{status:'matched',expected_title:args.feedback.expected_title,rejected_titles:args.feedback.rejected_titles??[],title:args.feedback.expected_title,after_title:args.feedback.expected_title,task_success:null,authority_granted:false,input_dispatched:false}};
+  else throw Error('unplanned tool');
+  const content=[{type:'text',text:JSON.stringify(meta)}];
+  if(r.tool==='interface_guarded_input')content.push({type:'image',data:'AAECAw==',mimeType:'image/png'});
+  process.stdout.write(JSON.stringify({status:'returned',id:r.id,tool:r.tool,next_id:r.id+1,result:{isError:false,content}})+'\n');
+});
