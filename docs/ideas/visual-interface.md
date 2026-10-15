@@ -1,6 +1,6 @@
 # Visual representation, addressing and feedback ideas
 
-Consolidated 2026-10-15 from #3, #5 and #8. **Disposition: retained ideas, not currently scheduled.** Closing their intake Issues does not assert scientific completion, rejection, or successful deployment. Original Issue bodies and metadata are retained in [the source snapshot](visual-interface-sources-20261015.json); the live Issues remain the discussion provenance.
+Consolidated 2026-10-15 from #3, #5 and #8. **Disposition: research to organize and execute.** All three source Issues were reopened after the maintainer clarified that archiving must lead to research rather than remove ideas from the queue. Use [the execution agenda](visual-interface-agenda.md) for priorities, dependencies and next experiments. Original Issue bodies and metadata remain in [the historical source snapshot](visual-interface-sources-20261015.json).
 
 ## Optional grids — #3
 
@@ -30,8 +30,8 @@ Costs depend on model/provider image processing. Fewer images or fewer bytes do 
 
 Revisit when a measured multi-view cost justifies a matched packing experiment. Do not silently add a semantic selector or change information content between comparison arms.
 
-## Intake closure and later work
+## Execution tracking
 
-At review time all three Issues were open, had no comments and had no closing references among the 538 open PRs retrieved. This is evidence about those discussions and formal PR references, not proof that there is no related implementation or informal worker assignment. No live resource or allocation is transferred by closing these idea menus.
+At initial review all three Issues were open, had no comments and had no closing references among the 538 open PRs retrieved. That did not establish that they should be deferred or closed. The consolidation closures have been reversed; preserve those events as correction history.
 
-Future work should reopen the relevant source Issue or use a focused task linking the relevant section, its current-code residual, a finite experiment and a decision rule. Unscheduled ideas remain discoverable here without all being open tasks.
+Track remaining experiments in the existing Issues. The agenda must distinguish existing component results from untested integration and new experiments. Consolidation is complete only when the distinct hypotheses and their next research actions have been accounted for, not when the intake count falls.

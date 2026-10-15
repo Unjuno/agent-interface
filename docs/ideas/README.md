@@ -2,7 +2,7 @@
 
 This directory is the compact history of ideas raised in Agent Interface.
 
-It is not a task tracker. GitHub Issues remain the intake, discussion, experiment, and execution surface. Unscheduled idea menus can be consolidated here and their Issues closed as `not planned`, with a link to the preserved idea and its unresolved questions. Closure for consolidation does not mean scientific completion or rejection. See the [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md).
+Use this directory to connect ideas to existing evidence, dependencies, priorities and executable experiments. GitHub Issues remain the discussion and execution surface. Preserving an idea here does not remove it from research consideration or justify closing its Issue. Close only for verified completion, evidence-based rejection, or an actual successor that carries the remaining research forward. See the [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md).
 
 ## What belongs here
 
@@ -34,4 +34,4 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
-- [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8). Retained ideas, not currently scheduled; original bodies and provenance are preserved.
+- [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). Original bodies and provenance are preserved; all three source Issues were reopened after correcting premature consolidation closures.
