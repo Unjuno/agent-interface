@@ -58,9 +58,12 @@ missing terminal or invent an admitted image before a returned turn handle.
 The [compiled handoff characterization](../research/integration/compiled_caller_handoff_20261016/README.md)
 finds a separate unqualified seam: the legacy helper imports caller v2, and an
 import-only v3 switch still loses known execution after sink failure and the
-completed prefix/current-input distinction after unverified release. Reuse the
-retained counterexamples for an explicit v3 composition repair; do not assume
-that the caller-only tests qualify this helper or rerun historical allocations.
+completed prefix/current-input distinction after unverified release. The
+[explicit v3 repair](../research/integration/compiled_caller_v3_repair_20261016/README.md)
+now retains those facts and builds from the final selected target, with 223
+affected normal/-O methods. Use its explicit API for future qualification of
+actual domain/admission/effect adapters; legacy v1 remains unchanged. Do not
+transfer inert construction to live qualification or rerun historical allocations.
 
 The [current V4→V12 generation characterization](../research/live_control/v12_generation_boundary_20261016/RESULT.md)
 records two same-focus fake admissions despite probe-supplied stale generation
