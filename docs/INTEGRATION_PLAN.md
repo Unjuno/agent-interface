@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Cover cancellation convergence](../research/doom/v39_cover_cancel_convergence_20261016/README.md)
+  preserves #8384's original 15 files and reconstructs its saved ten-case result
+  with a separate exact-inventory/type auditor. Current helper checks now expose
+  a remaining synchronous dependency: while planner interrupt transport is held,
+  even an available failed cover terminal is not inspected. Local invalidation
+  and cancel send precede that wait; finite recovery and physical release do not
+  follow. The old partial release fixtures are repaired without weakening checks.
+
 - [V39 cancellation failure custody](../research/doom/v39_cancel_failure_local_checks_20261016/README.md)
   now handles matching unverified release/failed terminal rather than discarding
   them while waiting only for successful release. Actual selected Fake X
