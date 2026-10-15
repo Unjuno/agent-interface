@@ -451,6 +451,38 @@ class NativeHandleBridge:
         self._save('window-review-' + uuid.uuid4().hex + '.json', row)
         return row
 
+    def recover_input(self, current_binding_revision):
+        """One explicit release-only attempt on this owner, never a replay.
+
+        Revocation commits before native I/O. Even a failed/unknown attempt
+        consumes its revision; review and fresh grounding remain separate.
+        """
+        refused = dict(status='refused',release_attempted=False,authority_granted=False,
+                       task_success=None,replay_allowed=False,binding_revision=self.binding_revision)
+        if self.active is not None:
+            return dict(refused,error='INPUT_OWNER_BUSY')
+        if type(current_binding_revision) is not int or current_binding_revision!=self.binding_revision:
+            return dict(refused,error='SESSION_BINDING_REVISION_MISMATCH')
+        if not self.session.recovery_required:
+            return dict(refused,error='INPUT_RECOVERY_NOT_REQUIRED',recovery_required=False)
+        previous = self.binding_revision
+        self.review_required = True
+        self.binding_revision += 1
+        self.scope = 'native-x11:' + uuid.uuid4().hex
+        self.store = TargetHandleStore(self.scope)
+        self.history.clear()
+        # No capture, source publication, reconnect, callback or program follows.
+        self.active = ('input-recovery',None)
+        try:
+            report = self.session.recover_input()
+        finally:
+            self.active = None
+        return dict(report,previous_binding_revision=previous,binding_revision=self.binding_revision,
+            review_required=True,authority_granted=False,task_success=None,replay_allowed=False,
+            task_effect_status='unknown',
+            note='One release-only attempt. Review this window and mint fresh aliases before new input; '
+                 'retired workers stay retired. Prior task effects remain unknown. No replay or lease issued.')
+
     def _window_title(self):
         window = self.backend.targets[self.target]
         d = self.backend.d
