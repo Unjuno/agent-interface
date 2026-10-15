@@ -34,6 +34,9 @@ class X11TargetQueries:
         self.connection = display.Display(display_name)
 
     def read(self, operation, xid):
+        if operation == 'focus_id':
+            focus = self.connection.get_input_focus().focus
+            return getattr(focus, 'id', focus)
         if operation == 'focus':
             return focus_within_target(self.connection,xid,raise_errors=True)
         if operation == 'process_identity':
