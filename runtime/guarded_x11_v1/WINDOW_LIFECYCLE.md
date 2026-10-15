@@ -62,3 +62,7 @@ dispatch/session and release path: process-only stale acceptance as a control,
 selected stale rejection, prefix release, blocked cancellation/expiry and late
 retirement, visual isolation, capture-time destruction and activation fencing.
 They use no GUI/input/model/WSLc allocation and do not complete #5/#17/#59/#57.
+
+The separately selected [MAP01/V12 transfer](../../research/doom/map01_window_lifecycle_local_checks_20261016/README.md)
+shares one canonical lifecycle reader between capture and input. Its construction
+evidence and availability limits are separate from this guarded MCP path.
