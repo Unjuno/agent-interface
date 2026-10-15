@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Callback receipt convergence from #7954](../research/integration/compiled_callback_convergence_20261016/README.md)
+  integrates its verifier/post-input journal repair into current core and guarded
+  caller, preserving newer safeguards. Both verifier and terminal-journal causes
+  survive, with prefix/release available to v3. Original six files are preserved.
+  The affected 463-method selection passes normal/-O with old-source and omission
+  controls. Pre-input propagation, malformed returns, durable publication, native
+  bounds and independent task effects remain distinct qualifications.
+
 - [Public MCP blocked transport custody](../research/integration/mcp_transport_cancellation_20261016/README.md)
   runs the actual in-process public guarded tools with all read-worker options.
   Four Fake X press/release send/sync barriers remain pending after cancel;

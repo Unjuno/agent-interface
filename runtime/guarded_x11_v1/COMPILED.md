@@ -155,6 +155,16 @@ After explicit primary modal review/new grounding/confirmation, the independentl
 read saved workbook matched317/529. The preceding startup failure is retained.
 This qualifies the boundary and one saved task, not a speed or token improvement.
 
+## Callback receipt failures
+
+Current callback receipt behavior is documented in the
+[source-bound #7954 convergence](../../research/integration/compiled_callback_convergence_20261016/README.md).
+Ordinary verifier exceptions retain a scoped adapter witness and return a typed
+core failure with known prefix/release. Post-input journal failure stops later
+input and retains in-memory failure evidence, including paired terminal sink
+failure. Pre-input journal exceptions still propagate. These receipts do not
+establish durable publication, independent application effects or recovery.
+
 ## Failed Inkscape keyboard transfer
 
 [Guarded Inkscape transfer](../results/inkscape-guarded-transfer-03/README.md)

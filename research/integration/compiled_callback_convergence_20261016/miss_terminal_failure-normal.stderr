@@ -1,0 +1,40 @@
+test_fatal_verifier_stop_still_propagates_same_object (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_fatal_verifier_stop_still_propagates_same_object) ... ok
+test_journal_failure_after_effect_stops_before_next_input (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_journal_failure_after_effect_stops_before_next_input) ... ok
+test_mutating_successful_journal_keeps_original_evidence (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_mutating_successful_journal_keeps_original_evidence) ... ok
+test_terminal_journal_failure_cannot_leave_success_claim (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_terminal_journal_failure_cannot_leave_success_claim) ... ok
+test_terminal_mutation_then_failure_keeps_private_prefix (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_terminal_mutation_then_failure_keeps_private_prefix) ... ok
+test_verifier_and_terminal_journal_failures_both_survive (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_and_terminal_journal_failures_both_survive) ... FAIL
+test_verifier_exception_without_journal_failure_is_typed (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_exception_without_journal_failure_is_typed) ... ok
+test_successful_verifier_control_still_completes (runtime.core_v1.test_compiled_gui_effect_verifier_exception.CompiledEffectVerifierExceptionTests.test_successful_verifier_control_still_completes) ... ok
+test_verifier_exception_returns_typed_receipt_and_keeps_prefix (runtime.core_v1.test_compiled_gui_effect_verifier_exception.CompiledEffectVerifierExceptionTests.test_verifier_exception_returns_typed_receipt_and_keeps_prefix) ... ok
+test_terminal_journal_failure_returns_prefix_and_stops (runtime.core_v1.test_compiled_gui_journal_exception.CompiledJournalExceptionTests.test_terminal_journal_failure_returns_prefix_and_stops) ... ok
+test_guarded_adapter_retains_verifier_witness_before_core_receipt (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_guarded_adapter_retains_verifier_witness_before_core_receipt) ... ok
+test_native_caller_journal_failure_keeps_prefix (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_journal_failure_keeps_prefix) ... ok
+test_native_caller_terminal_journal_and_verifier_failures_both_survive (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_terminal_journal_and_verifier_failures_both_survive) ... FAIL
+test_native_caller_verifier_failure_keeps_prefix (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_verifier_failure_keeps_prefix) ... ok
+
+======================================================================
+FAIL: test_verifier_and_terminal_journal_failures_both_survive (runtime.core_v1.test_compiled_callback_failure_composition.CompiledCallbackFailureCompositionTests.test_verifier_and_terminal_journal_failures_both_survive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\core_v1\test_compiled_callback_failure_composition.py", line 38, in test_verifier_and_terminal_journal_failures_both_survive
+    self.assertEqual(names.count('journal_write_failed'),1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_native_caller_terminal_journal_and_verifier_failures_both_survive (research.live_control.test_compiled_callback_caller_failures.CallbackCallerFailureTests.test_native_caller_terminal_journal_and_verifier_failures_both_survive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 62, in test_native_caller_terminal_journal_and_verifier_failures_both_survive
+    self.cell(verifier=True,journal_at='runtime_finished')
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_callback_caller_failures.py", line 53, in cell
+    self.assertEqual(len(failures),int(journal_at is not None))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.050s
+
+FAILED (failures=2)

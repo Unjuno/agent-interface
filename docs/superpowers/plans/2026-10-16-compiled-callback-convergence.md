@@ -20,9 +20,9 @@ its original verifier exception witness before core consumes that exception.
 publication or recovery guarantee. Fatal BaseException and malformed adapter
 returns retain their existing contracts.
 
-- [ ] Adopt original test ideas and add compound terminal failure, mutation,
+- [x] Adopt original test ideas and add compound terminal failure, mutation,
   no retry, prefix/release and caller-composition regressions; retain RED.
-- [ ] Apply the focused current-source repair, preserving pre-input/fatal and
+- [x] Apply the focused current-source repair, preserving pre-input/fatal and
   malformed-return behavior. Run selected normal/-O checks and exact old-source
   controls, retain source/conditions/raw and readback evidence.
 - [ ] Review/integrate, preserve the old PR's original bytes and unresolved
