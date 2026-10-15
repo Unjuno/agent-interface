@@ -1,0 +1,17 @@
+# A36 preregistration — V10 owner release evidence over file-backed app events
+
+Allocation `MAP01-V39-WSLC-V10-APP-EFFECT-A36-20261015-01` is a fresh one-shot. A35 remains a preserved predispatch STOP and is never rerun. Source main is `d82033921f9c2cd5a4c27f9971c46ffa0e781fb2`, with the same tree as the merged #8771 change.
+
+**Difference from A35.** A35 failed before owner creation because a readiness line read from the child process stdout was not valid JSON, and its raw record did not retain that line. A36 replaces stdout JSON IPC with a dedicated append-only JSONL event file in the new output directory. The app's stdout and stderr are redirected to separate retained files and copied into raw evidence. A36 gets a distinct allocation ID, display, output parent, source bytes, and freeze; it does not reuse or overwrite A35.
+
+**H — hypothesis.** On the pinned WSLc/Xvfb image, the current production V10 X11 input owner can deliver one admitted `a` key to a separate application process, cause an independently observable `0→1` task counter change, expire a fixed 300 ms lease, and publish a known-empty release accepted by both merged #8771 cleanup and current V39 predicates. A second X11 connection must observe key-up, and the application, owner, and Xvfb must close within their fixed bounds.
+
+**T — test.** Start one Xvfb server and one separate app process. The app writes ready, matching keypress/effect, matching keyrelease, and stop events to `app.events.jsonl`; stdout/stderr are retained separately. Arm the lease before the single direct V10 key-down dispatch. Verify the counter from a second X11 connection; record expiry release, physical state sample from that server, strict-predicate acceptance, missing-field mutation rejection, all hashes, and process cleanup. No model call. The input output directory must be new and empty.
+
+**D — decisions.** PASS requires all frozen hashes, valid full app-event file and matching retained raw rows, exactly one keypress effect and key release, counter `0→1` independently observed within 200 ms of input acknowledgement and still 1 after release, explicit verified-empty V10 fields, server key-up, at most 1 s expiry recovery, acceptance by both predicates, rejection by both when either known-empty field is removed, and successful owner/app/Xvfb shutdown. Any failure after dispatch is FAIL. Any predispatch source/runtime/image/display/app readiness failure is STOP. Keep first outcome; do not retry or relax thresholds.
+
+**C — limits.** A35 showed that stdout parsing can hide the reason for predispatch STOP; A36's file-backed event channel and separate stdio files make that boundary inspectable. The target remains a purpose-built synthetic app inside the isolated container. No Doom/MAP01, model-selected action or recovery, Windows desktop, or physical keyboard claim follows. One run is one timing sample only.
+
+**U — uncertainty.** WSLc may warn that swap/cgroup memory enforcement is unavailable; record it and do not claim a hard memory-plus-swap limit. Environment-specific process scheduling and one sample limit latency inference.
+
+Frozen resources: cached image `sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592`; pull disabled, network disabled, one requested CPU, 1 GiB requested memory. Runtime/source mounts read-only. New output parent `D:\codex-research\v39-xvfb-a09-a36-output`; X11 display `:178`.

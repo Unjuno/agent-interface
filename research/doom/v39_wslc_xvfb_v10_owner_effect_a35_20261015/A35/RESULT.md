@@ -1,0 +1,7 @@
+# A35 result — STOP before input dispatch
+
+The one-shot allocation ran from `2026-10-15T04:00:33Z` (output-parent creation; exact start not captured) through raw/audit write at `2026-10-15T04:00:57Z`. WSLc used the frozen image with network disabled, pull disabled, one requested CPU, and 1 GiB requested memory. All eight frozen input hashes matched. WSLc reported that swap/cgroup enforcement is unavailable. Xvfb started and exited cleanly.
+
+The candidate stopped while parsing the separate app process's readiness stdout. It raised `JSONDecodeError: Expecting value: line 1 column 1 (char 0)` before constructing the V10 owner or dispatching any input. The raw record confirms `dispatch_attempted=false`, no owner records, no key events, and no task effect. This is a harness/evidence-transport STOP, not a V10 release failure or a computer-control PASS/FAIL. The independent audit reports 3/20 checks because the run never reached the registered control path; its `FAIL` is not promoted to a post-dispatch experiment failure.
+
+The first PowerShell command string was rejected before `wslc.exe` ran; a process/output check confirmed no container or raw result. The later frozen invocation above was the only WSLc run for A35. This allocation is consumed and was not retried. See [raw](output/RAW.json), [independent audit](output/AUDIT.json), [exact invocation](output/INVOCATION.json), and the [runner transcript](output/RUNNER.transcript.txt).
