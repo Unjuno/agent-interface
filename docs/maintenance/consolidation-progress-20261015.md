@@ -12,6 +12,10 @@
 | [#8928](https://github.com/Unjuno/agent-interface/pull/8928) | ゴール・統合計画・quickstartを短くし、旧Git原文を履歴へ保存。[作業マップ](../WORKER_WORK_MAP.md)で有限な作業を選べる。 |
 | [#7981](https://github.com/Unjuno/agent-interface/pull/7981) | 59ファイルの凍結証拠と公開時の改行差分を照合して統合。結果はFAIL_CROSS_CLIENT_ISOLATIONのまま。新規実験やPASSへの変更なし。 |
 | [#8929](https://github.com/Unjuno/agent-interface/pull/8929) | settle timeout後の予定holdを停止し、期限後のcapture返答をquiet成功にしない。修理前に3件を再現し、関連15件が通常・最適化Pythonで成功。実Executorとinert backendによる構成試験であり、blocked I/Oの割込みや物理解放期限を証明しない。 |
+| [#8931](https://github.com/Unjuno/agent-interface/pull/8931) | mainのsource-attribution監査で5件のエラーを再現。改行属性の指定順により変換されていた凍結ソース3件を元Git blobから復元した。監査18件が通常・最適化Pythonで成功し、20件のsource hashはindexからのcheckout後も一致。元freeze/result/auditは不変。 |
+| [#8932](https://github.com/Unjuno/agent-interface/pull/8932) | 古い準備作業ツリーに残っていた708ca固定ソースの未公開回帰記録11ファイルを既存probeへ追加。原checksum10件、exit 4件、source pin 2件を照合。過去の記録であり、新規ライブ実験ではない。 |
+
+追加照合ではmain `4062116ea4d70f1904cdea9669c8c2226acd7b9d`のcontroller・planner・release関連9スイート98件が通常・最適化Pythonで成功した。この構成試験を、blocked I/O中の有限解放やライブ回復の証明には使わない。
 
 ## PR stackを収束させたもの
 
@@ -29,8 +33,8 @@
 
 | 作業ツリー名 | 未保存差分 | 次の処理 |
 |---|---|---|
-| issue59-v39-renewal-invalidation-a01 | 未追跡7ファイル。無視対象込み54ファイルを保全 | boundary probeの凍結条件と既存公開先を照合し、独自の証拠を届ける。 |
-| issue59-current-main-live-prep | 未追跡27ファイル。無視対象込み101ファイルを保全 | 同名probeとの内容差、追加のcurrent-main regression記録を照合する。 |
+| issue59-v39-renewal-invalidation-a01 | 未追跡7ファイル。無視対象込み54ファイルを保全 | probe本体・初回結果はmainと一致（sourceは改行差のみ）。古いREADME/checksumの独自原本も外部保全済み。作業ツリーの引退処理はまだ行っていない。 |
+| issue59-current-main-live-prep | 未追跡27ファイル。無視対象込み101ファイルを保全 | 既存mainと一致する記録と、未公開708ca記録を区別し、後者を#8932で追加。旧READMEの時点付き状態は現行割当として使わない。作業ツリーの引退処理は未実施。 |
 | issue59-main-576d | controllerの追跡変更1件。現在0バイト、元HEADから1,435行減 | 0バイト原本も保全済み。意図した変更か中断による破損かを履歴と照合し、判定前に完了扱いしない。 |
 | issue59-v39-guard-crossing-replay-a01-20261008 | 追跡変更5件、未追跡4件。無視対象込み16ファイルを保全 | audit v2/v3、freeze変更と公開済み証拠の一致を確認して統合を判断する。 |
 
