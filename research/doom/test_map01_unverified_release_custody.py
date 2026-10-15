@@ -64,7 +64,7 @@ class UnverifiedReleaseTests(unittest.TestCase):
                         backend.snapshot('fresh-after-failure', 0)
                         with patch.object(backend, 'validate', side_effect=AssertionError('validation reached')), patch.object(
                                 backend, 'bind_lease_source', side_effect=AssertionError('binding reached')):
-                            with self.assertRaisesRegex(RuntimeError, 'unverified'):
+                            with self.assertRaisesRegex(ValueError, 'unverified'):
                                 executor.submit('after-failure', [{'op': 'observe'}], backend.sequence,
                                                 time.perf_counter_ns() + 1_000_000_000)
                         self.assertIs(backend.lease, original_lease)

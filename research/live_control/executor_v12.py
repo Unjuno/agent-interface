@@ -81,7 +81,7 @@ class Executor(Previous):
             if self.closed or self.active is not None:
                 raise ValueError("closed or busy; no implicit queue")
             if self._release_obligation is not None:
-                raise RuntimeError("input release unverified; this executor cannot admit new work")
+                raise ValueError("input release unverified; this executor cannot admit new work")
             if type(expected_sequence) is not int or expected_sequence != self.backend.sequence:
                 raise ValueError("latest observation sequence required before input")
             if not isinstance(identifier, str) or not identifier or identifier in self.used_ids:
