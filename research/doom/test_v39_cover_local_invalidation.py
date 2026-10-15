@@ -116,6 +116,36 @@ class LocalInvalidationTests(unittest.TestCase):
         self.assertTrue(value.await_turn(fresh).answer_eligible)
         self.assertEqual(client.interrupts, [])
 
+    def test_invalidation_while_usage_is_pending_fences_result_publication(self):
+        value, handle, client = planner()
+        entered, resume = threading.Event(), threading.Event()
+        result = {}
+        def usage(*args):
+            entered.set()
+            if not resume.wait(2): raise TimeoutError('usage test gate not resumed')
+            return None
+        client.latest_turn_usage = usage
+        def await_result():
+            try: result['value'] = value.await_turn(handle)
+            except BaseException as error: result['error'] = error
+        worker = threading.Thread(target=await_result)
+        worker.start()
+        try:
+            self.assertTrue(entered.wait(1))
+            with self.assertRaises(PlannerProtocolError):
+                value.begin_turn('too soon', output_schema={'type': 'object'})
+            with self.assertRaises(PlannerProtocolError):
+                value.start_session()
+            self.assertEqual(value.invalidate_turn(handle)['outcome'], 'locally_invalidated')
+        finally:
+            resume.set()
+            worker.join(1)
+        self.assertFalse(worker.is_alive())
+        self.assertNotIn('error', result)
+        self.assertFalse(result['value'].answer_eligible)
+        self.assertIsNone(result['value'].answer)
+        self.assertTrue(result['value'].cancellation_requested)
+
     def test_local_abort_cannot_be_followed_by_a_new_remote_interrupt(self):
         value, handle, client = planner()
         value.invalidate_turn(handle)

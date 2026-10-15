@@ -190,8 +190,8 @@ class PersistentPlannerAdapter:
             raise PlannerProtocolError("turn/completed returned no status")
         with self._lock:
             self._require_active(handle)
-            self._terminal_status = status
             cancelled = self._cancellation_requested
+            output_schema = self._output_schema
 
         usage = self.client.latest_turn_usage(handle.thread_id, handle.turn_id)
         messages = [item for item in turn.get("items", [])
@@ -214,16 +214,25 @@ class PersistentPlannerAdapter:
                 error = f"invalid JSON answer: {parse_error.msg}"
             else:
                 try:
-                    _validate_schema(answer, self._output_schema)
+                    _validate_schema(answer, output_schema)
                 except PlannerProtocolError as schema_error:
                     error = str(schema_error)
                     answer = None
                 else:
                     eligible = True
-        return TurnResult(
-            handle=handle, status=status, answer_eligible=eligible, answer=answer,
-            error=error, usage=usage, cancellation_requested=cancelled,
-            completed_agent_messages=len(messages))
+        with self._lock:
+            self._require_active(handle)
+            cancelled = self._cancellation_requested
+            if cancelled:
+                eligible = False
+                answer = None
+                if status == "completed":
+                    error = "answer belongs to an invalidated observation"
+            self._terminal_status = status
+            return TurnResult(
+                handle=handle, status=status, answer_eligible=eligible, answer=answer,
+                error=error, usage=usage, cancellation_requested=cancelled,
+                completed_agent_messages=len(messages))
 
     def _require_active(self, handle):
         if handle != self._active:
