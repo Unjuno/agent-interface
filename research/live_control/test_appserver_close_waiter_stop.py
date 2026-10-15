@@ -1,4 +1,5 @@
 """Explicit close fences waiters even if receive-side journal retirement stalls."""
+import base64
 import json
 import os
 from pathlib import Path
@@ -14,6 +15,57 @@ from research.live_control.test_codex_app_server_send_deadline_v1 import owned_c
 
 
 class CloseWaiterTests(unittest.TestCase):
+    def test_close_fence_cannot_become_visible_during_cached_publication(self):
+        with owned_client() as (client, read_fd):
+            predicate_entered, resume, close_lock_attempted = (threading.Event() for _ in range(3))
+            class PublicationCondition(threading.Condition):
+                def __enter__(self):
+                    if threading.current_thread().name == 'fixture-closer': close_lock_attempted.set()
+                    return super().__enter__()
+            client._condition = PublicationCondition()
+            row = {'method': 'fixture/queued'}
+            with client._condition: client._notifications.append(row)
+            results = {}
+            def predicate(value):
+                predicate_entered.set()
+                if not resume.wait(2): raise TimeoutError('publication test gate not resumed')
+                return True
+            def wait():
+                try: results['row'] = client.wait_notification(predicate, timeout=1)
+                except BaseException as error: results['wait_error'] = error
+            def close():
+                try: client.close(timeout=1)
+                except BaseException as error: results['close_error'] = error
+            waiter = threading.Thread(target=wait)
+            closer = threading.Thread(target=close, name='fixture-closer')
+            waiter.start()
+            try:
+                self.assertTrue(predicate_entered.wait(1))
+                closer.start()
+                self.assertTrue(close_lock_attempted.wait(1))
+                self.assertFalse(client._closing, 'close flag escaped the publication lock')
+            finally:
+                resume.set()
+                waiter.join(1)
+                if closer.ident is not None: closer.join(1)
+            self.assertFalse(waiter.is_alive())
+            self.assertFalse(closer.is_alive())
+            self.assertEqual(results, {'row': row})
+            self.assertTrue(client._closing)
+
+    def test_reentrant_close_in_predicate_cannot_consume_notification(self):
+        with owned_client() as (client, read_fd):
+            row = {'method': 'fixture/reentrant-close'}
+            with client._condition: client._notifications.append(row)
+            def predicate(value):
+                # Reader EOF cannot acquire this same condition until predicate
+                # returns. A close timeout must not resume cached publication.
+                with self.assertRaises(TimeoutError): client.close(timeout=.01)
+                return True
+            with self.assertRaises(AppServerError):
+                client.wait_notification(predicate, timeout=1)
+            self.assertEqual(list(client._notifications), [row])
+
     def test_request_and_notification_wait_stop_before_blocked_reader_retires(self):
         for mode in ('request', 'notification'):
             with self.subTest(mode=mode), tempfile.TemporaryDirectory() as root, owned_client(
@@ -136,6 +188,13 @@ for line in sys.stdin:
                 if held: client._journal_lock.release()
                 client.close(timeout=1)
                 if worker is not None: worker.join(1)
+                print(json.dumps({'case': 'owned-python-peer-final-retirement',
+                    'peer_returncode': client.process.poll(), 'reader_alive': client._reader.is_alive(),
+                    'waiter_alive': worker.is_alive() if worker is not None else False,
+                    'streams_closed': {name: getattr(client.process, name).closed
+                                       for name in ('stdin', 'stdout', 'stderr')},
+                    'journal_base64': base64.b64encode((Path(root)/'journal.jsonl').read_bytes()).decode('ascii')}),
+                    flush=True)
 
 
 if __name__ == '__main__': unittest.main()
