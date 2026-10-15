@@ -205,7 +205,7 @@ class CoverTerminalTests(unittest.TestCase):
                 patch.object(controller.queue, "Queue", return_value=incoming),
                 patch.object(controller, "ControllerFailureCleanup", CleanupSpy),
                 patch.object(controller, "DoomStatusNumberReader", Reader),
-                patch.object(controller, "refresh_source", side_effect=lambda latest, *a: (
+                patch.object(controller, "refresh_source", side_effect=lambda latest, *a, terminal_predicate=None: (
                     latest, {"status": "already_observed"})),
                 patch.object(controller, "build_cover_monitor", return_value=(
                     monitor, {"status": "admitted", "authored": None})),
