@@ -1,0 +1,155 @@
+[
+  {
+    "mode": "valid",
+    "permit": {
+      "authorization": "f6abc8d42a53498f833d5c191bf6a541",
+      "sequence": 2,
+      "valid_until_ns": 325402337244900,
+      "point": [
+        3,
+        3
+      ]
+    },
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 325401338170800,
+        "ended_ns": 325401338227100,
+        "emissions": 0,
+        "observations": [],
+        "releases": [
+          {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        ]
+      },
+      "recovery_required": false
+    },
+    "replay": {
+      "status": "refused",
+      "error": "AUTHORIZATION_CONSUMED_OR_UNKNOWN",
+      "input_dispatched": false
+    },
+    "events": [
+      [
+        "move",
+        "fixture",
+        3,
+        3
+      ],
+      [
+        "release"
+      ]
+    ],
+    "capture_calls": 4
+  },
+  {
+    "mode": "pixels",
+    "permit": {
+      "authorization": "a3aeaaedf0ed41fa871a675aac2c2e29",
+      "sequence": 2,
+      "valid_until_ns": 325402339283400,
+      "point": [
+        3,
+        3
+      ]
+    },
+    "result": {
+      "status": "refused",
+      "error": "LIVE_REFERENCE_OR_AUTHORITY_CHANGED",
+      "input_dispatched": false
+    },
+    "replay": {
+      "status": "refused",
+      "error": "AUTHORIZATION_CONSUMED_OR_UNKNOWN",
+      "input_dispatched": false
+    },
+    "events": [],
+    "capture_calls": 3
+  },
+  {
+    "mode": "focus",
+    "permit": {
+      "authorization": "9efdfa6c5d69495098446e1e4d0b5314",
+      "sequence": 2,
+      "valid_until_ns": 325402341015700,
+      "point": [
+        3,
+        3
+      ]
+    },
+    "result": {
+      "status": "refused",
+      "error": "LIVE_REFERENCE_OR_AUTHORITY_CHANGED",
+      "input_dispatched": false
+    },
+    "replay": {
+      "status": "refused",
+      "error": "AUTHORIZATION_CONSUMED_OR_UNKNOWN",
+      "input_dispatched": false
+    },
+    "events": [],
+    "capture_calls": 2
+  },
+  {
+    "mode": "cancel",
+    "permit": {
+      "authorization": "d7edca1350f34d12afed12cf7e1cb387",
+      "sequence": 2,
+      "valid_until_ns": 325402342669300,
+      "point": [
+        3,
+        3
+      ]
+    },
+    "result": {
+      "status": "refused",
+      "error": "LIVE_REFERENCE_OR_AUTHORITY_CHANGED",
+      "input_dispatched": false
+    },
+    "replay": {
+      "status": "refused",
+      "error": "AUTHORIZATION_CONSUMED_OR_UNKNOWN",
+      "input_dispatched": false
+    },
+    "events": [],
+    "capture_calls": 2
+  },
+  {
+    "mode": "recovery",
+    "permit": {
+      "authorization": "bfb70bdf99c8475b9754c05e719ed239",
+      "sequence": 2,
+      "valid_until_ns": 325402344310100,
+      "point": [
+        3,
+        3
+      ]
+    },
+    "result": {
+      "status": "refused",
+      "error": "LIVE_REFERENCE_OR_AUTHORITY_CHANGED",
+      "input_dispatched": false
+    },
+    "replay": {
+      "status": "refused",
+      "error": "AUTHORIZATION_CONSUMED_OR_UNKNOWN",
+      "input_dispatched": false
+    },
+    "events": [],
+    "capture_calls": 2
+  },
+  {
+    "mode": "authority_missing",
+    "authority_refused": true,
+    "events": []
+  }
+]
