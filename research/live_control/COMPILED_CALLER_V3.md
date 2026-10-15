@@ -63,3 +63,8 @@ predicates and recovery separately before a frozen matched comparison.
 includes target promotion, a real model/planner/caller/core chain with inert RPC
 and input/effect adapters, and legacy/mutation controls. It is not a live task,
 provider or economics result.
+
+For the exact-value form, the [guarded-admission compatibility repair](../integration/compiled_form_guarded_admission_20261016/README.md)
+keeps field identity separate from its post-entry value effect. Submit retains
+the exact-value dependency. Actual guarded-adapter/memory-bridge tests cover
+that distinction; they do not qualify the full native domain path.
