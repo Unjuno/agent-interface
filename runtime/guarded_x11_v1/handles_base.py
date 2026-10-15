@@ -17,8 +17,14 @@ def _binding(observation):
     if type(observation) is not dict:
         raise ValueError("observation object required")
     binding = observation.get("pointer_binding")
-    if type(binding) is not dict or set(binding) != {"focus", "surface", "geometry"}:
+    base = {"focus", "surface", "geometry"}
+    if type(binding) is not dict or set(binding) not in (base, base | {'process_generation'}):
         raise ValueError("exact pointer binding required")
+    if 'process_generation' in binding:
+        identity = binding['process_generation']
+        if (type(identity) is not str or len(identity) != 64
+                or any(c not in '0123456789abcdef' for c in identity)):
+            raise ValueError('process generation digest required')
     if any(not _integer(binding[key]) or binding[key] in (0, 1)
            for key in ("focus", "surface")):
         raise ValueError("focus and surface identifiers required")
@@ -139,6 +145,8 @@ class TargetHandleStore:
                 sequence < entry["sequence"]):
             return outcome("STALE", reason="expired_or_nonfresh_observation")
         source_binding = entry["binding"]
+        if binding.get('process_generation') != source_binding.get('process_generation'):
+            return outcome('SCOPE_MISMATCH', reason='process_generation_changed_or_missing')
         if (binding["focus"] != source_binding["focus"] or
                 binding["surface"] != source_binding["surface"]):
             return outcome("SCOPE_MISMATCH", reason="focus_or_surface_changed")

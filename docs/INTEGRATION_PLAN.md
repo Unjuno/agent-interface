@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- The scoped public Python bridge now has an explicit
+  [process-identity option](../runtime/guarded_x11_v1/PROCESS_IDENTITY.md).
+  It binds a Linux/XRes process digest to observations/aliases and rechecks it
+  before new presses. Fake X composition covers refusal and prefix cleanup.
+  Trusted local server/PID-namespace correspondence is a precondition; same-process
+  resource reuse, post-read races, live qualification and bounded I/O remain open.
+  CLI/MCP configuration and the default Python mode do not select this option.
+
 - [Public guarded X11](../runtime/guarded_x11_v1/README.md) now refuses a new
   key/button press when a returned lookup has consumed the original lease
   ([PR #8927](https://github.com/Unjuno/agent-interface/pull/8927)). It still uses
