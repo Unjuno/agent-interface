@@ -5,6 +5,8 @@ release-only recovery on the actual guarded Python/MCP path, without reopening
 a connection or replaying a program. Require an open owner, idle serialized input,
 exact current binding revision and sticky input-recovery requirement. Invalid or
 unneeded requests cause no native call and do not invalidate otherwise valid state.
+Python callers must serialize all bridge use; the local active marker is not a
+cross-thread/process lock. Standard MCP supplies the serialized worker slot.
 
 An accepted request revokes alias/history scope and advances revision before one
 release/readback attempt, including on failure. Old revision requests cannot retry
