@@ -1,5 +1,14 @@
 # Explicit guarded input recovery
 
+The [interrupt-custody repair](../../research/live_control/x11_interrupt_custody_checks_20261016/README.md)
+also quarantines propagated KeyboardInterrupt/SystemExit on the selected X11
+session/execute path. Cleanup is attempted on the same owner and the original
+stop is preserved; the latest prefix/release snapshot is available in memory as
+`bridge.backend.interrupted_execution`. Explicit release-only recovery and
+review/fresh grounding remain required even after interrupted cleanup verified
+empty. This is Fake X/public Python composition, not a blocked-native-I/O bound,
+durable interruption journal or MCP process-shutdown qualification.
+
 Base main 54790014dd. Design/validation contract: expose the existing session's
 release-only recovery on the actual guarded Python/MCP path, without reopening
 a connection or replaying a program. Require an open owner, idle serialized input,

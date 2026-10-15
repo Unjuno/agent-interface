@@ -1,0 +1,271 @@
+......s..........................................ssss...........................................................................C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_guarded.py:374: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertEqual(list(image.convert('RGB').getdata()),[(1,2,3),(4,5,6)])
+C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_guarded.py:375: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertEqual(list(bridge.history[sequence][1].getdata()),[(1,2,3),(4,5,6)])
+.[10/16/26 06:01:41] INFO     execute program                base_events.py:1816
+                             'C:\\Users\\user\\Documents\\C                    
+                             odex\\2026-10-03\\new-chat-2\\                    
+                             outputs\\repository-consolidat                    
+                             ion-20261015\\test-env\\Script                    
+                             s\\python.exe':                                   
+                             <_WindowsSubprocessTransport                      
+                             pid=46984 running                                 
+                             stdin=<_ProactorWritePipeTrans                    
+                             port fd=1256                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorWritePipeTranspor                    
+                             t._pipe_closed()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:494>                    
+                             >                                                 
+                             stdout=<_ProactorReadPipeTrans                    
+                             port fd=1304                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorReadPipeTransport                    
+                             ._loop_reading()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:507>                    
+                             >>                                                
+[10/16/26 06:01:42] INFO     Processing request of type           server.py:733
+                             ListToolsRequest                                  
+                    INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+                    INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+                    INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+                    INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+                    INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+[10/16/26 06:01:42] INFO     <_WindowsSubprocessTranspor base_subprocess.py:236
+                             t pid=46984 running                               
+                             stdin=<_ProactorWritePipeTr                       
+                             ansport closed>                                   
+                             stdout=<_ProactorReadPipeTr                       
+                             ansport closed>> exited                           
+                             with return code 0                                
+.................................................[10/16/26 06:01:52] WARNING  Executing <Task pending        base_events.py:2055
+                             name='Task-275'                                   
+                             coro=<PublicRelayTests.test_po                    
+                             rtable_relay_outside_checkout_                    
+                             lists_validates_and_closes()                      
+                             running at                                        
+                             C:\Users\user\Documents\Codex\                    
+                             2026-10-15\work\repository-con                    
+                             solidation\runtime\cli_v1\test                    
+                             _mcp_relay.py:297>                                
+                             wait_for=<Future pending                          
+                             cb=[Task.task_wakeup()]                           
+                             created at C:\Program                             
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\base_events.py:459>                       
+                             cb=[_run_until_complete_cb()                      
+                             at C:\Program                                     
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\base_events.py:181]                       
+                             created at C:\Program                             
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\runners.py:101> took                      
+                             1.566 seconds                                     
+                    INFO     execute program                base_events.py:1816
+                             'C:\\Users\\user\\Documents\\C                    
+                             odex\\2026-10-03\\new-chat-2\\                    
+                             outputs\\repository-consolidat                    
+                             ion-20261015\\test-env\\Script                    
+                             s\\python.exe':                                   
+                             <_WindowsSubprocessTransport                      
+                             pid=31908 running                                 
+                             stdin=<_ProactorWritePipeTrans                    
+                             port fd=1468                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorWritePipeTranspor                    
+                             t._pipe_closed()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:494>                    
+                             >                                                 
+                             stdout=<_ProactorReadPipeTrans                    
+                             port fd=1492                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorReadPipeTransport                    
+                             ._loop_reading()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:507>                    
+                             >                                                 
+                             stderr=<_ProactorReadPipeTrans                    
+                             port fd=1308                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorReadPipeTransport                    
+                             ._loop_reading()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:507>                    
+                             >>                                                
+[10/16/26 06:01:54] INFO     <_WindowsSubprocessTranspor base_subprocess.py:236
+                             t pid=31908 running                               
+                             stdin=<_ProactorWritePipeTr                       
+                             ansport closed>                                   
+                             stdout=<_ProactorReadPipeTr                       
+                             ansport closed>                                   
+                             stderr=<_ProactorReadPipeTr                       
+                             ansport closed>> exited                           
+                             with return code 0                                
+.............[10/16/26 06:01:55] INFO     execute program                base_events.py:1816
+                             'C:\\Users\\user\\Documents\\C                    
+                             odex\\2026-10-03\\new-chat-2\\                    
+                             outputs\\repository-consolidat                    
+                             ion-20261015\\test-env\\Script                    
+                             s\\python.exe':                                   
+                             <_WindowsSubprocessTransport                      
+                             pid=56368 running                                 
+                             stdin=<_ProactorWritePipeTrans                    
+                             port fd=1304                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorWritePipeTranspor                    
+                             t._pipe_closed()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:494>                    
+                             >                                                 
+                             stdout=<_ProactorReadPipeTrans                    
+                             port fd=1500                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorReadPipeTransport                    
+                             ._loop_reading()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:507>                    
+                             >>                                                
+[10/16/26 06:01:55] INFO     Processing request of type           server.py:733
+                             ListToolsRequest                                  
+                    INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+                    INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+[10/16/26 06:01:56] INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+[10/16/26 06:01:56] INFO     <_WindowsSubprocessTranspor base_subprocess.py:236
+                             t pid=56368 running                               
+                             stdin=<_ProactorWritePipeTr                       
+                             ansport closed>                                   
+                             stdout=<_ProactorReadPipeTr                       
+                             ansport closed>> exited                           
+                             with return code 0                                
+............[10/16/26 06:01:59] INFO     execute program                base_events.py:1816
+                             'C:\\Users\\user\\Documents\\C                    
+                             odex\\2026-10-03\\new-chat-2\\                    
+                             outputs\\repository-consolidat                    
+                             ion-20261015\\test-env\\Script                    
+                             s\\python.exe':                                   
+                             <_WindowsSubprocessTransport                      
+                             pid=43636 running                                 
+                             stdin=<_ProactorWritePipeTrans                    
+                             port fd=1604                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorWritePipeTranspor                    
+                             t._pipe_closed()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:494>                    
+                             >                                                 
+                             stdout=<_ProactorReadPipeTrans                    
+                             port fd=1624                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorReadPipeTransport                    
+                             ._loop_reading()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:507>                    
+                             >>                                                
+[10/16/26 06:02:00] INFO     Processing request of type           server.py:733
+                             ListToolsRequest                                  
+                    INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+[10/16/26 06:02:00] INFO     <_WindowsSubprocessTranspor base_subprocess.py:236
+                             t pid=43636 running                               
+                             stdin=<_ProactorWritePipeTr                       
+                             ansport closed>                                   
+                             stdout=<_ProactorReadPipeTr                       
+                             ansport closed>> exited                           
+                             with return code 0                                
+.............................................................[10/16/26 06:02:19] INFO     execute program                base_events.py:1816
+                             'C:\\Users\\user\\Documents\\C                    
+                             odex\\2026-10-03\\new-chat-2\\                    
+                             outputs\\repository-consolidat                    
+                             ion-20261015\\test-env\\Script                    
+                             s\\python.exe':                                   
+                             <_WindowsSubprocessTransport                      
+                             pid=39596 running                                 
+                             stdin=<_ProactorWritePipeTrans                    
+                             port fd=1512                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorWritePipeTranspor                    
+                             t._pipe_closed()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:494>                    
+                             >                                                 
+                             stdout=<_ProactorReadPipeTrans                    
+                             port fd=1408                                      
+                             read=<_OverlappedFuture                           
+                             pending                                           
+                             cb=[_ProactorReadPipeTransport                    
+                             ._loop_reading()] created at                      
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\windows_events.py:507>                    
+                             >>                                                
+[10/16/26 06:02:20] INFO     <_WindowsSubprocessTranspor base_subprocess.py:236
+                             t pid=39596 running                               
+                             stdin=<_ProactorWritePipeTr                       
+                             ansport closed>                                   
+                             stdout=<_ProactorReadPipeTr                       
+                             ansport closed>> exited                           
+                             with return code 0                                
+.............................................................................................................................................................
+----------------------------------------------------------------------
+Ran 421 tests in 62.129s
+
+OK (skipped=5)

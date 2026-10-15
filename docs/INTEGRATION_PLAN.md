@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [X11 interruption custody](../research/live_control/x11_interrupt_custody_checks_20261016/README.md)
+  repairs the selected session/backend's missing KeyboardInterrupt/SystemExit
+  cleanup/quarantine. Seven new Fake X/public-Python methods distinguish same-owner
+  cleanup, original stop precedence, uncertain readback, no suffix replay and
+  explicit recovery with review invalidation. Pinned-base controls retain ten
+  assertion failures. The snapshot is in-memory evidence, not a durable journal;
+  blocked native I/O, process death, cross-backend custody and live task recovery
+  remain unqualified.
+
 - [X11 custody proposal convergence](../research/integration/x11_custody_convergence_20261016/README.md)
   recovers 391 public projected members from closed/unmerged #7148, preserving
   its V4 pass and later conditional false-clear counterexample/suspension.

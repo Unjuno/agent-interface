@@ -27,7 +27,10 @@ class X11RuntimeSession:
                     'release_attempted': False, 'recovery_required': False}
         try:
             release = self.backend.release_all()
-        except Exception as error:
+        except BaseException as error:
+            self.recovery_required = True
+            if not isinstance(error, Exception):
+                raise
             return {'status': 'recovery_failed', 'error': repr(error),
                     'release_attempted': True, 'recovery_required': True}
         verified = self._record_release([release])
@@ -74,7 +77,7 @@ class X11RuntimeSession:
         except X11BackendError as error:
             try:
                 release = self.backend.release_all()
-            except Exception:
+            except BaseException:
                 self.recovery_required = True
                 raise
             self._record_release([release])
@@ -89,6 +92,9 @@ class X11RuntimeSession:
                 "release": release,
                 "recovery_required": self.recovery_required,
             }
+        except BaseException:
+            self.recovery_required = True
+            raise
 
         try:
             result = self.backend.execute(program)
@@ -107,7 +113,7 @@ class X11RuntimeSession:
             # pre-input constraint failure, not an unknown execution exception.
             try:
                 release = self.backend.release_all()
-            except Exception:
+            except BaseException:
                 self.recovery_required = True
                 raise
             self._record_release([release])
@@ -120,7 +126,7 @@ class X11RuntimeSession:
                 "backend_emissions": self.backend.emissions,
                 "release": release, "recovery_required": self.recovery_required,
             }
-        except Exception:
+        except BaseException:
             self.recovery_required = True
             raise
         releases = result.get("releases", [])

@@ -42,6 +42,7 @@ class X11Backend:
         self.held_buttons: set[str] = set()
         self.emissions = 0
         self.capture_artifacts = None
+        self.interrupted_execution = None
 
     def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
         from .capture_artifacts import CaptureArtifacts
@@ -537,14 +538,25 @@ class X11Backend:
                 elif kind == "release_all": releases.append(self.release_all())
                 else: raise X11BackendError(f"unsupported op {kind}")
                 completed_ops.append(index)
-        except Exception as error:
+        except BaseException as error:
+            cleanup_interrupt = None
             try:
                 releases.append(self.release_all())
-            except Exception as release_error:
+            except BaseException as release_error:
                 releases.append({"verified": False, "error": repr(release_error),
                                  "monotonic_ns": time.monotonic_ns()})
+                if not isinstance(release_error, Exception):
+                    cleanup_interrupt = release_error
             partial = evidence()
             partial.update(error=repr(error), failed_op=index,
                            failed_op_effect="unknown; may have emitted partial input")
+            if not isinstance(error, Exception) or cleanup_interrupt is not None:
+                # Keep stop/exit semantics and the original execution failure.
+                # This snapshot survives a release exception; no program suffix
+                # or second input writer follows the interrupted operation.
+                self.interrupted_execution = partial
+                if not isinstance(error, Exception):
+                    raise
+                raise cleanup_interrupt from error
             raise X11ExecutionError(partial) from error
         return evidence()
