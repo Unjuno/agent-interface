@@ -1,6 +1,21 @@
 """Best-effort owned cleanup preserving the controller's primary failure."""
 import atexit,json,os,select,threading,time
 from collections import Counter
+from copy import deepcopy
+
+
+class SessionControlBoundaryFailure(RuntimeError):
+    """An observed refusal, never a release or task-effect certificate."""
+    def __init__(self, event):
+        self.event = deepcopy(event)
+        super().__init__('session input retirement unresolved before control effect')
+
+
+def reject_control_boundary_failure(row):
+    # Even an incomplete failure payload stops. Keep it for diagnosis rather
+    # than treating a missing obligation field as evidence of neutral input.
+    if type(row) is dict and row.get('event') == 'control_boundary_failed':
+        raise SessionControlBoundaryFailure(row)
 
 
 def reject_duplicate_json_members(pairs):
@@ -140,6 +155,11 @@ class ControllerFailureCleanup:
         receipt['stdout_reader_errors']=list(self.reader_errors)
         event_collection_valid=type(self.events) is list
         events=self.events if event_collection_valid else []
+        receipt['control_boundary_failures']=[deepcopy(row) for row in events
+            if type(row) is dict and row.get('event')=='control_boundary_failed']
+        receipt['control_boundary_failed']=bool(receipt['control_boundary_failures'])
+        if receipt['control_boundary_failed']:
+            receipt['task_effect']='unknown'
         invalid_event_records=sum(
             type(row) is not dict or
             type(row.get('event')) is not str or not row.get('event')
@@ -238,6 +258,7 @@ class ControllerFailureCleanup:
                                               identities_unambiguous)
         receipt['input_releases_verified_empty']=(
             receipt['input_terminals_complete'] and
+            not receipt['control_boundary_failed'] and
             all(release_is_verified(identifier) for identifier in accepted_ids))
         receipt['input_release_verified_empty']=receipt['input_releases_verified_empty']
         receipt['scorer_terminal_observed']=any(
