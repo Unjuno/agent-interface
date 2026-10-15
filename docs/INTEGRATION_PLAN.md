@@ -80,6 +80,12 @@ live task and matched comparison.
   retries, serialize pending cleanup and require review/fresh aliases after
   verified release. One attempt is a policy bound, not a native-I/O time bound;
   independent task effect and live recovery remain unqualified.
+  An explicit [guarded response wait budget](../runtime/cli_v1/WAIT_BUDGET.md)
+  now lets that original input/recovery call return pending with one discoverable
+  ID while retaining worker/cleanup custody. Fake X tests distinguish held send
+  from fake-neutral unconfirmed sync/readback, queued work and executor-handle
+  failures; real stdio checks pending-before-sync-resumption. This bounds only a
+  cooperative await policy, never physical release or independent task effect.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.

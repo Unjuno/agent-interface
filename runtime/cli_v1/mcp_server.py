@@ -225,22 +225,26 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         'Inspect action, image and cleanup outcomes separately. '
         'Never replay an uncertain action automatically.'))
 
-    def invoke(admission, operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
+    def invoke(admission, operation, kwargs, compact, report_refs, detail="full", observation_refs=False,
+               registered_call_id=None, wait_for_result_ms=None):
         if not admission.enter():
             return None  # A rejected/cancelled queued submission must never invoke.
-        call_id = None
+        call_id = registered_call_id
         try:
-            call_root = root / uuid.uuid4().hex
+            call_root = root / (registered_call_id or uuid.uuid4().hex)
             call_root.mkdir(exist_ok=False)
             call_id = call_root.name
             with calls_lock:
                 calls[call_id] = {"call_id": call_id, "operation": operation,
                                   "state": "running", "arguments": deepcopy(kwargs),
                                   "backend_attempted": False, "persistence_failure": None}
+                if wait_for_result_ms is not None:
+                    calls[call_id]['response_wait_ms'] = wait_for_result_ms
             # Serialize before calling the backend. A persistence failure here sends no input.
             authored_program = deepcopy(kwargs.get('program'))
             request = {'operation': operation, 'arguments': kwargs, 'targets': deepcopy(owner.targets) if owner else targets,
                        'display_name': display_name}
+            if wait_for_result_ms is not None: request['response_wait_ms'] = wait_for_result_ms
             if owner is not None:
                 request['session'] = owner.snapshot()
             if detail != 'full':
@@ -367,7 +371,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     calls[call_id]["state"] = "finished"
             admission.finish()
 
-    async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
+    async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False, *, wait_for_result_ms=None):
+        if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input')
+                or type(wait_for_result_ms) is not int or not 0<=wait_for_result_ms<=10000):
+            return content({'status':'invalid_request','error':'INVALID_RESPONSE_WAIT',
+                            'operation_invoked':False,'replay_allowed':False},error=True)
         if report_refs and not compact:
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
@@ -387,42 +395,79 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         def completed():
             loop.call_soon_threadsafe(completion.set_result, None)
         admission = _WorkerAdmission(lock, completed)
+        registered_call_id = None
+        def finish_unentered_record(error):
+            if registered_call_id is not None:
+                with calls_lock:
+                    calls[registered_call_id].update(state='finished',worker_error=repr(error))
         try:
             # Submit synchronously so pre-worker rejection is handled here. Keep
             # to_thread's context propagation and shield accepted work below.
             context = contextvars.copy_context()
+            if wait_for_result_ms is not None:
+                candidate = uuid.uuid4().hex
+                with calls_lock:
+                    if candidate in calls: raise RuntimeError('call ID collision')
+                    calls[candidate] = dict(call_id=candidate,operation=operation,state='queued',
+                        arguments=deepcopy(kwargs),backend_attempted=False,persistence_failure=None,
+                        response_wait_ms=wait_for_result_ms)
+                    registered_call_id = candidate
             worker = loop.run_in_executor(
                 None, context.run, invoke, admission, operation, kwargs,
-                compact, report_refs, detail, observation_refs)
+                compact, report_refs, detail, observation_refs,registered_call_id,wait_for_result_ms)
         except BaseException as error:
             revoked = admission.revoke_pending()
+            if revoked: finish_unentered_record(error)
             if not isinstance(error, Exception):
                 # Preserve cancellation/fatal exception propagation after
                 # revoking only work that has not entered the callable.
                 raise
-            return content({'status': 'worker_submission_failed',
+            report = {'status': 'worker_submission_failed',
                 'failure_phase': 'worker_submission', 'error': repr(error),
                 'operation_invoked': not revoked,
                 'input_dispatched': False if revoked else None,
                 'effect_status': 'none' if revoked else 'unknown',
-                'replay_allowed': False}, error=True)
+                'replay_allowed': False}
+            if registered_call_id is not None: report['call_id'] = registered_call_id
+            return content(report, error=True)
         def finished(task):
             # A terminal future can fail/cancel before callable entry. Revoke
             # only pending work; a running worker still owns its slot.
-            admission.revoke_pending()
+            revoked = admission.revoke_pending()
+            if revoked: finish_unentered_record('executor handle terminated before invocation')
             if not task.cancelled():
                 task.exception()
         worker.add_done_callback(finished)
         # A cancelled transport must not cancel a queued worker and strand its lock.
         try:
+            if wait_for_result_ms is not None:
+                # asyncio.wait never cancels accepted work when its timer ends.
+                await asyncio.wait({worker},timeout=wait_for_result_ms/1000)
+                if not worker.done():
+                    with calls_lock: record = deepcopy(calls[registered_call_id])
+                    return content(dict(status='pending',call_id=registered_call_id,call=record,
+                        scope='current_server',result_available=False,release_confirmed=False,
+                        effect_status='unknown',task_success=None,replay_allowed=False,
+                        note='Response wait ended; original worker retains custody and may still execute. '
+                             'Retrieve this call ID. Pending does not cancel input or permit replay.'))
             return await asyncio.shield(worker)
-        except BaseException:
+        except BaseException as error:
             # A terminal executor handle can surface its error before its done
             # callback runs. Revoke unentered work before returning to a caller
             # that may immediately submit again. A live/queued worker retains
             # custody when only this transport await was cancelled.
             if worker.done():
-                admission.revoke_pending()
+                revoked = admission.revoke_pending()
+                if revoked: finish_unentered_record('executor handle terminated before invocation')
+            handle_cancelled = (isinstance(error,asyncio.CancelledError) and worker.cancelled()
+                                and asyncio.current_task().cancelling()==0)
+            if wait_for_result_ms is not None and (isinstance(error,Exception) or handle_cancelled):
+                with calls_lock: record = deepcopy(calls[registered_call_id])
+                return content(dict(status='worker_handle_failed',call_id=registered_call_id,call=record,
+                    error=repr(error),operation_invoked=None,input_dispatched=None,effect_status='unknown',
+                    result_available=False,release_confirmed=False,task_success=None,replay_allowed=False,
+                    note='Executor handle failed; invocation custody is recorded separately. '
+                         'Inspect this call ID. Never replay or assume cleanup from this error.'),error=True)
             raise
 
     if owner is not None and not guarded:

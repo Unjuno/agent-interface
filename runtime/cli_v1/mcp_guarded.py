@@ -334,7 +334,8 @@ class GuardedSessionOwner(MCPSessionOwner):
 
 def register_guarded_tools(server, submit, *, cancel=None):
     @server.tool()
-    async def interface_guarded_recover_input(current_binding_revision: StrictInt) -> CallToolResult:
+    async def interface_guarded_recover_input(current_binding_revision: StrictInt,
+            wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)] | None=None) -> CallToolResult:
         """Explicitly attempt tracked-input release once on this open guarded owner.
 
         Requires recovery_required=true and the current binding revision. The
@@ -347,8 +348,12 @@ def register_guarded_tools(server, submit, *, cancel=None):
         Blocking platform I/O can leave this call pending; inspect results and
         never replay an uncertain request automatically. Retired workers remain
         retired and require explicitly closing the session.
+        Optional wait_for_result_ms ends only the response await; pending returns
+        the original call ID without release confirmation. The same worker keeps
+        cleanup custody. Retrieve its result; never resubmit because it is pending.
         """
-        return await submit('guarded_recover_input',dict(current_binding_revision=current_binding_revision),False,False)
+        options = {} if wait_for_result_ms is None else dict(wait_for_result_ms=wait_for_result_ms)
+        return await submit('guarded_recover_input',dict(current_binding_revision=current_binding_revision),False,False,**options)
     if cancel is not None:
         @server.tool()
         async def interface_guarded_cancel(call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:
@@ -440,7 +445,8 @@ def register_guarded_tools(server, submit, *, cancel=None):
                                      observe_after: StrictBool=True,
                                      detail: Literal["full","brief"]="full",
                                      observation_refs: StrictBool=False,
-                                     feedback: InputFeedback | None=None) -> CallToolResult:
+                                     feedback: InputFeedback | None=None,
+                                     wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)] | None=None) -> CallToolResult:
         """Use a scoped alias once through fresh pixel guards and ordinary input admission.
 
         tail uses text, key_chord, wait_update or observe operations, within the
@@ -467,6 +473,13 @@ def register_guarded_tools(server, submit, *, cancel=None):
         observation_refs=true additionally replaces exact duplicate image metadata
         with a local source.native reference. The reference layer is lossless;
         brief guard summaries remain lossy. Defaults keep the existing full shape.
+        Optional wait_for_result_ms limits the local response await, not input
+        execution/lease/cleanup. Pending names one queued/running original call;
+        it confirms neither release nor task success. The same worker can still
+        run after this response and retains its busy slot. Retrieve with
+        interface_results(call_id); never replay a pending/uncertain invocation.
+        Default null awaits the original terminal response. This is cooperative
+        scheduling, not a hard transport or physical-release time bound.
         """
         if feedback is not None and not observe_after:
             raise ValueError('feedback requires observe_after=true')
@@ -474,7 +487,8 @@ def register_guarded_tools(server, submit, *, cancel=None):
                        interaction=interaction,observe_after=observe_after)
         if feedback is not None:
             arguments['feedback']=feedback.model_dump()
-        return await submit('guarded_input',arguments,False,False,detail,observation_refs)
+        options = {} if wait_for_result_ms is None else dict(wait_for_result_ms=wait_for_result_ms)
+        return await submit('guarded_input',arguments,False,False,detail,observation_refs,**options)
 
     @server.tool()
     async def interface_guarded_review_window(window_id: StrictInt) -> CallToolResult:
