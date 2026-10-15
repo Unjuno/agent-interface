@@ -106,6 +106,8 @@ class ObservableSignalPolicyMonitor:
         self.guard = guard
         self.extractor = extractor
         self.last_sequence = guard.spec["source_sequence"]
+        self.last_capture_ns = guard.source_capture_ns
+        self.seen_event_kinds = set()
         self.last_event_kind = None
         self.last_signal = None
         self.last_frame_rgb_sha256 = None
@@ -178,7 +180,7 @@ class ObservableSignalPolicyMonitor:
         paired_duplicate = (
             type(sequence) is int and sequence == self.last_sequence and
             event_kind in self.event_types and self.last_event_kind in self.event_types and
-            event_kind != self.last_event_kind
+            event_kind not in self.seen_event_kinds and len(self.seen_event_kinds) == 1
         )
         if paired_duplicate:
             try:
@@ -191,6 +193,7 @@ class ObservableSignalPolicyMonitor:
                 type(observation.get("frame_rgb_sha256")) is str and
                 observation.get("frame_rgb_sha256") == self.last_frame_rgb_sha256)
             if self._same_signal(signal, self.last_signal) and frame_hash_matches:
+                self.seen_event_kinds.add(event_kind)
                 self.last_event_kind = event_kind
                 self.last_signal = signal
                 return None
@@ -206,6 +209,12 @@ class ObservableSignalPolicyMonitor:
                           else self.extractor.read(observation))
             except (OSError, ValueError, TypeError, KeyError):
                 signal = {"status": "unknown"}
+            capture_ns = signal.get("capture_ns") if type(signal) is dict else None
+            if type(capture_ns) is not int or capture_ns <= self.last_capture_ns:
+                signal = {"status": "unknown"}
+            else:
+                self.last_capture_ns = capture_ns
+            self.seen_event_kinds = {event_kind}
             self.last_event_kind = event_kind
             self.last_signal = signal
             self.last_frame_rgb_sha256 = observation.get("frame_rgb_sha256")
