@@ -51,4 +51,3 @@ review quorum or live-resource grant is introduced by this plan.
   limits, obtain available read-only review, repair findings without rerunning raw.
 - [ ] Publish/integrate exact source under actual protection, update #59/#17 as
   appropriate, retain original generation-gap packet and clean only own refs.
-
