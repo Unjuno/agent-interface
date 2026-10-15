@@ -57,6 +57,13 @@ python -m unittest research.concurrency.xlib_boundary_consolidation_20261016.tes
 python -O -m unittest research.concurrency.xlib_boundary_consolidation_20261016.test_saved_boundary_audit
 ```
 
+Clean checked source `2f56b1f39ad1b2a1497edd32d2b723c7d7c685c6`: 4 methods
+pass in normal and optimized Python 3.13.14; the auditor verifies 261 original
+paths and 274 public members. Independent read-only review confirms the same
+blob custody and scoped checks. `verification/` retains both test logs, saved
+audit output and first-import mismatch. Public navigation passes 26 documents /
+2,137 repository-relative links. Later changes only retain receipts/documentation.
+
 ## Consequence for the current control goal
 
 The read-only worker integrated in #8950/#8952 addresses named connection-local
