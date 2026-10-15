@@ -1,0 +1,869 @@
+[
+  {
+    "case": "stable",
+    "reuse": true,
+    "file": "stable-retain.txt",
+    "label": "議事録担当",
+    "error": null,
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": true
+        }
+      },
+      {
+        "event": "replacement_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_replacement",
+        "data": {
+          "matches_program": true
+        }
+      },
+      {
+        "event": "save_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "save_returned",
+        "data": {
+          "task_id": "file-backed"
+        }
+      }
+    ],
+    "reads": 3,
+    "replacements": 1,
+    "saves": 1,
+    "final_visible": "会議 é🚀\r\n議事録担当：森\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+  },
+  {
+    "case": "stable",
+    "reuse": false,
+    "file": "stable-replan.txt",
+    "label": "議事録担当",
+    "error": null,
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": true
+        }
+      },
+      {
+        "event": "replacement_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_replacement",
+        "data": {
+          "matches_program": true
+        }
+      },
+      {
+        "event": "save_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "save_returned",
+        "data": {
+          "task_id": "file-backed"
+        }
+      }
+    ],
+    "reads": 3,
+    "replacements": 1,
+    "saves": 1,
+    "final_visible": "会議 é🚀\r\n議事録担当：森\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+  },
+  {
+    "case": "annotation",
+    "reuse": true,
+    "file": "annotation-retain.txt",
+    "label": "議事録担当",
+    "error": null,
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": false
+        }
+      },
+      {
+        "event": "one_recovery_admitted",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "reuse_contract",
+        "data": {
+          "outcome": "READY",
+          "role": "議事録担当"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": true
+        }
+      },
+      {
+        "event": "replacement_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_replacement",
+        "data": {
+          "matches_program": true
+        }
+      },
+      {
+        "event": "save_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "save_returned",
+        "data": {
+          "task_id": "file-backed"
+        }
+      }
+    ],
+    "reads": 6,
+    "replacements": 1,
+    "saves": 1,
+    "final_visible": "会議 é🚀\r\n議事録担当：森\r\n受付担当：加藤\r\n注記：日程変更\r\n"
+  },
+  {
+    "case": "annotation",
+    "reuse": false,
+    "file": "annotation-replan.txt",
+    "label": "議事録担当",
+    "error": null,
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      },
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程変更\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程変更\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": false
+        }
+      },
+      {
+        "event": "one_recovery_admitted",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": true
+        }
+      },
+      {
+        "event": "replacement_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_replacement",
+        "data": {
+          "matches_program": true
+        }
+      },
+      {
+        "event": "save_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "save_returned",
+        "data": {
+          "task_id": "file-backed"
+        }
+      }
+    ],
+    "reads": 6,
+    "replacements": 1,
+    "saves": 1,
+    "final_visible": "会議 é🚀\r\n議事録担当：森\r\n受付担当：加藤\r\n注記：日程変更\r\n"
+  },
+  {
+    "case": "role_change",
+    "reuse": true,
+    "file": "role_change-retain.txt",
+    "label": "記録担当",
+    "error": null,
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      },
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n記録担当：加藤\r\n受付担当：加藤\r\n注記：日程変更\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n記録担当：加藤\r\n受付担当：加藤\r\n注記：日程変更\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": false
+        }
+      },
+      {
+        "event": "one_recovery_admitted",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "reuse_contract",
+        "data": {
+          "outcome": "INVALIDATED",
+          "role": "議事録担当"
+        }
+      },
+      {
+        "event": "invalidated_before_input",
+        "data": {
+          "role": "議事録担当"
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": true
+        }
+      },
+      {
+        "event": "replacement_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_replacement",
+        "data": {
+          "matches_program": true
+        }
+      },
+      {
+        "event": "save_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "save_returned",
+        "data": {
+          "task_id": "file-backed"
+        }
+      }
+    ],
+    "reads": 6,
+    "replacements": 1,
+    "saves": 1,
+    "final_visible": "会議 é🚀\r\n記録担当：森\r\n受付担当：加藤\r\n注記：日程変更\r\n"
+  },
+  {
+    "case": "role_change",
+    "reuse": false,
+    "file": "role_change-replan.txt",
+    "label": "記録担当",
+    "error": null,
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      },
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n記録担当：加藤\r\n受付担当：加藤\r\n注記：日程変更\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n記録担当：加藤\r\n受付担当：加藤\r\n注記：日程変更\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": false
+        }
+      },
+      {
+        "event": "one_recovery_admitted",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": true
+        }
+      },
+      {
+        "event": "replacement_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_replacement",
+        "data": {
+          "matches_program": true
+        }
+      },
+      {
+        "event": "save_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "save_returned",
+        "data": {
+          "task_id": "file-backed"
+        }
+      }
+    ],
+    "reads": 6,
+    "replacements": 1,
+    "saves": 1,
+    "final_visible": "会議 é🚀\r\n記録担当：森\r\n受付担当：加藤\r\n注記：日程変更\r\n"
+  },
+  {
+    "case": "second_change",
+    "reuse": true,
+    "file": "second_change-retain.txt",
+    "label": null,
+    "error": {
+      "type": "StaleDocument",
+      "message": "STOP: document changed while planning"
+    },
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": false
+        }
+      },
+      {
+        "event": "one_recovery_admitted",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "reuse_contract",
+        "data": {
+          "outcome": "READY",
+          "role": "議事録担当"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": false
+        }
+      }
+    ],
+    "reads": 5,
+    "replacements": 0,
+    "saves": 0,
+    "final_visible": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程再変更\r\n"
+  },
+  {
+    "case": "second_change",
+    "reuse": false,
+    "file": "second_change-replan.txt",
+    "label": null,
+    "error": {
+      "type": "StaleDocument",
+      "message": "STOP: document changed while planning"
+    },
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      },
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程変更\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程変更\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": false
+        }
+      },
+      {
+        "event": "one_recovery_admitted",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": false
+        }
+      }
+    ],
+    "reads": 5,
+    "replacements": 0,
+    "saves": 0,
+    "final_visible": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程再変更\r\n"
+  },
+  {
+    "case": "unknown_replace",
+    "reuse": true,
+    "file": "unknown_replace-retain.txt",
+    "label": null,
+    "error": {
+      "type": "RuntimeError",
+      "message": "fixture replacement outcome unknown"
+    },
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": true
+        }
+      },
+      {
+        "event": "replacement_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      }
+    ],
+    "reads": 2,
+    "replacements": 1,
+    "saves": 0,
+    "final_visible": "会議 é🚀\r\n議事録担当：森\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+  },
+  {
+    "case": "unknown_replace",
+    "reuse": false,
+    "file": "unknown_replace-replan.txt",
+    "label": null,
+    "error": {
+      "type": "RuntimeError",
+      "message": "fixture replacement outcome unknown"
+    },
+    "subject_calls": [
+      {
+        "task": {
+          "id": "file-backed",
+          "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n",
+          "old_person": "加藤",
+          "new_person": "森"
+        },
+        "document": "会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+      }
+    ],
+    "events": [
+      {
+        "event": "observed_original",
+        "data": {
+          "matches_public_input": true
+        }
+      },
+      {
+        "event": "subject_attempt_before_send",
+        "data": {
+          "task_id": "file-backed"
+        }
+      },
+      {
+        "event": "subject_contract",
+        "data": {
+          "outcome": "READY"
+        }
+      },
+      {
+        "event": "revalidated_original",
+        "data": {
+          "matches_previous": true
+        }
+      },
+      {
+        "event": "replacement_intent",
+        "data": {
+          "task_id": "file-backed"
+        }
+      }
+    ],
+    "reads": 2,
+    "replacements": 1,
+    "saves": 0,
+    "final_visible": "会議 é🚀\r\n議事録担当：森\r\n受付担当：加藤\r\n注記：日程確定\r\n"
+  }
+]
