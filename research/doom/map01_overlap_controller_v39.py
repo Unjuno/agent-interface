@@ -22,7 +22,8 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE.parent / "live_control"))
 from doom_hud_signal_v3 import DoomStatusNumberReader
 from doom_controller_failure_cleanup_v1 import (
-    ControllerFailureCleanup, reject_duplicate_json_members)
+    ControllerFailureCleanup, reject_duplicate_json_members,
+    reject_control_boundary_failure)
 from doom_source_refresh_v1 import refresh_source, SourceRefreshRefused
 from doom_typed_observation_v1 import (
     build_action_snapshot as build_typed_action_snapshot,
@@ -1359,6 +1360,7 @@ def main():
                     continue
                 if consumed_events is not None:
                     consumed_events.append(row)
+                reject_control_boundary_failure(row)
                 if row["event"] == "observation":
                     latest = row
                 event_types = (getattr(observation_monitor, "event_types", {"observation"})
