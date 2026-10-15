@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Explicit transport close fence](../research/doom/appserver_close_waiter_checks_20261016/README.md)
+  now wakes request/notification/planner waiters before receiver retirement and
+  serializes closing with cached publication, including predicate reentry. A
+  Windows owned Python peer/real stdio fixture stops the planner wait while the
+  receive journal remains held and close reports reader timeout. This qualifies
+  that logical stop/IPC fault boundary only; close itself, native I/O, physical
+  release and automatic task recovery remain unbounded/unverified.
+
 - [Fatal cover retirement](../research/doom/v39_fatal_cover_retirement_checks_20261016/README.md)
   now preserves failed natural/drained/post-answer cover terminals before aborting
   a pending planner, without requesting remote interrupt ACK. Actual-main tests
