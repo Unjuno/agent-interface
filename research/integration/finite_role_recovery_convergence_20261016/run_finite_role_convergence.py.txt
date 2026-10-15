@@ -1,0 +1,96 @@
+import hashlib
+import importlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import unittest
+
+ROOT = Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT = Path(__file__).parent / 'finite-role-convergence-20261016'
+MODE = 'optimized' if sys.flags.optimize else 'normal'
+DEST = OUT / MODE
+DEST.mkdir(parents=True, exist_ok=False)
+sys.path.insert(0, str(ROOT / 'research/live_control'))
+from finite_role_recovery import StaleDocument, run_with_one_recovery
+
+ROLE = '議事録担当'
+OTHER = '記録担当'
+BODY = '会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n'
+TASK = dict(id='file-backed', document=BODY, old_person='加藤', new_person='森')
+
+
+class FileEditor:
+    def __init__(self, path, case):
+        self.path, self.case = path, case
+        self.body = BODY
+        self.reads = self.replacements = self.saves = 0
+        path.write_bytes(BODY.encode('utf-8'))
+
+    def read_current(self):
+        self.reads += 1
+        if self.case == 'second_change' and self.reads == 5:
+            self.body = self.body.replace('日程変更', '日程再変更')
+        return self.body
+
+    def replace_once(self, text):
+        self.replacements += 1
+        self.body = text
+        if self.case == 'unknown_replace':
+            raise RuntimeError('fixture replacement outcome unknown')
+
+    def save_once(self):
+        self.saves += 1
+        self.path.write_bytes(self.body.encode('utf-8'))
+
+
+rows = []
+for case in ('stable', 'annotation', 'role_change', 'second_change', 'unknown_replace'):
+    for reuse in (True, False):
+        name = case + ('-retain' if reuse else '-replan')
+        editor = FileEditor(DEST / (name + '.txt'), case)
+        calls, events = [], []
+
+        def subject(task, document):
+            calls.append(dict(task=task.copy(), document=document))
+            role = OTHER if OTHER + '：' in document else ROLE
+            output = dict(updated_text=document.replace(role + '：加藤', role + '：森'),
+                          changed_role=role, previous_person='加藤', new_person='森',
+                          untouched_title='sibling.txt')
+            if len(calls) == 1 and case in ('annotation', 'role_change', 'second_change'):
+                editor.body = editor.body.replace('日程確定', '日程変更')
+                if case == 'role_change':
+                    editor.body = editor.body.replace(ROLE, OTHER)
+            return output
+
+        label = error = None
+        try:
+            label = run_with_one_recovery(TASK, editor, subject,
+                lambda event, data: events.append(dict(event=event, data=data.copy())), reuse)
+        except Exception as exc:
+            error = dict(type=type(exc).__name__, message=str(exc))
+        rows.append(dict(case=case, reuse=reuse, file=editor.path.name, label=label,
+                         error=error, subject_calls=calls, events=events, reads=editor.reads,
+                         replacements=editor.replacements, saves=editor.saves,
+                         final_visible=editor.body))
+(DEST / 'rows.json').write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding='utf-8')
+pins = []
+names = subprocess.check_output(['git', 'ls-files', 'research/live_control/finite_role_recovery',
+                                'research/live_control/test_finite_role_recovery.py'], cwd=ROOT, text=True).splitlines()
+for name in names:
+    b = (ROOT / name).read_bytes()
+    blob = subprocess.check_output(['git', 'show', 'HEAD:' + name], cwd=ROOT)
+    pins.append(dict(path=name, worktree_sha256=hashlib.sha256(b).hexdigest(),
+                     git_sha256=hashlib.sha256(blob).hexdigest(), same_bytes=b == blob))
+(DEST / 'conditions.json').write_text(json.dumps(dict(
+    tested_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+    pid=os.getpid(), optimize=sys.flags.optimize, executable=sys.executable,
+    python=sys.version, source_pins=pins,
+    scope='synthetic subject, visible memory state and actual local UTF-8 fixture files; no GUI/native/model'), indent=2))
+suite = unittest.defaultTestLoader.loadTestsFromModule(importlib.import_module('test_finite_role_recovery'))
+result = unittest.TextTestRunner(verbosity=2).run(suite)
+(DEST / 'test-result.json').write_text(json.dumps(dict(tests=result.testsRun,
+    failures=len(result.failures), errors=len(result.errors), skipped=len(result.skipped))))
+print(json.dumps(dict(mode=MODE, cells=len(rows), tests=result.testsRun, success=result.wasSuccessful())))
+sys.exit(0 if result.wasSuccessful() else 1)

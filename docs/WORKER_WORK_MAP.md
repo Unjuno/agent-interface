@@ -35,6 +35,14 @@ distinguishes stack merges from main integration and lists the completion criter
 
 ## What a worker leaves
 
+For finite semantic recovery, reuse the explicit
+[role-recovery prototype and convergence record](../research/integration/finite_role_recovery_convergence_20261016/README.md).
+PR7264/8370 package/tests are identical and their parent README contexts are
+preserved separately. Local 26-method and ten-file-cell checks qualify one
+pre-input recovery, never retrying unknown replacement. The next contribution
+is a selected-document editor through the actual caller with independent
+application effects; another synthetic prototype does not close that gate.
+
 The [#7954 callback convergence](../research/integration/compiled_callback_convergence_20261016/README.md)
 now retains verifier/post-input journal failures as typed core receipts without
 losing prefix/release or the second failure cause. Its old six files and tests

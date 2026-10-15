@@ -8,8 +8,8 @@
 
 **Constraints:** Local synthetic subject/editor only. No GUI/native input/model/provider/WSL/container or consumed experiment replay. Fixture Save is not application certification. Historical quorum/allocation records are data, not current approval requirements.
 
-- [ ] Preserve original files/head snapshots; adopt without behavior edits.
-- [ ] Run 26 original tests normal/-O; ten file-backed cells per mode: stable, annotation change, role invalidation, second change, unknown replacement, each retention/replan. Retain counters and exact bytes; saved-only audit rejects contradictory copies.
+- [x] Preserve original files/head snapshots; adopt without behavior edits.
+- [x] Run 26 original tests normal/-O; ten file-backed cells per mode: stable, annotation change, role invalidation, second change, unknown replacement, each retention/replan. Retain counters and exact bytes; saved-only audit rejects contradictory copies.
 - [ ] Publish conditions/source/raw/readback/limitations; review immutable patch.
 - [ ] Integrate and verify merged state, close converged originals with continuation, remove own safe temporary refs.
 

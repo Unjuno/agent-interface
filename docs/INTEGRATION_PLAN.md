@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Finite role recovery convergence from #7264/#8370](../research/integration/finite_role_recovery_convergence_20261016/README.md)
+  preserves both proposals' original files and adopts their identical explicit
+  prototype. The 26 original methods and ten file-backed recovery cells pass
+  normal/-O; independent literal file readback retains annotation changes and
+  distinguishes bounded replan, second-change stop and unknown-input no-resend.
+  Synthetic subject/editor results do not qualify actual v3/guarded editor
+  integration, native release, semantic truth, application effects or economics.
+
 - [Callback receipt convergence from #7954](../research/integration/compiled_callback_convergence_20261016/README.md)
   integrates its verifier/post-input journal repair into current core and guarded
   caller, preserving newer safeguards. Both verifier and terminal-journal causes
