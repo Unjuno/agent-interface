@@ -20,8 +20,10 @@ The remaining failure-custody requirement is carried into the current launcher:
 
 - A missing profile remains valid. Existing unreadable, malformed or invalid
   server-table configuration refuses command construction before client creation.
-- Server names are quoted as literal TOML keys, including dots, quotes and
-  Unicode. The fixed historical server-name list is not restored.
+- One nonempty root `mcp_servers` inline-table override carries literal TOML keys,
+  including dots, quotes, equals signs and supplementary Unicode. The fixed
+  historical server-name list is not restored. Its nested tables override only
+  `enabled=false`, preserving transport fields under recursive configuration merge.
 - `main()` writes `mcp-preflight-failure.json` with fixed stage/reason, exception
   class and failed status. It excludes configuration, exception text and output.
   A secondary receipt-write failure adds only its class to the original error;
@@ -48,6 +50,23 @@ Python. All 37 errors came from the existing cover-terminal substitute rejecting
 signature repair, both modes pass 68 tests with one skip. The skipped optional
 real Codex handshake was deliberately disabled by clearing executable-discovery
 environment variables in the external runner.
+
+Review then caught an incorrect assumption in the first quoting implementation:
+Codex splits the left-hand override path literally on dots; it parses only the
+right-hand value as TOML. Default JSON quoting also emits invalid TOML surrogate
+escapes for supplementary characters. The corrected regression models the actual
+split-first-equals, literal dotted path and recursive overlay, tests multiple
+names together and preserves original transport fields. Its first corrected
+consumer-model run fails on the old implementation and is retained separately
+as `mcp-preflight-consumer-red.log`. Earlier green results do not qualify that
+consumer boundary.
+
+Source contract checked at official Codex commit
+`f0c5077c34ec7a76b4ad9134835925e6ae3d72ec`:
+[CLI parsing](https://github.com/openai/codex/blob/f0c5077c34ec7a76b4ad9134835925e6ae3d72ec/codex-rs/utils/cli/src/config_override.rs),
+[override application](https://github.com/openai/codex/blob/f0c5077c34ec7a76b4ad9134835925e6ae3d72ec/codex-rs/config/src/overrides.rs),
+[recursive merge](https://github.com/openai/codex/blob/f0c5077c34ec7a76b4ad9134835925e6ae3d72ec/codex-rs/config/src/merge.rs).
+This is source-modeled compatibility, not a handshake with the installed binary.
 
 Runner and original logs are retained on the working host under
 `outputs/repository-consolidation-20261015/test_mcp_preflight_integration.py`,

@@ -711,8 +711,13 @@ def app_server_command():
             type(name) is not str or not name or type(server) is not dict
             for name, server in configured_mcps.items())):
         raise ValueError("MCP configuration must contain named server tables")
-    for name in configured_mcps:
-        command += ["-c", f"mcp_servers.{json.dumps(name)}.enabled=false"]
+    if configured_mcps:
+        # CLI parses only RHS as TOML and splits LHS literally on dots.
+        # One root table preserves arbitrary names and disables all entries in
+        # the same overlay; repeated root overrides would replace one another.
+        entries = ", ".join(json.dumps(name, ensure_ascii=False) + "={enabled=false}"
+                            for name in configured_mcps)
+        command += ["-c", "mcp_servers={" + entries + "}"]
     return command
 
 

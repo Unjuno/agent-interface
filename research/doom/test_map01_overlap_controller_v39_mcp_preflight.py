@@ -27,17 +27,38 @@ class MCPPreflightTests(unittest.TestCase):
                 controller.app_server_command()
 
     def test_mcp_names_are_literal_toml_keys(self):
-        names = ['sample_server', 'a.b', 'quote"key', '日本語']
+        names = ['sample_server', 'a', 'a.b', 'quote"key', 'equal=key', '日本語', 'emoji_😀']
         with tempfile.TemporaryDirectory() as home:
             Path(home, 'config.toml').write_text('\n'.join(
-                '[mcp_servers.' + json.dumps(name) + ']\ncommand = "ignored"'
+                '[mcp_servers.' + json.dumps(name, ensure_ascii=False) + ']\ncommand = "ignored"'
                 for name in names), encoding='utf-8')
             with patch.dict(os.environ, {'CODEX_HOME': home}):
                 command = controller.app_server_command()
-        overrides = [arg for arg in command if arg.startswith('mcp_servers.')]
-        self.assertEqual(len(overrides), len(names))
-        for name, override in zip(names, overrides):
-            self.assertEqual(tomllib.loads(override), {'mcp_servers': {name: {'enabled': False}}})
+        # Codex parses only RHS as TOML; LHS is split literally on '.'.
+        # Model that consumer, rather than parsing the whole override as TOML.
+        layer = {}
+        for index, arg in enumerate(command):
+            if arg != '-c':
+                continue
+            path, raw_value = command[index + 1].split('=', 1)
+            target = layer
+            segments = path.strip().split('.')
+            for segment in segments[:-1]:
+                target = target.setdefault(segment, {})
+            target[segments[-1]] = tomllib.loads('value = ' + raw_value)['value']
+        self.assertEqual(layer, {'mcp_servers': {name: {'enabled': False} for name in names}})
+        # The overlay must preserve the configured transport when recursively
+        # merged, and must not create spurious server names.
+        config = {'mcp_servers': {name: {'command': 'ignored'} for name in names}}
+        def merge(base, overlay):
+            for key, value in overlay.items():
+                if isinstance(value, dict) and isinstance(base.get(key), dict):
+                    merge(base[key], value)
+                else:
+                    base[key] = value
+        merge(config, layer)
+        self.assertEqual(config, {'mcp_servers': {
+            name: {'enabled': False, 'command': 'ignored'} for name in names}})
 
     def run_main_failure(self, output, failure, secondary=None):
         argv = ['controller', '--out', str(output), '--model', 'offline',
