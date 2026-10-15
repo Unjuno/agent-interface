@@ -1,31 +1,45 @@
-# Saved cancellation-wake saturation evidence rescue
+# Retained cancellation-wake evidence: current adoption
 
-Original PR #7049, exact source `17d0266a5e5ed1cf9f8f0738e65b62731a123fb6`.
-Original packet restored unchanged; all 213 SHA256SUMS targets match.
-Read the original REPORT rather than treating the prospective README's
-pre-execution counters as a current status report.
+Updated 2026-10-15 under the active user's FINAL v5. The original rescue README
+is preserved byte-for-byte as README_HISTORY_20261008.md; its prospective
+committee/quorum and pending-integration statements are historical, not current
+operating requirements. FINAL v5 section 8.1 permits one worker to review,
+validate and integrate; it adds no nonauthor review count or vote gate. Actual
+repository permissions and protections still apply.
+Frozen packet committee/descriptors are also historical provenance, not a new
+operating rule for workers reading the retained experiment.
 
-Fresh saved-only validation uses the completely reviewed auditor's `load` and
-`audit` functions with its guarded main suppressed. No output file, host FD,
-thread, container, original collector or original auditor CLI is invoked.
-This checks saved consistency, not native authenticity, new timing observations,
-current ownership/resource release, committee approval or production safety.
+This adopts inert historical evidence from #7049 via #7296 and #8764.
+The 214-file experiment packet is unchanged. All 213 manifest targets and the
+original first-outcome raw SHA256 match. The original native auditor PID and
+monotonic timestamps were not recorded; no values or approvals are invented.
+The old local-ci.log is historical validation, not current hosted CI.
 
-Original construction/publication failures and reversible stream/path mappings
-remain immutable. Native auditor PID/monotonic timestamps were not recorded;
-none are invented. Historical 18 cells concern owned dummy target descriptors,
-not physical input release, real task effect, contention/ABA or hard deadlines.
-Formal adoption review and fresh integration gates remain separate.
+The current saved-only verifier runs the reviewed auditor's load/audit functions
+with its guarded CLI suppressed. Normal and optimized Python each qualify all
+18 saved rows, match their individual copies and reject four synthetic data
+mutations. No collector, control/native module, original auditor CLI, pipe/FD
+operation, thread, container, GUI or input runs. This checks saved consistency,
+not independent authentication of the original execution or current resources.
 
-Saved-only audit normal/-O both qualified 18 rows with no reasons:
-`PASS_SCOPED_WAKE_PIPE_SATURATION`. Local workflow replay at `7cc875066b`
-exited 0, 43 steps, failures=[]; full output is `local-ci.log`. This is not
-hosted CI/full runtime/native certification. Main integration is pending;
-source is not yet retired.
+The original comparison shows the distinction among blocking cancellation bytes,
+discarded EAGAIN and a retained current-owner Event in an owned dummy-FD fixture.
+It does not prove physical release, production safety, event contention/ABA,
+multi-owner cancellation, hard deadlines, useful feedback, task effect or the
+broader #17/#59 goals. New runtime work must qualify its actual authority and
+backend path separately; this archive does not authorize a live experiment.
 
-Fresh review readback found a prospective threshold-two content committee,
-but no explicit approvals or verified exclusive sender handoff:
-https://github.com/Unjuno/agent-interface/pull/7049#issuecomment-5969210663
-Assignment/silence and old votes count zero. The original descriptor requires
-fresh current-tree nonauthor combination qualification after quorum. Neither
-this rescue nor local CI supplies those approvals or application authority.
+Windows initially converted the checkout's line endings, causing the first
+saved-check attempt to fail at CONSTRUCTION.md. Git blobs were unchanged and
+all differences were newline-only. Scoped attributes now preserve exact bytes;
+CHECKOUT_RECONCILIATION_20261015.json records the repair. Original raw,
+freeze and checksums were not rewritten.
+
+Recheck into fresh output files from the repository root:
+
+    python -B runtime/results/cancel_wake_rescue_17d0/verify_saved.py --output NORMAL_REPRO.json
+    python -O -B runtime/results/cancel_wake_rescue_17d0/verify_saved.py --output OPTIMIZED_REPRO.json
+
+Use the maintained safety-control agenda for the remaining independent-cleanup
+and late-reply-fencing repair, not the historical committee procedure:
+[Safety-control agenda](../../../docs/ideas/safety-control-agenda.md).
