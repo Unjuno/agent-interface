@@ -35,6 +35,14 @@ distinguishes stack merges from main integration and lists the completion criter
 
 ## What a worker leaves
 
+For the next V39 transport boundary, start from the
+[owned Executor pipe composition](../research/integration/v39_executor_pipe_recovery_20261016/README.md).
+Both actual v12/v13 workers are tested across child pipes while finalization is
+withheld after synthetic release. Old answers stay refused and unknown cleanup
+stays quarantined;67 selected normal/-O methods pass. The shim is not session
+main or native backend. Extend ownership/actual session failure rather than
+repeating helper-only cancellation or claiming fixture release as physical.
+
 The [current V39 cancel/recovery record](../research/integration/v39_current_cancel_recovery_20261016/README.md)
 now tests current helper functions and exact wait AST, rather than transferring
 the historical #8792 PASS. Ten inert rows retain old refusal, recovered full

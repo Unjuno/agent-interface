@@ -8,6 +8,6 @@
 
 **Constraints:** Only owned Python processes, pipes, in-memory backend/keys/signals. No X/native/game/provider/WSL/container/allocation or old producer. Synthetic release is not physical release or OS timing guarantee. Cleanup must join reader/worker processes, retaining forced cleanup as failure.
 
-- [ ] Add tests/child shim with raw pipe rows and terminal barrier for both Executor selections.
-- [ ] Run affected local tests normal/-O, retain exact source/conditions/processes and independent saved readback; preserve all failures.
+- [x] Add tests/child shim with raw pipe rows and terminal barrier for both Executor selections.
+- [x] Run affected local tests normal/-O, retain exact source/conditions/processes and independent saved readback; preserve all failures.
 - [ ] Publish scope and remaining actual-session/backend boundaries, review immutable patch and integrate.
