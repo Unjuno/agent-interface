@@ -116,6 +116,12 @@ class ObservableSignalPolicyMonitor:
         self.latest_soft_event = None
 
     def _typed_signal(self, observation):
+        # Lazy dependency: generic artifact-only monitors need no DOOM module.
+        # Support both package tests and the existing direct DOOM script entry.
+        try:
+            from research.doom.doom_signal_value_domain_v1 import signal_value_in_domain
+        except ModuleNotFoundError:
+            from doom_signal_value_domain_v1 import signal_value_in_domain
         if (type(observation) is not dict or
                 observation.get("event") != "typed_observation" or
                 observation.get("schema") != "doom-typed-observation-v1" or
@@ -147,7 +153,8 @@ class ObservableSignalPolicyMonitor:
                     row.get("signal_id") != name or
                     row.get("status") not in ("observed", "unknown") or
                     (row.get("status") == "unknown" and row.get("value") is not None) or
-                    (row.get("status") == "observed" and type(row.get("value")) is not int) or
+                    (row.get("status") == "observed" and
+                     not signal_value_in_domain(name, row.get("value"))) or
                     type(row.get("sequence")) is not int or
                     type(row.get("capture_ns")) is not int or
                     row.get("sequence") != sequence or

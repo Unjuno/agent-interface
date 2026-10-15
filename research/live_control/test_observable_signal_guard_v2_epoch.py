@@ -32,6 +32,18 @@ class HealthTypedEpochTests(unittest.TestCase):
                 self.assertEqual(monitor.soft_event_count, 1)
                 self.assertEqual(extractor.calls, 0)
 
+    def test_typed_signals_obey_shared_doom_domains(self):
+        for name, value in (('health', 201), ('health', 0), ('health', -1), ('ammo', -1), ('ammo', 1000)):
+            with self.subTest(name=name, value=value):
+                monitor, extractor = self.monitor()
+                typed = typed_observation(signal(87))
+                typed['signals'][name]['value'] = value
+                result = monitor.observe(typed)
+                self.assertIsNotNone(result)
+                self.assertEqual(result['outcome']['status'], 'UNKNOWN')
+                self.assertFalse(result['outcome']['keep_existing_policy'])
+                self.assertEqual(extractor.calls, 0)
+
     def test_each_epoch_accepts_each_transport_kind_only_once(self):
         typed = typed_observation(signal(87))
         full = {'event': 'observation', 'sequence': 38,
