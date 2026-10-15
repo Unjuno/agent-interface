@@ -47,3 +47,11 @@
 2026-10-15、main `e0d657c7288d4e3f8dd3314b2decbb89c817cb56`の`presentation.py`と`test_presentation.py`を読み、`python3 -m unittest -v test_presentation`と`python3 -O -m unittest -v test_presentation`を通常WSLで実行し、それぞれ4/4成功した。最新画像の結果直前flush、focus変化の転送、unknown/critical eventの転送、失敗terminal時の未配信画像flushを、その実装の単体範囲で確認した。
 
 これは#5のstate/event分離の一部を既存実装から再利用できる根拠である。配信経路全体での欠落防止、独立したtask effect、gridやpackingの効率を示す結果ではない。次はこのprojectionのcaller→保存→モデルへの配信を追跡し、同じeventの保持と可視化をcompositionで確認する。他の行のrawと比較条件の照合も継続する。新しいGUI操作、WSLc allocation、モデル比較はこの初回照合では行っていない。
+
+### 実行結果：state/eventのCLI composition
+
+[A01の実行記録](../../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)では、mainの実際の`interactive_v10.main()`/`interactive_v15.main()`とprojection/ledgerを、アプリ・Executorだけをstubにして実行した。version×full/compact×正常/送信失敗の8条件を通常・最適化Pythonで検証し、rawだけを読む独立監査でも確認した。
+
+明示的critical eventは出力候補に残ったが、同じfocusの一時的な警告観測はcompact表示から省略された。送信前BrokenPipeErrorではstdoutは空でも`delivered.jsonl`は残る。v15のflush記録は成功時だけ作られるため、この既存機構を再利用する。ただしモデル受信、実際の警告検知、GUI入力・task effectは未検証である。
+
+**判断の更新：** state/event projectionとローカルflush記録は新設せず既存成果を使う。次は実際に採用する公開callerの検知→保持→配信→acknowledgement/decisionを追跡し、不足部分だけをcompositionで検証する。#5の全体達成やcompactの一般採用は未成立なのでIssueは継続する。
