@@ -31,17 +31,19 @@ class InputFeedback(BaseModel):
         return self
 
 
-def open_bridge(display_name, targets, target, directory, *, process_identity=False):
+def open_bridge(display_name, targets, target, directory, *, process_identity=False, query_worker=False):
     # Optional Pillow/Xlib dependencies are loaded only for this explicit mode.
     from runtime.guarded_x11_v1.bridge import NativeHandleBridge
     return NativeHandleBridge(display_name, targets, target, directory,
-                              process_identity=process_identity)
+                              process_identity=process_identity,query_worker=query_worker)
 
 
 class GuardedSessionOwner(MCPSessionOwner):
-    def __init__(self, targets, directory, display_name=None, *, process_identity=False):
+    def __init__(self, targets, directory, display_name=None, *, process_identity=False, query_worker=False):
         if type(process_identity) is not bool:
             raise ValueError('process_identity must be a boolean')
+        if type(query_worker) is not bool or (query_worker and not process_identity):
+            raise ValueError('query_worker requires explicit process_identity=True')
         if len(targets) != 1:
             raise ValueError('guarded-x11 requires exactly one explicitly configured target')
         super().__init__(targets, display_name)
@@ -50,6 +52,7 @@ class GuardedSessionOwner(MCPSessionOwner):
         self.bridge = None
         self.binding_revision = 0
         self.process_identity = process_identity
+        self.query_worker = query_worker
 
     def get(self):
         if self.state == 'open':
@@ -59,6 +62,7 @@ class GuardedSessionOwner(MCPSessionOwner):
         self.state = 'opening'
         try:
             options = {'process_identity':True} if self.process_identity else {}
+            if self.query_worker: options['query_worker'] = True
             self.bridge = open_bridge(self.display_name, self.targets, self.target, self.directory, **options)
             self.session = self.bridge.session
             self.state = 'open'
@@ -72,12 +76,25 @@ class GuardedSessionOwner(MCPSessionOwner):
         row = super().snapshot()
         row['mode'] = 'guarded-x11'
         row['process_identity'] = self.process_identity
+        row['query_worker'] = self.query_worker
+        worker = getattr(self.bridge,'_target_queries',None)
+        row['target_queries'] = worker.snapshot() if worker is not None else None
         row['target'] = self.target
         row['observation_sequence'] = self.bridge.sequence if self.bridge else None
         row['review_required'] = self.bridge.review_required if self.bridge else None
         if self.bridge:
             row['binding_revision'] = self.bridge.binding_revision
         return row
+
+    def close(self):
+        if self.bridge is not None and self.query_worker:
+            self.bridge.stop_target_queries()
+        return super().close()
+
+    def cancel_guarded(self, token):
+        if self.state != 'open' or self.bridge is None or not self.query_worker:
+            return {'status':'not_active','input_dispatched':False,'release_confirmed':False}
+        return self.bridge.request_cancel(token)
 
     def _with_observation(self, row, source):
         row['source'] = source
@@ -215,7 +232,11 @@ class GuardedSessionOwner(MCPSessionOwner):
             self.dispatch_attempted = True
             method = {'click': bridge.click, 'keyboard': bridge.keyboard,
                       'move': bridge.move}[arguments['interaction']]
-            result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
+            if self.query_worker:
+                with bridge.cancellation_scope(Path(call_root).name):
+                    result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
+            else:
+                result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
             row.update(status=result['status'], result=result)
             if cue is not None:
                 row['feedback_status'] = 'cue_not_attempted'
@@ -293,7 +314,18 @@ class GuardedSessionOwner(MCPSessionOwner):
             return dict(row, status='refused', error=repr(error), input_dispatched=False)
 
 
-def register_guarded_tools(server, submit):
+def register_guarded_tools(server, submit, *, cancel=None):
+    if cancel is not None:
+        @server.tool()
+        async def interface_guarded_cancel(call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:
+            """Request cancellation of this running guarded-input call, bypassing the busy slot.
+
+            Get the call ID from interface_results. This publishes retained local
+            state only; no input or cleanup is injected here. Acknowledgement is
+            not release confirmation. Inspect the original result/cleanup; never
+            replay uncertain input. Old/unknown call IDs cannot cancel a new call.
+            """
+            return cancel(call_id)
     @server.tool()
     async def interface_guarded_activate_window(window_id: StrictInt, source_sequence: StrictInt,
             current_binding_revision: StrictInt, expires_at_ns: StrictInt,

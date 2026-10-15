@@ -12,12 +12,14 @@ import io
 import json
 from pathlib import Path
 import time
+import threading
 import uuid
 
 from PIL import Image
 from .handles import TargetHandleStore
 from .history import ObservationHistory
 from .process_identity import read_linux_x11_process_identity
+from .target_queries import TargetQueryWorker, focus_within_target
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
@@ -41,6 +43,9 @@ def read_window_title(connection, window):
 
 class _GuardedBackend(X11Backend):
     def _before_input_press(self):
+        check_cancelled = getattr(self.owner, '_check_cancelled', None)
+        if check_cancelled is not None:
+            check_cancelled()
         # Focus, pointer and key mapping queries can consume the original
         # deadline. The opt-in identity read has its own final local fence.
         if (self.owner.active is not None and self.owner.deadline is not None
@@ -52,6 +57,8 @@ class _GuardedBackend(X11Backend):
             if (self.owner.deadline is None
                     or time.monotonic_ns() >= self.owner.deadline):
                 raise X11BackendError('native target guard lease expired during process identity check')
+        if check_cancelled is not None:
+            check_cancelled()
 
     def key_state(self, key, down):
         # Text expands to key chords, so check each new press, including a
@@ -107,9 +114,15 @@ class _GuardedBackend(X11Backend):
 
 
 class NativeHandleBridge:
-    def __init__(self, display_name, targets, target, out, *, process_identity=False):
+    def __init__(self, display_name, targets, target, out, *, process_identity=False, query_worker=False):
         if type(process_identity) is not bool:
             raise ValueError('process_identity must be a boolean')
+        if type(query_worker) is not bool or (query_worker and not process_identity):
+            raise ValueError('query_worker requires explicit process_identity=True')
+        self._target_queries = None
+        self._cancel_lock = threading.Lock()
+        self._cancel_ticket = None
+        self._used_cancel_tokens = set()
         self._process_identity_guard = process_identity
         self._active_process_identity = None
         self.out = Path(out)
@@ -133,12 +146,70 @@ class NativeHandleBridge:
         try:
             self.backend.configure_capture_artifacts(self.out / "images", retain_rgb=True)
             self.session = X11RuntimeSession(self.backend)
+            if query_worker:
+                from . import target_queries
+                resolved_display = self.backend.d.get_display_name()
+                self._target_queries = TargetQueryWorker(lambda:target_queries.X11TargetQueries(resolved_display))
         except Exception:
             self.backend.close()
             raise
 
     def close(self):
+        self.stop_target_queries()
         self.backend.close()
+
+    def stop_target_queries(self):
+        worker = getattr(self,'_target_queries',None)
+        return worker.close() if worker is not None else None
+
+    @contextmanager
+    def cancellation_scope(self, token):
+        if self._target_queries is None or type(token) is not str or not 1 <= len(token) <= 64:
+            raise ValueError('explicit query-worker cancellation token required')
+        with self._cancel_lock:
+            if self._cancel_ticket is not None or token in self._used_cancel_tokens:
+                raise RuntimeError('cancellation token active or already consumed')
+            ticket = (token,threading.Event())
+            self._used_cancel_tokens.add(token)
+            self._cancel_ticket = ticket
+        try:
+            yield
+        finally:
+            with self._cancel_lock:
+                self._cancel_ticket = None
+
+    def request_cancel(self, token):
+        with self._cancel_lock:
+            ticket = self._cancel_ticket
+            if ticket is None or ticket[0] != token or self.active is None:
+                return {'status':'not_active','input_dispatched':False,'release_confirmed':False}
+            already = ticket[1].is_set()
+            ticket[1].set()
+            return {'status':'cancel_requested','already_requested':already,
+                    'input_dispatched':False,'release_confirmed':False,'replay_allowed':False}
+
+    def _cancel_requested(self):
+        lock = getattr(self,'_cancel_lock',None)
+        if lock is None: return False
+        with lock:
+            return self._cancel_ticket is not None and self._cancel_ticket[1].is_set()
+
+    def _check_cancelled(self):
+        if self._cancel_requested():
+            self.review_required = True
+            raise X11BackendError('guarded input cancellation requested; review required')
+
+    def _target_query(self, operation, xid):
+        context = (self.scope,self.binding_revision,self.backend.targets[self.target].id)
+        try:
+            value = self._target_queries.read(operation,xid,deadline_ns=self.deadline,cancelled=self._cancel_requested)
+            if context != (self.scope,self.binding_revision,self.backend.targets[self.target].id):
+                self._target_queries.close()
+                raise RuntimeError('target query context changed')
+            return value
+        except Exception as error:
+            self.review_required = True
+            raise X11BackendError('target query unavailable; close this session and review a fresh source') from error
 
     def _save(self, name, value):
         (self.out / name).write_text(json.dumps(value, indent=2) + "\n")
@@ -155,8 +226,11 @@ class NativeHandleBridge:
 
     def _read_process_identity(self):
         try:
-            value = read_linux_x11_process_identity(
-                self.backend.d, self.backend.targets[self.target].id)
+            xid = self.backend.targets[self.target].id
+            if getattr(self,'_target_queries',None) is not None and self.active is not None and self.deadline is not None:
+                value = self._target_query('process_identity',xid)
+            else:
+                value = read_linux_x11_process_identity(self.backend.d,xid)
             if (type(value) is not str or len(value) != 64
                     or any(c not in '0123456789abcdef' for c in value)):
                 raise ValueError('invalid process identity digest')
@@ -175,20 +249,9 @@ class NativeHandleBridge:
         """Read-only X11 ancestry, not title/PID similarity or input authority."""
         if window_id is None:
             window_id = self.backend.targets[self.target].id
-        try:
-            focus = self.backend.d.get_input_focus().focus
-            seen = set()
-            for _ in range(64):
-                identifier = getattr(focus, 'id', None)
-                if type(identifier) is not int or identifier <= 0 or identifier in seen:
-                    return False
-                if identifier == window_id:
-                    return True
-                seen.add(identifier)
-                focus = focus.query_tree().parent
-        except Exception:
-            return False
-        return False
+        if getattr(self,'_target_queries',None) is not None and self.active is not None and self.deadline is not None:
+            return self._target_query('focus',window_id) is True
+        return focus_within_target(self.backend.d,window_id)
 
     def observe(self):
         started_ns = time.monotonic_ns()
@@ -349,6 +412,10 @@ class NativeHandleBridge:
         """
         if self.active is not None:
             raise RuntimeError('cannot review another window during input')
+        if getattr(self,'_target_queries',None) is not None and self._target_queries.snapshot()['retired']:
+            self.review_required = True
+            return {'status':'needs_review','error':'TARGET_QUERY_WORKER_RETIRED_CLOSE_SESSION',
+                    'authority_granted':False,'input_dispatched':False,'replay_allowed':False}
         if type(window_id) is not int or window_id <= 0:
             raise ValueError('explicit positive window ID required')
         previous_scope = self.scope

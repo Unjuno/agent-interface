@@ -49,7 +49,14 @@ live task and matched comparison.
   schedules, with actual backend primitives and no second writer; input-transport
   blockage still prevents confirmation/progress. The actor/proof/clock are
   probe-owned. No public caller integration or physical bound follows from it.
-  Integrate the request/reply seam with actual source/generation/deadline next.
+  The opt-in [active target-query worker](../runtime/guarded_x11_v1/TARGET_QUERIES.md)
+  now connects named focus/process reads through the actual Python bridge and
+  standard guarded MCP, preserving source/generation/original deadline. Fake X
+  checks cancellation/expiry cleanup while either query is blocked, discarded
+  late replies, sticky transport failures and abandoned-open closure. This is
+  a narrower integration than the probe's full observation loop: capture,
+  persistence and input transport remain synchronous. Qualify those remaining
+  boundaries and independent task effect next; no physical bound is established.
 - [The executed #5 delivery composition](../research/live_control/idea5_delivery_boundary_a01_20261015/RESULT.md)
   separates retained raw, selected output and successful local flush. Its app and
   Executor boundaries are synthetic; it proves neither GUI task effect nor model receipt.
