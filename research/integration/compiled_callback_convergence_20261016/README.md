@@ -89,3 +89,8 @@ bounds, durable logging, finite semantic recovery or matched economics. Keep
 #57/#59/#17 open. The old PR can converge here with its ideas and original bytes
 preserved; no old branch or unrelated worktree needs deletion. Remaining adapter/
 publication failures and independently scored task effects are the next gates.
+
+Publication-only adaptation: the two adopted tests have excess EOF blank lines
+removed after tested code `db8f64706b7342e981612506f055c82d3ccc02db`.
+`PUBLICATION_SOURCE_JOINS.json` records exact byte hashes and equal Python ASTs.
+Original tested pins and runs remain unchanged; no behavioral rerun is claimed.
