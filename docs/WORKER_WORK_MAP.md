@@ -29,6 +29,11 @@ window incarnation, blocking native input/readback, and task-effect gates remain
 open. Run the [local affected regression entry](../research/doom/check_map01_control_regressions.py)
 in a fresh external output directory when modifying that path.
 
+In a sparse checkout, the saved-auditor test also needs its committed fixture:
+`git restore --ignore-skip-worktree-bits --worktree -- research/doom/v39_interrupt_cancel_composition_a03_20261008/candidate.json`.
+Materialize that exact data if absent; do not run the historical producer to
+regenerate it. This is local checkout preparation, not a new experiment.
+
 - The owning Issue and narrow question; exact branch/source and additive output.
 - Executed command/test, result scope, retained raw/conditions/audit as applicable.
 - Adoption/repair/rejection decision and an actual next action or named missing gate.
