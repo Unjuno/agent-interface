@@ -1,0 +1,28 @@
+{
+  "decision": "RETAIN_SELECTED_CONSTRUCTION_SCOPED",
+  "new_composition_methods": 7,
+  "new_selection_methods": 2,
+  "regressions": {
+    "normal": {
+      "modules": 58,
+      "tests": 427,
+      "skipped": 12,
+      "failed_modules": []
+    },
+    "optimized": {
+      "modules": 58,
+      "tests": 427,
+      "skipped": 12,
+      "failed_modules": []
+    }
+  },
+  "remaining": [
+    "native subscription/availability/timing",
+    "final check/use race",
+    "arbitrary undetected server event loss",
+    "native input/readback release bound",
+    "cross-backend/process custody",
+    "independent task effect and bounded recovery",
+    "matched economics"
+  ]
+}

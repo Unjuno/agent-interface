@@ -30,7 +30,7 @@ class SignalReader:
 
 
 @contextmanager
-def backend_fixture():
+def backend_fixture(*, window_lifecycle=False, query_factory=None):
     fake, events, generation = FakeDisplay(), [], ['a' * 64]
     fake.keysym_to_keycode = lambda value: {ord('a'): 38}.get(value, 0)
     class Reader:
@@ -44,12 +44,13 @@ def backend_fixture():
     with tempfile.TemporaryDirectory() as output, patch.object(
             native.display, 'Display', return_value=fake), patch.object(
             native.xtest, 'fake_input', side_effect=emit), patch.object(
-            policy, 'X11TargetQueries', side_effect=lambda name: Reader()), patch.object(
+            policy, 'X11TargetQueries', side_effect=query_factory or (lambda name: Reader())), patch.object(
             Previous, 'binding', return_value=binding), patch(
             'doom_typed_coast_backend_v1.ImageGrab.grab', return_value=Image.new('RGB', (32, 32), 'white')):
         session = SimpleNamespace(name=':fake', d=fake, context=lambda: {'windows': 'fixture'})
+        options = {'window_lifecycle': True} if window_lifecycle else {}
         backend = Backend(session, Path(output), events.append,
-                          {name: SignalReader(name) for name in ('health', 'ammo')})
+                          {name: SignalReader(name) for name in ('health', 'ammo')}, **options)
         try:
             yield backend, events, generation, fake
         finally:

@@ -8,7 +8,10 @@ It adds no requirement to read all 1,678 Issues before working.
 The public guarded MCP caller now has opt-in
 [direct-window lifecycle evidence](../runtime/guarded_x11_v1/WINDOW_LIFECYCLE.md),
 with [Fake X construction results](../research/live_control/window_lifecycle_local_checks_20261016/README.md).
-It does not qualify native subscriptions or add lifecycle checks to MAP01/V12.
+It does not qualify native subscriptions. The selected MAP01/V12 transfer now has
+[its own construction record](../research/doom/map01_window_lifecycle_local_checks_20261016/README.md),
+using one canonical lifecycle observer for capture and input; default/other routes
+do not inherit that qualification.
 Use its remaining protocol/atomicity and caller-transfer boundaries rather than
 repeating the process-only stale-alias characterization.
 
