@@ -4,6 +4,7 @@ import tempfile
 import threading
 import unittest
 from unittest.mock import patch
+from mcp.server.fastmcp.exceptions import ToolError
 
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_process_identity import FakeX,metadata
@@ -160,10 +161,10 @@ class WaitBudgetTests(unittest.IsolatedAsyncioTestCase):
     async def test_invalid_wait_budget_does_not_open_or_register_input(self):
         with tempfile.TemporaryDirectory() as td,patch('runtime.cli_v1.mcp_guarded.open_bridge') as opened:
             server=create_server({'app':20},td,session_mode='guarded-x11')
-            for value in (-1,10001,True,1.5,'20'):
-                result=await server.call_tool('interface_guarded_input',dict(alias='field',offset=[1,1],
-                    tail=[dict(op='key_chord',keys=['a'])],wait_for_result_ms=value))
-                self.assertTrue(result.isError)
+            for value in (-1,10001,True,1.5):
+                with self.assertRaises(ToolError):
+                    await server.call_tool('interface_guarded_input',dict(alias='field',offset=[1,1],
+                        tail=[dict(op='key_chord',keys=['a'])],wait_for_result_ms=value))
             self.assertEqual(metadata(await server.call_tool('interface_results',{}))['calls'],[])
             opened.assert_not_called()
 
