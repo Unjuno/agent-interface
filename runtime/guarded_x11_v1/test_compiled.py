@@ -1,5 +1,6 @@
 """Shared X11 adapter boundaries; fake captures/input, no display or model."""
 import copy
+from contextlib import contextmanager
 import hashlib
 import time
 from types import SimpleNamespace
@@ -18,6 +19,14 @@ class Bridge:
         self.target='app'; self.history={}; self.saved=[]; self.inputs=[]
         self.store=SimpleNamespace(resolve_point=Mock(side_effect=self.resolve))
         self.phase=0; self.release=True
+        self.guard=None
+    @contextmanager
+    def input_guard(self,alias,offset,*,tail,verify,interaction='keyboard'):
+        # Memory-only fixture: native fresh capture/fences are exercised by
+        # test_compiled_native_dependencies with the actual NativeHandleBridge.
+        self.guard=verify
+        try:yield
+        finally:self.guard=None
     def _save(self,name,value): self.saved.append((name,copy.deepcopy(value)))
     def _focus_within_target(self): return True
     def resolve(self,*args,**kwargs):
@@ -31,6 +40,10 @@ class Bridge:
         self.history[self.sequence]=(observation,image)
         return observation
     def click(self,alias,offset,**kwargs):
+        if self.guard is not None:
+            native,image=self.history[self.sequence]
+            if self.guard('fixture_before_input',copy.deepcopy(native),image.copy()) is not True:
+                return {'status':'refused','input_dispatched':False}
         self.inputs.append((alias,offset,copy.deepcopy(kwargs))); self.phase+=1
         return {'status':'completed','execution':{'releases':[{'verified':self.release,'keys_down':[],'buttons_down':[]}]}}
     keyboard=click; move=click

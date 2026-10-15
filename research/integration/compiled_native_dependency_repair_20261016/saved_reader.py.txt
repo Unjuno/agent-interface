@@ -1,0 +1,76 @@
+import copy,hashlib,io,json
+from pathlib import Path
+from PIL import Image
+OUT=Path(__file__).parent/'compiled-native-dependency-final-r2-20261016'
+KEY='runtime.guarded_x11_v1.test_compiled_native_dependencies.ROWS'
+CHORD=[[2,1],[2,2],[3,2],[3,1]]
+def check(rows):
+    expected={(i,c) for i in ('keyboard','click','move') for c in ('stable','false','unknown','missing','exception')}|{('keyboard','held'),('click','after_motion'),('keyboard','expired')}
+    if len(rows)!=18 or {(r['interaction'],r['change']) for r in rows}!=expected:raise ValueError('coverage')
+    for row in rows:
+        i,c=row['interaction'],row['change'];r=row['result']
+        codes=[e[:2] for e in row['events']]
+        events=CHORD if c=='stable' and i=='keyboard' else [[6,0],[4,1],[5,1]] if c=='stable' and i=='click' else [[6,0]] if c in ('stable','after_motion') else [[2,1],[3,1]] if c=='held' else []
+        if codes!=events or row['down'] or row['buttons'] or not row['guard_restored'] or row['pending_authorizations']:raise ValueError('input custody')
+        if r['status']!=('completed' if c=='stable' else 'execution_failed' if c in ('held','after_motion') else 'refused'):raise ValueError('status')
+        if c in ('stable','held','after_motion'):
+            if r['release']!={'verified':True,'keys_down':[],'buttons_down':[]}:raise ValueError('release')
+        elif r.get('input_dispatched') is not False:raise ValueError('refusal')
+        files={n:json.loads(bytes.fromhex(v)) for n,v in row['files_hex'].items() if n.endswith('.json')}
+        raw=files['bridge/'+r['effect_ref']+'.json']['result']
+        if raw['status']!=r['status']:raise ValueError('terminal join')
+        checks=[v for n,v in files.items() if n.endswith('-input_dependency.json')]
+        if c=='expired':
+            if checks or len(row['reads'])!=1:raise ValueError('expired check/replay')
+            continue
+        if not checks:raise ValueError('missing fresh check')
+        if any(v['required_predicates']!=['submit_target_present','submit_target_present','field_value_matches_task'] for v in checks):raise ValueError('dependency set')
+        for check in checks:
+            source=files['bridge/observation-'+str(check['observation_sequence'])+'.json']
+            artifact=source['native']['artifact']
+            data=next(bytes.fromhex(v) for n,v in row['files_hex'].items() if Path(n).name==Path(artifact['path']).name)
+            if hashlib.sha256(data).hexdigest()!=check['evidence_digest'] or check['evidence_digest']!=artifact['sha256']:raise ValueError('native artifact')
+            with Image.open(io.BytesIO(data)) as image:marker=image.getpixel((31,31))[0]
+            if marker==4:
+                if check['eligible'] or check.get('error_type')!='OSError':raise ValueError('exception')
+            else:
+                expected_value='unknown' if marker==3 else marker==1
+                if check['predicates']['field_value_matches_task']!=expected_value:raise ValueError('fresh value')
+                if check['eligible']!=(marker==1):raise ValueError('false eligibility')
+    return len(rows)
+def caller(rows,arm):
+    if len(rows)!=4 or {r['change'] for r in rows}!={'stable','false','unknown','generation'}:raise ValueError('caller coverage')
+    for row in rows:
+        c=row['change'];core=row['result']['compiled_execution_receipt']
+        blocked=c=='generation' or arm=='repaired' and c in ('false','unknown')
+        prefix=1 if blocked else 2
+        if core['completed_transitions']!=prefix or row['emissions']!=CHORD*prefix or row['down']:raise ValueError('caller prefix/input')
+        if row['result']['outcome']!=('EXECUTION_INCOMPLETE' if blocked else 'TASK_NOT_VERIFIED'):raise ValueError('false task success')
+        if row['witness'][0]['selected']['predicates']['field_value_matches_task'] is not True:raise ValueError('selection')
+    return len(rows)
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-records.json').read_text())[KEY];count=check(rows)
+    meta=json.loads((OUT/f'{mode}-result.json').read_text())
+    if (meta['methods'],meta['failures'],meta['errors'],meta['skipped'],len(set(meta['selected'])))!=(385,0,0,0,385):raise ValueError('suite')
+    control=json.loads((OUT/f'baseline-{mode}-result.json').read_text())
+    if (control['methods'],control['failures'],control['errors'],control['skipped'])!=(9,18,0,0):raise ValueError('baseline control')
+    joined={arm:caller(json.loads((OUT/f'caller-{arm}-{mode}-records.json').read_text()),arm) for arm in ('baseline','repaired')}
+    rejected=[]
+    for name in ('hidden_input','false_release','lost_check','wrong_dependency','false_eligibility','expired_recheck'):
+        bad=copy.deepcopy(rows);stable=next(r for r in bad if r['change']=='stable' and r['interaction']=='keyboard')
+        if name=='hidden_input':stable['events']=[]
+        elif name=='false_release':stable['result']['release']['verified']=False
+        elif name=='lost_check':stable['files_hex']={n:v for n,v in stable['files_hex'].items() if not n.endswith('-input_dependency.json')}
+        elif name in ('wrong_dependency','false_eligibility'):
+            item=next(r for r in bad if r['change']=='false');key=next(n for n in item['files_hex'] if n.endswith('-input_dependency.json'))
+            v=json.loads(bytes.fromhex(item['files_hex'][key]))
+            if name=='wrong_dependency':v['required_predicates']=[]
+            else:v['eligible']=True
+            item['files_hex'][key]=(json.dumps(v)+'\n').encode().hex()
+        else:next(r for r in bad if r['change']=='expired')['reads'].append({'sequence':999,'marker':1})
+        try:check(bad)
+        except ValueError as e:rejected.append(dict(name=name,reason=str(e)))
+        else:raise ValueError('mutant accepted')
+    report[mode]=dict(methods=385,direct_rows=count,caller_rows=joined,baseline_assertion_failures=18,mutations=rejected)
+print(json.dumps(dict(scope='saved-only fresh-dependency/artifact/receipt consistency; no candidate import or real app scoring',modes=report),indent=2))

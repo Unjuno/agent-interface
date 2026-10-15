@@ -76,8 +76,9 @@ transport/process evidence and synthetic phase recognition. Real application
 perception/effect, live model/MCP routes and physical release remain unqualified.
 
 The [post-admission semantic counterexample](../integration/compiled_semantic_press_boundary_20261016/README.md)
-shows an additional limitation: native alias/generation revalidation does not
-re-evaluate compiled semantic dependencies against its newer capture. False or
-unknown Submit values can still receive input before outer verification. The
-keyboard-only additional-guard control blocks it; a general runtime repair is
-still required before treating this composition as a live exact-value safeguard.
+shows the prior source's missing semantic check between admission and input.
+The [native dependency repair](../integration/compiled_native_dependency_repair_20261016/README.md)
+now registers frozen keyboard/click/move guards that re-evaluate admitted symbol
+identity/dependencies on fresh native captures. False/unknown refuse before
+later input, with prefix/release evidence retained. Trusted recognizer accuracy,
+capture-to-press changes and real application effects remain unqualified.
