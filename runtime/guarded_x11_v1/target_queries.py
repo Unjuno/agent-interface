@@ -11,7 +11,7 @@ class QueryUnavailable(RuntimeError):
     pass
 
 
-def focus_within_target(connection, window_id):
+def focus_within_target(connection, window_id, *, raise_errors=False):
     try:
         focus = connection.get_input_focus().focus
         seen = set()
@@ -24,6 +24,7 @@ def focus_within_target(connection, window_id):
             seen.add(identifier)
             focus = focus.query_tree().parent
     except Exception:
+        if raise_errors: raise
         return False
     return False
 
@@ -34,7 +35,7 @@ class X11TargetQueries:
 
     def read(self, operation, xid):
         if operation == 'focus':
-            return focus_within_target(self.connection,xid)
+            return focus_within_target(self.connection,xid,raise_errors=True)
         if operation == 'process_identity':
             return read_linux_x11_process_identity(self.connection,xid)
         raise ValueError('unknown target query')
@@ -79,6 +80,10 @@ class TargetQueryWorker:
                     if self.retired or job is None: break
                 try:
                     if reader is None: reader = self.factory()
+                    # Opening may have blocked after the waiter retired this client.
+                    # Do not begin another I/O operation when that open returns.
+                    with self.lock:
+                        if self.retired: raise QueryUnavailable('target query retired during open')
                     job.value = reader.read(job.operation,job.xid)
                 except BaseException as error:
                     job.error = error

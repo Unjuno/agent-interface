@@ -3,10 +3,45 @@ import time
 import unittest
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
-from .target_queries import QueryUnavailable, TargetQueryWorker, X11TargetQueries
+from .target_queries import QueryUnavailable, TargetQueryWorker, X11TargetQueries, focus_within_target
 
 
 class QueryWorkerTests(unittest.TestCase):
+    def test_focus_transport_failure_retires_reader_but_legacy_helper_refuses(self):
+        closed = threading.Event()
+        connection = SimpleNamespace(get_input_focus=Mock(side_effect=OSError('transport failed')),
+                                     close=closed.set)
+        self.assertIs(focus_within_target(connection,20),False)
+        with patch('runtime.guarded_x11_v1.target_queries.display.Display',return_value=connection):
+            worker = TargetQueryWorker(lambda:X11TargetQueries(':fixed'))
+            try:
+                with self.assertRaises(QueryUnavailable):
+                    worker.read('focus',20,deadline_ns=time.monotonic_ns()+1_000_000_000,cancelled=lambda:False)
+                self.assertTrue(worker.snapshot()['retired'])
+            finally: worker.close()
+            self.assertTrue(closed.wait(2))
+
+    def test_cancelled_open_closes_without_starting_another_query(self):
+        entered,resume,closed,cancel = [threading.Event() for _ in range(4)]
+        reader = SimpleNamespace(read=Mock(return_value=True),close=closed.set)
+        results = []
+        def factory():
+            entered.set();resume.wait(3);return reader
+        worker = TargetQueryWorker(factory)
+        def invoke():
+            try: results.append(worker.read('focus',20,deadline_ns=time.monotonic_ns()+2_000_000_000,cancelled=cancel.is_set))
+            except QueryUnavailable: results.append('refused')
+        caller = threading.Thread(target=invoke)
+        caller.start()
+        try:
+            self.assertTrue(entered.wait(1));cancel.set();caller.join(1)
+            self.assertFalse(caller.is_alive());self.assertEqual(results,['refused'])
+            self.assertTrue(worker.snapshot()['retired'])
+            resume.set();self.assertTrue(closed.wait(1))
+            reader.read.assert_not_called()
+        finally:
+            cancel.set();resume.set();worker.close();caller.join(2)
+
     def test_readonly_protocol_client_and_close_share_worker_thread(self):
         ids, closed = [], threading.Event()
         connection = SimpleNamespace(
