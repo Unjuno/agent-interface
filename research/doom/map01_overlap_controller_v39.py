@@ -715,7 +715,7 @@ def app_server_command():
         # CLI parses only RHS as TOML and splits LHS literally on dots.
         # One root table preserves arbitrary names and disables all entries in
         # the same overlay; repeated root overrides would replace one another.
-        entries = ", ".join(json.dumps(name, ensure_ascii=False) + "={enabled=false}"
+        entries = ", ".join(json.dumps(name, ensure_ascii=False).replace("\x7f", "\\u007f") + "={enabled=false}"
                             for name in configured_mcps)
         command += ["-c", "mcp_servers={" + entries + "}"]
     return command

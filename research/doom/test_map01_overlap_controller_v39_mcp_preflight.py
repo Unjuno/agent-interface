@@ -27,10 +27,10 @@ class MCPPreflightTests(unittest.TestCase):
                 controller.app_server_command()
 
     def test_mcp_names_are_literal_toml_keys(self):
-        names = ['sample_server', 'a', 'a.b', 'quote"key', 'equal=key', '日本語', 'emoji_😀']
+        names = ['sample_server', 'a', 'a.b', 'quote"key', 'equal=key', '日本語', 'emoji_😀', 'del_\x7f']
         with tempfile.TemporaryDirectory() as home:
             Path(home, 'config.toml').write_text('\n'.join(
-                '[mcp_servers.' + json.dumps(name, ensure_ascii=False) + ']\ncommand = "ignored"'
+                '[mcp_servers.' + json.dumps(name, ensure_ascii=False).replace('\x7f', '\\u007f') + ']\ncommand = "ignored"'
                 for name in names), encoding='utf-8')
             with patch.dict(os.environ, {'CODEX_HOME': home}):
                 command = controller.app_server_command()

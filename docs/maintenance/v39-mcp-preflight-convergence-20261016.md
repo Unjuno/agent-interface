@@ -61,6 +61,14 @@ consumer-model run fails on the old implementation and is retained separately
 as `mcp-preflight-consumer-red.log`. Earlier green results do not qualify that
 consumer boundary.
 
+A further review counterexample adds valid escaped DEL (`U+007F`) server names:
+JSON permits raw DEL but TOML does not. Explicitly escape it in the generated
+key. The initial test construction accidentally used JSON surrogate escapes for
+its emoji fixture; retain that construction failure as `mcp-preflight-del-red.log`.
+After fixing the fixture, the real output defect is reproduced separately in
+`mcp-preflight-del-fixture-repaired-red.log`. Final logs use the
+`mcp-preflight-*-final.log` names and cover DEL alongside all other names.
+
 Source contract checked at official Codex commit
 `f0c5077c34ec7a76b4ad9134835925e6ae3d72ec`:
 [CLI parsing](https://github.com/openai/codex/blob/f0c5077c34ec7a76b4ad9134835925e6ae3d72ec/codex-rs/utils/cli/src/config_override.rs),
