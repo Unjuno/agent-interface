@@ -488,6 +488,46 @@ def cancel_initial_cover_before_planner(process, wait, cover_id):
     return terminal
 
 
+def retire_failed_cover(planner, planner_handle, future, terminal, error, out):
+    """Retain a fatal terminal before best-effort planner retirement, without ACK."""
+    try:
+        local_invalidation = planner.invalidate_turn(planner_handle)
+    except BaseException as invalidation_error:
+        local_invalidation = {"outcome": "failed", "error_type": type(invalidation_error).__name__}
+        error.add_note("planner local invalidation failed: " + type(invalidation_error).__name__)
+    receipt = {"schema": "fatal-cover-terminal-v1", "terminal": deepcopy(terminal),
+               "local_invalidation": deepcopy(local_invalidation),
+               "planner_future_done_at_receipt": future.done(),
+               "failure": {"type": type(error).__name__, "message": str(error)[:200]},
+               "physical_input_state": "unverified", "grants_input_authority": False,
+               "task_effect": "unknown", "input_recovery_required": True}
+    error.fatal_cover_receipt = deepcopy(receipt)
+    try:
+        with (Path(out) / "fatal-cover-terminal.json").open(
+                "x", encoding="utf-8", newline="\n") as stream:
+            json.dump(receipt, stream, indent=2, allow_nan=False)
+            stream.write("\n")
+    except BaseException as save_error:
+        error.add_note("fatal cover receipt save failed: " + type(save_error).__name__)
+    if not future.done():
+        try:
+            abort_result = planner.abort_pending_turn()
+        except BaseException as abort_error:
+            error.add_note("planner transport abort failed: " + type(abort_error).__name__)
+        else:
+            if isinstance(abort_result, dict) and abort_result.get("outcome") == "aborted":
+                error.add_note("pending planner turn transport aborted")
+
+
+def validate_planner_cover_terminal(planner, planner_handle, future, terminal, out,
+                                    *, cancellation_requested=False):
+    try:
+        require_cover_terminal(terminal, cancellation_requested=cancellation_requested)
+    except RuntimeError as error:
+        retire_failed_cover(planner, planner_handle, future, terminal, error, out)
+        raise
+
+
 def cover_submission_invalidation_receipt(result, terminal=None):
     return {
         "ack": result["ack"],
@@ -1494,34 +1534,8 @@ def main():
                     current_terminal=boundary
                     cover_terminals.append(current_terminal)
                     failure_cleanup.set_stage("cover_terminal_validation")
-                    try:
-                        require_cover_terminal(current_terminal)
-                    except RuntimeError as error:
-                        # The fatal cover error ends this control session. An
-                        # interrupt ACK does not complete await_turn, so retire
-                        # its transport if the future is still pending before
-                        # pool shutdown joins it. Keep the cover failure primary.
-                        if not future.done():
-                            try:
-                                interrupt_result = planner.interrupt(planner_handle)
-                            except BaseException as interrupt_error:
-                                error.add_note("planner interrupt failed: " +
-                                               type(interrupt_error).__name__)
-                            else:
-                                if (isinstance(interrupt_result, dict) and
-                                        interrupt_result.get("outcome") == "request_error"):
-                                    error.add_note("planner interrupt transport failed")
-                            if not future.done():
-                                try:
-                                    abort_result = planner.abort_pending_turn()
-                                except BaseException as abort_error:
-                                    error.add_note("planner transport abort failed: " +
-                                                   type(abort_error).__name__)
-                                else:
-                                    if (isinstance(abort_result, dict) and
-                                            abort_result.get("outcome") == "aborted"):
-                                        error.add_note("pending planner turn transport aborted")
-                        raise
+                    validate_planner_cover_terminal(planner, planner_handle, future,
+                                                    current_terminal, args.out)
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     next_accepted=submit_cover(next_cover)
@@ -1539,7 +1553,8 @@ def main():
                         current_terminal = drained["terminal"]
                         cover_terminals.append(current_terminal)
                         failure_cleanup.set_stage("cover_terminal_validation")
-                        require_cover_terminal(current_terminal)
+                        validate_planner_cover_terminal(planner, planner_handle, future,
+                                                        current_terminal, args.out)
                     if drained["invalidation"] is not None:
                         invalidation = drained["invalidation"]
                         if current_terminal is None and current_cover is not None:
@@ -1580,7 +1595,8 @@ def main():
                 cover_terminals.append(current_terminal)
             failure_cleanup.set_stage("cover_terminal_validation")
             if current_cover is not None:
-                require_cover_terminal(current_terminal, cancellation_requested=True)
+                validate_planner_cover_terminal(planner, planner_handle, future,
+                    current_terminal, args.out, cancellation_requested=True)
             final_action_admission=final_admission_from_planner_result(
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())

@@ -22,13 +22,21 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Fatal cover retirement](../research/doom/v39_fatal_cover_retirement_checks_20261016/README.md)
+  now preserves failed natural/drained/post-answer cover terminals before aborting
+  a pending planner, without requesting remote interrupt ACK. Actual-main tests
+  retain save-before-abort, collision/invalidation/abort faults and an inert
+  Executor failure. Close/join, native input and physical release bounds remain
+  unqualified; this is not independently scored task recovery.
+
 - [Local cover invalidation and failure custody](../research/doom/v39_cover_local_invalidation_checks_20261016/README.md)
   now checks invalidated cover release before synchronous planner interrupt ACK.
   Failed/wait boundaries retain a copied receipt before planner abort, and the
   planner rechecks invalidation when publishing a result. Selected Fake X
   Executor/V4/V12 composition saves the original failed obligation while keycode
-  38 is still held, without a remote interrupt. Healthy ACK, other fatal-terminal
-  paths, close/I/O bounds, physical release and finite task recovery remain open.
+  38 is still held, without a remote interrupt. The fatal-cover validation repair
+  above extends retirement to its three main sites. Healthy ACK, close/I/O bounds,
+  physical release and finite task recovery remain open.
 
 - [Cover cancellation convergence](../research/doom/v39_cover_cancel_convergence_20261016/README.md)
   preserves #8384's original 15 files and reconstructs its saved ten-case result

@@ -1,0 +1,15 @@
+test_failed_cover_saves_original_terminal_before_abort_without_remote_ack (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_failed_cover_saves_original_terminal_before_abort_without_remote_ack) ... FAIL
+
+======================================================================
+FAIL: test_failed_cover_saves_original_terminal_before_abort_without_remote_ack (research.doom.test_map01_overlap_controller_v39_cover_terminal.CoverTerminalTests.test_failed_cover_saves_original_terminal_before_abort_without_remote_ack)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_overlap_controller_v39_cover_terminal.py", line 466, in test_failed_cover_saves_original_terminal_before_abort_without_remote_ack
+    self.assertNotIn("interrupt:synthetic-turn", trace["timeline"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'interrupt:synthetic-turn' unexpectedly found in ['read:ready', 'read:observation', 'write:submit', 'read:accepted', 'read:terminal', 'interrupt:synthetic-turn', 'interrupt_wait_entered', 'interrupt_wait_returned', 'abort_transport', 'planner_return']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.206s
+
+FAILED (failures=1)
