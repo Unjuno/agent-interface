@@ -96,6 +96,11 @@ class X11ObservationReader:
             self.backend.targets[self.target] = self.backend.d.create_resource_object('window',xid)
         request = request['payload']
         if operation=='binding': return self._binding()
+        if operation=='qualified':
+            if request['pointer_binding']['surface']!=xid:
+                raise ValueError('qualified observation target changed')
+            self._save('qualified-observation-'+str(request['sequence'])+'.json',request)
+            return None
         if operation=='verify':
             callback,stage,source,image = request
             return callback(stage,source,image)

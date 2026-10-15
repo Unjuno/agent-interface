@@ -1,5 +1,9 @@
 # Opt-in Linux/XRes process identity
 
+For the separate opt-in same-process window continuity guard, see
+[direct-window lifecycle evidence](WINDOW_LIFECYCLE.md). Its Fake X qualification
+does not turn this process digest into a window-incarnation proof.
+
 Select this check explicitly on the public scoped Python API:
 
 ```python
