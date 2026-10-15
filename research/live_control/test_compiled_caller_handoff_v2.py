@@ -2,6 +2,8 @@
 import copy
 import importlib
 import os
+from pathlib import Path
+import tempfile
 import time
 import unittest
 
@@ -19,11 +21,13 @@ class OwnedStop(BaseException):
 STOP = OwnedStop('owned inert stop')
 
 
-def cell(case='healthy', effect='succeeded', mutate_sink=False, journal_fault=None):
+def cell(case='healthy', effect='succeeded', mutate_sink=False, journal_fault=None,
+         model_adapter=None):
     module = importlib.import_module(os.environ.get('COMPILED_CALLER_MODULE',
         'research.live_control.integrated_efficiency_compiled_execution_v2'))
     legacy = module.__name__.endswith('_v1')
-    state = {'sequence': 0, 'execute': [], 'verify': 0, 'sink': 0}
+    state = {'sequence': 0, 'execute': [], 'verify': 0, 'sink': 0,
+             'bindings': [], 'admitted_references': []}
     raw, events = [], []
     interface = compile_form_method(interface_id='inert-v3-interface',
         session_scope='inert-v3-scope', surface='inert', field_handle='field',
@@ -40,6 +44,7 @@ def cell(case='healthy', effect='succeeded', mutate_sink=False, journal_fault=No
             evidence_digest='inert-digest-' + str(state['sequence']))
 
     def admit(payload):
+        state['admitted_references'].append(payload['symbol']['target_reference'])
         return dict(eligible=case != 'admission_refused',
             status='missing' if case == 'admission_refused' else 'revalidated',
             authorization=None if case == 'admission_refused' else 'INERT_NO_AUTHORITY',
@@ -81,15 +86,31 @@ def cell(case='healthy', effect='succeeded', mutate_sink=False, journal_fault=No
         if journal_fault == event['event']:
             raise OSError('inert caller journal failure')
 
+    def interface_for_target(payload):
+        state['bindings'].append(copy.deepcopy(payload))
+        value = copy.deepcopy(interface)
+        value['symbols']['value_field']['target_reference'] = payload['target']['field']
+        value['symbols']['submit_control']['target_reference'] = payload['target']['submit']
+        return value
+
+    def final_revalidate(_):
+        return {'status': 'revalidated', **({'target': {'id': 'new',
+            'field': 'new-field', 'submit': 'new-submit'}} if case == 'promoted_target' else {})}
+
     spec = dict(target='inert form', route='reuse', coarse_origin='caller_provided',
-        provided_coarse=None, cached_target={'id': 'inert'}, repair_on=[], session_id='inert')
+        provided_coarse=None, cached_target={'id': 'inert', 'field': 'field', 'submit': 'submit'},
+        repair_on=[], session_id='inert')
     if not legacy:
         spec['local_repair_on'] = []
+    caller_adapters = {'reuse_revalidate': lambda _: {'status': 'revalidated'},
+        'final_revalidate': final_revalidate, 'verify_effect': verify, 'journal': journal}
+    if model_adapter is not None:
+        spec.update(route='cold', cached_target=None, provided_coarse={'source': 'inert'})
+        caller_adapters.update(observe_source=lambda _: {'source': 'inert'},
+            acquire_anchor=lambda _: {'source': 'inert'}, anchor_model=model_adapter)
     try:
-        result = module.run_compiled_interface_in_caller(spec,
-            {'reuse_revalidate': lambda _: {'status': 'revalidated'},
-             'final_revalidate': lambda _: {'status': 'revalidated'},
-             'verify_effect': verify, 'journal': journal}, interface,
+        result = module.run_compiled_interface_in_caller(spec, caller_adapters,
+            interface if legacy else interface_for_target,
             dict(observe=observe, admit=admit, execute=execute,
                 verify_effect=lambda _: {'status': 'succeeded', 'evidence_ref': 'inert-core-effect'},
                 cancelled=lambda: False), on_receipt=sink)
@@ -102,6 +123,48 @@ def cell(case='healthy', effect='succeeded', mutate_sink=False, journal_fault=No
 
 
 class CompiledCallerHandoffTests(unittest.TestCase):
+    def test_actual_grounding_planner_caller_core_chain_retains_usage_and_unknown_effect(self):
+        from research.live_control.integrated_efficiency_app_server_model_v1 import PersistentGroundingModel
+        from research.live_control.test_integrated_efficiency_app_server_model_v1 import FakeClient, usage
+        point = lambda x, y: {'point_space': 'source_observation_pixels', 'point': {'x': x, 'y': y}}
+        answer = {'format': 'plain-form-points-v1', 'field': point(100, 200), 'submit': point(500, 300)}
+        client = FakeClient([answer], [usage(100, 20)])
+        with tempfile.TemporaryDirectory(prefix='compiled-caller-model-') as directory:
+            root = Path(directory); workspace = root/'workspace'; workspace.mkdir()
+            image = root/'image.inert'; image.write_bytes(b'inert; not display pixels')
+            model = PersistentGroundingModel(root/'session', workspace, node='unused',
+                cli='unused', contract='plain', model='inert', client=client, path_converter=str)
+            model_results = []
+            def anchor(_):
+                value = model.call(root/'call', 'inert points', image, 'plain', workspace)
+                model_results.append(value)
+                target = {'id': value['call_id'],
+                    'field': 'field-' + '-'.join(map(str, value['grounding']['field_point'])),
+                    'submit': 'submit-' + '-'.join(map(str, value['grounding']['submit_point']))}
+                return {'call_id': value['call_id'], 'output': {'status': 'target_reference', 'target': target},
+                    'usage': value['usage'], 'requested_model': value['requested_model'],
+                    'requested_effort': value['requested_effort'], 'cost': value['cost'],
+                    'visible_images_submitted': 1, 'wait_ns': value['runner_ns']}
+            row = cell(effect='unavailable', model_adapter=anchor); model.close()
+            ROWS[-1]['model_results'] = copy.deepcopy(model_results)
+        r = row['result']
+        self.assertEqual(r['outcome'], 'TASK_NOT_VERIFIED')
+        self.assertEqual(r['task_effect'], 'unavailable')
+        self.assertEqual(r['execution_progress'], {'status': 'completed'})
+        self.assertEqual(r['accounting']['usage_totals']['input_tokens'], 100)
+        self.assertEqual(r['accounting']['usage_totals']['cached_input_tokens'], 20)
+        self.assertEqual(r['accounting']['completed_calls'], 1)
+        self.assertEqual(r['attempt_ledger'][0]['call_id'], 'turn-1')
+        self.assertEqual(row['state']['admitted_references'], ['field-100-200', 'submit-500-300'])
+        self.assertEqual(r['compiled_execution_receipt']['completed_transitions'], 2)
+        self.assertEqual(client.turn, 1)
+
+    def test_final_selected_target_drives_interface_and_core_admission(self):
+        row = cell('promoted_target'); r = row['result']
+        self.assertEqual(row['state']['admitted_references'], ['new-field', 'new-submit'])
+        self.assertEqual(row['state']['bindings'][0]['target'], r['selected_target'])
+        self.assertEqual(r['outcome'], 'TASK_SUCCEEDED')
+
     def test_unverified_outer_effect_retains_completed_execution_and_evidence(self):
         for effect in ('failed', 'unavailable'):
             with self.subTest(effect=effect):

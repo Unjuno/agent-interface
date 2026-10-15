@@ -30,7 +30,7 @@ def execute_compiled_interface(interface, adapters):
     return decision, receipt
 
 
-def run_compiled_interface_in_caller(spec, caller_adapters, interface,
+def run_compiled_interface_in_caller(spec, caller_adapters, interface_for_target,
                                      execution_adapters, *, on_receipt=None,
                                      **caller_options):
     """Return v3 caller outcome plus detached compiled receipt/publication error.
@@ -43,6 +43,8 @@ def run_compiled_interface_in_caller(spec, caller_adapters, interface,
         raise ValueError('caller adapter mapping required')
     if 'execute' in caller_adapters:
         raise ValueError('caller execute adapter is supplied by this composition')
+    if not callable(interface_for_target):
+        raise ValueError('callable interface_for_target required')
     if on_receipt is not None and not callable(on_receipt):
         raise ValueError('on_receipt must be callable')
     retained_receipt = None
@@ -50,6 +52,9 @@ def run_compiled_interface_in_caller(spec, caller_adapters, interface,
 
     def execute(_payload):
         nonlocal retained_receipt, publication_error
+        # Domain-specific construction must use the caller's final selected
+        # target/check, rather than silently reuse a pre-model interface.
+        interface = interface_for_target(copy.deepcopy(_payload))
         decision, receipt = execute_compiled_interface(interface, execution_adapters)
         retained_receipt = copy.deepcopy(receipt)
         if on_receipt is not None:
