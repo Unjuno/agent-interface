@@ -1,6 +1,7 @@
 """Saved session/owner custody readback; no native/runtime/process imports."""
 import base64,copy,hashlib,json,sys
 from pathlib import Path,PureWindowsPath
+sys.dont_write_bytecode=True
 import backend_readback as old
 Q=Path(__file__).resolve().parent
 CASES={'normal-close','blocked-close','controller-selection','v15-selection','effect-fence',
