@@ -26,6 +26,26 @@ This index complements, rather than duplicates, the [durable design-theses ledge
 | Scoped, renewable visual invalidation | Ignore irrelevant whole-frame motion while periodically revalidating ROI identity. | Only bounded fixture evidence; no general GUI guarantee. |
 | Evidence and benchmark integrity | Preserve first outcomes and counterexamples; distinguish proxies from measured token/byte/performance claims; avoid tuning on hidden outcomes then calling them preregistered. | Embedded in the research method and evidence ledger. Issue [#6081](https://github.com/Unjuno/agent-interface/issues/6081) has a method-scoped exact-rational result, not live GUI/game evidence. |
 
+## Foundational open ideas
+
+| Issue | Idea | Status / boundary |
+|---|---|---|
+| [#51](https://github.com/Unjuno/agent-interface/issues/51) | Expose evidence-backed pre-action cost and assurance profiles so a planner can compare valid routes. | Open, unverified. This is a route-selection contract, not an estimate of current route latency or a permission to trade correctness for speed. A later refinement asks whether successful routes also expose perturbation tolerance; that remains unverified. |
+| [#41](https://github.com/Unjuno/agent-interface/issues/41) | Let an agent attach bounded machine-checkable invariants to a long-running intent or action group. | Open, unverified. The proposal aims to detect drift before false completion; it does not establish continuous enforcement, runtime authority, or a production invariant mechanism. |
+| [#32](https://github.com/Unjuno/agent-interface/issues/32) | Resolve semantic targets and effect constraints into safe candidate actions, while retaining universal input fallback. | Open, unverified. The proposal requires AMBIGUOUS/NEEDS_DECISION when resolution is nonunique. Its later virtual-fixture transfer concerns path connectivity beyond endpoint proximity; no GUI result follows. |
+| [#29](https://github.com/Unjuno/agent-interface/issues/29) | Define agreement, disagreement and staleness semantics across screenshot and UI-tree observations. | Open, unverified. Candidate contract fields include per-source identity/time, coordinate mapping and escalation; no multimodal action benefit or runtime policy is established. |
+| [#20](https://github.com/Unjuno/agent-interface/issues/20) | Expose self-describing tool schemas and bounded, structured repair hints for invalid calls. | Open, unverified. Diagnostics should identify schema revision, invalid field, side-effect status and atomicity; ambiguous calls must not be silently rewritten. A learner-aware contrast-example refinement remains within this Issue and is not an API result. |
+| [#19](https://github.com/Unjuno/agent-interface/issues/19) | Use non-authoritative shadow predictions to detect action/observation contradictions before live admission. | Open, unverified. A prediction must never count as an application effect or task completion; this remains a hypothesis about suitable action classes, not live safety evidence. |
+
+## Engineering and operations follow-ups
+
+| Issue | Purpose | Current state |
+|---|---|---|
+| [#6873](https://github.com/Unjuno/agent-interface/issues/6873) | Reject noncanonical JSON Pointer array positions during receipt expansion. | Closed as completed after [PR #6874](https://github.com/Unjuno/agent-interface/pull/6874) merged to main at `a96283aceb2d4e72aabd592a9b94fd60397d5622`; the merge is an ancestor of current main. The PR records canonical pointer/marker validation and focused regression checks. Parent research #57 remains open. |
+| [#6875](https://github.com/Unjuno/agent-interface/issues/6875) | Enforce nominal record types before lifecycle field admission. | Open. Code PR #6923 closed unmerged; evidence rescue PR #7117 merged separately. Do not treat retained evidence as an integrated implementation result. |
+| [#6932](https://github.com/Unjuno/agent-interface/issues/6932) | Preserve explicitly matching unknown literals before effect verification. | Open. PR #6939 closed unmerged; its scoped content approval is tied to the exact reviewed head and does not establish delivery or producer/formal replay. |
+| [#6767](https://github.com/Unjuno/agent-interface/issues/6767) | Keep local-environment repair with its current task owner. | Open operational guidance, not a research hypothesis. The routing principles are represented in [failure classification](ISSUE_FAILURE_CLASSIFICATION.md); shared-resource authority and issue ownership remain separate. |
+
 ## Recent open ideas
 
 | Issue | Idea | Status / boundary |
