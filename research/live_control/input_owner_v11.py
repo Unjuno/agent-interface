@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import time
 
-from input_owner_v10 import InputOwner as Previous
+from input_owner_v10 import InputOwner as Previous, _OwnerReleaseTimingKey
 
 
 RELEASE_OPS = frozenset({"up", "button_up"})
@@ -26,9 +26,10 @@ class InputOwner(Previous):
         if operation not in RELEASE_OPS:
             return super().call(operation, lease, key)
 
+        measured_key = _OwnerReleaseTimingKey(key) if operation == "up" else key
         call_started_ns = time.perf_counter_ns()
         # Important: if the underlying owner raises, no receipt is fabricated.
-        result = super().call(operation, lease, key)
+        result = super().call(operation, lease, measured_key)
         call_returned_ns = time.perf_counter_ns()
         if result is not None:
             raise RuntimeError("v10 ordinary release unexpectedly returned a payload")
@@ -44,6 +45,9 @@ class InputOwner(Previous):
             "call_started_ns": call_started_ns,
             "call_returned_ns": call_returned_ns,
             "release_transition_interval_ns": [call_started_ns, call_returned_ns],
+            "owner_thread_release_interval_ns": (
+                measured_key.owner_release_interval_ns if operation == "up" else None
+            ),
             "interval_width_ns": call_returned_ns - call_started_ns,
             "valid_until_ns": getattr(lease, "deadline", None),
             "x11_release_and_sync_completed_before_return": True,
