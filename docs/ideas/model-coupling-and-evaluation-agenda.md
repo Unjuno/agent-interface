@@ -121,6 +121,25 @@ separate hypotheses and must keep separate evidence and decisions.
   method failure. This entry records the evidence and does not authorize a new
   allocation or live action.
 
+## 5. Behavioral equivalence between benchmark variants — #8920
+
+- **Status:** Open and unverified; no implementation or result is recorded.
+- **Idea:** Matching required and forbidden endpoint effects may overlook
+  differences in intermediate actions, hidden preconditions, or recovery paths.
+  A finite labeled-transition audit could qualify variant equivalence under a
+  declared abstraction while returning `UNKNOWN_MODEL_INCOMPLETE` when the
+  transition model lacks coverage.
+- **Boundary:** A certificate would establish equivalence only in the frozen
+  abstract model. It would not establish equal visual difficulty, timing, agent
+  performance, outcome-pooling validity, or transfer to a live application.
+  Cosmetic renaming/layout mappings must be declared before scoring.
+- **Next test:** The Issue proposes deterministic exhaustive T0 pairs with
+  cosmetic changes, changed action availability, a forbidden intermediate
+  state, altered recovery, hidden preconditions, and incomplete-model controls.
+  Compare endpoint-only matching with an independent bisimulation oracle and
+  require distinguishing traces for semantic differences. No result or
+  allocation is claimed here.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
@@ -132,6 +151,9 @@ separate hypotheses and must keep separate evidence and decisions.
    common-mode-error comparison. It is independent of the consumed #6001
    allocations and does not need a GUI/model lane, but it still needs its own
    immutable freeze, candidate output and independent audit.
-4. Return each result to its source Issue and this family map. Preserve all
+4. #8920's finite transition-equivalence method is another untested proposal;
+   keep its variant qualification separate from empirical difficulty or
+   transfer claims.
+5. Return each result to its source Issue and this family map. Preserve all
    earlier STOP, FAIL, HOLD and PASS records; do not close an idea because its
    summary has been written here.
