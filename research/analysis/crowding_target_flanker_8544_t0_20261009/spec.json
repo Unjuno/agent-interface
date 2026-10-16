@@ -1,0 +1,43 @@
+{
+  "schema": "issue-8544-crowding-method-v1",
+  "allocation": "UNJUNO-8544-CROWDING-T0-A01-20261009",
+  "method_delta": "No-model T0 scorer qualification only. Exhaustive finite cells replace any sampling and do not test the H hypothesis about VLM behavior.",
+  "factors": {
+    "target_present": [false, true],
+    "spacing_px": [24, 72],
+    "eccentricity_proxy_px": [120, 360],
+    "target_size_px": [24, 48],
+    "flanker_similarity": ["near_duplicate", "dissimilar", "text_distinct", "no_flanker"],
+    "placement": ["inward", "outward"],
+    "global_control_count": 4,
+    "seeds": [0, 1, 2, 3, 4, 5, 6, 7],
+    "held_out_seeds": [6, 7]
+  },
+  "planted_endpoint_classes_by_presence": {
+    "present": ["correct_binding", "neighbor_substitution", "miss", "abstention", "schema_error", "ambiguous_identity"],
+    "absent": ["correct_rejection", "false_alarm", "abstention", "schema_error", "ambiguous_identity"]
+  },
+  "oracle_rectangles": {
+    "target": [480, 340, 560, 420],
+    "neighbor": [570, 340, 650, 420]
+  },
+  "response_templates": {
+    "correct_binding": {"status": "found", "identity": "target", "point": [520, 380], "schema_valid": true},
+    "neighbor_substitution": {"status": "found", "identity": "neighbor", "point": [610, 380], "schema_valid": true},
+    "miss": {"status": "not_found", "identity": null, "point": null, "schema_valid": true},
+    "abstention": {"status": "abstain", "identity": null, "point": null, "schema_valid": true},
+    "schema_error": {"status": "found", "identity": "target", "point": [520, 380], "schema_valid": false},
+    "ambiguous_identity": {"status": "found", "identity": "target_or_neighbor", "point": [565, 380], "schema_valid": true}
+  },
+  "gates": {
+    "fixture_count": 5632,
+    "per_cell_seed_count": 8,
+    "held_out_seed_count": 2,
+    "global_control_count_constant": true,
+    "exactly_one_endpoint_per_fixture": true,
+    "no_model_calls": true,
+    "authority": "NONE"
+  },
+  "authority": "NONE",
+  "execution_scope": "stdlib Python, deterministic CPU; no network/model/GUI/user data/external effect"
+}

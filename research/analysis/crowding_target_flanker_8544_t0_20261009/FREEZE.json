@@ -1,0 +1,39 @@
+{
+  "allocation": "UNJUNO-8544-CROWDING-T0-A01-20261009",
+  "base_branch": "main",
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "branch": "research/8544-crowding-method-t0-20261009",
+  "construction": {
+    "candidate_auditor_replay": "PASS_METHOD_SCOPED; 5,632 fixtures; 6,341 checks; mutation controls 6/6 rejected",
+    "formal_auditor_invocations_before_freeze": 0,
+    "formal_candidate_invocations_before_freeze": 0,
+    "formal_outputs_absent": true,
+    "tests": "5/5 PASS"
+  },
+  "decision_gate": "PLAN.md",
+  "environment": {
+    "dependencies": "standard library only",
+    "machine": "arm64",
+    "network": "not used",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+    "runtime": "host CPython; no container semantics tested"
+  },
+  "formal_commands": {
+    "auditor": "python3.12 research/analysis/crowding_target_flanker_8544_t0_20261009/auditor.py --spec research/analysis/crowding_target_flanker_8544_t0_20261009/spec.json --raw research/analysis/crowding_target_flanker_8544_t0_20261009/results/candidate.raw.json --output research/analysis/crowding_target_flanker_8544_t0_20261009/results/audit.raw.json",
+    "candidate": "python3.12 research/analysis/crowding_target_flanker_8544_t0_20261009/candidate.py --spec research/analysis/crowding_target_flanker_8544_t0_20261009/spec.json --output research/analysis/crowding_target_flanker_8544_t0_20261009/results/candidate.raw.json",
+    "invocation_limit": "one candidate, one auditor, zero retries"
+  },
+  "frozen_at_utc": "2026-10-08T21:16:50+00:00",
+  "package_path": "research/analysis/crowding_target_flanker_8544_t0_20261009/",
+  "preregistration_gate": "Do not run formal commands until committed/pushed exact hashes are preregistered on Issue #8544 and remotely verified.",
+  "schema": "issue-8544-crowding-t0-freeze-v1",
+  "source_sha256": {
+    "PLAN.md": "c9d74dcaa189543075a2c80718ee0dd654c0e01d001a480c69de75af001ae1e3",
+    "README.md": "27ccfc7eeafb411b74e50c8f1bff5e2fd32878e9d39e8b9575608e5656b75c95",
+    "auditor.py": "d1f2e298e5726fd72e35fca0c2c9ab23d25b9f62b67b1f7482a394bc9b533c7f",
+    "candidate.py": "7407c016023e75f295c6b59ae544484dd998a4c4087b3de6136c8de06e782bef",
+    "spec.json": "ab0545de194bd89717f82a7ce60db618cdfcc53cca40128c01562aed7cf48338",
+    "tests/test_construction.py": "76d5c7a5afb32fdae7cfa434fc382474905ca48b7eec59eef23accf098907b59"
+  }
+}
