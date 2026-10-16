@@ -34,6 +34,19 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Retrieval practice for takeover readiness](retrieval-practice-takeover-readiness.md) — records #8498's synthetic instrument PASS without inferring human or live-user benefit.
+- [Global queue synchronization](global-queue-synchronization.md) — preserves #8494's image-preflight boundary and zero formal invocations.
+- [Trace reduction under regime drift](trace-reduction-regime-drift.md) — records #8493's finite temporal-drift method result and open evidence PR.
+- [Scoped GUI plan infeasibility](scoped-gui-plan-infeasibility.md) — records #8473's symbolic method result without claiming GUI applicability.
+- [Switched-control dwell stability](switched-control-dwell-stability.md) — preserves #8471's finite results and separate trajectory-evidence eligibility limit.
+- [Compositional visual-control stability](compositional-visual-control-stability.md) — records #8470's eight-case gain-screen result and limits.
+- [Disturbance-order correlation](disturbance-order-correlation.md) — records #8434's synthetic equal-exposure schedule result.
+- [System-carbon rebound](system-carbon-rebound.md) — records #8421's synthetic accounting sign reversal without an empirical emissions claim.
+- [Episodic-memory consolidation schedule](episodic-memory-consolidation-schedule.md) — keeps #8406's unrun A19 separate from open model-free threshold calibration.
+- [PSI-triggered work shedding](psi-triggered-work-shedding.md) — preserves #8488's corrected deadline-semantics HOLD and records that no container/T1 pressure test ran.
+- [Context-return renewal](context-return-renewal.md) — preserves #8432's distinct A01 method failure and A02 raw-custody STOP without claiming behavioral evidence.
+- [WSLc smoke evidence audits](wslc-smoke-evidence-audits.md) — records #8446/#8455's separate audit-only failures and distinguishes the host-only prep branch.
+
 - [Observation load versus cue information](observation-load-cue-information.md) — preserves #8665's mixed synthetic factorial result without transferring it to GUI/OS load or user tempo.
 - [Policy-dependent ascertainment](policy-dependent-ascertainment.md) — keeps #8640's consumed disk STOP and distinct finite A02 PASS separate; no live-route bias claim.
 - [Epistemic-action CLI construction](epistemic-action-cli-construction.md) — records #8635's construction repair while retaining the dated shared-runtime gate and zero formal invocations.
