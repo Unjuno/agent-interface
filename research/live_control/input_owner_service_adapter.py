@@ -73,7 +73,10 @@ class OwnedOwnerAdapter:
             if self._closed:raise RuntimeError('external owner adapter closed')
             if lease is not None:
                 token=getattr(lease,'intent_token',None);expected=copy.deepcopy(self._bindings.get(token))
-                current=rpc.encode_lease(lease)
+                try:current=rpc.encode_lease(lease)
+                except BaseException as error:
+                    self._retain('original_source_changed',dict(operation=operation,intent_token=token,error=type(error).__name__))
+                    raise
                 if expected is not None:
                     for flag in ('cancel_requested','focus_invalid'):expected[flag]=current[flag]
                 if self._leases.get(token) is not lease or expected!=current:

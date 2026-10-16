@@ -165,14 +165,19 @@ class OwnedBackendTests(unittest.TestCase):
         for field in ('target_process_identity','deadline','intent_token'):
             adapter=self.inert_adapter();adapter.control.watch=lambda _:None
             lease=make_lease();adapter.bind_lease(lease)
+            original=(lease.target_process_identity,lease.deadline,lease.intent_token)
             if field=='target_process_identity':lease.target_process_identity=(1,41,'b'*64,lease.deadline)
             elif field=='deadline':lease.deadline+=1
             else:lease.intent_token='relabelled'
             with patch.object(adapter.client,'call') as send:
                 with self.subTest(field=field),self.assertRaises(ValueError):adapter.call('down',lease,'a')
                 self.assertEqual(send.call_count,0)
+                self.assertIsNotNone(adapter.obligation_snapshot(),'observed malformed source must retain custody')
+                lease.target_process_identity,lease.deadline,lease.intent_token=original
+                with self.assertRaises(ValueError):adapter.call('down',lease,'a')
+                self.assertEqual(send.call_count,0,'restoring fields cannot restore authority')
             rejected.append(field)
-        ROWS.append(dict(case='original-ordinary-binding',rejected=rejected,sends=0,scope='inert bound lease; no process'))
+        ROWS.append(dict(case='original-ordinary-binding',rejected=rejected,sends=0,restore_retry_refused=True,scope='inert bound lease; no process'))
 
     def run_case(self,case):
         with tempfile.TemporaryDirectory() as temp:
