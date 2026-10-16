@@ -73,6 +73,10 @@ merged by PR #8884; the branch had no current PR head/base reference or matching
 Its exact tip `76f33cc4b6c7af55074030ddc85857b73aec3117` was deleted with a tip-fixed lease and
 verified absent. The current remote branch count is 587 and the no-PR-reference group is now 32.
 The CSV remains the pre-deletion snapshot and includes this branch as it existed at capture time.
+The closed #8592 transfer is not a deletion signal for every associated ref: its final comment
+explicitly keeps A01/A02 execution STOPs and the superseded A03 freeze in immutable branch history.
+Accordingly, `research/8592-dpor-t0-a01-20261008` (`b0951ae1…`) and
+`research/8592-dpor-t0-a02-20261008-r1` (`bb195877…`) remain retained as evidence custody.
 
 ### r6：モデル連携・比較評価アイデアを一族ごとに整理
 
