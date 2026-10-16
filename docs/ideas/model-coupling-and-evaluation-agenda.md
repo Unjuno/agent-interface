@@ -225,7 +225,35 @@ separate hypotheses and must keep separate evidence and decisions.
   or independence assumptions can exclude the common-mode world, and when
   `UNIDENTIFIABLE` must remain the output. No new allocation is claimed here.
 
-## 10. Budgeted discovery of failures in shallow-zero task cells — #8914
+## 10. Revealed information-cost rationalizability — #8907
+
+- **Status:** Open and unverified; no implementation, model call, or result is
+  recorded.
+- **Idea:** For a fixed model/version and controlled observation channel, test
+  whether repeated query choices across downstream payoff schedules are
+  rationalizable by one general information-acquisition cost on held-out
+  decision problems. This is a measurement/diagnostic protocol, not a new
+  query policy or a claim that the model has human-like preferences.
+- **Relation:** #5306/#7934/#8879 study selecting observations or policies;
+  #8623 studies epistemic-action benchmarking. #8907 instead evaluates the
+  observed choices under incentive-crossed stakes. It is also distinct from
+  [#8908](https://github.com/Unjuno/agent-interface/issues/8908), which tests
+  time-consistency of a declared task-risk criterion, not query cost.
+- **Prior work:** Caplin and Dean's [revealed-preference test for costly
+  information acquisition](https://www.aeaweb.org/articles?id=10.1257%2Faer.20140117),
+  Dean and Neligh's [experimental rational-inattention test](https://www.journals.uchicago.edu/doi/10.1086/725174),
+  and Cook et al.'s [LLM revealed-choice analysis](https://www.federalreserve.gov/econres/feds/what-do-llms-want.htm)
+  limit novelty claims. The proposed transfer is the GUI-agent query/action
+  setting with actual runtime costs separately measured.
+- **Next test:** Start with a small synthetic observation environment and
+  scripted known-cost and inconsistent policies. Freeze payoff schedules,
+  held-out tasks, test power, and negative controls (free perfect information,
+  irrelevant/dominated cues, payoff transformations, and sequential variants)
+  before any fixed-model call. Report metered tokens/latency separately from
+  inferred behavioral costs. No external model/API budget or live GUI run is
+  claimed here.
+
+## 11. Budgeted discovery of failures in shallow-zero task cells — #8914
 
 - **Status:** Open; two offline allocations are preserved as
   `HOLD_AUDITOR_METHOD_FAILURE`, with no scientific decision.
