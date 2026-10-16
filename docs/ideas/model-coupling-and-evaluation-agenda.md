@@ -225,6 +225,31 @@ separate hypotheses and must keep separate evidence and decisions.
   or independence assumptions can exclude the common-mode world, and when
   `UNIDENTIFIABLE` must remain the output. No new allocation is claimed here.
 
+## 10. Budgeted discovery of failures in shallow-zero task cells — #8914
+
+- **Status:** Open and unverified; no PR, branch or result is recorded.
+- **Idea:** Under a fixed repeat budget, can metadata and shallow outcomes
+  prioritize frozen task cells with zero observed failures so held-out deeper
+  trials discover more subsequent failures than uniform allocation? The target
+  is discovery yield under the declared attempt distribution, not population
+  risk estimation or certification that a cell is safe.
+- **Proposed method:** Begin with an offline simulator. Compare uniform deep
+  resampling, a simple preregistered ranker and a feature ranker trained only on
+  shallow features/outcomes; reserve random sentinel trials to expose blind
+  spots. Keep task families disjoint for training and evaluation, and admit a
+  repeat only after an independent reset/state-hash check. Count reset failures
+  as ineligible/held rather than as another sample.
+- **Boundary:** #7889 asks about task/app breadth for route-effect
+  generalizability, while #6001 tests temporal shifts in route comparisons.
+  They remain separate estimands and controls here. A rank score is not a
+  calibrated failure probability, and a shallow-zero or never-failed cell is
+  not established safe. The proposal authorizes no live replay, GUI, model call
+  or shared resource allocation.
+- **Next test:** Freeze the simulator, family split, features, attempt budget,
+  reset contract, outcome oracle and independent audit before generating deep
+  outcomes. Include null-signal, family-shift, leakage, repeat-dependence and
+  reset-mismatch controls. No experiment is claimed.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
@@ -246,6 +271,9 @@ separate hypotheses and must keep separate evidence and decisions.
 6. #8887's A01 is a common-mode counterexample only. Keep the broader no-gold
    reliability method unvalidated until its assumptions and other regimes are
    audited.
-7. Return each result to its source Issue and this family map. Preserve all
+7. #8914 remains an unverified allocation-method proposal. Its held-out
+   discovery yield must stay separate from population-rate calibration and
+   safety certification.
+8. Return each result to its source Issue and this family map. Preserve all
    earlier STOP, FAIL, HOLD and PASS records; do not close an idea because its
    summary has been written here.
