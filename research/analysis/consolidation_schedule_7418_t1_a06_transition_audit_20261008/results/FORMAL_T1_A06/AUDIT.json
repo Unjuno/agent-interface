@@ -1,0 +1,164 @@
+{
+  "accuracies": {
+    "4601/batch_2": 0.6333333333333333,
+    "4601/episodic_only": 0.26666666666666666,
+    "4601/per_episode": 0.5333333333333333,
+    "4601/terminal": 0.6666666666666666,
+    "4602/batch_2": 0.6333333333333333,
+    "4602/episodic_only": 0.26666666666666666,
+    "4602/per_episode": 0.5333333333333333,
+    "4602/terminal": 0.6666666666666666,
+    "4603/batch_2": 0.6333333333333333,
+    "4603/episodic_only": 0.26666666666666666,
+    "4603/per_episode": 0.5333333333333333,
+    "4603/terminal": 0.6666666666666666
+  },
+  "consolidation_rows": 30,
+  "consolidation_updates_per_seed_arm": {
+    "4601/batch_2": 3,
+    "4601/episodic_only": 0,
+    "4601/per_episode": 6,
+    "4601/terminal": 1,
+    "4602/batch_2": 3,
+    "4602/episodic_only": 0,
+    "4602/per_episode": 6,
+    "4602/terminal": 1,
+    "4603/batch_2": 3,
+    "4603/episodic_only": 0,
+    "4603/per_episode": 6,
+    "4603/terminal": 1
+  },
+  "decision": "FAIL_METHOD",
+  "errors": [
+    "transition coverage mismatch (4601, 'per_episode', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (4601, 'per_episode', 4)",
+    "transition coverage mismatch (4601, 'batch_2', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (4601, 'batch_2', 4)",
+    "transition coverage mismatch (4602, 'per_episode', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (4602, 'per_episode', 4)",
+    "transition coverage mismatch (4602, 'batch_2', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (4602, 'batch_2', 4)",
+    "transition coverage mismatch (4603, 'per_episode', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (4603, 'per_episode', 4)",
+    "transition coverage mismatch (4603, 'batch_2', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (4603, 'batch_2', 4)"
+  ],
+  "max_abs_accuracy_difference": 0.4,
+  "paired_accuracy_differences": {
+    "4601:batch_2-terminal": -0.033333,
+    "4601:episodic_only-batch_2": -0.366667,
+    "4601:episodic_only-per_episode": -0.266667,
+    "4601:episodic_only-terminal": -0.4,
+    "4601:per_episode-batch_2": -0.1,
+    "4601:per_episode-terminal": -0.133333,
+    "4602:batch_2-terminal": -0.033333,
+    "4602:episodic_only-batch_2": -0.366667,
+    "4602:episodic_only-per_episode": -0.266667,
+    "4602:episodic_only-terminal": -0.4,
+    "4602:per_episode-batch_2": -0.1,
+    "4602:per_episode-terminal": -0.133333,
+    "4603:batch_2-terminal": -0.033333,
+    "4603:episodic_only-batch_2": -0.366667,
+    "4603:episodic_only-per_episode": -0.266667,
+    "4603:episodic_only-terminal": -0.4,
+    "4603:per_episode-batch_2": -0.1,
+    "4603:per_episode-terminal": -0.133333
+  },
+  "per_seed_arm_metrics": {
+    "4601/batch_2": {
+      "calls": 30,
+      "completion_tokens": 614,
+      "duration_ms": 19948,
+      "errors": 0,
+      "prompt_tokens": 8831
+    },
+    "4601/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 668,
+      "duration_ms": 24942,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "4601/per_episode": {
+      "calls": 30,
+      "completion_tokens": 641,
+      "duration_ms": 22476,
+      "errors": 0,
+      "prompt_tokens": 9311
+    },
+    "4601/terminal": {
+      "calls": 30,
+      "completion_tokens": 468,
+      "duration_ms": 15547,
+      "errors": 0,
+      "prompt_tokens": 6611
+    },
+    "4602/batch_2": {
+      "calls": 30,
+      "completion_tokens": 614,
+      "duration_ms": 20106,
+      "errors": 0,
+      "prompt_tokens": 8831
+    },
+    "4602/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 669,
+      "duration_ms": 24367,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "4602/per_episode": {
+      "calls": 30,
+      "completion_tokens": 634,
+      "duration_ms": 22829,
+      "errors": 0,
+      "prompt_tokens": 9311
+    },
+    "4602/terminal": {
+      "calls": 30,
+      "completion_tokens": 468,
+      "duration_ms": 15735,
+      "errors": 0,
+      "prompt_tokens": 6611
+    },
+    "4603/batch_2": {
+      "calls": 30,
+      "completion_tokens": 614,
+      "duration_ms": 20608,
+      "errors": 0,
+      "prompt_tokens": 8831
+    },
+    "4603/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 669,
+      "duration_ms": 21657,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "4603/per_episode": {
+      "calls": 30,
+      "completion_tokens": 634,
+      "duration_ms": 23708,
+      "errors": 0,
+      "prompt_tokens": 9311
+    },
+    "4603/terminal": {
+      "calls": 30,
+      "completion_tokens": 468,
+      "duration_ms": 16380,
+      "errors": 0,
+      "prompt_tokens": 6611
+    }
+  },
+  "qualifying_consistent_contrasts": [
+    "episodic_only vs per_episode: [-0.266667, -0.266667, -0.266667]",
+    "episodic_only vs batch_2: [-0.366667, -0.366667, -0.366667]",
+    "episodic_only vs terminal: [-0.4, -0.4, -0.4]",
+    "per_episode vs batch_2: [-0.1, -0.1, -0.1]",
+    "per_episode vs terminal: [-0.133333, -0.133333, -0.133333]"
+  ],
+  "query_rows": 360,
+  "rows": 390,
+  "scope": "single synthetic ledger, one local model family, three fixed seeds; no GUI/product/action inference",
+  "status": "FAIL_METHOD"
+}
