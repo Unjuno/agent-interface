@@ -34,6 +34,17 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Specification-diverse oracle challenges](specification-diverse-oracle-challenges.md) — records #8088's scoped no-incremental-value result and predecessor HOLDs.
+- [Confusion-adaptive GUI practice](confusion-adaptive-gui-practice.md) — preserves #8084's scoped synthetic gate results and low-dispersion false activations.
+- [Blocked versus interleaved GUI practice](blocked-interleaved-gui-practice.md) — indexes #8080's synthetic method readiness without inferring human transfer.
+- [Relation-first idea retrieval](relation-first-idea-retrieval.md) — records #8073's consumed search-surface STOP and unevaluated hypothesis.
+- [History-conditioned repair](history-conditioned-repair.md) — indexes #8068's canonical finite result and trace-eligibility HOLD.
+- [Unknown job-class fail-closed handling](unknown-job-class-fail-closed.md) — records #8061's scoped boundary result without a scheduler claim.
+- [Internal versus environmental GUI memory](internal-vs-environmental-gui-memory.md) — preserves #8057's finite method result and safety-floor failures.
+- [Repeated-cohort IPCW coverage](repeated-cohort-ipcw-coverage.md) — records #8049 A03 and keeps the predecessor FAIL/STOP separate.
+- [Delayed GUI-procedure retention](delayed-gui-procedure-retention.md) — indexes #8032's no-participant power-sensitivity packet.
+- [Calibrated recovery deadlines](calibrated-recovery-deadlines.md) — records #8024's synthetic result and fixed-timeout equivalence.
+- [Recording-salience reactivity](recording-salience-reactivity.md) — indexes #8022's consent-bounded, unrun human-study proposal.
 - [Epoch-bound transform chain](epoch-bound-transform-chain.md) — distinguishes #8185's non-conclusive A01 packages from #8201's synthetic exact-oracle successor.
 - [Screen-reader handback continuity](screen-reader-handback-continuity.md) — records #8166's AT-state observability hold without inferring state from focus.
 - [WSLc threat-profiled eligibility](wslc-threat-profiled-eligibility.md) — preserves #8150's blind-review disagreement without certifying a runtime as a sandbox.
