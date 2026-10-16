@@ -1,0 +1,109 @@
+{
+  "base": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5d",
+  "checks": [
+    {
+      "adjacent_changed_paths": [
+        "research/live_control/input_owner_v12.py",
+        "research/live_control/test_input_owner_v12_batch_sample_custody.py"
+      ],
+      "baseline_entry_count": 56,
+      "baseline_errors": [],
+      "baseline_owner_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "green_changed_paths": [
+        "research/live_control/input_owner_v12.py",
+        "research/live_control/test_input_owner_v12_batch_sample_custody.py"
+      ],
+      "name": "source_maps_bind_base_and_patch_only_owner_plus_new_test",
+      "new_test_sha256": "d32e16bf552a0a13f5b9e5993e91377d81f9da947e461ad646ecfa530b2ca6f4",
+      "pass": true,
+      "patched_owner_sha256": "24e01178f50bf6585e9fc4936a3b56db371398fc556b1d8305b21f1c13fb3832"
+    },
+    {
+      "base_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "before_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "name": "captured_before_source_matches_base_pin",
+      "pass": true
+    },
+    {
+      "candidate_owner_sha256": "24e01178f50bf6585e9fc4936a3b56db371398fc556b1d8305b21f1c13fb3832",
+      "candidate_test_sha256": "d32e16bf552a0a13f5b9e5993e91377d81f9da947e461ad646ecfa530b2ca6f4",
+      "name": "candidate_source_and_test_match_green_runtime_pins",
+      "pass": true
+    },
+    {
+      "exit_code": 1,
+      "failures": [],
+      "name": "red-v1_receipt_and_log_hashes",
+      "pass": true,
+      "stderr_sha256": "d737be8b61883a7f4111ccf1f8b2b779b16d499b4d0b8d63363eabfb656f70ad",
+      "stdout_sha256": "8d7d73fae11572a5dfa776ae711d5c4ccc8e39cdaf3d8ef02a8d17d64f9caae9"
+    },
+    {
+      "exit_code": 0,
+      "failures": [],
+      "name": "green-v1_receipt_and_log_hashes",
+      "pass": true,
+      "stderr_sha256": "bfd5d8d4b3e82db6aba3954ae204164035cd009969e72788f722a3f1495ccff4",
+      "stdout_sha256": "b421f4d116696821aa6fbd6b2c5981cc6242531fed49724b6fa83c9341ab6860"
+    },
+    {
+      "exit_code": 0,
+      "failures": [],
+      "name": "adjacent-v1_receipt_and_log_hashes",
+      "pass": true,
+      "stderr_sha256": "f5e0edf7262d21afc7f2442aa9d7fc67af47dbc44ffaba723392a3d376af80d4",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "failures": [
+        "drop-39-error-False:initial_sample_timestamp",
+        "drop-39-error-True:initial_sample_timestamp",
+        "drop-39-error-True:key38_initial_state"
+      ],
+      "name": "red_reproduces_only_first_key_sample_custody_failures",
+      "pass": false
+    },
+    {
+      "failures": [],
+      "name": "green_keeps_shared_initial_state_error_isolation_and_fail_closed_latch",
+      "outcomes": {
+        "drop-38-error-False": {
+          "final_fake_keys_down": [],
+          "following_down_error": null,
+          "following_press_count": 0,
+          "release_pending": false
+        },
+        "drop-39-error-False": {
+          "final_fake_keys_down": [],
+          "following_down_error": null,
+          "following_press_count": 0,
+          "release_pending": false
+        },
+        "drop-39-error-True": {
+          "final_fake_keys_down": [],
+          "following_down_error": "input owner release pending; retry release before actuation",
+          "following_press_count": 0,
+          "release_pending": true
+        }
+      },
+      "pass": true
+    },
+    {
+      "name": "adjacent_regression_suite_is_six_passes",
+      "pass": true,
+      "suite_log": "test_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary) ... ok\ntest_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap) ... ok\ntest_ordered_up_batch_has_no_keymap_query_between_original_ups (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_ordered_up_batch_has_no_keymap_query_between_original_ups) ... ok\ntest_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts) ... ok\ntest_v15_batch_survives_pre_and_post_sample_failures_fail_closed (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_v15_batch_survives_pre_and_post_sample_failures_fail_closed) ... ok\ntest_v15_successful_two_key_batch_retries_after_ordered_original_ups (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_v15_successful_two_key_batch_retries_after_ordered_original_ups) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.067s\n\nOK\n"
+    },
+    {
+      "name": "production_diff_is_only_common_sample_variable_separation",
+      "pass": true,
+      "production_patch": "immutable batch_* common post-sample values; retry locals unchanged",
+      "status": [
+        " M research/live_control/input_owner_v12.py",
+        "?? research/live_control/test_input_owner_v12_batch_sample_custody.py"
+      ]
+    }
+  ],
+  "pass": false,
+  "schema": "batch-sample-custody-independent-readback-v1",
+  "scope_limit": "retained fake-X traces and source/receipt pins only; no reruns, real X11, physical input, game, model, or latency qualification"
+}

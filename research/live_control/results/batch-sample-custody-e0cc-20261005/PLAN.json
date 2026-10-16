@@ -1,0 +1,12 @@
+{
+  "schema": "batch-sample-custody-regression-v1",
+  "base": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5d",
+  "kind": "ordinary source repair/regression; not formal allocation",
+  "H": "All initial explicit-UP attempt receipts must use the single shared post-original-UP snapshot; retry samples of another key cannot overwrite its bitmap, error or timestamp.",
+  "T": "Actual current raw owner threads over FakeDisplay, logical monotonic labels. Cases: first key initial UP dropped; last key initial UP dropped; first key initial UP dropped plus its retry sample raises. Preserve initial order/no inter-UP query, per-key initial evidence and failed-release actuation latch. Run identical new tests before/after minimal fix, then affected existing owner/transition regressions.",
+  "D": "PASS iff initial sample time is shared, initial bit/error equals common observation, retry outcomes stay key-local, unknown retry still latches release_pending and later DOWN sends no KeyPress. First/last drop recover; teardown terminates threads and neutralizes fake state.",
+  "C": "Testing only last-key retry masks defect. Per-key wrappers or fake substitute owner would miss actual local variable reuse. Fake clock labels rule out speed inference.",
+  "U": "No native input/X server/game/model/container/physical release/task effect; does not implement full A01-compatible adapter or establish useful feedback.",
+  "retention": "Save first logs, structured traces, command/exit/source receipts; correction versions are additive.",
+  "output_cap_bytes": 5000000
+}
