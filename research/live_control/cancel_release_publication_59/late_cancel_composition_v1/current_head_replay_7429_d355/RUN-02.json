@@ -1,0 +1,55 @@
+{
+  "experiment": "CROSS-COMPONENT-POST-SAMPLE-CANCEL-7429-7440",
+  "classification": "ORDINARY_RELEASE_CONTROL",
+  "trigger": "No cancellation; same owner release reason-sample source line and key-up operation",
+  "owner_release": {
+    "event": "owner_release",
+    "reason": "release",
+    "verified": true,
+    "buttons_down": [],
+    "keys_down": [],
+    "verified_ns": 102732508338600,
+    "valid_until_ns": 102737494290200
+  },
+  "emitted_events": [
+    "accepted",
+    "step_started",
+    "step_completed",
+    "terminal"
+  ],
+  "input_released_count": 0,
+  "terminal": {
+    "event": "terminal",
+    "id": "integration",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 102732508338600,
+      "valid_until_ns": 102737494290200,
+      "intent_token": "fc6ff8119e274085b47859d1679785b6",
+      "release_call_started_ns": 102732503935100,
+      "release_call_returned_ns": 102732509075100
+    },
+    "interruption": null,
+    "decision_reason": null,
+    "terminal_ns": 102732509104800,
+    "semantic_completion": "program status only; task scoring is separate"
+  },
+  "fake_x_events": [
+    [
+      2,
+      38
+    ],
+    [
+      3,
+      38
+    ]
+  ]
+}
+
