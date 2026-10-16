@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r33：3件の監査後続結果と2本の枝の保全を索引化（2026-10-17）
+
+#6311/#6306は原T5 HOLD・#6306 parser STOPと、#6311 audit-only PASSを別々に記録した。#6169は#6164のFAIL_AUDITを保った上で、merged #6171のraw-only count reconstructionを限定範囲で追記した。#5911の二つのfinite route-selector結果は分離して記録。併せてGitHub上の旧branch ref二本の不在と、archive tagが各元tip SHAを指すことを確認した。candidateやauditorの再実行はしていない。
+
 ### r32：Dockerless移行Issueの実装と実行証拠を分離（2026-10-17）
 
 #8677/#8619と関連コメントを再確認した。現行mainの方針はnative WSL（OCI境界不要）とWSLc（適格なimage境界あり）を分けて既に統合済み。#8677の323+205件はmainより41 commits古いcheckoutでの実行、current-main checkoutでの再検証は未完了。#8619のdigest-pinned smokeはread-only source read/EROFSを確認したが、exact-ID cleanup receiptやhard memory-capの証拠はない。速度・memory・Docker parityの主張を付けず、同Issue群のアドホックhello-world/list記録もacceptance証拠へ昇格させていない。新規のruntime操作は行っていない。branch refも再照合し、remote 587 refs、diverged候補28本は記録済みtipと一致し、候補間の同一tipは0件、先行削除2本は引き続き不在だった。追加削除に足る証拠は得られていない。
