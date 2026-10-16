@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r61: retain the Issue #6957 Xvfb A02 source with unresolved raw custody (2026-10-17)
+
+Issue #6957 records that `research/59-xvfb-audit-v3-a02-20261005` has the frozen source and inputs but lacks the declared original run outputs and independent audit streams. Its result is unresolved; the issue explicitly says preserve the branch/freeze and do not infer a disposition or rerun. The branch ledger now records that custody boundary.
+
 ### r60: preserve the separate Issue #8592 A01/A02 STOP branches (2026-10-17)
 
 Issue #8592's final comment confirms A01 and A02 each stopped before candidate code loaded, were not retried, and remain preserved in immutable branch history; the merged A03 result is a separate method-scoped outcome. The branch inventory now marks both refs as `RETAIN_ISSUE_CITED_SOURCE`. No result was pooled and no allocation was repeated.
