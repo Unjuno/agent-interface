@@ -45,3 +45,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Counterfactual responsibility for negative queries](negative-query-counterfactual-responsibility.md) — preserves #8624's finite method result and duplicate-allocation boundary while keeping query completeness and live visual applicability separate.
 
 - [Query-private evidence-location lookup](query-private-evidence-location.md) — preserves #8000's no-eligible-workload HOLD and separate WSL-container STOP; no PIR or privacy result is claimed.
+
+- [Effect-indexed semantic deoptimization](effect-indexed-semantic-deoptimization.md) — records #8040's finite cursor-reconstruction PASS while keeping external GUI effects, runtime resumption, and its Draft evidence PR unresolved.
