@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r42：#8297のreversibility review packetを保全（2026-10-17）
+
+`review/8297-reversibility-e0cc-20261007`のtip `31e1ad5d3e3d2d454f074c5d64935675bfe00172`はunprotectedで、PR head/base参照なし、ローカルworktreeなし。closed PR #8297に対する受動的な4-file review packetである。`evidence.tar.xz`の125,556 bytes / SHA-256 `e0e1ccb1f3ad29331e050315b9348afacc5b7294467b871e74d46caca26f5778`と72 member hashesを検証した。A03のraw-digest discrepancyは元証拠の来歴不明として保持し、A05の保存済み3-case整合とfrozen auditorの既知欠陥を分離する。packetを元のGit blobどおり`research/live_control/review_reversibility_8297_e0cc_20261007/`へ保全し、#8300/#7949の索引と研究indexを追加した。コードやreview packet中のprogramは実行していない。枝はこの保全PRがmainへ入るまで保持する。
+
 ### r41：#8186の未リンクreview証拠を索引・保全（2026-10-17）
 
 `review/8186-response-ownership-e0cc-20261007`のtip `e06245cb78059086f7f0e7179c1e8fa59ac2bd6f`を再確認した。unprotected、全PRのhead/base参照なし、ローカルworktreeなし。closed PR #8186を対象とする独立reviewの4-file packetで、READMEはnumeric reply compatibility回帰とpre-send ownership gapへのREQUEST_CHANGESを記録する。`evidence.tar.xz`の17,944 bytes / SHA-256 `48e64f53d87a33db7ab4ab59513beb332dbd1acacd067f1b62ebc1d3540e7ad4`とmanifestの71 member hashesを検証した。レビュー対象コード・packet内プログラムは実行せず、4 fileを元のGit blobどおり`research/live_control/review_response_ownership_8186_e0cc_20261007/`へ保全し、研究・アイデア索引を追加した。PR #7254はOPEN Draft、#8186はclosed-unmerged。source変更を適用したとは主張せず、branchは保全PRがmainへ入るまで維持する。
