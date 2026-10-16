@@ -34,6 +34,13 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [State-conditioned observation omission](state-conditioned-observation-omission.md) — indexes #8397's distinct A01 protocol deviation and A02 finite trace result.
+- [Carbon-window byte-bound replay](carbon-window-bytebound-replay.md) — preserves #8386 A05's exact-byte replay and the unresolved A04 metadata mismatch.
+- [Matched-context fixture integrity](matched-context-fixture-integrity.md) — carries #8313/#8341/#8353's successive auditor gates without promoting the invalid A02 gate.
+- [Caps Lock query-to-XTEST race](capslock-query-to-xtest-race.md) — records #8328's protocol-only status and absence of a formal run.
+- [Feedback factorial and retained-raw audits](feedback-factorial-and-retained-raw-audits.md) — preserves #8319/#8327's failure, review correction, and pending audit-only successor.
+- [Journal/state reconciliation](journal-state-reconciliation.md) — distinguishes #8300's original result, duplicate custody record, and separate byte-bound replay.
+
 - [Retrieval practice for takeover readiness](retrieval-practice-takeover-readiness.md) — records #8498's synthetic instrument PASS without inferring human or live-user benefit.
 - [Global queue synchronization](global-queue-synchronization.md) — preserves #8494's image-preflight boundary and zero formal invocations.
 - [Trace reduction under regime drift](trace-reduction-regime-drift.md) — records #8493's finite temporal-drift method result and open evidence PR.
