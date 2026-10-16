@@ -5,6 +5,8 @@ from pathlib import Path
 import queue
 import types
 import unittest
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from doom_controller_failure_cleanup_v1 import reject_control_boundary_failure
 
 SOURCE = Path(os.environ.get("V39_WAIT_SOURCE", Path(__file__).with_name("map01_overlap_controller_v39.py")))

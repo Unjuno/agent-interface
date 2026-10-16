@@ -4,10 +4,12 @@ import json
 import queue
 import time
 import tempfile
+import sys
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from doom_controller_failure_cleanup_v1 import (
     reject_duplicate_json_members, reject_control_boundary_failure,
     SessionControlBoundaryFailure)
