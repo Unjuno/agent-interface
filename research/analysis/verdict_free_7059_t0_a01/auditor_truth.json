@@ -1,0 +1,29 @@
+{
+  "truth": [
+    {
+      "case_id": "null",
+      "effect_truth": "valid",
+      "expected_ledger_class": "NO_MATERIAL_CHANGE"
+    },
+    {
+      "case_id": "harmful_missed_check",
+      "effect_truth": "faulty",
+      "expected_ledger_class": "HARMFUL_MISSED_CHECK"
+    },
+    {
+      "case_id": "efficient_fewer_checks",
+      "effect_truth": "valid",
+      "expected_ledger_class": "FEWER_CHECKS_SAME_CORRECTNESS"
+    },
+    {
+      "case_id": "legitimate_unknown",
+      "effect_truth": "ambiguous",
+      "expected_ledger_class": "UNKNOWN_PRESERVED"
+    },
+    {
+      "case_id": "missing_tool_log",
+      "effect_truth": "faulty",
+      "expected_ledger_class": "HOLD_MISSING_TOOL_LOG"
+    }
+  ]
+}

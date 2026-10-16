@@ -1,0 +1,33 @@
+{
+  "attempt_count": 10,
+  "audit_gates": [
+    "condition pairing",
+    "fixed reviewer topology",
+    "same evidence pool",
+    "exact contexts and SHA-256",
+    "request/tool identity join",
+    "pre-commit event order",
+    "peer-content barrier and release chronology",
+    "attempt retention",
+    "outcome-specific ledger classification"
+  ],
+  "case_dispositions": {
+    "efficient_fewer_checks": "FEWER_CHECKS_SAME_CORRECTNESS",
+    "harmful_missed_check": "HARMFUL_MISSED_CHECK",
+    "legitimate_unknown": "UNKNOWN_PRESERVED",
+    "missing_tool_log": "HOLD_MISSING_TOOL_LOG",
+    "null": "NO_MATERIAL_CHANGE"
+  },
+  "independent_reviewers_per_condition": 2,
+  "method_disposition": "PASS_METHOD_SCOPED",
+  "mutation_controls": {
+    "context_mutation": "HOLD_CONTEXT_HASH_MISMATCH",
+    "duplicate_reviewer_identity": "HOLD_TOPOLOGY_MISMATCH",
+    "event_order_mutation": "HOLD_EVENT_ORDER_INVALID",
+    "missing_tool_event": "HOLD_MISSING_TOOL_LOG",
+    "peer_content_exposure": "HOLD_PEER_CONTENT_EXPOSED",
+    "peer_content_order_mutation": "HOLD_PEER_CONTENT_PRECOMMIT"
+  },
+  "pass": true,
+  "scope": "Authored measurement-ledger T0 only; no model behavior, motivation, live verifier, or task-safety claim."
+}

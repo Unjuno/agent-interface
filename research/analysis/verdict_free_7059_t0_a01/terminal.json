@@ -1,0 +1,22 @@
+{
+  "allocation": "UNJUNO-7059-VERDICT-FREE-T0-A01-20261005",
+  "auditor_output_sha256": "1a9892d4dc790877d5e127a60f2f2582b07063faea131b5c654e1f1721ce7ddc",
+  "auditor_retry_count": 0,
+  "behavioral_claim": false,
+  "candidate_retry_count": 1,
+  "configured_auditor_invocations": 1,
+  "configured_candidate_invocations": 1,
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "first_candidate_output_preserved": false,
+  "formal_disposition": "STOP_EXECUTION_COUNT_MISMATCH",
+  "frozen_sha256": "f255c062a36af886a8bb797640a3d48dbe2d84418b4aec1d7065565807869c69",
+  "observed_auditor_invocations": 1,
+  "observed_candidate_invocations": 2,
+  "protocol": "issue-7059-t0-a01-v1",
+  "raw_content_audit_disposition": "PASS_METHOD_SCOPED",
+  "reason": "Candidate was accidentally launched a second time after the pre-run freeze. The first output was overwritten and its digest was not captured. The independent auditor reconstructed the retained output and six mutation controls, but cannot repair the frozen invocation-count violation. No candidate or auditor rerun is authorized under this allocation.",
+  "retained_candidate_output_sha256": "8c10e44502f104bc44a07625d5afc13caede21dbbf00e63b47140210216fd9da"
+}
