@@ -18,6 +18,8 @@ offline copyで分類する提案は未実行であり、IssueもOPENのまま�
 4件が既存Markdown未掲載のopen research ideaと分かり、仮説と評価境界を`docs/IDEAS_AND_OUTCOMES.md`へ追加した。
 続く本文確認で#8886/#8889/#8898/#8901も未掲載のopen research ideaと確認し、先行・類似案との違いと検証限界を
 同じ索引へ追加した。さらに#8902/#8903/#8904の本文を確認し、それぞれの推定対象、比較方法、前提を索引へ加えた。
+その後#8638/#8641/#8648/#8651の本文を読み、観測情報の制御分離、feedback、uncertainty source、path dependenceという
+別々の問いとして索引へ加えた。
 これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
