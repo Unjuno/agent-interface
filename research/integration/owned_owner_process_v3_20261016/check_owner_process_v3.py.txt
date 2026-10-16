@@ -1,0 +1,20 @@
+import hashlib,json,sys,unittest
+from pathlib import Path
+REPO=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+sys.path[:0]=[str(REPO/'research/live_control'),str(REPO/'research/doom'),str(REPO)]
+
+def main():
+    names=['test_input_owner_process_v3','test_input_owner_rpc_v2','test_map01_process_identity_backend','test_input_owner_v12_process_identity','test_input_owner_v12_explicit_up_cancel','test_executor_v12_owner_release_rpc_failure']
+    result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromNames(names))
+    pins={}
+    for module in list(sys.modules.values()):
+        filename=getattr(module,'__file__',None)
+        if filename:
+            path=Path(filename).resolve()
+            if path.is_relative_to(REPO) and path.is_file() and path.suffix=='.py':pins[path.relative_to(REPO).as_posix()]=hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    report=dict(modules=names,tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),process_rows=sys.modules['test_input_owner_process_v3'].ROWS,rpc_rows=sys.modules['test_input_owner_rpc_v2'].ROWS,source_sha256_lf=pins,optimize=sys.flags.optimize,python=sys.version)
+    Path(sys.argv[1]).write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({k:v for k,v in report.items() if k not in ('process_rows','rpc_rows','source_sha256_lf')}))
+    raise SystemExit(not result.wasSuccessful())
+
+if __name__=='__main__':main()

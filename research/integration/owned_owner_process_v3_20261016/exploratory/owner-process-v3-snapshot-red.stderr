@@ -1,0 +1,59 @@
+test_actual_client_process_abrupt_exit_leaves_service_to_release (__main__.OwnedOwnerProcessTests.test_actual_client_process_abrupt_exit_leaves_service_to_release) ... ok
+test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade (__main__.OwnedOwnerProcessTests.test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade) ... ok
+test_context_exit_failure_cannot_promote_initial_verified_owner_close (__main__.OwnedOwnerProcessTests.test_context_exit_failure_cannot_promote_initial_verified_owner_close) ... Process owned-input-owner-c32284f5:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 76, in _child_entry
+    with factory(display=display,out=out,service_id=service_id) as owner:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 61, in fake_owner_exit_error
+    raise RuntimeError('injected context exit failure')
+RuntimeError: injected context exit failure
+ok
+test_export_hash_is_bound_to_one_observation_of_each_saved_file (__main__.OwnedOwnerProcessTests.test_export_hash_is_bound_to_one_observation_of_each_saved_file) ... FAIL
+test_module_available (__main__.OwnedOwnerProcessTests.test_module_available) ... ok
+test_normal_close_binds_saved_receipts_and_owned_process_exit (__main__.OwnedOwnerProcessTests.test_normal_close_binds_saved_receipts_and_owned_process_exit) ... ok
+test_owner_process_death_has_no_acceptable_release_receipt (__main__.OwnedOwnerProcessTests.test_owner_process_death_has_no_acceptable_release_receipt) ... ok
+test_startup_failure_returns_owned_handle_and_unverified_saved_failure (__main__.OwnedOwnerProcessTests.test_startup_failure_returns_owned_handle_and_unverified_saved_failure) ... Process owned-input-owner-e859130e:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 76, in _child_entry
+    with factory(display=display,out=out,service_id=service_id) as owner:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 66, in fake_owner_start_error
+    raise RuntimeError('injected context startup failure')
+RuntimeError: injected context startup failure
+ok
+test_wrong_generation_and_overwrite_are_refused (__main__.OwnedOwnerProcessTests.test_wrong_generation_and_overwrite_are_refused) ... ok
+
+======================================================================
+FAIL: test_export_hash_is_bound_to_one_observation_of_each_saved_file (__main__.OwnedOwnerProcessTests.test_export_hash_is_bound_to_one_observation_of_each_saved_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 289, in test_export_hash_is_bound_to_one_observation_of_each_saved_file
+    self.assertEqual(hashlib.sha256(raw).hexdigest(),saved['sha256'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '7aa7a5359173d05b63cfd682e3c38487f3cb4f7f1d60659fe59fab1505977d4c' != '01d09d19c2139a46aebfb577780d123d7396e97201bc7ead210a2ebff8239dee'
+- 7aa7a5359173d05b63cfd682e3c38487f3cb4f7f1d60659fe59fab1505977d4c
++ 01d09d19c2139a46aebfb577780d123d7396e97201bc7ead210a2ebff8239dee
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 10.813s
+
+FAILED (failures=1)

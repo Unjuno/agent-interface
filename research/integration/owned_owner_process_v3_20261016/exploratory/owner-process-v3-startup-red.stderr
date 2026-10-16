@@ -1,0 +1,101 @@
+test_actual_client_process_abrupt_exit_leaves_service_to_release (__main__.OwnedOwnerProcessTests.test_actual_client_process_abrupt_exit_leaves_service_to_release) ... ok
+test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade (__main__.OwnedOwnerProcessTests.test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade) ... ok
+test_context_exit_failure_cannot_promote_initial_verified_owner_close (__main__.OwnedOwnerProcessTests.test_context_exit_failure_cannot_promote_initial_verified_owner_close) ... Process owned-input-owner-64ae7643:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 76, in _child_entry
+    with factory(display=display,out=out,service_id=service_id) as owner:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 61, in fake_owner_exit_error
+    raise RuntimeError('injected context exit failure')
+RuntimeError: injected context exit failure
+ok
+test_export_hash_is_bound_to_one_observation_of_each_saved_file (__main__.OwnedOwnerProcessTests.test_export_hash_is_bound_to_one_observation_of_each_saved_file) ... ok
+test_module_available (__main__.OwnedOwnerProcessTests.test_module_available) ... ok
+test_normal_close_binds_saved_receipts_and_owned_process_exit (__main__.OwnedOwnerProcessTests.test_normal_close_binds_saved_receipts_and_owned_process_exit) ... ok
+test_owner_process_death_has_no_acceptable_release_receipt (__main__.OwnedOwnerProcessTests.test_owner_process_death_has_no_acceptable_release_receipt) ... ok
+test_startup_failure_returns_owned_handle_and_unverified_saved_failure (__main__.OwnedOwnerProcessTests.test_startup_failure_returns_owned_handle_and_unverified_saved_failure) ... Process owned-input-owner-c0e426d0:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 76, in _child_entry
+    with factory(display=display,out=out,service_id=service_id) as owner:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 66, in fake_owner_start_error
+    raise RuntimeError('injected context startup failure')
+RuntimeError: injected context startup failure
+ok
+test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody (__main__.OwnedOwnerProcessTests.test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody) ... 
+  test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody (__main__.OwnedOwnerProcessTests.test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody) (fault='interrupt') ... FAIL
+  test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody (__main__.OwnedOwnerProcessTests.test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody) (fault='interrupt-and-close') ... ERROR
+  test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody (__main__.OwnedOwnerProcessTests.test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody) (fault='start-failure') ... FAIL
+test_wrong_generation_and_overwrite_are_refused (__main__.OwnedOwnerProcessTests.test_wrong_generation_and_overwrite_are_refused) ... ok
+
+======================================================================
+ERROR: test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody (__main__.OwnedOwnerProcessTests.test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody) (fault='interrupt-and-close')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 218, in launch_owner_service
+    if not parent_ready.poll(startup_timeout):raise TimeoutError('owned owner readiness deadline')
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 299, in poll
+    def poll(self,_):raise primary
+                     ^^^^^^^^^^^^^
+KeyboardInterrupt: startup interrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 318, in test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody
+    api.launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=fake_owner)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 236, in launch_owner_service
+    finally:parent_ready.close()
+            ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 301, in close
+    if fault=='interrupt-and-close':raise cleanup
+                                    ^^^^^^^^^^^^^
+OSError: ready pipe close
+
+======================================================================
+FAIL: test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody (__main__.OwnedOwnerProcessTests.test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody) (fault='interrupt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 325, in test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody
+    self.assertIsNotNone(handle,'Fatal startup must retain its owned handle')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : Fatal startup must retain its owned handle
+
+======================================================================
+FAIL: test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody (__main__.OwnedOwnerProcessTests.test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody) (fault='start-failure')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 320, in test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody
+    handle=caught.exception.handle;report=handle.wait(.1)
+                                          ~~~~~~~~~~~^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 182, in wait
+    self.process.join(timeout)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 309, in join
+    def join(self,_):raise AssertionError('unstarted/fake process must not be joined')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unstarted/fake process must not be joined
+
+----------------------------------------------------------------------
+Ran 10 tests in 10.151s
+
+FAILED (failures=2, errors=1)

@@ -149,3 +149,14 @@ blocked release stays unverified. This is an explicit library, not the default
 MAP01 owner: external service process/durable receipt, backend custody adapter,
 parent cancellation/telemetry and actual session/controller death remain under#59.
 The unsupported window observer transfer is refused rather than downgraded.
+
+## Owned process continuation
+
+[Owned service v3](../../research/integration/owned_owner_process_v3_20261016/README.md)
+adds the explicit spawned service and exclusive file-fsynced recovery/finish
+receipts. Normal/-O each55 methods preserve13 process/inert rows and26 RPC rows.
+Client death releases through EOF; unresolved release retains the service even
+on publication failure; file success alone never replaces owned-process exit.
+The preceding RPC paragraph records its earlier boundary. The remaining#59 work
+is selected backend/Executor custody, cancellation/telemetry and actual session
+death. This is Fake X construction, with no native/task-effect qualification.
