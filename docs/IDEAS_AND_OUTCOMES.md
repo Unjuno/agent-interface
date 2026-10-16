@@ -8,7 +8,7 @@ This index complements, rather than duplicates, the [durable design-theses ledge
 
 - **Proposed / open:** no result is implied.
 - **Scoped result:** evidence supports only the stated fixture, method, and assumptions.
-- **HOLD / STOP / FAIL:** preserve the recorded outcome; do not reinterpret it as a pass.
+- **HOLD / STOP / FAIL:** preserve the recorded outcome; do not reinterpret it as a pass. Each disposition applies only to its named allocation, evidence, or operation unless explicitly stated otherwise; it does not pause independent work on other Issues or repository tasks.
 - **Closed, unresolved:** workflow is closed, but the question was unanswered or continued elsewhere.
 
 ## Durable idea clusters
