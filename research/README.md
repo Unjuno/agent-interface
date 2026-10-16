@@ -4,6 +4,8 @@ This directory is the research workspace and retained evidence record for Agent 
 
 For claims and scientific disposition, start with the top-level [research index](../RESEARCH.md).
 
+- Closed PR #7148: [X11 input-custody safety HOLD](integration/x11_input_custody_7148/RECOVERY.md) — retained candidate tests do not establish safe release: source-supported wrong-ClientPointer and unreadable-button-state constructions can falsely clear custody. No runtime patch is adopted.
+
 ## Start here
 
 - Issue #59 WSLc A03: [typed-policy replay portability construction result](doom/typed_guard_wslc_replay_a03_20261013/README.md) — one fresh, single-container CPU WSLc run; candidate and independent raw-only audit reconstruct four selected retained rows with no input authority. A01 host-decoding STOP and A02 missing-image STOP remain preserved. Construction/portability only: no live threat exposure, task effect, recovery, survival, MAP01 result, or effective memory-limit claim.
