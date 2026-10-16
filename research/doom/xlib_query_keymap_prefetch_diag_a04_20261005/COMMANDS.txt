@@ -1,0 +1,4 @@
+Preparation checks: python3 -B -m py_compile probe.py audit.py test_audit.py verify_bundle.py; python3 -B -m unittest -v test_audit; bash -n setup_guest.sh run_candidate.sh; python3 -B verify_bundle.py (after freeze).
+Guest create: orb create --isolated --isolate-network --mount <bundle-transfer>:/mnt/diag-bundle --mount <results>:/mnt/diag-results -a arm64 ubuntu:noble map01-v39-xlib-prefetch-a04-20261005
+Transfer preflight as taka: verify SHA256SUMS, extract experiment.tar under /home/taka/xlib-query-prefetch-a04, then run verify_bundle.py, py_compile, and unit tests.
+Setup once as root, workdir /home/taka/xlib-query-prefetch-a04, preserving exact exit status and log. Candidate once as taka via bash run_candidate.sh only if setup exit is 0 and versions match. Auditor is invoked by the one-shot runner only when candidate exits 0. Preserve all logs/results and stop the guest after recording state.
