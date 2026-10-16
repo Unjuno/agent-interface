@@ -2,6 +2,13 @@
 
 These ledger entries preserve distinct human-evaluation questions. None authorizes a participant study or establishes a human behavioral effect.
 
+## Prediction-labeled human takeover under delayed feedback — #5935
+
+- **Status:** open, unverified human-behavior hypothesis; T0 has only a scoped result summary in the Issue comment. The candidate/audit package is not present in current `main`, and no PR was found.
+- **Source:** [Issue #5935](https://github.com/Unjuno/agent-interface/issues/5935); [T0 result comment #5928484527](https://github.com/Unjuno/agent-interface/issues/5935#issuecomment-5928484527); [C01 coordination correction #6015047863](https://github.com/Unjuno/agent-interface/issues/5935#issuecomment-6015047863).
+- **Idea:** At a delayed-feedback takeover boundary, compare an observed frame plus typed status with the same facts plus an explicitly labeled, bounded forecast and with the fact-only takeover packet from #5830. Forecasts remain advisory: they must be visibly distinct from observed state, invalidate on new evidence or mismatch, and never become an action-admission or effect-verification witness. Keep this separate from planner-facing rollout prediction (#785) and presentation non-interference (#5800).
+- **Outcome:** The Issue reports a seven-case synthetic T0 and separate raw-only audit as `PASS_T0_SCOPED_HOST_ONLY`: seven scenarios and invalidations checked, observed/predicted labels checked, unknown effects retained until an observed receipt, prediction-to-authority/effect promotions 0/0, and the deliberately mislabeled forecast control rejected. The Issue comment gives candidate/audit hashes, but the package path `research/analysis/forecast_takeover_5935_t0_v1/` is absent from current `main`; the recorded result is therefore summary-only here, not durable repository raw evidence. No participants, GUI, OS input, model, live application, safety effect, or human takeover benefit were tested. Any T1 needs its own consent, privacy, accessibility, and ethics review and a preregistered comparison against both delayed facts and the #5830 fact-only packet.
+
 ## Recording-salience reactivity — #8022
 
 - **Status:** on hold
