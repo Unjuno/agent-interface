@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_adapter_available (test_owned_owner_backend_adapter.OwnedBackendTests.test_adapter_available)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 71, in test_adapter_available
+    self.assertIsNotNone(importlib.util.find_spec('input_owner_service_adapter'),'production owner/custody adapter absent')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : production owner/custody adapter absent
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

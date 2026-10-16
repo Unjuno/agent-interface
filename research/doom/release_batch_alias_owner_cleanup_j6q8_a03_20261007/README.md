@@ -1,0 +1,3 @@
+# A03 owner-close cleanup construction
+
+This is a synthetic Xvfb construction follow-up to [PR #8250](https://github.com/Unjuno/agent-interface/pull/8250), whose result explicitly leaves caller exception-to-cleanup untested. One actual V4→V3→V12 owner thread refuses an alias batch while `a` is held; an explicit actual V4 owner close then releases it and records verified empty state. See `REPORT.md` for outcomes and limitations, `FREEZE.json` for the one-shot candidate, and `A03_AUDIT_V2_FREEZE.json` for the separately versioned read-only audit repair. The A01 runner STOP, A02 harness STOP, A03 audit-v1 FAIL, and A03 audit-v2 PASS are all preserved.

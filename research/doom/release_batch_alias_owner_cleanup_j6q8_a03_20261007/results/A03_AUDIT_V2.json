@@ -1,0 +1,26 @@
+{
+  "auditor_sha256": "17150e40c973702bf0ff0c7915a9d0d3a0a445d8dc4d411ce906849172eab1d1",
+  "candidate_sha256": "6a0e67d6b692803e8bd6208a9d919a5c0a4a217101e86cd6ff297a1fdd785808",
+  "checks": {
+    "a_A_alias_same_nonzero_code": true,
+    "close_release_matches_press_window_and_key": true,
+    "close_release_observed_after_verified_receipt": true,
+    "exactly_one_owner_terminal_release": true,
+    "key_down_admitted_and_observed": true,
+    "keymap_neutral_after_close": true,
+    "owner_closed_and_thread_stopped": true,
+    "refusal_did_not_emit_or_release": true,
+    "resolved_alias_batch_refused": true,
+    "terminal_release_is_verified_empty_close": true,
+    "xvfb_exited_zero": true
+  },
+  "decision": "PASS_METHOD_SCOPED_AUDIT_V2",
+  "errors": [],
+  "predecessor_audit_v1": {
+    "decision": "FAIL",
+    "reason": "its release-event check required a client_window raw field that candidate omitted; v2 binds release to the actually recorded press-event window"
+  },
+  "raw_sha256": "b16fb6f5f572f1e1e6a7a98a080e9cb8b0ef619d60fe76c0f02720dca64ba6b8",
+  "schema": "release-batch-alias-owner-cleanup-a03-audit-v2",
+  "scope": "read-only audit of one already completed guarded alias-refusal and actual V4/V3/V12 owner-close Xvfb trace; no candidate rerun, game, task, physical keyboard, or live allocation"
+}

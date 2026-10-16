@@ -1,0 +1,140 @@
+{
+  "schema": "health-boundary-consolidation-v1",
+  "original_pr_heads": {
+    "8801": "5d195dad8750a02a4f6597c76251127680893134",
+    "8814": "1fcb9e6332cd02f62481b7abb606defac6756e59"
+  },
+  "baseline_main": "734543f4488b30b1dcae52f7f9d6dd139db867fe",
+  "original_manifest_checks": 20,
+  "original_test_path_mapping": {
+    "test_audit.py": "history/test_audit_initial.py.txt"
+  },
+  "original_followup_test_sha256": "838d5d03534c2dc82f5613bf861eca88d4cfa2162a37fb409d8798465772712b",
+  "historical_runtime_source_closure": [
+    {
+      "path": "research/doom/doom_action_snapshot_v1.py",
+      "sha256": "f6efc8c8ac0957dfa0d8cf5e8190e4e58b2e71fa328021c816f01d36af476f38",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/doom/doom_action_validity_contract_v1.py",
+      "sha256": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/doom/doom_controller_failure_cleanup_v1.py",
+      "sha256": "bc8d3550e6c2d057c7b615b38e424de3497418547e835490429f526853e1fe28",
+      "current_main_matches": false
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v1.py",
+      "sha256": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v2.py",
+      "sha256": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v3.py",
+      "sha256": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/doom/doom_signal_value_domain_v1.py",
+      "sha256": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/doom/doom_source_refresh_v1.py",
+      "sha256": "f3a9c66bc069a98b3240f5256810123e4f61931fd648e03b3e564aedec545743",
+      "current_main_matches": false
+    },
+    {
+      "path": "research/doom/doom_typed_observation_v1.py",
+      "sha256": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+      "current_main_matches": false
+    },
+    {
+      "path": "research/doom/map01_stagnation_v1.py",
+      "sha256": "669d61eb473c486e693a478b1941a7b40102d2049e0a437e5982143544d60a54",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/live_control/action_validity_admission_v1.py",
+      "sha256": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a",
+      "current_main_matches": false
+    },
+    {
+      "path": "research/live_control/codex_app_server_client_v2.py",
+      "sha256": "1d85460d2c3a22d6f7fb78f6b0e29904980dcc0bd158e6ce35d4d13a55cad0b7",
+      "current_main_matches": false
+    },
+    {
+      "path": "research/live_control/final_action_admission_v1.py",
+      "sha256": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/live_control/final_action_admission_v2.py",
+      "sha256": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/live_control/running_action_guard_v1.py",
+      "sha256": "009418d261659db986e907b7ff9843e554aea5e5094fd96e38791ff6e69f6683",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/live_control/running_action_guard_v2.py",
+      "sha256": "13f224c491dfe455a9e50ab78eafbcd00bd08303b397b75a814e2558ce63fe7a",
+      "current_main_matches": true
+    },
+    {
+      "path": "research/live_control/running_action_guard_v3.py",
+      "sha256": "bcc0dc5961a54a315a05558d800f94ff119fa6106ed91e0fa0ba14131d470732",
+      "current_main_matches": true
+    }
+  ],
+  "current_main_matching_sources": 15,
+  "retained_raw_audit": {
+    "audit": "PASS_METHOD_SCOPED",
+    "checks_passed": 13,
+    "checks": [
+      "raw source identity equals frozen controller",
+      "frozen controller equals inspected source",
+      "base main identity",
+      "source health and effective floor",
+      "ordered boundary observations",
+      "strict below-floor invalidation",
+      "planner pending before samples",
+      "executor cancel precedes planner interrupt",
+      "exact cover cancellation",
+      "matching terminal and verified empty release",
+      "adversarial answer returned after invalidation",
+      "final gate rejects invalidated answer",
+      "no live or formal allocation"
+    ],
+    "controller_sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+    "live_effects": false
+  },
+  "candidate_rerun": false,
+  "live_allocation": false,
+  "scope": "Historical method evidence and provenance; no current-runtime or live-task success claim."
+}

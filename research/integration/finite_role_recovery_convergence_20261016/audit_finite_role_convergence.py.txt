@@ -1,0 +1,72 @@
+"""Saved-only literal file oracle; imports no candidate code."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+
+OUT = Path(__file__).parent / 'finite-role-convergence-20261016'
+INITIAL = '会議 é🚀\r\n議事録担当：加藤\r\n受付担当：加藤\r\n注記：日程確定\r\n'
+EXPECTED = {
+    'stable': '会議 é🚀\r\n議事録担当：森\r\n受付担当：加藤\r\n注記：日程確定\r\n',
+    'annotation': '会議 é🚀\r\n議事録担当：森\r\n受付担当：加藤\r\n注記：日程変更\r\n',
+    'role_change': '会議 é🚀\r\n記録担当：森\r\n受付担当：加藤\r\n注記：日程変更\r\n',
+    'second_change': INITIAL,
+    'unknown_replace': INITIAL,
+}
+
+
+def check(rows, files):
+    if len(rows) != 10 or {(r['case'], r['reuse']) for r in rows} != {(c,b) for c in EXPECTED for b in (True,False)}:
+        raise ValueError('coverage')
+    for r in rows:
+        case, reuse = r['case'], r['reuse']
+        if files[r['file']] != EXPECTED[case].encode('utf-8'):
+            raise ValueError('independent disk effect')
+        events = [e['event'] for e in r['events']]
+        recovery = int(case in ('annotation', 'role_change', 'second_change'))
+        if events.count('one_recovery_admitted') != recovery:
+            raise ValueError('finite recovery count')
+        calls = 2 if recovery and (not reuse or case == 'role_change') else 1
+        if len(r['subject_calls']) != calls:
+            raise ValueError('subject count')
+        writes = 0 if case == 'second_change' else 1
+        saves = int(case not in ('second_change','unknown_replace'))
+        if (r['replacements'],r['saves']) != (writes,saves):
+            raise ValueError('attempt counters or resend')
+        if (r['error'] is None) != bool(saves):
+            raise ValueError('false success')
+        if case == 'second_change' and r['error']['type'] != 'StaleDocument':
+            raise ValueError('second stale did not escape')
+        if saves and (events.count('save_returned') != 1 or events.index('observed_replacement') > events.index('save_intent')):
+            raise ValueError('save observation order')
+        if saves and r['label'] != ('記録担当' if case == 'role_change' else '議事録担当'):
+            raise ValueError('label')
+
+
+report = {}
+for mode in ('normal','optimized'):
+    folder=OUT/mode
+    rows=json.loads((folder/'rows.json').read_text(encoding='utf-8'))
+    files={r['file']:(folder/r['file']).read_bytes() for r in rows}
+    check(rows,files)
+    tests=json.loads((folder/'test-result.json').read_text())
+    if tests != dict(tests=26, failures=0, errors=0, skipped=0):raise ValueError('suite failed')
+    conditions=json.loads((folder/'conditions.json').read_text())
+    if conditions['optimize'] != (mode=='optimized'):raise ValueError('optimization mismatch')
+    if len(conditions['source_pins']) != 8 or not all(p['same_bytes'] for p in conditions['source_pins']):raise ValueError('source mismatch')
+    rejected=[]
+    for mutation in ('wrong_disk','repeat_recovery','resend','false_success','wrong_calls','lost_annotation'):
+        bad=copy.deepcopy(rows); images=files.copy()
+        row=next(r for r in bad if r['case']=='annotation' and r['reuse'])
+        if mutation=='wrong_disk':images[row['file']]=b'wrong'
+        elif mutation=='repeat_recovery':row['events'].append(dict(event='one_recovery_admitted',data={}))
+        elif mutation=='resend':next(r for r in bad if r['case']=='unknown_replace')['replacements']=2
+        elif mutation=='false_success':next(r for r in bad if r['case']=='second_change')['error']=None
+        elif mutation=='wrong_calls':row['subject_calls'].append({})
+        else:images[row['file']]=EXPECTED['stable'].encode('utf-8')
+        try:check(bad,images)
+        except ValueError as exc:rejected.append(dict(mutation=mutation,reason=str(exc)))
+        else:raise ValueError('contradiction accepted')
+    report[mode]=dict(cells=10,tests=tests,contradictions_rejected=rejected,
+        files={name:hashlib.sha256(b).hexdigest() for name,b in files.items()})
+print(json.dumps(report,indent=2))

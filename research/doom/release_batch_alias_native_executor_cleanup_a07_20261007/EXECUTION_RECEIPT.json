@@ -1,0 +1,7 @@
+{
+  "command": "docker run --rm --network none --read-only --cpus 2 --memory 4g --pids-limit 128 with pinned image; source mounted read-only and results mounted writable; python3 -B /study/candidate.py",
+  "started": "2026-10-07",
+  "exit_code": 1,
+  "outcome": "STOP: wrong output path targeted /study/results rather than /out",
+  "retry": "none"
+}

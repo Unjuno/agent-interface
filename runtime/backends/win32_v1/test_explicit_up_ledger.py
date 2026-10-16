@@ -45,7 +45,8 @@ class InputState:
         self.events.append({'query': vk})
         if self.query_error:
             raise RuntimeError('inert read unavailable')
-        return 0x8000 if vk in self.down else 0
+        # Nonzero successful up sample; zero now deliberately means unknown.
+        return 0x8000 if vk in self.down else 1
 
 
 class ExplicitUpLedgerTests(unittest.TestCase):

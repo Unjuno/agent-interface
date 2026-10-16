@@ -1,0 +1,75 @@
+{
+  "scope": "saved-only fresh-dependency/artifact/receipt consistency; no candidate import or real app scoring",
+  "modes": {
+    "normal": {
+      "methods": 385,
+      "direct_rows": 18,
+      "caller_rows": {
+        "baseline": 4,
+        "repaired": 4
+      },
+      "baseline_assertion_failures": 18,
+      "mutations": [
+        {
+          "name": "hidden_input",
+          "reason": "input custody"
+        },
+        {
+          "name": "false_release",
+          "reason": "release"
+        },
+        {
+          "name": "lost_check",
+          "reason": "missing fresh check"
+        },
+        {
+          "name": "wrong_dependency",
+          "reason": "dependency set"
+        },
+        {
+          "name": "false_eligibility",
+          "reason": "false eligibility"
+        },
+        {
+          "name": "expired_recheck",
+          "reason": "expired check/replay"
+        }
+      ]
+    },
+    "optimized": {
+      "methods": 385,
+      "direct_rows": 18,
+      "caller_rows": {
+        "baseline": 4,
+        "repaired": 4
+      },
+      "baseline_assertion_failures": 18,
+      "mutations": [
+        {
+          "name": "hidden_input",
+          "reason": "input custody"
+        },
+        {
+          "name": "false_release",
+          "reason": "release"
+        },
+        {
+          "name": "lost_check",
+          "reason": "missing fresh check"
+        },
+        {
+          "name": "wrong_dependency",
+          "reason": "dependency set"
+        },
+        {
+          "name": "false_eligibility",
+          "reason": "false eligibility"
+        },
+        {
+          "name": "expired_recheck",
+          "reason": "expired check/replay"
+        }
+      ]
+    }
+  }
+}

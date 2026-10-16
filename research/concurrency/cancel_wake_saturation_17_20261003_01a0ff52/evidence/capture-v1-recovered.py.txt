@@ -1,0 +1,18 @@
+import datetime, hashlib, json, os, pathlib, subprocess, sys, time
+root=pathlib.Path('work/cancel-wake-17-intake/operations'); root.mkdir(parents=True,exist_ok=True)
+name=sys.argv[1]; argv=sys.argv[2:]; p=root/name; p.mkdir(exist_ok=False)
+record={'argv':argv,'launcher_pid':os.getpid(),'start_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'start_ns':time.monotonic_ns()}
+(p/'INTENT.json').write_text(json.dumps(record,indent=2)+'\n')
+with (p/'stdout').open('xb') as o,(p/'stderr').open('xb') as e:
+    proc=subprocess.Popen(argv,stdout=o,stderr=e); record['pid']=proc.pid
+    (p/'STARTED.json').write_text(json.dumps(record,indent=2)+'\n')
+    try: code=proc.wait(timeout=60)
+    except subprocess.TimeoutExpired:
+        proc.terminate()
+        try: code=proc.wait(timeout=5)
+        except subprocess.TimeoutExpired: proc.kill();code=proc.wait()
+        record['guard']='HOST_COMMAND_TIMEOUT; remote state requires reconciliation'
+record.update(exit_code=code,end_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),end_ns=time.monotonic_ns(),source_sha256=hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest())
+record['outputs']={f:{'bytes':(p/f).stat().st_size,'sha256':hashlib.sha256((p/f).read_bytes()).hexdigest()} for f in ['stdout','stderr']}
+(p/'RECEIPT.json').write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps(record)); print((p/'stdout').read_text(errors='replace')[:2500]);print((p/'stderr').read_text(errors='replace')[:1000]);sys.exit(code)

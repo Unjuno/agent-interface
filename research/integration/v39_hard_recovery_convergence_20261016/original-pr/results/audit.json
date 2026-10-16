@@ -1,0 +1,16 @@
+{
+  "case": "health 100->80 hard invalidation at seq11; 80->96 recovery at seq12 during cancel wait; pending answer remains discarded",
+  "errors": [],
+  "independent_assertions": 8,
+  "limits": [
+    "live observation timing",
+    "physical release",
+    "useful feedback",
+    "bounded recovery",
+    "ammo or progress effect",
+    "game outcome"
+  ],
+  "mutation_rejections": 3,
+  "source_commit": "743ae74ec5be2472ff27fa06fe13d5ecf8534de5",
+  "status": "PASS_SCOPED_REPLAY"
+}

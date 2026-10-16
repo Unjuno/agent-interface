@@ -66,6 +66,16 @@ class Win32RuntimeSession:
                 "required_capabilities": list(admission.required_capabilities),
                 "backend_emissions": self.backend.emissions,
             }
+        pending = (getattr(self.backend, "held_keys", None) or
+                   getattr(self.backend, "held_buttons", None) or
+                   getattr(self.backend, "pending_unicode_ups", None))
+        if pending and any(op["op"] != "release_all" for op in program["ops"]):
+            # A new session wrapper is not recovery of backend-owned custody.
+            self.recovery_required = True
+            return {"status": "refused", "error": "INPUT_RECOVERY_REQUIRED",
+                    "recovery_required": True, "input_dispatched": False,
+                    "required_capabilities": list(admission.required_capabilities),
+                    "backend_emissions": self.backend.emissions}
         try:
             self.backend.preflight(program)
         except Win32BackendError as error:

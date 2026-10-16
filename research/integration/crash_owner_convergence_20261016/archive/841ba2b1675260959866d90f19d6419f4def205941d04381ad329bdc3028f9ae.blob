@@ -1,0 +1,24 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a16-audit-v1",
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A16-20261012-01",
+  "classification": "STOP_CANDIDATE_EVENT_ENVELOPE_MISMATCH",
+  "candidate_invocation": 1,
+  "retry_performed": false,
+  "observed": {
+    "owner_ready": true,
+    "two_keys_independently_observed_down": true,
+    "button1_independently_observed_down": true,
+    "owner_sigkill_sent": true,
+    "owner_process_state": "Z",
+    "durable_ledger_contains_two_key_and_button_intent_and_ack": true,
+    "emergency_recovery_invoked": false,
+    "root_cause": "Candidate parsed the backend event envelope incorrectly and passed event wrappers where the recovery parser expected flat events."
+  },
+  "negative_claims": [
+    "No emergency release result is established by A16.",
+    "A16 does not prove end-to-end recovery, input release, or normal product success."
+  ],
+  "raw_sha256": "80e6bcb4ef13a44bddaf1cd195812d070ab0b30d2ec59cbc1e2fe570276b1f7d",
+  "raw_path": "results/A01/RAW.json",
+  "decision": "Preserve A16 as a setup STOP. The parser now normalizes the actual {type, event: {...}} envelope, verified against stored A16 raw without rerunning the candidate. A future runtime attempt requires a new frozen allocation."
+}

@@ -1,5 +1,21 @@
 # Adaptive acquisition caller v3: local-first semantic repair
 
+Current-source navigation (2026-10-16): the [caller convergence crosswalk](../integration/caller_current_main_convergence_20261016/README.md)
+records the already-composed #7289/#7310 repair family, later effect receipts,
+76 selected normal/-O local methods and the remaining live provider/task-effect
+gates. The original evidence count below is historical, not the current total.
+
+The [persistent grounding failure-accounting repair](../integration/grounding_failure_accounting_20261016/README.md)
+also tests the actual model/planner/caller boundary with an inert RPC client:
+known failed-call accounting survives before the caller skips input/effect stages.
+This does not qualify live provider usage or independent application effects.
+
+The [explicit compiled v3 connection](COMPILED_CALLER_V3.md) builds from the final
+selected target and retains a returned core receipt across auxiliary sink
+failure. Trusted execute adapters can use `ExecutionReceiptError` with a
+validated detached decision; ordinary error attributes do not grant progress
+evidence. The caller records known delivery without promoting task success.
+
 ## Problem
 
 The retained matched v3 comparison established one narrow case in which a

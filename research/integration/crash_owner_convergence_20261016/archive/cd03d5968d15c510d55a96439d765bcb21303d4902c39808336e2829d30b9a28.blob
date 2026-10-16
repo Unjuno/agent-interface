@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 305, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 292, in main
+    return owner_service(*sys.argv[2:5], int(sys.argv[5]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 101, in owner_service
+    "close_error": close_error, "thread_stopped": owner._inner._inner._inner.stopped.is_set(),
+                                                  ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute '_inner'

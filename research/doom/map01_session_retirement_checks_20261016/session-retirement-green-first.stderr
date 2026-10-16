@@ -1,0 +1,30 @@
+test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) ... 
+  test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) (operation='finish') ... FAIL
+  test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) (operation='save_fixture') ... FAIL
+test_unstarted_ambiguous_admission_is_not_retired (__main__.RetirementBoundaryTests.test_unstarted_ambiguous_admission_is_not_retired) ... ok
+test_verified_retirement_allows_each_original_effect_path (__main__.RetirementBoundaryTests.test_verified_retirement_allows_each_original_effect_path) ... ok
+
+======================================================================
+FAIL: test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) (operation='finish')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_session_retirement_boundary.py", line 100, in test_failed_release_blocks_finish_and_fixture_effects
+    self.assertEqual(receipt['release_obligation'], executor.release_obligation_snapshot())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[147 chars]ty': [1, 41, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa[367 chars]alse} != {'id'[147 chars]ty': (1, 41, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa[367 chars]alse}
+Diff is 1300 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_failed_release_blocks_finish_and_fixture_effects (__main__.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects) (operation='save_fixture')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_session_retirement_boundary.py", line 100, in test_failed_release_blocks_finish_and_fixture_effects
+    self.assertEqual(receipt['release_obligation'], executor.release_obligation_snapshot())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[147 chars]ty': [1, 41, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa[367 chars]alse} != {'id'[147 chars]ty': (1, 41, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa[367 chars]alse}
+Diff is 1300 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 3 tests in 4.279s
+
+FAILED (failures=2)

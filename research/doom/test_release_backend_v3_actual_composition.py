@@ -19,7 +19,8 @@ class ActualReleaseCompositionTests(unittest.TestCase):
              fail_incomplete_publication=False,
              incomplete_publication_rows=False,
              release_all_publication_failure=False, return_backend=False,
-             text=None, failure_key=None, mutate_release_row_before_raise=False):
+             text=None, failure_key=None, mutate_release_row_before_raise=False,
+             failure_before_flush=False):
         emitted = []
         attempts = []
         fail_emit = [emit_accept_then_raise or release_all_publication_failure]
@@ -62,6 +63,13 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 pass
 
             def call(self, operation, lease=None, key=None):
+                if operation == "up_batch":
+                    for item in key:
+                        self.call("up", lease, item)
+                    for row in self.records[-len(key):]:
+                        row.update(release_batch_initial_up_count=len(key),
+                                   release_batch_key_order=list(key))
+                    return None
                 if operation == "down":
                     self.held.add(key)
                     return {"event": "input_admission", "operation": "down", "key": key,
@@ -80,6 +88,16 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                         "owner_sync_returned_ns": 21,
                         "cancel_requested_after_sync": cancel_after_sync,
                         "server_sync_completed": True,
+                        "server_keyup_verified": True,
+                        "server_key_down_after_keyup": False,
+                        "key_state_source": "x11_query_keymap",
+                        "owner_keymap_sampled_ns": 21,
+                        "server_keyup_attempt_count": 1,
+                        "server_keyup_attempts": [{
+                            "attempt": 1, "keyrelease_started_ns": 20,
+                            "sync_returned_ns": 21, "keymap_sampled_ns": 21,
+                            "server_key_down_before": True,
+                            "server_key_down_after": False}],
                         "physical_verification_authoritative": False,
                     })
                     return None
@@ -108,6 +126,15 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                 return getattr(lease, "intent_token", None)
 
             def call(self, operation, lease=None, key=None):
+                if operation == "up_batch":
+                    self._inner.call(operation, lease, key)
+                    return [{
+                        "event": "input_release_transition", "operation": "up",
+                        "key": item, "owner_id": self.owner_id,
+                        "intent_token": lease.intent_token, "valid_until_ns": lease.deadline,
+                        "release_call_started_ns": 19, "release_call_returned_ns": 22,
+                        "ordinary_release_candidate": True,
+                    } for item in key]
                 if operation == "up":
                     self._inner.call(operation, lease, key)
                     return {
@@ -147,11 +174,17 @@ class ActualReleaseCompositionTests(unittest.TestCase):
                     self.raw("c", False)
                     return
                 if incomplete_publication_rows:
+                    # Inject a complete synthetic row set, not a duplicate of
+                    # the independently queued UP from the preceding raw call.
+                    self._release_batch.context["pending_ups"] = []
                     self._release_batch.context["rows"] = [
                         {"event": "input_release_transition", "key": key,
                          "release_batch_step": 0}
                         for key in ("a", "b", "c")
                     ]
+                elif not failure_before_flush:
+                    # This case characterizes an error after a completed UP.
+                    self._flush_pending_ups(self._release_batch.context)
                 raise RuntimeError("later step failed")
 
             def release_all(self):
@@ -172,6 +205,10 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         sys.modules["input_owner_v12"] = low_level
         sys.modules["input_transition_owner_v3"] = transition
         sys.modules["doom_typed_release_backend_v2"] = backend_base
+        # This module may already be imported by another composition test.
+        # Load the exact candidate against this test's explicit fake dependencies.
+        sys.modules.pop('input_transition_owner_v4',None)
+        sys.modules.pop('doom_owner_thread_release_batch_backend_v1',None)
         try:
             owner_v4 = importlib.import_module("input_transition_owner_v4")
             backend = importlib.import_module("doom_owner_thread_release_batch_backend_v1")
@@ -179,7 +216,8 @@ class ActualReleaseCompositionTests(unittest.TestCase):
             self.assertIs(backend.InputOwner, owner_v4.InputOwner)
             candidate = backend.Backend(types.SimpleNamespace(name="display"), None,
                                         emit, {})
-            candidate.lease = types.SimpleNamespace(intent_token="lease-1", deadline=99)
+            candidate.lease = types.SimpleNamespace(intent_token="lease-1", deadline=99,
+                                                    check=lambda: None)
             candidate._input_event_context = ("program-1", 0)
             candidate._release_batch.context = {"rows": [], "identifier": "program-1",
                                                 "step": 0}
@@ -322,6 +360,14 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         self.assertFalse(releases[0]["owner_transition_verified"])
         self.assertFalse(releases[0]["release_batch_complete"])
         self.assertEqual(releases[0]["release_batch_disposition"], "step_exception")
+
+    def test_buffered_up_before_step_exception_is_unknown_not_verified(self):
+        _, releases = self._run(step_exception=True, failure_before_flush=True)
+        self.assertEqual([row["key"] for row in releases], ["a"])
+        self.assertFalse(releases[0]["owner_thread_keyup_verified"])
+        self.assertIsNone(releases[0]["owner_thread_keyup_receipt"])
+        self.assertEqual(releases[0]["release_batch_call_outcome"], "unknown_no_retry")
+        self.assertFalse(releases[0]["release_batch_complete"])
 
     def test_cleanup_exception_publishes_partial_receipt_before_propagating(self):
         _, releases = self._run(cleanup_exception=True)

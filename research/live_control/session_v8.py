@@ -1,7 +1,7 @@
 """Explicit bounded pixel-quiet observation, with no input authority renewal."""
 import time
 from session_v7 import Backend as Previous,suite
-from executor_v3 import Cancelled
+from executor_v3 import Cancelled,DecisionRequired
 from quiet_window import QuietWindow
 
 class Backend(Previous):
@@ -28,10 +28,12 @@ class Backend(Previous):
             if cancel.is_set():raise Cancelled()
             self.snapshot(identifier,index);samples+=1
             now=time.perf_counter_ns()
+            # A slow capture must not turn an exhausted wait into success.
+            if now>=deadline:break
             if quiet.sample((self.decoder.frame,self.observed_focus),now,self.observed_focus not in (None,0,1)):
                 reason='pixel_quiet';break
-            if now>=deadline:break
             if cancel.wait(min(.02,max(0,(deadline-now)/1e9))):raise Cancelled()
         self.emit(dict(event='settle_result',id=identifier,step=index,reason=reason,
             samples=samples,sequence=self.sequence,elapsed_ms=(time.perf_counter_ns()-start)/1e6,
             quiet_ms=step['quiet_ms'],timeout_ms=step['timeout_ms'],semantic_completion='unknown'))
+        if reason=='timeout':raise DecisionRequired('settle did not reach pixel quiet before timeout')

@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_effect_fence_checks_adapter_obligation (test_owned_service_session_selection.OwnedSessionTests.test_effect_fence_checks_adapter_obligation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_service_session_selection.py", line 135, in test_effect_fence_checks_adapter_obligation
+    with self.assertRaises(RuntimeError):namespace['close_before_control_effect'](executor,Path(temp),lambda _:None,'finish')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=1)

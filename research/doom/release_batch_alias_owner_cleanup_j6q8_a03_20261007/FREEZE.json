@@ -1,0 +1,75 @@
+{
+  "schema": "release-batch-alias-owner-cleanup-a01-freeze-v1",
+  "run_id": "j6q8-owner-cleanup-a03-20261007-one-shot",
+  "frozen_at_utc": "2026-10-07T08:39:30Z",
+  "allocation_type": "distinct synthetic construction successor after A02 owner-reference harness STOP; not a live allocation",
+  "base_main": "decc1896e3e85ab2fdbb7ec4678f958eb6561d0f",
+  "H": "When the candidate duplicate-resolved-keycode guard refuses up_batch([a,A]) on the actual V4→V3→V12 InputOwner chain after a was held, the caller can close that owner and obtain a KeyRelease event, verified-empty terminal release receipt, neutral Xvfb keymap, and stopped thread.",
+  "T": "One Xvfb session: admit and hold a, issue guarded up_batch([a,A]) once, observe refusal without a KeyRelease, then call the real V4 owner wrapper close once and inspect X events, server keymap, V12 terminal owner receipt, thread state, and Xvfb exit.",
+  "D": {
+    "PASS_METHOD_SCOPED": "Alias names resolve to one nonzero code; batch refusal occurs before any key-up; the key remains down until owner.close(); close produces the matching KeyRelease, verified empty owner_release(reason=close), neutral keymap, stopped thread, and Xvfb exits zero.",
+    "FAIL": "Candidate completes but any refusal, ordering, cleanup receipt, keymap, event, thread, or server-exit condition is contradicted.",
+    "STOP": "Setup or candidate does not complete with a complete raw record. Preserve first outcome; do not retry or overwrite."
+  },
+  "C": [
+    "Xvfb keymap and XTEST event delivery can validate the owner-thread/backend boundary but do not model a physical keyboard or application consumption.",
+    "The explicit owner.close() call may not be reached by a particular production V39/V15 caller after an exception; caller-specific unwind behavior remains outside this construction."
+  ],
+  "U": [
+    "One deterministic synthetic Xvfb case only; no real desktop, Doom/ViZDoom, model, physical HID, task effect, independently useful feedback, recovery benefit, latency bound, threat exposure, or MAP01 outcome.",
+    "The duplicate resolved-keycode guard exists only in the frozen candidate copy; no production source is modified or adopted.",
+    "This does not prove all V15 backend, V39 controller, or application-level caller cleanup paths, nor satisfy Issue #59's live gate."
+  ],
+  "source_sha256": {
+    "source/main/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "source/main/input_owner_v12.py": "f4c7f00817343c675f889a6f974ff5e2177a9e7ffbe47c0576b5f0174c2da3bc",
+    "source/main/input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "source/main/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "source/guarded/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "source/guarded/input_owner_v12.py": "ac6a58d9ee2094c391ff23819d86c08b9e53e6dc4ef63b89ac0d14a34d6552c5",
+    "source/guarded/input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "source/guarded/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+  },
+  "source_git_blob_ids": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_owner_v12.py": "d11a9b1328bf76e5045022c581d6a9a721bf9585",
+    "research/live_control/input_transition_owner_v3.py": "0a1772d1687d49bd49f048b9d7ba659ed18247a5",
+    "research/live_control/input_transition_owner_v4.py": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55"
+  },
+  "candidate_sha256": "6a0e67d6b692803e8bd6208a9d919a5c0a4a217101e86cd6ff297a1fdd785808",
+  "auditor_sha256": "939ed43d8fe3b22fdea78f665083741bb31291b0da8c91765fc308e3055f1c9f",
+  "guard_delta": "One candidate-only check after resolved-key ownership validation and before keymap query/KeyRelease: reject when resolved codes are non-unique.",
+  "runtime": {
+    "kind": "local Docker private Xvfb container",
+    "image": "issue59-v39-live-env@sha256:b473b61c9dda0fab168f4a2118bd1206676dc6913122a3b9193d423426bc0b84",
+    "platform": "linux/amd64",
+    "python": "3.11.2",
+    "xvfb": "/usr/bin/Xvfb",
+    "python_xlib": "/usr/local/lib/python3.11/dist-packages/Xlib/__init__.py",
+    "network": "none",
+    "cpu_limit": "2 CPUs (observed cgroup cpu.max=200000 100000)",
+    "memory_limit": "4 GiB (observed cgroup memory.max=4294967296)",
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "separate writable directory",
+    "pids_limit": 128,
+    "live_game_or_desktop": "not started or accessed"
+  },
+  "candidate_command": "python3 -B /study/candidate.py --out /out/A03 --display :131",
+  "auditor_command": "python3 -B /study/audit.py --raw /out/A03/RAW.json --freeze /study/FREEZE.json --candidate /study/candidate.py --out /out/A03/AUDIT.json",
+  "one_shot_policy": "Run candidate once. Preserve first raw output whether PASS, FAIL, or STOP. Run raw-only auditor once if raw exists. Never overwrite, retry, or tune after seeing the result.",
+  "preflight": {
+    "source_git_blobs_match_main": true,
+    "candidate_sha256_match": true,
+    "auditor_sha256_match": true,
+    "python_compile": "PASS on Windows CPython 3.13.14",
+    "cached_image_digest_verified": true,
+    "container_preflight": "PASS; Xvfb and Python-Xlib import; network none; CPU/memory cgroups observed",
+    "candidate_executed": false,
+    "raw_output_absent": true,
+    "audit_output_absent": true,
+    "external_output_subdirectory_absent": true
+  },
+  "delta_from_a01": "Only the invocation contract/output destination is corrected: candidate --out receives a fresh, nonexistent directory (/out/A02) under the mounted writable root; candidate implementation, source hashes, guard and decision gates are unchanged.",
+  "delta_from_a02": "Only candidate harness owner reference changes from owner._inner._inner to owner._inner, matching current V4/V3 object composition; candidate test behavior, guarded source, source pins and decision gates unchanged. Output uses fresh /out/A03 directory."
+}

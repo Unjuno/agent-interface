@@ -1,0 +1,43 @@
+test_cancel_blocked_qualified_persistence (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_cancel_blocked_qualified_persistence) ... FAIL
+test_expire_blocked_qualified_persistence (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_expire_blocked_qualified_persistence) ... FAIL
+
+======================================================================
+FAIL: test_cancel_blocked_qualified_persistence (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_cancel_blocked_qualified_persistence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 124, in test_cancel_blocked_qualified_persistence
+    async def test_cancel_blocked_qualified_persistence(self): await self.exercise('qualified', 'cancel', isolated=True)
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 76, in exercise
+    self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_expire_blocked_qualified_persistence (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_expire_blocked_qualified_persistence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 125, in test_expire_blocked_qualified_persistence
+    async def test_expire_blocked_qualified_persistence(self): await self.exercise('qualified', 'expiry', isolated=True)
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 76, in exercise
+    self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 2 tests in 4.965s
+
+FAILED (failures=2)

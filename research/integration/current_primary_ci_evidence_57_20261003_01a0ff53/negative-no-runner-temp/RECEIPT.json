@@ -1,0 +1,23 @@
+{
+  "label": "negative-no-runner-temp",
+  "argv": [
+    "/bin/bash",
+    "-c",
+    "set -euo pipefail\n: \"${RUNNER_TEMP:?}\" \"${GITHUB_ENV:?}\"\nPRIMARY_FAILURE_EVIDENCE=\"$(mktemp -d \"$RUNNER_TEMP/primary-failure-order.XXXXXX\")\"\nexport PRIMARY_FAILURE_EVIDENCE\nprintf 'PRIMARY_FAILURE_EVIDENCE=%s\\n' \"$PRIMARY_FAILURE_EVIDENCE\" >> \"$GITHUB_ENV\"\n"
+  ],
+  "cwd": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/source",
+  "pid": 8137,
+  "started_utc": "2026-10-03T11:05:09.975872+00:00",
+  "ended_utc": "2026-10-03T11:05:09.979666+00:00",
+  "actual_exit": 1,
+  "environment_delta": {
+    "RUNNER_TEMP": null,
+    "GITHUB_ENV": "<OWN_WORKSPACE>/work/current-primary-ci-entry-v3/github-env.txt",
+    "PRIMARY_FAILURE_EVIDENCE": null,
+    "PATH": "<PRIVATE_PATH_WITH_PINNED_NODE_FIRST>"
+  },
+  "stdout_bytes": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_bytes": 58,
+  "stderr_sha256": "7d3cdc4f75d0f6f023bc004c6ecac5e9f880b9e7880e1cfe5e0698b06b87f4f4"
+}

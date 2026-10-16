@@ -1,0 +1,31 @@
+import hashlib,json,sys,unittest
+from pathlib import Path
+REPO=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+sys.path[:0]=[str(REPO/'research/live_control'),str(REPO/'research/doom'),str(REPO)]
+
+
+def main():
+    names=['test_owned_owner_backend_adapter','test_doom_typed_release_backend_v2','test_doom_typed_release_backend_v3',
+        'test_release_backend_v3_actual_composition','test_input_transition_owner_v4','test_input_owner_cancel_v4',
+        'test_owned_owner_executor_boundary','test_input_owner_process_v3','test_input_owner_rpc_v2',
+        'test_map01_process_identity_backend','test_input_owner_v12_process_identity',
+        'test_input_owner_v12_explicit_up_cancel','test_executor_v12_owner_release_rpc_failure']
+    result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromNames(names))
+    pins={}
+    for module in list(sys.modules.values()):
+        filename=getattr(module,'__file__',None)
+        if filename:
+            path=Path(filename).resolve()
+            if path.is_relative_to(REPO) and path.is_file() and path.suffix=='.py':
+                pins[path.relative_to(REPO).as_posix()]=hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    groups={'adapter_rows':'test_owned_owner_backend_adapter','cancel_rows':'test_input_owner_cancel_v4',
+        'boundary_rows':'test_owned_owner_executor_boundary','process_rows':'test_input_owner_process_v3','rpc_rows':'test_input_owner_rpc_v2'}
+    report=dict(modules=names,tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),
+        source_sha256_lf=pins,optimize=sys.flags.optimize,python=sys.version)
+    report.update({key:sys.modules[name].ROWS for key,name in groups.items()})
+    Path(sys.argv[1]).write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({key:value for key,value in report.items() if key not in (*groups,'source_sha256_lf')}))
+    raise SystemExit(not result.wasSuccessful())
+
+
+if __name__=='__main__':main()

@@ -1,0 +1,88 @@
+[
+  {
+    "control": "baseline",
+    "mode": "normal",
+    "command": [
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\control_compiled_form_guarded.py",
+      "baseline"
+    ],
+    "started_utc": "2026-10-15T22:15:58.922133+00:00",
+    "ended_utc": "2026-10-15T22:15:59.151103+00:00",
+    "returncode": 1,
+    "result": {
+      "control": "baseline",
+      "methods": 7,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 0,
+      "pid": 47276,
+      "optimize": 0
+    }
+  },
+  {
+    "control": "baseline",
+    "mode": "optimized",
+    "command": [
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+      "-O",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\control_compiled_form_guarded.py",
+      "baseline"
+    ],
+    "started_utc": "2026-10-15T22:15:59.151140+00:00",
+    "ended_utc": "2026-10-15T22:15:59.372073+00:00",
+    "returncode": 1,
+    "result": {
+      "control": "baseline",
+      "methods": 7,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 0,
+      "pid": 16144,
+      "optimize": 1
+    }
+  },
+  {
+    "control": "drop_submit_gate",
+    "mode": "normal",
+    "command": [
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\control_compiled_form_guarded.py",
+      "drop_submit_gate"
+    ],
+    "started_utc": "2026-10-15T22:15:59.372101+00:00",
+    "ended_utc": "2026-10-15T22:15:59.569982+00:00",
+    "returncode": 1,
+    "result": {
+      "control": "drop_submit_gate",
+      "methods": 7,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "pid": 31868,
+      "optimize": 0
+    }
+  },
+  {
+    "control": "drop_submit_gate",
+    "mode": "optimized",
+    "command": [
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+      "-O",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\control_compiled_form_guarded.py",
+      "drop_submit_gate"
+    ],
+    "started_utc": "2026-10-15T22:15:59.570018+00:00",
+    "ended_utc": "2026-10-15T22:15:59.764520+00:00",
+    "returncode": 1,
+    "result": {
+      "control": "drop_submit_gate",
+      "methods": 7,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "pid": 14900,
+      "optimize": 1
+    }
+  }
+]

@@ -1,0 +1,854 @@
+test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) ...
+  test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=0, sink_accept_before_raise=False) ... FAIL
+  test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=0, sink_accept_before_raise=True) ... FAIL
+  test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=1, sink_accept_before_raise=False) ... FAIL
+  test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=1, sink_accept_before_raise=True) ... FAIL
+  test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=2, sink_accept_before_raise=False) ... FAIL
+  test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=2, sink_accept_before_raise=True) ... FAIL
+test_cancel_during_keyup_sync_fails_closed_through_batch_composition (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_cancel_during_keyup_sync_fails_closed_through_batch_composition) ... FAIL
+test_cleanup_exception_publishes_partial_receipt_before_propagating (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_cleanup_exception_publishes_partial_receipt_before_propagating) ... FAIL
+test_current_v4_wrapper_joins_each_key_admission_to_its_release (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_current_v4_wrapper_joins_each_key_admission_to_its_release) ... FAIL
+test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception) ... ERROR
+test_executor_terminal_retains_actual_backend_delivery_positions (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_executor_terminal_retains_actual_backend_delivery_positions) ... FAIL
+test_incomplete_publication_failure_keeps_row_status_on_original_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_publication_failure_keeps_row_status_on_original_exception) ... ok
+test_incomplete_publication_middle_failure_preserves_positions_on_original_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_publication_middle_failure_preserves_positions_on_original_exception) ...
+  test_incomplete_publication_middle_failure_preserves_positions_on_original_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_publication_middle_failure_preserves_positions_on_original_exception) (sink_accept_before_raise=False) ... FAIL
+  test_incomplete_publication_middle_failure_preserves_positions_on_original_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_publication_middle_failure_preserves_positions_on_original_exception) (sink_accept_before_raise=True) ... FAIL
+test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) ...
+  test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=False) ... FAIL
+  test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=True) ... FAIL
+  test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=False) ... FAIL
+  test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=True) ... FAIL
+  test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=False) ... FAIL
+  test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=True) ... FAIL
+test_release_all_publication_failure_retains_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_release_all_publication_failure_retains_delivery_ledger) ... FAIL
+test_release_all_without_current_batch_does_not_return_prior_program_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_release_all_without_current_batch_does_not_return_prior_program_ledger) ... FAIL
+test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) ...
+  test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=False) ... FAIL
+  test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=True) ... FAIL
+  test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=False) ... FAIL
+  test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=True) ... FAIL
+  test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=False) ... FAIL
+  test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=True) ... FAIL
+test_text_batches_preserve_confirmed_prefix_when_later_sink_fails (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_text_batches_preserve_confirmed_prefix_when_later_sink_fails) ...
+  test_text_batches_preserve_confirmed_prefix_when_later_sink_fails (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_text_batches_preserve_confirmed_prefix_when_later_sink_fails) (sink_accept_before_raise=False) ... FAIL
+  test_text_batches_preserve_confirmed_prefix_when_later_sink_fails (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_text_batches_preserve_confirmed_prefix_when_later_sink_fails) (sink_accept_before_raise=True) ... FAIL
+test_wrong_key_receipt_fails_closed_through_batch_composition (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_wrong_key_receipt_fails_closed_through_batch_composition) ... FAIL
+test_partial_release_batch_is_discarded_on_step_exception (research.doom.test_release_backend_v3_composition.ReleaseBackendCompositionTests.test_partial_release_batch_is_discarded_on_step_exception) ... FAIL
+test_release_batch_preserves_backend_v2_program_step_provenance (research.doom.test_release_backend_v3_composition.ReleaseBackendCompositionTests.test_release_batch_preserves_backend_v2_program_step_provenance)
+Owner-thread receipts stay joinable to the v2 input-admission stream. ... FAIL
+test_candidate_differs_only_by_telemetry_backend_and_its_source_hashes (research.doom.test_session_map01_v13_release_telemetry.SessionReleaseTelemetryCompositionTests.test_candidate_differs_only_by_telemetry_backend_and_its_source_hashes) ... ok
+test_selected_backend_is_the_typed_release_telemetry_v2 (research.doom.test_session_map01_v13_release_telemetry.SessionReleaseTelemetryCompositionTests.test_selected_backend_is_the_typed_release_telemetry_v2) ... ok
+test_inner_game_is_closed_when_final_sample_raises (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_inner_game_is_closed_when_final_sample_raises) ... ok
+test_reentrant_close_during_final_sample_does_not_repeat_cleanup (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_reentrant_close_during_final_sample_does_not_repeat_cleanup) ... ok
+test_repeated_close_reports_the_original_cleanup_failure (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_repeated_close_reports_the_original_cleanup_failure) ... ok
+test_sample_and_cleanup_errors_are_both_grouped (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_sample_and_cleanup_errors_are_both_grouped) ... ok
+test_session_unwind_preserves_controller_sample_and_close_errors (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_session_unwind_preserves_controller_sample_and_close_errors) ... ok
+test_successful_sample_preserves_inner_close_result_and_is_idempotent (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_successful_sample_preserves_inner_close_result_and_is_idempotent) ... ok
+test_wrapped_close_failure_is_replayed_without_a_false_success (research.doom.test_session_map01_v15.GameProxyLifecycleTests.test_wrapped_close_failure_is_replayed_without_a_false_success) ... ok
+test_v15_selects_release_ordered_executor_and_hashes_sources (research.doom.test_session_map01_v15.SessionSelectionTests.test_v15_selects_release_ordered_executor_and_hashes_sources) ... ok
+test_base_exception_fails_terminal_before_propagating_publication_custody (research.live_control.test_executor_v13.ExecutorV13Tests.test_base_exception_fails_terminal_before_propagating_publication_custody) ... ok
+test_cancelled_release_watcher_and_v12_terminal_barrier_share_deduplication (research.live_control.test_executor_v13.ExecutorV13Tests.test_cancelled_release_watcher_and_v12_terminal_barrier_share_deduplication) ... ok
+test_close_reentered_from_accepted_sink_prevents_worker_start (research.live_control.test_executor_v13.ExecutorV13Tests.test_close_reentered_from_accepted_sink_prevents_worker_start) ... ok
+test_focus_surface_and_expiry_publish_before_terminal (research.live_control.test_executor_v13.ExecutorV13Tests.test_focus_surface_and_expiry_publish_before_terminal) ... ok
+test_normal_completion_has_no_release_interruption_event (research.live_control.test_executor_v13.ExecutorV13Tests.test_normal_completion_has_no_release_interruption_event) ... ok
+test_reentrant_close_reports_unverified_release_without_starting_worker (research.live_control.test_executor_v13.ExecutorV13Tests.test_reentrant_close_reports_unverified_release_without_starting_worker) ... ok
+test_reentrant_close_terminal_delivery_unknown_stays_fail_closed (research.live_control.test_executor_v13.ExecutorV13Tests.test_reentrant_close_terminal_delivery_unknown_stays_fail_closed) ... ok
+test_release_all_baseexception_preserves_custody_in_failed_terminal (research.live_control.test_executor_v13.ExecutorV13Tests.test_release_all_baseexception_preserves_custody_in_failed_terminal) ... ok
+test_release_all_unrelated_baseexception_fails_terminal_then_propagates (research.live_control.test_executor_v13.ExecutorV13Tests.test_release_all_unrelated_baseexception_fails_terminal_then_propagates) ... ok
+test_release_sink_error_is_reported_by_terminal_without_retry (research.live_control.test_executor_v13.ExecutorV13Tests.test_release_sink_error_is_reported_by_terminal_without_retry) ... ok
+test_terminal_preserves_measurement_publish_failure_custody (research.live_control.test_executor_v13.ExecutorV13Tests.test_terminal_preserves_measurement_publish_failure_custody) ... ok
+test_terminal_preserves_release_batch_sink_delivery_uncertainty (research.live_control.test_executor_v13.ExecutorV13Tests.test_terminal_preserves_release_batch_sink_delivery_uncertainty) ... ok
+test_worker_and_cleanup_baseexceptions_preserve_both_custody_records (research.live_control.test_executor_v13.ExecutorV13Tests.test_worker_and_cleanup_baseexceptions_preserve_both_custody_records) ... ok
+test_worker_and_successful_cleanup_preserve_both_custody_records (research.live_control.test_executor_v13.ExecutorV13Tests.test_worker_and_successful_cleanup_preserve_both_custody_records) ... ok
+
+======================================================================
+ERROR: test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 320, in test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception
+    self.assertEqual(releases[0]["owner_thread_keyup_receipt"]["key"], "a")
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+FAIL: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=0, sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=0, sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=1, sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=1, sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=2, sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=2, sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_cancel_during_keyup_sync_fails_closed_through_batch_composition (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_cancel_during_keyup_sync_fails_closed_through_batch_composition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 310, in test_cancel_during_keyup_sync_fails_closed_through_batch_composition
+    _, releases = self._run(cancel_after_sync=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 218, in _run
+    candidate.raw(key, False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+======================================================================
+FAIL: test_cleanup_exception_publishes_partial_receipt_before_propagating (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_cleanup_exception_publishes_partial_receipt_before_propagating)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 327, in test_cleanup_exception_publishes_partial_receipt_before_propagating
+    _, releases = self._run(cleanup_exception=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 198, in _run
+    candidate.release_all()
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 164, in release_all
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+======================================================================
+FAIL: test_current_v4_wrapper_joins_each_key_admission_to_its_release (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_current_v4_wrapper_joins_each_key_admission_to_its_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 276, in test_current_v4_wrapper_joins_each_key_admission_to_its_release
+    admissions, releases = self._run()
+                           ^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 218, in _run
+    candidate.raw(key, False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+======================================================================
+FAIL: test_executor_terminal_retains_actual_backend_delivery_positions (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_executor_terminal_retains_actual_backend_delivery_positions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 381, in test_executor_terminal_retains_actual_backend_delivery_positions
+    error, _, _ = self._run(
+                  ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_incomplete_publication_middle_failure_preserves_positions_on_original_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_publication_middle_failure_preserves_positions_on_original_exception) (sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 453, in test_incomplete_publication_middle_failure_preserves_positions_on_original_exception
+    self.assertEqual(error.release_batch_publication, {
+AssertionError: {'sch[76 chars]ze': 4, 'positions': [{'position': 0, 'step': [236 chars]d'}]} != {'sch[76 chars]ze': 3, 'positions': [{'position': 0, 'step': [170 chars]d'}]}
+Diff is 771 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_incomplete_publication_middle_failure_preserves_positions_on_original_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_publication_middle_failure_preserves_positions_on_original_exception) (sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 453, in test_incomplete_publication_middle_failure_preserves_positions_on_original_exception
+    self.assertEqual(error.release_batch_publication, {
+AssertionError: {'sch[76 chars]ze': 4, 'positions': [{'position': 0, 'step': [236 chars]d'}]} != {'sch[76 chars]ze': 3, 'positions': [{'position': 0, 'step': [170 chars]d'}]}
+Diff is 771 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+AssertionError: Lists differ: [{'po[181 chars]ted'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[181 chars]ted'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'unknown', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'not_attempted', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0},
+?                                                                  ^
+
++  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+?                                                                  ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+AssertionError: Lists differ: [{'po[181 chars]ted'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[181 chars]ted'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'unknown', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'not_attempted', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0},
+?                                                                  ^
+
++  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+?                                                                  ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+AssertionError: Lists differ: [{'po[188 chars]ted'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[188 chars]ted'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'unknown', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0},
+?                                                                  ^
+
++  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+?                                                                  ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+AssertionError: Lists differ: [{'po[188 chars]ted'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[188 chars]ted'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'unknown', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0},
+?                                                                  ^
+
++  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+?                                                                  ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+AssertionError: Lists differ: [{'po[195 chars]own'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[195 chars]own'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'confirmed_incomplete', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'unknown', 'step': 0},
+?                                                            ^
+
++  {'key': 'c', 'position': 2, 'state': 'unknown', 'step': 0}]
+?                                                            ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+AssertionError: Lists differ: [{'po[195 chars]own'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[195 chars]own'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'confirmed_incomplete', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'unknown', 'step': 0},
+?                                                            ^
+
++  {'key': 'c', 'position': 2, 'state': 'unknown', 'step': 0}]
+?                                                            ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_release_all_publication_failure_retains_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_release_all_publication_failure_retains_delivery_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 467, in test_release_all_publication_failure_retains_delivery_ledger
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 211, in _run
+    candidate.release_all()
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 164, in release_all
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+======================================================================
+FAIL: test_release_all_without_current_batch_does_not_return_prior_program_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_release_all_without_current_batch_does_not_return_prior_program_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 235, in test_release_all_without_current_batch_does_not_return_prior_program_ledger
+    _, releases, backend = self._run(
+                           ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+======================================================================
+FAIL: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+FAIL: test_text_batches_preserve_confirmed_prefix_when_later_sink_fails (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_text_batches_preserve_confirmed_prefix_when_later_sink_fails) (sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 248, in test_text_batches_preserve_confirmed_prefix_when_later_sink_fails
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 138, in execute
+    self.raw(key, False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+======================================================================
+FAIL: test_text_batches_preserve_confirmed_prefix_when_later_sink_fails (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_text_batches_preserve_confirmed_prefix_when_later_sink_fails) (sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 248, in test_text_batches_preserve_confirmed_prefix_when_later_sink_fails
+    error, attempts, emitted = self._run(
+                               ^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 138, in execute
+    self.raw(key, False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+======================================================================
+FAIL: test_wrong_key_receipt_fails_closed_through_batch_composition (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_wrong_key_receipt_fails_closed_through_batch_composition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 304, in test_wrong_key_receipt_fails_closed_through_batch_composition
+    _, releases = self._run(wrong_key=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 218, in _run
+    candidate.raw(key, False)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+======================================================================
+FAIL: test_partial_release_batch_is_discarded_on_step_exception (research.doom.test_release_backend_v3_composition.ReleaseBackendCompositionTests.test_partial_release_batch_is_discarded_on_step_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_composition.py", line 210, in test_partial_release_batch_is_discarded_on_step_exception
+    self.assertTrue(release["owner_thread_keyup_verified"])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_release_batch_preserves_backend_v2_program_step_provenance (research.doom.test_release_backend_v3_composition.ReleaseBackendCompositionTests.test_release_batch_preserves_backend_v2_program_step_provenance)
+Owner-thread receipts stay joinable to the v2 input-admission stream.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_composition.py", line 120, in test_release_batch_preserves_backend_v2_program_step_provenance
+    backend.execute({"key": "w", "down": False}, None, "program-7", 3)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_composition.py", line 100, in execute
+    result = self.raw(step["key"], step["down"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 237, in raw
+    self._flush_pending_ups(context)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 246, in _flush_pending_ups
+    transitions = self.owner.call(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\doom\test_release_backend_v3_composition.py", line 77, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+----------------------------------------------------------------------
+Ran 40 tests in 0.314s
+
+FAILED (failures=31, errors=1)

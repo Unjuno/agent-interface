@@ -1,0 +1,58 @@
+{
+  "status": "PASS_SAVED_READBACK_ONLY",
+  "archived_changed_paths": 614,
+  "supplemental_sources": 7,
+  "modes": {
+    "normal": {
+      "rows": 7,
+      "source_pins": 46,
+      "rejected_mutations": [
+        "drop_row",
+        "duplicate_row",
+        "restore_identity",
+        "erase_unknown",
+        "erase_second_send",
+        "fabricate_admission"
+      ]
+    },
+    "optimized": {
+      "rows": 7,
+      "source_pins": 46,
+      "rejected_mutations": [
+        "drop_row",
+        "duplicate_row",
+        "restore_identity",
+        "erase_unknown",
+        "erase_second_send",
+        "fabricate_admission"
+      ]
+    }
+  },
+  "frozen_identity_backcheck": [
+    {
+      "allocation": 35,
+      "freeze_id": "V39-X11-SHARED-KEY-SOURCE-A35-20261012-01",
+      "candidate_ids": [
+        "V39-X11-SHARED-KEY-SOURCE-A35-20261012-01"
+      ],
+      "status": "MATCHED_IDENTITY_AND_HASHES_ONLY"
+    },
+    {
+      "allocation": 36,
+      "freeze_id": "V39-XI2-XTEST-CLIENT-SOURCE-A36-20261012-01",
+      "candidate_ids": [
+        "V39-X11-SHARED-KEY-SOURCE-A36-20261012-01"
+      ],
+      "status": "STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH"
+    },
+    {
+      "allocation": 37,
+      "freeze_id": "V39-XVFB-SECOND-DEVICE-HELD-KEY-A37-20261012-01",
+      "candidate_ids": [
+        "V39-X11-SHARED-KEY-SOURCE-A37-20261012-01"
+      ],
+      "status": "STOP_CANDIDATE_FREEZE_ALLOCATION_ID_MISMATCH"
+    }
+  ],
+  "scope": "Archive/identity/source/row checks; not a live experiment or revalidation of all historical outcomes"
+}

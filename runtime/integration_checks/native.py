@@ -46,6 +46,19 @@ SUITES['protocol'].append('test_adaptive_acquisition_diagnostics_93c2')
 SUITES['protocol'].append('test_adaptive_acquisition_failure_metadata_93c2')
 
 SUITES["protocol"].append("test_adaptive_acquisition_caller_verify_progress_v3")
+SUITES["protocol"].append("test_grounding_failure_accounting")
+SUITES["protocol"].append("test_compiled_caller_handoff_v2")
+SUITES["harness"].append("test_compiled_form_guarded_x11")
+SUITES["harness"].append("test_compiled_native_caller_composition")
+SUITES["harness"].append("runtime.guarded_x11_v1.test_compiled_native_dependencies")
+SUITES["harness"].append("test_compiled_observation_cancellation")
+SUITES["protocol"].append("runtime.cli_v1.test_mcp_transport_cancellation")
+SUITES["protocol"].extend([
+    "runtime.core_v1.test_compiled_gui_effect_verifier_exception",
+    "runtime.core_v1.test_compiled_gui_journal_exception",
+    "runtime.core_v1.test_compiled_callback_failure_composition",
+])
+SUITES["harness"].append("test_compiled_callback_caller_failures")
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
