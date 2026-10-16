@@ -1,0 +1,8 @@
+# Producer-side pacing for synchronized dispatch bursts — #8916
+
+- **Status:** Unverified transfer proposal; no allocation or result is recorded.
+- **Source:** Open [Issue #8916](https://github.com/Unjuno/agent-interface/issues/8916).
+- **Idea:** In a finite event-driven simulator, compare immediate dispatch, reactive queue-aware backpressure, and bounded producer-side pacing of independent nonurgent jobs. Preserve dependency order and bypass pacing for urgent or safety-critical work. Count pacing wait in full-path completion latency.
+- **Discriminator:** Hold paired job streams, service times, dependency DAGs, and capacity fixed. Audit per-job arrival/release/start/finish identities; report end-to-end p50/p95/p99, freshness/deadline misses, urgent-job delay, useful completions, and queue size. A simulator-scoped pass requires audited improvements in both p99 and miss fraction against both baselines, with urgent behavior non-inferior and no ordering violation.
+- **Overlap:** #5372 concerns reactive safety-aware backpressure; #6650 concerns persistence-gated suppression of optional observation work; #5694 concerns measurement under closed-loop stalls. #8916 isolates preventive smoothing of synchronized producer bursts while charging its added wait.
+- **Boundary:** The proposal says no live GUI, model, runtime, GPU, or shared-resource use is authorized or needed. Synthetic queue results would not establish real latency, safety, or product benefit. Persistent overload cannot be repaired by pacing.

@@ -59,3 +59,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Censoring-aware verifier ordering](censoring-aware-verifier-ordering.md) — connects #8919's unverified online-learning proposal to the distinct static-order and drift-boundary evidence in #4258/#4733, preserving their limits and audit outcomes.
 
 - [Incremental nonmonotone claim maintenance](incremental-nonmonotone-claim-maintenance.md) — indexes #8917's unverified DRed-versus-rebuild proposal, with explicit completeness/epoch prerequisites and no GUI claim.
+
+- [Producer-side dispatch pacing](producer-side-dispatch-pacing.md) — records #8916's unverified simulator-only comparison against immediate and reactive queue-aware policies.
