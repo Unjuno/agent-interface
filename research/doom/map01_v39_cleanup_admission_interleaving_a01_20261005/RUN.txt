@@ -1,0 +1,16 @@
+Candidate A01 (inconclusive; retained):
+  /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 /Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/admission_interleave_probe.py
+  Exit 0. It set cancellation before return, but owner_state_at_injected_boundary still had keycode 74 down. Do not count its `cleanup_completed_before_down_return` field as verified.
+
+Candidate A02 (verified boundary, superseded head):
+  /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 /Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/admission_interleave_probe_a02.py
+  Candidate head 84148054938965dc245602e37220586e07c6f28e. Exit 0. Two state polls; empty owned state and one owner cleanup record before down call returned; ordered admission/release; empty final fake and bridge states.
+
+Candidate A03 (current pinned head; reported result):
+  /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 /Users/taka/Documents/Codex/2026-10-03/new-chat-6/work/admission_interleave_probe_a03.py
+  Candidate head 39264f167f8f7541aaf10c43d287938b1317f520. Exit 0. Two state polls; empty owned state and one owner cleanup record before down call returned; events input_admission then input_release_measurement; matching F8 context/actuation; empty final fake and bridge states.
+
+Independent audit:
+  /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 research/doom/map01_v39_cleanup_admission_interleaving_a01_20261005/audit.py
+
+Environment: macOS 27.0.1 arm64, Codex bundled CPython 3.12.14. Construction fixture only; no Docker/container, GUI, X11 server, game, model, provider, or physical input.

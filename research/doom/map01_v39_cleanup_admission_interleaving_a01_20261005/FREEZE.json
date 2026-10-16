@@ -1,0 +1,25 @@
+{
+  "classification": "post-run provenance freeze",
+  "question": "Does the PR #7805 candidate preserve admission identity and reconcile bridge state if verified owner cancellation cleanup completes before owner.call(down) returns?",
+  "package_base_main": "16c74566b64f32d7fe035c7724bcfe3865863a91",
+  "candidate_pr": 7805,
+  "candidate_head": "39264f167f8f7541aaf10c43d287938b1317f520",
+  "formal_allocation_invocations": 0,
+  "diagnostic_probe_runs": 3,
+  "authoritative_verified_probe": "A03",
+  "outcome_file": "attempts/A03_PASS_39264f167f_RAW.json",
+  "limitations": [
+    "This freeze records provenance after the diagnostic run; it is not a prospective formal experiment freeze.",
+    "A01 was inconclusive and is retained; A02 was run on superseded candidate head 84148054938965dc245602e37220586e07c6f28e.",
+    "The only PASS claim is a fake-display bridge construction result."
+  ],
+  "artifact_sha256": {
+    "SOURCE_LOCK.json": "d82f956d0be70f3fa258e905a598904cd614dafba843cabe03c9f80561df751e",
+    "attempts/A01_INCONCLUSIVE_RAW.json": "a87503bd4e31dff416f453c744b571b75dcdca2ca86f1333eee7bf25085f602c",
+    "attempts/A02_PASS_8414805493_RAW.json": "07086e9ee78c1c1d9221970b5a9cc712dc58d6cca813f6aa192a72e929a6663e",
+    "attempts/A03_PASS_39264f167f_RAW.json": "8004a8cebeb0e7b1ec883aecb50250110429396d298c87acf9f153a3e9bc06dc",
+    "attempts/A01_probe.py": "91f5800ca179a81fbbb9c804365a12dbcffdc4202fde63e8af50c8531ef87e5d",
+    "attempts/A02_probe.py": "7e7f84fb0b42adc4313ad89ae7893e352ad25b0a1204c7591050dc9491a9e23a",
+    "attempts/A03_probe.py": "4f723739f7716a2e53d1ef9db401cd4540e9b3aa5af9c169b0fcc65c7f44bac0"
+  }
+}
