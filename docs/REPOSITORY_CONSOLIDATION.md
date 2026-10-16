@@ -2,9 +2,11 @@
 
 2026-10-15。対象は `Unjuno/agent-interface` 全体とGitHub Issue/PR。コンピューターコントロールの研究を再び見通せる状態にする。
 
-**2026-10-16更新：** [現在の整理状態・実行順・完了条件](maintenance/consolidation-status-20261016.md)を次の作業の入口とする。
-全件の取得結果はIssue 1,678件、open PR 524件。初回PR 538件との差14件は、直接merge 7件とmergeせず終了7件に分けて照合した。
+**2026-10-16更新（後続棚卸しあり）：** [現在の整理状態・実行順・完了条件](maintenance/consolidation-status-20261016.md)を次の作業の入口とする。
+最新の取得結果はIssue 1,678件、open PR 518件（[r2取得条件](maintenance/inventory-20261016-r2.json)）。
+先行する同日棚卸しはIssue 1,678件、open PR 524件。初回PR 538件との差14件は、直接merge 7件とmergeせず終了7件に分けて照合した。
 stack内のmergeはmain統合とは限らない。#5の未完了状態とcompleted closureの不整合も訂正した。
+後続の6件は保存先を示して旧PRを終了しており、元PRを直接mergeした件数ではない。
 以下の初回棚卸しは履歴として保持し、最新状態や全件レビュー済みの根拠にしない。
 
 ## 到達点
