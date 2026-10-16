@@ -1,0 +1,72 @@
+{
+  "cases": [
+    {
+      "arm_probabilities": {
+        "batch_2": 0.5,
+        "episodic_only": 0.6,
+        "per_episode": 0.5,
+        "terminal": 0.5
+      },
+      "scenario": "episodic_plus_0_10",
+      "structures": [
+        {
+          "dependence_model": "iid_answers",
+          "difference_in_monte_carlo_standard_errors": -0.7498783977925018,
+          "exact_sensitivity_decision_rate": 0.34573707777276896,
+          "monte_carlo_rate": 0.346535,
+          "monte_carlo_standard_error": 0.0010640688271324368,
+          "one_seed_mask_count": 183,
+          "one_seed_probability_sum": 0.999999999999958,
+          "within_five_mc_se": true
+        },
+        {
+          "dependence_model": "perfect_prefix_clusters",
+          "difference_in_monte_carlo_standard_errors": -0.4135381714224545,
+          "exact_sensitivity_decision_rate": 0.497282654970848,
+          "monte_carlo_rate": 0.497745,
+          "monte_carlo_standard_error": 0.001118022618230508,
+          "one_seed_mask_count": 75,
+          "one_seed_probability_sum": 1.0,
+          "within_five_mc_se": true
+        }
+      ]
+    },
+    {
+      "arm_probabilities": {
+        "batch_2": 0.5,
+        "episodic_only": 0.7,
+        "per_episode": 0.5,
+        "terminal": 0.5
+      },
+      "scenario": "episodic_plus_0_20",
+      "structures": [
+        {
+          "dependence_model": "iid_answers",
+          "difference_in_monte_carlo_standard_errors": 0.12670095418875732,
+          "exact_sensitivity_decision_rate": 0.9285979858668431,
+          "monte_carlo_rate": 0.928525,
+          "monte_carlo_standard_error": 0.0005760482808541311,
+          "one_seed_mask_count": 183,
+          "one_seed_probability_sum": 0.9999999999999624,
+          "within_five_mc_se": true
+        },
+        {
+          "dependence_model": "perfect_prefix_clusters",
+          "difference_in_monte_carlo_standard_errors": -1.7979062531890115,
+          "exact_sensitivity_decision_rate": 0.6542304056033534,
+          "monte_carlo_rate": 0.65614,
+          "monte_carlo_standard_error": 0.001062121227544201,
+          "one_seed_mask_count": 75,
+          "one_seed_probability_sum": 1.0,
+          "within_five_mc_se": true
+        }
+      ]
+    }
+  ],
+  "design_sha256": "6fc07363ce71a4ab8e80f6009cd73aeff7a225451305c5581b6803d2d937b3ca",
+  "method": "exact Binomial PMFs and directed-contrast-mask intersections across three seeds",
+  "monte_carlo_input_sha256": "32e78a6b53388ca61ab7d878e5d1e7242e282eb7b269eb243ed23f29613c3b10",
+  "scope": "exact non-null gate probabilities conditional on independent arm/seed Binomial draws; no model or GUI result",
+  "source_sha256": "cb326c528c6d25748c98b6a1b24fdda32deb70a4f618e5c5ddebb08528560f12",
+  "status": "PASS_EXACT_POWER_CROSSCHECK"
+}

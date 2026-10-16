@@ -1,0 +1,15 @@
+{
+  "families": ["common", "rare_exception", "conflict", "history", "heldout"],
+  "queries": [
+    {"id":"q_common_save","family":"common","question":"For document.save in editor/draft/toolbar, what effect is directly supported?","subject":"document.save","scope":{"app":"editor","mode":"draft","surface":"toolbar"},"field":"effect"},
+    {"id":"q_common_paste","family":"common","question":"For sheet.paste in spreadsheet/edit/cell_grid, what effect is directly supported?","subject":"sheet.paste","scope":{"app":"spreadsheet","mode":"edit","surface":"cell_grid"},"field":"effect"},
+    {"id":"q_rare_publish","family":"rare_exception","question":"In editor/publish/toolbar, which effect is forbidden for document.publish?","subject":"document.publish","scope":{"app":"editor","mode":"publish","surface":"toolbar"},"field":"forbidden_effect"},
+    {"id":"q_rare_share","family":"rare_exception","question":"For link.share in browser/share/share_dialog, what observed effect is recorded?","subject":"link.share","scope":{"app":"browser","mode":"share","surface":"share_dialog"},"field":"effect"},
+    {"id":"q_conflict_mode","family":"conflict","question":"What mode is established for document:rev-q4 in editor/review/inspector?","subject":"document:rev-q4","scope":{"app":"editor","mode":"review","surface":"inspector"},"field":"mode"},
+    {"id":"q_conflict_visibility","family":"conflict","question":"What visibility state is established for document:rev-q4 at editor/review/inspector?","subject":"document:rev-q4","scope":{"app":"editor","mode":"review","surface":"inspector"},"field":"visibility"},
+    {"id":"q_history_q8","family":"history","question":"What transition is recorded for document:rev-q8 in its history panel?","subject":"document:rev-q8","scope":{"app":"editor","mode":"review","surface":"history_panel"},"field":"transition"},
+    {"id":"q_history_q10","family":"history","question":"What transition is recorded for document:rev-q10 in its history panel?","subject":"document:rev-q10","scope":{"app":"editor","mode":"review","surface":"history_panel"},"field":"transition"},
+    {"id":"q_heldout_publish_save","family":"heldout","question":"Does document.save in editor/publish/toolbar have a verified effect? Do not transfer the draft result.","subject":"document.save","scope":{"app":"editor","mode":"publish","surface":"toolbar"},"field":"effect"},
+    {"id":"q_heldout_sheet_share","family":"heldout","question":"Does sheet.paste in spreadsheet/share/share_dialog have a verified effect?","subject":"sheet.paste","scope":{"app":"spreadsheet","mode":"share","surface":"share_dialog"},"field":"effect"}
+  ]
+}

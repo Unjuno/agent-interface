@@ -1,0 +1,22 @@
+{
+  "cases": [
+    {
+      "exact_single_pair_three_seed_probability": 0.007836561758752887,
+      "familywise_rate_exceeds_single_pair_lower_bound": true,
+      "monte_carlo_six_pair_familywise_rate": 0.041615,
+      "null_structure": "iid_answers",
+      "one_seed_one_direction_probability": 0.1576516504161289
+    },
+    {
+      "exact_single_pair_three_seed_probability": 0.11610734672285616,
+      "familywise_rate_exceeds_single_pair_lower_bound": true,
+      "monte_carlo_six_pair_familywise_rate": 0.436795,
+      "null_structure": "perfect_prefix_clusters",
+      "one_seed_one_direction_probability": 0.38720703125
+    }
+  ],
+  "limit": "checks only that the six-pair Monte Carlo familywise rates exceed an exact single-pair event; does not independently reproduce the full union probability",
+  "method": "exact binomial PMF and three-seed same-direction probability; no RNG simulation",
+  "simulation_result_sha256": "32e78a6b53388ca61ab7d878e5d1e7242e282eb7b269eb243ed23f29613c3b10",
+  "status": "PASS_SINGLE_PAIR_LOWER_BOUND_SANITY_CHECK"
+}

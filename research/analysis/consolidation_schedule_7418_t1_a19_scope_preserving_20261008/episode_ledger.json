@@ -1,0 +1,17 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A19-SCOPE-PRESERVING-20261008",
+  "episodes": [
+    {"id":"ep01","facts":[{"id":"fact-01","kind":"verified_pattern","subject":"document.save","scope":{"app":"editor","mode":"draft","surface":"toolbar"},"fields":{"effect":"draft_saved"},"source_ids":["src-01"]}]},
+    {"id":"ep02","facts":[{"id":"fact-02","kind":"verified_pattern","subject":"sheet.paste","scope":{"app":"spreadsheet","mode":"edit","surface":"cell_grid"},"fields":{"effect":"cells_updated"},"source_ids":["src-02"]}]},
+    {"id":"ep03","facts":[
+      {"id":"fact-03a","kind":"forbidden_effect_exception","subject":"document.publish","scope":{"app":"editor","mode":"publish","surface":"toolbar"},"fields":{"effect":"no_external_effect","forbidden_effect":"publish"},"source_ids":["src-03a"]},
+      {"id":"fact-03b","kind":"forbidden_effect_exception","subject":"link.share","scope":{"app":"browser","mode":"share","surface":"share_dialog"},"fields":{"effect":"no_external_effect","forbidden_effect":"external_share"},"source_ids":["src-03b"]}
+    ]},
+    {"id":"ep04","facts":[{"id":"fact-04","kind":"fact_observation","subject":"document:rev-q4","scope":{"app":"editor","mode":"review","surface":"inspector"},"fields":{"mode":"draft","visibility":"private"},"source_ids":["src-04"]}]},
+    {"id":"ep05","facts":[{"id":"fact-05","kind":"fact_observation","subject":"document:rev-q4","scope":{"app":"editor","mode":"review","surface":"inspector"},"fields":{"mode":"published","visibility":"listed"},"source_ids":["src-05"]}]},
+    {"id":"ep06","facts":[
+      {"id":"fact-06a","kind":"history_delta","subject":"document:rev-q8","scope":{"app":"editor","mode":"review","surface":"history_panel"},"fields":{"transition":"pending->complete"},"source_ids":["src-06a-before","src-06a-after"]},
+      {"id":"fact-06b","kind":"history_delta","subject":"document:rev-q10","scope":{"app":"editor","mode":"review","surface":"history_panel"},"fields":{"transition":"awaiting->approved"},"source_ids":["src-06b-before","src-06b-after"]}
+    ]}
+  ]
+}
