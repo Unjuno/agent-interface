@@ -22,6 +22,8 @@ offline copyで分類する提案は未実行であり、IssueもOPENのまま�
 別々の問いとして索引へ加えた。
 続けて#8596/#8597/#8613/#8614を本文から確認し、確率的進捗境界、decision-opportunity tail、predicate membership、
 adaptive cohort reuseを別の研究対象として索引化した。
+さらに#8549/#8574/#8577/#8582を本文確認し、人間アラート検出、構造化レビュー、GUI lens-law転送、
+human-agent item functioningの4件を別の未検証案として記録した。
 これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
