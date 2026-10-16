@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r60: preserve the separate Issue #8592 A01/A02 STOP branches (2026-10-17)
+
+Issue #8592's final comment confirms A01 and A02 each stopped before candidate code loaded, were not retried, and remain preserved in immutable branch history; the merged A03 result is a separate method-scoped outcome. The branch inventory now marks both refs as `RETAIN_ISSUE_CITED_SOURCE`. No result was pooled and no allocation was repeated.
+
 ### r59: preserve the distinct Issue #8553 A02 freeze (2026-10-17)
 
 The exact #8553 A02 branch contains the freeze held before formal execution when main advanced (`HOLD_MAIN_ADVANCED_PRE_RUN`, formal counts 0/0/0). The current-main A03 audit reported in open PR #8824 is a separate allocation. The branch ledger now records A02 as `RETAIN_ISSUE_CITED_SOURCE`; no A02 retry or result pooling occurred.
