@@ -63,3 +63,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Telemetry-aware resource allocation](telemetry-aware-resource-allocation.md) — links #8897's unverified noisy-telemetry scheduling proposal to #8488's corrected, deadline-semantics HOLD without implying host-pressure evidence or a WSL policy.
 
 - [GUI macro transfer and translation validation](gui-macro-transfer-validation.md) — separates #8890's appearance/function relation test, #7827's finite A05 result, and #8869's unverified external-interleaving successor.
+
+- [Semantic dependency audit](semantic-dependency-audit.md) — links #8883's bounded black-box discovery proposal with #4233's retained audit-control HOLD and later read-only corrections, without converting them into a PASS.
