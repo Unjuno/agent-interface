@@ -4,6 +4,15 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r11：次の4件のIssue証拠を分類して索引化（2026-10-16）
+
+Issue #7955/#7790/#7773/#7741をGitHubから再読し、既存の先行・後続Issue、正式コメント、関連PRを照合した。
+#7955の合成rank-uncertaintyとminimax fallback、および未検出のoutside-set miss、#7790のchoice-opportunityとscope条件を
+満たす行動由来preference evidence、#7773のmodel-visible candidate-list consumer未発見、#7741の複数allocationを
+分けて`docs/IDEAS_AND_OUTCOMES.md`に記載した。#7741のT0dは32/32のsynthetic seed cellsを通過したが、
+過去T0群の結果も別に残し、現実のadoption/production/user結果へ広げていない。Issue状態はいずれもOPEN。
+本ターンは索引・状態の読み取りのみで、候補やモデル、GUIを実行していない。
+
 ### r10：4件の過去Issueを成果境界つきで索引化（2026-10-16）
 
 Issue #8421/#8341/#8185/#8032の本文・コメントと関連PRをGitHubから再読し、
