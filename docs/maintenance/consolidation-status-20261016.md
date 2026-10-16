@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r35：4件の配分・復帰・学習・失効研究を結果列ごとに索引化（2026-10-17）
+
+#5407の安全性/不足量と公平性のトレードオフ、scarcity-firstの有限FAIL、base-drift STOP、未検証joint-feasibility案を分離。#5404のtyped resumption PASSと未検証cue/overlap課題、#5385のcanonical T0 PASSと未評価T1 STOP、#5361のT0 PASS/T1 gate FAIL/T2 PASSを連続結果として記録した。branch参照も再照合し、remoteに#5407/#5385名の枝はなく、#5407の3 archive tagと#5385の3 archive tagは確認済みtipを指す。実験・runtimeは実行していない。
+
 ### r34：4件のプライバシー・制御・通信研究を整理（2026-10-17）
 
 #5413の3つのfinite construction結果と未解決のruntime-enforcer仮説、#5420のrandomized-response T1とconditional-kernel T0、#5433のconstruction-only/正式未実行、#5907のarchive-level source-eligibility HOLDを区別して索引化した。特に#5907は調査した2 archiveに限る結論とし、全archiveへの一般化を避けた。candidate/model/provider/GUIの新規実行なし。
