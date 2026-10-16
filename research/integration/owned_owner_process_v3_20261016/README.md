@@ -61,7 +61,7 @@ exact LF/CRLF bytes only when matching the originally recorded SHA256 (17 initia
 pass files and13 byte-red files). It is saved-byte recovery, not experiment replay.
 Historical r2/r3/r4 passes have older source pins; only final-r5 copies qualify the
 published runtime. Test-only fsynced Fake edge logging is no production latency
-measurement. SHA256SUMS covers packet members except itself.
+measurement. SHA256SUMS.txt covers packet members except itself.
 
 ## Continuation and repository organization
 
