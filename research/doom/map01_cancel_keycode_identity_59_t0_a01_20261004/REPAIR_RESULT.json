@@ -1,0 +1,103 @@
+{
+  "arms": [
+    {
+      "admission_keycodes": [
+        87,
+        65
+      ],
+      "admissions": [
+        {
+          "admitted_ns": 115162791386400,
+          "event": "input_admission",
+          "input_ack_ns": 115162791389500,
+          "key": "W",
+          "keycode": 87,
+          "valid_until_ns": 115167791352200
+        },
+        {
+          "admitted_ns": 115162791428600,
+          "event": "input_admission",
+          "input_ack_ns": 115162791430000,
+          "key": "A",
+          "keycode": 65,
+          "valid_until_ns": 115167791352200
+        }
+      ],
+      "mapping": {
+        "65": 65,
+        "87": 87
+      },
+      "reason": "cancelled",
+      "release_interval_count": 2,
+      "release_intervals": [
+        {
+          "interval_ns": [
+            115162803147700,
+            115162803151900
+          ],
+          "keycode": 87
+        },
+        {
+          "interval_ns": [
+            115162803150300,
+            115162803151900
+          ],
+          "keycode": 65
+        }
+      ],
+      "release_keycodes": [
+        87,
+        65
+      ],
+      "release_verified": true
+    },
+    {
+      "admission_keycodes": [
+        77,
+        77
+      ],
+      "admissions": [
+        {
+          "admitted_ns": 115162803525500,
+          "event": "input_admission",
+          "input_ack_ns": 115162803527700,
+          "key": "W",
+          "keycode": 77,
+          "valid_until_ns": 115167803496200
+        },
+        {
+          "admitted_ns": 115162803562600,
+          "event": "input_admission",
+          "input_ack_ns": 115162803564000,
+          "key": "A",
+          "keycode": 77,
+          "valid_until_ns": 115167803496200
+        }
+      ],
+      "mapping": {
+        "65": 77,
+        "87": 77
+      },
+      "reason": "cancelled",
+      "release_interval_count": 1,
+      "release_intervals": [
+        {
+          "interval_ns": [
+            115162819336900,
+            115162819341000
+          ],
+          "keycode": 77
+        }
+      ],
+      "release_keycodes": [
+        77
+      ],
+      "release_verified": true
+    }
+  ],
+  "baseline_git_blob": "da1a0b496572f3b853a84a94451e6824369a49b0",
+  "candidate_source_sha256": "b874e5aa0efaac46a039d644f11e56d9753eca60c2bbb4eaa09757a29c5d68a4",
+  "mutation": "add resolved keycode to input_admission receipt",
+  "schema": "map01-cancel-keycode-identity-repair-t0-v1",
+  "scope": "one-line source mutation under fake Xlib; no live input or game"
+}
