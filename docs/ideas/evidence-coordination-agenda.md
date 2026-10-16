@@ -50,10 +50,35 @@ GUI, provider, or authority changes.
   causal observation/action/effect lineage; #8587 reconciles event ledgers with
   source traces. Their estimands remain distinct from delegation membership.
 
+## 3. Multi-source event-trace reconciliation — #8587
+
+- **Status:** A01 `PASS_METHOD_SCOPED` on a finite authored fixture; open PR
+  [#8747](https://github.com/Unjuno/agent-interface/pull/8747) remains
+  OPEN/DIRTY. No real GUI source-completeness or effect claim is established.
+- **Observed result:** The one-shot candidate and independent raw-only auditor
+  each exited 0 with no retries. On 15 cases, the auditor localized all eight
+  identifiable boundary faults, retained missing-correlation and incomplete-
+  coverage cases as UNKNOWN, and made zero false localizations on five benign
+  controls. Cross-source reconciliation found 8 faults, compared with 1 for
+  client-ledger-only and 0 for final-state-only comparison; concurrent source-
+  order inversion remained incomparable. All five frozen mutations were
+  rejected.
+- **Interpretation:** This supports only the frozen event-fixture method.
+  Source disagreement localizes a measurement boundary; it does not prove a
+  GUI event stream is complete, establish semantic effect or task success, or
+  grant action authority. The concurrent-order control also rejects invented
+  causal ordering where the source traces provide no relation.
+- **Relations:** #6310 tests source-complete frontiers for a scoped no-change
+  claim; #2722 tests reactive event lineage under timing/focus faults; #2317
+  tests mediated dependency-receipt coverage; #5716 studies workflow
+  conformance under incomplete logs. These address different estimands.
+
 ## Routing
 
-Keep both hypotheses separate unless a future owner freezes a test with the
-same estimand and controls. Neither proposal has an associated PR, branch, or
-experiment result as of this update. Any detected fork or ambiguous membership
-would be evidence about history consistency only, never a grant of action
+Keep these hypotheses and their evidence separate unless a future owner freezes
+a test with the same estimand and controls. Split-view detection and ambiguous
+delegation membership remain unverified, with no associated PR, branch, or
+experiment result. The #8587 result is finite event-fixture evidence only.
+Detected forks, ambiguous membership, and trace discrepancies are evidence
+about history consistency or measurement coverage, never grants of action
 authority.

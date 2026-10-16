@@ -4,6 +4,17 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r54：未索引の評価・観測Issueを中央索引へ接続（2026-10-17）
+
+Issue #8586/#8587/#8631/#8885の本文・結果コメントと関連PRを再照合した。
+`docs/IDEAS_AND_OUTCOMES.md`に結果と適用範囲を追加し、既存の専用ページへ接続した。
+新しい#8885ページはanchor-invariance/overlapを満たす場合に限るwave比較提案を記録し、同一taskのpaired比較優先を保持する。
+#8587の証拠協調agendaには15-case有限結果、5/5 mutation reject、比較器別検出数と非比較可能なGUI境界を追加した。
+#8586のA01/A02は別割当として記載し、#8631はA01 STOP/A02 construction-only/A03 scoped PASSを区別した。
+確認時点で関連PRは#8734 OPEN/DIRTY、#8738 OPEN/UNSTABLE、#8747 OPEN/DIRTY、#8633 MERGED。
+PR #9005はこの更新前のhead `62b1c91ec09c4d9c7b9b73561016b77188e86812`でOPEN/CLEAN、必須checks成功、レビューなし。
+新規実験、Issue投稿、PR merge、関連成果の再実行は行っていない。
+
 ### r53：#8914 open PR worktreeのignored状態を記録（2026-10-17）
 
 登録worktree `/private/tmp/agent-interface-8914-a01` はbranch

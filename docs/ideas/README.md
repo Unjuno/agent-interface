@@ -36,7 +36,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, calibrated soft-signal recovery deadlines (#8024), protective-control diagnosability (#8909), and incremental stratified negative-claim maintenance (#8917), with dependencies, the executed public-path Fake X blocking characterization, and scoped A01 evidence. These source Issues remain open.
 
-- [Evidence coordination and delegation observability](evidence-coordination-agenda.md) — separates split-view detection (#8912) from delegation-membership identifiability (#8915), preserving each unverified method proposal and its relation to existing evidence/trace issues.
+- [Evidence coordination and delegation observability](evidence-coordination-agenda.md) — keeps split-view detection (#8912) and delegation-membership identifiability (#8915) unverified, while preserving #8587's separate finite multi-source trace-reconciliation result and its GUI/source-completeness limits.
 
 - [Claim preservation under runtime loss](claim-preservation.md) — distinguishes fixity, interpretability, auditability, re-execution, and reproduction for #8905; a host-only raw-auditor follow-up is recorded, while the proposed three-package offline test remains unverified.
 
@@ -47,6 +47,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). That agenda also separates finite-sample observation-channel dominance (#8911) from #6678's known-kernel comparison, and keeps image-space Jacobian adaptation (#7765) distinct from #5's safety/recovery contract. Original bodies and provenance are preserved; the three source Issues were reopened after correcting premature consolidation closures.
 
 - [Model coupling and evaluation validity](model-coupling-and-evaluation-agenda.md) — keeps opaque model-behavior stability (#6001), model-by-interface interaction (#6035), revealed information-cost rationalizability (#8907), epistemic-action diagnostics and custody (#8623/#8629/#8635), action-selected cue-reliability feedback (#8654), benchmark-variant transition equivalence (#8920), censored verifier ordering (#8919), budgeted failure discovery (#8914), corrupted-feedback calibration (#8858), evidence-sufficient efficiency measurement (#8859), no-gold effect-checker identifiability (#8887), agreement-conditioned bounded continuation (#9004), and weak-shadow-variable bounds for unresolved route outcomes (#8903), independent-team replication of a frozen route effect (#8870), and neutral context-length effects on GUI decisions (#8856) distinct while connecting their scoped evidence and next tests.
+
+- [Benchmark-wave comparability](benchmark-wave-comparability.md) — records #8885's unverified anchor-invariance-gated comparison between non-identical task waves and its refusal conditions; same-task pairing remains preferred.
 
 - [Human evaluation validity](human-evaluation-validity.md) — preserves the prediction-labeled takeover question (#5935), consent-bounded recording salience (#8022), learning-transfer and user-relative benefit questions (#6600, #6593), their synthetic method limits, and the gates for any future participant study.
 

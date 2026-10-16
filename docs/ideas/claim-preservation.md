@@ -43,7 +43,7 @@ Updated 2026-10-16 from [Issue #8905](https://github.com/Unjuno/agent-interface/
   inconclusive. Three packages cannot establish long-term preservation.
 - **Related work:** #60 (provenance reconstruction), #1945 (evidence hashes
   and audits), #5082 (atomic publication), #3352 (real-experiment merge gate),
-  and #8885 (benchmark-wave comparability). The proposal concerns usability of
+  and [#8885](benchmark-wave-comparability.md) (benchmark-wave comparability). The proposal concerns usability of
   claims under loss of their execution substrate, not replacement of those
   controls.
 
