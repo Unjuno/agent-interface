@@ -485,6 +485,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
+- [`chromium_postsubmit_task_cue_1998_t0_a09_20261009/`](chromium_postsubmit_task_cue_1998_t0_a09_20261009/)
 - [`circuit_rejection_cost_5375_a01_20261004/`](circuit_rejection_cost_5375_a01_20261004/)
 - [`circuit_rejection_cost_5375_a02_20261004/`](circuit_rejection_cost_5375_a02_20261004/)
 - [`claim_disk_recovery_6509_01a0ff58/`](claim_disk_recovery_6509_01a0ff58/)
