@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r39：GTK relevance/transfer系4 Issueの現状と完了境界を整理（2026-10-17）
+
+#2188のsynthetic distribution-shift誤受理、#2492/#2606の未完の8-case transferと#2606 verifierのmissing raw receipts、#2577のmerged scorer-contract修理を区別した。#2577はPR #2581のbounded preflight・7 focused tests・source-only gateが完了しているため、契約修理だけを明記してIssueを閉じた。#2492/#2606はOPENのまま。#2606のallocationを再実行せず、full GTK acceptanceへ昇格していない。
+
 ### r38：MAP01 import-gate系4 Issueの結果境界を索引化（2026-10-17）
 
 #1963/#1967/#2005/#2008のIssue本文、PR状態、workflowコメントを照合した。#1970のsource-only import reproductionは未マージ、#1993はdependency repairの統合後もimport/argv STOPが続き、#2181のbounded gateはlauncher side effectを検出した。後続#2049はlive_control module originとfrozen preflightまでPASSしたが、construction/formalは0。Physical occupancyのPASSは別identityの#1928とfresh replication #2105だけに帰属させ、import-gate修理へ転記していない。4件の記録を`docs/IDEAS_AND_OUTCOMES.md`へ追加し、いずれのallocationも再実行していない。
