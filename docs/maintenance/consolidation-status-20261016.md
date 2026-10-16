@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r69: archive and remove the superseded wake-pipe rescue ref (2026-10-17)
+
+The live branch `rescue/cancel-wake-17d0-20261004` was the head of closed, unmerged PR #7296, with no open PR head/base reference and no registration in the inspected 65-worktree primary clone. Merged PR #8764 already carries the evidence packet on main: all 15 immediate packet-tree entries and their nested tree/blob identities match; main additionally has `.gitattributes`. The exact old tip `1e933698f5d1973a5d4f8c0526f68df1c8720cd7` is preserved by annotated tag `archive/recovered/cancel-wake-17d0-source-20261017`; remote readback verified the peeled SHA and branch absence after an expected-tip deletion. Issue #672's 2026-10-09 retention note predates #7296's closure and #8764's merge, so it remains historical context. The candidate snapshot row now records the disposition. Current remote counts after deletion: 585 branches and 521 open PRs. No experiment was rerun.
+
 ### r68: refresh open-PR-unreferenced branch inventory (2026-10-17)
 
 A direct paginated GitHub REST read returned 586 current remote branches and 521 open PRs. Sixty branches have no head or base ref in those open PRs. The dated [open-PR-unreferenced snapshot](open-pr-unreferenced-branches-20261017.csv) records exact tips and protection bits, and cross-references the 65 worktree registrations in the inspected primary clone. This is a candidate inventory only: closed-PR refs, Issue citations, ownership, content preservation and worktree state outside that clone still require review. In particular, `fix/native-handle-bridge-test-binding-revision-20261017` has a registered local worktree despite having no open PR ref. No branch was deleted.
