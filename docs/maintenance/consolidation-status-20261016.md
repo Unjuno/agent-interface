@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r65: retain the unique Windows rescue test pending owner review (2026-10-17)
+
+The unprotected `rescue/win32-release-retain-7772-currentmain-20261007` tip changes only `runtime/backends/win32_v1/test_integration.py`, whose blob differs from main (`cebb009c` vs `406e63dd`). The branch adds focused release-failure, input-query, session-recovery, and unverified-key-up cases. No PR refs or registered worktree were found in the audit clone. The branch name cites #7772, but current #7772 is an unrelated image-Jacobian study and its record does not establish ownership of this Windows change. Keep the unique test source until ownership/content review identifies its intended destination; do not integrate or delete based on the name alone.
+
 ### r64: preserve and remove the superseded #8186 review branch (2026-10-17)
 
 The passive `review/8186-response-ownership-e0cc-20261007` branch was unprotected, had zero PR head/base refs, and had no registered worktree in the primary audit clone. Its four review blobs exactly match the packet already preserved in PR #9005; the source tip `e06245cb78059086f7f0e7179c1e8fa59ac2bd6f` is also retained by `archive/recovered/review-8186-response-ownership-e0cc-20261017`. The branch was removed after readback. The review's `REQUEST_CHANGES` remains a historical finding on the strict-integer proposal; it is distinct from the superseding merged #8298. The original #7094/#7125/#7140 source branches were not changed, and no experiment was rerun. Remote branch count after deletion: 586.
