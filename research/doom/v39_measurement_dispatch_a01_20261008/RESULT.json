@@ -1,0 +1,33 @@
+{
+  "disposition": "PASS_FUTURE_DISPATCH_CONSTRUCTION_ONLY",
+  "instrumentation_chain": {
+    "input_owner_path": "research/live_control/input_owner_v12.py",
+    "per_key_fields": [
+      "key_release_attempts",
+      "key_release_intervals_ns"
+    ],
+    "release_backend_path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+    "session_path": "research/doom/session_map01_v15.py",
+    "transition_owner_path": "research/live_control/input_transition_owner_v4.py",
+    "typed_backend_path": "research/doom/doom_typed_release_backend_v2.py"
+  },
+  "main_commit": "e627b8954ecfbdd90ccfe35a81441a00d88047c8",
+  "modes": [
+    {
+      "command_arguments_preserved": true,
+      "measurement_session": false,
+      "mode": "default",
+      "report_label": "v12_default",
+      "session": "session_map01_v12.py"
+    },
+    {
+      "command_arguments_preserved": true,
+      "measurement_session": true,
+      "mode": "measurement",
+      "report_label": "v15_scorer_only_per_key_release",
+      "session": "session_map01_v15.py"
+    }
+  ],
+  "schema": "v39-measurement-dispatch-a01-result-v1",
+  "scope": "exact current-main session_command and parser/report expressions; pinned V15 source capability; no session/game/model/GUI/input execution"
+}
