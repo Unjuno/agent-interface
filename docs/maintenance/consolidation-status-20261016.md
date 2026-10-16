@@ -28,6 +28,8 @@ human-agent item functioningの4件を別の未検証案として記録した。
 target–flanker bindingの仮説を各先行Issueと分けて索引化した。
 #8498/#8518/#8522/#8526も本文を照合し、retrieval practice、WSLc session reuse、vignette仮定の検証、
 path-conditioned read-setという別の問いを追加した。
+その後#8618/#8620/#8636/#8675の本文を確認し、cross-task disclosure、execution information、
+rotation-invariant visual feature、version-crossing target continuityを分離して索引に載せた。
 これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
