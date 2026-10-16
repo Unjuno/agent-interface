@@ -1,0 +1,311 @@
+{
+  "cases": 2405,
+  "completion_claim": false,
+  "disposition": "PASS_FINITE_CROSSCHECK_SCOPED",
+  "errors": [],
+  "mutations": [
+    {
+      "after_sha256": "861c7bec15526e4eecdfe681cf72f14873d48bbe35e5b566dc1d54f2f30f991e",
+      "baseline_errors": [],
+      "before_sha256": "136e592b52a355b8eb8f9a258766042e94a00a24fd77df943972b6b36282a878",
+      "changed": true,
+      "errors": [
+        "completion_claim"
+      ],
+      "name": "false_completion",
+      "ordinal": 50,
+      "rejected": true
+    },
+    {
+      "after_sha256": "1f61effef3397d05c3f3380755cc0089d25b9b920ad316fbd48b607d002ce77b",
+      "baseline_errors": [],
+      "before_sha256": "deb37571dcce19b47ee792441f06377e910a10492461805df605ca8d12829dae",
+      "changed": true,
+      "errors": [
+        "minimal_bound"
+      ],
+      "name": "boolean_bound",
+      "ordinal": 2402,
+      "rejected": true
+    },
+    {
+      "after_sha256": "33b31e4877d9a2ccad86eae6bd0b377619837920a86f35d7a44192be9ac76902",
+      "baseline_errors": [],
+      "before_sha256": "9b74159ca13d76d01f1437afbac4037025ab3b1aa708045d017caab3d3d631bd",
+      "changed": true,
+      "errors": [
+        "minimal_bound"
+      ],
+      "name": "understated_bound",
+      "ordinal": 2403,
+      "rejected": true
+    },
+    {
+      "after_sha256": "f6c7e7d49bcf6b83fe6dde3df2188b0573b512ee48134a6ce9eccfa73ef30744",
+      "baseline_errors": [],
+      "before_sha256": "a56b65c63a7d4661d75a051c2894cc5efcd52b425bf475b9a233b787190f8501",
+      "changed": true,
+      "errors": [
+        "full_policy_layers"
+      ],
+      "name": "suppressed_mandatory",
+      "ordinal": 99,
+      "rejected": true
+    },
+    {
+      "after_sha256": "899d5b4319c6d3a8dcefc9d38e083c5df17e9d330b7ce198dfc9f8be537d210b",
+      "baseline_errors": [],
+      "before_sha256": "c568384ce37a860f5d3d7ff54d6a80da7a4937929342108ab1b810519af34e3b",
+      "changed": true,
+      "errors": [
+        "full_policy_layers"
+      ],
+      "name": "enabled_deadend",
+      "ordinal": 2404,
+      "rejected": true
+    },
+    {
+      "after_sha256": "ec3612ebd0f308477c9eb35fe3ec91eb1a244ec2e8364949c41c2847b145efd0",
+      "baseline_errors": [],
+      "before_sha256": "a56b65c63a7d4661d75a051c2894cc5efcd52b425bf475b9a233b787190f8501",
+      "changed": true,
+      "errors": [
+        "graph_recipe"
+      ],
+      "name": "changed_graph_kind",
+      "ordinal": 99,
+      "rejected": true
+    },
+    {
+      "after_sha256": "3e78ba70925e6d0644253af82a5489ea24e8679cb0ce04f1056339d582cc01c3",
+      "baseline_errors": [],
+      "before_sha256": "173348ca007a136079f628fe93152ea7cbe6d73acedf43f1993d5f4c7a02c0c0",
+      "changed": true,
+      "errors": [
+        "status"
+      ],
+      "name": "false_status",
+      "ordinal": 0,
+      "rejected": true
+    },
+    {
+      "after_sha256": "48853efe1f6641355e48bb57124654ec4bde845cf1e9d955e47ec16e3e94ca0a",
+      "baseline_errors": [],
+      "before_sha256": "136e592b52a355b8eb8f9a258766042e94a00a24fd77df943972b6b36282a878",
+      "changed": true,
+      "errors": [
+        "actions"
+      ],
+      "name": "action_claim",
+      "ordinal": 50,
+      "rejected": true
+    },
+    {
+      "after_sha256": "ec06dcdc07354fb1bb26b3b8e94070fc1150f345cf2800c4373263a673f61703",
+      "baseline_errors": [],
+      "before_sha256": "136e592b52a355b8eb8f9a258766042e94a00a24fd77df943972b6b36282a878",
+      "changed": true,
+      "errors": [
+        "filtered_baseline"
+      ],
+      "name": "wrong_baseline",
+      "ordinal": 50,
+      "rejected": true
+    },
+    {
+      "after_sha256": "05b20d002d04c137cefb5e5a2da525fcd61eea9ca89415df76eba0f07056b80f",
+      "baseline_errors": [],
+      "before_sha256": "2907af81015e7edcd9be7477b2aa8a7a96aae54198b9ccde8417ee07250222e8",
+      "changed": true,
+      "errors": [
+        "ordinal"
+      ],
+      "name": "boolean_ordinal",
+      "ordinal": 1,
+      "rejected": true
+    },
+    {
+      "after_sha256": "1b85fe4c0e0ec73f7b2c3580c72f393fe206c2672593c8c8fdd340b0bb5b574d",
+      "baseline_errors": [],
+      "before_sha256": "136e592b52a355b8eb8f9a258766042e94a00a24fd77df943972b6b36282a878",
+      "changed": true,
+      "errors": [
+        "subject_blob"
+      ],
+      "name": "wrong_source",
+      "ordinal": 50,
+      "rejected": true
+    },
+    {
+      "after_sha256": "7974edf780ad992d6050b7b171d622699d38832fddad1b44e0874213c522644a",
+      "baseline_errors": [],
+      "before_sha256": "136e592b52a355b8eb8f9a258766042e94a00a24fd77df943972b6b36282a878",
+      "changed": true,
+      "errors": [
+        "full_policy_layers"
+      ],
+      "name": "removed_layer",
+      "ordinal": 50,
+      "rejected": true
+    }
+  ],
+  "raw_sha256": "a55917a540eacd6ccdbe58f2aeb98b79913d60837779984930dec7ef7966cfb3",
+  "runtime_authority": false,
+  "totals": {
+    "compliant_nonblocking_unbounded": 36,
+    "filtered_false_compliant_supervisor_exists": 1,
+    "filtered_true_no_compliant_supervisor": 96,
+    "policy_proposed": 68,
+    "yielded": 2337
+  },
+  "witnesses": {
+    "compliant_nonblocking_unbounded": {
+      "graph": {
+        "edges": [
+          {
+            "evidence_available": true,
+            "id": "e1",
+            "kind": "C",
+            "safe": true,
+            "source": "q0",
+            "target": "q1"
+          },
+          {
+            "evidence_available": true,
+            "id": "e2",
+            "kind": "U",
+            "safe": true,
+            "source": "q1",
+            "target": "q0"
+          },
+          {
+            "evidence_available": true,
+            "id": "e3",
+            "kind": "C",
+            "safe": true,
+            "source": "q1",
+            "target": "g"
+          }
+        ],
+        "goal_states": [
+          "g"
+        ],
+        "id": "G0064",
+        "start": "q0"
+      },
+      "oracle": {
+        "bound": null,
+        "compliant_nonblocking": true,
+        "filtered_nonblocking": true
+      },
+      "ordinal": 64,
+      "result": {
+        "app_actions": [],
+        "bound": null,
+        "completion_claim": false,
+        "nonblocking_baseline": true,
+        "policy_layers": [],
+        "status": "SAFE_YIELD"
+      }
+    },
+    "filtered_false_compliant_supervisor_exists": {
+      "graph": {
+        "edges": [
+          {
+            "evidence_available": true,
+            "id": "finish",
+            "kind": "C",
+            "safe": true,
+            "source": "q0",
+            "target": "g"
+          },
+          {
+            "evidence_available": true,
+            "id": "dead",
+            "kind": "C",
+            "safe": true,
+            "source": "q0",
+            "target": "d"
+          }
+        ],
+        "goal_states": [
+          "g"
+        ],
+        "id": "D3",
+        "start": "q0"
+      },
+      "oracle": {
+        "bound": 1,
+        "compliant_nonblocking": true,
+        "filtered_nonblocking": false
+      },
+      "ordinal": 2404,
+      "result": {
+        "app_actions": [],
+        "bound": 1,
+        "completion_claim": false,
+        "nonblocking_baseline": false,
+        "policy_layers": [
+          {
+            "allowed_edges": {
+              "q0": [
+                "finish"
+              ]
+            },
+            "remaining": 1
+          }
+        ],
+        "status": "POLICY_PROPOSED"
+      }
+    },
+    "filtered_true_no_compliant_supervisor": {
+      "graph": {
+        "edges": [
+          {
+            "evidence_available": true,
+            "id": "e1",
+            "kind": "C",
+            "safe": true,
+            "source": "q0",
+            "target": "q1"
+          },
+          {
+            "evidence_available": true,
+            "id": "e2",
+            "kind": "U",
+            "safe": false,
+            "source": "q1",
+            "target": "q0"
+          },
+          {
+            "evidence_available": true,
+            "id": "e3",
+            "kind": "C",
+            "safe": true,
+            "source": "q1",
+            "target": "g"
+          }
+        ],
+        "goal_states": [
+          "g"
+        ],
+        "id": "G0078",
+        "start": "q0"
+      },
+      "oracle": {
+        "bound": null,
+        "compliant_nonblocking": false,
+        "filtered_nonblocking": true
+      },
+      "ordinal": 78,
+      "result": {
+        "app_actions": [],
+        "bound": null,
+        "completion_claim": false,
+        "nonblocking_baseline": true,
+        "policy_layers": [],
+        "status": "SAFE_YIELD"
+      }
+    }
+  }
+}
