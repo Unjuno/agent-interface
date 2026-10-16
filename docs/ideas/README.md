@@ -34,6 +34,14 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Epoch-bound transform chain](epoch-bound-transform-chain.md) — distinguishes #8185's non-conclusive A01 packages from #8201's synthetic exact-oracle successor.
+- [Screen-reader handback continuity](screen-reader-handback-continuity.md) — records #8166's AT-state observability hold without inferring state from focus.
+- [WSLc threat-profiled eligibility](wslc-threat-profiled-eligibility.md) — preserves #8150's blind-review disagreement without certifying a runtime as a sandbox.
+- [Persistent counterparty adaptation](persistent-counterparty-adaptation.md) — records #8135's construction-only state and missing isolated runtime preflight.
+- [Checkpoint clairvoyant diagnostic repair](checkpoint-clairvoyant-diagnostic-repair.md) — records #8283's retained-data repair without revising #7466's scientific result.
+- [Held-modifier chord composition](held-modifier-chord-composition.md) — preserves #8252's remaining paced-text prefix gap after the initial merged refusal fix.
+- [Typed-observation NaN elapsed](typed-observation-nan-elapsed.md) — records #8249's confirmed malformed-metadata gap and unmerged patch.
+- [Empty-event-index fast path](empty-event-index-fast-path.md) — records #8244's merged change and scoped hosted regression evidence.
 - [State-conditioned observation omission](state-conditioned-observation-omission.md) — indexes #8397's distinct A01 protocol deviation and A02 finite trace result.
 - [Carbon-window byte-bound replay](carbon-window-bytebound-replay.md) — preserves #8386 A05's exact-byte replay and the unresolved A04 metadata mismatch.
 - [Matched-context fixture integrity](matched-context-fixture-integrity.md) — carries #8313/#8341/#8353's successive auditor gates without promoting the invalid A02 gate.
