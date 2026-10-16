@@ -16,8 +16,9 @@ class Backend(Previous):
         self._executor_custody_owner = None
         self._executor_release_obligation = None
         super().__init__(session, out, emit, signal_readers)
-        self.owner.close()
-        self.owner = InputOwner(session.name)
+        if getattr(self,'_provided_input_owner',None) is None:
+            self.owner.close()
+            self.owner=InputOwner(session.name)
         self._release_batch = threading.local()
         self._last_release_batch_delivery = None
 

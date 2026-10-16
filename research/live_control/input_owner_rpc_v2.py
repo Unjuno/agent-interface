@@ -20,7 +20,7 @@ RESPONSE = 'input-owner-rpc-response-v2'
 MAX_FRAME = 1_048_576
 MAX_REQUESTS = 256
 MAX_LEASES = 64
-OPERATIONS = frozenset({'down', 'up', 'up_batch', 'release', 'input_state', 'close'})
+OPERATIONS = frozenset({'down', 'up', 'up_batch', 'release', 'input_state', 'surface_context', 'close'})
 KEYS = frozenset({'Left', 'Right', 'Up', 'Down', 'a', 'd', 'e', 'space', 'Shift_L'})
 LEASE_FIELDS = frozenset({'deadline_ns', 'intent_token', 'expected_focus', 'expected_surface',
     'expected_geometry', 'cancel_requested', 'focus_invalid', 'target_process_identity',
@@ -204,6 +204,9 @@ def _request(value, expected_id, service_id):
         if (type(key) is not list or not key or any(type(k) is not str or k not in KEYS for k in key)
                 or len(key) != len(set(key))):
             raise ValueError('unique allowlisted key batch required')
+    elif op=='surface_context':
+        if dto is not None or type(key) is not int or not 1<key<2**32:
+            raise ValueError('read-only non-root client XID and no lease required')
     elif key is not None:
         raise ValueError('unexpected key payload')
     if op == 'close' and dto is not None:
@@ -326,6 +329,11 @@ class OwnerRpcClient:
                 if not response['ok'] or response['error'] is not None:
                     raise RpcOutcomeUnknown('remote operation failed; input/cleanup may be partial',
                                             records=self._records, remote_error=response['error'])
+                if op=='surface_context':
+                    geometry=response['result']
+                    if (type(geometry) is not list or len(geometry)!=4
+                            or any(type(v) is not int for v in geometry) or geometry[2]<=0 or geometry[3]<=0):
+                        raise ValueError('read-only surface geometry invalid')
                 if op == 'close':
                     _validate_close_result(response['result'], self._records, self.display, self.service_id)
                     self._close_result = self._unverified_close_result()

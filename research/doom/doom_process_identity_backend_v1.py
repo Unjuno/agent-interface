@@ -11,30 +11,57 @@ from executor_v3 import DecisionRequired
 
 
 class Backend(Previous):
-    def __init__(self, session, out, emit, signal_readers, *, window_lifecycle=False):
+    def __init__(self, session, out, emit, signal_readers, *, window_lifecycle=False,owner_service=None):
         if type(window_lifecycle) is not bool:
             raise ValueError('window_lifecycle must be boolean')
+        if owner_service is not None and window_lifecycle:
+            raise ValueError('external window lifecycle transfer is not qualified')
+        self._provided_input_owner=None
         self._external_emit = emit
         self._capture_samples = None
         self._source_identity = None
         self._source_window_identity = None
-        self.window_identity = IdentityReader(session.name) if window_lifecycle else None
-        self.capture_identity = IdentityReader(session.name)
+        self.window_identity=self.capture_identity=None
         try:
+            if owner_service is not None:
+                from input_owner_service_adapter import OwnedOwnerAdapter
+                self._provided_input_owner=OwnedOwnerAdapter(owner_service,display=session.name)
+            self.window_identity = IdentityReader(session.name) if window_lifecycle else None
+            self.capture_identity = IdentityReader(session.name)
             super().__init__(session, out, self._emit_identity, signal_readers)
-            self.owner.close()
             options = dict(process_identity=True)
             if window_lifecycle: options.update(window_lifecycle=True, _window_reader=self.window_identity)
-            self.owner = TransitionOwner(session.name, _owner_cls=partial(NativeOwner, **options))
+            if self._provided_input_owner is None:
+                self.owner.close()
+                self.owner=TransitionOwner(session.name,_owner_cls=partial(NativeOwner,**options))
         except BaseException as error:
-            self.capture_identity.close()
-            if self.window_identity is not None: self.window_identity.close()
-            if hasattr(self, 'owner'):
-                try:
-                    self.owner.close()
-                except BaseException as cleanup_error:
-                    error.add_note('identity backend startup cleanup failed: ' + type(cleanup_error).__name__)
+            from input_owner_rpc_v2 import _run_cleanups
+            if owner_service is not None:error.owner_service_handle=owner_service
+            closers=[reader.close for reader in (self.capture_identity,self.window_identity) if reader is not None]
+            owner=getattr(self,'owner',None) or self._provided_input_owner
+            if owner is not None:closers.append(owner.close)
+            try:_run_cleanups(*closers)
+            except BaseException as cleanup:
+                if owner_service is not None:cleanup.owner_service_handle=owner_service
+                raise
             raise
+
+    def validate(self,steps):
+        if self._provided_input_owner is not None and isinstance(steps,list):
+            if any(isinstance(step,dict) and str(step.get('op','')).startswith('pointer_') for step in steps):
+                raise ValueError('external service pointer operations are not qualified')
+        return super().validate(steps)
+
+    def claim_executor_custody(self,token):
+        if self._provided_input_owner is not None and self._provided_input_owner.obligation_snapshot() is not None:
+            raise ValueError('external owner unresolved; no replacement authority')
+        return super().claim_executor_custody(token)
+
+    def executor_custody_snapshot(self):
+        result=super().executor_custody_snapshot()
+        if self._provided_input_owner is not None:
+            result['owner_service_obligation']=self._provided_input_owner.obligation_snapshot()
+        return result
 
     def binding(self):
         value = super().binding()
@@ -99,8 +126,13 @@ class Backend(Previous):
         lease.expected_focus = binding['focus']
         lease.expected_surface = binding['surface']
         lease.expected_geometry = deepcopy(binding['geometry'])
+        if self._provided_input_owner is not None:self._provided_input_owner.bind_lease(lease)
 
     def close(self):
-        self.capture_identity.close()
-        if self.window_identity is not None: self.window_identity.close()
-        return super().close()
+        from input_owner_rpc_v2 import _run_cleanups
+        result=[]
+        def close_owner():result.append(self.owner.close())
+        closers=[reader.close for reader in (self.capture_identity,self.window_identity) if reader is not None]
+        closers.append(close_owner)
+        _run_cleanups(*closers)
+        return result[0]

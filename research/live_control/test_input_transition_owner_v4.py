@@ -78,6 +78,7 @@ class OwnerReceiptJoinTests(unittest.TestCase):
         transition_module.InputOwner = Previous
         saved_owner = sys.modules.get("input_owner_v12")
         saved_transition = sys.modules.get("input_transition_owner_v3")
+        saved_candidate = sys.modules.pop('input_transition_owner_v4',None)
         sys.modules["input_owner_v12"] = owner_module
         sys.modules["input_transition_owner_v3"] = transition_module
         sys.path.insert(0, str(HERE))
@@ -93,6 +94,7 @@ class OwnerReceiptJoinTests(unittest.TestCase):
         finally:
             sys.path.remove(str(HERE))
             sys.modules.pop("input_transition_owner_v4", None)
+            if saved_candidate is not None:sys.modules['input_transition_owner_v4']=saved_candidate
             if saved_owner is None:
                 sys.modules.pop("input_owner_v12", None)
             else:
