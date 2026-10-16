@@ -156,3 +156,28 @@ successor composition, current-main implementation and retained source ref.
 
 The closed PR head retains the exact source commit for review and recovery; no
 tag push or source rerun was needed.
+
+## Retained Win32 release-tracking rescue branch
+
+Keep `rescue/win32-release-retain-7772-currentmain-20261007` pending an
+explicit resolution of the source proposal and its custody decision. Do not
+delete or merge it based only on the presence of newer, similarly named tests
+in main.
+
+- Current branch tip is `0d05169be4f937e534aa6c2c6abd6027d87c12ec`; the branch
+  exists remotely. It has no open PR of its own. The direct source proposal is
+  closed unmerged [PR #7169](https://github.com/Unjuno/agent-interface/pull/7169),
+  whose retained head is `bee11a6ac5cd67c13515a21edf7cc91766de2ecd`.
+- The PR proposed five regressions for retaining Win32 input tracking across
+  healthy, persistent, eventually-cleared, query-exception and send-exception
+  cases. Its proposal explicitly required distinct nonauthor agreement and
+  current-tree qualification; closure without merge does not establish either.
+- The earlier #672 custody note explicitly said to preserve this rescue branch
+  until its unique test coverage was proven elsewhere. Current main has newer
+  release-ledger tests, including query/send exception preservation and
+  persistent-down behavior, but the original test entry and all five named
+  cases were not established as a complete equivalent port in this review.
+  Similar behavior is not enough to overturn the explicit preserve decision.
+- No deletion or source execution was performed. Revisit only after recording
+  an evidence-backed coverage mapping and resolving the original proposal's
+  governance/custody conditions.
