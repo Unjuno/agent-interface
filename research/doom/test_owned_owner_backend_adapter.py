@@ -76,7 +76,7 @@ class OwnedBackendTests(unittest.TestCase):
         from input_owner_service_adapter import OwnedOwnerAdapter
         adapter=OwnedOwnerAdapter.__new__(OwnedOwnerAdapter)
         adapter._lock=threading.RLock();adapter._obligation=None;adapter._records=[]
-        adapter._attempted=set();adapter._leases={};adapter._close_result=None;adapter._closed=False;adapter._closing=False
+        adapter._attempted=set();adapter._leases={};adapter._bindings={};adapter._close_result=None;adapter._closed=False;adapter._closing=False
         adapter.owner_id='inert-owner';adapter.service_id='inert-service';adapter.timeout=.1;adapter.close_timeout=.1
         adapter.client=NS(close=lambda:{'verified':True},call=lambda *_:{'verified':False},records=[])
         adapter.control=NS(close=lambda:None,outcomes={})
@@ -147,6 +147,32 @@ class OwnedBackendTests(unittest.TestCase):
             self.assertEqual(send.call_count,1)
         ROWS.append(dict(case='surface-validation',invalid_xids_refused=5,bad_geometry_quarantined=True,
                          sends=1,scope='inert framing; no socket/process'))
+
+    def test_full_program_rejects_remote_unsupported_keys_before_authority(self):
+        backend=Backend.__new__(Backend);backend._provided_input_owner=object()
+        rejected=[]
+        for step in ({'op':'key','key':'q'},{'op':'hold','keys':['q'],'duration_ms':5},
+                     {'op':'chord','modifier':'Control_L','key':'a'},{'op':'text','text':'a/q'}):
+            with self.subTest(step=step),self.assertRaises(ValueError):
+                backend.validate([{'op':'hold','keys':['a'],'duration_ms':5},step])
+            rejected.append(step)
+        backend.validate([{'op':'key','key':'a'},{'op':'text','text':'a a'}])
+        ROWS.append(dict(case='program-capabilities',rejected=rejected,supported_validate=True,scope='pure validation; no process'))
+
+    def test_bound_source_cannot_be_relabelled_before_ordinary_send(self):
+        from test_input_owner_process_v3 import make_lease
+        rejected=[]
+        for field in ('target_process_identity','deadline','intent_token'):
+            adapter=self.inert_adapter();adapter.control.watch=lambda _:None
+            lease=make_lease();adapter.bind_lease(lease)
+            if field=='target_process_identity':lease.target_process_identity=(1,41,'b'*64,lease.deadline)
+            elif field=='deadline':lease.deadline+=1
+            else:lease.intent_token='relabelled'
+            with patch.object(adapter.client,'call') as send:
+                with self.subTest(field=field),self.assertRaises(ValueError):adapter.call('down',lease,'a')
+                self.assertEqual(send.call_count,0)
+            rejected.append(field)
+        ROWS.append(dict(case='original-ordinary-binding',rejected=rejected,sends=0,scope='inert bound lease; no process'))
 
     def run_case(self,case):
         with tempfile.TemporaryDirectory() as temp:

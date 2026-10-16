@@ -10,7 +10,7 @@ class OwnedOwnerAdapter:
     def __init__(self,service,*,display,timeout=2,close_timeout=5):
         self.service=service;self.timeout=rpc._timeout(timeout);self.close_timeout=rpc._timeout(close_timeout)
         self._lock=threading.RLock();self._obligation=None;self._records=[];self._attempted=set()
-        self._leases={};self._close_result=None;self._closed=False;self._closing=False;self.client=self.control=None
+        self._leases={};self._bindings={};self._close_result=None;self._closed=False;self._closing=False;self.client=self.control=None
         startup=service.startup
         if (type(startup) is not dict or startup.get('display')!=display
                 or startup.get('cancellation_enabled') is not True):
@@ -66,10 +66,19 @@ class OwnedOwnerAdapter:
                 raise ValueError('external owner has unresolved custody; no new authority')
             self.control.watch(lease)
             self._leases[lease.intent_token]=lease
+            self._bindings[lease.intent_token]=rpc.encode_lease(lease)
 
     def call(self,operation,lease=None,key=None):
         with self._lock:
             if self._closed:raise RuntimeError('external owner adapter closed')
+            if lease is not None:
+                token=getattr(lease,'intent_token',None);expected=copy.deepcopy(self._bindings.get(token))
+                current=rpc.encode_lease(lease)
+                if expected is not None:
+                    for flag in ('cancel_requested','focus_invalid'):expected[flag]=current[flag]
+                if self._leases.get(token) is not lease or expected!=current:
+                    self._retain('original_source_changed',dict(operation=operation,intent_token=token))
+                    raise ValueError('original backend source binding changed; no RPC sent')
             if operation in ('down','up','up_batch'):
                 if self.obligation_snapshot() is not None:raise ValueError('external owner release unverified')
                 token=getattr(lease,'intent_token',None)
@@ -90,8 +99,8 @@ class OwnedOwnerAdapter:
             self._retain('ordinary_release_unverified',result)
         obligation=self.obligation_snapshot()
         if operation=='release' and obligation is not None:
-            return dict(result,verified=False,owner_service_obligation=obligation,
-                        underlying_cleanup_verified=result.get('verified') is True)
+            return dict(result if type(result) is dict else {},verified=False,owner_service_obligation=obligation,
+                        underlying_cleanup_verified=type(result) is dict and result.get('verified') is True)
         return result
 
     def close(self):

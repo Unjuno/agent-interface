@@ -50,7 +50,18 @@ class Backend(Previous):
         if self._provided_input_owner is not None and isinstance(steps,list):
             if any(isinstance(step,dict) and str(step.get('op','')).startswith('pointer_') for step in steps):
                 raise ValueError('external service pointer operations are not qualified')
-        return super().validate(steps)
+        result=super().validate(steps)
+        if self._provided_input_owner is not None:
+            from input_owner_rpc_v2 import KEYS
+            for step in steps:
+                op=step['op'];keys=[]
+                if op=='key':keys=[step['key']]
+                elif op=='hold':keys=step['keys']
+                elif op=='chord':keys=[step['modifier'],step['key']]
+                elif op=='text':keys=['space' if char==' ' else char for char in step['text']]
+                if any(key not in KEYS for key in keys):
+                    raise ValueError('program uses a key outside external owner capabilities')
+        return result
 
     def claim_executor_custody(self,token):
         if self._provided_input_owner is not None and self._provided_input_owner.obligation_snapshot() is not None:
