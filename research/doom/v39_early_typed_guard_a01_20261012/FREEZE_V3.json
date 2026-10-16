@@ -1,0 +1,13 @@
+{
+  "experiment_id": "v39_early_typed_guard_a01_20261012",
+  "candidate": "test_typed_observation_guard_v3.py",
+  "candidate_sha256": "ab9c3d330ec3da03f012a35184f91fad2bcbb7cfc8022f1104577b7e765ca3d7",
+  "main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "source_blobs": {
+    "research/doom/map01_overlap_controller_v39.py": {"git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d", "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607"},
+    "research/live_control/observable_signal_guard_v2.py": {"git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543", "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"}
+  },
+  "runtime": {"wslc": "3.0.1.0", "image": "sha256:4fc7258eb9f2430d573bcbd352fc9851eee6ce96a65ff026274dfb317119bb7b", "network": "none", "cpus": 1, "memory_requested": "512m; not claimed enforced because host cgroup warning"},
+  "decision_rule": "Hard typed health 48 below source-derived hard minimum 51 immediately requires a new decision without input authority; soft typed health 55 preserves policy but does not advance last_pair_sequence until matching same-epoch artifact observation; mismatched epoch or conflicting typed/artifact duplicate fails closed.",
+  "classification": "CONSTRUCTION_ONLY_TYPED_OBSERVATION_MONITOR_BOUNDARY"
+}
