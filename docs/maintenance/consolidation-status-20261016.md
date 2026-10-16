@@ -160,3 +160,12 @@ on publication failure; file success alone never replaces owned-process exit.
 The preceding RPC paragraph records its earlier boundary. The remaining#59 work
 is selected backend/Executor custody, cancellation/telemetry and actual session
 death. This is Fake X construction, with no native/task-effect qualification.
+
+[The actual selected backend/Executor comparison](../../research/integration/owned_owner_executor_boundary_20261016/README.md)
+now rejects metadata-only RPC substitution: parent cancellation releases the
+local owner during a paused worker, but remote input remains pressed in the fixed
+diagnostic window until the worker sends again. Both final cleanup and ordinary
+remote completion succeed, which does not repair independent cancellation.
+Three cells normal/-O,49 source pins and nine saved-record negatives per mode
+preserve this distinction. Next implement the independently serviced intent-bound
+cancellation/cause relay, then explicit backend selection under#59.
