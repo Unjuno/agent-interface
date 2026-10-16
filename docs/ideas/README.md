@@ -49,3 +49,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Effect-indexed semantic deoptimization](effect-indexed-semantic-deoptimization.md) — records #8040's finite cursor-reconstruction PASS while keeping external GUI effects, runtime resumption, and its Draft evidence PR unresolved.
 
 - [Failure-episode unitization and linkage uncertainty](failure-episode-unitization-sensitivity.md) — records #7857's synthetic segmentation-sensitivity result and T1 HOLD, plus #8004's distinct joint boundary/linkage result and its Draft evidence PR.
+
+- [Client energy per verified effect](client-energy-per-verified-effect.md) — keeps #7728's macOS sensor HOLD separate from Windows counter-only observations; no matched-route energy result is claimed.
