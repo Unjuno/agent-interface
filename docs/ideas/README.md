@@ -41,3 +41,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Benchmark wave comparability](benchmark-wave-comparability.md) — anchor-gated linking of changed benchmark waves (#8885), subordinate to direct same-task comparisons and preserving per-family and safety outcomes.
 
 - [Assumption-gated evidence acquisition](evidence-acquisition-policy-selection.md) — tests when greedy observation choice is justified and when bounded lookahead is worth its cost (#8879), without granting runtime authority.
+
+- [Counterfactual responsibility for negative queries](negative-query-counterfactual-responsibility.md) — preserves #8624's finite method result and duplicate-allocation boundary while keeping query completeness and live visual applicability separate.
