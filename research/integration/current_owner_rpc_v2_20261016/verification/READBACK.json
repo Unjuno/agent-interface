@@ -1,0 +1,34 @@
+{
+  "status": "PASS_SAVED_SOCKET_FAKE_X_ONLY",
+  "modes": {
+    "normal": {
+      "rows": 22,
+      "source_pins": 46,
+      "rejected_mutants": [
+        "missing-row",
+        "duplicate-row",
+        "lost-source",
+        "second-send",
+        "verified-local-close",
+        "verified-blocked-owner",
+        "hidden-protocol-input",
+        "lost-interrupt"
+      ]
+    },
+    "optimized": {
+      "rows": 22,
+      "source_pins": 46,
+      "rejected_mutants": [
+        "missing-row",
+        "duplicate-row",
+        "lost-source",
+        "second-send",
+        "verified-local-close",
+        "verified-blocked-owner",
+        "hidden-protocol-input",
+        "lost-interrupt"
+      ]
+    }
+  },
+  "limitation": "Single-process socket service/owner threads; no service process, durable receipt, default caller, native or physical timing qualification"
+}

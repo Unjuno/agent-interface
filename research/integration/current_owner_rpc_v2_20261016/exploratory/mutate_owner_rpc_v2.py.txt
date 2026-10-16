@@ -1,0 +1,28 @@
+import ast,importlib.util,json,sys,unittest
+from pathlib import Path
+repo=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+out=Path(__file__).parent
+sys.path[:0]=[str(repo/'research/live_control'),str(repo/'research/doom'),str(repo)]
+source=repo/'research/live_control/input_owner_rpc_v2.py'
+tree=ast.parse(source.read_text(encoding='utf-8'))
+changed=0
+for cls in tree.body:
+    if isinstance(cls,ast.ClassDef) and cls.name=='OwnerRpcClient':
+        method=next(m for m in cls.body if isinstance(m,ast.FunctionDef) and m.name=='call')
+        for node in ast.walk(method):
+            if isinstance(node,ast.Assign) and len(node.targets)==1 and isinstance(node.targets[0],ast.Attribute) and node.targets[0].attr=='_quarantined' and isinstance(node.value,ast.Constant) and node.value.value is True:
+                node.value=ast.Constant(False);changed+=1
+if changed!=1:raise RuntimeError('Mutation target differs')
+raw=ast.unparse(tree)+'\n'
+(out/'owner-rpc-v2-quarantine-mutant.py.txt').write_text(raw,encoding='utf-8')
+spec=importlib.util.spec_from_file_location('input_owner_rpc_v2',source)
+module=importlib.util.module_from_spec(spec)
+sys.modules['input_owner_rpc_v2']=module
+exec(compile(raw,str(out/'owner-rpc-v2-quarantine-mutant.py.txt'),'exec'),module.__dict__)
+import test_input_owner_rpc_v2 as tests
+suite=unittest.TestSuite([tests.OwnerRpcTests('test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner')])
+result=unittest.TextTestRunner(verbosity=2).run(suite)
+report=dict(mutation='remove sticky quarantine assignment from client.call exception path',methods=result.testsRun,assertion_failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),rows=tests.ROWS,expected='test must reject loss of quarantine; may observe a secondary partial-frame parse error after forbidden send')
+(out/'owner-rpc-v2-quarantine-mutant.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({k:v for k,v in report.items() if k!='rows'}))
+if len(result.failures)+len(result.errors)!=4 or result.skipped:raise RuntimeError('Mutation not discriminated in all four faults')
