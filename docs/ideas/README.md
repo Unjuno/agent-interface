@@ -87,3 +87,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Belief-space recovery and predicate synthesis](belief-recovery-and-predicate-synthesis.md) — preserves #8527's pre-run STOP, #8553's scoped result plus audit gap, and #8562's unverified successor under an ownership HOLD.
 
 - [Early-warning signal identifiability](service-early-warning-identifiability.md) — separates #5776's recovery-rate method failure and artifact-integrity hold from #8525's preflight STOP and #8872's unverified disturbance-spacing successor.
+
+- [Controller portfolio and evidence-planning cost](controller-portfolio-and-evidence-planning-cost.md) — keeps #8864's portfolio-cardinality comparison distinct from #8851's topology-guided evidence-action shortlist and exact fallback.
