@@ -102,6 +102,20 @@ oracleは15 traceすべてに一致し、モデル上で安全性を破るprefix
 正確性は仮定であり、Agent Interface runtime、GUI、実測sentinel、診断不能の実環境頻度、
 本番安全性は検証していない。Issueはopenのまま。runtime policyの変更根拠にはしない。
 
+## #8917 stratified negative claimのincremental maintenance
+
+Open Issue #8917 は、absenceやcardinalityに依存するclaimを、evidence rowのinsert/deleteや
+scope不完備の後も正しく更新できるかを問う。#4431のpositive support/cycle deletion、#8624の
+stratified negative-queryに対するcounterfactual responsibility、#2305のより広いlive evidence
+maintenanceとは、問いを分けて保つ。
+
+提案中のT0は有限でdeterministicなCPU-only比較であり、`STRATIFIED_DRED`、full rebuild、
+positive-only support、global invalidationを独立oracleと比較する。claimはscope・epoch・
+completenessへ結び、条件が足りない場合は不在を断言しない。mixed insert/delete、代替positive
+support、modal absence、exactly-one、下流claim、unrelated claim、completeness欠落を扱い、
+stale negative claim、誤retraction、epoch混同、unknown coercionを監査する。Issue本文はこのT0を
+「not yet run」と明記しているため、現時点で結果・性能・GUI動作は主張しない。
+
 ## Issueを閉じる条件
 
 この一覧のIssueは今回の整理では閉じない。各原文の独自の問いと評価軸は残っている。

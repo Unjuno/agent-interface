@@ -34,7 +34,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
-- [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17 and the protective-control diagnosability transfer (#8909), with dependencies, the executed public-path Fake X blocking characterization, and its scoped A01 finite-model result. These source Issues remain open.
+- [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, protective-control diagnosability (#8909), and incremental stratified negative-claim maintenance (#8917), with dependencies, the executed public-path Fake X blocking characterization, and scoped A01 evidence. These source Issues remain open.
 
 - [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). That agenda keeps image-space Jacobian adaptation (#7765) separate from #5's safety/recovery contract and records its confounded T0 and no-gain T0b outcomes. Original bodies and provenance are preserved; the three source Issues were reopened after correcting premature consolidation closures.
 
