@@ -4,6 +4,17 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r14：#8638の統合結果を反映し、A01証拠refは保全（2026-10-16）
+
+索引の#8638は以前「未検証案」のみとしていたため、IssueのA02結果と関連PRを再読して訂正した。
+PR #8740はOPEN / DIRTYで、12 synthetic profiles・192 rows、3組すべての順位反転を独立監査した
+`PASS_METHOD_SCOPED`を記録している。コンテナを使わないmacOS network-deny実行であり、GUI/製品の
+情報価値や実運用への外挿はない。Issue #8638 A01のmissing-raw custody問題はA02と別の結果として残る。
+
+未参照branch `research/8638-split-control-voi-a01-20261008`を再取得すると、mainにない唯一の差分は
+A01 candidate/auditor sourceを含む`experiment.mjs`だった。A01 raw custody問題の再構成に必要なsourceで、
+A02 PR #8740では代替されないため削除せず、監査CSVで固有証拠refとして保持理由を明記した。
+
 ### r13：4件の研究Issueを証拠範囲つきで索引化（2026-10-16）
 
 Issue #7970/#7732/#7707/#7487の本文・全コメントを照合し、関連するPR #8123/#7744/#7507の現状態と
