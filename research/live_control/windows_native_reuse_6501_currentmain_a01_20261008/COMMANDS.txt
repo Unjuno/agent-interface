@@ -1,0 +1,13 @@
+For each target in the committed SHA256SUMS, compare its Git-blob SHA-256.
+PASS: 61/61
+
+For each target in the committed SHA256SUMS_V2, compare its Git-blob SHA-256.
+PASS: 69/69
+
+python research/check_workspace_index.py --git-tree
+PASS: 161 top-level directories reachable
+
+python research/analysis/check_index.py --strict
+PASS: 779 retained result/failure directories indexed
+
+No Windows native allocation, producer, audit helper, or mutation was replayed.
