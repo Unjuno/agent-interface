@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r55: live checkout worktree references for orphan branches (2026-10-17)
+
+The registered worktree metadata in the primary checkout at `/Users/taka/Documents/Codex/2026-10-05/agent-interface-8061-sparse` was compared with the 32 candidate branch names. Six of the 28 remote branches still present have registered worktrees, and all six worktree paths exist: A12 source, A16/A17 source, and the three #8406 T1 checkouts. The [dated worktree readback](unlinked-branch-worktree-readback-20261017.csv) records all candidates and paths. The other 22 present branches have no matching registration in this checkout; that does not prove no worktree exists in another clone. Worktree contents, dirty state, owners, and remaining checkout custody are still unreviewed. No additional branch was deleted.
+
 ### r54：未索引の評価・観測Issueを中央索引へ接続（2026-10-17）
 
 Issue #8586/#8587/#8631/#8885の本文・結果コメントと関連PRを再照合した。
