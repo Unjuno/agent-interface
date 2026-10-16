@@ -8,6 +8,6 @@
 
 **Constraints:** No production behavior changes, GUI/native/game/model/provider/WSL/container/allocation/old producer. Fixed white pixels and injected HUD numbers are fixtures; no OCR/task effect/physical timing claim. Helper/AST+backend composition is not full session or controller main.
 
-- [ ] Add joined tests and child fixture, retain actual wire/capture/owner records and no-input final counterprobes.
-- [ ] Verify normal/-O selected tests, independent decoded-image/authority/order readback and child source/cleanup joins; preserve failures.
+- [x] Add joined tests and child fixture, retain actual wire/capture/owner records and no-input final counterprobes.
+- [x] Verify normal/-O selected tests, independent decoded-image/authority/order readback and child source/cleanup joins; preserve failures.
 - [ ] Review immutable evidence patch and integrate with explicit remaining live/session/economics gates.
