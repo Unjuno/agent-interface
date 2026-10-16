@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orb",
+    "run",
+    "-m",
+    "research-6695-docker-01a0ff52",
+    "-u",
+    "root",
+    "python3",
+    "-c",
+    "import pathlib,tarfile,sys;s=pathlib.Path(sys.argv[1]);o=pathlib.Path(sys.argv[2]);s.mkdir();o.mkdir();o.chmod(0o777);tarfile.open(fileobj=sys.stdin.buffer,mode=\"r|\").extractall(s,filter=\"data\")",
+    "/var/tmp/notification-reentrant-c02-b64b-src",
+    "/var/tmp/notification-reentrant-c02-b64b-out"
+  ],
+  "ended_utc": "2026-10-03T12:41:41.047063+00:00",
+  "pid": 64354,
+  "returncode": 0,
+  "started_utc": "2026-10-03T12:41:40.905854+00:00",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "terminal": true,
+  "timed_out": false
+}
