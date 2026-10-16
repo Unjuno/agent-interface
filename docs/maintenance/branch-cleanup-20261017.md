@@ -61,6 +61,26 @@ The old whole branch is not a current-main candidate. Its PR head preserves
 the exact commit and historical tests while the redundant remote branch name
 is removed.
 
+## Compiled callback receipt handling
+
+Removed the superseded remote branch
+`fix/57-compiled-effect-verifier-receipt-20261005` after verifying that its
+closed PR changes were integrated through a merged successor and its source
+files remain pinned in current main.
+
+| Check | Evidence |
+|---|---|
+| Exact source tip before deletion | `f18c378f1eef3f48ea10207e17eb7f184bb5d8a5` |
+| Branch/PR state | Unprotected branch; [PR #7954](https://github.com/Unjuno/agent-interface/pull/7954) is closed and unmerged with the exact tip as head. No open PR used it as head or base. |
+| Successor | [PR #8985](https://github.com/Unjuno/agent-interface/pull/8985) is merged at `d6121c641ac1e56377e0ebb4bff6fb88d2d66833`. |
+| Evidence custody | Current main contains `research/integration/compiled_callback_convergence_20261016/PR7954_ORIGINAL_FILES.json`, which binds the six original file blobs, and `PR7954_SNAPSHOT.json`, which preserves the original PR body and comments. The six source snapshots are present under `original-pr/`. |
+| Worktree / local checkout | No matching registration in the primary clone and no matching directory in the inspected temporary or Codex workspace paths. |
+| Remote retention after deletion | `git ls-remote origin refs/pull/7954/head` returned the exact tip SHA after the branch ref disappeared. |
+| Final verification | Remote `refs/heads/fix/57-compiled-effect-verifier-receipt-20261005` absent; the closed PR head still points to the source tip. No source run or test was performed for this ref cleanup. |
+
+The merge successor and pinned source archive remain the current integration
+and provenance paths; the branch name was redundant.
+
 ## Reviewed and retained: #8243 verifier freeze
 
 The branch `fix/8243-verifier-r2p6-20261006` remains because it is an Issue/PR-
