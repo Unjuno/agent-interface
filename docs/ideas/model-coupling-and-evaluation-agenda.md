@@ -201,6 +201,30 @@ separate hypotheses and must keep separate evidence and decisions.
   considered. Objective outcomes such as tokens, wall time, and interruptions
   remain separately reported. No study or result is recorded here.
 
+## 9. No-gold identifiability for GUI effect checkers — #8887
+
+- **Status:** Open; A01 earned `PASS_COUNTEREXAMPLE_ONLY`, not a full method
+  pass.
+- **Idea:** Multiple checkers can agree perfectly while their accuracy remains
+  unidentified if their outputs share a common evidence source. Agreement must
+  not be presented as accuracy without justified source-independence or
+  reference evidence.
+- **Evidence:** Draft [PR #8893](https://github.com/Unjuno/agent-interface/pull/8893)
+  records one eight-row counterexample: four checker columns have identical
+  `00001111` outputs and 1.0 pairwise agreement in two hidden worlds with the
+  same 0.5 truth prevalence, but finite-panel correctness is 1.0 versus 0.5.
+  The candidate returned
+  `UNIDENTIFIABLE_WITHOUT_INDEPENDENCE_EVIDENCE`; the independent auditor
+  reconstructed both worlds and rejected 4/4 mutations. Candidate and auditor
+  each ran once; retries were zero.
+- **Boundary:** This single constructed control does not validate a latent-class
+  estimator, quantify sampling uncertainty, or establish real GUI-checker
+  accuracy. The broader factorial proposal in #8887 remains open; no estimate
+  may prove an effect or grant action authority.
+- **Next test:** Any continuation should identify which external source-lineage
+  or independence assumptions can exclude the common-mode world, and when
+  `UNIDENTIFIABLE` must remain the output. No new allocation is claimed here.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
@@ -219,6 +243,9 @@ separate hypotheses and must keep separate evidence and decisions.
    verifier ordering, corrupted-feedback calibration, and evidence-sufficient
    efficiency measurement. Their proposed work is offline and does not alter
    runtime policy.
-6. Return each result to its source Issue and this family map. Preserve all
+6. #8887's A01 is a common-mode counterexample only. Keep the broader no-gold
+   reliability method unvalidated until its assumptions and other regimes are
+   audited.
+7. Return each result to its source Issue and this family map. Preserve all
    earlier STOP, FAIL, HOLD and PASS records; do not close an idea because its
    summary has been written here.
