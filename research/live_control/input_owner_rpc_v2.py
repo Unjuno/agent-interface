@@ -378,7 +378,7 @@ def _close_owner(owner, native, display, service_id, protocol_error):
         physical_verification_authoritative=False)
 
 
-def serve_owner(sock, owner, *, display, service_id, idle_timeout=5):
+def serve_owner(sock, owner, *, display, service_id, idle_timeout=5, lease_registry=None):
     """Serve one explicitly supplied strict owner; EOF closes that same owner.
 
     Return value must be retained by an external supervisor for recovery. This
@@ -403,7 +403,8 @@ def serve_owner(sock, owner, *, display, service_id, idle_timeout=5):
             request = _read_frame(sock, buffer, time.monotonic()+idle_timeout)
             op = _request(request, next_id, service_id)
             next_id += 1
-            lease = decode_lease(request['lease'], leases) if request['lease'] is not None else None
+            lease = ((lease_registry.decode(request['lease']) if lease_registry is not None
+                      else decode_lease(request['lease'], leases)) if request['lease'] is not None else None)
             error = None
             if op == 'close':
                 receipt = _close_owner(owner, native, display, service_id, None)

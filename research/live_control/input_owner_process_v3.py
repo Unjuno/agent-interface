@@ -69,29 +69,41 @@ def _identity(startup):
     return {k:startup[k] for k in ('service_id','display','pid','parent_pid','supervisor_pid','owner_id')}
 
 
-def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory):
+def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory,cancel_channel=None):
     out=Path(out);startup=None;recovery=None;native=None;service_error=None
-    context_ok=False;finish=None
+    context_ok=False;finish=None;relay=None
     try:
         with factory(display=display,out=out,service_id=service_id) as owner:
             native=getattr(owner,'_inner',owner)
+            if cancel_channel is not None:
+                from input_owner_cancel_v4 import CancellationService
+                relay=CancellationService(cancel_channel,display=display,service_id=service_id,owner_id=owner.owner_id)
             startup=dict(schema='owned-owner-startup-v3',service_id=service_id,display=display,
                          pid=os.getpid(),parent_pid=os.getppid(),supervisor_pid=supervisor_pid,
                          owner_id=owner.owner_id,started_perf_ns=time.perf_counter_ns(),
                          python_optimize=sys.flags.optimize,python_version=sys.version,
                          generation_kind='fresh logical launch UUID; no native PID start-time proof',
                          source_sha256_lf=_pins())
+            if relay is not None:startup['cancellation_enabled']=True
             startup_hash=publish_json_exclusive(out/'startup.json',startup)
             ready.send(dict(ok=True,startup=startup));ready.close()
-            try:core=rpc.serve_owner(channel,owner,display=display,service_id=service_id)
+            try:
+                options=dict(lease_registry=relay.registry) if relay is not None else {}
+                core=rpc.serve_owner(channel,owner,display=display,service_id=service_id,**options)
             except BaseException as error:
                 service_error=type(error).__name__+': '+str(error)
                 core=rpc._close_owner(owner,native,display,service_id,service_error)
-            recovery=dict(schema='owned-owner-recovery-v3',identity=_identity(startup),
-                          startup_sha256=startup_hash,core=core,service_error=service_error,
-                          verified=core['verified'] is True and service_error is None,
-                          file_fsync=True,directory_fsync_requested=os.name=='posix')
             try:
+                control_hash=None
+                if relay is not None:
+                    control=relay.close()
+                    if relay.error is not None:service_error=service_error or relay.error
+                    control_hash=publish_json_exclusive(out/'control.json',dict(identity=_identity(startup),control=control))
+                recovery=dict(schema='owned-owner-recovery-v3',identity=_identity(startup),
+                              startup_sha256=startup_hash,core=core,service_error=service_error,
+                              verified=core['verified'] is True and service_error is None,
+                              file_fsync=True,directory_fsync_requested=os.name=='posix')
+                if relay is not None:recovery['control_sha256']=control_hash
                 recovery_hash=publish_json_exclusive(out/'recovery.json',recovery)
             finally:
                 # Publication failure cannot retire unresolved input custody.
@@ -125,6 +137,8 @@ def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory):
             raise BaseExceptionGroup('owner service failure and failure publication failed',[error,publication_error])
         raise
     finally:
+        if relay is not None:relay.close()
+        elif cancel_channel is not None:rpc._detach_socket(cancel_channel)
         rpc._detach_socket(channel)
 
 
@@ -145,6 +159,12 @@ def read_service_receipt(out,expected):
             or type(recovery.get('verified')) is not bool):
         raise ValueError('recovery identity/publication binding differs')
     core=recovery['core']
+    if expected.get('cancellation_enabled') is True:
+        control_raw=(out/'control.json').read_bytes();control=json.loads(control_raw)
+        if (recovery.get('control_sha256')!=hashlib.sha256(control_raw).hexdigest()
+                or control.get('identity')!=identity or control['control'].get('thread_stopped') is not True
+                or (control['control'].get('error') is not None and recovery.get('service_error') is None)):
+            raise ValueError('cancellation control custody binding differs')
     rpc._validate_close_result(core,core['release_records'],expected['display'],expected['service_id'])
     if recovery['verified'] is not (core['verified'] is True and recovery.get('service_error') is None):
         raise ValueError('recovery verification contradicts core outcome')
@@ -174,6 +194,7 @@ class OwnedOwnerService:
         self.process=process;self._channel=channel;self.out=Path(out)
         self.service_id=service_id;self.supervisor_pid=supervisor_pid
         self._startup=None;self._taken=False
+        self._cancel_channel=None;self._cancel_taken=False
     @property
     def startup(self):return copy.deepcopy(self._startup)
     def take_socket(self):
@@ -182,10 +203,16 @@ class OwnedOwnerService:
         self._taken=True
         return self._channel
     def close_channel(self):
+        if self._cancel_channel is not None:rpc._detach_socket(self._cancel_channel)
         if self._channel is not None:
             try:self._channel.shutdown(socket.SHUT_RDWR)
             except OSError:pass
             self._channel.close()
+    def take_cancellation_socket(self):
+        if self._cancel_taken or self._cancel_channel is None or self._startup is None:
+            raise RuntimeError('cancellation socket unavailable/already transferred')
+        self._cancel_taken=True
+        return self._cancel_channel
     def wait(self,timeout=5):
         timeout=rpc._timeout(timeout)
         if self.process is not None and self.process.pid is not None:
@@ -213,21 +240,25 @@ class OwnedOwnerService:
         return result
 
 
-def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5):
+def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5,cancellation=False):
     """Launch only this owned spawn instance. Never terminate or retry automatically."""
     display=rpc._identity(display);startup_timeout=rpc._timeout(startup_timeout)
+    if type(cancellation) is not bool:raise ValueError('cancellation must be boolean')
     out=Path(out).resolve();out.mkdir(parents=True,exist_ok=False)
     service_id=uuid.uuid4().hex;supervisor_pid=os.getpid()
     handle=OwnedOwnerService(None,None,out,service_id,supervisor_pid)
-    service=parent_ready=child_ready=None
+    service=parent_ready=child_ready=cancel_service=None
     try:
         ctx=multiprocessing.get_context('spawn')
         handle._channel,service=socket.socketpair()
+        if cancellation:handle._cancel_channel,cancel_service=socket.socketpair()
         parent_ready,child_ready=ctx.Pipe(duplex=False)
-        process=ctx.Process(target=_child_entry,args=(service,child_ready,display,out,service_id,
-                             supervisor_pid,_owner_factory or _default_owner),name='owned-input-owner-'+service_id[:8])
+        args=(service,child_ready,display,out,service_id,supervisor_pid,_owner_factory or _default_owner)
+        if cancellation:args=(*args,cancel_service)
+        process=ctx.Process(target=_child_entry,args=args,name='owned-input-owner-'+service_id[:8])
         handle.process=process
         process.start();service.close();child_ready.close()
+        if cancel_service is not None:cancel_service.close()
         if not parent_ready.poll(startup_timeout):raise TimeoutError('owned owner readiness deadline')
         message=parent_ready.recv()
         if type(message) is not dict or message.get('ok') is not True:
@@ -245,7 +276,7 @@ def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5):
         return handle
     except BaseException as error:
         failures=[]
-        closers=[resource.close for resource in (service,child_ready,parent_ready) if resource is not None]
+        closers=[resource.close for resource in (service,child_ready,parent_ready,cancel_service) if resource is not None]
         closers.append(handle.close_channel)
         for close in closers:
             try:close()
