@@ -16,6 +16,13 @@
 #9004は未検証のまま、Issue本文のfinite CPU-only T0条件と比較対象を整理した。
 Issueの状態変更、外部provider/model呼出し、GUI実行は行っていない。
 
+同じバッチで、統合済みPR [#8791](https://github.com/Unjuno/agent-interface/pull/8791)
+のremote branch `fix/primary-release-array-shape-20261009` を回収した。記録tip
+`3884c929435db18855b5ca62e95ca90ceadb52ed` は現行mainの祖先、branchはunprotectedで、
+open/closed PRのhead/base依存はなく、確認した69件のlocal checkoutでも未使用だった。
+正確なtipへの`--force-with-lease`削除後、remote refの不在を確認した。変更内容は
+merge commit `761a26e2cfae611efe97a426ed2555063928b177` とmainに残る。
+
 次は#9004の有限合成T0を独立したsource freeze・candidate・raw-only auditとして実行するか、
 先にIssue群の依存・実行優先を更新して実行先を確定する。#57の統合効率ゲートを押しのけず、
 実モデルT1やremote-model budgetを使わない。並行してPR/branch inventoryを現行状態で再取得し、
