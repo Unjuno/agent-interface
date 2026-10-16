@@ -1,0 +1,915 @@
+{
+  "alpha": "1/10",
+  "endpoint": "verifier_claim_contradicted_by_final_oracle",
+  "protocol": "issue-7993-t0-a01-v1",
+  "snapshots": [
+    {
+      "case_id": "zero_risk_control",
+      "checkpoint": "complete",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1"
+        }
+      },
+      "rows": [
+        {
+          "loss": 0,
+          "row_id": "z1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "z2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "z3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "z4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "zero_risk_control@complete"
+    },
+    {
+      "case_id": "informative_delay_known_bad",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "known_violated",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "informative_delay_known_bad@interim"
+    },
+    {
+      "case_id": "informative_delay_hidden_misspecification",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "informative_delay_hidden_misspecification@interim"
+    },
+    {
+      "case_id": "zero_support_error_stratum",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "common": "1",
+          "rare": "0"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "rare"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "common"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "common"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "common"
+        }
+      ],
+      "snapshot_id": "zero_support_error_stratum@interim"
+    },
+    {
+      "case_id": "delayed_eventually_resolved",
+      "checkpoint": "early",
+      "model": {
+        "independence": "not_verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "delayed_eventually_resolved@early"
+    },
+    {
+      "case_id": "delayed_eventually_resolved",
+      "checkpoint": "late",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "delayed_eventually_resolved@late"
+    },
+    {
+      "case_id": "pending_at_horizon",
+      "checkpoint": "horizon",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "pending_at_horizon@horizon"
+    },
+    {
+      "case_id": "safe_terminal_stop",
+      "checkpoint": "terminal",
+      "model": {
+        "independence": "not_applicable",
+        "known": false,
+        "pi_by_stratum": {}
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "safe_terminal_stop",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "safe_terminal_stop@terminal"
+    },
+    {
+      "case_id": "permanent_loss_unknown_cause",
+      "checkpoint": "horizon",
+      "model": {
+        "independence": "not_verified",
+        "known": false,
+        "pi_by_stratum": {}
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "permanent_loss_unknown_cause",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "permanent_loss_unknown_cause@horizon"
+    },
+    {
+      "case_id": "independent_mask_00",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e2",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e3",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e4",
+          "status": "pending",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_00@interim"
+    },
+    {
+      "case_id": "independent_mask_01",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e2",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e3",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e4",
+          "status": "pending",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_01@interim"
+    },
+    {
+      "case_id": "independent_mask_02",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e3",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e4",
+          "status": "pending",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_02@interim"
+    },
+    {
+      "case_id": "independent_mask_03",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e3",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e4",
+          "status": "pending",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_03@interim"
+    },
+    {
+      "case_id": "independent_mask_04",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e2",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e4",
+          "status": "pending",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_04@interim"
+    },
+    {
+      "case_id": "independent_mask_05",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e2",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e4",
+          "status": "pending",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_05@interim"
+    },
+    {
+      "case_id": "independent_mask_06",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e4",
+          "status": "pending",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_06@interim"
+    },
+    {
+      "case_id": "independent_mask_07",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e4",
+          "status": "pending",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_07@interim"
+    },
+    {
+      "case_id": "independent_mask_08",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e2",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e3",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_08@interim"
+    },
+    {
+      "case_id": "independent_mask_09",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e2",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e3",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_09@interim"
+    },
+    {
+      "case_id": "independent_mask_10",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e3",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_10@interim"
+    },
+    {
+      "case_id": "independent_mask_11",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e3",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_11@interim"
+    },
+    {
+      "case_id": "independent_mask_12",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e2",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_12@interim"
+    },
+    {
+      "case_id": "independent_mask_13",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "row_id": "e2",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_13@interim"
+    },
+    {
+      "case_id": "independent_mask_14",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "row_id": "e1",
+          "status": "pending",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_14@interim"
+    },
+    {
+      "case_id": "independent_mask_15",
+      "checkpoint": "interim",
+      "model": {
+        "independence": "verified",
+        "known": true,
+        "pi_by_stratum": {
+          "all": "1/2"
+        }
+      },
+      "rows": [
+        {
+          "loss": 1,
+          "row_id": "e1",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e2",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e3",
+          "status": "resolved",
+          "stratum": "all"
+        },
+        {
+          "loss": 0,
+          "row_id": "e4",
+          "status": "resolved",
+          "stratum": "all"
+        }
+      ],
+      "snapshot_id": "independent_mask_15@interim"
+    }
+  ]
+}
