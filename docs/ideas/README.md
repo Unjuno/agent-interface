@@ -71,3 +71,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Assistive-technology co-activity](assistive-technology-coactivity.md) — separates #8880's concurrent human/AT non-interference proposal from #5922's presentation-configuration study and its invalidated T0.
 
 - [Validity-preserving trace reduction](validity-preserving-trace-reduction.md) — distinguishes #8878's regenerated valid executions from #5666's frozen-trace delta debugging and preserves its no-replayable-failure HOLD.
+
+- [Constrained interaction-fault diagnosis](constrained-fault-diagnosis.md) — separates #5330's detection result, #8894's fault-set identifiability, #8895's adaptive-versus-fixed cost frontier, and #8898's corruption robustness.
