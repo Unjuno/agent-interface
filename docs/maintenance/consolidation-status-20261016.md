@@ -76,6 +76,12 @@ Issue #6843/#6841/#6838/#6809と正式結果を確認した。#6838 A01のrecurs
 #6843 A03のcorrected audit-only reconciliationを連結しつつ、過去allocationの disposition は維持した。
 #6809 A04のordered-prefix method PASSは#6689系の旧FAIL/STOPと分けて記載した。
 
+### r30：4件のvisual residual・human reliance・fairness・artifact Issueを索引化（2026-10-16）
+
+Issue #6619/#6616/#6613/#6610の正式結果とPRを照合した。#6619 V3 method audit、#6616のconstruction-only HOLD、
+#6613の provenance STOP と別個の二つの有限仮説FAIL、#6610のsynthetic artifact-changeability結果を区別して記録した。
+実利用者、実GUI、live fairness・safetyの証拠には外挿していない。
+
 ### r17：4件のオブジェクト記憶・復旧Issueを索引化（2026-10-16）
 
 Issue #7164/#7163/#7160/#7042を、正式コメントと現行PR状態で照合した。#7164はopen Draft #8216の
