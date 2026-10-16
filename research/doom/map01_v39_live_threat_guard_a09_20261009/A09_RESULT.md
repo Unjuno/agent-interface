@@ -57,3 +57,27 @@ latency-benefit, or generality claim follows.
   feedback was not observed.
 - The experiment allocation was not retried. No game or model was run during
   this audit correction.
+
+## Additive archive-bound custody audit v2
+
+The v1 supplemental reconciliation and its saved `HOLD` result remain intact.
+The additive `audit_live_reconciliation_v2.py` now hashes the sanitized archive
+before reading it, derives the expected cover-cancellation IDs from the archived
+report, and rejects duplicate or missing cancellation, terminal, and release
+identities. It reports `PASS_CUSTODY` for this archive's exact 10/10 cancellation
+set, with 21 unique terminals, six unique release events, and the guard's
+same-token verified-empty release. The v2 output explicitly leaves the
+preregistered research gate unclassified; the allocation remains `HOLD` under
+the original task-effect criterion. The CLI cannot accept a caller-supplied
+useful-feedback flag. No candidate, game, or model was rerun.
+
+The combined A09 custody test modules pass 12/12 in normal and optimized
+Python. Their captured outputs and the v2 audit result are retained under
+`v2-results/` and `A09_AUDIT_RECONCILIATION_V2.json`.
+
+The separate, unchanged `test_preflight_contract` module was also attempted.
+Its checkout-mapping case raises `ValueError` because this review worktree is
+outside the allocation's pinned host mount root
+(`/Users/taka/Documents/Codex/2026-10-09/agent-interface-59-live-threat-guard-a01`);
+the other two preflight tests pass. No live runner or preflight source was
+changed.
