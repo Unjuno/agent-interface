@@ -69,3 +69,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Spatial coordinate risk](spatial-coordinate-risk.md) — distinguishes #8881's probability-mass propagation proposal from #6684's finite relational-bound result and existing point-revalidation work.
 
 - [Assistive-technology co-activity](assistive-technology-coactivity.md) — separates #8880's concurrent human/AT non-interference proposal from #5922's presentation-configuration study and its invalidated T0.
+
+- [Validity-preserving trace reduction](validity-preserving-trace-reduction.md) — distinguishes #8878's regenerated valid executions from #5666's frozen-trace delta debugging and preserves its no-replayable-failure HOLD.
