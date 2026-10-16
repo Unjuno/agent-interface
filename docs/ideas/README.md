@@ -38,7 +38,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Evidence coordination and delegation observability](evidence-coordination-agenda.md) — separates split-view detection (#8912) from delegation-membership identifiability (#8915), preserving each unverified method proposal and its relation to existing evidence/trace issues.
 
-- [Claim preservation under runtime loss](claim-preservation.md) — distinguishes fixity, interpretability, auditability, re-execution, and reproduction for #8905; the three-package offline test remains unrun.
+- [Claim preservation under runtime loss](claim-preservation.md) — distinguishes fixity, interpretability, auditability, re-execution, and reproduction for #8905; a host-only raw-auditor follow-up is recorded, while the proposed three-package offline test remains unverified.
 
 - [Task risk semantics and sequential decisions](risk-semantics-agenda.md) — separates #26's bounded task posture and proposed trajectory-risk composition from #8908's unverified within-task time-consistency question.
 
