@@ -17,6 +17,12 @@ Issue #8604/#8598/#8589/#8583と関連PRを確認した。#8604 A03はA02と同�
 #8598は未実行のcensoring/tail-bound案、#8589は当初method label・後続gate discrepancy・audit-only補足・レビュー時の追加実行逸脱を区別し、
 #8583は有限synthetic principal-stratumのmethod結果として記載した。いずれも実GUIや人間研究への外挿をしていない。
 
+### r20：4件の研究Issueと証拠列を整理（2026-10-16）
+
+Issue #8576/#8571/#8569/#8473と各PRを再確認した。#8576は12件の再構成と監査器のhardcoded mutation gateを分離し、
+#8571はcustody HOLD下の記述的raw、#8569は合成conditional-recovery method結果として記載した。
+#8473はmerged A02と、閉鎖・未統合の別PR #8475を独立した証拠列として整理した。
+
 ### r17：4件のオブジェクト記憶・復旧Issueを索引化（2026-10-16）
 
 Issue #7164/#7163/#7160/#7042を、正式コメントと現行PR状態で照合した。#7164はopen Draft #8216の
