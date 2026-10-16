@@ -116,6 +116,12 @@ support、modal absence、exactly-one、下流claim、unrelated claim、complete
 stale negative claim、誤retraction、epoch混同、unknown coercionを監査する。Issue本文はこのT0を
 「not yet run」と明記しているため、現時点で結果・性能・GUI動作は主張しない。
 
+## Soft-signal recovery deadline — #8024
+
+Open Issue [#8024](https://github.com/Unjuno/agent-interface/issues/8024) asks whether calibration of recovery times can set a finite persistence deadline for an already-authorized local mode after one declared soft excursion. Hard identity, focus, lease, effect, and release failures remain immediate yield conditions; shifted or insufficiently calibrated episodes must remain uncertified.
+
+The A01 finite authored fixture reports `METHOD_PASS_SCOPED`: nominal held-out coverage was 9/9 and no hard event was delayed. However, a simple fixed timeout retained the same 9/9 recoverable cases as the calibrated rule, so incremental value was not shown. The result and raw evidence are in open Draft [PR #8036](https://github.com/Unjuno/agent-interface/pull/8036), not main. This establishes no real recovery distribution, GUI safety, or production deadline. Keep the issue open; any later transfer needs separate authorization and a fresh preregistered gate.
+
 ## Issueを閉じる条件
 
 この一覧のIssueは今回の整理では閉じない。各原文の独自の問いと評価軸は残っている。
