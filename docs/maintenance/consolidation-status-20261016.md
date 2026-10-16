@@ -14,10 +14,13 @@ offline copyで分類する提案は未実行であり、IssueもOPENのまま�
 `HOLD_AUDIT_INTEGRITY`となった。#6590はPython 3.14.5 / NumPy 2.5.2上で、packageのNumPy 1.26.4 pinとは
 異なる。候補起動や外部モデル実行はしておらず、ネットワーク遮断・入力コピー・5段階分類・fallback評価も
 していない。この結果は#8905の当該監査器に限り、他のIssueや実験の割当状態を変更しない。
-ページを`docs/ideas/README.md`と`docs/IDEAS_AND_OUTCOMES.md`へ接続した。Public Navigationは26 documents /
-2,140 repository-relative linksで成功し、PR #9005の現在head `92a16926fe95714f5d50e5498ee0785178ef7082`で
-Public Navigation、Research Workspace Index、replay-gateが成功。変更は既存の
-[PR #9005](https://github.com/Unjuno/agent-interface/pull/9005) にあり、未マージ。
+ページを`docs/ideas/README.md`と`docs/IDEAS_AND_OUTCOMES.md`へ接続した。後続のIssue本文確認で#8846/#8856/#8870/#8872の
+4件が既存Markdown未掲載のopen research ideaと分かり、仮説と評価境界を`docs/IDEAS_AND_OUTCOMES.md`へ追加した。
+これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
+Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
+`1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
+`7ba4191dd48d4a02f445f33cc9759b0237fb4423`の両方でPublic Navigation、Research Workspace Index、replay-gateが成功した。
+変更は既存の [PR #9005](https://github.com/Unjuno/agent-interface/pull/9005) にあり、未マージ。
 これは研究ラベル全体の整理完了ではない。次は未整理Issueと未参照branchの実内容・既存証拠・所有を個別に
 照合し、意味のない重複記録や安全に回収できるrefだけを特定する。
 
