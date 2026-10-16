@@ -81,3 +81,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Privacy-preserving failure discovery integrity](privacy-discovery-integrity.md) — records #6549's scoped 24-row feasibility result and #8877's separate unverified coalition-integrity successor, without claiming DP or fleet deployment.
 
 - [Cleanup identity audit and evidence custody](cleanup-identity-audit.md) — preserves #8681's duplicate-ID failure, the single merged #8771 implementation boundary, and the distinct evidence still carried by overlapping #8687/#8838 PRs.
+
+- [Versioned semantic degradation](versioned-semantic-degradation.md) — separates #8609's independent-failure finite result from #8610's protocol-arm mismatch and #8622's corrected but custody-held common-cause result.
