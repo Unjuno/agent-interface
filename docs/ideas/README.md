@@ -48,7 +48,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Human evaluation validity](human-evaluation-validity.md) — preserves the consent-bounded recording-salience question (#8022), the separate learning-transfer and user-relative benefit questions (#6600, #6593), their synthetic method results, and the gates for any future participant study.
 
-- [Control dynamics and route recovery](control-dynamics-agenda.md) — keeps route-by-disturbance evaluation (#6604) separate from source-supported path-class switching (#6586), preserving the synthetic method outcomes and the boundary to real GUI/game behavior.
+- [Control dynamics and route recovery](control-dynamics-agenda.md) — keeps route-by-disturbance evaluation (#6604), source-supported path-class switching (#6586), and reset-qualified trial-to-trial residual learning (#8661) distinct, preserving the synthetic outcomes and their limits.
 
 - [Runtime reliability under uncertainty](runtime-reliability-agenda.md) — separates liveness suspicion (#5531), timed resource deadlocks (#5410), verifier-cascade capacity (#5375), and hidden-state belief contracts (#5368), preserving distinct finite-method results, allocation failures, and unresolved integration boundaries.
 
