@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r40：p4n7の未参照hash-manifest branchをmainへ保全しref整理（2026-10-17）
+
+`research/cli-report-persistence-retained-p4n7-20261006`のtip `628b90360b4bd5bfc256159ce04300b60c064ae1`を現行API/PR/worktreeと照合した。branchはunprotected、全PR head/base参照0、ローカルworktreeなし、唯一の差分は4つのconversation-local delivery artifactを指す`SHA256SUMS`だった。current mainの`REPORT.md`だけは記載SHAと一致し、`DELIVERY_VALIDATION.json`は別hash、original ZIP/patchはtracked fileとして存在しない。manifestを[研究package内へ原文のまま保全](../../research/integration/cli_report_persistence_p4n7_v1/SHA256SUMS_EXTERNAL_20261006)し、外部artifactの存在/復元証明ではない境界を併記した。unprotected・PR head/base参照0・local worktreeなしを再確認し、tipを`archive/recovered/cli-report-persistence-retained-p4n7-original-20261017`へ注釈tagで保存後、期待tip指定のlease pushでremote branchを削除した。readbackでbranch不在とtag peel=`628b90360b4bd5bfc256159ce04300b60c064ae1`を確認。現在586 remote branches、29 unlinked refs（27 diverged、1 Issue-cited、1 unique A01 source）。#3711およびopen #8239/#8246の状態・evidenceは変更していない。
+
 ### r39：GTK relevance/transfer系4 Issueの現状と完了境界を整理（2026-10-17）
 
 #2188のsynthetic distribution-shift誤受理、#2492/#2606の未完の8-case transferと#2606 verifierのmissing raw receipts、#2577のmerged scorer-contract修理を区別した。#2577はPR #2581のbounded preflight・7 focused tests・source-only gateが完了しているため、契約修理だけを明記してIssueを閉じた。#2492/#2606はOPENのまま。#2606のallocationを再実行せず、full GTK acceptanceへ昇格していない。
