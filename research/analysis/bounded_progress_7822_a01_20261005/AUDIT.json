@@ -1,0 +1,70 @@
+{
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "metrics": {
+    "wait_cycle:ordinary": {
+      "reachable": [
+        "g",
+        "s",
+        "w"
+      ],
+      "nonblocking": true,
+      "nonmarker_cycle": true,
+      "worst_steps": null,
+      "unsafe_enabled": false,
+      "marker_evidence_edges": 2
+    },
+    "wait_cycle:bounded": {
+      "reachable": [
+        "g",
+        "s"
+      ],
+      "nonblocking": true,
+      "nonmarker_cycle": false,
+      "worst_steps": 1,
+      "unsafe_enabled": false,
+      "marker_evidence_edges": 2
+    },
+    "bounded_async:bounded": {
+      "reachable": [
+        "a0",
+        "a1",
+        "g",
+        "ready"
+      ],
+      "nonblocking": true,
+      "nonmarker_cycle": false,
+      "worst_steps": 3,
+      "unsafe_enabled": false,
+      "marker_evidence_edges": 1
+    },
+    "uncontrollable_cycle:bounded": {
+      "reachable": [
+        "g",
+        "u"
+      ],
+      "nonblocking": true,
+      "nonmarker_cycle": true,
+      "worst_steps": null,
+      "unsafe_enabled": false,
+      "marker_evidence_edges": 1
+    },
+    "unknown_evidence:bounded": {
+      "reachable": [
+        "q"
+      ],
+      "nonblocking": false,
+      "nonmarker_cycle": false,
+      "worst_steps": null,
+      "unsafe_enabled": false,
+      "marker_evidence_edges": 0
+    }
+  },
+  "mutation_rejected": {
+    "activity_as_progress": true,
+    "assume_fairness": true,
+    "omit_uncontrollable_cycle": true,
+    "oracle_leak": true,
+    "unsafe_enable": true
+  }
+}
