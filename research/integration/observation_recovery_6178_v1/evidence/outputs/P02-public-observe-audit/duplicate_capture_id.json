@@ -1,0 +1,93 @@
+{
+  "pid": 32752,
+  "start": "2026-10-03T19:54:14.505048+00:00",
+  "end": "2026-10-03T19:54:14.599344+00:00",
+  "base": "5796ff2b483d507b4b5275b2a6ef43e60f6092b5",
+  "source_path": "runtime/cli_v1/observe.py",
+  "source_sha256": "1f7a27c2355955fd13708c26c68bab4f3a167578f8d24a2a19d7c87722bd052a",
+  "rows": [
+    {
+      "case": "bool_region",
+      "reply": {
+        "schema": "agent-interface/runtime-observation-v1",
+        "observation_id": "088da2ebe1974b2ea3b88a0fe76b160e",
+        "side_effect_authority": false,
+        "input_dispatched": false,
+        "status": "invalid_request",
+        "error": "INVALID_OBSERVATION_REGION"
+      },
+      "calls": [],
+      "recovery_required": true,
+      "held": {
+        "Q": 81
+      }
+    },
+    {
+      "case": "oversize_region",
+      "reply": {
+        "schema": "agent-interface/runtime-observation-v1",
+        "observation_id": "088da2ebe1974b2ea3b88a0fe76b160e",
+        "side_effect_authority": false,
+        "input_dispatched": false,
+        "status": "invalid_request",
+        "error": "INVALID_OBSERVATION_REGION"
+      },
+      "calls": [],
+      "recovery_required": true,
+      "held": {
+        "Q": 81
+      }
+    },
+    {
+      "case": "unsupported_artifacts",
+      "reply": {
+        "schema": "agent-interface/runtime-observation-v1",
+        "observation_id": "fbe8eea3d24d4a0aa9ca8beb82c254ed",
+        "side_effect_authority": false,
+        "input_dispatched": false,
+        "status": "observation_failed",
+        "error": "ValueError('CAPTURE_ARTIFACTS_UNSUPPORTED')"
+      },
+      "calls": [],
+      "recovery_required": true,
+      "held": {
+        "Q": 81
+      }
+    },
+    {
+      "case": "reader_failure",
+      "reply": {
+        "schema": "agent-interface/runtime-observation-v1",
+        "observation_id": "32ae9e2a54dd41d085af02152a465856",
+        "side_effect_authority": false,
+        "input_dispatched": false,
+        "status": "observation_failed",
+        "error": "RuntimeError('inert capture failed')"
+      },
+      "calls": [
+        [
+          "observe",
+          [
+            "owned",
+            "screen_physical_px",
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        ]
+      ],
+      "recovery_required": true,
+      "held": {
+        "Q": 81
+      }
+    }
+  ],
+  "decision": "PASS_PUBLIC_OBSERVATION_FAILURE_CUSTODY_SCOPED",
+  "scope": "Full public facade with supplied inert session; selector opening forbidden. No actual backend/selector/native/GUI/effect/cancel/physical release or model/performance claim.",
+  "native_executions": 0,
+  "formal_replays": 0,
+  "main_requests": 0
+}
