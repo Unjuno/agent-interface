@@ -43,3 +43,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Assumption-gated evidence acquisition](evidence-acquisition-policy-selection.md) — tests when greedy observation choice is justified and when bounded lookahead is worth its cost (#8879), without granting runtime authority.
 
 - [Counterfactual responsibility for negative queries](negative-query-counterfactual-responsibility.md) — preserves #8624's finite method result and duplicate-allocation boundary while keeping query completeness and live visual applicability separate.
+
+- [Query-private evidence-location lookup](query-private-evidence-location.md) — preserves #8000's no-eligible-workload HOLD and separate WSL-container STOP; no PIR or privacy result is claimed.
