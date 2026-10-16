@@ -246,9 +246,8 @@ separate hypotheses and must keep separate evidence and decisions.
   calibrated failure probability, and a shallow-zero or never-failed cell is
   not established safe. The proposal authorizes no live replay, GUI, model call
   or shared resource allocation.
-- **Evidence:** [A01](../../research/analysis/budgeted_failure_discovery_8914_t0_a01_20261016/REPORT.md)
-  and [A02](../../research/analysis/budgeted_failure_discovery_8914_t0_a02_20261016/REPORT.md)
-  each ran the candidate/runner once and retained 61,800 attempt rows across
+- **Evidence:** [PR #9007](https://github.com/Unjuno/agent-interface/pull/9007)
+  preserves A01 and A02, each of which ran the candidate/runner once and retained 61,800 attempt rows across
   103 synthetic worlds. Both independent audits exited at sentinel
   reconstruction before the scientific gates: A01 sampled from generation
   order while the auditor assumed sorted order; A02's runner reused its

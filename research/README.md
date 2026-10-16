@@ -6,7 +6,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
-- Issue #8914 T0 A01/A02: [budgeted failure-discovery audit method failures](analysis/budgeted_failure_discovery_8914_t0_a01_20261016/REPORT.md) — both offline candidate/runner executions completed once, but each independent audit failed at sentinel reconstruction before scientific gates. Outputs are retained as gzip with decompressed SHA-256 receipts; no scientific decision or retry under either allocation.
+- Issue #8914 T0 A01/A02: [budgeted failure-discovery audit method failures](https://github.com/Unjuno/agent-interface/pull/9007) — both offline candidate/runner executions completed once, but each independent audit failed at sentinel reconstruction before scientific gates. Outputs are retained as gzip with decompressed SHA-256 receipts; no scientific decision or retry under either allocation.
 
 - Issue #59 WSLc A03: [typed-policy replay portability construction result](doom/typed_guard_wslc_replay_a03_20261013/README.md) — one fresh, single-container CPU WSLc run; candidate and independent raw-only audit reconstruct four selected retained rows with no input authority. A01 host-decoding STOP and A02 missing-image STOP remain preserved. Construction/portability only: no live threat exposure, task effect, recovery, survival, MAP01 result, or effective memory-limit claim.
 
