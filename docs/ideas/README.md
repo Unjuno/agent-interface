@@ -51,3 +51,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Failure-episode unitization and linkage uncertainty](failure-episode-unitization-sensitivity.md) — records #7857's synthetic segmentation-sensitivity result and T1 HOLD, plus #8004's distinct joint boundary/linkage result and its Draft evidence PR.
 
 - [Client energy per verified effect](client-energy-per-verified-effect.md) — keeps #7728's macOS sensor HOLD separate from Windows counter-only observations; no matched-route energy result is claimed.
+
+- [Agreement-conditioned bounded continuation](agreement-conditioned-continuation.md) — records #9004's consumed synthetic T0 (`PASS_METHOD_SCOPED`, `NO_INCREMENTAL_AGREEMENT_VALUE`) without inferring live control or timing benefit.
