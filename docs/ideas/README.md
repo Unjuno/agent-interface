@@ -59,3 +59,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Timing privacy and control utility](timing-privacy-control-utility.md) — connects #6201's scoped synthetic metadata-leakage result to #8899's unverified controller-utility/privacy frontier, keeping safety clocks and noncritical timing treatment distinct.
 
 - [Progressive and lossy evidence descriptions](progressive-lossy-evidence.md) — separates #8865's nested-versus-independent budget summaries from #8875's subset utility under loss, reordering, and interruption, including the receiver-side-information and semantic-coding boundaries.
+
+- [Telemetry-aware resource allocation](telemetry-aware-resource-allocation.md) — links #8897's unverified noisy-telemetry scheduling proposal to #8488's corrected, deadline-semantics HOLD without implying host-pressure evidence or a WSL policy.
