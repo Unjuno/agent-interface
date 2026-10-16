@@ -17,7 +17,8 @@ offline copyで分類する提案は未実行であり、IssueもOPENのまま�
 ページを`docs/ideas/README.md`と`docs/IDEAS_AND_OUTCOMES.md`へ接続した。後続のIssue本文確認で#8846/#8856/#8870/#8872の
 4件が既存Markdown未掲載のopen research ideaと分かり、仮説と評価境界を`docs/IDEAS_AND_OUTCOMES.md`へ追加した。
 続く本文確認で#8886/#8889/#8898/#8901も未掲載のopen research ideaと確認し、先行・類似案との違いと検証限界を
-同じ索引へ追加した。これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
+同じ索引へ追加した。さらに#8902/#8903/#8904の本文を確認し、それぞれの推定対象、比較方法、前提を索引へ加えた。
+これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
 `7ba4191dd48d4a02f445f33cc9759b0237fb4423`の両方でPublic Navigation、Research Workspace Index、replay-gateが成功した。
