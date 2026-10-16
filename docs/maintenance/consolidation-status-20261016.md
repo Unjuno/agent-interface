@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r37：#1946 attention package lineageを再照合（2026-10-17）
+
+#1946と未マージ閉鎖PR #1947/#1951、マージ済みPR #1981/#1983、後続Issue #1968/#2031の状態・差分・結果記録を確認した。#1951の元PASS表現にはserialized-sizeとduplicate-labelのレビュー欠陥があり、別表現の並行結果は`HOLD_NO_SIZE_GAIN`。修正版#1968は、PR #1981の3-case formal/audit scoped PASSと、PR #1983の24-row local-only `HOLD_NO_FORMAL_CONTAINER`を別結果として保存している。#1946はOPENのまま、モデル有用性は#2031が継続所有する。`docs/IDEAS_AND_OUTCOMES.md`に証拠系譜と限界を追記。Formal allocationは再実行していない。
+
 ### r36：4件の未索引Issueを既存証拠に沿って整理（2026-10-17）
 
 #5360のtoy counterexampleとhost-only opacity evidence、#5296のmapped-geometry constructionと未承認の後続案、#5254の未実行formal LRU allocationとsource/receipt HOLD、#5205のaudit receipt STOPとunsafe-metric欠落を区別して`docs/IDEAS_AND_OUTCOMES.md`へ追加した。関連PR/Issueを再確認し、科学的結果の昇格やallocationの再実行はしていない。#5205のSTOPはその監査allocationだけに限定し、全体停止とは記述していない。
