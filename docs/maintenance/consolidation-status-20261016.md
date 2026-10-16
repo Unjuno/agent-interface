@@ -12,6 +12,10 @@ PR #8678は旧`docs/CURRENT_GOAL.md`全体を差分に含み、base衝突で`DIR
 
 GitHub上のPR #8701 head `c0171c688906c86a30a0d36fcbb7f676ad5e8f65`はmainの短い`CURRENT_GOAL.md`にA09更新11行を足したものだった。ローカル`a03-source`の別head `5b9905535b81aac42efde6f58670246c1b7524a4`（旧2,215行CURRENT_GOAL）は未コミットのA08変更7件を持つ作業コピーで、PR headと取り違えない。PRのA09 blockから旧snapshotの「live未許可」引用を除き、A09結果・未retry・scopeだけを保持するcommit `6e308de606ef684ee07406b40958c3275c0bc7aa`をpushした。PRは`CLEAN`、未レビューでchecksは未報告。dirty A08 worktreeとA07/A08 rawは触らず、実行・再監査していない。
 
+### r46：A07保存rawをv3で再照合しcustody解釈を保留（2026-10-17）
+
+`a03-source`のignored A07 outputを変更せず`SHA256SUMS.json`の2,358 entries全件をbytes/hash一致確認した。PR #8701 headの`audit_live_v3.py`を一時ディレクトリへ置き、必要な6 input fileだけをrawから複写して実行した。10 cancellation IDsは全件unique/matched、post-cancel admission 0。admissionありの6 cancellationのうち3件は6 admissions/5 transitions、3件は4/3で、残る4件はadmission/transitionとも0。v3はadmissionありの5件でper-key custody falseとなり、`status=FAIL`, `formal_pass=false`, `scoped_pass=false`を返した。各`input_released.owner_release`はempty key stateを報告するが、admissionと実key-downの対応が未解釈なので、この結果から成功・失敗どちらの物理custodyも確定しない。元v1/v2/AUDIT_V3は変更せず、A07のcustody claimはHOLDのまま。PR #8701統合前にadmission/transition/owner-releaseの関係を独立に解決する。
+
 ### r43：#8648 C01/C02の別々の結果とsource branchを記録（2026-10-17）
 
 Issue #8648と最新コメント、PR #8827を再照合した。C01はWSLc初期化時に止まりcandidate/auditor 0/0で、A01 raw欠落を理由に再実行していない。C02は別のcurrent-main freezeとhost CPython allocationで、288 profiles / 6,048 endpointsの監査、5/5 mutation reject、3つのcoupled held-out settingsで`PASS_METHOD_SCOPED` / `H_PASS_SCOPED`を記録する。PR #8827はOPEN、全必須check success、未merge。`research/8638-split-control-voi-a01-20261008`のtip `16d846740645a338ea11ac70c8e4e931b71f1408`を再確認。unprotected、PR参照0、checkoutなしで、C01 candidate/auditorの唯一のsourceがmainにない。これはC02で代替されず、Issueのraw-custody境界も未解決のためsource branchは保持する。C01 source、候補、監査器は実行していない。
