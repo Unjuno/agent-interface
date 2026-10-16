@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r43：#8648 C01/C02の別々の結果とsource branchを記録（2026-10-17）
+
+Issue #8648と最新コメント、PR #8827を再照合した。C01はWSLc初期化時に止まりcandidate/auditor 0/0で、A01 raw欠落を理由に再実行していない。C02は別のcurrent-main freezeとhost CPython allocationで、288 profiles / 6,048 endpointsの監査、5/5 mutation reject、3つのcoupled held-out settingsで`PASS_METHOD_SCOPED` / `H_PASS_SCOPED`を記録する。PR #8827はOPEN、全必須check success、未merge。`research/8638-split-control-voi-a01-20261008`のtip `16d846740645a338ea11ac70c8e4e931b71f1408`を再確認。unprotected、PR参照0、checkoutなしで、C01 candidate/auditorの唯一のsourceがmainにない。これはC02で代替されず、Issueのraw-custody境界も未解決のためsource branchは保持する。C01 source、候補、監査器は実行していない。
+
 ### r42：#8297のreversibility review packetを保全（2026-10-17）
 
 `review/8297-reversibility-e0cc-20261007`のtip `31e1ad5d3e3d2d454f074c5d64935675bfe00172`はunprotectedで、PR head/base参照なし、ローカルworktreeなし。closed PR #8297に対する受動的な4-file review packetである。`evidence.tar.xz`の125,556 bytes / SHA-256 `e0e1ccb1f3ad29331e050315b9348afacc5b7294467b871e74d46caca26f5778`と72 member hashesを検証した。A03のraw-digest discrepancyは元証拠の来歴不明として保持し、A05の保存済み3-case整合とfrozen auditorの既知欠陥を分離する。packetを元のGit blobどおり`research/live_control/review_reversibility_8297_e0cc_20261007/`へ保全し、#8300/#7949の索引と研究indexを追加した。コードやreview packet中のprogramは実行していない。枝はこの保全PRがmainへ入るまで保持する。
