@@ -8,9 +8,9 @@
 
 PR #8678は旧`docs/CURRENT_GOAL.md`全体を差分に含み、base衝突で`DIRTY`だった。branch `research/59-live-threat-guard-a01-20261009`をcurrent main `1ece47014d05db898bf73afcd722a14524462e15`へrebaseし、履歴的な長文方向は採用せずcurrent mainの短いgoal entryを維持した。実験記録29ファイル/8,946行追加は保持され、head `7551424026375469f609754140250f89bf09cad4`でPRは`CLEAN`、必須replay-gate PASS。A02のruntime failureと`formal_pass: false`は未変更で、merge・再実験は行っていない。独立レビュー待ち。
 
-### r45：#8701のcurrent-goal差分と未コミットA08を分離（2026-10-17）
+### r45：#8701のA09記述を割当スコープに限定（2026-10-17）
 
-PR #8701は`docs/CURRENT_GOAL.md`をmainの62行から旧2,215行へ置き換える差分を含むため、そのまま統合すると廃止済みの指示群が現行入口へ復帰する。PR head `c0171c688906c86a30a0d36fcbb7f676ad5e8f65`は`CLEAN`だが未レビュー。対応する`a03-source` worktreeは別head `5b9905535b81aac42efde6f58670246c1b7524a4`でA08の結果・監査変更7件が未コミットのため、変更・stash・削除をせず保持する。PR修正時はmainの現行goal entryを維持し、A08変更の所有者・証拠を分けて確認する。A07/A08の保存rawは実行・再監査していない。
+GitHub上のPR #8701 head `c0171c688906c86a30a0d36fcbb7f676ad5e8f65`はmainの短い`CURRENT_GOAL.md`にA09更新11行を足したものだった。ローカル`a03-source`の別head `5b9905535b81aac42efde6f58670246c1b7524a4`（旧2,215行CURRENT_GOAL）は未コミットのA08変更7件を持つ作業コピーで、PR headと取り違えない。PRのA09 blockから旧snapshotの「live未許可」引用を除き、A09結果・未retry・scopeだけを保持するcommit `6e308de606ef684ee07406b40958c3275c0bc7aa`をpushした。PRは`CLEAN`、未レビューでchecksは未報告。dirty A08 worktreeとA07/A08 rawは触らず、実行・再監査していない。
 
 ### r43：#8648 C01/C02の別々の結果とsource branchを記録（2026-10-17）
 
