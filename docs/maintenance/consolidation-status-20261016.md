@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r41：#8186の未リンクreview証拠を索引・保全（2026-10-17）
+
+`review/8186-response-ownership-e0cc-20261007`のtip `e06245cb78059086f7f0e7179c1e8fa59ac2bd6f`を再確認した。unprotected、全PRのhead/base参照なし、ローカルworktreeなし。closed PR #8186を対象とする独立reviewの4-file packetで、READMEはnumeric reply compatibility回帰とpre-send ownership gapへのREQUEST_CHANGESを記録する。`evidence.tar.xz`の17,944 bytes / SHA-256 `48e64f53d87a33db7ab4ab59513beb332dbd1acacd067f1b62ebc1d3540e7ad4`とmanifestの71 member hashesを検証した。レビュー対象コード・packet内プログラムは実行せず、4 fileを元のGit blobどおり`research/live_control/review_response_ownership_8186_e0cc_20261007/`へ保全し、研究・アイデア索引を追加した。PR #7254はOPEN Draft、#8186はclosed-unmerged。source変更を適用したとは主張せず、branchは保全PRがmainへ入るまで維持する。
+
 ### r40：p4n7の未参照hash-manifest branchをmainへ保全しref整理（2026-10-17）
 
 `research/cli-report-persistence-retained-p4n7-20261006`のtip `628b90360b4bd5bfc256159ce04300b60c064ae1`を現行API/PR/worktreeと照合した。branchはunprotected、全PR head/base参照0、ローカルworktreeなし、唯一の差分は4つのconversation-local delivery artifactを指す`SHA256SUMS`だった。current mainの`REPORT.md`だけは記載SHAと一致し、`DELIVERY_VALIDATION.json`は別hash、original ZIP/patchはtracked fileとして存在しない。manifestを[研究package内へ原文のまま保全](../../research/integration/cli_report_persistence_p4n7_v1/SHA256SUMS_EXTERNAL_20261006)し、外部artifactの存在/復元証明ではない境界を併記した。unprotected・PR head/base参照0・local worktreeなしを再確認し、tipを`archive/recovered/cli-report-persistence-retained-p4n7-original-20261017`へ注釈tagで保存後、期待tip指定のlease pushでremote branchを削除した。readbackでbranch不在とtag peel=`628b90360b4bd5bfc256159ce04300b60c064ae1`を確認。現在586 remote branches、29 unlinked refs（27 diverged、1 Issue-cited、1 unique A01 source）。#3711およびopen #8239/#8246の状態・evidenceは変更していない。
