@@ -23,6 +23,12 @@ Issue #8576/#8571/#8569/#8473と各PRを再確認した。#8576は12件の再構
 #8571はcustody HOLD下の記述的raw、#8569は合成conditional-recovery method結果として記載した。
 #8473はmerged A02と、閉鎖・未統合の別PR #8475を独立した証拠列として整理した。
 
+### r21：4件の制御・推定Issueを結果範囲つきで索引化（2026-10-16）
+
+Issue #8471/#8470/#8466/#8434とmerged PRを確認した。有限列挙のswitched-mode結果、coupled-loop gain screen、
+source-time expiry、equal-marginal disturbance-orderの各結果を分け、いずれも合成または有限methodの範囲に限定した。
+runtime controller、GUI安全性、実環境の効果を主張していない。
+
 ### r17：4件のオブジェクト記憶・復旧Issueを索引化（2026-10-16）
 
 Issue #7164/#7163/#7160/#7042を、正式コメントと現行PR状態で照合した。#7164はopen Draft #8216の
