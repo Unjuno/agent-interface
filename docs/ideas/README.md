@@ -53,3 +53,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Client energy per verified effect](client-energy-per-verified-effect.md) — keeps #7728's macOS sensor HOLD separate from Windows counter-only observations; no matched-route energy result is claimed.
 
 - [Agreement-conditioned bounded continuation](agreement-conditioned-continuation.md) — records #9004's consumed synthetic T0 (`PASS_METHOD_SCOPED`, `NO_INCREMENTAL_AGREEMENT_VALUE`) without inferring live control or timing benefit.
+
+- [Benchmark-variant behavioral equivalence](benchmark-variant-equivalence.md) — indexes #8920's unverified finite-method proposal; no cohort, transfer, or equal-difficulty result is claimed.
