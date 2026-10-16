@@ -15,4 +15,4 @@ The audit is method-scoped. Even a pass does not estimate live GUI risk, establi
 
 ## A01 disposition
 
-See [REPORT.md](REPORT.md). The frozen candidate ran once, but the independent audit failed before scientific gates because its sentinel reconstruction sorted IDs while the runner sampled in generation order. A01 is consumed and preserved; there is no retry under this allocation. The result is `HOLD_AUDITOR_METHOD_FAILURE`, not a scientific PASS or FAIL. Any corrected study requires a new allocation and new source freeze.
+See [REPORT.md](REPORT.md). The frozen candidate ran once, but the independent audit failed before scientific gates because its sentinel reconstruction sorted IDs while the runner sampled in generation order. A01 has already run and is consumed; do not repeat this sequence under this allocation. Its raw JSON is stored as gzip with decompressed SHA-256 values. The result is `HOLD_AUDITOR_METHOD_FAILURE`, not a scientific PASS or FAIL. Any corrected study requires a new allocation and new source freeze.

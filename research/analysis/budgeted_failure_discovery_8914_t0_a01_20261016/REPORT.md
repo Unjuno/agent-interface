@@ -4,7 +4,7 @@ Frozen source commit: `24c12c73cf87eb45aeebc62e4e1360cbc74392a0`.
 
 The candidate/runner executed once and produced 61,800 deep-attempt rows across 103 synthetic worlds and three arms. The independent auditor executed once and exited 1 at `sentinel_not_reproducible`, before any scientific decision gate. Static diagnosis found the implementation mismatch: the runner sampled sentinels from eligible-cell generation order, while the auditor sampled from sorted cell IDs. This is an auditor reconstruction defect, not evidence for or against the hypothesis.
 
-A01 is consumed. Do not rerun or repair its output under this allocation ID. The first audit stdout/exit and candidate inputs/outputs are retained byte-for-byte in `raw/`. No mutation-control run was made because the main audit did not pass.
+A01 is consumed. Do not rerun or repair its output under this allocation ID. The first audit stdout/exit and candidate inputs/outputs are retained byte-for-byte in `raw/` as deterministic gzip streams; `UNCOMPRESSED-SHA256.txt` records the original JSON byte hashes. No mutation-control run was made because the main audit did not pass.
 
 SHA-256:
 

@@ -12,3 +12,5 @@ The prospective conditions are in [PREREGISTRATION.md](PREREGISTRATION.md) and [
 4. Run `python3 audit_raw.py` once, then run `python3 mutation_controls.py` on temporary copies. Do not rerun or tune the allocation.
 
 The audit is method-scoped. Even a pass does not estimate live GUI risk, establish safety, or certify a task cell as safe.
+
+A02 has already run and is consumed; do not repeat this sequence under this allocation. Its raw JSON is stored as gzip with decompressed SHA-256 values in `raw/UNCOMPRESSED-SHA256.txt`.
