@@ -23,14 +23,13 @@ assign people, grant resources or replace current user instructions.
 
 ## Live control update (r140)
 
-The user's direct request for live execution superseded the earlier #59 snapshot
-that said no live execution was authorized. The distinct A09 allocation ran 10
-decisions and crossed its health floor during pending inference; the guard
-cancelled the dependent turn and the owner verified empty input. Its formal
-result is HOLD because no useful scorer event occurred during model wait. A09
-is consumed and is not retried. See [PR #8749](https://github.com/Unjuno/agent-interface/pull/8749)
-for the retained evidence. This allocation-specific result is not a team-wide
-pause; independent authorized work continues.
+The distinct A09 allocation ran 10 decisions and crossed its health floor during
+pending inference; the guard cancelled the dependent turn and the owner verified
+empty input. Its formal result is HOLD because no useful scorer event occurred
+during model wait. A09 is consumed and is not retried. These findings apply only
+to A09; independent work and distinct authorized allocations continue. See
+[PR #8749](https://github.com/Unjuno/agent-interface/pull/8749) for the retained
+evidence.
 
 ## Remaining scientific gates
 
