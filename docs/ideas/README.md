@@ -34,6 +34,14 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Observation load versus cue information](observation-load-cue-information.md) — preserves #8665's mixed synthetic factorial result without transferring it to GUI/OS load or user tempo.
+- [Policy-dependent ascertainment](policy-dependent-ascertainment.md) — keeps #8640's consumed disk STOP and distinct finite A02 PASS separate; no live-route bias claim.
+- [Epistemic-action CLI construction](epistemic-action-cli-construction.md) — records #8635's construction repair while retaining the dated shared-runtime gate and zero formal invocations.
+- [Evidence readiness and epistemic action](evidence-readiness-epistemic-action.md) — preserves #8623's reported method result and distinct raw-receipt custody HOLD; no rerun to recreate missing receipts.
+- [Common-cause degradation contracts](common-cause-degradation-contracts.md) — carries #8610's protocol-arm correction and #8622's corrected A02 result/custody boundary without pooling the allocations.
+- [Safe observation-predicate synthesis](safe-observation-predicate-synthesis.md) — indexes #8562's unverified allowlisted-grammar proposal and dated no-run status without turning it into a repository-wide gate.
+- [Decision regret over stale-feedback windows](decision-regret-stale-feedback.md) — records #8528's synthetic-method PASS separately from any causal, GUI, or deployed-safety claim.
+
 - [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, dependencies and executed public-path Fake X blocking characterization. These parent ideas remain open.
 
 - [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). Original bodies and provenance are preserved; all three source Issues were reopened after correcting premature consolidation closures.
