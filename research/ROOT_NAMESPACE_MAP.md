@@ -40,6 +40,8 @@ New work should normally use a category directory. Existing direct-root paths re
 
 ## Retained direct-root research families
 
+- [`agreement_continuation_9004_v1/`](agreement_continuation_9004_v1/) — Issue #9004 finite synthetic agreement/lease T0; result is method-scoped and makes no live-control or timing claim.
+
 - [`outputs/`](outputs/) — retained local research-session status and handoff notes; not experiment evidence unless individually cited.
 
 - [`session_handoff/`](session_handoff/)
