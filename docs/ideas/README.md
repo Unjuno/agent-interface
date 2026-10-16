@@ -62,6 +62,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Progressive and lossy evidence descriptions](progressive-lossy-evidence.md) — separates #8865's nested-versus-independent budget summaries from #8875's subset utility under loss, reordering, and interruption, including the receiver-side-information and semantic-coding boundaries.
 
+- [Skill-conditioned terminal-event memory](skill-conditioned-terminal-event-memory.md) — records #8886's unverified fixed-context progress-memory contrast and its provenance/effect boundaries.
+
 - [Telemetry-aware resource allocation](telemetry-aware-resource-allocation.md) — links #8897's unverified noisy-telemetry scheduling proposal to #8488's corrected, deadline-semantics HOLD without implying host-pressure evidence or a WSL policy.
 
 - [GUI macro transfer and translation validation](gui-macro-transfer-validation.md) — separates #8890's appearance/function relation test, #7827's finite A05 result, and #8869's unverified external-interleaving successor.
