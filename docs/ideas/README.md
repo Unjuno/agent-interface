@@ -55,3 +55,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Agreement-conditioned bounded continuation](agreement-conditioned-continuation.md) — records #9004's consumed synthetic T0 (`PASS_METHOD_SCOPED`, `NO_INCREMENTAL_AGREEMENT_VALUE`) without inferring live control or timing benefit.
 
 - [Benchmark-variant behavioral equivalence](benchmark-variant-equivalence.md) — indexes #8920's unverified finite-method proposal; no cohort, transfer, or equal-difficulty result is claimed.
+
+- [Censoring-aware verifier ordering](censoring-aware-verifier-ordering.md) — connects #8919's unverified online-learning proposal to the distinct static-order and drift-boundary evidence in #4258/#4733, preserving their limits and audit outcomes.
