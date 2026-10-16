@@ -23,6 +23,16 @@ open/closed PRのhead/base依存はなく、確認した69件のlocal checkout�
 正確なtipへの`--force-with-lease`削除後、remote refの不在を確認した。変更内容は
 merge commit `761a26e2cfae611efe97a426ed2555063928b177` とmainに残る。
 
+続けて、merge済みPR [#8784](https://github.com/Unjuno/agent-interface/pull/8784)の
+`fix/kernel-stop-release-evidence-20261009`も、tip
+`08dd5be82cf9750faca9f9d9d5ba81aaf446bea0`がmainの祖先であること、unprotected、
+head/baseとも依存PRなし、確認範囲にlocal checkoutなしを確認して、tip固定で削除した。
+PRのmerge commit `b8ab890b03289f9a1303377c26b3cbb41ce7231e`もmainの祖先である。
+branch削除後にremote refがないことを再確認した。関連する古いlocal cloneでは、dry-runが
+存在しないdirectoryを指すと確認した3件のstale worktree metadataをpruneした。
+
+#8816と#8763は、closed PR #8823/#8787のbaseに使われていたため、今回の削除対象から除外した。
+
 次は#9004の有限合成T0を独立したsource freeze・candidate・raw-only auditとして実行するか、
 先にIssue群の依存・実行優先を更新して実行先を確定する。#57の統合効率ゲートを押しのけず、
 実モデルT1やremote-model budgetを使わない。並行してPR/branch inventoryを現行状態で再取得し、
