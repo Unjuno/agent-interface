@@ -99,6 +99,23 @@ and retained PR source reference.
 No separate implementation or retry was needed; the merged successor and
 closed PR preserve the behavior record and source history.
 
+## Terminal health report duplicate
+
+Removed the superseded child branch `fix/8816-terminal-report` after checking
+its closed PR and merged parent successor.
+
+| Check | Evidence |
+|---|---|
+| Exact source tip before deletion | `9808cec49c379a748e8bd802ef9220d97b5f3901` |
+| Branch/PR state | Unprotected branch; [PR #8823](https://github.com/Unjuno/agent-interface/pull/8823) is closed and unmerged, with this exact head. No open PR used the branch as head or base. |
+| Successor | Parent [PR #8816](https://github.com/Unjuno/agent-interface/pull/8816) is merged at head `88adef65f48874d681d5600f910ec009e6e662b1`. The #8823 close comment states the parent revision supersedes the child and includes the terminal-observation separation regression. |
+| Worktree / Issue references | No registered primary-clone worktree or exact Issue-body branch-name match was found. |
+| Remote retention after deletion | `git ls-remote origin refs/pull/8823/head` returned the exact tip SHA after the branch ref disappeared. |
+| Final verification | Remote `refs/heads/fix/8816-terminal-report` absent; the closed PR head retains the source SHA. No source run or test was performed for this ref cleanup. |
+
+The updated parent PR is the integrated path; the child branch name was
+redundant.
+
 ## Reviewed and retained: #8243 verifier freeze
 
 The branch `fix/8243-verifier-r2p6-20261006` remains because it is an Issue/PR-
