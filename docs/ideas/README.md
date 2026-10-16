@@ -61,3 +61,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Incremental nonmonotone claim maintenance](incremental-nonmonotone-claim-maintenance.md) — indexes #8917's unverified DRed-versus-rebuild proposal, with explicit completeness/epoch prerequisites and no GUI claim.
 
 - [Producer-side dispatch pacing](producer-side-dispatch-pacing.md) — records #8916's unverified simulator-only comparison against immediate and reactive queue-aware policies.
+
+- [Delegation-membership identifiability](delegation-membership-identifiability.md) — indexes #8915's unverified identical-trace discriminator without conflating membership, event causality, and actor attribution.
