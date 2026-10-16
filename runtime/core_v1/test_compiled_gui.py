@@ -103,6 +103,18 @@ class CompiledBoundaryTests(unittest.TestCase):
   d=Driver('execute',released=False);r=d.run();self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','execution_failed'));self.assertEqual(len(d.calls['execute']),1)
  def test_uncertain_delivery_is_preserved_over_expired_budget(self):
   d=Driver('execute',terminal='delivery_uncertain');r=d.run();self.assertEqual(r['reason'],'delivery_uncertain');self.assertEqual(len(d.calls['execute']),1)
+ def test_no_progress_after_input_yields_without_replay_or_completion(self):
+  d=Driver();base=d.observe
+  def observe(payload):
+   result=base(payload)
+   if len(d.calls['observe'])==2:result['evidence_digest']='digest1'
+   return result
+  d.observe=observe;r=d.run()
+  self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','no_progress'))
+  self.assertEqual(len(d.calls['execute']),1)
+  self.assertEqual(d.calls['verify_effect'],[])
+  self.assertEqual(r['completed_transitions'],1)
+  self.assertEqual(r['pending_effect']['action'],'enter')
  def test_action_deadline_cannot_extend_method_budget(self):
   d=Driver();r=d.run();self.assertEqual(r['outcome'],'TASK_SUCCEEDED');self.assertEqual([c['valid_until_ns'] for c in d.calls['execute']],[10_000_000,10_000_000])
  def test_normal_branches_use_fresh_effects(self):
