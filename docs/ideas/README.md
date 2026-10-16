@@ -42,6 +42,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Safe observation-predicate synthesis](safe-observation-predicate-synthesis.md) — indexes #8562's unverified allowlisted-grammar proposal and dated no-run status without turning it into a repository-wide gate.
 - [Decision regret over stale-feedback windows](decision-regret-stale-feedback.md) — records #8528's synthetic-method PASS separately from any causal, GUI, or deployed-safety claim.
 - [Constrained fault diagnosis](constrained-fault-diagnosis.md) — keeps #8895's adaptive-versus-fixed cost proposal and #8896 duplicate's parallel-makespan discriminator together.
+- [Persistent-sojourn gating](persistent-sojourn-gating.md) — carries #8891's estimator refinement into canonical open #6650, preserving #6650's negative synthetic result without creating a duplicate lane.
 - [Adversarial integrity in failure discovery](adversarial-integrity-failure-discovery.md) — indexes #8877's unverified bounded-coalition integrity test separately from privacy feasibility.
 - [Decision-useful multiple descriptions](decision-useful-multiple-descriptions.md) — preserves #8875's narrow conservative-decision-set discriminator and updated semantic-MDC prior-art boundary.
 - [Model-lifetime robustness of joint reserves](model-lifetime-joint-reserves.md) — records #8873's preliminary calculation and post-result DP audit without promoting them to a method PASS.
