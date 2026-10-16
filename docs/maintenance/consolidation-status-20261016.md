@@ -139,3 +139,13 @@ seven rows per normal/-O mode and saved readback are local construction only.
 A35 identity/hashes match; A36/A37 keep their allocation-ID STOP. Continue current
 service authority/quarantine and session-death integration under#59; no old
 allocation was replayed, and native/game/task-effect qualification remains open.
+
+## Current-owner RPC v2 repair boundary
+
+[Real private sockets plus current strict owner on Fake X](../../research/integration/current_owner_rpc_v2_20261016/README.md)
+now preserve source binding and permanently refuse new sends after unknown
+replies. Normal/-O each41 methods across5 modules retain26 rows and46 source pins;
+blocked release stays unverified. This is an explicit library, not the default
+MAP01 owner: external service process/durable receipt, backend custody adapter,
+parent cancellation/telemetry and actual session/controller death remain under#59.
+The unsupported window observer transfer is refused rather than downgraded.
