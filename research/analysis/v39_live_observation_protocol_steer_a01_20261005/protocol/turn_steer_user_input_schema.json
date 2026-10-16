@@ -1,0 +1,216 @@
+{
+  "TurnSteerParams": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "properties": {
+      "clientUserMessageId": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "expectedTurnId": {
+        "description": "Required active turn id precondition. The request fails when it does not match the currently active turn.",
+        "type": "string"
+      },
+      "input": {
+        "items": {
+          "$ref": "#/definitions/UserInput"
+        },
+        "type": "array"
+      },
+      "threadId": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "expectedTurnId",
+      "input",
+      "threadId"
+    ],
+    "title": "TurnSteerParams",
+    "type": "object"
+  },
+  "UserInput": {
+    "oneOf": [
+      {
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "text_elements": {
+            "default": [],
+            "description": "UI-defined spans within `text` used to render or persist special elements.",
+            "items": {
+              "$ref": "#/definitions/TextElement"
+            },
+            "type": "array"
+          },
+          "type": {
+            "enum": [
+              "text"
+            ],
+            "title": "TextUserInputType",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "type"
+        ],
+        "title": "TextUserInput",
+        "type": "object"
+      },
+      {
+        "properties": {
+          "detail": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/ImageDetail"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "type": {
+            "enum": [
+              "image"
+            ],
+            "title": "ImageUserInputType",
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "url"
+        ],
+        "title": "ImageUserInput",
+        "type": "object"
+      },
+      {
+        "properties": {
+          "detail": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/ImageDetail"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "localImage"
+            ],
+            "title": "LocalImageUserInputType",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "type"
+        ],
+        "title": "LocalImageUserInput",
+        "type": "object"
+      },
+      {
+        "properties": {
+          "type": {
+            "enum": [
+              "audio"
+            ],
+            "title": "AudioUserInputType",
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "url"
+        ],
+        "title": "AudioUserInput",
+        "type": "object"
+      },
+      {
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "localAudio"
+            ],
+            "title": "LocalAudioUserInputType",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "type"
+        ],
+        "title": "LocalAudioUserInput",
+        "type": "object"
+      },
+      {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "skill"
+            ],
+            "title": "SkillUserInputType",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "path",
+          "type"
+        ],
+        "title": "SkillUserInput",
+        "type": "object"
+      },
+      {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "mention"
+            ],
+            "title": "MentionUserInputType",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "path",
+          "type"
+        ],
+        "title": "MentionUserInput",
+        "type": "object"
+      }
+    ]
+  },
+  "cli_version": "codex-cli 0.146.1"
+}

@@ -1,0 +1,11 @@
+model = "gpt-5.6-luna"
+approval_policy = "never"
+sandbox_mode = "read-only"
+[model_providers.mock]
+name = "loopback mock"
+base_url = "http://127.0.0.1:<EPHEMERAL_PORT>/v1"
+wire_api = "responses"
+requires_openai_auth = false
+supports_websockets = false
+[analytics]
+enabled = false
