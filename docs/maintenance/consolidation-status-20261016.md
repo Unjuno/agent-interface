@@ -16,6 +16,12 @@ PR #9006の75行はWin32 `release_all` helper用のtest-only追加で、同suite
 
 PR #9007のA01/A02 method-contract初回workflowは、GitHub Actions checkout中のfetchが開始から10分でcancelされ、method-contractコードや実験候補/auditorは実行されていない。現時点で同workflowのattempt 2をrerun中。analysis-index PASSは独立に確認した。結果確定前にpass/failへ分類せず、正式allocationも再実行しない。
 
+### r49：#9007 CI再実行とNativeHandleBridge fixture修理PR（2026-10-17）
+
+#9007 attempt 2のmethod-contractはcheckout後18秒でPASS、analysis-index/replay-gate/public-navigationもPASS。PRはOPEN/CLEANで、A01/A02の`HOLD_AUDITOR_METHOD_FAILURE`と非科学的範囲を維持する。
+
+#9006の`native-mcp` failureをcurrent mainで限定再現した。`review_bridge()`がproduction constructorの`binding_revision=0`初期化を欠いていたため、fixtureだけを一致させる一行修理をPR #9010へ分離した。対象2テストと`test_native_handle_bridge_v1`全31件はPASS、PRのnative-mcp/replay/workspace/X11 CIは確認時点でpending。production codeは不変更。#9006の別`native-win32`失敗（`release_unverified`対`completed`）はこの修理で隠さず、未解決のまま残す。
+
 ### r44：#8678をcurrent-main基準へ整列（2026-10-17）
 
 PR #8678は旧`docs/CURRENT_GOAL.md`全体を差分に含み、base衝突で`DIRTY`だった。branch `research/59-live-threat-guard-a01-20261009`をcurrent main `1ece47014d05db898bf73afcd722a14524462e15`へrebaseし、履歴的な長文方向は採用せずcurrent mainの短いgoal entryを維持した。実験記録29ファイル/8,946行追加は保持され、head `7551424026375469f609754140250f89bf09cad4`でPRは`CLEAN`、必須replay-gate PASS。A02のruntime failureと`formal_pass: false`は未変更で、merge・再実験は行っていない。独立レビュー待ち。
