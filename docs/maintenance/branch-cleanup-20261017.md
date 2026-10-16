@@ -311,3 +311,21 @@ by the open successor PR.
 
 This removes only a redundant branch name. The closed experimental history is
 not changed, and the A01 source remains fetchable through the open successor PR.
+
+## Retired byte-bound replay branch after merged-artifact verification
+
+Removed `research/carbon-window-7794-a05-bytebound-recheck-20261008` after
+verifying its full content delta is already preserved in current main and the
+merged A05 publication PR.
+
+| Check | Evidence |
+|---|---|
+| Exact branch tip before deletion | `0b5af59e7ec4333f5c8f615176180e14229fb70d` |
+| Branch state | Unprotected; no open PR used the branch as head or base, and no registered worktree used it. The branch ref matched the expected SHA immediately before deletion. |
+| Artifact custody | Against current main `1ece47014d05db898bf73afcd722a14524462e15`, all 20 delta-path blobs were found byte-identically: 16 in main (including six preparation files moved from `research/analysis/` to the published package) and four in merged [PR #8393](https://github.com/Unjuno/agent-interface/pull/8393)'s retained head (`research/README.md`, `REPORT.md`, `RUN.json`, `SHA256SUMS`). Merged [PR #8395](https://github.com/Unjuno/agent-interface/pull/8395) records the final scoped gate wording. |
+| Deletion method | Remote delete used `--force-with-lease` for the exact branch ref and expected SHA. |
+| Final verification | The branch ref is absent; `refs/pull/8393/head` and `refs/pull/8395/head` remain fetchable at their verified merge heads. Fresh inventory: 562 remote branches, 521 open PRs, 66 registered worktrees, 27 unreferenced candidates. |
+| Scope | Branch-ref cleanup only; no candidate, auditor, model, or GUI run was performed. |
+
+This retires the redundant branch name while retaining its exact source and
+result bytes through main and the merged PR head.
