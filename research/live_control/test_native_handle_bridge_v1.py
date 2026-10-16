@@ -47,6 +47,7 @@ class NativeHandleBridgeTests(unittest.TestCase):
         bridge.history = {7: ('old-observation', 'old-image')}
         bridge.used_aliases = {'old_target'}
         bridge.sequence = 7
+        bridge.binding_revision = 0
         connection = mock.Mock()
         connection.get_input_focus.return_value = SimpleNamespace(focus=SimpleNamespace(id=focus))
         connection.create_resource_object.side_effect = lambda kind, wid: SimpleNamespace(id=wid)
