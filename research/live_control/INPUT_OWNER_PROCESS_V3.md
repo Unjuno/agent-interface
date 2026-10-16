@@ -1,5 +1,9 @@
 # Explicit owned owner service v3
 
+An explicit `cancellation=True` launch now adds the independently serviced
+[cancellation lane](INPUT_OWNER_CANCEL_V4.md). Default launch and standard backend
+selection remain unchanged; the original packet below qualifies its pinned code.
+
 `input_owner_process_v3.launch_owner_service(display=..., out=...)` places the
 current strict transition/native owner and RPC v2 in an independently spawned
 Python process. This is an explicit library API; it does not select or replace
