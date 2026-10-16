@@ -1,0 +1,13 @@
+diff --git a/runtime/backends/x11_v1/backend.py b/runtime/backends/x11_v1/backend.py
+--- a/runtime/backends/x11_v1/backend.py
++++ b/runtime/backends/x11_v1/backend.py
+@@ -364,6 +364,9 @@
+         # Validate every planned tap up front: a later held-letter collision
+         # must not leave an earlier prefix of the text in the target.
+         self._reject_held_nonmodifier_overlap(plan)
++        # A text-level sample does not make the later XTEST request atomic.
++        if value and self.root.query_pointer().mask & X.LockMask:
++            raise X11BackendError("CAPS_LOCK_ACTIVE: literal text refused; lock unchanged")
+         for keys in plan:
+             self.key_chord(keys)
+ 
