@@ -4,6 +4,19 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r12：superseded design-only refを回収（2026-10-16）
+
+`research/8185-transform-graph-a02-20261005`をliveで再照合した。Tipは
+`c0f8e1b690d86a7ff10cecf47d9bb16fcd79d053`で、唯一の未統合差分は
+`research/analysis/epoch_transform_chain_8185_a02_20261005/DESIGN.md`（blob
+`84a151d3d5e495fdb3c7cc9d2cca5860fe8c1df5`）。ファイル自身が未凍結の設計記録と明示し、
+同じIssueの後継A02実験と最終プロトコルはmerged PR #8211でmainに存在する。
+全状態のPR head/baseを照会して参照0、branch protectionなし、全worktree一覧でcheckoutなしを確認した。
+このため、tip固定の`--force-with-lease`でremote refのみ削除し、remote readbackで不在を確認した。
+履歴SHA・唯一のパス・削除理由は`unlinked-branch-review-20261016.csv`に保持した。
+削除後のlive readbackはremote branch 587本、open PR 518件。直前の監査でPR参照なしだった31本から
+この1本を除いた30本が残る見込みで、各refの内容・所有・worktreeを引き続き個別照合する。
+
 ### r11：次の4件のIssue証拠を分類して索引化（2026-10-16）
 
 Issue #7955/#7790/#7773/#7741をGitHubから再読し、既存の先行・後続Issue、正式コメント、関連PRを照合した。
