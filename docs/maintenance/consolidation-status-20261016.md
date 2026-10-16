@@ -67,6 +67,13 @@ ahead of main; 32 contain paths absent or different in main. The remaining blob-
 is associated by name with open Issue #8654. No matching checkout was found in the 38 local Git
 checkouts scanned. Issue/owner association remains incomplete, so these 33 refs are preserved.
 
+After that snapshot, `research/wsl3-dockerless-doc-inventory-8882` was reviewed separately.
+Issue #8882 is closed with an explicit completion record pointing to the superseding inventory
+merged by PR #8884; the branch had no current PR head/base reference or matching local checkout.
+Its exact tip `76f33cc4b6c7af55074030ddc85857b73aec3117` was deleted with a tip-fixed lease and
+verified absent. The current remote branch count is 587 and the no-PR-reference group is now 32.
+The CSV remains the pre-deletion snapshot and includes this branch as it existed at capture time.
+
 ### r6：モデル連携・比較評価アイデアを一族ごとに整理
 
 基準main `1ece47014d05db898bf73afcd722a14524462e15`（2026-10-16）。
