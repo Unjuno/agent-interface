@@ -1,0 +1,18 @@
+{
+  "schema": "v39-owner-close-currentmain-xvfb-invocation-a09-v1",
+  "base_main": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "image_tag": "a09-owner-close-xvfb:20261012",
+  "image_id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+  "base_image_ref": "python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+  "candidate_sha256": "267b42af54b2aa09bb1cbbe7928bb9978ea81fb929f272bf3d34ea4085fd41f1",
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "input_transition_owner_v3.py": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+  },
+  "command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 1G --volume <package>:/study:ro --volume <results>:/out --workdir /study/SOURCE a09-owner-close-xvfb:20261012 python candidate.py --out /out/A09 --display :131",
+  "candidate_invocation_count": 1,
+  "output_leaf": "results/A09",
+  "prepared_at_utc": "2026-10-12T05:47:40Z"
+}

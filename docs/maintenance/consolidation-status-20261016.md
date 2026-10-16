@@ -4,7 +4,40 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
-## 後続の現在地（r2）
+## 後続の現在地
+
+### r3：全体整理を優先する現在地
+
+基準main `4c63725565f4dea433c49213b8d068c4c762f9bf`。
+[r3取得条件](inventory-20261016-r3.json)、[open Issue 1,678件](open-issues-20261016-r3.csv)、
+[open PR 517件](open-prs-20261016-r3.csv)。r2から#8876がopen一覧を離れた。
+これは全件精査済みという意味ではない。#8876の公開候補と古いRPC境界は
+[既存の収束記録](../../research/integration/crash_owner_convergence_20261016/README.md)へ接続する。
+一覧は本バッチ公開前の非原子的スナップショット。
+
+[全体計画](../REPOSITORY_CONSOLIDATION.md)に、入口・アイデア/Issue・PR・branch/worktree・
+採用実装のそれぞれの完了条件と実行順を追記した。次はモデル連携/比較評価のアイデア一族と
+#8867の計測差分を別々の有限なバッチとして読む。Issue数ゼロを完了条件にしない。
+
+#8998/#8999で独立cancel laneと選択backend/Executor custodyはmain統合済み。
+[現行adapter証拠](../../research/integration/owned_backend_adapter_20261016/README.md)へwork mapを更新した。
+V15/controllerの選択経路はローカルbranch
+`work/owned-service-session-selection-20261016`、commit
+`8a252071ea7fb5281b9ecc154fa1640136d5345c`に保全してあり、このmainには未統合。
+149メソッドの再検証と原rawはローカル専用出力
+`new-chat-2/outputs/repository-consolidation-20261015/owned-service-session-final-r2-*`に保持。
+単独実行でのimport復元問題を修理したが、正式証拠パケットの読戻しと統合は残る。
+このbranchを不要物として削除しない。
+
+#8874の[保存専用照合](../../research/integration/owner_close_a09_preservation_20261016/README.md)では、
+公開headの29原ファイルを同一バイトで保全し、元manifestが要求する
+`RUNNER/BUILD.log`の欠落を記録する。当時のraw限定監査と、証拠パケットの完全性は別判断。
+WSLc/producerは再実行せず、現在source・実機・task effectの成功へ読み替えない。
+元の科学的問いと不足は#59で継続する。
+
+以下r2以前の件数と「次」は各時点の履歴として読む。
+
+### r2（履歴）
 
 基準main `8a70a77fc6542d49b03de2f1403b3fd8bcd00397`、取得時刻は
 [inventory r2](inventory-20261016-r2.json)。[Issue 1,678件](open-issues-20261016-r2.csv)、
