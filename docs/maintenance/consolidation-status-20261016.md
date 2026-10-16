@@ -4,6 +4,12 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r47：#9004の有限T0結果を索引化し、#8867旧refを回収（2026-10-17）
+
+Issue #9004の未検証案をcurrent-main `1ece47014d05db898bf73afcd722a14524462e15`から凍結し、合成10ケース×4 armを一度だけ実行した。独立raw-only auditは40/40行を再構成して`PASS_METHOD_SCOPED`、通常・optimizedの5 mutation testsがPASSした。結果は`NO_INCREMENTAL_AGREEMENT_VALUE`で、agreement leaseはSystem-1-onlyと同数の作用、always-waitと同じ1 tickの合成中央値となり、事前20%基準を満たさない。`formal_pass=false`、実時間/実アプリ/モデル/GUIの主張なし。PR #9009へraw・監査・報告を保存し、Issueと`IDEAS_AND_OUTCOMES.md`/`RESEARCH.md`/research索引を更新した。PRはOPEN、必須check全てPASS、未レビュー・未merge。
+
+計画記載の#8874は#9000経由で証拠専用として閉鎖済み。元head `6d008b53…`の29ファイルはmainの保存パケットに保持され、RUNNER/BUILD.log欠落は未解決として明記。#8867は#9001経由で現行sourceへ採用済み。旧head `598109fd6329ef88ec469557ae4beae2a2ef3002`の6変更blobすべてがmain上の`original-candidate/`内のbytesとindex SHAに一致した。全PRページでhead/base参照を確認し、#8867 CLOSEDのみ（base依存なし）、branch unprotected、登録worktree/Issue本文・コメントの明示参照なし。期待tipをlease条件にremote refを削除し、remote不在を確認した。元PR本文と#9001保存記録は残し、現行研究の未達は変更していない。
+
 ### r44：#8678をcurrent-main基準へ整列（2026-10-17）
 
 PR #8678は旧`docs/CURRENT_GOAL.md`全体を差分に含み、base衝突で`DIRTY`だった。branch `research/59-live-threat-guard-a01-20261009`をcurrent main `1ece47014d05db898bf73afcd722a14524462e15`へrebaseし、履歴的な長文方向は採用せずcurrent mainの短いgoal entryを維持した。実験記録29ファイル/8,946行追加は保持され、head `7551424026375469f609754140250f89bf09cad4`でPRは`CLEAN`、必須replay-gate PASS。A02のruntime failureと`formal_pass: false`は未変更で、merge・再実験は行っていない。独立レビュー待ち。
