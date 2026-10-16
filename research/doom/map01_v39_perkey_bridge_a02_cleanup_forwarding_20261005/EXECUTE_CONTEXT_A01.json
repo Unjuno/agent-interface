@@ -1,0 +1,29 @@
+{
+  "C": "The inherited executor is stubbed; this tests the bridge wrapper and owner fake only, not selected session wiring or live runtime.",
+  "D": "PASS only if exactly one confirmed contextual up is emitted before execute returns, the bridge context is cleared afterward, and fake display state is neutral.",
+  "H": "The bridge execute finally block drains asynchronous owner cleanup while the admission program/step context is still available.",
+  "T": "Call the exact candidate Backend.execute wrapper with a fake inherited execute that admits F8, cancels its lease, and waits for the V13 owner cleanup.",
+  "U": "Construction regression only. Candidate runs remain the separately retained frozen A03 run; no GUI, OS input, game, model, or live allocation.",
+  "base_commit": "2367dd4c9f2b69eb6ef7bab83156710073c37bb0",
+  "candidate_reruns": 0,
+  "disposition": "PASS_EXECUTE_CONTEXT_DRAIN_SCOPED",
+  "run_id": "V39-CLEANUP-BRIDGE-EXECUTE-CONTEXT-A01-20261005",
+  "schema": "v39_cleanup_bridge_execute_context_construction_v1",
+  "source_sha256": {
+    "bridge.py": "b14ec37323ae3f2510538326011c63a5253745521724613b0b573e902aabe377",
+    "input_owner_v13.py": "9c07b5143cbce965be709202377a311f25986f59963257faa9ee345d87e341ef",
+    "test_bridge.py": "077241f3bce99dd62a31fd6f7b52d774755fa44a686c18d0afcba3650f9d101b",
+    "test_execute_context.py": "39fa118659c82663db20aab954e7c49ffe57a5ad38c375f0e4037e0f7997667a",
+    "test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9"
+  },
+  "tests": {
+    "normal": {
+      "failed": 0,
+      "passed": 1
+    },
+    "optimized": {
+      "failed": 0,
+      "passed": 1
+    }
+  }
+}

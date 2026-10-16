@@ -1,0 +1,205 @@
+{
+  "bridge_emitted_events": [
+    {
+      "admitted_ns": 154267534067750,
+      "event": "input_admission",
+      "id": "MAP01-V39-CLEANUP-TELEMETRY-BRIDGE-A01-20261005",
+      "input_ack_ns": 154267534073916,
+      "intent_token": "cleanup-bridge-a01",
+      "key": "F8",
+      "owner_id": "abc8c294853d467c840a72d6e462249c",
+      "physical_key_measurement": {
+        "actuation_id": "abc8c294853d467c840a72d6e462249c:g1:F8",
+        "adapter_edge": {
+          "actuation_id": "abc8c294853d467c840a72d6e462249c:g1:F8",
+          "edge": "down",
+          "grants_input_authority": false,
+          "intent_token": "cleanup-bridge-a01",
+          "interval": [
+            154267534070833,
+            154267534076791
+          ],
+          "key": "F8",
+          "owner_id": "abc8c294853d467c840a72d6e462249c",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "application_consumption_observed": false,
+        "bracket": {
+          "application_consumption_observed": false,
+          "grants_input_authority": false,
+          "intent_token": "cleanup-bridge-a01",
+          "key": "F8",
+          "owner_id": "abc8c294853d467c840a72d6e462249c",
+          "physical_down_interval": [
+            154267534070833,
+            154267534076791
+          ],
+          "press_id": "abc8c294853d467c840a72d6e462249c:r1:down:74",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "classification": "CONFIRMED_PHYSICAL_DOWN",
+        "edge": "down",
+        "grants_input_authority": false,
+        "identity_status": "MINTED",
+        "post_sample": {
+          "available": true,
+          "down": true,
+          "error": null,
+          "finished_ns": 154267534076791,
+          "started_ns": 154267534074250
+        },
+        "pre_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 154267534070833,
+          "started_ns": 154267534068333
+        },
+        "press_request_ns": 154267534072083,
+        "sync_return_ns": 154267534073916
+      },
+      "step": 0,
+      "valid_until_ns": 154277534042166
+    },
+    {
+      "event": "input_release_measurement",
+      "grants_input_authority": false,
+      "id": "MAP01-V39-CLEANUP-TELEMETRY-BRIDGE-A01-20261005",
+      "intent_token": "cleanup-bridge-a01",
+      "key": "F8",
+      "owner_id": "abc8c294853d467c840a72d6e462249c",
+      "physical_key_measurement": {
+        "actuation_id": null,
+        "adapter_edge": null,
+        "application_consumption_observed": false,
+        "bracket": {
+          "application_consumption_observed": false,
+          "grants_input_authority": false,
+          "intent_token": "cleanup-bridge-a01",
+          "key": "F8",
+          "owner_id": "abc8c294853d467c840a72d6e462249c",
+          "physical_up_interval": null,
+          "release_id": "abc8c294853d467c840a72d6e462249c:r3:up:74",
+          "status": "NOOP_ALREADY_UP"
+        },
+        "classification": "NOOP_ALREADY_UP",
+        "edge": "up",
+        "grants_input_authority": false,
+        "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+        "post_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 154267537148958,
+          "started_ns": 154267537148500
+        },
+        "pre_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 154267537147791,
+          "started_ns": 154267537146041
+        },
+        "release_attempted": false,
+        "release_request_ns": 154267537148333,
+        "sync_return_ns": 154267537148333
+      },
+      "step": 0,
+      "valid_until_ns": 154277534042166
+    }
+  ],
+  "fake_physical_keys_after_cleanup": [],
+  "owner_cleanup_record": {
+    "buttons_down": [],
+    "event": "owner_release",
+    "keys_down": [],
+    "per_key_release_measurements": [
+      {
+        "actuation_id": "abc8c294853d467c840a72d6e462249c:g1:F8",
+        "application_consumption_observed": false,
+        "bracket": {
+          "application_consumption_observed": false,
+          "cleanup_reason": "cancelled",
+          "grants_input_authority": false,
+          "intent_token": "cleanup-bridge-a01",
+          "key": "F8",
+          "owner_id": "abc8c294853d467c840a72d6e462249c",
+          "physical_up_interval": [
+            154267536654958,
+            154267536659166
+          ],
+          "release_id": "abc8c294853d467c840a72d6e462249c:r2:cleanup-up:74",
+          "status": "CONFIRMED_PHYSICAL_UP"
+        },
+        "classification": "CONFIRMED_PHYSICAL_UP",
+        "edge": "up",
+        "grants_input_authority": false,
+        "identity_status": "RETIRED",
+        "key": "F8",
+        "keycode": 74,
+        "post_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 154267536659166,
+          "started_ns": 154267536658750
+        },
+        "pre_sample": {
+          "available": true,
+          "down": true,
+          "error": null,
+          "finished_ns": 154267536654958,
+          "started_ns": 154267536653291
+        },
+        "release_attempted": true,
+        "release_request_ns": 154267536655500,
+        "sync_return_ns": 154267536658625
+      }
+    ],
+    "reason": "cancelled",
+    "valid_until_ns": 154277534042166,
+    "verified": true,
+    "verified_ns": 154267536670125
+  },
+  "projected_receipts": [
+    {
+      "actuation_id_sha256": "51dd99497b12812615a348554f5d7cead1072c60801c7bf5c3e94e73b30a37a6",
+      "application_consumption_observed": null,
+      "down_edge_interval_ns": null,
+      "down_press_request_ns": null,
+      "down_sync_return_ns": null,
+      "grants_input_authority": null,
+      "input_admitted_ns": null,
+      "intent_token_sha256": "e79907b658a63226a394d7313327e9639411f607332ebe3025244fe8e4218742",
+      "key": "F8",
+      "owner_id_sha256": "fd44a73e741350ab9facd23aefa47e13070f90d74a94d4e776c79146c871f264",
+      "program_id_sha256": "58ef13aea50366f8c09b6a7819857f6eb70c4056d232d1db1802b261c5df9cc3",
+      "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim",
+      "status": "adapter_edge_receipt_incomplete",
+      "step": 0,
+      "up_edge_interval_ns": null,
+      "up_release_request_ns": null,
+      "up_sync_return_ns": null
+    },
+    {
+      "actuation_id_sha256": null,
+      "application_consumption_observed": null,
+      "down_edge_interval_ns": null,
+      "down_press_request_ns": null,
+      "down_sync_return_ns": null,
+      "grants_input_authority": null,
+      "input_admitted_ns": null,
+      "intent_token_sha256": "e79907b658a63226a394d7313327e9639411f607332ebe3025244fe8e4218742",
+      "key": "F8",
+      "owner_id_sha256": null,
+      "program_id_sha256": "58ef13aea50366f8c09b6a7819857f6eb70c4056d232d1db1802b261c5df9cc3",
+      "scope": "InputOwner v12 X-server keymap sampling brackets; no application receipt, physical dwell claim, or task-benefit claim",
+      "status": "adapter_edge_receipt_incomplete",
+      "step": 0,
+      "up_edge_interval_ns": null,
+      "up_release_request_ns": null,
+      "up_sync_return_ns": null
+    }
+  ],
+  "run_id": "MAP01-V39-CLEANUP-TELEMETRY-BRIDGE-A01-20261005"
+}
