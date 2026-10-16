@@ -104,6 +104,13 @@ WSLc read-only事前確認と、#8685のclient/container lane条件を読んだ�
 実験・移行結果ではなく、既存allocationも消費していない。この記録が限定するのは当該WSLc
 操作だけであり、独立した作業や他の実験レーンの停止条件ではない。
 
+2026-10-16にIssue #8914のオフライン候補を実行したところ、A01/A02とも候補後の独立監査が
+sentinel再構成で止まったため、科学的判定なしのraw保全PR
+[#9007](https://github.com/Unjuno/agent-interface/pull/9007)を作成した。
+branch `research/8914-budgeted-discovery-t0-a01-20261016` はこの未統合PRのheadとして保持中。
+同日時点のremote refs 589本・open PR 518件にはこれを含み、削除済み・main統合済みとは数えない。
+この保全用branchは独立したWSLc・GUI・ゲーム・model作業を制限しない。
+
 同じバッチで、統合済みPR [#8791](https://github.com/Unjuno/agent-interface/pull/8791)
 のremote branch `fix/primary-release-array-shape-20261009` を回収した。記録tip
 `3884c929435db18855b5ca62e95ca90ceadb52ed` は現行mainの祖先、branchはunprotectedで、
