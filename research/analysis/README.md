@@ -464,6 +464,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
 - [`braess_route_verifier_5855_horizon_ledger_a02_20261004/`](braess_route_verifier_5855_horizon_ledger_a02_20261004/)
 - [`breakdown_t7/`](breakdown_t7/)
+- [`budgeted_failure_discovery_8914_t0_a01_20261016/`](budgeted_failure_discovery_8914_t0_a01_20261016/)
+- [`budgeted_failure_discovery_8914_t0_a02_20261016/`](budgeted_failure_discovery_8914_t0_a02_20261016/)
 - [`cache_epoch_completeness_2928_v1/`](cache_epoch_completeness_2928_v1/)
 - [`cache_epoch_monitor_execution_2928_v1/`](cache_epoch_monitor_execution_2928_v1/)
 - [`cache_partial_effect_replay_boundary_2928_v1/`](cache_partial_effect_replay_boundary_2928_v1/)
