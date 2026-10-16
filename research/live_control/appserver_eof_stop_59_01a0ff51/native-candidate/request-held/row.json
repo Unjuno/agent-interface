@@ -1,0 +1,120 @@
+{
+  "api": "request",
+  "caller_alive_final": false,
+  "checkpoint": {
+    "caller_alive": false,
+    "frames": [],
+    "process_exit": null,
+    "reader_alive": false,
+    "returned": {
+      "message": "app-server closed during fixture/request: stderr not drained",
+      "type": "AppServerError"
+    },
+    "stdout_closed": true
+  },
+  "client_close_pipes": {
+    "stderr": false,
+    "stdin": false,
+    "stdout": false
+  },
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/src/peer.py.txt",
+    "request",
+    "held",
+    "/out/native-candidate/request-held"
+  ],
+  "events": [
+    {
+      "kind": "child_ready",
+      "ns": 22493166812333
+    },
+    {
+      "kind": "call_started",
+      "ns": 22493167031542
+    },
+    {
+      "kind": "call_ended",
+      "ns": 22493168493342
+    },
+    {
+      "kind": "stdout_eof_observed",
+      "ns": 22493168556176
+    },
+    {
+      "kind": "checkpoint",
+      "ns": 22493419901353
+    },
+    {
+      "kind": "owned_release_sent",
+      "ns": 22493422084031
+    },
+    {
+      "kind": "child_reaped",
+      "ns": 22493428248439
+    },
+    {
+      "kind": "client_close_returned",
+      "ns": 22493428623983
+    },
+    {
+      "kind": "driver_pipes_closed",
+      "ns": 22493428719275
+    }
+  ],
+  "final": {
+    "caller_alive": false,
+    "journal_closed": true,
+    "pipes_closed": {
+      "stderr": true,
+      "stdin": true,
+      "stdout": true
+    },
+    "reader_alive": false
+  },
+  "finished": {
+    "owned_release_received": true,
+    "pid": 14
+  },
+  "identity": "request-held",
+  "journal": [
+    {
+      "direction": "sent",
+      "message": {
+        "id": 1,
+        "method": "fixture/request",
+        "params": {
+          "owned": true
+        }
+      },
+      "observed_ns": 22493167040084
+    }
+  ],
+  "journal_sha256": "7bb13be4750bd0836f814a911baebbb42e3f75a83251d17f51d711dd285cfb11",
+  "native_exit": 0,
+  "pid": 14,
+  "ready": {
+    "api": "request",
+    "pid": 14,
+    "scenario": "held"
+  },
+  "returned": {
+    "message": "app-server closed during fixture/request: stderr not drained",
+    "type": "AppServerError"
+  },
+  "scenario": "held",
+  "stderr_remaining_hex": "68656c6420646961676e6f737469632072656d61696e73206f776e65640a",
+  "traceback": "Traceback (most recent call last):\n  File \"/src/driver.py.txt\", line 67, in invoke\n    value = (client.request('fixture/request', {'owned': True}, timeout=plan['timeout_s'])\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/candidate_client.py.txt\", line 75, in request\n    raise AppServerError(f\"app-server closed during {method}: stderr not drained\")\nfixed_candidate.AppServerError: app-server closed during fixture/request: stderr not drained\n",
+  "wire": {
+    "api": "request",
+    "pid": 14,
+    "request_line": "{\"method\":\"fixture/request\",\"id\":1,\"params\":{\"owned\":true}}\n",
+    "scenario": "held",
+    "stderr_hex": "68656c6420646961676e6f737469632072656d61696e73206f776e65640a",
+    "stderr_write_count": 30,
+    "stdout_closed_ns": 22493167254377,
+    "stdout_hex": "",
+    "stdout_write_count": 0
+  }
+}

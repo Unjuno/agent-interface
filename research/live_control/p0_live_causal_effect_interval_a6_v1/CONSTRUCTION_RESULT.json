@@ -1,0 +1,42 @@
+{
+  "task": "P0-LIVE-CAUSAL-EFFECT-INTERVAL-A6-20260918-001",
+  "phase": "excluded_construction",
+  "construction_sessions": 2,
+  "formal_invocations": 0,
+  "reruns": 0,
+  "raw_container_bytes": 11355,
+  "raw_container_sha256": "2963a2b588afe68c7e181f90314b15a1872ab998b9968997c9b6a19c1648dd9d",
+  "summary": {
+    "sessions": 2,
+    "effect_sessions": 1,
+    "control_sessions": 1,
+    "effect_application_ok": 1,
+    "effect_physical_ok": 1,
+    "effect_lineage_ok": 1,
+    "effect_independent_score_ok": 1,
+    "effect_temporal_clock_ok": 1,
+    "effect_terminal_up": 1,
+    "control_no_effect_ok": 1,
+    "child_failures": 0,
+    "exceptions": 0
+  },
+  "effect_temporal": {
+    "clock_disposition": "useful_bound",
+    "effect_buckets": {
+      "useful_bound": 1,
+      "useful_unbound": 0,
+      "nonuseful_bound": 0,
+      "unscored": 0,
+      "invalid_identity": 0,
+      "invalid_temporal": 0,
+      "temporal_ambiguous": 0
+    },
+    "occupancy": [150290403, 150799919, 0, 0]
+  },
+  "cleanup": {
+    "child_exit_code": 0,
+    "xvfb_exit_code": 0,
+    "socket_residual": false
+  },
+  "formal_eligible": true
+}

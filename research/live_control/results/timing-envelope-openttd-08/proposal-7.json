@@ -1,0 +1,14 @@
+{
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 1000,
+      "y": 180
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 1000
+    }
+  ],
+  "rationale": "The previous drag completed, but the cost text and pointer obscure the target tiles. Move away and let the overlay clear so the road and forbidden row can be checked before any further construction."
+}

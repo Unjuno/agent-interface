@@ -1,0 +1,29 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_click",
+      "x": 78,
+      "y": 190,
+      "duration_ms": 80
+    },
+    {
+      "op": "text",
+      "text": "480"
+    },
+    {
+      "op": "key",
+      "key": "Return"
+    },
+    {
+      "op": "text",
+      "text": "192"
+    },
+    {
+      "op": "chord",
+      "modifier": "Control_L",
+      "key": "s"
+    }
+  ],
+  "rationale": "Clicked the visibly selected A1 cell, entered 480, moved to A2 and entered 192, then saved the existing workbook."
+}

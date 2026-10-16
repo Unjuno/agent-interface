@@ -1,0 +1,767 @@
+{
+  "format": "pointer-report-view-v1",
+  "payload": {
+    "state": "terminal",
+    "exchanges": [
+      {
+        "request": {
+          "after": 16,
+          "events": [
+            "clock"
+          ],
+          "timeout": 5,
+          "request_id": "clock-3629865ca7d84ddc9154516cbe7d2933",
+          "command": {
+            "op": "clock"
+          }
+        },
+        "started_ns": 110141916392,
+        "returned_ns": 110171154731,
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "op": "clock",
+                "transport_request_id": "clock-3629865ca7d84ddc9154516cbe7d2933"
+              },
+              "received_ns": 110149459404,
+              "emit_started_ns": 110149462103
+            },
+            {
+              "event": "clock",
+              "runtime_ns": 110158723382,
+              "sequence": 2,
+              "emit_started_ns": 110158728031
+            }
+          ],
+          "cursor": 18,
+          "returned_ns": 110170995300,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "clock-3629865ca7d84ddc9154516cbe7d2933",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      },
+      {
+        "request": {
+          "after": 18,
+          "events": [
+            "terminal"
+          ],
+          "timeout": 15,
+          "action_id": "corrected-move-save",
+          "request_id": "program-4dc787926cb04293be87edb4f6ec3a47",
+          "command": {
+            "op": "submit",
+            "id": "corrected-move-save",
+            "steps": [
+              {
+                "op": "pointer_click",
+                "x": 618,
+                "y": 391
+              },
+              {
+                "op": "hold",
+                "keys": [
+                  "Right"
+                ],
+                "duration_ms": 80
+              },
+              {
+                "op": "chord",
+                "modifier": "Control_L",
+                "key": "s"
+              },
+              {
+                "op": "settle",
+                "quiet_ms": 80,
+                "timeout_ms": 500
+              }
+            ],
+            "expected_sequence": 2,
+            "valid_until_ns": 140158723382
+          }
+        },
+        "started_ns": 110179299963,
+        "returned_ns": 111058760933,
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "command",
+              "command": {
+                "expected_sequence": 2,
+                "id": "corrected-move-save",
+                "op": "submit",
+                "steps": [
+                  {
+                    "op": "pointer_click",
+                    "x": 618,
+                    "y": 391
+                  },
+                  {
+                    "duration_ms": 80,
+                    "keys": [
+                      "Right"
+                    ],
+                    "op": "hold"
+                  },
+                  {
+                    "key": "s",
+                    "modifier": "Control_L",
+                    "op": "chord"
+                  },
+                  {
+                    "op": "settle",
+                    "quiet_ms": 80,
+                    "timeout_ms": 500
+                  }
+                ],
+                "transport_request_id": "program-4dc787926cb04293be87edb4f6ec3a47",
+                "valid_until_ns": 140158723382
+              },
+              "received_ns": 110187192105,
+              "emit_started_ns": 110187194897
+            },
+            {
+              "event": "accepted",
+              "id": "corrected-move-save",
+              "steps": 4,
+              "valid_until_ns": 140158723382,
+              "accepted_ns": 110197941626,
+              "emit_started_ns": 110197943938
+            },
+            {
+              "event": "step_started",
+              "id": "corrected-move-save",
+              "step": 0,
+              "operation": "pointer_click",
+              "issued_ns": 110209542682,
+              "emit_started_ns": 110209544744
+            },
+            {
+              "event": "pointer_admission",
+              "operation": "move",
+              "payload": {
+                "x": 618,
+                "y": 391
+              },
+              "admitted_ns": 110222298570,
+              "input_ack_ns": 110222562068,
+              "valid_until_ns": 140158723382,
+              "surface": 6291463,
+              "id": "corrected-move-save",
+              "step": 0,
+              "emit_started_ns": 110222656580
+            },
+            {
+              "event": "pointer_admission",
+              "operation": "button_down",
+              "payload": 1,
+              "admitted_ns": 110235569483,
+              "input_ack_ns": 110235950068,
+              "valid_until_ns": 140158723382,
+              "surface": 6291463,
+              "id": "corrected-move-save",
+              "step": 0,
+              "emit_started_ns": 110236136043
+            },
+            {
+              "event": "observation",
+              "id": "corrected-move-save",
+              "step": 0,
+              "sequence": 3,
+              "capture_ns": 110298605236,
+              "context_ns": 110303249722,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/003.png",
+              "image_reused": false,
+              "image_prepare_ns": 32393334,
+              "image_ready_ns": 110359498814,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 5.831611,
+              "wire_bytes": 6122,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 110376258327
+            },
+            {
+              "event": "step_completed",
+              "id": "corrected-move-save",
+              "step": 0,
+              "completed_ns": 110386463209,
+              "emit_started_ns": 110386465590
+            },
+            {
+              "event": "step_started",
+              "id": "corrected-move-save",
+              "step": 1,
+              "operation": "hold",
+              "issued_ns": 110398928718,
+              "emit_started_ns": 110398932153
+            },
+            {
+              "event": "input_admission",
+              "key": "Right",
+              "admitted_ns": 110410353030,
+              "input_ack_ns": 110410670404,
+              "valid_until_ns": 140158723382,
+              "emit_started_ns": 110410735215
+            },
+            {
+              "event": "keys_held",
+              "id": "corrected-move-save",
+              "step": 1,
+              "keys": [
+                "Right"
+              ],
+              "input_ack_ns": 110433507302,
+              "emit_started_ns": 110433510765
+            },
+            {
+              "event": "observation",
+              "id": "corrected-move-save",
+              "step": 1,
+              "sequence": 4,
+              "capture_ns": 110452144028,
+              "context_ns": 110457654474,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop *shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/004.png",
+              "image_reused": false,
+              "image_prepare_ns": 28193852,
+              "image_ready_ns": 110506384618,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 4.267325,
+              "wire_bytes": 22742,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 110526845012
+            },
+            {
+              "event": "observation",
+              "id": "corrected-move-save",
+              "step": 1,
+              "sequence": 5,
+              "capture_ns": 110544580083,
+              "context_ns": 110549992693,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop *shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/005.png",
+              "image_reused": false,
+              "image_prepare_ns": 27289262,
+              "image_ready_ns": 110592735332,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 5.402184,
+              "wire_bytes": 7767,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 110609326796
+            },
+            {
+              "event": "step_completed",
+              "id": "corrected-move-save",
+              "step": 1,
+              "completed_ns": 110620098067,
+              "emit_started_ns": 110620102888
+            },
+            {
+              "event": "step_started",
+              "id": "corrected-move-save",
+              "step": 2,
+              "operation": "chord",
+              "issued_ns": 110632110238,
+              "emit_started_ns": 110632127307
+            },
+            {
+              "event": "input_admission",
+              "key": "Control_L",
+              "admitted_ns": 110642691182,
+              "input_ack_ns": 110642953382,
+              "valid_until_ns": 140158723382,
+              "emit_started_ns": 110643028914
+            },
+            {
+              "event": "input_admission",
+              "key": "s",
+              "admitted_ns": 110655256489,
+              "input_ack_ns": 110655470123,
+              "valid_until_ns": 140158723382,
+              "emit_started_ns": 110655597171
+            },
+            {
+              "event": "observation",
+              "id": "corrected-move-save",
+              "step": 2,
+              "sequence": 6,
+              "capture_ns": 110674601984,
+              "context_ns": 110678870357,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/006.png",
+              "image_reused": false,
+              "image_prepare_ns": 28751295,
+              "image_ready_ns": 110724867371,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 3.388548,
+              "wire_bytes": 6131,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 110740808104
+            },
+            {
+              "event": "step_completed",
+              "id": "corrected-move-save",
+              "step": 2,
+              "completed_ns": 110751660445,
+              "emit_started_ns": 110751662436
+            },
+            {
+              "event": "step_started",
+              "id": "corrected-move-save",
+              "step": 3,
+              "operation": "settle",
+              "issued_ns": 110764132375,
+              "emit_started_ns": 110764138594
+            },
+            {
+              "event": "observation",
+              "id": "corrected-move-save",
+              "step": 3,
+              "sequence": 7,
+              "capture_ns": 110781391806,
+              "context_ns": 110787424843,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/007.png",
+              "image_reused": false,
+              "image_prepare_ns": 27961780,
+              "image_ready_ns": 110831141141,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 5.564722,
+              "wire_bytes": 3292,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 110849918461
+            },
+            {
+              "event": "observation",
+              "id": "corrected-move-save",
+              "step": 3,
+              "sequence": 8,
+              "capture_ns": 110886097853,
+              "context_ns": 110891711460,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/007.png",
+              "image_reused": true,
+              "image_prepare_ns": 4410919,
+              "image_ready_ns": 110905209681,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 3.764986,
+              "wire_bytes": 282,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 110926036930
+            },
+            {
+              "event": "observation",
+              "id": "corrected-move-save",
+              "step": 3,
+              "sequence": 9,
+              "capture_ns": 110964158795,
+              "context_ns": 110969641012,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/007.png",
+              "image_reused": true,
+              "image_prepare_ns": 4975245,
+              "image_ready_ns": 110982855952,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 4.291259,
+              "wire_bytes": 282,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 111004669601
+            },
+            {
+              "event": "settle_result",
+              "id": "corrected-move-save",
+              "step": 3,
+              "reason": "pixel_quiet",
+              "samples": 3,
+              "sequence": 9,
+              "elapsed_ms": 242.861319,
+              "quiet_ms": 80,
+              "timeout_ms": 500,
+              "semantic_completion": "unknown",
+              "emit_started_ns": 111017846948
+            },
+            {
+              "event": "step_completed",
+              "id": "corrected-move-save",
+              "step": 3,
+              "completed_ns": 111030323069,
+              "emit_started_ns": 111030325003
+            },
+            {
+              "event": "terminal",
+              "id": "corrected-move-save",
+              "status": "completed",
+              "error": null,
+              "steps_completed": 4,
+              "release": {
+                "event": "owner_release",
+                "reason": "release",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 111044176982,
+                "valid_until_ns": 140158723382
+              },
+              "terminal_ns": 111044240234,
+              "semantic_completion": "program status only; task scoring is separate",
+              "emit_started_ns": 111044244461
+            }
+          ],
+          "cursor": 43,
+          "returned_ns": 111058258196,
+          "authority": "none",
+          "acknowledgement": "not implied",
+          "command_receipt": {
+            "request_id": "program-4dc787926cb04293be87edb4f6ec3a47",
+            "replayed": false,
+            "state": "stdin_flushed"
+          }
+        }
+      }
+    ],
+    "program_sent": true,
+    "source_image": {
+      "status": "image",
+      "sequence": 2,
+      "capture_ns": 33442383540,
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/001.png",
+      "relative_path": "001.png",
+      "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+      "authority": "none",
+      "freshness": "historical referenced capture; no new observation"
+    },
+    "image": {
+      "status": "image",
+      "sequence": 9,
+      "capture_ns": 110964158795,
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/007.png",
+      "relative_path": "007.png",
+      "sha256": "b74dc79676c267cda59c3fec74c9904f4b7bc537baffcddfdcd9ea3d2d881238",
+      "authority": "none",
+      "freshness": "historical referenced capture; no new observation"
+    },
+    "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies"
+  },
+  "references": {
+    "last_reply": [
+      "exchanges",
+      1,
+      "reply"
+    ],
+    "continuation_batch": [
+      "exchanges",
+      1,
+      "reply"
+    ],
+    "terminal": [
+      "exchanges",
+      1,
+      "reply",
+      "records",
+      24
+    ]
+  }
+}

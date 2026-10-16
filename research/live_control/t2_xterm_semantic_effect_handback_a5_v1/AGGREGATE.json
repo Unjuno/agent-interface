@@ -1,0 +1,39 @@
+{
+  "decision": "FAIL_XTERM_SEMANTIC_EFFECT_HANDBACK_A5_SPEED_GATE",
+  "formal_invocations": 1,
+  "batch_reruns": 0,
+  "batch_sha256": {
+    "BATCH_0.json": "fba1b9814ee68dfc3163151a284f79155cb466c6ecd361af9c472506aa06942f",
+    "BATCH_1.json": "cfe9927f49a282d6340ed3ccd95984701b0997a583799409c69de9a535ab0043",
+    "BATCH_2.json": "32b32d5793c4f818c1b99f685010f69bb9e79cb4d9ffd2c892fdee9183a9bf4d",
+    "BATCH_3.json": "0fbefaa9bc767a2125ddea07fc268a68606b84a3c513d24f4673ed7773c186ea",
+    "BATCH_4.json": "64b09f945165478d947516d5cb21293f82aa26bf6a73dcfed651c2b278c3500d"
+  },
+  "checks": {
+    "rows_total": 36,
+    "positive_pairs": 16,
+    "baseline_effect_after_handback": 16,
+    "candidate_receipts_valid": 16,
+    "candidate_effect_after_handback": 0,
+    "candidate_timeouts": 0,
+    "candidate_release_before_handback": 16,
+    "no_effect_receipts": 0,
+    "no_effect_completed_handbacks": 0,
+    "no_effect_timeouts": 4,
+    "all_exact_input": true,
+    "all_focus": true,
+    "all_exit0": true,
+    "all_terminal_key_up": true,
+    "all_press_before_frontier": true,
+    "drain_p95_ms": 6.110989,
+    "drain_max_ms": 8.270676,
+    "press_offset_min_ms": 34.255364,
+    "press_offset_max_ms": 39.591349
+  },
+  "source_sha256": {
+    "CONSTRUCTION.json": "b8899ba981c4d9219ccf2ff3e7e10a2b0ac5d809052cb4585f1576b83630fc31",
+    "FORMAL_ROWS.json": "982a078f7d89866fffc73ff40292ff977153aefebbe6b217e0da92023c1bd834",
+    "core.py": "0e6ea6cd67baee82519e099d30b7fca5950df417f712c74c826da29c52b14173",
+    "batch.py": "1c21671d72187bb72315daede40a2703baeb9a9d120f340e07dfe20b8c2f90a3"
+  }
+}

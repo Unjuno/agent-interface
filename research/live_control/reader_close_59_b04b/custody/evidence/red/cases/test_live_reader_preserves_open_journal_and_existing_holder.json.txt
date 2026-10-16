@@ -1,0 +1,16 @@
+{
+  "method": "test_live_reader_preserves_open_journal_and_existing_holder",
+  "kind": "controlled-owned-unit-objects",
+  "outcome": {
+    "error_type": "AssertionError",
+    "error_message": "journal touched while reader remains live"
+  },
+  "reader_alive": true,
+  "join_timeouts": [
+    0.125
+  ],
+  "journal_closed": false,
+  "journal_close_calls": 0,
+  "journal_lock_entries": 1,
+  "journal_lock_releases": 0
+}

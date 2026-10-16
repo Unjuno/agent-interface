@@ -1,0 +1,23 @@
+{
+  "allocation": "app-reconnect-generation-2802-20260923-01",
+  "issue": 2802,
+  "formal_state": "NOT_STARTED",
+  "formal_rows": 18,
+  "formal_invocations": 0,
+  "retries": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "bound_ns": 1000000000,
+  "late_delay_ms": 1200,
+  "scenarios": ["SAME_PROCESS_AB","RECONNECT_CROSS_B","RECONNECT_CROSS_AB","FRESH_AFTER_RECONNECT","MISSING_GENERATION_B","LATE_SAME_PROCESS_B"],
+  "construction": "6/6; all exits0; policy units4/4; audit errors=[]; controls8/8",
+  "source_sha256": {
+    "policy.py":"d7f8702cd3bd19c8164ebc8587cb56f18df6cceeba8e70926f9b92ca3d521b12",
+    "producer.py":"4adf344262bd4eb07c2f142132697d0eb694941599128a7d53bced6f68aaecf1",
+    "run.py":"894c2b8665865ea88e541e281c4afec38562a1dd0b8ef14390c16330bb02b065",
+    "audit.py":"f232de06e237b68a9e8825b440d543b3e979a16851702ac5d837c771210fa446",
+    "test_policy.py":"5368eadce9c1b6e71bb6179e2ef40884fbafb4f9534b3d0a93655668ca44f945",
+    "PLAN.md":"5b33fecacbdb25e1ced7d346c3a7dd226462e62fc0cfab6a47ff8547a6984eb8",
+    "ENVIRONMENT.txt":"f8799362d6253ecc128da0bfa9e532e1b0699bdf52423941b2e86501e1ab650d"
+  }
+}

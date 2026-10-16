@@ -1,0 +1,107 @@
+test_authoritative_epoch_mismatch (test_cell.CellTests.test_authoritative_epoch_mismatch) ... FAIL
+test_boolean_pid (test_cell.CellTests.test_boolean_pid) ... FAIL
+test_complete_cell_preserves_bad_exposure_outcome (test_cell.CellTests.test_complete_cell_preserves_bad_exposure_outcome) ... ok
+test_cpu_regression_even_with_matching_raw (test_cell.CellTests.test_cpu_regression_even_with_matching_raw) ... FAIL
+test_future_cue_pixels_temporally_impossible (test_cell.CellTests.test_future_cue_pixels_temporally_impossible) ... FAIL
+test_killed_server_is_not_normal_shutdown (test_cell.CellTests.test_killed_server_is_not_normal_shutdown) ... ok
+test_optional_thread_cpu_corruption (test_cell.CellTests.test_optional_thread_cpu_corruption) ... FAIL
+test_planned_sigterm_keeps_native_children_zero (test_cell.CellTests.test_planned_sigterm_keeps_native_children_zero) ... FAIL
+test_private_display_owner_mismatch (test_cell.CellTests.test_private_display_owner_mismatch) ... FAIL
+test_readiness_window_mismatch (test_cell.CellTests.test_readiness_window_mismatch) ... FAIL
+test_unexpected_server_zero_exit_not_planned_shutdown (test_cell.CellTests.test_unexpected_server_zero_exit_not_planned_shutdown) ... FAIL
+
+======================================================================
+FAIL: test_authoritative_epoch_mismatch (test_cell.CellTests.test_authoritative_epoch_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 70, in test_authoritative_epoch_mismatch
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_boolean_pid (test_cell.CellTests.test_boolean_pid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 78, in test_boolean_pid
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_cpu_regression_even_with_matching_raw (test_cell.CellTests.test_cpu_regression_even_with_matching_raw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 110, in test_cpu_regression_even_with_matching_raw
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_future_cue_pixels_temporally_impossible (test_cell.CellTests.test_future_cue_pixels_temporally_impossible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 89, in test_future_cue_pixels_temporally_impossible
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_optional_thread_cpu_corruption (test_cell.CellTests.test_optional_thread_cpu_corruption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 114, in test_optional_thread_cpu_corruption
+    with self.assertRaises(ValueError): snapshot_valid(s)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_planned_sigterm_keeps_native_children_zero (test_cell.CellTests.test_planned_sigterm_keeps_native_children_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 93, in test_planned_sigterm_keeps_native_children_zero
+    try: result=validate_cell(spec,data)
+                ~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/validation.py", line 77, in validate_cell
+    raise ValueError('all three children terminal0')
+ValueError: all three children terminal0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 94, in test_planned_sigterm_keeps_native_children_zero
+    except ValueError as exc: self.fail('planned shutdown rejected: '+str(exc))
+                              ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: planned shutdown rejected: all three children terminal0
+
+======================================================================
+FAIL: test_private_display_owner_mismatch (test_cell.CellTests.test_private_display_owner_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 82, in test_private_display_owner_mismatch
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_readiness_window_mismatch (test_cell.CellTests.test_readiness_window_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 74, in test_readiness_window_mismatch
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unexpected_server_zero_exit_not_planned_shutdown (test_cell.CellTests.test_unexpected_server_zero_exit_not_planned_shutdown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_cell.py", line 99, in test_unexpected_server_zero_exit_not_planned_shutdown
+    with self.assertRaises(ValueError): validate_cell(spec,data)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.013s
+
+FAILED (failures=9)

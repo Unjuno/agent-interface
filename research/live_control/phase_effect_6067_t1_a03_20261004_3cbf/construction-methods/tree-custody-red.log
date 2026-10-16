@@ -1,0 +1,16 @@
+test_exact_content_and_file_set (test_tree_custody.TreeCustody.test_exact_content_and_file_set) ... ok
+test_substitution_missing_extra_and_mistyped_hash_rejected (test_tree_custody.TreeCustody.test_substitution_missing_extra_and_mistyped_hash_rejected) ... FAIL
+
+======================================================================
+FAIL: test_substitution_missing_extra_and_mistyped_hash_rejected (test_tree_custody.TreeCustody.test_substitution_missing_extra_and_mistyped_hash_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/phase_effect_6067_t1_a03_20261004_3cbf/test_tree_custody.py", line 11, in test_substitution_missing_extra_and_mistyped_hash_rejected
+    with self.assertRaises(ValueError):assert_manifest(changed,expected,'exact custody')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (failures=1)

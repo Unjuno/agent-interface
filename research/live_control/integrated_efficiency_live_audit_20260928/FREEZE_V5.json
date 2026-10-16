@@ -1,0 +1,13 @@
+{
+  "schema": "integrated-efficiency-live-evidence-audit-freeze-v5",
+  "allocation": "integrated-efficiency-live-evidence-audit-20260928-05",
+  "source_main_commit": "9c9d7cf2bea50e47638c63effa72a5059fdb4e58",
+  "input_main_commit": "d739d70bb1ea2210bdeef488f1385c93e5902715",
+  "evidence_root": "research/live_control/results/integrated-efficiency-live-01",
+  "failed_predecessors": ["v1 preflight call ID absent", "v2 omitted preflight from task cumulative", "v3 wrong report key", "v4 assumed generation field cumulative although each row/task value appears cumulative"],
+  "independent_auditor": "independent_recount.py",
+  "scope": "Offline read-only reconstruction of raw image usage, exact submission history, cumulative model input and planner generations, repair and stale-admission checks. No GUI/model/input/session/formal allocation calls.",
+  "container": {"docker_desktop_version": "28.5.1", "context": "desktop-linux", "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9", "platform": "linux/amd64", "network": "none", "source_mount": "read-only", "output_mount": "container-tmpfs", "cpus": 0.10, "memory": "128m", "pids": 16},
+  "invocations": 1,
+  "retries": 0
+}

@@ -1,0 +1,72 @@
+{
+  "scope": "POST_RESULT_COPIED_DATA_ONLY",
+  "original_raw_sha256": "da49adabbfbde3afba302526fc777a3338ddf9533b0d20d344185087eaec3033",
+  "targets": [
+    [
+      "remove_write_frame",
+      "actual literal frozen stdin write/flush frame"
+    ],
+    [
+      "created_deadline",
+      "request deadline not created at blocked write"
+    ],
+    [
+      "advanced_request_line",
+      "request deadline not created at blocked write"
+    ],
+    [
+      "caller_ended",
+      "large unread live blocked writer"
+    ],
+    [
+      "write_lock_free",
+      "large unread live blocked writer"
+    ],
+    [
+      "premature_checkpoint",
+      "fixed checkpoint not premature"
+    ],
+    [
+      "boolean_request_id",
+      "one integer request identity consumed"
+    ],
+    [
+      "stdin_open_final",
+      "all owned parent streams closed"
+    ],
+    [
+      "reader_live_final",
+      "final caller/reader/source endpoints"
+    ],
+    [
+      "child_unreaped",
+      "owned peer normal terminal"
+    ],
+    [
+      "small_non_timeout",
+      "small unread exact timeout control"
+    ],
+    [
+      "wrong_healthy_payload",
+      "healthy exact large payload result"
+    ],
+    [
+      "unread_peer_consumed",
+      "unread peer never consumed/answered request"
+    ],
+    [
+      "wrong_source",
+      "source row binding"
+    ],
+    [
+      "wrong_peer_pid",
+      "actual native owner PID"
+    ],
+    [
+      "missing_native_count",
+      "complete three native cells"
+    ]
+  ],
+  "native_or_producer_replay": false,
+  "expected_rejected": 16
+}

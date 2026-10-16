@@ -1,0 +1,19 @@
+{"event":"cell_started","extra":{"spec":{"cell_id":"composed__held_journal","condition":"held_journal","source_file":"composed_client.py","variant":"composed"}},"monotonic_ns":8053646986,"seq":0}
+{"event":"client_construct_begin","extra":{"peer_command":["/usr/local/bin/python","-B","/src/echo_peer.py","--directory","/out/cells/composed__held_journal"]},"monotonic_ns":8058718664,"seq":1}
+{"event":"client_constructed","extra":{"child_pid":18,"reader_name":"Thread-1 (_read)"},"monotonic_ns":8064596057,"seq":2}
+{"event":"cell_stop","extra":{"exception_type":"RuntimeError","message":"peer file readiness deadline exceeded"},"monotonic_ns":8428619758,"seq":3}
+{"event":"pipe_close_begin","extra":{"name":"stdin"},"monotonic_ns":8429017239,"seq":4}
+{"event":"stdin_closed_for_peer_eof","extra":{"closed":true},"monotonic_ns":8429202253,"seq":5}
+{"event":"child_terminate","extra":{"child_pid":18},"monotonic_ns":8629772857,"seq":6}
+{"event":"child_reaped","extra":{"child_pid":18,"returncode":-15},"monotonic_ns":8631588421,"seq":7}
+{"event":"client_close_begin","extra":{"timeout_ns":200000000},"monotonic_ns":8632097464,"seq":8}
+{"event":"client_close_returned","extra":{},"monotonic_ns":8633071133,"seq":9}
+{"event":"reader_joined","extra":{"alive":false},"monotonic_ns":8633649121,"seq":10}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stdin"},"monotonic_ns":8638080883,"seq":11}
+{"event":"pipe_close_begin","extra":{"name":"stdout"},"monotonic_ns":8638558379,"seq":12}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stdout"},"monotonic_ns":8638905311,"seq":13}
+{"event":"pipe_close_begin","extra":{"name":"stderr"},"monotonic_ns":8639225418,"seq":14}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stderr"},"monotonic_ns":8639489352,"seq":15}
+{"event":"journal_closed","extra":{"closed":true},"monotonic_ns":8639691906,"seq":16}
+{"event":"cleanup_done","extra":{"caller_alive":false,"child_pid":18,"child_returncode":-15,"cleanup_errors":[],"explicit_pipe_closed":{"stderr":true,"stdin":true,"stdout":true},"holder_alive":false,"journal_closed":true,"journal_row_count":0,"peer_received_bytes":0,"reader_alive":false,"thread_exceptions":[]},"monotonic_ns":8644211946,"seq":17}
+{"event":"cell_finished","extra":{"status":"STOP","stop_reason":{"exception_type":"RuntimeError","message":"peer file readiness deadline exceeded"}},"monotonic_ns":8658997497,"seq":18}

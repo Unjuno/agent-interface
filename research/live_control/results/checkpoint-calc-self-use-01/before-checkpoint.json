@@ -1,0 +1,119 @@
+{
+  "request": {
+    "after": 16,
+    "events": [
+      "effect_checkpoint"
+    ],
+    "timeout": 5,
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_cells",
+        "expected": {
+          "A1": 612,
+          "A2": 129
+        }
+      }
+    },
+    "request_id": "check-before-confirm",
+    "read_request_id": "check-before-confirm"
+  },
+  "reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "contract": {
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "kind": "saved_cells"
+          },
+          "op": "effect_checkpoint",
+          "transport_request_id": "check-before-confirm"
+        },
+        "received_ns": 54858239609,
+        "transport_request_id": "check-before-confirm",
+        "runtime_request_sequence": 3,
+        "declared_action_id": null,
+        "command_op": "effect_checkpoint",
+        "correlation_scope": "current runtime input line; action ID is caller-declared",
+        "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+        "emit_started_ns": 54858248659,
+        "delivery_id": "delivery:17"
+      },
+      {
+        "event": "effect_checkpoint",
+        "evidence": {
+          "status": "UNKNOWN",
+          "authority": "none",
+          "attribution": "not_established",
+          "task_success": null,
+          "observation_closed": false,
+          "contract": {
+            "expected": {
+              "A1": 612,
+              "A2": 129
+            },
+            "kind": "saved_cells"
+          },
+          "started_ns": 54863157071,
+          "scope": "saved first worksheet cells at one sample",
+          "expected": {
+            "A1": 612,
+            "A2": 129
+          },
+          "sampled_ns": 54863254191,
+          "artifact_sha256": "c3840400e5f3cd329244d938a767eea260ba028b987deb869c4f7a707623b020",
+          "actual": {
+            "A1": null,
+            "A2": null
+          },
+          "reason": "sample_mismatch_window_open",
+          "finished_ns": 54867846718
+        },
+        "task_success": null,
+        "authority": "none",
+        "scope": "non-final artifact query; input admission unchanged",
+        "transport_request_id": "check-before-confirm",
+        "runtime_request_sequence": 3,
+        "declared_action_id": null,
+        "command_op": "effect_checkpoint",
+        "correlation_scope": "current runtime input line; action ID is caller-declared",
+        "clock_domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+        "emit_started_ns": 54867855898,
+        "delivery_id": "delivery:18"
+      }
+    ],
+    "cursor": 18,
+    "returned_ns": 54873811397,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "check-before-confirm",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "clock": {
+    "clock": "perf_counter_ns",
+    "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+    "monotonic": true,
+    "adjustable": false,
+    "resolution_seconds": 1e-09,
+    "authority": "none",
+    "status": "identified",
+    "domain": {
+      "boot_id": "9a0a4dfe-7756-4f7f-83a9-a8b4a18fd6a7",
+      "time_namespace": "time:[4026531834]",
+      "time_namespace_offsets": "monotonic           0         0\nboottime            0         0\n",
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)"
+    },
+    "domain_id": "6948d2a341aca84b47a37ea78028d13e5cb62966d6ccb52d23ba1a84dbd92530",
+    "uncertainty": "clock resolution recorded; scheduling/endpoint uncertainty not measured"
+  },
+  "started_ns": 54857762788,
+  "returned_ns": 54873995716
+}

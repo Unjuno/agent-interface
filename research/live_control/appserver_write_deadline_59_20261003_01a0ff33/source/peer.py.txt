@@ -1,0 +1,38 @@
+"""Owned inert OS-pipe fixture, never a Codex server or action executor."""
+from pathlib import Path
+import hashlib,json,os,sys,time
+ROOT=Path(sys.argv[1]).resolve();CONFIG=json.loads(Path(sys.argv[2]).read_bytes())
+def save(name,data):
+    target=ROOT/name
+    if target.exists():raise RuntimeError('never overwrite peer evidence '+name)
+    pending=ROOT/(name+'.pending')
+    if pending.exists():raise RuntimeError('never overwrite pending evidence')
+    pending.write_bytes(data);os.replace(pending,target)
+def emit(name,obj):save(name,json.dumps(obj,sort_keys=True,ensure_ascii=True).encode('ascii')+b'\n')
+started=time.monotonic_ns();record={'pid':os.getpid(),'name':CONFIG['name'],'read_calls':0,'request_read':False,'response_written':False,'started_child_monotonic_ns':started}
+emit('peer-ready.json',{'pid':os.getpid(),'name':CONFIG['name'],'phase':'ready-before-read','child_monotonic_ns':time.monotonic_ns(),'read_stdin':CONFIG['read_stdin']})
+exit_code=0
+try:
+    if CONFIG['read_stdin']:
+        record['read_calls']+=1
+        wire=sys.stdin.buffer.readline(300000)
+        save('peer-request.bin',wire)
+        request=json.loads(wire)
+        if type(request.get('id')) is not int or request['id']!=1 or request.get('method')!='fixture/request':raise RuntimeError('literal request identity')
+        payload=request['params']['payload']
+        if type(payload) is not str or len(payload)!=CONFIG['payload_characters']:raise RuntimeError('literal payload length')
+        record.update(request_read=True,request_bytes=len(wire),request_sha256=hashlib.sha256(wire).hexdigest(),payload_sha256=hashlib.sha256(payload.encode('ascii')).hexdigest())
+        response={'id':1,'result':{'payload_bytes':len(payload.encode('ascii')),'payload_sha256':record['payload_sha256']}}
+        returned=json.dumps(response,sort_keys=True,separators=(',',':')).encode('ascii')+b'\n'
+        save('peer-response.bin',returned);sys.stdout.buffer.write(returned);sys.stdout.buffer.flush();record['response_written']=True
+    while not (ROOT/'fixture-release.json').exists():
+        if time.monotonic_ns()-started>2_500_000_000:
+            record['fixture_self_expiry']=True;exit_code=6;break
+        time.sleep(0.002)
+    if (ROOT/'fixture-release.json').exists():record['private_release_seen']=True
+except BaseException as error:
+    record['error']={'type':type(error).__name__,'message':str(error)};exit_code=7
+finally:
+    record['ended_child_monotonic_ns']=time.monotonic_ns();record['exit_code']=exit_code
+    emit('peer-record.json',record)
+raise SystemExit(exit_code)

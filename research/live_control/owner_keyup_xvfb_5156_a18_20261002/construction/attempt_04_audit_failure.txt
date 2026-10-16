@@ -1,0 +1,1 @@
+WSLc construction attempt 4: candidate produced PASS_CANDIDATE_SHAPE, but the raw-only auditor returned FAIL with teardown_0_neutral. Inspection showed the first-case teardown omitted the A-key state field, so the auditor could not establish both keys neutral. Added explicit A-keymap state to that teardown row; no formal run occurred.

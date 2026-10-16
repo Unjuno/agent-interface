@@ -1,0 +1,33 @@
+{
+  "audit_sha256": "1c05b9f6bd7aadee3fa57d27c7d6cec94c9b370aaed4f58afc0376bc151bec76",
+  "source_pins_and_transport_slices_verified": true,
+  "cause_preserved_owner_to_terminal_to_socket_to_index": true,
+  "unique_events": 47,
+  "received_records": 47,
+  "socket_exchanges": 8,
+  "exact_frames": 9,
+  "receipts": [
+    {
+      "program": "interrupt",
+      "json_bytes": 3253,
+      "attention": true
+    },
+    {
+      "program": "recover",
+      "json_bytes": 3975,
+      "attention": false
+    }
+  ],
+  "task_success": true,
+  "actual": {
+    "x": "52",
+    "y": "50",
+    "width": "40",
+    "height": "30",
+    "transform": null
+  },
+  "release_to_terminal_ms": 22.968832,
+  "post_release_observations_before_terminal": 0,
+  "capture_to_evaluation_seconds": 87.93470372,
+  "limits": "One injected fault with explicit model image/index review and recovery. Timing is local runtime, not model latency/human speed. No model tokens or paired performance comparison. Bridge exit checked separately; no per-child cleanup inventory."
+}

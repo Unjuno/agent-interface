@@ -1,0 +1,96 @@
+{
+  "audit": [
+    {
+      "case": "ambiguous",
+      "disposition": "YIELD",
+      "emissions": 0,
+      "release_latency_ns": null,
+      "release_verified": false
+    },
+    {
+      "case": "cleanup_failure",
+      "disposition": "YIELD",
+      "emissions": 39,
+      "release_latency_ns": 112927000,
+      "release_verified": true
+    },
+    {
+      "case": "guarded",
+      "disposition": "YIELD",
+      "emissions": 0,
+      "release_latency_ns": null,
+      "release_verified": false
+    },
+    {
+      "case": "no_effect",
+      "disposition": "NONE",
+      "emissions": 27,
+      "release_latency_ns": 107500206,
+      "release_verified": true
+    },
+    {
+      "case": "partial",
+      "disposition": "PARTIAL",
+      "emissions": 21,
+      "release_latency_ns": 109513061,
+      "release_verified": true
+    },
+    {
+      "case": "stale_repair",
+      "disposition": "YIELD",
+      "emissions": 0,
+      "release_latency_ns": null,
+      "release_verified": false
+    },
+    {
+      "case": "unavailable",
+      "disposition": "YIELD",
+      "emissions": 0,
+      "release_latency_ns": null,
+      "release_verified": false
+    },
+    {
+      "case": "useful",
+      "disposition": "SUCCESS",
+      "emissions": 19,
+      "release_latency_ns": 111857532,
+      "release_verified": true
+    }
+  ],
+  "confirmed_cases": [
+    {
+      "case": "cleanup_failure",
+      "disposition": "YIELD",
+      "emissions": 39,
+      "release_latency_ns": 112927000,
+      "release_verified": true
+    },
+    {
+      "case": "no_effect",
+      "disposition": "NONE",
+      "emissions": 27,
+      "release_latency_ns": 107500206,
+      "release_verified": true
+    },
+    {
+      "case": "partial",
+      "disposition": "PARTIAL",
+      "emissions": 21,
+      "release_latency_ns": 109513061,
+      "release_verified": true
+    },
+    {
+      "case": "useful",
+      "disposition": "SUCCESS",
+      "emissions": 19,
+      "release_latency_ns": 111857532,
+      "release_verified": true
+    }
+  ],
+  "decision": "PASS_PHYSICAL_RELEASE_TIMING_SCOPED",
+  "model_calls": 0,
+  "network_calls": 0,
+  "runner_exit": 0,
+  "runner_stderr": "",
+  "runner_stdout_tail": " \"l\",\n            \"type\": \"key_press\"\n          },\n          {\n            \"key\": \"u\",\n            \"type\": \"key_press\"\n          },\n          {\n            \"key\": \"r\",\n            \"type\": \"key_press\"\n          },\n          {\n            \"key\": \"e\",\n            \"type\": \"key_press\"\n          },\n          {\n            \"key\": \"Control_L\",\n            \"type\": \"key_press\"\n          },\n          {\n            \"key\": \"s\",\n            \"type\": \"key_press\"\n          },\n          {\n            \"key\": null,\n            \"type\": \"save\"\n          }\n        ],\n        \"observation_revision\": 1,\n        \"replay_allowed\": false,\n        \"replay_count\": 0,\n        \"session_id\": \"gtk-matrix-cleanup_failure\",\n        \"window_id\": \"2097155\"\n      },\n      \"independent_effect\": {\n        \"saved\": true,\n        \"text\": \"cleanup_failure\"\n      },\n      \"replay_allowed\": false\n    }\n  ],\n  \"scope\": \"live GTK/X11 adapter matrix receipt-emission preflight; not formal #2606 acceptance\",\n  \"scorer_matches\": true\n}\n"
+}

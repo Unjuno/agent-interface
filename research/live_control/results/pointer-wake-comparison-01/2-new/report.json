@@ -1,0 +1,265 @@
+{
+  "kind": "drag",
+  "interrupt": false,
+  "candidate": "new",
+  "seed": 213,
+  "initial_png_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+  "physical_down_observed": true,
+  "terminal": {
+    "event": "terminal",
+    "id": "one",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 23238758734,
+      "valid_until_ns": 27125844045
+    },
+    "interruption": null,
+    "decision_reason": null,
+    "terminal_ns": 23238851381,
+    "semantic_completion": "program status only; task scoring is separate"
+  },
+  "physical_up_after_terminal": true,
+  "admitted_moves": [
+    {
+      "x": 618,
+      "y": 391
+    },
+    {
+      "x": 638,
+      "y": 391
+    }
+  ],
+  "checks_passed": true,
+  "events": [
+    {
+      "event": "observation",
+      "id": "initial",
+      "step": 0,
+      "sequence": 1,
+      "capture_ns": 22054395542,
+      "context_ns": 22061087929,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/pointer-wake-comparison-01/2-new/001.png",
+      "image_reused": false,
+      "image_prepare_ns": 25321429,
+      "image_ready_ns": 22103652908,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 3.035017,
+      "wire_bytes": 67751,
+      "exact": true,
+      "semantic_completion": "unknown"
+    },
+    {
+      "event": "accepted",
+      "id": "one",
+      "steps": 1,
+      "valid_until_ns": 27125844045,
+      "accepted_ns": 22125948604
+    },
+    {
+      "event": "step_started",
+      "id": "one",
+      "step": 0,
+      "operation": "pointer_drag",
+      "issued_ns": 22126145807
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 618,
+        "y": 391
+      },
+      "admitted_ns": 22127190242,
+      "input_ack_ns": 22127365746,
+      "valid_until_ns": 27125844045,
+      "surface": 6291463,
+      "id": "one",
+      "step": 0
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 22128982437,
+      "input_ack_ns": 22129156335,
+      "valid_until_ns": 27125844045,
+      "surface": 6291463,
+      "id": "one",
+      "step": 0
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 638,
+        "y": 391
+      },
+      "admitted_ns": 23130530701,
+      "input_ack_ns": 23130716061,
+      "valid_until_ns": 27125844045,
+      "surface": 6291463,
+      "id": "one",
+      "step": 0
+    },
+    {
+      "event": "observation",
+      "id": "one",
+      "step": 0,
+      "sequence": 2,
+      "capture_ns": 23144978623,
+      "context_ns": 23153157239,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/pointer-wake-comparison-01/2-new/002.png",
+      "image_reused": false,
+      "image_prepare_ns": 33183018,
+      "image_ready_ns": 23215761407,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 10.29697,
+      "wire_bytes": 7112,
+      "exact": true,
+      "semantic_completion": "unknown"
+    },
+    {
+      "event": "step_completed",
+      "id": "one",
+      "step": 0,
+      "completed_ns": 23238000559
+    },
+    {
+      "event": "terminal",
+      "id": "one",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 1,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 23238758734,
+        "valid_until_ns": 27125844045
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "terminal_ns": 23238851381,
+      "semantic_completion": "program status only; task scoring is separate"
+    }
+  ],
+  "owner_records": [
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 23238758734,
+      "valid_until_ns": 27125844045
+    },
+    {
+      "event": "owner_release",
+      "reason": "close",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 23240610693,
+      "valid_until_ns": null
+    }
+  ],
+  "cleanup": {
+    "engine": "close returned",
+    "backend": "close returned",
+    "controller": "close returned",
+    "session": "close returned"
+  }
+}

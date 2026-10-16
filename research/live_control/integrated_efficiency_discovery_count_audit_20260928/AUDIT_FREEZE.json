@@ -1,0 +1,18 @@
+{
+  "schema": "integrated-efficiency-discovery-count-independent-audit-freeze-v1",
+  "allocation": "integrated-efficiency-discovery-count-20260928-01-audit",
+  "runner_raw": "result-01/raw.json",
+  "runner_raw_sha256": "c040c8dd9708c22317ba79c267310973c8d539847c7ba103b600f3eb4f89b98b",
+  "independent_auditor": "independent_verify.py",
+  "independent_auditor_sha256": "bf85c0297a553e770457dbc9a2dfd5507a08c0ac7d9935bdd470ae59847ef57d",
+  "inputs": {
+    "plan_git_blob": "ff0de7c4a0d6cc57d145d460f019f72d6967ffec",
+    "ledger_git_blob": "7e79049c88e42fa62b4a4396f9c1668c8a7b9f9f",
+    "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64"
+  },
+  "decision": "Independently reconstruct runner raw counts, line-wrap-tolerant original plan claims, correction-to-eight control, and one-count mutation rejection. Preserve original plan and ledger read-only.",
+  "command": "docker run --rm --pull=never --platform linux/amd64 --network none --cpus=0.10 --memory=128m --pids-limit=16 --read-only --mount type=bind,source=<frozen audit source>,target=/src,readonly --mount type=bind,source=<original plan>,target=/input/plan.md,readonly --mount type=bind,source=<original ledger>,target=/input/ledger.json,readonly --mount type=bind,source=<runner raw>,target=/input/raw.json,readonly --mount type=bind,source=<fresh audit output>,target=/out --entrypoint python sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 -B /src/independent_verify.py --plan /input/plan.md --ledger /input/ledger.json --raw /input/raw.json --out /out/audit.json",
+  "invocations": 1,
+  "retries": 0
+}

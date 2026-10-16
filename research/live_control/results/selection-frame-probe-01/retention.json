@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "decision": "RETAIN_FIRST_OUTCOME_NO_RETRY",
+  "files": 3,
+  "bytes": 197729,
+  "metrics": {
+    "path_median_ms": 34.695506,
+    "frame_median_ms": 2.319728,
+    "path_p95_ms": 42.364648,
+    "frame_p95_ms": 2.629731,
+    "median_advantage_ms": 32.375778000000004,
+    "median_ratio": 0.06685961000251732
+  },
+  "manifest": {
+    "audit.json": "e610a9bce98de781874cbf7dd7c601fd73f8d441039eb7779cbf3a6dd7c4a040",
+    "preregistration.json": "6909f3b5c95b04056efffc4903846c0056cef7809230593cf185658b1ffad89b",
+    "report.json": "fafef15159feb1982194ceb42afe34940403058d9c3ca4f01395f73bc0afdb92"
+  },
+  "scope": "offline matched timing on two retained exact Inkscape feedback frames; existing path/Pillow pixel-loop scorer versus already-reconstructed frame/numpy ROI probe; semantic equivalence and exact-frame artifact reconciliation required; no live input, model, token, task-success, general speedup or human-tempo claim"
+}

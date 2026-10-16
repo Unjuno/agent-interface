@@ -1,0 +1,36 @@
+test_child_owned_display_descriptor (test_producer.ProducerTests.test_child_owned_display_descriptor) ... FAIL
+test_dead_server_does_not_gain_ownership (test_producer.ProducerTests.test_dead_server_does_not_gain_ownership) ... FAIL
+test_display_descriptor_timeout_is_bounded (test_producer.ProducerTests.test_display_descriptor_timeout_is_bounded) ... FAIL
+test_intentional_sigterm_has_real_terminal_receipt (test_producer.ProducerTests.test_intentional_sigterm_has_real_terminal_receipt) ... ok
+
+======================================================================
+FAIL: test_child_owned_display_descriptor (test_producer.ProducerTests.test_child_owned_display_descriptor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_producer.py", line 14, in test_child_owned_display_descriptor
+    try: self.assertEqual(read_display(p,r,.5),':4')
+         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != ':4'
+
+======================================================================
+FAIL: test_dead_server_does_not_gain_ownership (test_producer.ProducerTests.test_dead_server_does_not_gain_ownership)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_producer.py", line 21, in test_dead_server_does_not_gain_ownership
+    with self.assertRaises(RuntimeError): read_display(p,r,.1)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_display_descriptor_timeout_is_bounded (test_producer.ProducerTests.test_display_descriptor_timeout_is_bounded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_producer.py", line 28, in test_display_descriptor_timeout_is_bounded
+    with self.assertRaises(RuntimeError): read_display(p,r,.02)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.038s
+
+FAILED (failures=3)

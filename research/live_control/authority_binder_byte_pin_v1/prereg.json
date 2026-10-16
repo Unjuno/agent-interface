@@ -1,0 +1,39 @@
+{
+  "schema": "authority-binder-byte-pin-v1-prereg",
+  "task": "O3-AUTHORITY-BINDER-BYTE-PIN-FIX-20260916-008",
+  "issue": 209,
+  "base_commit": "7bea48e69cfb62b2993e7d7ea18a1688d527b70b",
+  "hypothesis": "independently byte-pinning the identity binder before inner ledger initialization closes the #204 restart drift gap while preserving existing durable-token crash semantics",
+  "candidate_contract": [
+    "read binder source bytes exactly once",
+    "hash those exact bytes and compile/exec the same bytes",
+    "persist strict binder metadata sidecar before inner validator/token-state initialization",
+    "on reopen require exact binder_id, binder_sha256, and function_name",
+    "bind receipt identity using the loaded pinned function before byte-bound validator issue"
+  ],
+  "gates": [
+    "exact binder init pins expected hash and issues runtime-intent-token",
+    "source replacement after constructor cannot change the already-loaded binder and forged ID still rejects",
+    "fresh restart under drift binder source rejects binder pin mismatch with existing entries unchanged",
+    "restoring exact binder source reopens and recovers the pending runtime token",
+    "injected crash after binder-sidecar persistence leaves no token state and exact-source initialize retry completes",
+    "same binder-sidecar crash followed by drift source rejects before token-state creation",
+    "existing token state with binder sidecar removed fails closed",
+    "delegated after_replace_fsync issue crash still recovers the pending runtime token after restart"
+  ],
+  "decision": "RETAIN_BINDER_BYTE_PIN_V1 iff all eight gates pass with zero formal retries",
+  "confounders": [
+    "pins binder provenance/consistency, not semantic approval of an arbitrary first-initialization binder",
+    "separate binder and validator sidecars are not an atomic composite manifest",
+    "offline/model-free only",
+    "PR #168 live executed-source provenance remains independently unresolved"
+  ],
+  "retained_sha256": {
+    "authority_end_identity_binding_v1.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+    "diagnostic_drift_binder.py": "e75b6851f37525e6230cde448392a248edf78d10c3e38dc2aeba4a518384ad26",
+    "validator_byte_pinned_ledger_v3.py": "a0744260a48b3575a451c63139fdb2fde898e0493317d1edd1d731ce3d227be5",
+    "bridge_v2_semantic_snapshot.py": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9",
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e"
+  }
+}

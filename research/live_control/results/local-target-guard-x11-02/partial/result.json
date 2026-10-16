@@ -1,0 +1,89 @@
+{
+  "name": "partial",
+  "before_bbox": [
+    596,
+    373,
+    643,
+    408
+  ],
+  "after_bbox": [
+    616,
+    373,
+    663,
+    408
+  ],
+  "observed_visual_delta": [
+    20,
+    0
+  ],
+  "postcondition": {
+    "event": "local_target_guard_postcondition",
+    "id": "partial",
+    "step": 3,
+    "sequence": 9,
+    "format": "local-target-guard-postcondition-outcome-v1",
+    "postcondition_id": "red-placement-right-24",
+    "reason": "target_not_reached",
+    "continue_program": false,
+    "needs_decision": true,
+    "measurements": [
+      {
+        "sequence": 8,
+        "target_changed_pixels": [
+          0
+        ],
+        "target_changed_total": 0,
+        "guard_changed_pixels": [
+          0
+        ],
+        "guard_changed_total": 0
+      },
+      {
+        "sequence": 9,
+        "target_changed_pixels": [
+          0
+        ],
+        "target_changed_total": 0,
+        "guard_changed_pixels": [
+          0
+        ],
+        "guard_changed_total": 0
+      }
+    ],
+    "minimum_target_changed_pixels": 50,
+    "maximum_guard_changed_pixels": 20,
+    "pixel_delta_threshold": 24,
+    "sample_span_ms": 95.403073,
+    "semantic_effect_verified": false,
+    "task_success_verified": false,
+    "grants_input_authority": false,
+    "scope": "fixed-region visual condition for already admitted later steps only"
+  },
+  "postcondition_event_count": 1,
+  "terminal": {
+    "event": "terminal",
+    "id": "partial",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 3,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 29802959139959,
+      "valid_until_ns": 29807912261985
+    },
+    "terminal_ns": 29802959237494,
+    "semantic_completion": "program status only; task scoring is separate"
+  },
+  "steps_started": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "save_started": false,
+  "owner_focus_release": false
+}

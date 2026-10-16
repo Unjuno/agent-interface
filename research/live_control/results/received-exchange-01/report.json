@@ -1,0 +1,35 @@
+{
+  "scope": "injected recorded replies through actual caller function, no network",
+  "requests": [
+    {
+      "after": 23,
+      "events": [
+        "clock"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "0a3049b878254e169c7a715f2729c156"
+    },
+    {
+      "after": 25,
+      "events": [
+        "clock"
+      ],
+      "timeout": 2
+    }
+  ],
+  "first_matched_clock": null,
+  "final_matched_clock": {
+    "record": {
+      "event": "clock",
+      "runtime_ns": 106455132483,
+      "sequence": 4,
+      "emit_started_ns": 106455135880
+    },
+    "echo_cursor": 26,
+    "record_cursor": 27
+  },
+  "image_sequence": 4
+}

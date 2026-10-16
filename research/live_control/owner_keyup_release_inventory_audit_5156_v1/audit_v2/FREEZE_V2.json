@@ -1,0 +1,41 @@
+{
+  "schema": "owner-keyup-request-parity-audit-freeze-v2",
+  "allocation": "MAP01-OWNER-KEYUP-RELEASE-INVENTORY-5156-20260930-01-AUDIT-V2",
+  "kind": "posthoc retained-evidence audit correction; not a new formal or X11 allocation",
+  "pr_head_under_review": "709cd77378e623f143eb89a98871740b47a5cdeb",
+  "current_main_at_review": "6968d45197c6a29e717a9281dcd050be1eed90c7",
+  "current_main_integrated_after_collision_check": "b9d1ac1c240f268e0b7abcf5db4dcd34a84932cb",
+  "integration_merge_head": "2b58982c1874e32fcec5b97b47184720148d0b64",
+  "input_evidence": {
+    "run_path": "../RUN_BYTE_IDENTICAL.json",
+    "run_git_blob": "2ab993f534bcc6e8c49e0fa26f233b629583278f",
+    "run_sha256": "019fb0fb2a01c3064ea8e88e8ad176b059f75cb67b201f444aeee08518dfe592",
+    "expected_inventory_path": "../expected_inventory.json",
+    "expected_inventory_git_blob": "7e9bc1f47eb461e0d69d142bcee97f2d4f0cee15",
+    "expected_inventory_sha256": "1c624eb00d80454cd551649e62902499a0addbdcf148691d6cb5117fb93aeb0c",
+    "v1_independent_auditor_sha256": "f6d4c519790f07d9218253d205753abd45ace4baf9543f9b21a64b34603361ea"
+  },
+  "v2_sources": {
+    "audit_request_sequences.py": {
+      "sha256": "424332a3be8198090fa926a5eda01ed76d3cae8dcad8c14473a1b70624413974",
+      "git_blob": "39b06ad152b76065a96c912f18e768ab5002991b"
+    },
+    "run_audit_v2.py": {
+      "sha256": "b1af434e782712f35509c1da86051ca72a3e10239c4a37bc8187e45169fb923c",
+      "git_blob": "284456c3d0d2a40c47589ced24708ce7ee52ec33"
+    },
+    "test_audit_v2.py": {
+      "sha256": "7d0fcd99599e6ca3a76525d659a8cc9e24533347c0745df66f19dd48366ddf10",
+      "git_blob": "86bd8dedc9b7a59b60e1a11db00722c5547fab0c"
+    },
+    "AUDIT_V2.json": {
+      "sha256": "bc2adcf0a2aa8e4d8269a4cd6a4c0ce155179cff92c8871d555b026d3f2ee65f"
+    },
+    "REPORT_V2.md": {
+      "sha256": "1004187faf71f0bababeb074ff0e95ad6caf86a999601286f835b943c862e29c"
+    }
+  },
+  "frozen_expected_request_sequence": [[2, 38], [3, 38], [2, 56], [2, 38], [3, 56], [3, 38]],
+  "formal_candidate_reruns": 0,
+  "x11_docker_model_or_gui_calls": 0
+}

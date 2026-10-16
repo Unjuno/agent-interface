@@ -1,0 +1,182 @@
+"""Owned journal-retirement regressions; no Codex server or native input."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import threading
+import time
+import unittest
+
+from codex_app_server_client_v2 import CodexAppServerClient
+
+
+class DeadProcess:
+    def poll(self):
+        return 0
+
+
+class RetiredReader:
+    def join(self, timeout):
+        self.timeout = timeout
+
+
+class Journal:
+    def __init__(self, closed=False, error=None):
+        self.closed = closed
+        self.error = error
+        self.calls = 0
+
+    def close(self):
+        self.calls += 1
+        if self.error is not None:
+            raise self.error
+        self.closed = True
+
+
+class JournalCloseTests(unittest.TestCase):
+    def save(self, record):
+        location = os.environ.get('JOURNAL_CLOSE_EVIDENCE_DIR')
+        if location is None:
+            return
+        record['method'] = self._testMethodName
+        target = Path(location) / (self._testMethodName + '.json')
+        with target.open('x', encoding='utf-8') as stream:
+            json.dump(record, stream, indent=2)
+            stream.write('\n')
+
+    def owned_client(self, journal):
+        return CodexAppServerClient(
+            [sys.executable, '-B', '-u', '-c', 'import sys; sys.stdin.read()'],
+            journal_path=journal)
+
+    def native_case(self, journal_enabled, held):
+        with tempfile.TemporaryDirectory(prefix='journal-close-owned-') as temporary:
+            path = Path(temporary) / 'journal.jsonl'
+            client = self.owned_client(path if journal_enabled else None)
+            seed = b'{"fixture":"retained-owned-journal"}\n' if journal_enabled else None
+            if journal_enabled:
+                client._journal.write(seed.decode())
+                client._journal.flush()
+            done = threading.Event()
+            outcome = {}
+
+            def invoke():
+                outcome['start_ns'] = time.monotonic_ns()
+                try:
+                    outcome['return_value'] = client.close(timeout=0.05)
+                except BaseException as error:
+                    outcome['error_type'] = type(error).__name__
+                    outcome['error_message'] = str(error)
+                finally:
+                    outcome['end_ns'] = time.monotonic_ns()
+                    done.set()
+
+            if held:
+                client._journal_lock.acquire()
+            caller = threading.Thread(target=invoke)
+            first = {}
+            try:
+                caller.start()
+                finished = done.wait(0.25)
+                observed = time.monotonic_ns()
+                first = {'kind': 'owned-native-silent-transport', 'child_pid': client.process.pid,
+                         'completed_at_checkpoint': finished, 'checkpoint_ns': observed,
+                         'caller_alive_at_checkpoint': caller.is_alive(),
+                         'child_exit_at_checkpoint': client.process.poll(),
+                         'reader_alive_at_checkpoint': client._reader.is_alive(),
+                         'journal_enabled': journal_enabled, 'fixture_held_lock': held,
+                         'journal_lock_still_locked': client._journal_lock.locked(),
+                         'journal_closed_at_checkpoint': None if not journal_enabled else client._journal.closed,
+                         'journal_bytes_equal_seed_at_checkpoint': None if not journal_enabled else path.read_bytes() == seed,
+                         'client_pipes_closed_at_checkpoint': [getattr(client.process, p).closed for p in ('stdin', 'stdout', 'stderr')],
+                         'checkpoint_outcome': dict(outcome), 'configured_wait_seconds': 0.05,
+                         'fixed_checkpoint_seconds': 0.25}
+            finally:
+                if held:
+                    client._journal_lock.release()
+                caller.join(timeout=2)
+                if caller.is_alive():
+                    raise AssertionError('Owned close caller remains live after holder release')
+                client.close(timeout=0.1)
+                for name in ('stdin', 'stdout', 'stderr'):
+                    getattr(client.process, name).close()
+                first['final_child_exit'] = client.process.poll()
+                first['final_reader_alive'] = client._reader.is_alive()
+                first['final_caller_alive'] = caller.is_alive()
+                first['final_journal_closed'] = None if not journal_enabled else client._journal.closed
+                first['final_journal_bytes_equal_seed'] = None if not journal_enabled else path.read_bytes() == seed
+                first['driver_closed_pipe_handles'] = [getattr(client.process, p).closed for p in ('stdin', 'stdout', 'stderr')]
+                first['cleanup_outcome'] = dict(outcome)
+                self.save(first)
+            self.assertTrue(first['completed_at_checkpoint'], 'close waits beyond its journal lock timeout')
+            self.assertIsNotNone(first['child_exit_at_checkpoint'])
+            self.assertFalse(first['reader_alive_at_checkpoint'])
+            self.assertFalse(first['final_reader_alive'])
+            self.assertFalse(first['final_caller_alive'])
+            if held:
+                self.assertTrue(first['journal_lock_still_locked'], 'client released the fixture holder lock')
+            if journal_enabled and held:
+                self.assertEqual(first['checkpoint_outcome'].get('error_type'), 'TimeoutError')
+                self.assertFalse(first['journal_closed_at_checkpoint'])
+                self.assertTrue(first['journal_bytes_equal_seed_at_checkpoint'])
+            else:
+                self.assertNotIn('error_type', first['checkpoint_outcome'])
+                self.assertIsNone(first['checkpoint_outcome']['return_value'])
+            if journal_enabled:
+                self.assertTrue(first['final_journal_closed'])
+                self.assertTrue(first['final_journal_bytes_equal_seed'])
+
+    def test_contended_journal_reports_incomplete_retirement(self):
+        self.native_case(journal_enabled=True, held=True)
+
+    def test_uncontended_journal_retires_without_changing_bytes(self):
+        self.native_case(journal_enabled=True, held=False)
+
+    def test_no_journal_does_not_acquire_contended_lock(self):
+        self.native_case(journal_enabled=False, held=True)
+
+    def fake_client(self, journal):
+        client = object.__new__(CodexAppServerClient)
+        client.process = DeadProcess()
+        client._reader = RetiredReader()
+        client._journal = journal
+        client._journal_lock = threading.Lock()
+        return client
+
+    def test_already_closed_journal_does_not_acquire_contended_lock(self):
+        journal = Journal(closed=True)
+        client = self.fake_client(journal)
+        client._journal_lock.acquire()
+        try:
+            result = client.close(timeout=0)
+            self.save({'kind': 'pure-owned-objects', 'return_value': result, 'journal_close_calls': journal.calls,
+                       'journal_closed': journal.closed, 'holder_lock_remains_locked': client._journal_lock.locked()})
+            self.assertIsNone(result)
+            self.assertEqual(journal.calls, 0)
+            self.assertTrue(client._journal_lock.locked())
+        finally:
+            client._journal_lock.release()
+
+    def test_journal_close_exception_preserves_error_and_releases_lock(self):
+        failure = ValueError('owned journal close failure')
+        journal = Journal(error=failure)
+        client = self.fake_client(journal)
+        caught = None
+        try:
+            client.close(timeout=0)
+        except BaseException as error:
+            caught = error
+        self.save({'kind': 'pure-owned-objects', 'same_error_instance': caught is failure,
+                   'error_type': type(caught).__name__, 'journal_close_calls': journal.calls,
+                   'journal_closed': journal.closed, 'lock_released': not client._journal_lock.locked()})
+        self.assertIs(caught, failure)
+        self.assertEqual(journal.calls, 1)
+        self.assertFalse(journal.closed)
+        self.assertFalse(client._journal_lock.locked())
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,28 @@
+{
+  "task": "P0-LIVE-CAUSAL-EFFECT-X11-DIAGNOSTIC-A3-20260918-003",
+  "issue": 1310,
+  "branch": "research/p0-live-causal-effect-x11-diagnostic-a3-1310",
+  "source_git_blob": {
+    "science_runner.py": "d8c509a55fe5363dc5211aebe510a720e964f7f3",
+    "case_child.py": "018886eb7df9b587ace8fd579e4a15f475a23811",
+    "supervisor.py": "fb600359fd0eff9739e7ba34550e8c121ff81f1e",
+    "audit.py": "025687c9569e264bec81cce7ae2b26e5a7df852f",
+    "schedule.json": "fb5cfb9fc63bca5a424d58b92f475a568f447d3b",
+    "AUTHORIZATION.json": "ee43a8f990144f2890f14ede66a1ccb17b10ec3f"
+  },
+  "source_sha256": {
+    "science_runner.py": "130db1af32380b112a31a28f71aacf376c0d4592389342f7c924acebb404da7b",
+    "case_child.py": "5c58ddee88390366f6291af864a1c324c29268a42c078f088aa074bd066e48b7",
+    "supervisor.py": "3c008a56977a84a0f0e70b9dcd3552f4c7c1bc7797ab26dece05be354d763bd6",
+    "audit.py": "c4d95c40aa5cd9b61933866283cc5b6d7c035cc0d47dde5d3df97dbd615219ff"
+  },
+  "parent_science_unchanged": true,
+  "harness_changes": [
+    "persist child_status before aggregation",
+    "persist supervisor_row after cleanup",
+    "failure-tolerant aggregate summary"
+  ],
+  "live_sessions": 0,
+  "formal_invocations": 0,
+  "reruns": 0
+}

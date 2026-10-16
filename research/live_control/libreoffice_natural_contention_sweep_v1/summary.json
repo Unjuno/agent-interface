@@ -1,0 +1,1100 @@
+{
+  "schema": "lo2975_predeclared_schedule_result_v1",
+  "allocation": "lo-natural-contention-sweep-20260920-a1",
+  "image": "agent-interface-lo2966:20260920",
+  "network": "none",
+  "schedule_ms": [
+    0,
+    1,
+    5,
+    10,
+    20,
+    50
+  ],
+  "rows": [
+    {
+      "case_id": "stable-1",
+      "kind": "stable",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": null,
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23147459418694
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 20,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "stable-2",
+      "kind": "stable",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": null,
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23147818388546
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 27,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "stable-3",
+      "kind": "stable",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": null,
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23148183982988
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 34,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "stable-4",
+      "kind": "stable",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": null,
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23148535656112
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 41,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "stable-5",
+      "kind": "stable",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": null,
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23148893268312
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 48,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "natural-0ms-1",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23149304300534,
+        "end_ns": 23149304537247
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23149267080043
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 0,
+      "controller_delay_ms": 5,
+      "schedule_ms": 0
+    },
+    {
+      "case_id": "natural-0ms-2",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23149696601799,
+        "end_ns": 23149696695176
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23149661438766
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 0,
+      "controller_delay_ms": 5,
+      "schedule_ms": 0
+    },
+    {
+      "case_id": "natural-0ms-3",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23150095017187,
+        "end_ns": 23150095145231
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23150056307750
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 0,
+      "controller_delay_ms": 5,
+      "schedule_ms": 0
+    },
+    {
+      "case_id": "natural-0ms-4",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23150493445824,
+        "end_ns": 23150493793956
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23150453831869
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 0,
+      "controller_delay_ms": 5,
+      "schedule_ms": 0
+    },
+    {
+      "case_id": "natural-0ms-5",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23150899410491,
+        "end_ns": 23150899660871
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23150862886713
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 0,
+      "controller_delay_ms": 5,
+      "schedule_ms": 0
+    },
+    {
+      "case_id": "natural-1ms-1",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23151322094004,
+        "end_ns": 23151322175089
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23151279782985
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 1,
+      "controller_delay_ms": 5,
+      "schedule_ms": 1
+    },
+    {
+      "case_id": "natural-1ms-2",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23151706488163,
+        "end_ns": 23151706567414
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23151663598716
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 1,
+      "controller_delay_ms": 5,
+      "schedule_ms": 1
+    },
+    {
+      "case_id": "natural-1ms-3",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23152094866443,
+        "end_ns": 23152095172616
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23152052048248
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 1,
+      "controller_delay_ms": 5,
+      "schedule_ms": 1
+    },
+    {
+      "case_id": "natural-1ms-4",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23152523410616,
+        "end_ns": 23152523646746
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23152481589982
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 1,
+      "controller_delay_ms": 5,
+      "schedule_ms": 1
+    },
+    {
+      "case_id": "natural-1ms-5",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23152948642223,
+        "end_ns": 23152948720974
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23152906440581
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 1,
+      "controller_delay_ms": 5,
+      "schedule_ms": 1
+    },
+    {
+      "case_id": "natural-5ms-1",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23153362689437,
+        "end_ns": 23153363070361
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23153322118662
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 5,
+      "controller_delay_ms": 5,
+      "schedule_ms": 5
+    },
+    {
+      "case_id": "natural-5ms-2",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23153773771717,
+        "end_ns": 23153774065723
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23153731171984
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 5,
+      "controller_delay_ms": 5,
+      "schedule_ms": 5
+    },
+    {
+      "case_id": "natural-5ms-3",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23154177412513,
+        "end_ns": 23154177638101
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23154135931386
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 5,
+      "controller_delay_ms": 5,
+      "schedule_ms": 5
+    },
+    {
+      "case_id": "natural-5ms-4",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23154576566344,
+        "end_ns": 23154576660179
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23154534993590
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 5,
+      "controller_delay_ms": 5,
+      "schedule_ms": 5
+    },
+    {
+      "case_id": "natural-5ms-5",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23154985960673,
+        "end_ns": 23154986043300
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23154940557134
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 5,
+      "controller_delay_ms": 5,
+      "schedule_ms": 5
+    },
+    {
+      "case_id": "natural-10ms-1",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23155404961571,
+        "end_ns": 23155405221326
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23155357156816
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 10,
+      "controller_delay_ms": 5,
+      "schedule_ms": 10
+    },
+    {
+      "case_id": "natural-10ms-2",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23155844297419,
+        "end_ns": 23155844525091
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23155793488688
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 10,
+      "controller_delay_ms": 5,
+      "schedule_ms": 10
+    },
+    {
+      "case_id": "natural-10ms-3",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23156262030250,
+        "end_ns": 23156262112751
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23156212862426
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 10,
+      "controller_delay_ms": 5,
+      "schedule_ms": 10
+    },
+    {
+      "case_id": "natural-10ms-4",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23156703797731,
+        "end_ns": 23156703871774
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23156655470632
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 10,
+      "controller_delay_ms": 5,
+      "schedule_ms": 10
+    },
+    {
+      "case_id": "natural-10ms-5",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23157141441170,
+        "end_ns": 23157141684967
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23157096096049
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 10,
+      "controller_delay_ms": 5,
+      "schedule_ms": 10
+    },
+    {
+      "case_id": "natural-20ms-1",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23157600683086,
+        "end_ns": 23157600761005
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23157532936222
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 20,
+      "controller_delay_ms": 5,
+      "schedule_ms": 20
+    },
+    {
+      "case_id": "natural-20ms-2",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23158037211462,
+        "end_ns": 23158037296380
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23157976148899
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 20,
+      "controller_delay_ms": 5,
+      "schedule_ms": 20
+    },
+    {
+      "case_id": "natural-20ms-3",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23158486135962,
+        "end_ns": 23158486218214
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23158425870373
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 20,
+      "controller_delay_ms": 5,
+      "schedule_ms": 20
+    },
+    {
+      "case_id": "natural-20ms-4",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23158945137123,
+        "end_ns": 23158945419213
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23158878040730
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 20,
+      "controller_delay_ms": 5,
+      "schedule_ms": 20
+    },
+    {
+      "case_id": "natural-20ms-5",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23159386907813,
+        "end_ns": 23159387153985
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23159320994485
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 20,
+      "controller_delay_ms": 5,
+      "schedule_ms": 20
+    },
+    {
+      "case_id": "natural-50ms-1",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23159836047484,
+        "end_ns": 23159836289239
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23159750135587
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 50,
+      "controller_delay_ms": 5,
+      "schedule_ms": 50
+    },
+    {
+      "case_id": "natural-50ms-2",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23160321177213,
+        "end_ns": 23160321438594
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23160230926396
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 50,
+      "controller_delay_ms": 5,
+      "schedule_ms": 50
+    },
+    {
+      "case_id": "natural-50ms-3",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23160814529983,
+        "end_ns": 23160814760446
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23160724098537
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 50,
+      "controller_delay_ms": 5,
+      "schedule_ms": 50
+    },
+    {
+      "case_id": "natural-50ms-4",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23161312122089,
+        "end_ns": 23161312206840
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23161222213861
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 50,
+      "controller_delay_ms": 5,
+      "schedule_ms": 50
+    },
+    {
+      "case_id": "natural-50ms-5",
+      "kind": "natural",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 1200,
+        "after": 1700,
+        "start_ns": 23161811960281,
+        "end_ns": 23161812041491
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23161721021116
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 50,
+      "controller_delay_ms": 5,
+      "schedule_ms": 50
+    },
+    {
+      "case_id": "external-1",
+      "kind": "external",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5700,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 5000,
+        "after": 5700,
+        "start_ns": 23162280101752,
+        "end_ns": 23162280266838
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23162223237690
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 20,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "external-2",
+      "kind": "external",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5700,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 5000,
+        "after": 5700,
+        "start_ns": 23162755948169,
+        "end_ns": 23162756310968
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23162686502854
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 27,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "external-3",
+      "kind": "external",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5700,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 5000,
+        "after": 5700,
+        "start_ns": 23163211643097,
+        "end_ns": 23163211915311
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23163136910967
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 34,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "external-4",
+      "kind": "external",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5700,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 5000,
+        "after": 5700,
+        "start_ns": 23163637766513,
+        "end_ns": 23163637890099
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23163555275852
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 41,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "external-5",
+      "kind": "external",
+      "observed_a": 1000,
+      "checked_a": 1000,
+      "final_a": 1200,
+      "final_b": 5700,
+      "outcome": "APPLIED",
+      "writer": {
+        "before": 5000,
+        "after": 5700,
+        "start_ns": 23164125656881,
+        "end_ns": 23164125764342
+      },
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23164040869799
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 48,
+      "controller_delay_ms": 5,
+      "schedule_ms": null
+    },
+    {
+      "case_id": "recovery-1",
+      "kind": "recovery",
+      "observed_a": 1000,
+      "checked_a": 1700,
+      "final_a": 1700,
+      "final_b": 5000,
+      "outcome": "CONFLICT_REJECTED",
+      "writer": null,
+      "events": [
+        {
+          "event": "fixture_ready",
+          "a": 1000,
+          "b": 5000,
+          "t_ns": 23164500730727
+        }
+      ],
+      "cleanup": "verified",
+      "writer_delay_ms": 20,
+      "controller_delay_ms": 5,
+      "schedule_ms": null,
+      "recovery": {
+        "fresh_expected": 1700,
+        "outcome": "APPLIED",
+        "final_a": 1200
+      }
+    }
+  ],
+  "decision": "HOLD_NO_NATURAL_CONTENTION_OBSERVED"
+}
+

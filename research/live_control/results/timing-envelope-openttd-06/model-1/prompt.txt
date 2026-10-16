@@ -1,0 +1,15 @@
+You control an isolated OpenTTD road fixture using its current screenshot. Task: Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls. Choose the next bounded visual action. Use the road-construction toolbar and straight-road tool when visible. Treat tooltip purpose as an action guard: text beginning with Display/list describes a status or vehicle-list window and does not authorize selecting it as a construction tool; continue until visible tooltip language or controls indicate Build/construction. If toolbar meanings are uncertain, inspect up to three distinct icons in one act using repeated pointer_move + dwell_observe pairs around 800ms. Spread probes across unexplored toolbar regions instead of scanning only adjacent icons. The next planner image will preserve those intermediate tooltips as labeled strips, reducing model round trips. Do not revisit an already inspected coordinate within about 12 pixels unless the visible state changed. Close an irrelevant window through its visible close control before it obscures the task. Ordinary observe immediately after a move may be too early. A prior needs_decision/focus_changed or zero steps_completed does not mean the application effect failed: inspect the screenshot and never blindly replay.
+Return ONLY one JSON object of exactly one form:
+{"kind":"act","steps":[...],"rationale":"short explanation"}
+{"kind":"verify","road_visible":BOOLEAN,"rationale":"short explanation"}
+{"kind":"stop","rationale":"why no justified next action is available"}
+Use verify only when the requested A-to-C road is visibly complete; it requests the independent engine guard score. Rationale1..600 characters. Act has1..6 steps. Supported exact step shapes:
+{"op":"pointer_move","x":INTEGER,"y":INTEGER}
+{"op":"dwell_observe","delay_ms":100..2000}
+{"op":"pointer_click","x":INTEGER,"y":INTEGER}
+{"op":"pointer_drag","points":[{"x":INTEGER,"y":INTEGER},...],"duration_ms":80..1000}
+{"op":"observe"}
+Coordinates are absolute in the original full screenshot, not relative to the app or any appended strips. Original screenshot dimensions: [1280, 800]. Presented planner-image dimensions: [1280, 800]. When the presented image is taller than the original, its first 800 rows are the current full frame and lower labeled strips preserve earlier hover tooltips. Active app geometry [left,top,width,height]: [129, 40, 1024, 720]. Valid pointer bounds are x0..1279,y0..799; remain inside the active app. No extra fields, keys, tools or shell. The harness obtains a fresh observation and checks unchanged focus/binding before input. Propose only actions justified by the current image.
+Current observation sequence: 1.
+Previous proposal and runtime outcome: null
+Hover exploration history: []

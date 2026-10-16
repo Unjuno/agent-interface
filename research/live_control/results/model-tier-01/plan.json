@@ -1,0 +1,85 @@
+{
+  "order": [
+    "default",
+    "fast",
+    "fast",
+    "default"
+  ],
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "image_sha256": "15829ff6b98fc22a7a30f4816974933f9f20d752f237eb651a15fea37f43a1d2",
+  "prompt_sha256": "083bb1a749ed0932a40435f021c05c0ee6a15afed37171df81d47944af323496",
+  "sources": {
+    "probe_model_tier_v1.py": "085662aab67ea29e81d14d379ef259ec256e88ff5855db40b71012ac21370b28",
+    "model_tier_runner_v1.py": "8dc1ff89aae7a17100f7f8bfeecfe06459c8e7874ef682692912e3e40b3c9d58"
+  },
+  "catalog_fetched_at": "2026-09-13T13:24:14.594795100Z",
+  "catalog_client_version": "0.154.0",
+  "capabilities": [
+    {
+      "slug": "gpt-5.6-luna",
+      "input_modalities": [
+        "text",
+        "image"
+      ],
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Fast responses with lighter reasoning"
+        },
+        {
+          "effort": "medium",
+          "description": "Balances speed and reasoning depth for everyday tasks"
+        },
+        {
+          "effort": "high",
+          "description": "Greater reasoning depth for complex problems"
+        },
+        {
+          "effort": "xhigh",
+          "description": "Extra high reasoning depth for complex problems"
+        },
+        {
+          "effort": "max",
+          "description": "Maximum reasoning depth for the hardest problems"
+        }
+      ],
+      "service_tiers": [
+        {
+          "id": "priority",
+          "name": "Fast",
+          "description": "1.5x speed, increased usage"
+        }
+      ],
+      "supported_in_api": true
+    },
+    {
+      "slug": "gpt-5.3-codex-spark",
+      "input_modalities": [
+        "text"
+      ],
+      "supported_reasoning_levels": [
+        {
+          "effort": "low",
+          "description": "Fast responses with lighter reasoning"
+        },
+        {
+          "effort": "medium",
+          "description": "Balances speed and reasoning depth for everyday tasks"
+        },
+        {
+          "effort": "high",
+          "description": "Greater reasoning depth for complex problems"
+        },
+        {
+          "effort": "xhigh",
+          "description": "Extra high reasoning depth for complex problems"
+        }
+      ],
+      "service_tiers": [],
+      "supported_in_api": false
+    }
+  ],
+  "docs": "https://learn.chatgpt.com/docs/agent-configuration/speed",
+  "scope": "archived actual Calc dialog screenshot, identical prompt; inference only, no new GUI input; requested service tier, honored tier unavailable"
+}

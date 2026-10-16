@@ -1,0 +1,44 @@
+{
+  "base": "4072b25c7510e8fb285ad34584fc9bdb1f46fa6d",
+  "factor": {
+    "capacity": [
+      1,
+      2
+    ],
+    "repetitions_per_cell": 5,
+    "replace": [
+      false,
+      true
+    ],
+    "sequence": [
+      "A",
+      "B",
+      "A",
+      "B"
+    ]
+  },
+  "formal_invocations_allowed": 1,
+  "gates": {
+    "correct_clicks_per_session": 4,
+    "old_probe_eligible": false,
+    "old_probe_status": "SCOPE_MISMATCH",
+    "replace_groundings": 4,
+    "stable_k1_groundings": 4,
+    "stable_k2_groundings": 2,
+    "terminal_button_neutral": true,
+    "wrong_clicks": 0
+  },
+  "reruns_allowed": 0,
+  "scope": "private Xvfb/Tk/XTEST; no model/provider/network/user desktop/shared runtime",
+  "task": "TARGET-HANDLE-CAPACITY-X11-R1-20260918-001",
+  "upstream": {
+    "coordinate_frame_transform_v1.py": {
+      "git_blob": "972daffee40a38d3effbd8155f3da133d664e445",
+      "sha256": "cb6aefeaa4e9a41b4f4b9ca532e24106025247e39e7c7ee026ddc242a7cbb05b"
+    },
+    "scoped_target_handle_v1.py": {
+      "git_blob": "c4482bb7cd9c3a3e780c05bafa34073491a33ece",
+      "sha256": "550d377f145abbb16f8466dc91b5bb84ca25fccadf71e4d24b2f426550f5a19f"
+    }
+  }
+}

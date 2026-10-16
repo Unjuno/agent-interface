@@ -1,0 +1,40 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "model_calls": 0,
+  "durable_calls": 4,
+  "method": {
+    "id": "openttd.transparent_trees",
+    "expanded_step": {
+      "op": "chord",
+      "modifier": "Control_L",
+      "key": "2"
+    },
+    "source_url": "https://wiki.openttd.org/en/Manual/Transparency%20options"
+  },
+  "image": {
+    "dimensions": [
+      1280,
+      800
+    ],
+    "before_sha256": "afdaf2184134025da88a78597cc3d95c45ce5ae86232e13cfb39c6b313e4b88a",
+    "after_sha256": "3a3132bc183ce896556a18cd0c391bac98a8bd6602dd68d16432f5723d88a3a2",
+    "changed_pixels": 398590,
+    "total_pixels": 1024000,
+    "changed_fraction": 0.389248046875
+  },
+  "task_state": {
+    "independent_success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "ordered_bidirectional_connections": false,
+      "forbidden_tiles_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "save_unchanged": true
+  },
+  "decision": "retain as an app-specific learned view optimizer and expose it separately from task mutation; fresh model recovery remains untested",
+  "scope": "view-transform feasibility only; no model judgment, task success, generic affordance discovery, latency or token claim",
+  "audit_sha256": "e8b8f9cfd1bc0e38c7f50dad9d0b7794d23cab6ba1f0c558d4eb75a2c49c5aa5"
+}

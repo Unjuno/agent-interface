@@ -1,0 +1,40 @@
+{
+  "after": 25,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "reviewed-recovery",
+  "request_id": "program-c2e04578b240472bbab7d11fa5a3bd81",
+  "command": {
+    "op": "submit",
+    "id": "reviewed-recovery",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 618,
+        "y": 391,
+        "duration_ms": 80
+      },
+      {
+        "op": "hold",
+        "keys": [
+          "Right"
+        ],
+        "duration_ms": 80
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 80,
+        "timeout_ms": 500
+      }
+    ],
+    "expected_sequence": 3,
+    "valid_until_ns": 179220528638
+  }
+}

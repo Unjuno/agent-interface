@@ -1,0 +1,51 @@
+{
+  "status": "timeout",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "op": "clock",
+        "transport_request_id": "0a3049b878254e169c7a715f2729c156"
+      },
+      "received_ns": 106442391374,
+      "emit_started_ns": 106442393977
+    },
+    {
+      "event": "clock",
+      "runtime_ns": 106455132483,
+      "sequence": 4,
+      "emit_started_ns": 106455135880
+    },
+    {
+      "event": "command",
+      "command": {
+        "expected_sequence": 4,
+        "id": "focus-x-current-observe",
+        "op": "submit",
+        "steps": [
+          {
+            "op": "observe"
+          }
+        ],
+        "transport_request_id": "06d1b2d7bdad442a9199c7d77309c953",
+        "valid_until_ns": 98815411336
+      },
+      "received_ns": 106469613725,
+      "emit_started_ns": 106469618246
+    },
+    {
+      "event": "rejected",
+      "reason": "intent validity expired",
+      "emit_started_ns": 106484447061
+    }
+  ],
+  "cursor": 29,
+  "returned_ns": 108450920041,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "06d1b2d7bdad442a9199c7d77309c953",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

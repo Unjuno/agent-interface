@@ -1,0 +1,29 @@
+{
+  "schema": "quiet_watch_scheduler_contention_v1_decision_evidence",
+  "raw_sha256": "dd3b0373ba82ac632154df51a547d9d1d1304f60695d6461427a394746e144fc",
+  "constants": {"period_ns":2000000,"block_ns":600000000,"pairs":20,"samples_per_block":300,"threshold_ratio":2.0,"threshold_max_ns":1000000,"threshold_blocks":10},
+  "environment": {"python":"3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]","platform":"linux","allowed_affinity_initial":[0,1,2,3,4],"selected_cpu":0},
+  "pairs": [
+    {"pair":0,"order":["idle","contended"],"idle_max_late_ns":499851,"contended_max_late_ns":3621701,"idle_p99_late_ns":325275.5299999998,"contended_p99_late_ns":440519.0199999991,"idle_missed":0,"contended_missed":1},
+    {"pair":1,"order":["contended","idle"],"idle_max_late_ns":786101,"contended_max_late_ns":5477661,"idle_p99_late_ns":418515.17999999726,"contended_p99_late_ns":3443335.0999999996,"idle_missed":0,"contended_missed":8},
+    {"pair":2,"order":["idle","contended"],"idle_max_late_ns":329903,"contended_max_late_ns":3835798,"idle_p99_late_ns":120591.35999999933,"contended_p99_late_ns":1839889.3799999987,"idle_missed":0,"contended_missed":2},
+    {"pair":3,"order":["contended","idle"],"idle_max_late_ns":850148,"contended_max_late_ns":5499458,"idle_p99_late_ns":211176.5299999996,"contended_p99_late_ns":1117910.369999991,"idle_missed":0,"contended_missed":3},
+    {"pair":4,"order":["idle","contended"],"idle_max_late_ns":1253530,"contended_max_late_ns":7557137,"idle_p99_late_ns":212296.0699999954,"contended_p99_late_ns":3565485.319999995,"idle_missed":0,"contended_missed":5},
+    {"pair":5,"order":["contended","idle"],"idle_max_late_ns":1249879,"contended_max_late_ns":2677386,"idle_p99_late_ns":233315.72999999946,"contended_p99_late_ns":1247099.8899999987,"idle_missed":0,"contended_missed":1},
+    {"pair":6,"order":["idle","contended"],"idle_max_late_ns":2249009,"contended_max_late_ns":11975464,"idle_p99_late_ns":1322979.059999999,"contended_p99_late_ns":6001171.699999982,"idle_missed":2,"contended_missed":13},
+    {"pair":7,"order":["contended","idle"],"idle_max_late_ns":2406113,"contended_max_late_ns":5265121,"idle_p99_late_ns":1369284.0899999996,"contended_p99_late_ns":1543594.1199999843,"idle_missed":1,"contended_missed":3},
+    {"pair":8,"order":["idle","contended"],"idle_max_late_ns":1746192,"contended_max_late_ns":7952089,"idle_p99_late_ns":277792.2699999982,"contended_p99_late_ns":4055512.289999996,"idle_missed":0,"contended_missed":6},
+    {"pair":9,"order":["contended","idle"],"idle_max_late_ns":711340,"contended_max_late_ns":2880697,"idle_p99_late_ns":267303.4199999997,"contended_p99_late_ns":991670.9299999991,"idle_missed":0,"contended_missed":1},
+    {"pair":10,"order":["idle","contended"],"idle_max_late_ns":45165007,"contended_max_late_ns":6100972,"idle_p99_late_ns":39192478.75999998,"contended_p99_late_ns":3820827.8,"idle_missed":40,"contended_missed":6},
+    {"pair":11,"order":["contended","idle"],"idle_max_late_ns":1609418,"contended_max_late_ns":3134275,"idle_p99_late_ns":257762.33999999842,"contended_p99_late_ns":1505399.3499999864,"idle_missed":0,"contended_missed":3},
+    {"pair":12,"order":["idle","contended"],"idle_max_late_ns":590873,"contended_max_late_ns":3572057,"idle_p99_late_ns":163309.45999999988,"contended_p99_late_ns":1578761.069999997,"idle_missed":0,"contended_missed":2},
+    {"pair":13,"order":["contended","idle"],"idle_max_late_ns":1916983,"contended_max_late_ns":3548065,"idle_p99_late_ns":748625.7199999937,"contended_p99_late_ns":1365362.6799999983,"idle_missed":0,"contended_missed":1},
+    {"pair":14,"order":["idle","contended"],"idle_max_late_ns":61643840,"contended_max_late_ns":3451850,"idle_p99_late_ns":58934041.489999995,"contended_p99_late_ns":1459196.5999999964,"idle_missed":32,"contended_missed":1},
+    {"pair":15,"order":["contended","idle"],"idle_max_late_ns":969051,"contended_max_late_ns":3519549,"idle_p99_late_ns":488533.81999999925,"contended_p99_late_ns":2199096.3099999945,"idle_missed":0,"contended_missed":4},
+    {"pair":16,"order":["idle","contended"],"idle_max_late_ns":636694,"contended_max_late_ns":3511326,"idle_p99_late_ns":335542.5399999993,"contended_p99_late_ns":2571810.279999992,"idle_missed":0,"contended_missed":4},
+    {"pair":17,"order":["contended","idle"],"idle_max_late_ns":1920642,"contended_max_late_ns":2039785,"idle_p99_late_ns":579881.0999999964,"contended_p99_late_ns":1070932.2999999998,"idle_missed":0,"contended_missed":1},
+    {"pair":18,"order":["idle","contended"],"idle_max_late_ns":1537474,"contended_max_late_ns":5350233,"idle_p99_late_ns":644679.8999999998,"contended_p99_late_ns":2422882.4699999937,"idle_missed":0,"contended_missed":4},
+    {"pair":19,"order":["contended","idle"],"idle_max_late_ns":1120555,"contended_max_late_ns":2621634,"idle_p99_late_ns":393011.7399999986,"contended_p99_late_ns":734850.2999999947,"idle_missed":0,"contended_missed":2}
+  ],
+  "summary": {"median_paired_max_lateness_ratio":3.8408155109582367,"contended_median_max_lateness_ns":3596879.0,"contended_blocks_max_ge_1ms":20,"decision":"CONTENTION_TAIL_REPRODUCED_SCOPED"}
+}

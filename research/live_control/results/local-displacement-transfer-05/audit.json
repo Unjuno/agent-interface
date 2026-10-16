@@ -1,0 +1,60 @@
+{
+  "audit_passed": true,
+  "v4_preregistration_failure_retained": true,
+  "pairs": 2,
+  "cases": 4,
+  "orders": [
+    [
+      "target",
+      "partial"
+    ],
+    [
+      "partial",
+      "target"
+    ]
+  ],
+  "authored_condition_unchanged": true,
+  "fresh_initial_source_identical_across_all_four_cases": true,
+  "authored_output_canonical_sha256": "99097b8f8aabe2eddcf130bd167d8244b25ff0975179fc1257d1b153c9bb8de6",
+  "initial_source_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+  "target_deltas": [
+    [
+      24,
+      0
+    ],
+    [
+      24,
+      0
+    ]
+  ],
+  "partial_deltas": [
+    [
+      20,
+      0
+    ],
+    [
+      20,
+      0
+    ]
+  ],
+  "target_save_started": [
+    true,
+    true
+  ],
+  "partial_save_started": [
+    false,
+    false
+  ],
+  "all_terminal_releases_verified": true,
+  "exact_frames": 38,
+  "sample_spans_ms": [
+    100.628208,
+    101.891489,
+    98.412749,
+    89.945885
+  ],
+  "decision": "PROMOTE_ONLY_AS_SCOPED_MOVED_OBJECT_LOCAL_POSTCONDITION_CANDIDATE",
+  "scope": "two fresh same-task target/partial pairs, opposite order, unchanged first Luna-authored patch; scripted pointer paths and no in-episode model call; no placement, unseen geometry, speed, token, cross-domain or broad autonomy claim",
+  "audit_sha256": "b6d702993186177daf1c5ddc6d944b045ea3c297c1a77b95b4b7af577668a02e",
+  "audit_correction": "first audit invocation expected the v3 byte-hash field in v5; no execution artifact changed"
+}

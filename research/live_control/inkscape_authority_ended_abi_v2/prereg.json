@@ -1,0 +1,33 @@
+{
+  "candidate": "preserve actual capture count/sequences; select latest sequence explicitly; add measured 400ms observation-lifecycle deadline; scheduled expiry only becomes authority_ended; bridge v2 accepts existing one-capture Doom evidence or exactly bounded two-capture evidence with strictly increasing sequences and latest-selection proof",
+  "construction": {
+    "live_smoke": {"excluded_from_formal": true, "outcome": "PASS", "seed": 994599},
+    "offline_matrix": "15/15 PASS",
+    "rejected_v1": "captures=2 actual work must not be normalized dishonestly as captures=1"
+  },
+  "decision": "PASS_ABI_ADAPTER_V2 only if every hard gate passes; otherwise retain first failure and stop",
+  "hard_gates": [
+    "retained single-capture Doom receipt remains accepted unchanged by bridge v2",
+    "two-capture evidence reports captures=2, both increasing sequences, sequence equal latest, selection_rule latest",
+    "multi-capture evidence missing/mismatching sequence list or selecting non-latest fails closed",
+    "scheduled expiry release verified empty; tail text never starts",
+    "legacy post_release_observation remains unchanged two-capture collector",
+    "snapshot finished <= independent 400ms lifecycle deadline; no authority grant/tail resumption",
+    "terminal status authority_ended and legacy_terminal_status expired",
+    "bridge v2 returns safe_yield/authority_unavailable",
+    "no post-release input admissions or input between stop and terminal; saved SVG unchanged at x50 y50 w40 h30",
+    "runtime sources.json binds candidate and base sources"
+  ],
+  "live": {"authority_ms": 500, "formal_sessions": 1, "hold_ms": 1500, "model_calls": 0, "retry_count_allowed": 0, "seed": 994600, "tail_text": "999"},
+  "question": "can the unchanged two-capture Inkscape expiry-observation path satisfy an honest cross-domain authority_ended contract if the bridge explicitly represents bounded multi-capture evidence?",
+  "schema": "inkscape-authority-ended-abi-prereg-v2",
+  "source_sha256": {
+    "authority_ended_bridge_v2.py": "37e6551baedaddad50ca8ef64677e3c387f742875ad3e28fa6ea630e58ad7d51",
+    "cause_servo_interactive_v7.py": "8b04c9bfffd50ba0d5416977040d471962138559866558a87aeb5a3a20cd27b6",
+    "cause_servo_socket_v9.py": "4ab524fdb7f73b21e75313ef2f60ddcf6232bec0617a9b0d0a7480cb0cd229d7",
+    "executor_v10_authority_ended_v2.py": "408060fd7867c2ad8d4eb956b18804a998472c1d2b2c17bfedca43f40daf81ee",
+    "post_authority_normalize_v2.py": "dc98340c5434160684802a92f04d96f47420bf908198f8861b2148cbd12bdc72",
+    "post_release_observation_v2.py": "69d2b2975d5cd0911af2952085eb481f590468d47f5e73cc0256bd3714ae1541",
+    "run_live_v2.py": "3b46c686783c79e5087629921c920b385865c67e99c6e4648c24b8cae97f678f"
+  }
+}

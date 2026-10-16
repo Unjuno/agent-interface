@@ -1,0 +1,38 @@
+{
+  "started_utc": "2026-10-04T01:01:02.656183+00:00",
+  "platform": "win32",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "client_source_sha256": "1faa5cf176f1c0a96acb0d38d3f207109a29db7170da72634dbabec33fd71f00",
+  "timeout_seconds": 5,
+  "descendant_pid": 52952,
+  "descendant_before_close": {
+    "exists": true,
+    "exit_code": 259
+  },
+  "close_outcome": "TimeoutError: app-server reader close timed out",
+  "descendant_after_timeout": {
+    "exists": true,
+    "exit_code": 259
+  },
+  "reader_alive_after_timeout": true,
+  "streams_open_after_timeout": {
+    "stdin": true,
+    "stdout": true,
+    "stderr": true
+  },
+  "candidate_timeout_gate_pass": true,
+  "cleanup_taskkill_returncode": 0,
+  "cleanup_taskkill_stdout": "SUCCESS: The process with PID 52952 (child process of PID 43976) has been terminated.",
+  "reader_dead_after_cleanup": true,
+  "streams_closed_after_cleanup": {
+    "stdin": true,
+    "stdout": true,
+    "stderr": true
+  },
+  "direct_child_returncode": 1,
+  "descendant_after_cleanup": {
+    "exists": false,
+    "error": 87
+  },
+  "completed_utc": "2026-10-04T01:01:08.854477+00:00"
+}

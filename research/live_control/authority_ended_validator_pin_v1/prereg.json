@@ -1,0 +1,24 @@
+{
+  "schema": "authority-ended-validator-pin-prereg-v1",
+  "base_commit": "1308b57d3209bc32b3bea5b84efb4911c915d8e9",
+  "question": "Can validator semantics be durably pinned across restart while leaving the retained authority-ended durable-token-state-v2 JSON shape unchanged?",
+  "baseline": "Process-memory validator injection is expected to permit silent validator drift across reopen because the retained token-state file stores only schema+entries.",
+  "candidate": "Separate atomically persisted validator sidecar with exact validator_id+validator_sha256. Sidecar must exist and match before loading an existing token-state file. New initialization persists sidecar before creating token state. Exact retained durable-token persistence/recover/consume semantics remain unchanged; issue uses the pinned validator callable.",
+  "cases": [
+    "baseline unpinned v2-to-v1 validator drift succeeds and is retained as failure",
+    "v2 pin issues two-capture receipt",
+    "matching v2 pin restart recovers pending",
+    "v2 ledger reopened with v1 validator rejects",
+    "same validator id with different sha rejects",
+    "existing token state without sidecar rejects",
+    "corrupt sidecar rejects",
+    "token-state top-level shape remains exactly schema+entries and schema string remains authority-ended-durable-token-state-v2",
+    "separate v1 pin issues one-capture receipt",
+    "v1 ledger reopened with v2 validator rejects",
+    "duplicate issue still rejects",
+    "consume then matching restart remains consumed",
+    "sidecar-only crash state is recoverable only through explicit initialize=true with same validator and never permits mismatched validator"
+  ],
+  "hard_gate": "RETAIN_VALIDATOR_PIN_CANDIDATE only if baseline drift is reproduced, all 12+ candidate gates pass, mismatches/corruption fail before receipt issuance, and token-state JSON shape is unchanged.",
+  "scope": "offline single-writer local filesystem; no GUI/model/network/durable-submit transport; two-capture validator is a semantic test contract, not PR #168 formal-source certification"
+}

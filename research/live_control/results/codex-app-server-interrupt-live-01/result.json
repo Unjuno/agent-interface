@@ -1,0 +1,31 @@
+{
+  "schema": "codex-app-server-interrupt-probe-v1",
+  "status": "COMPLETED",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\Users\\junny\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\bin\\codex.js",
+    "app-server",
+    "--stdio"
+  ],
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "initialize_user_agent": "Codex Desktop/0.153.4 (Windows 10.0.26200; x86_64) dumb (agent-interface; 1)",
+  "thread_id": "01a0a161-d977-7f33-9e5e-aaf6fdacab45",
+  "thread_ephemeral": true,
+  "turn_id": "01a0a161-dba5-77c0-8ad3-cc7ae02e02a7",
+  "turn_started_status": "inProgress",
+  "interrupt_sent_ns": 20776531888500,
+  "interrupt_ack": {},
+  "interrupt_error": null,
+  "turn_completed_status": "interrupted",
+  "turn_duration_ms": 37,
+  "turn_usage": null,
+  "completed_agent_messages": [],
+  "answer_eligible": false,
+  "codex_version": "codex-cli 0.153.4",
+  "source_sha256": {
+    "probe_codex_app_server_interrupt_v1.py": "94ba71f5a1cb03172659d02e7013ba0ff90fce24927581dd3776db85fccd0917",
+    "codex_app_server_client_v2.py": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b"
+  },
+  "scope": "one frozen no-tool turn; interruption mechanics and accounting only"
+}

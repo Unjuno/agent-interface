@@ -1,0 +1,10 @@
+{
+  "schema": "inkscape-expired-authority-semantics-prereg-v1",
+  "base_commit": "0bf4103e69e4108f92a153e38a5ea1f7253f1f93",
+  "question": "Can retained real Inkscape legacy expired-terminal evidence be upgraded to the newer authority_ended bridge contract without inventing evidence?",
+  "H": "The retained legacy Inkscape expiry evidence cannot be directly upgraded: terminal status is expired rather than authority_ended, the passive post-release collector records up to two captures rather than the newer exact-one-capture contract, and at least one independent lifecycle/snapshot-finish field required by authority_ended_bridge_v1 lacks direct retained provenance.",
+  "T": "Offline first-outcome provenance audit only. Use byte-identified current-main authority_ended_bridge_v1.py, probe_expiry_observation_v1.py, post_release_observation_v2.py, and retained results/expiry-observation-01 artifacts. For every required authority_ended receipt field classify provenance as direct, mechanically derived, contradictory, or unavailable. No synthetic defaults or semantic relabeling. Feed only the evidence-supported best-effort receipt into the unchanged bridge and retain its first rejection.",
+  "D": "FAIL_DIRECT_UPGRADE_RETAIN_SEMANTIC_MISMATCH if any required bridge field is contradictory or unavailable, or if the unchanged bridge rejects the evidence-only receipt. PASS_DIRECT_UPGRADE only if every required field is directly justified and the unchanged bridge accepts without invented values.",
+  "C": "The retained detailed event stream may contain per-capture finish timing and an independently defined lifecycle deadline that the high-level probe did not assert; if so, a direct adapter may be possible.",
+  "U": "Retained-source/artifact audit only; no live GUI, model, OS input, network side effects, or general-domain claim."
+}

@@ -1,0 +1,33 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "confirm",
+    "expected_sequence": 11,
+    "valid_until_ns": 58815687176,
+    "decision_evidence": {
+      "delivery_id": "delivery:16",
+      "observation_sequence": 11,
+      "producer": "scripted"
+    },
+    "steps": [
+      {
+        "op": "key",
+        "key": "Return"
+      }
+    ],
+    "finish_after": true
+  },
+  "image": {
+    "status": "image",
+    "sequence": 11,
+    "capture_ns": 28774504825,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/live-drain-delay-02/runtime/007.png",
+    "relative_path": "007.png",
+    "sha256": "65da3ae06d78f8ccbbecb96794c5d12b8a56d7ad2067ea93a4c38b26c8615e32",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 28815687176,
+  "lease_ms": 30000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

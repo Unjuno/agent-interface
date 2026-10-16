@@ -1,0 +1,37 @@
+{
+  "allocation": "degraded-temporal-monitor-2255-20260922-01",
+  "base_main": "1ff446ff8344675002fef5e076098a648dd7d086",
+  "bound_ms": 80,
+  "decision": "PASS_DECLARED_DEGRADATION_FAIL_CLOSED_SCOPED",
+  "formal_batches": 2,
+  "formal_cases": 16,
+  "formal_invocations_before_freeze": 0,
+  "issue": 2255,
+  "replacements": 0,
+  "reruns": 0,
+  "scenarios": [
+    "AB_WITHIN",
+    "AB_LATE",
+    "A_ONLY",
+    "CANCEL_COMPLETE",
+    "CANCEL_DROP_DECLARED",
+    "CANCEL_DROP_UNDECLARED",
+    "REORDER_DECLARED",
+    "CROSS_CLOCK_DECLARED"
+  ],
+  "sources": {
+    "CONSTRUCTION.md": "8ef588946d192b37818e6a297aa7e40bf04a56134cdfab85f30e97e2979b89cd",
+    "ENVIRONMENT.json": "eb9186bff23e982c0b3fbd196fafb6178c662cad23cfa3fc57cd980bccc5b525",
+    "PLAN.md": "c4ad08cc64187e5bcb99402c4e71ff3ac66ac179c6ee7b7fd20b6f0571fa0d09",
+    "aggregate.py": "aa288cf7221e98524cd80cc6b33b3056f4a2bd9c989d0205723e6764f452d904",
+    "app.py": "44fe2cb6d70d1a4763d7b68c4dc8b5920eff71f959291b10bb891f4227b7cba1",
+    "audit.py": "2f371cd33fbe9238d5d29841f6e6d2354910a8ae2ac71df29734374876c5a526",
+    "case.py": "47c3c27e59db37fe492ee3d18ac10946e7f2ea4cc6d8da967dc0baeb205e2aec",
+    "observer.py": "5502a3c148f8b1410d2ac1db20225d207a14dbdc4d0d58a7f37bce169d021666",
+    "policy.py": "6fa7a7fd8f6d2041afd63b93d202636c204031f4f417ffc184e505b1fe00651e",
+    "run_batch.py": "bbcad98c39fd413072ab1dfb15f2137fa62221d2ca53401a905bdc600c4fce6b",
+    "test_audit.py": "346605081682b90a3dea4d1c019c2300a45b37c3726a079cc33a0c88db468546",
+    "test_policy.py": "b6c54f943549e4450a7287fa41c07c2b8f388eab1f8108d8cc54153639c257c9"
+  },
+  "tuning": 0
+}

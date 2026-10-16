@@ -1,0 +1,17 @@
+{
+  "controls": [
+    {"decision":"HOLD","errors":["case-01:task"],"name":"wrong_task","rejected":true,"returncode":1},
+    {"decision":"HOLD","errors":["case-01:arm=selection_no_churn expected=panel_churn_then_selection","case-01:unexpected_churn"],"name":"wrong_arm","rejected":true,"returncode":1},
+    {"decision":"HOLD","errors":["case-01:visual_sequence"],"name":"wrong_visual","rejected":true,"returncode":1},
+    {"decision":"HOLD","errors":[],"name":"changed_path","rejected":true,"returncode":0},
+    {"decision":"HOLD","errors":["case-01:churn_pre_probe"],"name":"failed_churn_probe","rejected":true,"returncode":1},
+    {"decision":"HOLD","errors":["case-01:keymap"],"name":"held_key","rejected":true,"returncode":1},
+    {"decision":"HOLD","errors":["case-01:listeners"],"name":"listener_count","rejected":true,"returncode":1},
+    {"decision":"HOLD","errors":["case-01:session_match"],"name":"session_mismatch","rejected":true,"returncode":1}
+  ],
+  "formal_reruns":0,
+  "pass":true,
+  "rejected_count":8,
+  "schema":"inkscape-atspi-panel-selection-interaction-postformal-controls-v1",
+  "total_count":8
+}

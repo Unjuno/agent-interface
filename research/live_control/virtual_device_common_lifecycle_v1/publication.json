@@ -1,0 +1,40 @@
+{
+  "a1": {
+    "complete_first_outcomes": 12,
+    "pooled_into_a2": false,
+    "status": "STOPPED_INFRASTRUCTURE_TIMEOUT"
+  },
+  "a2": {
+    "audit_namespace_view_only": true,
+    "case_reruns": 0,
+    "complete_first_outcomes": 40
+  },
+  "a2_freeze_commit": "0c8a64e7c8186e3a27525407c5c7ff946dc913e8",
+  "artifacts": {
+    "a1_stop": {"bytes": 857, "path": "STOP.json", "sha256": "dbc7f7faf847f64d38ec7083a74f0b02175fe27ba04577772f5febf594ce7d16"},
+    "archive": {"bytes": 52151, "path": "virtual_device_common_lifecycle_v1_complete.tar.gz", "sha256": "c996533d4e566bd11c1c6a9b04ef2d19405104918c55d35386c59bbf6918beeb"},
+    "audit": {"bytes": 460, "path": "audit-result.json", "sha256": "2912cb45ba430536897fb46cd17abd4cbe811c01d6859929049d7049442724aa"},
+    "audit_attempt1": {"bytes": 722, "path": "audit-attempt1-namespace-fail.json", "sha256": "f1050d0a0bf6f9b487cdb4308abe70903fe4308f8f74ab5d21c9ab56a70d0204"},
+    "corruption_controls": {"bytes": 3353, "path": "corruption-controls.json", "sha256": "38e4b817a42c424e637ae33c4bf81992f726c2c9b15ea154ac8aba463534b066"},
+    "postformal_verify": {"bytes": 158, "path": "postformal-verify.json", "sha256": "2cc7096aee0f310a270c6b59b8e74e4bbee9f70321c34742fd887551edfa3cc7"},
+    "report": {"bytes": 4634, "path": "REPORT.md", "sha256": "d0c94f37d6fafb3818ceba1d5da1db4d1104e3611b6509027fdfc697f189a823"},
+    "results_summary": {"bytes": 3634, "path": "results-summary.json", "sha256": "b5cb46781c75a316b928aa15eb84cc0f03409e5cd0d430f84a6c2d9bf9b78b4c"}
+  },
+  "boundary": [
+    "keyboard and pointer only; both lowered through XTEST",
+    "no touch or multitouch identity/overlap semantics",
+    "no performance promotion",
+    "no cross-platform or application-task-success claim"
+  ],
+  "decision": "PASS_COMMON_LIFECYCLE_KEYBOARD_POINTER_SCOPED",
+  "fresh_reconstruction": {
+    "audit_byte_identical": true,
+    "manifest_files_verified": 599,
+    "postformal_verify_byte_identical": true
+  },
+  "issue": 625,
+  "publication_base": "1a2b9370f04e72533188e58da23e0d3eafd7b9a5",
+  "schema": "virtual-device-common-lifecycle-publication-v1",
+  "source_freeze_commit": "c78c4e194dfb10d07824e733614baff8ef628d64",
+  "task": "VIRTUAL-DEVICE-COMMON-LIFECYCLE-20260917-A2"
+}

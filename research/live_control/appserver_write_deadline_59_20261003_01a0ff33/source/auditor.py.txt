@@ -1,0 +1,77 @@
+"""Saved-only literal source-stage/endpoint oracle; imports no client or producer."""
+from pathlib import Path
+import hashlib,json
+ROOT=Path(__file__).resolve().parent
+PASS='PASS_NATIVE_REQUEST_WRITE_BEFORE_DEADLINE_WITNESS_SCOPED'
+def need(ok,label):
+    if not ok:raise ValueError(label)
+def sha(data):return hashlib.sha256(data).hexdigest()
+def exact_int(value):return type(value) is int
+def validate(raw):
+    inputs=json.loads((ROOT/'INPUT.json').read_bytes());source=json.loads((ROOT/'SOURCE.json').read_bytes())
+    need(raw['status']=='DATA_RETAINED_THREE_NATIVE_CELLS' and raw['actual_child_count']==3 and exact_int(raw['actual_child_count']),'complete three native cells')
+    need(raw['maximum_live_children']==1 and raw['source_runtime_modified'] is False and raw['formal_or_original_producer_replayed'] is False and raw['main_request_sent'] is False,'scope/owned concurrency')
+    need(raw['source_sha256']==source['source_sha256'] and raw['input_sha256']==sha((ROOT/'INPUT.json').read_bytes()) and raw['freeze_sha256']==sha((ROOT/'FREEZE.json').read_bytes()),'source/input/freeze bindings')
+    need([r['name'] for r in raw['rows']]==['healthy_large','unread_small','unread_large'],'literal three-cell identities')
+    summaries=[]
+    for row,cell in zip(raw['rows'],inputs['cells']):
+        name=row['name'];need(row['source_sha256']==source['source_sha256'],'source row binding')
+        need(row['phase']=='checkpoint' and 'infrastructure_error' not in row and row['freeze_unchanged_final'] is True,'complete checkpoint infrastructure')
+        need(row['journal_disabled'] is True and row['request_timeout_s']==0.05 and row['checkpoint_target_s']==0.25,'fixed journal/timeout/checkpoint')
+        need(exact_int(row['pid']) and row['pid']>0 and row['peer_ready']['pid']==row['pid'] and row['peer_final']['pid']==row['pid'],'actual native owner PID')
+        need(row['peer_ready']['name']==name and row['peer_ready']['read_stdin'] is cell['read_stdin'],'peer readiness mode')
+        need(row['child_exit_at_checkpoint'] is None and row['reader_alive_at_checkpoint'] is True and row['source_closed_at_checkpoint'] is False,'live open transport at checkpoint')
+        need(exact_int(row['next_id_at_checkpoint']) and row['next_id_at_checkpoint']==2,'one integer request identity consumed')
+        start=row['caller_state_at_checkpoint']['started_ns'];checkpoint=row['checkpoint_parent_ns'];final=row['final_parent_ns']
+        need(all(exact_int(v) for v in [start,checkpoint,final,row['producer_start_ns']]) and row['producer_start_ns']<=start<checkpoint<=final,'parent-only exact timestamp order')
+        need(checkpoint-start>=250_000_000,'fixed checkpoint not premature')
+        need(row['elapsed_parent_ns']==final-row['producer_start_ns']<=3_000_000_000,'fixed per-cell budget')
+        need(row['child_exit_final']==0 and exact_int(row['child_exit_final']) and row['peer_final']['exit_code']==0 and row['peer_final'].get('private_release_seen') is True,'owned peer normal terminal')
+        need(row['caller_alive_final'] is False and row['reader_alive_final'] is False and row['source_closed_final'] is True,'final caller/reader/source endpoints')
+        need(set(row['parent_streams_final'])=={'stdin','stdout','stderr'} and all(v['closed'] is True for v in row['parent_streams_final'].values()),'all owned parent streams closed')
+        need('owned_pid_terminate' not in row['cleanup_actions'] and 'owned_pid_kill' not in row['cleanup_actions'],'private peer release without fallback')
+        payload=b'probe' if name=='unread_small' else b'X'*262144
+        need(row['payload_characters']==len(payload) and row['payload_sha256']==sha(payload),'literal payload identity')
+        finished=row['caller_final'];need(exact_int(finished['ended_ns']) and start<=finished['ended_ns']<=final,'final caller interval')
+        if name=='healthy_large':
+            expected={'payload_bytes':262144,'payload_sha256':sha(payload)}
+            need(row['caller_alive_at_checkpoint'] is False and row['caller_done_at_checkpoint'] is True and row['write_lock_held_at_checkpoint'] is False,'healthy control completed by checkpoint')
+            need(finished.get('result')==expected and 'error' not in finished and row['caller_state_at_checkpoint'].get('result')==expected,'healthy exact large payload result')
+            need(row['peer_final']['read_calls']==1 and row['peer_final']['request_read'] is True and row['peer_final']['response_written'] is True,'actual healthy peer exchange')
+        elif name=='unread_small':
+            need(row['caller_alive_at_checkpoint'] is False and row['caller_done_at_checkpoint'] is True and row['write_lock_held_at_checkpoint'] is False,'small unread reaches response timeout')
+            need(finished.get('error')=={'type':'TimeoutError','message':'app-server request timed out: fixture/request'} and 'result' not in finished,'small unread exact timeout control')
+        else:
+            need(row['caller_alive_at_checkpoint'] is True and row['caller_done_at_checkpoint'] is False and row['write_lock_held_at_checkpoint'] is True,'large unread live blocked writer')
+            writes=[f for f in row['caller_frames'] if f['source']=='client.py.txt' and f['function']=='_write']
+            requests=[f for f in row['caller_frames'] if f['source']=='client.py.txt' and f['function']=='request']
+            need(len(writes)==len(requests)==1 and writes[0]['line'] in source['write_or_flush_lines'] and writes[0]['source_sha256']==source['source_sha256'],'actual literal frozen stdin write/flush frame')
+            need(requests[0]['line']==source['request_write_line'] and requests[0]['deadline_present'] is False and requests[0]['deadline_value'] is None,'request deadline not created at blocked write')
+            need(set(row['caller_state_at_checkpoint'])=={'started_ns'} and finished['ended_ns']>checkpoint and 'error' in finished and 'result' not in finished,'large request interrupted only after witness checkpoint')
+        if name!='healthy_large':need(row['peer_final']['read_calls']==0 and row['peer_final']['request_read'] is False and row['peer_final']['response_written'] is False,'unread peer never consumed/answered request')
+        summaries.append({'name':name,'checkpoint_elapsed_parent_ns':checkpoint-start,'caller_duration_parent_ns':finished['ended_ns']-start,'caller_live_at_checkpoint':row['caller_alive_at_checkpoint'],'child_exit_final':row['child_exit_final']})
+    return {'status':PASS,'cells':summaries,'scope':'one descriptive native Windows artificial pipe sample per cell; no latency ceiling/prevalence/physical effect/input release/model/game result','source_runtime_modified':False,'main_request_sent':False}
+def audit_original():
+    raw=json.loads((ROOT/'RAW.json').read_bytes());freeze=json.loads((ROOT/'FREEZE.json').read_bytes())
+    need(all(sha((ROOT/name).read_bytes())==digest for name,digest in freeze['pins'].items()),'original frozen bytes')
+    for name,digest in freeze['selected_environment'].items():need(sha(Path(name).read_bytes())==digest,'selected actual environment')
+    for row in raw['rows']:
+        case=ROOT/'cells'/row['name'];need(json.loads((case/'row.json').read_bytes())==row,'complete actual row file join')
+        native=(case/'planned-request.bin').read_bytes();need(len(native)==row['planned_request_bytes'] and sha(native)==row['planned_request_sha256'],'planned native request bytes')
+        request=json.loads(native);payload=b'probe' if row['name']=='unread_small' else b'X'*262144
+        need(native.endswith(b'\r\n') and request=={'method':'fixture/request','id':1,'params':{'payload':payload.decode('ascii')}},'fixed Windows text-pipe bytes and JSON request')
+        if row['name']=='healthy_large':
+            received=(case/'peer-request.bin').read_bytes();response=(case/'peer-response.bin').read_bytes()
+            need(received==native and sha(received)==row['peer_final']['request_sha256'] and len(received)==row['peer_final']['request_bytes'],'actual healthy request exact-byte receipt')
+            need(json.loads(response)=={'id':1,'result':row['caller_final']['result']},'actual healthy wire response binding')
+        else:need(not (case/'peer-request.bin').exists() and not (case/'peer-response.bin').exists(),'do not invent unread wire/response')
+    return raw,validate(raw)
+if __name__=='__main__':
+    try:
+        raw,result=audit_original();result['raw_sha256']=sha((ROOT/'RAW.json').read_bytes())
+        target=ROOT/'AUDIT_RESULT.json';need(not target.exists(),'never replace first audit');target.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))
+    except BaseException as error:
+        result={'status':'STOP_FIRST_RAW_AUDIT','error_type':type(error).__name__,'error':str(error),'native_replay':False}
+        target=ROOT/'AUDIT_FIRST_FAILURE.json'
+        if not target.exists():target.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+        print(json.dumps(result));raise SystemExit(1)

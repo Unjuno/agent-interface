@@ -1,0 +1,9 @@
+{
+  "conversation_archive":{"bytes":1924889,"contains":"145 bound files excluding replicated per-case chroot directory copies; includes formal raw result JSON, PNG screenshots, process logs, construction/protocol records and exact sources","path":"inkscape_atspi_panel_selection_interaction_v1_complete.tar.gz","sha256":"3c816d394768373389b57a93e766d2e954286c3a01b5b9c358765964f50ab76a"},
+  "excluded_from_archive":["replicated per-case chroot directories","__pycache__"],
+  "fresh_reconstruction_audit":"PASS with decision REJECT_PANEL_CHURN_X_SELECTION_INTERACTION_AS_DEFUNCT_CAUSE_SCOPED",
+  "github_retains":["REPORT.md","prereg.json","source_hashes.txt","source.part00.b64","source.part01.b64","source_manifest.json","reconstruct_source.py","case_witnesses.json","results_summary.json","audit.json","audit_controls.json","environment.json","predecessor_032_stop.json","RETENTION.json"],
+  "exact_source_reconstruction":"source.part00.b64 + source.part01.b64 reconstruct run_case.py, audit.py, native_dbus.py and register_listener.py; source_manifest.json verifies per-file SHA-256 plus bundle tar/XZ digests",
+  "not_claimed_github_retained":["formal PNG screenshots","per-process logs","full per-case raw result.json beyond SHA-bound case_witnesses","construction/protocol bulk files"],
+  "schema":"inkscape-atspi-panel-selection-interaction-github-retention-v1"
+}

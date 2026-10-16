@@ -1,0 +1,328 @@
+{
+  "index": 1,
+  "name": "1-coordinate-seed991010",
+  "mode": "coordinate",
+  "seed": 991010,
+  "goal": {
+    "token": "t991010",
+    "a": 445,
+    "b": 761,
+    "dx": 36,
+    "url": "http://127.0.0.1:42113/",
+    "setup_readiness_captures": 0
+  },
+  "navigate_terminal": {
+    "event": "terminal",
+    "id": "durable-648d6194181747718e1d211f3f1f935e",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 4,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 37490363006704,
+      "valid_until_ns": 37499435893014
+    },
+    "terminal_ns": 37490363075111,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 37490363077310
+  },
+  "typed_terminal": {
+    "event": "terminal",
+    "id": "durable-018dab2a98f547848652166f3aaef13f",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 2,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 37490858894555,
+      "valid_until_ns": 37500417298481
+    },
+    "terminal_ns": 37490858931496,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 37490858933835
+  },
+  "minted": {
+    "event": "target_handle_minted",
+    "id": "durable-394e56d9c91a4c39bf3d29b4f0cc3c30",
+    "step": 0,
+    "minted_ns": 37490983399574,
+    "handle": "save_form",
+    "name": "save_form",
+    "status": "VALID",
+    "created_sequence": 11,
+    "expires_ns": 37550983399574,
+    "allowed_transformations": [
+      "window_translation"
+    ],
+    "patch_sha256": "d59dee2e1d41b3d20bcd608da8671873bc9d7a620cf36eb39e96ca04bd5f0a35",
+    "authority": "observational reference only; grants no input authority",
+    "reference_kind": "session_alias",
+    "private_registry_id_exposed": false,
+    "emit_started_ns": 37490984699856
+  },
+  "surface_move": {
+    "event": "test_surface_moved",
+    "id": "durable-7cff378b6b314cf19d02a6e8a0dfde75",
+    "step": 0,
+    "before": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "after": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "authority": "fault injection only; grants no input authority",
+    "emit_started_ns": 37491167343514
+  },
+  "fresh_observation": {
+    "event": "observation",
+    "id": "durable-bd998c033c114846a3f3617252671e81",
+    "step": 0,
+    "sequence": 13,
+    "capture_ns": 37491328739881,
+    "context_ns": 37491334067924,
+    "context": [
+      [
+        "windows",
+        "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+      ],
+      [
+        "active_window",
+        6291459
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/chromium-target-handle-model-abba-03/1-coordinate-seed991010/runtime/013.png",
+    "image_reused": false,
+    "image_prepare_ns": 18691964,
+    "image_ready_ns": 37491370938550,
+    "input_focus_before": 6291459,
+    "input_focus_after": 6291459,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "capture_ms": 3.438247,
+    "wire_bytes": 29617,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emit_started_ns": 37491374808446
+  },
+  "handle_query": null,
+  "model": {
+    "typed": {
+      "op": "pointer_click",
+      "target": {
+        "kind": "absolute",
+        "x": 290,
+        "y": 252,
+        "target_handle": "",
+        "dx": 0,
+        "dy": 0
+      },
+      "button": 1,
+      "duration_ms": 80
+    },
+    "strict_shape_correct": true,
+    "usage": {
+      "input_tokens": 9280,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 83,
+      "reasoning_output_tokens": 31
+    },
+    "runner_ms": 6089.0528
+  },
+  "post_model_observation": {
+    "event": "observation",
+    "id": "durable-75cb8e2d6fdc444c802c65ce64a16652",
+    "step": 0,
+    "sequence": 14,
+    "capture_ns": 37497868406205,
+    "context_ns": 37497872964871,
+    "context": [
+      [
+        "windows",
+        "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+      ],
+      [
+        "active_window",
+        6291459
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/chromium-target-handle-model-abba-03/1-coordinate-seed991010/runtime/014.png",
+    "image_reused": false,
+    "image_prepare_ns": 17638901,
+    "image_ready_ns": 37497903495628,
+    "input_focus_before": 6291459,
+    "input_focus_after": 6291459,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "capture_ms": 3.45094,
+    "wire_bytes": 1514,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emit_started_ns": 37497908714885
+  },
+  "runtime_action": {
+    "op": "pointer_click",
+    "x": 290,
+    "y": 252,
+    "button": 1,
+    "duration_ms": 80
+  },
+  "coordinate_in_expected_box": true,
+  "expected_target_box": [
+    270,
+    242,
+    42,
+    18
+  ],
+  "admission_revalidation": null,
+  "pointer_admissions": [
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 290,
+        "y": 252
+      },
+      "admitted_ns": 37498073483232,
+      "input_ack_ns": 37498073665535,
+      "valid_until_ns": 37507988462550,
+      "surface": 6291459,
+      "id": "durable-f681bbdf814c4e8eb9e0c5595ef28c7f",
+      "step": 0,
+      "emit_started_ns": 37498073721058
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 37498086654044,
+      "input_ack_ns": 37498086840910,
+      "valid_until_ns": 37507988462550,
+      "surface": 6291459,
+      "id": "durable-f681bbdf814c4e8eb9e0c5595ef28c7f",
+      "step": 0,
+      "emit_started_ns": 37498086910141
+    }
+  ],
+  "terminal": {
+    "event": "terminal",
+    "id": "durable-f681bbdf814c4e8eb9e0c5595ef28c7f",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 37498267101742,
+      "valid_until_ns": 37507988462550
+    },
+    "terminal_ns": 37498267154593,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 37498267158064
+  },
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "success": true,
+    "actual": {
+      "value": [
+        "t991010"
+      ]
+    },
+    "known_ns": 37498323146481,
+    "emit_started_ns": 37498323151755
+  },
+  "actual": {
+    "value": [
+      "t991010"
+    ]
+  },
+  "bridge_exit_code": 0,
+  "durable_calls": 14,
+  "action_submit_to_return_ms": 343.947867,
+  "decision_start_to_evaluation_return_ms": 6900.825909,
+  "action_to_first_useful_feedback_ms": 100.315494,
+  "action_to_semantic_completion_ms": 236.305571
+}

@@ -1,0 +1,120 @@
+{
+  "allocation": "timerfd-observation-accounting-20260922-01",
+  "baseline": "shadow expiration-as-observation counter; not an allegation about existing production code",
+  "gui_observations": false,
+  "initial_lead_ns": 50000000,
+  "issue": 4001,
+  "mock_callback_definition": "one trivial actual callback invocation per successful read; not an application observation",
+  "period_ns": 2000000,
+  "reported_expirations_definition": "sum of successful 8-byte timer reads only; excludes unread history discarded at rearm",
+  "retries": 0,
+  "schedule": [
+    {
+      "index": 0,
+      "mode": "PERIODIC_20MS",
+      "rep": 0
+    },
+    {
+      "index": 1,
+      "mode": "PERIODIC_60MS",
+      "rep": 0
+    },
+    {
+      "index": 2,
+      "mode": "ONESHOT_20MS",
+      "rep": 0
+    },
+    {
+      "index": 3,
+      "mode": "ONESHOT_60MS",
+      "rep": 0
+    },
+    {
+      "index": 4,
+      "mode": "DISARMED",
+      "rep": 0
+    },
+    {
+      "index": 5,
+      "mode": "SHORT_READ",
+      "rep": 0
+    },
+    {
+      "index": 6,
+      "mode": "REARM",
+      "rep": 0
+    },
+    {
+      "index": 7,
+      "mode": "PERIODIC_60MS",
+      "rep": 1
+    },
+    {
+      "index": 8,
+      "mode": "ONESHOT_20MS",
+      "rep": 1
+    },
+    {
+      "index": 9,
+      "mode": "ONESHOT_60MS",
+      "rep": 1
+    },
+    {
+      "index": 10,
+      "mode": "DISARMED",
+      "rep": 1
+    },
+    {
+      "index": 11,
+      "mode": "SHORT_READ",
+      "rep": 1
+    },
+    {
+      "index": 12,
+      "mode": "REARM",
+      "rep": 1
+    },
+    {
+      "index": 13,
+      "mode": "PERIODIC_20MS",
+      "rep": 1
+    },
+    {
+      "index": 14,
+      "mode": "ONESHOT_20MS",
+      "rep": 2
+    },
+    {
+      "index": 15,
+      "mode": "ONESHOT_60MS",
+      "rep": 2
+    },
+    {
+      "index": 16,
+      "mode": "DISARMED",
+      "rep": 2
+    },
+    {
+      "index": 17,
+      "mode": "SHORT_READ",
+      "rep": 2
+    },
+    {
+      "index": 18,
+      "mode": "REARM",
+      "rep": 2
+    },
+    {
+      "index": 19,
+      "mode": "PERIODIC_20MS",
+      "rep": 2
+    },
+    {
+      "index": 20,
+      "mode": "PERIODIC_60MS",
+      "rep": 2
+    }
+  ],
+  "supervisor_timeout_s": 20,
+  "worker_timeout_s": 3
+}

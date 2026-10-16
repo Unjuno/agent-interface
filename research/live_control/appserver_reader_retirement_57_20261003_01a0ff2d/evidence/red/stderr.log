@@ -1,0 +1,35 @@
+test_healthy_eof_retires_reader_and_journal (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_healthy_eof_retires_reader_and_journal) ... ok
+test_live_reader_preserves_journal_and_late_frame (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_live_reader_preserves_journal_and_late_frame) ... FAIL
+test_live_reader_without_journal_reports_incomplete_and_keeps_frame (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_live_reader_without_journal_reports_incomplete_and_keeps_frame) ... FAIL
+
+======================================================================
+FAIL: test_live_reader_preserves_journal_and_late_frame (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_live_reader_preserves_journal_and_late_frame)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWN_HOME>\Documents\Codex\2026-10-03\go\work\repairs\appserver-journal-close-02\test_appserver_reader_retirement_01a0ff2d.py", line 203, in test_live_reader_preserves_journal_and_late_frame
+    self.pipe_case(held=True, journal_enabled=True)
+  File "<OWN_HOME>\Documents\Codex\2026-10-03\go\work\repairs\appserver-journal-close-02\test_appserver_reader_retirement_01a0ff2d.py", line 169, in pipe_case
+    self.assertEqual(record['reader_errors'], [], 'reader lost a valid frame while recording')
+AssertionError: Lists differ: [{'type': 'ValueError', 'message': 'I/O operation on closed file.'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'type': 'ValueError', 'message': 'I/O operation on closed file.'}
+
+- [{'message': 'I/O operation on closed file.', 'type': 'ValueError'}]
++ [] : reader lost a valid frame while recording
+
+======================================================================
+FAIL: test_live_reader_without_journal_reports_incomplete_and_keeps_frame (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_live_reader_without_journal_reports_incomplete_and_keeps_frame)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWN_HOME>\Documents\Codex\2026-10-03\go\work\repairs\appserver-journal-close-02\test_appserver_reader_retirement_01a0ff2d.py", line 206, in test_live_reader_without_journal_reports_incomplete_and_keeps_frame
+    self.pipe_case(held=True, journal_enabled=False)
+  File "<OWN_HOME>\Documents\Codex\2026-10-03\go\work\repairs\appserver-journal-close-02\test_appserver_reader_retirement_01a0ff2d.py", line 178, in pipe_case
+    self.assertEqual(record['first_outcome'].get('error_type'), 'TimeoutError')
+AssertionError: None != 'TimeoutError'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.552s
+
+FAILED (failures=2)

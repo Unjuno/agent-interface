@@ -1,0 +1,353 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "wrong-row",
+      "expected_reason": "target_not_reached",
+      "expected_independent_success": false,
+      "condition": {
+        "event": "local_target_guard_postcondition",
+        "id": "durable-72dde112f8a046899b256e50949defca",
+        "step": 4,
+        "sequence": 29,
+        "format": "local-target-guard-postcondition-outcome-v1",
+        "postcondition_id": "first-road-segment",
+        "reason": "target_not_reached",
+        "continue_program": false,
+        "needs_decision": true,
+        "measurements": [
+          {
+            "sequence": 28,
+            "target_changed_pixels": [
+              0,
+              0,
+              17
+            ],
+            "target_changed_total": 17,
+            "guard_changed_pixels": [
+              0,
+              0
+            ],
+            "guard_changed_total": 0
+          },
+          {
+            "sequence": 29,
+            "target_changed_pixels": [
+              0,
+              0,
+              17
+            ],
+            "target_changed_total": 17,
+            "guard_changed_pixels": [
+              0,
+              0
+            ],
+            "guard_changed_total": 0
+          }
+        ],
+        "minimum_target_changed_pixels": 120,
+        "maximum_guard_changed_pixels": 20,
+        "pixel_delta_threshold": 24,
+        "sample_span_ms": 171.836458,
+        "semantic_effect_verified": false,
+        "task_success_verified": false,
+        "grants_input_authority": false,
+        "scope": "fixed-region visual condition for already admitted later steps only",
+        "emitted_ns": 30836950954098
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-72dde112f8a046899b256e50949defca",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 4,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 30836959888237,
+          "valid_until_ns": 30863955972007
+        },
+        "terminal_ns": 30836959920954,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emitted_ns": 30836959923788
+      },
+      "steps_started": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "second_drag_started": false,
+      "independent_evaluation": {
+        "event": "independent_evaluation",
+        "success": false,
+        "checks": {
+          "target_owned_roads": false,
+          "ordered_bidirectional_connections": false,
+          "forbidden_tiles_clear": true,
+          "surrounding_road_owner_unchanged": false
+        },
+        "changed_surrounding_tiles": [
+          912,
+          913,
+          914,
+          915
+        ],
+        "contract": {
+          "x": 17,
+          "y": 15,
+          "width": 64,
+          "target": [
+            977,
+            978,
+            979,
+            1043,
+            1107
+          ],
+          "forbidden": [
+            1041,
+            1042,
+            1105,
+            1106
+          ],
+          "owner": 0,
+          "guard": [
+            847,
+            848,
+            849,
+            850,
+            851,
+            852,
+            853,
+            911,
+            912,
+            913,
+            914,
+            915,
+            916,
+            917,
+            975,
+            976,
+            977,
+            978,
+            979,
+            980,
+            981,
+            1039,
+            1040,
+            1041,
+            1042,
+            1043,
+            1044,
+            1045,
+            1103,
+            1104,
+            1105,
+            1106,
+            1107,
+            1108,
+            1109,
+            1167,
+            1168,
+            1169,
+            1170,
+            1171,
+            1172,
+            1173,
+            1231,
+            1232,
+            1233,
+            1234,
+            1235,
+            1236,
+            1237
+          ]
+        },
+        "emitted_ns": 30837043697029
+      },
+      "bridge_exit_code": 0,
+      "program_submit_to_return_ms": 3003.540872,
+      "first_drag_issued_to_condition_ms": 2509.125724,
+      "condition_to_terminal_ms": 8.966856,
+      "durable_calls": 6
+    },
+    {
+      "name": "target",
+      "expected_reason": "met",
+      "expected_independent_success": true,
+      "condition": {
+        "event": "local_target_guard_postcondition",
+        "id": "durable-fbe7f7baa62e49c192a1df155d2f5f44",
+        "step": 4,
+        "sequence": 28,
+        "format": "local-target-guard-postcondition-outcome-v1",
+        "postcondition_id": "first-road-segment",
+        "reason": "met",
+        "continue_program": true,
+        "needs_decision": false,
+        "measurements": [
+          {
+            "sequence": 27,
+            "target_changed_pixels": [
+              68,
+              32,
+              70
+            ],
+            "target_changed_total": 170,
+            "guard_changed_pixels": [
+              0,
+              0
+            ],
+            "guard_changed_total": 0
+          },
+          {
+            "sequence": 28,
+            "target_changed_pixels": [
+              68,
+              32,
+              70
+            ],
+            "target_changed_total": 170,
+            "guard_changed_pixels": [
+              0,
+              0
+            ],
+            "guard_changed_total": 0
+          }
+        ],
+        "minimum_target_changed_pixels": 120,
+        "maximum_guard_changed_pixels": 20,
+        "pixel_delta_threshold": 24,
+        "sample_span_ms": 176.421722,
+        "semantic_effect_verified": false,
+        "task_success_verified": false,
+        "grants_input_authority": false,
+        "scope": "fixed-region visual condition for already admitted later steps only",
+        "emitted_ns": 30845321734020
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-fbe7f7baa62e49c192a1df155d2f5f44",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 8,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 30846483910980,
+          "valid_until_ns": 30872313151467
+        },
+        "terminal_ns": 30846483981769,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emitted_ns": 30846483984984
+      },
+      "steps_started": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "second_drag_started": true,
+      "independent_evaluation": {
+        "event": "independent_evaluation",
+        "success": true,
+        "checks": {
+          "target_owned_roads": true,
+          "ordered_bidirectional_connections": true,
+          "forbidden_tiles_clear": true,
+          "surrounding_road_owner_unchanged": true
+        },
+        "changed_surrounding_tiles": [],
+        "contract": {
+          "x": 17,
+          "y": 15,
+          "width": 64,
+          "target": [
+            977,
+            978,
+            979,
+            1043,
+            1107
+          ],
+          "forbidden": [
+            1041,
+            1042,
+            1105,
+            1106
+          ],
+          "owner": 0,
+          "guard": [
+            847,
+            848,
+            849,
+            850,
+            851,
+            852,
+            853,
+            911,
+            912,
+            913,
+            914,
+            915,
+            916,
+            917,
+            975,
+            976,
+            977,
+            978,
+            979,
+            980,
+            981,
+            1039,
+            1040,
+            1041,
+            1042,
+            1043,
+            1044,
+            1045,
+            1103,
+            1104,
+            1105,
+            1106,
+            1107,
+            1108,
+            1109,
+            1167,
+            1168,
+            1169,
+            1170,
+            1171,
+            1172,
+            1173,
+            1231,
+            1232,
+            1233,
+            1234,
+            1235,
+            1236,
+            1237
+          ]
+        },
+        "emitted_ns": 30847309781487
+      },
+      "bridge_exit_code": 0,
+      "program_submit_to_return_ms": 4175.154387,
+      "first_drag_issued_to_condition_ms": 2514.703615,
+      "condition_to_terminal_ms": 1162.247749,
+      "durable_calls": 6
+    }
+  ],
+  "decision": "RETAIN_FRESH_OPENTTD_TARGET_GUARD_PAIR;_AUDIT_BEFORE_PROMOTION",
+  "scope": "matched scripted fresh seed991003 OpenTTD pair after one-click driver correction with independent engine score; no model call, model authorship, human comparison, token or generalization claim"
+}

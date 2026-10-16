@@ -1,0 +1,157 @@
+test_cancel_blocked_lifecycle (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_cancel_blocked_lifecycle) ... ERROR
+test_expire_blocked_lifecycle (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_expire_blocked_lifecycle) ... ERROR
+test_healthy (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_healthy) ... ERROR
+test_isolated_observation_healthy (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_isolated_observation_healthy) ... ERROR
+test_isolated_observation_modifier_released (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_isolated_observation_modifier_released) ... ERROR
+test_modifier_prefix_released (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_modifier_prefix_released) ... ERROR
+test_reparent_remap (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_reparent_remap) ... ERROR
+test_same_process_destroy_reuse (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_same_process_destroy_reuse) ... ERROR
+
+======================================================================
+ERROR: test_cancel_blocked_lifecycle (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_cancel_blocked_lifecycle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 95, in test_cancel_blocked_lifecycle
+    async def test_cancel_blocked_lifecycle(self): await self.exercise('blocked', 'cancel')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 47, in exercise
+    server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+        guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=True)
+TypeError: create_server() got an unexpected keyword argument 'guarded_window_lifecycle'
+
+======================================================================
+ERROR: test_expire_blocked_lifecycle (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_expire_blocked_lifecycle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 96, in test_expire_blocked_lifecycle
+    async def test_expire_blocked_lifecycle(self): await self.exercise('blocked', 'expiry')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 47, in exercise
+    server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+        guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=True)
+TypeError: create_server() got an unexpected keyword argument 'guarded_window_lifecycle'
+
+======================================================================
+ERROR: test_healthy (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_healthy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 91, in test_healthy
+    async def test_healthy(self): await self.exercise()
+                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 47, in exercise
+    server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+        guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=True)
+TypeError: create_server() got an unexpected keyword argument 'guarded_window_lifecycle'
+
+======================================================================
+ERROR: test_isolated_observation_healthy (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_isolated_observation_healthy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 97, in test_isolated_observation_healthy
+    async def test_isolated_observation_healthy(self): await self.exercise(isolated=True)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 47, in exercise
+    server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+        guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=True)
+TypeError: create_server() got an unexpected keyword argument 'guarded_window_lifecycle'
+
+======================================================================
+ERROR: test_isolated_observation_modifier_released (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_isolated_observation_modifier_released)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 98, in test_isolated_observation_modifier_released
+    async def test_isolated_observation_modifier_released(self): await self.exercise('modifier', isolated=True)
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 47, in exercise
+    server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+        guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=True)
+TypeError: create_server() got an unexpected keyword argument 'guarded_window_lifecycle'
+
+======================================================================
+ERROR: test_modifier_prefix_released (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_modifier_prefix_released)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 94, in test_modifier_prefix_released
+    async def test_modifier_prefix_released(self): await self.exercise('modifier')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 47, in exercise
+    server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+        guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=True)
+TypeError: create_server() got an unexpected keyword argument 'guarded_window_lifecycle'
+
+======================================================================
+ERROR: test_reparent_remap (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_reparent_remap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 92, in test_reparent_remap
+    async def test_reparent_remap(self): await self.exercise('reparent')
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 47, in exercise
+    server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+        guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=True)
+TypeError: create_server() got an unexpected keyword argument 'guarded_window_lifecycle'
+
+======================================================================
+ERROR: test_same_process_destroy_reuse (runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_same_process_destroy_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 119, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 93, in test_same_process_destroy_reuse
+    async def test_same_process_destroy_reuse(self): await self.exercise('stale')
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_mcp_window_lifecycle.py", line 47, in exercise
+    server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+        guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=True)
+TypeError: create_server() got an unexpected keyword argument 'guarded_window_lifecycle'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.073s
+
+FAILED (errors=8)

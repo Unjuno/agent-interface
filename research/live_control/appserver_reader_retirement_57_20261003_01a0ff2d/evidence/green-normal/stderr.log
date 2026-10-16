@@ -1,0 +1,15 @@
+test_already_closed_journal_does_not_acquire_contended_lock (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_already_closed_journal_does_not_acquire_contended_lock) ... ok
+test_contended_journal_reports_incomplete_retirement (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_contended_journal_reports_incomplete_retirement) ... ok
+test_explicit_none_timeout_preserves_unlimited_journal_mode (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_explicit_none_timeout_preserves_unlimited_journal_mode) ... ok
+test_explicit_none_timeout_without_journal_preserves_reader_join (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_explicit_none_timeout_without_journal_preserves_reader_join) ... ok
+test_journal_close_exception_preserves_error_and_releases_lock (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_journal_close_exception_preserves_error_and_releases_lock) ... ok
+test_no_journal_does_not_acquire_contended_lock (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_no_journal_does_not_acquire_contended_lock) ... ok
+test_uncontended_journal_retires_without_changing_bytes (test_appserver_journal_close_01a0ff2d.JournalCloseTests.test_uncontended_journal_retires_without_changing_bytes) ... ok
+test_healthy_eof_retires_reader_and_journal (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_healthy_eof_retires_reader_and_journal) ... ok
+test_live_reader_preserves_journal_and_late_frame (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_live_reader_preserves_journal_and_late_frame) ... ok
+test_live_reader_without_journal_reports_incomplete_and_keeps_frame (test_appserver_reader_retirement_01a0ff2d.ReaderRetirementTests.test_live_reader_without_journal_reports_incomplete_and_keeps_frame) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.133s
+
+OK

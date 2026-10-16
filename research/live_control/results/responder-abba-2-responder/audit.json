@@ -1,0 +1,80 @@
+{
+  "events": 84,
+  "exact_frames": 15,
+  "append_records": 25,
+  "socket_calls": 14,
+  "history_mode": "last",
+  "instruction_mode": "responder",
+  "model_turns": [
+    {
+      "turn": 1,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 9469,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 234,
+        "reasoning_output_tokens": 135
+      },
+      "runner_wall_ms": 9141.3686,
+      "supervisor_model_return_to_publish_ms": 14.0843,
+      "supervisor_publish_to_applied_ms": 1103.1764,
+      "linux_proposal_to_result_ms": 1065.549158,
+      "source_to_fresh_capture_ms": 9513.67081
+    },
+    {
+      "turn": 2,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 9932,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 90,
+        "reasoning_output_tokens": 30
+      },
+      "runner_wall_ms": 5953.8838,
+      "supervisor_model_return_to_publish_ms": 14.7259,
+      "supervisor_publish_to_applied_ms": 894.5423,
+      "linux_proposal_to_result_ms": 862.060548,
+      "source_to_fresh_capture_ms": 6383.984259
+    },
+    {
+      "turn": 3,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 9880,
+        "cached_input_tokens": 4864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 165,
+        "reasoning_output_tokens": 113
+      },
+      "runner_wall_ms": 8080.1564,
+      "supervisor_model_return_to_publish_ms": 13.7543,
+      "supervisor_publish_to_applied_ms": 612.7634,
+      "linux_proposal_to_result_ms": 533.95975,
+      "source_to_fresh_capture_ms": 8557.811903
+    },
+    {
+      "turn": 4,
+      "kind": "verify",
+      "usage": {
+        "input_tokens": 9716,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 88,
+        "reasoning_output_tokens": 37
+      },
+      "runner_wall_ms": 6005.7716
+    }
+  ],
+  "save_chords": 2,
+  "saved_cells": [
+    480,
+    192
+  ],
+  "xlsx_sha256": "e5d9998ea277b97a37c511498ed3f617e8181d0be50a55a06c308eb447fc31e1",
+  "supervisor_start_to_verified_exit_ms": 36230.5763,
+  "linux_initial_capture_to_evaluation_ms": 32647.159259,
+  "scope": "one predeclared requested-tier comparison episode; current outcome only, no population/human parity claim",
+  "audit_sha256": "0e339ec33f40dea721426bd7a0996d55d1a053dbc66d9d787046c1293f5bf5f2"
+}

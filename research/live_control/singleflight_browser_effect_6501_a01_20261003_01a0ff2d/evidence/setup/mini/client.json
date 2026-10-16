@@ -1,0 +1,570 @@
+{
+  "schema": "6501-browser-client-v1",
+  "node": "v24.19.0",
+  "started_utc": "2026-10-03T03:23:46.260Z",
+  "clock": "process.hrtime.bigint nanoseconds; comparable only inside this process",
+  "rows": [
+    {
+      "case": "cold_equivalent",
+      "policy": "independent",
+      "events": [
+        {
+          "event": "waiter_start",
+          "request": "w1",
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "deadline_ns": "8580366013100",
+          "seq": 0,
+          "ns": "8575366065900"
+        },
+        {
+          "event": "spawn",
+          "key": "[\"dom-ready-v1\",\"cold_equivalent\",\"A\",1,\"cold_equivalent/A/1/READY\",\"ready\",\"cold_equivalent\",\"read_only\"]",
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "seq": 1,
+          "ns": "8575366182400"
+        },
+        {
+          "event": "waiter_start",
+          "request": "w2",
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "deadline_ns": "8580366190000",
+          "seq": 2,
+          "ns": "8575366196200"
+        },
+        {
+          "event": "spawn",
+          "key": "[\"dom-ready-v1\",\"cold_equivalent\",\"A\",1,\"cold_equivalent/A/1/READY\",\"ready\",\"cold_equivalent\",\"read_only\"]",
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "seq": 3,
+          "ns": "8575366204800"
+        },
+        {
+          "event": "delivered",
+          "request": "w1",
+          "read_id": 1,
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "seq": 4,
+          "ns": "8575552127800"
+        },
+        {
+          "event": "decision",
+          "request": "w1",
+          "decision": "ELIGIBLE",
+          "requested": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "current": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "read_id": 1,
+          "ns_decision": "8575559050400",
+          "seq": 5,
+          "ns": "8575559158600"
+        },
+        {
+          "event": "useful_feedback",
+          "request": "w1",
+          "text": "Committed A",
+          "seq": 6,
+          "ns": "8575654600700"
+        },
+        {
+          "event": "delivered",
+          "request": "w2",
+          "read_id": 2,
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "seq": 7,
+          "ns": "8575732401800"
+        },
+        {
+          "event": "decision",
+          "request": "w2",
+          "decision": "ELIGIBLE",
+          "requested": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "current": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "read_id": 2,
+          "ns_decision": "8575736886700",
+          "seq": 8,
+          "ns": "8575736910300"
+        },
+        {
+          "event": "useful_feedback",
+          "request": "w2",
+          "text": "Committed A",
+          "seq": 9,
+          "ns": "8575812191800"
+        }
+      ],
+      "consumers": [
+        {
+          "request": "w1",
+          "requested": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "result": {
+            "read_id": 1,
+            "scope": {
+              "verifier": "dom-ready-v1",
+              "source": "cold_equivalent",
+              "target": "A",
+              "generation": 1,
+              "digest": "cold_equivalent/A/1/READY",
+              "predicate": "ready",
+              "window": "cold_equivalent",
+              "role": "read_only"
+            },
+            "value": "READY",
+            "evidence_ref": "read-1"
+          },
+          "current": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "decision": "ELIGIBLE",
+          "feedback": "Committed A",
+          "started_ns": "8575366013100",
+          "deadline_ns": "8580366013100",
+          "decision_ns": "8575559050400",
+          "ended_ns": "8575654603100",
+          "elapsed_ns": "288590000"
+        },
+        {
+          "request": "w2",
+          "requested": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "result": {
+            "read_id": 2,
+            "scope": {
+              "verifier": "dom-ready-v1",
+              "source": "cold_equivalent",
+              "target": "A",
+              "generation": 1,
+              "digest": "cold_equivalent/A/1/READY",
+              "predicate": "ready",
+              "window": "cold_equivalent",
+              "role": "read_only"
+            },
+            "value": "READY",
+            "evidence_ref": "read-2"
+          },
+          "current": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "decision": "ELIGIBLE",
+          "feedback": "Committed A",
+          "started_ns": "8575366190000",
+          "deadline_ns": "8580366190000",
+          "decision_ns": "8575736886700",
+          "ended_ns": "8575812193900",
+          "elapsed_ns": "446003900"
+        }
+      ],
+      "warmup": null,
+      "offered_ns": "8575347935800",
+      "ended_ns": "8575812207200",
+      "elapsed_ns": "464271400",
+      "pending_entries": 0,
+      "status": "COMPLETE",
+      "context_closed": true
+    },
+    {
+      "case": "cold_equivalent",
+      "policy": "scoped",
+      "events": [
+        {
+          "event": "waiter_start",
+          "request": "w1",
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "deadline_ns": "8581046109000",
+          "seq": 0,
+          "ns": "8576046124300"
+        },
+        {
+          "event": "spawn",
+          "key": "[\"dom-ready-v1\",\"cold_equivalent\",\"A\",1,\"cold_equivalent/A/1/READY\",\"ready\",\"cold_equivalent\",\"read_only\"]",
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "seq": 1,
+          "ns": "8576046136600"
+        },
+        {
+          "event": "waiter_start",
+          "request": "w2",
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "deadline_ns": "8581046141800",
+          "seq": 2,
+          "ns": "8576046144200"
+        },
+        {
+          "event": "join",
+          "key": "[\"dom-ready-v1\",\"cold_equivalent\",\"A\",1,\"cold_equivalent/A/1/READY\",\"ready\",\"cold_equivalent\",\"read_only\"]",
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "seq": 3,
+          "ns": "8576046147300"
+        },
+        {
+          "event": "delivered",
+          "request": "w1",
+          "read_id": 3,
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "seq": 4,
+          "ns": "8576230537900"
+        },
+        {
+          "event": "delivered",
+          "request": "w2",
+          "read_id": 3,
+          "scope": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "seq": 5,
+          "ns": "8576230542900"
+        },
+        {
+          "event": "decision",
+          "request": "w1",
+          "decision": "ELIGIBLE",
+          "requested": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "current": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "read_id": 3,
+          "ns_decision": "8576236373000",
+          "seq": 6,
+          "ns": "8576236391700"
+        },
+        {
+          "event": "useful_feedback",
+          "request": "w1",
+          "text": "Committed A",
+          "seq": 7,
+          "ns": "8576321726500"
+        },
+        {
+          "event": "decision",
+          "request": "w2",
+          "decision": "ELIGIBLE",
+          "requested": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "current": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "read_id": 3,
+          "ns_decision": "8576325065700",
+          "seq": 8,
+          "ns": "8576325077600"
+        },
+        {
+          "event": "useful_feedback",
+          "request": "w2",
+          "text": "Committed A",
+          "seq": 9,
+          "ns": "8576382990900"
+        }
+      ],
+      "consumers": [
+        {
+          "request": "w1",
+          "requested": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "result": {
+            "read_id": 3,
+            "scope": {
+              "verifier": "dom-ready-v1",
+              "source": "cold_equivalent",
+              "target": "A",
+              "generation": 1,
+              "digest": "cold_equivalent/A/1/READY",
+              "predicate": "ready",
+              "window": "cold_equivalent",
+              "role": "read_only"
+            },
+            "value": "READY",
+            "evidence_ref": "read-3"
+          },
+          "current": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "decision": "ELIGIBLE",
+          "feedback": "Committed A",
+          "started_ns": "8576046109000",
+          "deadline_ns": "8581046109000",
+          "decision_ns": "8576236373000",
+          "ended_ns": "8576321728300",
+          "elapsed_ns": "275619300"
+        },
+        {
+          "request": "w2",
+          "requested": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "result": {
+            "read_id": 3,
+            "scope": {
+              "verifier": "dom-ready-v1",
+              "source": "cold_equivalent",
+              "target": "A",
+              "generation": 1,
+              "digest": "cold_equivalent/A/1/READY",
+              "predicate": "ready",
+              "window": "cold_equivalent",
+              "role": "read_only"
+            },
+            "value": "READY",
+            "evidence_ref": "read-3"
+          },
+          "current": {
+            "verifier": "dom-ready-v1",
+            "source": "cold_equivalent",
+            "target": "A",
+            "generation": 1,
+            "digest": "cold_equivalent/A/1/READY",
+            "predicate": "ready",
+            "window": "cold_equivalent",
+            "role": "read_only"
+          },
+          "decision": "ELIGIBLE",
+          "feedback": "Committed A",
+          "started_ns": "8576046141800",
+          "deadline_ns": "8581046141800",
+          "decision_ns": "8576325065700",
+          "ended_ns": "8576382992600",
+          "elapsed_ns": "336850800"
+        }
+      ],
+      "warmup": null,
+      "offered_ns": "8576030599400",
+      "ended_ns": "8576383006100",
+      "elapsed_ns": "352406700",
+      "pending_entries": 0,
+      "status": "COMPLETE",
+      "context_closed": true
+    }
+  ],
+  "cleanup": {
+    "browser_exit_code": 0,
+    "browser_signal": null,
+    "browser_closed": true
+  },
+  "browser_pid": 27148,
+  "browser_version": "154.0.8037.93",
+  "ended_utc": "2026-10-03T03:23:48.270Z"
+}

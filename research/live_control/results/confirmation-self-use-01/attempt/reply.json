@@ -1,0 +1,84 @@
+{
+  "status": "request_rejected",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "decision_evidence": {
+          "delivery_id": "delivery:14",
+          "observation_sequence": 9,
+          "producer": "assistant"
+        },
+        "expected_sequence": 9,
+        "id": "attempt",
+        "op": "submit",
+        "steps": [
+          {
+            "key": "a",
+            "modifier": "Control_L",
+            "op": "chord"
+          },
+          {
+            "op": "text",
+            "text": "t991029"
+          },
+          {
+            "key": "Return",
+            "op": "key"
+          },
+          {
+            "op": "settle",
+            "quiet_ms": 150,
+            "timeout_ms": 1500
+          }
+        ],
+        "transport_request_id": "program:408bf7d0c6844179a64a230ea4ee236c",
+        "valid_until_ns": 77316733484
+      },
+      "received_ns": 83075954610,
+      "transport_request_id": "program:408bf7d0c6844179a64a230ea4ee236c",
+      "runtime_request_sequence": 3,
+      "declared_action_id": "attempt",
+      "command_op": "submit",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "clock_domain_id": "70c11482495b7c830add2453c75cdee799d6ea1223307243aa292c3630e32909",
+      "emit_started_ns": 83075962885,
+      "delivery_id": "delivery:15"
+    },
+    {
+      "event": "decision_evidence",
+      "source_delivery_id": "delivery:14",
+      "observation_sequence": 9,
+      "producer": "assistant",
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/confirmation-self-use-01/005.png",
+      "provenance": "caller-declared reference; model viewing unverified",
+      "authority": "none; ordinary admission remains required",
+      "id": "attempt",
+      "received_ns": 83083351721,
+      "clock_domain_id": "70c11482495b7c830add2453c75cdee799d6ea1223307243aa292c3630e32909",
+      "emit_started_ns": 83083354891,
+      "delivery_id": "delivery:16"
+    },
+    {
+      "event": "rejected",
+      "reason": "intent validity expired",
+      "transport_request_id": "program:408bf7d0c6844179a64a230ea4ee236c",
+      "runtime_request_sequence": 3,
+      "declared_action_id": "attempt",
+      "command_op": "submit",
+      "correlation_scope": "current runtime input line; action ID is caller-declared",
+      "clock_domain_id": "70c11482495b7c830add2453c75cdee799d6ea1223307243aa292c3630e32909",
+      "emit_started_ns": 83096587636,
+      "delivery_id": "delivery:17"
+    }
+  ],
+  "cursor": 17,
+  "returned_ns": 83109698010,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "program:408bf7d0c6844179a64a230ea4ee236c",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

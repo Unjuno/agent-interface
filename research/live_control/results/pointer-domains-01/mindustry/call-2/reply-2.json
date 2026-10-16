@@ -1,0 +1,594 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "expected_sequence": 5,
+        "id": "restore-plan-and-build",
+        "op": "submit",
+        "steps": [
+          {
+            "duration_ms": 600,
+            "op": "pointer_drag",
+            "points": [
+              {
+                "x": 400,
+                "y": 426
+              },
+              {
+                "x": 432,
+                "y": 426
+              },
+              {
+                "x": 464,
+                "y": 426
+              },
+              {
+                "x": 496,
+                "y": 426
+              },
+              {
+                "x": 528,
+                "y": 426
+              },
+              {
+                "x": 560,
+                "y": 426
+              }
+            ]
+          },
+          {
+            "op": "pointer_move",
+            "x": 900,
+            "y": 400
+          },
+          {
+            "duration_ms": 100,
+            "keys": [
+              "space"
+            ],
+            "op": "hold"
+          },
+          {
+            "op": "observe"
+          }
+        ],
+        "transport_request_id": "program-15640409ab074131b90bf340bf7c18c8",
+        "valid_until_ns": 120597053474
+      },
+      "emitted_ns": 90654817328
+    },
+    {
+      "event": "accepted",
+      "id": "restore-plan-and-build",
+      "steps": 4,
+      "valid_until_ns": 120597053474,
+      "accepted_ns": 90663250795,
+      "emitted_ns": 90663254084
+    },
+    {
+      "event": "step_started",
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "operation": "pointer_drag",
+      "issued_ns": 90675814198,
+      "emitted_ns": 90675817848
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 400,
+        "y": 426
+      },
+      "admitted_ns": 90695411977,
+      "input_ack_ns": 90695725435,
+      "valid_until_ns": 120597053474,
+      "surface": 6291470,
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "emitted_ns": 90695956702
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 90707221702,
+      "input_ack_ns": 90707550384,
+      "valid_until_ns": 120597053474,
+      "surface": 6291470,
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "emitted_ns": 90707757357
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 432,
+        "y": 426
+      },
+      "admitted_ns": 90844938715,
+      "input_ack_ns": 90845071849,
+      "valid_until_ns": 120597053474,
+      "surface": 6291470,
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "emitted_ns": 90845116114
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 464,
+        "y": 426
+      },
+      "admitted_ns": 90970523194,
+      "input_ack_ns": 90970769487,
+      "valid_until_ns": 120597053474,
+      "surface": 6291470,
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "emitted_ns": 90970836414
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 496,
+        "y": 426
+      },
+      "admitted_ns": 91098259976,
+      "input_ack_ns": 91098475854,
+      "valid_until_ns": 120597053474,
+      "surface": 6291470,
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "emitted_ns": 91098542438
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 528,
+        "y": 426
+      },
+      "admitted_ns": 91233258877,
+      "input_ack_ns": 91233550034,
+      "valid_until_ns": 120597053474,
+      "surface": 6291470,
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "emitted_ns": 91233666457
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 560,
+        "y": 426
+      },
+      "admitted_ns": 91365881738,
+      "input_ack_ns": 91366140877,
+      "valid_until_ns": 120597053474,
+      "surface": 6291470,
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "emitted_ns": 91366209119
+    },
+    {
+      "event": "observation",
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "sequence": 6,
+      "capture_ns": 91392219302,
+      "context_ns": 91398961535,
+      "context": [
+        [
+          "windows",
+          "0x0060000e  0 HPLaptop Mindustry\n"
+        ],
+        [
+          "active_window",
+          6291470
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/pointer-domains-01/mindustry/runtime/006.png",
+      "image_reused": false,
+      "image_prepare_ns": 116185379,
+      "image_ready_ns": 91556761188,
+      "input_focus_before": 6291470,
+      "input_focus_after": 6291470,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 13.427382,
+      "wire_bytes": 11930,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emitted_ns": 91569101082
+    },
+    {
+      "event": "step_completed",
+      "id": "restore-plan-and-build",
+      "step": 0,
+      "completed_ns": 91573379495,
+      "emitted_ns": 91573391787
+    },
+    {
+      "event": "step_started",
+      "id": "restore-plan-and-build",
+      "step": 1,
+      "operation": "pointer_move",
+      "issued_ns": 91588748833,
+      "emitted_ns": 91588755970
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 900,
+        "y": 400
+      },
+      "admitted_ns": 91605355145,
+      "input_ack_ns": 91605683473,
+      "valid_until_ns": 120597053474,
+      "surface": 6291470,
+      "id": "restore-plan-and-build",
+      "step": 1,
+      "emitted_ns": 91605890171
+    },
+    {
+      "event": "observation",
+      "id": "restore-plan-and-build",
+      "step": 1,
+      "sequence": 7,
+      "capture_ns": 91632036728,
+      "context_ns": 91637688704,
+      "context": [
+        [
+          "windows",
+          "0x0060000e  0 HPLaptop Mindustry\n"
+        ],
+        [
+          "active_window",
+          6291470
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/pointer-domains-01/mindustry/runtime/007.png",
+      "image_reused": false,
+      "image_prepare_ns": 92663664,
+      "image_ready_ns": 91772743382,
+      "input_focus_before": 6291470,
+      "input_focus_after": 6291470,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 4.866193,
+      "wire_bytes": 34150,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emitted_ns": 91792206906
+    },
+    {
+      "event": "step_completed",
+      "id": "restore-plan-and-build",
+      "step": 1,
+      "completed_ns": 91795575133,
+      "emitted_ns": 91795577713
+    },
+    {
+      "event": "step_started",
+      "id": "restore-plan-and-build",
+      "step": 2,
+      "operation": "hold",
+      "issued_ns": 91813406517,
+      "emitted_ns": 91813411334
+    },
+    {
+      "event": "input_admission",
+      "key": "space",
+      "admitted_ns": 91828431182,
+      "input_ack_ns": 91828935242,
+      "valid_until_ns": 120597053474,
+      "emitted_ns": 91829028305
+    },
+    {
+      "event": "keys_held",
+      "id": "restore-plan-and-build",
+      "step": 2,
+      "keys": [
+        "space"
+      ],
+      "input_ack_ns": 91849264017,
+      "emitted_ns": 91849269510
+    },
+    {
+      "event": "observation",
+      "id": "restore-plan-and-build",
+      "step": 2,
+      "sequence": 8,
+      "capture_ns": 91868056536,
+      "context_ns": 91873245043,
+      "context": [
+        [
+          "windows",
+          "0x0060000e  0 HPLaptop Mindustry\n"
+        ],
+        [
+          "active_window",
+          6291470
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/pointer-domains-01/mindustry/runtime/008.png",
+      "image_reused": false,
+      "image_prepare_ns": 91129090,
+      "image_ready_ns": 91999373171,
+      "input_focus_before": 6291470,
+      "input_focus_after": 6291470,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 3.968072,
+      "wire_bytes": 31966,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emitted_ns": 92015597379
+    },
+    {
+      "event": "observation",
+      "id": "restore-plan-and-build",
+      "step": 2,
+      "sequence": 9,
+      "capture_ns": 92035387517,
+      "context_ns": 92040601569,
+      "context": [
+        [
+          "windows",
+          "0x0060000e  0 HPLaptop Mindustry\n"
+        ],
+        [
+          "active_window",
+          6291470
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/pointer-domains-01/mindustry/runtime/009.png",
+      "image_reused": false,
+      "image_prepare_ns": 88194428,
+      "image_ready_ns": 92229751488,
+      "input_focus_before": 6291470,
+      "input_focus_after": 6291470,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 10.126604,
+      "wire_bytes": 519826,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emitted_ns": 92252275375
+    },
+    {
+      "event": "step_completed",
+      "id": "restore-plan-and-build",
+      "step": 2,
+      "completed_ns": 92257487563,
+      "emitted_ns": 92257495284
+    },
+    {
+      "event": "step_started",
+      "id": "restore-plan-and-build",
+      "step": 3,
+      "operation": "observe",
+      "issued_ns": 92274478636,
+      "emitted_ns": 92274485889
+    },
+    {
+      "event": "observation",
+      "id": "restore-plan-and-build",
+      "step": 3,
+      "sequence": 10,
+      "capture_ns": 92299587390,
+      "context_ns": 92304574179,
+      "context": [
+        [
+          "windows",
+          "0x0060000e  0 HPLaptop Mindustry\n"
+        ],
+        [
+          "active_window",
+          6291470
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/pointer-domains-01/mindustry/runtime/010.png",
+      "image_reused": false,
+      "image_prepare_ns": 95292624,
+      "image_ready_ns": 92503763157,
+      "input_focus_before": 6291470,
+      "input_focus_after": 6291470,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291470,
+        "surface": 6291470,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 7.462051,
+      "wire_bytes": 489569,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emitted_ns": 92518684081
+    },
+    {
+      "event": "step_completed",
+      "id": "restore-plan-and-build",
+      "step": 3,
+      "completed_ns": 92529275470,
+      "emitted_ns": 92529280453
+    },
+    {
+      "event": "terminal",
+      "id": "restore-plan-and-build",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 4,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 92548252026,
+        "valid_until_ns": 120597053474
+      },
+      "terminal_ns": 92548321413,
+      "semantic_completion": "program status only; task scoring is separate",
+      "emitted_ns": 92548323740
+    }
+  ],
+  "cursor": 60,
+  "returned_ns": 92563553253,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "program-15640409ab074131b90bf340bf7c18c8",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

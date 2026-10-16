@@ -1,0 +1,37 @@
+{
+  "command": {
+    "op": "submit",
+    "expected_sequence": 3,
+    "valid_until_ns": 39440459894,
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 550,
+        "y": 106,
+        "duration_ms": 80
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "a"
+      },
+      {
+        "op": "text",
+        "text": "88"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      },
+      {
+        "op": "observe"
+      }
+    ]
+  },
+  "timeout": 3
+}

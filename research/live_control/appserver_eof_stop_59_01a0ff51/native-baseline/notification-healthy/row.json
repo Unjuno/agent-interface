@@ -1,0 +1,124 @@
+{
+  "api": "notification",
+  "caller_alive_final": false,
+  "checkpoint": {
+    "caller_alive": false,
+    "frames": [],
+    "process_exit": 0,
+    "reader_alive": false,
+    "returned": {
+      "type": "result",
+      "value": {
+        "method": "fixture/ready",
+        "params": {
+          "usable": true
+        }
+      }
+    },
+    "stdout_closed": true
+  },
+  "client_close_pipes": {
+    "stderr": false,
+    "stdin": false,
+    "stdout": false
+  },
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/src/peer.py.txt",
+    "notification",
+    "healthy",
+    "/out/native-baseline/notification-healthy"
+  ],
+  "events": [
+    {
+      "kind": "child_ready",
+      "ns": 22490995704766
+    },
+    {
+      "kind": "call_started",
+      "ns": 22490995941184
+    },
+    {
+      "kind": "call_ended",
+      "ns": 22491000079831
+    },
+    {
+      "kind": "stdout_eof_observed",
+      "ns": 22491001478047
+    },
+    {
+      "kind": "checkpoint",
+      "ns": 22491255169320
+    },
+    {
+      "kind": "child_reaped",
+      "ns": 22491255343654
+    },
+    {
+      "kind": "client_close_returned",
+      "ns": 22491255481071
+    },
+    {
+      "kind": "driver_pipes_closed",
+      "ns": 22491255596989
+    }
+  ],
+  "final": {
+    "caller_alive": false,
+    "journal_closed": true,
+    "pipes_closed": {
+      "stderr": true,
+      "stdin": true,
+      "stdout": true
+    },
+    "reader_alive": false
+  },
+  "finished": {
+    "owned_release_received": false,
+    "pid": 20
+  },
+  "identity": "notification-healthy",
+  "journal": [
+    {
+      "direction": "received",
+      "message": {
+        "method": "fixture/ready",
+        "params": {
+          "usable": true
+        }
+      },
+      "observed_ns": 22490999869746
+    }
+  ],
+  "journal_sha256": "db146488193b3c2b19b972c64979a080e12503309b428e9c91f0180d43eea281",
+  "native_exit": 0,
+  "pid": 20,
+  "ready": {
+    "api": "notification",
+    "pid": 20,
+    "scenario": "healthy"
+  },
+  "returned": {
+    "type": "result",
+    "value": {
+      "method": "fixture/ready",
+      "params": {
+        "usable": true
+      }
+    }
+  },
+  "scenario": "healthy",
+  "stderr_remaining_hex": "6865616c74687920646961676e6f737469630a",
+  "wire": {
+    "api": "notification",
+    "pid": 20,
+    "request_line": null,
+    "scenario": "healthy",
+    "stderr_hex": "6865616c74687920646961676e6f737469630a",
+    "stderr_write_count": 19,
+    "stdout_closed_ns": 22490997636234,
+    "stdout_hex": "7b226d6574686f64223a22666978747572652f7265616479222c22706172616d73223a7b22757361626c65223a747275657d7d0a",
+    "stdout_write_count": 52
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "actual_tool_chunk": "3e5e1e",
+  "exit_code": 1,
+  "failed_command": [
+    "git",
+    "write-tree"
+  ],
+  "observed_error": "lazy fetching disabled; could not fetch b6d5dd6b3cb200c8949332391c125fa5cb4c8900 from promisor remote",
+  "outer_PID_UTC_separate_raw_unavailable": true,
+  "native_or_regression_replays": 0,
+  "repair": "write-tree --missing-ok preserves promised unchanged base OIDs; then mechanically compare every base/candidate entry. No full blob hydration, source/gates/result/timeout change."
+}

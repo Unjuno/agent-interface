@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["op", "point_space", "point", "motion_model"],
+  "properties": {
+    "op": {"type": "string", "const": "target_reference"},
+    "point_space": {"type": "string", "const": "source_observation_pixels"},
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": {"type": "integer"},
+        "y": {"type": "integer"}
+      }
+    },
+    "motion_model": {
+      "type": "string",
+      "enum": ["surface_origin_translation", "screen_fixed"]
+    }
+  }
+}
+

@@ -1,0 +1,114 @@
+{
+  "schema": "issue59-request-journal-composition-fixture-v1",
+  "fixture_id": "59-REQUEST-JOURNAL-MUTEX-COMPOSITION-4D74-A02",
+  "owner_issue": 59,
+  "claim_url": "https://github.com/Unjuno/agent-interface/issues/59#issuecomment-5967943399",
+  "source_origins": {
+    "main_client.py": {
+      "repository": "Unjuno/agent-interface",
+      "ref_at_fetch": "66822a57d2bc05082c6b82aa0b02bf7762dba98b",
+      "git_blob": "6e34f7c17300072e6739ded5e3f977974c2673be"
+    },
+    "send_proposal.py": {
+      "repository": "Unjuno/agent-interface",
+      "ref_at_fetch": "fbd804e549b589e7e7e692ab4f89183d21451ca7",
+      "pr": 6965,
+      "git_blob": "5f408d10850f69db3bd1279c5018044120d9a2df"
+    },
+    "close_proposal.py": {
+      "repository": "Unjuno/agent-interface",
+      "ref_at_fetch": "31f10e660d2e7e13d8fe05c9a56d3f3c5e71f324",
+      "pr": 6955,
+      "git_blob": "b1d4762ae4d3ccef8c4dd73198c01b247a2c07e7"
+    }
+  },
+  "source_sha256": {
+    "main_client.py": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e",
+    "send_proposal.py": "a18cab38b5336c801da63ee8b91ea67067bda6e9b76a83ef184723a3cc69999d",
+    "close_proposal.py": "464c770e357b664c35866e271740380307bfcd52dbaa8573e258d5600c006531",
+    "composed_client.py": "8386ceab0918e8caa17626e756969b901c2aa0f58cd2fb448710ac866654c1a2",
+    "bounded_journal_client.py": "0a62048f23c6870cfff345bd740abbcec6a1f972064a20da7ede5694bb0ad9d5",
+    "echo_peer.py": "5d7152cce7d6154c8fb404a55774dfadae7f6c9254741ef3615dac9bc3e6b14d",
+    "producer.py": "7ffeae182a8b0f56c778289dbc906da507dd95ca297e538b69a58f0a525c25c3"
+  },
+  "constants": {
+    "request_timeout_ns": 50000000,
+    "checkpoint_offset_ns": 250000000,
+    "holder_release_offset_ns": 400000000,
+    "cell_watchdog_ns": 6000000000,
+    "peer_readiness_timeout_ns": 2000000000,
+    "setup_rendezvous_timeout_ns": 1000000000,
+    "cleanup_join_timeout_ns": 350000000,
+    "client_close_timeout_ns": 200000000
+  },
+  "request": {
+    "method": "echo",
+    "id": 1,
+    "params": {
+      "payload": "journal-mutex-witness"
+    }
+  },
+  "request_wire": "{\"method\":\"echo\",\"id\":1,\"params\":{\"payload\":\"journal-mutex-witness\"}}\n",
+  "expected_result": {
+    "payload": "journal-mutex-witness"
+  },
+  "cells": [
+    {
+      "cell_id": "main__healthy",
+      "variant": "main",
+      "condition": "healthy",
+      "source_file": "main_client.py"
+    },
+    {
+      "cell_id": "main__held_journal",
+      "variant": "main",
+      "condition": "held_journal",
+      "source_file": "main_client.py"
+    },
+    {
+      "cell_id": "composed__healthy",
+      "variant": "composed",
+      "condition": "healthy",
+      "source_file": "composed_client.py"
+    },
+    {
+      "cell_id": "composed__held_journal",
+      "variant": "composed",
+      "condition": "held_journal",
+      "source_file": "composed_client.py"
+    },
+    {
+      "cell_id": "bounded_journal__healthy",
+      "variant": "bounded_journal",
+      "condition": "healthy",
+      "source_file": "bounded_journal_client.py"
+    },
+    {
+      "cell_id": "bounded_journal__held_journal",
+      "variant": "bounded_journal",
+      "condition": "held_journal",
+      "source_file": "bounded_journal_client.py"
+    }
+  ],
+  "scope": {
+    "formal_producer_invocations_max": 1,
+    "retries": 0,
+    "sequential_cells": 6,
+    "live_model": false,
+    "gui": false,
+    "native_input": false,
+    "external_effects": false,
+    "mutex_acquisition_only": true,
+    "file_write_flush_bound": false,
+    "whole_call_hard_bound": false,
+    "os_send_entry_measured": false
+  },
+  "expected_observations": {
+    "main__healthy": "RETURN exact echo before checkpoint",
+    "composed__healthy": "RETURN exact echo before checkpoint",
+    "bounded_journal__healthy": "RETURN exact echo before checkpoint",
+    "main__held_journal": "caller pending at checkpoint; RETURN exact echo after fixed holder release",
+    "composed__held_journal": "caller pending at checkpoint; TimeoutError after fixed holder release; zero peer bytes",
+    "bounded_journal__held_journal": "TimeoutError before checkpoint while holder still held; zero peer bytes"
+  }
+}

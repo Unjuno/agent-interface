@@ -1,0 +1,35 @@
+{
+  "task": "SAFE-PROBE-X11-OBSERVATION-ONLY-R2-20260919-001",
+  "issue": 1899,
+  "branch": "research/safe-probe-x11-observation-only-r2-1899",
+  "source_bundle": {
+    "file": "SOURCE_BUNDLE.tar.gz.b64",
+    "git_blob": "a6de9827bd90d24eefa17d322218ceb5ef189578",
+    "tar_sha256": "50946652ce63c013e2c92e18e2cd3c21a21e4433ec7a8e633cf925fbc11e76f6",
+    "gzip_sha256": "a9a9e170a1f46c3347a6a21c1034335a5316ce97c0cf26bb2405b40a3630d89a",
+    "base64_sha256": "9a06453099323cbe6e607795aceb6e1f22df1ccd918286b7d773bfd11bd888d9",
+    "base64_bytes": 7252
+  },
+  "source_files_git_blobs": {
+    "PLAN": "pending_bundle_only",
+    "probes": "0b9d36d6d99a667ff8bca34378d1b6b6bec2ceec",
+    "runner": "f9bd78209d21b9bfa2b46054a2602dbf18971c2a",
+    "audit": "8e3b49b283858abbcbbbf24c73dd0f8671582f50",
+    "independent_audit": "6a22dbc1ddecb479f60756f1f5732c29f0660d61"
+  },
+  "construction": {
+    "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+    "rows": 32,
+    "raw_sha256": "f48f9c50f85fee980d6529d577faf6b0828f550f9fa0bcd704b278b5b94298d9",
+    "audit_sha256": "e04b0e38e7338b37adc0b65379f2caf43fa33f79251dd119a223e0481da37d29",
+    "independent_audit_sha256": "c061e525b85bae0ddacf653f7a75ca12283835f1e4cbd92785b1ca6564e92605"
+  },
+  "formal_status": "NOT_RUN",
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "preformal_stops": [
+    "Xauthority missing before scientific row0; repaired by explicit empty XAUTHORITY with Xvfb -ac"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "inkscape-abi-v2-provenance-reaudit-v1-prereg",
+  "task": "O3-INKSCAPE-ABI-V2-PROVENANCE-REAUDIT-20260916-010",
+  "issue": 215,
+  "base_commit": "227ba648f1c0b83e9a5b69f4e0c7d39839d3578f",
+  "hypothesis": "reconciliation preserved the original ABI-v2 live-formal source provenance defect; current retained bridge/normalizer bytes do not match the formal identities claimed by the manifest/build gate, and neither source path existed at the formal-evidence commit",
+  "gates": [
+    "recompute current bridge SHA-256 and Git blob identity",
+    "recompute current normalizer SHA-256 and Git blob identity",
+    "current bridge and normalizer SHA-256 values both differ from manifest formal claims",
+    "build_candidate expected bridge/normalizer hashes equal the stale manifest claims rather than current retained bytes",
+    "GitHub observation records bridge path absent at formal-evidence commit",
+    "GitHub observation records normalizer path absent at formal-evidence commit",
+    "original direct parent chain orders formal evidence before bridge source, then normalizer source",
+    "reconciled main still retains the same post-formal bridge/normalizer Git blobs"
+  ],
+  "decision": "INVALIDATE_ABI_V2_FORMAL_SOURCE_PROVENANCE_REQUIRE_RERUN iff all eight gates pass with zero formal retries",
+  "scope": "invalidates only source-bound/reconstructible live-formal provenance; does not automatically invalidate bridge-v2 semantics, offline contract evidence, or historical raw terminal/observation data",
+  "confounders": [
+    "exact formal-run source bytes might exist outside Git history but are not currently recoverable from canonical repository evidence",
+    "timing-label inconsistencies are separate and non-gating",
+    "audit_input.json contains frozen GitHub connector observations for manifest/build blobs, formal-commit path absence, and original commit parent chain"
+  ]
+}

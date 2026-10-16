@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "x", "y", "button", "duration_ms"],
+      "properties": {
+        "op": {"const": "pointer_click"},
+        "x": {"type": "integer"},
+        "y": {"type": "integer"},
+        "button": {"const": 1},
+        "duration_ms": {"const": 80}
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "target_handle", "offset", "button", "duration_ms"],
+      "properties": {
+        "op": {"const": "pointer_click_target"},
+        "target_handle": {"const": "h_save_form"},
+        "offset": {
+          "type": "array",
+          "prefixItems": [{"const": 20}, {"const": 9}],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "button": {"const": 1},
+        "duration_ms": {"const": 80}
+      }
+    }
+  ]
+}

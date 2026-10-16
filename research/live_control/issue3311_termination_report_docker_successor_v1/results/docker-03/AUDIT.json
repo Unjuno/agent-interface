@@ -1,0 +1,37 @@
+{
+  "actual_case_directories": [
+    "test_base_runner_evaluates_before_writing_final_report",
+    "test_complete_synthetic_trace_control_is_retain",
+    "test_disagreeing_audit_disposition_yields_hold",
+    "test_existing_complete_output_is_preserved_and_not_reused",
+    "test_existing_report_is_never_overwritten",
+    "test_failure_text_never_promotes_runner_exit_to_reject",
+    "test_missing_sixth_row_exception_is_retained_as_audited_hold",
+    "test_raw_audit_rejects_artifact_mutation",
+    "test_raw_audit_rejects_path_traversal",
+    "test_source_pin_mismatch_is_stop_before_child",
+    "test_unlaunchable_child_is_stop_not_task_failure",
+    "test_valid_report_and_independent_audit_are_left_unmodified",
+    "test_zero_exit_without_report_is_hold"
+  ],
+  "allocation_id": "ISSUE3311-TERMINATION-REPORT-20260928-03",
+  "checks": {
+    "all_tests_ran": true,
+    "allocation_matches": true,
+    "case_artifacts_complete": true,
+    "log_reports_success": true,
+    "no_test_failures": true,
+    "result_pass": true,
+    "source_hashes_match": true,
+    "stdout_hash_matches": true,
+    "test_names_match": true
+  },
+  "expected_test_count": 13,
+  "schema": "issue3311-termination-docker-successor-audit-v1",
+  "source_hash_mismatches": [],
+  "status": "PASS_INDEPENDENT_RAW_AUDIT",
+  "test_log_terminal_lines": [
+    "Ran 13 tests in 6.540s",
+    "OK"
+  ]
+}

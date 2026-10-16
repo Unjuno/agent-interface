@@ -1,0 +1,188 @@
+[
+  {
+    "proposal": {
+      "kind": "act",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 78,
+          "y": 190,
+          "duration_ms": 80
+        },
+        {
+          "op": "text",
+          "text": "480"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        },
+        {
+          "op": "text",
+          "text": "192"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        },
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "s"
+        }
+      ],
+      "rationale": "Enter 480 in A1 and 192 in A2, then save the existing workbook; stop after Save in case an Excel-format confirmation dialog appears."
+    },
+    "resolution": {
+      "request_id": "5e1aeb3ec07b4845a3251c68423fa058",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-d85378b44ea8483d9751a4f12f0bdedc",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 5,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 87041385601,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "2df0f0d695944827a3caca3f275c36f2",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 87039814717,
+            "valid_until_ns": 116204177870
+          }
+        },
+        "decision_reason": "focus_changed",
+        "post_release_observation": {
+          "captures": 2,
+          "sequences": [
+            8,
+            9
+          ],
+          "equal_sample_pair": true,
+          "error": null,
+          "stopped": false,
+          "authority": "none; no input or lease renewal",
+          "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+          "elapsed_ms": 258.11456
+        },
+        "terminal_ns": 87310364790,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 87310369043
+      },
+      "authority": "none"
+    }
+  },
+  {
+    "proposal": {
+      "kind": "act",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 784,
+          "y": 463,
+          "duration_ms": 80
+        }
+      ],
+      "rationale": "The Excel format confirmation dialog is visible, so choose Use Excel 2007-365 Format to complete the requested save."
+    },
+    "resolution": {
+      "request_id": "f30253aedb9a4f038d5ef4c1a3d908d2",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-d0ce06eae44b4320ab23c1a64b47a2bb",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 94259908757,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "b66b9b5a639b4a71b92c43edd770e5dd",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 94183335162,
+            "valid_until_ns": 123985883867
+          }
+        },
+        "decision_reason": "focus_changed",
+        "post_release_observation": {
+          "captures": 2,
+          "sequences": [
+            12,
+            13
+          ],
+          "equal_sample_pair": false,
+          "error": null,
+          "stopped": false,
+          "authority": "none; no input or lease renewal",
+          "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+          "elapsed_ms": 301.275559
+        },
+        "terminal_ns": 94574294115,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 94574298541
+      },
+      "authority": "none"
+    }
+  },
+  {
+    "proposal": {
+      "kind": "act",
+      "steps": [
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "s"
+        }
+      ],
+      "rationale": "The worksheet visibly contains A1=480 and A2=192 with no dialog open; save the existing workbook in place, stopping before any possible format confirmation."
+    },
+    "resolution": {
+      "request_id": "61765b2f3ac44960bd894100baefb9ee",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-6af43e5b203242c59b6464b8c3183877",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 2,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 103285766413,
+          "valid_until_ns": 133002909715
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "post_release_observation": null,
+        "terminal_ns": 103285839227,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 103285842370
+      },
+      "authority": "none"
+    }
+  }
+]

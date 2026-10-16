@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 580,
+      "y": 420
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 1600
+    }
+  ],
+  "rationale": "The new southeast arm appears paved, but the cost popup and construction outline obscure its endpoint and connection. Move the pointer away and let the feedback clear before judging completion.",
+  "intent": "inspect",
+  "expected_effect": "An unobstructed view of the B-to-C pavement and shared B corner permits checking continuity and the clear X tiles.",
+  "checkpoint": {
+    "prior_turn": 11,
+    "status": "uncertain",
+    "evidence": "The comparison strip shows changed gray road surface along the southeast arm, but the red cost text and white tile outline obscure the endpoint; the shared corner is partly hidden beneath floating labels."
+  }
+}

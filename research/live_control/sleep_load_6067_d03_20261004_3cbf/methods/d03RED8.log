@@ -1,0 +1,57 @@
+Warning: truncated output (original token count: 2206)
+Total output lines: 114
+
+test_auditor_actual_limits_rejected (test_audit.AuditTests.test_auditor_actual_limits_rejected) ... ERROR
+test_auditor_actual_uid_rejected (test_audit.AuditTests.test_auditor_actual_uid_rejected) ... ERROR
+test_crosscell_cpu_regression_rejected (test_audit.AuditTests.test_crosscell_cpu_regression_rejected) ... ok
+test_duplicate_json_key_rejected (test_audit.AuditTests.test_duplicate_json_key_rejected) ... FAIL
+test_saved_consumer_and_independent_arithmetic (test_audit.AuditTests.test_saved_consumer_and_independent_arithmetic) ... ok
+test_saved_extra_file_rejected (test_audit.AuditTests.test_saved_extra_file_rejected) ... ok
+test_saved_missing_cell_rejected (test_audit.AuditTests.test_saved_missing_cell_rejected) ... ok
+test_self_reported_support_rejected (test_audit.AuditTests.test_self_reported_support_rejected) ... ok
+test_source_mismatch_rejected (test_audit.AuditTests.test_source_mismatch_rejected) ... ok
+test_symlink_required_file_rejected (test_audit.AuditTests.test_symlink_required_file_rejected) ... FAIL
+test_accept_complete (test_cell.CellTests.test_accept_complete) ... ok
+test_backwards_clock (test_cell.CellTests.test_backwards_clock) ... ok
+test_bool_timestamp (test_cell.CellTests.test_bool_timestamp) ... ok
+test_child_finishes_after_cell_rejected (test_cell.CellTests.test_child_finishes_after_cell_rejected) ... ok
+test_child_float_identity_rejected (test_cell.CellTests.test_child_float_identity_rejected) ... ok
+test_complete_loaded (test_cell.CellTests.test_complete_loaded) ... ok
+test_cpu_regression_between_rows (test_cell.CellTests.test_cpu_regression_between_rows) ... ok
+test_drop_row (test_cell.CellTests.test_drop_row) ... ok
+test_float_counter_rejected (test_cell.CellTests.test_float_counter_rejected) ... ok
+test_float_pair_rejected (test_cell.CellTests.test_float_pair_rejected) ... ok
+test_foreign_arm (test_cell.CellTests.test_foreign_arm) ... ok
+test_foreign_pid (test_cell.CellTests.test_foreign_pid) ... ok
+test_missing_optional_status (test_cell.…1206 tokens truncated…----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_audit.py", line 51, in test_duplicate_json_key_rejected
+    with self.assertRaises(ValueError):audit.evaluate(p,PLAN,{})
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_symlink_required_file_rejected (test_audit.AuditTests.test_symlink_required_file_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_audit.py", line 47, in test_symlink_required_file_rejected
+    with self.assertRaises(ValueError):audit.evaluate(p,PLAN,{})
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_only_process_cpu_regression_rejected (test_cell.CellTests.test_only_process_cpu_regression_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_cell.py", line 42, in test_only_process_cpu_regression_rejected
+    self.reject(mutate)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_cell.py", line 24, in reject
+    with self.assertRaises(ValueError):self.check(c)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 43 tests in 0.107s
+
+FAILED (failures=3, errors=4)

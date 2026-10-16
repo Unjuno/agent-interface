@@ -1,0 +1,66 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-02",
+  "frozen_main": "ec622974d09e7135816b2c8fe33e7b805bbec787",
+  "container": {
+    "context": "orbstack",
+    "image": "sha256:253e23fe66fc4ea0cdbfd1124a9495fc8b0c8a4acc9a523cd35a9808ed63f67a",
+    "platform": "linux/arm64"
+  },
+  "window_utc": "2026-09-30T15:00:00Z/2026-09-30T15:15:00Z",
+  "source_inputs": [
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "blob": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+      "sha256": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6"
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "blob": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    {
+      "path": "research/live_control/owner_keyup_owner_integration_5156_v1/input_owner_v11.py",
+      "ref": "research/5156-owner-release-integration-v1-20260930",
+      "blob": "c40db07e596b31557590cec5e90f6ab651573476",
+      "sha256": "14333b8e8450950bcdb60fa7055f7a7d4b279438ab44fbb8d14eb2f45fad057c"
+    },
+    {
+      "path": "research/doom/map01_v12_physical_occupancy_live_r1_v1/map01_v12_transition_owner.py",
+      "blob": "e2c72995a3727e63833c83b22384c8e40761be5a",
+      "sha256": "4832212b700d9c55220178d6452c01e8f1dc60a29dee9cb436dc5ff9135823c2"
+    }
+  ],
+  "candidate_sha256": {
+    "run_formal_x11.py": "00dd249625ba1d1126f9380c9ea71da85721ae29f80c9390f780acca67864945",
+    "audit_formal_x11.py": "49d30e688bac0e065e1b826097d1b62efb35c1849ff92754a62f1db2c6ab61be",
+    "EXPECTED.json": "27836258034cf332ed7b65680b075389c6b083f8feab4c0dac238252645eca5d",
+    "test_audit_formal_x11.py": "f9a1b7a85adc146f9b17b77efdb3df2279dbcfab571c2b677acba086bcebf11a"
+  },
+  "pre_run_revision": {
+    "supersedes": "initial candidate committed before invocation; never executed",
+    "reason": "static review found incorrect LIVE path; corrected to the parent research/live_control directory; auditor additionally binds explicit trigger class and fixture-process cleanup",
+    "host_validation": "owner-v11 fake-Xlib suite 14/14; formal raw-auditor controls 6/6; py_compile PASS",
+    "immutable_history": true
+  },
+  "expected_inventory": [
+    "single_explicit:a",
+    "two_key_explicit:a",
+    "two_key_explicit:b",
+    "partial_cancel:a"
+  ],
+  "limits": [
+    "XSync brackets server processing only, not application delivery or exact physical key-up",
+    "no game/MAP01/model/provider/GPU/network/user desktop",
+    "one disposable Xvfb instance; cannot establish efficacy, reliability, latency, or transfer"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "exact_frames": 6,
+  "full_prefix_records": 37,
+  "independent_score": {
+    "success": true,
+    "checks": {
+      "target_owned_roads": true,
+      "bidirectional_connections": true,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "legacy_success": true
+  },
+  "cleanup": {
+    "all_owned_processes_exited": true,
+    "save_unchanged": true
+  },
+  "presentation_bytes": [
+    {
+      "call": "open-call",
+      "original_json_bytes": 14629,
+      "view_json_bytes": 6306
+    },
+    {
+      "call": "road-call",
+      "original_json_bytes": 21723,
+      "view_json_bytes": 8753
+    }
+  ],
+  "offline_negative_cases": 3,
+  "capture_to_last_terminal_seconds": 73.128200974,
+  "capture_to_evaluation_seconds": 358.071190726,
+  "presentation_failure": "Second full report output was truncated in conversation; assistant inspected saved image in a later tool call without resending input.",
+  "scope": "Known-fixture assistant use; offline reversible presentation only. No paired speed, token, cost, or model receipt measurements.",
+  "audit_sha256": "e8bd6e71af26cba7e01de5521db6ee42feb948695f3a4a0ca8726c84b60c5a3b",
+  "view_source_sha256": "52f49ce8bc4012ef4a8cfd5d15ce3c709c9c3ee4b25353e8e19de5ebd4d826dc"
+}

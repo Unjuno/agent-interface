@@ -1,0 +1,50 @@
+{
+  "audit_passed": true,
+  "rows": [
+    {
+      "cohort": "bundle-focus-01",
+      "case": "select_button",
+      "classification": "physical release and no-tail verified",
+      "probe_success": true,
+      "exact_frames": 2,
+      "completed_prefix_steps": 0,
+      "decision_reason": "focus_changed",
+      "recorded_cause": "focus_changed",
+      "release_to_terminal_ms": 2.247432,
+      "fresh_observation_isolation_verified": true
+    },
+    {
+      "cohort": "bundle-focus-01",
+      "case": "field_button",
+      "classification": "physical release and no-tail verified",
+      "probe_success": true,
+      "exact_frames": 8,
+      "completed_prefix_steps": 2,
+      "decision_reason": "focus_changed",
+      "recorded_cause": "focus_changed",
+      "release_to_terminal_ms": 7.546479,
+      "fresh_observation_isolation_verified": true
+    },
+    {
+      "cohort": "bundle-focus-01",
+      "case": "select_all_modifier",
+      "classification": "injector never triggered; not a focus test",
+      "exact_frames": 20,
+      "probe_success": false
+    },
+    {
+      "cohort": "bundle-focus-02",
+      "case": "select_all_modifier",
+      "classification": "physical release and no-tail verified",
+      "probe_success": false,
+      "exact_frames": 8,
+      "completed_prefix_steps": 3,
+      "decision_reason": null,
+      "recorded_cause": "focus_changed",
+      "release_to_terminal_ms": 1.441162,
+      "fresh_observation_isolation_verified": false
+    }
+  ],
+  "audit_sha256": "8b461cd3d0c95f0a05363cd8aef71816cf291b08010dc7792e64cbc25001c049",
+  "limits": "Scripted actual X11 backend trials, not live socket/model delivery or complete fault coverage. Original failed probes retained. No rollback/unchanged-task claim; no keyboard fresh-intent check because its assertion aborted that branch."
+}

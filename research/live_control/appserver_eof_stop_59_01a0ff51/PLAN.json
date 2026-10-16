@@ -1,0 +1,49 @@
+{
+  "apis": [
+    "request",
+    "notification"
+  ],
+  "arm_order": [
+    "baseline",
+    "candidate"
+  ],
+  "checkpoint_after_eof_s": 0.25,
+  "claim": 5966679662,
+  "file_sha256": {
+    "audit.py.txt": "579eb12a2daf7d29f974b3d3cecba8c32d8e3f5f9f412c5ef43efcdbb2e24101",
+    "baseline_client.py.txt": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+    "candidate_client.py.txt": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e",
+    "driver.py.txt": "2accb499147b6f42273999b70d6acb7305923475e1e0c8adc2b309a4cfd042eb",
+    "peer.py.txt": "c0cf8002d334b4006f85b1943b33a528fe274f94f899bd7db6227248a324120f"
+  },
+  "frozen_utc": "2026-10-03T07:23:57.026987+00:00",
+  "gate": "all16 source-bound native rows; healthy results preserved; original held caller still pending past actual internal deadline, repaired held caller AppServerError before checkpoint; original invalid diagnostic UnicodeDecodeError vs repaired typed AppServerError; exact native EOF exits and separate driver pipe closure; saved-only independent reducer and26 effective copied controls",
+  "id": "EOF-STOP-59-20261003-01a0ff51-ordinary",
+  "image": "sha256:65ae56ebdddc2742bc1441ee9eca0fcca7e232cb611a09ea8b177b36fc23c291",
+  "kind": "ordinary engineering regression; not consumed formal replay",
+  "limits": {
+    "cpus": 0.5,
+    "memory_bytes": 536870912,
+    "network": "none",
+    "overall_driver_timeout_s": 25,
+    "pids": 64,
+    "read_only_root": true,
+    "read_only_source": true
+  },
+  "limits_note": "configured container limits are not measured enforcement; EOF branch only, no whole-call/journal/write/close/input/game/model deadline claim",
+  "max_native_children_live": 1,
+  "native_children_per_arm": 8,
+  "runs_per_arm": 1,
+  "scenarios": [
+    "healthy",
+    "empty",
+    "held",
+    "invalid"
+  ],
+  "source_base": "dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1",
+  "source_sha256": {
+    "baseline": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+    "candidate": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e"
+  },
+  "timeout_s": 0.05
+}

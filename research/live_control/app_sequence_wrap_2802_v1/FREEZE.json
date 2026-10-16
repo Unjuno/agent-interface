@@ -1,0 +1,31 @@
+{
+  "allocation": "app-sequence-wrap-2802-20260923-01",
+  "bound_ns": 20000000,
+  "construction": "6/6 rows; all exits0; units5/5; audit errors=[]; controls8/8",
+  "counter_modulus": 256,
+  "decision": "PASS_SEQUENCE_WRAP_BOUNDARY_SCOPED only at PLAN.md gates",
+  "formal_invocations": 0,
+  "formal_rows": 18,
+  "formal_state": "NOT_STARTED",
+  "issue": 2802,
+  "replacements": 0,
+  "reruns": 0,
+  "scenarios": [
+    "NORMAL_CONTIG",
+    "WRAP_CONTIG",
+    "WRAP_HEARTBEAT",
+    "WRAP_GAP",
+    "MISSING_MODULUS",
+    "LATE_WRAP"
+  ],
+  "source_hashes": {
+    "ENVIRONMENT.txt": "ba852eb241c0c96d3729fb03defcaf1ba3af499aebdba334ec83e404150e6e95",
+    "PLAN.md": "57fbcf0f6cca294a437d6a69d155d2ebdb7f2544a6d6c19fd555d5dd952f8a60",
+    "audit.py": "4f74e766064f39fc632982d71e29ff1b168e67f34846d0ea42a67bb9f5cb8603",
+    "policy.py": "ece7793b070ed845e45d5260c593da5c3d1f3c02b44ede689151f78b647d0f67",
+    "producer.py": "b1b2a8b228d65d45f75955ba52709476325278a17a1eeefc04a9682433b7a1ae",
+    "run.py": "6b41b4af9306a0a9c0730bf0387ba6abbb71afc3ee21f82a411c69a6ad4fffff",
+    "test_policy.py": "ddb20eb65ec36ce8541980e3bbaf9843d2a2e2711f76628d1d01acd515d69053"
+  },
+  "tuning": 0
+}

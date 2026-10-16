@@ -1,0 +1,50 @@
+test_boolean_delay_rejected (test_decision.DecisionTests.test_boolean_delay_rejected) ... FAIL
+test_consistent_finite_reduction (test_decision.DecisionTests.test_consistent_finite_reduction) ... FAIL
+test_duplicate_pair_rejected (test_decision.DecisionTests.test_duplicate_pair_rejected) ... FAIL
+test_equal_delays_are_hold (test_decision.DecisionTests.test_equal_delays_are_hold) ... ok
+test_incomplete_pairs_rejected (test_decision.DecisionTests.test_incomplete_pairs_rejected) ... FAIL
+test_one_large_pair_cannot_replace_five_pair_gate (test_decision.DecisionTests.test_one_large_pair_cannot_replace_five_pair_gate) ... ok
+
+======================================================================
+FAIL: test_boolean_delay_rejected (test_decision.DecisionTests.test_boolean_delay_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_decision.py", line 37, in test_boolean_delay_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_consistent_finite_reduction (test_decision.DecisionTests.test_consistent_finite_reduction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_decision.py", line 12, in test_consistent_finite_reduction
+    self.assertEqual(result['status'], 'SUPPORTED_FINITE_CONTRAST')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'HOLD_NOT_REPRODUCED' != 'SUPPORTED_FINITE_CONTRAST'
+- HOLD_NOT_REPRODUCED
++ SUPPORTED_FINITE_CONTRAST
+
+
+======================================================================
+FAIL: test_duplicate_pair_rejected (test_decision.DecisionTests.test_duplicate_pair_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_decision.py", line 31, in test_duplicate_pair_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_incomplete_pairs_rejected (test_decision.DecisionTests.test_incomplete_pairs_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/postwait_cost_6067_d02_20261004_3cbf/test_decision.py", line 27, in test_incomplete_pairs_rejected
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (failures=4)

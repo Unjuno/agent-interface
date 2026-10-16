@@ -1,0 +1,35 @@
+"""Capture first prospective ordinary phase outcomes without retries."""
+import datetime as dt
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+root=Path(__file__).resolve().parent
+out=root/"appserver-utf8-repair-59-01a0ff34"
+plan=json.loads((out/"PLAN.json").read_bytes())
+rows=[]
+for phase in plan["phases"]:
+    directory=out/phase["root"]
+    path=out/(phase["id"]+".receipt.json")
+    with path.open("x",encoding="utf-8") as handle:
+        handle.write("{}\n")
+    command=[sys.executable]+(["-O"] if phase["optimized"] else [])+["-m","unittest","-v"]+phase["modules"]
+    env=dict(os.environ,PYTHONDONTWRITEBYTECODE="1",PYTHONPATH=os.pathsep.join([str(directory),str(directory/"research/live_control")]))
+    start=dt.datetime.now(dt.timezone.utc).isoformat()
+    with (out/(phase["id"]+".stdout.bin")).open("xb") as stdout,(out/(phase["id"]+".stderr.bin")).open("xb") as stderr:
+        process=subprocess.Popen(command,cwd=directory,env=env,stdout=stdout,stderr=stderr)
+        code=process.wait(timeout=15)
+    row={"phase":phase["id"],"pid":process.pid,"command":command,"cwd":str(directory),"PYTHONPATH":env["PYTHONPATH"],
+         "started_utc":start,"ended_utc":dt.datetime.now(dt.timezone.utc).isoformat(),"exit_code":code,"expected_exit":phase["expected_exit"]}
+    for stream in ("stdout","stderr"):
+        data=(out/(phase["id"]+"."+stream+".bin")).read_bytes()
+        row[stream]={"bytes":len(data),"sha256":hashlib.sha256(data).hexdigest()}
+    path.write_text(json.dumps(row,ensure_ascii=True,indent=2)+"\n",encoding="utf-8")
+    rows.append(row)
+    print(json.dumps(row,ensure_ascii=True))
+    if code!=phase["expected_exit"]:
+        raise RuntimeError("STOP_FIRST_UNEXPECTED_PHASE: "+phase["id"])
+(out/"REGRESSION_RESULT.json").write_text(json.dumps({"status":"PASS_EXPECTED_RED_AND_BOTH_GREEN","rows":rows,"native_or_formal_replays":0},ensure_ascii=True,indent=2)+"\n",encoding="utf-8")

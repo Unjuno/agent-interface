@@ -1,0 +1,105 @@
+"""Actual catalogue and selected unittest launch under the native runner environment."""
+import argparse
+import ast
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import runpy
+import subprocess
+import sys
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--root', type=Path, required=True)
+parser.add_argument('--output', type=Path, required=True)
+parser.add_argument('--baseline-runner', type=Path, required=True)
+parser.add_argument('--expect', choices=['missing', 'registered'], required=True)
+args = parser.parse_args()
+root, out = args.root.resolve(), args.output.resolve()
+out.mkdir(parents=True, exist_ok=False)
+utc = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
+sha = lambda b: hashlib.sha256(b).hexdigest()
+module = 'test_app_server_eof_stop'
+runner_path = root / 'runtime/integration_checks/native.py'
+data = runner_path.read_bytes()
+old = args.baseline_runner.read_bytes()
+start = utc()
+freeze = {'utc': start, 'helper_sha256': sha(Path(__file__).read_bytes()), 'python': sys.version,
+          'python_executable': sys.executable, 'root': str(root), 'expect': args.expect,
+          'sources': {str(p.relative_to(root)): {'bytes': len(p.read_bytes()), 'sha256': sha(p.read_bytes())}
+                      for p in [runner_path, root / 'research/live_control/test_app_server_eof_stop.py',
+                                root / 'research/live_control/codex_app_server_client_v2.py']},
+          'baseline_runner_sha256': sha(old),
+          'scope': 'catalogue and registered module ONLY; not full native protocol/harness or original experiment'}
+(out / 'FREEZE.json').write_text(json.dumps(freeze, indent=2) + '\n')
+record = {'started_utc': start, 'expect': args.expect, 'unit_method_executions': 0,
+          'native_protocol_peer_starts': 0, 'model_game_GUI_input_formal_producer_replays': 0}
+
+
+def save():
+    (out / 'RESULT.json').write_text(json.dumps(record, indent=2) + '\n')
+
+
+def require(value, reason):
+    if not value:
+        raise RuntimeError(reason)
+
+
+try:
+    block = b"SUITES['protocol'].append('test_app_server_eof_stop')\n\n"
+    require((data == old if args.expect == 'missing' else data.replace(block, b'', 1) == old and data.count(block) == 1),
+            'exact original runner or sole approved two-line append')
+    for k, v in {'research/live_control/codex_app_server_client_v2.py': '6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e',
+                 'research/live_control/test_app_server_eof_stop.py': 'adaa8fcf0b1fa8aa136dd2ac21c26f8f65bdcf2bf9098ef3c16b28f9011bbe2b'}.items():
+        require(freeze['sources'][k]['sha256'] == v, 'unchanged rescued tested image')
+    t = ast.parse(data)
+    main = next(n for n in t.body if isinstance(n, ast.FunctionDef) and n.name == 'main')
+    env_value = next(n.value for n in main.body if isinstance(n, ast.Assign)
+                     and any(isinstance(x, ast.Name) and x.id == 'env' for x in n.targets))
+    expected_env = ast.parse("dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONPATH=os.pathsep.join([str(ROOT), str(ROOT/'research/live_control')]))", mode='eval').body
+    require(ast.dump(env_value, include_attributes=False) == ast.dump(expected_env, include_attributes=False),
+            'actual unchanged native environment expression')
+    # Import only this inspected stdlib runner; its guarded main/full suites are never executed.
+    loaded = runpy.run_path(str(runner_path), run_name='registration_inspection')
+    suites = loaded['SUITES']
+    old_suites = next(ast.literal_eval(n.value) for n in ast.parse(old).body if isinstance(n, ast.Assign)
+                      and any(isinstance(x, ast.Name) and x.id == 'SUITES' for x in n.targets))
+    require(loaded['ROOT'] == root and set(suites) == set(old_suites), 'actual root and suites')
+    record.update(previous_protocol_modules=len(old_suites['protocol']), actual_protocol_modules=len(suites['protocol']),
+                  module_occurrences=suites['protocol'].count(module), actual_suites=suites,
+                  actual_environment_expression=ast.unparse(env_value))
+    if args.expect == 'missing':
+        require(suites == old_suites and module not in suites['protocol'], 'actual baseline absent selection')
+        record.update(status='BASELINE_MISSING_PROTOCOL_REGISTRATION', expected_failure=True, ended_utc=utc())
+        save()
+        print(json.dumps({'status': record['status'], 'module_occurrences': 0, 'unit_method_executions': 0}))
+        raise SystemExit(1)
+    require(suites['protocol'] == old_suites['protocol'] + [module]
+            and suites['harness'] == old_suites['harness'], 'previous selections remain in exact order, one append')
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', PYTHONPATH=os.pathsep.join([str(root), str(root / 'research/live_control')]))
+    command = [sys.executable, '-m', 'unittest', '-v', module]
+    record.update(selected_command=command, cwd=str(root), environment_overrides={k: env[k] for k in ('PYTHONDONTWRITEBYTECODE', 'PYTHONPATH')},
+                  selected_start_utc=utc())
+    save()
+    result = subprocess.run(command, cwd=root, env=env, capture_output=True, timeout=30)
+    (out / 'unittest.stdout').write_bytes(result.stdout)
+    (out / 'unittest.stderr').write_bytes(result.stderr)
+    record.update(selected_end_utc=utc(), selected_returncode=result.returncode,
+                  stdout_sha256=sha(result.stdout), stderr_sha256=sha(result.stderr),
+                  stdout_bytes=len(result.stdout), stderr_bytes=len(result.stderr))
+    require(result.returncode == 0 and b'Ran 4 tests' in result.stderr and b'\nOK\n' in result.stderr,
+            'actual four selected methods must all pass')
+    require(all(sha((root / p).read_bytes()) == e['sha256'] for p, e in freeze['sources'].items()),
+            'source unchanged through actual execution')
+    record.update(status='PASS_SCOPED_SELECTED_NATIVE_PROTOCOL_MODULE', unit_method_executions=4, ended_utc=utc(),
+                  whole_native_protocol_or_harness_suite_executed=False)
+    save()
+    print(json.dumps({'status': record['status'], 'methods': 4, 'returncode': result.returncode,
+                      'native_peer_starts': 0, 'original_experiment_replays': 0}))
+except SystemExit:
+    raise
+except BaseException as error:
+    record.update(status='STOP_SELECTED_REGISTRATION_CHECK', error=type(error).__name__ + ': ' + str(error), ended_utc=utc())
+    save()
+    raise

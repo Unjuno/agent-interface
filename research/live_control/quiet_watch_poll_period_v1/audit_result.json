@@ -1,0 +1,213 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "name": "schema",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "not_preflight",
+      "pass": true
+    },
+    {
+      "detail": "d50233d9584876f119e78251728ccbf682a4b46b5485197ae60229970d9d520d",
+      "name": "source_sha256",
+      "pass": true
+    },
+    {
+      "detail": 38,
+      "name": "measured_count",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "schedule_exact",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "case_ids_unique",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "pixel_payload_sha256",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "pixel_match_counts",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "detection_rederived",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "one_press_one_release",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "verified_empty_all",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "final_roi_clear_all",
+      "pass": true
+    },
+    {
+      "detail": {
+        "10": {
+          "nuisance_acquisition_count_median": 61.5,
+          "nuisance_acquisition_wall_ms_median": 12.325775499999999,
+          "nuisance_false_cancel": 0,
+          "nuisance_total": 4,
+          "target_detected": 9,
+          "target_release_ms_median": 4.457327,
+          "target_total": 15
+        },
+        "2": {
+          "nuisance_acquisition_count_median": 299.0,
+          "nuisance_acquisition_wall_ms_median": 60.6249245,
+          "nuisance_false_cancel": 0,
+          "nuisance_total": 4,
+          "target_detected": 15,
+          "target_release_ms_median": 2.370833,
+          "target_total": 15
+        }
+      },
+      "name": "summary_target_counts",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "summary_nuisance_counts",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "summary_cost_medians",
+      "pass": true
+    },
+    {
+      "detail": "PROMOTE_2MS_SCOPED",
+      "name": "decision_rederived",
+      "pass": true
+    },
+    {
+      "detail": [
+        {
+          "case_id": "target-p10-o152-r0",
+          "contained_between_samples": true,
+          "cue_duration_ms": 5.503979,
+          "gap_ms": 9.843822
+        },
+        {
+          "case_id": "target-p10-o154-r1",
+          "contained_between_samples": true,
+          "cue_duration_ms": 5.821234,
+          "gap_ms": 19.889193
+        },
+        {
+          "case_id": "target-p10-o154-r2",
+          "contained_between_samples": true,
+          "cue_duration_ms": 5.521707,
+          "gap_ms": 9.856821
+        },
+        {
+          "case_id": "target-p10-o150-r1",
+          "contained_between_samples": true,
+          "cue_duration_ms": 5.424448,
+          "gap_ms": 9.878489
+        },
+        {
+          "case_id": "target-p10-o152-r2",
+          "contained_between_samples": true,
+          "cue_duration_ms": 5.285368,
+          "gap_ms": 9.856094
+        },
+        {
+          "case_id": "target-p10-o152-r1",
+          "contained_between_samples": true,
+          "cue_duration_ms": 5.479505,
+          "gap_ms": 10.073299
+        }
+      ],
+      "name": "all_10ms_misses_between_samples",
+      "pass": true
+    }
+  ],
+  "formal_pass": true,
+  "hashes": {
+    "measured_sha256": "7d8756168e1aff11cc1ee1a82cb8552876c409e3ec9c69460f0ed56cda0d3aea",
+    "prereg_sha256": "438a3d5514435c7066d36ec4ab7b3c9be5928ef995bf20d61bbbdafd98e6bcea",
+    "source_sha256": "d50233d9584876f119e78251728ccbf682a4b46b5485197ae60229970d9d520d"
+  },
+  "rederived": {
+    "arms": {
+      "10": {
+        "nuisance_acquisition_count_median": 61.5,
+        "nuisance_acquisition_wall_ms_median": 12.325775499999999,
+        "nuisance_false_cancel": 0,
+        "nuisance_total": 4,
+        "target_detected": 9,
+        "target_release_ms_median": 4.457327,
+        "target_total": 15
+      },
+      "2": {
+        "nuisance_acquisition_count_median": 299.0,
+        "nuisance_acquisition_wall_ms_median": 60.6249245,
+        "nuisance_false_cancel": 0,
+        "nuisance_total": 4,
+        "target_detected": 15,
+        "target_release_ms_median": 2.370833,
+        "target_total": 15
+      }
+    },
+    "baseline_misses": [
+      {
+        "case_id": "target-p10-o152-r0",
+        "contained_between_samples": true,
+        "cue_duration_ms": 5.503979,
+        "gap_ms": 9.843822
+      },
+      {
+        "case_id": "target-p10-o154-r1",
+        "contained_between_samples": true,
+        "cue_duration_ms": 5.821234,
+        "gap_ms": 19.889193
+      },
+      {
+        "case_id": "target-p10-o154-r2",
+        "contained_between_samples": true,
+        "cue_duration_ms": 5.521707,
+        "gap_ms": 9.856821
+      },
+      {
+        "case_id": "target-p10-o150-r1",
+        "contained_between_samples": true,
+        "cue_duration_ms": 5.424448,
+        "gap_ms": 9.878489
+      },
+      {
+        "case_id": "target-p10-o152-r2",
+        "contained_between_samples": true,
+        "cue_duration_ms": 5.285368,
+        "gap_ms": 9.856094
+      },
+      {
+        "case_id": "target-p10-o152-r1",
+        "contained_between_samples": true,
+        "cue_duration_ms": 5.479505,
+        "gap_ms": 10.073299
+      }
+    ],
+    "cost_ratio": 4.91854849214153,
+    "decision": "PROMOTE_2MS_SCOPED"
+  }
+}

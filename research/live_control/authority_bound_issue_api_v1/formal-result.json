@@ -1,0 +1,157 @@
+{
+  "base_commit": "71ab480b5a9b74e54ebae06a70913bb94ea432ef",
+  "decision": "RETAIN_BOUND_ISSUE_API_V1",
+  "dependency_sha256": {
+    "authority_end_identity_binding_v1.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+    "bound_authority_issue_v1.py": "2f812a678b72f09985e24d003b2e7030508a49e4475e9d3aef5533b1a07f2ba2",
+    "bridge_v2_semantic_snapshot.py": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9",
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "validator_byte_pinned_ledger_v3.py": "a0744260a48b3575a451c63139fdb2fde898e0493317d1edd1d731ce3d227be5"
+  },
+  "formal_retries": 0,
+  "hard_gate_pass": true,
+  "limitations": [
+    "offline composition semantics only",
+    "underlying Python ledger remains directly importable; this proves project-facing API order, not hostile in-process isolation",
+    "identity binder bytes are not durably pinned by this wrapper across restart",
+    "no live GUI/model/network/durable-submit",
+    "PR #168 executed-source provenance remains independent"
+  ],
+  "result_id": "authority-bound-issue-api-v1-20260916-01",
+  "rows": [
+    {
+      "case": "valid_missing_id_binds_without_mutating_caller",
+      "detail": {
+        "caller_has_id": false,
+        "entries": {
+          "runtime-intent-token": {
+            "post_sequence": 11,
+            "status": "pending"
+          }
+        },
+        "seq": 11,
+        "token_id": "runtime-intent-token"
+      },
+      "pass": true
+    },
+    {
+      "case": "forged_id_rejects_without_entry_mutation",
+      "detail": {
+        "entries": {},
+        "rejection": {
+          "error": "caller authority_end_id mismatch",
+          "status": "REJECTED",
+          "type": "IdentityBindingError"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "release_token_mismatch_rejects_without_entry_mutation",
+      "detail": {
+        "entries": {},
+        "rejection": {
+          "error": "release/interruption intent_token mismatch",
+          "status": "REJECTED",
+          "type": "IdentityBindingError"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "postbind_validator_failure_rejects_without_entry_mutation",
+      "detail": {
+        "entries": {},
+        "rejection": {
+          "error": "one or two bounded post-authority captures required",
+          "status": "REJECTED",
+          "type": "AuthorityEndedNotReady"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "restart_recovers_same_pending_runtime_token",
+      "detail": {
+        "entry": {
+          "post_sequence": 11,
+          "status": "pending"
+        },
+        "id": "runtime-intent-token",
+        "seq": 11
+      },
+      "pass": true
+    },
+    {
+      "case": "duplicate_rejects_preserving_single_pending_entry",
+      "detail": {
+        "entries": {
+          "runtime-intent-token": {
+            "post_sequence": 11,
+            "status": "pending"
+          }
+        },
+        "rejection": {
+          "error": "authority_end_id already exists",
+          "status": "REJECTED",
+          "type": "DuplicateReceipt"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "consume_restart_remains_consumed",
+      "detail": {
+        "entries": {
+          "runtime-intent-token": {
+            "post_sequence": 11,
+            "status": "consumed"
+          }
+        },
+        "rejection": {
+          "error": "authority_end_id already consumed",
+          "status": "REJECTED",
+          "type": "TokenConsumed"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "after_temp_fsync_crash_leaves_no_issued_entry",
+      "detail": {
+        "entries_after_restart": {},
+        "rejection": {
+          "error": "after_temp_fsync",
+          "status": "REJECTED",
+          "type": "InjectedCrash"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "after_replace_fsync_crash_recovers_durable_runtime_id",
+      "detail": {
+        "entries_after_restart": {
+          "runtime-intent-token": {
+            "post_sequence": 11,
+            "status": "pending"
+          }
+        },
+        "recovered_id": "runtime-intent-token",
+        "rejection": {
+          "error": "after_replace_fsync",
+          "status": "REJECTED",
+          "type": "InjectedCrash"
+        },
+        "seq": 11
+      },
+      "pass": true
+    }
+  ],
+  "schema": "authority-bound-issue-api-v1-formal-result",
+  "source_sha256": {
+    "bound_authority_issue_v1.py": "2f812a678b72f09985e24d003b2e7030508a49e4475e9d3aef5533b1a07f2ba2",
+    "formal_runner.py": "eabc8e41e57f57dd61eb36f9cec9d786ab20ce721e39a234f27cd2b29627e66e"
+  }
+}

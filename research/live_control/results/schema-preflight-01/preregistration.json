@@ -1,0 +1,49 @@
+{
+  "status": "preregistered_before_five_fresh_no_gui_preflights_and_one_cache_reuse",
+  "study": "schema-preflight-01",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "low",
+  "cases": [
+    {
+      "name": "01-reject-candidate-oneof",
+      "schema": "live_control/bounded_visual_target_contract_schema_v2.json",
+      "expected": "ENDPOINT_INCOMPATIBLE"
+    },
+    {
+      "name": "02-reject-missing-property-type",
+      "schema": "benchmark_discovery/mindustry_world_target_contract_schema_v2.json",
+      "expected": "ENDPOINT_INCOMPATIBLE"
+    },
+    {
+      "name": "03-accept-flat-candidate",
+      "schema": "live_control/bounded_visual_target_contract_schema_v3.json",
+      "expected": "ENDPOINT_COMPATIBLE"
+    },
+    {
+      "name": "04-accept-anchor-receipt",
+      "schema": "live_control/anchor_evidence_contract_schema_v1.json",
+      "expected": "ENDPOINT_COMPATIBLE"
+    },
+    {
+      "name": "05-accept-typed-world-receipt",
+      "schema": "benchmark_discovery/mindustry_world_target_contract_schema_v3.json",
+      "expected": "ENDPOINT_COMPATIBLE"
+    }
+  ],
+  "policy": "locally validate JSON Schema; on cache miss submit a minimal no-image call through target_handle_model_runner_v2 with the same output-schema conversion; cache by schema/runner/instructions/CLI hashes, CLI/Node versions, model, effort and request shape",
+  "positive_gate": "retained oneOf and missing-type schemas are refused with no completed turn; three production schemas complete; all fresh completed usage is reported; same-key reuse performs no call and reports no fresh usage",
+  "failure_policy": "retain the first finite block; no case or model retry",
+  "sources": {
+    "schema_preflight_responder_v1.txt": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef",
+    "schema_preflight_v1.py": "798a0967a65208afb90b7c71aac144a91822bcace69deede3f71c92e9a9fcb9b",
+    "run_schema_preflight_block_v1.py": "798b8481f214de530e95d86b63d7005b6b3ca055d87e521c0d21e6182382010b",
+    "preregister_schema_preflight_block_v1.py": "6179e90302001843aefa6803ba6a18df448385db90fefff0a359c67719462fff",
+    "target_handle_model_runner_v2.py": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+    "bounded_visual_target_contract_schema_v2.json": "57b25392a03f260b6723848d60fbf3b938c5822fd95cc0debf356626f2eca49e",
+    "bounded_visual_target_contract_schema_v3.json": "7647d1bcddfba66d41077041d6545b168576128b9a9a7c44f66c6792de860962",
+    "anchor_evidence_contract_schema_v1.json": "56c01ff17461f1f219a219589c822607c6513f4a13fe1ea4743b2abf9c2c6510",
+    "../benchmark_discovery/mindustry_world_target_contract_schema_v2.json": "497841a2c1b692d5853187c8b0ccb76b42046b5d3fa52598b2550233668b7470",
+    "../benchmark_discovery/mindustry_world_target_contract_schema_v3.json": "0802a56a35902d19788a1abf0961920d5341746b2180782299b764f9a41d0a10"
+  },
+  "scope": "endpoint compatibility and cache behavior only; no GUI starts, no input authority, no semantic task-quality, latency improvement, token saving, endpoint-version completeness or human-tempo claim"
+}

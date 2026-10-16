@@ -1,0 +1,36 @@
+{
+  "schema": "issue-experiment-freeze-v1",
+  "allocation_id": "issue3575-xres-guard-formal-03",
+  "issue": 3575,
+  "predecessor": "allocation-01 STOP_BEFORE_INPUT on import; allocation-02 STOP_BEFORE_INPUT during bridge construction; neither retried",
+  "main_sha": "c3abca57cb9d0e5cfea49794e35b33a84337959f",
+  "source_manifest_sha256": "6d9f39fa74d42b69b300baef0e57c9175c8396243b47131f334306b912f4317b",
+  "H": "A fully source-bound XRes incarnation guard reproduces fail-closed stale-alias refusal on a private Linux/Xvfb server when p1 and p2 reuse the same XID, geometry and exact client-window pixels but XRes LocalClientPID and /proc start ticks identify different process incarnations.",
+  "T": "One fresh allocation: observe and mint p1; capture XRes PID and contemporaneous /proc start ticks; exit p1; create p2 and require same XID, geometry and exact pixels but different PID/start ticks; query XRes; attempt the old alias once. Require refusal before bridge.click, zero backend emissions and no p2 effect. Only after safe refusal execute one fresh p2 alias positive control.",
+  "D": "Immutable raw JSON with XRes replies, process identities, XID/geometry/pixel bytes and hashes, guard decision, bridge-entry/emission counters, independent effect, release receipt, cleanup, image manifest and source/freeze/image bindings; separate raw-only auditor and eight corruption controls.",
+  "C": "Private local Xvfb only; no remote-X11 or production/default-runtime claim. XRes PID is corroborative; missing/inconsistent PID or /proc start ticks must fail closed. Do not change or overwrite v1. No retries or unpinned fallback. Fresh positive control is conditional on stale-alias refusal.",
+  "U": "Whether the provenance-complete current-main allocation reproduces the v1 scoped observation. A PASS remains one local allocation and does not establish production security, general visual-target reliability or #3311 completion.",
+  "container": {
+    "engine": "OrbStack Docker",
+    "image_id": "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+    "platform": "linux/arm64",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only selected source directories",
+    "output_mount": "fresh isolated writable results directory",
+    "tmpfs": "/tmp:rw,nosuid,size=128m",
+    "x_server": "private Xvfb :89, screen 800x600x24, TCP disabled, access control enabled",
+    "xres_required": [1, 2],
+    "python": "3.11.2",
+    "python_xlib": "0.33",
+    "pillow": "9.4.0",
+    "invocation_sys_path": ["/app", "/app/research/live_control", "/app/research/live_control/x11_xres_incarnation_guard_3555_v2/harness", "/app/research/live_control/x11_xres_incarnation_guard_3555_v2/allocation-03/harness"]
+  },
+  "decision_rules": {
+    "PASS_PROVENANCE_COMPLETE_XRES_GUARD_REPRODUCTION": "Source/freeze/image hash audit passes before X server or fixture starts; all XID/process/XRes/geometry/pixel gates hold; stale alias refuses PROCESS_INCARNATION_MISMATCH before bridge.click with zero emissions and unchanged p2 effect; only then fresh alias succeeds with exact p2 effect and verified empty release; cleanup and independent audit/corruption controls pass.",
+    "STOP_BEFORE_INPUT": "Any source/freeze/image/XRes trust or required precondition unavailable before the stale-alias action; preserve evidence and issue no fixture input.",
+    "FAIL_STALE_ALIAS_ADMITTED": "Stale alias reaches bridge/native input or causes any p2 effect; stop immediately and do not run positive control.",
+    "HOLD_AUDIT": "Any raw lineage, independent reconstruction, cleanup or release evidence incomplete."
+  },
+  "allocation_limits": {"formal_runner_invocations": 1, "stale_alias_decisions": 1, "positive_controls_max": 1, "retries": 0}
+}

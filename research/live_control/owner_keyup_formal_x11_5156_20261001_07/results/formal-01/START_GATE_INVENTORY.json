@@ -1,0 +1,36 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-ORB-20261001-07",
+  "engine_context": "orbstack",
+  "observation_window_utc": [
+    "2026-10-01T02:02:44Z",
+    "2026-10-01T02:05:04Z"
+  ],
+  "command": "docker --context orbstack ps -a --format '{{.ID}} {{.Names}} {{.State}}'",
+  "command_exit_code": 0,
+  "container_count": 74,
+  "running_count": 0,
+  "exited_count": 70,
+  "created_nonterminal_count": 4,
+  "created_nonterminal": [
+    {"id_prefix": "dd009c5eb28f", "name": "frosty_solomon"},
+    {"id_prefix": "2c75cfe9989c", "name": "issue4466-formal-stage-01-20260926"},
+    {"id_prefix": "82b9804f63db", "name": "issue4466-image-layer-20260926"},
+    {"id_prefix": "5544451d0230", "name": "issue4466-xwd-donor-20260926"}
+  ],
+  "ownership_resolution": {
+    "sources_checked": ["GitHub Issue #5085 comments", "GitHub Issue #5156 comments", "GitHub Issue #4466 comments", "active peer-task snapshots"],
+    "result": "unresolved",
+    "reason": "No explicit queue/task/Issue record mapped any Created container ID/name to an owner with a terminal release. Issue #4466 contains a different retained experiment report but no matching container ID/name ownership declaration."
+  },
+  "other_actions": {
+    "docker_inspect": 0,
+    "container_start": 0,
+    "container_stop_or_remove": 0,
+    "image_inspect": 0,
+    "candidate_invocations": 0,
+    "independent_auditor_invocations": 0,
+    "x11_input_events": 0
+  },
+  "disposition": "STOP_RESOURCE_COORDINATION_BEFORE_CANDIDATE",
+  "scientific_result": "NOT_EVALUATED"
+}

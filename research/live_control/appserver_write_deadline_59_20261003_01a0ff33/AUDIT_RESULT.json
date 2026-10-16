@@ -1,0 +1,30 @@
+{
+  "status": "PASS_NATIVE_REQUEST_WRITE_BEFORE_DEADLINE_WITNESS_SCOPED",
+  "cells": [
+    {
+      "name": "healthy_large",
+      "checkpoint_elapsed_parent_ns": 250675700,
+      "caller_duration_parent_ns": 3662400,
+      "caller_live_at_checkpoint": false,
+      "child_exit_final": 0
+    },
+    {
+      "name": "unread_small",
+      "checkpoint_elapsed_parent_ns": 250281400,
+      "caller_duration_parent_ns": 69535700,
+      "caller_live_at_checkpoint": false,
+      "child_exit_final": 0
+    },
+    {
+      "name": "unread_large",
+      "checkpoint_elapsed_parent_ns": 250370200,
+      "caller_duration_parent_ns": 261027900,
+      "caller_live_at_checkpoint": true,
+      "child_exit_final": 0
+    }
+  ],
+  "scope": "one descriptive native Windows artificial pipe sample per cell; no latency ceiling/prevalence/physical effect/input release/model/game result",
+  "source_runtime_modified": false,
+  "main_request_sent": false,
+  "raw_sha256": "da49adabbfbde3afba302526fc777a3338ddf9533b0d20d344185087eaec3033"
+}

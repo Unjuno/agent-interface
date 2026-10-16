@@ -1,0 +1,171 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "hard_success": false,
+  "classification": "safe_model_stop_rejected_by_frozen_checkpoint_v1_bug",
+  "negative_control": {
+    "passed": true,
+    "model_calls": 0,
+    "durable_calls": 0
+  },
+  "model_turns": [
+    {
+      "turn": 1,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 15960,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 204,
+        "reasoning_output_tokens": 117
+      }
+    },
+    {
+      "turn": 2,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16463,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 75,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "turn": 3,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16263,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 217,
+        "reasoning_output_tokens": 99
+      }
+    },
+    {
+      "turn": 4,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16752,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 197,
+        "reasoning_output_tokens": 86
+      }
+    },
+    {
+      "turn": 5,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16598,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 214,
+        "reasoning_output_tokens": 81
+      }
+    },
+    {
+      "turn": 6,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16420,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 175,
+        "reasoning_output_tokens": 26
+      }
+    },
+    {
+      "turn": 7,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16684,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 280,
+        "reasoning_output_tokens": 135
+      }
+    },
+    {
+      "turn": 8,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16726,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 280,
+        "reasoning_output_tokens": 146
+      }
+    },
+    {
+      "turn": 9,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16754,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 230,
+        "reasoning_output_tokens": 91
+      }
+    },
+    {
+      "turn": 10,
+      "kind": "act",
+      "usage": {
+        "input_tokens": 16803,
+        "cached_input_tokens": 13056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 301,
+        "reasoning_output_tokens": 150
+      }
+    },
+    {
+      "turn": 11,
+      "kind": "stop",
+      "usage": {
+        "input_tokens": 16861,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 200,
+        "reasoning_output_tokens": 93
+      }
+    }
+  ],
+  "model_wait_total_ms": 165704.0038,
+  "proposal_to_useful_feedback_total_ms": 19057.4758,
+  "initial_observation_to_safe_stop_proposal_ms": 185760.5964,
+  "input_tokens_total": 182284,
+  "cached_input_tokens_total": 104448,
+  "runtime_exact_frames": 42,
+  "contact_sheets": 8,
+  "durable_calls": 40,
+  "append_records": 81,
+  "task_drags_started": 1,
+  "post_drag_mutations_started": 0,
+  "checkpoint_turn": 5,
+  "uncertain_inspection_turns": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "model_stop_turn": 11,
+  "independent_checks": {
+    "target_owned_roads": false,
+    "ordered_bidirectional_connections": false,
+    "forbidden_tiles_clear": true,
+    "surrounding_road_owner_unchanged": false
+  },
+  "changed_surrounding_tiles": [
+    912,
+    913,
+    914,
+    915
+  ],
+  "semantic_completion_ms": null,
+  "failure_reason": "semantic_checkpoint_v1 incorrectly applied the observed-only verify rule to a safe stop; no retry",
+  "decision": "checkpoint prevented the second mutation and false verify, but did not complete or repair the task; fix safe-stop admission and typed failure packaging before reuse",
+  "scope": "one fresh candidate episode; no task success, broad correctness improvement, latency distribution, human comparison or speed claim",
+  "audit_sha256": "476a7221c97103610dda316a114ae88a75440d7d0b676cc4585ce5618b5eea34"
+}

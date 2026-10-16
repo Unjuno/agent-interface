@@ -1,0 +1,56 @@
+{
+  "current_test_sha256": "a6034367f811d2bd2d8c69ca094fb99d559500c57cf5d980bcbc2d848b9c1f0b",
+  "historical_RESULT_json_unchanged": true,
+  "historical_result_test_sha256": "f3c405499d6e9a4b6debace1632666a3d15c44e85fdee23b7ef62536ba4095f8",
+  "limits": [
+    "Executed on Darwin only. Windows skip behavior is established by unittest.skipUnless(os.name == posix), not by a Windows runner.",
+    "The historical 8-case regression result remains bound to the original test hash in RESULT.json."
+  ],
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "production_runtime_changed": false,
+  "purpose": "Guard the four mock tests that patch os.killpg on non-POSIX hosts; no production source changed.",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "runs": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "-v",
+        "test_appserver_process_tree_cleanup_20261004"
+      ],
+      "errors": 0,
+      "exit": 0,
+      "failures": 0,
+      "log_bytes": 1742,
+      "log_path": "portability-followup-20261007/normal.log",
+      "log_sha256": "869ab093945a535c8f387af2195cdd3cf993de66875f20b1f144364c2f008a0c",
+      "mode": "normal",
+      "passed": 8,
+      "skipped": 0,
+      "tests": 8
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "test_appserver_process_tree_cleanup_20261004"
+      ],
+      "errors": 0,
+      "exit": 0,
+      "failures": 0,
+      "log_bytes": 1742,
+      "log_path": "portability-followup-20261007/optimized.log",
+      "log_sha256": "817975f7efdbf72734dfdf02d2268da8e30fad801cffba86faaa7cd14a915f50",
+      "mode": "optimized",
+      "passed": 8,
+      "skipped": 0,
+      "tests": 8
+    }
+  ],
+  "scientific_allocation_rerun": false,
+  "status": "PASS_POSIX_TEST_PORTABILITY_GUARDS"
+}

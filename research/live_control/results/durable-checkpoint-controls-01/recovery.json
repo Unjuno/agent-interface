@@ -1,0 +1,234 @@
+{
+  "sent": [
+    {
+      "after": 0,
+      "events": [
+        "effect_checkpoint",
+        "rejected"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "effect_checkpoint",
+        "contract": {
+          "expected": {
+            "A1": 480,
+            "A2": 192
+          },
+          "kind": "saved_cells"
+        }
+      },
+      "request_id": "536b7e8525624b649f6d18b8f389f0f5",
+      "read_request_id": "536b7e8525624b649f6d18b8f389f0f5"
+    }
+  ],
+  "first": {
+    "request": {
+      "after": 0,
+      "events": [
+        "effect_checkpoint",
+        "rejected"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "effect_checkpoint",
+        "contract": {
+          "expected": {
+            "A1": 480,
+            "A2": 192
+          },
+          "kind": "saved_cells"
+        }
+      },
+      "request_id": "536b7e8525624b649f6d18b8f389f0f5",
+      "read_request_id": "536b7e8525624b649f6d18b8f389f0f5"
+    },
+    "reply": {
+      "status": "timeout",
+      "cursor": 1,
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 480,
+                "A2": 192
+              },
+              "kind": "saved_cells"
+            },
+            "transport_request_id": "536b7e8525624b649f6d18b8f389f0f5"
+          }
+        }
+      ]
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {},
+        "cursor": 1,
+        "format": "received-continuation-v1",
+        "observation": null,
+        "observation_cursor": null,
+        "pending_clock": null,
+        "record_hashes": [
+          "838d60ea69894ebc4784fc69337f8e996caa8f9e503c99878bd0daba5ef6698f"
+        ],
+        "session": "private-test.sock"
+      },
+      "format": "durable-submit-v5",
+      "last_resolution": null,
+      "pending": {
+        "request": {
+          "after": 0,
+          "events": [
+            "effect_checkpoint",
+            "rejected"
+          ],
+          "timeout": 2,
+          "command": {
+            "op": "effect_checkpoint",
+            "contract": {
+              "expected": {
+                "A1": 480,
+                "A2": 192
+              },
+              "kind": "saved_cells"
+            }
+          },
+          "request_id": "536b7e8525624b649f6d18b8f389f0f5",
+          "read_request_id": "536b7e8525624b649f6d18b8f389f0f5"
+        },
+        "write_state": "may_have_been_sent",
+        "echo_seen": true,
+        "accepted": false,
+        "conflict": false
+      }
+    }
+  },
+  "recovered": {
+    "request": {
+      "after": 1,
+      "events": [
+        "effect_checkpoint",
+        "rejected"
+      ],
+      "timeout": 2,
+      "read_request_id": "536b7e8525624b649f6d18b8f389f0f5"
+    },
+    "reply": {
+      "status": "boundary",
+      "cursor": 2,
+      "records": [
+        {
+          "event": "effect_checkpoint",
+          "transport_request_id": "536b7e8525624b649f6d18b8f389f0f5",
+          "command_op": "effect_checkpoint",
+          "task_success": null,
+          "authority": "none",
+          "evidence": {
+            "status": "VERIFIED",
+            "authority": "none",
+            "attribution": "not_established",
+            "task_success": null,
+            "observation_closed": false,
+            "contract": {
+              "kind": "saved_cells",
+              "expected": {
+                "A1": 480,
+                "A2": 192
+              }
+            },
+            "started_ns": 2334159052,
+            "scope": "saved first worksheet cells at one sample",
+            "expected": {
+              "A1": 480,
+              "A2": 192
+            },
+            "sampled_ns": 2338396404,
+            "artifact_sha256": "0ef806c65486260a0b0520b4038d89dfff3aa5798594398fadc6305fdaa8c7e3",
+            "actual": {
+              "A1": 480,
+              "A2": 192
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 2343267295,
+            "archive_path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/durable-checkpoint-controls-01/artifacts/0ef806c65486260a0b0520b4038d89dfff3aa5798594398fadc6305fdaa8c7e3.bin",
+            "source_sampled_ns": 2319524179,
+            "archive_source_path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/sampled-effect-calc-02/workbook-snapshot-03.xlsx",
+            "archive_started_ns": 2315760719,
+            "archive_bytes": 5674,
+            "archive_scope": "parsed archived bytes; original read not atomic; no durability or actor attribution"
+          }
+        }
+      ]
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {},
+        "cursor": 2,
+        "format": "received-continuation-v1",
+        "observation": null,
+        "observation_cursor": null,
+        "pending_clock": null,
+        "record_hashes": [
+          "838d60ea69894ebc4784fc69337f8e996caa8f9e503c99878bd0daba5ef6698f",
+          "426328c045e650659eb11a749af294ce7874d1660eeb8342263073959652fa09"
+        ],
+        "session": "private-test.sock"
+      },
+      "format": "durable-submit-v5",
+      "last_resolution": {
+        "request_id": "536b7e8525624b649f6d18b8f389f0f5",
+        "checkpoint": {
+          "event": "effect_checkpoint",
+          "transport_request_id": "536b7e8525624b649f6d18b8f389f0f5",
+          "command_op": "effect_checkpoint",
+          "task_success": null,
+          "authority": "none",
+          "evidence": {
+            "status": "VERIFIED",
+            "authority": "none",
+            "attribution": "not_established",
+            "task_success": null,
+            "observation_closed": false,
+            "contract": {
+              "kind": "saved_cells",
+              "expected": {
+                "A1": 480,
+                "A2": 192
+              }
+            },
+            "started_ns": 2334159052,
+            "scope": "saved first worksheet cells at one sample",
+            "expected": {
+              "A1": 480,
+              "A2": 192
+            },
+            "sampled_ns": 2338396404,
+            "artifact_sha256": "0ef806c65486260a0b0520b4038d89dfff3aa5798594398fadc6305fdaa8c7e3",
+            "actual": {
+              "A1": 480,
+              "A2": 192
+            },
+            "reason": "sample_matches_declared_cells",
+            "finished_ns": 2343267295,
+            "archive_path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/durable-checkpoint-controls-01/artifacts/0ef806c65486260a0b0520b4038d89dfff3aa5798594398fadc6305fdaa8c7e3.bin",
+            "source_sampled_ns": 2319524179,
+            "archive_source_path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/sampled-effect-calc-02/workbook-snapshot-03.xlsx",
+            "archive_started_ns": 2315760719,
+            "archive_bytes": 5674,
+            "archive_scope": "parsed archived bytes; original read not atomic; no durability or actor attribution"
+          }
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  }
+}

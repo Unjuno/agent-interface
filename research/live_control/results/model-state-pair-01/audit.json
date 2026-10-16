@@ -1,0 +1,176 @@
+{
+  "evidence_audit_passed": true,
+  "all_answers_correct": true,
+  "rows": [
+    {
+      "name": "pending-full",
+      "correct": true,
+      "answer": {
+        "lifecycle_state": "input_stopped_capture_pending",
+        "terminal_status": null,
+        "steps_completed": null,
+        "stop_reason": "focus_changed",
+        "observation_sequence": 8,
+        "owned_buttons_after": [],
+        "owned_keycodes_after": [],
+        "historical_active_lease_time_valid": false,
+        "input_authority": "none",
+        "record_proves_task_success": false
+      },
+      "expected": {
+        "lifecycle_state": "input_stopped_capture_pending",
+        "terminal_status": null,
+        "steps_completed": null,
+        "stop_reason": "focus_changed",
+        "observation_sequence": 8,
+        "owned_buttons_after": [],
+        "owned_keycodes_after": [],
+        "historical_active_lease_time_valid": false,
+        "input_authority": "none",
+        "record_proves_task_success": false
+      },
+      "parse_error": null,
+      "usage": {
+        "input_tokens": 13199,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 154,
+        "reasoning_output_tokens": 80
+      },
+      "stderr": "",
+      "local_process_seconds": 8.443215
+    },
+    {
+      "name": "pending-composed",
+      "correct": true,
+      "answer": {
+        "lifecycle_state": "input_stopped_capture_pending",
+        "terminal_status": null,
+        "steps_completed": null,
+        "stop_reason": "focus_changed",
+        "observation_sequence": 8,
+        "owned_buttons_after": [],
+        "owned_keycodes_after": [],
+        "historical_active_lease_time_valid": false,
+        "input_authority": "none",
+        "record_proves_task_success": false
+      },
+      "expected": {
+        "lifecycle_state": "input_stopped_capture_pending",
+        "terminal_status": null,
+        "steps_completed": null,
+        "stop_reason": "focus_changed",
+        "observation_sequence": 8,
+        "owned_buttons_after": [],
+        "owned_keycodes_after": [],
+        "historical_active_lease_time_valid": false,
+        "input_authority": "none",
+        "record_proves_task_success": false
+      },
+      "parse_error": null,
+      "usage": {
+        "input_tokens": 12932,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 145,
+        "reasoning_output_tokens": 71
+      },
+      "stderr": "",
+      "local_process_seconds": 6.7989422
+    },
+    {
+      "name": "terminal-composed",
+      "correct": true,
+      "answer": {
+        "lifecycle_state": "terminal_received",
+        "terminal_status": "needs_decision",
+        "steps_completed": 0,
+        "stop_reason": "focus_changed",
+        "observation_sequence": 11,
+        "owned_buttons_after": [],
+        "owned_keycodes_after": [],
+        "historical_active_lease_time_valid": false,
+        "input_authority": "none",
+        "record_proves_task_success": false
+      },
+      "expected": {
+        "lifecycle_state": "terminal_received",
+        "terminal_status": "needs_decision",
+        "steps_completed": 0,
+        "stop_reason": "focus_changed",
+        "observation_sequence": 11,
+        "owned_buttons_after": [],
+        "owned_keycodes_after": [],
+        "historical_active_lease_time_valid": false,
+        "input_authority": "none",
+        "record_proves_task_success": false
+      },
+      "parse_error": null,
+      "usage": {
+        "input_tokens": 13828,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 148,
+        "reasoning_output_tokens": 75
+      },
+      "stderr": "",
+      "local_process_seconds": 6.7298355
+    },
+    {
+      "name": "terminal-full",
+      "correct": true,
+      "answer": {
+        "lifecycle_state": "terminal_received",
+        "terminal_status": "needs_decision",
+        "steps_completed": 0,
+        "stop_reason": "focus_changed",
+        "observation_sequence": 11,
+        "owned_buttons_after": [],
+        "owned_keycodes_after": [],
+        "historical_active_lease_time_valid": false,
+        "input_authority": "none",
+        "record_proves_task_success": false
+      },
+      "expected": {
+        "lifecycle_state": "terminal_received",
+        "terminal_status": "needs_decision",
+        "steps_completed": 0,
+        "stop_reason": "focus_changed",
+        "observation_sequence": 11,
+        "owned_buttons_after": [],
+        "owned_keycodes_after": [],
+        "historical_active_lease_time_valid": false,
+        "input_authority": "none",
+        "record_proves_task_success": false
+      },
+      "parse_error": null,
+      "usage": {
+        "input_tokens": 14319,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 125,
+        "reasoning_output_tokens": 52
+      },
+      "stderr": "",
+      "local_process_seconds": 6.4667628
+    }
+  ],
+  "pairs": [
+    {
+      "case": "pending",
+      "input_difference": 267,
+      "full_input": 13199,
+      "composed_input": 12932,
+      "both_correct": true
+    },
+    {
+      "case": "terminal",
+      "input_difference": 491,
+      "full_input": 14319,
+      "composed_input": 13828,
+      "both_correct": true
+    }
+  ],
+  "audit_sha256": "ca6a7491c1d2b3824cb2b29c1720e1374a873a9d06ddf983e06ad7c8a3c6d499",
+  "limits": "Two known static records, requested model only; no GUI action, full context identity, billed cost or causal latency proof."
+}

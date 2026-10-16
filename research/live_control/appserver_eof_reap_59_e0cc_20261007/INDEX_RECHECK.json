@@ -1,0 +1,20 @@
+{
+  "at_utc": "2026-10-07T11:19:03.025051+00:00",
+  "source_commit": "96f8f2f168d525f7e42307a89e5098f8b7283f0b",
+  "command": [
+    "<PYTHON_RUNTIME>/bin/python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "research",
+    "-p",
+    "test_*workspace*.py",
+    "-v"
+  ],
+  "cwd": "repository root",
+  "exit_code": 0,
+  "previous_result": "Initial direct module invocation had 21 passed methods and one loader error: research was absent from sys.path. Outer shell status was from the subsequent git diff command, not unittest. The original index-tests.log remains unchanged inside evidence.tar.xz.",
+  "followup": "Use the existing .github/workflows/research-workspace-index.yml discovery command; no product or test-source change."
+}

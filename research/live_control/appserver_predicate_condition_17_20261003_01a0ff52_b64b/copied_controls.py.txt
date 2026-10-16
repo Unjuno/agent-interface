@@ -1,0 +1,52 @@
+"""Ordinary copied saved-data controls. No driver/peer/client import or replay."""
+import pathlib,json,shutil,importlib.util,hashlib,sys,traceback
+p=pathlib.Path(__file__).resolve().parent;s=importlib.util.spec_from_file_location('only_saved_checker',p/'check_saved.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+controls=p/'copied-controls';controls.mkdir(exist_ok=False);reports=[]
+
+def doc(f):return json.loads(f.read_text())
+def save(f,x):f.write_text(json.dumps(x,indent=2,sort_keys=True)+'\n')
+def lines(f):return [json.loads(x) for x in f.read_text().splitlines()]
+def save_lines(f,x):f.write_text(''.join(json.dumps(y,sort_keys=True)+'\n' for y in x))
+def event(rows,name):return next(x for x in rows if x['event']==name)
+
+def mutate(root,kind):
+ case='baseline-held' if kind in ['deadline-not-overdue','reader-wrong-boundary','response-late','boolean-ID'] else 'candidate-held';d=root/case;r=doc(d/'result.json');e=lines(d/'events.jsonl');peer=lines(d/'peer-events.jsonl');j=lines(d/'journal.jsonl');cp=r['checkpoint']
+ if kind=='candidate-pending':cp['request_alive']=True;event(e,'checkpoint')['request_alive']=True
+ elif kind=='candidate-ack-after-checkpoint':
+  late=cp['ns']+1_000_000;r['outcomes']['request']['end_ns']=late;cp['outcomes_snapshot']['request']['end_ns']=late;q=event(e,'request_return');q['ns']=late;e.sort(key=lambda x:x['ns'])
+ elif kind=='deadline-not-overdue':
+  deadline=(cp['ns']+100_000_000)/1e9;r['request_before_predicate']['deadline_ns']=round(deadline*1e9);r['request_before_predicate']['request_frame']['deadline']=deadline
+  for f in r['request_before_predicate']['frames']+cp['request_frames']:
+   if f['function']=='request':f['deadline']=deadline
+ elif kind=='reader-wrong-boundary':
+  for f in cp['reader_frames']:
+   if f['function']=='_read':f['line']=31
+ elif kind=='release-already-set':cp['release_event_set']=True
+ elif kind=='response-late':
+  j[2]['observed_ns']=r['request_before_predicate']['deadline_ns']+1;r['response_received']=j[2];cp['journal_received']=j
+ elif kind=='boolean-ID':
+  for x in peer:
+   if 'message' in x and 'id' in x['message']:x['message']['id']=True;x['wire']=json.dumps(x['message'],separators=(',',':'))+'\n'
+  for x in j:
+   if 'id' in x['message']:x['message']['id']=True
+  r['peer_request_receipt_before_predicate']=peer[3];r['response_emitted']=peer[5];r['response_received']=j[2];cp['peer_events']=peer[:-1];cp['journal_received']=j
+ elif kind=='pipe-not-closed':r['cleanup']['pipes'][1]['closed_after_driver_cleanup']=False
+ elif kind=='journal-not-closed':r['cleanup']['journal_closed']=False
+ elif kind=='first-exit-nonzero':pass
+ else:raise AssertionError(kind)
+ for i,row in enumerate(e,1):row['seq']=i
+ save(d/'result.json',r);save_lines(d/'events.jsonl',e);save_lines(d/'peer-events.jsonl',peer);save_lines(d/'journal.jsonl',j)
+ # Rebuild stdout/receipts/collection joins; refusal cannot rely only on stale outer log hashes.
+ stdout=json.dumps({'case':case,'errors':r['errors'],'cleanup':r['cleanup']},sort_keys=True)+'\n';(root/(case+'.stdout')).write_text(stdout)
+ collection=doc(root/'collection.json');receipt=doc(root/(case+'.receipt.json'));b=stdout.encode();receipt['stdout_bytes']=len(b);receipt['stdout_sha256']=hashlib.sha256(b).hexdigest()
+ if kind=='first-exit-nonzero':receipt['exit_code']=1
+ save(root/(case+'.receipt.json'),receipt)
+ idx=[a+'-'+b for a,b in m.CELLS].index(case);collection['items'][idx]=receipt;save(root/'collection.json',collection)
+
+for kind in ['candidate-pending','candidate-ack-after-checkpoint','deadline-not-overdue','reader-wrong-boundary','release-already-set','response-late','boolean-ID','pipe-not-closed','journal-not-closed','first-exit-nonzero']:
+ root=controls/kind;shutil.copytree(p/'raw',root);mutate(root,kind)
+ try:m.check(root,p,m.REVIEWED)
+ except m.Rejected as exc:reports.append({'control':kind,'refused':True,'reason':str(exc)})
+ else:reports.append({'control':kind,'refused':False})
+report={'schema':'predicate-condition-copied-controls-v1','python':sys.version,'controls':reports,'all_refused':all(x['refused'] for x in reports),'checker_sha256':hashlib.sha256((p/'check_saved.py').read_bytes()).hexdigest(),'experiment_source_imports':0,'native_replays':0,'outer_joins_rebuilt':True}
+save(p/'copied-controls-result.json',report);print(json.dumps(report,sort_keys=True));raise SystemExit(0 if report['all_refused'] else 2)

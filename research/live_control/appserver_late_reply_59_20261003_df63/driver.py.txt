@@ -1,0 +1,206 @@
+import datetime
+import hashlib
+import importlib.machinery
+import importlib.util
+import io
+import json
+import os
+from pathlib import Path
+import queue
+import sys
+import threading
+import time
+
+
+ROOT = Path(__file__).resolve().parent
+INPUT = json.loads((ROOT / 'INPUT.json').read_text(encoding='utf-8'))
+
+
+def save(path, value):
+    path.write_text(json.dumps(value, sort_keys=True, ensure_ascii=True, indent=2) + '\n', encoding='utf-8')
+
+
+def value(kind, identifier):
+    return {'kind': kind, 'identifier': identifier, 'blob': 'R' * INPUT['result_blob_characters'],
+            'meaning': '\u4fdd\u6301 caf\u00e9', 'integer': 37}
+
+
+class Receiver:
+    def __init__(self):
+        self.queue = queue.Queue()
+        self.condition = threading.Condition()
+        self.processed = 0
+        self.previous = False
+        self.closed = False
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        with self.condition:
+            if self.previous:
+                self.processed += 1
+                self.condition.notify_all()
+        line = self.queue.get(timeout=INPUT['fixture_join_seconds'])
+        self.previous = line is not None
+        if line is None:
+            raise StopIteration
+        return line
+
+    def wait_processed(self, target):
+        with self.condition:
+            if not self.condition.wait_for(lambda: self.processed >= target, INPUT['fixture_join_seconds']):
+                raise RuntimeError('source-reader FIFO acknowledgement missing')
+
+    def close(self):
+        self.closed = True
+
+
+class Writer:
+    def __init__(self, fixture):
+        self.fixture = fixture
+        self.closed = False
+
+    def write(self, text):
+        message = json.loads(text)
+        self.fixture.requests.append({'literal': text, 'message': message})
+        if message['method'] == 'study/healthy':
+            self.fixture.emit({'id': message['id'], 'result': value('healthy', message['id'])}, 'healthy_reply')
+        return len(text)
+
+    def flush(self):
+        pass
+
+    def close(self):
+        self.closed = True
+
+
+class Fixture:
+    def __init__(self):
+        self.stdout = Receiver()
+        self.stdin = Writer(self)
+        self.stderr = io.StringIO()
+        self.requests = []
+        self.frames = []
+        self.factory_calls = []
+        self.done = False
+        self.terminate_calls = 0
+
+    def factory(self, command, **kwargs):
+        self.factory_calls.append({'command': command, 'kwargs': kwargs, 'native_process_created': False})
+        return self
+
+    def emit(self, frame, stage):
+        self.frames.append({'stage': stage, 'message': frame})
+        self.stdout.queue.put(json.dumps(frame, ensure_ascii=True, separators=(',', ':')) + '\n')
+
+    def sync(self):
+        self.stdout.wait_processed(len(self.frames))
+
+    def poll(self):
+        return 0 if self.done else None
+
+    def terminate(self):
+        self.terminate_calls += 1
+        raise RuntimeError('unexpected fake termination')
+
+
+def load(path, name):
+    loader = importlib.machinery.SourceFileLoader(name, str(path))
+    spec = importlib.util.spec_from_loader(name, loader)
+    module = importlib.util.module_from_spec(spec)
+    loader.exec_module(module)
+    return module
+
+
+def call(client, method, timeout):
+    try:
+        answer = client.request(method, {'rich_input': 'M' * INPUT['request_blob_characters'], 'semantic_marker': 37}, timeout=timeout)
+        return {'error_type': None, 'result': answer}
+    except Exception as error:
+        return {'error_type': type(error).__name__, 'error_text': str(error), 'result': None}
+
+
+def one(arm, case, count):
+    folder = ROOT / 'a01' / (arm + '-' + case)
+    folder.mkdir(parents=True, exist_ok=False)
+    source = ROOT / ('client.py.txt' if arm == 'current' else 'pending_control.py.txt')
+    raw = source.read_bytes()
+    module = load(source, 'client_' + arm + '_' + case)
+    fixture = Fixture()
+    client = module.CodexAppServerClient(['owned-inert-fifo'], process_factory=fixture.factory,
+                                        journal_path=str(folder / 'journal.jsonl'))
+    row = {'arm': arm, 'case': case, 'count': count, 'driver_pid': os.getpid(),
+           'source_bytes': len(raw), 'source_sha256': hashlib.sha256(raw).hexdigest(),
+           'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'outcomes': []}
+    try:
+        if case == 'future':
+            fixture.emit({'id': 1, 'result': value('unowned-before-invocation', 1)}, 'before_request')
+            fixture.sync()
+            row['outcomes'].append(call(client, 'study/held-fresh', INPUT['timeout_for_retirement']))
+            fixture.emit({'id': 1, 'result': value('fresh-after-retirement', 1)}, 'after_first_outcome')
+            fixture.sync()
+        else:
+            for index in range(count):
+                row['outcomes'].append(call(client, 'study/retire', INPUT['timeout_for_retirement']))
+            for identifier in range(1, count + 1):
+                fixture.emit({'id': identifier, 'result': value('late', identifier)}, 'after_all_timeouts')
+            fixture.sync()
+        row['healthy'] = call(client, 'study/healthy', INPUT['healthy_timeout_seconds'])
+        fixture.sync()
+        healthy_id = fixture.requests[-1]['message']['id']
+        if count:
+            fixture.emit({'id': healthy_id, 'result': value('duplicate-completed', healthy_id)}, 'after_healthy_outcome')
+            fixture.emit({'id': INPUT['orphan_id'], 'result': value('orphan', INPUT['orphan_id'])}, 'unowned_orphan')
+        notice = {'method': 'study/notice', 'params': {'meaning': '\u4fdd\u6301', 'token': 'notice-37', 'value': 37}}
+        fixture.emit(notice, 'notice')
+        fixture.sync()
+        row['notice'] = client.wait_notification(lambda message: message.get('method') == 'study/notice', timeout=0)
+        with client._condition:
+            row['before_close'] = {'closed': client._closed, 'cache': [{'id': key, 'message': message} for key, message in sorted(client._responses.items())],
+                                   'notification_count': len(client._notifications),
+                                   'pending': sorted(client._pending) if hasattr(client, '_pending') else None,
+                                   'next_id': client._next_id}
+        row['cached_payload_bytes'] = len(json.dumps(row['before_close']['cache'], sort_keys=True, separators=(',', ':'), ensure_ascii=True).encode('utf-8'))
+    except BaseException as error:
+        row['harness_error'] = {'type': type(error).__name__, 'message': str(error)}
+    finally:
+        try:
+            fixture.sync()
+        except BaseException as error:
+            row['cleanup_sync_error'] = {'type': type(error).__name__, 'message': str(error)}
+        fixture.done = True
+        fixture.stdout.queue.put(None)
+        client._reader.join(timeout=INPUT['fixture_join_seconds'])
+        client.close(timeout=INPUT['fixture_join_seconds'])
+        fixture.stdin.close()
+        fixture.stdout.close()
+        fixture.stderr.close()
+        row['requests'] = fixture.requests
+        row['frames'] = fixture.frames
+        row['factory'] = fixture.factory_calls
+        row['terminal'] = {'reader_alive': client._reader.is_alive(), 'journal_closed': client._journal.closed,
+                           'stdin_closed': fixture.stdin.closed, 'stdout_closed': fixture.stdout.closed,
+                           'stderr_closed': fixture.stderr.closed, 'fake_terminate_calls': fixture.terminate_calls,
+                           'native_processes_created': 0}
+        row['source_unchanged'] = raw == source.read_bytes()
+        row['ended_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        save(folder / 'RAW.json', row)
+    return row
+
+
+summary = []
+for arm in INPUT['arms']:
+    for count in INPUT['late_counts']:
+        row = one(arm, 'late-%d' % count, count)
+        summary.append({'arm': arm, 'case': row['case'], 'cache_entries': len(row.get('before_close', {}).get('cache', [])),
+                        'healthy_error': row.get('healthy', {}).get('error_type'), 'harness_error': row.get('harness_error')})
+        if row.get('harness_error') or row['terminal']['reader_alive']:
+            raise RuntimeError('first unsafe/incomplete fixture retained; no repeat')
+    row = one(arm, 'future', 0)
+    summary.append({'arm': arm, 'case': 'future', 'first_outcome_error': row['outcomes'][0]['error_type'],
+                    'first_result_kind': (row['outcomes'][0]['result'] or {}).get('kind'),
+                    'cache_entries': len(row['before_close']['cache']), 'harness_error': row.get('harness_error')})
+    if row.get('harness_error') or row['terminal']['reader_alive']:
+        raise RuntimeError('first unsafe/incomplete fixture retained; no repeat')
+print(json.dumps({'driver_pid': os.getpid(), 'cells': len(summary), 'summary': summary}, ensure_ascii=True, sort_keys=True))

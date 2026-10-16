@@ -1,0 +1,4 @@
+  File "<string>", line 1
+    import json,os,time;from pathlib import Path;print(json.dumps({uid:os.getuid(),cpu_count:os.cpu_count(),kernel:os.uname().release,limits:{k:Path(/sys/fs/cgroup/+k).read_text().strip() for k in (cpu.max,memory.max,memory.swap.max,pids.max)},schedstat:Path(/proc/self/schedstat).read_text(),schedstats_enabled_exists:Path(/proc/sys/kernel/sched_schedstats).exists(),monotonic_resolution:time.get_clock_info(monotonic).resolution}))
+                                                                                                                                                     ^
+SyntaxError: invalid syntax

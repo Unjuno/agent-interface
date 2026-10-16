@@ -1,0 +1,73 @@
+{
+  "caller_after_close": false,
+  "caller_outcome": {
+    "ended_ns": 23427978041875,
+    "kind": "result",
+    "result": {
+      "label": "inert",
+      "padding": "short"
+    },
+    "started_ns": 23427977763166
+  },
+  "cell": {
+    "arm": "current",
+    "id": "healthy-current",
+    "mode": "healthy",
+    "padding": "short"
+  },
+  "checkpoint": {
+    "caller_alive": false,
+    "driver_ns": 23428229821375,
+    "frames": [],
+    "peer_poll": null,
+    "reader_alive": true
+  },
+  "driver_pid": 6687,
+  "ended_utc": "2026-10-03T07:27:43.254839+00:00",
+  "events": [
+    {
+      "driver_ns": 23428229818500,
+      "kind": "checkpoint"
+    },
+    {
+      "driver_ns": 23428229861083,
+      "kind": "cleanup_begin"
+    },
+    {
+      "driver_ns": 23428231446833,
+      "kind": "cleanup_end"
+    }
+  ],
+  "final_streams": {
+    "stderr": true,
+    "stdin": true,
+    "stdout": true
+  },
+  "owned_peer_reaped": true,
+  "peer_command": [
+    "/run/current-system/sw/bin/python3",
+    "-B",
+    "inert_peer.py",
+    "healthy",
+    "peer-events.jsonl"
+  ],
+  "peer_exit": -15,
+  "peer_pid": 6688,
+  "prefill": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "reader_after_close": false,
+  "ready": {
+    "method": "fixture/ready",
+    "params": {
+      "mode": "healthy"
+    }
+  },
+  "request_invocations": 1,
+  "started_utc": "2026-10-03T07:27:42.978888+00:00",
+  "wire": {
+    "bytes": 62,
+    "sha256": "6f5f8ec4565a03049ccb9aaca7ed366b7d23f7b3a6996d22abc27355b046c243"
+  }
+}

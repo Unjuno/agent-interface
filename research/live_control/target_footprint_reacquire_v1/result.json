@@ -1,0 +1,17 @@
+{
+  "allocation_id": "TARGET-FOOTPRINT-REACQUIRE-20260916-01",
+  "completed_cases": 30,
+  "planned_cases": 30,
+  "disposition": "PASS_SCOPED_CANDIDATE",
+  "model_calls": 0,
+  "scenario_order": ["stable", "moved_decoy", "replaced_square", "missing", "duplicate"],
+  "cases_per_scenario_per_arm": 3,
+  "center": {"successes_by_scenario": [3, 0, 0, 3, 0], "successes": 6, "wrong_target_deletions": 6, "additional_ambiguity_policy_violations": 3},
+  "footprint": {"successes_by_scenario": [3, 3, 3, 3, 3], "successes": 15, "wrong_target_deletions": 0, "positive_edit_successes": 6, "negative_refusals": 9},
+  "audit": {"images": 96, "target_gates": 48, "task_clicks": 18, "task_key_operations": 36, "empty_release_records_including_setup": 514, "integrity_pass": true},
+  "paired_initial_current_images": {"exactly_equal_pairs": 14, "total_pairs": 15, "different_pair": "1842-stable", "different_pixels": 414},
+  "gate_compute_ms": {"center": {"median": 0.12006, "range": [0.101153, 0.200162], "n": 27}, "footprint": {"median": 8.768551, "range": [8.267636, 11.060867], "n": 21}},
+  "browser_probe": {"completed_task_cases": 0, "controller_executions": 0, "post_receipts": 0, "outcome": "BLOCKED_BY_CHROMIUM_ORGANIZATION_POLICY"},
+  "full_raw_evidence_in_git": false,
+  "runtime_promotion": false
+}

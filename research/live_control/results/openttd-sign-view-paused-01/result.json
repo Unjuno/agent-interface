@@ -1,0 +1,102 @@
+{
+  "executed": true,
+  "model_calls": 0,
+  "precondition_steps": [
+    {
+      "op": "chord",
+      "modifier": "Control_L",
+      "key": "2"
+    },
+    {
+      "op": "key",
+      "key": "F1"
+    }
+  ],
+  "step": {
+    "op": "chord",
+    "modifier": "Control_L",
+    "key": "1"
+  },
+  "paused_image": "005.png",
+  "paused_sha256": "0afcf7e299654f21d8ea5938148a5bc16d2e1d7df7990e09812d7cf457f6f07e",
+  "before_image": "005.png",
+  "after_image": "008.png",
+  "before_sha256": "0afcf7e299654f21d8ea5938148a5bc16d2e1d7df7990e09812d7cf457f6f07e",
+  "after_sha256": "f76238af2f2a1fa4af5005c97782d35a96adc9f3f3c720e0366cc36d602bc1ba",
+  "image_changed": true,
+  "evaluation": {
+    "event": "independent_evaluation",
+    "success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "bidirectional_connections": false,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "legacy_success": false,
+    "contract": {
+      "x": 17,
+      "y": 7,
+      "width": 64,
+      "target": [
+        465,
+        466,
+        467
+      ],
+      "forbidden": [
+        529,
+        530,
+        531
+      ],
+      "owner": 0,
+      "guard": [
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        591,
+        592,
+        593,
+        594,
+        595,
+        596,
+        597,
+        655,
+        656,
+        657,
+        658,
+        659,
+        660,
+        661
+      ]
+    },
+    "emitted_ns": 20193499552272
+  },
+  "durable_calls": 10,
+  "save_unchanged": true
+}

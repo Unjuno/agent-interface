@@ -1,0 +1,298 @@
+{
+  "index": 1,
+  "mode": "combined",
+  "seed": 991012,
+  "goal": {
+    "token": "t991012",
+    "a": 373,
+    "b": 315,
+    "dx": 36,
+    "url": "http://127.0.0.1:46319/",
+    "setup_readiness_captures": 0
+  },
+  "navigate_terminal": {
+    "event": "terminal",
+    "id": "durable-9b409fbbd3ff4034a8ed6d3521007811",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 4,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 38387290985715,
+      "valid_until_ns": 38396410204403
+    },
+    "terminal_ns": 38387291025044,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 38387291027094
+  },
+  "typed_terminal": {
+    "event": "terminal",
+    "id": "durable-319ef7c5b5d646bf917b13a0f7f56ad3",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 2,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 38387729418819,
+      "valid_until_ns": 38397348597929
+    },
+    "terminal_ns": 38387729453144,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 38387729455828
+  },
+  "minted": {
+    "event": "target_handle_minted",
+    "id": "durable-1459070d3b4f4afbbf3f13d9821adb80",
+    "step": 0,
+    "minted_ns": 38387845241155,
+    "handle": "save_form",
+    "name": "save_form",
+    "status": "VALID",
+    "created_sequence": 11,
+    "expires_ns": 38447845241155,
+    "allowed_transformations": [
+      "window_translation"
+    ],
+    "patch_sha256": "d59dee2e1d41b3d20bcd608da8671873bc9d7a620cf36eb39e96ca04bd5f0a35",
+    "authority": "observational reference only; grants no input authority",
+    "reference_kind": "session_alias",
+    "private_registry_id_exposed": false,
+    "emit_started_ns": 38387846183827
+  },
+  "surface_move": {
+    "event": "test_surface_moved",
+    "id": "durable-97c3ed2d30d344fc96664a6f5a023782",
+    "step": 0,
+    "before": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "after": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "authority": "fault injection only; grants no input authority",
+    "emit_started_ns": 38388010251792
+  },
+  "fresh_observation": {
+    "event": "observation",
+    "id": "durable-14279531f3844934ac7f8be03d610259",
+    "step": 0,
+    "sequence": 13,
+    "capture_ns": 38388156696898,
+    "context_ns": 38388161054822,
+    "context": [
+      [
+        "windows",
+        "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+      ],
+      [
+        "active_window",
+        6291459
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/chromium-observe-target-pair-01/1-combined-seed991012/runtime/013.png",
+    "image_reused": false,
+    "image_prepare_ns": 17509361,
+    "image_ready_ns": 38388196053500,
+    "input_focus_before": 6291459,
+    "input_focus_after": 6291459,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        30,
+        18,
+        1050,
+        780
+      ]
+    },
+    "capture_ms": 2.970502,
+    "wire_bytes": 29773,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emit_started_ns": 38388201350878
+  },
+  "handle_check": {
+    "event": "target_handle_checked",
+    "id": "durable-14279531f3844934ac7f8be03d610259",
+    "step": 0,
+    "checked_ns": 38388206196689,
+    "observation_sequence": 13,
+    "observation_capture_ns": 38388156696898,
+    "authority": "resolution only; ordinary admission remains required",
+    "eligible": true,
+    "status": "REVALIDATED",
+    "handle": "save_form",
+    "reason": "exact_region_match",
+    "name": "save_form",
+    "point": [
+      290,
+      251
+    ],
+    "observed_box": [
+      270,
+      242,
+      42,
+      18
+    ],
+    "binding_translation": [
+      20,
+      8
+    ],
+    "local_translation": [
+      0,
+      0
+    ],
+    "sequence": 13,
+    "valid_until_ns": 38389156696898,
+    "patch_sha256": "d59dee2e1d41b3d20bcd608da8671873bc9d7a620cf36eb39e96ca04bd5f0a35",
+    "reference_kind": "session_alias",
+    "private_registry_id_exposed": false,
+    "emit_started_ns": 38388207130398
+  },
+  "admission_revalidation": {
+    "event": "target_handle_revalidated",
+    "step": 0,
+    "eligible": true,
+    "status": "REVALIDATED",
+    "handle": "save_form",
+    "authority": "resolution only; ordinary admission remains required",
+    "reason": "exact_region_match",
+    "name": "save_form",
+    "point": [
+      290,
+      251
+    ],
+    "observed_box": [
+      270,
+      242,
+      42,
+      18
+    ],
+    "binding_translation": [
+      20,
+      8
+    ],
+    "local_translation": [
+      0,
+      0
+    ],
+    "sequence": 13,
+    "valid_until_ns": 38389156696898,
+    "patch_sha256": "d59dee2e1d41b3d20bcd608da8671873bc9d7a620cf36eb39e96ca04bd5f0a35",
+    "reference_kind": "session_alias",
+    "private_registry_id_exposed": false,
+    "id": "durable-36796671ac16408bb6477f5616fd18fa",
+    "resolved_ns": 38388338499458,
+    "emit_started_ns": 38388338502842
+  },
+  "pointer_admissions": [
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 290,
+        "y": 251
+      },
+      "admitted_ns": 38388375877213,
+      "input_ack_ns": 38388376198809,
+      "valid_until_ns": 38398281271817,
+      "surface": 6291459,
+      "id": "durable-36796671ac16408bb6477f5616fd18fa",
+      "step": 0,
+      "emit_started_ns": 38388376334547
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 38388386118256,
+      "input_ack_ns": 38388386480843,
+      "valid_until_ns": 38398281271817,
+      "surface": 6291459,
+      "id": "durable-36796671ac16408bb6477f5616fd18fa",
+      "step": 0,
+      "emit_started_ns": 38388386559316
+    }
+  ],
+  "terminal": {
+    "event": "terminal",
+    "id": "durable-36796671ac16408bb6477f5616fd18fa",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 38388547848159,
+      "valid_until_ns": 38398281271817
+    },
+    "terminal_ns": 38388547879464,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 38388547881499
+  },
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "success": true,
+    "actual": {
+      "value": [
+        "t991012"
+      ]
+    },
+    "known_ns": 38388599896646,
+    "emit_started_ns": 38388599902898
+  },
+  "actual": {
+    "value": [
+      "t991012"
+    ]
+  },
+  "bridge_exit_code": 0,
+  "durable_calls": 12,
+  "observe_check_submit_to_return_ms": 202.583333
+}

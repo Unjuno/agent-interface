@@ -1,0 +1,5 @@
+OrbStack/Docker source and image inspection STOP (2026-10-05):
+`docker version --format '{{.Server.Version}}'` reported server version 29.4.0.
+The immediately following `docker image ls` failed in the daemon with:
+`rpc error: code = Unknown desc = blob sha256:c1f24dda54ba0d4f3cabe7900b203ea25766c2403dc752895a8e54e3f6167cb8 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/c1f24dda54ba0d4f3cabe7900b203ea25766c2403dc752895a8e54e3f6167cb8: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/c1f24dda54ba0d4f3cabe7900b203ea25766c2403dc752895a8e54e3f6167cb8: operation not supported`
+No image was identified and no container was started. No retry was made.

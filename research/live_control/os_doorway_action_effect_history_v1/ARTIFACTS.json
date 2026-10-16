@@ -1,0 +1,24 @@
+{
+  "archive": {
+    "name": "os_doorway_action_effect_history_v1_evidence.tar.xz",
+    "sha256": "49af2549e903db16f691863a881f545f9f36f1f039f71b16f985b09aeb7fe9ea",
+    "size_bytes": 15420
+  },
+  "base64_parts": [
+    {"name":"evidence.base64.part-00","sha256":"6c2a4e9dc8f9cb9db41ccaec4a0ad43e1f20bd4185fa009b7c275cad4e1f7f21","size_bytes":3001,"git_blob":"6c7c7c429a259a8679a48edf2d2de03dbbdf2613"},
+    {"name":"evidence.base64.part-01","sha256":"2d5dfba4bb9063b328b179ff2f424a2168076b58571eceb5b7eb9e27f5bbf008","size_bytes":3001,"git_blob":"37df92f5d8a0ccbdcb60c20e4363d989b82b53ba"},
+    {"name":"evidence.base64.part-02","sha256":"41d197038b327406956b0bbd3fd889184f0b418c7208ed258a4a80270dc917b2","size_bytes":3001,"git_blob":"5ba7a8945860f16cdfe156cf45663f2a0f661417"},
+    {"name":"evidence.base64.part-03","sha256":"44d120376475075b52af8b94d3907a8d60214d7134a3ed3d6a888ae4ea73cc70","size_bytes":3001,"git_blob":"132f724e8e3cfad663e32bd5bf575f4aa2279028"},
+    {"name":"evidence.base64.part-04","sha256":"0f25fdb13656ea820f60d0c91c50d01400fef4439d714a040e0c064e0b7afa4c","size_bytes":3001,"git_blob":"26149f0d02affc2e6039bc97e690bbf7a2051e39"},
+    {"name":"evidence.base64.part-05","sha256":"7fc0ee0d00147c73db2b379a11afa90a8b2f28af0aade50f903ba427de00a69c","size_bytes":3001,"git_blob":"08eabf91e4b3a99c353bed6c9845bde4dca72229"},
+    {"name":"evidence.base64.part-06","sha256":"8323b1c2538f546a357b914e0d536957511752f635d2c031de14e977a2583295","size_bytes":2561,"git_blob":"9a284cc855092fa8d1f135f9816c390bfbdab1a5"}
+  ],
+  "contents": "byte-complete source, A1 partial first outcomes, A2 24 first outcomes including PNG/result evidence, chunk ledgers, audit, readable result/report, and postformal corruption controls",
+  "invalid_publication_attempt": {
+    "bad_blob": "bf2b9a79616f47a8387c08b4f41bae23b9ae58bf",
+    "disposition": "detected by Git object mismatch and removed from branch before review; not evidence",
+    "reason": "single large base64 connector argument was truncated"
+  },
+  "reconstruction": "python reconstruct_evidence.py",
+  "schema": "os_doorway_history_artifacts_v1"
+}

@@ -1,0 +1,33 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "op": "finish",
+        "transport_request_id": "f99a5b7c1ba24517bd041c0332d21034"
+      },
+      "received_ns": 122950856399,
+      "emit_started_ns": 122950858886
+    },
+    {
+      "event": "independent_evaluation",
+      "success": true,
+      "actual": [
+        816,
+        345
+      ],
+      "known_ns": 122968386442,
+      "emit_started_ns": 122968417429
+    }
+  ],
+  "cursor": 72,
+  "returned_ns": 122979712332,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "f99a5b7c1ba24517bd041c0332d21034",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

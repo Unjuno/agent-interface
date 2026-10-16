@@ -1,0 +1,107 @@
+[
+  {
+    "name": "partial",
+    "before_bbox": [
+      596,
+      373,
+      643,
+      408
+    ],
+    "after_bbox": [
+      616,
+      373,
+      663,
+      408
+    ],
+    "observed_visual_delta": [
+      20,
+      0
+    ],
+    "postcondition": {
+      "event": "local_displacement_postcondition",
+      "id": "partial",
+      "step": 3,
+      "sequence": 9,
+      "format": "local-displacement-postcondition-outcome-v1",
+      "postcondition_id": "red-rectangle-right-24px",
+      "reason": "target_not_reached",
+      "continue_program": false,
+      "needs_decision": true,
+      "target_delta": [
+        24,
+        0
+      ],
+      "tolerance_px": 1,
+      "tracking": [
+        {
+          "status": "matched",
+          "error": 0.0,
+          "margin": 0.049166666666666664,
+          "source_observation": 1,
+          "observation": 8,
+          "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+          "patch_sha256": "f558da9a5b9b12e71ef6e713fe8053510d261afad353c315f6aa4efc8ac55a02",
+          "box": [
+            610,
+            367,
+            60,
+            48
+          ],
+          "delta": [
+            20,
+            0
+          ]
+        },
+        {
+          "status": "matched",
+          "error": 0.0,
+          "margin": 0.049166666666666664,
+          "source_observation": 1,
+          "observation": 9,
+          "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+          "patch_sha256": "f558da9a5b9b12e71ef6e713fe8053510d261afad353c315f6aa4efc8ac55a02",
+          "box": [
+            610,
+            367,
+            60,
+            48
+          ],
+          "delta": [
+            20,
+            0
+          ]
+        }
+      ],
+      "sample_span_ms": 110.340629,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "task-relative visual condition for already admitted later steps only"
+    },
+    "terminal": {
+      "event": "terminal",
+      "id": "partial",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 3,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 28319816033449,
+        "valid_until_ns": 28324501028508
+      },
+      "terminal_ns": 28319816068184,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "steps_started": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "save_started": false
+  }
+]

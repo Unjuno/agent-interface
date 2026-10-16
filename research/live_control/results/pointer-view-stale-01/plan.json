@@ -1,0 +1,12 @@
+{
+  "domain": "inkscape",
+  "controller": "assistant with deliberately stale source",
+  "sequence": "initial; observe advances sequence; use initial batch to request Right; expect clock-only reconciliation; inspect returned observation and resume explicit move/save",
+  "sources": {
+    "live_control/pointer_exchange_view_v1.py": "0613ec8f9a79705742c24e46679975746a1efd374227fd3d60dc48497f11c25d",
+    "live_control/pointer_exchange_v1.py": "76c5a753a16cf3634d4efd3c992dbdf90a9509da7a165dbad02c9b41eea2e1a5",
+    "live_control/pointer_report_view_v1.py": "52f49ce8bc4012ef4a8cfd5d15ce3c709c9c3ee4b25353e8e19de5ebd4d826dc",
+    "live_control/pointer_socket_entry_v1.py": "1b8ebf6b8bdcdbb2756ec4100acf0e9d5a4c4b77b0facdb58094fb0440d9c2d5"
+  },
+  "scope": "stale sequence detection; not same-sequence content freshness or race after clock"
+}

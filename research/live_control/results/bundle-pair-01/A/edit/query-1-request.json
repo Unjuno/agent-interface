@@ -1,0 +1,42 @@
+{
+  "after": 20,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "edit",
+  "request_id": "program-74d8198a021d4fc1b2282e9dbc598424",
+  "command": {
+    "op": "submit",
+    "id": "edit",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 560,
+        "y": 106,
+        "button": 1,
+        "duration_ms": 80
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "a"
+      },
+      {
+        "op": "text",
+        "text": "69.5"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 80,
+        "timeout_ms": 500
+      }
+    ],
+    "expected_sequence": 5,
+    "valid_until_ns": 64818509825
+  }
+}

@@ -1,0 +1,35 @@
+"""Exclusive bounded capture of one owned ordinary invocation."""
+from datetime import datetime, timezone
+import hashlib, json, platform, subprocess, sys, time
+from pathlib import Path
+
+HERE=Path(__file__).resolve().parent
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def write(path,obj):
+    with path.open('x',encoding='utf8',newline='\n') as f:json.dump(obj,f,indent=2);f.write('\n')
+def main():
+    label=sys.argv[1];allowed={'baseline':('run_arm.py.txt','baseline'),'candidate':('run_arm.py.txt','candidate'),'audit':('audit.py.txt',)}
+    if label not in allowed:raise ValueError('capture label')
+    out=HERE/'captures'/label;out.mkdir(parents=True,exist_ok=False)
+    argv=[sys.executable,'-B',str(HERE/allowed[label][0]),*allowed[label][1:]]
+    start=datetime.now(timezone.utc).isoformat();begin=time.perf_counter_ns()
+    write(out/'PRE_SEND.json',dict(label=label,argv=argv,cwd=str(HERE),start_utc=start,
+        capture_sha256=sha(Path(__file__).read_bytes()),python=sys.version,platform=platform.platform(),outer_timeout_s=30,stream_cap_bytes=2097152))
+    with (out/'stdout.txt').open('xb') as stdout,(out/'stderr.txt').open('xb') as stderr:
+        process=subprocess.Popen(argv,cwd=HERE,stdout=stdout,stderr=stderr)
+        write(out/'CHILD.json',dict(label=label,pid=process.pid,argv=argv))
+        timed_out=False
+        while process.poll() is None:
+            if time.perf_counter_ns()-begin>30000000000 or stdout.tell()>2097152 or stderr.tell()>2097152:
+                timed_out=True;process.terminate()
+                try:process.wait(timeout=1)
+                except subprocess.TimeoutExpired:process.kill();process.wait(timeout=1)
+                break
+            time.sleep(0.01)
+        code=process.wait(timeout=1)
+    streams={n:dict(bytes=len(b),sha256=sha(b)) for n in ('stdout.txt','stderr.txt') for b in [(out/n).read_bytes()]}
+    receipt=dict(label=label,pid=process.pid,start_utc=start,end_utc=datetime.now(timezone.utc).isoformat(),
+        elapsed_ns=time.perf_counter_ns()-begin,exit_code=code,timed_out_or_stream_cap=timed_out,streams=streams)
+    write(out/'RECEIPT.json',receipt);print(json.dumps(receipt))
+    return 2 if timed_out else code
+if __name__=='__main__':raise SystemExit(main())

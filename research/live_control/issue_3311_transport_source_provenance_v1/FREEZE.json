@@ -1,0 +1,14 @@
+{
+  "stage": "PRE_FORMAL",
+  "code_and_snapshot_manifest_sha256": {
+    "audit_v2.py": "c4b3ef8dac85cd4bd7e6f42a5835bbf91915883c72dab18fb61edbaec3c81889",
+    "formal_runner.py": "e87712fb79be55896ac30ea7b5bc5dac4e6bc28281a63a68c17fb6284bfcbc2d",
+    "test_audit_v2.py": "8870d39d7a918cbae3817c839d05752247791b47414b122777c170ac2a6a14b0",
+    "source_snapshots/audit_v1_frozen.py": "0a20abcbaeaf945992eb4abe97fb53b36c1d88ada83a131643ebdc7903c6ce61",
+    "SOURCE_SNAPSHOT_MANIFEST.json": "7359c94168ffc54e1baa58581238b5cae3b7c0c313ddc54afffbfaa8a43c5676"
+  },
+  "docker_image_id": "sha256:e635facd4cd70a0e0b5d72cb0ce38f24434b6e98e11c2383d428a880c0f7232c",
+  "docker_invocation": "docker run --rm --network none --read-only -e PYTHONDONTWRITEBYTECODE=1 -v <study>:/study:ro python:3.11-bookworm python /study/formal_runner.py",
+  "preformal_unit_tests": "4 passed",
+  "original_evidence_roots": "3 copied; each source-sha256.json and raw-sha256.json byte-identical to Issue #3311 originals"
+}

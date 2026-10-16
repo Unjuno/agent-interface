@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 760,
+      "y": 350
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    }
+  ],
+  "rationale": "Inspect the pending first segment after the presentation change before attempting the second segment.",
+  "intent": "inspect",
+  "expected_effect": "An unobstructed pointer position and fresh view of the A-to-B alignment for checking continuous pavement and the B corner.",
+  "checkpoint": {
+    "prior_turn": 5,
+    "status": "uncertain",
+    "evidence": "Only a short patch of pavement near B is clearly distinguishable. The terrain and overlapping labels prevent confirming a continuous three-tile A-to-B road and clear X tiles."
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "api": "notification",
+  "caller_alive_final": false,
+  "checkpoint": {
+    "caller_alive": false,
+    "frames": [],
+    "process_exit": 0,
+    "reader_alive": false,
+    "returned": {
+      "message": "app-server closed while waiting: ",
+      "type": "AppServerError"
+    },
+    "stdout_closed": true
+  },
+  "client_close_pipes": {
+    "stderr": false,
+    "stdin": false,
+    "stdout": false
+  },
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/src/peer.py.txt",
+    "notification",
+    "empty",
+    "/out/native-baseline/notification-empty"
+  ],
+  "events": [
+    {
+      "kind": "child_ready",
+      "ns": 22491294614531
+    },
+    {
+      "kind": "call_started",
+      "ns": 22491294801657
+    },
+    {
+      "kind": "call_ended",
+      "ns": 22491296233539
+    },
+    {
+      "kind": "stdout_eof_observed",
+      "ns": 22491296276165
+    },
+    {
+      "kind": "checkpoint",
+      "ns": 22491546370293
+    },
+    {
+      "kind": "child_reaped",
+      "ns": 22491546594503
+    },
+    {
+      "kind": "client_close_returned",
+      "ns": 22491546743795
+    },
+    {
+      "kind": "driver_pipes_closed",
+      "ns": 22491547097297
+    }
+  ],
+  "final": {
+    "caller_alive": false,
+    "journal_closed": true,
+    "pipes_closed": {
+      "stderr": true,
+      "stdin": true,
+      "stdout": true
+    },
+    "reader_alive": false
+  },
+  "finished": {
+    "owned_release_received": false,
+    "pid": 23
+  },
+  "identity": "notification-empty",
+  "journal": [],
+  "journal_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "native_exit": 0,
+  "pid": 23,
+  "ready": {
+    "api": "notification",
+    "pid": 23,
+    "scenario": "empty"
+  },
+  "returned": {
+    "message": "app-server closed while waiting: ",
+    "type": "AppServerError"
+  },
+  "scenario": "empty",
+  "stderr_remaining_hex": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/src/driver.py.txt\", line 68, in invoke\n    if api == 'request' else client.wait_notification(\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/baseline_client.py.txt\", line 102, in wait_notification\n    raise AppServerError(f\"app-server closed while waiting: {detail}\")\nfixed_baseline.AppServerError: app-server closed while waiting: \n",
+  "wire": {
+    "api": "notification",
+    "pid": 23,
+    "request_line": null,
+    "scenario": "empty",
+    "stderr_hex": "",
+    "stderr_write_count": 0,
+    "stdout_closed_ns": 22491295239826,
+    "stdout_hex": "",
+    "stdout_write_count": 0
+  }
+}

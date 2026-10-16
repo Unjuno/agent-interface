@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "checks": {
+    "manifest": true,
+    "frozen_sources": true,
+    "first_outcome": true,
+    "typed_failure": true,
+    "capacity_evidence": true,
+    "no_completed_model_turn": true,
+    "preflight_cache_only": true,
+    "gui_prefix_only": true,
+    "exact_source": true,
+    "empty_release": true,
+    "comparison_unobserved": true
+  },
+  "allocation_passed": false,
+  "failure_class": "upstream_model_capacity_before_completed_turn",
+  "model_threads_started": 1,
+  "completed_model_turns": 0,
+  "files_in_manifest": 34,
+  "bytes_before_receipt": 469683,
+  "scope": "The first and only frozen seed213 allocation stopped in arm 1 before a completed model turn. It observes an upstream Luna-low capacity refusal plus safe GUI cleanup. It contains no local-versus-model comparison, token advantage, recovery latency, semantic completion, general reliability or human-tempo evidence."
+}

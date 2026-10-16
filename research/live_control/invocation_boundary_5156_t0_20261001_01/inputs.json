@@ -1,0 +1,72 @@
+{
+  "allocation_id": "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-04",
+  "max_container_invocations": 1,
+  "cases": [
+    {
+      "case_id": "valid_one_invocation",
+      "invocations": [
+        {
+          "invocation_id": "inv-001",
+          "container_invoked": true,
+          "runner_started": true,
+          "runner_exit_code": 0,
+          "audit_invoked": true,
+          "raw_events": ["fixture", "runner_complete"],
+          "artifact_paths": ["results/inv-001/raw.jsonl", "results/inv-001/audit.json"]
+        }
+      ]
+    },
+    {
+      "case_id": "historical_three_attempt_collision",
+      "legacy_artifact_refs": [
+        {"path": "results/formal-01/STOP.json", "blob": "53d048cb8f962dee09de750328c4c655412a6547"},
+        {"path": "results/formal-02/STOP.json", "blob": "8edfdf0763bc2739d6a16ce73cca3b25acf296a1"},
+        {"path": "results/allocation-04-fail/raw.jsonl", "blob": "c11d740f5f37dc538490c235b117013067a52a36"},
+        {"path": "results/allocation-04-fail/runner.stderr.txt", "blob": "3473226a0bf77c26a0d806817e6a697e6477e922"}
+      ],
+      "invocations": [
+        {"invocation_id": null, "container_invoked": true, "runner_started": false, "runner_exit_code": 2, "audit_invoked": false, "raw_events": [], "artifact_paths": ["results/formal-01/STOP.json"]},
+        {"invocation_id": null, "container_invoked": true, "runner_started": false, "runner_exit_code": 1, "audit_invoked": false, "raw_events": [], "artifact_paths": ["results/formal-02/STOP.json"]},
+        {"invocation_id": null, "container_invoked": true, "runner_started": true, "runner_exit_code": 1, "audit_invoked": false, "raw_events": ["fixture", "admission", "runner_failure"], "artifact_paths": ["results/allocation-04-fail/raw.jsonl"]}
+      ]
+    },
+    {
+      "case_id": "two_tagged_invocations_exceed_limit",
+      "invocations": [
+        {"invocation_id": "inv-008", "container_invoked": true, "runner_started": false, "runner_exit_code": 2, "audit_invoked": false, "raw_events": [], "artifact_paths": ["results/inv-008/STOP.json"]},
+        {"invocation_id": "inv-009", "container_invoked": true, "runner_started": false, "runner_exit_code": 1, "audit_invoked": false, "raw_events": [], "artifact_paths": ["results/inv-009/STOP.json"]}
+      ]
+    },
+    {
+      "case_id": "mixed_artifacts_same_id",
+      "invocations": [
+        {"invocation_id": "inv-002", "container_invoked": true, "runner_started": false, "runner_exit_code": 2, "audit_invoked": false, "raw_events": ["fixture"], "artifact_paths": ["results/inv-002/STOP.json", "results/inv-002/raw.jsonl"]}
+      ]
+    },
+    {
+      "case_id": "runner_not_started_but_raw_exists",
+      "invocations": [
+        {"invocation_id": "inv-003", "container_invoked": true, "runner_started": false, "runner_exit_code": 2, "audit_invoked": false, "raw_events": ["fixture"], "artifact_paths": ["results/inv-003/raw.jsonl"]}
+      ]
+    },
+    {
+      "case_id": "duplicate_invocation_id",
+      "invocations": [
+        {"invocation_id": "inv-004", "container_invoked": true, "runner_started": false, "runner_exit_code": 2, "audit_invoked": false, "raw_events": [], "artifact_paths": ["results/inv-004/STOP.json"]},
+        {"invocation_id": "inv-004", "container_invoked": true, "runner_started": false, "runner_exit_code": 2, "audit_invoked": false, "raw_events": [], "artifact_paths": ["results/inv-004/STOP.json"]}
+      ]
+    },
+    {
+      "case_id": "cross_invocation_artifact_path",
+      "invocations": [
+        {"invocation_id": "inv-005", "container_invoked": true, "runner_started": true, "runner_exit_code": 0, "audit_invoked": true, "raw_events": ["fixture", "runner_complete"], "artifact_paths": ["results/inv-006/raw.jsonl"]}
+      ]
+    },
+    {
+      "case_id": "audit_after_runner_failure",
+      "invocations": [
+        {"invocation_id": "inv-007", "container_invoked": true, "runner_started": true, "runner_exit_code": 1, "audit_invoked": true, "raw_events": ["fixture", "runner_failure"], "artifact_paths": ["results/inv-007/raw.jsonl", "results/inv-007/audit.json"]}
+      ]
+    }
+  ]
+}

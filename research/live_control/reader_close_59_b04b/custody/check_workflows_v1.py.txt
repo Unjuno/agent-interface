@@ -1,0 +1,32 @@
+"""Read event/path filters at fixed content base; no dispatch/config change."""
+import datetime, fnmatch, hashlib, json, pathlib, subprocess, yaml
+R = pathlib.Path(__file__).resolve().parent; SRC = R / 'src'
+branch = 'fix/appserver-reader-close-01a0ff33-20261003'
+changed = ['research/live_control/codex_app_server_client_v2.py', 'research/live_control/test_appserver_reader_close_01a0ff33.py', 'research/live_control/README.md', 'research/live_control/reader_close_59_b04b/README.md']
+def git(*args): return subprocess.check_output(['git', '-C', str(SRC), *args])
+entries = git('ls-tree', '-r', 'HEAD', '.github/workflows').decode().splitlines()
+images = []
+for entry in entries:
+    meta, name = entry.split('\t'); mode, kind, oid = meta.split()
+    if not name.endswith(('.yml', '.yaml')): continue
+    b = git('cat-file', 'blob', oid); doc = yaml.safe_load(b); events = doc.get('on', doc.get(True, {}))
+    if isinstance(events, str): events = {events: None}
+    if isinstance(events, list): events = {e: None for e in events}
+    eligible = []
+    for event in ['push', 'pull_request', 'pull_request_target']:
+        if event not in events: continue
+        options = events[event] or {}; ref = branch if event == 'push' else 'main'
+        branches = options.get('branches', ['**']); branch_ignores = options.get('branches-ignore', [])
+        paths = options.get('paths', ['**']); ignores = options.get('paths-ignore', [])
+        def match(value, patterns):
+            ok = False
+            for p in patterns:
+                negative = str(p).startswith('!'); pattern = str(p)[1:] if negative else str(p)
+                if fnmatch.fnmatchcase(value, pattern): ok = not negative
+            return ok
+        if match(ref, branches) and not any(fnmatch.fnmatchcase(ref, p) for p in branch_ignores) and any(match(p, paths) and not any(fnmatch.fnmatchcase(p, q) for q in ignores) for p in changed):
+            eligible.append(event)
+    images.append({'path': name, 'git_oid': oid, 'sha256': hashlib.sha256(b).hexdigest(), 'bytes': len(b), 'event_filters': events, 'potential_events': eligible})
+result = {'observed_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'base': git('rev-parse', 'HEAD').decode().strip(), 'branch': branch, 'representative_changed_paths': changed, 'yaml_version': yaml.__version__, 'inventory': images, 'limits': 'fnmatch filter analysis over fixed base; final dynamic GitHub requirements/updated base/event execution remain separate. No workflows altered or dispatched.'}
+with (R / 'WORKFLOW_CONTEXT.v1.json').open('x', encoding='utf-8') as f: json.dump(result, f, indent=2); f.write('\n')
+print(json.dumps({'workflows': len(images), 'potential': [{'path': x['path'], 'events': x['potential_events']} for x in images if x['potential_events']]}, indent=2))

@@ -1,0 +1,43 @@
+{
+  "stage": "POSTHOC_ADDITIONAL_CONTROLS",
+  "formal_reruns": 0,
+  "total": 7,
+  "rejected": 7,
+  "controls": [
+    {
+      "name": "deleted_raw_case",
+      "rejected": true,
+      "reason": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    {
+      "name": "raw_byte_hash_mismatch",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "changed_exit_receipt",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "changed_candidate_metric",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "hidden_extra_case_file",
+      "rejected": true,
+      "reason": "ValueError('list length mismatch')"
+    },
+    {
+      "name": "boolean_terminal_count",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "hidden_stop",
+      "rejected": true,
+      "reason": "ValueError('formal STOP retained')"
+    }
+  ]
+}

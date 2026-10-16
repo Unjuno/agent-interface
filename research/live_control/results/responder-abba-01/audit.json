@@ -1,0 +1,101 @@
+{
+  "scope": "requested modes only; unequal model actions/cache possible; two episodes per mode; descriptive not causal",
+  "identical_first_prompts": true,
+  "rows": [
+    {
+      "label": "responder-abba-1-builtin",
+      "instruction_mode": "builtin",
+      "model_calls": 4,
+      "saves": 2,
+      "capture_to_evaluation_s": 35.192608338999996,
+      "supervisor_s": 41.4915757,
+      "proposal_arrival_s": [
+        9.9505503,
+        5.7762146,
+        5.9986983,
+        7.4374642
+      ],
+      "runner_total_s": 31.7654336,
+      "usage": {
+        "input_tokens": 52580,
+        "cached_input_tokens": 23552,
+        "output_tokens": 467
+      },
+      "events": 84,
+      "frames": 15,
+      "append_records": 25,
+      "socket_calls": 14
+    },
+    {
+      "label": "responder-abba-2-responder",
+      "instruction_mode": "responder",
+      "model_calls": 4,
+      "saves": 2,
+      "capture_to_evaluation_s": 32.647159259,
+      "supervisor_s": 36.2305763,
+      "proposal_arrival_s": [
+        8.5105907,
+        5.1949287,
+        7.4545146,
+        5.3426943
+      ],
+      "runner_total_s": 29.1811804,
+      "usage": {
+        "input_tokens": 38997,
+        "cached_input_tokens": 10240,
+        "output_tokens": 577
+      },
+      "events": 84,
+      "frames": 15,
+      "append_records": 25,
+      "socket_calls": 14
+    },
+    {
+      "label": "responder-abba-3-responder",
+      "instruction_mode": "responder",
+      "model_calls": 3,
+      "saves": 1,
+      "capture_to_evaluation_s": 24.809809179,
+      "supervisor_s": 28.3101978,
+      "proposal_arrival_s": [
+        7.3258814,
+        6.1538009,
+        6.7035905
+      ],
+      "runner_total_s": 22.131455000000003,
+      "usage": {
+        "input_tokens": 29282,
+        "cached_input_tokens": 11520,
+        "output_tokens": 436
+      },
+      "events": 60,
+      "frames": 12,
+      "append_records": 17,
+      "socket_calls": 10
+    },
+    {
+      "label": "responder-abba-4-builtin",
+      "instruction_mode": "builtin",
+      "model_calls": 4,
+      "saves": 2,
+      "capture_to_evaluation_s": 31.055456306,
+      "supervisor_s": 34.705095500000006,
+      "proposal_arrival_s": [
+        6.7315064,
+        4.908995,
+        7.0354749,
+        5.702253
+      ],
+      "runner_total_s": 27.3878888,
+      "usage": {
+        "input_tokens": 52573,
+        "cached_input_tokens": 39936,
+        "output_tokens": 488
+      },
+      "events": 85,
+      "frames": 16,
+      "append_records": 25,
+      "socket_calls": 14
+    }
+  ]
+}

@@ -1,0 +1,4282 @@
+[
+  {
+    "request": {
+      "after": 0,
+      "events": [
+        "observation"
+      ],
+      "timeout": 5
+    },
+    "started_ns": 17113977155,
+    "finished_ns": 18505224178,
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "ready",
+          "app": "xterm",
+          "task": "Type token and Return; saved text must equal token.",
+          "goal": {
+            "token": "t991024",
+            "a": 767,
+            "b": 799,
+            "dx": 24,
+            "setup_readiness_captures": 0
+          },
+          "presentation": "compact",
+          "finish_after_contract": "submit finish_after=true reserves final program; after terminal close input admission and score; cancel/clock remain available; finish cleans up without rescoring",
+          "basic_step_examples": [
+            {
+              "op": "text",
+              "text": "123"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "s"
+            }
+          ],
+          "decision_evidence_schema": {
+            "required_for": "submit",
+            "fields": {
+              "delivery_id": "successfully flushed observation or review delivery ID",
+              "observation_sequence": "must equal expected_sequence",
+              "producer": [
+                "assistant",
+                "scripted",
+                "human"
+              ]
+            },
+            "authority": "none; ordinary admission required"
+          },
+          "servo_schema": {
+            "op": "pointer_servo",
+            "program_constraint": "must be the only step",
+            "required": {
+              "source_sequence": "integer; latest observation sequence",
+              "box": "[x,y,width,height] integers; size 4..96; spatial detail required",
+              "target_delta": "[dx,dy] integers; each -32..32",
+              "points": "2..32 objects {x: integer, y: integer}; within source frame",
+              "duration_ms": "integer 1..5000; initial path only",
+              "max_corrections": "integer 1..3"
+            },
+            "fixed": {
+              "search_radius_px": 32,
+              "max_correction_px": 24,
+              "tolerance_px": 1,
+              "reply_timeout_ms": 1000,
+              "feedback_delay_ms": 80
+            },
+            "outcomes": [
+              "local_goal_reached",
+              "lost",
+              "ambiguous",
+              "invalid_frame",
+              "same_observation",
+              "update_limit"
+            ],
+            "completion": "non-goal outcome gives needs_decision; local goal is not independent task success"
+          },
+          "operations": [
+            "submit",
+            "pointer_reply",
+            "cancel",
+            "clock",
+            "finish",
+            "finalization_status"
+          ],
+          "guided_fields": [
+            "points",
+            "duration_ms",
+            "reply_timeout_ms",
+            "max_updates",
+            "feedback_delay_ms"
+          ],
+          "reply_fields": [
+            "ticket",
+            "sequence",
+            "command"
+          ],
+          "emit_started_ns": 18427623071,
+          "delivery_id": "delivery:1"
+        },
+        {
+          "event": "observation",
+          "id": "initial",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 18449645093,
+          "context_ns": 18457965280,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/001.png",
+          "image_reused": false,
+          "image_prepare_ns": 23354255,
+          "image_ready_ns": 18494334053,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 14.598432,
+          "wire_bytes": 20196,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 0,
+            "sample_started_ns": 18433987046,
+            "sample_finished_ns": 18434303969,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 0,
+            "sample_started_ns": 18499458257,
+            "sample_finished_ns": 18499716973,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18499752040,
+          "delivery_id": "delivery:2"
+        }
+      ],
+      "cursor": 2,
+      "returned_ns": 18504830951,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  },
+  {
+    "request": {
+      "after": 2,
+      "events": [
+        "clock"
+      ],
+      "timeout": 5,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "clock"
+    },
+    "started_ns": 18505368590,
+    "finished_ns": 18528568058,
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18505818038,
+          "emit_started_ns": 18505821002,
+          "delivery_id": "delivery:3"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18515849494,
+          "sequence": 1,
+          "emit_started_ns": 18515852498,
+          "delivery_id": "delivery:4"
+        }
+      ],
+      "cursor": 4,
+      "returned_ns": 18528355374,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "clock",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 4,
+      "events": [
+        "accepted",
+        "rejected"
+      ],
+      "timeout": 5,
+      "command": {
+        "op": "submit",
+        "id": "hold",
+        "expected_sequence": 1,
+        "valid_until_ns": 26515849494,
+        "decision_evidence": {
+          "delivery_id": "delivery:2",
+          "observation_sequence": 1,
+          "producer": "scripted"
+        },
+        "steps": [
+          {
+            "op": "hold",
+            "keys": [
+              "Right"
+            ],
+            "duration_ms": 4000
+          }
+        ]
+      },
+      "request_id": "hold"
+    },
+    "started_ns": 18528634509,
+    "finished_ns": 18560438817,
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "decision_evidence": {
+              "delivery_id": "delivery:2",
+              "observation_sequence": 1,
+              "producer": "scripted"
+            },
+            "expected_sequence": 1,
+            "id": "hold",
+            "op": "submit",
+            "steps": [
+              {
+                "duration_ms": 4000,
+                "keys": [
+                  "Right"
+                ],
+                "op": "hold"
+              }
+            ],
+            "valid_until_ns": 26515849494
+          },
+          "received_ns": 18529005743,
+          "emit_started_ns": 18529008104,
+          "delivery_id": "delivery:5"
+        },
+        {
+          "event": "decision_evidence",
+          "source_delivery_id": "delivery:2",
+          "observation_sequence": 1,
+          "producer": "scripted",
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/001.png",
+          "provenance": "caller-declared reference; model viewing unverified",
+          "authority": "none; ordinary admission remains required",
+          "id": "hold",
+          "received_ns": 18539800810,
+          "emit_started_ns": 18539801762,
+          "delivery_id": "delivery:6"
+        },
+        {
+          "event": "accepted",
+          "id": "hold",
+          "steps": 1,
+          "valid_until_ns": 26515849494,
+          "accepted_ns": 18550341129,
+          "emit_started_ns": 18550342699,
+          "delivery_id": "delivery:7"
+        }
+      ],
+      "cursor": 7,
+      "returned_ns": 18560214876,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "hold",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "cancel_requested"
+      ],
+      "timeout": 1,
+      "command": {
+        "op": "cancel",
+        "id": "hold"
+      },
+      "request_id": "cancel"
+    },
+    "started_ns": 18810513329,
+    "finished_ns": 18810705571,
+    "reply": {
+      "status": "busy",
+      "command_forwarded": false
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "cancel_requested"
+      ],
+      "timeout": 1,
+      "command": {
+        "op": "cancel",
+        "id": "hold"
+      },
+      "request_id": "cancel"
+    },
+    "started_ns": 18810761890,
+    "finished_ns": 18850830343,
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        }
+      ],
+      "cursor": 28,
+      "returned_ns": 18850574566,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "cancel",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "never-emitted"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "blocker1"
+    },
+    "started_ns": 18561155875,
+    "finished_ns": 20562121884,
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        },
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20561713346,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "blocker1",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "never-emitted"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "blocker2"
+    },
+    "started_ns": 18561664838,
+    "finished_ns": 20562665649,
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        },
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20562305652,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "blocker2",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "never-emitted"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "blocker0"
+    },
+    "started_ns": 18561486213,
+    "finished_ns": 20562921080,
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        },
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20562663432,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "blocker0",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "never-emitted"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "blocker3"
+    },
+    "started_ns": 18562533059,
+    "finished_ns": 20563798840,
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        },
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20563400060,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "blocker3",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "never-emitted"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "blocker4"
+    },
+    "started_ns": 18562481728,
+    "finished_ns": 20564151767,
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        },
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20563190552,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "blocker4",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "never-emitted"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "blocker5"
+    },
+    "started_ns": 18562847938,
+    "finished_ns": 20564431488,
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        },
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20564059031,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "blocker5",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "never-emitted"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "blocker6"
+    },
+    "started_ns": 18563489842,
+    "finished_ns": 20564603938,
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        },
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20564402225,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "blocker6",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 7,
+      "events": [
+        "never-emitted"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "blocker7"
+    },
+    "started_ns": 18563402789,
+    "finished_ns": 20564850477,
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18561541236,
+          "emit_started_ns": 18569123825,
+          "delivery_id": "delivery:8"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18584910388,
+          "sequence": 1,
+          "emit_started_ns": 18592693029,
+          "delivery_id": "delivery:9"
+        },
+        {
+          "event": "keys_held",
+          "id": "hold",
+          "step": 0,
+          "keys": [
+            "Right"
+          ],
+          "input_ack_ns": 18592652244,
+          "emit_started_ns": 18606336090,
+          "delivery_id": "delivery:10"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18606503087,
+          "emit_started_ns": 18617241664,
+          "delivery_id": "delivery:11"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18632193331,
+          "sequence": 1,
+          "emit_started_ns": 18632197463,
+          "delivery_id": "delivery:12"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18650275354,
+          "emit_started_ns": 18650276835,
+          "delivery_id": "delivery:13"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18660879116,
+          "sequence": 2,
+          "emit_started_ns": 18660884013,
+          "delivery_id": "delivery:14"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18673440403,
+          "emit_started_ns": 18673443165,
+          "delivery_id": "delivery:15"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18686614450,
+          "sequence": 2,
+          "emit_started_ns": 18686618775,
+          "delivery_id": "delivery:16"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18697819177,
+          "emit_started_ns": 18697820894,
+          "delivery_id": "delivery:17"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18709726249,
+          "sequence": 2,
+          "emit_started_ns": 18709729468,
+          "delivery_id": "delivery:18"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 18628789979,
+          "context_ns": 18635816987,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 22792691,
+          "image_ready_ns": 18676175177,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 10.120011,
+          "wire_bytes": 1562,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18617334161,
+            "sample_finished_ns": 18617679871,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18682518497,
+            "sample_finished_ns": 18682688624,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18723313731,
+          "delivery_id": "delivery:19"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18723215482,
+          "emit_started_ns": 18734209338,
+          "delivery_id": "delivery:20"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18747359850,
+          "sequence": 2,
+          "emit_started_ns": 18747362476,
+          "delivery_id": "delivery:21"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18759516245,
+          "emit_started_ns": 18759520404,
+          "delivery_id": "delivery:22"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18772601501,
+          "sequence": 2,
+          "emit_started_ns": 18772605833,
+          "delivery_id": "delivery:23"
+        },
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 18784926003,
+          "emit_started_ns": 18784929492,
+          "delivery_id": "delivery:24"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 18799422141,
+          "sequence": 3,
+          "emit_started_ns": 18799426726,
+          "delivery_id": "delivery:25"
+        },
+        {
+          "event": "command",
+          "command": {
+            "id": "hold",
+            "op": "cancel"
+          },
+          "received_ns": 18812464909,
+          "emit_started_ns": 18812467942,
+          "delivery_id": "delivery:26"
+        },
+        {
+          "event": "observation",
+          "id": "hold",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 18790501506,
+          "context_ns": 18796271702,
+          "context": [
+            [
+              "windows",
+              "0x0080000c  0 HPLaptop AI XTERM READY\n"
+            ],
+            [
+              "active_window",
+              8388620
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+          "image_reused": true,
+          "image_prepare_ns": 2092276,
+          "image_ready_ns": 18804626869,
+          "input_focus_before": 8388620,
+          "input_focus_after": 8388620,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 8388620,
+            "surface": 8388620,
+            "geometry": [
+              358,
+              237,
+              564,
+              340
+            ]
+          },
+          "capture_ms": 4.058096,
+          "wire_bytes": 260,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18784400553,
+            "sample_finished_ns": 18785090319,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "36426f66af4d4f9b86d4c96873cb1d2c",
+            "revision": 1,
+            "sample_started_ns": 18811319324,
+            "sample_finished_ns": 18811836565,
+            "owned_buttons": [],
+            "owned_keycodes": [
+              114
+            ],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "focus": 8388620,
+            "active_lease_deadline_ns": 26515849494,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 18824229429,
+          "delivery_id": "delivery:27"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "hold",
+          "matched": true,
+          "requested_ns": 18824041341,
+          "emit_started_ns": 18836643609,
+          "delivery_id": "delivery:28"
+        },
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20563850479,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "blocker7",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 28,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 5
+    },
+    "started_ns": 20564948753,
+    "finished_ns": 20565268456,
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "terminal",
+          "id": "hold",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 18837756830,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 18849708557,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 18849713241,
+          "review": {
+            "runtime_ns": 18849708557,
+            "clock_scope": "terminal creation time; not current time at delivery",
+            "observation": {
+              "sequence": 3,
+              "capture_ns": 18790501506,
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/socket-saturation-v4/runtime/002.png",
+              "image_reused": true,
+              "program_id": "hold",
+              "from_this_program": true,
+              "freshness": "historical; acquire new observation if required"
+            },
+            "local_outcome": null,
+            "semantic_verification": "not implied by execution or local visual goal"
+          },
+          "delivery_id": "delivery:29"
+        }
+      ],
+      "cursor": 29,
+      "returned_ns": 20565202211,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  },
+  {
+    "request": {
+      "after": 29,
+      "events": [
+        "clock"
+      ],
+      "timeout": 5,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "dropped"
+    },
+    "started_ns": 20565412719,
+    "finished_ns": 20592645440,
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock"
+          },
+          "received_ns": 20565833333,
+          "emit_started_ns": 20565835785,
+          "delivery_id": "delivery:30"
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 20570799092,
+          "sequence": 3,
+          "emit_started_ns": 20570802359,
+          "delivery_id": "delivery:31"
+        }
+      ],
+      "cursor": 31,
+      "returned_ns": 20592503000,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "dropped",
+        "state": "stdin_flushed",
+        "replayed": true
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 31,
+      "events": [
+        "command"
+      ],
+      "timeout": 5,
+      "command": {
+        "op": "finish"
+      },
+      "request_id": "finish"
+    },
+    "started_ns": 20592693740,
+    "finished_ns": 20603269929,
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "finish"
+          },
+          "received_ns": 20593266571,
+          "emit_started_ns": 20593268538,
+          "delivery_id": "delivery:32"
+        }
+      ],
+      "cursor": 32,
+      "returned_ns": 20603077269,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "finish",
+        "state": "stdin_flushed",
+        "replayed": false
+      }
+    }
+  }
+]

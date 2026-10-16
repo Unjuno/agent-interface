@@ -1,0 +1,22 @@
+{"event":"cell_started","extra":{"spec":{"cell_id":"composed__healthy","condition":"healthy","source_file":"composed_client.py","variant":"composed"}},"monotonic_ns":31985525077,"seq":0}
+{"event":"client_construct_begin","extra":{"peer_command":["/usr/local/bin/python","-B","/src/echo_peer.py","--directory","/out/cells/composed__healthy"]},"monotonic_ns":31988810546,"seq":1}
+{"event":"client_constructed","extra":{"child_pid":18,"reader_name":"Thread-1 (_read)"},"monotonic_ns":31992976218,"seq":2}
+{"event":"peer_ready_observed","extra":{"ready":{"monotonic_ns":32391217975,"parent_pid":17,"pid":18}},"monotonic_ns":32398160662,"seq":3}
+{"event":"caller_started","extra":{"timeout_ns":50000000},"monotonic_ns":32398468259,"seq":4}
+{"event":"caller_finished","extra":{"result":{"payload":"journal-mutex-witness"},"status":"RETURN"},"monotonic_ns":32402359326,"seq":5}
+{"event":"checkpoint","extra":{"caller_alive":false,"caller_finished":true,"holder_alive":false,"holder_finished":false,"journal_row_count":2,"peer_received_bytes":70,"peer_returncode":null,"reader_alive":true},"monotonic_ns":32657671215,"seq":6}
+{"event":"caller_joined","extra":{"alive":false},"monotonic_ns":32657956475,"seq":7}
+{"event":"pipe_close_begin","extra":{"name":"stdin"},"monotonic_ns":32658178245,"seq":8}
+{"event":"stdin_closed_for_peer_eof","extra":{"closed":true},"monotonic_ns":32658418018,"seq":9}
+{"event":"child_reaped","extra":{"child_pid":18,"returncode":0},"monotonic_ns":32666190014,"seq":10}
+{"event":"client_close_begin","extra":{"timeout_ns":200000000},"monotonic_ns":32666576813,"seq":11}
+{"event":"client_close_returned","extra":{},"monotonic_ns":32667203116,"seq":12}
+{"event":"reader_joined","extra":{"alive":false},"monotonic_ns":32667527663,"seq":13}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stdin"},"monotonic_ns":32670234478,"seq":14}
+{"event":"pipe_close_begin","extra":{"name":"stdout"},"monotonic_ns":32670573452,"seq":15}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stdout"},"monotonic_ns":32670936660,"seq":16}
+{"event":"pipe_close_begin","extra":{"name":"stderr"},"monotonic_ns":32671133228,"seq":17}
+{"event":"pipe_closed","extra":{"closed":true,"name":"stderr"},"monotonic_ns":32671279781,"seq":18}
+{"event":"journal_closed","extra":{"closed":true},"monotonic_ns":32671407917,"seq":19}
+{"event":"cleanup_done","extra":{"caller_alive":false,"child_pid":18,"child_returncode":0,"cleanup_errors":[],"explicit_pipe_closed":{"stderr":true,"stdin":true,"stdout":true},"holder_alive":false,"journal_closed":true,"journal_row_count":2,"peer_received_bytes":70,"reader_alive":false,"thread_exceptions":[]},"monotonic_ns":32674528533,"seq":20}
+{"event":"cell_finished","extra":{"status":"COMPLETE","stop_reason":null},"monotonic_ns":32679657078,"seq":21}

@@ -1,0 +1,89 @@
+"""Ordinary in-memory controls. No Popen/client constructor/native pipe."""
+import importlib.util,json,threading,time,traceback,hashlib,sys
+from pathlib import Path
+from collections import deque
+root=Path(__file__).resolve().parent;results=[]
+
+def load(arm):
+ s=importlib.util.spec_from_file_location('memory_'+arm,root/(arm+'.py'));m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+
+def make(m,objects,closed=False):
+ c=m.CodexAppServerClient.__new__(m.CodexAppServerClient);c._condition=threading.Condition();c._notifications=deque(objects);c._closed=closed;return c
+
+def run(name,fn):
+ begin=time.monotonic_ns()
+ try:details=fn();results.append({'name':name,'pass':True,'start_ns':begin,'end_ns':time.monotonic_ns(),'details':details})
+ except BaseException as e:
+  results.append({'name':name,'pass':False,'type':type(e).__name__,'message':str(e),'traceback':traceback.format_exc(),'start_ns':begin,'end_ns':time.monotonic_ns()});raise
+
+def queued(arm):
+ m=load(arm);value={'method':'ok'};c=make(m,[value],True);answer=c.wait_notification(lambda x:True,timeout=0);assert answer is value and len(c._notifications)==0
+ try:c.wait_notification(lambda x:False,timeout=.1)
+ except m.AppServerError:pass
+ else:raise AssertionError('closed empty wait did not raise AppServerError')
+ return {'queued_true_after_EOF_and_deadline':'same identity returned','closed_empty':'AppServerError'}
+
+def exception(arm):
+ m=load(arm);value={'method':'ok'};c=make(m,[value])
+ def fail(x):raise LookupError('construction expected')
+ try:c.wait_notification(fail)
+ except LookupError:pass
+ else:raise AssertionError('exception swallowed')
+ assert len(c._notifications)==1 and c._notifications[0] is value
+ assert c._condition.acquire(timeout=.1);c._condition.release()
+ return {'exception':'LookupError','queue':'same identity retained','condition':'released'}
+
+def stale():
+ m=load('candidate');first={'method':'equal'};second={'method':'equal'};assert first==second and first is not second
+ c=make(m,[first,second]);entered=threading.Event();release=threading.Event();answer={};calls=[]
+ def p(x):
+  calls.append(x)
+  if x is first:
+   entered.set();assert release.wait(.5)
+  return True
+ def waiter():
+  try:answer['a']=c.wait_notification(p,timeout=.2)
+  except BaseException as e:answer['error']=repr(e)
+ t=threading.Thread(target=waiter,daemon=True);t.start();assert entered.wait(.5)
+ try:answer['b']=c.wait_notification(lambda x:True,timeout=.2)
+ finally:release.set()
+ t.join(.5);assert not t.is_alive();assert 'error' not in answer;assert answer['b'] is first and answer['a'] is second and len(c._notifications)==0
+ assert len(calls)==2 and calls[0] is first and calls[1] is second
+ return {'first':'B consumed','equal_distinct_second':'A consumed after recheck','duplicate_return':False,'callback_calls':len(calls)}
+
+def queue_change():
+ m=load('candidate');first={'method':'old'};second={'method':'match'};c=make(m,[first]);entered=threading.Event();release=threading.Event();answer={}
+ def p(x):
+  if x is first and not entered.is_set():entered.set();assert release.wait(.5)
+  return x is second
+ def waiter():
+  try:answer['value']=c.wait_notification(p,timeout=.2)
+  except BaseException as e:answer['error']=repr(e)
+ t=threading.Thread(target=waiter,daemon=True);t.start();assert entered.wait(.5)
+ with c._condition:c._notifications.append(second);c._condition.notify_all()
+ release.set();t.join(.5);assert not t.is_alive() and 'error' not in answer and answer['value'] is second and list(c._notifications)==[first]
+ return {'append_and_notify':'during false callback','result':'new matching identity returned','old':'retained'}
+
+def truth():
+ m=load('candidate');value={'method':'ok'};c=make(m,[value]);entered=threading.Event();release=threading.Event();answer={}
+ class Truth:
+  def __bool__(self):entered.set();assert release.wait(.5);return True
+ def waiter():
+  try:answer['value']=c.wait_notification(lambda x:Truth(),timeout=.2)
+  except BaseException as e:answer['error']=repr(e)
+ t=threading.Thread(target=waiter,daemon=True);t.start();assert entered.wait(.5)
+ acquired=c._condition.acquire(timeout=.02)
+ if acquired:c._condition.release()
+ release.set();t.join(.5);assert acquired and not t.is_alive() and 'error' not in answer and answer['value'] is value
+ return {'truth_conversion':'outside condition','independent_acquisition':True}
+
+status=0
+try:
+ for arm in ('baseline','candidate'):
+  run(arm+' queued EOF/deadline',lambda arm=arm:queued(arm));run(arm+' exception retention',lambda arm=arm:exception(arm))
+ run('candidate stale identity/equal value',stale);run('candidate append before wait',queue_change);run('candidate truth conversion',truth)
+except BaseException:status=2
+finally:
+ report={'schema':'predicate-condition-memory-construction-v1','python':sys.version,'native_peers':0,'client_constructors':0,'tests':results,'pass':status==0,'source_sha256':{n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in ('baseline.py','candidate.py','construct_controls.py')}}
+ (root/'construction-controls.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\n');print(json.dumps(report,sort_keys=True))
+raise SystemExit(status)

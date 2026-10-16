@@ -1,0 +1,44 @@
+{
+  "schema": "3311-dockerdesktop-v1-owneronly-roundtrip-freeze-v1",
+  "allocation": "dockerdesktop-v1-owneronly-roundtrip-20260927-05",
+  "classification": "single fake-CLI current-runner/broker transport construction allocation; not #3489 or #3311 integrated six-task acceptance",
+  "hypothesis": "When the WSL backend passes its own UID/GID and the container runner chowns its mkstemp request to that identity before atomic publication while retaining mode 0600, the current host broker can complete the existing synthetic IPC roundtrip on Docker Desktop without widening request readability.",
+  "treatment": {
+    "source_revision": "b19293bff534e985063f68c83f08822f80e5707c",
+    "source_files": {
+      "research/live_control/container_host_model_ipc_runner_v1.py": "01c64cd62b3206f2e91b8613d5a797842e3e4c7fb5599b260ee4bf878b1a9b55",
+      "research/live_control/docker_model_call_backend_v1.py": "3b176713c1c501243cdad6ba3ed466faa6feb00ff5651df696462e35bee0d8fb",
+      "research/live_control/test_container_host_model_ipc_runner_v1.py": "90c3e82c1d5565156721cde402e68d530242968fe0c6fbfa861da24d049f41e2",
+      "research/live_control/test_docker_model_call_backend_v1.py": "1c46d2fb5928b20b30858a435007fec86356afd9a8aefc6fc0cbd897865558d7",
+      "research/live_control/issue_3311_host_ipc_v1/test_orbstack_v1_transport.py": "9b769e0342f0bb13e7f372078b72d29dd91b07fd8be804d456cf194ac733c9ee"
+    },
+    "host_uid_gid": "1002:1002",
+    "test": "test_fake_cli_round_trip_over_shared_mounts only",
+    "docker_context": "default",
+    "docker_endpoint": "unix:///var/run/docker.sock (WSL Docker Desktop integration)",
+    "engine": "28.5.1/linux/amd64",
+    "image_id": "sha256:f82bbd2c087056f324794ca9b0de64c16f0ecaf9a84f30bb0aba17b5b1833786",
+    "network": "none",
+    "authority": false,
+    "formal_container_invocations": 1,
+    "retries": 0,
+    "evidence_path": "/tmp/agent-interface-3311-latest-20260927/research/live_control/issue_3311_host_ipc_v1/evidence/20260927-desktop-05"
+  },
+  "preflight": {
+    "runner_owner_tests": "4/4 PASS",
+    "backend_command_test": "1/1 PASS",
+    "py_compile": "PASS",
+    "full_backend_suite": "not used for this allocation: current WSL Python lacks referencing/jsonschema runtime dependency"
+  },
+  "decision": {
+    "pass": "One test invocation exits 0 for container and broker; exact synthetic event stream, owner UID/GID 1002:1002 and mode 0600 reconcile; independent audit verifies request/plan/source/image/command hashes and container cleanup.",
+    "stop": "Any invocation, context/image, permission, broker, container, event, receipt, owner/mode, or cleanup failure. Preserve first outcome; no retry."
+  },
+  "limits": [
+    "Fake CLI only; no real model call, GUI, task input, or authority",
+    "Docker Desktop linux/amd64 only, not OrbStack linux/arm64",
+    "Does not satisfy #3489 real host-Codex schema preflight",
+    "Does not satisfy #3311 matched six-task cold/warm/invalidation/repair comparison",
+    "Owner assignment feature is opt-in at runner boundary; backend supplies identity only when POSIX uid/gid APIs exist"
+  ]
+}

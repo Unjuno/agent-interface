@@ -1,0 +1,35 @@
+{
+  "cases": {
+    "crash_after_consume": {
+      "blocked": {"error":"unresolved command; read only","transport_called":false},
+      "last_resolution_after_read": null,
+      "pending_after_read": {"accepted":false,"conflict":false,"echo_seen":false,"request":{"action_id":"durable-40be3de6e2a64cb7b4fb5d7970010a4a","after":0,"command":{"expected_sequence":3,"id":"durable-40be3de6e2a64cb7b4fb5d7970010a4a","op":"submit","steps":[{"op":"observe"}],"valid_until_ns":9999999999999},"events":["terminal"],"request_id":"31512e00b13647ffaf0db8f86a44b426","timeout":0},"write_state":"may_have_been_sent"},
+      "resolution":"unresolved",
+      "token_entries":{"9d0d4d9bad194302866da5edbaabcf61":{"post_sequence":2,"status":"consumed"}}
+    },
+    "crash_after_send": {
+      "blocked": {"error":"unresolved command; read only","transport_called":false},
+      "last_resolution_after_read": {"authority":"none","request_id":"6f656a7f468a4f348e4ec4624f2de3eb","terminal":{"event":"terminal","id":"durable-090c3b4ce31f4b1bb2fff20ccc9293df","release":{"buttons_down":[],"keys_down":[],"verified":true},"status":"completed","steps_completed":1}},
+      "pending_after_read": null,
+      "pending_before_read": {"accepted":false,"conflict":false,"echo_seen":false,"request":{"action_id":"durable-090c3b4ce31f4b1bb2fff20ccc9293df","after":0,"command":{"expected_sequence":3,"id":"durable-090c3b4ce31f4b1bb2fff20ccc9293df","op":"submit","steps":[{"op":"observe"}],"valid_until_ns":9999999999999},"events":["terminal"],"request_id":"6f656a7f468a4f348e4ec4624f2de3eb","timeout":0},"write_state":"may_have_been_sent"},
+      "resolution":"terminal",
+      "token_entries":{"9d0d4d9bad194302866da5edbaabcf61":{"post_sequence":2,"status":"consumed"}}
+    },
+    "crash_before_consume": {
+      "blocked": {"error":"unresolved command; read only","transport_called":false},
+      "last_resolution_after_read": null,
+      "pending_after_read": {"accepted":false,"conflict":false,"echo_seen":false,"request":{"action_id":"durable-eb8d36de37214d06a962371c5c1c194a","after":0,"command":{"expected_sequence":3,"id":"durable-eb8d36de37214d06a962371c5c1c194a","op":"submit","steps":[{"op":"observe"}],"valid_until_ns":9999999999999},"events":["terminal"],"request_id":"21cf24489c014e4284afa6429e51688a","timeout":0},"write_state":"may_have_been_sent"},
+      "resolution":"unresolved",
+      "token_entries":{"9d0d4d9bad194302866da5edbaabcf61":{"post_sequence":2,"status":"pending"}}
+    },
+    "normal": {
+      "last_resolution":{"authority":"none","request_id":"3e85ad1dd0a44389a89a093eda8231c4","terminal":{"event":"terminal","id":"durable-ce75c1aaa5a449ff962fafdc01a94597","release":{"buttons_down":[],"keys_down":[],"verified":true},"status":"completed","steps_completed":1}},
+      "pending":null,
+      "token_entries":{"9d0d4d9bad194302866da5edbaabcf61":{"post_sequence":2,"status":"consumed"}}
+    }
+  },
+  "decision":"RETAIN_COMPOSITION_CANDIDATE",
+  "full_local_result_sha256":"532452d7bed88c7d20f6c270455dbb5ce96f3855bb4f0727095f539347acdf2f",
+  "hard_gate_pass":true,
+  "schema":"authority-ended-durable-submit-composition-retained-v1"
+}

@@ -1,0 +1,45 @@
+{
+  "process_exit_code": 0,
+  "stdout_sha256": "a3a960e3007d008b6af01578780563e8aead5397f709280b514d99e7db74dbe5",
+  "stdout": "{\"candidate_rejects_cleanup_key\": true, \"candidate_rejects_explicit_key\": true, \"candidate_rejects_missing_key\": true, \"candidate_rejects_missing_row\": true, \"checks\": {\"candidate_cleanup_key_tamper\": [\"release_identity_mismatch:cleanup-b-01\"], \"candidate_explicit_key_tamper\": [\"release_identity_mismatch:explicit-a-01\"], \"candidate_missing_key\": [\"expected_release_missing:explicit-a-01\", \"record:0:missing:key\"], \"candidate_missing_row\": [\"expected_release_missing:explicit-a-01\"], \"candidate_pristine\": [], \"legacy_cleanup_key_tamper\": [], \"legacy_explicit_key_tamper\": []}, \"legacy_fail_open_reproduced\": true, \"scope\": \"synthetic immutable PR #5467 inputs; host-only construction/integrity\", \"source_hashes\": {\"candidate_auditor\": \"79f95eadb29bc6cc35036c6ff424cb284e55849ecd76ccd2a841ae186a18d1cf\", \"expected_inventory\": \"9ef72a837ce4f5d802dcc7fdb72a843a0e768154dbe30897a00f270cfaabde2b\", \"legacy_auditor\": \"191fdabdd289e49b03514d1dfc66ba475b885ab078b733a7ef7030daf9cfe906\", \"raw_input\": \"56842934b9f9b13fe0e52d515d31bd0c3d598cdb1cfa8b719dfb4c8ba463cbc2\"}, \"status\": \"PASS_KEY_IDENTITY_AUDIT_HOST_ONLY\"}\r\n",
+  "parsed": {
+    "candidate_rejects_cleanup_key": true,
+    "candidate_rejects_explicit_key": true,
+    "candidate_rejects_missing_key": true,
+    "candidate_rejects_missing_row": true,
+    "checks": {
+      "candidate_cleanup_key_tamper": [
+        "release_identity_mismatch:cleanup-b-01"
+      ],
+      "candidate_explicit_key_tamper": [
+        "release_identity_mismatch:explicit-a-01"
+      ],
+      "candidate_missing_key": [
+        "expected_release_missing:explicit-a-01",
+        "record:0:missing:key"
+      ],
+      "candidate_missing_row": [
+        "expected_release_missing:explicit-a-01"
+      ],
+      "candidate_pristine": [],
+      "legacy_cleanup_key_tamper": [],
+      "legacy_explicit_key_tamper": []
+    },
+    "legacy_fail_open_reproduced": true,
+    "scope": "synthetic immutable PR #5467 inputs; host-only construction/integrity",
+    "source_hashes": {
+      "candidate_auditor": "79f95eadb29bc6cc35036c6ff424cb284e55849ecd76ccd2a841ae186a18d1cf",
+      "expected_inventory": "9ef72a837ce4f5d802dcc7fdb72a843a0e768154dbe30897a00f270cfaabde2b",
+      "legacy_auditor": "191fdabdd289e49b03514d1dfc66ba475b885ab078b733a7ef7030daf9cfe906",
+      "raw_input": "56842934b9f9b13fe0e52d515d31bd0c3d598cdb1cfa8b719dfb4c8ba463cbc2"
+    },
+    "status": "PASS_KEY_IDENTITY_AUDIT_HOST_ONLY"
+  },
+  "run_command": "python -c exec(base64(RUNNER_SOURCE)) CANDIDATE_B64 LEGACY_B64 EXPECTED_B64 RAW_B64",
+  "environment": {
+    "python": "3.11.9",
+    "os": "Windows",
+    "local_files_written": false,
+    "network": false
+  }
+}

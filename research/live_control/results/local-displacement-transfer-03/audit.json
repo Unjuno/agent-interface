@@ -1,0 +1,44 @@
+{
+  "audit_passed": true,
+  "v1": {
+    "failed_before_input": true,
+    "reason": "cross-OS absolute path"
+  },
+  "v2": {
+    "partial_passed": true,
+    "target_focus_interrupted": true,
+    "target_release_verified": true,
+    "packaging_failure_retained": true
+  },
+  "v3": {
+    "order": [
+      "target",
+      "partial"
+    ],
+    "authored_condition_unchanged": true,
+    "fresh_sources_identical": true,
+    "fresh_source_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "target_delta": [
+      24,
+      0
+    ],
+    "target_condition": "met",
+    "target_save_started": true,
+    "target_saved_svg_within_one_px": true,
+    "partial_delta": [
+      20,
+      0
+    ],
+    "partial_condition": "target_not_reached",
+    "partial_save_started": false,
+    "exact_frames": 19,
+    "sample_spans_ms": [
+      100.628208,
+      101.891489
+    ],
+    "all_terminal_releases_verified": true
+  },
+  "decision": "RETAIN_MODEL_AUTHORED_FRESH_TRANSFER;_REPLICATE_BEFORE_PROMOTION",
+  "scope": "one unchanged first Luna-authored patch on one fresh same-task target/partial pair after two retained integration failures; scripted pointer paths; no live model call, speed, token, cross-domain or promotion claim",
+  "audit_sha256": "d7a72b3650a7c75acb8ebdb34bc1db32364e40663cd28ce0c2fdd2522d3b6a50"
+}

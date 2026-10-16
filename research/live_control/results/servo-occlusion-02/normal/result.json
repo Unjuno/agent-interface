@@ -1,0 +1,101 @@
+{
+  "case": "normal",
+  "terminal": {
+    "event": "terminal",
+    "id": "servo",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 95051318376,
+      "valid_until_ns": 102263996691
+    },
+    "terminal_ns": 95051372027,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 95051373347
+  },
+  "actual": {
+    "x": "70.338982",
+    "y": "50",
+    "width": "40",
+    "height": "30",
+    "transform": null
+  },
+  "saved_dx": 23.99999876,
+  "precision_pass": true,
+  "controller": [
+    {
+      "event": "servo_feedback",
+      "id": "servo",
+      "step": 0,
+      "observation": 2,
+      "tracking": {
+        "status": "matched",
+        "error": 0.021451914098972923,
+        "margin": 0.04567523979288685,
+        "rival_error": 0.06712715389185978,
+        "source_observation": 1,
+        "observation": 2,
+        "frame_id": "{\"focus\": 8388616, \"geometry\": [0, 19, 1280, 781], \"surface\": 8388615}",
+        "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+        "box": [
+          592,
+          369,
+          56,
+          44
+        ],
+        "delta": [
+          0,
+          0
+        ],
+        "error_method": "raw"
+      },
+      "reason": "correct",
+      "command": {
+        "op": "move",
+        "x": 655,
+        "y": 390
+      },
+      "updates_remaining": 2,
+      "emitted_ns": 94763955968
+    },
+    {
+      "event": "servo_feedback",
+      "id": "servo",
+      "step": 0,
+      "observation": 3,
+      "tracking": {
+        "status": "matched",
+        "error": 0.021451914098972923,
+        "margin": 0.04567523979288685,
+        "rival_error": 0.06712715389185978,
+        "source_observation": 1,
+        "observation": 3,
+        "frame_id": "{\"focus\": 8388616, \"geometry\": [0, 19, 1280, 781], \"surface\": 8388615}",
+        "patch_sha256": "87765ac1f76508ecded989749724fbea2b8c88dc2ab3ab9c4ff5fdb2eaa96adc",
+        "box": [
+          616,
+          369,
+          56,
+          44
+        ],
+        "delta": [
+          24,
+          0
+        ],
+        "error_method": "raw"
+      },
+      "reason": "local_goal_reached",
+      "command": {
+        "op": "finish"
+      },
+      "updates_remaining": 2,
+      "emitted_ns": 95013724141
+    }
+  ]
+}

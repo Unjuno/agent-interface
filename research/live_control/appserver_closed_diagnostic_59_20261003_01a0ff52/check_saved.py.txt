@@ -1,0 +1,130 @@
+"""Independent saved-record endpoint/type/clock reconstruction; no client/probe imports."""
+from pathlib import Path
+import copy, hashlib, json, math
+
+ROOT = Path(__file__).resolve().parent
+SOURCE = json.loads((ROOT / 'SOURCE.json').read_text())
+EXPECTED_SHA = '8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b'
+
+def need(ok, label):
+    if not ok:
+        raise ValueError(label)
+
+def integer(v):
+    return type(v) is int and v > 0
+
+def semantic(row, local=False):
+    api, mode = row['api'], row['mode']
+    need(api in ['request', 'notification'] and mode in ['healthy', 'closed_both', 'stderr_retained'], 'roster')
+    need(row['id'] == api + '-' + mode, 'cell-identity')
+    need(row['source_sha256'] == EXPECTED_SHA, 'source')
+    need(integer(row['child_pid']) and integer(row['probe_pid']) and row['child_pid'] != row['probe_pid'], 'pid-types')
+    need(type(row['public_timeout_s']) is float and row['public_timeout_s'] == .05 and
+         type(row['checkpoint_s']) is float and row['checkpoint_s'] == .25, 'configured-times')
+    need('construction_error' not in row and 'cleanup_error' not in row, 'construction-cleanup-error')
+    before, checkpoint, final = row['before_call'], row['checkpoint'], row['final']
+    call, final_call = checkpoint['call_record'], final['call_record']
+    need(all(integer(v) for v in [before['at_ns'], call['started_ns'], checkpoint['at_ns'],
+         row['cleanup_started_ns'], row['client_close_returned_ns'], final['at_ns'], final_call['ended_ns']]), 'clocks')
+    need(before['at_ns'] <= call['started_ns'] <= checkpoint['at_ns'] <= row['cleanup_started_ns'] <=
+         row['client_close_returned_ns'] <= final['at_ns'], 'phase-order')
+    need(final_call['started_ns'] == call['started_ns'], 'call-join')
+    need(before['child_exit'] is None and checkpoint['child_exit'] is None, 'owned-child-alive')
+    need(type(final['child_exit']) is int and final['child_exit'] == -15 and
+         final['reader_alive'] is False and final['caller_alive'] is False and
+         final['journal_closed'] is True and final['pipes_closed'] is True, 'final-endpoints')
+    events = final['child_events']
+    need(events == checkpoint['child_events'] and all(integer(e['monotonic_ns']) and
+         type(e['pid']) is int and e['pid'] == row['child_pid'] for e in events), 'child-events')
+    need(events[0]['event'] == 'started' and events[0]['api'] == api and events[0]['mode'] == mode, 'child-start')
+    need(events[1]['event'] == 'ready' and events[1]['stdout_closed'] is (mode != 'healthy') and
+         events[1]['stderr_closed'] is (mode == 'closed_both') and
+         events[0]['monotonic_ns'] <= events[1]['monotonic_ns'] <= before['at_ns'], 'ready-clock-streams')
+    if api == 'request':
+        need(len(events) == 3 and events[2]['event'] == 'request_received' and
+             events[2]['method'] == 'owned/probe' and type(events[2]['request_id']) is int and
+             events[2]['request_id'] == 1 and call['started_ns'] <= events[2]['monotonic_ns'] <= checkpoint['at_ns'], 'request-written')
+    else:
+        need(len(events) == 2, 'notification-no-request')
+    retained = mode == 'stderr_retained'
+    if mode != 'healthy':
+        need(before['transport_closed'] is True and before['reader_alive'] is False and
+             checkpoint['transport_closed'] is True and checkpoint['reader_alive'] is False, 'stdout-eof-before-call')
+    if retained:
+        need(checkpoint['caller_alive'] is True and set(call) == {'started_ns'}, 'blocked-checkpoint')
+        need(checkpoint['at_ns'] - call['started_ns'] >= 250_000_000, 'checkpoint-age')
+        method, line = ('request', 75) if api == 'request' else ('wait_notification', 101)
+        need(checkpoint['stack'][0] == {'file': 'codex_app_server_client_v2.py', 'function': method, 'line': line}, 'literal-read-frame')
+        need(final_call['outcome'] == 'RAISE' and final_call['exception']['type'] == 'AppServerError' and
+             row['cleanup_started_ns'] <= final_call['ended_ns'] <= final['at_ns'], 'released-error-order')
+        need(final_call['exception']['message'].endswith('owned inert diagnostic retained until process closure'), 'retained-diagnostic')
+        if local:
+            d = checkpoint['local_deadline']
+            need(all(type(d[k]) is float and math.isfinite(d[k]) for k in
+                     ['deadline_s', 'remaining_s_at_read_entry', 'observed_monotonic_s']), 'internal-deadline-types')
+            need(0 < d['remaining_s_at_read_entry'] <= .05 and
+                 d['observed_monotonic_s'] - d['deadline_s'] > .20, 'actual-deadline-expired')
+    else:
+        need(checkpoint['caller_alive'] is False and checkpoint['stack'] == [] and
+             final_call == call and call['ended_ns'] <= checkpoint['at_ns'], 'control-completed')
+        if mode == 'healthy':
+            value = {'inert': True} if api == 'request' else {'method': 'owned/probe', 'params': {'inert': True}}
+            need(call['outcome'] == 'RETURN' and call['value'] == value, 'healthy-result')
+        else:
+            need(call['outcome'] == 'RAISE' and call['exception']['type'] == 'AppServerError', 'closed-control-error')
+    return {'id': row['id'], 'configured_timeout_ms': 50,
+            'checkpoint_elapsed_ms': (checkpoint['at_ns'] - call['started_ns'])/1e6,
+            'blocked_literal_stderr_read': retained, 'actual_local_deadline_verified': local,
+            'call_completed_after_owned_close': retained, 'owned_final_resources_closed': True}
+
+def main():
+    need(hashlib.sha256((ROOT / 'codex_app_server_client_v2.py').read_bytes()).hexdigest() == SOURCE['sha256'] == EXPECTED_SHA, 'exact-source')
+    rows = []
+    findings = []
+    for run_id, cells, local in [('construction01', [(a, m) for a in ['request', 'notification']
+             for m in ['healthy', 'closed_both', 'stderr_retained']], False),
+             ('construction02-local-deadline', [(a, 'stderr_retained') for a in ['request', 'notification']], True)]:
+        for api, mode in cells:
+            cid = api + '-' + mode
+            row = json.loads((ROOT / run_id / cid / 'result.json').read_text())
+            receipt = json.loads((ROOT / run_id / (cid + '.receipt.json')).read_text())
+            need(type(receipt['exit_code']) is int and receipt['exit_code'] == 0 and
+                 receipt['outer_timeout'] is False and receipt['log_cap_exceeded'] is False, 'actual-driver-completion')
+            need(receipt['probe_pid'] == row['probe_pid'], 'driver-pid')
+            for stream in ['stdout', 'stderr']:
+                b = (ROOT / run_id / (cid + '.' + stream)).read_bytes()
+                need(hashlib.sha256(b).hexdigest() == receipt[stream + '_sha256'] and len(b) <= 65536, 'actual-log-hash-bound')
+            need(json.loads((ROOT / run_id / (cid + '.stdout')).read_text()) == row, 'stdout-row-join')
+            need((ROOT / run_id / cid / 'child-events.jsonl').read_text().splitlines() ==
+                 [json.dumps(e) for e in row['final']['child_events']], 'file-child-events-join')
+            findings.append({'run': run_id, **semantic(row, local)})
+            rows.append((row, local))
+    need(len({r['child_pid'] for r, _ in rows}) == 8, 'distinct-owned-children')
+    controls = []
+    for name in ['boolean_exit', 'false_closed_transport', 'wrong_frame', 'early_local_deadline',
+                 'boolean_local_deadline', 'caller_still_running', 'wrong_child_identity', 'early_error']:
+        changed = copy.deepcopy(rows[-1][0])
+        if name == 'boolean_exit': changed['final']['child_exit'] = False
+        elif name == 'false_closed_transport': changed['before_call']['transport_closed'] = False
+        elif name == 'wrong_frame': changed['checkpoint']['stack'][0]['line'] = 74
+        elif name == 'early_local_deadline':
+            changed['checkpoint']['local_deadline']['deadline_s'] = changed['checkpoint']['local_deadline']['observed_monotonic_s'] + 1.0
+        elif name == 'boolean_local_deadline': changed['checkpoint']['local_deadline']['deadline_s'] = True
+        elif name == 'caller_still_running': changed['final']['caller_alive'] = True
+        elif name == 'wrong_child_identity': changed['final']['child_events'][0]['pid'] += 1
+        elif name == 'early_error': changed['final']['call_record']['ended_ns'] = changed['checkpoint']['at_ns'] - 1
+        try:
+            semantic(changed, True)
+        except ValueError as error:
+            controls.append({'name': name, 'rejected': True, 'diagnostic': str(error)})
+        else:
+            raise ValueError('control-not-rejected/' + name)
+    output = {'status': 'PASS_SAVED_CONSTRUCTION_BOUNDARY_SCOPED', 'findings': findings,
+              'independent_controls': controls, 'first_cells': 6, 'local_deadline_supplement': 2,
+              'native_owned_children_total': 8, 'formal_or_real_model_replays': 0}
+    with (ROOT / 'independent-result.json').open('x') as f:
+        f.write(json.dumps(output, indent=2) + '\n')
+    print(json.dumps(output))
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,585 @@
+[
+  {
+    "request": {
+      "after": 0,
+      "events": [
+        "observation"
+      ],
+      "timeout": 5
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "ready",
+          "app": "inkscape",
+          "task": "Move the red rectangle right while preserving its size and vertical position.",
+          "goal": {
+            "token": "t000102",
+            "a": 251,
+            "b": 792,
+            "dx": 36,
+            "setup_readiness_captures": 3
+          },
+          "presentation": "full",
+          "operations": [
+            "submit",
+            "cancel",
+            "clock",
+            "finish"
+          ],
+          "emit_started_ns": 6397398678
+        },
+        {
+          "event": "observation",
+          "id": "initial",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 6420579818,
+          "context_ns": 6426259458,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/live-history-01/runtime/001.png",
+          "image_reused": false,
+          "image_prepare_ns": 40942610,
+          "image_ready_ns": 6485896963,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 6.570187,
+          "wire_bytes": 67750,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 6505282915
+        }
+      ],
+      "cursor": 2,
+      "returned_ns": 19098101593,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  },
+  {
+    "request": {
+      "after": 2,
+      "events": [
+        "clock"
+      ],
+      "timeout": 5,
+      "request_id": "clock-f3396293c94642de95c6d14b2f5dedbe",
+      "command": {
+        "op": "clock"
+      }
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "clock-f3396293c94642de95c6d14b2f5dedbe"
+          },
+          "received_ns": 19157354393,
+          "emit_started_ns": 19157357394
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 19167057566,
+          "sequence": 1,
+          "emit_started_ns": 19167099146
+        }
+      ],
+      "cursor": 4,
+      "returned_ns": 19178950198,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "clock-f3396293c94642de95c6d14b2f5dedbe",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 4,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 15,
+      "action_id": "advance",
+      "request_id": "program-380d951b63284da18a309da96097f767",
+      "command": {
+        "op": "submit",
+        "id": "advance",
+        "steps": [
+          {
+            "op": "observe"
+          }
+        ],
+        "expected_sequence": 1,
+        "valid_until_ns": 49167057566
+      }
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 1,
+            "id": "advance",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "program-380d951b63284da18a309da96097f767",
+            "valid_until_ns": 49167057566
+          },
+          "received_ns": 19210032530,
+          "emit_started_ns": 19210038161
+        },
+        {
+          "event": "accepted",
+          "id": "advance",
+          "steps": 1,
+          "valid_until_ns": 49167057566,
+          "accepted_ns": 19221027997,
+          "emit_started_ns": 19221030622
+        },
+        {
+          "event": "step_started",
+          "id": "advance",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 19230757069,
+          "emit_started_ns": 19230759506
+        },
+        {
+          "event": "observation",
+          "id": "advance",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 19249095414,
+          "context_ns": 19255507951,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/live-history-01/runtime/001.png",
+          "image_reused": true,
+          "image_prepare_ns": 4363440,
+          "image_ready_ns": 19267220989,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 6.989709,
+          "wire_bytes": 269,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 19280654736
+        },
+        {
+          "event": "step_completed",
+          "id": "advance",
+          "step": 0,
+          "completed_ns": 19289620244,
+          "emit_started_ns": 19289625187
+        },
+        {
+          "event": "terminal",
+          "id": "advance",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 19300379552,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 19300450564,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 19300455220
+        }
+      ],
+      "cursor": 10,
+      "returned_ns": 19309873718,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "program-380d951b63284da18a309da96097f767",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 10,
+      "events": [
+        "clock"
+      ],
+      "timeout": 5,
+      "request_id": "clock-e387793a60b044ccad618afcf05d7860",
+      "command": {
+        "op": "clock"
+      }
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "clock-e387793a60b044ccad618afcf05d7860"
+          },
+          "received_ns": 19418147154,
+          "emit_started_ns": 19418153114
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 19428736421,
+          "sequence": 2,
+          "emit_started_ns": 19428740088
+        }
+      ],
+      "cursor": 12,
+      "returned_ns": 19446919451,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "clock-e387793a60b044ccad618afcf05d7860",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 12,
+      "events": [
+        "clock"
+      ],
+      "timeout": 5,
+      "request_id": "clock-ff4795a3d42d4d9a95a00fac06c22c9c",
+      "command": {
+        "op": "clock"
+      }
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "clock-ff4795a3d42d4d9a95a00fac06c22c9c"
+          },
+          "received_ns": 19562612459,
+          "emit_started_ns": 19562617125
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 19576807155,
+          "sequence": 2,
+          "emit_started_ns": 19576809931
+        }
+      ],
+      "cursor": 14,
+      "returned_ns": 19586664521,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "clock-ff4795a3d42d4d9a95a00fac06c22c9c",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 14,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 15,
+      "action_id": "recover-observe",
+      "request_id": "program-550416113c8d4bb494eb628ca727054b",
+      "command": {
+        "op": "submit",
+        "id": "recover-observe",
+        "steps": [
+          {
+            "op": "observe"
+          }
+        ],
+        "expected_sequence": 2,
+        "valid_until_ns": 49576807155
+      }
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 2,
+            "id": "recover-observe",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "program-550416113c8d4bb494eb628ca727054b",
+            "valid_until_ns": 49576807155
+          },
+          "received_ns": 19614700909,
+          "emit_started_ns": 19614703625
+        },
+        {
+          "event": "accepted",
+          "id": "recover-observe",
+          "steps": 1,
+          "valid_until_ns": 49576807155,
+          "accepted_ns": 19624812128,
+          "emit_started_ns": 19624814877
+        },
+        {
+          "event": "step_started",
+          "id": "recover-observe",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 19636174191,
+          "emit_started_ns": 19636177253
+        },
+        {
+          "event": "observation",
+          "id": "recover-observe",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 19652921210,
+          "context_ns": 19656840775,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/live-history-01/runtime/001.png",
+          "image_reused": true,
+          "image_prepare_ns": 4855419,
+          "image_ready_ns": 19669922914,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 6.257117,
+          "wire_bytes": 277,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emit_started_ns": 19685238230
+        },
+        {
+          "event": "step_completed",
+          "id": "recover-observe",
+          "step": 0,
+          "completed_ns": 19695497747,
+          "emit_started_ns": 19695503488
+        },
+        {
+          "event": "terminal",
+          "id": "recover-observe",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 19707295117,
+            "valid_until_ns": null
+          },
+          "terminal_ns": 19707331329,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 19707334118
+        }
+      ],
+      "cursor": 20,
+      "returned_ns": 19716980793,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "program-550416113c8d4bb494eb628ca727054b",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  },
+  {
+    "request": {
+      "after": 20,
+      "events": [
+        "independent_evaluation"
+      ],
+      "timeout": 5,
+      "request_id": "2cc794cedbb24d55a1c18dea3b3135dc",
+      "command": {
+        "op": "finish"
+      }
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "finish",
+            "transport_request_id": "2cc794cedbb24d55a1c18dea3b3135dc"
+          },
+          "received_ns": 19776602337,
+          "emit_started_ns": 19776605303
+        },
+        {
+          "event": "independent_evaluation",
+          "success": false,
+          "actual": {
+            "x": "50",
+            "y": "50",
+            "width": "40",
+            "height": "30",
+            "transform": null
+          },
+          "known_ns": 22790961962,
+          "emit_started_ns": 22790969276
+        }
+      ],
+      "cursor": 22,
+      "returned_ns": 22807177251,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "2cc794cedbb24d55a1c18dea3b3135dc",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    }
+  }
+]

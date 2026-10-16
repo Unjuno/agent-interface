@@ -1,0 +1,64 @@
+{
+  "completed_cells": 2,
+  "rows": [
+    {
+      "condition": "closed",
+      "helper_receipt": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true
+      },
+      "calls": [
+        {
+          "timeout": 1,
+          "start_ns": 30794453775100,
+          "return_value": null,
+          "end_ns": 30794453820000
+        }
+      ],
+      "reader_alive": false,
+      "journal_closed": true
+    },
+    {
+      "condition": "held",
+      "helper_receipt": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": false,
+        "input_release_verified": false,
+        "errors": [
+          "planner close: TimeoutError('app-server reader close timed out')"
+        ],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true
+      },
+      "calls": [
+        {
+          "timeout": 1,
+          "start_ns": 30794648167300,
+          "error_type": "TimeoutError",
+          "error_message": "app-server reader close timed out",
+          "end_ns": 30795656878100
+        },
+        {
+          "timeout": 5,
+          "start_ns": 30795667050900,
+          "return_value": null,
+          "end_ns": 30795667111300
+        }
+      ],
+      "reader_alive": true,
+      "journal_closed": false
+    }
+  ]
+}

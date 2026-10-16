@@ -1,0 +1,205 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "hard_success": true,
+  "independent_checks": {
+    "target_owned_roads": true,
+    "ordered_bidirectional_connections": true,
+    "forbidden_tiles_clear": true,
+    "surrounding_road_owner_unchanged": true
+  },
+  "model_turns": 7,
+  "input_tokens": 116879,
+  "cached_input_tokens": 52224,
+  "output_tokens": 1202,
+  "model_wait_ms": 94221.0513,
+  "proposal_to_feedback_ms": 12439.2257,
+  "initial_observation_to_semantic_completion_ms": 109034.2746,
+  "durable_calls": 26,
+  "runtime_exact_frames": 32,
+  "verified_release_terminals": 13,
+  "drag_attempts": [
+    {
+      "turn": 5,
+      "points": [
+        {
+          "x": 705,
+          "y": 240
+        },
+        {
+          "x": 673,
+          "y": 256
+        },
+        {
+          "x": 641,
+          "y": 272
+        }
+      ],
+      "duration_ms": 600
+    },
+    {
+      "turn": 6,
+      "points": [
+        {
+          "x": 641,
+          "y": 272
+        },
+        {
+          "x": 673,
+          "y": 288
+        },
+        {
+          "x": 705,
+          "y": 304
+        }
+      ],
+      "duration_ms": 600
+    }
+  ],
+  "repeated_same_A_to_B_drags_after_first_effect": 0,
+  "effect_sheets": [
+    {
+      "next_turn": 6,
+      "path": "planner-6.png",
+      "dimensions": [
+        1280,
+        1046
+      ],
+      "sha256": "ce5970e524cd96ac17935dabc1ed7b42551797049c59c9b92f75188cb8295794"
+    },
+    {
+      "next_turn": 7,
+      "path": "planner-7.png",
+      "dimensions": [
+        1280,
+        1046
+      ],
+      "sha256": "026b3baff8fa44932a1d1096196b7a3dc57093099c625cc790a2ed0d5da29c26"
+    }
+  ],
+  "observer": {
+    "records": 122,
+    "transition_indices": [
+      88,
+      105
+    ],
+    "transition_tiles": [
+      [
+        977,
+        978,
+        979
+      ],
+      [
+        1043,
+        1107
+      ]
+    ],
+    "stable_final_records": 17,
+    "score": {
+      "success": true,
+      "checks": {
+        "target_owned_roads": true,
+        "ordered_bidirectional_connections": true,
+        "forbidden_tiles_clear": true,
+        "surrounding_road_owner_unchanged": true
+      },
+      "changed_surrounding_tiles": [],
+      "contract": {
+        "x": 17,
+        "y": 15,
+        "width": 64,
+        "target": [
+          977,
+          978,
+          979,
+          1043,
+          1107
+        ],
+        "forbidden": [
+          1041,
+          1042,
+          1105,
+          1106
+        ],
+        "owner": 0,
+        "guard": [
+          847,
+          848,
+          849,
+          850,
+          851,
+          852,
+          853,
+          911,
+          912,
+          913,
+          914,
+          915,
+          916,
+          917,
+          975,
+          976,
+          977,
+          978,
+          979,
+          980,
+          981,
+          1039,
+          1040,
+          1041,
+          1042,
+          1043,
+          1044,
+          1045,
+          1103,
+          1104,
+          1105,
+          1106,
+          1107,
+          1108,
+          1109,
+          1167,
+          1168,
+          1169,
+          1170,
+          1171,
+          1172,
+          1173,
+          1231,
+          1232,
+          1233,
+          1234,
+          1235,
+          1236,
+          1237
+        ]
+      }
+    },
+    "source_sha256": "50b3f96b65c7179c89e2df7b6cd709f7b2d5f94b9006d5bb274ce1595348bde8"
+  },
+  "descriptive_baseline_delta": {
+    "baseline_study": "timing-envelope-openttd-l-06",
+    "hard_success": [
+      false,
+      true
+    ],
+    "model_turns": [
+      12,
+      7
+    ],
+    "model_turn_reduction": 5,
+    "input_tokens": [
+      199613,
+      116879
+    ],
+    "input_token_reduction": 82734,
+    "repeated_same_A_to_B_drags": [
+      2,
+      0
+    ]
+  },
+  "decision": "RETAIN_FOR_REPLICATION",
+  "interpretation": "the first fresh effect-sheet episode recognizes A-to-B, proceeds directly to B-to-C and passes the independent five-tile L score in seven turns",
+  "scope": "one sequential same-task episode; no causal percentage, latency distribution, geometry transfer, human-tempo or general token claim",
+  "audit_sha256": "be600596b7d4f68fa9e6c7baeb1c40166866dcea124e4759e5630b3bef7801b0"
+}

@@ -1,0 +1,136 @@
+{
+  "errors": [],
+  "rows": 6,
+  "waiters": 12,
+  "summary": {
+    "independent": {
+      "offered_reads": 2,
+      "warmup_reads": 0,
+      "correct_effects": 2,
+      "refusals": 0
+    },
+    "predicate": {
+      "offered_reads": 2,
+      "warmup_reads": 0,
+      "correct_effects": 1,
+      "refusals": 3
+    },
+    "scoped": {
+      "offered_reads": 5,
+      "warmup_reads": 0,
+      "correct_effects": 5,
+      "refusals": 1
+    }
+  },
+  "equivalent_cohort_latency_gain_observed": null,
+  "cohort_elapsed_ns": {
+    "cold_equivalent/independent": 451909100,
+    "cold_equivalent/scoped": 359094800,
+    "mixed_targets/predicate": 274216100,
+    "mixed_targets/scoped": 463338000,
+    "generation_change/predicate": 281662300,
+    "generation_change/scoped": 566304800
+  },
+  "controls": [
+    {
+      "control": "omit_row",
+      "rejected": true,
+      "errors": [
+        "denominator_order",
+        "server_denominator",
+        "all_waiters"
+      ]
+    },
+    {
+      "control": "generation_type",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:requested_scope"
+      ]
+    },
+    {
+      "control": "wrong_result_target",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:delivery_binding"
+      ]
+    },
+    {
+      "control": "false_feedback",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:feedback"
+      ]
+    },
+    {
+      "control": "duplicate_waiter",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:waiter_denominator",
+        "cold_equivalent/independent:commit_count",
+        "cold_equivalent/independent:effect_intent",
+        "cold_equivalent/independent:effect_read_ref",
+        "cold_equivalent/independent:effects",
+        "cold_equivalent/independent:independent_state",
+        "cold_equivalent/independent:useful_feedback"
+      ]
+    },
+    {
+      "control": "browser_cleanup",
+      "rejected": true,
+      "errors": [
+        "browser_cleanup"
+      ]
+    },
+    {
+      "control": "numeric_server_cleanup",
+      "rejected": true,
+      "errors": [
+        "server_cleanup"
+      ]
+    },
+    {
+      "control": "wrong_intent",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:effect_intent"
+      ]
+    },
+    {
+      "control": "false_state",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:independent_state"
+      ]
+    },
+    {
+      "control": "accepted_type",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:effect_intent"
+      ]
+    },
+    {
+      "control": "deadline_type",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:clock_type",
+        "cold_equivalent/independent:waiter_clock",
+        "cold_equivalent/independent:unexpected_deadline"
+      ]
+    },
+    {
+      "control": "pending_entry",
+      "rejected": true,
+      "errors": [
+        "cold_equivalent/independent:pending"
+      ]
+    }
+  ],
+  "input_sha256": {
+    "client.json": "007632dfe6dcefd613d2f52a47ee7c1fe08f8546a749cf7bb170738a5fcc9894",
+    "server.json": "0f45258f22fb64a64e51dc6c2b44aade13ba985291bb47a6426a29794aaaabe9"
+  },
+  "status": "PASS_BROWSER_EFFECT_METHOD_SCOPED",
+  "hypothesis": "HOLD_NOT_ESTABLISHED"
+}

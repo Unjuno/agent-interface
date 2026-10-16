@@ -1,0 +1,29 @@
+{
+  "schema": "x11_gil_switch_live_nuisance_v1_environment",
+  "python": "CPython 3.13.5",
+  "gil_enabled": true,
+  "kernel": "Linux 6.18.44",
+  "xvfb": "21.1.16",
+  "libx11": "1.8.12",
+  "tk": "8.6.16",
+  "guest_cpu": "Intel Xeon Platinum 8573C",
+  "observed_frequency_ghz_approx": 2.300,
+  "frequency_pinned": false,
+  "physical_host_isolation_known": false,
+  "guest_cpu_assignment": {
+    "observer_tk_owner_watcher": 0,
+    "competing_python_thread": 1,
+    "xvfb": 2
+  },
+  "scheduler_policy": "SCHED_OTHER",
+  "nice": 0,
+  "formal_execution": "serial cases, batch 1",
+  "cgroup_throttle_count_increased_during_formal": false,
+  "limitations": [
+    "guest topology does not prove physical-host core isolation",
+    "CPU frequency was not pinned",
+    "synthetic CPU-bound competing Python thread",
+    "nuisance-only block does not measure short target-cue detection",
+    "release subsegments mix Python/GIL scheduling, Xlib/X server behavior and verifier scheduling"
+  ]
+}

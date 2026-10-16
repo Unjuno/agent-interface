@@ -1,0 +1,58 @@
+{
+  "scope": "actual private Chromium delayed effect; selected fetch fixture plus retained development failures",
+  "development": [
+    {
+      "revision": "01",
+      "reason": "outer durable spec used unsupported action_id option",
+      "result": null
+    },
+    {
+      "revision": "02",
+      "reason": "submit command tried to assign journal-owned action id",
+      "result": null
+    },
+    {
+      "revision": "03",
+      "reason": "stale coordinate missed the shifted input field; no POST committed",
+      "result": null
+    },
+    {
+      "revision": "04",
+      "reason": "task succeeded but navigation POST exposed browser loading state",
+      "result": {
+        "first_checkpoint": "UNKNOWN",
+        "second_checkpoint": "VERIFIED",
+        "independent_success": true
+      }
+    },
+    {
+      "revision": "05",
+      "reason": "selected fetch submission; task succeeded without navigation UI",
+      "result": {
+        "first_checkpoint": "UNKNOWN",
+        "second_checkpoint": "VERIFIED",
+        "independent_success": true
+      }
+    }
+  ],
+  "selected_revision": "05",
+  "events": 85,
+  "frames": 10,
+  "calls": 6,
+  "task_return_admissions": 1,
+  "effect_sequence": [
+    "UNKNOWN",
+    "VERIFIED"
+  ],
+  "received_to_commit_ms": 5003.918373,
+  "acceptance_to_post_action_image_ready_ms": 553.44397,
+  "acceptance_to_program_terminal_ms": 575.986547,
+  "acceptance_to_unknown_effect_ms": 617.32544,
+  "unknown_to_commit_ms": 4862.733042,
+  "commit_to_verified_effect_ms": 82.908241,
+  "acceptance_to_verified_effect_ms": 5562.966723,
+  "independent_success": true,
+  "model_calls": 0,
+  "exact_frames": true,
+  "all_terminals_released": true
+}

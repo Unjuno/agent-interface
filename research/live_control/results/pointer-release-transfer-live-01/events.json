@@ -1,0 +1,150 @@
+[
+  {
+    "event": "observation",
+    "id": "initial",
+    "step": 0,
+    "sequence": 1,
+    "capture_ns": 39066504321526,
+    "context_ns": 39066509344324,
+    "context": [
+      [
+        "windows",
+        "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+      ],
+      [
+        "active_window",
+        6291463
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/pointer-release-transfer-live-01/001.png",
+    "image_reused": false,
+    "image_prepare_ns": 40298978,
+    "image_ready_ns": 39066564494482,
+    "input_focus_before": 6291464,
+    "input_focus_after": 6291464,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 3.390493,
+    "wire_bytes": 67754,
+    "exact": true,
+    "semantic_completion": "unknown"
+  },
+  {
+    "event": "accepted",
+    "id": "pointer-release-focus-transfer-01",
+    "steps": 1,
+    "program_sha256": "cac6f1514639d36c61142ba450a15dab3691a0e2ceb54e2823d72b80be7865a3",
+    "intent_token": "647d740b883f4cc58a1a94a46ccf6421",
+    "valid_until_ns": 39071577302634,
+    "accepted_ns": 39066577653986
+  },
+  {
+    "event": "step_started",
+    "id": "pointer-release-focus-transfer-01",
+    "step": 0,
+    "operation": "pointer_drag",
+    "issued_ns": 39066578001711
+  },
+  {
+    "event": "pointer_admission",
+    "operation": "move",
+    "payload": {
+      "x": 618,
+      "y": 391
+    },
+    "admitted_ns": 39066579527453,
+    "input_ack_ns": 39066579714345,
+    "valid_until_ns": 39071577302634,
+    "surface": 6291463,
+    "id": "pointer-release-focus-transfer-01",
+    "step": 0
+  },
+  {
+    "event": "pointer_admission",
+    "operation": "button_down",
+    "payload": 1,
+    "admitted_ns": 39066581364737,
+    "input_ack_ns": 39066581586055,
+    "valid_until_ns": 39071577302634,
+    "surface": 6291463,
+    "id": "pointer-release-focus-transfer-01",
+    "step": 0
+  },
+  {
+    "event": "input_released",
+    "id": "pointer-release-focus-transfer-01",
+    "intent_token": "647d740b883f4cc58a1a94a46ccf6421",
+    "owner_release": {
+      "event": "owner_release",
+      "reason": "focus_changed",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 39066585528751,
+      "valid_until_ns": 39071577302634
+    },
+    "published_ns": 39066585663360,
+    "program_terminal_pending": true,
+    "grants_input_authority": false
+  },
+  {
+    "event": "terminal",
+    "id": "pointer-release-focus-transfer-01",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 39066586152041,
+      "valid_until_ns": null
+    },
+    "interruption": {
+      "intent_token": "647d740b883f4cc58a1a94a46ccf6421",
+      "record": {
+        "event": "owner_release",
+        "reason": "focus_changed",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 39066585528751,
+        "valid_until_ns": 39071577302634
+      }
+    },
+    "decision_reason": "focus_changed",
+    "terminal_ns": 39066586202335,
+    "semantic_completion": "program status only; task scoring is separate"
+  }
+]

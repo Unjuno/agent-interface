@@ -1,0 +1,34 @@
+import hashlib, json, shutil, subprocess
+from datetime import datetime, timezone
+from pathlib import Path
+root=Path(__file__).resolve().parent.parent
+old=root/'work/repairs/6920-audit-v2'
+new=root/'work/repairs/6920-audit-v3'
+new.mkdir(parents=True,exist_ok=False)
+(new/'inputs').mkdir()
+for name in ('client.json','server.json'):
+    shutil.copyfile(old/'inputs'/name,new/'inputs'/name)
+shutil.copyfile(old/'audit_v2.py',new/'inputs/audit_v2.py.txt')
+shutil.copyfile(old/'regressions.py',new/'inputs/regressions_v2.py.txt')
+shutil.copyfile(old/'audit_v2.py',new/'audit_v3.py.txt')
+paths=['inputs/client.json','inputs/server.json','inputs/audit_v2.py.txt','inputs/regressions_v2.py.txt','audit_v3.py.txt']
+images=[{'path':name,'bytes':(new/name).stat().st_size,'sha256':hashlib.sha256((new/name).read_bytes()).hexdigest()} for name in paths]
+assert images[0]['sha256']=='6e97a0331206579ff2353d2944e160222c1c7029cf1f84f0ed218f0a7e5da42c'
+assert images[1]['sha256']=='e8b36d46b4e493623224bd74dc92858cfeb080d4fe8241e65dc04e59b4a67560'
+assert images[2]['sha256']=='400b782260daf3b0fe4ebd5d06b79057cf00d7dde277acc2eda1f64ee2f5df36'
+assert images[3]['sha256']=='5b88d97428920c7fc2b5a7ee7fcd0f2ae82582ca2ca7ce09728461ca0af22693'
+ref='refs/heads/research/6501-browser-effect-01a0ff2d'
+start=datetime.now(timezone.utc).isoformat()
+p=subprocess.Popen(['git','ls-remote','--heads','origin',ref],cwd=root/'work/agent-interface',stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+stdout,stderr=p.communicate(timeout=30)
+assert p.returncode==0 and stdout.decode().split()==['8831d0fee51b89f1bde083e6db4ccbae87ba1f09',ref]
+freeze={'freeze_utc':datetime.now(timezone.utc).isoformat(),'images':images,'review_trigger':'PRR_kwDOUX14Nc8AAAABQdXpLw',
+    'old_public_head':'8831d0fee51b89f1bde083e6db4ccbae87ba1f09','source_v2_unchanged':True,
+    'H':'Require referenced server read_return seq before commit seq and same-server return timestamp <= commit timestamp. No cross-origin client/server numeric comparison.',
+    'T':'Seven ordinary saved-only methods: original;25 directed commit moves;2 separate clock-origin positives;equal-server-clock positive;72 old reviewer copies;12 extra old copies;12 controls.',
+    'D':'Before repair25 copies must expose unchanged v2 acceptance. After repair all reject with causal label and benefit None; original/control clock cases preserve counts/elapsed/flags, old invalid families remain rejected.',
+    'C_U':'Copied records and finite declared audit contract, not original effects falsification or coordinated emitter authentication; no browser/client/server/model/formal replay.',
+    'native_git_read':{'argv':['git','ls-remote','--heads','origin',ref],'pid':p.pid,'start_utc':start,'end_utc':datetime.now(timezone.utc).isoformat(),
+                       'exit_code':p.returncode,'stdout':stdout.decode(),'stderr':stderr.decode()}}
+(new/'FREEZE.json').write_text(json.dumps(freeze,indent=2)+'\n',encoding='utf-8',newline='\n')
+print(json.dumps(freeze,indent=2))

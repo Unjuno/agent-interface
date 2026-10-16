@@ -1,0 +1,8 @@
+{
+  "candidate": "post_authority_normalize_v1",
+  "disposition": "REJECT_BEFORE_LIVE_AS_SEMANTIC_MISREPRESENTATION",
+  "finding": "legacy post-release collector performs two real captures, but v1 normalization reported post_authority.captures=1 while separately recording source_captures=2",
+  "formal_live_consumed": false,
+  "repair_direction": "retain actual capture cardinality and extend caller bridge to verify bounded multi-capture/latest-selection evidence explicitly",
+  "schema": "inkscape-authority-ended-construction-failure-v1"
+}

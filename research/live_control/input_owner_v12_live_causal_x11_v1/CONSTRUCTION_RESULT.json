@@ -1,0 +1,44 @@
+{
+  "construction_sessions": 2,
+  "formal_invocations": 0,
+  "phase": "excluded_construction",
+  "reruns": 0,
+  "rows": [
+    {
+      "arm": "V10_BASELINE",
+      "cleanup": {"fixture_exit": -15, "socket_exists_after": false, "xvfb_exit": 0},
+      "clock_provenance": "same_host_python_perf_counter_ns",
+      "display": ":1500",
+      "exceptions": ["XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/opt/xvfb/.Xauthority'"],
+      "fixture_ready": {"clock": "python_perf_counter_ns", "pid": 912, "ready_ns": 1147718361825, "window_id": 2097167},
+      "pair": 0,
+      "position": "construction_1"
+    },
+    {
+      "arm": "V12_MEASURED",
+      "cleanup": {"fixture_exit": -15, "socket_exists_after": false, "xvfb_exit": 0},
+      "clock_provenance": "same_host_python_perf_counter_ns",
+      "display": ":1501",
+      "exceptions": ["XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/opt/xvfb/.Xauthority'"],
+      "fixture_ready": {"clock": "python_perf_counter_ns", "pid": 927, "ready_ns": 1148743675821, "window_id": 2097167},
+      "pair": 0,
+      "position": "construction_2"
+    }
+  ],
+  "source_gate": {
+    "adapter_sha256": "ed7e4f00675e79a9ef86984c7c129bb6c3eda64855c6c71821c313c9feb9badf",
+    "bundle_sha256": "5960543c9d9193b5615da2b545eb7a385a4d2e17bfe12513731bf9e92f948422",
+    "v10_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "v12_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508"
+  },
+  "summary": {
+    "baseline_application_ok": 0,
+    "candidate_application_ok": 0,
+    "candidate_physical_composed": 0,
+    "exceptions": 2,
+    "sessions": 2,
+    "terminal_up": 0
+  },
+  "task": "INPUT-OWNER-V12-LIVE-CAUSAL-X11-20260918-001",
+  "sha256_of_full_local_result": "2a88d4cb2cba945b79879e60abe1feb0b87157eea1ba154c2c0a1b01951245d9"
+}

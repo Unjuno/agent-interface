@@ -1,0 +1,27 @@
+"""Own inert JSONL endpoint, no Codex/API/model/game or descendant."""
+import json, os, sys, time
+from pathlib import Path
+
+mode, api, path = sys.argv[1:]
+with Path(path).open('x') as events:
+    def record(event, **values):
+        events.write(json.dumps({'event': event, 'pid': os.getpid(),
+                                'monotonic_ns': time.monotonic_ns(), **values}) + '\n')
+        events.flush()
+    record('started', mode=mode, api=api)
+    if mode == 'healthy' and api == 'notification':
+        print(json.dumps({'method': 'owned/probe', 'params': {'inert': True}}), flush=True)
+    if mode != 'healthy':
+        sys.stdout.flush()
+        os.close(1)
+        if mode == 'closed_both':
+            sys.stderr.flush()
+            os.close(2)
+        else:
+            os.write(2, b'owned inert diagnostic retained until process closure\n')
+    record('ready', stdout_closed=mode != 'healthy', stderr_closed=mode == 'closed_both')
+    for line in sys.stdin:
+        message = json.loads(line)
+        record('request_received', method=message.get('method'), request_id=message.get('id'))
+        if mode == 'healthy':
+            print(json.dumps({'id': message['id'], 'result': {'inert': True}}), flush=True)

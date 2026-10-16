@@ -1,0 +1,3920 @@
+[
+  {
+    "request": {
+      "after": 2,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "ad53885fe1c148e88b3dcd5a85c8f5d3"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "ad53885fe1c148e88b3dcd5a85c8f5d3"
+          },
+          "received_ns": 6507682942,
+          "emit_started_ns": 6507686870
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 6515747932,
+          "sequence": 1,
+          "emit_started_ns": 6515758456
+        }
+      ],
+      "cursor": 4,
+      "returned_ns": 6526442846,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "ad53885fe1c148e88b3dcd5a85c8f5d3",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "record": {
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1,
+              "emit_started_ns": 6515758456
+            },
+            "echo_cursor": 3,
+            "record_cursor": 4
+          }
+        },
+        "cursor": 4,
+        "format": "received-continuation-v1",
+        "observation": {
+          "capture_ms": 3.556495,
+          "capture_ns": 6416644992,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "context_ns": 6421421800,
+          "emit_started_ns": 6480412439,
+          "event": "observation",
+          "exact": true,
+          "focus_samples_match": true,
+          "id": "initial",
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/001.png",
+          "image_prepare_ns": 37436866,
+          "image_ready_ns": 6473432050,
+          "image_reused": false,
+          "input_focus_after": 6291464,
+          "input_focus_before": 6291464,
+          "input_state_after": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "revision": 0,
+            "sample_finished_ns": 6480357643,
+            "sample_started_ns": 6479941057
+          },
+          "input_state_before": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              640,
+              400
+            ],
+            "revision": 0,
+            "sample_finished_ns": 6411721512,
+            "sample_started_ns": 6411237902
+          },
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "owner_revision_unchanged": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "semantic_completion": "unknown",
+          "sequence": 1,
+          "step": 0,
+          "wire_bytes": 67750
+        },
+        "observation_cursor": 2,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "ad53885fe1c148e88b3dcd5a85c8f5d3",
+        "clock": {
+          "event": "clock",
+          "runtime_ns": 6515747932,
+          "sequence": 1,
+          "emit_started_ns": 6515758456
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 4,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 3,
+      "action_id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+      "command": {
+        "op": "submit",
+        "expected_sequence": 1,
+        "valid_until_ns": 9515747932,
+        "steps": [
+          {
+            "op": "pointer_click",
+            "x": 619,
+            "y": 391,
+            "duration_ms": 80
+          },
+          {
+            "op": "observe"
+          }
+        ],
+        "id": "durable-c6433ee0e22442519a8dc2ed6940088b"
+      },
+      "request_id": "675b56577220404295ad48cfeacb3f53"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 1,
+            "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+            "op": "submit",
+            "steps": [
+              {
+                "duration_ms": 80,
+                "op": "pointer_click",
+                "x": 619,
+                "y": 391
+              },
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "675b56577220404295ad48cfeacb3f53",
+            "valid_until_ns": 9515747932
+          },
+          "received_ns": 6554787549,
+          "emit_started_ns": 6554790414
+        },
+        {
+          "event": "accepted",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "steps": 2,
+          "valid_until_ns": 9515747932,
+          "accepted_ns": 6561398997,
+          "emit_started_ns": 6561401510
+        },
+        {
+          "event": "step_started",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 0,
+          "operation": "pointer_click",
+          "issued_ns": 6572048611,
+          "emit_started_ns": 6572050489
+        },
+        {
+          "event": "pointer_admission",
+          "operation": "move",
+          "payload": {
+            "x": 619,
+            "y": 391
+          },
+          "admitted_ns": 6583850072,
+          "input_ack_ns": 6584097881,
+          "valid_until_ns": 9515747932,
+          "surface": 6291463,
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 0,
+          "emit_started_ns": 6584181973
+        },
+        {
+          "event": "pointer_admission",
+          "operation": "button_down",
+          "payload": 1,
+          "admitted_ns": 6595801441,
+          "input_ack_ns": 6596059026,
+          "valid_until_ns": 9515747932,
+          "surface": 6291463,
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 0,
+          "emit_started_ns": 6596303759
+        },
+        {
+          "event": "observation",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 6696728153,
+          "context_ns": 6702765801,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/002.png",
+          "image_reused": false,
+          "image_prepare_ns": 29383020,
+          "image_ready_ns": 6751700449,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 6.688648,
+          "wire_bytes": 6130,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 3,
+            "sample_started_ns": 6687013703,
+            "sample_finished_ns": 6687344910,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 9515747932,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 3,
+            "sample_started_ns": 6756935385,
+            "sample_finished_ns": 6757236630,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 9515747932,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 6757294757
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 0,
+          "completed_ns": 6763921357,
+          "emit_started_ns": 6763923884
+        },
+        {
+          "event": "step_started",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 1,
+          "operation": "observe",
+          "issued_ns": 6777482121,
+          "emit_started_ns": 6777484417
+        },
+        {
+          "event": "observation",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 1,
+          "sequence": 3,
+          "capture_ns": 6793957173,
+          "context_ns": 6800390000,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/003.png",
+          "image_reused": false,
+          "image_prepare_ns": 28132391,
+          "image_ready_ns": 6846005698,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.817069,
+          "wire_bytes": 18751,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 3,
+            "sample_started_ns": 6788648757,
+            "sample_finished_ns": 6789146062,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 9515747932,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 3,
+            "sample_started_ns": 6856119926,
+            "sample_finished_ns": 6856323533,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 9515747932,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 6856379966
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 1,
+          "completed_ns": 6863969962,
+          "emit_started_ns": 6863972571
+        },
+        {
+          "event": "terminal",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 2,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 6876243580,
+            "valid_until_ns": 9515747932
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 6876439631,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 6876444403
+        }
+      ],
+      "cursor": 15,
+      "returned_ns": 6887101549,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "675b56577220404295ad48cfeacb3f53",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          }
+        },
+        "cursor": 15,
+        "format": "received-continuation-v1",
+        "observation": {
+          "event": "observation",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "step": 1,
+          "sequence": 3,
+          "capture_ns": 6793957173,
+          "context_ns": 6800390000,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/003.png",
+          "image_reused": false,
+          "image_prepare_ns": 28132391,
+          "image_ready_ns": 6846005698,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.817069,
+          "wire_bytes": 18751,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 3,
+            "sample_started_ns": 6788648757,
+            "sample_finished_ns": 6789146062,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 9515747932,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 3,
+            "sample_started_ns": 6856119926,
+            "sample_finished_ns": 6856323533,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 9515747932,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 6856379966
+        },
+        "observation_cursor": 13,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "675b56577220404295ad48cfeacb3f53",
+        "terminal": {
+          "event": "terminal",
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 2,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 6876243580,
+            "valid_until_ns": 9515747932
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 6876439631,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 6876444403
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 15,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "7d61a7cb549c4fe7a5ec563e0e40c525"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "7d61a7cb549c4fe7a5ec563e0e40c525"
+          },
+          "received_ns": 6917678812,
+          "emit_started_ns": 6917681502
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 6922837667,
+          "sequence": 3,
+          "emit_started_ns": 6922847293
+        }
+      ],
+      "cursor": 17,
+      "returned_ns": 6935589805,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "7d61a7cb549c4fe7a5ec563e0e40c525",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "record": {
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3,
+              "emit_started_ns": 6922847293
+            },
+            "echo_cursor": 16,
+            "record_cursor": 17
+          }
+        },
+        "cursor": 17,
+        "format": "received-continuation-v1",
+        "observation": {
+          "capture_ms": 3.817069,
+          "capture_ns": 6793957173,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "context_ns": 6800390000,
+          "emit_started_ns": 6856379966,
+          "event": "observation",
+          "exact": true,
+          "focus_samples_match": true,
+          "id": "durable-c6433ee0e22442519a8dc2ed6940088b",
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/003.png",
+          "image_prepare_ns": 28132391,
+          "image_ready_ns": 6846005698,
+          "image_reused": false,
+          "input_focus_after": 6291464,
+          "input_focus_before": 6291464,
+          "input_state_after": {
+            "active_lease_deadline_ns": 9515747932,
+            "active_lease_time_valid": true,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "revision": 3,
+            "sample_finished_ns": 6856323533,
+            "sample_started_ns": 6856119926
+          },
+          "input_state_before": {
+            "active_lease_deadline_ns": 9515747932,
+            "active_lease_time_valid": true,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "revision": 3,
+            "sample_finished_ns": 6789146062,
+            "sample_started_ns": 6788648757
+          },
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "owner_revision_unchanged": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "semantic_completion": "unknown",
+          "sequence": 3,
+          "step": 1,
+          "wire_bytes": 18751
+        },
+        "observation_cursor": 13,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "7d61a7cb549c4fe7a5ec563e0e40c525",
+        "clock": {
+          "event": "clock",
+          "runtime_ns": 6922837667,
+          "sequence": 3,
+          "emit_started_ns": 6922847293
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 17,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 3,
+      "action_id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+      "command": {
+        "op": "submit",
+        "expected_sequence": 3,
+        "valid_until_ns": 9922837667,
+        "steps": [
+          {
+            "op": "observe"
+          }
+        ],
+        "id": "durable-a4886aa223ea4dc1bab0619edbc94492"
+      },
+      "request_id": "55c81b46e79e41f8a6e894f45d9178c0"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 3,
+            "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "55c81b46e79e41f8a6e894f45d9178c0",
+            "valid_until_ns": 9922837667
+          },
+          "received_ns": 6964857944,
+          "emit_started_ns": 6964860816
+        },
+        {
+          "event": "accepted",
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "steps": 1,
+          "valid_until_ns": 9922837667,
+          "accepted_ns": 6970105503,
+          "emit_started_ns": 6970107130
+        },
+        {
+          "event": "step_started",
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 6983059363,
+          "emit_started_ns": 6983061100
+        },
+        {
+          "event": "observation",
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "step": 0,
+          "sequence": 4,
+          "capture_ns": 6999703810,
+          "context_ns": 7003879570,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/004.png",
+          "image_reused": false,
+          "image_prepare_ns": 23901825,
+          "image_ready_ns": 7042509513,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.298941,
+          "wire_bytes": 8776,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 4,
+            "sample_started_ns": 6994858982,
+            "sample_finished_ns": 6995402919,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 4,
+            "sample_started_ns": 7049725304,
+            "sample_finished_ns": 7050155552,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7050197934
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "step": 0,
+          "completed_ns": 7054420991,
+          "emit_started_ns": 7054423646
+        },
+        {
+          "event": "terminal",
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 7067887467,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 7067942746,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 7067945801
+        }
+      ],
+      "cursor": 23,
+      "returned_ns": 7079014526,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "55c81b46e79e41f8a6e894f45d9178c0",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          }
+        },
+        "cursor": 23,
+        "format": "received-continuation-v1",
+        "observation": {
+          "event": "observation",
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "step": 0,
+          "sequence": 4,
+          "capture_ns": 6999703810,
+          "context_ns": 7003879570,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/004.png",
+          "image_reused": false,
+          "image_prepare_ns": 23901825,
+          "image_ready_ns": 7042509513,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.298941,
+          "wire_bytes": 8776,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 4,
+            "sample_started_ns": 6994858982,
+            "sample_finished_ns": 6995402919,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 4,
+            "sample_started_ns": 7049725304,
+            "sample_finished_ns": 7050155552,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7050197934
+        },
+        "observation_cursor": 21,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "55c81b46e79e41f8a6e894f45d9178c0",
+        "terminal": {
+          "event": "terminal",
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 7067887467,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 7067942746,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 7067945801
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 23,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "08d20f04f1a3471ca3d1d17139dce64e"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "08d20f04f1a3471ca3d1d17139dce64e"
+          },
+          "received_ns": 7110968006,
+          "emit_started_ns": 7110971728
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 7116885843,
+          "sequence": 4,
+          "emit_started_ns": 7116891191
+        }
+      ],
+      "cursor": 25,
+      "returned_ns": 7129160079,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "08d20f04f1a3471ca3d1d17139dce64e",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "08d20f04f1a3471ca3d1d17139dce64e": {
+            "record": {
+              "event": "clock",
+              "runtime_ns": 7116885843,
+              "sequence": 4,
+              "emit_started_ns": 7116891191
+            },
+            "echo_cursor": 24,
+            "record_cursor": 25
+          }
+        },
+        "cursor": 25,
+        "format": "received-continuation-v1",
+        "observation": {
+          "capture_ms": 3.298941,
+          "capture_ns": 6999703810,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "context_ns": 7003879570,
+          "emit_started_ns": 7050197934,
+          "event": "observation",
+          "exact": true,
+          "focus_samples_match": true,
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/004.png",
+          "image_prepare_ns": 23901825,
+          "image_ready_ns": 7042509513,
+          "image_reused": false,
+          "input_focus_after": 6291464,
+          "input_focus_before": 6291464,
+          "input_state_after": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "revision": 4,
+            "sample_finished_ns": 7050155552,
+            "sample_started_ns": 7049725304
+          },
+          "input_state_before": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "revision": 4,
+            "sample_finished_ns": 6995402919,
+            "sample_started_ns": 6994858982
+          },
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "owner_revision_unchanged": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "semantic_completion": "unknown",
+          "sequence": 4,
+          "step": 0,
+          "wire_bytes": 8776
+        },
+        "observation_cursor": 21,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7",
+          "82c3a101a3027ec4dfa7ab1e2535c829bf3e8f9116d9b25e97247773912272ce",
+          "7b82b8453578d31d196f808fd83e29a0811e5ed5b8e7a48f71cec93b2908dd1c"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "08d20f04f1a3471ca3d1d17139dce64e",
+        "clock": {
+          "event": "clock",
+          "runtime_ns": 7116885843,
+          "sequence": 4,
+          "emit_started_ns": 7116891191
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 25,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "998af2f5f7054558834b22cd40b4bd75"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "998af2f5f7054558834b22cd40b4bd75"
+          },
+          "received_ns": 7191043501,
+          "emit_started_ns": 7191045452
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 7200607707,
+          "sequence": 4,
+          "emit_started_ns": 7200613771
+        }
+      ],
+      "cursor": 27,
+      "returned_ns": 7212238522,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "998af2f5f7054558834b22cd40b4bd75",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "08d20f04f1a3471ca3d1d17139dce64e": {
+            "echo_cursor": 24,
+            "record": {
+              "emit_started_ns": 7116891191,
+              "event": "clock",
+              "runtime_ns": 7116885843,
+              "sequence": 4
+            },
+            "record_cursor": 25
+          },
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "998af2f5f7054558834b22cd40b4bd75": {
+            "record": {
+              "event": "clock",
+              "runtime_ns": 7200607707,
+              "sequence": 4,
+              "emit_started_ns": 7200613771
+            },
+            "echo_cursor": 26,
+            "record_cursor": 27
+          }
+        },
+        "cursor": 27,
+        "format": "received-continuation-v1",
+        "observation": {
+          "capture_ms": 3.298941,
+          "capture_ns": 6999703810,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "context_ns": 7003879570,
+          "emit_started_ns": 7050197934,
+          "event": "observation",
+          "exact": true,
+          "focus_samples_match": true,
+          "id": "durable-a4886aa223ea4dc1bab0619edbc94492",
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/004.png",
+          "image_prepare_ns": 23901825,
+          "image_ready_ns": 7042509513,
+          "image_reused": false,
+          "input_focus_after": 6291464,
+          "input_focus_before": 6291464,
+          "input_state_after": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "revision": 4,
+            "sample_finished_ns": 7050155552,
+            "sample_started_ns": 7049725304
+          },
+          "input_state_before": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "revision": 4,
+            "sample_finished_ns": 6995402919,
+            "sample_started_ns": 6994858982
+          },
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "owner_revision_unchanged": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "semantic_completion": "unknown",
+          "sequence": 4,
+          "step": 0,
+          "wire_bytes": 8776
+        },
+        "observation_cursor": 21,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7",
+          "82c3a101a3027ec4dfa7ab1e2535c829bf3e8f9116d9b25e97247773912272ce",
+          "7b82b8453578d31d196f808fd83e29a0811e5ed5b8e7a48f71cec93b2908dd1c",
+          "2fdd8d029ccb1e2f3b7c09327004829e19db3441e22a831ae501359a6e04c040",
+          "02a3913a524a044df4777fed0fc200d989c05bca1487d97ef63a2b770d78ff35"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "998af2f5f7054558834b22cd40b4bd75",
+        "clock": {
+          "event": "clock",
+          "runtime_ns": 7200607707,
+          "sequence": 4,
+          "emit_started_ns": 7200613771
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 27,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 3,
+      "action_id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+      "command": {
+        "op": "submit",
+        "expected_sequence": 4,
+        "valid_until_ns": 10200607707,
+        "steps": [
+          {
+            "op": "observe"
+          }
+        ],
+        "id": "durable-589ac868f6bc49d788a27f6a46cb5650"
+      },
+      "request_id": "96885346f14d45baa6e6aaeff729addb"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 4,
+            "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "96885346f14d45baa6e6aaeff729addb",
+            "valid_until_ns": 10200607707
+          },
+          "received_ns": 7245317235,
+          "emit_started_ns": 7245320208
+        },
+        {
+          "event": "accepted",
+          "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+          "steps": 1,
+          "valid_until_ns": 10200607707,
+          "accepted_ns": 7250673066,
+          "emit_started_ns": 7250674461
+        },
+        {
+          "event": "step_started",
+          "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 7262843037,
+          "emit_started_ns": 7262844596
+        },
+        {
+          "event": "observation",
+          "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+          "step": 0,
+          "sequence": 5,
+          "capture_ns": 7279023850,
+          "context_ns": 7283715662,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/004.png",
+          "image_reused": true,
+          "image_prepare_ns": 1194301,
+          "image_ready_ns": 7289963333,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.976461,
+          "wire_bytes": 301,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 5,
+            "sample_started_ns": 7274037471,
+            "sample_finished_ns": 7274357482,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 5,
+            "sample_started_ns": 7297459546,
+            "sample_finished_ns": 7297720326,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7297772385
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+          "step": 0,
+          "completed_ns": 7302384080,
+          "emit_started_ns": 7302386336
+        },
+        {
+          "event": "terminal",
+          "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 7314760414,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 7314819671,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 7314822741
+        }
+      ],
+      "cursor": 33,
+      "returned_ns": 7326777154,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "96885346f14d45baa6e6aaeff729addb",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "08d20f04f1a3471ca3d1d17139dce64e": {
+            "echo_cursor": 24,
+            "record": {
+              "emit_started_ns": 7116891191,
+              "event": "clock",
+              "runtime_ns": 7116885843,
+              "sequence": 4
+            },
+            "record_cursor": 25
+          },
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "998af2f5f7054558834b22cd40b4bd75": {
+            "echo_cursor": 26,
+            "record": {
+              "emit_started_ns": 7200613771,
+              "event": "clock",
+              "runtime_ns": 7200607707,
+              "sequence": 4
+            },
+            "record_cursor": 27
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          }
+        },
+        "cursor": 33,
+        "format": "received-continuation-v1",
+        "observation": {
+          "event": "observation",
+          "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+          "step": 0,
+          "sequence": 5,
+          "capture_ns": 7279023850,
+          "context_ns": 7283715662,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/004.png",
+          "image_reused": true,
+          "image_prepare_ns": 1194301,
+          "image_ready_ns": 7289963333,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.976461,
+          "wire_bytes": 301,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 5,
+            "sample_started_ns": 7274037471,
+            "sample_finished_ns": 7274357482,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 5,
+            "sample_started_ns": 7297459546,
+            "sample_finished_ns": 7297720326,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7297772385
+        },
+        "observation_cursor": 31,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7",
+          "82c3a101a3027ec4dfa7ab1e2535c829bf3e8f9116d9b25e97247773912272ce",
+          "7b82b8453578d31d196f808fd83e29a0811e5ed5b8e7a48f71cec93b2908dd1c",
+          "2fdd8d029ccb1e2f3b7c09327004829e19db3441e22a831ae501359a6e04c040",
+          "02a3913a524a044df4777fed0fc200d989c05bca1487d97ef63a2b770d78ff35",
+          "43b1656f545d235b1a62e29ebc56ef7b5b5cab18d4e4b3360da4ffdf139b5bc4",
+          "cd6357e93edc7fd7ee37076fc01bf3de89f7554f5540aaab94dfb88ce24970b3",
+          "9c0c4985bc38bda8e9e5d5116110bc48b5db02594c95cd27c82d3e2432ad5557",
+          "257ac7ff3406f6a08426b9fade8b6177e70845638901f47917e8f336fe8cfa6d",
+          "c11d5dc39ca9c5854096015b9b2ac6f9e9d01934c1c25a7c8d8f7d027b1d0a9d",
+          "1e67b2e8eada17aa7136ca41f4c3aa728b46443ee3cc34f06a8f5e6402343695"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "96885346f14d45baa6e6aaeff729addb",
+        "terminal": {
+          "event": "terminal",
+          "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 7314760414,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 7314819671,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 7314822741
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 33,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "ba98039a79d64a75871fd465051b3484"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "ba98039a79d64a75871fd465051b3484"
+          },
+          "received_ns": 7361290493,
+          "emit_started_ns": 7361293576
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 7367862155,
+          "sequence": 5,
+          "emit_started_ns": 7367867513
+        }
+      ],
+      "cursor": 35,
+      "returned_ns": 7380711963,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "ba98039a79d64a75871fd465051b3484",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "08d20f04f1a3471ca3d1d17139dce64e": {
+            "echo_cursor": 24,
+            "record": {
+              "emit_started_ns": 7116891191,
+              "event": "clock",
+              "runtime_ns": 7116885843,
+              "sequence": 4
+            },
+            "record_cursor": 25
+          },
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "998af2f5f7054558834b22cd40b4bd75": {
+            "echo_cursor": 26,
+            "record": {
+              "emit_started_ns": 7200613771,
+              "event": "clock",
+              "runtime_ns": 7200607707,
+              "sequence": 4
+            },
+            "record_cursor": 27
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "ba98039a79d64a75871fd465051b3484": {
+            "record": {
+              "event": "clock",
+              "runtime_ns": 7367862155,
+              "sequence": 5,
+              "emit_started_ns": 7367867513
+            },
+            "echo_cursor": 34,
+            "record_cursor": 35
+          }
+        },
+        "cursor": 35,
+        "format": "received-continuation-v1",
+        "observation": {
+          "capture_ms": 3.976461,
+          "capture_ns": 7279023850,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "context_ns": 7283715662,
+          "emit_started_ns": 7297772385,
+          "event": "observation",
+          "exact": true,
+          "focus_samples_match": true,
+          "id": "durable-589ac868f6bc49d788a27f6a46cb5650",
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/004.png",
+          "image_prepare_ns": 1194301,
+          "image_ready_ns": 7289963333,
+          "image_reused": true,
+          "input_focus_after": 6291464,
+          "input_focus_before": 6291464,
+          "input_state_after": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "revision": 5,
+            "sample_finished_ns": 7297720326,
+            "sample_started_ns": 7297459546
+          },
+          "input_state_before": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              619,
+              391
+            ],
+            "revision": 5,
+            "sample_finished_ns": 7274357482,
+            "sample_started_ns": 7274037471
+          },
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "owner_revision_unchanged": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "semantic_completion": "unknown",
+          "sequence": 5,
+          "step": 0,
+          "wire_bytes": 301
+        },
+        "observation_cursor": 31,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7",
+          "82c3a101a3027ec4dfa7ab1e2535c829bf3e8f9116d9b25e97247773912272ce",
+          "7b82b8453578d31d196f808fd83e29a0811e5ed5b8e7a48f71cec93b2908dd1c",
+          "2fdd8d029ccb1e2f3b7c09327004829e19db3441e22a831ae501359a6e04c040",
+          "02a3913a524a044df4777fed0fc200d989c05bca1487d97ef63a2b770d78ff35",
+          "43b1656f545d235b1a62e29ebc56ef7b5b5cab18d4e4b3360da4ffdf139b5bc4",
+          "cd6357e93edc7fd7ee37076fc01bf3de89f7554f5540aaab94dfb88ce24970b3",
+          "9c0c4985bc38bda8e9e5d5116110bc48b5db02594c95cd27c82d3e2432ad5557",
+          "257ac7ff3406f6a08426b9fade8b6177e70845638901f47917e8f336fe8cfa6d",
+          "c11d5dc39ca9c5854096015b9b2ac6f9e9d01934c1c25a7c8d8f7d027b1d0a9d",
+          "1e67b2e8eada17aa7136ca41f4c3aa728b46443ee3cc34f06a8f5e6402343695",
+          "74483f396f383cf66a48e1b7e5ff1ffca77d3b149e9e5cb0f612b00dea3b1c95",
+          "cc2bf4ba18aba7832d6b3e51ec3bcd217b19d098dbe91c19ca91c83608c900e8"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "ba98039a79d64a75871fd465051b3484",
+        "clock": {
+          "event": "clock",
+          "runtime_ns": 7367862155,
+          "sequence": 5,
+          "emit_started_ns": 7367867513
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 35,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 3,
+      "action_id": "durable-f6bbf91d116545478858c37ed4531172",
+      "command": {
+        "op": "submit",
+        "expected_sequence": 5,
+        "valid_until_ns": 8279023850,
+        "steps": [
+          {
+            "op": "pointer_click",
+            "x": 550,
+            "y": 106,
+            "duration_ms": 80
+          },
+          {
+            "op": "observe"
+          }
+        ],
+        "id": "durable-f6bbf91d116545478858c37ed4531172"
+      },
+      "request_id": "27edbc70ad14428aac5a6ac1f0035253"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 5,
+            "id": "durable-f6bbf91d116545478858c37ed4531172",
+            "op": "submit",
+            "steps": [
+              {
+                "duration_ms": 80,
+                "op": "pointer_click",
+                "x": 550,
+                "y": 106
+              },
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "27edbc70ad14428aac5a6ac1f0035253",
+            "valid_until_ns": 8279023850
+          },
+          "received_ns": 7464393058,
+          "emit_started_ns": 7464397725
+        },
+        {
+          "event": "accepted",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "steps": 2,
+          "valid_until_ns": 8279023850,
+          "accepted_ns": 7469740806,
+          "emit_started_ns": 7469743064
+        },
+        {
+          "event": "step_started",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 0,
+          "operation": "pointer_click",
+          "issued_ns": 7483608818,
+          "emit_started_ns": 7483610405
+        },
+        {
+          "event": "pointer_admission",
+          "operation": "move",
+          "payload": {
+            "x": 550,
+            "y": 106
+          },
+          "admitted_ns": 7498559273,
+          "input_ack_ns": 7498772800,
+          "valid_until_ns": 8279023850,
+          "surface": 6291463,
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 0,
+          "emit_started_ns": 7498868808
+        },
+        {
+          "event": "pointer_admission",
+          "operation": "button_down",
+          "payload": 1,
+          "admitted_ns": 7524630319,
+          "input_ack_ns": 7525283219,
+          "valid_until_ns": 8279023850,
+          "surface": 6291463,
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 0,
+          "emit_started_ns": 7525465868
+        },
+        {
+          "event": "observation",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 0,
+          "sequence": 6,
+          "capture_ns": 7621678461,
+          "context_ns": 7628325093,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/006.png",
+          "image_reused": false,
+          "image_prepare_ns": 27127072,
+          "image_ready_ns": 7672318190,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.499361,
+          "wire_bytes": 2284,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 9,
+            "sample_started_ns": 7616438027,
+            "sample_finished_ns": 7616699479,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 8279023850,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 9,
+            "sample_started_ns": 7680154811,
+            "sample_finished_ns": 7680352939,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 8279023850,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7680414349
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 0,
+          "completed_ns": 7686184616,
+          "emit_started_ns": 7686186932
+        },
+        {
+          "event": "step_started",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 1,
+          "operation": "observe",
+          "issued_ns": 7698289792,
+          "emit_started_ns": 7698291047
+        },
+        {
+          "event": "observation",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 1,
+          "sequence": 7,
+          "capture_ns": 7715470821,
+          "context_ns": 7720053210,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/007.png",
+          "image_reused": false,
+          "image_prepare_ns": 25260935,
+          "image_ready_ns": 7760272259,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.732693,
+          "wire_bytes": 2261,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 9,
+            "sample_started_ns": 7708959391,
+            "sample_finished_ns": 7709502507,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 8279023850,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 9,
+            "sample_started_ns": 7765923327,
+            "sample_finished_ns": 7766123665,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 8279023850,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7766181436
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 1,
+          "completed_ns": 7771034140,
+          "emit_started_ns": 7771036461
+        },
+        {
+          "event": "terminal",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 2,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 7783701627,
+            "valid_until_ns": 8279023850
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 7783748075,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 7783750538
+        }
+      ],
+      "cursor": 46,
+      "returned_ns": 7795693679,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "27edbc70ad14428aac5a6ac1f0035253",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "08d20f04f1a3471ca3d1d17139dce64e": {
+            "echo_cursor": 24,
+            "record": {
+              "emit_started_ns": 7116891191,
+              "event": "clock",
+              "runtime_ns": 7116885843,
+              "sequence": 4
+            },
+            "record_cursor": 25
+          },
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "998af2f5f7054558834b22cd40b4bd75": {
+            "echo_cursor": 26,
+            "record": {
+              "emit_started_ns": 7200613771,
+              "event": "clock",
+              "runtime_ns": 7200607707,
+              "sequence": 4
+            },
+            "record_cursor": 27
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "ba98039a79d64a75871fd465051b3484": {
+            "echo_cursor": 34,
+            "record": {
+              "emit_started_ns": 7367867513,
+              "event": "clock",
+              "runtime_ns": 7367862155,
+              "sequence": 5
+            },
+            "record_cursor": 35
+          }
+        },
+        "cursor": 46,
+        "format": "received-continuation-v1",
+        "observation": {
+          "event": "observation",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "step": 1,
+          "sequence": 7,
+          "capture_ns": 7715470821,
+          "context_ns": 7720053210,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/007.png",
+          "image_reused": false,
+          "image_prepare_ns": 25260935,
+          "image_ready_ns": 7760272259,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.732693,
+          "wire_bytes": 2261,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 9,
+            "sample_started_ns": 7708959391,
+            "sample_finished_ns": 7709502507,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 8279023850,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 9,
+            "sample_started_ns": 7765923327,
+            "sample_finished_ns": 7766123665,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 6291464,
+            "active_lease_deadline_ns": 8279023850,
+            "active_lease_time_valid": true,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7766181436
+        },
+        "observation_cursor": 44,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7",
+          "82c3a101a3027ec4dfa7ab1e2535c829bf3e8f9116d9b25e97247773912272ce",
+          "7b82b8453578d31d196f808fd83e29a0811e5ed5b8e7a48f71cec93b2908dd1c",
+          "2fdd8d029ccb1e2f3b7c09327004829e19db3441e22a831ae501359a6e04c040",
+          "02a3913a524a044df4777fed0fc200d989c05bca1487d97ef63a2b770d78ff35",
+          "43b1656f545d235b1a62e29ebc56ef7b5b5cab18d4e4b3360da4ffdf139b5bc4",
+          "cd6357e93edc7fd7ee37076fc01bf3de89f7554f5540aaab94dfb88ce24970b3",
+          "9c0c4985bc38bda8e9e5d5116110bc48b5db02594c95cd27c82d3e2432ad5557",
+          "257ac7ff3406f6a08426b9fade8b6177e70845638901f47917e8f336fe8cfa6d",
+          "c11d5dc39ca9c5854096015b9b2ac6f9e9d01934c1c25a7c8d8f7d027b1d0a9d",
+          "1e67b2e8eada17aa7136ca41f4c3aa728b46443ee3cc34f06a8f5e6402343695",
+          "74483f396f383cf66a48e1b7e5ff1ffca77d3b149e9e5cb0f612b00dea3b1c95",
+          "cc2bf4ba18aba7832d6b3e51ec3bcd217b19d098dbe91c19ca91c83608c900e8",
+          "62c01689de1f22aed2668beece12bab81db233e7ad90a72609251d36d77f371b",
+          "9d3f23e127c365d8d0de48b7c419f4aa28454920c2bea34a2bfcd3645f69a515",
+          "45b9c24c2e648da95d4ea8f59796dc64bfe8be20896108006da7e3db36e8cbe3",
+          "e6f6dbb2265ce4c8c16d353327e3a86a8add9a632bf316e9aebdacda32e08d81",
+          "d105f70c62f48f238b39f93b9d2f4eb0bb7c30fc33bc2836b72dc5445025928b",
+          "0859386b28d224766de2cc459bdb5b19c471d191f30e9524e6867876f64d9610",
+          "4d8cf1d3c7ad0e536125b7367ad1aafa6f3b6760dd213ef355de597ddf0e02b9",
+          "a48749dacc1286cfd63f333004838e52557d411e9333e0e49c596b44ee96de6f",
+          "7a9212e61c556b0040f43b8798e3c3fce36d964ad76d3471aa615ee7cfe1e818",
+          "a38bb7b8728b43c5ff6c2b34397f73fcd78d47d53f7042e7a4077bbd61b1723e",
+          "1f21352639cbc413f0448e10e3182ef3fe5f81c3e8df2f975656160d139e9230"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "27edbc70ad14428aac5a6ac1f0035253",
+        "terminal": {
+          "event": "terminal",
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 2,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 7783701627,
+            "valid_until_ns": 8279023850
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 7783748075,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 7783750538
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 46,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "58ec61ebeb184143a361ceffb1df1a3b"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "58ec61ebeb184143a361ceffb1df1a3b"
+          },
+          "received_ns": 7835011542,
+          "emit_started_ns": 7835014424
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 7840390032,
+          "sequence": 7,
+          "emit_started_ns": 7840395052
+        }
+      ],
+      "cursor": 48,
+      "returned_ns": 7861056477,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "58ec61ebeb184143a361ceffb1df1a3b",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "08d20f04f1a3471ca3d1d17139dce64e": {
+            "echo_cursor": 24,
+            "record": {
+              "emit_started_ns": 7116891191,
+              "event": "clock",
+              "runtime_ns": 7116885843,
+              "sequence": 4
+            },
+            "record_cursor": 25
+          },
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "998af2f5f7054558834b22cd40b4bd75": {
+            "echo_cursor": 26,
+            "record": {
+              "emit_started_ns": 7200613771,
+              "event": "clock",
+              "runtime_ns": 7200607707,
+              "sequence": 4
+            },
+            "record_cursor": 27
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "ba98039a79d64a75871fd465051b3484": {
+            "echo_cursor": 34,
+            "record": {
+              "emit_started_ns": 7367867513,
+              "event": "clock",
+              "runtime_ns": 7367862155,
+              "sequence": 5
+            },
+            "record_cursor": 35
+          },
+          "58ec61ebeb184143a361ceffb1df1a3b": {
+            "record": {
+              "event": "clock",
+              "runtime_ns": 7840390032,
+              "sequence": 7,
+              "emit_started_ns": 7840395052
+            },
+            "echo_cursor": 47,
+            "record_cursor": 48
+          }
+        },
+        "cursor": 48,
+        "format": "received-continuation-v1",
+        "observation": {
+          "capture_ms": 3.732693,
+          "capture_ns": 7715470821,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "context_ns": 7720053210,
+          "emit_started_ns": 7766181436,
+          "event": "observation",
+          "exact": true,
+          "focus_samples_match": true,
+          "id": "durable-f6bbf91d116545478858c37ed4531172",
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/007.png",
+          "image_prepare_ns": 25260935,
+          "image_ready_ns": 7760272259,
+          "image_reused": false,
+          "input_focus_after": 6291464,
+          "input_focus_before": 6291464,
+          "input_state_after": {
+            "active_lease_deadline_ns": 8279023850,
+            "active_lease_time_valid": true,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "revision": 9,
+            "sample_finished_ns": 7766123665,
+            "sample_started_ns": 7765923327
+          },
+          "input_state_before": {
+            "active_lease_deadline_ns": 8279023850,
+            "active_lease_time_valid": true,
+            "cancel_requested": false,
+            "focus": 6291464,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "revision": 9,
+            "sample_finished_ns": 7709502507,
+            "sample_started_ns": 7708959391
+          },
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "owner_revision_unchanged": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ],
+            "surface": 6291463
+          },
+          "semantic_completion": "unknown",
+          "sequence": 7,
+          "step": 1,
+          "wire_bytes": 2261
+        },
+        "observation_cursor": 44,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7",
+          "82c3a101a3027ec4dfa7ab1e2535c829bf3e8f9116d9b25e97247773912272ce",
+          "7b82b8453578d31d196f808fd83e29a0811e5ed5b8e7a48f71cec93b2908dd1c",
+          "2fdd8d029ccb1e2f3b7c09327004829e19db3441e22a831ae501359a6e04c040",
+          "02a3913a524a044df4777fed0fc200d989c05bca1487d97ef63a2b770d78ff35",
+          "43b1656f545d235b1a62e29ebc56ef7b5b5cab18d4e4b3360da4ffdf139b5bc4",
+          "cd6357e93edc7fd7ee37076fc01bf3de89f7554f5540aaab94dfb88ce24970b3",
+          "9c0c4985bc38bda8e9e5d5116110bc48b5db02594c95cd27c82d3e2432ad5557",
+          "257ac7ff3406f6a08426b9fade8b6177e70845638901f47917e8f336fe8cfa6d",
+          "c11d5dc39ca9c5854096015b9b2ac6f9e9d01934c1c25a7c8d8f7d027b1d0a9d",
+          "1e67b2e8eada17aa7136ca41f4c3aa728b46443ee3cc34f06a8f5e6402343695",
+          "74483f396f383cf66a48e1b7e5ff1ffca77d3b149e9e5cb0f612b00dea3b1c95",
+          "cc2bf4ba18aba7832d6b3e51ec3bcd217b19d098dbe91c19ca91c83608c900e8",
+          "62c01689de1f22aed2668beece12bab81db233e7ad90a72609251d36d77f371b",
+          "9d3f23e127c365d8d0de48b7c419f4aa28454920c2bea34a2bfcd3645f69a515",
+          "45b9c24c2e648da95d4ea8f59796dc64bfe8be20896108006da7e3db36e8cbe3",
+          "e6f6dbb2265ce4c8c16d353327e3a86a8add9a632bf316e9aebdacda32e08d81",
+          "d105f70c62f48f238b39f93b9d2f4eb0bb7c30fc33bc2836b72dc5445025928b",
+          "0859386b28d224766de2cc459bdb5b19c471d191f30e9524e6867876f64d9610",
+          "4d8cf1d3c7ad0e536125b7367ad1aafa6f3b6760dd213ef355de597ddf0e02b9",
+          "a48749dacc1286cfd63f333004838e52557d411e9333e0e49c596b44ee96de6f",
+          "7a9212e61c556b0040f43b8798e3c3fce36d964ad76d3471aa615ee7cfe1e818",
+          "a38bb7b8728b43c5ff6c2b34397f73fcd78d47d53f7042e7a4077bbd61b1723e",
+          "1f21352639cbc413f0448e10e3182ef3fe5f81c3e8df2f975656160d139e9230",
+          "54a5960d2b2123345617531665e9f7851699cea5abbbc1522c73e7190996703f",
+          "b7556a814a0181d1c595ae5503ab3b26e92d5c61c2d80c361db0317c3268b695"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "58ec61ebeb184143a361ceffb1df1a3b",
+        "clock": {
+          "event": "clock",
+          "runtime_ns": 7840390032,
+          "sequence": 7,
+          "emit_started_ns": 7840395052
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 48,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 3,
+      "action_id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+      "command": {
+        "op": "submit",
+        "expected_sequence": 7,
+        "valid_until_ns": 10840390032,
+        "steps": [
+          {
+            "op": "observe"
+          }
+        ],
+        "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f"
+      },
+      "request_id": "6fa169cd085b4a13a08e01e8ba36b125"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 7,
+            "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "6fa169cd085b4a13a08e01e8ba36b125",
+            "valid_until_ns": 10840390032
+          },
+          "received_ns": 7897974086,
+          "emit_started_ns": 7897976644
+        },
+        {
+          "event": "accepted",
+          "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+          "steps": 1,
+          "valid_until_ns": 10840390032,
+          "accepted_ns": 7902696182,
+          "emit_started_ns": 7902698488
+        },
+        {
+          "event": "step_started",
+          "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 7915851483,
+          "emit_started_ns": 7915853441
+        },
+        {
+          "event": "observation",
+          "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+          "step": 0,
+          "sequence": 8,
+          "capture_ns": 7931924377,
+          "context_ns": 7937280319,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              0
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/008.png",
+          "image_reused": false,
+          "image_prepare_ns": 25608952,
+          "image_ready_ns": 7977502160,
+          "input_focus_before": 16777216,
+          "input_focus_after": 16777216,
+          "focus_samples_match": true,
+          "pointer_binding": null,
+          "pointer_context_before": {
+            "focus": 16777216,
+            "surface": null,
+            "geometry": null
+          },
+          "pointer_context_after": {
+            "focus": 16777216,
+            "surface": null,
+            "geometry": null
+          },
+          "capture_ms": 4.52276,
+          "wire_bytes": 12463,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 10,
+            "sample_started_ns": 7926042275,
+            "sample_finished_ns": 7926654957,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 16777216,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 10,
+            "sample_started_ns": 7987542816,
+            "sample_finished_ns": 7987811364,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 16777216,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7987849344
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+          "step": 0,
+          "completed_ns": 7993608407,
+          "emit_started_ns": 7993610534
+        },
+        {
+          "event": "terminal",
+          "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 8006571371,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 8006616772,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 8006620190
+        }
+      ],
+      "cursor": 54,
+      "returned_ns": 8021360995,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "6fa169cd085b4a13a08e01e8ba36b125",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "08d20f04f1a3471ca3d1d17139dce64e": {
+            "echo_cursor": 24,
+            "record": {
+              "emit_started_ns": 7116891191,
+              "event": "clock",
+              "runtime_ns": 7116885843,
+              "sequence": 4
+            },
+            "record_cursor": 25
+          },
+          "58ec61ebeb184143a361ceffb1df1a3b": {
+            "echo_cursor": 47,
+            "record": {
+              "emit_started_ns": 7840395052,
+              "event": "clock",
+              "runtime_ns": 7840390032,
+              "sequence": 7
+            },
+            "record_cursor": 48
+          },
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "998af2f5f7054558834b22cd40b4bd75": {
+            "echo_cursor": 26,
+            "record": {
+              "emit_started_ns": 7200613771,
+              "event": "clock",
+              "runtime_ns": 7200607707,
+              "sequence": 4
+            },
+            "record_cursor": 27
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "ba98039a79d64a75871fd465051b3484": {
+            "echo_cursor": 34,
+            "record": {
+              "emit_started_ns": 7367867513,
+              "event": "clock",
+              "runtime_ns": 7367862155,
+              "sequence": 5
+            },
+            "record_cursor": 35
+          }
+        },
+        "cursor": 54,
+        "format": "received-continuation-v1",
+        "observation": {
+          "event": "observation",
+          "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+          "step": 0,
+          "sequence": 8,
+          "capture_ns": 7931924377,
+          "context_ns": 7937280319,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              0
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/008.png",
+          "image_reused": false,
+          "image_prepare_ns": 25608952,
+          "image_ready_ns": 7977502160,
+          "input_focus_before": 16777216,
+          "input_focus_after": 16777216,
+          "focus_samples_match": true,
+          "pointer_binding": null,
+          "pointer_context_before": {
+            "focus": 16777216,
+            "surface": null,
+            "geometry": null
+          },
+          "pointer_context_after": {
+            "focus": 16777216,
+            "surface": null,
+            "geometry": null
+          },
+          "capture_ms": 4.52276,
+          "wire_bytes": 12463,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "input_state_before": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 10,
+            "sample_started_ns": 7926042275,
+            "sample_finished_ns": 7926654957,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 16777216,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "input_state_after": {
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "revision": 10,
+            "sample_started_ns": 7987542816,
+            "sample_finished_ns": 7987811364,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "focus": 16777216,
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false
+          },
+          "owner_revision_unchanged": true,
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "emit_started_ns": 7987849344
+        },
+        "observation_cursor": 52,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7",
+          "82c3a101a3027ec4dfa7ab1e2535c829bf3e8f9116d9b25e97247773912272ce",
+          "7b82b8453578d31d196f808fd83e29a0811e5ed5b8e7a48f71cec93b2908dd1c",
+          "2fdd8d029ccb1e2f3b7c09327004829e19db3441e22a831ae501359a6e04c040",
+          "02a3913a524a044df4777fed0fc200d989c05bca1487d97ef63a2b770d78ff35",
+          "43b1656f545d235b1a62e29ebc56ef7b5b5cab18d4e4b3360da4ffdf139b5bc4",
+          "cd6357e93edc7fd7ee37076fc01bf3de89f7554f5540aaab94dfb88ce24970b3",
+          "9c0c4985bc38bda8e9e5d5116110bc48b5db02594c95cd27c82d3e2432ad5557",
+          "257ac7ff3406f6a08426b9fade8b6177e70845638901f47917e8f336fe8cfa6d",
+          "c11d5dc39ca9c5854096015b9b2ac6f9e9d01934c1c25a7c8d8f7d027b1d0a9d",
+          "1e67b2e8eada17aa7136ca41f4c3aa728b46443ee3cc34f06a8f5e6402343695",
+          "74483f396f383cf66a48e1b7e5ff1ffca77d3b149e9e5cb0f612b00dea3b1c95",
+          "cc2bf4ba18aba7832d6b3e51ec3bcd217b19d098dbe91c19ca91c83608c900e8",
+          "62c01689de1f22aed2668beece12bab81db233e7ad90a72609251d36d77f371b",
+          "9d3f23e127c365d8d0de48b7c419f4aa28454920c2bea34a2bfcd3645f69a515",
+          "45b9c24c2e648da95d4ea8f59796dc64bfe8be20896108006da7e3db36e8cbe3",
+          "e6f6dbb2265ce4c8c16d353327e3a86a8add9a632bf316e9aebdacda32e08d81",
+          "d105f70c62f48f238b39f93b9d2f4eb0bb7c30fc33bc2836b72dc5445025928b",
+          "0859386b28d224766de2cc459bdb5b19c471d191f30e9524e6867876f64d9610",
+          "4d8cf1d3c7ad0e536125b7367ad1aafa6f3b6760dd213ef355de597ddf0e02b9",
+          "a48749dacc1286cfd63f333004838e52557d411e9333e0e49c596b44ee96de6f",
+          "7a9212e61c556b0040f43b8798e3c3fce36d964ad76d3471aa615ee7cfe1e818",
+          "a38bb7b8728b43c5ff6c2b34397f73fcd78d47d53f7042e7a4077bbd61b1723e",
+          "1f21352639cbc413f0448e10e3182ef3fe5f81c3e8df2f975656160d139e9230",
+          "54a5960d2b2123345617531665e9f7851699cea5abbbc1522c73e7190996703f",
+          "b7556a814a0181d1c595ae5503ab3b26e92d5c61c2d80c361db0317c3268b695",
+          "0cb1f0fa01eb48e6ab2ee553638726e89ec7c1767822548c9af669918c9848d9",
+          "fbd78df8f0e426b39a29e716f2e0077ef9ea91b37fbdd4039e1c997f5b703881",
+          "654b8410d1d27fa0a7361e666042bf3337f9f2b38d86bedc089cf0afecb1cd9a",
+          "2c5148ef15fbb5c70438a7d221b7da6cada7c1761ee96ca09fafde659dfdb5a4",
+          "a9f21901cb7d90192baf730b7cb335577e451350c3d8423e8ee100ea7500665d",
+          "123c313b17f8aeb84ca58ba561c67e5d9ce15d9a347686e6c504a48a5f550753"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "6fa169cd085b4a13a08e01e8ba36b125",
+        "terminal": {
+          "event": "terminal",
+          "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 8006571371,
+            "valid_until_ns": null
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "post_release_observation": null,
+          "terminal_ns": 8006616772,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emit_started_ns": 8006620190
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  {
+    "request": {
+      "after": 54,
+      "events": [
+        "clock"
+      ],
+      "timeout": 3,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "de581a8f59164bf0a968b81542b2b742"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "de581a8f59164bf0a968b81542b2b742"
+          },
+          "received_ns": 8057119533,
+          "emit_started_ns": 8057122303
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 8063201040,
+          "sequence": 8,
+          "emit_started_ns": 8063212070
+        }
+      ],
+      "cursor": 56,
+      "returned_ns": 8073955934,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "de581a8f59164bf0a968b81542b2b742",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "08d20f04f1a3471ca3d1d17139dce64e": {
+            "echo_cursor": 24,
+            "record": {
+              "emit_started_ns": 7116891191,
+              "event": "clock",
+              "runtime_ns": 7116885843,
+              "sequence": 4
+            },
+            "record_cursor": 25
+          },
+          "58ec61ebeb184143a361ceffb1df1a3b": {
+            "echo_cursor": 47,
+            "record": {
+              "emit_started_ns": 7840395052,
+              "event": "clock",
+              "runtime_ns": 7840390032,
+              "sequence": 7
+            },
+            "record_cursor": 48
+          },
+          "7d61a7cb549c4fe7a5ec563e0e40c525": {
+            "echo_cursor": 16,
+            "record": {
+              "emit_started_ns": 6922847293,
+              "event": "clock",
+              "runtime_ns": 6922837667,
+              "sequence": 3
+            },
+            "record_cursor": 17
+          },
+          "998af2f5f7054558834b22cd40b4bd75": {
+            "echo_cursor": 26,
+            "record": {
+              "emit_started_ns": 7200613771,
+              "event": "clock",
+              "runtime_ns": 7200607707,
+              "sequence": 4
+            },
+            "record_cursor": 27
+          },
+          "ad53885fe1c148e88b3dcd5a85c8f5d3": {
+            "echo_cursor": 3,
+            "record": {
+              "emit_started_ns": 6515758456,
+              "event": "clock",
+              "runtime_ns": 6515747932,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "ba98039a79d64a75871fd465051b3484": {
+            "echo_cursor": 34,
+            "record": {
+              "emit_started_ns": 7367867513,
+              "event": "clock",
+              "runtime_ns": 7367862155,
+              "sequence": 5
+            },
+            "record_cursor": 35
+          },
+          "de581a8f59164bf0a968b81542b2b742": {
+            "record": {
+              "event": "clock",
+              "runtime_ns": 8063201040,
+              "sequence": 8,
+              "emit_started_ns": 8063212070
+            },
+            "echo_cursor": 55,
+            "record_cursor": 56
+          }
+        },
+        "cursor": 56,
+        "format": "received-continuation-v1",
+        "observation": {
+          "capture_ms": 4.52276,
+          "capture_ns": 7931924377,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              0
+            ]
+          ],
+          "context_ns": 7937280319,
+          "emit_started_ns": 7987849344,
+          "event": "observation",
+          "exact": true,
+          "focus_samples_match": true,
+          "id": "durable-43fa6aa5eada4876b913f8c70cb0d24f",
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/phased-focus-01/runtime/008.png",
+          "image_prepare_ns": 25608952,
+          "image_ready_ns": 7977502160,
+          "image_reused": false,
+          "input_focus_after": 16777216,
+          "input_focus_before": 16777216,
+          "input_state_after": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 16777216,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "revision": 10,
+            "sample_finished_ns": 7987811364,
+            "sample_started_ns": 7987542816
+          },
+          "input_state_before": {
+            "active_lease_deadline_ns": null,
+            "active_lease_time_valid": false,
+            "cancel_requested": false,
+            "focus": 16777216,
+            "owned_buttons": [],
+            "owned_keycodes": [],
+            "owner_id": "201f86ad6cec40d79dca06620b6c0fc2",
+            "physical_pointer_mask": 0,
+            "pointer": [
+              550,
+              106
+            ],
+            "revision": 10,
+            "sample_finished_ns": 7926654957,
+            "sample_started_ns": 7926042275
+          },
+          "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+          "owner_revision_unchanged": true,
+          "pointer_binding": null,
+          "pointer_context_after": {
+            "focus": 16777216,
+            "geometry": null,
+            "surface": null
+          },
+          "pointer_context_before": {
+            "focus": 16777216,
+            "geometry": null,
+            "surface": null
+          },
+          "semantic_completion": "unknown",
+          "sequence": 8,
+          "step": 0,
+          "wire_bytes": 12463
+        },
+        "observation_cursor": 52,
+        "pending_clock": null,
+        "record_hashes": [
+          "c94ef96b2d6ef2c0ef9b0cf8f6020c37c7b33ae430495e5b818e3c9b67f2d527",
+          "3b7af38fb5e42b98bdf006191b81380f9b5c9e6e18c8b4f26e0972f04d80440d",
+          "b95902cb964bdc3476e96f1a74841f8f0f5a2fe649ee37fd9a4b521bc2e118da",
+          "3848b4b2f06d9b828279d60068b4aac3caee9d8877bac3d851e7c8f62e19d5a0",
+          "b6aadfedbe0ada4c9651291c6b637a38930154933f2e764791841e40987633a8",
+          "20aad72fa86b61138815af59461289699873ea31287bcf118aa71c49eec8189d",
+          "9380d072d14db7c23de5918ecb096deb300e7e578afa9bd40df0c19493b22988",
+          "4d485fcd91604ec0a4fd14f7c630247141905e28d4d67b25db5bf12c31ca2bf9",
+          "c319f766be125326a444dd6d5643b91a837628824c87cf2e63fc4f97d3c338ee",
+          "7c57cd2e7c3b91e34fc6316461f3e4beb513da57c9a9407192ff63663928c89e",
+          "9e3ddb2744f30ae93c7d7e762c3b5f8ef83ec02d9f0a517a32db7fc56ef6ff6f",
+          "5e8ad73496503e808cb4fa6a1e1142591ff853e5564b48399b9f7d92b149c050",
+          "2dd8eb966a167e90a302e40b9f0b1b99f25efb1cb7deba10db1693a25ba4f47f",
+          "c1da332ee05c7b3cd740b6b378e313cceffec06844254bb9f1ebb11a3634e4cc",
+          "e3bec05945bd7aae9763a5b1460d3a917beddd0ace2618c477af504e45295b70",
+          "cad32c6107dbe3d0acdc84743104b2079cb9193bb690c4baaa0ce99734dd6212",
+          "c2a53d204ad5fb95b773d29ba8ff5c74a579707a64dee028c6c8b89692d837eb",
+          "80a934fdd27fa564d08424f15f3fed86e6f4b6a7d1ef1fdd9b168fe0deb2cf00",
+          "852a1f0ba47ee2809d9da5111433d0503e30fd0df63ebb2f21987b1e2e7752be",
+          "38c6533e3aa491820490c42ca01fa0aa1a3fdb04e3a99a4c306995dbc89504f2",
+          "678908867e4dde5ad40956463905c5cdf6e0937ea6570d55e688b54b674a359f",
+          "72f1f8ed0792e828fd5c6c3ec86aed3287e304bf7a0dbcffd6817b0f05fe73a7",
+          "eb297305852bf316cf8cced10ceffda65d06d6ea2cd7c92437372301c52e86d7",
+          "82c3a101a3027ec4dfa7ab1e2535c829bf3e8f9116d9b25e97247773912272ce",
+          "7b82b8453578d31d196f808fd83e29a0811e5ed5b8e7a48f71cec93b2908dd1c",
+          "2fdd8d029ccb1e2f3b7c09327004829e19db3441e22a831ae501359a6e04c040",
+          "02a3913a524a044df4777fed0fc200d989c05bca1487d97ef63a2b770d78ff35",
+          "43b1656f545d235b1a62e29ebc56ef7b5b5cab18d4e4b3360da4ffdf139b5bc4",
+          "cd6357e93edc7fd7ee37076fc01bf3de89f7554f5540aaab94dfb88ce24970b3",
+          "9c0c4985bc38bda8e9e5d5116110bc48b5db02594c95cd27c82d3e2432ad5557",
+          "257ac7ff3406f6a08426b9fade8b6177e70845638901f47917e8f336fe8cfa6d",
+          "c11d5dc39ca9c5854096015b9b2ac6f9e9d01934c1c25a7c8d8f7d027b1d0a9d",
+          "1e67b2e8eada17aa7136ca41f4c3aa728b46443ee3cc34f06a8f5e6402343695",
+          "74483f396f383cf66a48e1b7e5ff1ffca77d3b149e9e5cb0f612b00dea3b1c95",
+          "cc2bf4ba18aba7832d6b3e51ec3bcd217b19d098dbe91c19ca91c83608c900e8",
+          "62c01689de1f22aed2668beece12bab81db233e7ad90a72609251d36d77f371b",
+          "9d3f23e127c365d8d0de48b7c419f4aa28454920c2bea34a2bfcd3645f69a515",
+          "45b9c24c2e648da95d4ea8f59796dc64bfe8be20896108006da7e3db36e8cbe3",
+          "e6f6dbb2265ce4c8c16d353327e3a86a8add9a632bf316e9aebdacda32e08d81",
+          "d105f70c62f48f238b39f93b9d2f4eb0bb7c30fc33bc2836b72dc5445025928b",
+          "0859386b28d224766de2cc459bdb5b19c471d191f30e9524e6867876f64d9610",
+          "4d8cf1d3c7ad0e536125b7367ad1aafa6f3b6760dd213ef355de597ddf0e02b9",
+          "a48749dacc1286cfd63f333004838e52557d411e9333e0e49c596b44ee96de6f",
+          "7a9212e61c556b0040f43b8798e3c3fce36d964ad76d3471aa615ee7cfe1e818",
+          "a38bb7b8728b43c5ff6c2b34397f73fcd78d47d53f7042e7a4077bbd61b1723e",
+          "1f21352639cbc413f0448e10e3182ef3fe5f81c3e8df2f975656160d139e9230",
+          "54a5960d2b2123345617531665e9f7851699cea5abbbc1522c73e7190996703f",
+          "b7556a814a0181d1c595ae5503ab3b26e92d5c61c2d80c361db0317c3268b695",
+          "0cb1f0fa01eb48e6ab2ee553638726e89ec7c1767822548c9af669918c9848d9",
+          "fbd78df8f0e426b39a29e716f2e0077ef9ea91b37fbdd4039e1c997f5b703881",
+          "654b8410d1d27fa0a7361e666042bf3337f9f2b38d86bedc089cf0afecb1cd9a",
+          "2c5148ef15fbb5c70438a7d221b7da6cada7c1761ee96ca09fafde659dfdb5a4",
+          "a9f21901cb7d90192baf730b7cb335577e451350c3d8423e8ee100ea7500665d",
+          "123c313b17f8aeb84ca58ba561c67e5d9ce15d9a347686e6c504a48a5f550753",
+          "9eff66691bdb82286af0906d3d7ca8dff6308ec98cbcf79e5530c7da762be2eb",
+          "09b64f8b465e2a2d44436693257a4c5a094b665febedf84a58be60b6a3ebe600"
+        ],
+        "session": "/tmp/agent-interface-events-6jmii125/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "de581a8f59164bf0a968b81542b2b742",
+        "clock": {
+          "event": "clock",
+          "runtime_ns": 8063201040,
+          "sequence": 8,
+          "emit_started_ns": 8063212070
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  }
+]

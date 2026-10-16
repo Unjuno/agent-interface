@@ -1,0 +1,1 @@
+WSLc construction attempt 2 (non-formal): same ModuleNotFoundError. The first patch placed sys.path insertion after dependency imports, so it had no effect. No raw output or experimental events were produced. Moved the insertion before dependency imports. Formal candidate has not been invoked.

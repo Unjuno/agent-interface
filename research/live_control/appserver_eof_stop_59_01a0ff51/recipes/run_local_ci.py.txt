@@ -1,0 +1,28 @@
+import datetime
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+ROOT = Path(__file__).resolve().parent
+WT = ROOT.parent / 'agent-interface-eof-59'
+IMAGE = 'sha256:65ae56ebdddc2742bc1441ee9eca0fcca7e232cb611a09ea8b177b36fc23c291'
+out = ROOT / 'local-ci'
+out.mkdir(exist_ok=False)
+command = ['orb', '-m', 'research-clipboard-36-01a0ff51-docker', '-u', 'root', 'docker', 'run',
+           '--name', 'eof-stop-59-01a0ff51-ci-01', '--pull', 'never', '--network', 'none',
+           '--read-only', '--memory', '512m', '--cpus', '0.5', '--pids-limit', '64',
+           '--tmpfs', '/tmp:rw,size=16m', '--mount', 'type=bind,src=' + str(WT) + ',dst=/repository,readonly',
+           '--env', 'PYTHONPATH=/repository/research/live_control', '--workdir', '/tmp', IMAGE,
+           'python3', '-B', '-m', 'unittest', '-v', 'test_app_server_eof_stop']
+started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+(out / 'PRE_SEND.json').write_text(json.dumps({'utc': started, 'command': command}, indent=2) + '\n')
+r = subprocess.run(command, capture_output=True, timeout=30)
+(out / 'stdout.txt').write_bytes(r.stdout)
+(out / 'stderr.txt').write_bytes(r.stderr)
+(out / 'RECEIPT.json').write_text(json.dumps({'started_utc': started,
+        'ended_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'exit_code': r.returncode,
+        'stdout_sha256': hashlib.sha256(r.stdout).hexdigest(), 'stderr_sha256': hashlib.sha256(r.stderr).hexdigest()},
+        indent=2) + '\n')
+print(json.dumps({'exit_code': r.returncode, 'stderr': r.stderr.decode()}))
+raise SystemExit(r.returncode)

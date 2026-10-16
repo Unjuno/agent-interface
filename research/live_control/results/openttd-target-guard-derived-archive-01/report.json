@@ -1,0 +1,243 @@
+{
+  "calibration_passed": true,
+  "archive": "timing-envelope-openttd-l-11 fixed-astra seed991004",
+  "archive_source_sequence": 28,
+  "selected_sequence_pairs": {
+    "unchanged": [
+      29,
+      30
+    ],
+    "first_segment_settled": [
+      35,
+      36
+    ],
+    "later_segment_present": [
+      61,
+      62
+    ]
+  },
+  "first_path": [
+    {
+      "x": 705,
+      "y": 239
+    },
+    {
+      "x": 673,
+      "y": 255
+    },
+    {
+      "x": 641,
+      "y": 271
+    }
+  ],
+  "continuation_path": [
+    {
+      "x": 641,
+      "y": 278
+    },
+    {
+      "x": 673,
+      "y": 294
+    },
+    {
+      "x": 705,
+      "y": 310
+    }
+  ],
+  "target_boxes": [
+    [
+      699,
+      235,
+      12,
+      8
+    ],
+    [
+      667,
+      251,
+      12,
+      8
+    ],
+    [
+      635,
+      267,
+      12,
+      8
+    ]
+  ],
+  "guard_boxes": [
+    [
+      667,
+      290,
+      12,
+      8
+    ],
+    [
+      699,
+      306,
+      12,
+      8
+    ]
+  ],
+  "derivation": {
+    "format": "target-guard-from-pointer-paths-v1",
+    "box_width": 12,
+    "box_height": 8,
+    "shared_corner_offset": [
+      0,
+      7
+    ],
+    "shared_corner_tolerance": 8,
+    "guard_excludes_continuation_shared_corner": true
+  },
+  "outcomes": {
+    "unchanged": {
+      "format": "local-target-guard-postcondition-outcome-v1",
+      "postcondition_id": "seed991004-first-road-segment",
+      "reason": "target_not_reached",
+      "continue_program": false,
+      "needs_decision": true,
+      "measurements": [
+        {
+          "sequence": 29,
+          "target_changed_pixels": [
+            0,
+            0,
+            0
+          ],
+          "target_changed_total": 0,
+          "guard_changed_pixels": [
+            0,
+            0
+          ],
+          "guard_changed_total": 0
+        },
+        {
+          "sequence": 30,
+          "target_changed_pixels": [
+            0,
+            0,
+            0
+          ],
+          "target_changed_total": 0,
+          "guard_changed_pixels": [
+            0,
+            0
+          ],
+          "guard_changed_total": 0
+        }
+      ],
+      "minimum_target_changed_pixels": 120,
+      "maximum_guard_changed_pixels": 20,
+      "pixel_delta_threshold": 24,
+      "sample_span_ms": 50.0,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "fixed-region visual condition for already admitted later steps only"
+    },
+    "first_segment_settled": {
+      "format": "local-target-guard-postcondition-outcome-v1",
+      "postcondition_id": "seed991004-first-road-segment",
+      "reason": "met",
+      "continue_program": true,
+      "needs_decision": false,
+      "measurements": [
+        {
+          "sequence": 35,
+          "target_changed_pixels": [
+            71,
+            26,
+            42
+          ],
+          "target_changed_total": 139,
+          "guard_changed_pixels": [
+            0,
+            0
+          ],
+          "guard_changed_total": 0
+        },
+        {
+          "sequence": 36,
+          "target_changed_pixels": [
+            71,
+            26,
+            42
+          ],
+          "target_changed_total": 139,
+          "guard_changed_pixels": [
+            0,
+            0
+          ],
+          "guard_changed_total": 0
+        }
+      ],
+      "minimum_target_changed_pixels": 120,
+      "maximum_guard_changed_pixels": 20,
+      "pixel_delta_threshold": 24,
+      "sample_span_ms": 50.0,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "fixed-region visual condition for already admitted later steps only"
+    },
+    "later_segment_present": {
+      "format": "local-target-guard-postcondition-outcome-v1",
+      "postcondition_id": "seed991004-first-road-segment",
+      "reason": "guard_changed",
+      "continue_program": false,
+      "needs_decision": true,
+      "measurements": [
+        {
+          "sequence": 61,
+          "target_changed_pixels": [
+            71,
+            26,
+            60
+          ],
+          "target_changed_total": 157,
+          "guard_changed_pixels": [
+            72,
+            41
+          ],
+          "guard_changed_total": 113
+        },
+        {
+          "sequence": 62,
+          "target_changed_pixels": [
+            71,
+            26,
+            60
+          ],
+          "target_changed_total": 157,
+          "guard_changed_pixels": [
+            72,
+            41
+          ],
+          "guard_changed_total": 113
+        }
+      ],
+      "minimum_target_changed_pixels": 120,
+      "maximum_guard_changed_pixels": 20,
+      "pixel_delta_threshold": 24,
+      "sample_span_ms": 50.0,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "fixed-region visual condition for already admitted later steps only"
+    }
+  },
+  "sources": {
+    "calibrate_openttd_target_guard_geometry_v1.py": "5b0732b9293b45025f7af661d4b3fc1e96363e7f18368733b1e401ce8baa01ff",
+    "target_guard_from_paths_v1.py": "00af75a8eb95f49cf27684c126f411cb28fbe9223e4850cbb4d02cfa563fbb81",
+    "local_target_guard_postcondition_v1.py": "c28509ff0ae060f6a1410f559bb100662a2cec9b37479a628d3d4d3df61dbf06",
+    "source_028.png": "6275e8a9116b655db255f60bffc4ea102f94f56b43cae02027e6667ac0788877",
+    "unchanged_029.png": "4c32c454aad84c39f2323c62c812f0dc24ef3ec085520ca3fedc285e9716c8ed",
+    "unchanged_030.png": "349fd0cf1ad696dded6e5c12a102ef3b3e77f8db0a2a23c1f1b1e5870b1e3f9f",
+    "target_035.png": "9b26b8b3aa7b0a9576d57e096eb39e03defb99c0c774c764e47f1e6f101924bb",
+    "target_036.png": "6cb9ead3a64466ee475ee57e088c3672aa2d9b13de228aeafdae759897fec61a",
+    "guard_061.png": "bb7a08b825cb983c0588831660952cfb27dc28ca817c20a274eaa7ae5f0ec81b",
+    "guard_062.png": "96c79aaa4ec18467c20af8e6dc67f4261695c0290c2e2821f037f46e314deee7"
+  },
+  "decision": "ADVANCE_PATH-DERIVED_BOXES_TO_ONE_PREREGISTERED_FRESH_SEED991004_PAIR",
+  "scope": "posthoc selected frozen frames on one changed save; no fresh input, held-out visual geometry, model, latency, token or generalization claim"
+}

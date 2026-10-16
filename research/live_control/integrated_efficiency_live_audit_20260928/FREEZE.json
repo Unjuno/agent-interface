@@ -1,0 +1,35 @@
+{
+  "schema": "integrated-efficiency-live-evidence-audit-freeze-v1",
+  "allocation": "integrated-efficiency-live-evidence-audit-20260928-01",
+  "source_main_commit": "9c9d7cf2bea50e47638c63effa72a5059fdb4e58",
+  "input_main_commit": "d739d70bb1ea2210bdeef488f1385c93e5902715",
+  "evidence_root": "research/live_control/results/integrated-efficiency-live-01",
+  "preregistration_sha256": "64e2c1453be9dd3fd62d525954ad7f9a62c9887dd4bab91e1dc516beb4412987",
+  "trace_sha256": "167de975e75d3e3da88c50d2b3f6eb9b00ed853b638c289f8cb79bdc027b24e9",
+  "report_sha256": "84672ef551b97764c73ccdf4070b82db043d4e56bc509137e69c057c11aaa7da",
+  "existing_audit_sha256": "6e780d7aea3dd8d44ee07e4a6d046019d905e6b0db0eff6cb09085cee9d44e24",
+  "independent_auditor": "independent_recount.py",
+  "scope": "Offline read-only reconstruction of retained model usage counts, exact task submission ledger, arm totals, artifact hashes and declared decision gates. No GUI, model, input, session or formal allocation calls.",
+  "controls": [
+    "17 unique model call IDs from 3 preflight and 14 image-grounding result artifacts",
+    "per-call raw usage sums reconcile independently to trace and frozen audit summary",
+    "18 append-only submission records map one exact submission to each arm/task",
+    "persistent task-4 repair call and stale-handle refusal match trace",
+    "frozen arm thresholds recomputed from task-level input and generation totals",
+    "evidence file hashes match Git objects in source commit"
+  ],
+  "container": {
+    "docker_desktop_version": "28.5.1",
+    "context": "desktop-linux",
+    "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "network": "none",
+    "source_mount": "read-only",
+    "output_mount": "writable-only",
+    "cpus": 0.10,
+    "memory": "128m",
+    "pids": 16
+  },
+  "invocations": 1,
+  "retries": 0
+}

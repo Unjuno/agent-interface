@@ -1,0 +1,34 @@
+{
+  "decision": "PASS_CROSS_SESSION_CRITICAL_ARBITRATION_SCOPED",
+  "formal_reruns": 0,
+  "full_result_in_evidence_archive": true,
+  "full_result_sha256": "a252ac3589bf3cb75ee03b202201e289d5db9fc13feb4cdfc05e53aab82d4ee2",
+  "gates": {
+    "baseline_starvation_exposed": true,
+    "candidate_critical_next_slot_after_partial": true,
+    "candidate_critical_next_slot_flood": true,
+    "derived_needs_decision_breakthrough": true,
+    "identity_exact_once_and_projection_fifo": true,
+    "multiple_critical_arrival_order": true,
+    "noncritical_order_unchanged": true,
+    "same_session_fifo_preserved": true
+  },
+  "summary": {
+    "all_identities_exact_once": true,
+    "critical_prefix": [
+      "B-target-lost",
+      "C-lease-expired"
+    ],
+    "flood_baseline_slot": 9,
+    "flood_candidate_slot": 1,
+    "needs_decision_baseline_slot": 6,
+    "needs_decision_candidate_slot": 1,
+    "partial_baseline_slot": 9,
+    "partial_candidate_slot": 4,
+    "same_session_order": [
+      "B-progress",
+      "B-target-lost"
+    ]
+  },
+  "task": "EVENT-MULTISURFACE-CRITICAL-ARBITRATION-20260917-004"
+}

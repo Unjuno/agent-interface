@@ -1,0 +1,280 @@
+{
+  "name": "05-duplicate-action_crop",
+  "scenario": "duplicate",
+  "arm": "action_crop",
+  "ordinal": 5,
+  "status": "COMPLETED",
+  "retry_count": 0,
+  "current_observation": {
+    "event": "observation",
+    "id": "memory-current",
+    "step": 0,
+    "sequence": 6,
+    "capture_ns": 52542694324044,
+    "context_ns": 52542698563024,
+    "context": [
+      [
+        "windows",
+        "0x00600003  0 HPLaptop AI MEMORY duplicate READY - Google Chrome for Testing\n"
+      ],
+      [
+        "active_window",
+        6291459
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/action-grounded-memory-ablation-live-01/05-duplicate-action_crop/006.png",
+    "image_reused": false,
+    "image_prepare_ns": 24065115,
+    "image_ready_ns": 52542738555855,
+    "input_focus_before": 6291459,
+    "input_focus_after": 6291459,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "capture_ms": 3.162518,
+    "wire_bytes": 17603,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "semantic_probe_sequence": null,
+    "semantic_probe_reconciliation": null,
+    "runtime_emit_ns": 52542742305024
+  },
+  "current_image_sha256": "15cd1d561cb522a9070295bccecddeb12661b2566e957602098f3de5ca05975a",
+  "prompt_sha256": "a683e34dac2b9edd9de8880158b9c0dce4f0d21aae6708a2e5110040c05304ce",
+  "model": {
+    "call_id": "01a0a35b-c255-7c82-8b5c-c7892c6219d4",
+    "decision": {
+      "format": "visual-memory-target-decision-v1",
+      "status": "target_reference",
+      "x": 732,
+      "y": 563,
+      "reason": "matched",
+      "memory_use": "none"
+    },
+    "usage": {
+      "input_tokens": 9393,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 167,
+      "reasoning_output_tokens": 122
+    },
+    "requested_model": "gpt-5.6-luna",
+    "requested_effort": "low",
+    "visible_images_submitted": 2,
+    "cost": null,
+    "runner_ms": 12519.0085,
+    "caller_elapsed_ms": 12716.336368,
+    "prompt_sha256": "a683e34dac2b9edd9de8880158b9c0dce4f0d21aae6708a2e5110040c05304ce"
+  },
+  "images": [
+    {
+      "path": "results/action-grounded-memory-ablation-live-01/05-duplicate-action_crop/006.png",
+      "sha256": "15cd1d561cb522a9070295bccecddeb12661b2566e957602098f3de5ca05975a"
+    },
+    {
+      "path": "results/action-grounded-visual-memory-01/local/target.png",
+      "sha256": "1e34582ed711606705460e58df78921c5c44eba70965aa4ffddfb1e713131209"
+    }
+  ],
+  "action": {
+    "id": "select-5",
+    "program": [
+      {
+        "op": "pointer_click",
+        "x": 732,
+        "y": 563,
+        "duration_ms": 80
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 100,
+        "timeout_ms": 700
+      },
+      {
+        "op": "observe"
+      }
+    ],
+    "accepted": {
+      "event": "accepted",
+      "id": "select-5",
+      "steps": 3,
+      "program_sha256": "55753f81323707c90b14b72769aa3ba94e75912ad3cc83a2877e139e7c6f5afb",
+      "intent_token": "8be52c3addb3472192d3ca50920d4a16",
+      "valid_until_ns": 52563534941232,
+      "accepted_ns": 52555535215195,
+      "runtime_emit_ns": 52555535216211
+    },
+    "terminal": {
+      "event": "terminal",
+      "id": "select-5",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 3,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 52555922039155,
+        "valid_until_ns": 52563534941232
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "terminal_ns": 52555922085718,
+      "semantic_completion": "program status only; task scoring is separate",
+      "runtime_emit_ns": 52555922087152
+    }
+  },
+  "oracle_records": [
+    {
+      "exact": true,
+      "kind": "submit",
+      "known_ns": 52555636956131,
+      "scenario": "duplicate",
+      "values": {
+        "value": [
+          "t000218"
+        ]
+      }
+    }
+  ],
+  "correct": true,
+  "wrong_target_action": false,
+  "no_effect": false,
+  "release_ok": true,
+  "actions": [
+    {
+      "id": "nav-5",
+      "program": [
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "l"
+        },
+        {
+          "op": "text",
+          "text": "http://127.0.0.1:42075/duplicate"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        },
+        {
+          "op": "wait_title",
+          "contains": "AI MEMORY duplicate READY",
+          "timeout_ms": 1500
+        }
+      ],
+      "accepted": {
+        "event": "accepted",
+        "id": "nav-5",
+        "steps": 4,
+        "program_sha256": "5650b02afc5f6e7916a80716146ce0189d037cddb9baccfa669c22d61007d2e5",
+        "intent_token": "8ebb050b73c148e4b95ec069f95cb38f",
+        "valid_until_ns": 52550289030339,
+        "accepted_ns": 52542289183305,
+        "runtime_emit_ns": 52542289184393
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "nav-5",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 4,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 52542689463544,
+          "valid_until_ns": 52550289030339
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 52542689509070,
+        "semantic_completion": "program status only; task scoring is separate",
+        "runtime_emit_ns": 52542689510419
+      }
+    },
+    {
+      "id": "select-5",
+      "program": [
+        {
+          "op": "pointer_click",
+          "x": 732,
+          "y": 563,
+          "duration_ms": 80
+        },
+        {
+          "op": "settle",
+          "quiet_ms": 100,
+          "timeout_ms": 700
+        },
+        {
+          "op": "observe"
+        }
+      ],
+      "accepted": {
+        "event": "accepted",
+        "id": "select-5",
+        "steps": 3,
+        "program_sha256": "55753f81323707c90b14b72769aa3ba94e75912ad3cc83a2877e139e7c6f5afb",
+        "intent_token": "8be52c3addb3472192d3ca50920d4a16",
+        "valid_until_ns": 52563534941232,
+        "accepted_ns": 52555535215195,
+        "runtime_emit_ns": 52555535216211
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "select-5",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 3,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 52555922039155,
+          "valid_until_ns": 52563534941232
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 52555922085718,
+        "semantic_completion": "program status only; task scoring is separate",
+        "runtime_emit_ns": 52555922087152
+      }
+    }
+  ]
+}

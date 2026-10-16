@@ -1,0 +1,21 @@
+{
+  "source_commit": "564530981e6cf834c3d6ac607a94734afacba10b",
+  "frozen_source_files_verified": 10,
+  "freeze_sha256": "fe0c88aeed1bca8699a9e625ee48d9f698e958e4b1232a873dd76bd3b978f3f8",
+  "candidate_launches": 1,
+  "auditor_launches": 1,
+  "retries": 0,
+  "candidate_exit_observed": 0,
+  "auditor_exit_observed": 0,
+  "audit_receipt_first_recorded_utc": "2026-10-03T02:05:44.800051+00:00",
+  "audit_timestamp_limit": "Audit invocation argv/exit are from the observed tool call; start/end wall timestamps were not instrumented. File creation is not its invocation start. This receipt is post-run and is not backdated.",
+  "audit_argv": [
+    "python3",
+    "-B",
+    "$SOURCE/audit.py",
+    "$SOURCE/fixtures.json",
+    "$SOURCE/truth.json",
+    "$SOURCE/formal_01",
+    "$SOURCE/AUDIT.json"
+  ]
+}

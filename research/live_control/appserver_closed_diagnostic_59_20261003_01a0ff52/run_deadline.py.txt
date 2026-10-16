@@ -1,0 +1,41 @@
+from pathlib import Path
+import datetime, hashlib, json, os, signal, subprocess, sys
+
+ROOT = Path(__file__).resolve().parent
+plan = json.loads((ROOT / 'PLAN_LOCAL_DEADLINE.json').read_text())
+destination = ROOT / 'construction02-local-deadline'
+destination.mkdir()
+receipts = []
+pins = {n: hashlib.sha256((ROOT / n).read_bytes()).hexdigest()
+        for n in ['PLAN.json', 'PLAN_LOCAL_DEADLINE.json', 'SOURCE.json',
+                   'codex_app_server_client_v2.py', 'inert_child.py',
+                   'run_cell_v2.py', 'run_deadline.py']}
+for cell in plan['cells']:
+    argv = [sys.executable, '-B', str(ROOT / 'run_cell_v2.py'), cell['id'], cell['api'],
+            cell['mode'], str(destination / cell['id'])]
+    receipt = {'kind': plan['kind'], 'cell': cell, 'argv': argv, 'cwd': str(ROOT),
+               'sources': pins, 'started_utc': datetime.datetime.now(datetime.UTC).isoformat()}
+    process = subprocess.Popen(argv, cwd=ROOT, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, start_new_session=True)
+    receipt['probe_pid'] = process.pid
+    try:
+        out, err = process.communicate(timeout=3)
+        receipt['outer_timeout'] = False
+    except subprocess.TimeoutExpired:
+        receipt['outer_timeout'] = True
+        os.killpg(process.pid, signal.SIGKILL)
+        out, err = process.communicate(timeout=1)
+    (destination / (cell['id'] + '.stdout')).write_bytes(out)
+    (destination / (cell['id'] + '.stderr')).write_bytes(err)
+    receipt.update({'exit_code': process.returncode, 'ended_utc': datetime.datetime.now(datetime.UTC).isoformat(),
+                    'stdout_sha256': hashlib.sha256(out).hexdigest(), 'stderr_sha256': hashlib.sha256(err).hexdigest(),
+                    'log_cap_exceeded': len(out) > 65536 or len(err) > 65536})
+    (destination / (cell['id'] + '.receipt.json')).write_text(json.dumps(receipt, indent=2) + '\n')
+    receipts.append(receipt)
+    print(json.dumps({'cell': cell['id'], 'exit': process.returncode,
+                      'outer_timeout': receipt['outer_timeout'], 'stderr': err.decode()[:1000]}), flush=True)
+    if process.returncode or receipt['outer_timeout'] or receipt['log_cap_exceeded']:
+        break
+(destination / 'driver-summary.json').write_text(json.dumps({'receipts': receipts,
+   'planned_cells': 2, 'completed_cells': len(receipts), 'formal_replays': 0}, indent=2) + '\n')
+raise SystemExit(any(r['exit_code'] or r['outer_timeout'] or r['log_cap_exceeded'] for r in receipts))

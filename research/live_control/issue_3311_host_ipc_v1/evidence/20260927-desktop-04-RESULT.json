@@ -1,0 +1,37 @@
+{
+  "schema": "3311-dockerdesktop-windows-mount-owner-treatment-result-v1",
+  "allocation": "dockerdesktop-v1-windows-bind-owner0600-20260927-04",
+  "decision": "PASS_SYNTHETIC_OWNER_ONLY_READ_BOUNDARY",
+  "formal_container_invocations": 1,
+  "retries": 0,
+  "container_exit": 0,
+  "container": {
+    "name": "ai3311-winperm-04",
+    "postrun_present": false,
+    "network": "none",
+    "authority_granted": false,
+    "process_uid_gid": "0:0",
+    "file_owner_uid_gid": "1002:1002",
+    "mode": "0600",
+    "bytes": 53,
+    "sha256": "56b2e3518a827f52be5f07cc269733cafb857a71ed9750ec729704faa3354bcc"
+  },
+  "wsl_host": {
+    "uid_gid": "1002:1002",
+    "readable": true,
+    "observed_owner_uid_gid_mode_size": "1002:1002 600 53",
+    "sha256": "56b2e3518a827f52be5f07cc269733cafb857a71ed9750ec729704faa3354bcc"
+  },
+  "comparison": {
+    "allocation_02_root_0600": "WSL read denied",
+    "allocation_03_root_0644": "WSL read passed; broad read access",
+    "allocation_04_host_owner_0600": "WSL read passed with owner-only mode"
+  },
+  "interpretation": "On this Docker Desktop Windows-backed bind mount, assigning the synthetic file to the actual WSL broker user's UID/GID and retaining mode 0600 permitted that owner to read the exact payload. This is a promising least-privilege mechanism to test with the actual runner/broker; it is not yet a runtime fix or cross-platform guarantee.",
+  "scope_limits": [
+    "Synthetic file only; repository broker and container runner were not executed",
+    "Does not prove production host UID discovery, chown portability, or race-safe ownership",
+    "Does not satisfy #3489 or #3311 integrated acceptance"
+  ],
+  "no_retry": true
+}

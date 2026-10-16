@@ -1,0 +1,100 @@
+{
+  "schema": "action-grounded-memory-ablation-live-prereg-v1",
+  "seed": 218,
+  "chromium": "/home/taka/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome",
+  "requested_effort": "low",
+  "arms": [
+    "no_memory",
+    "full_frame",
+    "action_crop"
+  ],
+  "scenarios": [
+    "shifted",
+    "duplicate",
+    "restyled_trap"
+  ],
+  "schedule": [
+    {
+      "ordinal": 1,
+      "scenario": "shifted",
+      "arm": "no_memory",
+      "name": "01-shifted-no_memory"
+    },
+    {
+      "ordinal": 2,
+      "scenario": "shifted",
+      "arm": "full_frame",
+      "name": "02-shifted-full_frame"
+    },
+    {
+      "ordinal": 3,
+      "scenario": "shifted",
+      "arm": "action_crop",
+      "name": "03-shifted-action_crop"
+    },
+    {
+      "ordinal": 4,
+      "scenario": "duplicate",
+      "arm": "full_frame",
+      "name": "04-duplicate-full_frame"
+    },
+    {
+      "ordinal": 5,
+      "scenario": "duplicate",
+      "arm": "action_crop",
+      "name": "05-duplicate-action_crop"
+    },
+    {
+      "ordinal": 6,
+      "scenario": "duplicate",
+      "arm": "no_memory",
+      "name": "06-duplicate-no_memory"
+    },
+    {
+      "ordinal": 7,
+      "scenario": "restyled_trap",
+      "arm": "action_crop",
+      "name": "07-restyled_trap-action_crop"
+    },
+    {
+      "ordinal": 8,
+      "scenario": "restyled_trap",
+      "arm": "no_memory",
+      "name": "08-restyled_trap-no_memory"
+    },
+    {
+      "ordinal": 9,
+      "scenario": "restyled_trap",
+      "arm": "full_frame",
+      "name": "09-restyled_trap-full_frame"
+    }
+  ],
+  "calls": {
+    "schema_preflight": 1,
+    "comparison": 9,
+    "total": 10
+  },
+  "retries": 0,
+  "same_prompt": true,
+  "same_current_frame_per_scenario": true,
+  "memory": {
+    "full_frame_path": "results/adaptive-semantic-repair-live-02/case-01-local/013.png",
+    "full_frame_sha256": "e94e306332f81d257338b19102247e291518db0a684dc7ad00b588e72561c15b",
+    "action_crop_path": "results/action-grounded-visual-memory-01/local/target.png",
+    "action_crop_sha256": "1e34582ed711606705460e58df78921c5c44eba70965aa4ffddfb1e713131209"
+  },
+  "source_sha256": {
+    "action_grounded_memory_ablation_live_v1.py": "559897e4d1cc91a252b057edc510c6f0fc0d303553db0cb665928f28e451abb1",
+    "visual_memory_fixture_v1.py": "de132c2f6b204c3c75b336fac4f9caf213f2b78622447ea55851b6ed5596dd29",
+    "visual_memory_model_v1.py": "6cc8e155d0787e5f7f672cebd4d3eaf760e941a2a19c75498ffb4a770bb447b6",
+    "visual_memory_model_runner_v1.py": "c4b2edeb1e95f8494136ba7d1e8c97cdee8329d8641c4b849a7f5c6243efc5c8",
+    "visual_memory_decision_schema_v1.json": "d924053dd031ed34565fdb260894d4eb276b152f711626b1bd2e9e049154daa4",
+    "visual_memory_decision_responder_v1.txt": "e2128d14b6667ec3cc9b9e40f700038dd5dfa5de5604fa3f8800945adbcbca1b",
+    "test_action_grounded_memory_ablation_live_v1.py": "2272ddb0c39f355960d93bdfdd5854628c8cd1d295d1297952d24c59256ed87f",
+    "audit_action_grounded_memory_ablation_live_v1.py": "51d27806efb5d21cc47f72ef1876bca7376fa7c7b845578bb5b79b964aed89a1",
+    "preregister_action_grounded_memory_ablation_live_v1.py": "c794592a069bf0d19626514fad26bba9870f32270dbcb71b6a62bf9e393184fa"
+  },
+  "formal_pass": "schema preflight completes; all 9 arms complete; byte-identical current frame within each scenario; every action empty-release verified",
+  "crop_transfer_rule": "3/3 correct, zero wrong-target, no worse correctness than both controls, and fewer actual input tokens than full-frame",
+  "scope": "one finite actual Chromium allocation; first outcome retained; no retries; no general memory, token, latency, or human-tempo claim"
+}

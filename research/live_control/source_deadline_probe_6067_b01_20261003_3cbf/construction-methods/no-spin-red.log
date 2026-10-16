@@ -1,0 +1,15 @@
+test_no_spin_return_is_exact_final_sample (test_evidence.Evidence.test_no_spin_return_is_exact_final_sample) ... FAIL
+
+======================================================================
+FAIL: test_no_spin_return_is_exact_final_sample (test_evidence.Evidence.test_no_spin_return_is_exact_final_sample)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_evidence.py", line 63, in test_no_spin_return_is_exact_final_sample
+    with self.assertRaises(ValueError): check_trace(t,1006,1007)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

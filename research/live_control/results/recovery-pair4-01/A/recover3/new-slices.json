@@ -1,0 +1,34 @@
+[
+  {
+    "request": {
+      "after": 14,
+      "events": [
+        "clock"
+      ],
+      "timeout": 0.25
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "99b6b80afb764048b8823bf9efe9b8fd"
+          },
+          "emitted_ns": 36820306178
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 36822962165,
+          "sequence": 2,
+          "emitted_ns": 36822972778
+        }
+      ],
+      "cursor": 16,
+      "returned_ns": 67377818298,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    }
+  }
+]

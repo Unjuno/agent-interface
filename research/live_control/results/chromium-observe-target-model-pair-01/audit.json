@@ -1,0 +1,34 @@
+{
+  "audit_passed": true,
+  "same_prompt_sha256": "82c07626ceb39bcd62bc9ed217edb4665e434fcdce58c89be30b76cc05a6144d",
+  "strict_model_actions": "2/2",
+  "reported_input_tokens": {
+    "changed-target": 8013,
+    "stable": 8013
+  },
+  "stable": {
+    "durable_calls": 14,
+    "independent_success": true,
+    "admission_revalidation": "REVALIDATED"
+  },
+  "changed_target": {
+    "durable_calls": 16,
+    "target_action_pointer_admissions": 0,
+    "independent_success": false,
+    "admission_revalidation": "MISSING"
+  },
+  "prior_separate_query_handle_calls": [
+    16,
+    16
+  ],
+  "exact_frames": {
+    "changed-target": 22,
+    "stable": 15
+  },
+  "total_exact_frames": 37,
+  "decision_start_to_evaluation_return_ms": {
+    "changed-target": 11435.88676,
+    "stable": 5998.963155
+  },
+  "scope": "two fresh same-seed Chromium sessions and two Luna-low calls; one stable success plus one post-model target-loss refusal; no causal latency, monetary cost, broad token reduction, human-speed, unknown-app or default claim"
+}

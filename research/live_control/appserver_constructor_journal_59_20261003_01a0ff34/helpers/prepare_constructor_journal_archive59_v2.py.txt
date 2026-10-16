@@ -1,0 +1,121 @@
+"""Create additive inert archive candidate with all base Git entries preserved."""
+import datetime as dt
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+root=Path(__file__).resolve().parent
+out=root/"appserver-constructor-journal-59-01a0ff34-a01"
+repo=root/"agent-interface"
+definition=json.loads((out/"ARCHIVE_BASE.json").read_text(encoding="ascii"))
+base,branch,leaf=definition["base"],definition["branch"],definition["leaf"]
+stage=root/"cj59pub-v2"
+archive=stage/leaf
+archive.mkdir(parents=True,exist_ok=False)
+env=dict(os.environ,GIT_NO_LAZY_FETCH="1",GIT_INDEX_FILE=str(out/"publication.index"))
+def sha(data): return hashlib.sha256(data).hexdigest()
+def put(path,data):
+    path.parent.mkdir(parents=True,exist_ok=True)
+    with path.open("xb") as handle: handle.write(data)
+def put_json(path,data): put(path,(json.dumps(data,ensure_ascii=True,indent=2)+"\n").encode("ascii"))
+def git(*args,input=None):
+    result=subprocess.run(["git",*args],cwd=repo,env=env,input=input,capture_output=True)
+    if result.returncode:
+        raise RuntimeError(json.dumps({"argv":list(args),"exit":result.returncode,"stderr":result.stderr.decode("utf-8",errors="replace")},ensure_ascii=True))
+    return result.stdout
+def project(text):
+    for original,replacement in [(str(root.parent),"$TASK"),(str(root.parent).replace("\\","/"),"$TASK"),(r"$PYTHON","$PYTHON")]:
+        text=text.replace(original.replace("\\","\\\\"),replacement).replace(original,replacement)
+    return text
+packet=json.loads((out/"PUBLIC_CAPSULE.json").read_text(encoding="ascii"))
+original_joins=[]
+for member in packet["files"]:
+    data=member["data_utf8"].encode("utf-8")
+    if len(data)!=member["bytes"] or sha(data)!=member["sha256"]: raise ValueError("public capsule member changed")
+    put(archive/"retained"/member["path"],data)
+    original_joins.append({key:member[key] for key in ("path","original_bytes","original_sha256","bytes","sha256")})
+extra=[]
+for name in ("PUBLIC_READBACK_RESULT.json","public-readback.receipt.json","public-readback.stdout.bin","public-readback.stderr.bin"):
+    original=(out/name).read_bytes()
+    public=project(original.decode("utf-8")).encode("utf-8")
+    put(archive/"public_readback"/name,public)
+    extra.append({"path":"public_readback/"+name,"original_bytes":len(original),"original_sha256":sha(original),"bytes":len(public),"sha256":sha(public)})
+for name in ("verify_public_constructor59.py","run_public_constructor59.py","prepare_constructor_journal_archive59.py","prepare_constructor_journal_archive59_v2.py"):
+    original=(root/name).read_bytes()
+    public=project(original.decode("utf-8")).encode("utf-8")
+    put(archive/"helpers"/(name+".txt"),public)
+    extra.append({"path":"helpers/"+name+".txt","original_bytes":len(original),"original_sha256":sha(original),"bytes":len(public),"sha256":sha(public)})
+original_stop=(out/"ARCHIVE_PREPARATION_FIRST_STOP.json").read_bytes()
+public_stop=project(original_stop.decode("utf-8")).encode("utf-8")
+put(archive/"ARCHIVE_PREPARATION_FIRST_STOP.json",public_stop)
+extra.append({"path":"ARCHIVE_PREPARATION_FIRST_STOP.json","original_bytes":len(original_stop),"original_sha256":sha(original_stop),"bytes":len(public_stop),"sha256":sha(public_stop)})
+put(archive/".gitattributes",b"# Retained original/public byte images remain inert and exact.\n* -text\n")
+put(archive/"README.md",b"# App-server constructor journal ownership: first twelve cells\n\nScientific disposition: COUNTEREXAMPLE_RETAINED_TRACEBACK_OWNS_OPEN_JOURNAL.\n\nSee [report and limits](REPORT.md), [exact public byte manifest](MANIFEST.json), [projection/custody declaration](PUBLICATION.json), [preexecution final freeze](retained/FREEZE_V2.json), [first saved raw](retained/RAW.json), and [independent saved-only audit](retained/AUDIT.json). All Python images end .py.txt and are retained source; no discovery/import/runtime/CI registration is added.\n")
+report="""# First constructor-journal ownership comparison under #59/#57
+
+The current client opens an owned journal before process_factory returns. Keeping the original failed-startup exception traceback retains the partial client and leaves that actual file descriptor open. This first comparison observes three such current failures and a private standard try/close/re-raise comparator that releases the three successfully closable empty journals while preserving the original exception objects.
+
+| Case | Current journal fd before driver cleanup | Private reference fd | Outcome/control |
+|---|---|---|---|
+| Healthy local FIFO | open; source close then closes | same | exact healthy reply, notification and three journal rows |
+| Actual absent-executable Popen | open | closed | original FileNotFoundError object retained |
+| No-journal absent-executable Popen | none | none | original FileNotFoundError, no journal acquired |
+| Inert factory TypeError | open | closed | original TypeError object retained |
+| Inert factory KeyboardInterrupt | open | closed | explicit fixture control, original object retained |
+| Exclusive journal-open refusal | none | none | FileExistsError before factory; prior bytes exact |
+
+Named execution source maina878df7886c5901f86806aed5a4696c81457c9e7: research/live_control/codex_app_server_client_v2.py,6194B/SHA6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e. Private comparator7342a84aa2b007223330c7870e99a6112c4cc0278d8df10c97f88cc0ac1fbd9e changes only __init__; all15 other methods exact. Ordinary source/native-empty-file construction, not a formal/live allocation. Freeze36c3ef4c5602160ca1fe75cfa3d5f10a874d948c491f4ce685bbf571b0280594 precedes all12 first cells. The unused V1 observer/freeze is preserved: a strong journal reference was removed before any cell, with all subject/input/gates unchanged.
+
+Actual Windows CPython3.12.14 collector36672:2026-10-03T10:43:14.541984-14.638532UTC, exit0/stdout151B/SHA2cadb4e3dd5ec2bc2d73fbb8054c422928dd165bd6dc1ee03ca4dc9e79165b8d/stderr0. Separately authored literal saved-only reader38664:10:43:22.515919-22.575222UTC, exit0/stdout833B/SHA289e91aa5a83a552e4287bc7923c97680024d84ecdc77fedd3f3740d40f54a53/stderr0; all12 first cell/journal images reconcile,10 effective copied type/ownership/error/control corruptions reject. RAW SHA1764b09d15df1ccd6c7e4d9b5987ada64123b3607ab0ffb96539851965729a1c. Four actual standard Popen failure attempts return no process. Two successful controls use local FIFO doubles and actual owned journal files. No cell was replayed.
+
+Full45-member public capsule was posted once in https://github.com/Unjuno/agent-interface/pull/6991#issuecomment-5968448090 and read back whole-body exact. Independent public-only reconstruction6444 at10:52:38.587561-38.643154UTC, exit0/stdout720B/SHAda50d6860686b6c6b9959641b95ee4b028a25e785c1434637e8f0579bfa53e67/stderr0, recovers all45 images and source/raw/receipt/journal literal joins. Packet125220B/SHAc45f4a275a226a4c0a99a04e9bd027e996edc1b6c0bb875c971a8abe80f44f14, gzip22669B/SHAab3d045da34f2a9c41f4fbb3b051913523359784fc81f515fe9331127efc6864. Original/public path projections and private-origin hash custody declarations remain explicit; private original process authenticity is not inferred from a hash.
+
+The retained exception traceback is an essential condition. This does not establish a permanent leak after exception disposal/GC or quantify a leak duration/resource benefit. Only successfully closable empty-journal factory failure is compared; cleanup-close failure/timeout, later thread-start failure, internal Popen handle cleanup and global process-birth counters are unobserved. Durations do not imply speedup or a strict bound. No actual app-server binary/wire encoding, provider/model/game/GUI/input/task effect/useful feedback/physical release/finite-recovery efficacy/efficiency is established.
+
+This is an existing base constructor ownership gap, outside6991's fixed valid-UTF8 wire scope; no defect is attributed to its encoding argument. Own6991 head77d8f0a2dc43fef22ac73fa804350389edd898e1 and prior review remain unchanged. Existing close/journal/startup/reader/send/cache/notification owners retain their scopes. The comparison source is inert evidence, not active adoption. No main/source/index edit, consumed original/formal/native-producer replay, new worker, shared/apply/input lease, model/API/game/GUI use or goal completion. A later constructor ownership repair needs its own relevant regression, fault/ownership limits, fixed nonauthor content agreement and exact-current coupling/application gates.
+"""
+put(archive/"REPORT.md",report.encode("ascii"))
+put_json(archive/"PUBLICATION.json",{"original_and_public_packet_joins":original_joins,"additional_public_joins":extra,"only_projection":"own task/interpreter prefixes; original private custody hashes retained separately","scientific_source_main":"a878df7886c5901f86806aed5a4696c81457c9e7","archive_review_base":base,"actual_advisory":5968448090,"all_source_images_inert":True,"public_runtime_adoption":False})
+manifest=[]
+for path in sorted(archive.rglob("*")):
+    if path.is_file():
+        data=path.read_bytes()
+        manifest.append({"path":path.relative_to(archive).as_posix(),"bytes":len(data),"sha256":sha(data)})
+put_json(archive/"MANIFEST.json",{"self_excluded":True,"entries":manifest})
+git("read-tree",base)
+staged=[]
+for path in sorted(stage.rglob("*")):
+    if path.is_file():
+        rel=path.relative_to(stage).as_posix()
+        data=path.read_bytes()
+        oid=git("hash-object","-w","--stdin",input=data).decode().strip()
+        git("update-index","--add","--cacheinfo","100644,"+oid+","+rel)
+        staged.append({"path":rel,"mode":"100644","blob":oid,"bytes":len(data),"sha256":sha(data)})
+tree=git("write-tree","--missing-ok").decode().strip()
+def entries(revision):
+    result={}
+    for row in git("ls-tree","-r","-z",revision).split(b"\0"):
+        if row:
+            meta,path=row.split(b"\t",1)
+            result[path.decode("utf-8")]=meta.decode("ascii")
+    return result
+before,after=entries(base),entries(tree)
+if any(after.get(path)!=meta for path,meta in before.items()): raise ValueError("base entry changed/deleted")
+delta={path for path in set(before)|set(after) if before.get(path)!=after.get(path)}
+if delta!={entry["path"] for entry in staged}: raise ValueError("candidate delta mismatch")
+for name in ("runtime","src","docs",".github"):
+    if git("rev-parse",base+":"+name)!=git("rev-parse",tree+":"+name): raise ValueError("executable/source/docs/workflow subtree changed")
+if any(path.endswith(".py") for path in delta): raise ValueError("executable Python suffix in archive")
+diff=git("diff","--no-ext-diff","--no-textconv","--binary","--full-index","--no-renames",base,tree)
+put(out/"ARCHIVE_DIFF.patch",diff)
+whitespace=subprocess.run(["git","-c","core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol","diff","--check",base,tree],cwd=repo,env=env,capture_output=True)
+put(out/"archive-whitespace.stdout.bin",whitespace.stdout)
+put(out/"archive-whitespace.stderr.bin",whitespace.stderr)
+if whitespace.returncode: raise ValueError("archive diff whitespace failure")
+head=git("commit-tree",tree,"-p",base,input=b"research(#59): retain constructor journal failure ownership [skip ci]\n").decode().strip()
+git("update-ref","refs/heads/"+branch,head,"0"*40)
+record={"status":"ADDITIVE_INERT_ARCHIVE_CREATED_NOT_PUSHED","created_utc":dt.datetime.now(dt.timezone.utc).isoformat(),"base":base,"branch":branch,"leaf":leaf,"head":head,"tree":tree,"changed_paths":staged,"manifest_entries":len(manifest),"manifest_sha256":sha((archive/"MANIFEST.json").read_bytes()),"diff_bytes":len(diff),"diff_sha256":sha(diff),"whitespace_exit":whitespace.returncode,"all_base_entries_preserved":len(before),"unchanged_runtime_src_docs_workflows":True,"active_Python_additions":0,"main_sends":0,"subject_or_native_replays":0}
+put_json(out/"ARCHIVE_DELIVERY.json",record)
+print(json.dumps({key:value for key,value in record.items() if key!="changed_paths"},ensure_ascii=True))

@@ -1,0 +1,72 @@
+{
+  "schema": "issue3311_termination_report_freeze_v1",
+  "allocation_id": "ISSUE3311-TERMINATION-REPORT-20260928-01",
+  "base_main": "e8b4071931df81b3408a5d0a91c7607c6323c9c9",
+  "branch": "research/3311-termination-report-v2-20260928",
+  "expected_disposition": "PASS_TERMINATION_HOLD_CONTRACT_SCOPED",
+  "environment": {
+    "os": "Microsoft Windows 11 Home",
+    "python": "3.11.9",
+    "container": "not_used_shared_slot_not_assigned",
+    "gpu": "not_used_cpu_contract_only"
+  },
+  "sources": {
+    "evaluator": {
+      "path": "research/live_control/integrated_efficiency_protocol_v1.py",
+      "git_blob": "e8e5ee9e3abb66cb7673ac90ec9074820a16cac9",
+      "sha256": "d5c2f8e44addace79b6bcc30fa6911cfd12d809273100e874dfc1db97f184307"
+    },
+    "base_runner": {
+      "path": "research/live_control/run_integrated_efficiency_live_v1.py",
+      "git_blob": "7551eaf8112a48a893b204db9fae9105c1c10899",
+      "sha256": "cadb3e068dbe1474541371cb70d87a4681eed9d2d8639ce159962e179f648e83"
+    },
+    "plan": {
+      "path": "research/live_control/issue3311_termination_report_v1/PLAN.md",
+      "sha256": "6104aaa35d5c601c5da8fa13f49191326f701c7b6d3626fbabb3175e3e793d99"
+    },
+    "readme": {
+      "path": "research/live_control/issue3311_termination_report_v1/README.md",
+      "sha256": "e5cdc596e684b0d95724f4518a8cabf325109f5abb62ad9d7f742133e9bf824e"
+    },
+    "candidate_supervisor": {
+      "path": "research/live_control/issue3311_termination_report_v1/supervisor.py",
+      "sha256": "0c5dc488c4b0888b62681c701b26eaf624d44ea1279e0155987991e43a550374"
+    },
+    "independent_auditor": {
+      "path": "research/live_control/issue3311_termination_report_v1/audit_termination_report.py",
+      "sha256": "c401a52479e09a8deeed706a812f8123abbf0d5b70916ef62918f5dd0e7c3441"
+    },
+    "tests": {
+      "path": "research/live_control/issue3311_termination_report_v1/test_supervisor.py",
+      "sha256": "f05d3e6fb64f37abb52b8267a824fa3a2dfd2fd28acd2a4ce391e966e1951475"
+    },
+    "test_runner": {
+      "path": "research/live_control/issue3311_termination_report_v1/run_tests.py",
+      "sha256": "0d867610e26c850c0682c0df7149a4420cef6a2cbc9c97abcd2fb4cabff5253e"
+    },
+    "package_init": {
+      "path": "research/live_control/issue3311_termination_report_v1/__init__.py",
+      "sha256": "d301971051775fde6b63ce06de5553298c05772e9d2dc7dda42717ec50cbe270"
+    }
+  },
+  "controls": [
+    "complete synthetic trace",
+    "six-row omission through the frozen evaluator subprocess",
+    "source pin mismatch before child launch",
+    "unlaunchable child before process start",
+    "nonzero child whose stderr says unsafe does not become REJECT",
+    "zero exit with missing report",
+    "successful RETAIN/HOLD/REJECT reports plus agreeing separate audits are preserved",
+    "disagreeing audit disposition becomes HOLD",
+    "pre-existing terminal or result bytes are not overwritten or reused",
+    "independent raw audit rejects digest mutation and path traversal",
+    "frozen base runner writes report only after evaluation returns"
+  ],
+  "formal_runs": 1,
+  "retries": 0,
+  "post_freeze_tuning": 0,
+  "model_calls": 0,
+  "gui_actions": 0,
+  "test_network_calls": 0
+}

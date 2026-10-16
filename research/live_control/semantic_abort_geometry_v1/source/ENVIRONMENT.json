@@ -1,0 +1,30 @@
+{
+  "binary_or_library_sha256": {
+    "/opt/pyvenv/bin/python": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1",
+    "/opt/pyvenv/lib/python3.13/site-packages/Xlib/__init__.py": "2799b37f544bfadf7173eb64649ac2c7d2fbe1cf6fd8a8bba35b3da0836a9893",
+    "/usr/bin/Xvfb": "4efd5850f0d98c587195ef77be92916dd1578fb725ddd1b2d95d232042813c5e",
+    "/usr/share/tcltk/tk8.6/button.tcl": "2f013b643d62f08ddaaa1dea39ff80d6607569c9e1acc19406377b64d75ccf53"
+  },
+  "bindings": {
+    "<<Invoke>>": "\n    tk::ButtonInvoke %W\n",
+    "<Button-1>": "\n    tk::ButtonDown %W\n",
+    "<ButtonRelease-1>": "\n    tk::ButtonUp %W\n",
+    "<Enter>": "\n    tk::ButtonEnter %W\n",
+    "<Key-space>": "\n    tk::ButtonInvoke %W\n",
+    "<Leave>": "\n    tk::ButtonLeave %W\n"
+  },
+  "docker_cli": null,
+  "executable": "/opt/pyvenv/bin/python",
+  "experiment_network_calls": 0,
+  "model_calls": 0,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "scope": "provided Linux execution container; cookie-authenticated private Xvfb; no Docker image identity; TCP listener disabled",
+  "tcl": "8.6.16",
+  "tk": "8.6.16",
+  "xlib_distribution_metadata": "PackageNotFoundError (setup limitation)",
+  "xlib_module_version": [
+    0,
+    15
+  ]
+}

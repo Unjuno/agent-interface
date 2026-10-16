@@ -1,0 +1,62 @@
+{
+  "audit_passed": true,
+  "preregistered_result_passed": true,
+  "one_click_driver_correction": "road toolbar opened at (820,51) before unchanged direction selection and drags",
+  "cases": {
+    "wrong-row": {
+      "exact_frames": 29,
+      "condition_reason": "target_not_reached",
+      "target_changed_totals": [
+        17,
+        17
+      ],
+      "guard_changed_totals": [
+        0,
+        0
+      ],
+      "second_drag_started": false,
+      "independent_success": false,
+      "checks": {
+        "target_owned_roads": false,
+        "ordered_bidirectional_connections": false,
+        "forbidden_tiles_clear": true,
+        "surrounding_road_owner_unchanged": false
+      },
+      "program_submit_to_return_ms": 3003.540872,
+      "first_drag_issued_to_condition_ms": 2509.125724,
+      "condition_to_terminal_ms": 8.966856,
+      "durable_calls": 6
+    },
+    "target": {
+      "exact_frames": 31,
+      "condition_reason": "met",
+      "target_changed_totals": [
+        170,
+        170
+      ],
+      "guard_changed_totals": [
+        0,
+        0
+      ],
+      "second_drag_started": true,
+      "independent_success": true,
+      "checks": {
+        "target_owned_roads": true,
+        "ordered_bidirectional_connections": true,
+        "forbidden_tiles_clear": true,
+        "surrounding_road_owner_unchanged": true
+      },
+      "program_submit_to_return_ms": 4175.154387,
+      "first_drag_issued_to_condition_ms": 2514.703615,
+      "condition_to_terminal_ms": 1162.247749,
+      "durable_calls": 6
+    }
+  },
+  "exact_frames": 60,
+  "all_terminal_releases_verified": true,
+  "all_owned_processes_exited": true,
+  "save_unchanged": true,
+  "decision": "RETAIN_FRESH_OPENTTD_TARGET_GUARD_PAIR;_REPLICATE_BEFORE_PROMOTION",
+  "scope": "matched scripted fresh seed991003 OpenTTD pair after one-click driver correction with independent engine score; no model call, model authorship, human comparison, token or generalization claim",
+  "audit_sha256": "c3b5ff1e9983f4471d442bbab0c72a0035b7117fb3892fc4e92205b677a52d88"
+}

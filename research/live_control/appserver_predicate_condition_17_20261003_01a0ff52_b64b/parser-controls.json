@@ -1,0 +1,52 @@
+{
+  "schema": "saved-parser-construction-v1",
+  "pass": true,
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "checker_sha256": "1fb7980a3e9348037b58b553cf663531f5f3e22315f47f31ecb77332564620be",
+  "positive_JSON": true,
+  "typed_bool_int_distinct": true,
+  "refused": [
+    {
+      "name": "duplicate-key",
+      "refused": true,
+      "reason": "duplicate JSON key: x"
+    },
+    {
+      "name": "NaN",
+      "refused": true,
+      "reason": "nonfinite JSON constant: NaN"
+    },
+    {
+      "name": "Infinity",
+      "refused": true,
+      "reason": "nonfinite JSON constant: Infinity"
+    },
+    {
+      "name": "negative-Infinity",
+      "refused": true,
+      "reason": "nonfinite JSON constant: -Infinity"
+    },
+    {
+      "name": "overflow-float",
+      "refused": true,
+      "reason": "nonfinite JSON float"
+    },
+    {
+      "name": "malformed",
+      "refused": true,
+      "reason": "malformed: malformed JSON: Expecting value: line 1 column 6 (char 5)"
+    },
+    {
+      "name": "invalid-UTF8",
+      "refused": true,
+      "reason": "invalid-UTF8: malformed JSON: 'utf-8' codec can't decode byte 0xff in position 6: invalid start byte"
+    },
+    {
+      "name": "nonterminated-JSONL",
+      "refused": true,
+      "reason": "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/predicate-59-b64b/parser-nonterminated.jsonl: missing final newline"
+    }
+  ],
+  "native_peers": 0,
+  "experiment_source_imports": 0
+}

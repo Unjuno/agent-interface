@@ -1,0 +1,41 @@
+{
+  "schema": "inkscape-authority-durable-token-compat-v1-result",
+  "upstream_authority_abi_head": "d1c7d0531993b23a61c7f38e12d979c27948cf6e",
+  "decision": "RETAIN_COMPOSITION_GAP",
+  "hard_gate_pass": true,
+  "rows": [
+    {"case":"current_v2_ledger_rejects_truthful_two_capture_receipt","pass":true,"detail":{"type":"AuthorityEndedNotReady","error":"exactly one passive post-authority capture required"}},
+    {"case":"bridge_v2_exposes_missing_runtime_authority_end_id","pass":true,"detail":{"type":"StateError","error":"runtime authority_end_id required"}},
+    {"case":"diagnostic_id_allows_single_issue","pass":true,"detail":{"id":"diagnostic-synthetic-authority-end-id","post_sequence":11,"status":"pending"}},
+    {"case":"diagnostic_duplicate_rejected","pass":true,"detail":{"type":"DuplicateReceipt","error":"authority_end_id already exists"}},
+    {"case":"diagnostic_pending_recovers_after_restart","pass":true,"detail":{"id":"diagnostic-synthetic-authority-end-id","post_sequence":11,"status":"pending"}}
+  ],
+  "executed_source_sha256": {
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+    "current_pr168_authority_ended_bridge_v2.py": "37e544086fe70087c0a2e6c03ce8c42c1c5dd71989f7fe541eb9055b3551eb52"
+  },
+  "current_pr168_bridge_v2_git_blob": "63639f44eba47a2842e57e3761730e6f6224e815",
+  "receipt_values": {
+    "terminal_status": "authority_ended",
+    "post_release_input_admissions": 0,
+    "steps_completed": 0,
+    "post_authority": {
+      "captures": 2,
+      "sequences": [10,11],
+      "sequence": 11,
+      "selection_rule": "latest",
+      "sequence_advanced": true,
+      "snapshot_finished_ns": 7902247743831,
+      "lifecycle_deadline_ns": 7902425703275,
+      "within_lifecycle_deadline": true
+    }
+  },
+  "limits": [
+    "offline interface compatibility",
+    "diagnostic synthetic authority_end_id only",
+    "no durable-submit transport",
+    "no GUI/model/network",
+    "does not repair PR #168 formal-run source provenance"
+  ]
+}

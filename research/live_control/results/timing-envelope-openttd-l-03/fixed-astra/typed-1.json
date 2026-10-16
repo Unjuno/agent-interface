@@ -1,0 +1,18 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 820,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    }
+  ],
+  "rationale": "Inspect the apparent road toolbar icon and confirm its tooltip explicitly indicates road construction before clicking.",
+  "intent": "inspect",
+  "expected_effect": "A tooltip identifies the purpose of the toolbar icon at (820,51).",
+  "checkpoint": null
+}

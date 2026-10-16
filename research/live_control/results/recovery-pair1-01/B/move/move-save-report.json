@@ -1,0 +1,694 @@
+{
+  "state": "terminal",
+  "exchanges": [
+    {
+      "request": {
+        "after": 12,
+        "events": [
+          "clock"
+        ],
+        "timeout": 5,
+        "request_id": "clock-d148847107fd424a8998098b57a5b858",
+        "command": {
+          "op": "clock"
+        }
+      },
+      "started_ns": 113901406436,
+      "returned_ns": 113951482801,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "clock-d148847107fd424a8998098b57a5b858"
+            },
+            "received_ns": 113920586193,
+            "emit_started_ns": 113920597154
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 113931382389,
+            "sequence": 2,
+            "emit_started_ns": 113931391866
+          }
+        ],
+        "cursor": 14,
+        "returned_ns": 113943857251,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "clock-d148847107fd424a8998098b57a5b858",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    },
+    {
+      "request": {
+        "after": 14,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 15,
+        "action_id": "move-save",
+        "request_id": "program-0c842b9b82504fc58f861e8e1fea51ae",
+        "command": {
+          "op": "submit",
+          "id": "move-save",
+          "steps": [
+            {
+              "op": "pointer_click",
+              "x": 618,
+              "y": 391
+            },
+            {
+              "op": "hold",
+              "keys": [
+                "Right"
+              ],
+              "duration_ms": 80
+            },
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "s"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "expected_sequence": 2,
+          "valid_until_ns": 143931382389
+        }
+      },
+      "started_ns": 113958239986,
+      "returned_ns": 114243005337,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 2,
+              "id": "move-save",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "pointer_click",
+                  "x": 618,
+                  "y": 391
+                },
+                {
+                  "duration_ms": 80,
+                  "keys": [
+                    "Right"
+                  ],
+                  "op": "hold"
+                },
+                {
+                  "key": "s",
+                  "modifier": "Control_L",
+                  "op": "chord"
+                },
+                {
+                  "op": "settle",
+                  "quiet_ms": 80,
+                  "timeout_ms": 500
+                }
+              ],
+              "transport_request_id": "program-0c842b9b82504fc58f861e8e1fea51ae",
+              "valid_until_ns": 143931382389
+            },
+            "received_ns": 113984104412,
+            "emit_started_ns": 113984107274
+          },
+          {
+            "event": "accepted",
+            "id": "move-save",
+            "steps": 4,
+            "valid_until_ns": 143931382389,
+            "accepted_ns": 113995562074,
+            "emit_started_ns": 113995564660
+          },
+          {
+            "event": "step_started",
+            "id": "move-save",
+            "step": 0,
+            "operation": "pointer_click",
+            "issued_ns": 114008862643,
+            "emit_started_ns": 114008865589
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "move",
+            "payload": {
+              "x": 618,
+              "y": 391
+            },
+            "admitted_ns": 114021691868,
+            "input_ack_ns": 114022016805,
+            "valid_until_ns": 143931382389,
+            "surface": 6291463,
+            "id": "move-save",
+            "step": 0,
+            "emit_started_ns": 114022155761
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "button_down",
+            "payload": 1,
+            "admitted_ns": 114034515406,
+            "input_ack_ns": 114034907223,
+            "valid_until_ns": 143931382389,
+            "surface": 6291463,
+            "id": "move-save",
+            "step": 0,
+            "emit_started_ns": 114035079298
+          },
+          {
+            "event": "observation",
+            "id": "move-save",
+            "step": 0,
+            "sequence": 3,
+            "capture_ns": 114102010318,
+            "context_ns": 114109681823,
+            "context": [
+              [
+                "windows",
+                "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+              ],
+              [
+                "active_window",
+                6291463
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/003.png",
+            "image_reused": false,
+            "image_prepare_ns": 29622784,
+            "image_ready_ns": 114159972866,
+            "input_focus_before": 6291464,
+            "input_focus_after": 6291464,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 10.124873,
+            "wire_bytes": 6112,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 114183100644
+          },
+          {
+            "event": "step_completed",
+            "id": "move-save",
+            "step": 0,
+            "completed_ns": 114193260678,
+            "emit_started_ns": 114193265307
+          },
+          {
+            "event": "step_started",
+            "id": "move-save",
+            "step": 1,
+            "operation": "hold",
+            "issued_ns": 114205221835,
+            "emit_started_ns": 114205224460
+          },
+          {
+            "event": "terminal",
+            "id": "move-save",
+            "status": "needs_decision",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 114221263640,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 114221299412,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 114221302244
+          }
+        ],
+        "cursor": 23,
+        "returned_ns": 114233731245,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "program-0c842b9b82504fc58f861e8e1fea51ae",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    }
+  ],
+  "program_sent": true,
+  "source_image": {
+    "status": "image",
+    "sequence": 2,
+    "capture_ns": 96539582130,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "last_reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 2,
+          "id": "move-save",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "pointer_click",
+              "x": 618,
+              "y": 391
+            },
+            {
+              "duration_ms": 80,
+              "keys": [
+                "Right"
+              ],
+              "op": "hold"
+            },
+            {
+              "key": "s",
+              "modifier": "Control_L",
+              "op": "chord"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "transport_request_id": "program-0c842b9b82504fc58f861e8e1fea51ae",
+          "valid_until_ns": 143931382389
+        },
+        "received_ns": 113984104412,
+        "emit_started_ns": 113984107274
+      },
+      {
+        "event": "accepted",
+        "id": "move-save",
+        "steps": 4,
+        "valid_until_ns": 143931382389,
+        "accepted_ns": 113995562074,
+        "emit_started_ns": 113995564660
+      },
+      {
+        "event": "step_started",
+        "id": "move-save",
+        "step": 0,
+        "operation": "pointer_click",
+        "issued_ns": 114008862643,
+        "emit_started_ns": 114008865589
+      },
+      {
+        "event": "pointer_admission",
+        "operation": "move",
+        "payload": {
+          "x": 618,
+          "y": 391
+        },
+        "admitted_ns": 114021691868,
+        "input_ack_ns": 114022016805,
+        "valid_until_ns": 143931382389,
+        "surface": 6291463,
+        "id": "move-save",
+        "step": 0,
+        "emit_started_ns": 114022155761
+      },
+      {
+        "event": "pointer_admission",
+        "operation": "button_down",
+        "payload": 1,
+        "admitted_ns": 114034515406,
+        "input_ack_ns": 114034907223,
+        "valid_until_ns": 143931382389,
+        "surface": 6291463,
+        "id": "move-save",
+        "step": 0,
+        "emit_started_ns": 114035079298
+      },
+      {
+        "event": "observation",
+        "id": "move-save",
+        "step": 0,
+        "sequence": 3,
+        "capture_ns": 114102010318,
+        "context_ns": 114109681823,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/003.png",
+        "image_reused": false,
+        "image_prepare_ns": 29622784,
+        "image_ready_ns": 114159972866,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 10.124873,
+        "wire_bytes": 6112,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 114183100644
+      },
+      {
+        "event": "step_completed",
+        "id": "move-save",
+        "step": 0,
+        "completed_ns": 114193260678,
+        "emit_started_ns": 114193265307
+      },
+      {
+        "event": "step_started",
+        "id": "move-save",
+        "step": 1,
+        "operation": "hold",
+        "issued_ns": 114205221835,
+        "emit_started_ns": 114205224460
+      },
+      {
+        "event": "terminal",
+        "id": "move-save",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 114221263640,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 114221299412,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 114221302244
+      }
+    ],
+    "cursor": 23,
+    "returned_ns": 114233731245,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-0c842b9b82504fc58f861e8e1fea51ae",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "move-save",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 114221263640,
+      "valid_until_ns": null
+    },
+    "terminal_ns": 114221299412,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 114221302244
+  },
+  "image": {
+    "status": "image",
+    "sequence": 3,
+    "capture_ns": 114102010318,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/003.png",
+    "relative_path": "003.png",
+    "sha256": "b0517c19b1b707964acb11ec3a517ad90f34fbc348fb3be108d2b25cab07f194",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "continuation_batch": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 2,
+          "id": "move-save",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "pointer_click",
+              "x": 618,
+              "y": 391
+            },
+            {
+              "duration_ms": 80,
+              "keys": [
+                "Right"
+              ],
+              "op": "hold"
+            },
+            {
+              "key": "s",
+              "modifier": "Control_L",
+              "op": "chord"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "transport_request_id": "program-0c842b9b82504fc58f861e8e1fea51ae",
+          "valid_until_ns": 143931382389
+        },
+        "received_ns": 113984104412,
+        "emit_started_ns": 113984107274
+      },
+      {
+        "event": "accepted",
+        "id": "move-save",
+        "steps": 4,
+        "valid_until_ns": 143931382389,
+        "accepted_ns": 113995562074,
+        "emit_started_ns": 113995564660
+      },
+      {
+        "event": "step_started",
+        "id": "move-save",
+        "step": 0,
+        "operation": "pointer_click",
+        "issued_ns": 114008862643,
+        "emit_started_ns": 114008865589
+      },
+      {
+        "event": "pointer_admission",
+        "operation": "move",
+        "payload": {
+          "x": 618,
+          "y": 391
+        },
+        "admitted_ns": 114021691868,
+        "input_ack_ns": 114022016805,
+        "valid_until_ns": 143931382389,
+        "surface": 6291463,
+        "id": "move-save",
+        "step": 0,
+        "emit_started_ns": 114022155761
+      },
+      {
+        "event": "pointer_admission",
+        "operation": "button_down",
+        "payload": 1,
+        "admitted_ns": 114034515406,
+        "input_ack_ns": 114034907223,
+        "valid_until_ns": 143931382389,
+        "surface": 6291463,
+        "id": "move-save",
+        "step": 0,
+        "emit_started_ns": 114035079298
+      },
+      {
+        "event": "observation",
+        "id": "move-save",
+        "step": 0,
+        "sequence": 3,
+        "capture_ns": 114102010318,
+        "context_ns": 114109681823,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/003.png",
+        "image_reused": false,
+        "image_prepare_ns": 29622784,
+        "image_ready_ns": 114159972866,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 10.124873,
+        "wire_bytes": 6112,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 114183100644
+      },
+      {
+        "event": "step_completed",
+        "id": "move-save",
+        "step": 0,
+        "completed_ns": 114193260678,
+        "emit_started_ns": 114193265307
+      },
+      {
+        "event": "step_started",
+        "id": "move-save",
+        "step": 1,
+        "operation": "hold",
+        "issued_ns": 114205221835,
+        "emit_started_ns": 114205224460
+      },
+      {
+        "event": "terminal",
+        "id": "move-save",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 114221263640,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 114221299412,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 114221302244
+      }
+    ],
+    "cursor": 23,
+    "returned_ns": 114233731245,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-0c842b9b82504fc58f861e8e1fea51ae",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies"
+}

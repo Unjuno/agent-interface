@@ -1,0 +1,851 @@
+{
+  "proposal_received_ns": 12831339520705,
+  "source_observation": {
+    "capture_ms": 3.099692,
+    "capture_ns": 12821293775195,
+    "context": [
+      [
+        "windows",
+        "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+      ],
+      [
+        "active_window",
+        10485762
+      ]
+    ],
+    "context_ns": 12821298889393,
+    "emitted_ns": 12821382842077,
+    "event": "observation",
+    "exact": true,
+    "focus_samples_match": true,
+    "id": "durable-a27e495b730947c6b34530c118384210",
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-matched-05/fixed-astra/runtime/028.png",
+    "image_prepare_ns": 47839929,
+    "image_ready_ns": 12821377573641,
+    "image_reused": false,
+    "input_focus_after": 10485762,
+    "input_focus_before": 10485762,
+    "pointer_binding": {
+      "focus": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ],
+      "surface": 10485762
+    },
+    "pointer_context_after": {
+      "focus": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ],
+      "surface": 10485762
+    },
+    "pointer_context_before": {
+      "focus": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ],
+      "surface": 10485762
+    },
+    "semantic_completion": "unknown",
+    "sequence": 28,
+    "step": 3,
+    "wire_bytes": 141115
+  },
+  "fresh_observation": {
+    "event": "observation",
+    "id": "durable-abb92379929d4160ae0e45633104f64f",
+    "step": 0,
+    "sequence": 29,
+    "capture_ns": 12831447132616,
+    "context_ns": 12831452031740,
+    "context": [
+      [
+        "windows",
+        "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+      ],
+      [
+        "active_window",
+        10485762
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-matched-05/fixed-astra/runtime/029.png",
+    "image_reused": false,
+    "image_prepare_ns": 48119527,
+    "image_ready_ns": 12831535305682,
+    "input_focus_before": 10485762,
+    "input_focus_after": 10485762,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "capture_ms": 3.680434,
+    "wire_bytes": 244718,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emitted_ns": 12831539163610
+  },
+  "result": {
+    "request": {
+      "after": 156,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 6.05,
+      "action_id": "durable-6526ad435b14410f9370699536cbcd61",
+      "command": {
+        "op": "submit",
+        "expected_sequence": 29,
+        "valid_until_ns": 12861611118647,
+        "steps": [
+          {
+            "op": "pointer_move",
+            "x": 1000,
+            "y": 180
+          },
+          {
+            "op": "dwell_observe",
+            "delay_ms": 800
+          },
+          {
+            "op": "observe"
+          }
+        ],
+        "id": "durable-6526ad435b14410f9370699536cbcd61"
+      },
+      "request_id": "b105a460f3b745cb85b4cee4b6ba72ee"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 29,
+            "id": "durable-6526ad435b14410f9370699536cbcd61",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "pointer_move",
+                "x": 1000,
+                "y": 180
+              },
+              {
+                "delay_ms": 800,
+                "op": "dwell_observe"
+              },
+              {
+                "op": "observe"
+              }
+            ],
+            "transport_request_id": "b105a460f3b745cb85b4cee4b6ba72ee",
+            "valid_until_ns": 12861611118647
+          },
+          "emitted_ns": 12831673580123
+        },
+        {
+          "event": "accepted",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "steps": 3,
+          "valid_until_ns": 12861611118647,
+          "accepted_ns": 12831676191084,
+          "emitted_ns": 12831676193277
+        },
+        {
+          "event": "step_started",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 0,
+          "operation": "pointer_move",
+          "issued_ns": 12831687024786,
+          "emitted_ns": 12831687027609
+        },
+        {
+          "event": "pointer_admission",
+          "operation": "move",
+          "payload": {
+            "x": 1000,
+            "y": 180
+          },
+          "admitted_ns": 12831697432403,
+          "input_ack_ns": 12831697637770,
+          "valid_until_ns": 12861611118647,
+          "surface": 10485762,
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 0,
+          "emitted_ns": 12831697721490
+        },
+        {
+          "event": "observation",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 0,
+          "sequence": 30,
+          "capture_ns": 12831711828206,
+          "context_ns": 12831718271144,
+          "context": [
+            [
+              "windows",
+              "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+            ],
+            [
+              "active_window",
+              10485762
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-matched-05/fixed-astra/runtime/030.png",
+          "image_reused": false,
+          "image_prepare_ns": 50781386,
+          "image_ready_ns": 12831800950369,
+          "input_focus_before": 10485762,
+          "input_focus_after": 10485762,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "capture_ms": 3.475583,
+          "wire_bytes": 150873,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emitted_ns": 12831805771531
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 0,
+          "completed_ns": 12831807436275,
+          "emitted_ns": 12831807439986
+        },
+        {
+          "event": "step_started",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 1,
+          "operation": "dwell_observe",
+          "issued_ns": 12831816909335,
+          "emitted_ns": 12831816913375
+        },
+        {
+          "event": "observation",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 1,
+          "sequence": 31,
+          "capture_ns": 12832630277432,
+          "context_ns": 12832636053786,
+          "context": [
+            [
+              "windows",
+              "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+            ],
+            [
+              "active_window",
+              10485762
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-matched-05/fixed-astra/runtime/031.png",
+          "image_reused": false,
+          "image_prepare_ns": 53016295,
+          "image_ready_ns": 12832725199337,
+          "input_focus_before": 10485762,
+          "input_focus_after": 10485762,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "capture_ms": 3.68024,
+          "wire_bytes": 155822,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emitted_ns": 12832731072949
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 1,
+          "completed_ns": 12832733559190,
+          "emitted_ns": 12832733564196
+        },
+        {
+          "event": "step_started",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 2,
+          "operation": "observe",
+          "issued_ns": 12832744232218,
+          "emitted_ns": 12832744236884
+        },
+        {
+          "event": "observation",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 2,
+          "sequence": 32,
+          "capture_ns": 12832762672097,
+          "context_ns": 12832768493219,
+          "context": [
+            [
+              "windows",
+              "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+            ],
+            [
+              "active_window",
+              10485762
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-matched-05/fixed-astra/runtime/032.png",
+          "image_reused": false,
+          "image_prepare_ns": 48781664,
+          "image_ready_ns": 12832842245242,
+          "input_focus_before": 10485762,
+          "input_focus_after": 10485762,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "capture_ms": 5.302056,
+          "wire_bytes": 62933,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emitted_ns": 12832846958000
+        },
+        {
+          "event": "step_completed",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 2,
+          "completed_ns": 12832849262738,
+          "emitted_ns": 12832849266760
+        },
+        {
+          "event": "terminal",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 3,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 12832858943545,
+            "valid_until_ns": 12861611118647
+          },
+          "terminal_ns": 12832858986420,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emitted_ns": 12832858988703
+        }
+      ],
+      "cursor": 169,
+      "returned_ns": 12832869454766,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "b105a460f3b745cb85b4cee4b6ba72ee",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "state": {
+      "authority": "none",
+      "continuation": {
+        "authority": "none",
+        "channel_closed": false,
+        "clocks": {
+          "181045a71ae74d90824c943dff6cb9cb": {
+            "echo_cursor": 117,
+            "record": {
+              "emitted_ns": 12819935598577,
+              "event": "clock",
+              "runtime_ns": 12819935595649,
+              "sequence": 23
+            },
+            "record_cursor": 118
+          },
+          "23eb22ccb18c41e4b56a3d80d3175b3d": {
+            "echo_cursor": 40,
+            "record": {
+              "emitted_ns": 12782662517942,
+              "event": "clock",
+              "runtime_ns": 12782662513351,
+              "sequence": 9
+            },
+            "record_cursor": 41
+          },
+          "2c8ed8b8af6542a7ad9c3c56e7b13817": {
+            "echo_cursor": 71,
+            "record": {
+              "emitted_ns": 12792849316870,
+              "event": "clock",
+              "runtime_ns": 12792849310078,
+              "sequence": 14
+            },
+            "record_cursor": 72
+          },
+          "697b7c13fb824b0dae32c2049c900591": {
+            "echo_cursor": 63,
+            "record": {
+              "emitted_ns": 12792616402943,
+              "event": "clock",
+              "runtime_ns": 12792616399372,
+              "sequence": 13
+            },
+            "record_cursor": 64
+          },
+          "80fc297d386e425c81a746c66d3dca48": {
+            "echo_cursor": 147,
+            "record": {
+              "emitted_ns": 12831360373058,
+              "event": "clock",
+              "runtime_ns": 12831360371065,
+              "sequence": 28
+            },
+            "record_cursor": 148
+          },
+          "8f3f72f9c30d4fd3ae1839f9e80c95bb": {
+            "echo_cursor": 87,
+            "record": {
+              "emitted_ns": 12804556255615,
+              "event": "clock",
+              "runtime_ns": 12804556251238,
+              "sequence": 17
+            },
+            "record_cursor": 88
+          },
+          "b3cd015c51bd447ebf638d9d1596b51d": {
+            "echo_cursor": 125,
+            "record": {
+              "emitted_ns": 12820187458759,
+              "event": "clock",
+              "runtime_ns": 12820187455165,
+              "sequence": 24
+            },
+            "record_cursor": 126
+          },
+          "c17bea1ad267426f80d061ed1218f3fc": {
+            "echo_cursor": 48,
+            "record": {
+              "emitted_ns": 12782894477935,
+              "event": "clock",
+              "runtime_ns": 12782894474746,
+              "sequence": 10
+            },
+            "record_cursor": 49
+          },
+          "d3afb93aca9c43a789f1fb358db76570": {
+            "echo_cursor": 11,
+            "record": {
+              "emitted_ns": 12771301358321,
+              "event": "clock",
+              "runtime_ns": 12771301349273,
+              "sequence": 2
+            },
+            "record_cursor": 12
+          },
+          "d742f93915c5401fa2fb745f0da84323": {
+            "echo_cursor": 3,
+            "record": {
+              "emitted_ns": 12771056689506,
+              "event": "clock",
+              "runtime_ns": 12771056685022,
+              "sequence": 1
+            },
+            "record_cursor": 4
+          },
+          "ebfbfe9f523645bb97d7116617e783e2": {
+            "echo_cursor": 95,
+            "record": {
+              "emitted_ns": 12804799906086,
+              "event": "clock",
+              "runtime_ns": 12804799902428,
+              "sequence": 18
+            },
+            "record_cursor": 96
+          },
+          "fb5ceeda3a7746b388087b2a97724e38": {
+            "echo_cursor": 155,
+            "record": {
+              "emitted_ns": 12831611122684,
+              "event": "clock",
+              "runtime_ns": 12831611118647,
+              "sequence": 29
+            },
+            "record_cursor": 156
+          }
+        },
+        "cursor": 169,
+        "format": "received-continuation-v1",
+        "observation": {
+          "event": "observation",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "step": 2,
+          "sequence": 32,
+          "capture_ns": 12832762672097,
+          "context_ns": 12832768493219,
+          "context": [
+            [
+              "windows",
+              "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+            ],
+            [
+              "active_window",
+              10485762
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/timing-envelope-openttd-matched-05/fixed-astra/runtime/032.png",
+          "image_reused": false,
+          "image_prepare_ns": 48781664,
+          "image_ready_ns": 12832842245242,
+          "input_focus_before": 10485762,
+          "input_focus_after": 10485762,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 10485762,
+            "surface": 10485762,
+            "geometry": [
+              129,
+              40,
+              1024,
+              720
+            ]
+          },
+          "capture_ms": 5.302056,
+          "wire_bytes": 62933,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "emitted_ns": 12832846958000
+        },
+        "observation_cursor": 167,
+        "pending_clock": null,
+        "record_hashes": [
+          "55ae94b2cf3572c645eb8abe30cbdf70f3dd9b2623c065948c5759e47499e67d",
+          "e479c838ae67ace18ac0ee5eecc94d26c9c3bb7f65f3ccce01662298ce9bbb48",
+          "5d490d41caeb273e3bde8575c8821242e45c6651962fa822cf50d15cd5b6e5c0",
+          "735e728cf646825c078ac154cbca572eb878ca1763e91d36d164bd6ae4031937",
+          "3949e0aefe66bcb9de55e3c767594d750eac359df85b31e1a152b49ec0fa8497",
+          "5db293b49102b876f1fbbdda9d699552c51afa8623d939df0727287c9ecc59f9",
+          "1f93958a10c02f304a9fc2f94aae83e3339747f75639a890cf97a955769b9bd4",
+          "771ab5791a26eec783ed48fe9cc7ab44c0ffad49d21108396f08a7917fd30c53",
+          "41bc95e29dde39de1dadb5d9acfd3c5bb5501b1d03c0c9569b218df704ccfe57",
+          "17632901b71c5b400007695026253dae9bf47c2c8a3847898c2c3d4bb9e9adcd",
+          "714a9d200ff1059a086b0f4a6df03ea1cadef725f9a6800cb4abdea6a7bdc294",
+          "197450d9985cdeaef780bdc56a07d07bf466155a223a3bbc4b17c68d71e10cbf",
+          "a2a911bf5391a337d009feec6c3395fc7cd6a6f88b7e168d79f6f4d5f61008cd",
+          "4bdde8b0aed39a9ca31512104cc00c15db0d2c575bcd7fd4d647d167df124ba7",
+          "aae1cf417565f07a571b576e0590f10c0775046e9b1a9980cbd81ffc6def48c2",
+          "434ce09902706e31570082f83e8b956e69bea138cfe0e37dd6f01fc72964d466",
+          "4f20def5213a6a03c9032a0e059809b29c4c05890b639bc66411e425c6feca50",
+          "8361b89bf014d24eda64517565ff4eca820dc6e309556c6ede58a29818301b4e",
+          "87a6e360cfdf97c8238f4a561b8b90c68342f5b4a62547fe62718158dea51cda",
+          "edbcf3023ed7b9da94bd865959ee01465e7d28ca4e871bcfbe19dc5d8bd5a9f0",
+          "4a4e02f2feee7d9f84431ef85f12beee873e3c7080ba8324e8cfba649c22ad72",
+          "e98b9c0281b566434e3a0c06c349b692dc74f637f7d8ff578235f16563cae806",
+          "c0627d193c91766a6c45485cf264db01972f0f2c53bf050e33cf985025f94a34",
+          "4d18921a34d94262af7367bec30ae9a7db612bedca1c1df49b5608451c54c655",
+          "d4a508076d19718ea2a0e2db178239cc845b04ab3fc792d844a42237f7291340",
+          "91b41b97f7d20b753099abc9d8dd3c50161d6e8ed6f4451f3afd4d3ff87bfdfa",
+          "1c443624699e762b0c42616584c4694eee2134eb57b7139815804d50d7b88847",
+          "a350083a3482d725dd54b110f1cb0caf59c833dbbb3532e7e5f15276d3037ccd",
+          "8c720f4f9826fb9d47854fc80ffd5ce3373d82fa360c123051fa0ebb05009769",
+          "754adf273b1950e2858eb0bc16ef319551922fe571cb208034bd0a05f2526b7d",
+          "cc1a7cb7423af1c885cc3c4c6227ffed93a877a8aac55a7241d17dc02867882a",
+          "153a9a8ed64bc4354063e30ea25d4182d4bfce3b4e6848aa4db50e7dea097e36",
+          "3662ed8fa063d47b3c443ed5d6a562e481bb51634f68bf3c7d6a347cc4a625ba",
+          "1998638476ba54e0821d80ab010f101c93757814cb287623f933bf48b4646e69",
+          "0266325784f6353dfecfd0d333be071de596a8e3f72d21a44890f5f74893a1c8",
+          "bd76b441f8233a34bed235463548e3a414d2bf8208eeb2202f5de58f86a4e9bf",
+          "983106c6c90c7f3e85d654acb5ac1ee5c6bbf7d32284cb4d70d2c3883543182b",
+          "102291df65d4874c47c640c2c9043f02430f37f3a8ea3fbc9a8b75c2862756d6",
+          "4046a781f23c208effc4e0641b3cf94f52b0e996c4386fc98c94f972e1cd5d07",
+          "0ebd65c59926cbcc2dae35819e502307404f780c52cc7dc7e07afcef9df64874",
+          "dbb8ae33ac57cddaafb64f691c6de0730113eafa41dde701a4cf69c2c550ddd4",
+          "a0442b039523bc65a947de4e3e530953d0af898135b1a7a2dae9a9ca13022d60",
+          "36434c095935ece4337d81dc90d84957c047ba2cec6b38d184f303ae26c96432",
+          "627596869e5b4424a0908cfd0ddd873688fa5a6fdc2cf6915fa8a1b6065cd841",
+          "4aa55716f83485c3d56cc46d856868130c611d5106252625aeb6babc33ad5161",
+          "05856da1d3e85f46e514926f150e5c933b14786018686c93e204bf89f01c604e",
+          "12c18cfaa59e3e1bbec5732829f66f28cfc562d6e0128322097bc774cc9b4d82",
+          "cee4cf99c3915462a6923d7c3b32bd8453dc3d87a39c70f763dea56f55f2c943",
+          "236c0cd183ed27c1d52b1b6384d68a920cffbc3ed360b05adf6f2021ed5009c3",
+          "10406c7610cdfe367113a034cab2d0dee6b3f3d424a2dbc98fbabd8a4d8cea46",
+          "592f430a0d29581397dffcf0f2ad2204af6b33a7b9958829d99e0ea9c3062aa9",
+          "969be89e5e04810a85f9741758ee0dfb3ab4af2edc5ffc15ccb3f48926c4a9b6",
+          "a7c377e0b2e9da7ff5a7924cfa0a110bcafdc79e345c0734e3c834685b6cddf1",
+          "1bcc67ac62b6e8a50e81b9eb665f2fb8a7ad904dccf1439d4e16c74822e32602",
+          "b720338272a36a2ab899f4978e5b04e4a8fa14f6def682e168a684ff13bebdcc",
+          "626dce00e2bbabcb209ab00f8c5f82bdf3463e364efd6ad820e442947268c9db",
+          "6d2ec2b99125d1cef54f52153a9dbd9f0f58078177925800c6f96b86c17368ce",
+          "945d3864f37bc09b9cf62dcd493a7b6ed4a0feaf58f2bf84b362fa28b965b305",
+          "852c8b2e58036401692c7d6b2930493850404ca4a2608216e31c99dbaad270bd",
+          "4dd0bc0c5d295207a47d2443d21a88bee215eb85b727a543ccb1d168766b04a0",
+          "8055396690d1a6f8afbe2eb13088f13a2bb8596ae13d4867e960a5f9db2e351f",
+          "1bc4a78c7598cefcc8ad7d8d3995980e7ab5728332acb35fe06f04c8d4c0a33a",
+          "bba7817a182b7fe9f669c679aa2588e0bf3a211f65eb57c2aeca5469c4d24289",
+          "7987b04c0db9f8a274fa1c53459d00405846a4a3122b380bd6f510c9f8a674ba",
+          "78419f4b2382f836f0608d43e2fb95316532f368305a40a85351d956fbebbf17",
+          "348240a6e1c38469799178c8a7a99a79387a3e0f16158a86f7ff99096940443a",
+          "14e099f1c8f02b5b097563181bed35132e76cae522881cebd247bd5ecce5c0a6",
+          "1066f5a14dd15969ec2305191448a53dd30c099b32b9b3646537d7eadc639f8c",
+          "82942389631a9cac65140cb9fa989b0cfbf630e9b758ea8dfbd0a86bc936fe25",
+          "d193c0b3f2cd2821a77505c9f347b82b9a24146421ba1f1548875c87201a2061",
+          "d232231520bf1fee5906e42acdf4a89a622b8fe42bb9fdbc2fbd47cf6935815b",
+          "57857dfec2523abb32b23b3d6cb0e44c1efde906fa2f4351dc30e356231c88e7",
+          "83e66821f7dbe7203d28f1555543f0bd04debecbab8ebaf5e57e42b2f45bfb55",
+          "8ab1e085dbe57fa720ca8b10171f53d233c26fcb3daa9f90e063398446cd4fd2",
+          "eda334d9c13c15939d9825581c7874431ed9366dc71b4745ef3711b2ad05caf9",
+          "e9011fe446a67276a36504a8b3106283372a03516acd3e4212835397ec39440e",
+          "d51aedc519d84a4bb9005d5d63e5c2dfdd144ac0dcd4c22f3164e91bce6ec784",
+          "a7e6eb749db2c2cbf0f747ce9d5dee5efd77df166fad3d435c9550254f35d9c7",
+          "d946798b4eb14e4437569d2636c316602182ca35d6d68c526b7604e8a2ff057b",
+          "88e0e91a060c1558c82b07d64e75da6920a9d27f8c302873c58c1d6a957b38ae",
+          "3051e4c61d8a5290343d4c3aaadfb5b5e958d28337153818c410e69a7256fa91",
+          "9b876408e3364e4b210399780fe66913407a8440b0d16f95dd2f80d44aac6e8d",
+          "af5e672acd2819494526ab7ff32c478d1fa63f65066aee06413fb612380be29b",
+          "3c597101bbd34a90c3f11a4aa2fa0376702bebd0e27ed04c9a917213d25c7ddf",
+          "c514f4172358bb6ef02ae3b30bf1044b99ac8b10c72d5699ef0651dd64541e05",
+          "7f81f5c69f79937945a241262d2d10011a0e2db31f15b2cbfa44d077b76eadc1",
+          "ee40cd88ef92efab92807ea1a304bb346e046bb97e4a4cb2bc5d1a7228bb869c",
+          "06e41b296e465b5f5bd14eaa6a2f94d46a47776f2cbd125aa67a56500709be3f",
+          "8ae45f7838c0a1420a20b17f3e06475dd1a0bf7e02347f8fa7e0a65596aaa8fe",
+          "5ba630675a99f5c335a15dfe92bd57566a0753ea6b022a04fdc422e52ff5605f",
+          "3bbca9c86d2ad1ed08fe75b14b21e399958a66690fea6fbe48e4493435992612",
+          "953e75ebc7247a02bcc7c33109437d3b333696e2d064fe1d533117f59f6f9c63",
+          "a1e311d22b43fe4c4000b7033e7fb07f2726dd2f77c126c8232c6e890d0685a6",
+          "7c8deae07180d47ca5a4ddfa143457c9f6c7dd6df125cf635137476438f30d3e",
+          "fbd6d96996e93446d914e31e40d78d924b3ef539530391f93134dfb3fa66a698",
+          "53a2ab2c6e748fa8d715620cc532427c7dd28f66c2552ac95d17d454a8c9a027",
+          "6215f2e6cc1aeca9688ff3dd547e8fa00e0798f0572b73d495b104115bf68f68",
+          "5dde3969ab8c8f5138a282ccad957d2ce722ae1d11e9feca3b0d3cec0ca99326",
+          "97b6441f7ba113f5c9fe7c128b354a99d165704cab35086f105b770aa93e3e88",
+          "b474aae6de48b99d9c0a30860ab4d330b5cc8648fb8f05d44e62e85d7d5db021",
+          "77b5c490061a7662722735fdbf4454a5bd1c8cbdb25a8c4a110e5cf6c918d4e3",
+          "b9adbd6924c7170c98c59ce1a42c813d63a8419d954f22dbb9e03543aa194b14",
+          "8cbeba2af7f7d65dcb9cdbc52a34ffa4556f1d57631fbcfe7ed14b0a69e6865e",
+          "fbdaa846ded45b92e9c2b272b480d655b4a51b266950a77540cc3be349532e96",
+          "86b8400b996d786217eba6ac5a4740b7d79d6c5bc6ef91f94a6d3a2dcf208ee9",
+          "bbf5c8baf00853915f62de6b244ab50b7261ae5c012ce4486dfa6501e9af24db",
+          "1c84d77b9bd67c13dca917d3e67b901956faf059e06e38c07910ad4122199c33",
+          "9898bd79dff531892161b9ae8fb0d1ceff34b36f4f99a0ad52a5e53343d6c3ce",
+          "dafa1177b5a75b2c260aa90b01c4f7453eddb8f02fa47796d1eeda973d9d561b",
+          "7b1f3d4e3a6257b65acdf22d8253cd8b6da423da67966b5980e7b781235a3cb9",
+          "721f0935ab2c9f489d730d794a393b889980be13716047b6e5b68cbe9e93c88b",
+          "0ddb0b1a866417250b7a94aa84507d55e202d7f202b1e6e124c53c05469aab92",
+          "ad2eb828a1490c87e7655d2a88443b8027ca94e57eb2930581f729e4b38696c4",
+          "a96df2caabb7b455893b4bbdbdd7a18385859ef9eb6a2111747562edff71c20c",
+          "7d14c201bf2386ce786fdefd31c697e9ccc42145736c1d014283a218ecba0526",
+          "a23be93cdfd3e468f8ed96fef3110de923f844cebb6909e7263acb1e961338b3",
+          "89a490161fa0d8ad83bd0798af62af8bafc6a6f017cc3e7789aabfd385074dec",
+          "e9b6b46ae02e6ec89b8ad134cd7a746966371930f4ee671364fcd322d95bf903",
+          "67e9c862ec19e845e24b5740c85f45897953e879db84e81fcf57ad3793d0e5ef",
+          "0b9302eba6a69c449823903678f0e92c42cdfe1102fc7e99d3e38d2475be2096",
+          "02178df8dacdda93efd5122531fcd8b80e9f1970a401df0b46706fb638467fc8",
+          "7bc8707ba230ba04d7b08bd48e941cd2652e43d35f76a07c3eb6cbe89f9d7fb9",
+          "fb13b4a410ac248aeca11777218dd8ed56412f993ba91f5b524358aa08dfb4c4",
+          "58559179d2eb0eade76cd8290aa309b9460c005dc390017bd2674daafa2d5172",
+          "235f067413e898afeb56addd7c447418ea2074484265a3fce81ec68fe0cb5688",
+          "704194bc5d0b9e467e83afc0c3eee7029a09858c8a1a62ab396947adf8399d62",
+          "6ce1201d63e4f1bcf485da1bc9d6f691e977e2a334494bca9bb38a82d608303b",
+          "61db61a76ac7d8f09b0f663ef3aaf36ee78e80f87590add10f7d3bf26805129b",
+          "f0f8a6a1a712d42225c206c199625a71e08913801fce45a513fdc37d808debab",
+          "0aa3ba1f5b85eff9af427bed7a4c77e5011f1186f4cdb3dfad35e6cd5a36e494",
+          "1702fec64ed4f78e8f21551548669335559a51f5d144292652b2e64552c872e4",
+          "cbfe1a8e82437df437f0b97810296e4e06756e077e63cde2f381cff842b6712d",
+          "4ccfa8ce422ba5412d9685b09213d0455ed2c3798bd232b9830bd68f6f109d03",
+          "ae47df359ab06ff015216eecd0369c3f880adb9f4d525d01b90f396eadd8aff6",
+          "993088891ae0d0102ac9309d6782b74b33fe2d2b5e25e42a0a5b88099e9b7130",
+          "d0007f1fa7599a84bfecaad6fa63d1da8ded3e6a34048a0549fc9afdb67d5e95",
+          "326b158044fd11da927ab25f29cf6d2911c4064b3cef8f2224858c84978f94d4",
+          "c56fa008b30b300a1f3c153be8bdb144e2bffb97e7fe0a2f8c948eec537ab8b6",
+          "306e043ee2fa299c3183256aad87e67d345642db472ef03df4f85634d402ca8b",
+          "e3fe7182bcc4dc4737be2bc40a80f9eeeeaf984e647664ec6dfa005fb3157672",
+          "662def5336c22a1d2bf4ba906ca5ef8eec45b13fa591aeb3edb0799190ad2567",
+          "48053d564bc51646c0cd7ceab0e48455de7901ff21061efaf09c05887311f35e",
+          "9c7c275b493791dd217bdbeb135f2002961ea33cb8b21bfff631fa11edc52a5f",
+          "ff11295c8a7b6163cd6123e96cb7ed3654ba58ce2c3053e5dcde2503ba8cc7de",
+          "7e9485abd449233ff26a2ccc58f56e59d016be798e7d0c3147ca219d1e689928",
+          "be8878f8a7a4b9ae98439e79c8981854c781e98b3bac54b9a7ddc5457051fb68",
+          "1153e91de3163d024fdefbc596c7514f48b9bce59ec02708b4a183d9bc2753d8",
+          "077cc32f6c4c5a1de613c22d54bee5f052893a02dd44f6fc7c3aa686a924aa8c",
+          "8b1d97f3fa5ad72976feaa2546f2b224ece7081b9a8dd9ebcc528acebb7bd887",
+          "62c2689ee23d415429b084fd72b7812d8243fb057c3260b35663f6ff810df5be",
+          "d275520cef96f7d95c1253cf3cdcadbe8a9f02a08db227ac9ea71da22a784469",
+          "beb4fa7e38ae4d2b538657e02b9477af61e0b9f7766037bb24adbc58cfc14d09",
+          "ee0fbfb17cc40ce0c93212e9a35414cc554d737bbfbf40533ad586885206d32d",
+          "8b5ae6450fc26e331ee0e9bad9749ffeb9404584f1a32e98d4fac0f5c25e582e",
+          "ac12c2f53eed6c730f52c298f56322c459b35d98b5762141350232767da8cc1b",
+          "2c7eadba10ecbc24658bc562cea67ccdb4281e334215e6b69a490c2dacd7d34c",
+          "ae18fa793aecfc387bae6650ddc1e4a3ce9546c7654cacaf1dd62f812d9dd944",
+          "9bb81d9e65173a7d777b43e37ea6199b06ccc49bb25ce6e33c0f637ae18dcc14",
+          "acde7572dda787e40b130dd953b3a67bec02c1a4f1885aec18f2518a4e75f58a",
+          "115d3abc2e53482af3727ce23b345b0cb08c1e390a44580e12f42b7f2923f029",
+          "94948648a7c593aeb799a4e1b7f884cd5b267368867bed0fe8d00f40ba507d84",
+          "21215ab1705e38ed47e82a4e9ff90a063e0aa96c192051c0391f14ea586f6e81",
+          "b0ea6b312910439f6ba94a8eef326f37c1e0e293561aa13137fe5d22825187a8",
+          "3905eb50af42808f6810d6abbb7c566a5ecb502d1f0176be4c73006040440597",
+          "605aef0524116fe7c8d57bc510dcf2dbaf79ffd6749903d241d9adeb772b9568",
+          "099b948fdc7816cbddddc119a16f74e8255a0b0e0ad515a5e98a070fbf5f306d",
+          "1727e60997c0ff6847347256751e4d6f62780edd0c7cda06dca085d15159e7e4",
+          "3bf054f392ea57e0051053e54d877dfbfb36dbab9a6191bcc389c624adc8b680",
+          "c775d30b685c81d7d4024a8fc5833490420d1af0a9fadef0d83348704d58d4e9"
+        ],
+        "session": "/tmp/agent-interface-events-68a9nysa/events.sock"
+      },
+      "format": "durable-submit-v4",
+      "last_resolution": {
+        "request_id": "b105a460f3b745cb85b4cee4b6ba72ee",
+        "terminal": {
+          "event": "terminal",
+          "id": "durable-6526ad435b14410f9370699536cbcd61",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 3,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 12832858943545,
+            "valid_until_ns": 12861611118647
+          },
+          "terminal_ns": 12832858986420,
+          "semantic_completion": "program status only; task scoring is separate",
+          "emitted_ns": 12832858988703
+        },
+        "authority": "none"
+      },
+      "pending": null
+    }
+  },
+  "returned_ns": 12832905363155
+}

@@ -1,0 +1,55 @@
+{
+  "authority_granted": false,
+  "cleanup_error": null,
+  "diagnostic": "BACKEND_EXECUTION_FAILED",
+  "lifecycle": [
+    "dispatch"
+  ],
+  "native_status": "execution_failed",
+  "partial_effects": [],
+  "program_completed": false,
+  "raw_dispatch": {
+    "result": {
+      "admission": "accepted",
+      "error": "BACKEND_EXECUTION_FAILED",
+      "execution": {
+        "completed_ops": [],
+        "emissions": 0,
+        "ended_ns": 24081129757916,
+        "error": "X11BackendError('focus verification failed')",
+        "failed_op": 0,
+        "failed_op_effect": "unknown; may have emitted partial input",
+        "observations": [],
+        "program_emissions": 0,
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [],
+            "monotonic_ns": 24081129756999,
+            "verified": true
+          }
+        ],
+        "started_ns": 24081129371825
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "capture.frame",
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "status": "execution_failed"
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "returned"
+  },
+  "schema": "golden-v3-result-v2",
+  "status": "partial",
+  "task_success": null,
+  "usage": {}
+}

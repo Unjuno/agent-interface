@@ -1,0 +1,222 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "partial",
+      "before_bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "after_bbox": [
+        616,
+        373,
+        663,
+        408
+      ],
+      "observed_visual_delta": [
+        20,
+        0
+      ],
+      "postcondition": {
+        "event": "local_displacement_postcondition",
+        "id": "partial",
+        "step": 3,
+        "sequence": 9,
+        "format": "local-displacement-postcondition-outcome-v1",
+        "postcondition_id": "red-rectangle-right-24px",
+        "reason": "target_not_reached",
+        "continue_program": false,
+        "needs_decision": true,
+        "target_delta": [
+          24,
+          0
+        ],
+        "tolerance_px": 1,
+        "tracking": [
+          {
+            "status": "matched",
+            "error": 0.0,
+            "margin": 0.049166666666666664,
+            "source_observation": 1,
+            "observation": 8,
+            "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+            "patch_sha256": "f558da9a5b9b12e71ef6e713fe8053510d261afad353c315f6aa4efc8ac55a02",
+            "box": [
+              610,
+              367,
+              60,
+              48
+            ],
+            "delta": [
+              20,
+              0
+            ]
+          },
+          {
+            "status": "matched",
+            "error": 0.0,
+            "margin": 0.049166666666666664,
+            "source_observation": 1,
+            "observation": 9,
+            "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+            "patch_sha256": "f558da9a5b9b12e71ef6e713fe8053510d261afad353c315f6aa4efc8ac55a02",
+            "box": [
+              610,
+              367,
+              60,
+              48
+            ],
+            "delta": [
+              20,
+              0
+            ]
+          }
+        ],
+        "sample_span_ms": 89.945885,
+        "semantic_effect_verified": false,
+        "task_success_verified": false,
+        "grants_input_authority": false,
+        "scope": "task-relative visual condition for already admitted later steps only"
+      },
+      "postcondition_event_count": 1,
+      "terminal": {
+        "event": "terminal",
+        "id": "partial",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 3,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 28885111445449,
+          "valid_until_ns": 28889885970846
+        },
+        "terminal_ns": 28885111484269,
+        "semantic_completion": "program status only; task scoring is separate"
+      },
+      "steps_started": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "save_started": false,
+      "owner_focus_release": false
+    },
+    {
+      "name": "target",
+      "before_bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "after_bbox": [
+        620,
+        373,
+        667,
+        408
+      ],
+      "observed_visual_delta": [
+        24,
+        0
+      ],
+      "postcondition": {
+        "event": "local_displacement_postcondition",
+        "id": "target",
+        "step": 3,
+        "sequence": 9,
+        "format": "local-displacement-postcondition-outcome-v1",
+        "postcondition_id": "red-rectangle-right-24px",
+        "reason": "met",
+        "continue_program": true,
+        "needs_decision": false,
+        "target_delta": [
+          24,
+          0
+        ],
+        "tolerance_px": 1,
+        "tracking": [
+          {
+            "status": "matched",
+            "error": 0.0,
+            "margin": 0.049166666666666664,
+            "source_observation": 1,
+            "observation": 8,
+            "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+            "patch_sha256": "f558da9a5b9b12e71ef6e713fe8053510d261afad353c315f6aa4efc8ac55a02",
+            "box": [
+              614,
+              367,
+              60,
+              48
+            ],
+            "delta": [
+              24,
+              0
+            ]
+          },
+          {
+            "status": "matched",
+            "error": 0.0,
+            "margin": 0.049166666666666664,
+            "source_observation": 1,
+            "observation": 9,
+            "frame_id": "{\"focus\": 6291464, \"geometry\": [0, 19, 1280, 781], \"surface\": 6291463}",
+            "patch_sha256": "f558da9a5b9b12e71ef6e713fe8053510d261afad353c315f6aa4efc8ac55a02",
+            "box": [
+              614,
+              367,
+              60,
+              48
+            ],
+            "delta": [
+              24,
+              0
+            ]
+          }
+        ],
+        "sample_span_ms": 98.412749,
+        "semantic_effect_verified": false,
+        "task_success_verified": false,
+        "grants_input_authority": false,
+        "scope": "task-relative visual condition for already admitted later steps only"
+      },
+      "postcondition_event_count": 1,
+      "terminal": {
+        "event": "terminal",
+        "id": "target",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 5,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 28889055295777,
+          "valid_until_ns": 28893726283964
+        },
+        "terminal_ns": 28889055344120,
+        "semantic_completion": "program status only; task scoring is separate"
+      },
+      "steps_started": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "save_started": true,
+      "owner_focus_release": false
+    }
+  ],
+  "decision": "RETAIN_UNCHANGED_REPLICATION;_ASSESS_SCOPED_PROMOTION",
+  "scope": "second fresh same-task pair for the unchanged first Luna-authored patch; scripted pointer paths; no live model call, speed, token, cross-domain or generalization claim"
+}

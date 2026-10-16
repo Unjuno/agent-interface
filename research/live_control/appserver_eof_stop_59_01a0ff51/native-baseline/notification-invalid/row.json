@@ -1,0 +1,104 @@
+{
+  "api": "notification",
+  "caller_alive_final": false,
+  "checkpoint": {
+    "caller_alive": false,
+    "frames": [],
+    "process_exit": 0,
+    "reader_alive": false,
+    "returned": {
+      "message": "'utf-8' codec can't decode byte 0xff in position 20: invalid start byte",
+      "type": "UnicodeDecodeError"
+    },
+    "stdout_closed": true
+  },
+  "client_close_pipes": {
+    "stderr": false,
+    "stdin": false,
+    "stdout": false
+  },
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/src/peer.py.txt",
+    "notification",
+    "invalid",
+    "/out/native-baseline/notification-invalid"
+  ],
+  "events": [
+    {
+      "kind": "child_ready",
+      "ns": 22491880697539
+    },
+    {
+      "kind": "call_started",
+      "ns": 22491880808290
+    },
+    {
+      "kind": "call_ended",
+      "ns": 22491882827093
+    },
+    {
+      "kind": "stdout_eof_observed",
+      "ns": 22491884516768
+    },
+    {
+      "kind": "checkpoint",
+      "ns": 22492135310859
+    },
+    {
+      "kind": "child_reaped",
+      "ns": 22492135410526
+    },
+    {
+      "kind": "client_close_returned",
+      "ns": 22492135485402
+    },
+    {
+      "kind": "driver_pipes_closed",
+      "ns": 22492135572986
+    }
+  ],
+  "final": {
+    "caller_alive": false,
+    "journal_closed": true,
+    "pipes_closed": {
+      "stderr": true,
+      "stdin": true,
+      "stdout": true
+    },
+    "reader_alive": false
+  },
+  "finished": {
+    "owned_release_received": false,
+    "pid": 29
+  },
+  "identity": "notification-invalid",
+  "journal": [],
+  "journal_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "native_exit": 0,
+  "pid": 29,
+  "ready": {
+    "api": "notification",
+    "pid": 29,
+    "scenario": "invalid"
+  },
+  "returned": {
+    "message": "'utf-8' codec can't decode byte 0xff in position 20: invalid start byte",
+    "type": "UnicodeDecodeError"
+  },
+  "scenario": "invalid",
+  "stderr_remaining_hex": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/src/driver.py.txt\", line 68, in invoke\n    if api == 'request' else client.wait_notification(\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/baseline_client.py.txt\", line 101, in wait_notification\n    detail = self.process.stderr.read().strip()\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen codecs>\", line 322, in decode\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 20: invalid start byte\n",
+  "wire": {
+    "api": "notification",
+    "pid": 29,
+    "request_line": null,
+    "scenario": "invalid",
+    "stderr_hex": "696e76616c696420646961676e6f737469633a20fffe0a",
+    "stderr_write_count": 23,
+    "stdout_closed_ns": 22491882340507,
+    "stdout_hex": "",
+    "stdout_write_count": 0
+  }
+}

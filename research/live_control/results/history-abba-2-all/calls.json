@@ -1,0 +1,3562 @@
+[
+  {
+    "begin_ns": 41664774023,
+    "end_ns": 41699756635,
+    "result": {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "e167c24adecc44689a297f6072dd16d5"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "e167c24adecc44689a297f6072dd16d5"
+            },
+            "received_ns": 41673342344,
+            "emit_started_ns": 41673346708
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 41678526466,
+            "sequence": 1,
+            "emit_started_ns": 41678530319
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 41691346268,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "e167c24adecc44689a297f6072dd16d5",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "e167c24adecc44689a297f6072dd16d5": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 41678526466,
+                "sequence": 1,
+                "emit_started_ns": 41678530319
+              },
+              "echo_cursor": 3,
+              "record_cursor": 4
+            }
+          },
+          "cursor": 4,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 3.846339,
+            "capture_ns": 32858932851,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "context_ns": 32863811612,
+            "emit_started_ns": 32915498021,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "initial",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/001.png",
+            "image_prepare_ns": 30598441,
+            "image_ready_ns": 32909564636,
+            "image_reused": false,
+            "input_focus_after": 8389124,
+            "input_focus_before": 8389124,
+            "input_state_after": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8389124,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "revision": 0,
+              "sample_finished_ns": 32915463864,
+              "sample_started_ns": 32915239866
+            },
+            "input_state_before": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8389124,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "revision": 0,
+              "sample_finished_ns": 32853967007,
+              "sample_started_ns": 32853421333
+            },
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "owner_revision_unchanged": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ],
+              "surface": 8389124
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ],
+              "surface": 8389124
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ],
+              "surface": 8389124
+            },
+            "semantic_completion": "unknown",
+            "sequence": 1,
+            "step": 0,
+            "wire_bytes": 80427
+          },
+          "observation_cursor": 2,
+          "pending_clock": null,
+          "record_hashes": [
+            "db2f06e7b20216ce8549b1f827638bab609a2040ec3085b48c807de6395d4b23",
+            "393079db55c9b0d9dc397b473b8d73cc83ad39c7ba7cb2cd738e2acf8f2607c2",
+            "f8d400072871adfa08fafc2d8b5d9e6b1da6d5fa22e27034f1a0725aa66afab0",
+            "8739dc5e8869b04b81bbaa4248dc8a93ac25b1f59b22f94020d9644dcd3996e0"
+          ],
+          "session": "/tmp/agent-interface-events-f5mucioa/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "e167c24adecc44689a297f6072dd16d5",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 41678526466,
+            "sequence": 1,
+            "emit_started_ns": 41678530319
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 41713246836,
+    "end_ns": 41814634121,
+    "result": {
+      "request": {
+        "after": 4,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 3,
+        "action_id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 1,
+          "valid_until_ns": 71678526466,
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "id": "durable-ca61ace518ad4420a14e6d0fe1594c57"
+        },
+        "request_id": "ba14918b3b724ab3844fd28f878442a1"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "ba14918b3b724ab3844fd28f878442a1",
+              "valid_until_ns": 71678526466
+            },
+            "received_ns": 41722493366,
+            "emit_started_ns": 41722496383
+          },
+          {
+            "event": "accepted",
+            "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+            "steps": 1,
+            "valid_until_ns": 71678526466,
+            "accepted_ns": 41728486798,
+            "emit_started_ns": 41728488401
+          },
+          {
+            "event": "step_started",
+            "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+            "step": 0,
+            "operation": "observe",
+            "issued_ns": 41740439747,
+            "emit_started_ns": 41740441714
+          },
+          {
+            "event": "observation",
+            "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 41759579540,
+            "context_ns": 41765610595,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/001.png",
+            "image_reused": true,
+            "image_prepare_ns": 1301120,
+            "image_ready_ns": 41773867251,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 9.353116,
+            "wire_bytes": 316,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 0,
+              "sample_started_ns": 41749223102,
+              "sample_finished_ns": 41749591731,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 0,
+              "sample_started_ns": 41777966306,
+              "sample_finished_ns": 41778232137,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 41778267283
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+            "step": 0,
+            "completed_ns": 41783247142,
+            "emit_started_ns": 41783254868
+          },
+          {
+            "event": "terminal",
+            "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 41794398209,
+              "valid_until_ns": null
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 41794518195,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 41794521896
+          }
+        ],
+        "cursor": 10,
+        "returned_ns": 41806097871,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "ba14918b3b724ab3844fd28f878442a1",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "e167c24adecc44689a297f6072dd16d5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 41678530319,
+                "event": "clock",
+                "runtime_ns": 41678526466,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            }
+          },
+          "cursor": 10,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 41759579540,
+            "context_ns": 41765610595,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/001.png",
+            "image_reused": true,
+            "image_prepare_ns": 1301120,
+            "image_ready_ns": 41773867251,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 9.353116,
+            "wire_bytes": 316,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 0,
+              "sample_started_ns": 41749223102,
+              "sample_finished_ns": 41749591731,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 0,
+              "sample_started_ns": 41777966306,
+              "sample_finished_ns": 41778232137,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 41778267283
+          },
+          "observation_cursor": 8,
+          "pending_clock": null,
+          "record_hashes": [
+            "db2f06e7b20216ce8549b1f827638bab609a2040ec3085b48c807de6395d4b23",
+            "393079db55c9b0d9dc397b473b8d73cc83ad39c7ba7cb2cd738e2acf8f2607c2",
+            "f8d400072871adfa08fafc2d8b5d9e6b1da6d5fa22e27034f1a0725aa66afab0",
+            "8739dc5e8869b04b81bbaa4248dc8a93ac25b1f59b22f94020d9644dcd3996e0",
+            "99780374ed4766c65a74a0f195b4c0173b87b8fe9e1f895b5dd70b96c08e1c0d",
+            "523cb7d20ae8820ec7814cea0e55e299af43a1c99243c29d17fa842825c9d290",
+            "3b83082535296d48ce882dc582231fb7a1489f15e8ec1cb99d5acbe8212932c6",
+            "077553cdff18e35cbc1bc1ee7434188639edc45fca6b36128c1c6f912347e935",
+            "8e60e0ab36365ee0b8e29bf55960467ba2853e283866757505786475a459e796",
+            "10cff8534cda9f9d1a3dde453d7ddca227123990414cd92aec5eb02a3b34daa7"
+          ],
+          "session": "/tmp/agent-interface-events-f5mucioa/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "ba14918b3b724ab3844fd28f878442a1",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 41794398209,
+              "valid_until_ns": null
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 41794518195,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 41794521896
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 41830373518,
+    "end_ns": 41865608316,
+    "result": {
+      "request": {
+        "after": 10,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "5099fe76ff4f4a21ae2a57dadf0f8909"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "5099fe76ff4f4a21ae2a57dadf0f8909"
+            },
+            "received_ns": 41839761776,
+            "emit_started_ns": 41839765171
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 41845447230,
+            "sequence": 2,
+            "emit_started_ns": 41845452522
+          }
+        ],
+        "cursor": 12,
+        "returned_ns": 41857407525,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "5099fe76ff4f4a21ae2a57dadf0f8909",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "e167c24adecc44689a297f6072dd16d5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 41678530319,
+                "event": "clock",
+                "runtime_ns": 41678526466,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "5099fe76ff4f4a21ae2a57dadf0f8909": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 41845447230,
+                "sequence": 2,
+                "emit_started_ns": 41845452522
+              },
+              "echo_cursor": 11,
+              "record_cursor": 12
+            }
+          },
+          "cursor": 12,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 9.353116,
+            "capture_ns": 41759579540,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "context_ns": 41765610595,
+            "emit_started_ns": 41778267283,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-ca61ace518ad4420a14e6d0fe1594c57",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/001.png",
+            "image_prepare_ns": 1301120,
+            "image_ready_ns": 41773867251,
+            "image_reused": true,
+            "input_focus_after": 8389124,
+            "input_focus_before": 8389124,
+            "input_state_after": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8389124,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "revision": 0,
+              "sample_finished_ns": 41778232137,
+              "sample_started_ns": 41777966306
+            },
+            "input_state_before": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8389124,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "revision": 0,
+              "sample_finished_ns": 41749591731,
+              "sample_started_ns": 41749223102
+            },
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "owner_revision_unchanged": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ],
+              "surface": 8389124
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ],
+              "surface": 8389124
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ],
+              "surface": 8389124
+            },
+            "semantic_completion": "unknown",
+            "sequence": 2,
+            "step": 0,
+            "wire_bytes": 316
+          },
+          "observation_cursor": 8,
+          "pending_clock": null,
+          "record_hashes": [
+            "db2f06e7b20216ce8549b1f827638bab609a2040ec3085b48c807de6395d4b23",
+            "393079db55c9b0d9dc397b473b8d73cc83ad39c7ba7cb2cd738e2acf8f2607c2",
+            "f8d400072871adfa08fafc2d8b5d9e6b1da6d5fa22e27034f1a0725aa66afab0",
+            "8739dc5e8869b04b81bbaa4248dc8a93ac25b1f59b22f94020d9644dcd3996e0",
+            "99780374ed4766c65a74a0f195b4c0173b87b8fe9e1f895b5dd70b96c08e1c0d",
+            "523cb7d20ae8820ec7814cea0e55e299af43a1c99243c29d17fa842825c9d290",
+            "3b83082535296d48ce882dc582231fb7a1489f15e8ec1cb99d5acbe8212932c6",
+            "077553cdff18e35cbc1bc1ee7434188639edc45fca6b36128c1c6f912347e935",
+            "8e60e0ab36365ee0b8e29bf55960467ba2853e283866757505786475a459e796",
+            "10cff8534cda9f9d1a3dde453d7ddca227123990414cd92aec5eb02a3b34daa7",
+            "0b02b4337daa246b0b78e2521e167d51eb88999aebaa832bc82fd12606035a71",
+            "9ca95031097745e8b6c568e304f3b046cdf67212619381828d6e9fe7e3862784"
+          ],
+          "session": "/tmp/agent-interface-events-f5mucioa/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "5099fe76ff4f4a21ae2a57dadf0f8909",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 41845447230,
+            "sequence": 2,
+            "emit_started_ns": 41845452522
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 41880218500,
+    "end_ns": 42889246708,
+    "result": {
+      "request": {
+        "after": 12,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 3,
+        "action_id": "durable-18b53b41cb43436db372ab7d3b71524a",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 2,
+          "valid_until_ns": 71845447230,
+          "steps": [
+            {
+              "op": "pointer_click",
+              "x": 79,
+              "y": 190,
+              "duration_ms": 80
+            },
+            {
+              "op": "text",
+              "text": "480"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "text",
+              "text": "192"
+            },
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "s"
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "id": "durable-18b53b41cb43436db372ab7d3b71524a"
+        },
+        "request_id": "6aeede698de0437a84620417400d5451"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 2,
+              "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+              "op": "submit",
+              "steps": [
+                {
+                  "duration_ms": 80,
+                  "op": "pointer_click",
+                  "x": 79,
+                  "y": 190
+                },
+                {
+                  "op": "text",
+                  "text": "480"
+                },
+                {
+                  "key": "Return",
+                  "op": "key"
+                },
+                {
+                  "op": "text",
+                  "text": "192"
+                },
+                {
+                  "key": "s",
+                  "modifier": "Control_L",
+                  "op": "chord"
+                },
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "6aeede698de0437a84620417400d5451",
+              "valid_until_ns": 71845447230
+            },
+            "received_ns": 41889956337,
+            "emit_started_ns": 41889959746
+          },
+          {
+            "event": "accepted",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "steps": 6,
+            "valid_until_ns": 71845447230,
+            "accepted_ns": 41896331877,
+            "emit_started_ns": 41896333931
+          },
+          {
+            "event": "step_started",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 0,
+            "operation": "pointer_click",
+            "issued_ns": 41907251464,
+            "emit_started_ns": 41907253460
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "move",
+            "payload": {
+              "x": 79,
+              "y": 190
+            },
+            "admitted_ns": 41920617420,
+            "input_ack_ns": 41920818388,
+            "valid_until_ns": 71845447230,
+            "surface": 8389124,
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 0,
+            "emit_started_ns": 41920946452
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "button_down",
+            "payload": 1,
+            "admitted_ns": 41931248239,
+            "input_ack_ns": 41931414296,
+            "valid_until_ns": 71845447230,
+            "surface": 8389124,
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 0,
+            "emit_started_ns": 41931491502
+          },
+          {
+            "event": "observation",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 0,
+            "sequence": 3,
+            "capture_ns": 42029908363,
+            "context_ns": 42034093923,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/003.png",
+            "image_reused": false,
+            "image_prepare_ns": 27704576,
+            "image_ready_ns": 42077768592,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 5.450797,
+            "wire_bytes": 574,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 4,
+              "sample_started_ns": 42023269752,
+              "sample_finished_ns": 42023456246,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": 71845447230,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 4,
+              "sample_started_ns": 42082861313,
+              "sample_finished_ns": 42083037795,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": 71845447230,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 42083091575
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 0,
+            "completed_ns": 42088900106,
+            "emit_started_ns": 42088901272
+          },
+          {
+            "event": "step_started",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 1,
+            "operation": "text",
+            "issued_ns": 42101620558,
+            "emit_started_ns": 42101623711
+          },
+          {
+            "event": "input_admission",
+            "key": "4",
+            "admitted_ns": 42113415762,
+            "input_ack_ns": 42113781950,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42113935682
+          },
+          {
+            "event": "input_admission",
+            "key": "8",
+            "admitted_ns": 42128801733,
+            "input_ack_ns": 42129004233,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42129075951
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 42140698815,
+            "input_ack_ns": 42141038983,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42141107026
+          },
+          {
+            "event": "observation",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 1,
+            "sequence": 4,
+            "capture_ns": 42153127732,
+            "context_ns": 42157926450,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/004.png",
+            "image_reused": false,
+            "image_prepare_ns": 24964735,
+            "image_ready_ns": 42197729501,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 4.013614,
+            "wire_bytes": 3083,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 10,
+              "sample_started_ns": 42148314298,
+              "sample_finished_ns": 42148472073,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": 71845447230,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 10,
+              "sample_started_ns": 42205300993,
+              "sample_finished_ns": 42205579219,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": 71845447230,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 42205645474
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 1,
+            "completed_ns": 42210732274,
+            "emit_started_ns": 42210733667
+          },
+          {
+            "event": "step_started",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 2,
+            "operation": "key",
+            "issued_ns": 42222803995,
+            "emit_started_ns": 42222806679
+          },
+          {
+            "event": "input_admission",
+            "key": "Return",
+            "admitted_ns": 42232826651,
+            "input_ack_ns": 42233011930,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42233152130
+          },
+          {
+            "event": "observation",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 2,
+            "sequence": 5,
+            "capture_ns": 42250108198,
+            "context_ns": 42256622392,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/005.png",
+            "image_reused": false,
+            "image_prepare_ns": 25483441,
+            "image_ready_ns": 42298411727,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 3.42993,
+            "wire_bytes": 4794,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 12,
+              "sample_started_ns": 42245225348,
+              "sample_finished_ns": 42245505841,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": 71845447230,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 12,
+              "sample_started_ns": 42305950514,
+              "sample_finished_ns": 42306143499,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": 71845447230,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 42306200617
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 2,
+            "completed_ns": 42311481942,
+            "emit_started_ns": 42311484082
+          },
+          {
+            "event": "step_started",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 3,
+            "operation": "text",
+            "issued_ns": 42322187536,
+            "emit_started_ns": 42322192296
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 42333085018,
+            "input_ack_ns": 42333274053,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42333349419
+          },
+          {
+            "event": "input_admission",
+            "key": "9",
+            "admitted_ns": 42346153758,
+            "input_ack_ns": 42346310785,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42346373743
+          },
+          {
+            "event": "input_admission",
+            "key": "2",
+            "admitted_ns": 42357995316,
+            "input_ack_ns": 42358153849,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42358255506
+          },
+          {
+            "event": "observation",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 3,
+            "sequence": 6,
+            "capture_ns": 42372521072,
+            "context_ns": 42376840778,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/006.png",
+            "image_reused": false,
+            "image_prepare_ns": 26734498,
+            "image_ready_ns": 42421557227,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 5.149568,
+            "wire_bytes": 8007,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 18,
+              "sample_started_ns": 42366534737,
+              "sample_finished_ns": 42366708221,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": 71845447230,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 18,
+              "sample_started_ns": 42471347493,
+              "sample_finished_ns": 42471546518,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": 71845447230,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 42471608912
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 3,
+            "completed_ns": 42514502712,
+            "emit_started_ns": 42514505417
+          },
+          {
+            "event": "step_started",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 4,
+            "operation": "chord",
+            "issued_ns": 42528132533,
+            "emit_started_ns": 42528135329
+          },
+          {
+            "event": "input_admission",
+            "key": "Control_L",
+            "admitted_ns": 42539734438,
+            "input_ack_ns": 42539949692,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42539997111
+          },
+          {
+            "event": "input_admission",
+            "key": "s",
+            "admitted_ns": 42553362116,
+            "input_ack_ns": 42553686006,
+            "valid_until_ns": 71845447230,
+            "emit_started_ns": 42553810253
+          },
+          {
+            "event": "input_stopped",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "decision_reason": "focus_changed",
+            "interruption": {
+              "intent_token": "d954a619707c4b31a7c6591b457a52ef",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 42571039232,
+                "valid_until_ns": 71845447230
+              }
+            },
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 42576489036,
+              "valid_until_ns": null
+            },
+            "stopped_ns": 42576558902,
+            "followup": "two passive observations; terminal follows; no further program steps",
+            "emit_started_ns": 42576562253
+          },
+          {
+            "event": "observation",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 4,
+            "sequence": 7,
+            "capture_ns": 42678933599,
+            "context_ns": 42686419087,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800849  0 HPLaptop Confirm File Format\n"
+              ],
+              [
+                "active_window",
+                8390729
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/007.png",
+            "image_reused": false,
+            "image_prepare_ns": 28688719,
+            "image_ready_ns": 42737772551,
+            "input_focus_before": 8390729,
+            "input_focus_after": 8390729,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "capture_ms": 3.763119,
+            "wire_bytes": 45203,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 42673599627,
+              "sample_finished_ns": 42673963906,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 42744840489,
+              "sample_finished_ns": 42745200003,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 42745292609
+          },
+          {
+            "event": "observation",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 4,
+            "sequence": 8,
+            "capture_ns": 42840105492,
+            "context_ns": 42845462391,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800849  0 HPLaptop Confirm File Format\n"
+              ],
+              [
+                "active_window",
+                8390729
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/007.png",
+            "image_reused": true,
+            "image_prepare_ns": 2468506,
+            "image_ready_ns": 42853640045,
+            "input_focus_before": 8390729,
+            "input_focus_after": 8390729,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "capture_ms": 5.675959,
+            "wire_bytes": 360,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 42832948134,
+              "sample_finished_ns": 42833441442,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 42860855133,
+              "sample_finished_ns": 42861492143,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 42861581757
+          },
+          {
+            "event": "terminal",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "status": "needs_decision",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 42576489036,
+              "valid_until_ns": null
+            },
+            "interruption": {
+              "intent_token": "d954a619707c4b31a7c6591b457a52ef",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 42571039232,
+                "valid_until_ns": 71845447230
+              }
+            },
+            "decision_reason": "focus_changed",
+            "post_release_observation": {
+              "captures": 2,
+              "sequences": [
+                7,
+                8
+              ],
+              "equal_sample_pair": true,
+              "error": null,
+              "stopped": false,
+              "authority": "none; no input or lease renewal",
+              "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+              "elapsed_ms": 274.2027
+            },
+            "terminal_ns": 42867583600,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 42867586991
+          }
+        ],
+        "cursor": 42,
+        "returned_ns": 42879600712,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "6aeede698de0437a84620417400d5451",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "5099fe76ff4f4a21ae2a57dadf0f8909": {
+              "echo_cursor": 11,
+              "record": {
+                "emit_started_ns": 41845452522,
+                "event": "clock",
+                "runtime_ns": 41845447230,
+                "sequence": 2
+              },
+              "record_cursor": 12
+            },
+            "e167c24adecc44689a297f6072dd16d5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 41678530319,
+                "event": "clock",
+                "runtime_ns": 41678526466,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            }
+          },
+          "cursor": 42,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "step": 4,
+            "sequence": 8,
+            "capture_ns": 42840105492,
+            "context_ns": 42845462391,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800849  0 HPLaptop Confirm File Format\n"
+              ],
+              [
+                "active_window",
+                8390729
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/007.png",
+            "image_reused": true,
+            "image_prepare_ns": 2468506,
+            "image_ready_ns": 42853640045,
+            "input_focus_before": 8390729,
+            "input_focus_after": 8390729,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "capture_ms": 5.675959,
+            "wire_bytes": 360,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 42832948134,
+              "sample_finished_ns": 42833441442,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 42860855133,
+              "sample_finished_ns": 42861492143,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 42861581757
+          },
+          "observation_cursor": 41,
+          "pending_clock": null,
+          "record_hashes": [
+            "db2f06e7b20216ce8549b1f827638bab609a2040ec3085b48c807de6395d4b23",
+            "393079db55c9b0d9dc397b473b8d73cc83ad39c7ba7cb2cd738e2acf8f2607c2",
+            "f8d400072871adfa08fafc2d8b5d9e6b1da6d5fa22e27034f1a0725aa66afab0",
+            "8739dc5e8869b04b81bbaa4248dc8a93ac25b1f59b22f94020d9644dcd3996e0",
+            "99780374ed4766c65a74a0f195b4c0173b87b8fe9e1f895b5dd70b96c08e1c0d",
+            "523cb7d20ae8820ec7814cea0e55e299af43a1c99243c29d17fa842825c9d290",
+            "3b83082535296d48ce882dc582231fb7a1489f15e8ec1cb99d5acbe8212932c6",
+            "077553cdff18e35cbc1bc1ee7434188639edc45fca6b36128c1c6f912347e935",
+            "8e60e0ab36365ee0b8e29bf55960467ba2853e283866757505786475a459e796",
+            "10cff8534cda9f9d1a3dde453d7ddca227123990414cd92aec5eb02a3b34daa7",
+            "0b02b4337daa246b0b78e2521e167d51eb88999aebaa832bc82fd12606035a71",
+            "9ca95031097745e8b6c568e304f3b046cdf67212619381828d6e9fe7e3862784",
+            "a382ff21c8f8dd793a53d19e291954ce28d418a0f0a00aff969fa79f3696ab68",
+            "db7bee94e4fa5360a818b050f854f75e26cd4566cedee5c2725010e688b411d8",
+            "a39a557e0774dc750829261394c5111cb7b8cded6e746498eae002a00d1faae0",
+            "0edfe14483bb0cc8f9c97ea3dec6f3dbe1b874f90bd5c9a86ae3157fa8f6377c",
+            "8dd8525d93bfd107e3ca283a9a83cc0ee17d94b121f928e27a4eef6e0ca2a03f",
+            "e46b176c39486181ec0b9275c7071489fa18a356a403f8970c8dc60d5a83b7a4",
+            "0802c45f7eed4ba68176194031e51cb87e309df9122439376ffa0f4b1a5062e6",
+            "a164c2721f6b6474fa78cfa7c04b8d09ef581ac3130cafd33bf2daf46928e6e8",
+            "09545e0a01430ace4c3a99b639041038371ad01d7a814490f63ed9ee43cfff04",
+            "03cdb9538be4c3b817c68b29e15edcbdf15f3d8a05c12bf0447dac6dae62cc32",
+            "3b61e716767be3405f04ae0e8aae02dbf0e805aa75d28bbdd3525cb2a0e51374",
+            "a0a9f6824c01f911569f9dd5facdf982af9f446e06adf3af57dd5fb15caffef6",
+            "15e4a19a8938f4225de9c271dad62d87ee6437c0fbe158595e8c6e3611df59a6",
+            "6b34e09d2f3614638233dfcc58550133eedcb45735f0e40780f6d7870b243c14",
+            "fcfd27f94fada41027aefba6baecd1936d8376e9c7264b1e5f2aa94b46cb81e5",
+            "2e681de591effdc2b2c998b7580eb56e4f8c3cfa4881c61e04ff73487ba22d39",
+            "1dfe3392da4bd67514b801bd9b19ff26d0334c0fc47a4c79e4038b002fcd5171",
+            "efaa99fd30a18adffe8ee7e83c860a0e15441940e3682c8e2a7b4be2c970eaa9",
+            "767e15e687335d6dd9ecc3fe72acfed3a7d9224461873a859ea35b302392a708",
+            "9d3e8c0a472857b8b098d7385d36c514955cbd8819334666e3b859d3f5a5e68a",
+            "4cc72c9ffd0ddc079ef3fc3f1fa15bece57aaf793ed095c0eb22f0d0593cc7a0",
+            "2960a81887335867b6a8bcf951a1923b405a67572686908e61545ba6b3f14f2f",
+            "32746719ec82cad11b2c5a273a81c9bb54f5021918e06822339ec2750623af98",
+            "3edefaa948b299a0e41c4e9d56159ea455cf3302fb14f33e1ea28669bd91bbd9",
+            "064e67b226144e3076e18b0fcc956c2e6f205155a4f5e5ed5167f4d381f3076e",
+            "e8360e256dee8ac408abcc6c63e5e39a66eea02899bcb6ff743ef5fd0c516d38",
+            "f518e9b85aa13e18eb267b46384fad958fb7fa219da50b32d1102e673fedec9c",
+            "c9d9a4dd71d15032e26a847c9922dd7a9cdbea28f83cfbfeecea895797d2dd6f",
+            "b7abab30900e6537cde6c682bfc9d1383d1f479bee35950730f4f448cf5943b2",
+            "22bdfce7352bd4928c4b9d7c353fb986a2b00cd3d787022f45175a43b38a2b7d"
+          ],
+          "session": "/tmp/agent-interface-events-f5mucioa/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "6aeede698de0437a84620417400d5451",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "status": "needs_decision",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 42576489036,
+              "valid_until_ns": null
+            },
+            "interruption": {
+              "intent_token": "d954a619707c4b31a7c6591b457a52ef",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 42571039232,
+                "valid_until_ns": 71845447230
+              }
+            },
+            "decision_reason": "focus_changed",
+            "post_release_observation": {
+              "captures": 2,
+              "sequences": [
+                7,
+                8
+              ],
+              "equal_sample_pair": true,
+              "error": null,
+              "stopped": false,
+              "authority": "none; no input or lease renewal",
+              "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+              "elapsed_ms": 274.2027
+            },
+            "terminal_ns": 42867583600,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 42867586991
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 49637054889,
+    "end_ns": 49683458806,
+    "result": {
+      "request": {
+        "after": 42,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "c924f61500164cb691a6fc0ff89f10c2"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "c924f61500164cb691a6fc0ff89f10c2"
+            },
+            "received_ns": 49648586000,
+            "emit_started_ns": 49648588860
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 49658868316,
+            "sequence": 8,
+            "emit_started_ns": 49658873734
+          }
+        ],
+        "cursor": 44,
+        "returned_ns": 49673391347,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "c924f61500164cb691a6fc0ff89f10c2",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "5099fe76ff4f4a21ae2a57dadf0f8909": {
+              "echo_cursor": 11,
+              "record": {
+                "emit_started_ns": 41845452522,
+                "event": "clock",
+                "runtime_ns": 41845447230,
+                "sequence": 2
+              },
+              "record_cursor": 12
+            },
+            "e167c24adecc44689a297f6072dd16d5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 41678530319,
+                "event": "clock",
+                "runtime_ns": 41678526466,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c924f61500164cb691a6fc0ff89f10c2": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 49658868316,
+                "sequence": 8,
+                "emit_started_ns": 49658873734
+              },
+              "echo_cursor": 43,
+              "record_cursor": 44
+            }
+          },
+          "cursor": 44,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 5.675959,
+            "capture_ns": 42840105492,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800849  0 HPLaptop Confirm File Format\n"
+              ],
+              [
+                "active_window",
+                8390729
+              ]
+            ],
+            "context_ns": 42845462391,
+            "emit_started_ns": 42861581757,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-18b53b41cb43436db372ab7d3b71524a",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/007.png",
+            "image_prepare_ns": 2468506,
+            "image_ready_ns": 42853640045,
+            "image_reused": true,
+            "input_focus_after": 8390729,
+            "input_focus_before": 8390729,
+            "input_state_after": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8390729,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "revision": 24,
+              "sample_finished_ns": 42861492143,
+              "sample_started_ns": 42860855133
+            },
+            "input_state_before": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8390729,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "revision": 24,
+              "sample_finished_ns": 42833441442,
+              "sample_started_ns": 42832948134
+            },
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "owner_revision_unchanged": true,
+            "pointer_binding": {
+              "focus": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ],
+              "surface": 8390729
+            },
+            "pointer_context_after": {
+              "focus": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ],
+              "surface": 8390729
+            },
+            "pointer_context_before": {
+              "focus": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ],
+              "surface": 8390729
+            },
+            "semantic_completion": "unknown",
+            "sequence": 8,
+            "step": 4,
+            "wire_bytes": 360
+          },
+          "observation_cursor": 41,
+          "pending_clock": null,
+          "record_hashes": [
+            "db2f06e7b20216ce8549b1f827638bab609a2040ec3085b48c807de6395d4b23",
+            "393079db55c9b0d9dc397b473b8d73cc83ad39c7ba7cb2cd738e2acf8f2607c2",
+            "f8d400072871adfa08fafc2d8b5d9e6b1da6d5fa22e27034f1a0725aa66afab0",
+            "8739dc5e8869b04b81bbaa4248dc8a93ac25b1f59b22f94020d9644dcd3996e0",
+            "99780374ed4766c65a74a0f195b4c0173b87b8fe9e1f895b5dd70b96c08e1c0d",
+            "523cb7d20ae8820ec7814cea0e55e299af43a1c99243c29d17fa842825c9d290",
+            "3b83082535296d48ce882dc582231fb7a1489f15e8ec1cb99d5acbe8212932c6",
+            "077553cdff18e35cbc1bc1ee7434188639edc45fca6b36128c1c6f912347e935",
+            "8e60e0ab36365ee0b8e29bf55960467ba2853e283866757505786475a459e796",
+            "10cff8534cda9f9d1a3dde453d7ddca227123990414cd92aec5eb02a3b34daa7",
+            "0b02b4337daa246b0b78e2521e167d51eb88999aebaa832bc82fd12606035a71",
+            "9ca95031097745e8b6c568e304f3b046cdf67212619381828d6e9fe7e3862784",
+            "a382ff21c8f8dd793a53d19e291954ce28d418a0f0a00aff969fa79f3696ab68",
+            "db7bee94e4fa5360a818b050f854f75e26cd4566cedee5c2725010e688b411d8",
+            "a39a557e0774dc750829261394c5111cb7b8cded6e746498eae002a00d1faae0",
+            "0edfe14483bb0cc8f9c97ea3dec6f3dbe1b874f90bd5c9a86ae3157fa8f6377c",
+            "8dd8525d93bfd107e3ca283a9a83cc0ee17d94b121f928e27a4eef6e0ca2a03f",
+            "e46b176c39486181ec0b9275c7071489fa18a356a403f8970c8dc60d5a83b7a4",
+            "0802c45f7eed4ba68176194031e51cb87e309df9122439376ffa0f4b1a5062e6",
+            "a164c2721f6b6474fa78cfa7c04b8d09ef581ac3130cafd33bf2daf46928e6e8",
+            "09545e0a01430ace4c3a99b639041038371ad01d7a814490f63ed9ee43cfff04",
+            "03cdb9538be4c3b817c68b29e15edcbdf15f3d8a05c12bf0447dac6dae62cc32",
+            "3b61e716767be3405f04ae0e8aae02dbf0e805aa75d28bbdd3525cb2a0e51374",
+            "a0a9f6824c01f911569f9dd5facdf982af9f446e06adf3af57dd5fb15caffef6",
+            "15e4a19a8938f4225de9c271dad62d87ee6437c0fbe158595e8c6e3611df59a6",
+            "6b34e09d2f3614638233dfcc58550133eedcb45735f0e40780f6d7870b243c14",
+            "fcfd27f94fada41027aefba6baecd1936d8376e9c7264b1e5f2aa94b46cb81e5",
+            "2e681de591effdc2b2c998b7580eb56e4f8c3cfa4881c61e04ff73487ba22d39",
+            "1dfe3392da4bd67514b801bd9b19ff26d0334c0fc47a4c79e4038b002fcd5171",
+            "efaa99fd30a18adffe8ee7e83c860a0e15441940e3682c8e2a7b4be2c970eaa9",
+            "767e15e687335d6dd9ecc3fe72acfed3a7d9224461873a859ea35b302392a708",
+            "9d3e8c0a472857b8b098d7385d36c514955cbd8819334666e3b859d3f5a5e68a",
+            "4cc72c9ffd0ddc079ef3fc3f1fa15bece57aaf793ed095c0eb22f0d0593cc7a0",
+            "2960a81887335867b6a8bcf951a1923b405a67572686908e61545ba6b3f14f2f",
+            "32746719ec82cad11b2c5a273a81c9bb54f5021918e06822339ec2750623af98",
+            "3edefaa948b299a0e41c4e9d56159ea455cf3302fb14f33e1ea28669bd91bbd9",
+            "064e67b226144e3076e18b0fcc956c2e6f205155a4f5e5ed5167f4d381f3076e",
+            "e8360e256dee8ac408abcc6c63e5e39a66eea02899bcb6ff743ef5fd0c516d38",
+            "f518e9b85aa13e18eb267b46384fad958fb7fa219da50b32d1102e673fedec9c",
+            "c9d9a4dd71d15032e26a847c9922dd7a9cdbea28f83cfbfeecea895797d2dd6f",
+            "b7abab30900e6537cde6c682bfc9d1383d1f479bee35950730f4f448cf5943b2",
+            "22bdfce7352bd4928c4b9d7c353fb986a2b00cd3d787022f45175a43b38a2b7d",
+            "6b6cfeb9287de25c651f53e32535a88c131fc2794528779bb03841cb3b965bf6",
+            "dec2d79fad70cebe405b89ab55b39201966834a4884f8bc466852f25a14f773e"
+          ],
+          "session": "/tmp/agent-interface-events-f5mucioa/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "c924f61500164cb691a6fc0ff89f10c2",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 49658868316,
+            "sequence": 8,
+            "emit_started_ns": 49658873734
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 49700655634,
+    "end_ns": 49811429436,
+    "result": {
+      "request": {
+        "after": 44,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 3,
+        "action_id": "durable-19e79c3674a0477384adfaefba43414f",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 8,
+          "valid_until_ns": 79658868316,
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "id": "durable-19e79c3674a0477384adfaefba43414f"
+        },
+        "request_id": "0ca6e67f81264aab8d5b0338ec4f88f4"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 8,
+              "id": "durable-19e79c3674a0477384adfaefba43414f",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "0ca6e67f81264aab8d5b0338ec4f88f4",
+              "valid_until_ns": 79658868316
+            },
+            "received_ns": 49711877481,
+            "emit_started_ns": 49711880909
+          },
+          {
+            "event": "accepted",
+            "id": "durable-19e79c3674a0477384adfaefba43414f",
+            "steps": 1,
+            "valid_until_ns": 79658868316,
+            "accepted_ns": 49718035854,
+            "emit_started_ns": 49718038976
+          },
+          {
+            "event": "step_started",
+            "id": "durable-19e79c3674a0477384adfaefba43414f",
+            "step": 0,
+            "operation": "observe",
+            "issued_ns": 49731129716,
+            "emit_started_ns": 49731132102
+          },
+          {
+            "event": "observation",
+            "id": "durable-19e79c3674a0477384adfaefba43414f",
+            "step": 0,
+            "sequence": 9,
+            "capture_ns": 49750910226,
+            "context_ns": 49756804138,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800849  0 HPLaptop Confirm File Format\n"
+              ],
+              [
+                "active_window",
+                8390729
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/007.png",
+            "image_reused": true,
+            "image_prepare_ns": 1850639,
+            "image_ready_ns": 49763622897,
+            "input_focus_before": 8390729,
+            "input_focus_after": 8390729,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "capture_ms": 7.495282,
+            "wire_bytes": 360,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 49742118607,
+              "sample_finished_ns": 49742485449,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 49771498415,
+              "sample_finished_ns": 49771800342,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 49771848276
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-19e79c3674a0477384adfaefba43414f",
+            "step": 0,
+            "completed_ns": 49777665177,
+            "emit_started_ns": 49777666580
+          },
+          {
+            "event": "terminal",
+            "id": "durable-19e79c3674a0477384adfaefba43414f",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 49790828779,
+              "valid_until_ns": null
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 49790877061,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 49790880370
+          }
+        ],
+        "cursor": 50,
+        "returned_ns": 49802063412,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "0ca6e67f81264aab8d5b0338ec4f88f4",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "5099fe76ff4f4a21ae2a57dadf0f8909": {
+              "echo_cursor": 11,
+              "record": {
+                "emit_started_ns": 41845452522,
+                "event": "clock",
+                "runtime_ns": 41845447230,
+                "sequence": 2
+              },
+              "record_cursor": 12
+            },
+            "c924f61500164cb691a6fc0ff89f10c2": {
+              "echo_cursor": 43,
+              "record": {
+                "emit_started_ns": 49658873734,
+                "event": "clock",
+                "runtime_ns": 49658868316,
+                "sequence": 8
+              },
+              "record_cursor": 44
+            },
+            "e167c24adecc44689a297f6072dd16d5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 41678530319,
+                "event": "clock",
+                "runtime_ns": 41678526466,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            }
+          },
+          "cursor": 50,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-19e79c3674a0477384adfaefba43414f",
+            "step": 0,
+            "sequence": 9,
+            "capture_ns": 49750910226,
+            "context_ns": 49756804138,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800849  0 HPLaptop Confirm File Format\n"
+              ],
+              [
+                "active_window",
+                8390729
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/007.png",
+            "image_reused": true,
+            "image_prepare_ns": 1850639,
+            "image_ready_ns": 49763622897,
+            "input_focus_before": 8390729,
+            "input_focus_after": 8390729,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8390729,
+              "surface": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "capture_ms": 7.495282,
+            "wire_bytes": 360,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 49742118607,
+              "sample_finished_ns": 49742485449,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 24,
+              "sample_started_ns": 49771498415,
+              "sample_finished_ns": 49771800342,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "focus": 8390729,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 49771848276
+          },
+          "observation_cursor": 48,
+          "pending_clock": null,
+          "record_hashes": [
+            "db2f06e7b20216ce8549b1f827638bab609a2040ec3085b48c807de6395d4b23",
+            "393079db55c9b0d9dc397b473b8d73cc83ad39c7ba7cb2cd738e2acf8f2607c2",
+            "f8d400072871adfa08fafc2d8b5d9e6b1da6d5fa22e27034f1a0725aa66afab0",
+            "8739dc5e8869b04b81bbaa4248dc8a93ac25b1f59b22f94020d9644dcd3996e0",
+            "99780374ed4766c65a74a0f195b4c0173b87b8fe9e1f895b5dd70b96c08e1c0d",
+            "523cb7d20ae8820ec7814cea0e55e299af43a1c99243c29d17fa842825c9d290",
+            "3b83082535296d48ce882dc582231fb7a1489f15e8ec1cb99d5acbe8212932c6",
+            "077553cdff18e35cbc1bc1ee7434188639edc45fca6b36128c1c6f912347e935",
+            "8e60e0ab36365ee0b8e29bf55960467ba2853e283866757505786475a459e796",
+            "10cff8534cda9f9d1a3dde453d7ddca227123990414cd92aec5eb02a3b34daa7",
+            "0b02b4337daa246b0b78e2521e167d51eb88999aebaa832bc82fd12606035a71",
+            "9ca95031097745e8b6c568e304f3b046cdf67212619381828d6e9fe7e3862784",
+            "a382ff21c8f8dd793a53d19e291954ce28d418a0f0a00aff969fa79f3696ab68",
+            "db7bee94e4fa5360a818b050f854f75e26cd4566cedee5c2725010e688b411d8",
+            "a39a557e0774dc750829261394c5111cb7b8cded6e746498eae002a00d1faae0",
+            "0edfe14483bb0cc8f9c97ea3dec6f3dbe1b874f90bd5c9a86ae3157fa8f6377c",
+            "8dd8525d93bfd107e3ca283a9a83cc0ee17d94b121f928e27a4eef6e0ca2a03f",
+            "e46b176c39486181ec0b9275c7071489fa18a356a403f8970c8dc60d5a83b7a4",
+            "0802c45f7eed4ba68176194031e51cb87e309df9122439376ffa0f4b1a5062e6",
+            "a164c2721f6b6474fa78cfa7c04b8d09ef581ac3130cafd33bf2daf46928e6e8",
+            "09545e0a01430ace4c3a99b639041038371ad01d7a814490f63ed9ee43cfff04",
+            "03cdb9538be4c3b817c68b29e15edcbdf15f3d8a05c12bf0447dac6dae62cc32",
+            "3b61e716767be3405f04ae0e8aae02dbf0e805aa75d28bbdd3525cb2a0e51374",
+            "a0a9f6824c01f911569f9dd5facdf982af9f446e06adf3af57dd5fb15caffef6",
+            "15e4a19a8938f4225de9c271dad62d87ee6437c0fbe158595e8c6e3611df59a6",
+            "6b34e09d2f3614638233dfcc58550133eedcb45735f0e40780f6d7870b243c14",
+            "fcfd27f94fada41027aefba6baecd1936d8376e9c7264b1e5f2aa94b46cb81e5",
+            "2e681de591effdc2b2c998b7580eb56e4f8c3cfa4881c61e04ff73487ba22d39",
+            "1dfe3392da4bd67514b801bd9b19ff26d0334c0fc47a4c79e4038b002fcd5171",
+            "efaa99fd30a18adffe8ee7e83c860a0e15441940e3682c8e2a7b4be2c970eaa9",
+            "767e15e687335d6dd9ecc3fe72acfed3a7d9224461873a859ea35b302392a708",
+            "9d3e8c0a472857b8b098d7385d36c514955cbd8819334666e3b859d3f5a5e68a",
+            "4cc72c9ffd0ddc079ef3fc3f1fa15bece57aaf793ed095c0eb22f0d0593cc7a0",
+            "2960a81887335867b6a8bcf951a1923b405a67572686908e61545ba6b3f14f2f",
+            "32746719ec82cad11b2c5a273a81c9bb54f5021918e06822339ec2750623af98",
+            "3edefaa948b299a0e41c4e9d56159ea455cf3302fb14f33e1ea28669bd91bbd9",
+            "064e67b226144e3076e18b0fcc956c2e6f205155a4f5e5ed5167f4d381f3076e",
+            "e8360e256dee8ac408abcc6c63e5e39a66eea02899bcb6ff743ef5fd0c516d38",
+            "f518e9b85aa13e18eb267b46384fad958fb7fa219da50b32d1102e673fedec9c",
+            "c9d9a4dd71d15032e26a847c9922dd7a9cdbea28f83cfbfeecea895797d2dd6f",
+            "b7abab30900e6537cde6c682bfc9d1383d1f479bee35950730f4f448cf5943b2",
+            "22bdfce7352bd4928c4b9d7c353fb986a2b00cd3d787022f45175a43b38a2b7d",
+            "6b6cfeb9287de25c651f53e32535a88c131fc2794528779bb03841cb3b965bf6",
+            "dec2d79fad70cebe405b89ab55b39201966834a4884f8bc466852f25a14f773e",
+            "93947055e9411f7bfa149a10266dd29bb3a3a06f74980395dd4ed59a5bb5aa6b",
+            "5118e718b6b4a79eeee96363d8669b7c00933584c00fb245c2964c667cff3d88",
+            "c89b9ff03f196887ecdc712d5c9ea91bd416528fca244f8355f34c691aa7cd38",
+            "998aaa575ddff2a006b5d4358c82f6f6bd40937ce8d897c965c1789f68f9b7da",
+            "9d97dfbc11db80eddc1e7b19f3c0f4268bf97087670c7fbab5b1022676c4b55e",
+            "aa891722d4b6189970ee18e1c1f2c39c88184f14a51724ba46afaeb8650e2e42"
+          ],
+          "session": "/tmp/agent-interface-events-f5mucioa/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "0ca6e67f81264aab8d5b0338ec4f88f4",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-19e79c3674a0477384adfaefba43414f",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 49790828779,
+              "valid_until_ns": null
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 49790877061,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 49790880370
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 49827980725,
+    "end_ns": 49866863796,
+    "result": {
+      "request": {
+        "after": 50,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "d13513e2fb0f498faf2a1b28b5e2c0e0"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "d13513e2fb0f498faf2a1b28b5e2c0e0"
+            },
+            "received_ns": 49839348435,
+            "emit_started_ns": 49839351885
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 49844252609,
+            "sequence": 9,
+            "emit_started_ns": 49844258297
+          }
+        ],
+        "cursor": 52,
+        "returned_ns": 49857167882,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "d13513e2fb0f498faf2a1b28b5e2c0e0",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "5099fe76ff4f4a21ae2a57dadf0f8909": {
+              "echo_cursor": 11,
+              "record": {
+                "emit_started_ns": 41845452522,
+                "event": "clock",
+                "runtime_ns": 41845447230,
+                "sequence": 2
+              },
+              "record_cursor": 12
+            },
+            "c924f61500164cb691a6fc0ff89f10c2": {
+              "echo_cursor": 43,
+              "record": {
+                "emit_started_ns": 49658873734,
+                "event": "clock",
+                "runtime_ns": 49658868316,
+                "sequence": 8
+              },
+              "record_cursor": 44
+            },
+            "e167c24adecc44689a297f6072dd16d5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 41678530319,
+                "event": "clock",
+                "runtime_ns": 41678526466,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "d13513e2fb0f498faf2a1b28b5e2c0e0": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 49844252609,
+                "sequence": 9,
+                "emit_started_ns": 49844258297
+              },
+              "echo_cursor": 51,
+              "record_cursor": 52
+            }
+          },
+          "cursor": 52,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 7.495282,
+            "capture_ns": 49750910226,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n0x00800849  0 HPLaptop Confirm File Format\n"
+              ],
+              [
+                "active_window",
+                8390729
+              ]
+            ],
+            "context_ns": 49756804138,
+            "emit_started_ns": 49771848276,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-19e79c3674a0477384adfaefba43414f",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/007.png",
+            "image_prepare_ns": 1850639,
+            "image_ready_ns": 49763622897,
+            "image_reused": true,
+            "input_focus_after": 8390729,
+            "input_focus_before": 8390729,
+            "input_state_after": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8390729,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "revision": 24,
+              "sample_finished_ns": 49771800342,
+              "sample_started_ns": 49771498415
+            },
+            "input_state_before": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8390729,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                79,
+                190
+              ],
+              "revision": 24,
+              "sample_finished_ns": 49742485449,
+              "sample_started_ns": 49742118607
+            },
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "owner_revision_unchanged": true,
+            "pointer_binding": {
+              "focus": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ],
+              "surface": 8390729
+            },
+            "pointer_context_after": {
+              "focus": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ],
+              "surface": 8390729
+            },
+            "pointer_context_before": {
+              "focus": 8390729,
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ],
+              "surface": 8390729
+            },
+            "semantic_completion": "unknown",
+            "sequence": 9,
+            "step": 0,
+            "wire_bytes": 360
+          },
+          "observation_cursor": 48,
+          "pending_clock": null,
+          "record_hashes": [
+            "db2f06e7b20216ce8549b1f827638bab609a2040ec3085b48c807de6395d4b23",
+            "393079db55c9b0d9dc397b473b8d73cc83ad39c7ba7cb2cd738e2acf8f2607c2",
+            "f8d400072871adfa08fafc2d8b5d9e6b1da6d5fa22e27034f1a0725aa66afab0",
+            "8739dc5e8869b04b81bbaa4248dc8a93ac25b1f59b22f94020d9644dcd3996e0",
+            "99780374ed4766c65a74a0f195b4c0173b87b8fe9e1f895b5dd70b96c08e1c0d",
+            "523cb7d20ae8820ec7814cea0e55e299af43a1c99243c29d17fa842825c9d290",
+            "3b83082535296d48ce882dc582231fb7a1489f15e8ec1cb99d5acbe8212932c6",
+            "077553cdff18e35cbc1bc1ee7434188639edc45fca6b36128c1c6f912347e935",
+            "8e60e0ab36365ee0b8e29bf55960467ba2853e283866757505786475a459e796",
+            "10cff8534cda9f9d1a3dde453d7ddca227123990414cd92aec5eb02a3b34daa7",
+            "0b02b4337daa246b0b78e2521e167d51eb88999aebaa832bc82fd12606035a71",
+            "9ca95031097745e8b6c568e304f3b046cdf67212619381828d6e9fe7e3862784",
+            "a382ff21c8f8dd793a53d19e291954ce28d418a0f0a00aff969fa79f3696ab68",
+            "db7bee94e4fa5360a818b050f854f75e26cd4566cedee5c2725010e688b411d8",
+            "a39a557e0774dc750829261394c5111cb7b8cded6e746498eae002a00d1faae0",
+            "0edfe14483bb0cc8f9c97ea3dec6f3dbe1b874f90bd5c9a86ae3157fa8f6377c",
+            "8dd8525d93bfd107e3ca283a9a83cc0ee17d94b121f928e27a4eef6e0ca2a03f",
+            "e46b176c39486181ec0b9275c7071489fa18a356a403f8970c8dc60d5a83b7a4",
+            "0802c45f7eed4ba68176194031e51cb87e309df9122439376ffa0f4b1a5062e6",
+            "a164c2721f6b6474fa78cfa7c04b8d09ef581ac3130cafd33bf2daf46928e6e8",
+            "09545e0a01430ace4c3a99b639041038371ad01d7a814490f63ed9ee43cfff04",
+            "03cdb9538be4c3b817c68b29e15edcbdf15f3d8a05c12bf0447dac6dae62cc32",
+            "3b61e716767be3405f04ae0e8aae02dbf0e805aa75d28bbdd3525cb2a0e51374",
+            "a0a9f6824c01f911569f9dd5facdf982af9f446e06adf3af57dd5fb15caffef6",
+            "15e4a19a8938f4225de9c271dad62d87ee6437c0fbe158595e8c6e3611df59a6",
+            "6b34e09d2f3614638233dfcc58550133eedcb45735f0e40780f6d7870b243c14",
+            "fcfd27f94fada41027aefba6baecd1936d8376e9c7264b1e5f2aa94b46cb81e5",
+            "2e681de591effdc2b2c998b7580eb56e4f8c3cfa4881c61e04ff73487ba22d39",
+            "1dfe3392da4bd67514b801bd9b19ff26d0334c0fc47a4c79e4038b002fcd5171",
+            "efaa99fd30a18adffe8ee7e83c860a0e15441940e3682c8e2a7b4be2c970eaa9",
+            "767e15e687335d6dd9ecc3fe72acfed3a7d9224461873a859ea35b302392a708",
+            "9d3e8c0a472857b8b098d7385d36c514955cbd8819334666e3b859d3f5a5e68a",
+            "4cc72c9ffd0ddc079ef3fc3f1fa15bece57aaf793ed095c0eb22f0d0593cc7a0",
+            "2960a81887335867b6a8bcf951a1923b405a67572686908e61545ba6b3f14f2f",
+            "32746719ec82cad11b2c5a273a81c9bb54f5021918e06822339ec2750623af98",
+            "3edefaa948b299a0e41c4e9d56159ea455cf3302fb14f33e1ea28669bd91bbd9",
+            "064e67b226144e3076e18b0fcc956c2e6f205155a4f5e5ed5167f4d381f3076e",
+            "e8360e256dee8ac408abcc6c63e5e39a66eea02899bcb6ff743ef5fd0c516d38",
+            "f518e9b85aa13e18eb267b46384fad958fb7fa219da50b32d1102e673fedec9c",
+            "c9d9a4dd71d15032e26a847c9922dd7a9cdbea28f83cfbfeecea895797d2dd6f",
+            "b7abab30900e6537cde6c682bfc9d1383d1f479bee35950730f4f448cf5943b2",
+            "22bdfce7352bd4928c4b9d7c353fb986a2b00cd3d787022f45175a43b38a2b7d",
+            "6b6cfeb9287de25c651f53e32535a88c131fc2794528779bb03841cb3b965bf6",
+            "dec2d79fad70cebe405b89ab55b39201966834a4884f8bc466852f25a14f773e",
+            "93947055e9411f7bfa149a10266dd29bb3a3a06f74980395dd4ed59a5bb5aa6b",
+            "5118e718b6b4a79eeee96363d8669b7c00933584c00fb245c2964c667cff3d88",
+            "c89b9ff03f196887ecdc712d5c9ea91bd416528fca244f8355f34c691aa7cd38",
+            "998aaa575ddff2a006b5d4358c82f6f6bd40937ce8d897c965c1789f68f9b7da",
+            "9d97dfbc11db80eddc1e7b19f3c0f4268bf97087670c7fbab5b1022676c4b55e",
+            "aa891722d4b6189970ee18e1c1f2c39c88184f14a51724ba46afaeb8650e2e42",
+            "759419307a4c3373fd1ea6ac020f61b87095f2404c14346f51b5d8cf165d1f71",
+            "5d6350863e2a0b4d380079ffb847ab3e756caa0fa1a428d5000bcfc4817a58d3"
+          ],
+          "session": "/tmp/agent-interface-events-f5mucioa/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "d13513e2fb0f498faf2a1b28b5e2c0e0",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 49844252609,
+            "sequence": 9,
+            "emit_started_ns": 49844258297
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 49883734890,
+    "end_ns": 50440235284,
+    "result": {
+      "request": {
+        "after": 52,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 3,
+        "action_id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 9,
+          "valid_until_ns": 79844252609,
+          "steps": [
+            {
+              "op": "pointer_click",
+              "x": 784,
+              "y": 463,
+              "duration_ms": 80
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "id": "durable-df1eb5f2f6b2476f8b56f30d19906428"
+        },
+        "request_id": "74629ed871114a338013a072290b4097"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 9,
+              "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+              "op": "submit",
+              "steps": [
+                {
+                  "duration_ms": 80,
+                  "op": "pointer_click",
+                  "x": 784,
+                  "y": 463
+                },
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "74629ed871114a338013a072290b4097",
+              "valid_until_ns": 79844252609
+            },
+            "received_ns": 49895788926,
+            "emit_started_ns": 49895791867
+          },
+          {
+            "event": "accepted",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "steps": 2,
+            "valid_until_ns": 79844252609,
+            "accepted_ns": 49903015746,
+            "emit_started_ns": 49903018602
+          },
+          {
+            "event": "step_started",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "step": 0,
+            "operation": "pointer_click",
+            "issued_ns": 49914337741,
+            "emit_started_ns": 49914339891
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "move",
+            "payload": {
+              "x": 784,
+              "y": 463
+            },
+            "admitted_ns": 49925997750,
+            "input_ack_ns": 49926206106,
+            "valid_until_ns": 79844252609,
+            "surface": 8390729,
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "step": 0,
+            "emit_started_ns": 49926324170
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "button_down",
+            "payload": 1,
+            "admitted_ns": 49938850347,
+            "input_ack_ns": 49939048209,
+            "valid_until_ns": 79844252609,
+            "surface": 8390729,
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "step": 0,
+            "emit_started_ns": 49939129894
+          },
+          {
+            "event": "observation",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "step": 0,
+            "sequence": 10,
+            "capture_ns": 50035426365,
+            "context_ns": 50044420641,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/010.png",
+            "image_reused": false,
+            "image_prepare_ns": 29584971,
+            "image_ready_ns": 50094982938,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 3.325451,
+            "wire_bytes": 26751,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 29,
+              "sample_started_ns": 50030318484,
+              "sample_finished_ns": 50030724882,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                784,
+                463
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 29,
+              "sample_started_ns": 50104326127,
+              "sample_finished_ns": 50104713367,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                784,
+                463
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 50104782639
+          },
+          {
+            "event": "input_stopped",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "decision_reason": "focus_changed",
+            "interruption": {
+              "intent_token": "ab108bc4b37242ca93465e1636e4a499",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 50030274374,
+                "valid_until_ns": 79844252609
+              }
+            },
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 50112235930,
+              "valid_until_ns": null
+            },
+            "stopped_ns": 50112316173,
+            "followup": "two passive observations; terminal follows; no further program steps",
+            "emit_started_ns": 50112319376
+          },
+          {
+            "event": "observation",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "step": 0,
+            "sequence": 11,
+            "capture_ns": 50212949606,
+            "context_ns": 50218693553,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/011.png",
+            "image_reused": false,
+            "image_prepare_ns": 25332695,
+            "image_ready_ns": 50261083887,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 6.038284,
+            "wire_bytes": 15160,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 30,
+              "sample_started_ns": 50205390543,
+              "sample_finished_ns": 50205773972,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                784,
+                463
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 30,
+              "sample_started_ns": 50266087499,
+              "sample_finished_ns": 50266340038,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                784,
+                463
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 50266374209
+          },
+          {
+            "event": "observation",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "step": 0,
+            "sequence": 12,
+            "capture_ns": 50359423487,
+            "context_ns": 50364196191,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/012.png",
+            "image_reused": false,
+            "image_prepare_ns": 25940339,
+            "image_ready_ns": 50403988028,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 3.510505,
+            "wire_bytes": 1730,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 30,
+              "sample_started_ns": 50354313460,
+              "sample_finished_ns": 50354875524,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                784,
+                463
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 30,
+              "sample_started_ns": 50412423948,
+              "sample_finished_ns": 50412698646,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                784,
+                463
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 50412736918
+          },
+          {
+            "event": "terminal",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "status": "needs_decision",
+            "error": null,
+            "steps_completed": 0,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 50112235930,
+              "valid_until_ns": null
+            },
+            "interruption": {
+              "intent_token": "ab108bc4b37242ca93465e1636e4a499",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 50030274374,
+                "valid_until_ns": 79844252609
+              }
+            },
+            "decision_reason": "focus_changed",
+            "post_release_observation": {
+              "captures": 2,
+              "sequences": [
+                11,
+                12
+              ],
+              "equal_sample_pair": false,
+              "error": null,
+              "stopped": false,
+              "authority": "none; no input or lease renewal",
+              "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+              "elapsed_ms": 293.381265
+            },
+            "terminal_ns": 50418343470,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 50418352676
+          }
+        ],
+        "cursor": 62,
+        "returned_ns": 50429696293,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "74629ed871114a338013a072290b4097",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "5099fe76ff4f4a21ae2a57dadf0f8909": {
+              "echo_cursor": 11,
+              "record": {
+                "emit_started_ns": 41845452522,
+                "event": "clock",
+                "runtime_ns": 41845447230,
+                "sequence": 2
+              },
+              "record_cursor": 12
+            },
+            "c924f61500164cb691a6fc0ff89f10c2": {
+              "echo_cursor": 43,
+              "record": {
+                "emit_started_ns": 49658873734,
+                "event": "clock",
+                "runtime_ns": 49658868316,
+                "sequence": 8
+              },
+              "record_cursor": 44
+            },
+            "d13513e2fb0f498faf2a1b28b5e2c0e0": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 49844258297,
+                "event": "clock",
+                "runtime_ns": 49844252609,
+                "sequence": 9
+              },
+              "record_cursor": 52
+            },
+            "e167c24adecc44689a297f6072dd16d5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 41678530319,
+                "event": "clock",
+                "runtime_ns": 41678526466,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            }
+          },
+          "cursor": 62,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "step": 0,
+            "sequence": 12,
+            "capture_ns": 50359423487,
+            "context_ns": 50364196191,
+            "context": [
+              [
+                "windows",
+                "0x00800204  0 HPLaptop sheet.xlsx \u2014 LibreOffice Calc\n"
+              ],
+              [
+                "active_window",
+                8389124
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/history-abba-2-all/runtime/012.png",
+            "image_reused": false,
+            "image_prepare_ns": 25940339,
+            "image_ready_ns": 50403988028,
+            "input_focus_before": 8389124,
+            "input_focus_after": 8389124,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8389124,
+              "surface": 8389124,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 3.510505,
+            "wire_bytes": 1730,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 30,
+              "sample_started_ns": 50354313460,
+              "sample_finished_ns": 50354875524,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                784,
+                463
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "55ee6d2f27e649b3bc0dfc5e6826dfa2",
+              "revision": 30,
+              "sample_started_ns": 50412423948,
+              "sample_finished_ns": 50412698646,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                784,
+                463
+              ],
+              "focus": 8389124,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 50412736918
+          },
+          "observation_cursor": 61,
+          "pending_clock": null,
+          "record_hashes": [
+            "db2f06e7b20216ce8549b1f827638bab609a2040ec3085b48c807de6395d4b23",
+            "393079db55c9b0d9dc397b473b8d73cc83ad39c7ba7cb2cd738e2acf8f2607c2",
+            "f8d400072871adfa08fafc2d8b5d9e6b1da6d5fa22e27034f1a0725aa66afab0",
+            "8739dc5e8869b04b81bbaa4248dc8a93ac25b1f59b22f94020d9644dcd3996e0",
+            "99780374ed4766c65a74a0f195b4c0173b87b8fe9e1f895b5dd70b96c08e1c0d",
+            "523cb7d20ae8820ec7814cea0e55e299af43a1c99243c29d17fa842825c9d290",
+            "3b83082535296d48ce882dc582231fb7a1489f15e8ec1cb99d5acbe8212932c6",
+            "077553cdff18e35cbc1bc1ee7434188639edc45fca6b36128c1c6f912347e935",
+            "8e60e0ab36365ee0b8e29bf55960467ba2853e283866757505786475a459e796",
+            "10cff8534cda9f9d1a3dde453d7ddca227123990414cd92aec5eb02a3b34daa7",
+            "0b02b4337daa246b0b78e2521e167d51eb88999aebaa832bc82fd12606035a71",
+            "9ca95031097745e8b6c568e304f3b046cdf67212619381828d6e9fe7e3862784",
+            "a382ff21c8f8dd793a53d19e291954ce28d418a0f0a00aff969fa79f3696ab68",
+            "db7bee94e4fa5360a818b050f854f75e26cd4566cedee5c2725010e688b411d8",
+            "a39a557e0774dc750829261394c5111cb7b8cded6e746498eae002a00d1faae0",
+            "0edfe14483bb0cc8f9c97ea3dec6f3dbe1b874f90bd5c9a86ae3157fa8f6377c",
+            "8dd8525d93bfd107e3ca283a9a83cc0ee17d94b121f928e27a4eef6e0ca2a03f",
+            "e46b176c39486181ec0b9275c7071489fa18a356a403f8970c8dc60d5a83b7a4",
+            "0802c45f7eed4ba68176194031e51cb87e309df9122439376ffa0f4b1a5062e6",
+            "a164c2721f6b6474fa78cfa7c04b8d09ef581ac3130cafd33bf2daf46928e6e8",
+            "09545e0a01430ace4c3a99b639041038371ad01d7a814490f63ed9ee43cfff04",
+            "03cdb9538be4c3b817c68b29e15edcbdf15f3d8a05c12bf0447dac6dae62cc32",
+            "3b61e716767be3405f04ae0e8aae02dbf0e805aa75d28bbdd3525cb2a0e51374",
+            "a0a9f6824c01f911569f9dd5facdf982af9f446e06adf3af57dd5fb15caffef6",
+            "15e4a19a8938f4225de9c271dad62d87ee6437c0fbe158595e8c6e3611df59a6",
+            "6b34e09d2f3614638233dfcc58550133eedcb45735f0e40780f6d7870b243c14",
+            "fcfd27f94fada41027aefba6baecd1936d8376e9c7264b1e5f2aa94b46cb81e5",
+            "2e681de591effdc2b2c998b7580eb56e4f8c3cfa4881c61e04ff73487ba22d39",
+            "1dfe3392da4bd67514b801bd9b19ff26d0334c0fc47a4c79e4038b002fcd5171",
+            "efaa99fd30a18adffe8ee7e83c860a0e15441940e3682c8e2a7b4be2c970eaa9",
+            "767e15e687335d6dd9ecc3fe72acfed3a7d9224461873a859ea35b302392a708",
+            "9d3e8c0a472857b8b098d7385d36c514955cbd8819334666e3b859d3f5a5e68a",
+            "4cc72c9ffd0ddc079ef3fc3f1fa15bece57aaf793ed095c0eb22f0d0593cc7a0",
+            "2960a81887335867b6a8bcf951a1923b405a67572686908e61545ba6b3f14f2f",
+            "32746719ec82cad11b2c5a273a81c9bb54f5021918e06822339ec2750623af98",
+            "3edefaa948b299a0e41c4e9d56159ea455cf3302fb14f33e1ea28669bd91bbd9",
+            "064e67b226144e3076e18b0fcc956c2e6f205155a4f5e5ed5167f4d381f3076e",
+            "e8360e256dee8ac408abcc6c63e5e39a66eea02899bcb6ff743ef5fd0c516d38",
+            "f518e9b85aa13e18eb267b46384fad958fb7fa219da50b32d1102e673fedec9c",
+            "c9d9a4dd71d15032e26a847c9922dd7a9cdbea28f83cfbfeecea895797d2dd6f",
+            "b7abab30900e6537cde6c682bfc9d1383d1f479bee35950730f4f448cf5943b2",
+            "22bdfce7352bd4928c4b9d7c353fb986a2b00cd3d787022f45175a43b38a2b7d",
+            "6b6cfeb9287de25c651f53e32535a88c131fc2794528779bb03841cb3b965bf6",
+            "dec2d79fad70cebe405b89ab55b39201966834a4884f8bc466852f25a14f773e",
+            "93947055e9411f7bfa149a10266dd29bb3a3a06f74980395dd4ed59a5bb5aa6b",
+            "5118e718b6b4a79eeee96363d8669b7c00933584c00fb245c2964c667cff3d88",
+            "c89b9ff03f196887ecdc712d5c9ea91bd416528fca244f8355f34c691aa7cd38",
+            "998aaa575ddff2a006b5d4358c82f6f6bd40937ce8d897c965c1789f68f9b7da",
+            "9d97dfbc11db80eddc1e7b19f3c0f4268bf97087670c7fbab5b1022676c4b55e",
+            "aa891722d4b6189970ee18e1c1f2c39c88184f14a51724ba46afaeb8650e2e42",
+            "759419307a4c3373fd1ea6ac020f61b87095f2404c14346f51b5d8cf165d1f71",
+            "5d6350863e2a0b4d380079ffb847ab3e756caa0fa1a428d5000bcfc4817a58d3",
+            "8cc288023db7f351ea1498e5d41274b50135ba366eec3b0ee974e8fe8469d175",
+            "c4a85038c41e004f646e235ac524765dd1b2006ccda64fe6ad76ff64e2132f0d",
+            "845ea77db9cab5614fc978e793b503e5c05839ab71e3ad1429aaaeb591656036",
+            "2fabf8e3189f938dd7c421f4eb6f6275f3ae34c74aa4f2491ed205b4d27776eb",
+            "c8062058fcb91e6bf6910f256dac2281f707aa25664a2390c097e88b25abe5c3",
+            "1b51a719b5e943a2e4bca06e9d3a74b7b19803d395a3771a1a89f5e1f85de6dc",
+            "dc1afde9df40fb5ea0b11051d7527bc29455e9f52a8396b644ee2fb19f4c2dae",
+            "5532c3dc44cd20c6dce9e604e2313a0ba47ec28d7b9897c6e0f382767eb3710a",
+            "40ecf72ab746457f6a9d6bb31d3135698a1dd744b78e73049f32e25e7935d73b",
+            "5a5e364e3e803638b2685412a1d49773afa7b7554edfcd32689ac486238aca82"
+          ],
+          "session": "/tmp/agent-interface-events-f5mucioa/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "74629ed871114a338013a072290b4097",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-df1eb5f2f6b2476f8b56f30d19906428",
+            "status": "needs_decision",
+            "error": null,
+            "steps_completed": 0,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 50112235930,
+              "valid_until_ns": null
+            },
+            "interruption": {
+              "intent_token": "ab108bc4b37242ca93465e1636e4a499",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 50030274374,
+                "valid_until_ns": 79844252609
+              }
+            },
+            "decision_reason": "focus_changed",
+            "post_release_observation": {
+              "captures": 2,
+              "sequences": [
+                11,
+                12
+              ],
+              "equal_sample_pair": false,
+              "error": null,
+              "stopped": false,
+              "authority": "none; no input or lease renewal",
+              "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+              "elapsed_ms": 293.381265
+            },
+            "terminal_ns": 50418343470,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 50418352676
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  }
+]

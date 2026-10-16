@@ -1,0 +1,51 @@
+test_auditor_actual_limits_rejected (test_audit.AuditTests.test_auditor_actual_limits_rejected) ... ERROR
+test_auditor_actual_uid_rejected (test_audit.AuditTests.test_auditor_actual_uid_rejected) ... ERROR
+test_crosscell_cpu_regression_rejected (test_audit.AuditTests.test_crosscell_cpu_regression_rejected) ... ok
+test_duplicate_json_key_rejected (test_audit.AuditTests.test_duplicate_json_key_rejected) ... FAIL
+test_saved_consumer_and_independent_arithmetic (test_audit.AuditTests.test_saved_consumer_and_independent_arithmetic) ... ok
+test_saved_extra_file_rejected (test_audit.AuditTests.test_saved_extra_file_rejected) ... ok
+test_saved_missing_cell_rejected (test_audit.AuditTests.test_saved_missing_cell_rejected) ... ok
+test_self_reported_support_rejected (test_audit.AuditTests.test_self_reported_support_rejected) ... ok
+test_source_mismatch_rejected (test_audit.AuditTests.test_source_mismatch_rejected) ... ok
+test_symlink_required_file_rejected (test_audit.AuditTests.test_symlink_required_file_rejected) ... FAIL
+
+======================================================================
+ERROR: test_auditor_actual_limits_rejected (test_audit.AuditTests.test_auditor_actual_limits_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_audit.py", line 54, in test_auditor_actual_limits_rejected
+    with self.assertRaises(ValueError):audit.audit_runtime(lambda k:limits[k],501)
+                                       ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'audit' has no attribute 'audit_runtime'
+
+======================================================================
+ERROR: test_auditor_actual_uid_rejected (test_audit.AuditTests.test_auditor_actual_uid_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_audit.py", line 57, in test_auditor_actual_uid_rejected
+    with self.assertRaises(ValueError):audit.audit_runtime(lambda k:limits[k],0)
+                                       ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'audit' has no attribute 'audit_runtime'
+
+======================================================================
+FAIL: test_duplicate_json_key_rejected (test_audit.AuditTests.test_duplicate_json_key_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_audit.py", line 51, in test_duplicate_json_key_rejected
+    with self.assertRaises(ValueError):audit.evaluate(p,PLAN,{})
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_symlink_required_file_rejected (test_audit.AuditTests.test_symlink_required_file_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_audit.py", line 47, in test_symlink_required_file_rejected
+    with self.assertRaises(ValueError):audit.evaluate(p,PLAN,{})
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.057s
+
+FAILED (failures=2, errors=2)

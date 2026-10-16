@@ -1,0 +1,3963 @@
+[
+  {
+    "begin_ns": 59738720253345,
+    "end_ns": 59738792485697,
+    "result": {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "9f9a9e7fba724eb4a5c003e3dee148aa"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "9f9a9e7fba724eb4a5c003e3dee148aa"
+            },
+            "received_ns": 59738757849232,
+            "emit_started_ns": 59738757855291
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59738763707280,
+            "sequence": 1,
+            "emit_started_ns": 59738763713247
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 59738778442193,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "9f9a9e7fba724eb4a5c003e3dee148aa",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1,
+                "emit_started_ns": 59738763713247
+              },
+              "echo_cursor": 3,
+              "record_cursor": 4
+            }
+          },
+          "cursor": 4,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 9.229923,
+            "capture_ns": 59738611651275,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59738618416279,
+            "emit_started_ns": 59738667015402,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "initial",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/001.png",
+            "image_prepare_ns": 26783084,
+            "image_ready_ns": 59738660061544,
+            "image_reused": false,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 1,
+            "step": 0,
+            "wire_bytes": 35193
+          },
+          "observation_cursor": 2,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "9f9a9e7fba724eb4a5c003e3dee148aa",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59738763707280,
+            "sequence": 1,
+            "emit_started_ns": 59738763713247
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59738806213600,
+    "end_ns": 59739820351876,
+    "result": {
+      "request": {
+        "after": 4,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 8,
+        "action_id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 1,
+          "valid_until_ns": 59748763707280,
+          "steps": [
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "l"
+            },
+            {
+              "op": "text",
+              "text": "http://127.0.0.1:42905/"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "id": "durable-2da42f08d39a4d19a9c207e1ab59035b"
+        },
+        "request_id": "715fd93a00ff44538de095cefb73fb8e"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+              "op": "submit",
+              "steps": [
+                {
+                  "key": "l",
+                  "modifier": "Control_L",
+                  "op": "chord"
+                },
+                {
+                  "op": "text",
+                  "text": "http://127.0.0.1:42905/"
+                },
+                {
+                  "key": "Return",
+                  "op": "key"
+                },
+                {
+                  "op": "settle",
+                  "quiet_ms": 80,
+                  "timeout_ms": 500
+                }
+              ],
+              "transport_request_id": "715fd93a00ff44538de095cefb73fb8e",
+              "valid_until_ns": 59748763707280
+            },
+            "received_ns": 59738831816292,
+            "emit_started_ns": 59738831819190
+          },
+          {
+            "event": "accepted",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "steps": 4,
+            "coordinate_resolutions": 0,
+            "valid_until_ns": 59748763707280,
+            "accepted_ns": 59738840661571,
+            "emit_started_ns": 59738840664076
+          },
+          {
+            "event": "step_started",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 0,
+            "operation": "chord",
+            "issued_ns": 59738852776616,
+            "emit_started_ns": 59738852779294
+          },
+          {
+            "event": "input_admission",
+            "key": "Control_L",
+            "admitted_ns": 59738865705644,
+            "input_ack_ns": 59738866164087,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59738866351983
+          },
+          {
+            "event": "input_admission",
+            "key": "l",
+            "admitted_ns": 59738881472462,
+            "input_ack_ns": 59738881735757,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59738881788480
+          },
+          {
+            "event": "observation",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 59738903871501,
+            "context_ns": 59738911303667,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/002.png",
+            "image_reused": false,
+            "image_prepare_ns": 23205548,
+            "image_ready_ns": 59738950158674,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 7.384156,
+            "wire_bytes": 1107,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59738959546389
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 0,
+            "completed_ns": 59738972054726,
+            "emit_started_ns": 59738972060255
+          },
+          {
+            "event": "step_started",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 1,
+            "operation": "text",
+            "issued_ns": 59738983805296,
+            "emit_started_ns": 59738983809915
+          },
+          {
+            "event": "input_admission",
+            "key": "h",
+            "admitted_ns": 59738997290425,
+            "input_ack_ns": 59738997653965,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59738997782777
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 59739015130632,
+            "input_ack_ns": 59739015495651,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739015621341
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 59739031045796,
+            "input_ack_ns": 59739031255168,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739031324773
+          },
+          {
+            "event": "input_admission",
+            "key": "p",
+            "admitted_ns": 59739046643575,
+            "input_ack_ns": 59739046988483,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739047121733
+          },
+          {
+            "event": "input_admission",
+            "key": "Shift_L",
+            "admitted_ns": 59739062733509,
+            "input_ack_ns": 59739063003010,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739063155164
+          },
+          {
+            "event": "input_admission",
+            "key": "semicolon",
+            "admitted_ns": 59739075205661,
+            "input_ack_ns": 59739075570863,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739075659167
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 59739094736048,
+            "input_ack_ns": 59739095166541,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739095237667
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 59739108346162,
+            "input_ack_ns": 59739108590570,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739108685313
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 59739121952088,
+            "input_ack_ns": 59739122413707,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739122570125
+          },
+          {
+            "event": "input_admission",
+            "key": "2",
+            "admitted_ns": 59739136263728,
+            "input_ack_ns": 59739136450141,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739136503209
+          },
+          {
+            "event": "input_admission",
+            "key": "7",
+            "admitted_ns": 59739151449354,
+            "input_ack_ns": 59739151667891,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739151804238
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 59739166291462,
+            "input_ack_ns": 59739166519440,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739166606794
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 59739182896015,
+            "input_ack_ns": 59739183192136,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739183317629
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 59739197089762,
+            "input_ack_ns": 59739197377712,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739197492234
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 59739212729596,
+            "input_ack_ns": 59739212952031,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739213006458
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 59739226541262,
+            "input_ack_ns": 59739226755516,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739226864075
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 59739239692896,
+            "input_ack_ns": 59739239999476,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739240214546
+          },
+          {
+            "event": "input_admission",
+            "key": "Shift_L",
+            "admitted_ns": 59739253808843,
+            "input_ack_ns": 59739254279493,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739254500425
+          },
+          {
+            "event": "input_admission",
+            "key": "semicolon",
+            "admitted_ns": 59739263491126,
+            "input_ack_ns": 59739263746402,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739263858740
+          },
+          {
+            "event": "input_admission",
+            "key": "4",
+            "admitted_ns": 59739279691739,
+            "input_ack_ns": 59739279840038,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739279989548
+          },
+          {
+            "event": "input_admission",
+            "key": "2",
+            "admitted_ns": 59739292718750,
+            "input_ack_ns": 59739292906477,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739293019514
+          },
+          {
+            "event": "input_admission",
+            "key": "9",
+            "admitted_ns": 59739305640361,
+            "input_ack_ns": 59739306109219,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739306256320
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 59739318277821,
+            "input_ack_ns": 59739318453852,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739318509154
+          },
+          {
+            "event": "input_admission",
+            "key": "5",
+            "admitted_ns": 59739331358476,
+            "input_ack_ns": 59739331648207,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739331830694
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 59739346697671,
+            "input_ack_ns": 59739346906235,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739346966659
+          },
+          {
+            "event": "observation",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 1,
+            "sequence": 3,
+            "capture_ns": 59739363438092,
+            "context_ns": 59739368832384,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/003.png",
+            "image_reused": false,
+            "image_prepare_ns": 20758918,
+            "image_ready_ns": 59739411932943,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.284307,
+            "wire_bytes": 24670,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739417856005
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 1,
+            "completed_ns": 59739426958626,
+            "emit_started_ns": 59739426962932
+          },
+          {
+            "event": "step_started",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 2,
+            "operation": "key",
+            "issued_ns": 59739436877991,
+            "emit_started_ns": 59739436880414
+          },
+          {
+            "event": "input_admission",
+            "key": "Return",
+            "admitted_ns": 59739450485099,
+            "input_ack_ns": 59739450701769,
+            "valid_until_ns": 59748763707280,
+            "emit_started_ns": 59739450799807
+          },
+          {
+            "event": "observation",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 2,
+            "sequence": 4,
+            "capture_ns": 59739482981633,
+            "context_ns": 59739493494196,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/004.png",
+            "image_reused": false,
+            "image_prepare_ns": 18994994,
+            "image_ready_ns": 59739534495971,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 14.512076,
+            "wire_bytes": 3459,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739542912795
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 2,
+            "completed_ns": 59739552739267,
+            "emit_started_ns": 59739552746057
+          },
+          {
+            "event": "step_started",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 3,
+            "operation": "settle",
+            "issued_ns": 59739562386784,
+            "emit_started_ns": 59739562394093
+          },
+          {
+            "event": "observation",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 3,
+            "sequence": 5,
+            "capture_ns": 59739584173393,
+            "context_ns": 59739590823521,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/005.png",
+            "image_reused": false,
+            "image_prepare_ns": 22282918,
+            "image_ready_ns": 59739634080066,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.565647,
+            "wire_bytes": 24966,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739642227721
+          },
+          {
+            "event": "observation",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 3,
+            "sequence": 6,
+            "capture_ns": 59739678366562,
+            "context_ns": 59739684284546,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 1648960,
+            "image_ready_ns": 59739693388925,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.964381,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739701008374
+          },
+          {
+            "event": "observation",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 3,
+            "sequence": 7,
+            "capture_ns": 59739734726864,
+            "context_ns": 59739743189721,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 1708975,
+            "image_ready_ns": 59739751086034,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.787708,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739759089538
+          },
+          {
+            "event": "settle_result",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 3,
+            "reason": "pixel_quiet",
+            "samples": 3,
+            "sequence": 7,
+            "elapsed_ms": 191.259881,
+            "quiet_ms": 80,
+            "timeout_ms": 500,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739768191990
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 3,
+            "completed_ns": 59739778898971,
+            "emit_started_ns": 59739778903894
+          },
+          {
+            "event": "terminal",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59739796841242,
+              "valid_until_ns": 59748763707280
+            },
+            "terminal_ns": 59739796918343,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59739796921040
+          }
+        ],
+        "cursor": 50,
+        "returned_ns": 59739809637128,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "715fd93a00ff44538de095cefb73fb8e",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            }
+          },
+          "cursor": 50,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "step": 3,
+            "sequence": 7,
+            "capture_ns": 59739734726864,
+            "context_ns": 59739743189721,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 1708975,
+            "image_ready_ns": 59739751086034,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.787708,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739759089538
+          },
+          "observation_cursor": 47,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "715fd93a00ff44538de095cefb73fb8e",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59739796841242,
+              "valid_until_ns": 59748763707280
+            },
+            "terminal_ns": 59739796918343,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59739796921040
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59739840027264,
+    "end_ns": 59739878998450,
+    "result": {
+      "request": {
+        "after": 50,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "ee996122c012482eaebca19500665bee"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "ee996122c012482eaebca19500665bee"
+            },
+            "received_ns": 59739850554727,
+            "emit_started_ns": 59739850557399
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59739857870719,
+            "sequence": 7,
+            "emit_started_ns": 59739857876854
+          }
+        ],
+        "cursor": 52,
+        "returned_ns": 59739869298537,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "ee996122c012482eaebca19500665bee",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7,
+                "emit_started_ns": 59739857876854
+              },
+              "echo_cursor": 51,
+              "record_cursor": 52
+            }
+          },
+          "cursor": 52,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 3.787708,
+            "capture_ns": 59739734726864,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59739743189721,
+            "emit_started_ns": 59739759089538,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-2da42f08d39a4d19a9c207e1ab59035b",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/005.png",
+            "image_prepare_ns": 1708975,
+            "image_ready_ns": 59739751086034,
+            "image_reused": true,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 7,
+            "step": 3,
+            "wire_bytes": 326
+          },
+          "observation_cursor": 47,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "ee996122c012482eaebca19500665bee",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59739857870719,
+            "sequence": 7,
+            "emit_started_ns": 59739857876854
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59739895428222,
+    "end_ns": 59740002642891,
+    "result": {
+      "request": {
+        "after": 52,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 8,
+        "action_id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 7,
+          "valid_until_ns": 59749857870719,
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "id": "durable-3cac263b1dad4e54bb84d71fb0e37239"
+        },
+        "request_id": "0d446b870a5c4fd0954411c112cd7895"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 7,
+              "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "0d446b870a5c4fd0954411c112cd7895",
+              "valid_until_ns": 59749857870719
+            },
+            "received_ns": 59739905420999,
+            "emit_started_ns": 59739905427791
+          },
+          {
+            "event": "accepted",
+            "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+            "steps": 1,
+            "coordinate_resolutions": 0,
+            "valid_until_ns": 59749857870719,
+            "accepted_ns": 59739913185378,
+            "emit_started_ns": 59739913188066
+          },
+          {
+            "event": "step_started",
+            "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+            "step": 0,
+            "operation": "observe",
+            "issued_ns": 59739923468994,
+            "emit_started_ns": 59739923471419
+          },
+          {
+            "event": "observation",
+            "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+            "step": 0,
+            "sequence": 8,
+            "capture_ns": 59739942764157,
+            "context_ns": 59739947099698,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 1461835,
+            "image_ready_ns": 59739952829610,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 7.521206,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739959935271
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+            "step": 0,
+            "completed_ns": 59739966937003,
+            "emit_started_ns": 59739966942754
+          },
+          {
+            "event": "terminal",
+            "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59739979643841,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59739979680738,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59739979683619
+          }
+        ],
+        "cursor": 58,
+        "returned_ns": 59739991923292,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "0d446b870a5c4fd0954411c112cd7895",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59739857876854,
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            }
+          },
+          "cursor": 58,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+            "step": 0,
+            "sequence": 8,
+            "capture_ns": 59739942764157,
+            "context_ns": 59739947099698,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 1461835,
+            "image_ready_ns": 59739952829610,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 7.521206,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59739959935271
+          },
+          "observation_cursor": 56,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11",
+            "d3328638a689de787e21b7d378ab61055fb99d774cbdc7851c268c089e42e846",
+            "1fefad6fecf249955579a2f92da15e69d126a79330dacc245a67a7686280641e",
+            "db6f1c164088333834779d258ce66a0c675bbed618acadadee90f4380d6aa966",
+            "677a85a585a490584b9a56de6b562c2fff566bac5f5b81c1e64f345fca25da6e",
+            "321fb37a43ec1504be94f68494e181d5b2a2c5a1aacea761c2e298fb09faa0e2",
+            "a569611d9ad1c51075cfafa740b2d780af2fd12efca52eb880fc5dcc660016e5"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "0d446b870a5c4fd0954411c112cd7895",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59739979643841,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59739979680738,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59739979683619
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59753753192670,
+    "end_ns": 59753791609786,
+    "result": {
+      "request": {
+        "after": 58,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "c0f45e6d3425430f9d23e2d54064700b"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "c0f45e6d3425430f9d23e2d54064700b"
+            },
+            "received_ns": 59753763328573,
+            "emit_started_ns": 59753763331451
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59753768495191,
+            "sequence": 8,
+            "emit_started_ns": 59753768498877
+          }
+        ],
+        "cursor": 60,
+        "returned_ns": 59753782412615,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "c0f45e6d3425430f9d23e2d54064700b",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59739857876854,
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            },
+            "c0f45e6d3425430f9d23e2d54064700b": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59753768495191,
+                "sequence": 8,
+                "emit_started_ns": 59753768498877
+              },
+              "echo_cursor": 59,
+              "record_cursor": 60
+            }
+          },
+          "cursor": 60,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 7.521206,
+            "capture_ns": 59739942764157,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59739947099698,
+            "emit_started_ns": 59739959935271,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-3cac263b1dad4e54bb84d71fb0e37239",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/005.png",
+            "image_prepare_ns": 1461835,
+            "image_ready_ns": 59739952829610,
+            "image_reused": true,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 8,
+            "step": 0,
+            "wire_bytes": 326
+          },
+          "observation_cursor": 56,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11",
+            "d3328638a689de787e21b7d378ab61055fb99d774cbdc7851c268c089e42e846",
+            "1fefad6fecf249955579a2f92da15e69d126a79330dacc245a67a7686280641e",
+            "db6f1c164088333834779d258ce66a0c675bbed618acadadee90f4380d6aa966",
+            "677a85a585a490584b9a56de6b562c2fff566bac5f5b81c1e64f345fca25da6e",
+            "321fb37a43ec1504be94f68494e181d5b2a2c5a1aacea761c2e298fb09faa0e2",
+            "a569611d9ad1c51075cfafa740b2d780af2fd12efca52eb880fc5dcc660016e5",
+            "5ca5ca936d55ab1a16d66112cb99cdca5c3d93f0a9af5dbfac6745fcb56a8955",
+            "f8214f74da806b0f1e88991f2bfdd0f55a81c4a601316467f9d28bcb6b089ce6"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "c0f45e6d3425430f9d23e2d54064700b",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59753768495191,
+            "sequence": 8,
+            "emit_started_ns": 59753768498877
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59753806819172,
+    "end_ns": 59753945888827,
+    "result": {
+      "request": {
+        "after": 60,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 8,
+        "action_id": "durable-fe5ffb27a73940e39a10f312733342b2",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 8,
+          "valid_until_ns": 59763768495191,
+          "steps": [
+            {
+              "op": "target_handle_mint_from_point",
+              "name": "form_field",
+              "coordinate_frame": "window_content",
+              "source_sequence": 8,
+              "point": [
+                180,
+                243
+              ],
+              "region_size": [
+                24,
+                22
+              ],
+              "ttl_ms": 60000,
+              "freshness_ms": 1500,
+              "search_radius": 0,
+              "allowed_transformations": [
+                "window_translation"
+              ]
+            }
+          ],
+          "id": "durable-fe5ffb27a73940e39a10f312733342b2"
+        },
+        "request_id": "ce40c09df7a24e8fb673511c00302903"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 8,
+              "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+              "op": "submit",
+              "steps": [
+                {
+                  "allowed_transformations": [
+                    "window_translation"
+                  ],
+                  "coordinate_frame": "window_content",
+                  "freshness_ms": 1500,
+                  "name": "form_field",
+                  "op": "target_handle_mint_from_point",
+                  "point": [
+                    180,
+                    243
+                  ],
+                  "region_size": [
+                    24,
+                    22
+                  ],
+                  "search_radius": 0,
+                  "source_sequence": 8,
+                  "ttl_ms": 60000
+                }
+              ],
+              "transport_request_id": "ce40c09df7a24e8fb673511c00302903",
+              "valid_until_ns": 59763768495191
+            },
+            "received_ns": 59753816115987,
+            "emit_started_ns": 59753816118345
+          },
+          {
+            "event": "accepted",
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "steps": 1,
+            "coordinate_resolutions": 0,
+            "valid_until_ns": 59763768495191,
+            "accepted_ns": 59753822965644,
+            "emit_started_ns": 59753822968341
+          },
+          {
+            "event": "step_started",
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "step": 0,
+            "operation": "target_handle_mint_from_point",
+            "issued_ns": 59753834162327,
+            "emit_started_ns": 59753834164430
+          },
+          {
+            "event": "observation",
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "step": 0,
+            "sequence": 9,
+            "capture_ns": 59753850655008,
+            "context_ns": 59753856675904,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/009.png",
+            "image_reused": false,
+            "image_prepare_ns": 20239561,
+            "image_ready_ns": 59753888313824,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.618722,
+            "wire_bytes": 1098,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59753896184853
+          },
+          {
+            "event": "target_handle_minted_from_point",
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "step": 0,
+            "minted_ns": 59753904258200,
+            "handle": "form_field",
+            "name": "form_field",
+            "status": "VALID",
+            "created_sequence": 9,
+            "expires_ns": 59813904258200,
+            "allowed_transformations": [
+              "window_translation"
+            ],
+            "patch_sha256": "877663a5b7e58aa85715ae004a6afd3b3165a9dd0c2e5ab54c2fe74af89fed54",
+            "authority": "observational reference only; grants no input authority",
+            "reference_kind": "session_alias",
+            "private_registry_id_exposed": false,
+            "derivation": "centered_region_from_model_point",
+            "source_point": [
+              180,
+              243
+            ],
+            "source_sequence": 8,
+            "fresh_sequence": 9,
+            "derived_box": [
+              168,
+              232,
+              24,
+              22
+            ],
+            "derived_offset": [
+              12,
+              11
+            ],
+            "source_patch_sha256": "877663a5b7e58aa85715ae004a6afd3b3165a9dd0c2e5ab54c2fe74af89fed54",
+            "fresh_patch_sha256": "877663a5b7e58aa85715ae004a6afd3b3165a9dd0c2e5ab54c2fe74af89fed54",
+            "fresh_patch_exact": true,
+            "emit_started_ns": 59753905595489
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "step": 0,
+            "completed_ns": 59753914366457,
+            "emit_started_ns": 59753914372087
+          },
+          {
+            "event": "terminal",
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59753925745687,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59753925780887,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59753925783986
+          }
+        ],
+        "cursor": 67,
+        "returned_ns": 59753936658135,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "ce40c09df7a24e8fb673511c00302903",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c0f45e6d3425430f9d23e2d54064700b": {
+              "echo_cursor": 59,
+              "record": {
+                "emit_started_ns": 59753768498877,
+                "event": "clock",
+                "runtime_ns": 59753768495191,
+                "sequence": 8
+              },
+              "record_cursor": 60
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59739857876854,
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            }
+          },
+          "cursor": 67,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "step": 0,
+            "sequence": 9,
+            "capture_ns": 59753850655008,
+            "context_ns": 59753856675904,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/009.png",
+            "image_reused": false,
+            "image_prepare_ns": 20239561,
+            "image_ready_ns": 59753888313824,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.618722,
+            "wire_bytes": 1098,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59753896184853
+          },
+          "observation_cursor": 64,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11",
+            "d3328638a689de787e21b7d378ab61055fb99d774cbdc7851c268c089e42e846",
+            "1fefad6fecf249955579a2f92da15e69d126a79330dacc245a67a7686280641e",
+            "db6f1c164088333834779d258ce66a0c675bbed618acadadee90f4380d6aa966",
+            "677a85a585a490584b9a56de6b562c2fff566bac5f5b81c1e64f345fca25da6e",
+            "321fb37a43ec1504be94f68494e181d5b2a2c5a1aacea761c2e298fb09faa0e2",
+            "a569611d9ad1c51075cfafa740b2d780af2fd12efca52eb880fc5dcc660016e5",
+            "5ca5ca936d55ab1a16d66112cb99cdca5c3d93f0a9af5dbfac6745fcb56a8955",
+            "f8214f74da806b0f1e88991f2bfdd0f55a81c4a601316467f9d28bcb6b089ce6",
+            "1b54533f3588849670541c037fc2ccce5c3fb8118b94e0e11d7552bff90026af",
+            "0122f8edc2da5e3d020f6978ccca25486987fb476d9bfcbfe83f8a6ec36b5fbe",
+            "631b95961ddaa9a05473eedc303f71ba2c0f939430db46426306008677dfb7cb",
+            "4e07cf597c815a8b0fa05f34a3669c81e969c847af458ed2349448a502609baa",
+            "73a02cc999d73bc5a32171da312025a344ccefd331fcaa379ad40a908da14451",
+            "8e5e003ecb543e2c57836646d18471d65f3ec97ae023810390bdc94b4a1b3e42",
+            "e5c86cc21d9c596b7a1c2427081dd75561cd528af14698d7c30f712ef0abb4c9"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "ce40c09df7a24e8fb673511c00302903",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59753925745687,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59753925780887,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59753925783986
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59753961383494,
+    "end_ns": 59753999513292,
+    "result": {
+      "request": {
+        "after": 67,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "82faa384b9e34179a01f1adc34db7481"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "82faa384b9e34179a01f1adc34db7481"
+            },
+            "received_ns": 59753971902357,
+            "emit_started_ns": 59753971905410
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59753977839608,
+            "sequence": 9,
+            "emit_started_ns": 59753977845303
+          }
+        ],
+        "cursor": 69,
+        "returned_ns": 59753990790540,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "82faa384b9e34179a01f1adc34db7481",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c0f45e6d3425430f9d23e2d54064700b": {
+              "echo_cursor": 59,
+              "record": {
+                "emit_started_ns": 59753768498877,
+                "event": "clock",
+                "runtime_ns": 59753768495191,
+                "sequence": 8
+              },
+              "record_cursor": 60
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59739857876854,
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            },
+            "82faa384b9e34179a01f1adc34db7481": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59753977839608,
+                "sequence": 9,
+                "emit_started_ns": 59753977845303
+              },
+              "echo_cursor": 68,
+              "record_cursor": 69
+            }
+          },
+          "cursor": 69,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 3.618722,
+            "capture_ns": 59753850655008,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59753856675904,
+            "emit_started_ns": 59753896184853,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-fe5ffb27a73940e39a10f312733342b2",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/009.png",
+            "image_prepare_ns": 20239561,
+            "image_ready_ns": 59753888313824,
+            "image_reused": false,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 9,
+            "step": 0,
+            "wire_bytes": 1098
+          },
+          "observation_cursor": 64,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11",
+            "d3328638a689de787e21b7d378ab61055fb99d774cbdc7851c268c089e42e846",
+            "1fefad6fecf249955579a2f92da15e69d126a79330dacc245a67a7686280641e",
+            "db6f1c164088333834779d258ce66a0c675bbed618acadadee90f4380d6aa966",
+            "677a85a585a490584b9a56de6b562c2fff566bac5f5b81c1e64f345fca25da6e",
+            "321fb37a43ec1504be94f68494e181d5b2a2c5a1aacea761c2e298fb09faa0e2",
+            "a569611d9ad1c51075cfafa740b2d780af2fd12efca52eb880fc5dcc660016e5",
+            "5ca5ca936d55ab1a16d66112cb99cdca5c3d93f0a9af5dbfac6745fcb56a8955",
+            "f8214f74da806b0f1e88991f2bfdd0f55a81c4a601316467f9d28bcb6b089ce6",
+            "1b54533f3588849670541c037fc2ccce5c3fb8118b94e0e11d7552bff90026af",
+            "0122f8edc2da5e3d020f6978ccca25486987fb476d9bfcbfe83f8a6ec36b5fbe",
+            "631b95961ddaa9a05473eedc303f71ba2c0f939430db46426306008677dfb7cb",
+            "4e07cf597c815a8b0fa05f34a3669c81e969c847af458ed2349448a502609baa",
+            "73a02cc999d73bc5a32171da312025a344ccefd331fcaa379ad40a908da14451",
+            "8e5e003ecb543e2c57836646d18471d65f3ec97ae023810390bdc94b4a1b3e42",
+            "e5c86cc21d9c596b7a1c2427081dd75561cd528af14698d7c30f712ef0abb4c9",
+            "bb0ed487b717f141b889f5f294eaf473c6acbf646448a80cdae20299b7023ee1",
+            "b68c641b36300d1fbb016cad5e64377f0ad8d818b52a75b9b09b653811ca0d60"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "82faa384b9e34179a01f1adc34db7481",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59753977839608,
+            "sequence": 9,
+            "emit_started_ns": 59753977845303
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59754016983897,
+    "end_ns": 59754161672086,
+    "result": {
+      "request": {
+        "after": 69,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 8,
+        "action_id": "durable-98010bf1c8614314bee290e36960117b",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 9,
+          "valid_until_ns": 59763977839608,
+          "steps": [
+            {
+              "op": "target_handle_mint_from_point",
+              "name": "submit_control",
+              "coordinate_frame": "window_content",
+              "source_sequence": 8,
+              "point": [
+                270,
+                243
+              ],
+              "region_size": [
+                24,
+                14
+              ],
+              "ttl_ms": 60000,
+              "freshness_ms": 1500,
+              "search_radius": 0,
+              "allowed_transformations": [
+                "window_translation"
+              ]
+            }
+          ],
+          "id": "durable-98010bf1c8614314bee290e36960117b"
+        },
+        "request_id": "04e41bb28dea45e983bd4813c8756629"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 9,
+              "id": "durable-98010bf1c8614314bee290e36960117b",
+              "op": "submit",
+              "steps": [
+                {
+                  "allowed_transformations": [
+                    "window_translation"
+                  ],
+                  "coordinate_frame": "window_content",
+                  "freshness_ms": 1500,
+                  "name": "submit_control",
+                  "op": "target_handle_mint_from_point",
+                  "point": [
+                    270,
+                    243
+                  ],
+                  "region_size": [
+                    24,
+                    14
+                  ],
+                  "search_radius": 0,
+                  "source_sequence": 8,
+                  "ttl_ms": 60000
+                }
+              ],
+              "transport_request_id": "04e41bb28dea45e983bd4813c8756629",
+              "valid_until_ns": 59763977839608
+            },
+            "received_ns": 59754027565237,
+            "emit_started_ns": 59754027568132
+          },
+          {
+            "event": "accepted",
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "steps": 1,
+            "coordinate_resolutions": 0,
+            "valid_until_ns": 59763977839608,
+            "accepted_ns": 59754033265894,
+            "emit_started_ns": 59754033267676
+          },
+          {
+            "event": "step_started",
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "step": 0,
+            "operation": "target_handle_mint_from_point",
+            "issued_ns": 59754046445150,
+            "emit_started_ns": 59754046447305
+          },
+          {
+            "event": "observation",
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "step": 0,
+            "sequence": 10,
+            "capture_ns": 59754066811613,
+            "context_ns": 59754073822812,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/010.png",
+            "image_reused": false,
+            "image_prepare_ns": 20894355,
+            "image_ready_ns": 59754106832937,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 7.702736,
+            "wire_bytes": 1136,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59754111825626
+          },
+          {
+            "event": "target_handle_minted_from_point",
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "step": 0,
+            "minted_ns": 59754118982540,
+            "handle": "submit_control",
+            "name": "submit_control",
+            "status": "VALID",
+            "created_sequence": 10,
+            "expires_ns": 59814118982540,
+            "allowed_transformations": [
+              "window_translation"
+            ],
+            "patch_sha256": "e6bf6b7e5d01e75023e9bd87a941d3de13c2104c02833ebdf2ecbf83819a27ab",
+            "authority": "observational reference only; grants no input authority",
+            "reference_kind": "session_alias",
+            "private_registry_id_exposed": false,
+            "derivation": "centered_region_from_model_point",
+            "source_point": [
+              270,
+              243
+            ],
+            "source_sequence": 8,
+            "fresh_sequence": 10,
+            "derived_box": [
+              258,
+              236,
+              24,
+              14
+            ],
+            "derived_offset": [
+              12,
+              7
+            ],
+            "source_patch_sha256": "e6bf6b7e5d01e75023e9bd87a941d3de13c2104c02833ebdf2ecbf83819a27ab",
+            "fresh_patch_sha256": "e6bf6b7e5d01e75023e9bd87a941d3de13c2104c02833ebdf2ecbf83819a27ab",
+            "fresh_patch_exact": true,
+            "emit_started_ns": 59754119780903
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "step": 0,
+            "completed_ns": 59754129153178,
+            "emit_started_ns": 59754129158086
+          },
+          {
+            "event": "terminal",
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59754140798429,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59754140831961,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59754140834570
+          }
+        ],
+        "cursor": 76,
+        "returned_ns": 59754151398285,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "04e41bb28dea45e983bd4813c8756629",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "82faa384b9e34179a01f1adc34db7481": {
+              "echo_cursor": 68,
+              "record": {
+                "emit_started_ns": 59753977845303,
+                "event": "clock",
+                "runtime_ns": 59753977839608,
+                "sequence": 9
+              },
+              "record_cursor": 69
+            },
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c0f45e6d3425430f9d23e2d54064700b": {
+              "echo_cursor": 59,
+              "record": {
+                "emit_started_ns": 59753768498877,
+                "event": "clock",
+                "runtime_ns": 59753768495191,
+                "sequence": 8
+              },
+              "record_cursor": 60
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59739857876854,
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            }
+          },
+          "cursor": 76,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "step": 0,
+            "sequence": 10,
+            "capture_ns": 59754066811613,
+            "context_ns": 59754073822812,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/010.png",
+            "image_reused": false,
+            "image_prepare_ns": 20894355,
+            "image_ready_ns": 59754106832937,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 7.702736,
+            "wire_bytes": 1136,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59754111825626
+          },
+          "observation_cursor": 73,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11",
+            "d3328638a689de787e21b7d378ab61055fb99d774cbdc7851c268c089e42e846",
+            "1fefad6fecf249955579a2f92da15e69d126a79330dacc245a67a7686280641e",
+            "db6f1c164088333834779d258ce66a0c675bbed618acadadee90f4380d6aa966",
+            "677a85a585a490584b9a56de6b562c2fff566bac5f5b81c1e64f345fca25da6e",
+            "321fb37a43ec1504be94f68494e181d5b2a2c5a1aacea761c2e298fb09faa0e2",
+            "a569611d9ad1c51075cfafa740b2d780af2fd12efca52eb880fc5dcc660016e5",
+            "5ca5ca936d55ab1a16d66112cb99cdca5c3d93f0a9af5dbfac6745fcb56a8955",
+            "f8214f74da806b0f1e88991f2bfdd0f55a81c4a601316467f9d28bcb6b089ce6",
+            "1b54533f3588849670541c037fc2ccce5c3fb8118b94e0e11d7552bff90026af",
+            "0122f8edc2da5e3d020f6978ccca25486987fb476d9bfcbfe83f8a6ec36b5fbe",
+            "631b95961ddaa9a05473eedc303f71ba2c0f939430db46426306008677dfb7cb",
+            "4e07cf597c815a8b0fa05f34a3669c81e969c847af458ed2349448a502609baa",
+            "73a02cc999d73bc5a32171da312025a344ccefd331fcaa379ad40a908da14451",
+            "8e5e003ecb543e2c57836646d18471d65f3ec97ae023810390bdc94b4a1b3e42",
+            "e5c86cc21d9c596b7a1c2427081dd75561cd528af14698d7c30f712ef0abb4c9",
+            "bb0ed487b717f141b889f5f294eaf473c6acbf646448a80cdae20299b7023ee1",
+            "b68c641b36300d1fbb016cad5e64377f0ad8d818b52a75b9b09b653811ca0d60",
+            "089f71d2f5bb5b9fd4f2fe4e6197c7367bf2ad3e370516f464842cc5ac750b60",
+            "9609aaec8708c8c431fa33edf487aaf0a8a512d320e49c17f4d498e79ec19bfc",
+            "867134eeed0219bbbdf9dc4881ea3caa455c72a5414d966a2fe7b5fa5b176e17",
+            "fdb0e3574c81f2c3e22a0cb01b03022763fabee5d6e91248c8507aa9e10b35af",
+            "ab73b5f345a57824e4bb3504afb867863500f1f10331b9c411f608429f3a2751",
+            "8123d64c6334352b122ab93f59f33fc7ef447bd462eac1c7dde3a8d7372e14cf",
+            "2dfd9e7806503bfc8f61e073ce4bff2035d7b4d6f72cc2c2d7aab7a6a4c19ea7"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "04e41bb28dea45e983bd4813c8756629",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59754140798429,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59754140831961,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59754140834570
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59754180113596,
+    "end_ns": 59754219575011,
+    "result": {
+      "request": {
+        "after": 76,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "bb4016d8238a4c9bab94974d4aed13bd"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "bb4016d8238a4c9bab94974d4aed13bd"
+            },
+            "received_ns": 59754190549548,
+            "emit_started_ns": 59754190552520
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59754196437974,
+            "sequence": 10,
+            "emit_started_ns": 59754196443021
+          }
+        ],
+        "cursor": 78,
+        "returned_ns": 59754209332848,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "bb4016d8238a4c9bab94974d4aed13bd",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "82faa384b9e34179a01f1adc34db7481": {
+              "echo_cursor": 68,
+              "record": {
+                "emit_started_ns": 59753977845303,
+                "event": "clock",
+                "runtime_ns": 59753977839608,
+                "sequence": 9
+              },
+              "record_cursor": 69
+            },
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c0f45e6d3425430f9d23e2d54064700b": {
+              "echo_cursor": 59,
+              "record": {
+                "emit_started_ns": 59753768498877,
+                "event": "clock",
+                "runtime_ns": 59753768495191,
+                "sequence": 8
+              },
+              "record_cursor": 60
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59739857876854,
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            },
+            "bb4016d8238a4c9bab94974d4aed13bd": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59754196437974,
+                "sequence": 10,
+                "emit_started_ns": 59754196443021
+              },
+              "echo_cursor": 77,
+              "record_cursor": 78
+            }
+          },
+          "cursor": 78,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 7.702736,
+            "capture_ns": 59754066811613,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59754073822812,
+            "emit_started_ns": 59754111825626,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-98010bf1c8614314bee290e36960117b",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/010.png",
+            "image_prepare_ns": 20894355,
+            "image_ready_ns": 59754106832937,
+            "image_reused": false,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 10,
+            "step": 0,
+            "wire_bytes": 1136
+          },
+          "observation_cursor": 73,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11",
+            "d3328638a689de787e21b7d378ab61055fb99d774cbdc7851c268c089e42e846",
+            "1fefad6fecf249955579a2f92da15e69d126a79330dacc245a67a7686280641e",
+            "db6f1c164088333834779d258ce66a0c675bbed618acadadee90f4380d6aa966",
+            "677a85a585a490584b9a56de6b562c2fff566bac5f5b81c1e64f345fca25da6e",
+            "321fb37a43ec1504be94f68494e181d5b2a2c5a1aacea761c2e298fb09faa0e2",
+            "a569611d9ad1c51075cfafa740b2d780af2fd12efca52eb880fc5dcc660016e5",
+            "5ca5ca936d55ab1a16d66112cb99cdca5c3d93f0a9af5dbfac6745fcb56a8955",
+            "f8214f74da806b0f1e88991f2bfdd0f55a81c4a601316467f9d28bcb6b089ce6",
+            "1b54533f3588849670541c037fc2ccce5c3fb8118b94e0e11d7552bff90026af",
+            "0122f8edc2da5e3d020f6978ccca25486987fb476d9bfcbfe83f8a6ec36b5fbe",
+            "631b95961ddaa9a05473eedc303f71ba2c0f939430db46426306008677dfb7cb",
+            "4e07cf597c815a8b0fa05f34a3669c81e969c847af458ed2349448a502609baa",
+            "73a02cc999d73bc5a32171da312025a344ccefd331fcaa379ad40a908da14451",
+            "8e5e003ecb543e2c57836646d18471d65f3ec97ae023810390bdc94b4a1b3e42",
+            "e5c86cc21d9c596b7a1c2427081dd75561cd528af14698d7c30f712ef0abb4c9",
+            "bb0ed487b717f141b889f5f294eaf473c6acbf646448a80cdae20299b7023ee1",
+            "b68c641b36300d1fbb016cad5e64377f0ad8d818b52a75b9b09b653811ca0d60",
+            "089f71d2f5bb5b9fd4f2fe4e6197c7367bf2ad3e370516f464842cc5ac750b60",
+            "9609aaec8708c8c431fa33edf487aaf0a8a512d320e49c17f4d498e79ec19bfc",
+            "867134eeed0219bbbdf9dc4881ea3caa455c72a5414d966a2fe7b5fa5b176e17",
+            "fdb0e3574c81f2c3e22a0cb01b03022763fabee5d6e91248c8507aa9e10b35af",
+            "ab73b5f345a57824e4bb3504afb867863500f1f10331b9c411f608429f3a2751",
+            "8123d64c6334352b122ab93f59f33fc7ef447bd462eac1c7dde3a8d7372e14cf",
+            "2dfd9e7806503bfc8f61e073ce4bff2035d7b4d6f72cc2c2d7aab7a6a4c19ea7",
+            "5d39b4bc6f908f2e322e2aca0094100eb33962de18626ee40331800aebd3af2d",
+            "61cd8e1198e87baf6b70f85baaabdd396a9702c9bb43d7f6d27232230925b17d"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "bb4016d8238a4c9bab94974d4aed13bd",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59754196437974,
+            "sequence": 10,
+            "emit_started_ns": 59754196443021
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59754237983624,
+    "end_ns": 59754352744331,
+    "result": {
+      "request": {
+        "after": 78,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 8,
+        "action_id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 10,
+          "valid_until_ns": 59764196437974,
+          "steps": [
+            {
+              "op": "observe_target_handle",
+              "target_handle": "form_field",
+              "offset": [
+                12,
+                11
+              ]
+            }
+          ],
+          "id": "durable-0887e27a18594e6f83deb2c8b84a89d9"
+        },
+        "request_id": "598ad56f9c964fe4a68a0b591d40671a"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 10,
+              "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+              "op": "submit",
+              "steps": [
+                {
+                  "offset": [
+                    12,
+                    11
+                  ],
+                  "op": "observe_target_handle",
+                  "target_handle": "form_field"
+                }
+              ],
+              "transport_request_id": "598ad56f9c964fe4a68a0b591d40671a",
+              "valid_until_ns": 59764196437974
+            },
+            "received_ns": 59754249216844,
+            "emit_started_ns": 59754249219216
+          },
+          {
+            "event": "accepted",
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "steps": 1,
+            "coordinate_resolutions": 0,
+            "valid_until_ns": 59764196437974,
+            "accepted_ns": 59754258394177,
+            "emit_started_ns": 59754258397001
+          },
+          {
+            "event": "step_started",
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "step": 0,
+            "operation": "observe_target_handle",
+            "issued_ns": 59754268184960,
+            "emit_started_ns": 59754268187183
+          },
+          {
+            "event": "observation",
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "step": 0,
+            "sequence": 11,
+            "capture_ns": 59754283835688,
+            "context_ns": 59754289440531,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/010.png",
+            "image_reused": true,
+            "image_prepare_ns": 1222946,
+            "image_ready_ns": 59754295723912,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.168554,
+            "wire_bytes": 328,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59754300577929
+          },
+          {
+            "event": "target_handle_checked",
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "step": 0,
+            "checked_ns": 59754308192044,
+            "observation_sequence": 11,
+            "observation_capture_ns": 59754283835688,
+            "authority": "resolution only; ordinary admission remains required",
+            "eligible": true,
+            "status": "VALID",
+            "handle": "form_field",
+            "reason": "exact_region_match",
+            "name": "form_field",
+            "point": [
+              180,
+              243
+            ],
+            "observed_box": [
+              168,
+              232,
+              24,
+              22
+            ],
+            "binding_translation": [
+              0,
+              0
+            ],
+            "local_translation": [
+              0,
+              0
+            ],
+            "sequence": 11,
+            "valid_until_ns": 59755783835688,
+            "patch_sha256": "877663a5b7e58aa85715ae004a6afd3b3165a9dd0c2e5ab54c2fe74af89fed54",
+            "reference_kind": "session_alias",
+            "private_registry_id_exposed": false,
+            "emit_started_ns": 59754308965205
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "step": 0,
+            "completed_ns": 59754318643906,
+            "emit_started_ns": 59754318649010
+          },
+          {
+            "event": "terminal",
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59754330451744,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59754330486575,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59754330489334
+          }
+        ],
+        "cursor": 85,
+        "returned_ns": 59754342177559,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "598ad56f9c964fe4a68a0b591d40671a",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "82faa384b9e34179a01f1adc34db7481": {
+              "echo_cursor": 68,
+              "record": {
+                "emit_started_ns": 59753977845303,
+                "event": "clock",
+                "runtime_ns": 59753977839608,
+                "sequence": 9
+              },
+              "record_cursor": 69
+            },
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "bb4016d8238a4c9bab94974d4aed13bd": {
+              "echo_cursor": 77,
+              "record": {
+                "emit_started_ns": 59754196443021,
+                "event": "clock",
+                "runtime_ns": 59754196437974,
+                "sequence": 10
+              },
+              "record_cursor": 78
+            },
+            "c0f45e6d3425430f9d23e2d54064700b": {
+              "echo_cursor": 59,
+              "record": {
+                "emit_started_ns": 59753768498877,
+                "event": "clock",
+                "runtime_ns": 59753768495191,
+                "sequence": 8
+              },
+              "record_cursor": 60
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59739857876854,
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            }
+          },
+          "cursor": 85,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "step": 0,
+            "sequence": 11,
+            "capture_ns": 59754283835688,
+            "context_ns": 59754289440531,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/010.png",
+            "image_reused": true,
+            "image_prepare_ns": 1222946,
+            "image_ready_ns": 59754295723912,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.168554,
+            "wire_bytes": 328,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59754300577929
+          },
+          "observation_cursor": 82,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11",
+            "d3328638a689de787e21b7d378ab61055fb99d774cbdc7851c268c089e42e846",
+            "1fefad6fecf249955579a2f92da15e69d126a79330dacc245a67a7686280641e",
+            "db6f1c164088333834779d258ce66a0c675bbed618acadadee90f4380d6aa966",
+            "677a85a585a490584b9a56de6b562c2fff566bac5f5b81c1e64f345fca25da6e",
+            "321fb37a43ec1504be94f68494e181d5b2a2c5a1aacea761c2e298fb09faa0e2",
+            "a569611d9ad1c51075cfafa740b2d780af2fd12efca52eb880fc5dcc660016e5",
+            "5ca5ca936d55ab1a16d66112cb99cdca5c3d93f0a9af5dbfac6745fcb56a8955",
+            "f8214f74da806b0f1e88991f2bfdd0f55a81c4a601316467f9d28bcb6b089ce6",
+            "1b54533f3588849670541c037fc2ccce5c3fb8118b94e0e11d7552bff90026af",
+            "0122f8edc2da5e3d020f6978ccca25486987fb476d9bfcbfe83f8a6ec36b5fbe",
+            "631b95961ddaa9a05473eedc303f71ba2c0f939430db46426306008677dfb7cb",
+            "4e07cf597c815a8b0fa05f34a3669c81e969c847af458ed2349448a502609baa",
+            "73a02cc999d73bc5a32171da312025a344ccefd331fcaa379ad40a908da14451",
+            "8e5e003ecb543e2c57836646d18471d65f3ec97ae023810390bdc94b4a1b3e42",
+            "e5c86cc21d9c596b7a1c2427081dd75561cd528af14698d7c30f712ef0abb4c9",
+            "bb0ed487b717f141b889f5f294eaf473c6acbf646448a80cdae20299b7023ee1",
+            "b68c641b36300d1fbb016cad5e64377f0ad8d818b52a75b9b09b653811ca0d60",
+            "089f71d2f5bb5b9fd4f2fe4e6197c7367bf2ad3e370516f464842cc5ac750b60",
+            "9609aaec8708c8c431fa33edf487aaf0a8a512d320e49c17f4d498e79ec19bfc",
+            "867134eeed0219bbbdf9dc4881ea3caa455c72a5414d966a2fe7b5fa5b176e17",
+            "fdb0e3574c81f2c3e22a0cb01b03022763fabee5d6e91248c8507aa9e10b35af",
+            "ab73b5f345a57824e4bb3504afb867863500f1f10331b9c411f608429f3a2751",
+            "8123d64c6334352b122ab93f59f33fc7ef447bd462eac1c7dde3a8d7372e14cf",
+            "2dfd9e7806503bfc8f61e073ce4bff2035d7b4d6f72cc2c2d7aab7a6a4c19ea7",
+            "5d39b4bc6f908f2e322e2aca0094100eb33962de18626ee40331800aebd3af2d",
+            "61cd8e1198e87baf6b70f85baaabdd396a9702c9bb43d7f6d27232230925b17d",
+            "ec754a048b55c840e1ef1b69c4285b6581c9e2098de01d23a60c4e16299c6809",
+            "be6c52f6887b4f9454f8224bcab7e7bbc8cb8dc2e12ba3cfa97732d1e5703791",
+            "22de536502b611d7ac8f9bcd0a4d12fe5f5bb204cdac18a3c98e7331d3d36724",
+            "923506dbc55f236399fd4e165217543388e90914af424a73f40c6c767a53c4c1",
+            "65c9530e114518fc6e823a43a2b7b4f0327c30174c3c987f28c50752a4b27362",
+            "6076b8e8df5e63b5a2591c873f5608e40d228fd8452a56c4537fee41a9901b7f",
+            "ada29bfd6d431cf3b8a8ddead10d40f5c997c96de4dc86d4989898b406650fa9"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "598ad56f9c964fe4a68a0b591d40671a",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59754330451744,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59754330486575,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59754330489334
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59754370154955,
+    "end_ns": 59754411182127,
+    "result": {
+      "request": {
+        "after": 85,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "262f41f45ee44e7cbceaa1d1a3e9aed9"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "262f41f45ee44e7cbceaa1d1a3e9aed9"
+            },
+            "received_ns": 59754383091274,
+            "emit_started_ns": 59754383093917
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59754390058306,
+            "sequence": 11,
+            "emit_started_ns": 59754390065543
+          }
+        ],
+        "cursor": 87,
+        "returned_ns": 59754400946285,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "262f41f45ee44e7cbceaa1d1a3e9aed9",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "82faa384b9e34179a01f1adc34db7481": {
+              "echo_cursor": 68,
+              "record": {
+                "emit_started_ns": 59753977845303,
+                "event": "clock",
+                "runtime_ns": 59753977839608,
+                "sequence": 9
+              },
+              "record_cursor": 69
+            },
+            "9f9a9e7fba724eb4a5c003e3dee148aa": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59738763713247,
+                "event": "clock",
+                "runtime_ns": 59738763707280,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "bb4016d8238a4c9bab94974d4aed13bd": {
+              "echo_cursor": 77,
+              "record": {
+                "emit_started_ns": 59754196443021,
+                "event": "clock",
+                "runtime_ns": 59754196437974,
+                "sequence": 10
+              },
+              "record_cursor": 78
+            },
+            "c0f45e6d3425430f9d23e2d54064700b": {
+              "echo_cursor": 59,
+              "record": {
+                "emit_started_ns": 59753768498877,
+                "event": "clock",
+                "runtime_ns": 59753768495191,
+                "sequence": 8
+              },
+              "record_cursor": 60
+            },
+            "ee996122c012482eaebca19500665bee": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59739857876854,
+                "event": "clock",
+                "runtime_ns": 59739857870719,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            },
+            "262f41f45ee44e7cbceaa1d1a3e9aed9": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59754390058306,
+                "sequence": 11,
+                "emit_started_ns": 59754390065543
+              },
+              "echo_cursor": 86,
+              "record_cursor": 87
+            }
+          },
+          "cursor": 87,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 3.168554,
+            "capture_ns": 59754283835688,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59754289440531,
+            "emit_started_ns": 59754300577929,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-0887e27a18594e6f83deb2c8b84a89d9",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-03/2-positive/runtime/010.png",
+            "image_prepare_ns": 1222946,
+            "image_ready_ns": 59754295723912,
+            "image_reused": true,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 11,
+            "step": 0,
+            "wire_bytes": 328
+          },
+          "observation_cursor": 82,
+          "pending_clock": null,
+          "record_hashes": [
+            "339d38566927083bdfacc644d58c08611702e27b0a4694b21de5d96976184e8e",
+            "d34dd40f57e096b05939202817d490f57f08a45f69fc026be002e21794449889",
+            "3ee009e074c86566e616e351c4384f75fc0874be489124c9d663200712d368a5",
+            "6426901a4b48920eb026a1a755e9cb29303ea096b76991e74313f0a3434ecbe6",
+            "23c34da66b7251b2762da05546433a1bed004f34389d73f32c6b13a6171df1fa",
+            "b8a3a6d2e5ff9fa3cf6830f6a1087d81155f3b8fdf688e210a56d75682dae10b",
+            "53182b0dc1a0ffba6da5a80fe9078bcf9f179f59dee25339f1c6b022a62f68b8",
+            "23239e4193c6b367fdfd97fba8b79c9e069fbf76c7670c076e056fffdf304d06",
+            "db82c302d6214033031c3481f574349279f61b54772b07ca323dbc8fa2be26ea",
+            "ea63eaddb8db6ceca8c92845c7a79cc9f8f9443931b5b741a0f2d09057af4ef2",
+            "db0292dd3a130b93abd7450bc2701d0fef02e669f10dc7eef188c985f002dc0e",
+            "edd501dcb4d3da8156ae0b5b766e9f8de5872778e363b28727a533da4659af25",
+            "7e14438c3b9e80f65b9c0a3f4cafbc0c38509c08b8f30e27a3fbb9d1958cb47d",
+            "b1f754db77b4a7b1f90d5e1fc75c1a3f3145295ff022afe56ca7cc280d841ce9",
+            "78f566258a2604cbde609acdc6ee3656b4fd163c0178057d31f718692f6e93ed",
+            "c3acd978d91eda11db23190014fe616b0e07c87cdb86a26bd1ee14b8ef3b56f7",
+            "6bd75c05a3105e7a8943194b7d7be34a147f6931556969b6b93538e1a659178f",
+            "b8c817efca1f374966467f814a54573f9c2a767daec00c7816638e2ec06fb3ca",
+            "5f03c2daa39a38a7af14ce814cb5aebe8b433343ea323f3ec1c07bba809f1653",
+            "b42b59f772d14931af36bb1a19a4eb2898dff54e0888871554c2135847e249a6",
+            "30151844c505f56192ac07f50c3fdcec70b6e26f256388256ea5763828b00014",
+            "ea184cbccaee31f82fb047dcab6d709c92ae7526828e328b0aee7be2a45ab7c9",
+            "9d618293144cfaf68b1bd7cdbd653383b2d1000d11fac624751debc2ab2c7e83",
+            "a83fbe82de9307c2de21df55fe2435cbb540fd84f4ab616c590489cc566d16d8",
+            "88521e00cb610cd5ae0827714f693df1f3f5e2f6d53a282fc5c9de28fad2cf88",
+            "91b29b98a9acad759239067100e4b68a263e62811224a81424eb872b0cc5a253",
+            "ca9aa1421fbd7b954eff7bec59755fedfc53d884b30434c36572d6e9a62420cc",
+            "1808b12583cddf6cd05006ee5c2738bcf609d6bbf0a661a88121e67464ec9e6a",
+            "2878204e5bcaba13b36da9e1ce9322817f941cd3e9888e1ab3d0d069408b8e6e",
+            "37c8fd31339b7928ed8cbe6228729ec105f388502ce4831e34b54e69a85fbfb8",
+            "2214a22c1e7931c461f8a9535f5a8b01c35a6d5c3f969385addcab2b12a7a321",
+            "95cd11eaa6462920a8a25987d669fdb43af377bd232523179609a03c1512e987",
+            "51a7e9f0a3dd5366aee35ae961ba058436dac4c0c9fc6ab6b91a24945a092631",
+            "7c80f24da679ea559e92acba8aca0265f0363e3b8ca2d5d838f7ee720cdb9e3e",
+            "f35545ddf1cef9ef23a4d5e2c194bbb14aa3fe7073babdebe2928d28e3ca1585",
+            "5dfbd97c7642cda05be81c863f7bfee27dc8c7b33b65d29562d8bf92955c894e",
+            "31cfd4f90f9f20156dafeb7a3e260053265883cbe0c69741f7562ba0be1a422f",
+            "e1e3b2203716f11a13979627a18a0735a75954cb3270924f5753a74a9eede456",
+            "136e566332b9e922119eb1b7ebd11585136a0b9a387a25a119064cf051fd4798",
+            "de8c54d6409877f4fb409f5afb8b0b1143f2670af8b6420677b1d44b86939b29",
+            "0782fc606605ad6c2da5a4eac2852debde4642ac60f5938b051e8398ada85c98",
+            "a3dc0851b7e6c944e101aea0089eaf1bdec1fb303cedc69e7276a28b640cc545",
+            "485351fc61c822496d2c025ee59a2e1bac87dfbfbf7f39a615a015e39a4e8f4d",
+            "ece4057725fe2b487883d58193786045e4e8bfabca3e0915255e05788ec543d4",
+            "718f4a482dd1d40e369b864803ae87c172564fc9ed04575c14224f33702e0952",
+            "6235c9c50a7404ba2f96c7cdac4b97a4ee4ed92e237fa83af3640213b837166d",
+            "1c4751ac7c6a7428ec1c6a1a117f1caddbbd998e3065445837d86524cd1f86da",
+            "df33494b94d1e80019045aae3020c33dddbb14fe2647808e4458c5a4648c431c",
+            "e600245b4de111eff1c455ebbbedf4bba82691690ac42556b6d4f5ef4b7f7529",
+            "76203994f9cfa74ba08f8246bc2b317eadc3792b3dc1b5c3b78ba3c34b4c8124",
+            "c4a696269016ffdbe140c251d873090be1fbbff1a1097c970923547e15a7fa10",
+            "cac55a8b7de8c375d23a058d1db4036d9c76f341725b3b248d10a85518520f11",
+            "d3328638a689de787e21b7d378ab61055fb99d774cbdc7851c268c089e42e846",
+            "1fefad6fecf249955579a2f92da15e69d126a79330dacc245a67a7686280641e",
+            "db6f1c164088333834779d258ce66a0c675bbed618acadadee90f4380d6aa966",
+            "677a85a585a490584b9a56de6b562c2fff566bac5f5b81c1e64f345fca25da6e",
+            "321fb37a43ec1504be94f68494e181d5b2a2c5a1aacea761c2e298fb09faa0e2",
+            "a569611d9ad1c51075cfafa740b2d780af2fd12efca52eb880fc5dcc660016e5",
+            "5ca5ca936d55ab1a16d66112cb99cdca5c3d93f0a9af5dbfac6745fcb56a8955",
+            "f8214f74da806b0f1e88991f2bfdd0f55a81c4a601316467f9d28bcb6b089ce6",
+            "1b54533f3588849670541c037fc2ccce5c3fb8118b94e0e11d7552bff90026af",
+            "0122f8edc2da5e3d020f6978ccca25486987fb476d9bfcbfe83f8a6ec36b5fbe",
+            "631b95961ddaa9a05473eedc303f71ba2c0f939430db46426306008677dfb7cb",
+            "4e07cf597c815a8b0fa05f34a3669c81e969c847af458ed2349448a502609baa",
+            "73a02cc999d73bc5a32171da312025a344ccefd331fcaa379ad40a908da14451",
+            "8e5e003ecb543e2c57836646d18471d65f3ec97ae023810390bdc94b4a1b3e42",
+            "e5c86cc21d9c596b7a1c2427081dd75561cd528af14698d7c30f712ef0abb4c9",
+            "bb0ed487b717f141b889f5f294eaf473c6acbf646448a80cdae20299b7023ee1",
+            "b68c641b36300d1fbb016cad5e64377f0ad8d818b52a75b9b09b653811ca0d60",
+            "089f71d2f5bb5b9fd4f2fe4e6197c7367bf2ad3e370516f464842cc5ac750b60",
+            "9609aaec8708c8c431fa33edf487aaf0a8a512d320e49c17f4d498e79ec19bfc",
+            "867134eeed0219bbbdf9dc4881ea3caa455c72a5414d966a2fe7b5fa5b176e17",
+            "fdb0e3574c81f2c3e22a0cb01b03022763fabee5d6e91248c8507aa9e10b35af",
+            "ab73b5f345a57824e4bb3504afb867863500f1f10331b9c411f608429f3a2751",
+            "8123d64c6334352b122ab93f59f33fc7ef447bd462eac1c7dde3a8d7372e14cf",
+            "2dfd9e7806503bfc8f61e073ce4bff2035d7b4d6f72cc2c2d7aab7a6a4c19ea7",
+            "5d39b4bc6f908f2e322e2aca0094100eb33962de18626ee40331800aebd3af2d",
+            "61cd8e1198e87baf6b70f85baaabdd396a9702c9bb43d7f6d27232230925b17d",
+            "ec754a048b55c840e1ef1b69c4285b6581c9e2098de01d23a60c4e16299c6809",
+            "be6c52f6887b4f9454f8224bcab7e7bbc8cb8dc2e12ba3cfa97732d1e5703791",
+            "22de536502b611d7ac8f9bcd0a4d12fe5f5bb204cdac18a3c98e7331d3d36724",
+            "923506dbc55f236399fd4e165217543388e90914af424a73f40c6c767a53c4c1",
+            "65c9530e114518fc6e823a43a2b7b4f0327c30174c3c987f28c50752a4b27362",
+            "6076b8e8df5e63b5a2591c873f5608e40d228fd8452a56c4537fee41a9901b7f",
+            "ada29bfd6d431cf3b8a8ddead10d40f5c997c96de4dc86d4989898b406650fa9",
+            "e9f105b665fc054866d978337494595725b0355182e828c7823520cafd78c128",
+            "48a8b1728d8777b4b35d2be1cc9ab33a03f41cf4706f942488f3926416fab065"
+          ],
+          "session": "/tmp/agent-interface-events-f9qsv01w/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "262f41f45ee44e7cbceaa1d1a3e9aed9",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59754390058306,
+            "sequence": 11,
+            "emit_started_ns": 59754390065543
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  }
+]

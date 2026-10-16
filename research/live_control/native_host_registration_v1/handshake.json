@@ -1,0 +1,47 @@
+{
+  "command": "wsl.exe",
+  "args": [
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit",
+    "--exec",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONPATH=.:research/live_control",
+    "/tmp/agent-interface-mcp-venv/bin/python",
+    "research/live_control/native_mcp_v1.py",
+    "--allocation-directory",
+    "results-local/native-host-direct-01",
+    "--app",
+    "calc",
+    "--seed",
+    "991125",
+    "--max-stages",
+    "8",
+    "--text-gap-ms",
+    "2",
+    "--harness-python",
+    "/usr/bin/python3"
+  ],
+  "tools": [
+    "native_start",
+    "native_status",
+    "native_observe",
+    "native_submit",
+    "native_resume"
+  ],
+  "status": {
+    "allocation": {
+      "authority": "none",
+      "run_directory": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-host-direct-01/run",
+      "app": "calc",
+      "seed": 991125,
+      "max_stages": 8,
+      "text_gap_ms": 2,
+      "status": "not_started"
+    },
+    "authority": "none"
+  },
+  "allocation_exists": false
+}

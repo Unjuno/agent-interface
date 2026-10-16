@@ -1,0 +1,144 @@
+{
+  "base_commit": "0792fe8bbacb53073b7f818244b0bf52f9c20fe6",
+  "decision": "RETAIN_LIVE_RECEIPT_DURABLE_IDENTITY_COMPOSITION",
+  "formal_retries": 0,
+  "hard_gate_pass": true,
+  "input_result_id": "inkscape-abi-v2-source-first-live-v1-20260916-994601",
+  "input_result_sha256": "402f6320f7a87acd0540b9aab1cd2eee610fab73c9937c72a682b77f11e0e9f3",
+  "limitations": [
+    "offline replay of exact retained live evidence",
+    "does not prove full live servo/executor durable write in same process",
+    "no durable-submit/network/crash-after-send/external exactly-once claim"
+  ],
+  "result_id": "inkscape-live-receipt-durable-composition-v1-20260916-01",
+  "rows": [
+    {
+      "case": "exact_live_input_and_dependency_identities",
+      "detail": {
+        "authority_end_id": "901e6ed15b87454fdbef7909c1e0f026",
+        "result_id": "inkscape-abi-v2-source-first-live-v1-20260916-994601",
+        "sequence": 3,
+        "source_sha256": {
+          "authority_end_identity_binding_v1.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+          "authority_ended_bridge_v2.py": "37e544086fe70087c0a2e6c03ce8c42c1c5dd71989f7fe541eb9055b3551eb52",
+          "binder_byte_pinned_bound_issue_v1.py": "c725ca222920acf7dde9e5e0950a7178da92dbac41b49f65452acd0939241060",
+          "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+          "formal-result.json": "402f6320f7a87acd0540b9aab1cd2eee610fab73c9937c72a682b77f11e0e9f3",
+          "validator_byte_pinned_ledger_v3.py": "a0744260a48b3575a451c63139fdb2fde898e0493317d1edd1d731ce3d227be5"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "issue_exact_runtime_identity_without_caller_mutation",
+      "detail": {
+        "entries": {
+          "901e6ed15b87454fdbef7909c1e0f026": {
+            "post_sequence": 3,
+            "status": "pending"
+          }
+        },
+        "post_sequence": 3,
+        "receipt_unchanged": true,
+        "terminal_unchanged": true,
+        "token_id": "901e6ed15b87454fdbef7909c1e0f026"
+      },
+      "pass": true
+    },
+    {
+      "case": "sidecars_pin_exact_live_policy_bytes",
+      "detail": {
+        "binder_pin": {
+          "binder_id": "authority-end-intent-token-v1",
+          "binder_sha256": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+          "function_name": "bind_authority_end_identity",
+          "schema": "authority-end-identity-binder-byte-pin-v1"
+        },
+        "validator_pin": {
+          "function_name": "to_caller_execution_decision",
+          "schema": "authority-ended-validator-byte-pin-v3",
+          "validator_id": "inkscape-authority-ended-abi-v2-current",
+          "validator_sha256": "37e544086fe70087c0a2e6c03ce8c42c1c5dd71989f7fe541eb9055b3551eb52"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "fresh_reopen_recovers_exact_pending_live_token",
+      "detail": {
+        "entries": {
+          "901e6ed15b87454fdbef7909c1e0f026": {
+            "post_sequence": 3,
+            "status": "pending"
+          }
+        },
+        "post_sequence": 3,
+        "token_id": "901e6ed15b87454fdbef7909c1e0f026"
+      },
+      "pass": true
+    },
+    {
+      "case": "duplicate_live_receipt_rejects_without_mutation",
+      "detail": {
+        "entries": {
+          "901e6ed15b87454fdbef7909c1e0f026": {
+            "post_sequence": 3,
+            "status": "pending"
+          }
+        },
+        "rejection": {
+          "error": "authority_end_id already exists",
+          "status": "REJECTED",
+          "type": "DuplicateReceipt"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "forged_live_identity_rejects_before_mutation",
+      "detail": {
+        "entries": {
+          "901e6ed15b87454fdbef7909c1e0f026": {
+            "post_sequence": 3,
+            "status": "pending"
+          }
+        },
+        "rejection": {
+          "error": "caller authority_end_id mismatch",
+          "status": "REJECTED",
+          "type": "IdentityBindingError"
+        }
+      },
+      "pass": true
+    },
+    {
+      "case": "consume_restart_preserves_consumed_live_identity",
+      "detail": {
+        "entries": {
+          "901e6ed15b87454fdbef7909c1e0f026": {
+            "post_sequence": 3,
+            "status": "consumed"
+          }
+        },
+        "rejection": {
+          "error": "authority_end_id already consumed",
+          "status": "REJECTED",
+          "type": "TokenConsumed"
+        }
+      },
+      "pass": true
+    }
+  ],
+  "runner_sha256": "6e6ae05eaacb8e39b1dacd072f33186d225255f0ac776988ac1ac7a0dc7f830d",
+  "schema": "inkscape-live-receipt-durable-composition-v1-formal-result",
+  "source_sha256": {
+    "authority_end_identity_binding_v1.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+    "authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e",
+    "authority_ended_bridge_v2.py": "37e544086fe70087c0a2e6c03ce8c42c1c5dd71989f7fe541eb9055b3551eb52",
+    "binder_byte_pinned_bound_issue_v1.py": "c725ca222920acf7dde9e5e0950a7178da92dbac41b49f65452acd0939241060",
+    "durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "formal-result.json": "402f6320f7a87acd0540b9aab1cd2eee610fab73c9937c72a682b77f11e0e9f3",
+    "validator_byte_pinned_ledger_v3.py": "a0744260a48b3575a451c63139fdb2fde898e0493317d1edd1d731ce3d227be5"
+  }
+}

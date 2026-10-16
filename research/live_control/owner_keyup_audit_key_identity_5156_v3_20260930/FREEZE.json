@@ -1,0 +1,62 @@
+{
+  "schema": "owner-keyup-key-identity-audit-freeze-v1",
+  "intake_main": "55c467786b3b98e5f8d1746f9c2970b7ada8b47c",
+  "predecessors": {
+    "pr_5415_head": "2b01248ff319a70ca7ddb19131f2f6cc4d7a2360",
+    "pr_5467_head": "1675b2e3b3deb4ffbd2651098ccfc819aa53d123"
+  },
+  "inputs": {
+    "upstream/audit_v2.py": {
+      "repository_path": "research/live_control/owner_keyup_audit_completeness_5156_v2_20260930/audit_v2.py",
+      "git_blob": "c37b6372f4e5a7306b98049c834559fdd60cadee",
+      "sha256": "191fdabdd289e49b03514d1dfc66ba475b885ab078b733a7ef7030daf9cfe906"
+    },
+    "upstream/expected_inventory.json": {
+      "repository_path": "research/live_control/owner_keyup_audit_interop_5156_v1/expected_inventory.json",
+      "git_blob": "affa71e53457bb903353ce67b3477ef20b1d488c",
+      "sha256": "9ef72a837ce4f5d802dcc7fdb72a843a0e768154dbe30897a00f270cfaabde2b"
+    },
+    "upstream/owner_rows_v1.json": {
+      "repository_path": "research/live_control/owner_keyup_audit_interop_5156_v1/owner_rows_v1.json",
+      "git_blob": "0ba30b5f30d57045af4ca54c3eec9893fa1bce05",
+      "sha256": "26dd2c9fbb4655cd9d69ef9a55f5daea68da07cc1a0ce75a99024edace5b4b87"
+    },
+    "upstream/retained_raw.json": {
+      "repository_path": "research/live_control/owner_keyup_audit_interop_5156_v1/results/construction-01/raw.json",
+      "git_blob": "451247a5180348b8c29d09994dc0264f822585d1",
+      "sha256": "56842934b9f9b13fe0e52d515d31bd0c3d598cdb1cfa8b719dfb4c8ba463cbc2"
+    }
+  },
+  "candidate": {
+    "PLAN.md": "f84ca193eb9fb7f9ffabe1be3b61c892eebe55153a84a29a0aa0d958bf43f3af",
+    "audit_key_identity.py": "c313db317d0973319e6a77cccecb4f5bb6f1a344120ddbb1ece33bb235d586e8",
+    "run_experiment.py": "0f2d14167ac256bafb6f5bc2831e42804190a69d2698d42026963949b95d0b93",
+    "audit_raw_only.py": "d3bd3cadc9b141db9ef378e6b27121d45a20c78a6eb03a9fd4b6e38838db0a4a",
+    "test_audit_key_identity.py": "89cb15c38f401f3b71dc71086854efc1c9d22f971d9012b353d461e5405aebd1"
+  },
+  "protocol": {
+    "retained_rows": 3,
+    "upstream_false_accept_controls": 2,
+    "candidate_mutation_controls": [
+      "explicit_key_other_string",
+      "explicit_key_null",
+      "cleanup_key_string",
+      "cleanup_key_boolean",
+      "explicit_key_omitted",
+      "release_id_tampered",
+      "release_row_deleted",
+      "release_row_duplicated",
+      "expected_explicit_key_null",
+      "expected_cleanup_key_string"
+    ],
+    "formal_owner_or_x11_invocations": 0,
+    "container_invocations": 0,
+    "retry_policy": "one candidate runner; one separate raw-only audit only after runner success; no source/owner rerun"
+  },
+  "runtime": {
+    "python": "CPython 3.14.5",
+    "platform": "macOS host; standard library only",
+    "network_experiment": false,
+    "gui_or_input": false
+  }
+}

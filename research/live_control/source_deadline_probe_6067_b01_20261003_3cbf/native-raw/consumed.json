@@ -1,0 +1,80 @@
+{
+  "mkdir": {
+    "command": [
+      "orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "mkdir",
+      "/home/taka/outputs/source-deadline-6067-b01-3cbf-raw"
+    ],
+    "exit_code": 0,
+    "finished_ns": 48175794870791,
+    "started_ns": 48175767875375,
+    "stderr": "",
+    "stdout": ""
+  },
+  "mode": "source-boundary-diagnostic",
+  "readiness": {
+    "guest_sha256": {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "sha256sum",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/README.md",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/auditor.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/common.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/evidence-red.log",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/no-spin-red.log",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/probe-red.log",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/profile-red.log",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/review-continuity-red.log",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/runtime-spin-red.log",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/evidence.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/fixture_baseline.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/fixture_trace.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/observer.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/plan.json",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/policy.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/probe.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/profile.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/profile_reference.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/reference.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/runner.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/test_continuity.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/test_evidence.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/test_probe.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/test_profile.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/timing.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/x11.py",
+        "/home/taka/inputs/source-deadline-6067-b01-3cbf-source/FREEZE.json"
+      ],
+      "exit_code": 0,
+      "finished_ns": 48175653750208,
+      "started_ns": 48175618804458,
+      "stderr": "",
+      "stdout": "ad8b0320ee60044b2a7899085063b3658c6b471c413f0f51810d53d6acd959c1  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/README.md\nc49728d8e8096806a3cb35303aa5e4366490e240fb97d991a475718e9a76645e  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/auditor.py\nd0274dc14a409ae409363ca82b83a4cffd186f37b7c859ba1cb6e22d875d9b37  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/common.py\n455b90b306be00790b8d1bd86646929218561ff91856bd02882bd30e4b7c7a4e  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/evidence-red.log\nee7e5e10b706cecfa7e7b2f3142a4cf2453ff52b0dbd5a26a2672972dd4dfa5c  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/no-spin-red.log\nea88cf879070fc2d3c63e8a797ccd5a04e262317a119395e1277d9ff123f24e4  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/probe-red.log\n081195783522082fd8c62bf1ce6a9fbf03e06c0cc11b9c2d28e74b9a7c84fd0e  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/profile-red.log\n6bdf744702b97799163ef8190f8c878f3f455eecf7da75d7049096296e0c82d2  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/review-continuity-red.log\nad148a490d242ec9813f7daf1241554db1df9abb8714a965d021b7f622cff09d  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/construction-methods/runtime-spin-red.log\n7c7cb050d2f69e9404fae96d24746dc7159fb6534c0a3bd395ad0c6c26a70319  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/evidence.py\n5a5dbb04605e94cd086fdadfaf644cf116bc7e3bb93f3c06d04187df08d34ba5  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/fixture_baseline.py\ne7de4828742708e2e4a5931693b4e64ee4a4b059f62f98d2ceba4cc6124c3e60  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/fixture_trace.py\n8be84058c071ae18324feaf2890fcff6d494e6a7b9bcd0ed9760e92734c359c6  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/observer.py\n2ca76d8dba2d7c166353f16250ab21bf6dd1155164394777453af9237e100ba6  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/plan.json\nf31df31976e59ebfee0dd2ff505ca057583912daa0d56f5d8fc69a1c6c64a6a2  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/policy.py\n95bd7a59133659125b6cbe3720d62d28f84d312d4c3ae4ef36b0d662add9736c  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/probe.py\n63f8259ac7babaf5c4e956381156c49f10b03e1be07b9c8ee301bb5ad6206dff  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/profile.py\nb316105d966ac590094f274e26fa7b21babdc6d896ff5f989427f2457fe2a04c  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/profile_reference.py\n30e63aad6f234b65a22a2be5d153fc68cae1178a023e5ec68f116873efcce37a  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/reference.py\n4516ca2d540c0a915e8b454725a1aeb8ba6b006905e3bc2ba0f00b22eb635114  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/runner.py\n4ab1c508a8378fac2ac1294e5797e1edaea5e5aa6df7d15d860fbe8ecb9c5db6  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/test_continuity.py\nc7e59fd93de0da0d075ccab686068fb949138621ed71aacbc9a2f21cbc7aee55  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/test_evidence.py\n47b6ebfe4b5bb1bb49c2c9d115b8600aa69485e25c821ad01c32f6092e00926a  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/test_probe.py\nc7a3780e4c5f1d7147a6cd45bb3ca2b5f6b767417e9e1ea60acae886cb6802c3  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/test_profile.py\n1f8ec675a3f582dd66c9bed1d4a31c76aee1b7986c7417fe6102cb7387e07030  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/timing.py\n51570deaf7e11828df3d58c6ddc65381fb3041818e3b733978c62090125030d5  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/x11.py\n6d5bb7483d469608f823925ecbe6d07eef5dfd086bf60edf2c6e18a3aeaf3949  /home/taka/inputs/source-deadline-6067-b01-3cbf-source/FREEZE.json\n"
+    },
+    "idle": {
+      "command": [
+        "orbctl",
+        "run",
+        "-m",
+        "research-6183-t0-20261003",
+        "-u",
+        "root",
+        "docker",
+        "ps",
+        "-q"
+      ],
+      "exit_code": 0,
+      "finished_ns": 48175767584708,
+      "started_ns": 48175654937625,
+      "stderr": "",
+      "stdout": ""
+    }
+  },
+  "started_ns": 48175767874375
+}

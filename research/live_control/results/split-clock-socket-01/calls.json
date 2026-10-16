@@ -1,0 +1,371 @@
+[
+  {
+    "request": {
+      "after": 0,
+      "events": [
+        "observation"
+      ],
+      "timeout": 2
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "observation",
+          "id": "initial",
+          "sequence": 1,
+          "image": "synthetic-reference-only",
+          "scope": "no image capture",
+          "emitted_ns": 1745881055
+        }
+      ],
+      "cursor": 1,
+      "returned_ns": 1749494493,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    },
+    "continuation": {
+      "format": "received-continuation-v1",
+      "session": "/tmp/agent-interface-events-rwvowhym/events.sock",
+      "cursor": 1,
+      "record_hashes": [
+        "05aa3d0481a81273d09b1c12a9294c2951f854dc5b755e7aab96d503e93a1cd3"
+      ],
+      "observation": {
+        "event": "observation",
+        "id": "initial",
+        "sequence": 1,
+        "image": "synthetic-reference-only",
+        "scope": "no image capture",
+        "emitted_ns": 1745881055
+      },
+      "observation_cursor": 1,
+      "pending_clock": null,
+      "clocks": {},
+      "channel_closed": false,
+      "authority": "none"
+    },
+    "requested_clock_id": null,
+    "matched_clock": null,
+    "authority": "none; current observation and admission still required"
+  },
+  {
+    "request": {
+      "after": 1,
+      "events": [
+        "clock"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "new-clock"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "old-clock"
+          },
+          "emitted_ns": 1749009407
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 1,
+          "sequence": 1,
+          "emitted_ns": 1759617780
+        }
+      ],
+      "cursor": 3,
+      "returned_ns": 1769850701,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "new-clock",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "continuation": {
+      "format": "received-continuation-v1",
+      "session": "/tmp/agent-interface-events-rwvowhym/events.sock",
+      "cursor": 3,
+      "record_hashes": [
+        "05aa3d0481a81273d09b1c12a9294c2951f854dc5b755e7aab96d503e93a1cd3",
+        "745ccab41fbb9f4d3ca1deeefe24b0d81ef1b5c2855ef2363cbc29ac51e62971",
+        "841e57ed9a84108be76672418c74a540a276cae7ebefacf717378cf132a14513"
+      ],
+      "observation": {
+        "event": "observation",
+        "id": "initial",
+        "sequence": 1,
+        "image": "synthetic-reference-only",
+        "scope": "no image capture",
+        "emitted_ns": 1745881055
+      },
+      "observation_cursor": 1,
+      "pending_clock": null,
+      "clocks": {
+        "old-clock": {
+          "record": {
+            "event": "clock",
+            "runtime_ns": 1,
+            "sequence": 1,
+            "emitted_ns": 1759617780
+          },
+          "echo_cursor": 2,
+          "record_cursor": 3
+        }
+      },
+      "channel_closed": false,
+      "authority": "none"
+    },
+    "requested_clock_id": "new-clock",
+    "matched_clock": null,
+    "authority": "none; current observation and admission still required"
+  },
+  {
+    "request": {
+      "after": 3,
+      "events": [
+        "clock"
+      ],
+      "timeout": 0.05
+    },
+    "reply": {
+      "status": "timeout",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "new-clock"
+          },
+          "emitted_ns": 1769684064
+        }
+      ],
+      "cursor": 4,
+      "returned_ns": 1824324465,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    },
+    "continuation": {
+      "format": "received-continuation-v1",
+      "session": "/tmp/agent-interface-events-rwvowhym/events.sock",
+      "cursor": 4,
+      "record_hashes": [
+        "05aa3d0481a81273d09b1c12a9294c2951f854dc5b755e7aab96d503e93a1cd3",
+        "745ccab41fbb9f4d3ca1deeefe24b0d81ef1b5c2855ef2363cbc29ac51e62971",
+        "841e57ed9a84108be76672418c74a540a276cae7ebefacf717378cf132a14513",
+        "7091d21537cca6b59972a6b92dc5c5dc38516a5181d0412edbbbc8243a2ef0b3"
+      ],
+      "observation": {
+        "event": "observation",
+        "id": "initial",
+        "sequence": 1,
+        "image": "synthetic-reference-only",
+        "scope": "no image capture",
+        "emitted_ns": 1745881055
+      },
+      "observation_cursor": 1,
+      "pending_clock": {
+        "request_id": "new-clock",
+        "echo_cursor": 4
+      },
+      "clocks": {
+        "old-clock": {
+          "record": {
+            "event": "clock",
+            "runtime_ns": 1,
+            "sequence": 1,
+            "emitted_ns": 1759617780
+          },
+          "echo_cursor": 2,
+          "record_cursor": 3
+        }
+      },
+      "channel_closed": false,
+      "authority": "none"
+    },
+    "requested_clock_id": "new-clock",
+    "matched_clock": null,
+    "authority": "none; current observation and admission still required"
+  },
+  {
+    "request": {
+      "after": 4,
+      "events": [
+        "clock"
+      ],
+      "timeout": 2
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "clock",
+          "runtime_ns": 1830851282,
+          "sequence": 1,
+          "emitted_ns": 1830852592
+        }
+      ],
+      "cursor": 5,
+      "returned_ns": 1833722431,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    },
+    "continuation": {
+      "format": "received-continuation-v1",
+      "session": "/tmp/agent-interface-events-rwvowhym/events.sock",
+      "cursor": 5,
+      "record_hashes": [
+        "05aa3d0481a81273d09b1c12a9294c2951f854dc5b755e7aab96d503e93a1cd3",
+        "745ccab41fbb9f4d3ca1deeefe24b0d81ef1b5c2855ef2363cbc29ac51e62971",
+        "841e57ed9a84108be76672418c74a540a276cae7ebefacf717378cf132a14513",
+        "7091d21537cca6b59972a6b92dc5c5dc38516a5181d0412edbbbc8243a2ef0b3",
+        "c49048b3a50d9c8fddf5d84e4cc1c38fc14bee3da3a1ecc6960e4af179b453ca"
+      ],
+      "observation": {
+        "event": "observation",
+        "id": "initial",
+        "sequence": 1,
+        "image": "synthetic-reference-only",
+        "scope": "no image capture",
+        "emitted_ns": 1745881055
+      },
+      "observation_cursor": 1,
+      "pending_clock": null,
+      "clocks": {
+        "old-clock": {
+          "record": {
+            "event": "clock",
+            "runtime_ns": 1,
+            "sequence": 1,
+            "emitted_ns": 1759617780
+          },
+          "echo_cursor": 2,
+          "record_cursor": 3
+        },
+        "new-clock": {
+          "record": {
+            "event": "clock",
+            "runtime_ns": 1830851282,
+            "sequence": 1,
+            "emitted_ns": 1830852592
+          },
+          "echo_cursor": 4,
+          "record_cursor": 5
+        }
+      },
+      "channel_closed": false,
+      "authority": "none"
+    },
+    "requested_clock_id": "new-clock",
+    "matched_clock": {
+      "record": {
+        "event": "clock",
+        "runtime_ns": 1830851282,
+        "sequence": 1,
+        "emitted_ns": 1830852592
+      },
+      "echo_cursor": 4,
+      "record_cursor": 5
+    },
+    "authority": "none; current observation and admission still required"
+  },
+  {
+    "request": {
+      "after": 5,
+      "events": [
+        "independent_evaluation"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "finish"
+      },
+      "request_id": "finish-once"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "finish",
+            "transport_request_id": "finish-once"
+          },
+          "emitted_ns": 1839809341
+        },
+        {
+          "event": "independent_evaluation",
+          "scope": "fixture shutdown only",
+          "task_success": null,
+          "emitted_ns": 1843152877
+        }
+      ],
+      "cursor": 7,
+      "returned_ns": 1853876128,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "finish-once",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "continuation": {
+      "format": "received-continuation-v1",
+      "session": "/tmp/agent-interface-events-rwvowhym/events.sock",
+      "cursor": 7,
+      "record_hashes": [
+        "05aa3d0481a81273d09b1c12a9294c2951f854dc5b755e7aab96d503e93a1cd3",
+        "745ccab41fbb9f4d3ca1deeefe24b0d81ef1b5c2855ef2363cbc29ac51e62971",
+        "841e57ed9a84108be76672418c74a540a276cae7ebefacf717378cf132a14513",
+        "7091d21537cca6b59972a6b92dc5c5dc38516a5181d0412edbbbc8243a2ef0b3",
+        "c49048b3a50d9c8fddf5d84e4cc1c38fc14bee3da3a1ecc6960e4af179b453ca",
+        "0649b137aad274268a670043122d43a6addc5519dbbb43144d3a4b8720a4cb07",
+        "1dcef0b884e63514684315b5178bcfd3acf703010f1d49949e279774f8dc6f0a"
+      ],
+      "observation": {
+        "event": "observation",
+        "id": "initial",
+        "sequence": 1,
+        "image": "synthetic-reference-only",
+        "scope": "no image capture",
+        "emitted_ns": 1745881055
+      },
+      "observation_cursor": 1,
+      "pending_clock": null,
+      "clocks": {
+        "old-clock": {
+          "record": {
+            "event": "clock",
+            "runtime_ns": 1,
+            "sequence": 1,
+            "emitted_ns": 1759617780
+          },
+          "echo_cursor": 2,
+          "record_cursor": 3
+        },
+        "new-clock": {
+          "record": {
+            "event": "clock",
+            "runtime_ns": 1830851282,
+            "sequence": 1,
+            "emitted_ns": 1830852592
+          },
+          "echo_cursor": 4,
+          "record_cursor": 5
+        }
+      },
+      "channel_closed": false,
+      "authority": "none"
+    },
+    "requested_clock_id": null,
+    "matched_clock": null,
+    "authority": "none; current observation and admission still required"
+  }
+]

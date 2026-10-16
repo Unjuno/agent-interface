@@ -1,0 +1,224 @@
+{
+  "exchanges": [
+    {
+      "request": {
+        "after": 0,
+        "events": [
+          "clock"
+        ],
+        "timeout": 2,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "9508bd134f8e4f1cb50911e81c6ad8e0"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "9508bd134f8e4f1cb50911e81c6ad8e0"
+            },
+            "fixture_emitted_ns": 79692550579
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 79694678739,
+            "sequence": 1,
+            "fixture_emitted_ns": 79694681450
+          }
+        ],
+        "cursor": 2,
+        "returned_ns": 79704300680,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "9508bd134f8e4f1cb50911e81c6ad8e0",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "started_ns": 79627602553,
+      "returned_ns": 79704562134
+    },
+    {
+      "request": {
+        "after": 2,
+        "events": [
+          "input_stopped",
+          "terminal"
+        ],
+        "timeout": 2,
+        "action_id": "fault",
+        "command": {
+          "op": "submit",
+          "id": "fault",
+          "steps": [
+            {
+              "op": "fault"
+            },
+            {
+              "op": "tail"
+            }
+          ],
+          "expected_sequence": 1,
+          "valid_until_ns": 84694678739
+        },
+        "request_id": "428cf42fb30345308e062bc29fa22fac"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "fault",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "fault"
+                },
+                {
+                  "op": "tail"
+                }
+              ],
+              "transport_request_id": "428cf42fb30345308e062bc29fa22fac",
+              "valid_until_ns": 84694678739
+            },
+            "fixture_emitted_ns": 79705163899
+          },
+          {
+            "event": "accepted",
+            "id": "fault",
+            "steps": 2,
+            "valid_until_ns": 84694678739,
+            "accepted_ns": 79712511417,
+            "fixture_emitted_ns": 79712512696
+          },
+          {
+            "event": "step_started",
+            "id": "fault",
+            "step": 0,
+            "operation": "fault",
+            "issued_ns": 79723534287,
+            "fixture_emitted_ns": 79723535851
+          },
+          {
+            "event": "input_stopped",
+            "id": "fault",
+            "decision_reason": "focus_changed",
+            "interruption": {
+              "intent_token": "aca98f3f1a2b41c1be38c82d4f74e8e7",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true
+              }
+            },
+            "release": {
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": []
+            },
+            "stopped_ns": 79731719974,
+            "followup": "two passive observations; terminal follows; no further program steps",
+            "fixture_emitted_ns": 79731722057
+          }
+        ],
+        "cursor": 6,
+        "returned_ns": 79742823950,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "428cf42fb30345308e062bc29fa22fac",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "started_ns": 79704608010,
+      "returned_ns": 79742989871
+    },
+    {
+      "request": {
+        "after": 6,
+        "events": [
+          "terminal"
+        ],
+        "action_id": "fault",
+        "timeout": 0.4
+      },
+      "started_ns": 79828522027,
+      "reply": {
+        "status": "timeout",
+        "records": [],
+        "cursor": 6,
+        "returned_ns": 80229254769,
+        "authority": "none",
+        "acknowledgement": "not implied"
+      },
+      "returned_ns": 80229607830
+    }
+  ],
+  "state": "input_stopped_capture_pending",
+  "last_reply": {
+    "status": "timeout",
+    "records": [],
+    "cursor": 6,
+    "returned_ns": 80229254769,
+    "authority": "none",
+    "acknowledgement": "not implied"
+  },
+  "continuation_batch": {
+    "status": "timeout",
+    "records": [],
+    "cursor": 6,
+    "returned_ns": 80229254769,
+    "authority": "none",
+    "acknowledgement": "not implied"
+  },
+  "lifecycle": {
+    "state": "input_stopped_capture_pending",
+    "action_id": "fault",
+    "cursor": 6,
+    "uncertainty": null,
+    "stopped": {
+      "event": "input_stopped",
+      "id": "fault",
+      "decision_reason": "focus_changed",
+      "interruption": {
+        "intent_token": "aca98f3f1a2b41c1be38c82d4f74e8e7",
+        "record": {
+          "event": "owner_release",
+          "reason": "focus_changed",
+          "verified": true
+        }
+      },
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": []
+      },
+      "stopped_ns": 79731719974,
+      "followup": "two passive observations; terminal follows; no further program steps",
+      "fixture_emitted_ns": 79731722057
+    },
+    "terminal": null,
+    "observation": null,
+    "input_authority": "none",
+    "meaning": "Historical action state; terminal is not task success or permission to reuse a lease."
+  },
+  "image": {
+    "status": "no_observation",
+    "authority": "none"
+  },
+  "bounded_followup": {
+    "server_wait_ms": 400,
+    "socket_deadline_ms": 650,
+    "attempt_elapsed_ms": 401.085803,
+    "read_error": null,
+    "scope": "one read only; no command, input retry or authority renewal; serialization/rendering outside I/O deadline"
+  }
+}

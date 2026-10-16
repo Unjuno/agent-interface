@@ -1,0 +1,98 @@
+{
+  "aggregation_errors": [],
+  "batch_size": 4,
+  "controls": {
+    "duplicate": true,
+    "invalid_batch_size": true,
+    "invalid_kind": true,
+    "invalid_priority": true,
+    "nonmonotonic": true
+  },
+  "decision": "PASS_ORDERED_INTERRUPT_BATCHING_A3_SCOPED",
+  "directed": {
+    "batch_boundary": {
+      "candidate_deliveries": 2,
+      "candidate_exact": true,
+      "individual_deliveries": 5,
+      "priority_sorted_reversed": true
+    },
+    "causal_pair": {
+      "candidate_deliveries": 1,
+      "candidate_exact": true,
+      "individual_deliveries": 2,
+      "priority_sorted_reversed": true
+    },
+    "critical_pair": {
+      "candidate_deliveries": 1,
+      "candidate_exact": true,
+      "individual_deliveries": 2,
+      "priority_sorted_reversed": true
+    },
+    "goal_terminal": {
+      "candidate_deliveries": 1,
+      "candidate_exact": true,
+      "individual_deliveries": 2,
+      "priority_sorted_reversed": true
+    },
+    "independent_progress": {
+      "candidate_deliveries": 1,
+      "candidate_exact": true,
+      "individual_deliveries": 4,
+      "priority_sorted_reversed": false
+    },
+    "metadata": {
+      "candidate_deliveries": 1,
+      "candidate_exact": true,
+      "individual_deliveries": 4,
+      "priority_sorted_reversed": true
+    },
+    "mixed_sessions": {
+      "candidate_deliveries": 1,
+      "candidate_exact": true,
+      "individual_deliveries": 4,
+      "priority_sorted_reversed": true
+    }
+  },
+  "gates": {
+    "all_shards_present": true,
+    "corpus_coverage_exact": true,
+    "delivery_reduction_exposed": true,
+    "directed_candidate_exact": true,
+    "identity_exact": true,
+    "invocation_discipline": true,
+    "malformed_fail_closed": true,
+    "metadata_exact": true,
+    "naive_reversal_exposed": true,
+    "sequence_exact": true,
+    "session_projection_exact": true,
+    "shard_counts_exact": true
+  },
+  "logical_formal_allocations": 1,
+  "priority_sorted_directed_reversals": 6,
+  "replacements": 0,
+  "schema": "ordered-interrupt-batching-a3-formal-v1",
+  "shard_digests": {
+    "0": "81a8e816400fac142a51df725fedd82030f8c9d14f672980fdaee22bdc371a0e",
+    "1": "9c7ec5ab6145692e7da4d1864d3831686d08c0195d898f40c78de2b4d5915eb1",
+    "2": "8a1290407b530f25f76ba5ba09e349343ea2e30e583c9f581f60cdd0215669cb",
+    "3": "dccff8d0186255b3c4d284f3d844633ba71b04e85e5c845bfd6fa05a960b5b8a",
+    "4": "96fa13bd8f36650db7debf3e7ba446d613c2236f89da024ac02a60fbeb482075",
+    "5": "ec010798820326c2b4c97b50dbbdd4e8c17e650611339db70ad8447800a50cc1",
+    "6": "1a1d3603bacc8aae0f159f57d54045e16529e9e5c08a0101cae370b3969455c2",
+    "7": "23e54af9feef27a706cbb4f5093ebe30d55517e64252814c538376cd672c8d80",
+    "8": "7b973bdb79cbded6190ac762f4ff7f34a75196b1fdd44b23f028b814fbccad8b"
+  },
+  "shard_process_invocations": 9,
+  "shard_reruns": 0,
+  "sums": {
+    "identity_errors": 0,
+    "metadata_errors": 0,
+    "prefix_count": 2054353,
+    "sequence_count": 299593,
+    "sequence_mismatches": 0,
+    "sequences_with_delivery_reduction": 299584,
+    "session_projection_errors": 0
+  },
+  "task": "EVENT-ORDERED-INTERRUPT-BATCHING-A3-SHARDED-20260919-003",
+  "tuning": 0
+}

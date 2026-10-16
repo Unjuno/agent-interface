@@ -1,0 +1,146 @@
+{
+  "api": "request",
+  "caller_alive_final": false,
+  "checkpoint": {
+    "caller_alive": true,
+    "frames": [
+      {
+        "deadline": 22490.466056875,
+        "file": "baseline_client.py.txt",
+        "function": "request",
+        "line": 75,
+        "remaining": 0.04928391300200019,
+        "snapshot_monotonic": 22490.672904956
+      },
+      {
+        "file": "driver.py.txt",
+        "function": "invoke",
+        "line": 67
+      },
+      {
+        "file": "threading.py",
+        "function": "run",
+        "line": 1010
+      },
+      {
+        "file": "threading.py",
+        "function": "_bootstrap_inner",
+        "line": 1073
+      },
+      {
+        "file": "threading.py",
+        "function": "_bootstrap",
+        "line": 1030
+      }
+    ],
+    "process_exit": null,
+    "reader_alive": false,
+    "returned": null,
+    "stdout_closed": true
+  },
+  "client_close_pipes": {
+    "stderr": false,
+    "stdin": false,
+    "stdout": false
+  },
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/src/peer.py.txt",
+    "request",
+    "held",
+    "/out/native-baseline/request-held"
+  ],
+  "events": [
+    {
+      "kind": "child_ready",
+      "ns": 22490415661748
+    },
+    {
+      "kind": "call_started",
+      "ns": 22490415868665
+    },
+    {
+      "kind": "stdout_eof_observed",
+      "ns": 22490417494841
+    },
+    {
+      "kind": "checkpoint",
+      "ns": 22490672838039
+    },
+    {
+      "kind": "owned_release_sent",
+      "ns": 22490673278542
+    },
+    {
+      "kind": "call_ended",
+      "ns": 22490674880342
+    },
+    {
+      "kind": "child_reaped",
+      "ns": 22490676701143
+    },
+    {
+      "kind": "client_close_returned",
+      "ns": 22490676724394
+    },
+    {
+      "kind": "driver_pipes_closed",
+      "ns": 22490676742060
+    }
+  ],
+  "final": {
+    "caller_alive": false,
+    "journal_closed": true,
+    "pipes_closed": {
+      "stderr": true,
+      "stdin": true,
+      "stdout": true
+    },
+    "reader_alive": false
+  },
+  "finished": {
+    "owned_release_received": true,
+    "pid": 14
+  },
+  "identity": "request-held",
+  "journal": [
+    {
+      "direction": "sent",
+      "message": {
+        "id": 1,
+        "method": "fixture/request",
+        "params": {
+          "owned": true
+        }
+      },
+      "observed_ns": 22490415877124
+    }
+  ],
+  "journal_sha256": "0f056bbc72b80b5f1ff6169ca8b265388a4212ade74f8607153acee96409077a",
+  "native_exit": 0,
+  "pid": 14,
+  "ready": {
+    "api": "request",
+    "pid": 14,
+    "scenario": "held"
+  },
+  "returned": {
+    "message": "app-server closed during fixture/request: held diagnostic remains owned",
+    "type": "AppServerError"
+  },
+  "scenario": "held",
+  "stderr_remaining_hex": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/src/driver.py.txt\", line 67, in invoke\n    value = (client.request('fixture/request', {'owned': True}, timeout=plan['timeout_s'])\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/baseline_client.py.txt\", line 76, in request\n    raise AppServerError(f\"app-server closed during {method}: {detail}\")\nfixed_baseline.AppServerError: app-server closed during fixture/request: held diagnostic remains owned\n",
+  "wire": {
+    "api": "request",
+    "pid": 14,
+    "request_line": "{\"method\":\"fixture/request\",\"id\":1,\"params\":{\"owned\":true}}\n",
+    "scenario": "held",
+    "stderr_hex": "68656c6420646961676e6f737469632072656d61696e73206f776e65640a",
+    "stderr_write_count": 30,
+    "stdout_closed_ns": 22490416108250,
+    "stdout_hex": "",
+    "stdout_write_count": 0
+  }
+}

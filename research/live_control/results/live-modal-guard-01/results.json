@@ -1,0 +1,234 @@
+[
+  {
+    "case": "normal",
+    "guard": {
+      "event": "modal_guard",
+      "id": "confirm",
+      "status": "requires_new_admission",
+      "sample_started_ns": 5653412748,
+      "captured_ns": 5662146879,
+      "checked_ns": 5669441682,
+      "before": {
+        "focus": 8390085,
+        "surface": 8390085,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "after": {
+        "focus": 8390085,
+        "surface": 8390085,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "scope": "pre-input sample; ordinary lease/owner checks still required"
+    },
+    "terminal": {
+      "event": "terminal",
+      "id": "confirm",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 1,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 5767359765,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 5767417590,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "independent_evaluation": {
+      "success": true,
+      "actual": [
+        532,
+        590
+      ],
+      "known_ns": 5775098695
+    }
+  },
+  {
+    "case": "focus_change",
+    "guard": {
+      "event": "modal_guard",
+      "id": "confirm",
+      "status": "pixels_changed",
+      "sample_started_ns": 8460755713,
+      "captured_ns": 8464339281,
+      "checked_ns": 8471426682,
+      "before": {
+        "focus": 10487237,
+        "surface": 10487237,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "after": {
+        "focus": 10487237,
+        "surface": 10487237,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "scope": "pre-input sample; ordinary lease/owner checks still required"
+    },
+    "terminal": {
+      "event": "terminal",
+      "id": "confirm",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 8471949860,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 8471993465,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "independent_evaluation": {
+      "success": false,
+      "actual": [
+        null,
+        null
+      ],
+      "known_ns": 11491012782
+    }
+  },
+  {
+    "case": "move",
+    "guard": {
+      "event": "modal_guard",
+      "id": "confirm",
+      "status": "geometry_changed",
+      "sample_started_ns": 14074737352,
+      "captured_ns": 14078535764,
+      "checked_ns": 14079838852,
+      "before": {
+        "focus": 8390085,
+        "surface": 8390085,
+        "geometry": [
+          440,
+          250,
+          507,
+          174
+        ]
+      },
+      "after": {
+        "focus": 8390085,
+        "surface": 8390085,
+        "geometry": [
+          440,
+          250,
+          507,
+          174
+        ]
+      },
+      "scope": "pre-input sample; ordinary lease/owner checks still required"
+    },
+    "terminal": {
+      "event": "terminal",
+      "id": "confirm",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 14080378485,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 14080419339,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "independent_evaluation": {
+      "success": false,
+      "actual": [
+        null,
+        null
+      ],
+      "known_ns": 17089903196
+    }
+  },
+  {
+    "case": "age",
+    "guard": {
+      "event": "modal_guard",
+      "id": "confirm",
+      "status": "expired",
+      "sample_started_ns": 19912120746,
+      "captured_ns": 19915446207,
+      "checked_ns": 19916351610,
+      "before": {
+        "focus": 8390083,
+        "surface": 8390083,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "after": {
+        "focus": 8390083,
+        "surface": 8390083,
+        "geometry": [
+          386,
+          322,
+          507,
+          174
+        ]
+      },
+      "scope": "pre-input sample; ordinary lease/owner checks still required"
+    },
+    "terminal": {
+      "event": "terminal",
+      "id": "confirm",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 19916727762,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 19916765180,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "independent_evaluation": {
+      "success": false,
+      "actual": [
+        null,
+        null
+      ],
+      "known_ns": 22922422414
+    }
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "allocation": "timerfd-observation-accounting-20260922-01",
+  "command": [
+    "python",
+    "-B",
+    "study.py",
+    "run",
+    "formal-01"
+  ],
+  "construction": "synthetic 21-cell trace; 5 tests;12 mutation variants; unarmed probe and disarmed worker only, no armed timer observed before formal",
+  "count_scope": "reported_expirations means successful reads; unread history discarded by rearm is UNKNOWN, not part of reported count",
+  "formal_invocations_at_freeze": 0,
+  "formal_output": "formal-01",
+  "issue": 4001,
+  "retries": 0,
+  "sha256": {
+    "ENVIRONMENT.json": "4922dbb20e63e5f21e9a1f9edf1e140e444c80033551581a62c48b4e9f3fc785",
+    "PLAN.json": "fd9b9e0c1a9ad35c23166a88f72491a4507a8e689813534c72fde45f6abb4b62",
+    "audit.py": "15361671c96e170d93f9278f00c07bb4204bcb0a91d4f985ec9863b0ef43b245",
+    "construction/api_probe.json": "3ab74e43dc6f7c9c1fe96c0cf04fbbbbd51640a84b4bffa97d0c146430f1c443",
+    "construction/disarmed-worker.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/disarmed-worker.stdout.json": "38ff9110f3d1f0860ed5ef7c441a1486f725c499e0908cc6e5ec7c562321bdc6",
+    "construction/tests-01.stderr": "754e7d8ede2ac47b757673329d8ce49a3ffc94489805f77159bd8cacf0732632",
+    "construction/tests-01.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "study.py": "80b9d9a64976956417c6d4688271782621263fd6fb2b5f221b2111e951dd2866",
+    "test_audit.py": "8a10998e1e9e64ff2a56334b5a4e1dbe82760fab599b603fb6e4454a7890344b"
+  },
+  "state": "FROZEN_BEFORE_FORMAL",
+  "supervisor_timeout_s": 20,
+  "worker_timeout_s": 3
+}

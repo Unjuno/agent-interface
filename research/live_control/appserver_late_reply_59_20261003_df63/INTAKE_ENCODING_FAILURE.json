@@ -1,0 +1,11 @@
+{
+  "phase": "read-only main startup intake",
+  "tool_chunk": "730320",
+  "exit_code": 1,
+  "errors": [
+    "UnicodeDecodeError: cp932 cannot decode Git UTF8 doc byte0x94",
+    "TypeError: stdout was None after subprocess text-reader failure"
+  ],
+  "repair": "Bytes capture + explicit UTF8 decode and UTF8 stdout only; no source/runtime/native call or test ran before failure.",
+  "utc_of_record": "2026-10-03T10:18:48.094712+00:00"
+}

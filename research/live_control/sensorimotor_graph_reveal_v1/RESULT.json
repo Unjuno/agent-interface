@@ -1,0 +1,45 @@
+{
+  "copied_evidence_corruptions": {
+    "rejected": 9,
+    "total": 9
+  },
+  "decision": "PASS_SENSORIMOTOR_GRAPH_REVEAL_SCOPED",
+  "expected_typed_stops": 30,
+  "formal_cases": 48,
+  "formal_reruns": 0,
+  "intake_base": "d84027ebd94a786b2143e25e52fe1504deb85ee7",
+  "late_continuations_refused": 48,
+  "limits": {
+    "focus_loss_measured": false,
+    "model_calls": 0,
+    "performance_claim": false,
+    "synthetic_fixture": true,
+    "wheel_only": true
+  },
+  "matched_pairs": 24,
+  "neutral_receiver_cases": 48,
+  "outcomes": {
+    "ACTUATOR_BUDGET": 6,
+    "CANCELLED": 6,
+    "EXPIRED": 6,
+    "STALE_SOURCE": 6,
+    "UNKNOWN": 6,
+    "VISIBLE": 18
+  },
+  "scenarios": [
+    {"scenario":"initial_visible","outcome":["VISIBLE"],"wheel_counts":[0],"by_arm":{"graph":{"cases":3,"audit_pass":3},"imperative":{"cases":3,"audit_pass":3}}},
+    {"scenario":"one_scroll","outcome":["VISIBLE"],"wheel_counts":[1],"by_arm":{"graph":{"cases":3,"audit_pass":3},"imperative":{"cases":3,"audit_pass":3}}},
+    {"scenario":"three_scrolls","outcome":["VISIBLE"],"wheel_counts":[3],"by_arm":{"graph":{"cases":3,"audit_pass":3},"imperative":{"cases":3,"audit_pass":3}}},
+    {"scenario":"absent","outcome":["ACTUATOR_BUDGET"],"wheel_counts":[4],"by_arm":{"graph":{"cases":3,"audit_pass":3},"imperative":{"cases":3,"audit_pass":3}}},
+    {"scenario":"ambiguous","outcome":["UNKNOWN"],"wheel_counts":[0],"by_arm":{"graph":{"cases":3,"audit_pass":3},"imperative":{"cases":3,"audit_pass":3}}},
+    {"scenario":"stale_source","outcome":["STALE_SOURCE"],"wheel_counts":[1],"by_arm":{"graph":{"cases":3,"audit_pass":3},"imperative":{"cases":3,"audit_pass":3}}},
+    {"scenario":"cancelled","outcome":["CANCELLED"],"wheel_counts":[1],"by_arm":{"graph":{"cases":3,"audit_pass":3},"imperative":{"cases":3,"audit_pass":3}}},
+    {"scenario":"expired","outcome":["EXPIRED"],"wheel_counts":[0],"by_arm":{"graph":{"cases":3,"audit_pass":3},"imperative":{"cases":3,"audit_pass":3}}}
+  ],
+  "schema": "agent-interface/sensorimotor-graph-reveal-result-v1",
+  "source_hash_checks": 12,
+  "static_controls": {"passed":10,"total":10},
+  "target_visible_terminal_outcomes": 18,
+  "task": "SENSORIMOTOR-GRAPH-REVEAL-20260917-001",
+  "task_wheel_events": 60
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "3311-dockerdesktop-windows-mount-owner-treatment-freeze-v1",
+  "allocation": "dockerdesktop-v1-windows-bind-owner0600-20260927-04",
+  "classification": "one-shot least-privilege construction boundary probe; fake IPC-shaped bytes only",
+  "hypothesis": "On the Docker Desktop Windows-backed bind mount, a root container can assign an IPC-shaped file to the actual WSL host broker UID/GID 1002:1002 while retaining mode 0600, allowing only that owner to read it.",
+  "treatment_delta_from_02": "After writing the same fake request, container root calls chown(1002,1002) and chmod(0600). No request prompt or model data is present.",
+  "source_revision": "883c72e76451e2ed7cb2ec6e04a426b56892c991",
+  "host_identity": {"uid": 1002, "gid": 1002, "user": "taka"},
+  "docker": {
+    "context": "desktop-linux",
+    "endpoint": "npipe:////./pipe/dockerDesktopLinuxEngine",
+    "engine": "28.5.1/linux/amd64",
+    "image_id": "sha256:f82bbd2c087056f324794ca9b0de64c16f0ecaf9a84f30bb0aba17b5b1833786",
+    "network": "none",
+    "container_removal": "--rm"
+  },
+  "controls": {
+    "model_calls": 0,
+    "gui_or_input": false,
+    "authority": false,
+    "one_container_invocation": true,
+    "retries": 0,
+    "unique_windows_temp_directory": true,
+    "unrelated_containers_unmodified": true
+  },
+  "decision": {
+    "pass": "Container exit 0, file owner observed as 1002:1002 and mode 0600, WSL host UID 1002 reads exact bytes/hash, and container is removed.",
+    "stop": "Any chown/chmod failure, owner/mode mismatch, host read/hash mismatch, or cleanup discrepancy. Preserve first outcome and do not retry."
+  },
+  "security_limit": "This synthetic owner-only treatment is only a permission-boundary test. It does not prove the production runner can safely discover/receive the host UID or that every Docker Desktop platform preserves chown semantics.",
+  "evidence_path": "research/live_control/issue_3311_host_ipc_v1/evidence/20260927-desktop-04"
+}

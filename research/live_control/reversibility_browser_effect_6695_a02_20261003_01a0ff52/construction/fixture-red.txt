@@ -1,0 +1,66 @@
+test_commit_at_deadline_is_admitted_once (test_fixture.FixtureTests.test_commit_at_deadline_is_admitted_once) ... FAIL
+test_future_signal_is_hidden (test_fixture.FixtureTests.test_future_signal_is_hidden) ... FAIL
+test_one_ns_after_deadline_has_no_effect (test_fixture.FixtureTests.test_one_ns_after_deadline_has_no_effect) ... FAIL
+test_only_commit_changes_effect_ledger (test_fixture.FixtureTests.test_only_commit_changes_effect_ledger) ... ok
+test_rejected_edit_preserves_prepared_target (test_fixture.FixtureTests.test_rejected_edit_preserves_prepared_target) ... FAIL
+test_unprepared_commit_has_no_effect (test_fixture.FixtureTests.test_unprepared_commit_has_no_effect) ... FAIL
+test_valid_edit_uses_observed_service_time (test_fixture.FixtureTests.test_valid_edit_uses_observed_service_time) ... FAIL
+
+======================================================================
+FAIL: test_commit_at_deadline_is_admitted_once (test_fixture.FixtureTests.test_commit_at_deadline_is_admitted_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$SOURCE/test_fixture.py", line 28, in test_commit_at_deadline_is_admitted_once
+    self.assertEqual(trial.commit(), 'committed')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'committed'
+
+======================================================================
+FAIL: test_future_signal_is_hidden (test_fixture.FixtureTests.test_future_signal_is_hidden)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$SOURCE/test_fixture.py", line 44, in test_future_signal_is_hidden
+    self.assertEqual(trial.signal(), 'PENDING')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'PENDING'
+
+======================================================================
+FAIL: test_one_ns_after_deadline_has_no_effect (test_fixture.FixtureTests.test_one_ns_after_deadline_has_no_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$SOURCE/test_fixture.py", line 36, in test_one_ns_after_deadline_has_no_effect
+    self.assertEqual(trial.commit(), 'deadline')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'deadline'
+
+======================================================================
+FAIL: test_rejected_edit_preserves_prepared_target (test_fixture.FixtureTests.test_rejected_edit_preserves_prepared_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$SOURCE/test_fixture.py", line 50, in test_rejected_edit_preserves_prepared_target
+    with self.assertRaises(ValueError): trial.edit('C')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unprepared_commit_has_no_effect (test_fixture.FixtureTests.test_unprepared_commit_has_no_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$SOURCE/test_fixture.py", line 40, in test_unprepared_commit_has_no_effect
+    self.assertEqual(trial.commit(), 'unprepared')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'unprepared'
+
+======================================================================
+FAIL: test_valid_edit_uses_observed_service_time (test_fixture.FixtureTests.test_valid_edit_uses_observed_service_time)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "$SOURCE/test_fixture.py", line 56, in test_valid_edit_uses_observed_service_time
+    self.assertEqual(clock.now,12_000_000)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 12000000
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=6)

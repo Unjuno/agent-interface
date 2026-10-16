@@ -1,0 +1,15 @@
+test_terminal_preserves_measurement_publish_failure_custody (research.live_control.test_executor_v13.ExecutorV13Tests.test_terminal_preserves_measurement_publish_failure_custody) ... ERROR
+
+======================================================================
+ERROR: test_terminal_preserves_measurement_publish_failure_custody (research.live_control.test_executor_v13.ExecutorV13Tests.test_terminal_preserves_measurement_publish_failure_custody)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-3\work\v39-soft-event-routing\research\live_control\test_executor_v13.py", line 314, in test_terminal_preserves_measurement_publish_failure_custody
+    self.assertEqual(terminal["release"]["measurement_publish_error"], measurement_error)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'measurement_publish_error'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)

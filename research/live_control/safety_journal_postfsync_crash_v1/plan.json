@@ -1,0 +1,9 @@
+{
+  "task":"SAFETY-JOURNAL-POSTFSYNC-CRASH-RECOVERY-20260917-001",
+  "issue":874,
+  "policies":["no_crash","post_fsync_sigkill"],
+  "schedule":[["f00","no_crash"],["f01","post_fsync_sigkill"],["f02","post_fsync_sigkill"],["f03","no_crash"],["f04","no_crash"],["f05","post_fsync_sigkill"],["f06","post_fsync_sigkill"],["f07","no_crash"],["f08","no_crash"],["f09","post_fsync_sigkill"]],
+  "formal_rows":10,
+  "formal_invocations":1,
+  "rerun_budget":0
+}

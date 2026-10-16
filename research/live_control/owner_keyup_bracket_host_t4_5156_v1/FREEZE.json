@@ -1,0 +1,29 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-HOST-CONSTRUCTION-5156-T4-20261002-01",
+  "status": "FROZEN_PRE_CANDIDATE",
+  "issue": 5156,
+  "main_commit": "97afcb82f90616589801a256893f886010ed6d27",
+  "source": {
+    "research/live_control/input_owner_v10.py": {
+      "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    "research/live_control/input_owner_v11.py": {
+      "git_blob": "842071284156d3ccc647f47135ee62a9e512cb56",
+      "sha256": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c"
+    }
+  },
+  "package_sha256": {
+    "README.md": "2a773a3a9127425bab4097330d65a41241daaacb971bb26d823d4ebd9bf7bce3",
+    "audit_raw.py": "16b79b2984dd615a702a82fa4715900685896ada9ef270a2d9e51864227906e0",
+    "run_candidate.py": "31112b021176aca40276209b586e3f7f6345b6eedf82c027f162dadee9564a3f",
+    "test_audit.py": "ea6afc30339c47bc8618b3fa1e09e8afe8d382febb3dc1aed70863eeb1abe755"
+  },
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "host": "Windows 11 / CPython 3.12.10",
+  "container": "not used; fake-Xlib construction semantics are host-local",
+  "formal_x11_allocation": "not used; separate #5156 slot remains request-only",
+  "formal_input_or_model_calls": 0
+}

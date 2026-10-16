@@ -1,0 +1,67 @@
+{
+  "controls": [
+    {
+      "name": "missing_sample",
+      "rejected": true,
+      "reason": "ValueError('300 raw tuples')"
+    },
+    {
+      "name": "changed_due",
+      "rejected": true,
+      "reason": "ValueError('absolute due step')"
+    },
+    {
+      "name": "changed_wake",
+      "rejected": true,
+      "reason": "ValueError('raw lateness arithmetic')"
+    },
+    {
+      "name": "changed_late",
+      "rejected": true,
+      "reason": "ValueError('raw lateness arithmetic')"
+    },
+    {
+      "name": "boolean_count",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "changed_cpu",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "changed_max",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "missing_exit",
+      "rejected": true,
+      "reason": "KeyError('returncode')"
+    },
+    {
+      "name": "false_reaped",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "wrong_stop_signal",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "wrong_stopped_state",
+      "rejected": true,
+      "reason": "ValueError('value/type mismatch')"
+    },
+    {
+      "name": "inverted_resume_clock",
+      "rejected": true,
+      "reason": "ValueError('pause clock order')"
+    }
+  ],
+  "total": 12,
+  "rejected": 12,
+  "formal_reruns": 0
+}

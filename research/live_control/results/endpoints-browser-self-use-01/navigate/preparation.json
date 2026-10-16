@@ -1,0 +1,46 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "navigate",
+    "expected_sequence": 1,
+    "valid_until_ns": 79866821739,
+    "decision_evidence": {
+      "delivery_id": "delivery:2",
+      "observation_sequence": 1,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "l"
+      },
+      {
+        "op": "text",
+        "text": "http://127.0.0.1:45989/"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 150,
+        "timeout_ms": 1500
+      }
+    ]
+  },
+  "image": {
+    "status": "image",
+    "sequence": 1,
+    "capture_ns": 14609793007,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/endpoints-browser-self-use-01/001.png",
+    "relative_path": "001.png",
+    "sha256": "4899bdb80189ba0d9deb930038977a6e0f433b25c404a58a798dfb8bf3cca06b",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 49866821739,
+  "lease_ms": 30000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

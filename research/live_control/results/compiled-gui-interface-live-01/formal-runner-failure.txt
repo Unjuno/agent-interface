@@ -1,0 +1,13 @@
+The preregistered fresh v1 runner exited after both case result files were saved.
+
+Traceback (most recent call last):
+  File "run_compiled_gui_interface_live_v1.py", line 568, in <module>
+    main()
+  File "run_compiled_gui_interface_live_v1.py", line 516, in main
+    positive["compiled_runtime"]["outcome"] == "TASK_SUCCEEDED"
+TypeError: 'NoneType' object is not subscriptable
+
+Both adaptive routes had already returned CALLER_FAILED because the two handle
+mint steps were submitted in one program and the existing backend rejected it
+with "at most one target handle may be minted per program". No compiled target
+action was executed. The cases are not rerun or overwritten.

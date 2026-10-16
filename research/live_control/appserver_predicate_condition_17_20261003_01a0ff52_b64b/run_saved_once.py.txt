@@ -1,0 +1,11 @@
+"""One frozen saved-data auditor, own private engine, no native fixture replay."""
+import pathlib,json,hashlib,subprocess,datetime
+p=pathlib.Path(__file__).resolve().parent;freeze=json.loads((p/'FREEZE.json').read_text());assert json.loads((p/'native.receipt.json').read_text())['exit_code']==0
+for name in ['check_saved.py','baseline.py','candidate.py','driver.py','peer.py','collect.py']:
+ assert hashlib.sha256((p/name).read_bytes()).hexdigest()==freeze['frozen_inputs'][name]['sha256']
+with (p/'AUDIT_SEND_ONCE.json').open('x') as f:json.dump({'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'checker_sha256':freeze['frozen_inputs']['check_saved.py']['sha256'],'native_replays':0},f)
+prefix=['/opt/homebrew/bin/orb','run','-m','research-6695-docker-01a0ff52','-u','root'];argv=prefix+['docker','run','--name','predicate-saved-audit-c01-b64b','--label','worker=01a0ff52-b64b','--pull','never','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--cpus','1','--memory','256m','--memory-swap','256m','--pids-limit','64','--tmpfs','/tmp:rw,nosuid,nodev,noexec,size=16m','--user','65534:65534','-v','/var/tmp/predicate-b64b-c01-src:/src:ro','-v','/var/tmp/predicate-b64b-c01-out:/raw:ro',freeze['image'],'python','-B','/src/check_saved.py','/raw','--source-root','/src']
+start=datetime.datetime.now(datetime.timezone.utc).isoformat();r=subprocess.run(argv,capture_output=True,timeout=15);(p/'independent.stdout').write_bytes(r.stdout);(p/'independent.stderr').write_bytes(r.stderr)
+receipt={'argv':argv,'utc_start':start,'utc_end':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit_code':r.returncode,'stdout_bytes':len(r.stdout),'stdout_sha256':hashlib.sha256(r.stdout).hexdigest(),'stderr_bytes':len(r.stderr),'stderr_sha256':hashlib.sha256(r.stderr).hexdigest(),'checker_sha256':freeze['frozen_inputs']['check_saved.py']['sha256'],'native_replays':0};(p/'independent.receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
+i=subprocess.run(prefix+['docker','inspect','predicate-saved-audit-c01-b64b'],capture_output=True,timeout=5);(p/'independent-inspect.json').write_bytes(i.stdout);(p/'independent-inspect.stderr').write_bytes(i.stderr)
+print(json.dumps({'receipt':receipt,'audit':json.loads(r.stdout)},sort_keys=True));raise SystemExit(r.returncode)

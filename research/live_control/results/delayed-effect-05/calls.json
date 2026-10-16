@@ -1,0 +1,3107 @@
+[
+  {
+    "begin_ns": 185610257517,
+    "end_ns": 185665899640,
+    "result": {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "3f9b7ab1d9fa44e59e47c50599fec4f5"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "3f9b7ab1d9fa44e59e47c50599fec4f5"
+            },
+            "received_ns": 185627409763,
+            "emit_started_ns": 185627415290
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 185632677110,
+            "sequence": 1,
+            "emit_started_ns": 185632680361
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 185644522396,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "3f9b7ab1d9fa44e59e47c50599fec4f5",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "3f9b7ab1d9fa44e59e47c50599fec4f5": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 185632677110,
+                "sequence": 1,
+                "emit_started_ns": 185632680361
+              },
+              "echo_cursor": 3,
+              "record_cursor": 4
+            }
+          },
+          "cursor": 4,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 14.694498,
+            "capture_ns": 185487459856,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "context_ns": 185496528214,
+            "emit_started_ns": 185541763865,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "initial",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/001.png",
+            "image_prepare_ns": 24155628,
+            "image_ready_ns": 185535510890,
+            "image_reused": false,
+            "input_focus_after": 8388611,
+            "input_focus_before": 8388611,
+            "input_state_after": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8388611,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "revision": 0,
+              "sample_finished_ns": 185541694814,
+              "sample_started_ns": 185541051905
+            },
+            "input_state_before": {
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false,
+              "cancel_requested": false,
+              "focus": 8388611,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "revision": 0,
+              "sample_finished_ns": 185471618206,
+              "sample_started_ns": 185471215005
+            },
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "owner_revision_unchanged": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "semantic_completion": "unknown",
+            "sequence": 1,
+            "step": 0,
+            "wire_bytes": 35144
+          },
+          "observation_cursor": 2,
+          "pending_clock": null,
+          "record_hashes": [
+            "16860e8ccf5f14909a788b43d50032d448a213dae6984adcdafae8e7ed95618f",
+            "edc3063cbb333c813ae62c5b997caf51e82fd5db54e93de71d92ec98add8264f",
+            "e2d24ea5ddc5f4ff706793eb4dcbf5d405ad0cf7e908316da2c1d4e867412bd9",
+            "af507c789dc090e2b150618492725b02fac1c9d93668bc65778faaa33b107003"
+          ],
+          "session": "/tmp/agent-interface-events-qd_ahmhx/events.sock"
+        },
+        "format": "durable-submit-v5",
+        "last_resolution": {
+          "request_id": "3f9b7ab1d9fa44e59e47c50599fec4f5",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 185632677110,
+            "sequence": 1,
+            "emit_started_ns": 185632680361
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 185669402382,
+    "end_ns": 186428440288,
+    "result": {
+      "request": {
+        "after": 4,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 3,
+        "action_id": "durable-165889f43d194d05b551062c6f9e0fbb",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 1,
+          "valid_until_ns": 188632677110,
+          "steps": [
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "l"
+            },
+            {
+              "op": "text",
+              "text": "http://127.0.0.1:43401/"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "id": "durable-165889f43d194d05b551062c6f9e0fbb"
+        },
+        "request_id": "3fa7626a9e364731a8030fed613f1aed"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+              "op": "submit",
+              "steps": [
+                {
+                  "key": "l",
+                  "modifier": "Control_L",
+                  "op": "chord"
+                },
+                {
+                  "op": "text",
+                  "text": "http://127.0.0.1:43401/"
+                },
+                {
+                  "key": "Return",
+                  "op": "key"
+                },
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "3fa7626a9e364731a8030fed613f1aed",
+              "valid_until_ns": 188632677110
+            },
+            "received_ns": 185683685036,
+            "emit_started_ns": 185683688051
+          },
+          {
+            "event": "accepted",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "steps": 4,
+            "valid_until_ns": 188632677110,
+            "accepted_ns": 185688726535,
+            "emit_started_ns": 185688728754
+          },
+          {
+            "event": "step_started",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 0,
+            "operation": "chord",
+            "issued_ns": 185702039229,
+            "emit_started_ns": 185702041210
+          },
+          {
+            "event": "input_admission",
+            "key": "Control_L",
+            "admitted_ns": 185714210633,
+            "input_ack_ns": 185714616046,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185714734067
+          },
+          {
+            "event": "input_admission",
+            "key": "l",
+            "admitted_ns": 185729346139,
+            "input_ack_ns": 185729609997,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185729677006
+          },
+          {
+            "event": "observation",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 185753803516,
+            "context_ns": 185763202731,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/002.png",
+            "image_reused": false,
+            "image_prepare_ns": 21733622,
+            "image_ready_ns": 185800468193,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 7.845921,
+            "wire_bytes": 1105,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 4,
+              "sample_started_ns": 185744168619,
+              "sample_finished_ns": 185744493260,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 4,
+              "sample_started_ns": 185811115435,
+              "sample_finished_ns": 185811321343,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 185811383180
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 0,
+            "completed_ns": 185815965561,
+            "emit_started_ns": 185815968014
+          },
+          {
+            "event": "step_started",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 1,
+            "operation": "text",
+            "issued_ns": 185829849493,
+            "emit_started_ns": 185829852281
+          },
+          {
+            "event": "input_admission",
+            "key": "h",
+            "admitted_ns": 185841382885,
+            "input_ack_ns": 185841750998,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185841920257
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 185858215087,
+            "input_ack_ns": 185858516254,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185858594503
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 185871785373,
+            "input_ack_ns": 185871959268,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185872046183
+          },
+          {
+            "event": "input_admission",
+            "key": "p",
+            "admitted_ns": 185885447132,
+            "input_ack_ns": 185885616508,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185885695127
+          },
+          {
+            "event": "input_admission",
+            "key": "Shift_L",
+            "admitted_ns": 185899068954,
+            "input_ack_ns": 185899273859,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185899338393
+          },
+          {
+            "event": "input_admission",
+            "key": "semicolon",
+            "admitted_ns": 185908426062,
+            "input_ack_ns": 185908840071,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185908973073
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 185928113625,
+            "input_ack_ns": 185928324240,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185928390486
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 185939701946,
+            "input_ack_ns": 185939867267,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185939929552
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 185952240835,
+            "input_ack_ns": 185952397131,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185952467426
+          },
+          {
+            "event": "input_admission",
+            "key": "2",
+            "admitted_ns": 185965412494,
+            "input_ack_ns": 185965582597,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185965648914
+          },
+          {
+            "event": "input_admission",
+            "key": "7",
+            "admitted_ns": 185976067130,
+            "input_ack_ns": 185976347713,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185976410654
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 185989120381,
+            "input_ack_ns": 185989295410,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 185989365807
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 186001422513,
+            "input_ack_ns": 186001661415,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186001710289
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 186014179542,
+            "input_ack_ns": 186014395250,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186014449491
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 186026439417,
+            "input_ack_ns": 186026666258,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186026750622
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 186039283106,
+            "input_ack_ns": 186039419745,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186039469252
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 186051021697,
+            "input_ack_ns": 186051195597,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186051255467
+          },
+          {
+            "event": "input_admission",
+            "key": "Shift_L",
+            "admitted_ns": 186065110769,
+            "input_ack_ns": 186065307427,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186065383581
+          },
+          {
+            "event": "input_admission",
+            "key": "semicolon",
+            "admitted_ns": 186074783798,
+            "input_ack_ns": 186075065527,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186075245109
+          },
+          {
+            "event": "input_admission",
+            "key": "4",
+            "admitted_ns": 186091180658,
+            "input_ack_ns": 186091560187,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186091636555
+          },
+          {
+            "event": "input_admission",
+            "key": "3",
+            "admitted_ns": 186104815102,
+            "input_ack_ns": 186104975724,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186105068818
+          },
+          {
+            "event": "input_admission",
+            "key": "4",
+            "admitted_ns": 186117174549,
+            "input_ack_ns": 186117387883,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186117528336
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 186129589755,
+            "input_ack_ns": 186129807877,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186129858722
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 186143059046,
+            "input_ack_ns": 186143308238,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186143367541
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 186154398310,
+            "input_ack_ns": 186154595443,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186154722641
+          },
+          {
+            "event": "observation",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 1,
+            "sequence": 3,
+            "capture_ns": 186169076186,
+            "context_ns": 186173706254,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/003.png",
+            "image_reused": false,
+            "image_prepare_ns": 18335304,
+            "image_ready_ns": 186209429622,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.414115,
+            "wire_bytes": 24501,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 54,
+              "sample_started_ns": 186164788691,
+              "sample_finished_ns": 186164953670,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 54,
+              "sample_started_ns": 186214777712,
+              "sample_finished_ns": 186214942997,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 186214996077
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 1,
+            "completed_ns": 186219478148,
+            "emit_started_ns": 186219480682
+          },
+          {
+            "event": "step_started",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 2,
+            "operation": "key",
+            "issued_ns": 186230847419,
+            "emit_started_ns": 186230848781
+          },
+          {
+            "event": "input_admission",
+            "key": "Return",
+            "admitted_ns": 186241447449,
+            "input_ack_ns": 186241697025,
+            "valid_until_ns": 188632677110,
+            "emit_started_ns": 186241765351
+          },
+          {
+            "event": "observation",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 2,
+            "sequence": 4,
+            "capture_ns": 186266767392,
+            "context_ns": 186273418280,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/003.png",
+            "image_reused": true,
+            "image_prepare_ns": 2128959,
+            "image_ready_ns": 186284089509,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.118454,
+            "wire_bytes": 322,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 56,
+              "sample_started_ns": 186259356594,
+              "sample_finished_ns": 186259661999,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 56,
+              "sample_started_ns": 186297498087,
+              "sample_finished_ns": 186297712932,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 186297768149
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 2,
+            "completed_ns": 186302317923,
+            "emit_started_ns": 186302320129
+          },
+          {
+            "event": "step_started",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 3,
+            "operation": "observe",
+            "issued_ns": 186316282214,
+            "emit_started_ns": 186316284689
+          },
+          {
+            "event": "observation",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 3,
+            "sequence": 5,
+            "capture_ns": 186336241256,
+            "context_ns": 186341735198,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/005.png",
+            "image_reused": false,
+            "image_prepare_ns": 21549270,
+            "image_ready_ns": 186383336307,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.540848,
+            "wire_bytes": 31063,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 56,
+              "sample_started_ns": 186331297869,
+              "sample_finished_ns": 186331628586,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 56,
+              "sample_started_ns": 186388431038,
+              "sample_finished_ns": 186388610120,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 186388663796
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 3,
+            "completed_ns": 186394434105,
+            "emit_started_ns": 186394435980
+          },
+          {
+            "event": "terminal",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 186406254527,
+              "valid_until_ns": 188632677110
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 186406307770,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 186406310908
+          }
+        ],
+        "cursor": 47,
+        "returned_ns": 186417868491,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "3fa7626a9e364731a8030fed613f1aed",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "3f9b7ab1d9fa44e59e47c50599fec4f5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 185632680361,
+                "event": "clock",
+                "runtime_ns": 185632677110,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            }
+          },
+          "cursor": 47,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "step": 3,
+            "sequence": 5,
+            "capture_ns": 186336241256,
+            "context_ns": 186341735198,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/005.png",
+            "image_reused": false,
+            "image_prepare_ns": 21549270,
+            "image_ready_ns": 186383336307,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.540848,
+            "wire_bytes": 31063,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 56,
+              "sample_started_ns": 186331297869,
+              "sample_finished_ns": 186331628586,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 56,
+              "sample_started_ns": 186388431038,
+              "sample_finished_ns": 186388610120,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 186388663796
+          },
+          "observation_cursor": 45,
+          "pending_clock": null,
+          "record_hashes": [
+            "16860e8ccf5f14909a788b43d50032d448a213dae6984adcdafae8e7ed95618f",
+            "edc3063cbb333c813ae62c5b997caf51e82fd5db54e93de71d92ec98add8264f",
+            "e2d24ea5ddc5f4ff706793eb4dcbf5d405ad0cf7e908316da2c1d4e867412bd9",
+            "af507c789dc090e2b150618492725b02fac1c9d93668bc65778faaa33b107003",
+            "09a3cbb91f37234ddb4532d23ce07c85debe340f30a3a01d7a0dc1dfc99f66e1",
+            "ea8a7c78ee8f1076ae4dd20afcca120bbd64832d5934a63af0f777cdcb9e52b1",
+            "3ffecf22983d68ed69449e8ad8c7e4a2f1f77df013cb584d9abd960ddd46bc8f",
+            "133ceaca9a6afdf30b15afa3b90821276bbeea3cea8c88ebbff39b1365b1f292",
+            "ae8511cc7abe856996e2970ae3dfa8233e7e80918bbcc7622eca10c714729cb7",
+            "14d0976335124aa3157a22ff95b5565087879a7b587247776758c962c049dd3e",
+            "3097ffe3b42e905b6c6f2e2f629017fbcaf20e911916d539f95daefbb8aab259",
+            "b319077f713940b5b6344b02d5eecc2a3f18730d3d55d546dfc64fa56081fbd1",
+            "01375f3eb76a671650898812c8818d565c6a7698a4bb379cc33619ab3b7cbbed",
+            "33f912fdb97626b00d6a255efb6b47865c02f24af9cfc6ff43103819fd17bd4f",
+            "d372e0696693bf8d8101ca2081f6b4e83410c19591cf7b92cd9fb34485368b77",
+            "9edab76f40d7ddf6e16e06188198c5e95cba739d482f1aed7865dd28e06b62d3",
+            "a69daa9fc90e2b04e97b4a0d856cfc159c8d3c0a96a7da630832b24aaf926805",
+            "c6861ae05cbac694f9b5b7b980c430c82af262d1ed34f8a009f33a81334cf66a",
+            "31e79e48d56890810f9465ea9f5be932416bd3e9c3813c6de0dcd6ea5d1e5f9f",
+            "a400e63ffc73c19e1cf35f634be0d789fddab30ed96edba580415662a04ca9ff",
+            "8eceb674589e9bf02afaa053df0da6d1dfc4d6516d84889d19012d8325577e93",
+            "829d1ee27ca33486f40f37c2fdb94f11ce025c879010f9d3ced8d4c5ddce5063",
+            "19289840d17acee8835cd1c2cb61dad03625d640be2cc9acbb449a481be2429f",
+            "39ff7c293517e0e1a4a6bf3c824c03b9af3c4bb07c4fc23b363d02a0b99e5d16",
+            "b589f1e219ec4a2c0867519dec7278c2b6a9042f2e8e2cffbad915e7f08de20f",
+            "da92b0af9784e860b3d36be17f03970a7c8569a0def80586eb6112438351b9dc",
+            "f11cd38f1942ddbcc601f9221e32b077dae0ae22633154f443e2c288e980c80e",
+            "b027956406b6dc7980b6f2fd5fc92df247215e757da6c95960a83007e5512a43",
+            "881347c522460791c3d5fc2924a36356443fe59e9e4762fd4e77fab879f37275",
+            "50cf3515797451d4c3e7825873c52f34e09c84418a26efc7aa9d9458f513cb9b",
+            "97373a0354eb85a92f4ba572d66c7987ce6fe5191582c7164fbaadd39deb85c4",
+            "b41290238f7fb61f13b20364cae739760a10db20af24bb6ed593027a18bde55d",
+            "72225944f3379684c5448893fd9180660d24780c2f7293a23d4aba777a9d3822",
+            "663c5dfdd53124d7373cadc31a57d8e501bd915d18cf41fd67feb1c3dc425ae2",
+            "b3d74f274a8629564e78454d1cd6045aa05b0e3ef84166018fe083febba32276",
+            "7aea6ac357a9d48bac2e34856af7cc473e7630d6853f958a1c6d561214ab736d",
+            "40287b9c0614c33f7e2e670a9ad74a91753290b3ff43baa4564532adecd2e07d",
+            "13fc305eaac7d7ff6cd361c2ae2acf9a5bb448b3e2404cfcff8fada189b4500b",
+            "87bcd9f12513c92929f03d4c78d1313f7712ce5382c81610b27794dc85df2a4a",
+            "46c25f0300a637479fcbf7fa45cdd2eb9126fe2d34e32d006b31c984888f4753",
+            "a6931b5408e10bc6cdb6d6a0c984dfb392e0e8000bdfe7bb6df37bc1ff2bd21d",
+            "f76cf9e0d7e13e50fbfa1dec2774214ae9bcd24d5d83b87853d57a3d26cbf598",
+            "921f9826effe294f0eab3b35ac72ab9e644d97aff5735d928b30443752fa101d",
+            "17b480a507d8c73315319ee364b7ff0f8bf699c0d5be5ea109c854b34cb001aa",
+            "f097f4a90efe0459a3a1f7af80a50332566ad9e600ed778db4cbc5b721ed4dd8",
+            "3e9974ce375d2acc7539c61eb4f1dbb170b85526c0eba0834ef2661c5d16def8",
+            "758ebf74cc9ab7adaa05f54b8f8c2351f35c50101391527d7324245fc0918904"
+          ],
+          "session": "/tmp/agent-interface-events-qd_ahmhx/events.sock"
+        },
+        "format": "durable-submit-v5",
+        "last_resolution": {
+          "request_id": "3fa7626a9e364731a8030fed613f1aed",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 186406254527,
+              "valid_until_ns": 188632677110
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 186406307770,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 186406310908
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 186431621106,
+    "end_ns": 186470270516,
+    "result": {
+      "request": {
+        "after": 47,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "c173d56c772e489181ce3a49a7938b54"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "c173d56c772e489181ce3a49a7938b54"
+            },
+            "received_ns": 186441754780,
+            "emit_started_ns": 186441760005
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 186447904610,
+            "sequence": 5,
+            "emit_started_ns": 186447909857
+          }
+        ],
+        "cursor": 49,
+        "returned_ns": 186460803771,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "c173d56c772e489181ce3a49a7938b54",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "3f9b7ab1d9fa44e59e47c50599fec4f5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 185632680361,
+                "event": "clock",
+                "runtime_ns": 185632677110,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c173d56c772e489181ce3a49a7938b54": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 186447904610,
+                "sequence": 5,
+                "emit_started_ns": 186447909857
+              },
+              "echo_cursor": 48,
+              "record_cursor": 49
+            }
+          },
+          "cursor": 49,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 3.540848,
+            "capture_ns": 186336241256,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "context_ns": 186341735198,
+            "emit_started_ns": 186388663796,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-165889f43d194d05b551062c6f9e0fbb",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/005.png",
+            "image_prepare_ns": 21549270,
+            "image_ready_ns": 186383336307,
+            "image_reused": false,
+            "input_focus_after": 8388611,
+            "input_focus_before": 8388611,
+            "input_state_after": {
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false,
+              "focus": 8388611,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "revision": 56,
+              "sample_finished_ns": 186388610120,
+              "sample_started_ns": 186388431038
+            },
+            "input_state_before": {
+              "active_lease_deadline_ns": 188632677110,
+              "active_lease_time_valid": true,
+              "cancel_requested": false,
+              "focus": 8388611,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                640,
+                400
+              ],
+              "revision": 56,
+              "sample_finished_ns": 186331628586,
+              "sample_started_ns": 186331297869
+            },
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "owner_revision_unchanged": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "semantic_completion": "unknown",
+            "sequence": 5,
+            "step": 3,
+            "wire_bytes": 31063
+          },
+          "observation_cursor": 45,
+          "pending_clock": null,
+          "record_hashes": [
+            "16860e8ccf5f14909a788b43d50032d448a213dae6984adcdafae8e7ed95618f",
+            "edc3063cbb333c813ae62c5b997caf51e82fd5db54e93de71d92ec98add8264f",
+            "e2d24ea5ddc5f4ff706793eb4dcbf5d405ad0cf7e908316da2c1d4e867412bd9",
+            "af507c789dc090e2b150618492725b02fac1c9d93668bc65778faaa33b107003",
+            "09a3cbb91f37234ddb4532d23ce07c85debe340f30a3a01d7a0dc1dfc99f66e1",
+            "ea8a7c78ee8f1076ae4dd20afcca120bbd64832d5934a63af0f777cdcb9e52b1",
+            "3ffecf22983d68ed69449e8ad8c7e4a2f1f77df013cb584d9abd960ddd46bc8f",
+            "133ceaca9a6afdf30b15afa3b90821276bbeea3cea8c88ebbff39b1365b1f292",
+            "ae8511cc7abe856996e2970ae3dfa8233e7e80918bbcc7622eca10c714729cb7",
+            "14d0976335124aa3157a22ff95b5565087879a7b587247776758c962c049dd3e",
+            "3097ffe3b42e905b6c6f2e2f629017fbcaf20e911916d539f95daefbb8aab259",
+            "b319077f713940b5b6344b02d5eecc2a3f18730d3d55d546dfc64fa56081fbd1",
+            "01375f3eb76a671650898812c8818d565c6a7698a4bb379cc33619ab3b7cbbed",
+            "33f912fdb97626b00d6a255efb6b47865c02f24af9cfc6ff43103819fd17bd4f",
+            "d372e0696693bf8d8101ca2081f6b4e83410c19591cf7b92cd9fb34485368b77",
+            "9edab76f40d7ddf6e16e06188198c5e95cba739d482f1aed7865dd28e06b62d3",
+            "a69daa9fc90e2b04e97b4a0d856cfc159c8d3c0a96a7da630832b24aaf926805",
+            "c6861ae05cbac694f9b5b7b980c430c82af262d1ed34f8a009f33a81334cf66a",
+            "31e79e48d56890810f9465ea9f5be932416bd3e9c3813c6de0dcd6ea5d1e5f9f",
+            "a400e63ffc73c19e1cf35f634be0d789fddab30ed96edba580415662a04ca9ff",
+            "8eceb674589e9bf02afaa053df0da6d1dfc4d6516d84889d19012d8325577e93",
+            "829d1ee27ca33486f40f37c2fdb94f11ce025c879010f9d3ced8d4c5ddce5063",
+            "19289840d17acee8835cd1c2cb61dad03625d640be2cc9acbb449a481be2429f",
+            "39ff7c293517e0e1a4a6bf3c824c03b9af3c4bb07c4fc23b363d02a0b99e5d16",
+            "b589f1e219ec4a2c0867519dec7278c2b6a9042f2e8e2cffbad915e7f08de20f",
+            "da92b0af9784e860b3d36be17f03970a7c8569a0def80586eb6112438351b9dc",
+            "f11cd38f1942ddbcc601f9221e32b077dae0ae22633154f443e2c288e980c80e",
+            "b027956406b6dc7980b6f2fd5fc92df247215e757da6c95960a83007e5512a43",
+            "881347c522460791c3d5fc2924a36356443fe59e9e4762fd4e77fab879f37275",
+            "50cf3515797451d4c3e7825873c52f34e09c84418a26efc7aa9d9458f513cb9b",
+            "97373a0354eb85a92f4ba572d66c7987ce6fe5191582c7164fbaadd39deb85c4",
+            "b41290238f7fb61f13b20364cae739760a10db20af24bb6ed593027a18bde55d",
+            "72225944f3379684c5448893fd9180660d24780c2f7293a23d4aba777a9d3822",
+            "663c5dfdd53124d7373cadc31a57d8e501bd915d18cf41fd67feb1c3dc425ae2",
+            "b3d74f274a8629564e78454d1cd6045aa05b0e3ef84166018fe083febba32276",
+            "7aea6ac357a9d48bac2e34856af7cc473e7630d6853f958a1c6d561214ab736d",
+            "40287b9c0614c33f7e2e670a9ad74a91753290b3ff43baa4564532adecd2e07d",
+            "13fc305eaac7d7ff6cd361c2ae2acf9a5bb448b3e2404cfcff8fada189b4500b",
+            "87bcd9f12513c92929f03d4c78d1313f7712ce5382c81610b27794dc85df2a4a",
+            "46c25f0300a637479fcbf7fa45cdd2eb9126fe2d34e32d006b31c984888f4753",
+            "a6931b5408e10bc6cdb6d6a0c984dfb392e0e8000bdfe7bb6df37bc1ff2bd21d",
+            "f76cf9e0d7e13e50fbfa1dec2774214ae9bcd24d5d83b87853d57a3d26cbf598",
+            "921f9826effe294f0eab3b35ac72ab9e644d97aff5735d928b30443752fa101d",
+            "17b480a507d8c73315319ee364b7ff0f8bf699c0d5be5ea109c854b34cb001aa",
+            "f097f4a90efe0459a3a1f7af80a50332566ad9e600ed778db4cbc5b721ed4dd8",
+            "3e9974ce375d2acc7539c61eb4f1dbb170b85526c0eba0834ef2661c5d16def8",
+            "758ebf74cc9ab7adaa05f54b8f8c2351f35c50101391527d7324245fc0918904",
+            "79fb35f8e463e8204032d6efa8064d02d399324455aba18d210dbce5caac20f5",
+            "b6e6463eb9e270d270c0c442bd1e2b8186511d1a38914f9baab8b4a460e078da"
+          ],
+          "session": "/tmp/agent-interface-events-qd_ahmhx/events.sock"
+        },
+        "format": "durable-submit-v5",
+        "last_resolution": {
+          "request_id": "c173d56c772e489181ce3a49a7938b54",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 186447904610,
+            "sequence": 5,
+            "emit_started_ns": 186447909857
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 186474120046,
+    "end_ns": 187089140307,
+    "result": {
+      "request": {
+        "after": 49,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 4,
+        "action_id": "durable-8779535bff1e441d918de0d94129b3e6",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 5,
+          "valid_until_ns": 189447904610,
+          "steps": [
+            {
+              "op": "pointer_click",
+              "x": 150,
+              "y": 277,
+              "duration_ms": 80
+            },
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "a"
+            },
+            {
+              "op": "text",
+              "text": "t000242"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "id": "durable-8779535bff1e441d918de0d94129b3e6"
+        },
+        "request_id": "d93da9bcc5964c7991c8cba0703893ca"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 5,
+              "id": "durable-8779535bff1e441d918de0d94129b3e6",
+              "op": "submit",
+              "steps": [
+                {
+                  "duration_ms": 80,
+                  "op": "pointer_click",
+                  "x": 150,
+                  "y": 277
+                },
+                {
+                  "key": "a",
+                  "modifier": "Control_L",
+                  "op": "chord"
+                },
+                {
+                  "op": "text",
+                  "text": "t000242"
+                },
+                {
+                  "key": "Return",
+                  "op": "key"
+                },
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "d93da9bcc5964c7991c8cba0703893ca",
+              "valid_until_ns": 189447904610
+            },
+            "received_ns": 186486382520,
+            "emit_started_ns": 186486386986
+          },
+          {
+            "event": "accepted",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "steps": 5,
+            "valid_until_ns": 189447904610,
+            "accepted_ns": 186493218221,
+            "emit_started_ns": 186493221062
+          },
+          {
+            "event": "step_started",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 0,
+            "operation": "pointer_click",
+            "issued_ns": 186504980081,
+            "emit_started_ns": 186504982815
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "move",
+            "payload": {
+              "x": 150,
+              "y": 277
+            },
+            "admitted_ns": 186519739009,
+            "input_ack_ns": 186520210179,
+            "valid_until_ns": 189447904610,
+            "surface": 8388611,
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 0,
+            "emit_started_ns": 186520358874
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "button_down",
+            "payload": 1,
+            "admitted_ns": 186535472836,
+            "input_ack_ns": 186535781420,
+            "valid_until_ns": 189447904610,
+            "surface": 8388611,
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 0,
+            "emit_started_ns": 186535909229
+          },
+          {
+            "event": "observation",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 0,
+            "sequence": 6,
+            "capture_ns": 186637325797,
+            "context_ns": 186644537536,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/006.png",
+            "image_reused": false,
+            "image_prepare_ns": 19222979,
+            "image_ready_ns": 186682267826,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.214429,
+            "wire_bytes": 12602,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 60,
+              "sample_started_ns": 186630452643,
+              "sample_finished_ns": 186630742058,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 60,
+              "sample_started_ns": 186687382331,
+              "sample_finished_ns": 186687668513,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 186687727012
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 0,
+            "completed_ns": 186693802294,
+            "emit_started_ns": 186693804906
+          },
+          {
+            "event": "step_started",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 1,
+            "operation": "chord",
+            "issued_ns": 186706188926,
+            "emit_started_ns": 186706191223
+          },
+          {
+            "event": "input_admission",
+            "key": "Control_L",
+            "admitted_ns": 186718505486,
+            "input_ack_ns": 186718720615,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186718875827
+          },
+          {
+            "event": "input_admission",
+            "key": "a",
+            "admitted_ns": 186730038596,
+            "input_ack_ns": 186730252341,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186730321235
+          },
+          {
+            "event": "observation",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 1,
+            "sequence": 7,
+            "capture_ns": 186748213170,
+            "context_ns": 186752591242,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/006.png",
+            "image_reused": true,
+            "image_prepare_ns": 2369596,
+            "image_ready_ns": 186760354087,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 3.80027,
+            "wire_bytes": 324,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 64,
+              "sample_started_ns": 186742468543,
+              "sample_finished_ns": 186742760454,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 64,
+              "sample_started_ns": 186766641359,
+              "sample_finished_ns": 186766823296,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 186766877985
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 1,
+            "completed_ns": 186771354811,
+            "emit_started_ns": 186771357275
+          },
+          {
+            "event": "step_started",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 2,
+            "operation": "text",
+            "issued_ns": 186783775427,
+            "emit_started_ns": 186783776709
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 186795554172,
+            "input_ack_ns": 186795762637,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186795832016
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 186811456857,
+            "input_ack_ns": 186811831817,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186811971576
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 186824893655,
+            "input_ack_ns": 186825267167,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186825395269
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 186836320008,
+            "input_ack_ns": 186836498681,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186836561030
+          },
+          {
+            "event": "input_admission",
+            "key": "2",
+            "admitted_ns": 186848836870,
+            "input_ack_ns": 186848997759,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186849059496
+          },
+          {
+            "event": "input_admission",
+            "key": "4",
+            "admitted_ns": 186861015398,
+            "input_ack_ns": 186861274375,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186861350923
+          },
+          {
+            "event": "input_admission",
+            "key": "2",
+            "admitted_ns": 186872694966,
+            "input_ack_ns": 186872855732,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186872964556
+          },
+          {
+            "event": "observation",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 2,
+            "sequence": 8,
+            "capture_ns": 186888707110,
+            "context_ns": 186894847904,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/008.png",
+            "image_reused": false,
+            "image_prepare_ns": 20100783,
+            "image_ready_ns": 186926665902,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.192434,
+            "wire_bytes": 1132,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 78,
+              "sample_started_ns": 186882472253,
+              "sample_finished_ns": 186882721392,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 78,
+              "sample_started_ns": 186931289708,
+              "sample_finished_ns": 186931446375,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 186931498772
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 2,
+            "completed_ns": 186936790059,
+            "emit_started_ns": 186936792754
+          },
+          {
+            "event": "step_started",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 3,
+            "operation": "key",
+            "issued_ns": 186949671471,
+            "emit_started_ns": 186949673912
+          },
+          {
+            "event": "input_admission",
+            "key": "Return",
+            "admitted_ns": 186960862851,
+            "input_ack_ns": 186961089728,
+            "valid_until_ns": 189447904610,
+            "emit_started_ns": 186961168499
+          },
+          {
+            "event": "observation",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 3,
+            "sequence": 9,
+            "capture_ns": 186981641508,
+            "context_ns": 186985989153,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/008.png",
+            "image_reused": true,
+            "image_prepare_ns": 2449507,
+            "image_ready_ns": 186993634407,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 4.586193,
+            "wire_bytes": 324,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 80,
+              "sample_started_ns": 186974580384,
+              "sample_finished_ns": 186975102309,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 80,
+              "sample_started_ns": 186999839007,
+              "sample_finished_ns": 186999999793,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 187000137865
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 3,
+            "completed_ns": 187005468333,
+            "emit_started_ns": 187005469312
+          },
+          {
+            "event": "step_started",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 4,
+            "operation": "observe",
+            "issued_ns": 187017673683,
+            "emit_started_ns": 187017676070
+          },
+          {
+            "event": "observation",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 4,
+            "sequence": 10,
+            "capture_ns": 187034445383,
+            "context_ns": 187038779816,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/008.png",
+            "image_reused": true,
+            "image_prepare_ns": 1994293,
+            "image_ready_ns": 187046662191,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 4.736274,
+            "wire_bytes": 325,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 80,
+              "sample_started_ns": 187028735380,
+              "sample_finished_ns": 187029040695,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 80,
+              "sample_started_ns": 187052151543,
+              "sample_finished_ns": 187052339766,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 187052394530
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 4,
+            "completed_ns": 187057496694,
+            "emit_started_ns": 187057499003
+          },
+          {
+            "event": "terminal",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 5,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 187069157095,
+              "valid_until_ns": 189447904610
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 187069204768,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 187069207771
+          }
+        ],
+        "cursor": 79,
+        "returned_ns": 187079818941,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "d93da9bcc5964c7991c8cba0703893ca",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "3f9b7ab1d9fa44e59e47c50599fec4f5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 185632680361,
+                "event": "clock",
+                "runtime_ns": 185632677110,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c173d56c772e489181ce3a49a7938b54": {
+              "echo_cursor": 48,
+              "record": {
+                "emit_started_ns": 186447909857,
+                "event": "clock",
+                "runtime_ns": 186447904610,
+                "sequence": 5
+              },
+              "record_cursor": 49
+            }
+          },
+          "cursor": 79,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "step": 4,
+            "sequence": 10,
+            "capture_ns": 187034445383,
+            "context_ns": 187038779816,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/008.png",
+            "image_reused": true,
+            "image_prepare_ns": 1994293,
+            "image_ready_ns": 187046662191,
+            "input_focus_before": 8388611,
+            "input_focus_after": 8388611,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "surface": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 4.736274,
+            "wire_bytes": 325,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "input_state_before": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 80,
+              "sample_started_ns": 187028735380,
+              "sample_finished_ns": 187029040695,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "input_state_after": {
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "revision": 80,
+              "sample_started_ns": 187052151543,
+              "sample_finished_ns": 187052339766,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "focus": 8388611,
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false
+            },
+            "owner_revision_unchanged": true,
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "emit_started_ns": 187052394530
+          },
+          "observation_cursor": 77,
+          "pending_clock": null,
+          "record_hashes": [
+            "16860e8ccf5f14909a788b43d50032d448a213dae6984adcdafae8e7ed95618f",
+            "edc3063cbb333c813ae62c5b997caf51e82fd5db54e93de71d92ec98add8264f",
+            "e2d24ea5ddc5f4ff706793eb4dcbf5d405ad0cf7e908316da2c1d4e867412bd9",
+            "af507c789dc090e2b150618492725b02fac1c9d93668bc65778faaa33b107003",
+            "09a3cbb91f37234ddb4532d23ce07c85debe340f30a3a01d7a0dc1dfc99f66e1",
+            "ea8a7c78ee8f1076ae4dd20afcca120bbd64832d5934a63af0f777cdcb9e52b1",
+            "3ffecf22983d68ed69449e8ad8c7e4a2f1f77df013cb584d9abd960ddd46bc8f",
+            "133ceaca9a6afdf30b15afa3b90821276bbeea3cea8c88ebbff39b1365b1f292",
+            "ae8511cc7abe856996e2970ae3dfa8233e7e80918bbcc7622eca10c714729cb7",
+            "14d0976335124aa3157a22ff95b5565087879a7b587247776758c962c049dd3e",
+            "3097ffe3b42e905b6c6f2e2f629017fbcaf20e911916d539f95daefbb8aab259",
+            "b319077f713940b5b6344b02d5eecc2a3f18730d3d55d546dfc64fa56081fbd1",
+            "01375f3eb76a671650898812c8818d565c6a7698a4bb379cc33619ab3b7cbbed",
+            "33f912fdb97626b00d6a255efb6b47865c02f24af9cfc6ff43103819fd17bd4f",
+            "d372e0696693bf8d8101ca2081f6b4e83410c19591cf7b92cd9fb34485368b77",
+            "9edab76f40d7ddf6e16e06188198c5e95cba739d482f1aed7865dd28e06b62d3",
+            "a69daa9fc90e2b04e97b4a0d856cfc159c8d3c0a96a7da630832b24aaf926805",
+            "c6861ae05cbac694f9b5b7b980c430c82af262d1ed34f8a009f33a81334cf66a",
+            "31e79e48d56890810f9465ea9f5be932416bd3e9c3813c6de0dcd6ea5d1e5f9f",
+            "a400e63ffc73c19e1cf35f634be0d789fddab30ed96edba580415662a04ca9ff",
+            "8eceb674589e9bf02afaa053df0da6d1dfc4d6516d84889d19012d8325577e93",
+            "829d1ee27ca33486f40f37c2fdb94f11ce025c879010f9d3ced8d4c5ddce5063",
+            "19289840d17acee8835cd1c2cb61dad03625d640be2cc9acbb449a481be2429f",
+            "39ff7c293517e0e1a4a6bf3c824c03b9af3c4bb07c4fc23b363d02a0b99e5d16",
+            "b589f1e219ec4a2c0867519dec7278c2b6a9042f2e8e2cffbad915e7f08de20f",
+            "da92b0af9784e860b3d36be17f03970a7c8569a0def80586eb6112438351b9dc",
+            "f11cd38f1942ddbcc601f9221e32b077dae0ae22633154f443e2c288e980c80e",
+            "b027956406b6dc7980b6f2fd5fc92df247215e757da6c95960a83007e5512a43",
+            "881347c522460791c3d5fc2924a36356443fe59e9e4762fd4e77fab879f37275",
+            "50cf3515797451d4c3e7825873c52f34e09c84418a26efc7aa9d9458f513cb9b",
+            "97373a0354eb85a92f4ba572d66c7987ce6fe5191582c7164fbaadd39deb85c4",
+            "b41290238f7fb61f13b20364cae739760a10db20af24bb6ed593027a18bde55d",
+            "72225944f3379684c5448893fd9180660d24780c2f7293a23d4aba777a9d3822",
+            "663c5dfdd53124d7373cadc31a57d8e501bd915d18cf41fd67feb1c3dc425ae2",
+            "b3d74f274a8629564e78454d1cd6045aa05b0e3ef84166018fe083febba32276",
+            "7aea6ac357a9d48bac2e34856af7cc473e7630d6853f958a1c6d561214ab736d",
+            "40287b9c0614c33f7e2e670a9ad74a91753290b3ff43baa4564532adecd2e07d",
+            "13fc305eaac7d7ff6cd361c2ae2acf9a5bb448b3e2404cfcff8fada189b4500b",
+            "87bcd9f12513c92929f03d4c78d1313f7712ce5382c81610b27794dc85df2a4a",
+            "46c25f0300a637479fcbf7fa45cdd2eb9126fe2d34e32d006b31c984888f4753",
+            "a6931b5408e10bc6cdb6d6a0c984dfb392e0e8000bdfe7bb6df37bc1ff2bd21d",
+            "f76cf9e0d7e13e50fbfa1dec2774214ae9bcd24d5d83b87853d57a3d26cbf598",
+            "921f9826effe294f0eab3b35ac72ab9e644d97aff5735d928b30443752fa101d",
+            "17b480a507d8c73315319ee364b7ff0f8bf699c0d5be5ea109c854b34cb001aa",
+            "f097f4a90efe0459a3a1f7af80a50332566ad9e600ed778db4cbc5b721ed4dd8",
+            "3e9974ce375d2acc7539c61eb4f1dbb170b85526c0eba0834ef2661c5d16def8",
+            "758ebf74cc9ab7adaa05f54b8f8c2351f35c50101391527d7324245fc0918904",
+            "79fb35f8e463e8204032d6efa8064d02d399324455aba18d210dbce5caac20f5",
+            "b6e6463eb9e270d270c0c442bd1e2b8186511d1a38914f9baab8b4a460e078da",
+            "05e707c3a33cafd1c8b91f8fc9a4649b9e220e46673f9c94f488a370eb83e060",
+            "6cca1ccfbb4c30dc9d96171da63a77c3754e4ca7df7652415bee1b1bbd0abe3f",
+            "e8531bd812da309e42a2c62c6ecdb15d5672aff15abc9b07cff25faf7ca03188",
+            "e8f4a3631202f4b85ddc99232b34c37126d8c8d24fc77a0dbc641428195dcf30",
+            "2227c1e84317f2531bc757ca9623268783d3db4afc64196d1a45f2cfad97b3e3",
+            "3e146ad682a36591d862308a5cf9bf793ad7a47f9d37b4846d8177e3127ccc2e",
+            "3e2caae370dcd64bdb11400a89aad2c671e64dcda5f9f2d5ce0bd2c36371322b",
+            "ed576ccdaf171be801b753656a5d0bf52a3215c963a754778bb36138c1c2b070",
+            "d3c1ad864f99424f4443fa472a2ac96e0355762fa9661c2add144b6c261b3b6b",
+            "f16f5f6fc3e6706bd0cbb1a8fd4596ebb9d2c7c38c6587743cda961cddcacd9a",
+            "5370589f6b33252a2c6d87366f59a867af37521b31127745a96e24f731542922",
+            "0fc75bbc7a8f3b48830a662ea67acd5ca5a3a30264855a401a9093fc1515e2f5",
+            "8fbc41479913e7791326e2bf37375957c8ab58895962f1bc166b906773a846c9",
+            "f4cf4cde11bfbdd2f7795685a6603f2ada842ffc5aa8eec0ee139f4ad7822adb",
+            "36a246006bb15b27e9f534f32b11eaf1be6b2a90be3276fae4a6efcc6f41558e",
+            "63498f7dbc6d6132c642cacc6a6dd38db847aa0bce09f8a886eb82b60c37953f",
+            "353aac14f96151b40f110a10e761d444fba9985e90dad3a36ade6172acfb4a2f",
+            "fdf397196226ba36d0e5cbc6eef766621e6b3639dca645ab80852370a35c3d16",
+            "f17291d56b8f33522d37bf9b1e1e84574242ad4f61f6d153707f82e0fce4a989",
+            "c75e10d8d06686198b82e18b3ed5cf3f275a7a72ea57e1a74232ee61a4e4f9d0",
+            "51c9ec55f1628fab3e66cb68db106c985fa851e88af7859978859cb2fcc21743",
+            "9860f991868507b7ecf1a74aa376cc2847627f620d511ec733242b168e3f09e4",
+            "3d9b0dd6f069b343aa5fc52b5a8ae352d25a38f3baa245580731226b5e366571",
+            "abc468e272dc0a5eeedaeb65e30551f6da1bfa3046f661a47d0e9f7c18f0d2c7",
+            "96e64bc776688b969981ac0618957179849794c657e8bbfdeb6438770e469f48",
+            "4b04531295394d1a1dcb543dfcf828841d74d2941ff305b6acac4fd4945bd7b8",
+            "1aec69ed0f68a8282b057b68e2f190549f04890555f3b4ee3d15f17bda6b00c2",
+            "8259d66b54827d39daae1fcc5ec84b201291941ecbd752e6382551cbd7ca38a7",
+            "ed846dfe8fa647f8f2d162a0821a50ddcadb430d5f0330ab5c0086271708da7d",
+            "3d019ba6f00c2df04552d607aa0b5de24aa835f0cf601497bb03a93d28b97f77"
+          ],
+          "session": "/tmp/agent-interface-events-qd_ahmhx/events.sock"
+        },
+        "format": "durable-submit-v5",
+        "last_resolution": {
+          "request_id": "d93da9bcc5964c7991c8cba0703893ca",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 5,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 187069157095,
+              "valid_until_ns": 189447904610
+            },
+            "interruption": null,
+            "decision_reason": null,
+            "post_release_observation": null,
+            "terminal_ns": 187069204768,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 187069207771
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 187094488170,
+    "end_ns": 187129359321,
+    "result": {
+      "request": {
+        "after": 79,
+        "events": [
+          "effect_checkpoint"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "effect_checkpoint",
+          "contract": {
+            "expected": "t000242",
+            "kind": "saved_form_value"
+          }
+        },
+        "request_id": "c2d53317b7924151aa9390ca7efdab57",
+        "read_request_id": "c2d53317b7924151aa9390ca7efdab57"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "contract": {
+                "expected": "t000242",
+                "kind": "saved_form_value"
+              },
+              "op": "effect_checkpoint",
+              "transport_request_id": "c2d53317b7924151aa9390ca7efdab57"
+            },
+            "received_ns": 187103995391,
+            "emit_started_ns": 187103998558
+          },
+          {
+            "event": "effect_checkpoint",
+            "evidence": {
+              "status": "UNKNOWN",
+              "task_success": null,
+              "authority": "none",
+              "attribution": "not_established",
+              "observation_closed": false,
+              "contract": {
+                "expected": "t000242",
+                "kind": "saved_form_value"
+              },
+              "reason": "archive_or_evidence_unavailable",
+              "started_ns": 187110467456,
+              "finished_ns": 187110543661,
+              "error": {
+                "type": "FileNotFoundError",
+                "message": "[Errno 2] No such file or directory: '/tmp/realapp-x-i9c4gyy3/submitted.txt'"
+              }
+            },
+            "task_success": null,
+            "authority": "none",
+            "scope": "non-final artifact query; input admission unchanged",
+            "transport_request_id": "c2d53317b7924151aa9390ca7efdab57",
+            "runtime_request_sequence": 5,
+            "declared_action_id": null,
+            "command_op": "effect_checkpoint",
+            "correlation_scope": "current runtime input line; action ID is caller-declared",
+            "emit_started_ns": 187110553982
+          }
+        ],
+        "cursor": 81,
+        "returned_ns": 187120719311,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "c2d53317b7924151aa9390ca7efdab57",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "3f9b7ab1d9fa44e59e47c50599fec4f5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 185632680361,
+                "event": "clock",
+                "runtime_ns": 185632677110,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c173d56c772e489181ce3a49a7938b54": {
+              "echo_cursor": 48,
+              "record": {
+                "emit_started_ns": 186447909857,
+                "event": "clock",
+                "runtime_ns": 186447904610,
+                "sequence": 5
+              },
+              "record_cursor": 49
+            }
+          },
+          "cursor": 81,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 4.736274,
+            "capture_ns": 187034445383,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "context_ns": 187038779816,
+            "emit_started_ns": 187052394530,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/008.png",
+            "image_prepare_ns": 1994293,
+            "image_ready_ns": 187046662191,
+            "image_reused": true,
+            "input_focus_after": 8388611,
+            "input_focus_before": 8388611,
+            "input_state_after": {
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false,
+              "focus": 8388611,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "revision": 80,
+              "sample_finished_ns": 187052339766,
+              "sample_started_ns": 187052151543
+            },
+            "input_state_before": {
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false,
+              "focus": 8388611,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "revision": 80,
+              "sample_finished_ns": 187029040695,
+              "sample_started_ns": 187028735380
+            },
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "owner_revision_unchanged": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "semantic_completion": "unknown",
+            "sequence": 10,
+            "step": 4,
+            "wire_bytes": 325
+          },
+          "observation_cursor": 77,
+          "pending_clock": null,
+          "record_hashes": [
+            "16860e8ccf5f14909a788b43d50032d448a213dae6984adcdafae8e7ed95618f",
+            "edc3063cbb333c813ae62c5b997caf51e82fd5db54e93de71d92ec98add8264f",
+            "e2d24ea5ddc5f4ff706793eb4dcbf5d405ad0cf7e908316da2c1d4e867412bd9",
+            "af507c789dc090e2b150618492725b02fac1c9d93668bc65778faaa33b107003",
+            "09a3cbb91f37234ddb4532d23ce07c85debe340f30a3a01d7a0dc1dfc99f66e1",
+            "ea8a7c78ee8f1076ae4dd20afcca120bbd64832d5934a63af0f777cdcb9e52b1",
+            "3ffecf22983d68ed69449e8ad8c7e4a2f1f77df013cb584d9abd960ddd46bc8f",
+            "133ceaca9a6afdf30b15afa3b90821276bbeea3cea8c88ebbff39b1365b1f292",
+            "ae8511cc7abe856996e2970ae3dfa8233e7e80918bbcc7622eca10c714729cb7",
+            "14d0976335124aa3157a22ff95b5565087879a7b587247776758c962c049dd3e",
+            "3097ffe3b42e905b6c6f2e2f629017fbcaf20e911916d539f95daefbb8aab259",
+            "b319077f713940b5b6344b02d5eecc2a3f18730d3d55d546dfc64fa56081fbd1",
+            "01375f3eb76a671650898812c8818d565c6a7698a4bb379cc33619ab3b7cbbed",
+            "33f912fdb97626b00d6a255efb6b47865c02f24af9cfc6ff43103819fd17bd4f",
+            "d372e0696693bf8d8101ca2081f6b4e83410c19591cf7b92cd9fb34485368b77",
+            "9edab76f40d7ddf6e16e06188198c5e95cba739d482f1aed7865dd28e06b62d3",
+            "a69daa9fc90e2b04e97b4a0d856cfc159c8d3c0a96a7da630832b24aaf926805",
+            "c6861ae05cbac694f9b5b7b980c430c82af262d1ed34f8a009f33a81334cf66a",
+            "31e79e48d56890810f9465ea9f5be932416bd3e9c3813c6de0dcd6ea5d1e5f9f",
+            "a400e63ffc73c19e1cf35f634be0d789fddab30ed96edba580415662a04ca9ff",
+            "8eceb674589e9bf02afaa053df0da6d1dfc4d6516d84889d19012d8325577e93",
+            "829d1ee27ca33486f40f37c2fdb94f11ce025c879010f9d3ced8d4c5ddce5063",
+            "19289840d17acee8835cd1c2cb61dad03625d640be2cc9acbb449a481be2429f",
+            "39ff7c293517e0e1a4a6bf3c824c03b9af3c4bb07c4fc23b363d02a0b99e5d16",
+            "b589f1e219ec4a2c0867519dec7278c2b6a9042f2e8e2cffbad915e7f08de20f",
+            "da92b0af9784e860b3d36be17f03970a7c8569a0def80586eb6112438351b9dc",
+            "f11cd38f1942ddbcc601f9221e32b077dae0ae22633154f443e2c288e980c80e",
+            "b027956406b6dc7980b6f2fd5fc92df247215e757da6c95960a83007e5512a43",
+            "881347c522460791c3d5fc2924a36356443fe59e9e4762fd4e77fab879f37275",
+            "50cf3515797451d4c3e7825873c52f34e09c84418a26efc7aa9d9458f513cb9b",
+            "97373a0354eb85a92f4ba572d66c7987ce6fe5191582c7164fbaadd39deb85c4",
+            "b41290238f7fb61f13b20364cae739760a10db20af24bb6ed593027a18bde55d",
+            "72225944f3379684c5448893fd9180660d24780c2f7293a23d4aba777a9d3822",
+            "663c5dfdd53124d7373cadc31a57d8e501bd915d18cf41fd67feb1c3dc425ae2",
+            "b3d74f274a8629564e78454d1cd6045aa05b0e3ef84166018fe083febba32276",
+            "7aea6ac357a9d48bac2e34856af7cc473e7630d6853f958a1c6d561214ab736d",
+            "40287b9c0614c33f7e2e670a9ad74a91753290b3ff43baa4564532adecd2e07d",
+            "13fc305eaac7d7ff6cd361c2ae2acf9a5bb448b3e2404cfcff8fada189b4500b",
+            "87bcd9f12513c92929f03d4c78d1313f7712ce5382c81610b27794dc85df2a4a",
+            "46c25f0300a637479fcbf7fa45cdd2eb9126fe2d34e32d006b31c984888f4753",
+            "a6931b5408e10bc6cdb6d6a0c984dfb392e0e8000bdfe7bb6df37bc1ff2bd21d",
+            "f76cf9e0d7e13e50fbfa1dec2774214ae9bcd24d5d83b87853d57a3d26cbf598",
+            "921f9826effe294f0eab3b35ac72ab9e644d97aff5735d928b30443752fa101d",
+            "17b480a507d8c73315319ee364b7ff0f8bf699c0d5be5ea109c854b34cb001aa",
+            "f097f4a90efe0459a3a1f7af80a50332566ad9e600ed778db4cbc5b721ed4dd8",
+            "3e9974ce375d2acc7539c61eb4f1dbb170b85526c0eba0834ef2661c5d16def8",
+            "758ebf74cc9ab7adaa05f54b8f8c2351f35c50101391527d7324245fc0918904",
+            "79fb35f8e463e8204032d6efa8064d02d399324455aba18d210dbce5caac20f5",
+            "b6e6463eb9e270d270c0c442bd1e2b8186511d1a38914f9baab8b4a460e078da",
+            "05e707c3a33cafd1c8b91f8fc9a4649b9e220e46673f9c94f488a370eb83e060",
+            "6cca1ccfbb4c30dc9d96171da63a77c3754e4ca7df7652415bee1b1bbd0abe3f",
+            "e8531bd812da309e42a2c62c6ecdb15d5672aff15abc9b07cff25faf7ca03188",
+            "e8f4a3631202f4b85ddc99232b34c37126d8c8d24fc77a0dbc641428195dcf30",
+            "2227c1e84317f2531bc757ca9623268783d3db4afc64196d1a45f2cfad97b3e3",
+            "3e146ad682a36591d862308a5cf9bf793ad7a47f9d37b4846d8177e3127ccc2e",
+            "3e2caae370dcd64bdb11400a89aad2c671e64dcda5f9f2d5ce0bd2c36371322b",
+            "ed576ccdaf171be801b753656a5d0bf52a3215c963a754778bb36138c1c2b070",
+            "d3c1ad864f99424f4443fa472a2ac96e0355762fa9661c2add144b6c261b3b6b",
+            "f16f5f6fc3e6706bd0cbb1a8fd4596ebb9d2c7c38c6587743cda961cddcacd9a",
+            "5370589f6b33252a2c6d87366f59a867af37521b31127745a96e24f731542922",
+            "0fc75bbc7a8f3b48830a662ea67acd5ca5a3a30264855a401a9093fc1515e2f5",
+            "8fbc41479913e7791326e2bf37375957c8ab58895962f1bc166b906773a846c9",
+            "f4cf4cde11bfbdd2f7795685a6603f2ada842ffc5aa8eec0ee139f4ad7822adb",
+            "36a246006bb15b27e9f534f32b11eaf1be6b2a90be3276fae4a6efcc6f41558e",
+            "63498f7dbc6d6132c642cacc6a6dd38db847aa0bce09f8a886eb82b60c37953f",
+            "353aac14f96151b40f110a10e761d444fba9985e90dad3a36ade6172acfb4a2f",
+            "fdf397196226ba36d0e5cbc6eef766621e6b3639dca645ab80852370a35c3d16",
+            "f17291d56b8f33522d37bf9b1e1e84574242ad4f61f6d153707f82e0fce4a989",
+            "c75e10d8d06686198b82e18b3ed5cf3f275a7a72ea57e1a74232ee61a4e4f9d0",
+            "51c9ec55f1628fab3e66cb68db106c985fa851e88af7859978859cb2fcc21743",
+            "9860f991868507b7ecf1a74aa376cc2847627f620d511ec733242b168e3f09e4",
+            "3d9b0dd6f069b343aa5fc52b5a8ae352d25a38f3baa245580731226b5e366571",
+            "abc468e272dc0a5eeedaeb65e30551f6da1bfa3046f661a47d0e9f7c18f0d2c7",
+            "96e64bc776688b969981ac0618957179849794c657e8bbfdeb6438770e469f48",
+            "4b04531295394d1a1dcb543dfcf828841d74d2941ff305b6acac4fd4945bd7b8",
+            "1aec69ed0f68a8282b057b68e2f190549f04890555f3b4ee3d15f17bda6b00c2",
+            "8259d66b54827d39daae1fcc5ec84b201291941ecbd752e6382551cbd7ca38a7",
+            "ed846dfe8fa647f8f2d162a0821a50ddcadb430d5f0330ab5c0086271708da7d",
+            "3d019ba6f00c2df04552d607aa0b5de24aa835f0cf601497bb03a93d28b97f77",
+            "ee716cba663214946abbba32ff4a5419b4f13359b2c31f48800ccb2f53929423",
+            "d2f2894f46c3ae408ff9ce76a997828096b8c5888144e81c117534cc2f26fd6a"
+          ],
+          "session": "/tmp/agent-interface-events-qd_ahmhx/events.sock"
+        },
+        "format": "durable-submit-v5",
+        "last_resolution": {
+          "request_id": "c2d53317b7924151aa9390ca7efdab57",
+          "checkpoint": {
+            "event": "effect_checkpoint",
+            "evidence": {
+              "status": "UNKNOWN",
+              "task_success": null,
+              "authority": "none",
+              "attribution": "not_established",
+              "observation_closed": false,
+              "contract": {
+                "expected": "t000242",
+                "kind": "saved_form_value"
+              },
+              "reason": "archive_or_evidence_unavailable",
+              "started_ns": 187110467456,
+              "finished_ns": 187110543661,
+              "error": {
+                "type": "FileNotFoundError",
+                "message": "[Errno 2] No such file or directory: '/tmp/realapp-x-i9c4gyy3/submitted.txt'"
+              }
+            },
+            "task_success": null,
+            "authority": "none",
+            "scope": "non-final artifact query; input admission unchanged",
+            "transport_request_id": "c2d53317b7924151aa9390ca7efdab57",
+            "runtime_request_sequence": 5,
+            "declared_action_id": null,
+            "command_op": "effect_checkpoint",
+            "correlation_scope": "current runtime input line; action ID is caller-declared",
+            "emit_started_ns": 187110553982
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 192016015068,
+    "end_ns": 192078438617,
+    "result": {
+      "request": {
+        "after": 81,
+        "events": [
+          "effect_checkpoint"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "effect_checkpoint",
+          "contract": {
+            "expected": "t000242",
+            "kind": "saved_form_value"
+          }
+        },
+        "request_id": "9768227d3a8b48e5a6e357968764219f",
+        "read_request_id": "9768227d3a8b48e5a6e357968764219f"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "contract": {
+                "expected": "t000242",
+                "kind": "saved_form_value"
+              },
+              "op": "effect_checkpoint",
+              "transport_request_id": "9768227d3a8b48e5a6e357968764219f"
+            },
+            "received_ns": 192026121283,
+            "emit_started_ns": 192026124615
+          },
+          {
+            "event": "effect_checkpoint",
+            "evidence": {
+              "status": "VERIFIED",
+              "authority": "none",
+              "attribution": "not_established",
+              "task_success": null,
+              "observation_closed": false,
+              "contract": {
+                "expected": "t000242",
+                "kind": "saved_form_value"
+              },
+              "started_ns": 192053490864,
+              "sampled_ns": 192056149238,
+              "artifact_sha256": "453b812402a8fc5365fabf5578456a3a544ac7a99249408e840ab28a80aff826",
+              "actual": {
+                "value": [
+                  "t000242"
+                ]
+              },
+              "scope": "one saved form artifact, exact field mapping",
+              "reason": "sample_matches_declared_value",
+              "finished_ns": 192056184944,
+              "archive_path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/checkpoint-artifacts/453b812402a8fc5365fabf5578456a3a544ac7a99249408e840ab28a80aff826.bin",
+              "source_sampled_ns": 192043065305,
+              "archive_source_path": "/tmp/realapp-x-i9c4gyy3/submitted.txt",
+              "archive_started_ns": 192042951906,
+              "archive_bytes": 13,
+              "archive_scope": "parsed archived bytes; original read not atomic; no durability or actor attribution"
+            },
+            "task_success": null,
+            "authority": "none",
+            "scope": "non-final artifact query; input admission unchanged",
+            "transport_request_id": "9768227d3a8b48e5a6e357968764219f",
+            "runtime_request_sequence": 6,
+            "declared_action_id": null,
+            "command_op": "effect_checkpoint",
+            "correlation_scope": "current runtime input line; action ID is caller-declared",
+            "emit_started_ns": 192063544734
+          }
+        ],
+        "cursor": 83,
+        "returned_ns": 192067925141,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "9768227d3a8b48e5a6e357968764219f",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "3f9b7ab1d9fa44e59e47c50599fec4f5": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 185632680361,
+                "event": "clock",
+                "runtime_ns": 185632677110,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "c173d56c772e489181ce3a49a7938b54": {
+              "echo_cursor": 48,
+              "record": {
+                "emit_started_ns": 186447909857,
+                "event": "clock",
+                "runtime_ns": 186447904610,
+                "sequence": 5
+              },
+              "record_cursor": 49
+            }
+          },
+          "cursor": 83,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 4.736274,
+            "capture_ns": 187034445383,
+            "context": [
+              [
+                "windows",
+                "0x00800003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                8388611
+              ]
+            ],
+            "context_ns": 187038779816,
+            "emit_started_ns": 187052394530,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-8779535bff1e441d918de0d94129b3e6",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/008.png",
+            "image_prepare_ns": 1994293,
+            "image_ready_ns": 187046662191,
+            "image_reused": true,
+            "input_focus_after": 8388611,
+            "input_focus_before": 8388611,
+            "input_state_after": {
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false,
+              "focus": 8388611,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "revision": 80,
+              "sample_finished_ns": 187052339766,
+              "sample_started_ns": 187052151543
+            },
+            "input_state_before": {
+              "active_lease_deadline_ns": 189447904610,
+              "active_lease_time_valid": true,
+              "cancel_requested": false,
+              "focus": 8388611,
+              "owned_buttons": [],
+              "owned_keycodes": [],
+              "owner_id": "aa72bc95f42a4c12a52516c82ec39f81",
+              "physical_pointer_mask": 0,
+              "pointer": [
+                150,
+                277
+              ],
+              "revision": 80,
+              "sample_finished_ns": 187029040695,
+              "sample_started_ns": 187028735380
+            },
+            "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+            "owner_revision_unchanged": true,
+            "pointer_binding": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "pointer_context_after": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "pointer_context_before": {
+              "focus": 8388611,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 8388611
+            },
+            "semantic_completion": "unknown",
+            "sequence": 10,
+            "step": 4,
+            "wire_bytes": 325
+          },
+          "observation_cursor": 77,
+          "pending_clock": null,
+          "record_hashes": [
+            "16860e8ccf5f14909a788b43d50032d448a213dae6984adcdafae8e7ed95618f",
+            "edc3063cbb333c813ae62c5b997caf51e82fd5db54e93de71d92ec98add8264f",
+            "e2d24ea5ddc5f4ff706793eb4dcbf5d405ad0cf7e908316da2c1d4e867412bd9",
+            "af507c789dc090e2b150618492725b02fac1c9d93668bc65778faaa33b107003",
+            "09a3cbb91f37234ddb4532d23ce07c85debe340f30a3a01d7a0dc1dfc99f66e1",
+            "ea8a7c78ee8f1076ae4dd20afcca120bbd64832d5934a63af0f777cdcb9e52b1",
+            "3ffecf22983d68ed69449e8ad8c7e4a2f1f77df013cb584d9abd960ddd46bc8f",
+            "133ceaca9a6afdf30b15afa3b90821276bbeea3cea8c88ebbff39b1365b1f292",
+            "ae8511cc7abe856996e2970ae3dfa8233e7e80918bbcc7622eca10c714729cb7",
+            "14d0976335124aa3157a22ff95b5565087879a7b587247776758c962c049dd3e",
+            "3097ffe3b42e905b6c6f2e2f629017fbcaf20e911916d539f95daefbb8aab259",
+            "b319077f713940b5b6344b02d5eecc2a3f18730d3d55d546dfc64fa56081fbd1",
+            "01375f3eb76a671650898812c8818d565c6a7698a4bb379cc33619ab3b7cbbed",
+            "33f912fdb97626b00d6a255efb6b47865c02f24af9cfc6ff43103819fd17bd4f",
+            "d372e0696693bf8d8101ca2081f6b4e83410c19591cf7b92cd9fb34485368b77",
+            "9edab76f40d7ddf6e16e06188198c5e95cba739d482f1aed7865dd28e06b62d3",
+            "a69daa9fc90e2b04e97b4a0d856cfc159c8d3c0a96a7da630832b24aaf926805",
+            "c6861ae05cbac694f9b5b7b980c430c82af262d1ed34f8a009f33a81334cf66a",
+            "31e79e48d56890810f9465ea9f5be932416bd3e9c3813c6de0dcd6ea5d1e5f9f",
+            "a400e63ffc73c19e1cf35f634be0d789fddab30ed96edba580415662a04ca9ff",
+            "8eceb674589e9bf02afaa053df0da6d1dfc4d6516d84889d19012d8325577e93",
+            "829d1ee27ca33486f40f37c2fdb94f11ce025c879010f9d3ced8d4c5ddce5063",
+            "19289840d17acee8835cd1c2cb61dad03625d640be2cc9acbb449a481be2429f",
+            "39ff7c293517e0e1a4a6bf3c824c03b9af3c4bb07c4fc23b363d02a0b99e5d16",
+            "b589f1e219ec4a2c0867519dec7278c2b6a9042f2e8e2cffbad915e7f08de20f",
+            "da92b0af9784e860b3d36be17f03970a7c8569a0def80586eb6112438351b9dc",
+            "f11cd38f1942ddbcc601f9221e32b077dae0ae22633154f443e2c288e980c80e",
+            "b027956406b6dc7980b6f2fd5fc92df247215e757da6c95960a83007e5512a43",
+            "881347c522460791c3d5fc2924a36356443fe59e9e4762fd4e77fab879f37275",
+            "50cf3515797451d4c3e7825873c52f34e09c84418a26efc7aa9d9458f513cb9b",
+            "97373a0354eb85a92f4ba572d66c7987ce6fe5191582c7164fbaadd39deb85c4",
+            "b41290238f7fb61f13b20364cae739760a10db20af24bb6ed593027a18bde55d",
+            "72225944f3379684c5448893fd9180660d24780c2f7293a23d4aba777a9d3822",
+            "663c5dfdd53124d7373cadc31a57d8e501bd915d18cf41fd67feb1c3dc425ae2",
+            "b3d74f274a8629564e78454d1cd6045aa05b0e3ef84166018fe083febba32276",
+            "7aea6ac357a9d48bac2e34856af7cc473e7630d6853f958a1c6d561214ab736d",
+            "40287b9c0614c33f7e2e670a9ad74a91753290b3ff43baa4564532adecd2e07d",
+            "13fc305eaac7d7ff6cd361c2ae2acf9a5bb448b3e2404cfcff8fada189b4500b",
+            "87bcd9f12513c92929f03d4c78d1313f7712ce5382c81610b27794dc85df2a4a",
+            "46c25f0300a637479fcbf7fa45cdd2eb9126fe2d34e32d006b31c984888f4753",
+            "a6931b5408e10bc6cdb6d6a0c984dfb392e0e8000bdfe7bb6df37bc1ff2bd21d",
+            "f76cf9e0d7e13e50fbfa1dec2774214ae9bcd24d5d83b87853d57a3d26cbf598",
+            "921f9826effe294f0eab3b35ac72ab9e644d97aff5735d928b30443752fa101d",
+            "17b480a507d8c73315319ee364b7ff0f8bf699c0d5be5ea109c854b34cb001aa",
+            "f097f4a90efe0459a3a1f7af80a50332566ad9e600ed778db4cbc5b721ed4dd8",
+            "3e9974ce375d2acc7539c61eb4f1dbb170b85526c0eba0834ef2661c5d16def8",
+            "758ebf74cc9ab7adaa05f54b8f8c2351f35c50101391527d7324245fc0918904",
+            "79fb35f8e463e8204032d6efa8064d02d399324455aba18d210dbce5caac20f5",
+            "b6e6463eb9e270d270c0c442bd1e2b8186511d1a38914f9baab8b4a460e078da",
+            "05e707c3a33cafd1c8b91f8fc9a4649b9e220e46673f9c94f488a370eb83e060",
+            "6cca1ccfbb4c30dc9d96171da63a77c3754e4ca7df7652415bee1b1bbd0abe3f",
+            "e8531bd812da309e42a2c62c6ecdb15d5672aff15abc9b07cff25faf7ca03188",
+            "e8f4a3631202f4b85ddc99232b34c37126d8c8d24fc77a0dbc641428195dcf30",
+            "2227c1e84317f2531bc757ca9623268783d3db4afc64196d1a45f2cfad97b3e3",
+            "3e146ad682a36591d862308a5cf9bf793ad7a47f9d37b4846d8177e3127ccc2e",
+            "3e2caae370dcd64bdb11400a89aad2c671e64dcda5f9f2d5ce0bd2c36371322b",
+            "ed576ccdaf171be801b753656a5d0bf52a3215c963a754778bb36138c1c2b070",
+            "d3c1ad864f99424f4443fa472a2ac96e0355762fa9661c2add144b6c261b3b6b",
+            "f16f5f6fc3e6706bd0cbb1a8fd4596ebb9d2c7c38c6587743cda961cddcacd9a",
+            "5370589f6b33252a2c6d87366f59a867af37521b31127745a96e24f731542922",
+            "0fc75bbc7a8f3b48830a662ea67acd5ca5a3a30264855a401a9093fc1515e2f5",
+            "8fbc41479913e7791326e2bf37375957c8ab58895962f1bc166b906773a846c9",
+            "f4cf4cde11bfbdd2f7795685a6603f2ada842ffc5aa8eec0ee139f4ad7822adb",
+            "36a246006bb15b27e9f534f32b11eaf1be6b2a90be3276fae4a6efcc6f41558e",
+            "63498f7dbc6d6132c642cacc6a6dd38db847aa0bce09f8a886eb82b60c37953f",
+            "353aac14f96151b40f110a10e761d444fba9985e90dad3a36ade6172acfb4a2f",
+            "fdf397196226ba36d0e5cbc6eef766621e6b3639dca645ab80852370a35c3d16",
+            "f17291d56b8f33522d37bf9b1e1e84574242ad4f61f6d153707f82e0fce4a989",
+            "c75e10d8d06686198b82e18b3ed5cf3f275a7a72ea57e1a74232ee61a4e4f9d0",
+            "51c9ec55f1628fab3e66cb68db106c985fa851e88af7859978859cb2fcc21743",
+            "9860f991868507b7ecf1a74aa376cc2847627f620d511ec733242b168e3f09e4",
+            "3d9b0dd6f069b343aa5fc52b5a8ae352d25a38f3baa245580731226b5e366571",
+            "abc468e272dc0a5eeedaeb65e30551f6da1bfa3046f661a47d0e9f7c18f0d2c7",
+            "96e64bc776688b969981ac0618957179849794c657e8bbfdeb6438770e469f48",
+            "4b04531295394d1a1dcb543dfcf828841d74d2941ff305b6acac4fd4945bd7b8",
+            "1aec69ed0f68a8282b057b68e2f190549f04890555f3b4ee3d15f17bda6b00c2",
+            "8259d66b54827d39daae1fcc5ec84b201291941ecbd752e6382551cbd7ca38a7",
+            "ed846dfe8fa647f8f2d162a0821a50ddcadb430d5f0330ab5c0086271708da7d",
+            "3d019ba6f00c2df04552d607aa0b5de24aa835f0cf601497bb03a93d28b97f77",
+            "ee716cba663214946abbba32ff4a5419b4f13359b2c31f48800ccb2f53929423",
+            "d2f2894f46c3ae408ff9ce76a997828096b8c5888144e81c117534cc2f26fd6a",
+            "3f71029f4a90d3b1234d87f332a88699b103e44610e63d4377a4b21ac5d9c967",
+            "472061e39eea46c8be04cff0735f5fddef8b2150d1dfb2c4c2d09066083714c5"
+          ],
+          "session": "/tmp/agent-interface-events-qd_ahmhx/events.sock"
+        },
+        "format": "durable-submit-v5",
+        "last_resolution": {
+          "request_id": "9768227d3a8b48e5a6e357968764219f",
+          "checkpoint": {
+            "event": "effect_checkpoint",
+            "evidence": {
+              "status": "VERIFIED",
+              "authority": "none",
+              "attribution": "not_established",
+              "task_success": null,
+              "observation_closed": false,
+              "contract": {
+                "expected": "t000242",
+                "kind": "saved_form_value"
+              },
+              "started_ns": 192053490864,
+              "sampled_ns": 192056149238,
+              "artifact_sha256": "453b812402a8fc5365fabf5578456a3a544ac7a99249408e840ab28a80aff826",
+              "actual": {
+                "value": [
+                  "t000242"
+                ]
+              },
+              "scope": "one saved form artifact, exact field mapping",
+              "reason": "sample_matches_declared_value",
+              "finished_ns": 192056184944,
+              "archive_path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/delayed-effect-05/runtime/checkpoint-artifacts/453b812402a8fc5365fabf5578456a3a544ac7a99249408e840ab28a80aff826.bin",
+              "source_sampled_ns": 192043065305,
+              "archive_source_path": "/tmp/realapp-x-i9c4gyy3/submitted.txt",
+              "archive_started_ns": 192042951906,
+              "archive_bytes": 13,
+              "archive_scope": "parsed archived bytes; original read not atomic; no durability or actor attribution"
+            },
+            "task_success": null,
+            "authority": "none",
+            "scope": "non-final artifact query; input admission unchanged",
+            "transport_request_id": "9768227d3a8b48e5a6e357968764219f",
+            "runtime_request_sequence": 6,
+            "declared_action_id": null,
+            "command_op": "effect_checkpoint",
+            "correlation_scope": "current runtime input line; action ID is caller-declared",
+            "emit_started_ns": 192063544734
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  }
+]

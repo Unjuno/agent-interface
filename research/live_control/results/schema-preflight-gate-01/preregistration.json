@@ -1,0 +1,46 @@
+{
+  "status": "preregistered_before_one_fresh_remaining-refusal_and_one_cached-positive-gate",
+  "study": "schema-preflight-gate-01",
+  "negative": [
+    {
+      "name": "world-receipt-oneof",
+      "schema": "benchmark_discovery/mindustry_world_target_contract_schema_v1.json"
+    }
+  ],
+  "positive": [
+    {
+      "name": "flat-candidate",
+      "schema": "live_control/bounded_visual_target_contract_schema_v3.json"
+    },
+    {
+      "name": "anchor-receipt",
+      "schema": "live_control/anchor_evidence_contract_schema_v1.json"
+    },
+    {
+      "name": "typed-world-receipt",
+      "schema": "benchmark_discovery/mindustry_world_target_contract_schema_v3.json"
+    }
+  ],
+  "gate": "negative is refused before caller continuation; positive accepts three production schemas entirely from copied pinned cache",
+  "failure_policy": "retain the first finite block; no endpoint retry",
+  "sources": {
+    "schema_preflight_responder_v1.txt": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef",
+    "schema_preflight_v1.py": "798a0967a65208afb90b7c71aac144a91822bcace69deede3f71c92e9a9fcb9b",
+    "schema_preflight_gate_v1.py": "4fb369d3f0b7b4d551b3326b9dfc3df8152e1bc7a8fd27d8b5445b191abebae7",
+    "run_schema_preflight_gate_v1.py": "a251ba96520b0e98cd8fdc37ee3d3e1297479989a87158301184f252a8009c04",
+    "preregister_schema_preflight_gate_v1.py": "90572ea214264e36b1ea3c4c2be64a02a75f1b6363a5c52e0b5f650baac7cfce",
+    "target_handle_model_runner_v2.py": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+    "bounded_visual_target_contract_schema_v3.json": "7647d1bcddfba66d41077041d6545b168576128b9a9a7c44f66c6792de860962",
+    "anchor_evidence_contract_schema_v1.json": "56c01ff17461f1f219a219589c822607c6513f4a13fe1ea4743b2abf9c2c6510",
+    "../benchmark_discovery/mindustry_world_target_contract_schema_v1.json": "d85b97811f9f5ce4cc70ed69e8636b2b445211df73800c77017d25cff79709fe",
+    "../benchmark_discovery/mindustry_world_target_contract_schema_v3.json": "0802a56a35902d19788a1abf0961920d5341746b2180782299b764f9a41d0a10"
+  },
+  "seed_cache": {
+    "3d9a09b7ebf78f933924bee95edad9670c842b4cf21d8df49933e02d81ecf97c.json": "ec234ce5bd221a7b838286e6cb76d18d308145565f29fec2bf638ed85174bced",
+    "7213800c6b99da390ac42e90a125df59030bdd82eaa4f54a2c74024ebc5cc75e.json": "5275e2d434ca3f99b7b3ebd3d0a3431b7b8eb254224cc8ab4142539e4923d5d0",
+    "d673b6dee8f288ab3a98460f748f81e468d928f4b32332c0b72d04134767fdb3.json": "85569b4385995d58d618994e8248fcb0490ea62a50838dc7cf1b6ba6dfa863d2",
+    "dd429a3b621fbe4d72f30ec4a68cfa850a8f2866709769d1445e0102361178af.json": "0febb80b0e412d47c0b38d3024b0646ebfd57b04d98b15a120b1d1647437339f",
+    "fa10d9ae5f1a46fb340fae4b2e031c171b26fc748a7ebc9aa539ca2ee920ba0b.json": "688380f0ef2fea80132555c4f542a439a4517d3b4e22db5685dfe7e9aaae00b9"
+  },
+  "scope": "schema authority ordering only; no GUI, semantic task quality, speed, token saving or human-tempo claim"
+}

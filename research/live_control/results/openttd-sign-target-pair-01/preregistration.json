@@ -1,0 +1,45 @@
+{
+  "study": "openttd-sign-target-pair-01",
+  "status": "PREREGISTERED_BEFORE_MODEL_CALLS",
+  "order": [
+    "opaque-sign-background",
+    "transparent-sign-background",
+    "transparent-sign-background",
+    "opaque-sign-background"
+  ],
+  "model": "gpt-6-astra",
+  "effort": "medium",
+  "same_prompt_sha256": "1102e93ab05a0d74431d09d39a3be6192b8430cd2759e6de9ddba11a3f5ffe36",
+  "conditions": {
+    "opaque-sign-background": {
+      "image": "results\\openttd-sign-view-paused-01\\run\\runtime\\005.png",
+      "sha256": "0afcf7e299654f21d8ea5938148a5bc16d2e1d7df7990e09812d7cf457f6f07e"
+    },
+    "transparent-sign-background": {
+      "image": "results\\openttd-sign-view-paused-01\\run\\runtime\\008.png",
+      "sha256": "f76238af2f2a1fa4af5005c97782d35a96adc9f3f3c720e0366cc36d602bc1ba"
+    }
+  },
+  "hidden_scoring_reference": {
+    "start": [
+      737,
+      250
+    ],
+    "end": [
+      673,
+      282
+    ],
+    "basis": "previous independently successful seed-991002 live road drag; never included in model prompt",
+    "endpoint_gate": "absolute x error <=12 and absolute y error <=6 for both named endpoints"
+  },
+  "decision_rule": "report per-condition 0/2 endpoint-gate passes, coordinates, model time and actual reported tokens; do not promote from one fixed image pair",
+  "no_retry": true,
+  "sources": {
+    "preregister_openttd_sign_target_pair_v1.py": "9c698217f26b77d31d38c7a2cfa6a6784a3ee5ede0b9e34ebc71f9cca287b2a2",
+    "run_openttd_sign_target_pair_v1.py": "866d5c2cf5444d4bfcda4373725bf9b5558ea4a8ac7b63a22786234c214f79c3",
+    "audit_openttd_sign_target_pair_v1.py": "35285aacec6baa54430e11c4c17d27217db75db3aba8ff8e15a53b05ee14f5c9",
+    "model_pair_runner_v2.py": "31c59f88eeac7eebe8470d875934db87a6bb8395f444a812ccb6fb9444191f77",
+    "results/openttd-sign-view-paused-01/audit.json": "a23ba9a1cc22cf40d541c0cce00eec6c68703f1f65b3260b11ac1883fb7cec0e"
+  },
+  "scope": "fixed-image grounding diagnostic; no GUI execution, task success, causal speed or broad token claim"
+}

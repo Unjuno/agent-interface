@@ -1,0 +1,26 @@
+{
+  "schema": "native-rpc-id-peer-v1",
+  "case": "boolean_true",
+  "peer_pid": 14972,
+  "start_utc": "2026-10-03T06:34:07.907134+00:00",
+  "request_line_utf8": "{\"method\":\"fixture/probe\",\"id\":1,\"params\":{\"case\":\"boolean_true\"}}\r\n",
+  "request": {
+    "method": "fixture/probe",
+    "id": 1,
+    "params": {
+      "case": "boolean_true"
+    }
+  },
+  "reply_line_ascii": "{\"jsonrpc\":\"2.0\",\"id\":true,\"result\":{\"kind\":\"fixture-payload\",\"case\":\"boolean_true\"}}\n",
+  "reply": {
+    "jsonrpc": "2.0",
+    "id": true,
+    "result": {
+      "kind": "fixture-payload",
+      "case": "boolean_true"
+    }
+  },
+  "before_reply_ns": 19996196408900,
+  "receipt_written_utc": "2026-10-03T06:34:07.907134+00:00",
+  "planned_terminal": "natural process EOF after this single reply"
+}

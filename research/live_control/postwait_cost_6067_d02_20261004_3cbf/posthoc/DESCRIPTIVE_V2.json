@@ -1,0 +1,185 @@
+{
+  "scope": "CORRECTED POSTHOC descriptors only, selected by frozen case.kind=='pulse'; invalid first prefix-based descriptor retained unchanged",
+  "source_cells": 16,
+  "capture_cells": 16,
+  "total_source_events": 98,
+  "total_captures": 128,
+  "snapshots": 599,
+  "pulse_cells": 12,
+  "by_arm": {
+    "full": {
+      "events": 48,
+      "delay_ns": {
+        "median": 733066,
+        "min": 185960,
+        "max": 2725888
+      },
+      "wait_lateness_ns": {
+        "median": 834,
+        "min": 6,
+        "max": 290052
+      },
+      "trial_wall_ns": {
+        "median": 717358,
+        "min": 180127,
+        "max": 2694805
+      },
+      "trial_process_cpu_ns": {
+        "median": 710687,
+        "min": 177125,
+        "max": 2683542
+      },
+      "trial_thread_cpu_ns": {
+        "median": 704604,
+        "min": 175500,
+        "max": 2673625
+      },
+      "snapshot_wall_ns": {
+        "median": 688920.5,
+        "min": 168043,
+        "max": 2642346
+      },
+      "exposure_ns": {
+        "median": 9515982.5,
+        "min": 6920117,
+        "max": 11690348
+      },
+      "residual_wall_not_cpu_ns": {
+        "median": 11108.5,
+        "min": 3877,
+        "max": 23132
+      },
+      "source_exposure_violations": 0
+    },
+    "minimal": {
+      "events": 48,
+      "delay_ns": {
+        "median": 54375.5,
+        "min": 14166,
+        "max": 322168
+      },
+      "wait_lateness_ns": {
+        "median": 1014,
+        "min": 74,
+        "max": 36179783
+      },
+      "trial_wall_ns": {
+        "median": 22375,
+        "min": 5792,
+        "max": 285877
+      },
+      "trial_process_cpu_ns": {
+        "median": 12791.5,
+        "min": 3291,
+        "max": 48750
+      },
+      "trial_thread_cpu_ns": {
+        "median": 5666,
+        "min": 1834,
+        "max": 40916
+      },
+      "snapshot_wall_ns": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "exposure_ns": {
+        "median": 10036798.5,
+        "min": 1590675,
+        "max": 12750561
+      },
+      "residual_wall_not_cpu_ns": {
+        "median": 16187.5,
+        "min": 3917,
+        "max": 278586
+      },
+      "source_exposure_violations": 1
+    }
+  },
+  "paired": [
+    {
+      "pair": 0,
+      "full_median_ns": 480441.5,
+      "minimal_median_ns": 46646.5,
+      "reduction_ns": 433795
+    },
+    {
+      "pair": 1,
+      "full_median_ns": 451754.5,
+      "minimal_median_ns": 23396,
+      "reduction_ns": 428358.5
+    },
+    {
+      "pair": 2,
+      "full_median_ns": 645961.5,
+      "minimal_median_ns": 54313.5,
+      "reduction_ns": 591648
+    },
+    {
+      "pair": 3,
+      "full_median_ns": 1138026,
+      "minimal_median_ns": 59437.5,
+      "reduction_ns": 1078588.5
+    },
+    {
+      "pair": 4,
+      "full_median_ns": 992275.5,
+      "minimal_median_ns": 61667,
+      "reduction_ns": 930608.5
+    },
+    {
+      "pair": 5,
+      "full_median_ns": 1186568.5,
+      "minimal_median_ns": 54500.5,
+      "reduction_ns": 1132068
+    }
+  ],
+  "qualifying_pairs": 4,
+  "pooled_reduction_ns": 678690.5,
+  "primary_gate_status": "HOLD_NOT_REPRODUCED",
+  "pulse_timing_violations": [
+    {
+      "cell": "p3_minimal",
+      "id": 1,
+      "delay_ns": 71167,
+      "wait_lateness_ns": 36179783,
+      "trial_wall_ns": 19875,
+      "trial_process_cpu_ns": 10792,
+      "trial_thread_cpu_ns": 3750,
+      "snapshot_wall_ns": 0,
+      "exposure_ns": 1590675
+    }
+  ],
+  "pulse_capture_max_lateness_ns": 44093787,
+  "pulse_capture_lateness_violations": [
+    {
+      "cell": "p3_minimal",
+      "index": 0,
+      "lateness_ns": 44093787
+    }
+  ],
+  "whole_native_leaf_observed": {
+    "first": {
+      "burst_usec": 0,
+      "nice_usec": 0,
+      "nr_bursts": 0,
+      "nr_periods": 3,
+      "nr_throttled": 0,
+      "system_usec": 45870,
+      "throttled_usec": 0,
+      "usage_usec": 281209,
+      "user_usec": 235338
+    },
+    "last": {
+      "burst_usec": 0,
+      "nice_usec": 0,
+      "nr_bursts": 0,
+      "nr_periods": 240,
+      "nr_throttled": 3,
+      "system_usec": 602141,
+      "throttled_usec": 7370,
+      "usage_usec": 7739053,
+      "user_usec": 7136911
+    }
+  }
+}

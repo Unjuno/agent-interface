@@ -1,0 +1,13 @@
+{
+  "check": "git diff --cached --check",
+  "exit_code": 2,
+  "reason": "Five immutable helper snapshots retain their originally executed/frozen blank line at EOF. Not normalized/reexecuted. Explicit package-only filenames ignore only blank-at-eof; all other checks and active source/docs retain standard rules.",
+  "files": [
+    "audit_saved.py.txt",
+    "audit_saved_v2.py.txt",
+    "inert_peer.py.txt",
+    "run_cell.py.txt",
+    "run_comparison.py.txt"
+  ],
+  "before_any_commit_or_send": true
+}

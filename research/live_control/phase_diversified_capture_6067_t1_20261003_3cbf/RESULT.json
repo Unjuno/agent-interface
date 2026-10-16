@@ -1,0 +1,32 @@
+{
+  "status": "STOP_CAPTURE_TIMING_GATE",
+  "allocation": "PHASE-DIVERSITY-6067-X11-A01-20261003-3CBF",
+  "candidate_runs": 1,
+  "auditor_runs": 0,
+  "planned_cells": 114,
+  "started_cells": 2,
+  "completed_controls": 1,
+  "started_controls": 2,
+  "pulse_cells_started": 0,
+  "planned_pulse_cells": 108,
+  "frames_retained": 16,
+  "first_failed_cell": "c001",
+  "failed_frame_index": 0,
+  "lateness_ns": 17231413,
+  "capture_gate_ns": 10000000,
+  "first_native_duration_ns": 223959,
+  "formal_exit": 2,
+  "child_exits": [
+    0,
+    0,
+    0
+  ],
+  "oom_killed": false,
+  "restarts": 0,
+  "source_commit": "48ce12d529c1a9127e46eda4b33bcaaa278129a2",
+  "freeze_commit": "6990c3e2650b34f557ba11f51949f9bcc5b1ee41",
+  "freeze_comment_id": 5968687263,
+  "scope": "No phase benefit tested; no live effect/per-key/recovery/safety promotion",
+  "reason": "First irregular dark-control acquisition start missed its deadline; root scheduling cause not established",
+  "next_gate": "No A01 retry. Any successor requires explicit named prospective timing/allocation requalification, unchanged predecessor raw, fresh source/command/gate freeze."
+}

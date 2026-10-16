@@ -1,0 +1,93 @@
+[
+  {
+    "case": "move_drag_vertical_wheel",
+    "events": [
+      [
+        4,
+        1
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        5,
+        4
+      ]
+    ],
+    "pointer": [
+      180,
+      180
+    ]
+  },
+  {
+    "case": "expired_move",
+    "rejected": true
+  },
+  {
+    "case": "cancelled_press",
+    "rejected": true
+  },
+  {
+    "case": "other_surface",
+    "rejected": true
+  },
+  {
+    "case": "out_of_root",
+    "rejected": true
+  },
+  {
+    "case": "deadline_release_without_worker_calls",
+    "button1_down": false,
+    "release_reason": "expired"
+  },
+  {
+    "case": "cancel_release_without_worker_calls",
+    "button1_down": false,
+    "release_reason": "cancelled"
+  },
+  {
+    "case": "focus_release",
+    "button1_down": false,
+    "release_reason": "focus_changed"
+  },
+  {
+    "case": "wrong_focus_move",
+    "rejected": true
+  },
+  {
+    "case": "same_focus_overlay_release",
+    "button1_down": false,
+    "release_reason": "surface_changed"
+  },
+  {
+    "case": "old_lease_cannot_release_new_button",
+    "rejected": true
+  },
+  {
+    "case": "moved_surface_rejects_old_geometry",
+    "rejected": true
+  },
+  {
+    "case": "resized_surface_releases_hold",
+    "button1_down": false,
+    "release_reason": "surface_changed"
+  },
+  {
+    "case": "destroyed_surface_releases_hold",
+    "button1_down": false,
+    "release_reason": "focus_changed"
+  }
+]

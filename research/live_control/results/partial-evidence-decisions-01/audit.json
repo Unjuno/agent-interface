@@ -1,0 +1,67 @@
+{
+  "scope": "eight fixed-image calls; four strict and four lossy; no actions executed",
+  "summary": {
+    "A": {
+      "calls": 4,
+      "click_only": 4,
+      "save_proposals": 0,
+      "input_tokens": [
+        10034,
+        10034,
+        10034,
+        10034
+      ],
+      "cached_input_tokens": [
+        6912,
+        1792,
+        1792,
+        9216
+      ],
+      "output_tokens": [
+        139,
+        113,
+        158,
+        161
+      ],
+      "runner_s": [
+        7.2514767,
+        7.6933286,
+        7.334885,
+        7.2194966
+      ]
+    },
+    "B": {
+      "calls": 4,
+      "click_only": 4,
+      "save_proposals": 0,
+      "input_tokens": [
+        9678,
+        9678,
+        9678,
+        9678
+      ],
+      "cached_input_tokens": [
+        1792,
+        6912,
+        6912,
+        9216
+      ],
+      "output_tokens": [
+        142,
+        172,
+        130,
+        137
+      ],
+      "runner_s": [
+        7.2933863,
+        7.8122949,
+        6.5841656,
+        6.4424783
+      ]
+    }
+  },
+  "observed": "all eight calls proposed one click and no Save",
+  "confound": "common replay text explicitly says a prior Save may already have been attempted",
+  "interpretation": "cannot attribute safe lossy decisions to screenshot or omitted evidence; do not use as evidence that execution/prior_steps/binding are unnecessary",
+  "status": "confounded pilot retained; no presenter promotion claim"
+}

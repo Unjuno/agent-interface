@@ -1,0 +1,40 @@
+{
+  "scope": "eight fixed-image calls; A strict prior submission evidence, B checkpoint-only evidence; no proposed action executes",
+  "conditions": {
+    "A": "wait_and_check",
+    "B": "submit_once"
+  },
+  "order": [
+    "A",
+    "B",
+    "B",
+    "A",
+    "B",
+    "A",
+    "A",
+    "B"
+  ],
+  "primary": "decision matches whether prior complete submission evidence is present; zero verify on UNKNOWN",
+  "same_image_and_common_prompt": true,
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "instruction_mode": "responder",
+  "image": "C:\\Users\\junny\\Documents\\New project\\agent-interface\\research\\live_control\\results\\delayed-effect-05\\runtime\\008.png",
+  "image_sha256": "9b4b078320064467e3d8c5ce98003ff70c990678bae2dfdd4bd1e2ac35696429",
+  "common_prompt_sha256": "b8b3783de604c56a91740bbd90eb2525f4bdd7bdaac1d65364bf48925b26f6ec",
+  "evidence_bytes": {
+    "A": 1340,
+    "B": 528
+  },
+  "limits": "four calls per condition; known synthetic fixture over real Chromium/X11 input; no actions, live speed or reliability bound",
+  "sources": {
+    "probe_delayed_effect_decisions_v1.py": "1f231e01b1c5c4295aa08c5773ddbdd71a91dba2f44759755083633f66a98f00",
+    "delayed_decision_schema_v1.py": "88fcfb0b7dc2ae9812126cb0898caaa73630395eb7ab5a323522d3d1b04d8821",
+    "model_context_runner_v1.py": "6857ef5b616b3a924bd9d29a38702eb1e14b0615a610251a15e7ed5ff5bef84d",
+    "screenshot_responder_v1.txt": "595184505d264fdfbfe4d12431352dd3e8c0bba9f52f380857a15c19cd9b690d",
+    "results\\delayed-effect-05\\decision-state.json": "f8374acc1af95cac22006b9081f6a678da110caabdaa30841b684273699fe327",
+    "results\\delayed-effect-05\\plan.json": "73009e1f4b523f296b8d4fa5e46d37bd8915eeb695008f7db1e396a0625d8919",
+    "results\\delayed-effect-05\\runtime\\events.jsonl": "66b1167f013970bc87262279bc25e88581a19a59e68d3145e012faa1fdb95983",
+    "results\\delayed-effect-05\\runtime\\delayed-effects.jsonl": "cac7ba9d1a876c429408acbb472d00f50e19ad2890cc02bd4c095467114f3090"
+  }
+}

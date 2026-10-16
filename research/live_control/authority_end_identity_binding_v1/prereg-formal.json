@@ -1,0 +1,18 @@
+{
+  "schema": "authority-end-identity-binding-formal-prereg-v1",
+  "result_id": "authority-end-identity-binding-v1-20260916-01",
+  "base_commit": "1308b57d3209bc32b3bea5b84efb4911c915d8e9",
+  "formal_retries": 0,
+  "source_sha256": {
+    "authority_end_identity_binding_v1.py": "a305c1f70bc7bf849421ad41a7539966d539e1037f7db2fa5116b41af4f5f730",
+    "bridge_v2_semantic_snapshot.py": "f16ba93fabef5c395b349d91e2ea9ec4139f6f993a763269879fc8ccd6ee35f9",
+    "retained_terminal_fixture.json": "2bff1613ebd5ac89894d081bfc813a3f4c608669e8ca7dd09ebd7cd27ba47a22",
+    "formal_runner.py": "6b36dd5f88a89a0c1c1c683b3d4cd54306d415c32ae9c84f6200d4cec550b87f"
+  },
+  "dependency_sha256": {
+    "authority_ended_restart_durability_v1/durable_token_state_v2.py": "72a3481653cf9c41ec1a03f4c7a7bf1c482ff69468b5d92986bad8cf814950b4",
+    "authority_ended_restart_durability_v1/authority_ended_bridge_v1.py": "2c9684d8f731b36469df06532fc2ce566716c0380002d18da1f317814f7acb1e"
+  },
+  "hard_gate": "13/13 rows pass; exact existing interruption.intent_token is retained as authority_end_id; duplicate/same-epoch mutation/restart semantics hold; missing/forged/non-authority-ended/unverified/non-expiry/mismatched-release identity cases all fail closed; no fresh authority_end_id generation occurs.",
+  "scope": "offline interface formalization only; PR #168 terminal projection is retained data, not certification of PR #168 formal source provenance; zero GUI/model/network/durable-submit transport"
+}

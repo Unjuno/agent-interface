@@ -1,0 +1,87 @@
+{
+  "authority_granted": false,
+  "cleanup_error": null,
+  "lifecycle": [
+    "dispatch"
+  ],
+  "native_status": "completed",
+  "partial_effects": [],
+  "program_completed": true,
+  "raw_dispatch": {
+    "result": {
+      "admission": "accepted",
+      "execution": {
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "emissions": 35,
+        "ended_ns": 24080943151192,
+        "observations": [
+          {
+            "artifact": {
+              "bytes": 3874,
+              "height": 180,
+              "mime_type": "image/png",
+              "path": "/out/allocation-a1/useful-control/capture/743a8afcaca74809acd4faee304d1123.png",
+              "sha256": "35c25edf67dfed6c24b785d75db7d43bf7f68084bbcfedff519667591c2773cc",
+              "source_raw_sha256": "523d7d9f2d40725a96b7f82f4db06412a7bcf2c28cd23f79ce4886ddaf794b04",
+              "width": 400
+            },
+            "bytes": 288000,
+            "capture_ended_ns": 24080937573788,
+            "capture_started_ns": 24080937042318,
+            "frame": "window_client",
+            "height": 180,
+            "native_window_id": 2097155,
+            "region": [
+              0,
+              0,
+              400,
+              180
+            ],
+            "sha256": "523d7d9f2d40725a96b7f82f4db06412a7bcf2c28cd23f79ce4886ddaf794b04",
+            "target": "fixture",
+            "width": 400
+          }
+        ],
+        "program_emissions": 35,
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [],
+            "monotonic_ns": 24080943149108,
+            "verified": true
+          }
+        ],
+        "started_ns": 24080825392565
+      },
+      "recovery_required": false,
+      "required_capabilities": [
+        "capture.frame",
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "status": "completed"
+    },
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "returned"
+  },
+  "schema": "golden-v3-result-v2",
+  "status": "partial",
+  "task_success": null,
+  "usage": {}
+}
