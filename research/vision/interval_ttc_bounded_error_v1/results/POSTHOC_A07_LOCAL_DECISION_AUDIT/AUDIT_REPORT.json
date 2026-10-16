@@ -1,0 +1,210 @@
+{
+  "a02_a03_a04_a05_a06_auditor_invocations_in_a07": 0,
+  "a03_stop_preserved": "STOP_AUDITOR_RUNTIME_ERROR",
+  "a04_report_sha256": "aacd1864216bdef5431e15bf48c344024f7194b5b7ab7f5f0e42466c6cbedcf5",
+  "a05_stop_preserved": "STOP_BEFORE_INPUT_READ_ARGUMENT_ROOT_MISMATCH",
+  "a06_stop_preserved": "STOP_BEFORE_INPUT_READ_FREEZE_SCHEMA_MISMATCH",
+  "calibration_control_false_yields": {
+    "interval": 0,
+    "point": 0
+  },
+  "candidate_generator_container_runtime_invocations_in_a07": 0,
+  "candidate_reconstruction_errors": [],
+  "coverage_by_in_model_profile": {
+    "approach": 0.9083333333333333,
+    "correlated": 0.9166666666666666,
+    "iid": 0.9,
+    "irregular_dropout": 0.87
+  },
+  "decision_checks": {
+    "both_methods_yield_on_an_eligible_hazard": false,
+    "coverage_at_least_50pct_each_in_model_profile": true,
+    "in_model_interval_containment": true,
+    "invalid_profile_terminal_interval_fail_closed": true,
+    "paired_lead_criterion": true,
+    "paired_lead_failures": [],
+    "paired_lead_rows": 0,
+    "strict_false_yield_improvement": {
+      "correlated": false,
+      "iid": false,
+      "irregular_dropout": false
+    }
+  },
+  "diagnostic_disposition": "MIXED_OR_INCOMPLETE_DIAGNOSTIC",
+  "eligible_hazard_prefixes_by_profile": {
+    "approach": 120,
+    "correlated": 120,
+    "iid": 120,
+    "irregular_dropout": 100
+  },
+  "formal_a02_disposition_preserved": "FAIL_METHOD_UNSCORABLE",
+  "input_sha256": {
+    "candidate": "c35b44be558110784b94a92d9b0d2df83db75c519218fd6ea88a65055cd54557",
+    "oracle": "298fbe931ae91ebbf31abb89f17ad0e652cb9418cb5d2b108c7f9d2a14d3410c",
+    "public": "c04d597eb90483b51e055704dbfd72429d83fb9f804d78b0470fee97192315d9"
+  },
+  "integrity_pass": false,
+  "mutation_controls": {
+    "calibration_threshold_uses_controls_only": false,
+    "extra_invalid_interval_rejected": true,
+    "false_yield_tally_sensitive": true,
+    "missing_numeric_interval_rejected": true,
+    "paired_lead_loss_over_100ms_detected": false,
+    "profile_eligibility_flip_rejected": true
+  },
+  "numeric_intervals_by_profile": {
+    "approach": 109,
+    "correlated": 110,
+    "iid": 108,
+    "irregular_dropout": 87
+  },
+  "profiles": {
+    "acceleration": {
+      "containment_checked_prefixes": 0,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 0,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 0,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 0,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "approach": {
+      "containment_checked_prefixes": 109,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 120,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 5,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 109,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "correlated": {
+      "containment_checked_prefixes": 110,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 120,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 5,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 110,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "identity_swap": {
+      "containment_checked_prefixes": 0,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 0,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 0,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 0,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "iid": {
+      "containment_checked_prefixes": 108,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 120,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 5,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 108,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "irregular_dropout": {
+      "containment_checked_prefixes": 87,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 100,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 5,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 87,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "occlusion": {
+      "containment_checked_prefixes": 0,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 0,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 0,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 0,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "passby": {
+      "containment_checked_prefixes": 0,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 0,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 0,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 0,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "stationary": {
+      "containment_checked_prefixes": 0,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 0,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 0,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 0,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    },
+    "understated_bound": {
+      "containment_checked_prefixes": 0,
+      "containment_misses": 0,
+      "eligible_hazard_prefixes": 0,
+      "evaluation_controls": 5,
+      "evaluation_eligible_hazards": 0,
+      "interval_false_yield": 0,
+      "interval_hazard_yield": 0,
+      "invalid_terminal_false_yield": 0,
+      "numeric_intervals": 0,
+      "point_false_yield": 0,
+      "point_hazard_yield": 0,
+      "sequences": 20
+    }
+  },
+  "schema": "issue-8157-a07-local-decision-audit-v1",
+  "scope": "posthoc local score adjudication of immutable A02 synthetic raw; does not change its formal FAIL_METHOD",
+  "structural_errors": [],
+  "thresholds_s": {
+    "interval": 0.0,
+    "point": 0.0
+  }
+}
