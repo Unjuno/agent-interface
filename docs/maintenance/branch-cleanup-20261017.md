@@ -256,7 +256,7 @@ retention decision; closure of an integration PR does not erase that record.
 | `research/8651-observation-response-factorial-a03-20261009` | `d7022f5c2a5c9535a66519f70e1b12e5090163cf` | Closed [#8657](https://github.com/Unjuno/agent-interface/pull/8657) preserves the checksum-preflight STOP before image pull or candidate invocation. |
 | `research/v39-import-preflight-a01-20261009` | `1d7cc0e13f18484260012f2c487e86679bd8b534` | Closed [#8697](https://github.com/Unjuno/agent-interface/pull/8697) explicitly retains the branch and local reproduction artifact; its narrow Pillow preflight was superseded by broader preparation. |
 
-The remaining 21 are retained pending specific custody resolution. The unique
+At that census snapshot, the remaining 21 were retained pending specific custody resolution. The unique
 frozen package `fix/8243-verifier-r2p6-20261006` and the explicit preservation
 decision for `rescue/win32-release-retain-7772-currentmain-20261007` are recorded
 above. `research/v39-retained-trajectory-posthoc-a01-20261008` differs from
@@ -293,3 +293,21 @@ No remote branch was deleted during this refresh. Revisit each retained candidat
 only after matching its exact current tip to its Issue/allocation and verifying
 an independently fetchable source/evidence path or a complete integrated
 successor.
+
+## Retired A01 branch after exact successor-custody verification
+
+Removed `research/8596-chance-bounded-progress-t0-a01-20261009` with an exact
+tip lease after establishing that its complete A01 source was already carried
+by the open successor PR.
+
+| Check | Evidence |
+|---|---|
+| Exact branch tip before deletion | `2ecf498101453ce52869cdfb5d643bb7d2b19991` |
+| Branch state | Unprotected; no open PR used the branch as head or base, and no registered worktree used it. The branch ref matched the expected SHA immediately before deletion. |
+| Successor custody | Open [PR #8721](https://github.com/Unjuno/agent-interface/pull/8721) head `e78551d4ec48da1c247141514456aafb7dedfb83` descends from the exact A01 tip. All 11 paths in the A01 delta have identical blobs at that PR head. Its Issue record preserves A01's pre-formal invalidation and separately freezes A02. |
+| Deletion method | Remote delete used `--force-with-lease` for the exact branch ref and expected SHA. |
+| Final verification | `refs/heads/research/8596-chance-bounded-progress-t0-a01-20261009` is absent; `refs/pull/8721/head` remains at the verified successor SHA. Fresh inventory: 563 remote branches, 521 open PRs, 66 registered worktrees, 28 unreferenced candidates. |
+| Scope | Branch-ref cleanup only; no experiment or candidate rerun was performed. |
+
+This removes only a redundant branch name. The closed experimental history is
+not changed, and the A01 source remains fetchable through the open successor PR.
