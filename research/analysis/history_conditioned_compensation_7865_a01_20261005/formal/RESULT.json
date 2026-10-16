@@ -1,0 +1,34 @@
+{
+  "allocation_id": "UNJUNO-7865-HCC-A01-20261005",
+  "issue": 7865,
+  "candidate_exit_code": 0,
+  "independent_auditor_exit_code": 0,
+  "retries": 0,
+  "candidate_status": "CANDIDATE_METHOD_RESULT",
+  "independent_audit_status": "PASS_METHOD_SCOPED",
+  "independent_case_match": true,
+  "errors": [],
+  "observations": {
+    "blind_snapshot_inverse_lost_disjoint_external_update": true,
+    "whole_object_version_guard_refused_disjoint_update": true,
+    "field_scoped_compensation_restored_owned_field_and_preserved_disjoint_update": true,
+    "same_field_and_aba_changes_refused": true,
+    "replacement_unknown_identity_incomplete_or_uncertain_history_refused_or_unknown": true,
+    "footprint_and_version_integrity_mutations_failed_closed": true,
+    "compensation_recorded_as_new_effect_without_exact_rollback_claim": true
+  },
+  "limits": [
+    "Finite synthetic method fixture only.",
+    "No live application version, identity, history completeness, field-independence, or undo semantics were validated.",
+    "WSLc accepted --memory 512M but reported swap-limit/cgroup support unavailable; hard memory enforcement is unverified.",
+    "No GUI, model, network, external effect, task-success, or deployment claim."
+  ],
+  "raw_evidence": [
+    "formal/candidate.raw.json",
+    "formal/candidate.stderr",
+    "formal/candidate.exit.json",
+    "formal/audit.raw.json",
+    "formal/audit.stderr",
+    "formal/audit.exit.json"
+  ]
+}
