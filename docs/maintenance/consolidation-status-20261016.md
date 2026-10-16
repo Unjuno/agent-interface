@@ -8,6 +8,10 @@
 
 PR #8678は旧`docs/CURRENT_GOAL.md`全体を差分に含み、base衝突で`DIRTY`だった。branch `research/59-live-threat-guard-a01-20261009`をcurrent main `1ece47014d05db898bf73afcd722a14524462e15`へrebaseし、履歴的な長文方向は採用せずcurrent mainの短いgoal entryを維持した。実験記録29ファイル/8,946行追加は保持され、head `7551424026375469f609754140250f89bf09cad4`でPRは`CLEAN`、必須replay-gate PASS。A02のruntime failureと`formal_pass: false`は未変更で、merge・再実験は行っていない。独立レビュー待ち。
 
+### r45：#8701のcurrent-goal差分と未コミットA08を分離（2026-10-17）
+
+PR #8701は`docs/CURRENT_GOAL.md`をmainの62行から旧2,215行へ置き換える差分を含むため、そのまま統合すると廃止済みの指示群が現行入口へ復帰する。PR head `c0171c688906c86a30a0d36fcbb7f676ad5e8f65`は`CLEAN`だが未レビュー。対応する`a03-source` worktreeは別head `5b9905535b81aac42efde6f58670246c1b7524a4`でA08の結果・監査変更7件が未コミットのため、変更・stash・削除をせず保持する。PR修正時はmainの現行goal entryを維持し、A08変更の所有者・証拠を分けて確認する。A07/A08の保存rawは実行・再監査していない。
+
 ### r43：#8648 C01/C02の別々の結果とsource branchを記録（2026-10-17）
 
 Issue #8648と最新コメント、PR #8827を再照合した。C01はWSLc初期化時に止まりcandidate/auditor 0/0で、A01 raw欠落を理由に再実行していない。C02は別のcurrent-main freezeとhost CPython allocationで、288 profiles / 6,048 endpointsの監査、5/5 mutation reject、3つのcoupled held-out settingsで`PASS_METHOD_SCOPED` / `H_PASS_SCOPED`を記録する。PR #8827はOPEN、全必須check success、未merge。`research/8638-split-control-voi-a01-20261008`のtip `16d846740645a338ea11ac70c8e4e931b71f1408`を再確認。unprotected、PR参照0、checkoutなしで、C01 candidate/auditorの唯一のsourceがmainにない。これはC02で代替されず、Issueのraw-custody境界も未解決のためsource branchは保持する。C01 source、候補、監査器は実行していない。
