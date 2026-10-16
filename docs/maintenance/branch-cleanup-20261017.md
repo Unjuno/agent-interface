@@ -39,3 +39,22 @@ closed PR, merged successor, current-main behavior and retained provenance.
 
 The closed PR head retains the exact source commit for review and recovery; no
 tag push or source rerun was needed.
+
+## Cancelled pending-UP branch
+
+Removed the superseded remote branch
+`fix/59-v15-cancelled-up-batch-20261009` after verifying its closed PR,
+successor composition, current-main implementation and retained source ref.
+
+| Check | Evidence |
+|---|---|
+| Exact source tip before deletion | `1f5a0d98cc48daa4e7c8399ee3508692e924feb7` |
+| Branch state | Unprotected; branch ref pointed to the exact tip above. |
+| Worktree / Issue / dependent PR references | No registered worktree in the primary clone, no Issue title/body match for the exact branch name, and no PR used this branch as its base. |
+| Pull request state | [PR #8684](https://github.com/Unjuno/agent-interface/pull/8684) is closed and unmerged; its head is the exact tip. The PR comment says its pending-UP guard was composed into merged [PR #8691](https://github.com/Unjuno/agent-interface/pull/8691). |
+| Successor evidence | Current main retains `cancel_requested` handling, the `not_attempted_owner_cancel_release` disposition, and regression tests for both verified owner cancellation and the ordinary-failure control. |
+| Remote retention after deletion | `git ls-remote origin refs/pull/8684/head` returned the exact tip SHA after the branch ref disappeared. |
+| Final verification | Remote `refs/heads/fix/59-v15-cancelled-up-batch-20261009` absent; `refs/pull/8684/head` still equals the original tip. No experiment or test was run for this ref cleanup. |
+
+The closed PR head retains the exact source commit for review and recovery; no
+tag push or source rerun was needed.
