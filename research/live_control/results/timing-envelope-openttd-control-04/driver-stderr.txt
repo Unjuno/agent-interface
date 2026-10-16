@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/timing_envelope_openttd_driver_v4.py", line 62, in <module>
-    applied=call({'command':{'op':'submit','expected_sequence':c['sequence'],'valid_until_ns':c['runtime_ns']+30_000_000_000,'steps':steps+[{'op':'observe'}]},'timeout':3})
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/timing_envelope_openttd_driver_v4.py", line 30, in call
-    assert r['state']['pending'] is None,'read pending before any further command'
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: read pending before any further command

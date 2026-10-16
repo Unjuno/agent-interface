@@ -1,8 +1,0 @@
-{
-  "exit_code": 1,
-  "stage": "fixed image path replay",
-  "observed": "FileNotFoundError for an absolute Windows image path under WSL",
-  "cause": "source-key normalization did not yet translate recorded absolute Windows paths to the WSL mount",
-  "effect_on_model_runs": "none; all 16 calls remain retained",
-  "audit_source_sha256": "bd6613bdc041dbfeec5ae5f72f301282fec12e4740ac7401d86d5b7bf7d246a8"
-}

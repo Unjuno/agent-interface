@@ -1,8 +1,0 @@
-{
-  "command": "/opt/homebrew/bin/python3 -B runner.py --mode readiness --guest-source /home/taka/inputs/phase-effect-6067-a03-readiness-3cbf-source --guest-output /home/taka/outputs/phase-effect-6067-a03-readiness-3cbf-raw --out /Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/phase_effect_6067_t1_a03_20261004_3cbf/readiness-raw",
-  "chunk_id": "1a84b1",
-  "wall_time_seconds": 0.000006666,
-  "exit_code": 1,
-  "original_token_count": 229,
-  "output": "Traceback (most recent call last):\n  File \"/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/phase_effect_6067_t1_a03_20261004_3cbf/runner.py\", line 93, in <module>\n    if __name__ == '__main__': main()\n                               ~~~~^^\n  File \"/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/phase_effect_6067_t1_a03_20261004_3cbf/runner.py\", line 48, in main\n    guard_output(HERE.parent/'source_deadline_probe_6067_b01_20261003_3cbf',a.out,HERE)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/phase_effect_6067_t1_a03_20261004_3cbf/mount_adapter.py\", line 10, in guard_output\n    raise ValueError('output overlaps protected input/source tree')\nValueError: output overlaps protected input/source tree\n"
-}
