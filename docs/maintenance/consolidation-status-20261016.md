@@ -8,11 +8,11 @@
 
 ### r7：マージ済みremote branchの再照合・回収
 
-同日取得した全6,100件のPR記録とremote branch 618本を照合した。merged済みPRの
-headとbranch tipが完全一致し、mainがそのcommitの祖先、protectedでなく、全PRの
-head/base依存がなく、確認したlocal worktreeにも登録がない20本をtip固定の
-`--force-with-lease`で削除した。削除後は20 refsすべて不在、remote branchは599本。
-削除したtipはすべてmainから到達でき、PRの履歴とmerged内容は保持されている。
+同日取得した全6,100件のPR記録とremote branch 618本を照合した。#8862のmerged branch
+`fix/pr8857-deadline-type-fix`は、main包含、無保護、依存PRなし、worktree未使用を
+確認して個別に回収した。618本の一覧では、さらに19本がmerged PR headとtip完全一致、
+main祖先、無保護、全PRのhead/base依存なし、確認したlocal worktree未登録の条件を
+満たしたため、tip固定`--force-with-lease`で削除した。これら20本はmainから到達できる。
 
 | PR | 削除したremote branch | tip |
 |---|---|---|
@@ -36,14 +36,18 @@ head/base依存がなく、確認したlocal worktreeにも登録がない20本�
 | #8696 | `research/59-terminal-custody-order-a01-20261009` | `e991aa78c28b4bbbb55de5599248b26a9e16db8f` |
 | #8742 | `research/59-v39-regression-a03-currentmain-ffe5292-20261009` | `fd0f79e1ad36e39fb8e4a435fc0a63650b942170` |
 | #8822 | `research/6018-importance-sampling-t0-a01-20261009` | `e3e025c37701717ecfb5263b9ee45bc5051de6a5` |
+| #8705 | `rescue/5749-action-only-currentmain-20261009` | `1b438270124f1647e950fd320067a1a078e80e40` |
+| #8709 | `rescue/6576-a04-archive-currentmain-20261009` | `7f25e16a6d9356c7dcac49033758433dfb46cb89` |
+| #8710 | `rescue/7386-7414-currentmain-20261009` | `0c4dabaaa40d0c681eaa01dc776879e725cc2441` |
+| #8884 | `research/wsl3-residual-docker-inventory-20261012` | `d4c726cd7dbb84c2cd7eacd01aef897407ae8c67` |
 
-5 merged branch tips were deliberately kept because compare-to-main found unique commits:
-`rescue/5749-action-only-currentmain-20261009` (+3),
-`rescue/6576-a04-archive-currentmain-20261009` (+1),
-`rescue/7386-7414-currentmain-20261009` (+2),
-`research/wsl3-residual-docker-inventory-20261012` (+1), and
-`research/59-a07-cancel-admission-order-a01-20261009` (+12).
-These are preservation/integration candidates, not disposable merged refs.
+The four final rows were not ancestors of main, so they were held for a blob-level review. Every
+added evidence file was already identical in main; differences were stale index deletions or, for
+PR #8709, an older archival qualification missing provenance detail that main already preserves.
+All four merged PR heads remain available in their PR records. The remaining branch
+`research/59-a07-cancel-admission-order-a01-20261009` has 36 A03–A07 files absent from main and
+is retained for evidence preservation/integration review. After all 24 ref deletions, the live
+remote count is 595 and every deleted ref was verified absent.
 
 ### r6：モデル連携・比較評価アイデアを一族ごとに整理
 
