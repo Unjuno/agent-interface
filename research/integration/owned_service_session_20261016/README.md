@@ -80,6 +80,10 @@ process termination operation. `pid-source-readback.json` binds its input IDs.
 First missing-module/effect/finalizer/import failures and old-base outputs remain
 under `exploratory/`. `driver.py.txt` is the guarded current-suite driver.
 `SHA256SUMS.txt` inventories this entire new packet, excluding itself.
+Generated `__pycache__` is excluded and the saved reader disables bytecode writes
+before importing its helper. The initial publication accidentally tracked two
+generated cache files; their original bytes remain in commit
+`17c9dc05457125dc7db664274ae0dc13071c0a0f`, not in the corrected evidence inventory.
 
 Next: qualify actual controller/session failure through the explicit selected
 path, then native environment response/release/effect under applicable conditions.
