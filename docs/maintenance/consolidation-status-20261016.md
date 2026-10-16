@@ -6,6 +6,23 @@
 
 ## 後続の現在地
 
+### r6：モデル連携・比較評価アイデアを一族ごとに整理
+
+基準main `1ece47014d05db898bf73afcd722a14524462e15`（2026-10-16）。
+[モデル連携・評価agenda](../ideas/model-coupling-and-evaluation-agenda.md)と
+[Issue中心の一覧](../IDEAS_AND_OUTCOMES.md)へ、#6001/#6035/#9004を追加した。
+これらは同じ結論へまとめない。#6001の合成canary/interference T0とWSLc replay、
+#6035の64行合成cross-model method T0は、それぞれの限定根拠と過去のSTOPを分けて記載。
+#9004は未検証のまま、Issue本文のfinite CPU-only T0条件と比較対象を整理した。
+Issueの状態変更、外部provider/model呼出し、GUI実行は行っていない。
+
+次は#9004の有限合成T0を独立したsource freeze・candidate・raw-only auditとして実行するか、
+先にIssue群の依存・実行優先を更新して実行先を確定する。#57の統合効率ゲートを押しのけず、
+実モデルT1やremote-model budgetを使わない。並行してPR/branch inventoryを現行状態で再取得し、
+完了・後継移管・保全のみ・未判定を判別する。全件の内容精査やref削除はまだ完了していない。
+
+## 前段の進捗履歴
+
 ### r5：保全していたV15選択変更を現行mainへ結合
 
 基準main `7aeb6f933c67384ad0e8d3b25e1d68a44ec341a8`。#9001は統合済み、
