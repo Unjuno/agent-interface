@@ -69,3 +69,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
 
 - [Observation-channel kernel uncertainty](observation-channel-kernel-uncertainty.md) — indexes #8911's unverified confidence-set successor to #6678 without revising prior synthetic or browser-fixture results.
+
+- [Diagnosability under protective control](protective-control-diagnosability.md) — preserves #8909's scoped A01 mask/restoration result, construction mismatch, assumed sentinel, and unmerged Draft evidence status.
