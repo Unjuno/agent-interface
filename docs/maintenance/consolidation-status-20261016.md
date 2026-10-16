@@ -6,6 +6,45 @@
 
 ## 後続の現在地
 
+### r7：マージ済みremote branchの再照合・回収
+
+同日取得した全6,100件のPR記録とremote branch 618本を照合した。merged済みPRの
+headとbranch tipが完全一致し、mainがそのcommitの祖先、protectedでなく、全PRの
+head/base依存がなく、確認したlocal worktreeにも登録がない20本をtip固定の
+`--force-with-lease`で削除した。削除後は20 refsすべて不在、remote branchは599本。
+削除したtipはすべてmainから到達でき、PRの履歴とmerged内容は保持されている。
+
+| PR | 削除したremote branch | tip |
+|---|---|---|
+| #8862 | `fix/pr8857-deadline-type-fix` | `37d6fca43c927de8acc1cbfc3d1a30808377a229` |
+| #8821 | `fix/doom-passive-refresh-empty-release-token` | `30ba3a90be112fe6bbcb0ed52e43a4041bea5b6e` |
+| #8829 | `fix/issue59-v10-release-rpc-failure-20261009-a01` | `a197e6a87132be5fd29a5a0656edb5b309a2a7b2` |
+| #8837 | `fix/v39-windows-appserver-executable` | `7adc0fdc8b191cc139baa30fe7c3bb605c2dab03` |
+| #8693 | `fix/59-release-cleanup-lease-identity-a01-20261009` | `cb47c43c97258cd92f3059c22e49eb181dbf2435` |
+| #8835 | `fix/59-terminal-release-completeness-20261009` | `c024b41a0aac62a6b3d466e935d77edf477bb3fa` |
+| #8813 | `rescue/7321-evidence-only-20261009` | `84d92821780b69f14625542b27725965b2519e50` |
+| #8820 | `rescue/8686-currentmain-20261009` | `8bd299a5bc86cf3711ca51fc36a974f433761842` |
+| #8815 | `research/a16-result-evidence-20261009` | `2d777d5290a6fded898ca8977ce04f0838ffc55d` |
+| #8871 | `research/health-typed-release-delay-a01-20261012` | `18d1fadea3dcad4cffaa743d3480fa309edcf643` |
+| #8923 | `research/v10-wslc-app-effect-a35-a36-20261015` | `7f7065a050ad4d9b5dfd89cf2b324ba95309a1cf` |
+| #8922 | `research/v39-wslc-app-effect-a34-20261014` | `b1983742ed7e73a5f62e08f8b271d927c0eeb060` |
+| #8918 | `research/wslc-typed-guard-replay-a03-20261013` | `580c452ddd0fea55be817f138ad225d2f44de4e6` |
+| #8771 | `research/59-cleanup-unknown-key-failclosed-20261009` | `8af95598a2517088203be2696b043ef329ba5b5c` |
+| #8690 | `research/59-global-live-gate-scope-20261009` | `7de1969eebef154108d4349d2ba8f9ab00e8f3b0` |
+| #8866 | `research/59-health-only-typed-monitor-a01-20261012` | `eb1367cc3ac1184862c454440a418dcf1add9267` |
+| #8699 | `research/59-invalidation-recovery-a01-20261009` | `94c3f4c7299c3e5e8c50890071bfcb96a4ae7193` |
+| #8696 | `research/59-terminal-custody-order-a01-20261009` | `e991aa78c28b4bbbb55de5599248b26a9e16db8f` |
+| #8742 | `research/59-v39-regression-a03-currentmain-ffe5292-20261009` | `fd0f79e1ad36e39fb8e4a435fc0a63650b942170` |
+| #8822 | `research/6018-importance-sampling-t0-a01-20261009` | `e3e025c37701717ecfb5263b9ee45bc5051de6a5` |
+
+5 merged branch tips were deliberately kept because compare-to-main found unique commits:
+`rescue/5749-action-only-currentmain-20261009` (+3),
+`rescue/6576-a04-archive-currentmain-20261009` (+1),
+`rescue/7386-7414-currentmain-20261009` (+2),
+`research/wsl3-residual-docker-inventory-20261012` (+1), and
+`research/59-a07-cancel-admission-order-a01-20261009` (+12).
+These are preservation/integration candidates, not disposable merged refs.
+
 ### r6：モデル連携・比較評価アイデアを一族ごとに整理
 
 基準main `1ece47014d05db898bf73afcd722a14524462e15`（2026-10-16）。
