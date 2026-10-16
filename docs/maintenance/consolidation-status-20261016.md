@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r56: repair branch inventory and identify unique A01 evidence (2026-10-17)
+
+The branch review CSV had three rows whose unquoted commas shifted fields. All 32 records are now serialized as valid 15-column CSV and verified by readback. The seven files on `research/59-v39-main-source-identity-a01-20261009` are all absent from current main; its A01 `HOLD_AUDIT_INPUT` freeze, failure and raw are unique. The branch is classified `RETAIN_UNIQUE_A01_SOURCE`; no run was repeated and the ref remains preserved.
+
 ### r55: live checkout worktree references for orphan branches (2026-10-17)
 
 The registered worktree metadata in the primary checkout at `/Users/taka/Documents/Codex/2026-10-05/agent-interface-8061-sparse` was compared with the 32 candidate branch names. Six of the 28 remote branches still present have registered worktrees, and all six worktree paths exist: A12 source, A16/A17 source, and the three #8406 T1 checkouts. The [dated worktree readback](unlinked-branch-worktree-readback-20261017.csv) records all candidates and paths. The other 22 present branches have no matching registration in this checkout; that does not prove no worktree exists in another clone. Worktree contents, dirty state, owners, and remaining checkout custody are still unreviewed. No additional branch was deleted.
