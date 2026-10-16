@@ -1,0 +1,26 @@
+{
+  "issue": 8068,
+  "allocation": "T0-A01",
+  "question": "Does the finite enumerator distinguish perfect renewal, minimal repair, and intermediate partial repair under equal exposure while retaining recurrence censoring?",
+  "hypothesis": "The candidate rows will exactly match an independent integer-state recurrence oracle across all 12 authored state/operator cells, with no dropped censoring or mislabeled initiating faults.",
+  "decision": "PASS_METHOD_SCOPED only if all 12 rows, all operator summaries, and three planned mutation controls are independently rejected when incorrect; otherwise FAIL/HOLD with no rerun.",
+  "model": {
+    "fault_threshold": 4,
+    "states": [0, 1, 2, 3],
+    "operators": ["perfect", "minimal", "partial"],
+    "pre_repair_exposure_ticks": 1,
+    "recurrence_horizon_ticks": 2,
+    "post_repair": {
+      "perfect": "0",
+      "minimal": "pre_repair_state",
+      "partial": "max(0, pre_repair_state - 2)"
+    }
+  },
+  "controls": [
+    "omit a censored row and require rejection",
+    "erase censored status on a non-recurrence row and require rejection",
+    "relabel one repair operator without changing transition and require rejection"
+  ],
+  "attempts": {"candidate": 1, "auditor": 1, "retries": 0},
+  "scope": "Synthetic method behavior only. No empirical interface recovery law, causal claim, calibrated recurrence probability, escalation-policy value, GUI/runtime behavior, or retry/reset authority."
+}
