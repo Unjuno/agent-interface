@@ -1,0 +1,453 @@
+{
+  "claims": {
+    "live_actuation": false,
+    "synthetic_timing": true
+  },
+  "rows": [
+    {
+      "actions": [
+        "advance",
+        "advance"
+      ],
+      "arm": "always_wait",
+      "case_id": "stable_shared_state",
+      "decision_ticks": [
+        5,
+        6
+      ],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "complete"
+    },
+    {
+      "actions": [
+        "advance",
+        "advance"
+      ],
+      "arm": "system1_only",
+      "case_id": "stable_shared_state",
+      "decision_ticks": [
+        0,
+        1
+      ],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "complete"
+    },
+    {
+      "actions": [
+        "advance"
+      ],
+      "arm": "agreement_only",
+      "case_id": "stable_shared_state",
+      "decision_ticks": [
+        0
+      ],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "complete"
+    },
+    {
+      "actions": [
+        "advance",
+        "advance"
+      ],
+      "arm": "agreement_lease",
+      "case_id": "stable_shared_state",
+      "decision_ticks": [
+        0,
+        1
+      ],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "complete"
+    },
+    {
+      "actions": [
+        "advance",
+        "advance"
+      ],
+      "arm": "always_wait",
+      "case_id": "benign_drift",
+      "decision_ticks": [
+        5,
+        6
+      ],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "complete"
+    },
+    {
+      "actions": [
+        "advance",
+        "advance"
+      ],
+      "arm": "system1_only",
+      "case_id": "benign_drift",
+      "decision_ticks": [
+        0,
+        1
+      ],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "complete"
+    },
+    {
+      "actions": [
+        "advance"
+      ],
+      "arm": "agreement_only",
+      "case_id": "benign_drift",
+      "decision_ticks": [
+        0
+      ],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "complete"
+    },
+    {
+      "actions": [
+        "advance",
+        "advance"
+      ],
+      "arm": "agreement_lease",
+      "case_id": "benign_drift",
+      "decision_ticks": [
+        0,
+        1
+      ],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "complete"
+    },
+    {
+      "actions": [],
+      "arm": "always_wait",
+      "case_id": "target_substitution",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "wait_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "system1_only",
+      "case_id": "target_substitution",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "revoked_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_only",
+      "case_id": "target_substitution",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_lease",
+      "case_id": "target_substitution",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "always_wait",
+      "case_id": "common_mode_wrong_agreement",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "wait_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "system1_only",
+      "case_id": "common_mode_wrong_agreement",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "revoked_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_only",
+      "case_id": "common_mode_wrong_agreement",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "independent_gate"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_lease",
+      "case_id": "common_mode_wrong_agreement",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "lease_or_independent_gate"
+    },
+    {
+      "actions": [],
+      "arm": "always_wait",
+      "case_id": "delayed_system2_contradiction",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "wait_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "system1_only",
+      "case_id": "delayed_system2_contradiction",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "revoked_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_only",
+      "case_id": "delayed_system2_contradiction",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_lease",
+      "case_id": "delayed_system2_contradiction",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "always_wait",
+      "case_id": "stale_observation",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "wait_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "system1_only",
+      "case_id": "stale_observation",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "revoked_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_only",
+      "case_id": "stale_observation",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_lease",
+      "case_id": "stale_observation",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "always_wait",
+      "case_id": "emergency_preemption",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "wait_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "system1_only",
+      "case_id": "emergency_preemption",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "revoked_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_only",
+      "case_id": "emergency_preemption",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_lease",
+      "case_id": "emergency_preemption",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "always_wait",
+      "case_id": "authority_loss",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "wait_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "system1_only",
+      "case_id": "authority_loss",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "revoked_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_only",
+      "case_id": "authority_loss",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_lease",
+      "case_id": "authority_loss",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "always_wait",
+      "case_id": "release_failure",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": false,
+      "release_required": true,
+      "stop": "release_failure"
+    },
+    {
+      "actions": [],
+      "arm": "system1_only",
+      "case_id": "release_failure",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": false,
+      "release_required": true,
+      "stop": "release_failure"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_only",
+      "case_id": "release_failure",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": false,
+      "release_required": true,
+      "stop": "release_failure"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_lease",
+      "case_id": "release_failure",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": false,
+      "release_required": true,
+      "stop": "release_failure"
+    },
+    {
+      "actions": [],
+      "arm": "always_wait",
+      "case_id": "irreversible_action_unknown_effect",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "wait_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "system1_only",
+      "case_id": "irreversible_action_unknown_effect",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "revoked_or_gate"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_only",
+      "case_id": "irreversible_action_unknown_effect",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    },
+    {
+      "actions": [],
+      "arm": "agreement_lease",
+      "case_id": "irreversible_action_unknown_effect",
+      "decision_ticks": [],
+      "effect_correct": true,
+      "release_ok": true,
+      "release_required": true,
+      "stop": "yield"
+    }
+  ],
+  "schema": "agreement-continuation-raw-v1"
+}
