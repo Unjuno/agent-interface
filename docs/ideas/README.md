@@ -52,7 +52,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Runtime reliability under uncertainty](runtime-reliability-agenda.md) — separates liveness suspicion (#5531), timed resource deadlocks (#5410), verifier-cascade capacity (#5375), and hidden-state belief contracts (#5368), preserving distinct finite-method results, allocation failures, and unresolved integration boundaries.
 
-- [Observation load and feedback cascades](observation-load-cascade-agenda.md) — separates #8665's scoped factorial method result from #8888's implementation/audit STOP, preserving the consumed allocation and the bounded successor requirements.
+- [Observation load, dispatch pacing, and feedback cascades](observation-load-cascade-agenda.md) — separates #8665's scoped factorial result, #8888's implementation/audit STOP, and #8916's unverified producer-pacing proposal.
 
 - [Post-crash effect reconciliation bootstrap](crash-reconciliation-bootstrap.md) — records #8900's unverified question about independently rooted, read-only evidence paths for `UNKNOWN_RECONCILE`, with task and retry authority held revoked until classification.
 

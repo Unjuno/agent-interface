@@ -1,6 +1,6 @@
-# Observation load and feedback cascades
+# Observation load, dispatch pacing, and feedback cascades
 
-These Issues study adjacent mechanisms, but their outcomes are separate. Neither authorizes changing mandatory observation, freshness, release, or effect-verification behavior.
+These Issues study adjacent load-control mechanisms, but their hypotheses and outcomes are separate. Neither authorizes changing mandatory observation, freshness, release, or effect-verification behavior.
 
 ## Observation load versus cue information — #8665
 
@@ -16,6 +16,14 @@ These Issues study adjacent mechanisms, but their outcomes are separate. Neither
 
 This STOP applies to the integrity of that allocation's result. It does not stop other workers or authorize changing observation policy. Any successor needs a new frozen allocation with a real discrete-event scheduler, exercised controls, and an independent auditor that reconstructs the trace and actually applies mutations. The issue reports no live GUI defect, operational threshold, or runtime benefit.
 
+## Producer-side pacing for synchronized dispatch bursts — #8916
+
+- **Status:** open, unverified transfer proposal; no result, implementation, or evidence PR is recorded.
+- **Source:** [Issue #8916](https://github.com/Unjuno/agent-interface/issues/8916).
+- **Idea:** In a finite event-driven simulator, compare immediate dispatch, queue-threshold reactive backpressure, and bounded pacing of only independent, nonurgent jobs. Keep offered jobs, service-time sequence, dependency order, and capacity paired across policies; bypass pacing for urgent work and never delay containment or release.
+- **Proposed discriminator:** Count producer pacing wait in end-to-end latency alongside service-queue wait, p50/p95/p99 completion, deadline/freshness misses, useful completions, maximum queue, and urgent-job delay. An independent auditor should reconstruct each job's arrival/release/start/finish and conservation. Frozen counterexamples include persistent overload, urgent jobs inside bursts, correlated long service, and fully serialized dependencies.
+- **Decision boundary:** The Issue's proposed `PASS_SIMULATOR_SCOPED` requires audited improvement in both p99 end-to-end latency and miss fraction versus both baselines on preregistered bursty-but-stable strata, urgent-job non-inferiority, and no dependency/order violation. Pacing that only lowers queue length is insufficient; all results remain simulator-scoped. This proposal authorizes no live GUI, model, WSLc, GPU, shared resource, or runtime scheduler.
+
 ## Relationship
 
-#8665 isolates load and cue content in a one-shot finite factorial. #8888 proposes endogenous repeated demand and queue dynamics. A method pass in the first does not validate the second; the second's STOP does not invalidate the first. Neither supports production or user-facing claims.
+#8665 isolates load and cue content in a one-shot finite factorial. #8888 proposes endogenous repeated observation demand and queue dynamics. #8916 instead asks whether preventive pacing of synchronized independent dispatch reduces total tail delay after charging its own wait. A method pass in one does not validate another; #8888's STOP does not invalidate either. None supports production or user-facing claims.
