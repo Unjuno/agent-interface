@@ -45,17 +45,20 @@ main祖先、無保護、全PRのhead/base依存なし、確認したlocal workt
 | #8874 | `research/59-v39-owner-close-currentmain-a09-20261012` | `6d008b53e23fda4703c8f56c4ea1bd762e5d147b` |
 | #8662 | `research/8654-c02-raw-custody-20261009` | `60a726cf744cab1044083ce0af61d7d4acf43adc` |
 | #8786 | `test/exchange-presentation-failure-20261009` | `5f8fdedaac8fbdaf820ca26dd7ebc7985dc2305a` |
+| #7264 | `feat/finite-role-recovery-2d0b-20261004` | `8fe7c2b7a955187939014aff33cf61ed01ea90e9` |
+| #8370 | `rescue/finite-role-recovery-currentmain-20261008` | `9fb4a64d6a86fc2eb01b4e984508e8f320bb3e31` |
 
 The four #8705/#8709/#8710/#8884 tips were not ancestors of main, so their changed files were
 compared blob by blob. Every evidence file was already identical in main; branch differences were
 stale index deletions or, for #8709, an older archival qualification missing provenance detail
-that main already preserves. The five closed, unmerged PR heads in the last rows also had no base
-dependents or local worktrees, and every changed file was byte-identical to main. Their PR records
-remain available. The remaining branch `research/59-a07-cancel-admission-order-a01-20261009` has
-36 A03–A07 files absent from main and is retained for evidence preservation/integration review.
-After all 29 ref deletions, the live
-remote count is 590 and every deleted ref was verified absent. PR-linkage classification of the
-remaining refs is 516 open-PR heads, 10 base dependencies, 31 closed-PR heads, and 33 with no PR
+that main already preserves. The closed, unmerged PR heads #7109/#8384/#8874/#8662/#8786 had no
+base dependents or local worktrees, and every changed file was byte-identical to main. Their PR
+records remain available. The #7264/#8370 finite-role prototype and tests are also byte-identical to main;
+their only unique README row is superseded by the current main convergence link. The remaining
+branch `research/59-a07-cancel-admission-order-a01-20261009` has 36 A03–A07 files absent from main
+and is retained for evidence preservation/integration review. After all 31 ref deletions, the live
+remote count is 588 and every deleted ref was verified absent. PR-linkage classification of the
+remaining refs is 516 open-PR heads, 10 base dependencies, 29 closed-PR heads, and 33 with no PR
 head/base reference in the complete 6,100-PR snapshot. The closed-head and unreferenced groups
 still require content/owner review; they are not assumed disposable.
 
