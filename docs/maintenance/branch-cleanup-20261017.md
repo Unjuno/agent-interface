@@ -1,4 +1,6 @@
-# V39 cancellation branch cleanup — 2026-10-17
+# Branch cleanup receipts — 2026-10-17
+
+## V39 cancellation batch race
 
 Removed the superseded remote branch
 `research/v39-cancel-batch-race-a01-20261009` after checking its current refs,
@@ -18,3 +20,22 @@ worktree registration, protection, successor code and retained provenance.
 The PR author's prior provenance preference is preserved through the closed PR
 and its retained head ref. The deletion removed only the redundant branch name;
 the exact source commit remains reachable for review and recovery.
+
+## Owner release known-empty receipt
+
+Removed the superseded remote branch
+`fix/59-cleanup-owner-release-known-empty-a01-20261009` after verifying its
+closed PR, merged successor, current-main behavior and retained provenance.
+
+| Check | Evidence |
+|---|---|
+| Exact source tip before deletion | `3b426e665d6598357637ac39969d35e93399a946` |
+| Branch state | Unprotected; branch ref pointed to the exact tip above. |
+| Worktree / Issue / dependent PR references | No registered worktree in the primary clone, no Issue title/body match for the exact branch name, and no PR used this branch as its base. |
+| Pull request state | [PR #8787](https://github.com/Unjuno/agent-interface/pull/8787) is closed and unmerged; its head is the exact tip. Its base is `fix/59-cleanup-lease-aware-terminal-receipt-a01-20261009`. |
+| Successor evidence | [PR #8771](https://github.com/Unjuno/agent-interface/pull/8771) is merged. PR #8787's review comment says the five malformed present-token values and absent-token legacy control are covered by the successor. Current main explicitly requires `keys_unknown == []` and `key_state_errors == []` in the shared empty-release predicate. |
+| Remote retention after deletion | `git ls-remote origin refs/pull/8787/head` returned the exact tip SHA after the branch ref disappeared. |
+| Final verification | Remote `refs/heads/fix/59-cleanup-owner-release-known-empty-a01-20261009` absent; `refs/pull/8787/head` still equals the original tip. No experiment or test was run for this ref cleanup. |
+
+The closed PR head retains the exact source commit for review and recovery; no
+tag push or source rerun was needed.

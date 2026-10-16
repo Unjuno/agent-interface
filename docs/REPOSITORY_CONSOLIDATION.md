@@ -18,8 +18,9 @@ stack内のmergeはmain統合とは限らない。#5の未完了状態とcomplet
 `research/v39-cancel-batch-race-a01-20261009` branch was removed after its
 closed PR and current-main successor were checked. GitHub's retained
 `refs/pull/8688/head` still points to the exact source tip. See the
-[cleanup evidence](maintenance/branch-cleanup-v39-20261017.md); no tag was
-pushed, avoiding unrelated push-triggered workflows.
+[cleanup evidence](maintenance/branch-cleanup-20261017.md) for this and a
+second superseded cleanup branch. No tag was pushed, avoiding unrelated
+push-triggered workflows.
 
 ## 到達点
 
