@@ -14,7 +14,7 @@ GitHub上のPR #8701 head `c0171c688906c86a30a0d36fcbb7f676ad5e8f65`はmainの�
 
 ### r46：A07保存rawをv3で再照合しcustody解釈を保留（2026-10-17）
 
-`a03-source`のignored A07 outputを変更せず`SHA256SUMS.json`の2,358 entries全件をbytes/hash一致確認した。PR #8701 headの`audit_live_v3.py`を一時ディレクトリへ置き、必要な6 input fileだけをrawから複写して実行した。10 cancellation IDsは全件unique/matched、post-cancel admission 0。admissionありの6 cancellationのうち3件は6 admissions/5 transitions、3件は4/3で、残る4件はadmission/transitionとも0。v3はadmissionありの5件でper-key custody falseとなり、`status=FAIL`, `formal_pass=false`, `scoped_pass=false`を返した。各`input_released.owner_release`はempty key stateを報告するが、admissionと実key-downの対応が未解釈なので、この結果から成功・失敗どちらの物理custodyも確定しない。元v1/v2/AUDIT_V3は変更せず、A07のcustody claimはHOLDのまま。PR #8701統合前にadmission/transition/owner-releaseの関係を独立に解決する。
+`a03-source`のignored A07 outputを変更せず`SHA256SUMS.json`の2,358 entries全件をbytes/hash一致確認した。PR #8701 headの`audit_live_v3.py`を一時ディレクトリへ置き、必要な6 input fileだけをrawから複写して実行した。10 cancellation IDsは全件unique/matched、post-cancel admission 0。admissionありの6 cancellationのうち3件は6 admissions/5 transitions、2件は4/3で、残る4件はadmission/transitionとも0。v3はadmissionありの5件でper-key custody falseとなり、`status=FAIL`, `formal_pass=false`, `scoped_pass=false`を返した。各`input_released.owner_release`はempty key stateを報告するが、admissionと実key-downの対応が未解釈なので、この結果から成功・失敗どちらの物理custodyも確定しない。元v1/v2/AUDIT_V3は変更せず、再現したJSONと解釈をPR #8701の`A07_SAVED_TRACE_AUDIT_V3.{json,md}`へ加えた。A07のcustody claimはHOLDのまま。統合前にadmission/transition/owner-releaseの関係を独立に解決する。
 
 ### r43：#8648 C01/C02の別々の結果とsource branchを記録（2026-10-17）
 
