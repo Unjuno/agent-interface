@@ -1,0 +1,36 @@
+Repository commit tested as current main: dccf55e264f434ca27f2948fe53be09919047819
+Refresh check: all seven pinned implementation/test Git blobs were refetched at this commit and were byte-identical.
+PR #7805 source candidate commit: 7a696dc085cad8a49eaae50d968bc6e8d28fb45e
+Host: Windows 11 Home 10.0.26300; CPython 3.11.9
+No X server, OS input, GUI, game, WSLc container, or live allocation was used.
+
+Aggregate query regression:
+python -m unittest research.doom.map01_v39_cancel_release_fix_a02_20261005.test_release_record_durability -v
+Initial red observed before owner repair: exit 1; expected release row count 1, observed 0.
+Final green is included in candidate-suite-final.log as RAW_RESULT.
+
+Expiry terminal red (frozen pre-fix bridge):
+python research/doom/map01_v39_cancel_release_fix_a02_20261005/run_expiry_red.py
+Expected exit 1. The owner release in terminal is verified and contains one confirmed F8-up measurement; the event stream has no per-key release event and the bridge still holds F8.
+
+Expiry terminal green:
+python -m unittest research.doom.map01_v39_cancel_release_fix_a02_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_terminal_contains_one_verified_cleanup_receipt -v
+Exit 0; raw ordering/state is in expiry-green-a02.log.
+
+Candidate suite:
+python research.doom/map01_v39_cancel_release_fix_a02_20261005/run_candidate_suite.py
+Exit 0; 10 tests. Raw: candidate-suite-final.log; exit: candidate-suite-final.exit.
+
+InputOwner compatibility:
+python research/doom/map01_v39_cancel_release_fix_a02_20261005/run_owner_compat_suite.py
+Exit 0; 10 tests. Raw: owner-compat-suite.log; exit: owner-compat-suite.exit.
+
+Existing V39 bridge tests:
+python -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p 'test_*.py' -v
+Exit 0; 2 tests. Raw: existing-bridge-suite.log; exit: existing-bridge-suite.exit.
+
+Syntax:
+python -m py_compile research/doom/map01_v39_cancel_release_fix_a02_20261005/input_owner_v13_candidate.py research/doom/map01_v39_cancel_release_fix_a02_20261005/bridge_v2_candidate.py research/doom/map01_v39_cancel_release_fix_a02_20261005/test_cancel_release.py research/doom/map01_v39_cancel_release_fix_a02_20261005/test_release_record_durability.py research/doom/map01_v39_cancel_release_fix_a02_20261005/run_candidate_suite.py research/doom/map01_v39_cancel_release_fix_a02_20261005/run_owner_compat_suite.py
+Exit 0.
+
+The pre-fix and setup-failure logs remain separate and are never pooled into the final passing test count.
