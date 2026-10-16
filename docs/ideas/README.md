@@ -89,3 +89,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Early-warning signal identifiability](service-early-warning-identifiability.md) — separates #5776's recovery-rate method failure and artifact-integrity hold from #8525's preflight STOP and #8872's unverified disturbance-spacing successor.
 
 - [Controller portfolio and evidence-planning cost](controller-portfolio-and-evidence-planning-cost.md) — keeps #8864's portfolio-cardinality comparison distinct from #8851's topology-guided evidence-action shortlist and exact fallback.
+
+- [Predicate-aware GUI history reduction](predicate-aware-gui-history-reduction.md) — separates #8592's scoped lifecycle DPOR result, #8613's phantom-membership method result, and #8663's combined finite result with an audit-count deviation.
