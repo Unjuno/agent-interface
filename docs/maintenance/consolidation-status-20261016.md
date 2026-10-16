@@ -436,12 +436,12 @@ still present and four absent: `rescue/59-paired-epoch-a03-precursor-20261007`,
 `research/8185-transform-graph-a02-20261005`,
 `research/8654-c03-support-sufficiency-20261009`, and
 `research/cli-report-persistence-retained-p4n7-20261006`. GitHub branch search confirms each is
-absent. The [dated presence readback](remote-branch-presence-readback-20261017.csv) records all 32
-candidate names against the 588-branch snapshot. The saved 6,100-PR head/base census remains the
-last complete reference audit; the four newly opened PRs #9007, #9008, #9009 and #9011 target
-`main`. This updates live counts and verifies the four removals, but does not certify a refreshed
-head/base census for the 28 remaining branches. They remain preserved pending that audit and
-owner/content review.
+absent. The [dated readback](remote-branch-presence-readback-20261017.csv) records all 32 candidate
+names against the 588-branch snapshot and the current PR-reference queries. Exact GitHub searches
+for each name as `is:pr head:<branch>` and `is:pr base:<branch>` returned zero across open and closed
+PRs for all 32. The newly opened PRs #9007, #9008, #9009 and #9011 target `main`. All 28 remaining
+branches are still preserved pending owner/content and local-worktree review; zero PR references
+alone does not establish that their unique evidence is disposable.
 The closed #8592 transfer is not a deletion signal for every associated ref: its final comment
 explicitly keeps A01/A02 execution STOPs and the superseded A03 freeze in immutable branch history.
 Accordingly, `research/8592-dpor-t0-a01-20261008` (`b0951ae1…`) and
