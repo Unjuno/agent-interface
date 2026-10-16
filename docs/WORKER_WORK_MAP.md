@@ -35,6 +35,13 @@ distinguishes stack merges from main integration and lists the completion criter
 
 ## What a worker leaves
 
+The [selected MAP01 backend pipe record](../research/integration/map01_backend_pipe_custody_20261016/README.md)
+now uses actual process-identity backend/InputOwner/Executor v13 with Fake X,
+not only a synthetic release backend. Generation change releases autonomously;
+late blocked-release return leaves the exact backend obligation quarantined.
+Three new cells and17 selected normal/-O methods preserve raw edges/custody/PNG.
+Do not combine separate tests into an unrun live/full-controller qualification.
+
 For the next V39 transport boundary, start from the
 [owned Executor pipe composition](../research/integration/v39_executor_pipe_recovery_20261016/README.md).
 Both actual v12/v13 workers are tested across child pipes while finalization is

@@ -22,6 +22,14 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Selected MAP01 backend/owner custody over child pipes](../research/integration/map01_backend_pipe_custody_20261016/README.md)
+  runs actual process-identity backend, release-batch owner and Executor v13 on
+  Fake X. Three new cells retain cancel, autonomous generation invalidation and
+  blocked-release late-return custody: an empty later bitmap/fresh capture does
+  not authorize Executor replacement.17 selected methods pass normal/-O; PNG
+  readback joins typed/full source identity and pixels. This is separate backend
+  composition, not a unified live V39/session/native/task-effect qualification.
+
 - [V39 cancellation through owned Executor pipes](../research/integration/v39_executor_pipe_recovery_20261016/README.md)
   connects current cancel/wait/final helpers to actual Executor v12/v13 workers
   across real child stdin/stdout, with synthetic backend/protocol shim. Eight
