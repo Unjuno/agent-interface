@@ -1,0 +1,22 @@
+{
+  "schema": "v39-soft-feedback-a05-current-main-ast-recheck-v1",
+  "original_experiment_main": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "current_main": "decc1896e3e85ab2fdbb7ec4678f958eb6561d0f",
+  "relevant_runtime_change": {
+    "commit": "d562a86cc6",
+    "summary": "Allow completed/expired cover terminals after invalidation only when release is verified empty; failed and nonempty terminals still reject.",
+    "controller_git_blob_before": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+    "controller_git_blob_current": "e9b437979e87347f6aa4dbefffcc84e9a2d01752",
+    "controller_sha256_current": "f76c618f5eedbe2c301eecb67c36c9064ec0de035009d0be6f8610bb1d808dc8",
+    "guard_git_blob_current": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543"
+  },
+  "current_main_ast_sha256_by_node": {
+    "latest_soft_event_summary": "76f08643dad3e6cc0446d694ff869bd540fef8f7e44eb8424a8a51d26d0e9401",
+    "begin_model_turn": "ad0f0853beaaddb09349b82ea68ff8b4dba7a9fd90397298c9e2cb22954411dd",
+    "DoomCoverSignalPairMonitor": "ef34acc9b6518fa57b2beb464f11870d05d0810e06fa6391a50e1177a32b7ac6",
+    "main": "5c6f7adc63c2db2b2b703a6fe08de7d98aab1ab750eb4541772d5de5fddc1f52",
+    "cancel_invalidated_cover": "3db818f73e7ee67d969eace391f4553c0d89b4ae1dd134a8c45d17fc2b83744c"
+  },
+  "finding": "A01-A05 soft-event monitor, summary, prompt-builder, and main-loop AST nodes are byte-for-byte equivalent under ast.dump(include_attributes=False) to their 018934c versions. The cancellation helper changed in d562a86cc6, so A05's soft-event carry result remains applicable to the unchanged decision-record and next-turn routing, while terminal-status behavior is now governed by the newer verified-empty race fix. This recheck is not a new runtime test or live allocation.",
+  "verification": "AST comparison from git show at both exact revisions; controller and guard blobs read from origin/main."
+}
