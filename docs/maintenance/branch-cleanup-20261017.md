@@ -232,6 +232,14 @@ outside those references. All 29 are unprotected. This is an inventory, not a
 deletion list: absence from open PRs and worktrees does not establish that a
 branch's source or one-shot evidence is redundant.
 
+All 29 exact tips were fetched into local audit refs and compared with current
+`main` at `1ece47014d05db898bf73afcd722a14524462e15`. None is an ancestor of
+main. Each has 1–20 branch-only commits and a merge-base diff of 1–585 paths.
+They are not removable as already-main duplicates. Deletion would require a
+per-branch Issue/allocation mapping and an independently retained source path
+for its delta; that custody step remains open for the candidates without exact
+closed-PR head refs.
+
 Eight branches exactly match closed PR heads. Their exact tips and linked PRs
 were read back. These are retained because their PR discussions preserve
 unique failures, stacked source lineage, or an explicit branch/evidence
