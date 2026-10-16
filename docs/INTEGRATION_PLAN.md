@@ -22,6 +22,15 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
+- [Joined V39 recovery and selected backend](../research/integration/v39_selected_backend_recovery_20261016/README.md)
+  connects actual monitor/cancel/final functions plus nested wait AST to selected
+  capture/backend/InputOwner/Executor13 across child pipes on Fake X. Four cells
+  per mode retain recovery frames before withheld terminal, old-answer refusal,
+  unknown cleanup and explicit dropped-invalidation control.15 selected methods
+  pass normal/-O. Initial concurrent-capture driver failure and cleanup/raw limits
+  are preserved; runtime safety rules were unchanged. Full session/controller
+  main, actual pixels/native release/task effects and economics remain open.
+
 - [Selected MAP01 backend/owner custody over child pipes](../research/integration/map01_backend_pipe_custody_20261016/README.md)
   runs actual process-identity backend, release-batch owner and Executor v13 on
   Fake X. Three new cells retain cancel, autonomous generation invalidation and

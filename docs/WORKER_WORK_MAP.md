@@ -35,6 +35,13 @@ distinguishes stack merges from main integration and lists the completion criter
 
 ## What a worker leaves
 
+The [joined V39/backend recovery construction](../research/integration/v39_selected_backend_recovery_20261016/README.md)
+now places current monitor/cancel/final helpers and selected owner/capture code
+on one child-pipe path with Fake X. Low/recovered observations use actual capture
+publication with injected HUD numbers; terminal is deliberately held.15 normal/
+optimized methods pass. Respect capture serialization; do not repeat the failed
+concurrent-capture driver or infer live/OCR/task success from fixture values.
+
 The [selected MAP01 backend pipe record](../research/integration/map01_backend_pipe_custody_20261016/README.md)
 now uses actual process-identity backend/InputOwner/Executor v13 with Fake X,
 not only a synthetic release backend. Generation change releases autonomously;
