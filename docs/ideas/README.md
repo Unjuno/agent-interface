@@ -71,3 +71,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Observation-channel kernel uncertainty](observation-channel-kernel-uncertainty.md) — indexes #8911's unverified confidence-set successor to #6678 without revising prior synthetic or browser-fixture results.
 
 - [Diagnosability under protective control](protective-control-diagnosability.md) — preserves #8909's scoped A01 mask/restoration result, construction mismatch, assumed sentinel, and unmerged Draft evidence status.
+
+- [Time-consistent task risk](time-consistent-task-risk.md) — indexes #8908's unverified finite decision-method proposal, preserving hard constraints and distinguishing information-driven policy changes from same-node preference reversal.
