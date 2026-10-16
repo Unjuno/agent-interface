@@ -1,0 +1,121 @@
+{
+  "disposition": "PASS_SOURCE_BOUND_SYNTHETIC_COMPOSITION_ONLY",
+  "latest_main_at_freeze": "e678e9e0b7ffbc949ee5670637519d0af48288ac",
+  "measurement_mode": {
+    "input_owner_path": "research/live_control/input_owner_v12.py",
+    "per_key_fields": [
+      "key_release_attempts",
+      "key_release_intervals_ns"
+    ],
+    "release_backend_path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+    "session_path": "research/doom/session_map01_v15.py",
+    "transition_owner_path": "research/live_control/input_transition_owner_v4.py",
+    "typed_backend_path": "research/doom/doom_typed_release_backend_v2.py"
+  },
+  "release_to_feedback_adapter": {
+    "after_accept_failure": {
+      "attribution": "TEMPORALLY_UNIQUE",
+      "causal_attribution": "NOT_ESTABLISHED",
+      "delivery_positions": [
+        0,
+        1
+      ],
+      "producer_ledger": [
+        "confirmed",
+        "unknown"
+      ],
+      "trace_integrity": "SOURCE_ROWS_JOINED",
+      "visible_rows": 2
+    },
+    "before_accept_failure": {
+      "attribution": "UNRESOLVED",
+      "producer_ledger": [
+        "confirmed",
+        "unknown"
+      ],
+      "trace_integrity": "HOLD_INCOMPLETE_RELEASE_BATCH",
+      "visible_rows": 1
+    },
+    "complete_batch": {
+      "attribution": "TEMPORALLY_UNIQUE",
+      "causal_attribution": "NOT_ESTABLISHED",
+      "delivery_positions": [
+        0,
+        1
+      ],
+      "release_rows": 2,
+      "trace_integrity": "SOURCE_ROWS_JOINED"
+    }
+  },
+  "schema": "v39-dispatch-release-adapter-composition-result-v1",
+  "scope": "exact V39 command helper and V15 manifest merger composed with pinned current-main release publication methods and T5 adapter; synthetic owner/scorer/sink; no session or OS input",
+  "selected_command": {
+    "command_arguments": [
+      "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "D:\\codex-research\\issue59-stale-replan-pr-20261008\\research\\doom\\session_map01_v15.py",
+      "--out",
+      "D:\\codex-research\\issue59-stale-replan-pr-20261008\\research\\doom\\v39_dispatch_release_adapter_composition_a01_20261008\\synthetic-measurement-session",
+      "--seed",
+      "990605",
+      "--timeout-seconds",
+      "600",
+      "--skill",
+      "1",
+      "--load-fixture-manifest",
+      "D:\\codex-research\\issue59-stale-replan-pr-20261008\\fixture-manifest.json"
+    ],
+    "mode": "measurement",
+    "output": "D:\\codex-research\\issue59-stale-replan-pr-20261008\\research\\doom\\v39_dispatch_release_adapter_composition_a01_20261008\\synthetic-measurement-session",
+    "report_label": "v15_scorer_only_per_key_release",
+    "seed": "990605",
+    "session_path": "D:\\codex-research\\issue59-stale-replan-pr-20261008\\research\\doom\\session_map01_v15.py"
+  },
+  "source_commit_used_by_component_harnesses": "e627b8954ecfbdd90ccfe35a81441a00d88047c8",
+  "source_identities": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "193c2bd231795e7ee57de64aedfd741c8b814013",
+    "research/doom/doom_typed_release_backend_v2.py": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+    "research/doom/independent_progress_clock_v2.py": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+    "research/doom/main_thread_scorer_polling_v1.py": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+    "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2",
+    "research/doom/session_map01_v15.py": "f71ca01426a703e4160c9403395fed03416c772e",
+    "research/doom/v15_release_batch_t6_20261008/FREEZE.json": "f0f2ddbee27deca5e06ab1eac0c053cecd58661fa3ca99516e2aa63c1d41d3c3",
+    "research/doom/v15_release_batch_t6_20261008/candidate/adapter.py": "6f0ad1eb378b8269d596b6d7f38ec21c3e447c7f41814b974f6aa19a7250b58c",
+    "research/doom/v15_release_batch_t6_20261008/candidate/scorer_feedback_attribution_v1.py": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b",
+    "research/doom/v15_release_batch_t6_20261008/run.py": "59a8409582a91a2639aeea7c032afa275d2d6bc703af50508f7e6a1e2756a62b",
+    "research/doom/v15_release_batch_t7_20261008/FREEZE.json": "41f3a8991c418bab9151c9190792d04ecc151f56358ccef139603ed7d023a319",
+    "research/doom/v15_release_batch_t7_20261008/run.py": "6b2bcd90a10aeb969d922b9bc2230072fe7c676c8c5156cbc01abaa2a846e43a",
+    "research/doom/v39_measurement_dispatch_a01_20261008/FREEZE.json": "681cf61b871ec5464076157b1faa527d76efbfbbb22ef3204a2f289d965659fd",
+    "research/doom/v39_measurement_dispatch_a01_20261008/run.py": "9b02c5ed6171797710b132cb549f82462df2924328a5bdb3c8a74e4420ed6e97",
+    "research/live_control/executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "research/live_control/executor_v13.py": "9eb5ed4dcd42cae07bea69530136f78f9e65fb33",
+    "research/live_control/input_owner_v11.py": "842071284156d3ccc647f47135ee62a9e512cb56",
+    "research/live_control/input_owner_v12.py": "d11a9b1328bf76e5045022c581d6a9a721bf9585",
+    "research/live_control/input_transition_owner_v3.py": "0a1772d1687d49bd49f048b9d7ba659ed18247a5",
+    "research/live_control/input_transition_owner_v4.py": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55"
+  },
+  "source_snapshot_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "c6595afa6314fbee73669ae1258fdf4ec8658ebb4c41be5f7365ba327f533581",
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "research/doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/live_control/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "research/live_control/executor_v13.py": "fc4bad32859561c0d236f283c75d154f8221365c82b1df19c12c358d99045e6e",
+    "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "research/live_control/input_owner_v12.py": "f4c7f00817343c675f889a6f974ff5e2177a9e7ffbe47c0576b5f0174c2da3bc",
+    "research/live_control/input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "research/live_control/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+  },
+  "v15_manifest": {
+    "entry_count": 12,
+    "per_key_source_keys": {
+      "doom/doom_owner_thread_release_batch_backend_v1.py": "c6595afa6314fbee73669ae1258fdf4ec8658ebb4c41be5f7365ba327f533581",
+      "doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+      "live_control/input_owner_v12.py": "f4c7f00817343c675f889a6f974ff5e2177a9e7ffbe47c0576b5f0174c2da3bc",
+      "live_control/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+    },
+    "sha256": "20ba03f8fee5544dc137c2fdf2965e032e66aa802c35e0d77edc4c9fdfa167f5"
+  }
+}
