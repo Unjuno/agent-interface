@@ -40,6 +40,28 @@ closed PR, merged successor, current-main behavior and retained provenance.
 The closed PR head retains the exact source commit for review and recovery; no
 tag push or source rerun was needed.
 
+## Reviewed and retained: #8243 verifier freeze
+
+The branch `fix/8243-verifier-r2p6-20261006` remains because it is an Issue/PR-
+cited, unique pre-execution source package, not an obsolete implementation
+branch ready for deletion.
+
+- Exact current tip: `44f4d99480344e50f504fe5c92f5f2cd58c5dec1`; unprotected and
+  not an ancestor of current main. The one-commit delta adds eight files under
+  `research/live_control/validation_r2p6/`, including the freeze, protocol,
+  verifier and four literal source fragments; that package path is absent from
+  main.
+- Merged [PR #8243](https://github.com/Unjuno/agent-interface/pull/8243)
+  comment [#6016739963](https://github.com/Unjuno/agent-interface/pull/8243#issuecomment-6016739963)
+  names the exact branch and SHA as the frozen source. The follow-up
+  [comment #6016757229](https://github.com/Unjuno/agent-interface/pull/8243#issuecomment-6016757229)
+  records one 80-subprocess engineering matrix and a separate raw audit,
+  with the original unqualified claim explicitly withdrawn. This is not a
+  live/runtime result and must not be promoted beyond that scope.
+- No head PR, base PR, or registered primary-clone worktree references this
+  branch. The Issue/PR freeze and the unique source package are sufficient
+  custody reasons to retain it; no deletion or rerun was performed.
+
 ## Cancelled pending-UP branch
 
 Removed the superseded remote branch
