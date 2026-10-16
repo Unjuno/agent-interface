@@ -140,6 +140,67 @@ separate hypotheses and must keep separate evidence and decisions.
   require distinguishing traces for semantic differences. No result or
   allocation is claimed here.
 
+## 6. Censoring-aware verifier ordering under workload drift — #8919
+
+- **Status:** Open and unverified; proposed as an offline finite-method study.
+- **Idea:** Under short-circuit verification, later predicate outcomes and
+  costs are censored. A changing workload can make the most efficient order
+  change, but estimating predicate selectivity only among cases that reach it
+  can be biased. Compare a frozen order with an adaptive policy using only
+  observed ordered outcomes and costs.
+- **Existing evidence:** [#4258 / PR #4274](https://github.com/Unjuno/agent-interface/pull/4274)
+  records a synthetic frozen-order cost reduction with exact three-valued
+  semantics. [#4733 / PR #4735](https://github.com/Unjuno/agent-interface/pull/4735)
+  maps a finite selectivity-drift crossover; the Issue retains a separate
+  allocation-wide collision `HOLD`. Neither result establishes online
+  adaptation. Preserve the #4733 collision record.
+- **Decision boundary:** Mandatory predicates must all finish before `PASS`;
+  `UNKNOWN` must not be upgraded. A method result cannot establish real
+  verifier cost, workload prevalence, GUI benefit, or live safety.
+- **Next test:** The Issue proposes a CPU-only deterministic drift fixture
+  against the frozen #4258 order and an oracle, with independent enumeration of
+  three-valued outcomes, censored suffixes, exploration cost, drift response,
+  and no-shift overhead. It has no result or allocation here.
+
+## 7. Calibration under corrupted verifier feedback — #8858
+
+- **Status:** Open and unverified; no current repository feedback corruption is
+  asserted.
+- **Idea:** A sequential risk calibrator may be misled when its binary feedback
+  bit is wrong, even when the event is observed rather than delayed or missing.
+  Test whether a bounded method remains useful under directional/clustered
+  label corruption, or whether excluding questionable labels and abstaining is
+  the stronger baseline.
+- **Boundary:** [#5315](https://github.com/Unjuno/agent-interface/issues/5315)
+  covers assumption-conditioned verifier risk calibration, while
+  [#7993](https://github.com/Unjuno/agent-interface/issues/7993) concerns
+  delayed/censored labels. Integrity checks for modified raw artifacts do not
+  test statistical robustness to an incorrect feedback label. No result may
+  weaken evidence or authority gates.
+- **Next test:** A finite CPU-only simulator must distinguish clean,
+  directionally corrupted, clustered, and assumption-violating feedback, with
+  an independent audit and simple label-exclusion/abstention baselines. This is
+  a proposal only; no implementation or allocation is recorded.
+
+## 8. Evidence-sufficient efficiency measurement — #8859
+
+- **Status:** Open and unverified; no preference study or measured user
+  preference is claimed.
+- **Idea:** An efficiency measure should distinguish excess work from checks
+  required to establish correctness, effect, and release. Fewer calls alone
+  cannot earn efficiency credit when required evidence is missing.
+- **Boundary:** This is a measurement layer for [#57](https://github.com/Unjuno/agent-interface/issues/57),
+  not permission to remove observations, verifiers, release checks, or model
+  boundaries. [#7705](https://github.com/Unjuno/agent-interface/issues/7705)
+  studies elicitation methods, and [#7889](https://github.com/Unjuno/agent-interface/issues/7889)
+  studies route-effect generalizability; neither provides preference validity
+  for evidence-sufficient GUI traces.
+- **Next test:** First assess whether existing successful traces can be
+  independently classified as required versus excess work. Only if that
+  feasibility gate passes should a small blinded pairwise-preference assay be
+  considered. Objective outcomes such as tokens, wall time, and interruptions
+  remain separately reported. No study or result is recorded here.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
@@ -154,6 +215,10 @@ separate hypotheses and must keep separate evidence and decisions.
 4. #8920's finite transition-equivalence method is another untested proposal;
    keep its variant qualification separate from empirical difficulty or
    transfer claims.
-5. Return each result to its source Issue and this family map. Preserve all
+5. #8919, #8858 and #8859 remain distinct evaluation questions: censored
+   verifier ordering, corrupted-feedback calibration, and evidence-sufficient
+   efficiency measurement. Their proposed work is offline and does not alter
+   runtime policy.
+6. Return each result to its source Issue and this family map. Preserve all
    earlier STOP, FAIL, HOLD and PASS records; do not close an idea because its
    summary has been written here.
