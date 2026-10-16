@@ -41,6 +41,12 @@ Issue #8406/#8397/#8313/#8135の全コメントと関連PRを読み直し、古�
 #8406はT1の失敗・A16限定pass・A18 incomplete・A19未実行とcalibrationを分け、#8397はA01 STOPとA02 method resultを分離した。
 #8313のauditor coverage HOLDとduplicate STOP、#8135のA01 schema failure・A02 scoped result・未着手T1を明記した。
 
+### r24：4件の学習・スケジューリングIssueを索引化（2026-10-16）
+
+Issue #8084/#8080/#8061/#8057と関連merged PRを確認した。#8084のA03 STOP・A04 HOLDとA05低分散false activation、
+#8080の合成method readiness、#8061の7-row class boundary、#8057の96-row情報配置fixtureを証拠範囲とともに追加した。
+人間研究や実GUIへの外挿は記載していない。
+
 ### r17：4件のオブジェクト記憶・復旧Issueを索引化（2026-10-16）
 
 Issue #7164/#7163/#7160/#7042を、正式コメントと現行PR状態で照合した。#7164はopen Draft #8216の
