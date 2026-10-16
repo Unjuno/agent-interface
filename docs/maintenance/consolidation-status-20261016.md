@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r63: preserve the #8297 packet before deleting its source branch (2026-10-17)
+
+The remote branch `review/8297-reversibility-e0cc-20261007` was absent on readback; its exact tip `31e1ad5d3e3d2d454f074c5d64935675bfe00172` remains reachable through `archive/recovered/review-8297-reversibility-e0cc-20261017`. The branch had zero PR head/base refs and no registered worktree in the audit clone. The four original blobs (MANIFEST, README, RESULT, and `evidence.tar.xz`) were restored unchanged into PR #9005 at commit `d342774e1222947ab6049f7cf0e310fe491c0571`; each Git blob SHA was checked against the archived source commit. The current remote branch count is 587. The deleted ref is recorded in both branch ledgers. No packet code or experiment was run.
+
 ### r62: flag the #59 owner-integration branch's missing main record (2026-10-17)
 
 The 300-file `research/59-v15-owner-integration-20261012` tip records A33/A34 STOPs and prior owner-integration work. Its `research/doom/V15_OWNER_RECOVERY_INTEGRATION_A02_A32_20261012.md` summary is absent from current main. The branch has no PR head/base reference or registered worktree in the primary checkout. The ledger now requires owner, raw, and content review before any deletion; no branch was removed.
@@ -129,7 +133,7 @@ Issue #8648と最新コメント、PR #8827を再照合した。C01はWSLc初期
 
 ### r42：#8297のreversibility review packetを保全（2026-10-17）
 
-`review/8297-reversibility-e0cc-20261007`のtip `31e1ad5d3e3d2d454f074c5d64935675bfe00172`はunprotectedで、PR head/base参照なし、ローカルworktreeなし。closed PR #8297に対する受動的な4-file review packetである。`evidence.tar.xz`の125,556 bytes / SHA-256 `e0e1ccb1f3ad29331e050315b9348afacc5b7294467b871e74d46caca26f5778`と72 member hashesを検証した。A03のraw-digest discrepancyは元証拠の来歴不明として保持し、A05の保存済み3-case整合とfrozen auditorの既知欠陥を分離する。packetを元のGit blobどおり`research/live_control/review_reversibility_8297_e0cc_20261007/`へ保全し、#8300/#7949の索引と研究indexを追加した。コードやreview packet中のprogramは実行していない。枝はこの保全PRがmainへ入るまで保持する。
+`review/8297-reversibility-e0cc-20261007`のtip `31e1ad5d3e3d2d454f074c5d64935675bfe00172`はunprotectedで、PR head/base参照なし、ローカルworktreeなし。closed PR #8297に対する受動的な4-file review packetである。`evidence.tar.xz`の125,556 bytes / SHA-256 `e0e1ccb1f3ad29331e050315b9348afacc5b7294467b871e74d46caca26f5778`と72 member hashesを検証した。A03のraw-digest discrepancyは元証拠の来歴不明として保持し、A05の保存済み3-case整合とfrozen auditorの既知欠陥を分離する。packetを元のGit blobどおり`research/live_control/review_reversibility_8297_e0cc_20261007/`へ保全し、#8300/#7949の索引と研究indexを追加した。コードやreview packet中のprogramは実行していない。2026-10-17、元tipを指す保全tag作成と4 blobのPR内readback後にremote branchを削除した。
 
 ### r41：#8186の未リンクreview証拠を索引・保全（2026-10-17）
 
