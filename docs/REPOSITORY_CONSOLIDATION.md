@@ -14,6 +14,13 @@ stack内のmergeはmain統合とは限らない。#5の未完了状態とcomplet
 後続の6件は保存先を示して旧PRを終了しており、元PRを直接mergeした件数ではない。
 以下の初回棚卸しは履歴として保持し、最新状態や全件レビュー済みの根拠にしない。
 
+**2026-10-17 branch cleanup receipt:** the superseded, unprotected
+`research/v39-cancel-batch-race-a01-20261009` branch was removed after its
+closed PR and current-main successor were checked. GitHub's retained
+`refs/pull/8688/head` still points to the exact source tip. See the
+[cleanup evidence](maintenance/branch-cleanup-v39-20261017.md); no tag was
+pushed, avoiding unrelated push-triggered workflows.
+
 ## 到達点
 
 - アイデアをテーマ・関係・依存・優先順位で整理し、既存の実装と研究結果につなぐ。
