@@ -1,0 +1,49 @@
+{
+  "classification": "posthoc single-run mechanism observation; not preregistered",
+  "cover_actions": [
+    "strafe_right",
+    "strafe_left",
+    "retreat_fire"
+  ],
+  "cover_terminal_before_plan": true,
+  "decision_iteration": 5,
+  "hard_minimum": 51,
+  "invalidation": {
+    "monitor_received_ns": 55550166722786,
+    "outcome_evaluated_ns": 55550189057945,
+    "reason": "below_hard_minimum",
+    "signal_extracted_ns": 55550189025866,
+    "status": "HARD_INVALIDATED"
+  },
+  "live_allocations_added": 0,
+  "model_wait_ms": 8915.94921,
+  "model_wait_ns": 8915949210,
+  "planner_terminal": {
+    "answer_eligible": false,
+    "cancellation_requested": true,
+    "status": "interrupted",
+    "terminal_observed_ns": 55550226108534
+  },
+  "schema": "issue59-v39-health-invalidation-timing-posthoc-result-v1",
+  "source_base_commit": "b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3",
+  "source_hashes_verified": true,
+  "source_health": 61,
+  "task_effect_or_survival_claim": false,
+  "timing_ms": {
+    "capture_after_model_start": 8722.694139,
+    "capture_to_monitor_received": 133.689927,
+    "evaluation_before_planner_terminal": 37.050589,
+    "monitor_received_to_evaluation": 22.335159,
+    "planner_terminal_before_model_wait_end": 0.179396
+  },
+  "trigger_frame_visibility_verified": false,
+  "trigger_observation": {
+    "ammo": 37,
+    "artifact_published": false,
+    "capture_ns": 55550033032859,
+    "frame_rgb_sha256": "fd7f813b9b2c15d1c33c8e0d4514747697c62df515c8a1905b7492f5c16cc60b",
+    "health": 48,
+    "sequence": 218,
+    "typed_ready_ns": 55550044843813
+  }
+}
