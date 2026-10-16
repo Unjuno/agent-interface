@@ -1,0 +1,69 @@
+import hashlib
+import json
+import math
+import subprocess
+import time
+from pathlib import Path
+
+
+def capture(argv, env, prefix, timeout):
+    if type(timeout) not in (int, float) or not math.isfinite(timeout) or timeout <= 0:
+        raise ValueError('finite positive timeout required')
+    prefix = Path(prefix)
+    receipt_path = prefix.with_suffix('.receipt.json')
+    # Reserve a new record before launching. Reuse is refused without execution.
+    with receipt_path.open('x', encoding='utf-8') as reserved:
+        reserved.write(json.dumps({'state': 'PREPARING', 'pid': None}) + '\n')
+    started_ns = time.perf_counter_ns()
+    process = None
+    timed_out = False
+    primary = None
+    opened = set()
+    try:
+        with prefix.with_suffix('.stdout').open('xb') as out:
+            opened.add('stdout')
+            with prefix.with_suffix('.stderr').open('xb') as err:
+                opened.add('stderr')
+                process = subprocess.Popen(argv, env=env, stdout=out, stderr=err)
+                try:
+                    process.wait(timeout=timeout)
+                except subprocess.TimeoutExpired:
+                    timed_out = True
+                    process.kill()
+                    process.wait(timeout=5)
+    except BaseException as error:
+        primary = error
+    ended_ns = time.perf_counter_ns()
+    terminal = process is not None and process.poll() is not None
+    streams = {}
+    for kind in ('stdout', 'stderr'):
+        path = prefix.with_suffix('.' + kind)
+        if kind in opened:
+            raw = path.read_bytes()
+            streams[kind] = {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+        else:
+            streams[kind] = None
+    result = {
+        'state': 'CAPTURE_FAILED' if primary is not None else 'TIMED_OUT' if timed_out else 'EXITED',
+        'pid': None if process is None else process.pid,
+        'exit': None if process is None else process.returncode,
+        'timed_out': timed_out,
+        'reaped': terminal,
+        'started_ns': started_ns,
+        'ended_ns': ended_ns,
+        'elapsed_ns': ended_ns - started_ns,
+        'error': None if primary is None else {'type': type(primary).__name__, 'message': str(primary)},
+        'streams': streams,
+        'clock_scope': 'after receipt reservation through stream open, launch, wait/kill/wait and stream close; excludes hashes/receipt serialization',
+        'descendants_certified': False,
+    }
+    try:
+        receipt_path.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+    except BaseException as storage_error:
+        if primary is not None:
+            primary.add_note('final capture receipt unavailable: ' + type(storage_error).__name__)
+            raise primary
+        raise
+    if primary is not None:
+        raise primary
+    return result
