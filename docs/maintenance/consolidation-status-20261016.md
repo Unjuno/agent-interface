@@ -32,6 +32,8 @@ path-conditioned read-setという別の問いを追加した。
 rotation-invariant visual feature、version-crossing target continuityを分離して索引に載せた。
 さらに#8493/#8494/#8594/#8595を確認し、temporal drift、shared-queue synchronization、reverse-stress synthesis、
 mediation identifiabilityをそれぞれ別の未検証課題として記録した。
+今回#8073/#8166/#8300/#8319も本文から整理し、analogy retrieval、screen-reader handback、external-write journaling、
+feedback/update-rule交互作用の違いを追記した。
 これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
