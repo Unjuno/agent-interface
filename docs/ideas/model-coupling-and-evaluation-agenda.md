@@ -92,14 +92,46 @@ separate hypotheses and must keep separate evidence and decisions.
   evidence with real timings and independent effects; the proposed 20% gap
   threshold is prospective, not an expected result.
 
+## 4. Cue reliability under action-selected feedback — #8654
+
+- **Status:** Open. C07 earned `PASS_METHOD_SCOPED` for auditing saved finite-
+  design data; C06's original `FAIL_METHOD` remains unchanged.
+- **Idea:** A policy's choices determine which action outcomes become observable.
+  When unchosen outcomes are missing, factual feedback may not identify whether
+  a visual cue's action/outcome relationship changed. Zero-support cells must
+  remain `UNIDENTIFIABLE`, not be filled by counterfactual guesses.
+- **Evidence:** Merged [PR #8671](https://github.com/Unjuno/agent-interface/pull/8671)
+  preserves the read-only C07 audit of 15 C06 shards (197,376 histories): all
+  six regime/policy groups had unit mass, the known-propensity expectation
+  matched the finite all-action oracle, 768 greedy histories were
+  unidentifiable, and 4/4 malformed-input controls were rejected. The auditor
+  ran once and the candidate did not run in C07. This checks the stated finite
+  design and saved-data audit; it does not show that diagnostic sampling
+  improves an agent or that an agent adapts to cue reversal.
+- **Unresolved:** C06's auditor mutation harness failed, and C07 does not repair
+  or replace that disposition. Sequential interaction, carryover, empirical
+  agent behavior, safe exploration, GUI effects, and product value remain
+  unevaluated. Related [#8200](https://github.com/Unjuno/agent-interface/issues/8200)
+  and [#8432](https://github.com/Unjuno/agent-interface/issues/8432) concern
+  adaptation/recurrence under an available task-effect oracle; [#8640](https://github.com/Unjuno/agent-interface/issues/8640)
+  concerns route-dependent outcome ascertainment. They are adjacent questions,
+  not interchangeable evidence.
+- **Next decision:** Decide in #8654 whether the remaining hypothesis warrants
+  a separately frozen, independently audited test after resolving the C06
+  method failure. This entry records the evidence and does not authorize a new
+  allocation or live action.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
    blockers before spending remote-model budget on #6001 or #6035.
-2. The lowest-cost untested discriminator in this family is #9004's finite
+2. #8654's C07 audit is complete at method scope. Any follow-up must address
+   C06's failed audit and make a distinct hypothesis decision; do not treat C07
+   as evidence of agent adaptation or sampling benefit.
+3. The lowest-cost untested discriminator in this family is #9004's finite
    common-mode-error comparison. It is independent of the consumed #6001
    allocations and does not need a GUI/model lane, but it still needs its own
    immutable freeze, candidate output and independent audit.
-3. Return each result to its source Issue and this family map. Preserve all
+4. Return each result to its source Issue and this family map. Preserve all
    earlier STOP, FAIL, HOLD and PASS records; do not close an idea because its
    summary has been written here.
