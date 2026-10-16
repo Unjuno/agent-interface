@@ -181,3 +181,20 @@ in main.
 - No deletion or source execution was performed. Revisit only after recording
   an evidence-backed coverage mapping and resolving the original proposal's
   governance/custody conditions.
+
+## Main-merged terminal fixes and A07 correction source
+
+Removed three redundant remote branch names after checking their exact tips,
+PR destinations, retained source refs and worktree state. The operation removed
+remote refs only; the two attached local fix worktrees and the A03 source
+worktree remain intact.
+
+| Branch | Exact tip | PR and preservation evidence | Final state |
+|---|---|---|---|
+| `fix/doom-terminal-health-zero-a16` | `88adef65f48874d681d5600f910ec009e6e662b1` | Merged [PR #8816](https://github.com/Unjuno/agent-interface/pull/8816) at the exact head; main comparison reported zero commits ahead. Its local worktree remains at `/Users/taka/Documents/Codex/2026-10-09/agent-interface-59-live-threat-guard-a01/results-local/doom/a16-health-zero-terminal-fix`. | Remote branch absent; pull-request head ref retains the tip. |
+| `fix/59-cleanup-lease-aware-terminal-receipt-a01-20261009` | `a0acd7e96032cd3d9cf0e5ae86b20140d9abca3f` | Merged [PR #8763](https://github.com/Unjuno/agent-interface/pull/8763) at the exact head; main comparison reported zero commits ahead. Its local worktree remains at `/Users/taka/Documents/Codex/2026-10-09/agent-interface-59-live-threat-guard-a01/results-local/doom/a10-cleanup-fix`. | Remote branch absent; pull-request head ref retains the tip. |
+| `research/59-a07-audit-v3-correction-20261009` | `29143d84d7e0e5288f7bc316a1a4f8b77967068c` | [PR #8707](https://github.com/Unjuno/agent-interface/pull/8707) merged to `research/59-live-threat-guard-a03-20261009` at `ce6724b870696916d8d421e20d9bcd18362af88c`, not to main. The current A03 tip `44f15471bd07705f1bbe565c017b6f9df29e87ec` contains that merge commit; comparison reported zero commits ahead. The A03 worktree at `/Users/taka/Documents/Codex/2026-10-09/agent-interface-59-live-threat-guard-a01/results-local/doom/a03-source` remains. | Redundant A07 remote branch absent; `refs/pull/8707/head` still equals the exact tip. |
+
+No experiment or test was run for these ref removals. In particular, the A07
+correction package remains available through the retained A03 branch and pull
+request ref; this receipt does not claim that it is present on main.

@@ -18,9 +18,18 @@ stack内のmergeはmain統合とは限らない。#5の未完了状態とcomplet
 `research/v39-cancel-batch-race-a01-20261009` branch was removed after its
 closed PR and current-main successor were checked. GitHub's retained
 `refs/pull/8688/head` still points to the exact source tip. See the
-[cleanup evidence](maintenance/branch-cleanup-20261017.md) for this and a
-other superseded cleanup branches. No tag was pushed, avoiding unrelated
+[cleanup evidence](maintenance/branch-cleanup-20261017.md) for this and other
+superseded cleanup branches. No tag was pushed, avoiding unrelated
 push-triggered workflows.
+
+**2026-10-17 additional remote-ref cleanup:** three redundant branch names were
+removed after exact-head and retention checks: two main-merged fixes
+([PR #8816](https://github.com/Unjuno/agent-interface/pull/8816) and
+[#8763](https://github.com/Unjuno/agent-interface/pull/8763)) and the A07
+correction branch merged into the retained A03 source branch by
+[#8707](https://github.com/Unjuno/agent-interface/pull/8707). Related local
+worktrees and the A03 source branch remain. Evidence is in the
+[cleanup receipt](maintenance/branch-cleanup-20261017.md).
 
 ## 到達点
 
