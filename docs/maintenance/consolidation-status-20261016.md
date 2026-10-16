@@ -99,6 +99,11 @@ code or original rescue ref was changed.
 #9004は未検証のまま、Issue本文のfinite CPU-only T0条件と比較対象を整理した。
 Issueの状態変更、外部provider/model呼出し、GUI実行は行っていない。
 
+運用記録Issue [#8913](https://github.com/Unjuno/agent-interface/issues/8913)は、2026-10-12の
+WSLc read-only事前確認と、#8685のclient/container lane条件を読んだ後に認識した手順逸脱を記録する。
+実験・移行結果ではなく、既存allocationも消費していない。この記録が限定するのは当該WSLc
+操作だけであり、独立した作業や他の実験レーンの停止条件ではない。
+
 同じバッチで、統合済みPR [#8791](https://github.com/Unjuno/agent-interface/pull/8791)
 のremote branch `fix/primary-release-array-shape-20261009` を回収した。記録tip
 `3884c929435db18855b5ca62e95ca90ceadb52ed` は現行mainの祖先、branchはunprotectedで、
