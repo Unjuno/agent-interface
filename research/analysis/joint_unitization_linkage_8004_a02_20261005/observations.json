@@ -1,0 +1,27 @@
+{
+  "schema": "joint-unitization-observations-a02",
+  "channels": ["runtime", "watcher", "verifier"],
+  "raw_records": [
+    {"record_id": "r-01", "channel": "runtime", "span": [0, 2]},
+    {"record_id": "r-02", "channel": "runtime", "span": [2, 4]},
+    {"record_id": "w-01", "channel": "watcher", "span": [0, 2]},
+    {"record_id": "w-02", "channel": "watcher", "span": [6, 7]},
+    {"record_id": "v-01", "channel": "verifier", "span": [2, 4]}
+  ],
+  "segmentation_alternatives": {
+    "S_split": {
+      "runtime": [["r-01"], ["r-02"]],
+      "watcher": [["w-01"], ["w-02"]],
+      "verifier": [["v-01"]]
+    },
+    "S_merge": {
+      "runtime": [["r-01", "r-02"]],
+      "watcher": [["w-01"], ["w-02"]],
+      "verifier": [["v-01"]]
+    }
+  },
+  "linkage_alternatives": {
+    "L_temporal": [["r-01", "w-01"], ["r-02", "v-01"]],
+    "L_crossed": [["r-01", "v-01"], ["r-02", "w-01"]]
+  }
+}
