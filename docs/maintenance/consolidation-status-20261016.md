@@ -80,6 +80,15 @@ explicitly keeps A01/A02 execution STOPs and the superseded A03 freeze in immuta
 Accordingly, `research/8592-dpor-t0-a01-20261008` (`b0951ae1…`) and
 `research/8592-dpor-t0-a02-20261008-r1` (`bb195877…`) remain retained as evidence custody.
 
+The separate no-PR rescue branch `rescue/win32-release-retain-7772-currentmain-20261007` also
+contains release-custody tests absent from current main, so it is not disposable. Current-main
+adaptations are in draft [PR #9006](https://github.com/Unjuno/agent-interface/pull/9006): its five
+new pure release tests pass locally and in the native-mcp Win32 module, but CI remains red. The
+unchanged native Win32 fixture test returns `release_unverified` when `GetAsyncKeyState` reports
+zero; the native-mcp job also has four failures in other test modules. This is an unresolved
+release-verification contract and CI baseline, not evidence that the new tests failed. No runtime
+code or original rescue ref was changed.
+
 ### r6：モデル連携・比較評価アイデアを一族ごとに整理
 
 基準main `1ece47014d05db898bf73afcd722a14524462e15`（2026-10-16）。
