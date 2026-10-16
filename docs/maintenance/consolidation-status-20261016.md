@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r31：2件の探索Issueの実結果と限界を索引化（2026-10-17）
+
+#5908のmerged PR #6139を確認し、合成T1で3方式すべてが同じ2機序を回収し、descriptor方式のpairwise超過がなかった結果を記載した。#6278のIssue/merged PR #6283では、境界T0、欠落negative controlによるportfolio allocation STOP、qualification-filter constructionと資源/優先順位STOPを分離した。形式candidate/auditorは0/0で、portfolio効果を主張しない。両STOPは各allocationに限定され、他作業を止めない。実験・model・GUIは実行していない。
+
 ### r18：4件の既存研究結果を索引化（2026-10-16）
 
 Issue #6640/#6624/#6615/#6611と関連PR・後続Issueを確認し、`docs/IDEAS_AND_OUTCOMES.md`へ結果と境界を追記した。
