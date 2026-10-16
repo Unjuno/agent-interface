@@ -81,6 +81,24 @@ files remain pinned in current main.
 The merge successor and pinned source archive remain the current integration
 and provenance paths; the branch name was redundant.
 
+## Ambiguous cleanup terminal identity
+
+Removed the superseded branch `fix/8687-terminal-identity-completeness` after
+checking its closed PR, current-main successor, primary-clone worktree registry
+and retained PR source reference.
+
+| Check | Evidence |
+|---|---|
+| Exact source tip before deletion | `c80db274e4e99ddaefee1aa500cfc8c53195e4cb` |
+| Branch/PR state | Unprotected branch; [PR #8831](https://github.com/Unjuno/agent-interface/pull/8831) is closed and unmerged, with the exact tip as head. No open PR used the branch as head or base. |
+| Current-main successor | The final PR comment says [PR #8771](https://github.com/Unjuno/agent-interface/pull/8771) supersedes this fix and includes the orphan-terminal case. PR #8771 is merged. Current main requires `accepted_ids == terminal_ids` and tests `test_unmatched_or_invalid_event_ids_fail_closed`. |
+| Worktree / Issue references | No registered primary-clone worktree or exact Issue-body branch-name match was found. |
+| Remote retention after deletion | `git ls-remote origin refs/pull/8831/head` returned the exact tip SHA after the branch ref disappeared. |
+| Final verification | Remote `refs/heads/fix/8687-terminal-identity-completeness` absent; the closed PR head still points to the exact source tip. No test or experiment was run for this ref cleanup. |
+
+No separate implementation or retry was needed; the merged successor and
+closed PR preserve the behavior record and source history.
+
 ## Reviewed and retained: #8243 verifier freeze
 
 The branch `fix/8243-verifier-r2p6-20261006` remains because it is an Issue/PR-
