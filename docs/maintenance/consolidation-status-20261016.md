@@ -4,6 +4,24 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r8：アイデア索引と重複branch refの更新（2026-10-16）
+
+基準mainは `1ece47014d05db898bf73afcd722a14524462e15`。全Issueを `research-idea` labelで照合し、
+未掲載の #8022/#8024 を `docs/ideas/` と `docs/IDEAS_AND_OUTCOMES.md` に記録した。
+#8022は no-human protocol audit のHOLDと倫理条件、#8024は authored fixtureのMETHOD_PASS_SCOPEDと
+固定timeoutを上回る価値が未実証である境界を残す。Issueは開いたまま。変更は
+[PR #9005](https://github.com/Unjuno/agent-interface/pull/9005) にあり、先行headではPublic Navigation、
+Research Workspace Index、replay-gateのCIが成功。今回追記後のheadは別途CI確認する。未マージ。
+
+未参照branch `research/8654-c03-support-sufficiency-20261009` (`e4061a6f0fc9863ed2dbec7e09d3a99b4972685`)は、
+無保護、全PR head/base未参照、登録worktreeなし。mainとの差分16ファイルすべてのblob SHAがmainおよび
+merged PR #8664と一致し、#8664のC04がC03のpre-candidate STOP履歴を明記していたため、remote refだけを削除し
+GitHubで不在を確認した。Issue #8654とmainの証拠ファイルは変更していない。
+
+削除後のlive snapshotはremote branch 588本、全PR 6,102件、open PR 518件、PR head/baseに未参照31本。
+未参照31本の個別内容・所有確認は継続中。削除は確認できた重複ref一件に限定し、worktreeや固有rawは
+対象にしていない。
+
 ## 後続の現在地
 
 ### r7：マージ済みremote branchの再照合・回収
