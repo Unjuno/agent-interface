@@ -80,6 +80,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Constrained interaction-fault diagnosis](constrained-fault-diagnosis.md) — separates #5330's detection result, #8901's unverified early-search portfolio, #8894's fault-set identifiability, #8895's adaptive-versus-fixed cost frontier, and #8898's corruption robustness.
 
+- [Invariant-confluence coordination boundary](invariant-confluence-coordination-boundary.md) — consolidates #5547's scoped finite evidence and #8889's corrected overlap without duplicating its broad allocation.
+
 - [Joint reserve and model-lifetime](joint-reserve-model-lifetime.md) — keeps #8630's failed weak-signal gate, #6580's bounded T0c pass plus remaining HOLD, and #8873's post-result full-tree policy audit distinct.
 
 - [Task-conditioned degraded envelopes](task-conditioned-degraded-envelope.md) — records #8586 A01/A02 finite-model results separately, with the live capability, runtime, and integration boundaries.
