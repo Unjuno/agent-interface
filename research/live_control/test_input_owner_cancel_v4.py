@@ -90,6 +90,54 @@ class CancelRelayTests(unittest.TestCase):
         self.assertTrue(cancel.closed,'secondary close must follow shutdown fault')
         ROWS.append(dict(case='paired-channel-cleanup',both_closed=True,primary_preserved=True,scope='inert channels; no process'))
 
+    def test_gated_reply_cannot_apply_cause_to_mutated_original_lease(self):
+        results=[]
+        for field in ('target_process_identity','deadline','intent_token'):
+            with self.subTest(field=field):
+                lease=make_lease();dto=encode_lease(lease);lease.set()
+                cause=dict(intent_token=dto['intent_token'],record=dict(event='owner_release',reason='cancelled',
+                    intent_token=dto['intent_token'],valid_until_ns=dto['deadline_ns'],target_process_identity=dto['target_process_identity'],
+                    verified=True,keys_down=[],buttons_down=[],keys_unknown=[],key_state_errors=[],key_state_source='x11_query_keymap'))
+                control=api().CancellationClient.__new__(api().CancellationClient)
+                control.sock=object();control.startup={'service_id':'inert-generation'};control.timeout=.1
+                control._gate=threading.Lock();control._lock=threading.Lock();control._stop=threading.Event()
+                control._retired=False;control._next_id=1;control._buffer=bytearray()
+                entry=dict(lease=lease,dto=dto,done=threading.Event(),outcome=None)
+                def reply(*_):
+                    if field=='target_process_identity':lease.target_process_identity=(1,41,'b'*64,lease.deadline)
+                    elif field=='deadline':lease.deadline+=1
+                    else:lease.intent_token='changed-intent'
+                    return dict(schema=api().SCHEMA+'-response',service_id='inert-generation',request_id=1,
+                        intent_token=dto['intent_token'],accepted=True,cause=cause)
+                with patch.object(api().rpc,'_send_frame'),patch.object(api().rpc,'_read_frame',side_effect=reply),patch.object(api().rpc,'_detach_socket'):
+                    control._watch(entry)
+                self.assertFalse(entry['outcome']['release_verified'])
+                self.assertIsNotNone(entry['outcome']['error']);self.assertIsNone(lease.interruption_snapshot())
+                results.append(dict(field=field,refused=True,parent_cause_absent=True))
+        ROWS.append(dict(case='mutated-parent-binding',results=results,scope='inert gated reply; no process'))
+
+    def test_started_then_interrupted_watcher_remains_owned_and_joined(self):
+        control=api().CancellationClient.__new__(api().CancellationClient)
+        control.sock=object();control.startup={'service_id':'inert-generation'};control.timeout=.1
+        control._gate=threading.Lock();control._lock=threading.Lock();control._stop=threading.Event()
+        control._retired=False;control._next_id=1;control._buffer=bytearray();control._entries={}
+        original=threading.Thread.start;started=[];primary=KeyboardInterrupt('after native thread start')
+        def start(thread):
+            original(thread);started.append(thread);raise primary
+        try:
+            with patch.object(threading.Thread,'start',start),patch.object(api().rpc,'_detach_socket'):
+                with self.assertRaises(KeyboardInterrupt) as caught:control.watch(make_lease())
+            self.assertIs(caught.exception,primary)
+            self.assertTrue(control._stop.is_set())
+            self.assertEqual(len(control._entries),1,'possibly-started watcher must remain tracked')
+            self.assertTrue(all(not thread.is_alive() for thread in started))
+            self.assertFalse(control.thread_alive)
+            ROWS.append(dict(case='interrupted-watcher-start',tracked=1,joined=True,primary_preserved=True,
+                             scope='owned local Python thread only; no child/socket/native'))
+        finally:
+            control._stop.set()
+            for thread in started:thread.join(1)
+
     def test_cause_validation_rejects_unbound_or_false_release(self):
         dto=encode_lease(make_lease());record=dict(event='owner_release',reason='cancelled',intent_token=dto['intent_token'],
             valid_until_ns=dto['deadline_ns'],target_process_identity=dto['target_process_identity'],

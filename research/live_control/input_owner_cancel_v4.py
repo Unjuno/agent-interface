@@ -116,32 +116,53 @@ class CancellationClient:
 
     @property
     def thread_alive(self):
-        with self._lock:return any(entry['thread'].is_alive() for entry in self._entries.values())
+        with self._lock:return any(entry['thread'].is_alive() or entry.get('start_unresolved',False) for entry in self._entries.values())
+
+    def _join_entries(self,entries):
+        failures=[]
+        for entry in entries:
+            thread=entry['thread']
+            try:
+                if entry.get('start_unresolved') and not thread._started.wait(self.timeout):
+                    raise RuntimeError('watcher startup remains unresolved; handle retained')
+                thread.join(self.timeout+1)
+                if thread.is_alive():raise RuntimeError('parent cancellation thread remains owned')
+                entry['start_unresolved']=False
+            except BaseException as error:failures.append(error)
+        if failures:
+            if len(failures)==1:raise failures[0]
+            raise BaseExceptionGroup('parent cancellation watcher join failures',failures)
 
     def watch(self,lease):
         dto=rpc.encode_lease(lease);token=dto['intent_token']
-        with self._lock:
-            if self._stop.is_set() or self._retired:raise RuntimeError('cancellation client retired')
-            existing=self._entries.get(token)
-            if existing is not None:
-                if existing['lease'] is not lease:raise ValueError('intent belongs to another original lease')
-                original=dict(existing['dto']);original['cancel_requested']=dto['cancel_requested'];original['focus_invalid']=dto['focus_invalid']
-                if original!=dto:raise ValueError('watched source binding changed')
-                return
-            if len(self._entries)>=rpc.MAX_LEASES:raise ValueError('cancellation inventory exhausted')
-            entry=dict(lease=lease,dto=copy.deepcopy(dto),done=threading.Event(),outcome=None)
-            thread=threading.Thread(target=self._watch,args=(entry,),name='parent-cancel-'+token[:8],daemon=False)
-            entry['thread']=thread;self._entries[token]=entry
-            try:thread.start()
-            except BaseException:
-                self._entries.pop(token);self._retired=True
-                rpc._detach_socket(self.sock);raise
+        starting=None
+        try:
+            with self._lock:
+                if self._stop.is_set() or self._retired:raise RuntimeError('cancellation client retired')
+                existing=self._entries.get(token)
+                if existing is not None:
+                    if existing['lease'] is not lease:raise ValueError('intent belongs to another original lease')
+                    original=dict(existing['dto']);original['cancel_requested']=dto['cancel_requested'];original['focus_invalid']=dto['focus_invalid']
+                    if original!=dto:raise ValueError('watched source binding changed')
+                    return
+                if len(self._entries)>=rpc.MAX_LEASES:raise ValueError('cancellation inventory exhausted')
+                entry=dict(lease=lease,dto=copy.deepcopy(dto),done=threading.Event(),outcome=None)
+                thread=threading.Thread(target=self._watch,args=(entry,),name='parent-cancel-'+token[:8],daemon=False)
+                entry['thread']=thread;self._entries[token]=entry;starting=entry
+                thread.start()
+        except BaseException:
+            if starting is not None:
+                with self._lock:
+                    starting['start_unresolved']=True;self._retired=True;self._stop.set()
+                    entries=list(self._entries.values())
+                rpc._run_cleanups(lambda:rpc._detach_socket(self.sock),lambda:self._join_entries(entries))
+            raise
 
     def _watch(self,entry):
         while not self._stop.wait(.005):
             if entry['lease'].cancel.is_set():break
         else:return
-        outcome=dict(accepted=None,release_verified=False,cause=None,error=None)
+        outcome=dict(accepted=None,release_verified=False,cause=None,cause_applied=False,error=None)
         acquired=False
         try:
             acquired=self._gate.acquire(timeout=self.timeout)
@@ -158,10 +179,19 @@ class CancellationClient:
                     or response['intent_token']!=dto['intent_token'] or response['accepted'] is not True or self._buffer):
                 raise ValueError('cancellation response identity/schema mismatch')
             verified=validate_cause(response['cause'],dto)
+            current=rpc.encode_lease(entry['lease']);original=copy.deepcopy(entry['dto'])
+            for flag in ('cancel_requested','focus_invalid'):
+                original[flag]=current[flag]
+            if current!=original:raise ValueError('original parent lease binding changed before cause application')
             outcome.update(accepted=True,release_verified=verified,cause=copy.deepcopy(response['cause']))
-            if response['cause'] is not None:entry['lease'].record_interruption(response['cause']['record'])
+            if response['cause'] is not None:
+                entry['lease'].record_interruption(response['cause']['record'])
+                if entry['lease'].interruption_snapshot()!=response['cause']:
+                    raise ValueError('original parent lease did not retain the matching release cause')
+                outcome['cause_applied']=True
         except BaseException as error:
-            self._retired=True;outcome['error']=type(error).__name__+': '+str(error)
+            self._retired=True;outcome['release_verified']=False
+            outcome['error']=type(error).__name__+': '+str(error)
             try:rpc._detach_socket(self.sock)
             except BaseException as cleanup:outcome['cleanup_error']=type(cleanup).__name__+': '+str(cleanup)
         finally:
@@ -179,6 +209,6 @@ class CancellationClient:
         with self._lock:
             self._stop.set();self._retired=True;entries=list(self._entries.values())
         def join():
-            for entry in entries:entry['thread'].join(self.timeout+1)
+            self._join_entries(entries)
             if self.thread_alive:raise RuntimeError('parent cancellation thread remains owned')
         rpc._run_cleanups(lambda:rpc._detach_socket(self.sock),join)
