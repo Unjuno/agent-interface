@@ -6,7 +6,27 @@
 
 ## 後続の現在地
 
-### r3：全体整理を優先する現在地
+### r4：#8867の計測変更を現行経路へ収束
+
+基準main `5abbc37e7674d52ef452f08f64bce3b8cb82fd0b`。
+#9000はこのmainへ統合済み。#8874は原29ファイルの保全先とログ欠落を示して
+[終了](https://github.com/Unjuno/agent-interface/pull/8874#issuecomment-6206880752)した。
+元PRを直接mergeした扱いや、#59の研究完了にはしない。r3の517件は処理前の一覧。
+
+#8867の[計測収束記録](../../research/integration/v39_event_timing_convergence_20261016/README.md)では、
+ログ開始とstdout受渡しを区別し、controllerのparse/queue/monitor時刻を現行経路へ接続した。
+移植時のreader衝突は、現行の重複JSON拒否とcontrol-boundary失敗拒否を残して解消した。
+通常・最適化Python各70メソッド/10モジュール、各7保存行、59凍結sourceを確認。
+別読取処理も両modeで通り、各reportの11改変を拒否した。実ゲーム/GUI/providerの時間測定ではない。
+旧PRの6ファイルは原バイトで残し、追加テスト・現行guard・採用sourceとは区別する。
+
+V15選択branch `8a252071ea7fb5281b9ecc154fa1640136d5345c` は引き続き未統合。
+session/controllerの同じファイルが今回変わるため、以前の149件の結果を新mainへ自動転用しない。
+取り込み時に正確な差分を結合し、影響する検証と証拠読戻しを行う。
+次の整理対象はモデル連携/比較評価のアイデア一族。実制御ではV15選択と実session/controller死亡、
+環境応答・タスク効果・matched economicsの不足を残す。
+
+### r3（履歴）：全体整理を優先
 
 基準main `4c63725565f4dea433c49213b8d068c4c762f9bf`。
 [r3取得条件](inventory-20261016-r3.json)、[open Issue 1,678件](open-issues-20261016-r3.csv)、

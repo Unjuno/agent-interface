@@ -5,18 +5,18 @@ removing current failure guards, or interpreting stage spans as isolated pipe la
 Base: `5abbc37e7674d52ef452f08f64bce3b8cb82fd0b`.
 Candidate: `598109fd6329ef88ec469557ae4beae2a2ef3002`.
 
-- [ ] Restore the candidate's two new timing tests; bind their AST harness to
+- [x] Restore the candidate's two new timing tests; bind their AST harness to
   actual current duplicate-JSON/control-boundary guards. Run against main and
   preserve the missing-marker/missing-summary failures.
-- [ ] Transplant the producer marker, controller stage stamps, strict summary
+- [x] Transplant the producer marker, controller stage stamps, strict summary
   and explicit report contract. Preserve current duplicate rejection, failure
   cleanup, source refresh and authority gates. Update the two affected old test
   harnesses without removing guard execution.
-- [ ] Add a composed actual emitter→serialized row→actual reader/wait→monitor
+- [x] Add a composed actual emitter→serialized row→actual reader/wait→monitor
   check, monitor-exception final timestamp, malformed/duplicate JSON refusal,
   current control failure refusal, and missing/reversed/bool timestamp cases.
   Keep raw log rows and stdout-enriched rows distinct in saved evidence.
-- [ ] Run relevant controller/emitter/retirement tests in normal and optimized
+- [x] Run relevant controller/emitter/retirement tests in normal and optimized
   Python. Preserve source pins, rows, first failures, driver and limits; verify
   saved records separately without starting a game, model, WSLc or native input.
 - [ ] Review current exact head/base and local checks, integrate by conditional
