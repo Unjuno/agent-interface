@@ -39,3 +39,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). Original bodies and provenance are preserved; all three source Issues were reopened after correcting premature consolidation closures.
 
 - [Benchmark wave comparability](benchmark-wave-comparability.md) — anchor-gated linking of changed benchmark waves (#8885), subordinate to direct same-task comparisons and preserving per-family and safety outcomes.
+
+- [Assumption-gated evidence acquisition](evidence-acquisition-policy-selection.md) — tests when greedy observation choice is justified and when bounded lookahead is worth its cost (#8879), without granting runtime authority.
