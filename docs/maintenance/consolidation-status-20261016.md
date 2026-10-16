@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r64: preserve and remove the superseded #8186 review branch (2026-10-17)
+
+The passive `review/8186-response-ownership-e0cc-20261007` branch was unprotected, had zero PR head/base refs, and had no registered worktree in the primary audit clone. Its four review blobs exactly match the packet already preserved in PR #9005; the source tip `e06245cb78059086f7f0e7179c1e8fa59ac2bd6f` is also retained by `archive/recovered/review-8186-response-ownership-e0cc-20261017`. The branch was removed after readback. The review's `REQUEST_CHANGES` remains a historical finding on the strict-integer proposal; it is distinct from the superseding merged #8298. The original #7094/#7125/#7140 source branches were not changed, and no experiment was rerun. Remote branch count after deletion: 586.
+
 ### r63: preserve the #8297 packet before deleting its source branch (2026-10-17)
 
 The remote branch `review/8297-reversibility-e0cc-20261007` was absent on readback; its exact tip `31e1ad5d3e3d2d454f074c5d64935675bfe00172` remains reachable through `archive/recovered/review-8297-reversibility-e0cc-20261017`. The branch had zero PR head/base refs and no registered worktree in the audit clone. The four original blobs (MANIFEST, README, RESULT, and `evidence.tar.xz`) were restored unchanged into PR #9005 at commit `d342774e1222947ab6049f7cf0e310fe491c0571`; each Git blob SHA was checked against the archived source commit. The current remote branch count is 587. The deleted ref is recorded in both branch ledgers. No packet code or experiment was run.
