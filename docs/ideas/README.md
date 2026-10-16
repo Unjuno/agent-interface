@@ -65,3 +65,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [GUI macro transfer and translation validation](gui-macro-transfer-validation.md) — separates #8890's appearance/function relation test, #7827's finite A05 result, and #8869's unverified external-interleaving successor.
 
 - [Semantic dependency audit](semantic-dependency-audit.md) — links #8883's bounded black-box discovery proposal with #4233's retained audit-control HOLD and later read-only corrections, without converting them into a PASS.
+
+- [Spatial coordinate risk](spatial-coordinate-risk.md) — distinguishes #8881's probability-mass propagation proposal from #6684's finite relational-bound result and existing point-revalidation work.
