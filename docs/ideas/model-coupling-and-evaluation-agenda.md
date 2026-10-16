@@ -1,6 +1,6 @@
 # Model coupling and evaluation validity agenda
 
-Updated 2026-10-16 against `main` `1ece47014d05db898bf73afcd722a14524462e15`.
+Updated 2026-10-17 against `main` `1ece47014d05db898bf73afcd722a14524462e15`.
 This is the next idea-family batch named by the [repository consolidation
 status](../maintenance/consolidation-status-20261016.md). The issues below share
 a concern with model behavior or model/interface comparisons, but they are
@@ -318,6 +318,38 @@ separate hypotheses and must keep separate evidence and decisions.
   current-main allocation with a complete freeze and independently authored
   task generator, policies, and auditor. This page does not authorize that
   execution or alter any prior allocation.
+
+
+## 13. Weak-shadow-variable bounds for unresolved route outcomes — #8903
+
+- **Status:** Open, unverified method-transfer proposal; no experiment, model
+  call, implementation, or result is recorded.
+- **Idea:** Test whether a frozen, route-blind prediction proxy for every
+  prospectively assigned attempt can add defensible constraints to
+  partial-identification bounds for unresolved route-success outcomes. The
+  proxy is never treated as an outcome label; if its conditional restrictions,
+  support, or leakage checks fail, retain the wider baseline bound or
+  `UNIDENTIFIED`.
+- **Relation:** #5590 supplies assumption-free bounds, while #8640/#8846 study
+  route-dependent ascertainment and sensitivity to uncertain selection odds.
+  #8903 asks whether weak-shadow-variable LP constraints add validated
+  information beyond those baselines. It differs from #8887, which asks
+  whether multiple fallible effect checkers can identify accuracy without
+  gold labels.
+- **Proposed test:** Freeze a binary route outcome, two assigned routes,
+  covariates, ascertainment, proxy strata, LP restrictions, seeds, and an
+  independent exhaustive oracle. Compare observed-outcome point estimates,
+  #5590-style assumption-free bounds, #8846-style ascertainment-sensitivity
+  bounds, and weak-shadow-variable bounds across informative and uninformative
+  proxies, conditional dependence, route shift, outcome leakage, zero support,
+  and outcome-dependent missingness. Report interval width, finite-world truth
+  coverage, route-rank decisions, and false certification separately.
+- **Boundary:** `PASS_METHOD_SCOPED` would apply only when the frozen proxy
+  restrictions hold in the finite synthetic worlds and the independent audit
+  validates coverage and corruption controls. It would not show that real GUI
+  proxy assumptions hold or change any historical route ranking. No GUI,
+  live model, participant, GPU, container, or external allocation is part of
+  the proposal.
 
 ## Priority and handoff
 
