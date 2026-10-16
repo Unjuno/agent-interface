@@ -1,5 +1,6 @@
 """Regression tests for exact typed-observation epoch identity."""
 import copy
+import json
 from pathlib import Path
 import sys
 import unittest
@@ -55,6 +56,12 @@ class TypedObservationEpochExactTests(unittest.TestCase):
         snapshot = build_action_snapshot(self.event, self.contract)
         self.assertEqual(snapshot["sequence"], 1)
         self.assertEqual(snapshot["capture_ns"], 1)
+
+    def test_default_json_nan_elapsed_is_rejected(self):
+        event = copy.deepcopy(self.event)
+        event["capture_to_typed_ready_ms"] = json.loads("NaN")
+        with self.assertRaises(ValueError):
+            build_action_snapshot(event, self.contract)
 
     def test_boolean_and_float_epoch_aliases_are_rejected(self):
         for signal in ("health", "ammo"):
