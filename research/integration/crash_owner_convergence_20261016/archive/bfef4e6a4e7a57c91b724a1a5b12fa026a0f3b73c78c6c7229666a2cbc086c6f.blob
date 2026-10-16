@@ -1,0 +1,30 @@
+{
+  "schema":"v39-v15-process-owner-xvfb-a24-audit-v1",
+  "allocation_id":"V39-V15-PROCESS-OWNER-XVFB-A24-20261012-01",
+  "status":"PASS_METHOD_SCOPED",
+  "candidate_invocations":1,
+  "retries":0,
+  "checks":{
+    "private_tcp_disabled_xvfb":true,
+    "physical_input_or_game_or_model":false,
+    "independent_keypresses_observed":[38,40],
+    "two_keys_down_before_owner_kill":true,
+    "button1_down_before_owner_kill":true,
+    "owner_service_sigkill_and_zombie_observed":true,
+    "service_start_ticks_match_ready_arm_and_ledger":true,
+    "ledger_reconstructed_exactly_keys_a_d_and_button1":true,
+    "recovery_receipt_recovery_verified":true,
+    "release_events_observed_by_independent_recovery_connection":{"keycodes":[38,40],"buttons":[1]},
+    "keymap_and_pointer_state_up":true,
+    "receipt_fsynced_and_ledger_sha256_matches":true,
+    "normal_owner_receipt_absent":true,
+    "session_alive_during_recovery":true,
+    "xvfb_exit_code":0
+  },
+  "raw_path":"results/A01/RAW.json",
+  "raw_sha256":"2c99429692dc0e8fea2841a118929fae63e53417937e1571adfc2e403194e43e",
+  "emergency_receipt_path":"results/A01/input-owner-process/input-owner-emergency-recovery-v1.json",
+  "emergency_receipt_sha256":"1893bddc825e4add1144e432fa6dd61c2a8f43ea6f156896151908d1bb1daef0",
+  "limitations":"One WSL2/Xvfb allocation. Confirms the ledger-bound emergency recovery primitive with two keys and one button for this isolated path. Does not prove physical-device attribution, competing ButtonPressMask behavior, mixed-focus input recovery, multi-button recovery, owner normal path under every operation, full V39 controller/failure-cleanup integration, game/model feedback, or task-effect correctness. Not product-level computer-control completion.",
+  "decision":"Preserve as PASS_METHOD_SCOPED and integrate only behind the existing opt-in measurement-owner path. Keep deployment/product claim open pending outer V39 failure-flow and additional adversarial recovery gates."
+}

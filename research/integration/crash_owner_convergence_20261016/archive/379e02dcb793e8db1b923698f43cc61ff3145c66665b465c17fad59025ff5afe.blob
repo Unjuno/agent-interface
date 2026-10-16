@@ -1,0 +1,22 @@
+{
+  "candidate_invocations": 1,
+  "classification": "PASS_METHOD_SCOPED for two keyboard keys plus Button1 via actual process-owner RPC and isolated Xvfb crash recovery",
+  "finding": "All frozen A12 gates pass. An independent observer saw KeyPress and pointer ButtonPress and confirmed both keymap bits plus Button1 mask down before session SIGKILL. After the session returned -9, the observer saw both KeyRelease events and ButtonRelease, and observed both keymap bits plus button mask up. The matching rpc_eof receipt is fsynced and recovery_verified=true with a verified empty close release; owner thread stopped and service exited 0 without forced termination. The supervisor requested Xvfb termination and it exited cleanly 0.",
+  "hashes": {
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/FREEZE.json": "978a168f9eb3685512dfc751fe9b8a5244bd8e5ac4b4128dc94e54887acb5125",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/PLAN.md": "cb75cf5253451393e38d819aaa9e0371714eec76bc3338f4a0d9006aa91b9d4a",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/candidate.py": "b4634eac0595a3fedf996722d1cbda565c51eca357f705d9b5883dfa3b92b835",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/results/A01/RAW.json": "9ffc82d4db4300f8d7781ed74f0307aa78c4baa5d0064ff283cff8ac5297e8e9",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json": "6a745898e2d554ff610f9643e18c169b21ee48e875fa358944dae1d2623e4924",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/results/A01/session-events.jsonl": "58197fdb01afc51edd92bf391574ad4d03dcd45c9d2986c382c30a92c6ef8d88",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/results/A01/session.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/results/A01/session.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/run_candidate.sh": "24508e8db0a0b4247225173a9735a8b4119d4769590c2a970624808db834402d"
+  },
+  "limitations": "One WSL2/Xvfb run. No full V15 CLI/outer V39 flow, malformed frames, owner-service death, multiple buttons, physical input, game/model feedback, or task effect. This is not product-level computer-control completion.",
+  "raw_sha256": "9ffc82d4db4300f8d7781ed74f0307aa78c4baa5d0064ff283cff8ac5297e8e9",
+  "receipt_sha256": "6a745898e2d554ff610f9643e18c169b21ee48e875fa358944dae1d2623e4924",
+  "retries": 0,
+  "schema": "v39-v15-process-owner-xvfb-a12-audit-v1",
+  "status": "PASS_METHOD_SCOPED"
+}

@@ -1,0 +1,21 @@
+{
+  "schema":"v39-v15-process-owner-xvfb-a25-audit-v1",
+  "allocation_id":"V39-V15-PROCESS-OWNER-XVFB-A25-20261012-01",
+  "status":"PASS_METHOD_SCOPED",
+  "candidate_invocations":1,"retries":0,
+  "checks":{"frozen_source_hashes_match":true,"private_tcp_disabled_xvfb":true,
+    "physical_input_or_game_or_model":false,"keys_a_d_independently_observed_down":true,
+    "button1_pointer_mask_down":true,"owner_service_sigkill_and_zombie":true,
+    "owner_pid_start_ticks_match_ready_and_ledger":true,
+    "ledger_contains_exactly_two_keys_and_one_button":true,
+    "release_events_observed":{"keycodes":[38,40],"buttons":[1]},
+    "all_keymap_and_pointer_states_up":true,"emergency_receipt_verified_and_fsynced":true,
+    "emergency_receipt_binds_ledger_hash":true,"normal_owner_receipt_absent":true,
+    "session_alive_during_recovery":true,"xvfb_exit_code":0},
+  "raw_path":"results/A01/RAW.json",
+  "raw_sha256":"5a857274c0c0f5e9bfb479a94fb9193f3447406372fc072665cbd64353b6dfc7",
+  "receipt_path":"results/A01/input-owner-process/input-owner-emergency-recovery-v1.json",
+  "receipt_sha256":"0226523a7c5dcf959f8a886405bce4bd7828d98a12fbd666158794b408fa0ac6",
+  "limitations":"One WSL2/Xvfb allocation. Confirms guarded emergency recovery for two keys and one button on the isolated measurement path. Does not prove physical-input attribution, simultaneous physical and XTEST users, multi-button or mixed-focus recovery, full V39 failure flow, task effect, or product-level completion.",
+  "decision":"Keep opt-in and method-scoped. Continue with outer V39 failure-flow and normal-process receipt integration checks."
+}

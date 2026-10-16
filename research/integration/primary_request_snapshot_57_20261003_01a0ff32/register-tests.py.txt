@@ -1,0 +1,8 @@
+from pathlib import Path
+import json,subprocess,os
+O=Path(__file__).resolve().parent;R=O.parent.parent/'work/primary-request-snapshot-01a0ff32';d=json.loads((O/'ACTUAL-EXISTING-TEST.json').read_bytes());b=d['utf8'].encode();env=dict(os.environ,GIT_NO_LAZY_FETCH='1',GIT_TERMINAL_PROMPT='0')
+def git(*a,**kw):return subprocess.check_output(['git','-C',str(R),*a],env=env,**kw)
+blob=git('ls-tree',d['ref'],d['path']).decode().split()[2];actual=git('hash-object','-w','--stdin',input=b).decode().strip();assert actual==blob
+git('sparse-checkout','add','--no-cone','/runtime/host_v1/test_primary_caller.mjs')
+p=R/d['path'];assert p.read_bytes()==b;p.write_bytes(b+ b"\n// Keep request snapshot regressions in the existing local/CI caller entry.\nimport './test_primary_request_snapshot.mjs';\n")
+print(git('ls-tree',d['ref'],'AGENTS.md','runtime/AGENTS.md','runtime/host_v1/AGENTS.md').decode());print(git('diff','--stat').decode())

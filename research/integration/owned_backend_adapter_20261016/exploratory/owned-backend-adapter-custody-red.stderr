@@ -1,0 +1,23 @@
+FF
+======================================================================
+FAIL: test_unverified_release_retains_adapter_obligation (test_owned_owner_backend_adapter.OwnedBackendTests.test_unverified_release_retains_adapter_obligation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 86, in test_unverified_release_retains_adapter_obligation
+    self.assertFalse(result['verified']);self.assertIsNotNone(adapter.obligation_snapshot())
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_concurrent_close_cannot_upgrade_an_observed_unknown (test_owned_owner_backend_adapter.OwnedBackendTests.test_concurrent_close_cannot_upgrade_an_observed_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_owner_backend_adapter.py", line 101, in test_concurrent_close_cannot_upgrade_an_observed_unknown
+    self.assertFalse(completed[0]['verified'],'an already observed unresolved close cannot upgrade')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false : an already observed unresolved close cannot upgrade
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.007s
+
+FAILED (failures=2)

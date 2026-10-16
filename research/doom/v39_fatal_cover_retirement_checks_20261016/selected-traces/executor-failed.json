@@ -1,0 +1,171 @@
+{
+  "case": "executor-failed",
+  "commands": [
+    {
+      "op": "submit",
+      "id": "cover-0",
+      "expected_sequence": 1,
+      "valid_until_ns": 320908262101900,
+      "steps": [
+        {
+          "op": "coast",
+          "duration_ms": 5000,
+          "sample_ms": 250
+        },
+        {
+          "op": "coast",
+          "duration_ms": 5000,
+          "sample_ms": 250
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event": "ready",
+      "fixture": {
+        "loaded": true
+      }
+    },
+    {
+      "event": "observation",
+      "sequence": 1,
+      "capture_ns": 100,
+      "image": "synthetic.png",
+      "step": 0,
+      "pointer_binding": {
+        "focus": 7,
+        "surface": 7
+      }
+    },
+    {
+      "event": "accepted",
+      "id": "cover-0",
+      "steps": 2,
+      "program_sha256": "c7cf3db510f8a70d8ac3555f75caeff3952df00f75bfd7d116ffead26f72dfb6",
+      "intent_token": "bd429460898f4ba1ad4b7faf0992c8ce",
+      "valid_until_ns": 320884262121700,
+      "accepted_ns": 320883262338100
+    },
+    {
+      "event": "step_started",
+      "id": "cover-0",
+      "step": 0,
+      "operation": "coast",
+      "issued_ns": 320883262449500
+    },
+    {
+      "event": "terminal",
+      "id": "cover-0",
+      "status": "failed",
+      "error": "OSError('inert backend execute failure')",
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "keys_unknown": [],
+        "key_state_errors": []
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "terminal_ns": 320883262533700,
+      "semantic_completion": "program status only; task scoring is separate"
+    }
+  ],
+  "timeline": [
+    "read:ready",
+    "read:observation",
+    "write:submit",
+    "read:accepted",
+    "read:step_started",
+    "read:terminal",
+    "local_invalidation:synthetic-turn",
+    "abort_transport",
+    "planner_return"
+  ],
+  "stage": "cover_terminal_validation",
+  "planner_timeout_requested": 90,
+  "pending_at_terminal": true,
+  "fatal_receipt_at_abort": {
+    "schema": "fatal-cover-terminal-v1",
+    "terminal": {
+      "event": "terminal",
+      "id": "cover-0",
+      "status": "failed",
+      "error": "OSError('inert backend execute failure')",
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "keys_unknown": [],
+        "key_state_errors": []
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "terminal_ns": 320883262533700,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "local_invalidation": {
+      "outcome": "locally_invalidated"
+    },
+    "planner_future_done_at_receipt": false,
+    "failure": {
+      "type": "RuntimeError",
+      "message": "cover terminal lacks allowed status and verified empty release: {'event': 'terminal', 'id': 'cover-0', 'status': 'failed', 'error': \"OSError('inert backend execute failure')\", 'steps_completed': 0, 'r"
+    },
+    "physical_input_state": "unverified",
+    "grants_input_authority": false,
+    "task_effect": "unknown",
+    "input_recovery_required": true
+  },
+  "cleanup_error": "RuntimeError",
+  "error": {
+    "type": "RuntimeError",
+    "message": "cover terminal lacks allowed status and verified empty release: {'event': 'terminal', 'id': 'cover-0', 'status': 'failed', 'error': \"OSError('inert backend execute failure')\", 'steps_completed': 0, 'release': {'event': 'owner_release', 'verified': True, 'keys_down': [], 'buttons_down': [], 'keys_unknown': [], 'key_state_errors': []}, 'interruption': None, 'decision_reason': None, 'terminal_ns': 320883262533700, 'semantic_completion': 'program status only; task scoring is separate'}"
+  },
+  "error_notes": [
+    "pending planner turn transport aborted"
+  ],
+  "fatal_receipt": {
+    "schema": "fatal-cover-terminal-v1",
+    "terminal": {
+      "event": "terminal",
+      "id": "cover-0",
+      "status": "failed",
+      "error": "OSError('inert backend execute failure')",
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "keys_unknown": [],
+        "key_state_errors": []
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "terminal_ns": 320883262533700,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "local_invalidation": {
+      "outcome": "locally_invalidated"
+    },
+    "planner_future_done_at_receipt": false,
+    "failure": {
+      "type": "RuntimeError",
+      "message": "cover terminal lacks allowed status and verified empty release: {'event': 'terminal', 'id': 'cover-0', 'status': 'failed', 'error': \"OSError('inert backend execute failure')\", 'steps_completed': 0, 'r"
+    },
+    "physical_input_state": "unverified",
+    "grants_input_authority": false,
+    "task_effect": "unknown",
+    "input_recovery_required": true
+  },
+  "main_elapsed_ns": 2618100,
+  "executor_inactive": true,
+  "executor_watchers_retired": true,
+  "all_futures_done": true
+}

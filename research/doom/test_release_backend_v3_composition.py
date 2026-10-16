@@ -39,6 +39,8 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
                 pass
 
             def call(self, operation, lease=None, key=None):
+                if operation == "up_batch":
+                    return [self.call("up", lease, item) for item in key]
                 if operation == "down":
                     return {"event": "input_admission", "operation": operation, "key": key,
                             "owner_id": self.owner_id, "intent_token": "lease-1"}
@@ -113,7 +115,7 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
             with patch.object(candidate, "InputOwner", Owner):
                 backend = candidate.Backend(types.SimpleNamespace(name="display"), None,
                                              emitted.append, {"health": 1, "ammo": 1})
-            backend.lease = types.SimpleNamespace(intent_token="lease-1")
+            backend.lease = types.SimpleNamespace(intent_token="lease-1", check=lambda: None)
             backend.execute({"key": "w", "down": True}, None, "program-7", 3)
             admission = emitted.pop()
             self.assertEqual((admission["id"], admission["step"]), ("program-7", 3))
@@ -154,6 +156,8 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
                 pass
 
             def call(self, operation, lease=None, key=None):
+                if operation == "up_batch":
+                    return [self.call("up", lease, item) for item in key]
                 if operation == "up":
                     return {
                         "event": "input_release_transition", "key": key,
@@ -186,6 +190,9 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
                 try:
                     self.raw(step["key"], False)
                     if step.get("raise"):
+                        # The injected failure follows a completed owner batch,
+                        # rather than a merely buffered, never attempted UP.
+                        self._flush_pending_ups(context)
                         raise RuntimeError("step failed after release")
                 finally:
                     self._input_event_context = None
@@ -199,7 +206,7 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
             with patch.object(candidate, "InputOwner", Owner):
                 backend = candidate.Backend(types.SimpleNamespace(name="display"), None,
                                              emitted.append, {"health": 1, "ammo": 1})
-            backend.lease = types.SimpleNamespace(intent_token="lease-1")
+            backend.lease = types.SimpleNamespace(intent_token="lease-1", check=lambda: None)
             with self.assertRaisesRegex(RuntimeError, "step failed after release"):
                 backend.execute({"key": "a", "raise": True}, None, "program-8", 0)
             self.assertFalse(hasattr(backend._release_batch, "context"))

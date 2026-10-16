@@ -20,8 +20,37 @@ class Executor(Previous):
         self.terminal_publication_errors = {}
         self.admission_publication_errors = {}
         self.admission_callback_ids = set()
+        self._admission_context = None
+        self._release_obligation = None
+        self._backend_custody_token = object()
+        self._backend_custody_claimed = False
+        self._backend_custody_released = False
+        claim_custody = getattr(backend, "claim_executor_custody", None)
+        if claim_custody is not None:
+            claim_custody(self._backend_custody_token)
+            self._backend_custody_claimed = True
+
+    def release_obligation_snapshot(self):
+        with self.lock:
+            return copy.deepcopy(self._release_obligation)
 
     def _emit_with_release_barrier(self, event):
+        if type(event) is dict and event.get("event") == "terminal":
+            with self.lock:
+                release = event.get("release")
+                if type(release) is not dict or release.get("verified") is not True:
+                    if self._release_obligation is None:
+                        context = self._admission_context
+                        if context is None or context.get("id") != event.get("id"):
+                            context = {"id": event.get("id")}
+                        self._release_obligation = dict(copy.deepcopy(context),
+                            release=copy.deepcopy(release), grants_input_authority=False)
+                if self._release_obligation is not None:
+                    if self._backend_custody_claimed:
+                        self.backend.retain_executor_release_obligation(
+                            self._backend_custody_token, self._release_obligation)
+                    event["input_recovery_required"] = True
+                    event["release_obligation"] = copy.deepcopy(self._release_obligation)
         if type(event) is dict and event.get("event") == "terminal":
             active = self.active
             if active is not None and active[0] == event.get("id"):
@@ -61,6 +90,8 @@ class Executor(Previous):
         with self.lock:
             if self.closed or self.active is not None:
                 raise ValueError("closed or busy; no implicit queue")
+            if self._release_obligation is not None:
+                raise ValueError("input release unverified; this executor cannot admit new work")
             if type(expected_sequence) is not int or expected_sequence != self.backend.sequence:
                 raise ValueError("latest observation sequence required before input")
             if not isinstance(identifier, str) or not identifier or identifier in self.used_ids:
@@ -70,8 +101,15 @@ class Executor(Previous):
             copied = copy.deepcopy(steps)
             self.backend.validate(copied)
             lease.check()
+            bind_source = getattr(self.backend, 'bind_lease_source', None)
+            if bind_source is not None:
+                bind_source(lease, expected_sequence)
+                lease.check()
             attestation = program_sha256(copied)
             self.backend.lease = lease
+            self._admission_context = {"id": identifier, "intent_token": lease.intent_token,
+                "valid_until_ns": valid_until_ns, "expected_sequence": expected_sequence,
+                "target_process_identity": copy.deepcopy(getattr(lease, 'target_process_identity', None))}
             worker = threading.Thread(
                 target=self._run, args=(identifier, copied, lease), daemon=False)
             self.active = (identifier, lease, worker)
@@ -233,3 +271,8 @@ class Executor(Previous):
                 job[2].join()
         for watcher in self.release_watchers:
             watcher.join()
+        with self.lock:
+            if (self._backend_custody_claimed and not self._backend_custody_released and
+                    self.active is None and self._release_obligation is None):
+                self.backend.release_executor_custody(self._backend_custody_token)
+                self._backend_custody_released = True

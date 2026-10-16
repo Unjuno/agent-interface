@@ -1,0 +1,1980 @@
+{
+  "candidate": {
+    "cases": [
+      {
+        "caller_arguments_after": {
+          "references": [
+            {
+              "alias": "field",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:56:47.651Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 2228,
+          "ppid": 22940,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 2228,
+          "ppid": 22940
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 43.4518,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 96.2088,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 96.9122,
+            "kind": "presentation_started",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 97.5056,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 105.6557,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 0,
+        "label": "mint-stable",
+        "original_arguments": {
+          "references": [
+            {
+              "alias": "field",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:56:47.572Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "references": [
+                {
+                  "alias": "changed",
+                  "point": [
+                    1,
+                    2
+                  ],
+                  "region_size": [
+                    8,
+                    8
+                  ]
+                }
+              ],
+              "source_sequence": 1
+            },
+            "id": 1,
+            "tool": "interface_guarded_mint_many"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "references": [
+            {
+              "alias": "changed",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:56:47.723Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 22684,
+          "ppid": 22940,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 22684,
+          "ppid": 22940
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 117.038,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 169.0421,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 169.704,
+            "kind": "presentation_started",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 170.1625,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 177.7104,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 0,
+        "label": "mint-mutated",
+        "original_arguments": {
+          "references": [
+            {
+              "alias": "field",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:56:47.572Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "references": [
+                {
+                  "alias": "field",
+                  "point": [
+                    1,
+                    2
+                  ],
+                  "region_size": [
+                    8,
+                    8
+                  ]
+                }
+              ],
+              "source_sequence": 1
+            },
+            "id": 1,
+            "tool": "interface_guarded_mint_many"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "references": [
+            {
+              "alias": "changed",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:56:47.796Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 24944,
+          "ppid": 22940,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 24944,
+          "ppid": 22940
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 188.9578,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 242.4435,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 243.1929,
+            "kind": "presentation_started",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 243.6424,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 250.8685,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 0,
+        "label": "mint-preclone",
+        "original_arguments": {
+          "references": [
+            {
+              "alias": "field",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:56:47.572Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "references": [
+                {
+                  "alias": "field",
+                  "point": [
+                    1,
+                    2
+                  ],
+                  "region_size": [
+                    8,
+                    8
+                  ]
+                }
+              ],
+              "source_sequence": 1
+            },
+            "id": 1,
+            "tool": "interface_guarded_mint_many"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "saved",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:56:47.869Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 37264,
+          "ppid": 22940,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 37264,
+          "ppid": 22940
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 261.6548,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 314.2872,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 314.9108,
+            "kind": "presentation_started",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 315.6719,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 322.9573,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 1,
+        "label": "feedback-stable",
+        "original_arguments": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "saved",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:56:47.572Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "alias": "save",
+              "detail": "brief",
+              "feedback": {
+                "expected_title": "saved",
+                "rejected_titles": [],
+                "timeout_ms": 10
+              },
+              "interaction": "click",
+              "observation_refs": true,
+              "offset": [
+                1,
+                2
+              ],
+              "tail": []
+            },
+            "id": 1,
+            "tool": "interface_guarded_input"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "changed",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:56:47.945Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 23672,
+          "ppid": 22940,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 23672,
+          "ppid": 22940
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 334.1863,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 390.4852,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 391.1602,
+            "kind": "presentation_started",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 391.792,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 399.196,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 1,
+        "label": "feedback-mutated",
+        "original_arguments": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "saved",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:56:47.572Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "alias": "save",
+              "detail": "brief",
+              "feedback": {
+                "expected_title": "saved",
+                "rejected_titles": [],
+                "timeout_ms": 10
+              },
+              "interaction": "click",
+              "observation_refs": true,
+              "offset": [
+                1,
+                2
+              ],
+              "tail": []
+            },
+            "id": 1,
+            "tool": "interface_guarded_input"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "changed",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:56:48.028Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 23852,
+          "ppid": 22940,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 23852,
+          "ppid": 22940
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 410.4732,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 471.7958,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 472.6351,
+            "kind": "presentation_started",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 473.3927,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 481.4644,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 1,
+        "label": "feedback-helper",
+        "original_arguments": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "saved",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:56:47.572Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "alias": "save",
+              "detail": "brief",
+              "feedback": {
+                "expected_title": "saved",
+                "rejected_titles": [],
+                "timeout_ms": 10
+              },
+              "interaction": "click",
+              "observation_refs": true,
+              "offset": [
+                1,
+                2
+              ],
+              "tail": []
+            },
+            "id": 1,
+            "tool": "interface_guarded_input"
+          }
+        ]
+      }
+    ],
+    "ended_utc": "2026-10-03T12:56:48.028Z",
+    "fail": 0,
+    "formal_allocation_replays": 0,
+    "native_or_physical_inputs": 0,
+    "node": "v24.19.0",
+    "node_path": "$REVIEW_HOME\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+    "node_sha256": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237",
+    "pass": 6,
+    "pid": 22940,
+    "ppid": 22860,
+    "source_sha256": "bc3aabd7e6ec5fe243c61b52b6f8541b7869c9a01ff43af7fbd0c8a918175840",
+    "stage": "candidate",
+    "started_utc": "2026-10-03T12:56:47.572Z"
+  },
+  "original": {
+    "cases": [
+      {
+        "caller_arguments_after": {
+          "references": [
+            {
+              "alias": "field",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:54:48.681Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 20240,
+          "ppid": 16112,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 20240,
+          "ppid": 16112
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 45.6734,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 94.2443,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 95.0386,
+            "kind": "presentation_started",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 95.5877,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 104.2461,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 0,
+        "label": "mint-stable",
+        "original_arguments": {
+          "references": [
+            {
+              "alias": "field",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:54:48.603Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "references": [
+                {
+                  "alias": "field",
+                  "point": [
+                    1,
+                    2
+                  ],
+                  "region_size": [
+                    8,
+                    8
+                  ]
+                }
+              ],
+              "source_sequence": 1
+            },
+            "id": 1,
+            "tool": "interface_guarded_mint_many"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "references": [
+            {
+              "alias": "changed",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "caller_state": {
+          "stopped": "incomplete or inconsistent batch mint result"
+        },
+        "ended_utc": "2026-10-03T12:54:48.756Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 22416,
+          "ppid": 16112,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 22416,
+          "ppid": 16112
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 116.4103,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 170.8729,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 171.3989,
+            "kind": "presentation_started",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 171.7849,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 179.1263,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 0,
+        "label": "mint-mutated",
+        "original_arguments": {
+          "references": [
+            {
+              "alias": "field",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "semantic_pass": false,
+        "started_utc": "2026-10-03T12:54:48.603Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "references": [
+                {
+                  "alias": "field",
+                  "point": [
+                    1,
+                    2
+                  ],
+                  "region_size": [
+                    8,
+                    8
+                  ]
+                }
+              ],
+              "source_sequence": 1
+            },
+            "id": 1,
+            "tool": "interface_guarded_mint_many"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "references": [
+            {
+              "alias": "changed",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:54:48.827Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 23868,
+          "ppid": 16112,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 23868,
+          "ppid": 16112
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 190.5782,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 241.9639,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_mint_many"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 242.5959,
+            "kind": "presentation_started",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 243.0449,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "8eff88cd281740d520e0b3ae46d100194f379588e70fa723df7ab163e81b1256",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 250.8235,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 0,
+        "label": "mint-preclone",
+        "original_arguments": {
+          "references": [
+            {
+              "alias": "field",
+              "point": [
+                1,
+                2
+              ],
+              "region_size": [
+                8,
+                8
+              ]
+            }
+          ],
+          "source_sequence": 1
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"minted\",\"source_sequence\":1,\"minted\":[{\"alias\":\"field\"}]}",
+                "type": "text"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_mint_many"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:54:48.603Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "references": [
+                {
+                  "alias": "field",
+                  "point": [
+                    1,
+                    2
+                  ],
+                  "region_size": [
+                    8,
+                    8
+                  ]
+                }
+              ],
+              "source_sequence": 1
+            },
+            "id": 1,
+            "tool": "interface_guarded_mint_many"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "saved",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:54:48.902Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 34040,
+          "ppid": 16112,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 34040,
+          "ppid": 16112
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 261.9413,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 315.8545,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 316.3854,
+            "kind": "presentation_started",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 316.9736,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 324.9485,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 1,
+        "label": "feedback-stable",
+        "original_arguments": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "saved",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:54:48.603Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "alias": "save",
+              "detail": "brief",
+              "feedback": {
+                "expected_title": "saved",
+                "rejected_titles": [],
+                "timeout_ms": 10
+              },
+              "interaction": "click",
+              "observation_refs": true,
+              "offset": [
+                1,
+                2
+              ],
+              "tail": []
+            },
+            "id": 1,
+            "tool": "interface_guarded_input"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "changed",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "caller_state": {
+          "stopped": "missing or inconsistent requested feedback"
+        },
+        "ended_utc": "2026-10-03T12:54:48.975Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 26416,
+          "ppid": 16112,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 26416,
+          "ppid": 16112
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 337.0865,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 390.1252,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 390.8223,
+            "kind": "presentation_started",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 391.4244,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 398.8693,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 1,
+        "label": "feedback-mutated",
+        "original_arguments": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "saved",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "semantic_pass": false,
+        "started_utc": "2026-10-03T12:54:48.603Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "alias": "save",
+              "detail": "brief",
+              "feedback": {
+                "expected_title": "saved",
+                "rejected_titles": [],
+                "timeout_ms": 10
+              },
+              "interaction": "click",
+              "observation_refs": true,
+              "offset": [
+                1,
+                2
+              ],
+              "tail": []
+            },
+            "id": 1,
+            "tool": "interface_guarded_input"
+          }
+        ]
+      },
+      {
+        "caller_arguments_after": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "changed",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "caller_state": {
+          "stopped": null
+        },
+        "ended_utc": "2026-10-03T12:54:49.047Z",
+        "error": null,
+        "fixture_exit": {
+          "code": 0,
+          "pid": 35384,
+          "ppid": 16112,
+          "requests": 1
+        },
+        "fixture_start": {
+          "pid": 35384,
+          "ppid": 16112
+        },
+        "host_events": [
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 409.4173,
+            "kind": "send_requested",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 1,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 461.6802,
+            "kind": "reply_available",
+            "relay_id": 1,
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 2,
+            "tool": "interface_guarded_input"
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 462.2932,
+            "kind": "presentation_started",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 3
+          },
+          {
+            "attempt": 1,
+            "host_monotonic_ms": 462.8737,
+            "kind": "presentation_callbacks_completed",
+            "reply_sha256": "b85c4d64d31bb7fd38926e516838408828802df896458d3d8d9585add18c9005",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 4
+          },
+          {
+            "code": 0,
+            "host_monotonic_ms": 470.3117,
+            "kind": "transport_closed",
+            "schema": "agent-interface/relay-host-event-v1",
+            "sequence": 5,
+            "signal": null
+          }
+        ],
+        "host_exit": {
+          "code": 0,
+          "signal": null
+        },
+        "image_callbacks": 1,
+        "label": "feedback-helper",
+        "original_arguments": {
+          "alias": "save",
+          "detail": "brief",
+          "feedback": {
+            "expected_title": "saved",
+            "rejected_titles": [],
+            "timeout_ms": 10
+          },
+          "interaction": "click",
+          "observation_refs": true,
+          "offset": [
+            1,
+            2
+          ],
+          "tail": []
+        },
+        "original_reply": {
+          "attempt": 1,
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "request_count": 1,
+        "retained_original_wire_identity": true,
+        "saved_reply": {
+          "id": 1,
+          "next_id": 2,
+          "result": {
+            "content": [
+              {
+                "text": "{\"status\":\"completed\",\"image_status\":\"image\",\"result\":{\"execution\":{\"releases\":[{\"verified\":true,\"keys_down\":[],\"buttons_down\":[]}]}},\"feedback\":{\"status\":\"matched\",\"expected_title\":\"saved\",\"rejected_titles\":[],\"title\":\"saved\",\"after_title\":\"saved\",\"task_success\":null,\"authority_granted\":false,\"input_dispatched\":false}}",
+                "type": "text"
+              },
+              {
+                "data": "AAECAw==",
+                "mimeType": "image/png",
+                "type": "image"
+              }
+            ],
+            "isError": false
+          },
+          "status": "returned",
+          "tool": "interface_guarded_input"
+        },
+        "semantic_pass": true,
+        "started_utc": "2026-10-03T12:54:48.603Z",
+        "text_callbacks": 2,
+        "wire_requests": [
+          {
+            "arguments": {
+              "alias": "save",
+              "detail": "brief",
+              "feedback": {
+                "expected_title": "saved",
+                "rejected_titles": [],
+                "timeout_ms": 10
+              },
+              "interaction": "click",
+              "observation_refs": true,
+              "offset": [
+                1,
+                2
+              ],
+              "tail": []
+            },
+            "id": 1,
+            "tool": "interface_guarded_input"
+          }
+        ]
+      }
+    ],
+    "ended_utc": "2026-10-03T12:54:49.048Z",
+    "fail": 2,
+    "formal_allocation_replays": 0,
+    "native_or_physical_inputs": 0,
+    "node": "v24.19.0",
+    "node_path": "$REVIEW_HOME\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe",
+    "node_sha256": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237",
+    "pass": 4,
+    "pid": 16112,
+    "ppid": 3056,
+    "source_sha256": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e",
+    "stage": "original",
+    "started_utc": "2026-10-03T12:54:48.603Z"
+  }
+}

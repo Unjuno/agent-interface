@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_relay_module_available (test_input_owner_cancel_v4.CancelRelayTests.test_relay_module_available)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_cancel_v4.py", line 8, in test_relay_module_available
+    self.assertIsNotNone(importlib.util.find_spec('input_owner_cancel_v4'),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         'independently serviced cancellation/cause relay absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : independently serviced cancellation/cause relay absent
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

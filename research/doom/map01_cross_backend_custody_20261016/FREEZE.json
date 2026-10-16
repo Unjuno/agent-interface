@@ -1,0 +1,27 @@
+{
+  "source": "026ce5e8ab0b466fbfb0dd2c0ec03e6c17f94169",
+  "probe_sha256": "00910ec50590fd007983fa3a3d2130cd26138df65532a46570230fe7dfe168d0",
+  "frozen_at_utc": "2026-10-15T18:56:54.067722+00:00",
+  "H": "Unverified release custody must prevent a new intent on the same underlying input domain; backend object identity may be insufficient.",
+  "T": {
+    "cases": [
+      "same-backend",
+      "same-session-new-backend",
+      "new-session-same-display"
+    ],
+    "fixture": "actual selected process backend + ExecutorV13 with FakeDisplay and patched XTest only",
+    "original": "hold a for 5ms; stall release send; await failed/unverified terminal; close wrapper",
+    "alternate": "preconstructed backend, same target digest; attempt hold admission; sink raises on accepted before worker.start; no alternate input",
+    "gate_limit_seconds": 8,
+    "terminal_wait_seconds": 3,
+    "native_or_gui_runs": 0,
+    "normal_and_optimized": "local characterization repeats; not independent reliability trials"
+  },
+  "D": "RETAIN fence only if same backend refuses; FAIL shared-domain guarantee if a distinct backend accepts while key38 is held; HOLD cross-process/native/recovery scope.",
+  "C": [
+    "Backend construction precedes failure; reconstruction after failure is not tested",
+    "All owners share one fake object, not separate native transport connections",
+    "Accepted-event sink is harness-controlled and deliberately fails; no second worker or input is run"
+  ],
+  "U": "Raw admission/custody/held state and source retained; no physical release deadline or actual task effect claim."
+}

@@ -1,0 +1,56 @@
+import ast, copy, hashlib, importlib, json, os, subprocess, sys, time
+from datetime import datetime,timezone
+from pathlib import Path
+from unittest.mock import patch
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT=Path(__file__).parent/'compiled-caller-handoff-20261016'
+BASE='955f85ef0238c44b05a4477f607578b026390568'
+CASES=('healthy','failed_effect','unavailable_effect','sink_failure','unknown_release_first','unknown_release_second')
+if len(sys.argv)>1:
+    from research.live_control import integrated_efficiency_compiled_execution_v1 as bridge
+    from research.live_control import adaptive_acquisition_caller_v2 as v2, adaptive_acquisition_caller_v3 as v3
+    from research.live_control.integrated_efficiency_compiled_adapter_v2 import compile_form_method,EXPECTED_METHOD_CONTRACT
+    rows=[]
+    for version,caller in [('existing_v2',v2.run),('v3_import_swap_control',v3.run)]:
+        for case in CASES:
+            state={'sequence':0,'execute':[],'verify':0,'sink':0};raw=[];events=[]
+            interface=compile_form_method(interface_id='owned-inert-interface',session_scope='owned-inert-scope',surface='inert',field_handle='field',submit_handle='submit',method_contract=EXPECTED_METHOD_CONTRACT)
+            def observe(_):
+                state['sequence']+=1;n=len(state['execute'])
+                return dict(sequence=state['sequence'],captured_ns=time.perf_counter_ns(),surface='inert',predicates=dict(field_pixels_changed=n>0,field_value_matches_task=n>0,field_target_present=True,submit_target_present=True,submission_pixels_changed=n>1),evidence_ref='inert-frame-'+str(state['sequence']),evidence_digest='inert-digest-'+str(state['sequence']))
+            def admit(payload):return dict(eligible=True,status='revalidated',authorization='INERT_NO_INPUT_AUTHORITY',expected_sequence=payload['observation']['sequence'],valid_until_ns=time.perf_counter_ns()+1_000_000_000)
+            def execute(payload):
+                state['execute'].append(copy.deepcopy(payload));n=len(state['execute']);unknown=(case=='unknown_release_first' and n==1) or (case=='unknown_release_second' and n==2)
+                return dict(status='completed',action_id='inert-action-'+str(n),effect_ref='inert-effect-'+str(n),input_dispatched=True,release=dict(verified=not unknown,keys_down=['inert-held'] if unknown else [],buttons_down=[]))
+            def sink(receipt):
+                state['sink']+=1;raw.append(copy.deepcopy(receipt))
+                if case=='sink_failure':raise OSError('owned inert receipt publication failure')
+            def effect(_):
+                state['verify']+=1
+                return dict(status='failed' if case=='failed_effect' else 'unavailable' if case=='unavailable_effect' else 'succeeded',evidence_ref='inert-independent-effect-reference')
+            spec=dict(target='inert exact form',route='reuse',coarse_origin='caller_provided',provided_coarse=None,cached_target={'id':'inert-form'},repair_on=[],session_id='inert')
+            if version=='v3_import_swap_control':spec['local_repair_on']=[]
+            with patch.object(bridge,'run_caller',caller):
+                result=bridge.run_compiled_interface_in_caller(spec,{'reuse_revalidate':lambda _:{'status':'revalidated'},'final_revalidate':lambda _:{'status':'revalidated'},'verify_effect':effect,'journal':events.append},interface,dict(observe=observe,admit=admit,execute=execute,verify_effect=lambda _:{'status':'succeeded','evidence_ref':'inert-core-effect'},cancelled=lambda:False),on_receipt=sink)
+            rows.append(dict(version=version,case=case,state=state,compiled=raw[0],caller=result,events=events))
+    mode='optimized' if sys.flags.optimize else 'normal'
+    (OUT/f'{mode}-rows.json').write_text(json.dumps(rows,indent=2,allow_nan=False)+'\n')
+    print(json.dumps(dict(pid=os.getpid(),optimize=sys.flags.optimize,rows=len(rows),versions=['existing_v2','v3_import_swap_control'],scope='real core/helper/caller composition; synthetic observation/admission/input/release/effect; zero model/native calls')))
+    sys.exit(0)
+OUT.mkdir(exist_ok=False)
+paths=['runtime/core_v1/compiled_gui.py','research/live_control/integrated_efficiency_compiled_execution_v1.py','research/live_control/integrated_efficiency_compiled_adapter_v2.py','research/live_control/adaptive_acquisition_caller_v2.py','research/live_control/adaptive_acquisition_caller_v3.py']
+pins=[]
+for p in paths:
+    data=subprocess.check_output(['git','show',BASE+':'+p],cwd=ROOT);actual=(ROOT/p).read_bytes()
+    assert ast.dump(ast.parse(data))==ast.dump(ast.parse(actual)),p
+    pins.append(dict(path=p,git_blob=subprocess.check_output(['git','rev-parse',BASE+':'+p],cwd=ROOT,text=True).strip(),git_byte_sha256=hashlib.sha256(data).hexdigest(),worktree_byte_sha256=hashlib.sha256(actual).hexdigest(),ast_join=True))
+(OUT/'SOURCE_PINS.json').write_text(json.dumps(pins,indent=2)+'\n')
+(OUT/'CONDITIONS.json').write_text(json.dumps(dict(base=BASE,cases=CASES,scope='ordinary local construction/characterization; no formal allocation',before_execution_utc=datetime.now(timezone.utc).isoformat(),versions='existing helper caller v2 versus directed imported-run_caller swap to v3; v3 spec only adds local_repair_on=[]',runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),python=sys.version,requirements=['outer effect unknown must not erase completed input','publication failure must retain known execution status','failed release must retain completed prefix plus unknown current input']),indent=2)+'\n')
+env=dict(os.environ,PYTHONPATH=os.pathsep.join([str(ROOT),str(ROOT/'research/live_control')]),PYTHONDONTWRITEBYTECODE='1');env.pop('DISPLAY',None)
+receipts=[]
+for mode,flags in [('normal',[]),('optimized',['-O'])]:
+    cmd=[sys.executable,*flags,str(Path(__file__)),'child'];start=datetime.now(timezone.utc).isoformat();run=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True)
+    for stream,data in [('stdout',run.stdout),('stderr',run.stderr)]: (OUT/f'{mode}.{stream}').write_bytes(data)
+    receipts.append(dict(mode=mode,command=cmd,started_utc=start,ended_utc=datetime.now(timezone.utc).isoformat(),returncode=run.returncode))
+(OUT/'PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2)+'\n')
+print(json.dumps(receipts,indent=2))

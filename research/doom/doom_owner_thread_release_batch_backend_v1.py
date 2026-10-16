@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import threading
+from copy import deepcopy
 
 from doom_typed_release_backend_v2 import Backend as Previous, suite
 from input_transition_owner_v4 import InputOwner
@@ -11,11 +12,47 @@ class Backend(Previous):
     """Opt-in release composition; controller and default backend are unchanged."""
 
     def __init__(self, session, out, emit, signal_readers):
+        self._executor_custody_lock = threading.RLock()
+        self._executor_custody_owner = None
+        self._executor_release_obligation = None
         super().__init__(session, out, emit, signal_readers)
-        self.owner.close()
-        self.owner = InputOwner(session.name)
+        if getattr(self,'_provided_input_owner',None) is None:
+            self.owner.close()
+            self.owner=InputOwner(session.name)
         self._release_batch = threading.local()
         self._last_release_batch_delivery = None
+
+    def claim_executor_custody(self, token):
+        with self._executor_custody_lock:
+            if token is None:
+                raise ValueError("executor custody requires a nonempty owner token")
+            if self._executor_release_obligation is not None:
+                raise ValueError("backend input release unverified; no replacement authority")
+            if self._executor_custody_owner is not None:
+                raise ValueError("backend executor custody occupied; close the current executor first")
+            self._executor_custody_owner = token
+
+    def retain_executor_release_obligation(self, token, obligation):
+        with self._executor_custody_lock:
+            if self._executor_custody_owner is None or self._executor_custody_owner is not token:
+                raise ValueError("executor does not own this backend")
+            if self._executor_release_obligation is None:
+                self._executor_release_obligation = deepcopy(obligation)
+
+    def release_executor_custody(self, token):
+        with self._executor_custody_lock:
+            if self._executor_custody_owner is None or self._executor_custody_owner is not token:
+                raise ValueError("executor does not own this backend")
+            if self._executor_release_obligation is not None:
+                raise ValueError("backend input release unverified; no replacement authority")
+            self._executor_custody_owner = None
+
+    def executor_custody_snapshot(self):
+        with self._executor_custody_lock:
+            return {"schema": "map01-backend-executor-custody-v1",
+                    "executor_attached": self._executor_custody_owner is not None,
+                    "release_obligation": deepcopy(self._executor_release_obligation),
+                    "grants_input_authority": False}
 
     def _delivery_ledger(self, context):
         ledger = context.get("delivery_ledger")

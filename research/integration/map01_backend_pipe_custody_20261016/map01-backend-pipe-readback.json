@@ -1,0 +1,64 @@
+{
+  "normal": {
+    "tests": 17,
+    "backend_pipe_cells": 3,
+    "prior_pipe_cells": 8,
+    "contradictions": [
+      {
+        "name": "lost_custody",
+        "reason": "lost custody"
+      },
+      {
+        "name": "late_authority",
+        "reason": "new authority"
+      },
+      {
+        "name": "stale_source",
+        "reason": "typed/full identity join"
+      },
+      {
+        "name": "two_writers",
+        "reason": "single owner edges"
+      },
+      {
+        "name": "bad_png",
+        "reason": "PNG byte join"
+      },
+      {
+        "name": "repeat_submit",
+        "reason": "input replay"
+      }
+    ]
+  },
+  "optimized": {
+    "tests": 17,
+    "backend_pipe_cells": 3,
+    "prior_pipe_cells": 8,
+    "contradictions": [
+      {
+        "name": "lost_custody",
+        "reason": "lost custody"
+      },
+      {
+        "name": "late_authority",
+        "reason": "new authority"
+      },
+      {
+        "name": "stale_source",
+        "reason": "typed/full identity join"
+      },
+      {
+        "name": "two_writers",
+        "reason": "single owner edges"
+      },
+      {
+        "name": "bad_png",
+        "reason": "PNG byte join"
+      },
+      {
+        "name": "repeat_submit",
+        "reason": "input replay"
+      }
+    ]
+  }
+}

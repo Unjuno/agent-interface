@@ -1,0 +1,58 @@
+{
+  "checks": {
+    "all_pinned_sources_match": true,
+    "controller_launches_session_as_subprocess": true,
+    "default_v12_and_optin_v15_sessions_share_child_boundary": true,
+    "executor_worker_is_thread_inside_host_process": true,
+    "inputowner_is_thread_inside_host_process": true,
+    "parent_cleanup_has_no_inputowner_release_client": true,
+    "parent_failure_cleanup_can_terminate_or_kill_only_tracked_child": true,
+    "production_backend_constructs_inputowner_from_session_display": true,
+    "ready_protocol_does_not_publish_display_name": true,
+    "session_constructs_backend_and_executor_in_same_process": true,
+    "v15_patches_v12_backend_and_executor_in_child": true
+  },
+  "decision": "PASS_SOURCE_GRAPH",
+  "evidence_kind": "static source inspection; not runtime behavior",
+  "integration_judgment": {
+    "boundary": "A supervisor-service death still needs an external restart/display-reset policy; A04 proves only Executor-child death while the owner supervisor remains alive.",
+    "current_failure_domain": "The MAP01 session subprocess creates the Executor and owner-thread InputOwner. A hard death of that subprocess removes both; the outer controller only knows the child process and has no display-bound release client.",
+    "recovery_direction": "Move input ownership into a longer-lived supervisor/service outside the session/Executor child failure domain. Add a strict local RPC adapter in the session backend, publish the display/auth context before input authority, and on child EOF close the owner and persist verified release evidence before any new admission."
+  },
+  "pinned_sources": {
+    "research/doom/doom_controller_failure_cleanup_v1.py": {
+      "sha256": "bc8d3550e6c2d057c7b615b38e424de3497418547e835490429f526853e1fe28"
+    },
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": {
+      "sha256": "2df84b632456388a488f2595347b6b37def29f66b47f97a44d89ed5c11b8d418"
+    },
+    "research/doom/doom_typed_release_backend_v2.py": {
+      "sha256": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4"
+    },
+    "research/doom/map01_overlap_controller_v39.py": {
+      "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607"
+    },
+    "research/doom/session_map01_v12.py": {
+      "sha256": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2"
+    },
+    "research/doom/session_map01_v15.py": {
+      "sha256": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+    },
+    "research/live_control/executor_v12.py": {
+      "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+    },
+    "research/live_control/executor_v13.py": {
+      "sha256": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b"
+    },
+    "research/live_control/input_owner_v12.py": {
+      "sha256": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19"
+    },
+    "research/live_control/input_transition_owner_v3.py": {
+      "sha256": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2"
+    },
+    "research/live_control/input_transition_owner_v4.py": {
+      "sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+    }
+  },
+  "schema": "v39-crash-recovery-current-topology-audit-v1"
+}

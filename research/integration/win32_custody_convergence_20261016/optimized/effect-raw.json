@@ -1,0 +1,339 @@
+[
+  {
+    "mode": "changed_pixels",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 325404952400500,
+        "ended_ns": 325404952468300,
+        "emissions": 0,
+        "observations": [],
+        "releases": [
+          {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        ]
+      },
+      "recovery_required": false,
+      "effect": {
+        "status": "verified",
+        "task_success": true,
+        "observation": {
+          "sequence": 3,
+          "session_scope": "native-win32:e45dd1033b8b450d83dde24c8291d7ee",
+          "binding_revision": 0,
+          "capture_ns": 325404953471900,
+          "pointer_binding": {
+            "surface": 42,
+            "geometry": {
+              "x": 0,
+              "y": 0,
+              "width": 8,
+              "height": 8
+            },
+            "focus": 42
+          },
+          "region": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "native": {
+            "width": 8,
+            "height": 8,
+            "bytes": 256,
+            "sha256": "a9faedf005419034af9a0adfb822237e183bb5e6315f586c2abfa999e13125fa",
+            "capture_started_ns": 325404953471900,
+            "capture_finished_ns": 325404953493100,
+            "artifact": {
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\win32-isolated-optimized\\images\\test_exact_expiry_consumes_without_capture\\3f54cc74c1f141e69e4a66558af89149.png",
+              "sha256": "36fe6ab71ec56fa1fc84326e4673fbf028c6ad2eb5051ce5a9e6cb0d07c85f4c",
+              "source_raw_sha256": "a9faedf005419034af9a0adfb822237e183bb5e6315f586c2abfa999e13125fa"
+            }
+          },
+          "input_dispatched": false,
+          "side_effect_authority": false
+        }
+      },
+      "task_success": true
+    },
+    "events": [
+      [
+        "move",
+        "fixture",
+        3,
+        3
+      ],
+      [
+        "release"
+      ]
+    ],
+    "verifier_sequences": [
+      3
+    ],
+    "capture_calls": 5
+  },
+  {
+    "mode": "unchanged_pixels",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 325404956026400,
+        "ended_ns": 325404956188700,
+        "emissions": 0,
+        "observations": [],
+        "releases": [
+          {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        ]
+      },
+      "recovery_required": false,
+      "effect": {
+        "status": "not_verified",
+        "task_success": false,
+        "observation": {
+          "sequence": 3,
+          "session_scope": "native-win32:004e6db10db24fd08d3357486a763a39",
+          "binding_revision": 0,
+          "capture_ns": 325404956236000,
+          "pointer_binding": {
+            "surface": 42,
+            "geometry": {
+              "x": 0,
+              "y": 0,
+              "width": 8,
+              "height": 8
+            },
+            "focus": 42
+          },
+          "region": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "native": {
+            "width": 8,
+            "height": 8,
+            "bytes": 256,
+            "sha256": "f398a3958acd0e43481f1ab46c67f5b05e961aebc6f5ed98cadd924ee21791bf",
+            "capture_started_ns": 325404956236000,
+            "capture_finished_ns": 325404956252000,
+            "artifact": {
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\win32-isolated-optimized\\images\\test_exact_expiry_consumes_without_capture\\5a4ee50dc341403186fbfd64b81a5d7e.png",
+              "sha256": "9d776546aabcc8a1693466760e2d07f023302abe675835989bb55e233de9f812",
+              "source_raw_sha256": "f398a3958acd0e43481f1ab46c67f5b05e961aebc6f5ed98cadd924ee21791bf"
+            }
+          },
+          "input_dispatched": false,
+          "side_effect_authority": false
+        }
+      },
+      "task_success": false
+    },
+    "events": [
+      [
+        "move",
+        "fixture",
+        3,
+        3
+      ],
+      [
+        "release"
+      ]
+    ],
+    "verifier_sequences": [
+      3
+    ],
+    "capture_calls": 5
+  },
+  {
+    "mode": "capture_error",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 325404958565500,
+        "ended_ns": 325404958627200,
+        "emissions": 0,
+        "observations": [],
+        "releases": [
+          {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        ]
+      },
+      "recovery_required": false,
+      "effect": {
+        "status": "unknown",
+        "task_success": null,
+        "observation": null,
+        "error": {
+          "type": "RuntimeError",
+          "detail": "inert post-action capture error"
+        }
+      },
+      "task_success": null
+    },
+    "events": [
+      [
+        "move",
+        "fixture",
+        3,
+        3
+      ],
+      [
+        "release"
+      ]
+    ],
+    "verifier_sequences": [],
+    "capture_calls": 5
+  },
+  {
+    "mode": "callback_binding_change",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 325404960506600,
+        "ended_ns": 325404960562600,
+        "emissions": 0,
+        "observations": [],
+        "releases": [
+          {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        ]
+      },
+      "recovery_required": false,
+      "effect": {
+        "status": "unknown",
+        "task_success": null,
+        "observation": {
+          "sequence": 3,
+          "session_scope": "native-win32:0b672d49796c442bb11d8f6ef8348631",
+          "binding_revision": 0,
+          "capture_ns": 325404960606100,
+          "pointer_binding": {
+            "surface": 42,
+            "geometry": {
+              "x": 0,
+              "y": 0,
+              "width": 8,
+              "height": 8
+            },
+            "focus": 42
+          },
+          "region": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "native": {
+            "width": 8,
+            "height": 8,
+            "bytes": 256,
+            "sha256": "f398a3958acd0e43481f1ab46c67f5b05e961aebc6f5ed98cadd924ee21791bf",
+            "capture_started_ns": 325404960606100,
+            "capture_finished_ns": 325404960621400,
+            "artifact": {
+              "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\win32-isolated-optimized\\images\\test_exact_expiry_consumes_without_capture\\cf4b966e37854cf69dfb4609612a1443.png",
+              "sha256": "9d776546aabcc8a1693466760e2d07f023302abe675835989bb55e233de9f812",
+              "source_raw_sha256": "f398a3958acd0e43481f1ab46c67f5b05e961aebc6f5ed98cadd924ee21791bf"
+            }
+          },
+          "input_dispatched": false,
+          "side_effect_authority": false
+        }
+      },
+      "task_success": null
+    },
+    "events": [
+      [
+        "move",
+        "fixture",
+        3,
+        3
+      ],
+      [
+        "release"
+      ]
+    ],
+    "verifier_sequences": [
+      3
+    ],
+    "capture_calls": 5
+  },
+  {
+    "mode": "no_verifier",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 325404962896200,
+        "ended_ns": 325404963087900,
+        "emissions": 0,
+        "observations": [],
+        "releases": [
+          {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        ]
+      },
+      "recovery_required": false
+    },
+    "events": [
+      [
+        "move",
+        "fixture",
+        3,
+        3
+      ],
+      [
+        "release"
+      ]
+    ],
+    "verifier_sequences": [],
+    "capture_calls": 4
+  }
+]

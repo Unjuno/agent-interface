@@ -1,0 +1,23 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a17-freeze-v1",
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A17-20261012-01",
+  "successor_of": "V39-V15-PROCESS-OWNER-XVFB-A16-20261012-01",
+  "base_commit": "47e2a914ef7d81d07b69205d333f79f4151bc338",
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1,
+  "retries_allowed": 0,
+  "source_sha256": {
+    "research/live_control/input_owner_process_v1.py": "0a8b42ccc926ad5763bad4558603e4f5bdd258a6b7a153409fbd6e0f30c0c726",
+    "research/doom/doom_controller_failure_cleanup_v1.py": "7ff33535c1dfda139a69441d6e8e963b7bed3a6ed61a40f95714913cc65fc25d",
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": "51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+    "research/doom/v39_v15_process_owner_xvfb_a17_20261012/PLAN.md": "7ff33535c1dfda139a69441d6e8e963b7bed3a6ed61a40f95714913cc65fc25d",
+    "research/doom/v39_v15_process_owner_xvfb_a17_20261012/candidate.py": "7ff33535c1dfda139a69441d6e8e963b7bed3a6ed61a40f95714913cc65fc25d",
+    "research/doom/v39_v15_process_owner_xvfb_a17_20261012/run_candidate.sh": "7ff33535c1dfda139a69441d6e8e963b7bed3a6ed61a40f95714913cc65fc25d"
+  },
+  "environment": {"host":"WSL2 Ubuntu", "python":"CPython 3.12.3", "xvfb":"TCP disabled", "physical_input":false, "game_or_model":false, "network_calls":0},
+  "hypothesis": "After owner service SIGKILL with two keys and Button1 held, the outer recovery routine accepts the backend event envelope, reconstructs the fsynced ledger, verifies exact service-generation death and unchanged focus/surface/geometry/pointer binding, then releases only the three ledgered inputs and writes a durable verified emergency receipt.",
+  "scope": "Private isolated Xvfb recovery primitive and cleanup boundary only.",
+  "decision_rule": "PASS requires independent down and up events and key/button state; owner PID and start ticks match then process is dead; reconstructed ledger contains only a/d and Button1; emergency receipt binds ledger hash and verifies; no normal owner receipt; session stays alive during recovery; Xvfb exits cleanly. Otherwise preserve STOP/FAIL.",
+  "command": "unshare --user --map-root-user --mount --fork bash research/doom/v39_v15_process_owner_xvfb_a17_20261012/run_candidate.sh",
+  "output": "research/doom/v39_v15_process_owner_xvfb_a17_20261012/results/A01"
+}

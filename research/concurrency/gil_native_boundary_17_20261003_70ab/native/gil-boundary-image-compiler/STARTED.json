@@ -1,0 +1,18 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/gil-boundary-image-compiler",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker run --pull never --network none --read-only --cpus 0.25 --memory 128m --memory-swap 128m --pids-limit 32 --name 17-gil-compiler-intake-70ab python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -c 'import shutil,subprocess,json; p=shutil.which(\"gcc\"); print(json.dumps({\"gcc\":p,\"cc\":shutil.which(\"cc\")})); subprocess.run([p,\"--version\"],check=True) if p else None'"
+  ],
+  "launcher_pid": 34447,
+  "start_utc": "2026-10-03T14:59:47.807016+00:00",
+  "start_ns": 50552674233958,
+  "pid": 34451
+}

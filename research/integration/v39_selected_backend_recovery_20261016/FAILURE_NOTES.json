@@ -1,0 +1,7 @@
+{
+  "initial_suite": "Four case errors: concurrent capture request timed out; stdin close OSError interrupted first cleanup and raw-row completion. Complete parent streams and initial test source preserved, but four child raw/stderr not independently retained.",
+  "initial_process_check": "Known launcher PIDs30364,60832,34828,7852 and direct child queries returned no processes in tool output after the failures; no separate process snapshot file retained for that check.",
+  "diagnostic": "One joined diagnostic child retained complete wire/stderr in debug JSON and exited1 without forced cleanup. Selected capture IdentityReader had retired/occupied due concurrent capture with hold worker.",
+  "correction": "Test uses existing worker observation after phase update; recovery capture occurs only at original-execute exception barrier, after its capture work unwinds. No production change or safety bypass.",
+  "exploratory": "Corrected three-method exploratory check passed; full streams only, before tested final selected-suite source pin."
+}

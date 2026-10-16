@@ -1,0 +1,21 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a04-audit-v1",
+  "status": "STOP_HARNESS_OBSERVATION_FAILURE",
+  "classification": "Harness/observation STOP; not a hypothesis result",
+  "evidence": {
+    "receipt_fsynced": true,
+    "json_decode_error": true,
+    "receipt_written": true,
+    "xvfb_exit_code": 0,
+    "service_exit_status_observed": false,
+    "receipt_recovery_verified": false,
+    "session_started": true,
+    "xvfb_started": true
+  },
+  "finding": "The parent attempted JSON decoding on the first child stdout line and stopped before recording readiness/arm/session PID. The owner receipt shows rpc_eof, but Xvfb was shut down before owner could verify release; connection reset and recovery_verified=false. No pass/fail on scoped process-death hypothesis.",
+  "retry": "Do not retry A04. A05 changes child event observation to a durable JSONL file and redirects stdout/stderr to files.",
+  "hashes": {
+    "raw_sha256": "79fa4a37fefa932dcca84ef0266ab4c8f15bbd41006030fb67ab379db16462b7",
+    "receipt_sha256": "d10880f96cb989813f6d3cc158318ca910fc1d45fd7f817e468759088f09e22a"
+  }
+}

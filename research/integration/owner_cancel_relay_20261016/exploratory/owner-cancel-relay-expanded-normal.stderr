@@ -1,0 +1,38 @@
+test_actual_executor_receives_release_before_worker_resume (__main__.CancelRelayTests.test_actual_executor_receives_release_before_worker_resume) ... ok
+test_blocked_release_first_control_result_never_upgrades (__main__.CancelRelayTests.test_blocked_release_first_control_result_never_upgrades) ... ok
+test_cancel_before_down_cannot_be_undone_by_later_request (__main__.CancelRelayTests.test_cancel_before_down_cannot_be_undone_by_later_request) ... ok
+test_cause_validation_rejects_unbound_or_false_release (__main__.CancelRelayTests.test_cause_validation_rejects_unbound_or_false_release) ... ok
+test_control_is_serviced_while_ordinary_rpc_inflight (__main__.CancelRelayTests.test_control_is_serviced_while_ordinary_rpc_inflight) ... ok
+test_control_loss_cancels_known_lease_and_retires_admission (__main__.CancelRelayTests.test_control_loss_cancels_known_lease_and_retires_admission) ... Process owned-input-owner-439b615e:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 127, in _child_entry
+    if service_error is not None:raise RuntimeError(service_error)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: EOFError: RPC peer closed
+ok
+test_pending_cancel_is_sticky_and_changed_source_rejected (__main__.CancelRelayTests.test_pending_cancel_is_sticky_and_changed_source_rejected) ... ok
+test_relay_module_available (__main__.CancelRelayTests.test_relay_module_available) ... ok
+test_wrong_generation_retires_service_control_authority (__main__.CancelRelayTests.test_wrong_generation_retires_service_control_authority) ... Process owned-input-owner-84aa6361:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 127, in _child_entry
+    if service_error is not None:raise RuntimeError(service_error)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ValueError: cancellation identity/schema invalid
+ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 6.890s
+
+OK

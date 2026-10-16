@@ -490,11 +490,7 @@ class PendingObservationDrainTests(unittest.TestCase):
             def execute(self, *args):
                 self.execute_calls += 1
 
-        executor = ExecutorV12.__new__(ExecutorV12)
-        executor.lock = threading.RLock()
-        executor.closed = False
-        executor.active = None
-        executor.backend = Backend()
+        executor = ExecutorV12(Backend(), lambda row: None)
         with self.assertRaisesRegex(
                 ValueError, "latest observation sequence required before input"):
             executor.submit("stale-plan", [{"op": "observe"}], 11, 10**30)
@@ -584,16 +580,7 @@ class PendingObservationDrainTests(unittest.TestCase):
             def start(self):
                 started.append(self.args[0])
 
-        executor = ExecutorV12.__new__(ExecutorV12)
-        executor.lock = threading.RLock()
-        executor.closed = False
-        executor.active = None
-        executor.backend = Backend()
-        executor.used_ids = set()
-        executor.admission_callback_ids = set()
-        executor.terminal_publication_errors = {}
-        executor.admission_publication_errors = {}
-        executor.emit = published.append
+        executor = ExecutorV12(Backend(), published.append)
         deadline = time.perf_counter_ns() + 10_000_000_000
         incoming = queue.Queue()
         latest = {"sequence": 11}

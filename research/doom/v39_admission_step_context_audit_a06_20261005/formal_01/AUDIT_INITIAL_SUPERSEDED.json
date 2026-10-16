@@ -1,0 +1,81 @@
+{
+  "a05_input_hashes_match": true,
+  "a05_result_sha256": "c4d4f8d537e94256cd1875765a54206580371802f4b098de55396b2e4ae8070a",
+  "candidate_invocations": 0,
+  "full_output_matches_independent_reconstruction": true,
+  "mutation_control_count": 15,
+  "mutation_controls": {
+    "admission_count": {
+      "rejected": true
+    },
+    "aggregate_receipt_count": {
+      "rejected": true
+    },
+    "orphan_interpretation": {
+      "rejected": true
+    },
+    "orphan_terminal_status": {
+      "rejected": true
+    },
+    "receipt_ack_time": {
+      "rejected": true
+    },
+    "receipt_cardinality": {
+      "rejected": true
+    },
+    "receipt_key_membership": {
+      "rejected": true
+    },
+    "receipt_program_id": {
+      "rejected": true
+    },
+    "row_ack_gap": {
+      "rejected": true
+    },
+    "row_admitted_time": {
+      "rejected": true
+    },
+    "row_association": {
+      "rejected": true
+    },
+    "row_input_ack_time": {
+      "rejected": true
+    },
+    "step_operation": {
+      "rejected": true
+    },
+    "summary_max": {
+      "rejected": true
+    },
+    "summary_median": {
+      "rejected": true
+    }
+  },
+  "mutation_rejections": 15,
+  "reconstructed_admission_rows": 39,
+  "reconstructed_summary": {
+    "counts": {
+      "admissions": 39,
+      "aggregate_receipts": 28,
+      "ambiguous_same_step_receipt": 0,
+      "no_same_step_receipt": 1,
+      "unique_same_step_receipt": 38
+    },
+    "same_step_ack_gap_ms": {
+      "max": 38.471932,
+      "median": 12.770812,
+      "min": 8.853053,
+      "n": 38
+    },
+    "status": "PASS_STEP_CONTEXT_ASSOCIATION_SCOPED"
+  },
+  "schema": "map01-v39-admission-step-context-strict-audit-a06-v1",
+  "scope": "saved raw-result integrity only; not per-key up/release or live-control evidence",
+  "source": {
+    "commit": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+    "path": "research/doom/results/v39-control-telemetry-gap-audit-20261004/events.jsonl",
+    "raw_rows": 634,
+    "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+  },
+  "status": "PASS_SAVED_RESULT_AUDIT_SCOPED"
+}

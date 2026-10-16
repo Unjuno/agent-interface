@@ -219,3 +219,8 @@ research/analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_831
 # Preserve frozen Issue #8313 protocol, code and exact fixture bytes.
 research/analysis/proactive_interference_5947_t0_a01_20261007/** -text -whitespace -filter -ident
 research/analysis/proactive_interference_5947_t0_a01_20261007/raw/*.bin -diff
+
+# Preserve exact source, receipt, and embedded evidence bytes for Issue #57 archives.
+research/integration/primary_control_guard_57_20261004_01a0ff32/** -text -whitespace -filter -ident
+research/integration/primary_request_snapshot_57_20261003_01a0ff32/** -text -whitespace -filter -ident
+research/integration/primary_typed_release_57_20261003_01a0ff32/** -text -whitespace -filter -ident

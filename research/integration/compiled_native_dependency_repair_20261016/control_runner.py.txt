@@ -1,0 +1,39 @@
+import importlib,json,os,subprocess,sys,types,unittest
+from datetime import datetime,timezone
+from pathlib import Path
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT=Path(__file__).parent/'compiled-native-dependency-final-r2-20261016'
+BASE='f861e2cbf5a4e72281a564ea63c07e1d329296cb'
+NAME='runtime.guarded_x11_v1.compiled'
+PATH='runtime/guarded_x11_v1/compiled.py'
+EXPR='"dependencies": ["submit_target_present", "field_value_matches_task"]'
+if len(sys.argv)>1:
+    control=sys.argv[1];original=importlib.import_module(NAME)
+    if control=='baseline':source=subprocess.check_output(['git','show',BASE+':'+PATH],cwd=ROOT).decode()
+    elif control=='drop_submit_gate':
+        source=Path(original.__file__).read_text();assert source.count(EXPR)==1
+        source=source.replace(EXPR,'"dependencies": ["submit_target_present"]')
+    else:raise ValueError(control)
+    module=types.ModuleType(NAME);module.__file__=original.__file__;module.__package__='runtime.guarded_x11_v1'
+    sys.modules[NAME]=module;setattr(importlib.import_module('runtime.guarded_x11_v1'),'compiled',module)
+    exec(compile(source,module.__file__,'exec'),module.__dict__)
+    tests=importlib.import_module('runtime.guarded_x11_v1.test_compiled_native_dependencies')
+    result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(tests))
+    mode='optimized' if sys.flags.optimize else 'normal'
+    (OUT/f'{control}-{mode}-records.json').write_text(json.dumps(tests.ROWS,indent=2)+'\n')
+    (OUT/f'{control}-{mode}-result.json').write_text(json.dumps(dict(control=control,methods=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),pid=os.getpid(),optimize=sys.flags.optimize),indent=2)+'\n')
+    sys.exit(not result.wasSuccessful())
+env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=os.pathsep.join([str(ROOT),str(ROOT/'research/live_control')]))
+env.pop('DISPLAY',None);env.pop('COMPILED_CALLER_MODULE',None)
+receipts=[]
+for control,failures in [('baseline',18)]:
+    for mode,flags in [('normal',[]),('optimized',['-O'])]:
+        cmd=[sys.executable,*flags,str(Path(__file__)),control];start=datetime.now(timezone.utc).isoformat();run=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True)
+        for stream,data in [('stdout',run.stdout),('stderr',run.stderr)]: (OUT/f'{control}-{mode}.{stream}').write_bytes(data)
+        row=json.loads((OUT/f'{control}-{mode}-result.json').read_text())
+        if (row['methods'],row['failures'],row['errors'],row['skipped'],run.returncode)!=(9,failures,0,0,1):raise ValueError(row)
+        receipts.append(dict(control=control,mode=mode,command=cmd,started_utc=start,ended_utc=datetime.now(timezone.utc).isoformat(),returncode=run.returncode,result=row))
+(OUT/'CONTROL_PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2)+'\n')
+print(json.dumps([r['result'] for r in receipts],indent=2))
+
+

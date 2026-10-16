@@ -1,0 +1,147 @@
+{
+  "admission": {
+    "admitted_ns": 97552905319,
+    "event": "input_admission",
+    "input_ack_ns": 97553059042,
+    "intent_token": "v39-owner-close-a09",
+    "key": "a",
+    "keycode": 38,
+    "valid_until_ns": 117552764540
+  },
+  "cleanup": {
+    "owner_closed": true,
+    "owner_stopped": true,
+    "owner_thread_alive": false,
+    "terminal_release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "v39-owner-close-a09",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 97553453359,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 97553336078,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 97553399649
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            97553336078,
+            97553453359
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 117552764540,
+      "verified": true,
+      "verified_ns": 97553747041
+    },
+    "xvfb_exit": 0
+  },
+  "client_events": [
+    {
+      "keycode": 38,
+      "observed_ns": 97553236295,
+      "type": 2,
+      "window": 2097152
+    },
+    {
+      "keycode": 38,
+      "observed_ns": 97553939810,
+      "type": 3,
+      "window": 2097152
+    }
+  ],
+  "client_window": 2097152,
+  "display": ":131",
+  "errors": [],
+  "keycode": 38,
+  "observer_key_up": true,
+  "owner_closed": true,
+  "owner_queries": [
+    {
+      "returned_ns": 97553332992,
+      "role": "observer_or_other",
+      "started_ns": 97553268490
+    },
+    {
+      "returned_ns": 97553451649,
+      "role": "observer_or_other",
+      "started_ns": 97553400347
+    },
+    {
+      "returned_ns": 97553744389,
+      "role": "observer_or_other",
+      "started_ns": 97553688326
+    },
+    {
+      "returned_ns": 97554043620,
+      "role": "observer_or_other",
+      "started_ns": 97553951993
+    }
+  ],
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "v39-owner-close-a09",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 97553453359,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 97553336078,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 97553399649
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            97553336078,
+            97553453359
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 117552764540,
+      "verified": true,
+      "verified_ns": 97553747041
+    }
+  ],
+  "schema": "v39-owner-close-xvfb-raw-a09-v1",
+  "scope": "one V12 owner key held then closed on isolated Xvfb; no game/model/physical input",
+  "status": "CANDIDATE_COMPLETE",
+  "xvfb_pid": 7
+}

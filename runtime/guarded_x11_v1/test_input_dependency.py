@@ -9,6 +9,23 @@ from runtime.backends.x11_v1.backend import X11Backend, X11BackendError, X11Exec
 TAIL = [{'op':'key_chord','keys':['CTRL','s']}]
 
 class InputDependencyTests(unittest.TestCase):
+    def test_explicit_pointer_guard_freezes_interaction_even_with_empty_tail(self):
+        for interaction in ('click','move'):
+            with self.subTest(interaction=interaction),self.b.input_guard(
+                    'save',[0,0],tail=[],verify=lambda *a:True,interaction=interaction):
+                self.assertEqual(self.b._input_guard['interaction'],interaction)
+                for other in ({'click','move','keyboard'}-{interaction}):
+                    with self.assertRaises(ValueError):
+                        self.b._run_guarded('save',[0,0],tail=[],interaction=other)
+        self.assertEqual(self.b.sequence,0)
+
+    def test_unknown_interaction_and_empty_default_keyboard_guard_are_rejected(self):
+        for interaction in ('touch','',None):
+            with self.subTest(interaction=interaction),self.assertRaises(ValueError):
+                with self.b.input_guard('save',[0,0],tail=[],verify=lambda *a:True,interaction=interaction):pass
+        with self.assertRaises(ValueError):
+            with self.b.input_guard('save',[0,0],tail=[],verify=lambda *a:True):pass
+
     def setUp(self):
         self.b = object.__new__(NativeHandleBridge)
         b=self.b;b.active=None;b.review_required=False;b.session=SimpleNamespace(recovery_required=False)
