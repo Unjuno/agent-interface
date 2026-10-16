@@ -1,0 +1,21 @@
+Current main: cef53dbe8d131a8e116c92b5c79257f1db5f77b3
+Production source baseline: 74fc81e0a447ad05e4a2220b16d7949979635fb9 (the only later change is test-only)
+Test module blob: a5ccb2e44baec649caa4314612dc8a1696985abf
+Runtime: /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 (CPython 3.12.14)
+
+Run this snippet normally and once with `-O` after the interpreter command:
+
+import importlib.util, subprocess, sys, unittest
+from pathlib import Path
+root=Path('/private/tmp/agent-interface-main-74fc')
+p='research/live_control/test_input_owner_v12_explicit_up_cancel.py'
+sys.path.insert(0,str(root/'research/live_control'))
+source=subprocess.check_output(['git','show','origin/main:'+p], text=True)
+spec=importlib.util.spec_from_loader('test_input_owner_v12_explicit_up_cancel_current_main',loader=None)
+module=importlib.util.module_from_spec(spec); module.__file__=str(root/p)
+exec(compile(source,module.__file__,'exec'),module.__dict__)
+suite=unittest.defaultTestLoader.loadTestsFromModule(module)
+result=unittest.TextTestRunner(verbosity=2).run(suite)
+raise SystemExit(not result.wasSuccessful())
+
+Results: Ran 7 tests, OK (normal); Ran 7 tests, OK (-O).
