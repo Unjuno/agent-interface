@@ -381,6 +381,34 @@ separate hypotheses and must keep separate evidence and decisions.
   not establish general reproducibility or cross-application validity. No
   external team, eligible claim, or replication result is recorded here.
 
+## 15. Neutral context-length effects on fixed-model GUI decisions — #8856
+
+- **Status:** Open, unverified transfer/evaluation proposal; no model or GUI
+  result is recorded.
+- **Idea:** Isolate length-only sensitivity by holding the exact decision
+  evidence, its order and position, task, output schema, model/settings, and
+  available actions fixed, then adding only preregistered neutral padding.
+  A separately frozen equal-token semantic-distraction control must not be
+  pooled with the length-only contrast.
+- **Proposed test:** Use paired short and padded requests over exact-oracle
+  GUI-like cases with a finite answer menu including `ABSTAIN`/`UNKNOWN`.
+  Pin model/version/settings and serialization; verify actual provider token
+  counts, position, and truncation; counterbalance order; retain all attempts;
+  independently score wrong target/route proposals, unsupported claims,
+  abstention, and schema validity. Downstream guards remain identical, and a
+  blocked changed proposal is not counted as unchanged model behavior.
+- **Relation:** #5329 tests whether compressed evidence preserves sufficient
+  facts; #6241/#5947 test semantic contamination from other tasks or
+  superseded values; #57 remains the integrated token/latency/correctness
+  gate. #8856 asks whether neutral length alone changes model proposals when
+  the evidence is held fixed.
+- **Boundary:** A method pass validates only the manipulation and audit on
+  the frozen cases. Behavioral support requires a predeclared paired effect
+  threshold; otherwise report no effect at tested lengths or uncertainty.
+  No consequence, visual-token effect, task completion, runtime adoption, or
+  end-to-end efficiency claim follows without a separate #57-compatible
+  evaluation.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
