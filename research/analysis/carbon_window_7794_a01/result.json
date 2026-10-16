@@ -1,0 +1,189 @@
+{
+  "cases": [
+    {
+      "case": "declining",
+      "feasible_schedule_count": 12,
+      "heuristics": {
+        "asap": {
+          "cost": 29,
+          "starts": [
+            0,
+            2,
+            3
+          ]
+        },
+        "carbon_greedy": {
+          "cost": null,
+          "starts": null
+        },
+        "latest": {
+          "cost": null,
+          "starts": null
+        }
+      },
+      "oracle_min_cost": 17,
+      "oracle_starts": [
+        1,
+        4,
+        3
+      ]
+    },
+    {
+      "case": "flat",
+      "feasible_schedule_count": 12,
+      "heuristics": {
+        "asap": {
+          "cost": 20,
+          "starts": [
+            0,
+            2,
+            3
+          ]
+        },
+        "carbon_greedy": {
+          "cost": 20,
+          "starts": [
+            0,
+            2,
+            3
+          ]
+        },
+        "latest": {
+          "cost": null,
+          "starts": null
+        }
+      },
+      "oracle_min_cost": 20,
+      "oracle_starts": [
+        0,
+        2,
+        3
+      ]
+    },
+    {
+      "case": "inverted",
+      "feasible_schedule_count": 12,
+      "heuristics": {
+        "asap": {
+          "cost": 17,
+          "starts": [
+            0,
+            2,
+            3
+          ]
+        },
+        "carbon_greedy": {
+          "cost": 17,
+          "starts": [
+            0,
+            2,
+            3
+          ]
+        },
+        "latest": {
+          "cost": null,
+          "starts": null
+        }
+      },
+      "oracle_min_cost": 17,
+      "oracle_starts": [
+        0,
+        2,
+        3
+      ]
+    },
+    {
+      "case": "tied",
+      "feasible_schedule_count": 12,
+      "heuristics": {
+        "asap": {
+          "cost": 8,
+          "starts": [
+            0,
+            2,
+            3
+          ]
+        },
+        "carbon_greedy": {
+          "cost": 7,
+          "starts": [
+            0,
+            3,
+            2
+          ]
+        },
+        "latest": {
+          "cost": null,
+          "starts": null
+        }
+      },
+      "oracle_min_cost": 7,
+      "oracle_starts": [
+        0,
+        3,
+        2
+      ]
+    }
+  ],
+  "controls": {
+    "declining_prefers_late": true,
+    "flat_cost_computed": true,
+    "infeasible_rejected": true,
+    "inverted_prefers_early": true
+  },
+  "heuristic_counterexamples": [
+    {
+      "case": "declining",
+      "cost": 29,
+      "method": "asap",
+      "starts": [
+        0,
+        2,
+        3
+      ]
+    },
+    {
+      "case": "declining",
+      "cost": null,
+      "method": "latest",
+      "starts": null
+    },
+    {
+      "case": "declining",
+      "cost": null,
+      "method": "carbon_greedy",
+      "starts": null
+    },
+    {
+      "case": "flat",
+      "cost": null,
+      "method": "latest",
+      "starts": null
+    },
+    {
+      "case": "inverted",
+      "cost": null,
+      "method": "latest",
+      "starts": null
+    },
+    {
+      "case": "tied",
+      "cost": 8,
+      "method": "asap",
+      "starts": [
+        0,
+        2,
+        3
+      ]
+    },
+    {
+      "case": "tied",
+      "cost": null,
+      "method": "latest",
+      "starts": null
+    }
+  ],
+  "pass": true,
+  "scope": "finite deterministic model; not operational emissions evidence",
+  "source_sha256": "c4c39ac012b71d599d4f0101359a8ef720109c31bf18e1279a85d2c9f2096fb1"
+}
