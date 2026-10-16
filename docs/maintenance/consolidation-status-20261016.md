@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r59: preserve the distinct Issue #8553 A02 freeze (2026-10-17)
+
+The exact #8553 A02 branch contains the freeze held before formal execution when main advanced (`HOLD_MAIN_ADVANCED_PRE_RUN`, formal counts 0/0/0). The current-main A03 audit reported in open PR #8824 is a separate allocation. The branch ledger now records A02 as `RETAIN_ISSUE_CITED_SOURCE`; no A02 retry or result pooling occurred.
+
 ### r58: classify Issue #8581's frozen branch as cited source (2026-10-17)
 
 Issue #8581 remains open and its preregistration comment identifies `research/8581-feedback-artifact-bypass-t0-20261009` and freeze `5c80abe8dc51e7a8ab5e42384fdce0066aca12a0`; formal candidate/auditor counts are 0/0. The branch inventory now marks it `RETAIN_ISSUE_CITED_SOURCE`. This preserves the frozen source while successor evidence and custody are reconciled; nothing was rerun.
