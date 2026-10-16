@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r38：MAP01 import-gate系4 Issueの結果境界を索引化（2026-10-17）
+
+#1963/#1967/#2005/#2008のIssue本文、PR状態、workflowコメントを照合した。#1970のsource-only import reproductionは未マージ、#1993はdependency repairの統合後もimport/argv STOPが続き、#2181のbounded gateはlauncher side effectを検出した。後続#2049はlive_control module originとfrozen preflightまでPASSしたが、construction/formalは0。Physical occupancyのPASSは別identityの#1928とfresh replication #2105だけに帰属させ、import-gate修理へ転記していない。4件の記録を`docs/IDEAS_AND_OUTCOMES.md`へ追加し、いずれのallocationも再実行していない。
+
 ### r37：#1946 attention package lineageを再照合（2026-10-17）
 
 #1946と未マージ閉鎖PR #1947/#1951、マージ済みPR #1981/#1983、後続Issue #1968/#2031の状態・差分・結果記録を確認した。#1951の元PASS表現にはserialized-sizeとduplicate-labelのレビュー欠陥があり、別表現の並行結果は`HOLD_NO_SIZE_GAIN`。修正版#1968は、PR #1981の3-case formal/audit scoped PASSと、PR #1983の24-row local-only `HOLD_NO_FORMAL_CONTAINER`を別結果として保存している。#1946はOPENのまま、モデル有用性は#2031が継続所有する。`docs/IDEAS_AND_OUTCOMES.md`に証拠系譜と限界を追記。Formal allocationは再実行していない。
