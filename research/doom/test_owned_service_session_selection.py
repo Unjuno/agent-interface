@@ -55,6 +55,7 @@ class OwnedSessionTests(unittest.TestCase):
 
     def test_v15_selects_wrapper_strips_flag_and_pins_sources(self):
         import session_map01_v15 as session
+        selected_backend=helper().Backend
         with tempfile.TemporaryDirectory() as temp:
             (Path(temp)/'sources.json').write_text('{}')
             base=ModuleType('session_map01_v12');base.vd=NS(DoomGame=object,GameVariable=object)
@@ -63,7 +64,7 @@ class OwnedSessionTests(unittest.TestCase):
             argv=['session','--out',temp,'--target-process-identity','--owned-input-service']
             with patch.dict(sys.modules,{'session_map01_v12':base}),patch.object(session,'MainThreadScorerStdin',return_value=Mock()),patch.object(
                     session,'ScorerFileSink',return_value=Mock()),patch.object(sys,'argv',argv):session.main()
-            self.assertIs(seen[0][0],helper().Backend)
+            self.assertIs(seen[0][0],selected_backend)
             self.assertNotIn('--owned-input-service',seen[0][1]);self.assertNotIn('--target-process-identity',seen[0][1])
             manifest=json.loads((Path(temp)/'target-process-identity-sources.json').read_text())
             self.assertTrue(manifest['owned_input_service'])
