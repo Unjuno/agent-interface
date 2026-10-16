@@ -4,6 +4,37 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+## 後続の現在地（r2）
+
+基準main `8a70a77fc6542d49b03de2f1403b3fd8bcd00397`、取得時刻は
+[inventory r2](inventory-20261016-r2.json)。[Issue 1,678件](open-issues-20261016-r2.csv)、
+[open PR 518件](open-prs-20261016-r2.csv)を取得した。明示上限未到達・番号重複なし。
+非原子的な案内用スナップショットであり、全件の内容・担当・採否を確認した件数ではない。
+以前の524件から除かれた6件を[APIで照合](pr-convergence-20261016-r2.csv)した。
+6件とも元PR自体はmergedではなく、次の保全・採用先へ収束した。
+APIのmerge_commit欄が非nullであってもmerged=falseを覆さない。
+
+| 元PR | main上の実行・保全先と残る問い |
+|---|---|
+| #7264 / #8370 | #8986、[finite role convergence](../../research/integration/finite_role_recovery_convergence_20261016/README.md)。同一prototypeと独自README文脈を保持。実callerの文書効果adapterは未達。 |
+| #7954 | #8985、[callback convergence](../../research/integration/compiled_callback_convergence_20261016/README.md)。post-input verifier/journal例外のprefix・解放・原因保全を修理。耐久的な公開保証とは別。 |
+| #8786 | #8987、[presentation convergence](../../research/integration/primary_presentation_convergence_20261016/README.md)。効果後のreply失敗で再送を拒否。実アプリの成功判定は未達。 |
+| #8792 | #8988、[saved recovery correction](../../research/integration/v39_hard_recovery_convergence_20261016/README.md)。初期normal/-O記録の回復source不足とv1 false passを保持・訂正。 |
+| #8812 | #8967、[saved regression convergence](../../research/doom/v39_saved_regression_convergence_20261016/README.md)。初回FAILと後続CPU結果を原本のまま保全。現行ライブ検証ではない。 |
+
+続く#8989/#8990/#8991/#8992は現在V39 helper→Executor pipe→選択backend/ownerへ
+構成確認を接続した。最新の[結合記録](../../research/integration/v39_selected_backend_recovery_20261016/README.md)は
+15メソッドを通常/-Oで確認したが、Fake X・注入HUD・制御されたterminal待機に限定される。
+次は実session/controllerの死亡時に入力責任が残る境界と、独立したtask effectの検証である。
+#8876の保存済みcrash recovery候補を照合する際、古いheadと新mainの全体差分をそのまま採用しない。
+
+[worker work map](../WORKER_WORK_MAP.md)は7つの独立した選択範囲と次の有限な成果へ短縮した。
+従来本文は[Git原文のまま保存](../WORKER_WORK_MAP_HISTORY_20261016.md)。
+ROADMAPの古いexperiment-first優先指定も現行ゴールの整理・統合優先へ揃えた。
+既存の研究Issueの問いは残し、今回新たなIssue closureや実機操作は行っていない。
+
+以下の棚卸し・終了先は先行する時点の履歴である。上のr2を最新の一覧入口として使う。
+
 ## 今回確認・訂正したもの
 
 - [全open Issue](open-issues-20261016.csv)：1,678件。番号の重複なし。
