@@ -1,0 +1,26 @@
+{
+  "base_commit": "40f15b8b04fbdc33327fd18d52250930fb03aee1",
+  "checks": {
+    "owner_brackets_keyrelease_and_sync": true,
+    "progress_events_are_independent_and_typed": true,
+    "receipt_explicitly_limits_sync_claim": true,
+    "release_batch_samples_after_last_up": true,
+    "release_caller_uses_perf_counter_ns": true,
+    "release_rows_published_after_batch_sample": true,
+    "scorer_clock_is_perf_counter_ns": true,
+    "scorer_state_read_window_is_recorded": true,
+    "v15_sampling_path_uses_35_hz_and_same_clock": true
+  },
+  "scope": "source semantics only; no live runtime, X server, game, model, physical state, or task-effect run",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9",
+    "research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "research/doom/main_thread_scorer_polling_v1.py": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/live_control/input_owner_v12.py": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+    "research/live_control/input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "research/live_control/input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3"
+  },
+  "status": "PASS_SCOPED_SOURCE_CLOCK_COMPATIBILITY"
+}
