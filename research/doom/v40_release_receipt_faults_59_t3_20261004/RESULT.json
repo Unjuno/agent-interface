@@ -1,0 +1,35 @@
+{
+  "schema": "v40-release-receipt-fault-injection-result-v1",
+  "disposition": "PASS_CONSTRUCTION_FAULT_INJECTION",
+  "base_commit": "1c8c89f3c2b419569c536d5a1f007896a07f640b",
+  "candidate": "research/doom/map01_overlap_controller_v40.py",
+  "candidate_sha256": "0e1183a26cb0f816dcde97bb80f63f436ae306fd356a2ccef160e9ba5fe2add4",
+  "test_source": "research/doom/test_map01_overlap_controller_v40_unknown_source.py",
+  "test_source_sha256": "b6fb60b74c3275b92a66f9ccc59e02a1f553875f3c02062c2dc98fb0b0b56373",
+  "experiment_source_sha256": "482bc1e97068bf7c4f6464bbee157888f224f884b4080e4b7146cf9770f65a9d",
+  "audit_source_sha256": "fd26618758c8c86deea3601470a48b7547c5860cdf23d1e0fd9b6fda184303ef",
+  "environment": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "commands": [
+    {
+      "command": "python research/doom/v40_release_receipt_faults_59_t3_20261004/experiment.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python research/doom/v40_release_receipt_faults_59_t3_20261004/audit.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m py_compile <experiment.py> <audit.py>",
+      "exit_code": 0
+    }
+  ],
+  "case_counts": {
+    "total": 12,
+    "valid_controls_accepted": 2,
+    "adverse_receipts_rejected": 10
+  },
+  "scope": "host-side cancellation helper construction only; no child runtime, game, parser, model, GUI, OS input, formal allocation, or task-effect evidence"
+}
