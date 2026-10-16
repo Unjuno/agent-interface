@@ -1,0 +1,176 @@
+{
+  "cases": [
+    {
+      "base_backend_touched_after_batch": [],
+      "container_resource_observation": {
+        "/sys/fs/cgroup/cgroup.controllers": "cpuset cpu io memory hugetlb pids rdma",
+        "/sys/fs/cgroup/cpu.max": "25000 100000",
+        "/sys/fs/cgroup/memory.max": "536870912",
+        "/sys/fs/cgroup/memory.swap.max": "max"
+      },
+      "events": [
+        {
+          "accepted_ns": 5494944236,
+          "event": "accepted",
+          "id": "normal-case",
+          "intent_token": "824d023422574139a84d25c88cb0ace3",
+          "program_sha256": "59066659ff0a5d87f839b1cd8da4d390c9372f3780281b0af09f535fe4e16a0d",
+          "steps": 1,
+          "valid_until_ns": 15494805535
+        },
+        {
+          "decision_reason": null,
+          "error": "KeyError('op')",
+          "event": "terminal",
+          "id": "normal-case",
+          "interruption": null,
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "intent_token": "824d023422574139a84d25c88cb0ace3",
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_errors": [],
+            "key_state_source": "x11_query_keymap",
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "release",
+            "release_call_returned_ns": 5495554708,
+            "release_call_started_ns": 5495240551,
+            "valid_until_ns": null,
+            "verified": true,
+            "verified_ns": 5495396101
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "failed",
+          "steps_completed": 0,
+          "terminal_ns": 5495586794
+        }
+      ],
+      "executor_terminal": {
+        "decision_reason": null,
+        "error": "KeyError('op')",
+        "event": "terminal",
+        "id": "normal-case",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "824d023422574139a84d25c88cb0ace3",
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "release",
+          "release_call_returned_ns": 5495554708,
+          "release_call_started_ns": 5495240551,
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 5495396101
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "failed",
+        "steps_completed": 0,
+        "terminal_ns": 5495586794
+      },
+      "injected_keyrelease_loss": false,
+      "owner_close_error": null,
+      "owner_close_recovered": true,
+      "release_row": null,
+      "server_keycodes_down_after_executor_release": []
+    },
+    {
+      "base_backend_touched_after_batch": [],
+      "container_resource_observation": {
+        "/sys/fs/cgroup/cgroup.controllers": "cpuset cpu io memory hugetlb pids rdma",
+        "/sys/fs/cgroup/cpu.max": "25000 100000",
+        "/sys/fs/cgroup/memory.max": "536870912",
+        "/sys/fs/cgroup/memory.swap.max": "max"
+      },
+      "events": [
+        {
+          "accepted_ns": 5497456738,
+          "event": "accepted",
+          "id": "lost-up-case",
+          "intent_token": "5f535b9ff3834c55b8cc72202bbd3c69",
+          "program_sha256": "59066659ff0a5d87f839b1cd8da4d390c9372f3780281b0af09f535fe4e16a0d",
+          "steps": 1,
+          "valid_until_ns": 15497352062
+        },
+        {
+          "decision_reason": null,
+          "error": "KeyError('op')",
+          "event": "terminal",
+          "id": "lost-up-case",
+          "interruption": null,
+          "release": {
+            "buttons_down": [],
+            "event": "owner_release",
+            "intent_token": "5f535b9ff3834c55b8cc72202bbd3c69",
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_errors": [],
+            "key_state_source": "x11_query_keymap",
+            "keys_down": [],
+            "keys_unknown": [],
+            "reason": "release",
+            "release_call_returned_ns": 5497984857,
+            "release_call_started_ns": 5497621076,
+            "valid_until_ns": null,
+            "verified": true,
+            "verified_ns": 5497858957
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "failed",
+          "steps_completed": 0,
+          "terminal_ns": 5498008730
+        }
+      ],
+      "executor_terminal": {
+        "decision_reason": null,
+        "error": "KeyError('op')",
+        "event": "terminal",
+        "id": "lost-up-case",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "5f535b9ff3834c55b8cc72202bbd3c69",
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "release",
+          "release_call_returned_ns": 5497984857,
+          "release_call_started_ns": 5497621076,
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 5497858957
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "failed",
+        "steps_completed": 0,
+        "terminal_ns": 5498008730
+      },
+      "injected_keyrelease_loss": true,
+      "owner_close_error": null,
+      "owner_close_recovered": true,
+      "release_row": null,
+      "server_keycodes_down_after_executor_release": []
+    }
+  ],
+  "claims": {
+    "application_effect": false,
+    "doom": false,
+    "gui": false,
+    "model": false,
+    "physical_keyboard": false,
+    "real_x11": false
+  },
+  "schema": "v39-v15-keyup-loss-a06-raw-v1",
+  "source_base": "10be950b8fb6e2799b837b541577fb5f32db858d"
+}
