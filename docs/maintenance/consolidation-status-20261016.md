@@ -60,7 +60,12 @@ and is retained for evidence preservation/integration review. After all 31 ref d
 remote count is 588 and every deleted ref was verified absent. PR-linkage classification of the
 remaining refs is 516 open-PR heads, 10 base dependencies, 29 closed-PR heads, and 33 with no PR
 head/base reference in the complete 6,100-PR snapshot. The closed-head and unreferenced groups
-still require content/owner review; they are not assumed disposable.
+still require content/owner review; they are not assumed disposable. The [unreferenced-branch
+comparison](unlinked-branch-review-20261016.csv) records exact tips, ancestry, current-main blob
+matches, and local-checkout coverage. All 33 are unprotected but diverged, with one or more commits
+ahead of main; 32 contain paths absent or different in main. The remaining blob-identical branch
+is associated by name with open Issue #8654. No matching checkout was found in the 38 local Git
+checkouts scanned. Issue/owner association remains incomplete, so these 33 refs are preserved.
 
 ### r6：モデル連携・比較評価アイデアを一族ごとに整理
 
