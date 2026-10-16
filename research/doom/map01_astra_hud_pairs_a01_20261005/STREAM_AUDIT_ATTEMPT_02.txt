@@ -1,0 +1,2 @@
+Disposition: FAIL_AUDIT_IMPLEMENTATION
+The second independent-audit invocation also returned one `wait-result-mismatch`. The attempted edit intended to add the omitted `first_sequence` field but did not match the file's actual line endings, so the auditor source remained unchanged. This is preserved as a separate failed audit attempt; stream source and STREAM_RESULT.json were unchanged.
