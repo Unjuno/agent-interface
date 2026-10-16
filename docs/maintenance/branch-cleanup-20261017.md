@@ -40,6 +40,27 @@ closed PR, merged successor, current-main behavior and retained provenance.
 The closed PR head retains the exact source commit for review and recovery; no
 tag push or source rerun was needed.
 
+## Superseded compiled callback custody proposal
+
+Removed the unprotected remote branch
+`fix/compiled-callback-custody-01a0ff35-20261003` after confirming that its
+closed proposal is superseded by integrated current-main work and its exact
+source remains retained by the closed PR head.
+
+| Check | Evidence |
+|---|---|
+| Exact source tip before deletion | `b332fddcd1372e0cbba07c50691c215b20bd5831` |
+| Branch/PR state | Branch was unprotected; [PR #6934](https://github.com/Unjuno/agent-interface/pull/6934) is closed, unmerged, and its head was the exact tip. No open PR used this branch as head or base. |
+| Current disposition | The final PR comment says the proposal is superseded by integrated current-main work, with remaining safety residue tracked in #8965. It states all 184 original evidence paths are exact Git-blob matches in main and warns that merging the old whole tree would regress newer behavior. |
+| Unique old tests | The old tip also contains `runtime/backends/win32_v1/test_release_custody.py` and `test_session_custody.py`, whose paths are absent from current main. Current main has the consolidated `test_release_ledger.py`, `test_explicit_up_ledger.py`, `test_unknown_release_custody.py`, and `test_integration.py` suites. The exact old tests remain fetchable from `refs/pull/6934/head`; this cleanup does not claim a line-for-line test port. |
+| Worktree / local checkout | No matching worktree registration or checkout path was found in the inspected primary clone, `/private/tmp`, or the Codex workspace directories. |
+| Remote retention after deletion | `git ls-remote origin refs/pull/6934/head` returned the exact tip SHA after the branch ref disappeared. |
+| Final verification | Remote `refs/heads/fix/compiled-callback-custody-01a0ff35-20261003` absent; closed PR head retains the original SHA. No source run or test was performed for this ref cleanup. |
+
+The old whole branch is not a current-main candidate. Its PR head preserves
+the exact commit and historical tests while the redundant remote branch name
+is removed.
+
 ## Reviewed and retained: #8243 verifier freeze
 
 The branch `fix/8243-verifier-r2p6-20261006` remains because it is an Issue/PR-
