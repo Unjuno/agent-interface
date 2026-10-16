@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "candidate_time_bounds_match_raw": true,
+    "cover_health_decreases_55_to_48": true,
+    "eventual_verified_release_after_cancel": true,
+    "hold_events_match_command_steps": true,
+    "no_early_cancel_or_revocation_record": true,
+    "prior_health_is_61": true,
+    "single_accepted_static_cover": true,
+    "started_steps_match_recorded_candidate": true,
+    "step_completion_sequence_recorded": true
+  },
+  "derived": {
+    "cancel_ns": 55550197971990,
+    "cover_first_health": 55,
+    "cover_last_health": 48,
+    "cover_min_health": 48,
+    "first_drop_sequence": 167,
+    "last_cover_sequence": 218,
+    "preceding_health": 61,
+    "terminal_status": "cancelled"
+  },
+  "pass": true,
+  "schema": "v39-static-cover-health-posthoc-audit-a01-v1"
+}
