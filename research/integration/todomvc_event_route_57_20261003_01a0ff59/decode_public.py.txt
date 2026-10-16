@@ -1,0 +1,18 @@
+import base64,gzip,hashlib,json,pathlib,re
+root=pathlib.Path(__file__).resolve().parent
+comments=json.loads((root/'ACTUAL_PUBLIC_PARTS.json').read_text(encoding='utf-8'))
+parts=[]
+for n,c in enumerate(comments,1):
+    m=re.search(r'PART '+str(n)+r'/4 BEGIN\n([A-Za-z0-9+/=\n]+)\nPART '+str(n)+r'/4 END$',c['body'])
+    if not m: raise ValueError(('part delimiter',n))
+    parts.append(m.group(1).replace('\n',''))
+compressed=base64.b64decode(''.join(parts),validate=True)
+assert len(compressed)==127352
+assert hashlib.sha256(compressed).hexdigest()=='2861b8f2b3d2d4c240c24c7547b1b39980b58f7104420d28393007e131b111c8'
+decoded=gzip.decompress(compressed)
+assert len(decoded)==638323
+assert hashlib.sha256(decoded).hexdigest()=='5b83583a2664c91119b8044997833f797ea08474f16436650cec0b830221f5c0'
+packet=json.loads(decoded)
+with (root/'decoded-packet.json').open('xb') as f:f.write(decoded)
+with (root/'decoded-packet.json.gz').open('xb') as f:f.write(compressed)
+print(json.dumps({'keys':list(packet),'files_type':type(packet.get('files')).__name__,'first':str(packet.get('files',[None])[0])[:1000],'files':len(packet.get('files',[]))},ensure_ascii=True))

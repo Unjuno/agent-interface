@@ -1,0 +1,88 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const vm = require('node:vm');
+const root = __dirname;
+const hash = b => crypto.createHash('sha256').update(b).digest('hex');
+const plan = JSON.parse(fs.readFileSync(path.join(root, 'PLAN.json'), 'utf8'));
+const packet = JSON.parse(fs.readFileSync(path.join(root, 'decoded-packet.json'), 'utf8'));
+const raw = {schema:'unchanged-stock-source-event-route', start_utc:new Date().toISOString(),
+  plan_sha256:hash(fs.readFileSync(path.join(root,'PLAN.json'))),
+  node:process.version, pid:process.pid, sources:[], rows:[], status:'RUNNING'};
+const sources = plan.sources.map(pin => {
+  const x = packet.members.find(x => x.path === pin.path);
+  const b = Buffer.from(x.text, 'utf8');
+  if (b.length !== pin.bytes || hash(b) !== pin.sha256) throw Error('SOURCE_PIN');
+  raw.sources.push({...pin});
+  return x;
+});
+function save() {
+  fs.writeFileSync(path.join(root,'RAW_SOURCE_ROUTE.json'), JSON.stringify(raw,null,2)+'\n');
+}
+try {
+  for (const cell of plan.cells) {
+    const registrations=[], renders=[], trace=[];
+    const elements=new Map();
+    const element = selector => {
+      if (!elements.has(selector)) elements.set(selector, {
+        selector, value:'', listeners:[],
+        addEventListener(type, callback, capture) {
+          const id=registrations.length;
+          registrations.push({id,target:selector,type,capture});
+          this.listeners.push({id,type,callback});
+        }
+      });
+      return elements.get(selector);
+    };
+    const sandbox={document:{querySelector:s=>element(s),querySelectorAll:()=>[]},
+      NodeList:function NodeList(){}};
+    sandbox.window=sandbox;
+    const context=vm.createContext(sandbox);
+    for(const source of sources) vm.runInContext(source.text,context,{filename:source.path,timeout:100});
+    const store=new sandbox.app.Store('source-event-route');
+    const model=new sandbox.app.Model(store);
+    const view=new sandbox.app.View({});
+    const originalRender=view.render;
+    view.render=function(command, parameter) {
+      renders.push({command,parameter:parameter===undefined?null:JSON.parse(JSON.stringify(parameter))});
+      if(command==='clearNewTodo') return originalRender.call(this,command,parameter);
+    };
+    const controller=new sandbox.app.Controller(model,view);
+    controller.setView('#/');
+    const initial_render_count=renders.length;
+    view.$newTodo.value=cell.value;
+    for (const event of cell.events) {
+      const target=event.target==='new' ? view.$newTodo : element('.sibling');
+      const step={event:{...event},input_before:view.$newTodo.value,
+        delivered_handler_ids:[],input_after:null};
+      for(const listener of target.listeners.filter(x=>x.type===event.type)) {
+        step.delivered_handler_ids.push(listener.id);
+        listener.callback.call(target,{type:event.type,target,keyCode:event.keyCode});
+      }
+      step.input_after=view.$newTodo.value;
+      trace.push(step);
+    }
+    let items;
+    store.findAll(x=>{items=JSON.parse(JSON.stringify(x));});
+    let counts;
+    model.getCount(x=>{counts=JSON.parse(JSON.stringify(x));});
+    const row={case:cell.name,value:cell.value,events:cell.events,registrations,
+      initial_render_count,trace,renders,items,counts,input_after:view.$newTodo.value};
+    raw.rows.push(row);
+    const expected=cell.expected_count===0 ? [] : [{title:cell.value.trim(),completed:false,id:1}];
+    if(JSON.stringify(items)!==JSON.stringify(expected) ||
+      row.input_after!==(cell.expected_count===1?'':cell.value)) {
+      raw.status='STOP_FIRST_UNEXPECTED_SOURCE_ROW';save();throw Error(cell.name);
+    }
+    save();
+  }
+  raw.status='SOURCE_EVENT_ROUTE_CONFIRMED';
+} catch(error) {
+  raw.error=String(error);
+  if(raw.status==='RUNNING') raw.status='STOP_SOURCE_CONSTRUCTION';
+  process.exitCode=1;
+} finally {
+  raw.end_utc=new Date().toISOString();save();
+}
+console.log(JSON.stringify({status:raw.status,rows:raw.rows.length,pid:raw.pid}));

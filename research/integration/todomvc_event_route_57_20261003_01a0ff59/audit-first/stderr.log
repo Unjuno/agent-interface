@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "OWN_WORKSPACE\work\todomvc-C04-source-advisory-0820\audit_source_route.py", line 76, in <module>
+    control('Boolean count alias',lambda x:x['rows'][4]['counts'].__setitem__('total',True))
+  File "OWN_WORKSPACE\work\todomvc-C04-source-advisory-0820\audit_source_route.py", line 71, in control
+    if x==original:fail('ineffective control: '+name)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "OWN_WORKSPACE\work\todomvc-C04-source-advisory-0820\audit_source_route.py", line 26, in fail
+    def fail(message): raise ValueError(message)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: ineffective control: Boolean count alias

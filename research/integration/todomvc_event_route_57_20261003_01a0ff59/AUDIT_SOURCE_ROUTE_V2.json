@@ -1,0 +1,119 @@
+{
+  "schema": "independent-saved-source-event-route-reduction",
+  "rows": [
+    {
+      "case": "input_blur",
+      "items": [],
+      "input_after": "c04-route A <&>"
+    },
+    {
+      "case": "tab_no_change",
+      "items": [],
+      "input_after": "c04-route A <&>"
+    },
+    {
+      "case": "sibling_change",
+      "items": [],
+      "input_after": "c04-route A <&>"
+    },
+    {
+      "case": "whitespace_change",
+      "items": [],
+      "input_after": " \t\n "
+    },
+    {
+      "case": "change_only",
+      "items": [
+        {
+          "title": "c04-route A <&>",
+          "completed": false,
+          "id": 1
+        }
+      ],
+      "input_after": ""
+    },
+    {
+      "case": "input_change_blur",
+      "items": [
+        {
+          "title": "c04-route A <&>",
+          "completed": false,
+          "id": 1
+        }
+      ],
+      "input_after": ""
+    },
+    {
+      "case": "unicode_change",
+      "items": [
+        {
+          "title": "c04-route 作業 <&>",
+          "completed": false,
+          "id": 1
+        }
+      ],
+      "input_after": ""
+    },
+    {
+      "case": "repeated_change",
+      "items": [
+        {
+          "title": "c04-route A <&>",
+          "completed": false,
+          "id": 1
+        }
+      ],
+      "input_after": ""
+    }
+  ],
+  "controls": [
+    {
+      "name": "invent absent change",
+      "rejected": true
+    },
+    {
+      "name": "Boolean count alias",
+      "rejected": true
+    },
+    {
+      "name": "wrong created title",
+      "rejected": true
+    },
+    {
+      "name": "Boolean completed alias",
+      "rejected": true
+    },
+    {
+      "name": "wrong target delivers change",
+      "rejected": true
+    },
+    {
+      "name": "erase genuine handler entry",
+      "rejected": true
+    },
+    {
+      "name": "fabricate cleared negative input",
+      "rejected": true
+    },
+    {
+      "name": "drop last row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate row",
+      "rejected": true
+    },
+    {
+      "name": "erase source clear",
+      "rejected": true
+    }
+  ],
+  "raw_sha256": "7daf776844176644aec9dcfb27a1d96b1a425f51d8d509a82eac51407f15f60e",
+  "source_executions": 0,
+  "original_public_members_joined": 79,
+  "parent_first_stop_preserved": true,
+  "parent_actor_source_sha256": "75328ef517ebfdda21b285c497d50b14a0a9b5198eaf9de09be8c000e00f98e0",
+  "parent_native_event_delivery_observed": false,
+  "ended_utc": "2026-10-03T11:59:06.763051+00:00",
+  "limits": "Explicit source-level event delivery and recording render sink. No observed real browser change/dirty-value semantics, native DOM/render/task/durability or SDK fault attribution."
+}
