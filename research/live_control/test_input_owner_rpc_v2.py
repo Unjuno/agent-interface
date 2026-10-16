@@ -33,6 +33,14 @@ class Wire:
         self.sock, self.fault, self.sent = sock, fault, []
     def __getattr__(self, key):
         return getattr(self.sock, key)
+    def recv(self,n):
+        data=self.sock.recv(n)
+        if self.fault=='coalesce-two':
+            while data.count(b'\n')<2:
+                chunk=self.sock.recv(n-len(data))
+                if not chunk:break
+                data+=chunk
+        return data
     def sendall(self, data):
         row = json.loads(data)
         self.sent.append(row)
@@ -47,6 +55,10 @@ class Wire:
             row['result']['verified'] = True
             data = (json.dumps(row)+'\n').encode()
         if row.get('schema') == 'input-owner-rpc-response-v2' and row.get('request_id') == 1:
+            if self.fault == 'extra-reply':
+                extra=json.loads(json.dumps(row));extra['request_id']=2
+                self.sent.append(extra)
+                return self.sock.sendall((json.dumps(row)+'\n'+json.dumps(extra)+'\n').encode())
             if self.fault == 'drop': return
             if self.fault == 'wrong-id': row['request_id'] = 999
             if self.fault == 'invalid-records': row['records'] = None
@@ -369,6 +381,56 @@ class OwnerRpcTests(unittest.TestCase):
                     ROWS.append(dict(case=case,local_close=result,server_receipts=receipts,
                                      edges=fake.rpc_edges,primary_interrupt_preserved=True))
                 finally:client.close();thread.join(5)
+
+    def test_buffered_unsolicited_reply_quarantines_before_a_second_send(self):
+        c=rpc()
+        with backend_fixture() as (backend,events,generation,fake):
+            backend.snapshot('extra-reply',0);lease=bound(backend)
+            client,wire,peer,receipts,thread=self.session(backend,'extra-reply',fake=fake)
+            wire.fault='coalesce-two'
+            try:
+                with self.assertRaises(c.RpcOutcomeUnknown):client.call('down',lease,'a')
+                with self.assertRaises(c.RpcQuarantined):client.call('down',lease,'d')
+                self.assertEqual([r['op'] for r in wire.sent],['down'])
+                result=client.close();thread.join(3)
+                self.assertFalse(thread.is_alive());self.assertFalse(result['verified'])
+                self.assertEqual(fake.down,set())
+                ROWS.append(dict(case='extra-reply',requests=wire.sent,replies=peer.sent,
+                                 local_close=result,server_receipts=receipts,edges=fake.rpc_edges,
+                                 post_error_send_count=0))
+            finally:client.close();thread.join(5)
+
+    def test_primary_and_detach_failure_are_both_preserved(self):
+        c=rpc()
+        for phase in ('readiness','close','service'):
+            with self.subTest(phase=phase):
+                primary=KeyboardInterrupt('primary '+phase)
+                cleanup=OSError('secondary socket close')
+                class InertSocket:
+                    def settimeout(self,_):pass
+                    def sendall(self,_):pass
+                    def recv(self,_):raise primary
+                    def shutdown(self,_):pass
+                    def close(self):raise cleanup
+                if phase=='readiness':
+                    invoke=lambda:c.OwnerRpcClient(InertSocket(),display=':fake',service_id='owned-service-v2')
+                elif phase=='service':
+                    def invoke():
+                        with backend_fixture() as (backend,events,generation,fake):
+                            return c.serve_owner(InertSocket(),backend.owner,display=':fake',service_id='owned-service-v2')
+                else:
+                    client=c.OwnerRpcClient.__new__(c.OwnerRpcClient)
+                    client._closed=False;client._quarantined=False;client._close_result=None
+                    client._sock=InertSocket();client.service_id='owned-service-v2';client.display=':fake'
+                    client.call=lambda *_:(_ for _ in ()).throw(primary)
+                    invoke=client.close
+                with self.assertRaises(BaseExceptionGroup) as raised:invoke()
+                self.assertIs(raised.exception.exceptions[0],primary)
+                self.assertIs(raised.exception.exceptions[1],cleanup)
+                if phase=='close':self.assertFalse(client.close()['verified'])
+                ROWS.append(dict(case='paired-'+phase,primary_preserved=True,cleanup_preserved=True,
+                                 primary_type=type(primary).__name__,cleanup_type=type(cleanup).__name__,
+                                 scope='inert socket; no transport/native execution'))
 
 
 if __name__=='__main__':

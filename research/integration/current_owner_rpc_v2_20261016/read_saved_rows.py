@@ -9,7 +9,7 @@ ROOT=P.parents[2]
 EXPECTED={'peer-eof','blocked-release','stale-generation','codec','duplicate-id','lease-rebind',
 'duplicate-json-member','pre-send-refusal','inconsistent-close','interrupted-close','bad-ready',
 'active-generation','active-explicit-cancel','active-lease-expiry','raw-close','drop','wrong-id',
-'invalid-records','partial','unsupported-window','fatal-close','fatal-group-close'}
+'invalid-records','partial','unsupported-window','fatal-close','fatal-group-close','paired-readiness','paired-close','paired-service','extra-reply'}
 
 
 def check_receipt(receipt,verified):
@@ -26,9 +26,9 @@ def check_receipt(receipt,verified):
 
 
 def check(data):
-    if (data['tests'],data['failures'],data['errors'],data['skipped'])!=(39,0,0,0):
+    if (data['tests'],data['failures'],data['errors'],data['skipped'])!=(41,0,0,0):
         raise ValueError('Suite outcome differs')
-    if len(data['rows'])!=22 or {r['case'] for r in data['rows']}!=EXPECTED:
+    if len(data['rows'])!=26 or {r['case'] for r in data['rows']}!=EXPECTED:
         raise ValueError('Row inventory differs')
     rows={r['case']:r for r in data['rows']}
     codec=rows['codec']
@@ -80,6 +80,14 @@ def check(data):
         if row['explicit_update_sent'] != (name=='active-explicit-cancel'):
             raise ValueError('Explicit/idle control distinction lost')
         check_receipt(row['server_receipts'][0],True)
+    extra=rows['extra-reply']
+    if len(extra['requests'])!=1 or extra['requests'][0]['op']!='down' or extra['post_error_send_count']!=0 or extra['local_close']['verified'] is not False:
+        raise ValueError('Unsolicited buffered response allowed another send')
+    check_receipt(extra['server_receipts'][0],True)
+    for name in ('paired-readiness','paired-close','paired-service'):
+        row=rows[name]
+        if row['primary_preserved'] is not True or row['cleanup_preserved'] is not True or row['primary_type']!='KeyboardInterrupt' or row['cleanup_type']!='OSError':
+            raise ValueError('Paired primary/cleanup error was lost')
     if rows['unsupported-window']['refused_before_send'] is not True or rows['pre-send-refusal']['invalid_attempts_sent']!=0 or rows['bad-ready']['no_client_created'] is not True:
         raise ValueError('Readiness/local refusal differs')
     check_receipt(rows['raw-close']['close'],True)
@@ -96,7 +104,7 @@ def main():
             if hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()!=digest:
                 raise ValueError('Current source pin differs: '+name)
         rejected=[]
-        for name in ('missing-row','duplicate-row','lost-source','second-send','verified-local-close','verified-blocked-owner','hidden-protocol-input','lost-interrupt'):
+        for name in ('missing-row','duplicate-row','lost-source','second-send','verified-local-close','verified-blocked-owner','hidden-protocol-input','lost-interrupt','lost-paired-cleanup','accepted-extra-reply'):
             mutant=copy.deepcopy(data);rows={r['case']:r for r in mutant['rows']}
             if name=='missing-row':mutant['rows'].pop()
             if name=='duplicate-row':mutant['rows'].append(copy.deepcopy(mutant['rows'][0]))
@@ -106,6 +114,8 @@ def main():
             if name=='verified-blocked-owner':rows['blocked-release']['server_receipts'][0]['verified']=True
             if name=='hidden-protocol-input':rows['lease-rebind']['edges'].append(dict(event=2,code=40,down=[40]))
             if name=='lost-interrupt':rows['interrupted-close']['primary_interrupt_preserved']=False
+            if name=='lost-paired-cleanup':rows['paired-service']['cleanup_preserved']=False
+            if name=='accepted-extra-reply':rows['extra-reply']['post_error_send_count']=1
             try:check(mutant)
             except ValueError:rejected.append(name)
             else:raise ValueError('Altered rows accepted: '+name)

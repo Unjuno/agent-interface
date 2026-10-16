@@ -2,7 +2,7 @@
   "status": "PASS_SAVED_SOCKET_FAKE_X_ONLY",
   "modes": {
     "normal": {
-      "rows": 22,
+      "rows": 26,
       "source_pins": 46,
       "rejected_mutants": [
         "missing-row",
@@ -12,11 +12,13 @@
         "verified-local-close",
         "verified-blocked-owner",
         "hidden-protocol-input",
-        "lost-interrupt"
+        "lost-interrupt",
+        "lost-paired-cleanup",
+        "accepted-extra-reply"
       ]
     },
     "optimized": {
-      "rows": 22,
+      "rows": 26,
       "source_pins": 46,
       "rejected_mutants": [
         "missing-row",
@@ -26,7 +28,9 @@
         "verified-local-close",
         "verified-blocked-owner",
         "hidden-protocol-input",
-        "lost-interrupt"
+        "lost-interrupt",
+        "lost-paired-cleanup",
+        "accepted-extra-reply"
       ]
     }
   },

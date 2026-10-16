@@ -22,8 +22,8 @@ session/Executor, durable recovery, application effect or efficiency result.
 ## Final checks
 
 [verification/normal.json](verification/normal.json) and
-[verification/optimized.json](verification/optimized.json) each retain **39 methods
-in5 modules,0 failures/errors/skips**, including14 new RPC methods and22 socket/
+[verification/optimized.json](verification/optimized.json) each retain **41 methods
+in5 modules,0 failures/errors/skips**, including16 new RPC methods and26 socket/
 codec/Fake X rows. Each mode records46 LF-normalized source pins. Dedicated local
 Python3.13.14, Pillow12.2.0, numpy2.3.4 and python-xlib0.33; Windows sockets and
 threads only. Final commands used `python -I` / `python -I -O` with the preserved
@@ -47,15 +47,15 @@ Fake X native owner runs on its own thread; service/client are in the same OS
 process. The service's returned receipt is retained by the harness; it is not
 fsynced by the service and does not survive host/supervisor failure on its own.
 
-[Independent readback](read_saved_rows.py) checks all22 rows, source pins, wire
+[Independent readback](read_saved_rows.py) checks all26 rows, source pins, wire
 identities, original native-admission source, single post-uncertainty input,
-release/stop distinctions and protocol controls. It rejects8 altered records
+release/stop distinctions and protocol controls. It rejects10 altered records
 per mode; [READBACK.json](verification/READBACK.json) preserves the outcome.
 A separate candidate mutation removes only `call`'s sticky quarantine assignment.
 The four-fault test rejects it with **3 assertion failures and1 partial-frame
 parse error** after the forbidden second send. This negative was run before the
-later constructor capability-type repair; the exercised `call` and fault-test
-logic are unchanged. It is not a native performance/control experiment.
+later constructor capability-type and buffered-reply/teardown repairs; it is
+retained as historical construction evidence. It is not a native performance/control experiment.
 
 ## First results and repair history
 
@@ -84,3 +84,21 @@ preserves unknown cleanup custody, cancellation/telemetry propagation and then
 session/controller death checks. Window observer transfer must keep its canonical
 epoch; physical release time, independent task effects and matched resources
 remain unproved. Existing session/controller selection is unchanged.
+
+Review follow-up: initial immutable commit ddb194cb702455b1c4ab04815cca9af4e60c8c00
+passed39 selected methods but a reviewer reproduced primary KeyboardInterrupt
+being replaced by socket-close OSError. Paired readiness/client/service teardown
+now retains both objects in BaseExceptionGroup, with repeated client close still
+unverified. A coalesced extra-response construction also showed the old client
+accepting a valid first reply despite buffered unsolicited bytes; it now
+quarantines before any next request. The combined red had1 assertion failure
+and2 cleanup errors, followed by1 service cleanup error; exact sources/tests
+and streams are preserved. Final verification above is the repaired41-method,
+26-row version. Service-preflight validation occurs before ownership acceptance;
+if preflight raises, the supplying caller retains cleanup responsibility.
+
+Final-source negative control: `exploratory/owner-rpc-v2-reviewed-quarantine-mutant.*`
+removes only the post-send exception handler quarantine assignment. Three fault
+subtests fail assertions (0 errors); the partial-frame subtest still passes
+because the new independent buffered-byte fence blocks its second send. Source
+and driver are retained separately from the earlier3-failure/1-error negative.

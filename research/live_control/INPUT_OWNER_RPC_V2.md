@@ -54,3 +54,12 @@ session/controller death composition. Qualify process clock/identity, service
 and supervisor death, blocking platform I/O and independent task effects. No
 physical device, native display, WSLc allocation, game or model qualification is
 provided here. The full computer-control objective remains open under#59.
+
+The client rejects extra buffered bytes after readiness/each response and before
+a new write. This qualifies observed/coalesced protocol leftovers, not a defense
+against a malicious peer racing unsolicited bytes into an unobserved OS queue.
+Fatal primary exceptions and socket-detach failures are both retained in an
+exception group at readiness, client close and service teardown; a failed local
+detach cannot make an interrupted close verified. Service configuration preflight
+occurs before accepting owner cleanup responsibility: if it raises, the supplying
+caller still owns that owner/socket and must clean them up.

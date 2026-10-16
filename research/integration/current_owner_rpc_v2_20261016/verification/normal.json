@@ -6,7 +6,7 @@
     "test_input_owner_v12_explicit_up_cancel",
     "test_executor_v12_owner_release_rpc_failure"
   ],
-  "tests": 39,
+  "tests": 41,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
@@ -20,7 +20,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344360323942200,
+            "deadline_ns": 344720325234800,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -36,7 +36,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344360323942200
+              344720325234800
             ],
             "target_window_identity": null
           },
@@ -61,17 +61,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344350325507800,
-              "valid_until_ns": 344360323942200,
+              "verified_ns": 344710326738200,
+              "valid_until_ns": 344720325234800,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344350325477000,
-                      "sync_returned_ns": 344350325493900,
-                      "keymap_sampled_ns": 344350325495900,
+                      "keyrelease_started_ns": 344710326708400,
+                      "sync_returned_ns": 344710326725300,
+                      "keymap_sampled_ns": 344710326727100,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -87,8 +87,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344350325477000,
-                    344350325495900
+                    344710326708400,
+                    344710326727100
                   ]
                 }
               ],
@@ -97,7 +97,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344360323942200
+                344720325234800
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -115,14 +115,14 @@
         "event": "input_admission",
         "key": "a",
         "keycode": 38,
-        "admitted_ns": 344350325086400,
-        "input_ack_ns": 344350325111100,
-        "valid_until_ns": 344360323942200,
+        "admitted_ns": 344710326393000,
+        "input_ack_ns": 344710326415700,
+        "valid_until_ns": 344720325234800,
         "target_process_identity": [
           1,
           41,
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          344360323942200
+          344720325234800
         ],
         "intent_token": "rpc-v2-intent"
       },
@@ -183,7 +183,7 @@
       ]
     },
     {
-      "case": "stale-generation",
+      "case": "extra-reply",
       "requests": [
         {
           "schema": "input-owner-rpc-v2",
@@ -191,7 +191,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364349871600,
+            "deadline_ns": 344724357466800,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -207,7 +207,194 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364349871600
+              344724357466800
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        }
+      ],
+      "replies": [
+        {
+          "schema": "input-owner-rpc-ready-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "capabilities": {
+            "process_identity": true,
+            "window_lifecycle": false,
+            "operations": [
+              "close",
+              "down",
+              "input_state",
+              "release",
+              "up",
+              "up_batch"
+            ]
+          }
+        },
+        {
+          "schema": "input-owner-rpc-response-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "ok": true,
+          "result": {
+            "event": "input_admission",
+            "key": "a",
+            "keycode": 38,
+            "admitted_ns": 344714358756000,
+            "input_ack_ns": 344714358777500,
+            "valid_until_ns": 344724357466800,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              344724357466800
+            ],
+            "intent_token": "rpc-v2-intent"
+          },
+          "records": [],
+          "error": null
+        },
+        {
+          "schema": "input-owner-rpc-response-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 2,
+          "ok": true,
+          "result": {
+            "event": "input_admission",
+            "key": "a",
+            "keycode": 38,
+            "admitted_ns": 344714358756000,
+            "input_ack_ns": 344714358777500,
+            "valid_until_ns": 344724357466800,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              344724357466800
+            ],
+            "intent_token": "rpc-v2-intent"
+          },
+          "records": [],
+          "error": null
+        }
+      ],
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 344714359094900,
+              "valid_until_ns": 344724357466800,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 344714359070400,
+                      "sync_returned_ns": 344714359084400,
+                      "keymap_sampled_ns": 344714359085600,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    344714359070400,
+                    344714359085600
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                344724357466800
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": false,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "post_error_send_count": 0
+    },
+    {
+      "case": "stale-generation",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 344724362154600,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              344724362154600
             ],
             "target_window_identity": null
           },
@@ -232,7 +419,7 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354350985800,
+              "verified_ns": 344714363114300,
               "valid_until_ns": null,
               "intent_token": null,
               "key_release_attempts": {},
@@ -257,7 +444,7 @@
     {
       "case": "codec",
       "wire": {
-        "deadline_ns": 344364354157600,
+        "deadline_ns": 344724365504300,
         "intent_token": "rpc-v2-intent",
         "expected_focus": 41,
         "expected_surface": 41,
@@ -273,26 +460,26 @@
           1,
           41,
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          344364354157600
+          344724365504300
         ],
         "target_window_identity": [
           1,
           41,
           "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          344364354157600
+          344724365504300
         ]
       },
       "process": [
         1,
         41,
         "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        344364354157600
+        344724365504300
       ],
       "window": [
         1,
         41,
         "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-        344364354157600
+        344724365504300
       ],
       "cancel_sticky": true,
       "changed_source_refused": true
@@ -305,7 +492,7 @@
         "request_id": 1,
         "op": "down",
         "lease": {
-          "deadline_ns": 344364357010800,
+          "deadline_ns": 344724367891900,
           "intent_token": "rpc-v2-intent",
           "expected_focus": 41,
           "expected_surface": 41,
@@ -321,7 +508,7 @@
             1,
             41,
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            344364357010800
+            344724367891900
           ],
           "target_window_identity": null
         },
@@ -345,17 +532,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354358231100,
-              "valid_until_ns": 344364357010800,
+              "verified_ns": 344714369217300,
+              "valid_until_ns": 344724367891900,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354358206500,
-                      "sync_returned_ns": 344354358223700,
-                      "keymap_sampled_ns": 344354358224900,
+                      "keyrelease_started_ns": 344714369197500,
+                      "sync_returned_ns": 344714369209600,
+                      "keymap_sampled_ns": 344714369210700,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -371,8 +558,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354358206500,
-                    344354358224900
+                    344714369197500,
+                    344714369210700
                   ]
                 }
               ],
@@ -381,7 +568,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364357010800
+                344724367891900
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -419,7 +606,7 @@
         "request_id": 2,
         "op": "down",
         "lease": {
-          "deadline_ns": 344364360865800,
+          "deadline_ns": 344724372324600,
           "intent_token": "rpc-v2-intent",
           "expected_focus": 41,
           "expected_surface": 41,
@@ -435,7 +622,7 @@
             1,
             41,
             "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-            344364360865800
+            344724372324600
           ],
           "target_window_identity": null
         },
@@ -459,17 +646,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354377795700,
-              "valid_until_ns": 344364360865800,
+              "verified_ns": 344714373804800,
+              "valid_until_ns": 344724372324600,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354377768800,
-                      "sync_returned_ns": 344354377783500,
-                      "keymap_sampled_ns": 344354377786100,
+                      "keyrelease_started_ns": 344714373777700,
+                      "sync_returned_ns": 344714373794800,
+                      "keymap_sampled_ns": 344714373797200,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -485,8 +672,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354377768800,
-                    344354377786100
+                    344714373777700,
+                    344714373797200
                   ]
                 }
               ],
@@ -495,7 +682,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364360865800
+                344724372324600
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -533,7 +720,7 @@
         "request_id": 2,
         "op": "down",
         "lease": {
-          "deadline_ns": 344364380489100,
+          "deadline_ns": 344724376760200,
           "intent_token": "rpc-v2-intent",
           "expected_focus": 41,
           "expected_surface": 41,
@@ -549,7 +736,7 @@
             1,
             41,
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            344364380489100
+            344724376760200
           ],
           "target_window_identity": null
         },
@@ -573,17 +760,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354381826100,
-              "valid_until_ns": 344364380489100,
+              "verified_ns": 344714378005300,
+              "valid_until_ns": 344724376760200,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354381802300,
-                      "sync_returned_ns": 344354381818900,
-                      "keymap_sampled_ns": 344354381820300,
+                      "keyrelease_started_ns": 344714377981300,
+                      "sync_returned_ns": 344714377997600,
+                      "keymap_sampled_ns": 344714377998900,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -599,8 +786,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354381802300,
-                    344354381820300
+                    344714377981300,
+                    344714377998900
                   ]
                 }
               ],
@@ -609,7 +796,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364380489100
+                344724376760200
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -648,7 +835,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364384583200,
+            "deadline_ns": 344724380999900,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -664,7 +851,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364384583200
+              344724380999900
             ],
             "target_window_identity": null
           },
@@ -696,17 +883,17 @@
             "keys_down": [],
             "keys_unknown": [],
             "key_state_errors": [],
-            "verified_ns": 344354386038400,
-            "valid_until_ns": 344364384583200,
+            "verified_ns": 344714382188900,
+            "valid_until_ns": 344724380999900,
             "intent_token": "rpc-v2-intent",
             "key_release_attempts": {
               "38": {
                 "attempts": [
                   {
                     "attempt": 1,
-                    "keyrelease_started_ns": 344354386006600,
-                    "sync_returned_ns": 344354386023300,
-                    "keymap_sampled_ns": 344354386024900,
+                    "keyrelease_started_ns": 344714382164900,
+                    "sync_returned_ns": 344714382181700,
+                    "keymap_sampled_ns": 344714382183000,
                     "server_key_down_before": true,
                     "server_key_down_after": false,
                     "keymap_before_error": null,
@@ -722,8 +909,8 @@
               {
                 "keycode": 38,
                 "interval_ns": [
-                  344354386006600,
-                  344354386024900
+                  344714382164900,
+                  344714382183000
                 ]
               }
             ],
@@ -732,12 +919,12 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364384583200
+              344724380999900
             ],
             "target_process_identity_reader": {
               "retired": true,
               "pending": false,
-              "thread_alive": false,
+              "thread_alive": true,
               "close_error": null
             },
             "target_focus_query_failed": false
@@ -787,17 +974,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354390371400,
-              "valid_until_ns": 344364389219500,
+              "verified_ns": 344714386039700,
+              "valid_until_ns": 344724384942500,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354390352100,
-                      "sync_returned_ns": 344354390364200,
-                      "keymap_sampled_ns": 344354390365400,
+                      "keyrelease_started_ns": 344714386018100,
+                      "sync_returned_ns": 344714386032900,
+                      "keymap_sampled_ns": 344714386034100,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -813,8 +1000,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354390352100,
-                    344354390365400
+                    344714386018100,
+                    344714386034100
                   ]
                 }
               ],
@@ -823,7 +1010,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364389219500
+                344724384942500
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -864,14 +1051,14 @@
             "event": "input_admission",
             "key": "a",
             "keycode": 38,
-            "admitted_ns": 344354390088000,
-            "input_ack_ns": 344354390105200,
-            "valid_until_ns": 344364389219500,
+            "admitted_ns": 344714385771500,
+            "input_ack_ns": 344714385789200,
+            "valid_until_ns": 344724384942500,
             "target_process_identity": [
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364389219500
+              344724384942500
             ],
             "intent_token": "rpc-v2-intent"
           },
@@ -900,17 +1087,17 @@
                 "keys_down": [],
                 "keys_unknown": [],
                 "key_state_errors": [],
-                "verified_ns": 344354390371400,
-                "valid_until_ns": 344364389219500,
+                "verified_ns": 344714386039700,
+                "valid_until_ns": 344724384942500,
                 "intent_token": "rpc-v2-intent",
                 "key_release_attempts": {
                   "38": {
                     "attempts": [
                       {
                         "attempt": 1,
-                        "keyrelease_started_ns": 344354390352100,
-                        "sync_returned_ns": 344354390364200,
-                        "keymap_sampled_ns": 344354390365400,
+                        "keyrelease_started_ns": 344714386018100,
+                        "sync_returned_ns": 344714386032900,
+                        "keymap_sampled_ns": 344714386034100,
                         "server_key_down_before": true,
                         "server_key_down_after": false,
                         "keymap_before_error": null,
@@ -926,8 +1113,8 @@
                   {
                     "keycode": 38,
                     "interval_ns": [
-                      344354390352100,
-                      344354390365400
+                      344714386018100,
+                      344714386034100
                     ]
                   }
                 ],
@@ -936,7 +1123,7 @@
                   1,
                   41,
                   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                  344364389219500
+                  344724384942500
                 ],
                 "target_process_identity_reader": {
                   "retired": true,
@@ -958,17 +1145,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354390371400,
-              "valid_until_ns": 344364389219500,
+              "verified_ns": 344714386039700,
+              "valid_until_ns": 344724384942500,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354390352100,
-                      "sync_returned_ns": 344354390364200,
-                      "keymap_sampled_ns": 344354390365400,
+                      "keyrelease_started_ns": 344714386018100,
+                      "sync_returned_ns": 344714386032900,
+                      "keymap_sampled_ns": 344714386034100,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -984,8 +1171,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354390352100,
-                    344354390365400
+                    344714386018100,
+                    344714386034100
                   ]
                 }
               ],
@@ -994,7 +1181,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364389219500
+                344724384942500
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -1049,17 +1236,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354394471000,
-              "valid_until_ns": 344364393282700,
+              "verified_ns": 344714390104400,
+              "valid_until_ns": 344724388829800,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354394450100,
-                      "sync_returned_ns": 344354394463600,
-                      "keymap_sampled_ns": 344354394464900,
+                      "keyrelease_started_ns": 344714390073400,
+                      "sync_returned_ns": 344714390094800,
+                      "keymap_sampled_ns": 344714390096300,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -1075,8 +1262,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354394450100,
-                    344354394464900
+                    344714390073400,
+                    344714390096300
                   ]
                 }
               ],
@@ -1085,12 +1272,12 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364393282700
+                344724388829800
               ],
               "target_process_identity_reader": {
                 "retired": true,
                 "pending": false,
-                "thread_alive": true,
+                "thread_alive": false,
                 "close_error": null
               },
               "target_focus_query_failed": false
@@ -1141,17 +1328,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354398730300,
-              "valid_until_ns": 344364397223400,
+              "verified_ns": 344714394545300,
+              "valid_until_ns": 344724393237500,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354398707700,
-                      "sync_returned_ns": 344354398722300,
-                      "keymap_sampled_ns": 344354398723500,
+                      "keyrelease_started_ns": 344714394523700,
+                      "sync_returned_ns": 344714394538800,
+                      "keymap_sampled_ns": 344714394539800,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -1167,8 +1354,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354398707700,
-                    344354398723500
+                    344714394523700,
+                    344714394539800
                   ]
                 }
               ],
@@ -1177,7 +1364,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364397223400
+                344724393237500
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -1233,17 +1420,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354402405000,
-              "valid_until_ns": 344364401240100,
+              "verified_ns": 344714398299300,
+              "valid_until_ns": 344724397053300,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354402381500,
-                      "sync_returned_ns": 344354402397700,
-                      "keymap_sampled_ns": 344354402399100,
+                      "keyrelease_started_ns": 344714398279300,
+                      "sync_returned_ns": 344714398292800,
+                      "keymap_sampled_ns": 344714398294100,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -1259,8 +1446,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354402381500,
-                    344354402399100
+                    344714398279300,
+                    344714398294100
                   ]
                 }
               ],
@@ -1269,7 +1456,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364401240100
+                344724397053300
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -1300,6 +1487,30 @@
       "primary_interrupt_preserved": true
     },
     {
+      "case": "paired-readiness",
+      "primary_preserved": true,
+      "cleanup_preserved": true,
+      "primary_type": "KeyboardInterrupt",
+      "cleanup_type": "OSError",
+      "scope": "inert socket; no transport/native execution"
+    },
+    {
+      "case": "paired-close",
+      "primary_preserved": true,
+      "cleanup_preserved": true,
+      "primary_type": "KeyboardInterrupt",
+      "cleanup_type": "OSError",
+      "scope": "inert socket; no transport/native execution"
+    },
+    {
+      "case": "paired-service",
+      "primary_preserved": true,
+      "cleanup_preserved": true,
+      "primary_type": "KeyboardInterrupt",
+      "cleanup_type": "OSError",
+      "scope": "inert socket; no transport/native execution"
+    },
+    {
       "case": "bad-ready",
       "no_client_created": true,
       "fake_down_after": [],
@@ -1315,14 +1526,14 @@
         "event": "input_admission",
         "key": "a",
         "keycode": 38,
-        "admitted_ns": 344354414537200,
-        "input_ack_ns": 344354414552600,
-        "valid_until_ns": 344364413600600,
+        "admitted_ns": 344714411304100,
+        "input_ack_ns": 344714411322300,
+        "valid_until_ns": 344724410435000,
         "target_process_identity": [
           1,
           41,
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          344364413600600
+          344724410435000
         ],
         "intent_token": "rpc-v2-intent"
       },
@@ -1334,17 +1545,17 @@
         "keys_down": [],
         "keys_unknown": [],
         "key_state_errors": [],
-        "verified_ns": 344354440073900,
-        "valid_until_ns": 344364413600600,
+        "verified_ns": 344714446443100,
+        "valid_until_ns": 344724410435000,
         "intent_token": "rpc-v2-intent",
         "key_release_attempts": {
           "38": {
             "attempts": [
               {
                 "attempt": 1,
-                "keyrelease_started_ns": 344354440032000,
-                "sync_returned_ns": 344354440064600,
-                "keymap_sampled_ns": 344354440066100,
+                "keyrelease_started_ns": 344714446399000,
+                "sync_returned_ns": 344714446433200,
+                "keymap_sampled_ns": 344714446434800,
                 "server_key_down_before": true,
                 "server_key_down_after": false,
                 "keymap_before_error": null,
@@ -1360,8 +1571,8 @@
           {
             "keycode": 38,
             "interval_ns": [
-              344354440032000,
-              344354440066100
+              344714446399000,
+              344714446434800
             ]
           }
         ],
@@ -1370,7 +1581,7 @@
           1,
           41,
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          344364413600600
+          344724410435000
         ],
         "target_process_identity_reader": {
           "retired": false,
@@ -1387,7 +1598,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364413600600,
+            "deadline_ns": 344724410435000,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -1403,7 +1614,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364413600600
+              344724410435000
             ],
             "target_window_identity": null
           },
@@ -1444,17 +1655,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354440073900,
-              "valid_until_ns": 344364413600600,
+              "verified_ns": 344714446443100,
+              "valid_until_ns": 344724410435000,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354440032000,
-                      "sync_returned_ns": 344354440064600,
-                      "keymap_sampled_ns": 344354440066100,
+                      "keyrelease_started_ns": 344714446399000,
+                      "sync_returned_ns": 344714446433200,
+                      "keymap_sampled_ns": 344714446434800,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -1470,8 +1681,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354440032000,
-                    344354440066100
+                    344714446399000,
+                    344714446434800
                   ]
                 }
               ],
@@ -1480,7 +1691,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364413600600
+                344724410435000
               ],
               "target_process_identity_reader": {
                 "retired": false,
@@ -1498,7 +1709,7 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354440645000,
+              "verified_ns": 344714447131200,
               "valid_until_ns": null,
               "intent_token": null,
               "key_release_attempts": {},
@@ -1508,12 +1719,12 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364413600600
+                344724410435000
               ],
               "target_process_identity_reader": {
                 "retired": true,
                 "pending": false,
-                "thread_alive": true,
+                "thread_alive": false,
                 "close_error": null
               },
               "target_focus_query_failed": false
@@ -1544,14 +1755,14 @@
         "event": "input_admission",
         "key": "a",
         "keycode": 38,
-        "admitted_ns": 344354444598800,
-        "input_ack_ns": 344354444615900,
-        "valid_until_ns": 344364443729200,
+        "admitted_ns": 344714451209800,
+        "input_ack_ns": 344714451226200,
+        "valid_until_ns": 344724450338000,
         "target_process_identity": [
           1,
           41,
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          344364443729200
+          344724450338000
         ],
         "intent_token": "rpc-v2-intent"
       },
@@ -1563,17 +1774,17 @@
         "keys_down": [],
         "keys_unknown": [],
         "key_state_errors": [],
-        "verified_ns": 344354444946400,
-        "valid_until_ns": 344364443729200,
+        "verified_ns": 344714451564400,
+        "valid_until_ns": 344724450338000,
         "intent_token": "rpc-v2-intent",
         "key_release_attempts": {
           "38": {
             "attempts": [
               {
                 "attempt": 1,
-                "keyrelease_started_ns": 344354444927600,
-                "sync_returned_ns": 344354444940400,
-                "keymap_sampled_ns": 344354444941600,
+                "keyrelease_started_ns": 344714451544300,
+                "sync_returned_ns": 344714451558200,
+                "keymap_sampled_ns": 344714451559300,
                 "server_key_down_before": true,
                 "server_key_down_after": false,
                 "keymap_before_error": null,
@@ -1589,8 +1800,8 @@
           {
             "keycode": 38,
             "interval_ns": [
-              344354444927600,
-              344354444941600
+              344714451544300,
+              344714451559300
             ]
           }
         ],
@@ -1599,7 +1810,7 @@
           1,
           41,
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          344364443729200
+          344724450338000
         ],
         "target_process_identity_reader": {
           "retired": true,
@@ -1616,7 +1827,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364443729200,
+            "deadline_ns": 344724450338000,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -1632,7 +1843,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364443729200
+              344724450338000
             ],
             "target_window_identity": null
           },
@@ -1644,7 +1855,7 @@
           "request_id": 2,
           "op": "input_state",
           "lease": {
-            "deadline_ns": 344364443729200,
+            "deadline_ns": 344724450338000,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -1660,7 +1871,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364443729200
+              344724450338000
             ],
             "target_window_identity": null
           },
@@ -1701,17 +1912,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354444946400,
-              "valid_until_ns": 344364443729200,
+              "verified_ns": 344714451564400,
+              "valid_until_ns": 344724450338000,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354444927600,
-                      "sync_returned_ns": 344354444940400,
-                      "keymap_sampled_ns": 344354444941600,
+                      "keyrelease_started_ns": 344714451544300,
+                      "sync_returned_ns": 344714451558200,
+                      "keymap_sampled_ns": 344714451559300,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -1727,8 +1938,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354444927600,
-                    344354444941600
+                    344714451544300,
+                    344714451559300
                   ]
                 }
               ],
@@ -1737,7 +1948,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364443729200
+                344724450338000
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -1755,7 +1966,7 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354445571200,
+              "verified_ns": 344714452187700,
               "valid_until_ns": null,
               "intent_token": null,
               "key_release_attempts": {},
@@ -1765,7 +1976,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364443729200
+                344724450338000
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -1801,14 +2012,14 @@
         "event": "input_admission",
         "key": "a",
         "keycode": 38,
-        "admitted_ns": 344354449509500,
-        "input_ack_ns": 344354449527600,
-        "valid_until_ns": 344354748717100,
+        "admitted_ns": 344714455775800,
+        "input_ack_ns": 344714455790500,
+        "valid_until_ns": 344714755008600,
         "target_process_identity": [
           1,
           41,
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          344354748717100
+          344714755008600
         ],
         "intent_token": "rpc-v2-intent"
       },
@@ -1820,17 +2031,17 @@
         "keys_down": [],
         "keys_unknown": [],
         "key_state_errors": [],
-        "verified_ns": 344354754550600,
-        "valid_until_ns": 344354748717100,
+        "verified_ns": 344714757064200,
+        "valid_until_ns": 344714755008600,
         "intent_token": "rpc-v2-intent",
         "key_release_attempts": {
           "38": {
             "attempts": [
               {
                 "attempt": 1,
-                "keyrelease_started_ns": 344354754456800,
-                "sync_returned_ns": 344354754530200,
-                "keymap_sampled_ns": 344354754533900,
+                "keyrelease_started_ns": 344714756948900,
+                "sync_returned_ns": 344714757041900,
+                "keymap_sampled_ns": 344714757046500,
                 "server_key_down_before": true,
                 "server_key_down_after": false,
                 "keymap_before_error": null,
@@ -1846,8 +2057,8 @@
           {
             "keycode": 38,
             "interval_ns": [
-              344354754456800,
-              344354754533900
+              344714756948900,
+              344714757046500
             ]
           }
         ],
@@ -1856,7 +2067,7 @@
           1,
           41,
           "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          344354748717100
+          344714755008600
         ],
         "target_process_identity_reader": {
           "retired": false,
@@ -1873,7 +2084,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344354748717100,
+            "deadline_ns": 344714755008600,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -1889,7 +2100,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344354748717100
+              344714755008600
             ],
             "target_window_identity": null
           },
@@ -1930,17 +2141,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354754550600,
-              "valid_until_ns": 344354748717100,
+              "verified_ns": 344714757064200,
+              "valid_until_ns": 344714755008600,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354754456800,
-                      "sync_returned_ns": 344354754530200,
-                      "keymap_sampled_ns": 344354754533900,
+                      "keyrelease_started_ns": 344714756948900,
+                      "sync_returned_ns": 344714757041900,
+                      "keymap_sampled_ns": 344714757046500,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -1956,8 +2167,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354754456800,
-                    344354754533900
+                    344714756948900,
+                    344714757046500
                   ]
                 }
               ],
@@ -1966,7 +2177,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344354748717100
+                344714755008600
               ],
               "target_process_identity_reader": {
                 "retired": false,
@@ -1984,7 +2195,7 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354755772400,
+              "verified_ns": 344714758386800,
               "valid_until_ns": null,
               "intent_token": null,
               "key_release_attempts": {},
@@ -1994,7 +2205,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344354748717100
+                344714755008600
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -2033,7 +2244,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364760068300,
+            "deadline_ns": 344724763279800,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -2049,7 +2260,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364760068300
+              344724763279800
             ],
             "target_window_identity": null
           },
@@ -2075,23 +2286,23 @@
         "release_records": [
           {
             "event": "owner_release",
-            "reason": "target_generation_invalidated",
+            "reason": "close",
             "verified": true,
             "buttons_down": [],
             "keys_down": [],
             "keys_unknown": [],
             "key_state_errors": [],
-            "verified_ns": 344354761142800,
-            "valid_until_ns": 344364760068300,
+            "verified_ns": 344714764404500,
+            "valid_until_ns": 344724763279800,
             "intent_token": "rpc-v2-intent",
             "key_release_attempts": {
               "38": {
                 "attempts": [
                   {
                     "attempt": 1,
-                    "keyrelease_started_ns": 344354761124100,
-                    "sync_returned_ns": 344354761136300,
-                    "keymap_sampled_ns": 344354761137400,
+                    "keyrelease_started_ns": 344714764384700,
+                    "sync_returned_ns": 344714764397400,
+                    "keymap_sampled_ns": 344714764398400,
                     "server_key_down_before": true,
                     "server_key_down_after": false,
                     "keymap_before_error": null,
@@ -2107,8 +2318,8 @@
               {
                 "keycode": 38,
                 "interval_ns": [
-                  344354761124100,
-                  344354761137400
+                  344714764384700,
+                  344714764398400
                 ]
               }
             ],
@@ -2117,35 +2328,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364760068300
-            ],
-            "target_process_identity_reader": {
-              "retired": true,
-              "pending": false,
-              "thread_alive": true,
-              "close_error": null
-            },
-            "target_focus_query_failed": false
-          },
-          {
-            "event": "owner_release",
-            "reason": "close",
-            "verified": true,
-            "buttons_down": [],
-            "keys_down": [],
-            "keys_unknown": [],
-            "key_state_errors": [],
-            "verified_ns": 344354761214100,
-            "valid_until_ns": null,
-            "intent_token": null,
-            "key_release_attempts": {},
-            "key_release_intervals_ns": [],
-            "key_state_source": "x11_query_keymap",
-            "target_process_identity": [
-              1,
-              41,
-              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364760068300
+              344724763279800
             ],
             "target_process_identity_reader": {
               "retired": true,
@@ -2182,7 +2365,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364764149000,
+            "deadline_ns": 344724767108700,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -2198,7 +2381,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364764149000
+              344724767108700
             ],
             "target_window_identity": null
           },
@@ -2223,23 +2406,23 @@
           "release_records": [
             {
               "event": "owner_release",
-              "reason": "close",
+              "reason": "target_generation_invalidated",
               "verified": true,
               "buttons_down": [],
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354926738200,
-              "valid_until_ns": 344364764149000,
+              "verified_ns": 344714929676000,
+              "valid_until_ns": 344724767108700,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354926685000,
-                      "sync_returned_ns": 344354926722000,
-                      "keymap_sampled_ns": 344354926724200,
+                      "keyrelease_started_ns": 344714929637300,
+                      "sync_returned_ns": 344714929667100,
+                      "keymap_sampled_ns": 344714929668500,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -2255,8 +2438,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354926685000,
-                    344354926724200
+                    344714929637300,
+                    344714929668500
                   ]
                 }
               ],
@@ -2265,12 +2448,40 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364764149000
+                344724767108700
               ],
               "target_process_identity_reader": {
                 "retired": true,
                 "pending": false,
-                "thread_alive": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            },
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 344714929767700,
+              "valid_until_ns": null,
+              "intent_token": null,
+              "key_release_attempts": {},
+              "key_release_intervals_ns": [],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                344724767108700
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
                 "close_error": null
               },
               "target_focus_query_failed": false
@@ -2308,7 +2519,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364930414100,
+            "deadline_ns": 344724932997800,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -2324,7 +2535,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364930414100
+              344724932997800
             ],
             "target_window_identity": null
           },
@@ -2355,17 +2566,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354931558600,
-              "valid_until_ns": 344364930414100,
+              "verified_ns": 344714934202300,
+              "valid_until_ns": 344724932997800,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354931539800,
-                      "sync_returned_ns": 344354931551500,
-                      "keymap_sampled_ns": 344354931552700,
+                      "keyrelease_started_ns": 344714934180400,
+                      "sync_returned_ns": 344714934192100,
+                      "keymap_sampled_ns": 344714934194700,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -2381,8 +2592,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354931539800,
-                    344354931552700
+                    344714934180400,
+                    344714934194700
                   ]
                 }
               ],
@@ -2391,12 +2602,12 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364930414100
+                344724932997800
               ],
               "target_process_identity_reader": {
                 "retired": true,
                 "pending": false,
-                "thread_alive": true,
+                "thread_alive": false,
                 "close_error": null
               },
               "target_focus_query_failed": false
@@ -2434,7 +2645,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364933976100,
+            "deadline_ns": 344724936858700,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -2450,7 +2661,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364933976100
+              344724936858700
             ],
             "target_window_identity": null
           },
@@ -2481,17 +2692,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344354935038500,
-              "valid_until_ns": 344364933976100,
+              "verified_ns": 344714938189300,
+              "valid_until_ns": 344724936858700,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344354935014200,
-                      "sync_returned_ns": 344354935030200,
-                      "keymap_sampled_ns": 344354935031700,
+                      "keyrelease_started_ns": 344714938163500,
+                      "sync_returned_ns": 344714938181100,
+                      "keymap_sampled_ns": 344714938182600,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -2507,8 +2718,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344354935014200,
-                    344354935031700
+                    344714938163500,
+                    344714938182600
                   ]
                 }
               ],
@@ -2517,12 +2728,12 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364933976100
+                344724936858700
               ],
               "target_process_identity_reader": {
                 "retired": true,
                 "pending": false,
-                "thread_alive": false,
+                "thread_alive": true,
                 "close_error": null
               },
               "target_focus_query_failed": false
@@ -2560,7 +2771,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344364938100700,
+            "deadline_ns": 344724940833400,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -2576,7 +2787,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344364938100700
+              344724940833400
             ],
             "target_window_identity": null
           },
@@ -2601,23 +2812,23 @@
           "release_records": [
             {
               "event": "owner_release",
-              "reason": "close",
+              "reason": "target_generation_invalidated",
               "verified": true,
               "buttons_down": [],
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344355100161000,
-              "valid_until_ns": 344364938100700,
+              "verified_ns": 344715119725300,
+              "valid_until_ns": 344724940833400,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344355100116300,
-                      "sync_returned_ns": 344355100150000,
-                      "keymap_sampled_ns": 344355100151900,
+                      "keyrelease_started_ns": 344715119639800,
+                      "sync_returned_ns": 344715119701800,
+                      "keymap_sampled_ns": 344715119705600,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -2633,8 +2844,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344355100116300,
-                    344355100151900
+                    344715119639800,
+                    344715119705600
                   ]
                 }
               ],
@@ -2643,11 +2854,39 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344364938100700
+                344724940833400
               ],
               "target_process_identity_reader": {
                 "retired": true,
-                "pending": false,
+                "pending": true,
+                "thread_alive": false,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            },
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 344715119960000,
+              "valid_until_ns": null,
+              "intent_token": null,
+              "key_release_attempts": {},
+              "key_release_intervals_ns": [],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                344724940833400
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": true,
                 "thread_alive": false,
                 "close_error": null
               },
@@ -2687,7 +2926,7 @@
           "request_id": 1,
           "op": "down",
           "lease": {
-            "deadline_ns": 344365103383500,
+            "deadline_ns": 344725126641800,
             "intent_token": "rpc-v2-intent",
             "expected_focus": 41,
             "expected_surface": 41,
@@ -2703,7 +2942,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344365103383500
+              344725126641800
             ],
             "target_window_identity": null
           },
@@ -2735,17 +2974,17 @@
             "keys_down": [],
             "keys_unknown": [],
             "key_state_errors": [],
-            "verified_ns": 344355104723800,
-            "valid_until_ns": 344365103383500,
+            "verified_ns": 344715128647100,
+            "valid_until_ns": 344725126641800,
             "intent_token": "rpc-v2-intent",
             "key_release_attempts": {
               "38": {
                 "attempts": [
                   {
                     "attempt": 1,
-                    "keyrelease_started_ns": 344355104696200,
-                    "sync_returned_ns": 344355104714600,
-                    "keymap_sampled_ns": 344355104716200,
+                    "keyrelease_started_ns": 344715128619100,
+                    "sync_returned_ns": 344715128635300,
+                    "keymap_sampled_ns": 344715128636900,
                     "server_key_down_before": true,
                     "server_key_down_after": false,
                     "keymap_before_error": null,
@@ -2761,8 +3000,8 @@
               {
                 "keycode": 38,
                 "interval_ns": [
-                  344355104696200,
-                  344355104716200
+                  344715128619100,
+                  344715128636900
                 ]
               }
             ],
@@ -2771,7 +3010,7 @@
               1,
               41,
               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-              344365103383500
+              344725126641800
             ],
             "target_process_identity_reader": {
               "retired": true,
@@ -2802,17 +3041,17 @@
               "keys_down": [],
               "keys_unknown": [],
               "key_state_errors": [],
-              "verified_ns": 344355104723800,
-              "valid_until_ns": 344365103383500,
+              "verified_ns": 344715128647100,
+              "valid_until_ns": 344725126641800,
               "intent_token": "rpc-v2-intent",
               "key_release_attempts": {
                 "38": {
                   "attempts": [
                     {
                       "attempt": 1,
-                      "keyrelease_started_ns": 344355104696200,
-                      "sync_returned_ns": 344355104714600,
-                      "keymap_sampled_ns": 344355104716200,
+                      "keyrelease_started_ns": 344715128619100,
+                      "sync_returned_ns": 344715128635300,
+                      "keymap_sampled_ns": 344715128636900,
                       "server_key_down_before": true,
                       "server_key_down_after": false,
                       "keymap_before_error": null,
@@ -2828,8 +3067,8 @@
                 {
                   "keycode": 38,
                   "interval_ns": [
-                    344355104696200,
-                    344355104716200
+                    344715128619100,
+                    344715128636900
                   ]
                 }
               ],
@@ -2838,7 +3077,7 @@
                 1,
                 41,
                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                344365103383500
+                344725126641800
               ],
               "target_process_identity_reader": {
                 "retired": true,
@@ -2894,10 +3133,10 @@
     "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
     "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
     "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
-    "research/live_control/test_input_owner_rpc_v2.py": "a212de1d28f3abb8b8d8a94a69a237614bc75c717964b9203ef3efeb08ab34c4",
+    "research/live_control/test_input_owner_rpc_v2.py": "50ee3a7a986e38709d03d8ce378e4a44637a3d600797951f66e7022906de97cd",
     "research/live_control/test_input_owner_v12_process_identity.py": "58d384226a7dc737ab27ed100e96b14c98e069259bcc6e216629a9af45ceecff",
     "research/live_control/test_executor_v12_owner_release_rpc_failure.py": "c1fac5033c8ecea64874146c1085e14a2cdda9b2486ee3a04441d363cea82423",
-    "research/live_control/input_owner_rpc_v2.py": "4ecd4f027dc1efb105060bd22be9f3fd23395f06adb2ce21e61674e936e73318",
+    "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
     "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
     "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
     "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe"

@@ -7,6 +7,7 @@ import copy
 import json
 import math
 import socket
+import sys
 import threading
 import time
 
@@ -234,6 +235,22 @@ def _validate_close_result(result, records, display, service_id):
         raise ValueError('close receipt verification contradicts release/stop evidence')
 
 
+def _detach_socket(sock):
+    primary = sys.exception()
+    failures = []
+    try: sock.shutdown(socket.SHUT_RDWR)
+    except OSError: pass
+    except BaseException as error: failures.append(error)
+    try: sock.close()
+    except BaseException as error: failures.append(error)
+    if failures:
+        if primary is not None and all(error is not primary for error in failures):
+            failures.insert(0, primary)
+        if len(failures) == 1:
+            raise failures[0]
+        raise BaseExceptionGroup('RPC failure and transport detachment failed', failures)
+
+
 class OwnerRpcClient:
     def __init__(self, sock, *, display, service_id, timeout=2):
         self.display, self.service_id = _identity(display), _identity(service_id)
@@ -254,6 +271,8 @@ class OwnerRpcClient:
                     or ready['capabilities'].get('process_identity') is not True
                     or ready['capabilities'].get('window_lifecycle') is not False):
                 raise ValueError('strict process-owner readiness mismatch')
+            if self._buffer:
+                raise ValueError('unsolicited bytes after owner readiness')
         except BaseException:
             self._quarantined = True
             self._detach()
@@ -270,6 +289,9 @@ class OwnerRpcClient:
         try:
             if self._closed or self._quarantined:
                 raise RpcQuarantined('RPC retired; no further request may be sent')
+            if self._buffer:
+                self._quarantined = True
+                raise RpcQuarantined('unsolicited buffered reply; no request sent')
             request = dict(schema=SCHEMA, service_id=self.service_id, request_id=self._next_id,
                            op=op, lease=encode_lease(lease), key=copy.deepcopy(key))
             _request(request, self._next_id, self.service_id)
@@ -278,6 +300,8 @@ class OwnerRpcClient:
             try:
                 _send_frame(self._sock, request, deadline)
                 response = _read_frame(self._sock, self._buffer, deadline)
+                if self._buffer:
+                    raise ValueError('unsolicited bytes after RPC response')
                 fields = {'schema', 'service_id', 'request_id', 'ok', 'result', 'records', 'error'}
                 if (type(response) is not dict or set(response) != fields or response['schema'] != RESPONSE
                         or response['service_id'] != self.service_id
@@ -292,9 +316,10 @@ class OwnerRpcClient:
                                             records=self._records, remote_error=response['error'])
                 if op == 'close':
                     _validate_close_result(response['result'], self._records, self.display, self.service_id)
-                    self._close_result = copy.deepcopy(response['result'])
+                    self._close_result = self._unverified_close_result()
                     self._closed = True
                     self._detach()
+                    self._close_result = copy.deepcopy(response['result'])
                 return copy.deepcopy(response['result'])
             except BaseException as exc:
                 self._quarantined = True
@@ -304,18 +329,19 @@ class OwnerRpcClient:
         finally:
             self._gate.release()
 
+    def _unverified_close_result(self):
+        return dict(verified=False, service_id=self.service_id, display=self.display,
+                    reason='transport detached; independent owner release evidence required')
+
     def _detach(self):
-        try: self._sock.shutdown(socket.SHUT_RDWR)
-        except OSError: pass
-        finally: self._sock.close()
+        return _detach_socket(self._sock)
 
     def close(self):
         if self._closed:
             return copy.deepcopy(self._close_result)
         result = None
         # Install the conservative result before any interruptible transport work.
-        self._close_result = dict(verified=False, service_id=self.service_id, display=self.display,
-            reason='transport detached; independent owner release evidence required')
+        self._close_result = self._unverified_close_result()
         try:
             if not self._quarantined:
                 result = self.call('close')
@@ -326,8 +352,9 @@ class OwnerRpcClient:
             self._quarantined = True
             result = None
         finally:
-            self._closed = True
-            self._detach()
+            if not self._closed:
+                self._closed = True
+                self._detach()
         if result is not None:
             self._close_result = copy.deepcopy(result)
         return copy.deepcopy(self._close_result)
@@ -402,7 +429,5 @@ def serve_owner(sock, owner, *, display, service_id, idle_timeout=5):
     finally:
         if receipt is None:
             receipt = _close_owner(owner, native, display, service_id, protocol_error)
-        try: sock.shutdown(socket.SHUT_RDWR)
-        except OSError: pass
-        finally: sock.close()
+        _detach_socket(sock)
     return receipt
