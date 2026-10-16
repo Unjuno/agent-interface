@@ -18,6 +18,15 @@ captureと入力は一つのcanonical lifecycle readerを共有する。reader�
 
 対象：[#3](https://github.com/Unjuno/agent-interface/issues/3)、[#5](https://github.com/Unjuno/agent-interface/issues/5)、[#8](https://github.com/Unjuno/agent-interface/issues/8)。[元の仮説と制約](visual-interface.md)を維持し、既存成果との照合から実験へ進める。3件を保存しただけで研究対象から外さない。
 
+## 別軸：推定観測channelの頑健な優越証明 — #6678 / #8911
+
+[#6678](https://github.com/Unjuno/agent-interface/issues/6678)のBlackwell比較は、既知の有限channel kernelについてgarbling関係を検査する。
+Open successor [#8911](https://github.com/Unjuno/agent-interface/issues/8911)は、有限captureから推定したkernelの不確実性を扱う別の方法課題であり、既存の#6678結果を否定・再採点しない。
+
+#8911の提案は、stateごとのraw countとsampling設計を保ち、同時信頼領域内の全kernel対で優越関係が成立するときだけ`ROBUST A≽B`または`ROBUST B≽A`を返す。それ以外は`UNRESOLVED`とし、単なる領域の重なりをincomparableと呼ばない。これは未実施案で、統計保証やGUI routeの順位はまだ得られていない。
+
+提案T0は、既知のgarbling方向、逆方向、境界・近傍、希少出力、label permutation、cluster/dependenceを含む有限multinomial fixtureを、point-kernel判定とset-valued判定で比較する。state oracle、sampling unit、同時信頼手順、許容誤差、solver、independent auditを事前固定する。confidence regionが境界の両側を許す場合は`UNRESOLVED`を維持する。モデル、GUI、ライブcapture、実運用上の優越はこの案の結果に含めない。
+
 ## 最初に行うこと
 
 1. **既存成果の対応表を埋める。** 下表の実装/資料を入口に、実際の呼出し元、固定ソース、raw、監査、比較条件を確認する。ファイルの存在や単体テストPASSだけでアイデアを検証済みとしない。同じ問いに有効な結果があれば再実験を省き、未検証部分だけを選ぶ。
