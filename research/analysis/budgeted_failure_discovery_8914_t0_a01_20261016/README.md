@@ -12,3 +12,7 @@ The prospective conditions are in [PREREGISTRATION.md](PREREGISTRATION.md) and [
 4. Run `python3 audit_raw.py` once, then run `python3 mutation_controls.py` on temporary copies. Do not rerun or tune the allocation.
 
 The audit is method-scoped. Even a pass does not estimate live GUI risk, establish safety, or certify a task cell as safe. Raw outputs and exact commit will determine the result.
+
+## A01 disposition
+
+See [REPORT.md](REPORT.md). The frozen candidate ran once, but the independent audit failed before scientific gates because its sentinel reconstruction sorted IDs while the runner sampled in generation order. A01 is consumed and preserved; there is no retry under this allocation. The result is `HOLD_AUDITOR_METHOD_FAILURE`, not a scientific PASS or FAIL. Any corrected study requires a new allocation and new source freeze.
