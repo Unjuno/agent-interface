@@ -1,6 +1,6 @@
 # 現在の整理状態と次の実行順
 
-2026-10-16 JST。基準main `ed87095fda10147ec91d247eb382b4ffbafd3495`。
+2026-10-16 JST。基準main `1ece47014d05db898bf73afcd722a14524462e15`。
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
@@ -8,11 +8,18 @@
 
 Issue #8905の本文と関連Issueを確認し、hash/fixity、解釈可能性、raw-only監査、再実行、独立再現を
 別レベルに分ける提案として `docs/ideas/claim-preservation.md` に整理した。3種のanalysis-only packageを
-offline copyで分類するT0は未実行であり、IssueもOPENのまま。ページを`docs/ideas/README.md`と
-`docs/IDEAS_AND_OUTCOMES.md`へ接続した。Public Navigationは26 documents / 2,140 repository-relative links
-で成功。変更は既存の [PR #9005](https://github.com/Unjuno/agent-interface/pull/9005) に追加する。
-これは研究ラベル全体の整理完了ではない。次はパッケージ3種・runtime loss条件・判定器をcurrent-mainで凍結し、
-Issue本文の最小実験を実行する。
+offline copyで分類する提案は未実行であり、IssueもOPENのまま。別のホスト監査追試として、保存済みrawに対し
+各監査器を1回ずつ実行した。#5749は78行で`PASS_METHOD_SCOPED`、7/7改変拒否、#6530は8行で`PASS`、
+#6590は10件の決定論的CPU再フィットと30,720行を確認した後、hash/refit/prediction不一致で
+`HOLD_AUDIT_INTEGRITY`となった。#6590はPython 3.14.5 / NumPy 2.5.2上で、packageのNumPy 1.26.4 pinとは
+異なる。候補起動や外部モデル実行はしておらず、ネットワーク遮断・入力コピー・5段階分類・fallback評価も
+していない。この結果は#8905の当該監査器に限り、他のIssueや実験の割当状態を変更しない。
+ページを`docs/ideas/README.md`と`docs/IDEAS_AND_OUTCOMES.md`へ接続した。Public Navigationは26 documents /
+2,140 repository-relative linksで成功し、PR #9005の現在head `92a16926fe95714f5d50e5498ee0785178ef7082`で
+Public Navigation、Research Workspace Index、replay-gateが成功。変更は既存の
+[PR #9005](https://github.com/Unjuno/agent-interface/pull/9005) にあり、未マージ。
+これは研究ラベル全体の整理完了ではない。次は未整理Issueと未参照branchの実内容・既存証拠・所有を個別に
+照合し、意味のない重複記録や安全に回収できるrefだけを特定する。
 
 ### r8：アイデア索引と重複branch refの更新（2026-10-16）
 
