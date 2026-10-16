@@ -4,6 +4,15 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r51：#8648 C01のIssue引用sourceをbranch台帳で識別（2026-10-17）
+
+remoteに残る`research/8648-hysteresis-c01-20261009`のtip `4ce63dfedcdef07d1763147dfc2575fc46077aa1`を
+Issue #8648の本文/コメントと照合した。Issueコメントはこのbranch名とtipを修正版C01 candidate/auditor sourceとして
+引用し、両者の起動数は0/0、raw resultは存在しないと記録している。C02の別allocationと証拠はopen PR #8827にあり、
+C01のpre-execution source custodyとは区別する。CSVの`RETAIN_DIVERGED_TIP`を`RETAIN_ISSUE_CITED_SOURCE`へ訂正した。
+branchはunprotected、head/base PR参照0、登録worktreeなし。sourceをmainへコピーしたりremote refを削除したりせず、
+Issue引用と履歴を保持する。remote 588本、候補台帳32件のうち4件不在・28件現存で、他の現存tipも一致する。
+
 ### r50：#8668のA03–A05結果をテーマ索引へ接続（2026-10-17）
 
 Issue #8668の最新コメントと関連PR #8698/#8745/#8751/#8761/#8796を読み直し、
