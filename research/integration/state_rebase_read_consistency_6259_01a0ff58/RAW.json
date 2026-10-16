@@ -1,0 +1,120 @@
+{
+  "sqlite": "3.45.1",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "rows": [
+    {
+      "policy": "split",
+      "mutate": false,
+      "first": [
+        "X",
+        0
+      ],
+      "second": [
+        1,
+        0
+      ],
+      "accepted": false,
+      "actual": [
+        "X",
+        1,
+        0
+      ],
+      "db_sha256": "37a4eb0f9231a4848e58cbebe0a5ccd3cd8cc1535ce540c55cbf2042ce0b39c8"
+    },
+    {
+      "policy": "split",
+      "mutate": true,
+      "first": [
+        "X",
+        0
+      ],
+      "second": [
+        0,
+        1
+      ],
+      "accepted": true,
+      "actual": [
+        "Y",
+        0,
+        1
+      ],
+      "db_sha256": "6396f86b339c9eb2861520c21ea352c1452cc8a6051596424e625b3149eaae13"
+    },
+    {
+      "policy": "snapshot",
+      "mutate": false,
+      "first": [
+        "X",
+        0
+      ],
+      "second": [
+        1,
+        0
+      ],
+      "accepted": false,
+      "actual": [
+        "X",
+        1,
+        0
+      ],
+      "db_sha256": "37a4eb0f9231a4848e58cbebe0a5ccd3cd8cc1535ce540c55cbf2042ce0b39c8"
+    },
+    {
+      "policy": "snapshot",
+      "mutate": true,
+      "first": [
+        "X",
+        0
+      ],
+      "second": [
+        1,
+        0
+      ],
+      "accepted": false,
+      "actual": [
+        "Y",
+        0,
+        1
+      ],
+      "db_sha256": "6396f86b339c9eb2861520c21ea352c1452cc8a6051596424e625b3149eaae13"
+    },
+    {
+      "policy": "generation_join",
+      "mutate": false,
+      "first": [
+        "X",
+        0
+      ],
+      "second": [
+        1,
+        0
+      ],
+      "accepted": false,
+      "actual": [
+        "X",
+        1,
+        0
+      ],
+      "db_sha256": "37a4eb0f9231a4848e58cbebe0a5ccd3cd8cc1535ce540c55cbf2042ce0b39c8"
+    },
+    {
+      "policy": "generation_join",
+      "mutate": true,
+      "first": [
+        "X",
+        0
+      ],
+      "second": [
+        0,
+        1
+      ],
+      "accepted": false,
+      "actual": [
+        "Y",
+        0,
+        1
+      ],
+      "db_sha256": "6396f86b339c9eb2861520c21ea352c1452cc8a6051596424e625b3149eaae13"
+    }
+  ]
+}
