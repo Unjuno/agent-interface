@@ -89,10 +89,10 @@
   "skips": [],
   "source_sha256_lf": {
     "research/doom/doom_controller_failure_cleanup_v1.py": "5f6fd4bf642e79b547cbc8b6d1cac7bb7d75e35b7c92766ba8501fdb32c0b079",
-    "research/doom/test_map01_v39_event_transport_timing.py": "0de7f5a03b65305793f01d1fe5fbea26d71e73aa71131bd7f7c0eb655fd4248d",
+    "research/doom/test_map01_v39_event_transport_timing.py": "5cc0f7fd34fbfb4ca4e994c040d2f4bf06d8f473d23b40f3303ccdafd3e1e904",
     "research/doom/test_session_map01_v12_emit_timing.py": "0b9b393b67d2ee7c5fbacd4a0f2df57774acc4840f0d25c3e9c038d52a4dbdfb",
-    "research/doom/test_map01_v39_pair_wait_dispatch.py": "15353e142d56b8a36c0c92661bb68ec623bc35f9d55970a5d08e18dac7a1732e",
-    "research/doom/test_overlap_controller_v39_wait.py": "d5620a40d5722f99c3b527e518b85aeec8468aacfe15d1ae8f690348e6687148",
+    "research/doom/test_map01_v39_pair_wait_dispatch.py": "d70ac8925b4f94c3a1bf1a84e2767cf847227a71efba0b17fccfe764de6fe96a",
+    "research/doom/test_overlap_controller_v39_wait.py": "70e9f7e7f9aff051d05076e25ec39dea6d60de1845ac6ea79f5d52249299a498",
     "research/doom/test_controller_retirement_failure.py": "70dd981a295002ff370a17b1dd81e739bcd3838fa8c653c2bedce9af97b3a0bc",
     "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
     "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
@@ -154,46 +154,46 @@
     {
       "case": "composed-emitter-dispatch",
       "raw_logs": {
-        "events.jsonl": "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 351793389489600, \"emit_ns\": 351793389764700}\n",
-        "delivered.jsonl": "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 351793389489600, \"emit_ns\": 351793389764700}\n"
+        "events.jsonl": "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 352116021056800, \"emit_ns\": 352116021349400}\n",
+        "delivered.jsonl": "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 352116021056800, \"emit_ns\": 352116021349400}\n"
       },
       "stdout": [
-        "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 351793389489600, \"emit_ns\": 351793389764700, \"stdout_handoff_started_ns\": 351793390064200}"
+        "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 352116021056800, \"emit_ns\": 352116021349400, \"stdout_handoff_started_ns\": 352116021674700}"
       ],
       "events": [
         {
           "event": "typed_observation",
           "sequence": 13,
-          "typed_ready_ns": 351793389489600,
-          "emit_ns": 351793389764700,
-          "stdout_handoff_started_ns": 351793390064200,
-          "controller_parsed_ns": 351793404258400,
-          "controller_enqueued_ns": 351793404259400,
-          "controller_dequeued_ns": 351793404281600,
-          "controller_monitor_started_ns": 351793404284600,
-          "controller_monitor_finished_ns": 351793404285300
+          "typed_ready_ns": 352116021056800,
+          "emit_ns": 352116021349400,
+          "stdout_handoff_started_ns": 352116021674700,
+          "controller_parsed_ns": 352116035559000,
+          "controller_enqueued_ns": 352116035559800,
+          "controller_dequeued_ns": 352116035576000,
+          "controller_monitor_started_ns": 352116035578400,
+          "controller_monitor_finished_ns": 352116035579000
         }
       ],
       "summary": [
         {
           "sequence": 13,
-          "typed_ready_ns": 351793389489600,
-          "emit_ns": 351793389764700,
-          "stdout_handoff_started_ns": 351793390064200,
-          "controller_parsed_ns": 351793404258400,
-          "controller_enqueued_ns": 351793404259400,
-          "controller_dequeued_ns": 351793404281600,
-          "controller_monitor_started_ns": 351793404284600,
-          "controller_monitor_finished_ns": 351793404285300,
+          "typed_ready_ns": 352116021056800,
+          "emit_ns": 352116021349400,
+          "stdout_handoff_started_ns": 352116021674700,
+          "controller_parsed_ns": 352116035559000,
+          "controller_enqueued_ns": 352116035559800,
+          "controller_dequeued_ns": 352116035576000,
+          "controller_monitor_started_ns": 352116035578400,
+          "controller_monitor_finished_ns": 352116035579000,
           "stage_order_valid": true,
           "intervals_ms": {
-            "typed_ready_to_emit_call_ms": 0.2751,
-            "producer_pre_handoff_ms": 0.2995,
-            "stdout_handoff_to_controller_parse_ms": 14.1942,
-            "controller_parse_to_enqueue_ms": 0.001,
-            "controller_queue_wait_ms": 0.0222,
-            "controller_dispatch_to_monitor_ms": 0.003,
-            "controller_monitor_service_ms": 0.0007
+            "typed_ready_to_emit_call_ms": 0.2926,
+            "producer_pre_handoff_ms": 0.3253,
+            "stdout_handoff_to_controller_parse_ms": 13.8843,
+            "controller_parse_to_enqueue_ms": 0.0008,
+            "controller_queue_wait_ms": 0.0162,
+            "controller_dispatch_to_monitor_ms": 0.0024,
+            "controller_monitor_service_ms": 0.0006
           }
         }
       ]
@@ -223,11 +223,11 @@
       "event": {
         "event": "typed_observation",
         "sequence": 11,
-        "controller_parsed_ns": 351793457288300,
-        "controller_enqueued_ns": 351793457289300,
-        "controller_dequeued_ns": 351793457308800,
-        "controller_monitor_started_ns": 351793457310800,
-        "controller_monitor_finished_ns": 351793457312300
+        "controller_parsed_ns": 352116088731800,
+        "controller_enqueued_ns": 352116088733100,
+        "controller_dequeued_ns": 352116088761500,
+        "controller_monitor_started_ns": 352116088764300,
+        "controller_monitor_finished_ns": 352116088766000
       },
       "primary_preserved": true,
       "errors": []
@@ -240,11 +240,11 @@
         "typed_ready_ns": 80,
         "emit_ns": 100,
         "stdout_handoff_started_ns": 150,
-        "controller_parsed_ns": 351793471539000,
-        "controller_enqueued_ns": 351793471541300,
-        "controller_dequeued_ns": 351793471564100,
-        "controller_monitor_started_ns": 351793471566700,
-        "controller_monitor_finished_ns": 351793471568300
+        "controller_parsed_ns": 352116103091500,
+        "controller_enqueued_ns": 352116103092800,
+        "controller_dequeued_ns": 352116103112200,
+        "controller_monitor_started_ns": 352116103115000,
+        "controller_monitor_finished_ns": 352116103116300
       },
       "summary": [
         {
@@ -252,20 +252,20 @@
           "typed_ready_ns": 80,
           "emit_ns": 100,
           "stdout_handoff_started_ns": 150,
-          "controller_parsed_ns": 351793471539000,
-          "controller_enqueued_ns": 351793471541300,
-          "controller_dequeued_ns": 351793471564100,
-          "controller_monitor_started_ns": 351793471566700,
-          "controller_monitor_finished_ns": 351793471568300,
+          "controller_parsed_ns": 352116103091500,
+          "controller_enqueued_ns": 352116103092800,
+          "controller_dequeued_ns": 352116103112200,
+          "controller_monitor_started_ns": 352116103115000,
+          "controller_monitor_finished_ns": 352116103116300,
           "stage_order_valid": true,
           "intervals_ms": {
             "typed_ready_to_emit_call_ms": 2e-05,
             "producer_pre_handoff_ms": 5e-05,
-            "stdout_handoff_to_controller_parse_ms": 351793471.53885,
-            "controller_parse_to_enqueue_ms": 0.0023,
-            "controller_queue_wait_ms": 0.0228,
-            "controller_dispatch_to_monitor_ms": 0.0026,
-            "controller_monitor_service_ms": 0.0016
+            "stdout_handoff_to_controller_parse_ms": 352116103.09135,
+            "controller_parse_to_enqueue_ms": 0.0013,
+            "controller_queue_wait_ms": 0.0194,
+            "controller_dispatch_to_monitor_ms": 0.0028,
+            "controller_monitor_service_ms": 0.0013
           }
         }
       ]

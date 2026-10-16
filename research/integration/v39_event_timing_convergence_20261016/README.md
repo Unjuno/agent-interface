@@ -5,6 +5,7 @@ Candidate [#8867](https://github.com/Unjuno/agent-interface/pull/8867), exact he
 `598109fd6329ef88ec469557ae4beae2a2ef3002`.
 Base `5abbc37e7674d52ef452f08f64bce3b8cb82fd0b`.
 Reviewed runtime/test delta `4fa7a07d2ed89d3038c9b26294f54e4eed403222`.
+Final test-import repair `47b72f4c34d7ab6b54eff4472328b3d77587ebd1`.
 
 The old `emit_ns` precedes two JSONL appends. Treating it as transport departure
 confounds producer log work with serialization, stdout delivery and controller
@@ -47,6 +48,12 @@ No WSLc, Docker, real display/input, game, provider or model execution occurred.
 The initial three-test baseline failed on the absent parent stamps, summary
 helper and stdout handoff marker. `exploratory/` preserves that output and later
 12/17-method checks. Full final stdout/stderr and result JSON are retained.
+After the first full pass, a fresh dotted unittest import exposed a harness
+dependency on the suite's search path. Three harnesses now add their own source
+directory before importing the actual failure guards. Dotted imports pass all
+16 applicable methods in both modes; the final 70-method suite and readback were
+rerun with repaired source pins. Initial full outputs/source index and the
+isolation failure remain under `exploratory/r1-*` and `exploratory/isolation-*`.
 
 ## Saved-only readback
 
