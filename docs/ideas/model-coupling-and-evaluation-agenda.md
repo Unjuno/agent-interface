@@ -351,6 +351,36 @@ separate hypotheses and must keep separate evidence and decisions.
   live model, participant, GPU, container, or external allocation is part of
   the proposal.
 
+## 14. Independent-team replication of a frozen route effect — #8870
+
+- **Status:** Open, unverified evaluation-method proposal; no external
+  replication, participant study, model call, live GUI run, or repository
+  effect is claimed.
+- **Idea:** Test whether a separate team can execute one narrowly scoped,
+  frozen route contrast on its own clean setup without author intervention,
+  while preserving the same task/effect contract, hard-safety outcome, and a
+  preregistered practical-equivalence band. Retain source and recipient
+  outcomes separately; do not pool sites or choose only favorable source
+  results.
+- **Eligibility gate:** First establish one eligible claim with a complete
+  task contract, recoverable raw packet, fixed route contrast, independent
+  effect oracle, and a willing external team/site. Freeze source/dependency
+  identities, model/runtime envelope where applicable, assignment/order,
+  timeout/resource budget, all-attempt denominator, allowed deviations, and
+  recipient-side source/readback checks. If any are missing, retain the
+  corresponding HOLD; never rerun a consumed allocation to manufacture a
+  replication target.
+- **Relation:** #3033 checks artifact-packet recovery and audit replay; #12
+  defines held-out task contracts; #5663 studies source-to-target transport;
+  #7889 studies task/app sampling for route-effect generalizability; #8614
+  addresses adaptive overfitting to reused cohorts. None alone executes the
+  same frozen empirical claim through an independent operator/site.
+- **Boundary:** `PASS_REPLICATION_SCOPED` would apply only to the selected
+  claim, one external team, and its tested environment. A discrepancy does
+  not identify its cause without further design; one successful site does
+  not establish general reproducibility or cross-application validity. No
+  external team, eligible claim, or replication result is recorded here.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
