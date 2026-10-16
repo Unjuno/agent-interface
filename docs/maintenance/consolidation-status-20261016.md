@@ -429,7 +429,19 @@ verified absent. The current remote branch count was 587 and the no-PR-reference
 at that intermediate capture. The comparison artifact was absent from main; the current census
 below replaces it.
 Subsequent creation of the current-main Win32 release-test PR #9006 added one open PR head; the
-live remote count is now 588 branches and 517 open PRs. The no-PR-reference group remains 32.
+following readback found 588 branches and 517 open PRs, with 32 no-PR-reference branches.
+2026-10-17 readback through the GitHub API reports 588 remote branches and 521 open PRs. Comparing
+the complete paginated branch list against the 32 names in the saved no-reference review finds 28
+still present and four absent: `rescue/59-paired-epoch-a03-precursor-20261007`,
+`research/8185-transform-graph-a02-20261005`,
+`research/8654-c03-support-sufficiency-20261009`, and
+`research/cli-report-persistence-retained-p4n7-20261006`. GitHub branch search confirms each is
+absent. The [dated presence readback](remote-branch-presence-readback-20261017.csv) records all 32
+candidate names against the 588-branch snapshot. The saved 6,100-PR head/base census remains the
+last complete reference audit; the four newly opened PRs #9007, #9008, #9009 and #9011 target
+`main`. This updates live counts and verifies the four removals, but does not certify a refreshed
+head/base census for the 28 remaining branches. They remain preserved pending that audit and
+owner/content review.
 The closed #8592 transfer is not a deletion signal for every associated ref: its final comment
 explicitly keeps A01/A02 execution STOPs and the superseded A03 freeze in immutable branch history.
 Accordingly, `research/8592-dpor-t0-a01-20261008` (`b0951ae1…`) and
