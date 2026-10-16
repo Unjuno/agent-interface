@@ -64,6 +64,12 @@ Issue #7804/#7802/#7794/#7748のIssue記録と関連PRを照合した。#7804は
 Issue #7678/#7650/#7470/#7459と関連PR・監査訂正を確認した。#7678の三/四-route結果と各HOLD、#7650のA01 row-binding欠陥とA02監査、
 #7470のA02-A05設計差分、#7459の正式audit FAILと未解決oracle境界を区別した。いずれも評価/隔離の方法結果に限定して記録した。
 
+### r28：4件のcontext・記憶Issueをcanonical結果で索引化（2026-10-16）
+
+Issue #7387/#7367/#7162/#7161のcanonical packageとfollow-up auditを確認した。#7387のA01 STOP/A02 method resultと追加false-accept検出、
+#7367のA01 workload-binding gap/A02 audit-only再検証、#7162のcanonical T0とduplicate #7679、#7161のcorrective audit-v2を区別した。
+model-facing・real GUIの効果や認証されていないevent historyを主張していない。
+
 ### r17：4件のオブジェクト記憶・復旧Issueを索引化（2026-10-16）
 
 Issue #7164/#7163/#7160/#7042を、正式コメントと現行PR状態で照合した。#7164はopen Draft #8216の
