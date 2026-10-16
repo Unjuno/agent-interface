@@ -66,6 +66,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Semantic dependency audit](semantic-dependency-audit.md) — links #8883's bounded black-box discovery proposal with #4233's retained audit-control HOLD and later read-only corrections, without converting them into a PASS.
 
+- [Guard-evidence applicability envelope](guard-evidence-applicability-envelope.md) — records #8631 A01/A02 failures and construction-only evidence separately from the scoped A03 method result in merged PR #8633.
+
 - [Spatial coordinate risk](spatial-coordinate-risk.md) — distinguishes #8881's probability-mass propagation proposal from #6684's finite relational-bound result and existing point-revalidation work.
 
 - [Assistive-technology co-activity](assistive-technology-coactivity.md) — separates #8880's concurrent human/AT non-interference proposal from #5922's presentation-configuration study and its invalidated T0.
