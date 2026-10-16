@@ -198,3 +198,28 @@ worktree remain intact.
 No experiment or test was run for these ref removals. In particular, the A07
 correction package remains available through the retained A03 branch and pull
 request ref; this receipt does not claim that it is present on main.
+
+## Closed superseded PR branches
+
+Removed these nine remote branch names after rechecking that each exact tip
+was the head of a closed, unmerged PR, no branch was protected, no registered
+worktree or open PR referenced the branch as head/base, and the closed PR head
+ref still retained the exact tip. Successor/retention evidence was checked in
+the PR close discussion and merged successor where applicable. Remote branch
+deletion does not remove the PR or its retained head ref.
+
+| Branch | Exact tip / closed PR | Disposition and retained path |
+|---|---|---|
+| `fix/8252-held-modifier-current-main` | `db73d5c87fa3503d5b403d93f4822918b5f7b9cb` / [#8296](https://github.com/Unjuno/agent-interface/pull/8296) | Explicitly withdrawn; closed PR head remains the source record. |
+| `research/59-current-main-a12-20261009` | `320d39b6d8f495c78e4863d15a747ce54eed17ed` / [#8812](https://github.com/Unjuno/agent-interface/pull/8812) | Superseded by merged [#8967](https://github.com/Unjuno/agent-interface/pull/8967), which preserves all 48 source files; PR head retains this exact tip. |
+| `research/59-currentmain-guard-boundary-a01-20261009` | `5d195dad8750a02a4f6597c76251127680893134` / [#8801](https://github.com/Unjuno/agent-interface/pull/8801) | Superseded by merged [#8933](https://github.com/Unjuno/agent-interface/pull/8933), with original source/raw/audit and follow-up additions preserved. |
+| `research/59-hard-recovery-pending-a01-20261009` | `e27c0b43625bbe986b8363c448e52abdb20ebc10` / [#8792](https://github.com/Unjuno/agent-interface/pull/8792) | Converged through merged [#8988](https://github.com/Unjuno/agent-interface/pull/8988); original files are retained there. |
+| `research/59-v39-health-guard-boundary-a01-currentmain-pr-20261009` | `1fcb9e6332cd02f62481b7abb606defac6756e59` / [#8814](https://github.com/Unjuno/agent-interface/pull/8814) | Superseded by merged #8933; exact PR head retained. |
+| `research/59-v39-visual-active-hold-xvfb-a01-20261012` | `0aca0e31216659a44f285b62db3edb3b5eb228b9` / [#8876](https://github.com/Unjuno/agent-interface/pull/8876) | Superseded by merged [#8994](https://github.com/Unjuno/agent-interface/pull/8994), whose records preserve all 614 changed-path head blobs and seven dependencies. |
+| `research/8681-cleanup-identity-a03-malformed-events` | `31e1b6372b3e7ebe24b5dfb57f6aa1dd01a55931` / [#8850](https://github.com/Unjuno/agent-interface/pull/8850) | Redundant after merged [#8771](https://github.com/Unjuno/agent-interface/pull/8771); exact PR head retained. |
+| `research/8681-malformed-cleanup-identity-a01-20261012` | `6dd3086e93854231b9b2e06e337e308bcc847030` / [#8852](https://github.com/Unjuno/agent-interface/pull/8852) | Redundant after merged #8771; exact PR head retained. |
+| `research/issue59-v39-configured-mcp-disable-20261011` | `cf399788e32d1430fa233c7ac41deb83a2711d67` / [#8839](https://github.com/Unjuno/agent-interface/pull/8839) | Superseded by merged [#8946](https://github.com/Unjuno/agent-interface/pull/8946), which retains the original proposal/tests. |
+
+After deletion, all nine `refs/heads/*` names were absent and each
+`refs/pull/<number>/head` still resolved to the exact SHA in the table. No
+source or experiment was run for this remote-ref cleanup.
