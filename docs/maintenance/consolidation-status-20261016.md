@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r57: index Issue #8252 and retain its incomplete evidence source (2026-10-17)
+
+Issue #8252 explicitly owns `research/held-chord-h7k3-20261007`. Its comments report a scoped 12-cell backend-method result but state that the matrix raw/audit package is missing from the branch and workspace; the allocation must not be rerun. The branch's source/freeze package remains preserved pending raw delivery or custody resolution. `docs/IDEAS_AND_OUTCOMES.md` now summarizes the reported result, evidence gap, and separate closed PR #8308 boundary without promoting it to production integration.
+
 ### r56: repair branch inventory and identify unique A01 evidence (2026-10-17)
 
 The branch review CSV had three rows whose unquoted commas shifted fields. All 32 records are now serialized as valid 15-column CSV and verified by readback. The seven files on `research/59-v39-main-source-identity-a01-20261009` are all absent from current main; its A01 `HOLD_AUDIT_INPUT` freeze, failure and raw are unique. The branch is classified `RETAIN_UNIQUE_A01_SOURCE`; no run was repeated and the ref remains preserved.
