@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8914 T0 A01/A02: [budgeted failure-discovery audit method failures](analysis/budgeted_failure_discovery_8914_t0_a01_20261016/REPORT.md) — both offline candidate/runner executions completed once, but each independent audit failed at sentinel reconstruction before scientific gates. Outputs are retained as gzip with decompressed SHA-256 receipts; no scientific decision or retry under either allocation.
+
 - Issue #59 WSLc A03: [typed-policy replay portability construction result](doom/typed_guard_wslc_replay_a03_20261013/README.md) — one fresh, single-container CPU WSLc run; candidate and independent raw-only audit reconstruct four selected retained rows with no input authority. A01 host-decoding STOP and A02 missing-image STOP remain preserved. Construction/portability only: no live threat exposure, task effect, recovery, survival, MAP01 result, or effective memory-limit claim.
 
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.

@@ -227,7 +227,8 @@ separate hypotheses and must keep separate evidence and decisions.
 
 ## 10. Budgeted discovery of failures in shallow-zero task cells — #8914
 
-- **Status:** Open and unverified; no PR, branch or result is recorded.
+- **Status:** Open; two offline allocations are preserved as
+  `HOLD_AUDITOR_METHOD_FAILURE`, with no scientific decision.
 - **Idea:** Under a fixed repeat budget, can metadata and shallow outcomes
   prioritize frozen task cells with zero observed failures so held-out deeper
   trials discover more subsequent failures than uniform allocation? The target
@@ -245,10 +246,19 @@ separate hypotheses and must keep separate evidence and decisions.
   calibrated failure probability, and a shallow-zero or never-failed cell is
   not established safe. The proposal authorizes no live replay, GUI, model call
   or shared resource allocation.
-- **Next test:** Freeze the simulator, family split, features, attempt budget,
-  reset contract, outcome oracle and independent audit before generating deep
-  outcomes. Include null-signal, family-shift, leakage, repeat-dependence and
-  reset-mismatch controls. No experiment is claimed.
+- **Evidence:** [A01](../../research/analysis/budgeted_failure_discovery_8914_t0_a01_20261016/REPORT.md)
+  and [A02](../../research/analysis/budgeted_failure_discovery_8914_t0_a02_20261016/REPORT.md)
+  each ran the candidate/runner once and retained 61,800 attempt rows across
+  103 synthetic worlds. Both independent audits exited at sentinel
+  reconstruction before the scientific gates: A01 sampled from generation
+  order while the auditor assumed sorted order; A02's runner reused its
+  world-generation RNG state while the auditor restarted it. Both allocations
+  are consumed; no mutation controls or retry were run. No candidate ranking
+  benefit, null bound, or scientific pass/fail is established.
+- **Next test:** Only a separately frozen allocation could continue this
+  question. First qualify a deterministic sentinel contract and the independent
+  auditor against constructed fixtures before any deep outcomes. This boundary
+  applies to #8914 only and does not suspend other repository work.
 
 ## Priority and handoff
 
