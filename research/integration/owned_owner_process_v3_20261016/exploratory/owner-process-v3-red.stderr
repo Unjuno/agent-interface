@@ -1,0 +1,17 @@
+test_module_available (__main__.OwnedOwnerProcessTests.test_module_available) ... FAIL
+
+======================================================================
+FAIL: test_module_available (__main__.OwnedOwnerProcessTests.test_module_available)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 86, in test_module_available
+    self.assertIsNotNone(importlib.util.find_spec('input_owner_process_v3'),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         'Independent owner process and bound receipt implementation absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : Independent owner process and bound receipt implementation absent
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
