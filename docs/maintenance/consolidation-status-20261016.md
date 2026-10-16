@@ -4,6 +4,21 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r50：#8668のA03–A05結果をテーマ索引へ接続（2026-10-17）
+
+Issue #8668の最新コメントと関連PR #8698/#8745/#8751/#8761/#8796を読み直し、
+`docs/ideas/control-dynamics-agenda.md`のA01/A02だけだった記録へ、A02のstale-ACK監査境界と
+A03 operation/attempt binding、A04 request-bound ACK、A05 emitted-frontierの別々の有限結果を追記した。
+`docs/IDEAS_AND_OUTCOMES.md`にもIssue行を追加した。関連する5 PRはいずれもOPENで未merge。
+PR #9005のhead `c91199fe385fd995135e77d3164cff6e2221d249`でreplay-gate、Research Workspace Index、
+Public Navigationが成功。作業treeはclean。今回Issueへの投稿、実験、branch削除は行っていない。
+
+現行のbranch API snapshotは588 remote refs。ローカルrepoの登録worktreeは2件。
+ローカル4 ref中、mainは基準ref、整理PR枝はPR #9005、#8914枝は専用worktree、
+残るWin32 test枝はopen Draft PR #9006 (UNSTABLE)のheadに一致する。安全に回収できる枝はこの確認では見つからず、
+remote branch削除候補32件の所有・内容照合は未完了。次はPR #9005の未レビュー状態を保ちつつ、
+未参照/closed-head branchの残存候補を一件ずつowner・依存・raw保全と照合する。
+
 ### r47：#9004の有限T0結果を索引化し、#8867旧refを回収（2026-10-17）
 
 Issue #9004の未検証案をcurrent-main `1ece47014d05db898bf73afcd722a14524462e15`から凍結し、合成10ケース×4 armを一度だけ実行した。独立raw-only auditは40/40行を再構成して`PASS_METHOD_SCOPED`、通常・optimizedの5 mutation testsがPASSした。結果は`NO_INCREMENTAL_AGREEMENT_VALUE`で、agreement leaseはSystem-1-onlyと同数の作用、always-waitと同じ1 tickの合成中央値となり、事前20%基準を満たさない。`formal_pass=false`、実時間/実アプリ/モデル/GUIの主張なし。PR #9009へraw・監査・報告を保存し、Issueと`IDEAS_AND_OUTCOMES.md`/`RESEARCH.md`/research索引を更新した。PRはOPEN、必須check全てPASS、未レビュー・未merge。
