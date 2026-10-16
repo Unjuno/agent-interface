@@ -41,6 +41,11 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Common-cause degradation contracts](common-cause-degradation-contracts.md) — carries #8610's protocol-arm correction and #8622's corrected A02 result/custody boundary without pooling the allocations.
 - [Safe observation-predicate synthesis](safe-observation-predicate-synthesis.md) — indexes #8562's unverified allowlisted-grammar proposal and dated no-run status without turning it into a repository-wide gate.
 - [Decision regret over stale-feedback windows](decision-regret-stale-feedback.md) — records #8528's synthetic-method PASS separately from any causal, GUI, or deployed-safety claim.
+- [Constrained fault diagnosis](constrained-fault-diagnosis.md) — keeps #8895's adaptive-versus-fixed cost proposal and #8896 duplicate's parallel-makespan discriminator together.
+- [Adversarial integrity in failure discovery](adversarial-integrity-failure-discovery.md) — indexes #8877's unverified bounded-coalition integrity test separately from privacy feasibility.
+- [Decision-useful multiple descriptions](decision-useful-multiple-descriptions.md) — preserves #8875's narrow conservative-decision-set discriminator and updated semantic-MDC prior-art boundary.
+- [Model-lifetime robustness of joint reserves](model-lifetime-joint-reserves.md) — records #8873's preliminary calculation and post-result DP audit without promoting them to a method PASS.
+- [GUI macro validation under interleavings](interleaving-validated-gui-macros.md) — indexes #8869's unverified environment-interleaving successor without treating prior pair validation as sufficient.
 
 - [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, dependencies and executed public-path Fake X blocking characterization. These parent ideas remain open.
 
