@@ -46,4 +46,6 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Model coupling and evaluation validity](model-coupling-and-evaluation-agenda.md) — keeps opaque model-behavior stability (#6001), model-by-interface interaction (#6035), revealed information-cost rationalizability (#8907), action-selected cue-reliability feedback (#8654), benchmark-variant transition equivalence (#8920), censored verifier ordering (#8919), budgeted failure discovery (#8914), corrupted-feedback calibration (#8858), evidence-sufficient efficiency measurement (#8859), no-gold effect-checker identifiability (#8887), and agreement-conditioned bounded continuation (#9004) distinct while connecting their scoped evidence and next tests.
 
-- [Human evaluation validity](human-evaluation-validity.md) — preserves the consent-bounded recording-salience question (#8022), its no-human protocol HOLD, and the ethical prerequisites for any future participant study.
+- [Human evaluation validity](human-evaluation-validity.md) — preserves the consent-bounded recording-salience question (#8022), the separate learning-transfer and user-relative benefit questions (#6600, #6593), their synthetic method results, and the gates for any future participant study.
+
+- [Control dynamics and route recovery](control-dynamics-agenda.md) — keeps route-by-disturbance evaluation (#6604) separate from source-supported path-class switching (#6586), preserving the synthetic method outcomes and the boundary to real GUI/game behavior.
