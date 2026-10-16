@@ -34,6 +34,15 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Action-conditioned incorrect-belief exposure](action-conditioned-incorrect-belief-exposure.md) — records #7986's synthetic measure without claiming live authority or safety.
+- [Bandwidth inheritance for blocked verifiers](bandwidth-inheritance-blocked-verifiers.md) — links #7944/#7979 and their finite offline BWI result.
+- [Post-GA WSL filesystem placement](post-ga-wsl-filesystem-placement.md) — preserves #7970's scoped WSLc-lane readiness boundary and no-run status.
+- [Decision value over likelihood ambiguity](decision-value-likelihood-ambiguity.md) — records #7955's finite likelihood-set result and limits.
+- [Outcome-conditioned GUI reversibility](outcome-conditioned-gui-reversibility.md) — preserves #7949's STOP/raw and peer-review coverage concerns.
+- [Decision-value observation stopping](decision-value-observation-stopping.md) — separates #7934's historical A01/A02 results from its later noncanonical launcher STOP.
+- [V39/V15 retained audit provenance](v39-v15-retained-audit-provenance.md) — keeps #7921/#7933 audit failures and #8192 manifest issue separate.
+- [WSLc client ownership readiness](wslc-client-ownership-readiness.md) — records #7924's scoped ownership/current-main HOLD without a repository-wide stop.
+- [Source-time expiry for negative evidence](source-time-expiry-negative-evidence.md) — preserves #8466's finite logical-time result without implying query completeness.
 - [Specification-diverse oracle challenges](specification-diverse-oracle-challenges.md) — records #8088's scoped no-incremental-value result and predecessor HOLDs.
 - [Confusion-adaptive GUI practice](confusion-adaptive-gui-practice.md) — preserves #8084's scoped synthetic gate results and low-dispersion false activations.
 - [Blocked versus interleaved GUI practice](blocked-interleaved-gui-practice.md) — indexes #8080's synthetic method readiness without inferring human transfer.
