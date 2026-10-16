@@ -1,0 +1,75 @@
+[
+  {
+    "Config": {
+      "Cmd": [
+        "python",
+        "-B",
+        "/src/candidate.py"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.15",
+        "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a"
+      ],
+      "Healthcheck": null,
+      "Image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+      "Labels": {},
+      "StopTimeout": null,
+      "User": "",
+      "WorkingDir": ""
+    },
+    "Created": "2026-10-05T01:35:05.02179948Z",
+    "HostConfig": {
+      "Memory": 536870912,
+      "NanoCpus": 1000000000,
+      "NetworkMode": "none",
+      "Ulimits": []
+    },
+    "Id": "a0e916dd509c5fda6f50303537b00383872a26fc6fbeda9f31b5452a450e8856",
+    "Image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "Labels": {},
+    "Mounts": [
+      {
+        "Destination": "/src",
+        "Name": "",
+        "ReadWrite": false,
+        "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-7\\outputs\\map01-v39-v15-release-closure-a02-20261005\\research\\doom\\results\\map01-v39-v15-release-closure-a03-20261005\\src",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/out",
+        "Name": "",
+        "ReadWrite": true,
+        "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-7\\outputs\\map01-v39-v15-release-closure-a02-20261005\\research\\doom\\results\\map01-v39-v15-release-closure-a03-20261005\\out",
+        "Type": "bind"
+      }
+    ],
+    "Name": "/map01-v39-v15-release-a03-20261005-candidate",
+    "NetworkSettings": {
+      "Networks": {
+        "none": {
+          "Aliases": [],
+          "DriverOpts": {},
+          "Gateway": "",
+          "IPAMConfig": null,
+          "IPAddress": "",
+          "IPPrefixLen": 0,
+          "Links": [],
+          "MacAddress": ""
+        }
+      }
+    },
+    "Ports": {},
+    "State": {
+      "ExitCode": 0,
+      "FinishedAt": "2026-10-05T01:35:06.408330215Z",
+      "Health": null,
+      "Running": false,
+      "StartedAt": "2026-10-05T01:35:05.491059598Z",
+      "Status": "exited"
+    }
+  }
+]

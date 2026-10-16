@@ -1,0 +1,20 @@
+{
+  "schema": "experiment-commands-v1",
+  "run_id": "MAP01-V39-V15-RELEASE-CLOSURE-A03-20261005",
+  "candidate": {
+    "executable": "wslc.exe",
+    "argv": ["run", "--pull", "never", "--network", "none", "--cpus", "1", "--memory", "512m", "--mount", "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-7\\outputs\\map01-v39-v15-release-closure-a02-20261005\\research\\doom\\results\\map01-v39-v15-release-closure-a03-20261005\\src,target=/src,readonly", "--mount", "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-7\\outputs\\map01-v39-v15-release-closure-a02-20261005\\research\\doom\\results\\map01-v39-v15-release-closure-a03-20261005\\out,target=/out", "--name", "map01-v39-v15-release-a03-20261005-candidate", "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016", "python", "-B", "/src/candidate.py"],
+    "exit_code": 0,
+    "stdout_file": "CANDIDATE_CONTAINER.log",
+    "inspect_file": "CANDIDATE_CONTAINER_INSPECT.json"
+  },
+  "independent_auditor": {
+    "executable": "wslc.exe",
+    "argv": ["run", "--pull", "never", "--network", "none", "--cpus", "1", "--memory", "512m", "--mount", "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-7\\outputs\\map01-v39-v15-release-closure-a02-20261005\\research\\doom\\results\\map01-v39-v15-release-closure-a03-20261005\\src,target=/src,readonly", "--mount", "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-7\\outputs\\map01-v39-v15-release-closure-a02-20261005\\research\\doom\\results\\map01-v39-v15-release-closure-a03-20261005\\out,target=/out", "--name", "map01-v39-v15-release-a03-20261005-auditor", "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016", "python", "-B", "/src/audit.py"],
+    "exit_code": 0,
+    "stdout_file": "AUDITOR_CONTAINER.log",
+    "inspect_file": "AUDITOR_CONTAINER_INSPECT.json"
+  },
+  "started_utc": "2026-10-05T01:32:51Z",
+  "finished_utc": "2026-10-05T01:32:54Z"
+}

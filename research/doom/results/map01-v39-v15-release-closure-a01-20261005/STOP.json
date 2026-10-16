@@ -1,0 +1,14 @@
+{
+  "schema": "candidate-stop-v1",
+  "run_id": "MAP01-V39-V15-RELEASE-CLOSURE-A01-20261005",
+  "classification": "STOP",
+  "phase": "exact V15 startup composition import, before candidate schedule or X/display/game input",
+  "exit_code": 1,
+  "first_error": "ModuleNotFoundError: No module named 'executor_v5'",
+  "root_cause": "Frozen offline package omitted transitive exact-source dependencies imported by session_map01_v15 -> executor_v13 -> executor_v12.",
+  "preserved_failure": "C:/Users/junny/AppData/Local/Temp/map01_v39_v15_release_closure_a01_20261005/CANDIDATE_CONTAINER.log",
+  "container_inspect": "C:/Users/junny/AppData/Local/Temp/map01_v39_v15_release_closure_a01_20261005/CANDIDATE_CONTAINER_INSPECT.json",
+  "no_retry": true,
+  "scientific_inference": "none; the planned release/query schedule did not execute",
+  "next_step": "A distinct, source-complete construction run may exercise class binding and deterministic fake-display release only after separate scope/authority and exact-current-main freeze. Do not reuse this run ID, image/source locks, or partial result."
+}
