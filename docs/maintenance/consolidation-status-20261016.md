@@ -24,6 +24,8 @@ offline copyで分類する提案は未実行であり、IssueもOPENのまま�
 adaptive cohort reuseを別の研究対象として索引化した。
 さらに#8549/#8574/#8577/#8582を本文確認し、人間アラート検出、構造化レビュー、GUI lens-law転送、
 human-agent item functioningの4件を別の未検証案として記録した。
+次に#8527/#8532/#8533/#8544を確認し、期限内reachability、条件統一したrejection memory、success-cue inoculation、
+target–flanker bindingの仮説を各先行Issueと分けて索引化した。
 これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
