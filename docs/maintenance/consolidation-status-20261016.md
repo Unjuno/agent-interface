@@ -4,6 +4,16 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r9：実験ランタイム喪失時のclaim保全案を索引化（2026-10-16）
+
+Issue #8905の本文と関連Issueを確認し、hash/fixity、解釈可能性、raw-only監査、再実行、独立再現を
+別レベルに分ける提案として `docs/ideas/claim-preservation.md` に整理した。3種のanalysis-only packageを
+offline copyで分類するT0は未実行であり、IssueもOPENのまま。ページを`docs/ideas/README.md`と
+`docs/IDEAS_AND_OUTCOMES.md`へ接続した。Public Navigationは26 documents / 2,140 repository-relative links
+で成功。変更は既存の [PR #9005](https://github.com/Unjuno/agent-interface/pull/9005) に追加する。
+これは研究ラベル全体の整理完了ではない。次はパッケージ3種・runtime loss条件・判定器をcurrent-mainで凍結し、
+Issue本文の最小実験を実行する。
+
 ### r8：アイデア索引と重複branch refの更新（2026-10-16）
 
 基準mainは `1ece47014d05db898bf73afcd722a14524462e15`。全Issueを `research-idea` labelで照合し、
