@@ -1,5 +1,6 @@
 import copy
 import unittest
+from pathlib import Path
 
 import map01_recovery_cover_matched_v2_runner as r
 
@@ -20,6 +21,20 @@ def owner(**overrides):
     }
     row.update(overrides)
     return row
+
+
+def _has_clean_boundary(source):
+    import ast
+    tree = ast.parse(source)
+    fn = next(n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == "_run_arm")
+    body = next(n for n in fn.body if isinstance(n, ast.Try)).body
+    def one(pred):
+        found = [i for i, n in enumerate(body) if pred(n)]
+        return found[0] if len(found) == 1 else None
+    timer = one(lambda n: isinstance(n, ast.Expr) and isinstance(n.value, ast.Call) and isinstance(n.value.func, ast.Attribute) and isinstance(n.value.func.value, ast.Name) and n.value.func.value.id == "timer" and n.value.func.attr == "cancel")
+    end = one(lambda n: isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "planner_end_ns" for t in n.targets))
+    cleanup = one(lambda n: isinstance(n, ast.If) and ast.unparse(n.test) == "fallback_terminal is None")
+    return timer is not None and end is not None and cleanup is not None and timer < end < cleanup
 
 
 class RunnerTests(unittest.TestCase):
@@ -66,6 +81,20 @@ class RunnerTests(unittest.TestCase):
         unknown = copy.deepcopy(base)
         unknown["signals"]["health"]["status"] = "unknown"
         self.assertEqual(r.recovery_guard_failed(90, 10, unknown), (True, "health_unavailable"))
+
+    def test_planner_window_end_is_sampled_before_fallback_cleanup(self):
+        self.assertTrue(_has_clean_boundary(Path(r.__file__).read_text(encoding="utf-8")))
+
+    def test_after_cleanup_mutation_fails_boundary_regression(self):
+        import ast
+        source = Path(r.__file__).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        run_arm = next(n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef) and n.name == "_run_arm")
+        body = next(n for n in run_arm.body if isinstance(n, ast.Try)).body
+        end = next(i for i, n in enumerate(body) if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "planner_end_ns" for t in n.targets))
+        cleanup = next(i for i, n in enumerate(body) if isinstance(n, ast.If) and ast.unparse(n.test) == "fallback_terminal is None")
+        body.insert(cleanup + 1, body.pop(end))
+        self.assertFalse(_has_clean_boundary(ast.unparse(tree)))
 
     def test_union_no_double_count(self):
         w = r.Window(0, 100)
