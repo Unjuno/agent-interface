@@ -77,3 +77,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Joint reserve and model-lifetime](joint-reserve-model-lifetime.md) — keeps #8630's failed weak-signal gate, #6580's bounded T0c pass plus remaining HOLD, and #8873's post-result full-tree policy audit distinct.
 
 - [Partial GUI target correspondence](partial-target-correspondence.md) — updates #8675's scoped synthetic T0 result and records #8868's separate unmatched-node successor without treating either as live identity or authority.
+
+- [Privacy-preserving failure discovery integrity](privacy-discovery-integrity.md) — records #6549's scoped 24-row feasibility result and #8877's separate unverified coalition-integrity successor, without claiming DP or fleet deployment.
