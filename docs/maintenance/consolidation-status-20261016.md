@@ -126,3 +126,16 @@ main `2b9df51535c7662d76ac29477bb14e2219eb9865`までに、次の有限な整理
 
 「作業ツリーの変更ゼロ」「全成果の整理完了」「コンピューター制御の研究達成」は別々の状態として報告する。
 新規allocationや実GUI操作は今回の整理では実行していない。
+
+## #8876 crash-owner candidate convergence
+
+[The preserved candidate and counterexamples](../../research/integration/crash_owner_convergence_20261016/README.md)
+retain all614 published changed-path head blobs plus seven dependencies without
+adopting the old runtime. Exact codec/client AST drops current process/window
+sources and permits a new down send after timeout, wrong-ID reply or malformed
+record failure. The selected current Fake X owner refuses the decoded lease;
+original bound-lease admission/release is the positive control. Three methods /
+seven rows per normal/-O mode and saved readback are local construction only.
+A35 identity/hashes match; A36/A37 keep their allocation-ID STOP. Continue current
+service authority/quarantine and session-death integration under#59; no old
+allocation was replayed, and native/game/task-effect qualification remains open.

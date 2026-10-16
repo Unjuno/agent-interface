@@ -1,0 +1,91 @@
+{
+  "close_error": {
+    "attrs": {},
+    "message": "owner release not verified: []",
+    "type": "RuntimeError"
+  },
+  "closed_ns": 6029539846881,
+  "display": ":0",
+  "event_publisher_errors": [
+    "BrokenPipeError"
+  ],
+  "owner_id": "424ca34279674a39bbb2c62aa16ef81d",
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": null,
+      "key_release_attempts": {},
+      "key_release_intervals_ns": [],
+      "key_state_errors": [
+        {
+          "message": "Display connection closed by server: [Errno 32] Broken pipe",
+          "source": "pointer_before",
+          "type": "ConnectionClosedError"
+        },
+        {
+          "message": "Display connection closed by server: [Errno 32] Broken pipe",
+          "source": "button_release_sync",
+          "type": "ConnectionClosedError"
+        },
+        {
+          "message": "Display connection closed by server: [Errno 32] Broken pipe",
+          "source": "pointer_after",
+          "type": "ConnectionClosedError"
+        }
+      ],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": null,
+      "verified": false,
+      "verified_ns": 6029534191723
+    },
+    {
+      "error": "ConnectionClosedError('server: [Errno 32] Broken pipe')",
+      "event": "owner_failed",
+      "verified": false
+    }
+  ],
+  "owner_thread_stopped": true,
+  "receipt_fsynced": true,
+  "recovery_verified": false,
+  "release_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": null,
+      "key_release_attempts": {},
+      "key_release_intervals_ns": [],
+      "key_state_errors": [
+        {
+          "message": "Display connection closed by server: [Errno 32] Broken pipe",
+          "source": "pointer_before",
+          "type": "ConnectionClosedError"
+        },
+        {
+          "message": "Display connection closed by server: [Errno 32] Broken pipe",
+          "source": "button_release_sync",
+          "type": "ConnectionClosedError"
+        },
+        {
+          "message": "Display connection closed by server: [Errno 32] Broken pipe",
+          "source": "pointer_after",
+          "type": "ConnectionClosedError"
+        }
+      ],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": null,
+      "verified": false,
+      "verified_ns": 6029534191723
+    }
+  ],
+  "schema": "input-owner-recovery-v1",
+  "service_pid": 4111,
+  "service_start_ticks": 602005,
+  "trigger": "rpc_eof"
+}
