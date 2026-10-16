@@ -56,7 +56,10 @@ class AcknowledgedScorerTests(unittest.TestCase):
         sampler, rows = self.sampler()
         with self.assertRaisesRegex(RuntimeError, 'did not advance'):
             sampler(Game(delta=0), None, 10)
-        self.assertEqual(rows[0]['status'], 'UPDATE_UNAVAILABLE')
+        self.assertEqual(rows[0]['status'], 'UPDATE_VALIDATION_FAILED')
+        self.assertEqual(rows[0]['update_status'], 'UPDATE_RETURNED')
+        self.assertEqual(rows[0]['sample_status'], 'NOT_ATTEMPTED')
+        self.assertEqual(rows[0]['producer']['tic_before'], rows[0]['producer']['tic_after'])
         self.assertIsNone(sampler.last)
 
     def test_failed_update_is_recorded_without_retry(self):
@@ -65,7 +68,26 @@ class AcknowledgedScorerTests(unittest.TestCase):
         with self.assertRaises(OSError):
             sampler(game, None, 10)
         self.assertEqual(game.calls, 1)
+        self.assertEqual(rows[0]['status'], 'UPDATE_UNAVAILABLE')
+        self.assertEqual(rows[0]['update_status'], 'UPDATE_UNAVAILABLE')
+        self.assertEqual(rows[0]['sample_status'], 'NOT_ATTEMPTED')
         self.assertEqual(rows[0]['error_type'], 'OSError')
+
+    def test_sample_failure_preserves_successful_update_acknowledgment(self):
+        game = Game()
+        rows = []
+        def fail_sample(*args, **kwargs):
+            raise ValueError('scorer read failed')
+        sampler = AcknowledgedSampler(fail_sample, 'run-a', rows.append,
+                                      clock_ns=lambda: 10)
+        with self.assertRaisesRegex(ValueError, 'scorer read failed'):
+            sampler(game, None, 10)
+        self.assertEqual(game.calls, 1)
+        self.assertEqual(rows[0]['status'], 'SAMPLE_UNAVAILABLE')
+        self.assertEqual(rows[0]['update_status'], 'UPDATE_RETURNED')
+        self.assertEqual(rows[0]['sample_status'], 'UNAVAILABLE')
+        self.assertEqual(rows[0]['producer']['tic_before'], 2)
+        self.assertEqual(rows[0]['producer']['tic_after'], 11)
 
     def test_terminal_repeat_carries_ack_without_second_update(self):
         sampler, rows = self.sampler()
