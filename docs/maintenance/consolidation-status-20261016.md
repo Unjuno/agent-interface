@@ -20,6 +20,8 @@ offline copyで分類する提案は未実行であり、IssueもOPENのまま�
 同じ索引へ追加した。さらに#8902/#8903/#8904の本文を確認し、それぞれの推定対象、比較方法、前提を索引へ加えた。
 その後#8638/#8641/#8648/#8651の本文を読み、観測情報の制御分離、feedback、uncertainty source、path dependenceという
 別々の問いとして索引へ加えた。
+続けて#8596/#8597/#8613/#8614を本文から確認し、確率的進捗境界、decision-opportunity tail、predicate membership、
+adaptive cohort reuseを別の研究対象として索引化した。
 これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
