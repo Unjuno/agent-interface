@@ -36,6 +36,6 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, dependencies and executed public-path Fake X blocking characterization. These parent ideas remain open.
 
-- [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). Original bodies and provenance are preserved; all three source Issues were reopened after correcting premature consolidation closures.
+- [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). That agenda keeps image-space Jacobian adaptation (#7765) separate from #5's safety/recovery contract and records its confounded T0 and no-gain T0b outcomes. Original bodies and provenance are preserved; the three source Issues were reopened after correcting premature consolidation closures.
 
 - [Model coupling and evaluation validity](model-coupling-and-evaluation-agenda.md) — keeps opaque model-behavior stability (#6001), model-by-interface interaction (#6035), and agreement-conditioned bounded continuation (#9004) distinct while connecting their scoped evidence and next tests.

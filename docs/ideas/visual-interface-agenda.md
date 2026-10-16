@@ -44,6 +44,15 @@ captureと入力は一つのcanonical lifecycle readerを共有する。reader�
 | #5 自己記述schema | `research/live_control/SCHEMA_PREFLIGHT_V1.md`、公開CLI/MCP仕様 | モデルに提示したschemaと実際に受理する操作・値・エラーを照合し、不一致を最小ケースで実行する | 共通schemaの修理で閉じるか、新機構が必要か |
 | #8 composite packing | #8原文、`runtime/USING_CURRENT_INTERFACE.md`、既存presentation比較 | 既存比較を照合後、同じsource/ROI情報をseparate/compositeで提示。overviewのみとtask-selected版は情報量の異なる別対照にする。正答率・panel混同・準備時間・モデル費用を測る | packingを採用するか、タスク限定か、追加費用により棄却するか |
 
+## 関連する別仮説：image-space Jacobian adaptation（#7765）
+
+これは#5のbounded-servo admission/recovery契約とは別の制御則の仮説である。画像特徴の誤差と入力変化の局所Jacobianを更新し、固定gainよりgain driftや軸間結合の補正回数を減らせるかを、有限な合成2-D plantで問う。visual servoingの一般採用やGUIでの改善を前提にしない。
+
+- **状態:** Issue [#7765](https://github.com/Unjuno/agent-interface/issues/7765) はOPEN。新しい実験割当はこの整理記録からは作らない。
+- **T0:** 機械的gateは240行を再構成したが、online armの比例gain 0.75とfixed armの0.48が不一致で別seed calibrationもなく、`HOLD_METHOD_DESIGN_CONFOUNDED`。40.7%の補正減少はJacobian効果の根拠にしない。[T0 report](../../research/analysis/image_jacobian_adaptation_7765_t0_20261005/REPORT.md)
+- **T0b:** calibration A01は監査の605不一致で`STOP_CALIBRATION_AUDIT_FAILED`。A01を再実行せず、別seed A02はgain 0.9をcalibration-onlyで選択した。独立したheld-out監査は240行を誤りなく再構成したが、drift/cross-coupling subsetではfixed 185 corrections、online 191となり`FAIL_NO_GAIN`。[T0b report](../../research/analysis/image_jacobian_adaptation_7765_t0b_20261005/REPORT.md) · [A02 calibration record](../../research/analysis/image_jacobian_adaptation_7765_t0b_cal_a02_20261005/README.md)
+- **境界:** 有限の作者作成simulatorとfeature oracleのみ。GUI、遅延/遮蔽、task effect、実actuationや製品便益の結果ではない。T0のHOLD、A01のSTOP、T0bのno-gainを一つのPASS/FAILへまとめない。
+
 ## 比較実験の条件
 
 - **H:** gridやpackingが、正確さを保ち対象指定・観測往復・待ち時間・費用の少なくとも指定した一つを改善する。
