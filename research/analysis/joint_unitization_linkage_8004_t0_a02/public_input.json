@@ -1,0 +1,716 @@
+{
+  "protocol": "issue-8004-t0-a02-v1",
+  "scenarios": [
+    {
+      "analysis_sets": {
+        "clean": [
+          "exact"
+        ]
+      },
+      "channels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "combinations": [
+        {
+          "id": "exact",
+          "linkage": "exact",
+          "segmentation": "exact"
+        }
+      ],
+      "decision_threshold_multi_channel": 3,
+      "linkage_sets": {
+        "exact": {
+          "exact": [
+            {
+              "edge_id": "clean-e1-ab",
+              "left": "A:ca",
+              "right": "B:cb"
+            },
+            {
+              "edge_id": "clean-e1-ac",
+              "left": "A:ca",
+              "right": "C:cc"
+            },
+            {
+              "edge_id": "clean-e2-ab",
+              "left": "A:da",
+              "right": "B:db"
+            },
+            {
+              "edge_id": "clean-e3-ac",
+              "left": "A:ea",
+              "right": "C:ec"
+            }
+          ]
+        }
+      },
+      "missing_intervals": [],
+      "raw_records": [
+        {
+          "channel": "A",
+          "end": 2,
+          "record_id": "ca",
+          "right_censored": false,
+          "start": 1,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 2,
+          "record_id": "cb",
+          "right_censored": false,
+          "start": 1,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 2,
+          "record_id": "cc",
+          "right_censored": false,
+          "start": 1,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "A",
+          "end": 6,
+          "record_id": "da",
+          "right_censored": false,
+          "start": 5,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 6,
+          "record_id": "db",
+          "right_censored": false,
+          "start": 5,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "A",
+          "end": 10,
+          "record_id": "ea",
+          "right_censored": false,
+          "start": 9,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 10,
+          "record_id": "ec",
+          "right_censored": false,
+          "start": 9,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 15,
+          "record_id": "fb",
+          "right_censored": false,
+          "start": 14,
+          "trace_id": "trace-main"
+        }
+      ],
+      "scenario_id": "clean_unique_ids",
+      "segmentations": {
+        "exact": {
+          "ca": "ca",
+          "cb": "cb",
+          "cc": "cc",
+          "da": "da",
+          "db": "db",
+          "ea": "ea",
+          "ec": "ec",
+          "fb": "fb"
+        }
+      },
+      "source_dependence_groups": {
+        "A": "independent-A",
+        "B": "independent-B",
+        "C": "independent-C",
+        "D": "independent-D"
+      }
+    },
+    {
+      "analysis_sets": {
+        "boundary_only": [
+          "merged_hard",
+          "split_hard"
+        ],
+        "joint": [
+          "merged_hard",
+          "split_hard",
+          "merged_ambiguous",
+          "split_ambiguous"
+        ],
+        "linkage_only": [
+          "merged_hard",
+          "merged_ambiguous"
+        ]
+      },
+      "channels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "combinations": [
+        {
+          "id": "merged_hard",
+          "linkage": "hard",
+          "segmentation": "merged"
+        },
+        {
+          "id": "split_hard",
+          "linkage": "hard",
+          "segmentation": "split"
+        },
+        {
+          "id": "merged_ambiguous",
+          "linkage": "ambiguous",
+          "segmentation": "merged"
+        },
+        {
+          "id": "split_ambiguous",
+          "linkage": "ambiguous",
+          "segmentation": "split"
+        }
+      ],
+      "decision_threshold_multi_channel": 3,
+      "linkage_sets": {
+        "ambiguous": {
+          "merged": [
+            {
+              "edge_id": "m_ab_right",
+              "left": "A:a_pair",
+              "right": "B:b_right"
+            },
+            {
+              "edge_id": "m_ac_left",
+              "left": "A:a_pair",
+              "right": "C:c_left"
+            },
+            {
+              "edge_id": "stable_ac",
+              "left": "A:a_stable",
+              "right": "C:c_stable"
+            }
+          ],
+          "split": [
+            {
+              "edge_id": "s_ab_left",
+              "left": "A:a_left",
+              "right": "B:b_left"
+            },
+            {
+              "edge_id": "s_ac_left",
+              "left": "A:a_left",
+              "right": "C:c_left"
+            },
+            {
+              "edge_id": "stable_ac",
+              "left": "A:a_stable",
+              "right": "C:c_stable"
+            },
+            {
+              "edge_id": "s_ab_right",
+              "left": "A:a_right",
+              "right": "B:b_right"
+            }
+          ]
+        },
+        "hard": {
+          "merged": [
+            {
+              "edge_id": "m_ab_left",
+              "left": "A:a_pair",
+              "right": "B:b_left"
+            },
+            {
+              "edge_id": "m_ac_left",
+              "left": "A:a_pair",
+              "right": "C:c_left"
+            },
+            {
+              "edge_id": "stable_ac",
+              "left": "A:a_stable",
+              "right": "C:c_stable"
+            }
+          ],
+          "split": [
+            {
+              "edge_id": "s_ab_left",
+              "left": "A:a_left",
+              "right": "B:b_left"
+            },
+            {
+              "edge_id": "s_ac_left",
+              "left": "A:a_left",
+              "right": "C:c_left"
+            },
+            {
+              "edge_id": "stable_ac",
+              "left": "A:a_stable",
+              "right": "C:c_stable"
+            }
+          ]
+        }
+      },
+      "missing_intervals": [
+        {
+          "channel": "D",
+          "end": 53,
+          "reason": "telemetry_gap",
+          "start": 48
+        }
+      ],
+      "raw_records": [
+        {
+          "channel": "A",
+          "end": 12,
+          "record_id": "a_left",
+          "right_censored": false,
+          "start": 10,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "A",
+          "end": 22,
+          "record_id": "a_right",
+          "right_censored": false,
+          "start": 20,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "A",
+          "end": 32,
+          "record_id": "a_stable",
+          "right_censored": false,
+          "start": 30,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "A",
+          "end": 52,
+          "record_id": "a_gap",
+          "right_censored": false,
+          "start": 50,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 12,
+          "record_id": "b_left",
+          "right_censored": false,
+          "start": 10,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 22,
+          "record_id": "b_right",
+          "right_censored": false,
+          "start": 20,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 35,
+          "record_id": "b_only",
+          "right_censored": false,
+          "start": 34,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 45,
+          "record_id": "b_overlap",
+          "right_censored": false,
+          "start": 40,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 12,
+          "record_id": "c_left",
+          "right_censored": false,
+          "start": 10,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 32,
+          "record_id": "c_stable",
+          "right_censored": false,
+          "start": 30,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 37,
+          "record_id": "c_only",
+          "right_censored": false,
+          "start": 36,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 47,
+          "record_id": "c_overlap",
+          "right_censored": false,
+          "start": 42,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "D",
+          "end": 39,
+          "record_id": "d_only",
+          "right_censored": false,
+          "start": 38,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "D",
+          "end": 60,
+          "record_id": "d_censored",
+          "right_censored": true,
+          "start": 58,
+          "trace_id": "trace-main"
+        }
+      ],
+      "scenario_id": "joint_boundary_linkage_independent_sources",
+      "segmentations": {
+        "merged": {
+          "a_gap": "a_gap",
+          "a_left": "a_pair",
+          "a_right": "a_pair",
+          "a_stable": "a_stable",
+          "b_left": "b_left",
+          "b_only": "b_only",
+          "b_overlap": "b_overlap",
+          "b_right": "b_right",
+          "c_left": "c_left",
+          "c_only": "c_only",
+          "c_overlap": "c_overlap",
+          "c_stable": "c_stable",
+          "d_censored": "d_censored",
+          "d_only": "d_only"
+        },
+        "split": {
+          "a_gap": "a_gap",
+          "a_left": "a_left",
+          "a_right": "a_right",
+          "a_stable": "a_stable",
+          "b_left": "b_left",
+          "b_only": "b_only",
+          "b_overlap": "b_overlap",
+          "b_right": "b_right",
+          "c_left": "c_left",
+          "c_only": "c_only",
+          "c_overlap": "c_overlap",
+          "c_stable": "c_stable",
+          "d_censored": "d_censored",
+          "d_only": "d_only"
+        }
+      },
+      "source_dependence_groups": {
+        "A": "independent-A",
+        "B": "independent-B",
+        "C": "independent-C",
+        "D": "independent-D"
+      }
+    },
+    {
+      "analysis_sets": {
+        "boundary_only": [
+          "merged_hard",
+          "split_hard"
+        ],
+        "joint": [
+          "merged_hard",
+          "split_hard",
+          "merged_ambiguous",
+          "split_ambiguous"
+        ],
+        "linkage_only": [
+          "merged_hard",
+          "merged_ambiguous"
+        ]
+      },
+      "channels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "combinations": [
+        {
+          "id": "merged_hard",
+          "linkage": "hard",
+          "segmentation": "merged"
+        },
+        {
+          "id": "split_hard",
+          "linkage": "hard",
+          "segmentation": "split"
+        },
+        {
+          "id": "merged_ambiguous",
+          "linkage": "ambiguous",
+          "segmentation": "merged"
+        },
+        {
+          "id": "split_ambiguous",
+          "linkage": "ambiguous",
+          "segmentation": "split"
+        }
+      ],
+      "decision_threshold_multi_channel": 3,
+      "linkage_sets": {
+        "ambiguous": {
+          "merged": [
+            {
+              "edge_id": "m_ab_right",
+              "left": "A:a_pair",
+              "right": "B:b_right"
+            },
+            {
+              "edge_id": "m_ac_left",
+              "left": "A:a_pair",
+              "right": "C:c_left"
+            },
+            {
+              "edge_id": "stable_ac",
+              "left": "A:a_stable",
+              "right": "C:c_stable"
+            }
+          ],
+          "split": [
+            {
+              "edge_id": "s_ab_left",
+              "left": "A:a_left",
+              "right": "B:b_left"
+            },
+            {
+              "edge_id": "s_ac_left",
+              "left": "A:a_left",
+              "right": "C:c_left"
+            },
+            {
+              "edge_id": "stable_ac",
+              "left": "A:a_stable",
+              "right": "C:c_stable"
+            },
+            {
+              "edge_id": "s_ab_right",
+              "left": "A:a_right",
+              "right": "B:b_right"
+            }
+          ]
+        },
+        "hard": {
+          "merged": [
+            {
+              "edge_id": "m_ab_left",
+              "left": "A:a_pair",
+              "right": "B:b_left"
+            },
+            {
+              "edge_id": "m_ac_left",
+              "left": "A:a_pair",
+              "right": "C:c_left"
+            },
+            {
+              "edge_id": "stable_ac",
+              "left": "A:a_stable",
+              "right": "C:c_stable"
+            }
+          ],
+          "split": [
+            {
+              "edge_id": "s_ab_left",
+              "left": "A:a_left",
+              "right": "B:b_left"
+            },
+            {
+              "edge_id": "s_ac_left",
+              "left": "A:a_left",
+              "right": "C:c_left"
+            },
+            {
+              "edge_id": "stable_ac",
+              "left": "A:a_stable",
+              "right": "C:c_stable"
+            }
+          ]
+        }
+      },
+      "missing_intervals": [
+        {
+          "channel": "D",
+          "end": 53,
+          "reason": "telemetry_gap",
+          "start": 48
+        }
+      ],
+      "raw_records": [
+        {
+          "channel": "A",
+          "end": 12,
+          "record_id": "a_left",
+          "right_censored": false,
+          "start": 10,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "A",
+          "end": 22,
+          "record_id": "a_right",
+          "right_censored": false,
+          "start": 20,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "A",
+          "end": 32,
+          "record_id": "a_stable",
+          "right_censored": false,
+          "start": 30,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "A",
+          "end": 52,
+          "record_id": "a_gap",
+          "right_censored": false,
+          "start": 50,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 12,
+          "record_id": "b_left",
+          "right_censored": false,
+          "start": 10,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 22,
+          "record_id": "b_right",
+          "right_censored": false,
+          "start": 20,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 35,
+          "record_id": "b_only",
+          "right_censored": false,
+          "start": 34,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "B",
+          "end": 45,
+          "record_id": "b_overlap",
+          "right_censored": false,
+          "start": 40,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 12,
+          "record_id": "c_left",
+          "right_censored": false,
+          "start": 10,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 32,
+          "record_id": "c_stable",
+          "right_censored": false,
+          "start": 30,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 37,
+          "record_id": "c_only",
+          "right_censored": false,
+          "start": 36,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "C",
+          "end": 47,
+          "record_id": "c_overlap",
+          "right_censored": false,
+          "start": 42,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "D",
+          "end": 39,
+          "record_id": "d_only",
+          "right_censored": false,
+          "start": 38,
+          "trace_id": "trace-main"
+        },
+        {
+          "channel": "D",
+          "end": 60,
+          "record_id": "d_censored",
+          "right_censored": true,
+          "start": 58,
+          "trace_id": "trace-main"
+        }
+      ],
+      "scenario_id": "joint_boundary_linkage_shared_AB",
+      "segmentations": {
+        "merged": {
+          "a_gap": "a_gap",
+          "a_left": "a_pair",
+          "a_right": "a_pair",
+          "a_stable": "a_stable",
+          "b_left": "b_left",
+          "b_only": "b_only",
+          "b_overlap": "b_overlap",
+          "b_right": "b_right",
+          "c_left": "c_left",
+          "c_only": "c_only",
+          "c_overlap": "c_overlap",
+          "c_stable": "c_stable",
+          "d_censored": "d_censored",
+          "d_only": "d_only"
+        },
+        "split": {
+          "a_gap": "a_gap",
+          "a_left": "a_left",
+          "a_right": "a_right",
+          "a_stable": "a_stable",
+          "b_left": "b_left",
+          "b_only": "b_only",
+          "b_overlap": "b_overlap",
+          "b_right": "b_right",
+          "c_left": "c_left",
+          "c_only": "c_only",
+          "c_overlap": "c_overlap",
+          "c_stable": "c_stable",
+          "d_censored": "d_censored",
+          "d_only": "d_only"
+        }
+      },
+      "source_dependence_groups": {
+        "A": "shared-pipeline-1",
+        "B": "shared-pipeline-1",
+        "C": "independent-C",
+        "D": "independent-D"
+      }
+    }
+  ]
+}
