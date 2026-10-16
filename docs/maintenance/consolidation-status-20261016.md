@@ -141,7 +141,7 @@ Issue #8648と最新コメント、PR #8827を再照合した。C01はWSLc初期
 
 ### r41：#8186の未リンクreview証拠を索引・保全（2026-10-17）
 
-`review/8186-response-ownership-e0cc-20261007`のtip `e06245cb78059086f7f0e7179c1e8fa59ac2bd6f`を再確認した。unprotected、全PRのhead/base参照なし、ローカルworktreeなし。closed PR #8186を対象とする独立reviewの4-file packetで、READMEはnumeric reply compatibility回帰とpre-send ownership gapへのREQUEST_CHANGESを記録する。`evidence.tar.xz`の17,944 bytes / SHA-256 `48e64f53d87a33db7ab4ab59513beb332dbd1acacd067f1b62ebc1d3540e7ad4`とmanifestの71 member hashesを検証した。レビュー対象コード・packet内プログラムは実行せず、4 fileを元のGit blobどおり`research/live_control/review_response_ownership_8186_e0cc_20261007/`へ保全し、研究・アイデア索引を追加した。PR #7254はOPEN Draft、#8186はclosed-unmerged。source変更を適用したとは主張せず、branchは保全PRがmainへ入るまで維持する。
+Historical snapshot: branch tip `e06245cb78059086f7f0e7179c1e8fa59ac2bd6f` was unprotected with zero PR refs and no local worktree in the audit clone. Its four-file independent review packet records `REQUEST_CHANGES` for numeric reply compatibility and pre-send ownership. The packet was kept byte-identical and the branch was later removed after the source tip was tagged; see r64. #8186 was closed unmerged and superseded by merged #8298; the original #7094/#7125/#7140 source branches remain unchanged.
 
 ### r40：p4n7の未参照hash-manifest branchをmainへ保全しref整理（2026-10-17）
 
