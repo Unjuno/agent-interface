@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r44：#8678をcurrent-main基準へ整列（2026-10-17）
+
+PR #8678は旧`docs/CURRENT_GOAL.md`全体を差分に含み、base衝突で`DIRTY`だった。branch `research/59-live-threat-guard-a01-20261009`をcurrent main `1ece47014d05db898bf73afcd722a14524462e15`へrebaseし、履歴的な長文方向は採用せずcurrent mainの短いgoal entryを維持した。実験記録29ファイル/8,946行追加は保持され、head `7551424026375469f609754140250f89bf09cad4`でPRは`CLEAN`、必須replay-gate PASS。A02のruntime failureと`formal_pass: false`は未変更で、merge・再実験は行っていない。独立レビュー待ち。
+
 ### r43：#8648 C01/C02の別々の結果とsource branchを記録（2026-10-17）
 
 Issue #8648と最新コメント、PR #8827を再照合した。C01はWSLc初期化時に止まりcandidate/auditor 0/0で、A01 raw欠落を理由に再実行していない。C02は別のcurrent-main freezeとhost CPython allocationで、288 profiles / 6,048 endpointsの監査、5/5 mutation reject、3つのcoupled held-out settingsで`PASS_METHOD_SCOPED` / `H_PASS_SCOPED`を記録する。PR #8827はOPEN、全必須check success、未merge。`research/8638-split-control-voi-a01-20261008`のtip `16d846740645a338ea11ac70c8e4e931b71f1408`を再確認。unprotected、PR参照0、checkoutなしで、C01 candidate/auditorの唯一のsourceがmainにない。これはC02で代替されず、Issueのraw-custody境界も未解決のためsource branchは保持する。C01 source、候補、監査器は実行していない。
