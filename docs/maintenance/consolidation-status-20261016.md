@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r34：4件のプライバシー・制御・通信研究を整理（2026-10-17）
+
+#5413の3つのfinite construction結果と未解決のruntime-enforcer仮説、#5420のrandomized-response T1とconditional-kernel T0、#5433のconstruction-only/正式未実行、#5907のarchive-level source-eligibility HOLDを区別して索引化した。特に#5907は調査した2 archiveに限る結論とし、全archiveへの一般化を避けた。candidate/model/provider/GUIの新規実行なし。
+
 ### r33：3件の監査後続結果と2本の枝の保全を索引化（2026-10-17）
 
 #6311/#6306は原T5 HOLD・#6306 parser STOPと、#6311 audit-only PASSを別々に記録した。#6169は#6164のFAIL_AUDITを保った上で、merged #6171のraw-only count reconstructionを限定範囲で追記した。#5911の二つのfinite route-selector結果は分離して記録。併せてGitHub上の旧branch ref二本の不在と、archive tagが各元tip SHAを指すことを確認した。candidateやauditorの再実行はしていない。
