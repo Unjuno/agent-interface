@@ -4,6 +4,17 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r52：#5935のallocation-localなC01重複記録へ修正（2026-10-17）
+
+Issue #5935 comment [#6015047863](https://github.com/Unjuno/agent-interface/issues/5935#issuecomment-6015047863)を編集し、
+既存の2026-10-01 T0結果が正本、後続確認はformal rows 0件、枝はpreformal metadataのみ、という事実を保持した。
+誤解を招く停止ラベルは除き、当該コメントがC01の重複確認だけを記録し、他allocation/workを停止させないことを明記した。
+再取得で旧ラベルがコメントに残らないことを確認した。
+
+`research/predictive-display-t0-5935-20261006-v1`はIssue #5935から参照される4-file sourceであり、
+no PR refs・unprotected・登録worktreeなしだが、既存T0の重複確認に使ったfreeze metadataの来歴である。
+`unlinked-branch-review-20261016.csv`で汎用の未判定を`RETAIN_ISSUE_CITED_SOURCE`へ変更し、枝自体は削除していない。
+
 ### r51：#8648 C01のIssue引用sourceをbranch台帳で識別（2026-10-17）
 
 remoteに残る`research/8648-hysteresis-c01-20261009`のtip `4ce63dfedcdef07d1763147dfc2575fc46077aa1`を
