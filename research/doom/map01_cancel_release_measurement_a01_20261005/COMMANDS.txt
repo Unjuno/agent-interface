@@ -1,0 +1,7 @@
+Frozen host commands (each once, sequentially):
+
+/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 run_cancel.py > candidate.log 2>&1; printf '%s\n' "$?" > candidate.exit
+/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 audit.py > audit.log 2>&1; printf '%s\n' "$?" > audit.exit
+
+Working directory: repository root.
+No X server, game, GUI, or OS-level input is used.
