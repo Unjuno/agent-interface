@@ -287,6 +287,38 @@ separate hypotheses and must keep separate evidence and decisions.
   auditor against constructed fixtures before any deep outcomes. This boundary
   applies to #8914 only and does not suspend other repository work.
 
+## 12. Epistemic-action diagnostics and CLI custody — #8623/#8629/#8635
+
+- **Status:** The three Issues remain open. Preserve #8623's historical result
+  and later custody hold, #8629's consumed execution STOP, and #8635's
+  construction-only repair separately.
+- **Question:** Can independently authored held-out policies reveal which
+  epistemic-action competencies aggregate task success conceals? #8629 adds
+  independent task generation and raw-only auditing to the finite authored
+  method proposed by #8623; it does not establish real-agent competence.
+- **#8623 record:** A01's `PASS_METHOD_SCOPED` / `H_PASS_SCOPED` remains a
+  historical report, but integration review found its formal run, raw candidate,
+  raw audit and stderr streams absent from every PR commit. PR #8628 was
+  returned to Draft with `HOLD_RESULT_CUSTODY`; the consumed allocation must
+  not be rerun to recreate outputs.
+- **#8629 record:** The one-shot A01 candidate exited 1 on an undefined
+  `select_action`; the auditor then exited 1 parsing empty input. Candidate and
+  auditor each ran once, retries were zero, no scientific rows were emitted,
+  and the disposition is `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`. Merged PR
+  [#8634](https://github.com/Unjuno/agent-interface/pull/8634) preserves the
+  exact failure; no retry or hypothesis inference follows.
+- **#8635 record:** The successor construction packet fixed the CLI integration
+  gap; actual candidate/auditor CLI tests passed and the construction suite
+  passed 22/22 in normal and optimized Python. Merged PR
+  [#8639](https://github.com/Unjuno/agent-interface/pull/8639) records only
+  construction checks. Formal counts remain 0/0 and the packet is not frozen
+  while shared WSLc ownership remains HOLD under #5085. Host execution or
+  another container method is not a substitute for the registered gate.
+- **Next decision:** Reconcile the shared runtime gate, then create a fresh
+  current-main allocation with a complete freeze and independently authored
+  task generator, policies, and auditor. This page does not authorize that
+  execution or alter any prior allocation.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
