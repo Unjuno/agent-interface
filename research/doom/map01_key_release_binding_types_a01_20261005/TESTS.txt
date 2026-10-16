@@ -1,0 +1,11 @@
+Focused regression:
+python -m pytest research/doom/map01_key_release_binding_types_a01_20261005/test_type_aliases.py -q
+Python 3.11 host; exit 0; 5 passed.
+
+Byte compilation:
+python -m py_compile research/doom/map01_key_release_binding_types_a01_20261005/candidate.py research/doom/map01_key_release_binding_types_a01_20261005/audit.py research/doom/map01_key_release_binding_types_a01_20261005/test_type_aliases.py
+Python 3.11 host; exit 0.
+
+Full repository test discovery:
+python -m pytest -q
+Python 3.11 host; exit 1 during collection with 66 errors. The sparse worktree omits paths required by other tests and the host Python cannot import PIL.Image. No test reached the new package's scoped candidate/audit boundary because collection stopped early. This run is not evidence of a code regression or repository-wide pass.
