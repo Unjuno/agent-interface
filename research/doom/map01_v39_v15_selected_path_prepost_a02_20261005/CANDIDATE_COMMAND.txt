@@ -1,0 +1,1 @@
+python -u candidate.py 1> run/candidate.stdout 2> run/candidate.stderr; $code = $LASTEXITCODE; [IO.File]::WriteAllText('run/candidate.exit', [string]$code + "`n")
