@@ -63,3 +63,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Producer-side dispatch pacing](producer-side-dispatch-pacing.md) — records #8916's unverified simulator-only comparison against immediate and reactive queue-aware policies.
 
 - [Delegation-membership identifiability](delegation-membership-identifiability.md) — indexes #8915's unverified identical-trace discriminator without conflating membership, event causality, and actor attribution.
+
+- [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
