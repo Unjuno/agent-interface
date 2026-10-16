@@ -70,6 +70,12 @@ Issue #7387/#7367/#7162/#7161のcanonical packageとfollow-up auditを確認し�
 #7367のA01 workload-binding gap/A02 audit-only再検証、#7162のcanonical T0とduplicate #7679、#7161のcorrective audit-v2を区別した。
 model-facing・real GUIの効果や認証されていないevent historyを主張していない。
 
+### r29：4件のlayer-identity・prefix-certificate結果を索引化（2026-10-16）
+
+Issue #6843/#6841/#6838/#6809と正式結果を確認した。#6838 A01のrecursive auditor failure、#6841 A02のmutation HOLD、
+#6843 A03のcorrected audit-only reconciliationを連結しつつ、過去allocationの disposition は維持した。
+#6809 A04のordered-prefix method PASSは#6689系の旧FAIL/STOPと分けて記載した。
+
 ### r17：4件のオブジェクト記憶・復旧Issueを索引化（2026-10-16）
 
 Issue #7164/#7163/#7160/#7042を、正式コメントと現行PR状態で照合した。#7164はopen Draft #8216の
