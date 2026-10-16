@@ -4,6 +4,14 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r53：#8914 open PR worktreeのignored状態を記録（2026-10-17）
+
+登録worktree `/private/tmp/agent-interface-8914-a01` はbranch
+`research/8914-budgeted-discovery-t0-a01-20261016`、HEAD `b322368ba0da7116bde171de47dee70d2a938ee3`。
+PR #9007は同じheadでOPEN/CLEAN。tracked treeに変更はなく、ignored項目はA01/A02各packageの
+`__pycache__/`だけだった。open PRのworktreeは保持し、ignored内容も削除せず、現状を
+`dirty-worktree-review-20261016.csv`へ追記した。
+
 ### r52：#5935のallocation-localなC01重複記録へ修正（2026-10-17）
 
 Issue #5935 comment [#6015047863](https://github.com/Unjuno/agent-interface/issues/5935#issuecomment-6015047863)を編集し、
