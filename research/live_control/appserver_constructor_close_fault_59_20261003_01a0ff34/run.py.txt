@@ -1,0 +1,19 @@
+from pathlib import Path
+import datetime, hashlib, json, subprocess, sys
+p=Path(__file__).resolve().parent
+def run(name):
+    receipt=p/(name+'.receipt.json')
+    if receipt.exists(): raise RuntimeError('previous launch retained: '+name)
+    rec={'command':[sys.executable,'-X','utf8',str(p/(name+'.py'))],'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pid':None,'exit':None}
+    receipt.write_bytes(json.dumps(rec).encode()+b'\n')
+    child=subprocess.Popen(rec['command'],cwd=p,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    rec['pid']=child.pid
+    receipt.write_bytes(json.dumps(rec).encode()+b'\n')
+    out,err=child.communicate(timeout=10)
+    if len(out)>65536 or len(err)>65536: raise RuntimeError('output cap')
+    (p/(name+'.stdout')).write_bytes(out); (p/(name+'.stderr')).write_bytes(err)
+    rec.update({'finished_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit':child.returncode,'stdout_bytes':len(out),'stderr_bytes':len(err),'stdout_sha256':hashlib.sha256(out).hexdigest(),'stderr_sha256':hashlib.sha256(err).hexdigest()})
+    receipt.write_bytes(json.dumps(rec,sort_keys=True,indent=2).encode()+b'\n')
+    print(json.dumps(rec))
+    if child.returncode: raise RuntimeError('first child failure retained '+name)
+run(sys.argv[1])

@@ -1,0 +1,74 @@
+{
+  "cells": 18,
+  "copied_controls_rejected": [
+    {
+      "field": "fd_open_at_exception",
+      "index": 0,
+      "reason": "current-OSError-healthy fd_open_at_exception"
+    },
+    {
+      "field": "close_attempts",
+      "index": 0,
+      "reason": "current-OSError-healthy close_attempts"
+    },
+    {
+      "field": "raised_type",
+      "index": 4,
+      "reason": "current-KeyboardInterrupt-before raised_type"
+    },
+    {
+      "field": "primary_identity",
+      "index": 7,
+      "reason": "naive-OSError-before primary_identity"
+    },
+    {
+      "field": "cleanup_identity",
+      "index": 7,
+      "reason": "naive-OSError-before cleanup_identity"
+    },
+    {
+      "field": "context_is_primary",
+      "index": 7,
+      "reason": "naive-OSError-before context_is_primary"
+    },
+    {
+      "field": "fd_open_at_exception",
+      "index": 8,
+      "reason": "naive-OSError-after fd_open_at_exception"
+    },
+    {
+      "field": "notes",
+      "index": 13,
+      "reason": "protected-OSError-before notes"
+    },
+    {
+      "field": "fd_open_at_exception",
+      "index": 13,
+      "reason": "protected-OSError-before fd_open_at_exception"
+    },
+    {
+      "field": "textio_closed_at_exception",
+      "index": 14,
+      "reason": "protected-OSError-after textio_closed_at_exception"
+    },
+    {
+      "field": "fd_open_after_driver_cleanup",
+      "index": 17,
+      "reason": "protected-KeyboardInterrupt-after fd_open_after_driver_cleanup"
+    },
+    {
+      "field": "factory_calls",
+      "index": 0,
+      "reason": "current-OSError-healthy factory_calls"
+    }
+  ],
+  "current_no_cleanup": 6,
+  "driver_final_open_fds": 0,
+  "naive_cleanup_masks_primary": 4,
+  "pid": 33512,
+  "primary_preserved_protected": 6,
+  "raw_sha256": "a20095516f2dd70759e84d27da367a54df5c737419d49f7b320ff2b9017964ae",
+  "scope": "Injected cooperative fault/reference only; notes are diagnosis, not resource release or finite recovery.",
+  "source_closes_fd": 8,
+  "status": "PRIMARY_MASKING_COUNTEREXAMPLE_WITH_SEPARATE_RESOURCE_OUTCOME"
+}

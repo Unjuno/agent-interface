@@ -1,0 +1,60 @@
+from pathlib import Path
+import builtins, datetime, hashlib, json, os, types
+p=Path(__file__).resolve().parent
+freeze=json.loads((p/'FREEZE.json').read_bytes())
+for name,pin in freeze['files'].items():
+    b=(p/name).read_bytes()
+    if len(b)!=pin['bytes'] or hashlib.sha256(b).hexdigest()!=pin['sha256']: raise RuntimeError('pin mismatch '+name)
+class CleanupFault(OSError): pass
+def fd_open(fd):
+    try: os.fstat(fd); return True
+    except OSError: return False
+class Journal:
+    def __init__(self,real,mode,error): self.real=real; self.mode=mode; self.error=error; self.attempts=0; self.fd=real.fileno()
+    def close(self):
+        self.attempts+=1
+        if self.mode=='before': raise self.error
+        self.real.close()
+        if self.mode=='after': raise self.error
+    def __getattr__(self,name): return getattr(self.real,name)
+rows=[]
+for variant in freeze['order']['variants']:
+    for primary_name in freeze['order']['primary']:
+        for close_mode in freeze['order']['close']:
+            key=variant+'-'+primary_name+'-'+close_mode
+            module=types.ModuleType(key)
+            source=(p/(variant+'.py.txt')).read_bytes()
+            exec(compile(source,str(p/(variant+'.py.txt')),'exec'),module.__dict__)
+            primary=(OSError if primary_name=='OSError' else KeyboardInterrupt)('owned inert process-factory refusal')
+            secondary=CleanupFault('owned injected journal-close refusal')
+            journal=None
+            calls=0
+            def owned_open(path,*args,**kwargs):
+                global journal
+                journal=Journal(builtins.open(path,*args,**kwargs),close_mode,secondary)
+                return journal
+            def factory(*args,**kwargs):
+                global calls
+                calls+=1
+                raise primary
+            module.open=owned_open
+            started=datetime.datetime.now(datetime.timezone.utc).isoformat()
+            raised=None
+            try:
+                module.CodexAppServerClient(['inert-no-process'],process_factory=factory,journal_path=p/(key+'.journal'))
+            except BaseException as error:
+                raised=error
+                frames=[]
+                tb=error.__traceback__
+                while tb:
+                    frames.append({'function':tb.tb_frame.f_code.co_name,'line':tb.tb_lineno})
+                    tb=tb.tb_next
+            if raised is None or journal is None: raise RuntimeError('unexpected constructor completion '+key)
+            row={'cell':key,'variant':variant,'primary':primary_name,'close_mode':close_mode,'factory_calls':calls,'raised_type':type(raised).__name__,'primary_identity':raised is primary,'cleanup_identity':raised is secondary,'context_is_primary':raised.__context__ is primary,'notes':getattr(raised,'__notes__',[]),'close_attempts':journal.attempts,'fd_open_at_exception':fd_open(journal.fd),'textio_closed_at_exception':journal.real.closed,'frames':frames,'started_utc':started,'finished_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'processes_started':0}
+            journal.real.close()
+            row['fd_open_after_driver_cleanup']=fd_open(journal.fd)
+            row['textio_closed_after_driver_cleanup']=journal.real.closed
+            row['journal_bytes']=(p/(key+'.journal')).stat().st_size
+            with (p/'RAW.jsonl').open('ab') as sink: sink.write(json.dumps(row,ensure_ascii=True,sort_keys=True).encode()+b'\n')
+            rows.append(row)
+print(json.dumps({'cells':len(rows),'pid':os.getpid(),'raw_sha256':hashlib.sha256((p/'RAW.jsonl').read_bytes()).hexdigest(),'processes_started':0}))

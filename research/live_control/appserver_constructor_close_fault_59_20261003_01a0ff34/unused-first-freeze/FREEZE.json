@@ -1,0 +1,59 @@
+{
+  "ast_other_methods_equal": 15,
+  "base": "e74cfc78b84d286ff3faabf2696129b988655c1b",
+  "cells": 18,
+  "claim": 5969150279,
+  "decision": "original primary object survives protected; naive masks primary when close faults; native fd before/after separate; all driver-owned files closed; healthy controls first; stop on infrastructure error, retain partial raw, no collector replay",
+  "files": {
+    "collect.py": {
+      "bytes": 3605,
+      "sha256": "ccb2339939acf31b44117f11067c06c1b16eb99c642024beb1f6586cd27a3059"
+    },
+    "current.py.txt": {
+      "bytes": 6195,
+      "sha256": "f1c2aef43a4a71fcde12697b5fa7b659d65b8a2869fe6ccde486110da4ca3b71"
+    },
+    "naive.py.txt": {
+      "bytes": 6348,
+      "sha256": "de0e595adb9b702015d7fb168212bb809734d00da2251cc60a0099a9519535bc"
+    },
+    "oracle.py": {
+      "bytes": 2569,
+      "sha256": "9621536fe2aff0b906e34b7dfc947f4dfb745cbcd1c18020b5d24c7c58cb647a"
+    },
+    "protected.py.txt": {
+      "bytes": 6572,
+      "sha256": "55fad4bbcd5144abb68f0a524b2e2048552641790568a5f2a612482408e49180"
+    },
+    "run.py": {
+      "bytes": 1294,
+      "sha256": "243c287f015156f88f6d659fe829268ac043ddd53043cf960af6d18561c95f05"
+    }
+  },
+  "id": "59-CONSTRUCTOR-CLOSE-FAULT-01A0FF34-A02-20261003",
+  "kind": "ordinary injected cooperative cleanup-fault/native-file boundary",
+  "limits": {
+    "actual_server": 0,
+    "children": 0,
+    "collector_cap_seconds": 10,
+    "gui_input": 0,
+    "stream_cap_bytes": 65536
+  },
+  "limits_text": "proxy owner retains handles for instrumentation; no new retained-traceback lifetime claim; cooperative faults only; no native process/thread acquisition, close deadline, hostile add_note, task/input/recovery efficacy or production adoption",
+  "order": {
+    "close": [
+      "healthy",
+      "before",
+      "after"
+    ],
+    "primary": [
+      "OSError",
+      "KeyboardInterrupt"
+    ],
+    "variants": [
+      "current",
+      "naive",
+      "protected"
+    ]
+  }
+}

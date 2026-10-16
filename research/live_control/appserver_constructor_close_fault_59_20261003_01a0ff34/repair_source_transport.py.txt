@@ -1,0 +1,9 @@
+from pathlib import Path
+import hashlib,json,shutil
+p=Path(__file__).resolve().parent
+d=p/'unused-first-freeze';d.mkdir()
+for n in ['current.py.txt','naive.py.txt','protected.py.txt','FREEZE.json']: shutil.copyfile(p/n,d/n)
+b=json.loads((p/'source-transport.json').read_bytes())['source'].encode('utf-8')
+assert len(b)==6194 and hashlib.sha256(b).hexdigest()=='6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e'
+(p/'current.py.txt').write_bytes(b)
+print(json.dumps({'reason':'patch transport added one extra LF; caught before any subject execution','source_bytes':len(b),'source_sha256':hashlib.sha256(b).hexdigest(),'subject_executions_before_repair':0}))
