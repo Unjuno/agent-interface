@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r70: archive merged release-composition branch (2026-10-17)
+
+The unreferenced `research/59-release-composition-a01-20261009` tip `e20345f04edbb5bd29925ab86e73b7114ec2520b` is an ancestor of current main `1ece47014d05db898bf73afcd722a14524462e15`. All-state PR search found #8691 as its merged head and #8693 as its merged base; exact-branch Issue search found no body/comment references, and the inspected primary clone had no registered worktree. An annotated tag, `archive/recovered/59-release-composition-a01-20261017`, preserves the exact tip and was verified by remote peel before expected-tip deletion. The snapshot row records the disposition. Current remote counts after this deletion: 584 branches and 521 open PRs. No tests or experiment were rerun for the branch cleanup.
+
 ### r69: archive and remove the superseded wake-pipe rescue ref (2026-10-17)
 
 The live branch `rescue/cancel-wake-17d0-20261004` was the head of closed, unmerged PR #7296, with no open PR head/base reference and no registration in the inspected 65-worktree primary clone. Merged PR #8764 already carries the evidence packet on main: all 15 immediate packet-tree entries and their nested tree/blob identities match; main additionally has `.gitattributes`. The exact old tip `1e933698f5d1973a5d4f8c0526f68df1c8720cd7` is preserved by annotated tag `archive/recovered/cancel-wake-17d0-source-20261017`; remote readback verified the peeled SHA and branch absence after an expected-tip deletion. Issue #672's 2026-10-09 retention note predates #7296's closure and #8764's merge, so it remains historical context. The candidate snapshot row now records the disposition. Current remote counts after deletion: 585 branches and 521 open PRs. No experiment was rerun.
