@@ -1,0 +1,54 @@
+{
+  "audit": "PASS_INDEPENDENT_REPLAY_SCOPED_POSTHOC_V2",
+  "calibration_false_alarms": {
+    "positive_queue_cusum": 0,
+    "recovery_duration_ratio": 0,
+    "rolling_maximum_service_margin_deficit": 0,
+    "rolling_mean_queue": 0,
+    "rolling_mode_transition_count": 0
+  },
+  "candidate_alarm_map_complete": false,
+  "candidate_episodes_with_alarm_map_mismatch": 288,
+  "decision": "HOLD_AUDIT",
+  "episodes": 288,
+  "event_rows": 23040,
+  "heldout_flicker_all_warned": true,
+  "heldout_flicker_median_lead_ticks": {
+    "positive_queue_cusum": 48.0,
+    "recovery_duration_ratio": 0.0,
+    "rolling_maximum_service_margin_deficit": 41.5,
+    "rolling_mean_queue": 43.5,
+    "rolling_mode_transition_count": 7.0
+  },
+  "heldout_flicker_n": 32,
+  "heldout_negative_control_false_alarms": {
+    "positive_queue_cusum": 0,
+    "recovery_duration_ratio": 0,
+    "rolling_maximum_service_margin_deficit": 0,
+    "rolling_mean_queue": 0,
+    "rolling_mode_transition_count": 0
+  },
+  "improves_over_all_comparators": false,
+  "mismatches": 0,
+  "mode_threshold_sensitivity": "NOT_APPLICABLE_SOURCE_BOUND_LABELS",
+  "mutation_controls": {
+    "alarm": "REJECTED",
+    "duplicate_cell": "REJECTED",
+    "endpoint": "REJECTED",
+    "queue_state": "REJECTED",
+    "safety_lane": "REJECTED",
+    "source_transition": "REJECTED",
+    "threshold": "REJECTED"
+  },
+  "mutation_controls_pass": true,
+  "negative_controls_alarm_free": true,
+  "reconstructed_method_gate": "FAIL_METHOD_SCOPED",
+  "safety_lane_invariants": "PASS_ALL_ROWS",
+  "thresholds": {
+    "positive_queue_cusum": 0.75,
+    "recovery_duration_ratio": 1.0,
+    "rolling_maximum_service_margin_deficit": 2,
+    "rolling_mean_queue": 3.0,
+    "rolling_mode_transition_count": 3
+  }
+}
