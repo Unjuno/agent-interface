@@ -74,6 +74,22 @@ class CancelRelayTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):registry.decode(dto)
         ROWS.append(dict(case='registry-binding',pending_cancel_sticky=True,changed_source_refused=True,retired_refused=True))
 
+    def test_secondary_channel_cleanup_cannot_skip_primary_channel(self):
+        import input_owner_process_v3 as owned
+        class Channel:
+            closed=False
+            def shutdown(self,_):pass
+            def close(self):self.closed=True
+        class Bad(Channel):
+            def shutdown(self,_):raise KeyboardInterrupt('cancel cleanup interruption')
+        main=Channel();cancel=Bad()
+        handle=owned.OwnedOwnerService(None,main,'.','inert-generation',os.getpid())
+        handle._cancel_channel=cancel
+        with self.assertRaises(KeyboardInterrupt):handle.close_channel()
+        self.assertTrue(main.closed,'primary transport still must close')
+        self.assertTrue(cancel.closed,'secondary close must follow shutdown fault')
+        ROWS.append(dict(case='paired-channel-cleanup',both_closed=True,primary_preserved=True,scope='inert channels; no process'))
+
     def test_cause_validation_rejects_unbound_or_false_release(self):
         dto=encode_lease(make_lease());record=dict(event='owner_release',reason='cancelled',intent_token=dto['intent_token'],
             valid_until_ns=dto['deadline_ns'],target_process_identity=dto['target_process_identity'],

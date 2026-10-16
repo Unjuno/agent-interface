@@ -88,8 +88,11 @@ class CancellationService:
                 self.registry.retire('control detach: '+type(error).__name__+': '+str(error))
 
     def close(self):
-        self.stop.set();rpc._detach_socket(self.sock);self.thread.join(3)
-        if self.thread.is_alive():raise RuntimeError('cancellation service thread remains owned')
+        self.stop.set()
+        def join():
+            self.thread.join(3)
+            if self.thread.is_alive():raise RuntimeError('cancellation service thread remains owned')
+        rpc._run_cleanups(lambda:rpc._detach_socket(self.sock),join)
         return dict(schema=SCHEMA+'-service',error=self.error,records=copy.deepcopy(self.records),
                     thread_stopped=True,grants_input_authority=False)
 
@@ -112,7 +115,8 @@ class CancellationClient:
         with self._lock:return {token:copy.deepcopy(entry['outcome']) for token,entry in self._entries.items()}
 
     @property
-    def thread_alive(self):return any(entry['thread'].is_alive() for entry in self._entries.values())
+    def thread_alive(self):
+        with self._lock:return any(entry['thread'].is_alive() for entry in self._entries.values())
 
     def watch(self,lease):
         dto=rpc.encode_lease(lease);token=dto['intent_token']
@@ -127,7 +131,11 @@ class CancellationClient:
             if len(self._entries)>=rpc.MAX_LEASES:raise ValueError('cancellation inventory exhausted')
             entry=dict(lease=lease,dto=copy.deepcopy(dto),done=threading.Event(),outcome=None)
             thread=threading.Thread(target=self._watch,args=(entry,),name='parent-cancel-'+token[:8],daemon=False)
-            entry['thread']=thread;self._entries[token]=entry;thread.start()
+            entry['thread']=thread;self._entries[token]=entry
+            try:thread.start()
+            except BaseException:
+                self._entries.pop(token);self._retired=True
+                rpc._detach_socket(self.sock);raise
 
     def _watch(self,entry):
         while not self._stop.wait(.005):
@@ -168,6 +176,9 @@ class CancellationClient:
         with self._lock:return copy.deepcopy(entry['outcome'])
 
     def close(self):
-        self._stop.set();self._retired=True;rpc._detach_socket(self.sock)
-        for entry in list(self._entries.values()):entry['thread'].join(self.timeout+1)
-        if self.thread_alive:raise RuntimeError('parent cancellation thread remains owned')
+        with self._lock:
+            self._stop.set();self._retired=True;entries=list(self._entries.values())
+        def join():
+            for entry in entries:entry['thread'].join(self.timeout+1)
+            if self.thread_alive:raise RuntimeError('parent cancellation thread remains owned')
+        rpc._run_cleanups(lambda:rpc._detach_socket(self.sock),join)

@@ -137,9 +137,11 @@ def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory,can
             raise BaseExceptionGroup('owner service failure and failure publication failed',[error,publication_error])
         raise
     finally:
-        if relay is not None:relay.close()
-        elif cancel_channel is not None:rpc._detach_socket(cancel_channel)
-        rpc._detach_socket(channel)
+        closers=[]
+        if relay is not None:closers.append(relay.close)
+        elif cancel_channel is not None:closers.append(lambda:rpc._detach_socket(cancel_channel))
+        closers.append(lambda:rpc._detach_socket(channel))
+        rpc._run_cleanups(*closers)
 
 
 def read_service_receipt(out,expected):
@@ -203,11 +205,8 @@ class OwnedOwnerService:
         self._taken=True
         return self._channel
     def close_channel(self):
-        if self._cancel_channel is not None:rpc._detach_socket(self._cancel_channel)
-        if self._channel is not None:
-            try:self._channel.shutdown(socket.SHUT_RDWR)
-            except OSError:pass
-            self._channel.close()
+        rpc._run_cleanups(*(lambda channel=channel:rpc._detach_socket(channel)
+                            for channel in (self._channel,self._cancel_channel) if channel is not None))
     def take_cancellation_socket(self):
         if self._cancel_taken or self._cancel_channel is None or self._startup is None:
             raise RuntimeError('cancellation socket unavailable/already transferred')

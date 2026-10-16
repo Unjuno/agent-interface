@@ -235,6 +235,18 @@ def _validate_close_result(result, records, display, service_id):
         raise ValueError('close receipt verification contradicts release/stop evidence')
 
 
+def _run_cleanups(*closers):
+    """Run every owned cleanup, retaining primary and secondary failures."""
+    primary=sys.exception();failures=[]
+    for close in closers:
+        try:close()
+        except BaseException as error:failures.append(error)
+    if failures:
+        if primary is not None and all(error is not primary for error in failures):failures.insert(0,primary)
+        if len(failures)==1:raise failures[0]
+        raise BaseExceptionGroup('owned cleanup failures',failures)
+
+
 def _detach_socket(sock):
     primary = sys.exception()
     failures = []
