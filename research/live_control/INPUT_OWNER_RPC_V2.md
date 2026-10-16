@@ -20,8 +20,13 @@ refuses non-null window identity: a canonical observer epoch shared across
 capture and input has not been qualified across service processes. Window data
 is preserved by the codec, never silently discarded by transport admission.
 
-Allowed operations are `down`, `up`, `up_batch`, `release`, `input_state`, `close`,
-with the fixed Doom keyboard allowlist. No pointer API, command execution or
+Allowed operations are `down`, `up`, `up_batch`, `release`, `input_state`, `surface_context`, `close`,
+with the fixed Doom keyboard allowlist. `surface_context` is a read-only extension
+for inherited backend binding: no Lease, an exact non-root 32-bit client XID and
+validated nonempty integer geometry. Mixed old/new capability sets fail readiness.
+The explicit [selected-backend adapter](INPUT_OWNER_SERVICE_ADAPTER.md) owns both
+RPC and cancellation lanes; default session/controller selection remains unchanged.
+No pointer API, command execution or
 arbitrary callable is accepted. Frames are at most1MiB, one service accepts at
 most256 requests and64 lease identities, and requests/replies use strict schemas,
 service IDs, monotonically consecutive integer IDs, duplicate-member rejection,

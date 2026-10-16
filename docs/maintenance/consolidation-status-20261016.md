@@ -179,3 +179,14 @@ release outcomes remain unverified after late cleanup; wrong generation/control
 loss retires admission. Default backend selection is unchanged. Next connect the
 production backend custody adapter, preserving first control failure and original
 source/cause, then qualify controller/session death and native/task effects.
+
+[The selected-backend owner adapter](../../research/integration/owned_backend_adapter_20261016/README.md)
+now connects explicit owned service selection to the actual process-identity
+Backend/Executor. Inherited binding reads validated remote geometry, source is
+frozen before sends, and whole-program capability checks precede input. A first
+unverified control result remains failed through late successful service exit;
+the original Executor and a replacement Executor both refuse new authority.
+Normal/-O each106 methods across13 modules pass. Parent capture PNG/.ait and child
+raw are retained, with independent PNG reconstruction/source/custody readback.
+Default V15/controller selection and controller/session death cleanup remain the
+next#59 integration; no native input/task/economics qualification is implied.

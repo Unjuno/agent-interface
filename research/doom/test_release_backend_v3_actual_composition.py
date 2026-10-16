@@ -205,6 +205,10 @@ class ActualReleaseCompositionTests(unittest.TestCase):
         sys.modules["input_owner_v12"] = low_level
         sys.modules["input_transition_owner_v3"] = transition
         sys.modules["doom_typed_release_backend_v2"] = backend_base
+        # This module may already be imported by another composition test.
+        # Load the exact candidate against this test's explicit fake dependencies.
+        sys.modules.pop('input_transition_owner_v4',None)
+        sys.modules.pop('doom_owner_thread_release_batch_backend_v1',None)
         try:
             owner_v4 = importlib.import_module("input_transition_owner_v4")
             backend = importlib.import_module("doom_owner_thread_release_batch_backend_v1")
