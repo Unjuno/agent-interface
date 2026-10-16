@@ -1,0 +1,13 @@
+RUN_01 command: python -B research/doom/results/map01-astra-video-health-timeline-v1/run_timeline.py
+RUN_01 exit: 1
+RUN_01 raw traceback:
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-2\work\agent-interface\work\owner-queue-audit-mutations\research\doom\results\map01-astra-video-health-timeline-v1\run_timeline.py", line 60, in <module>
+    if __name__=='__main__': main()
+                             ^^^^^^
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-2\work\agent-interface\work\owner-queue-audit-mutations\research\doom\results\map01-astra-video-health-timeline-v1\run_timeline.py", line 47, in main
+    if row['delta_percent_points']<0: gross[key]+= -row['delta_percent_points']
+                                      ~~~~~^^^^^
+KeyError: 'active_hold'
+
+Failure class: analysis-runner aggregation-key mismatch. Video decode and all 30 transition crops completed before the exception; summary JSON/contact sheets were not written. The frozen video/input artifact was not changed. This first failure and all 30 partial crop hashes are retained. The corrected revision emitted byte-identical crop files (verified against the attempt-01 hashes) and wrote the completed timeline/contact sheets as versioned outputs. No live allocation was involved.
