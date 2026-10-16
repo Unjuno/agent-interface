@@ -1,0 +1,44 @@
+import ast,base64,json,os,sqlite3,sys,time
+from pathlib import Path
+from http.server import BaseHTTPRequestHandler,HTTPServer as StandardServer
+P=Path(__file__).resolve().parent
+root=Path(sys.argv[1]);phase=sys.argv[2];variant=sys.argv[3];fault=sys.argv[4];count=int(sys.argv[5])
+reference=(P/'reference-experiment.py.txt').read_bytes()
+tree=ast.parse(reference);names={'canonical','save','event','connect','receiver'}
+defs=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in names]
+assert len(defs)==5
+component=ast.unparse(ast.Module(body=defs,type_ignores=[]))
+old="value = json.loads(self.rfile.read(length))"
+assert component.count(old)==1
+component=component.replace(old,"wire_body = self.rfile.read(length)\n            event(root / (phase + '-events.jsonl'), 'http_received', body_base64=base64.b64encode(wire_body).decode())\n            value = json.loads(wire_body)")
+if variant=='restartable':
+    assert component.count('CREATE TABLE effects(')==1 and component.count('CREATE TABLE requests(')==1
+    component=component.replace('CREATE TABLE effects(','CREATE TABLE IF NOT EXISTS effects(').replace('CREATE TABLE requests(','CREATE TABLE IF NOT EXISTS requests(')
+class Connection(sqlite3.Connection):
+    def execute(self,sql,*args,**kwargs):
+        if sql=='COMMIT' and fault=='before':
+            env['event'](root/(phase+'-events.jsonl'),'crash_before_commit');os._exit(23)
+        result=super().execute(sql,*args,**kwargs)
+        if sql=='COMMIT' and fault=='after':
+            env['event'](root/(phase+'-events.jsonl'),'crash_after_commit_before_reply');os._exit(23)
+        return result
+connections=[]
+original_connect=sqlite3.connect
+def owned_connect(*args,**kwargs):
+    kwargs['factory']=Connection;c=original_connect(*args,**kwargs);connections.append(c);return c
+class BoundedServer(StandardServer):
+    def serve_forever(self,poll_interval=.02):
+        self.timeout=5
+        for _ in range(count):self.handle_request()
+        self.server_close()
+env={'Path':Path,'json':json,'os':os,'time':time,'sqlite3':sqlite3,'BaseHTTPRequestHandler':BaseHTTPRequestHandler,'HTTPServer':BoundedServer,'base64':base64,'phase':phase}
+exec(compile(component,'<selected-receiver-component>','exec'),env)
+save_original=env['save']
+def save_phase(path,value):
+    if Path(path).name=='receiver_ready.json':path=root/(phase+'-ready.json')
+    save_original(path,value)
+env['save']=save_phase;sqlite3.connect=owned_connect
+try:env['receiver'](root,True)
+finally:
+    for c in connections:c.close()
+

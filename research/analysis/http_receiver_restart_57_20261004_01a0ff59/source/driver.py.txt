@@ -1,0 +1,52 @@
+import base64,hashlib,http.client,json,os,platform,shutil,sqlite3,subprocess,sys,time
+from pathlib import Path
+P=Path(__file__).resolve().parent;rows=[]
+def write(path,value):path.write_text(json.dumps(value,indent=2),encoding='utf-8')
+def call(port,body):
+    c=http.client.HTTPConnection('127.0.0.1',port,timeout=3);start=time.perf_counter_ns()
+    try:
+        c.request('POST','/effect',body,{'Content-Type':'application/json'});r=c.getresponse();data=r.read();return {'status':r.status,'body_base64':base64.b64encode(data).decode(),'error':None,'start_ns':start,'end_ns':time.perf_counter_ns()}
+    except Exception as e:return {'status':None,'body_base64':None,'error':type(e).__name__,'start_ns':start,'end_ns':time.perf_counter_ns()}
+    finally:c.close()
+def snapshot(root,label):
+    d=root/label;d.mkdir()
+    for f in root.glob('receiver.sqlite*'):shutil.copyfile(f,d/f.name)
+def start(root,phase,variant,fault,count):
+    out=(root/(phase+'.stdout')).open('xb');err=(root/(phase+'.stderr')).open('xb');argv=[sys.executable,'-X','utf8',str(P/'server.py'),str(root),phase,variant,fault,str(count)]
+    begin=time.perf_counter_ns();proc=subprocess.Popen(argv,stdout=out,stderr=err);ready=root/(phase+'-ready.json');deadline=time.monotonic()+5
+    while not ready.exists() and proc.poll() is None and time.monotonic()<deadline:time.sleep(.01)
+    if not ready.exists() and proc.poll() is None:proc.terminate();proc.wait(timeout=3)
+    return proc,out,err,begin,(json.loads(ready.read_text()) if ready.exists() else None),argv
+def finish(root,phase,handle):
+    proc,out,err,begin,ready,argv=handle;fallback=False
+    try:proc.wait(timeout=7)
+    except subprocess.TimeoutExpired:fallback=True;proc.terminate();proc.wait(timeout=3)
+    finally:out.close();err.close()
+    end=time.perf_counter_ns();streams={}
+    for suffix in ['stdout','stderr']:
+        b=(root/(phase+'.'+suffix)).read_bytes();streams[suffix]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+    receipt={'pid':proc.pid,'exit':proc.returncode,'reaped':proc.poll() is not None,'fallback_termination':fallback,'start_ns':begin,'end_ns':end,'streams':streams,'argv':argv,'descendants_certified':False};write(root/(phase+'-receipt.json'),receipt);return receipt
+for name,variant,fault in [('original_restart','original','none'),('restartable_after_commit','restartable','after'),('restartable_before_commit','restartable','before')]:
+    root=P/name;root.mkdir();key='own-'+name;payload={'target':'A','append':'追加行'}
+    body=json.dumps({'command_id':key,'payload':payload},sort_keys=True,separators=(',',':'),allow_nan=False).encode();write(root/'INTENT.json',{'command_id':key,'body_base64':base64.b64encode(body).decode(),'variant':variant,'first_fault':fault,'explicit_second_request':'new controlled receiver-restart experiment intervention, not caller-authority renewal'})
+    first=start(root,'first',variant,fault,1);requests=[]
+    if first[4] is None:
+        finish(root,'first',first);raise RuntimeError('first receiver failed readiness')
+    requests.append({'phase':'first','request_body_base64':base64.b64encode(body).decode(),**call(first[4]['port'],body)})
+    first_receipt=finish(root,'first',first);assert first_receipt['exit']==(0 if fault=='none' else 23) and not first_receipt['fallback_termination']
+    snapshot(root,'after_first_raw')
+    second=start(root,'second',variant,'none',2 if fault=='after' else 1)
+    if second[4] is not None:
+        requests.append({'phase':'second','request_body_base64':base64.b64encode(body).decode(),**call(second[4]['port'],body)})
+        if fault=='after':
+            altered=json.dumps({'command_id':key,'payload':{'target':'B','append':'別の変更'}},sort_keys=True,separators=(',',':')).encode();requests.append({'phase':'second_conflict','request_body_base64':base64.b64encode(altered).decode(),**call(second[4]['port'],altered)})
+    second_receipt=finish(root,'second',second);snapshot(root,'after_second_raw')
+    uri=(root/'receiver.sqlite').resolve().as_uri()+'?mode=ro';con=sqlite3.connect(uri,uri=True)
+    try:
+        state={'effects':con.execute('SELECT * FROM effects ORDER BY seq').fetchall(),'requests':con.execute('SELECT * FROM requests ORDER BY seq').fetchall(),'integrity':con.execute('PRAGMA integrity_check').fetchall()}
+    finally:con.close()
+    row={'case':name,'first':first_receipt,'second':second_receipt,'second_ready':second[4] is not None,'http_attempts':requests,'state':state};rows.append(row);write(root/'RESULT.json',row)
+    if name=='original_restart':assert not row['second_ready'] and row['second']['exit']==1
+    else:assert row['second_ready'] and row['second']['exit']==0
+write(P/'RESULT.json',{'rows':rows,'python':platform.python_version(),'sqlite':sqlite3.sqlite_version,'platform':platform.platform(),'model_calls':0,'native_or_browser_actor_replay':False,'claim':'ordinary controlled native Windows receiver restart construction; no current runtime/adoption/full goal'})
+print(json.dumps({'cells':len(rows),'result':'RETAIN_RECEIVER_RESTART_BOUNDARY'}))
