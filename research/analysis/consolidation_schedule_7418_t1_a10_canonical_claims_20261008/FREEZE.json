@@ -1,0 +1,93 @@
+{
+  "a09_context": "A09 first update made five claims for ep01 with duplicate IDs because it interpreted every metadata field as a separate fact. A10 freezes one canonical mapping per input kind.",
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A10-CANONICAL-CLAIMS-20261008",
+  "base_main_sha": "d4eaac02eced2e6ebf2e8d29642343048661d71b",
+  "branch": "research/8406-schedule-t1-a10-canonical-claims-20261008",
+  "companion_to": 7418,
+  "construction_tests": "10/10 PASS before freeze; no A10 model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED only for >=0.10 consistent paired contrast across seeds and clean full transition/raw audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED only within margin and all gates; failed transition/method gate => FAIL_METHOD; otherwise UNCERTAIN",
+  "delta_from_A09": [
+    "fresh allocation and seeds 5001/5002/5003",
+    "one canonical output claim per episode kind, with irrelevant metadata excluded",
+    "same carry-forward and conflict scope; no fixture literals; no prior outputs reused"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 2048,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      5001,
+      5002,
+      5003
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PRIVATE_MODEL_STORE.json": "a8a975cf11773597d8e065797796d09727bb607c363b6115025f14f485fd6680",
+    "PROTOCOL.md": "47086b5d54136c289a03e2f65b7f15e746bb754047b72582eab9b98ace66c2a3",
+    "README.md": "aea966a29ac5d7558e3857e1cd847d14942ae0ef59fc54cc1515cb781f98351a",
+    "auditor.py": "7c3380f406e7e7748fbb46efc8166135cf9a21b26a3c2c0b8fb4cb9abd819a82",
+    "candidate.py": "dc45e833bbb52b045b93e170e289e38ab5c65c39d7161319c0340b92acb64dff",
+    "episode_ledger.json": "1d3248311b248c7bb5081dc4db784f746b73494d34e3e1422b8bec3d65c751ca",
+    "prompts.json": "00549dcfc6a6d5da51f261936eb63f851b2a3d1929b0fade26fa11fb961f675e",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "569702348fcf928bf08f2c731a8415a70f30552b0ff8defcaf34d98af51bd6cf"
+  },
+  "identity_gate": "Exact private tag digest and unique runner checked before/after every request; runner may be absent only before first call.",
+  "issue": 8406,
+  "model": {
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "host": "127.0.0.1:11435",
+    "ollama_version": "0.40.0",
+    "parameters": "8.2B",
+    "private_store": "/tmp/unjuno-8406-t1-a10-ollama-store",
+    "quantization": "Q4_K_M",
+    "request_name": "qwen3:8b",
+    "size_bytes": 5225388164
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a10_canonical_claims_20261008",
+  "pre_freeze_HEAD": "d4eaac02eced2e6ebf2e8d29642343048661d71b",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a10_canonical_claims_20261008/results/FORMAL_T1_A10/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local private Ollama",
+    "gui": "none",
+    "network": "loopback only",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  },
+  "transition_contract": [
+    "one canonical claim per episode kind; no metadata fanout or duplicate IDs",
+    "copy every prior claim unchanged; no drops",
+    "exception includes exact and forbidden effects with exact source",
+    "conflict only for same-key/context fact observations after both visible",
+    "history key from version and field; full baseline-to-current relation"
+  ]
+}
