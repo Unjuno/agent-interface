@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r68: refresh open-PR-unreferenced branch inventory (2026-10-17)
+
+A direct paginated GitHub REST read returned 586 current remote branches and 521 open PRs. Sixty branches have no head or base ref in those open PRs. The dated [open-PR-unreferenced snapshot](open-pr-unreferenced-branches-20261017.csv) records exact tips and protection bits, and cross-references the 65 worktree registrations in the inspected primary clone. This is a candidate inventory only: closed-PR refs, Issue citations, ownership, content preservation and worktree state outside that clone still require review. In particular, `fix/native-handle-bridge-test-binding-revision-20261017` has a registered local worktree despite having no open PR ref. No branch was deleted.
+
 ### r67: index three uncovered research records with allocation-local limits (2026-10-17)
 
 A bounded read of the 100 most recently updated open `research` Issues found three research records absent from `docs/IDEAS_AND_OUTCOMES.md`, now indexed: #8200 remains an unverified cue-reversal proposal after its separate #8208 T0 preflight STOP; #4255 retains its consumed 12-session `FAIL_FROZEN_AUDIT_CONTROL_GATE` and open evidence PR #8248; #4435 records the scoped lease-precision result while its archived-evidence audit/custody recovery remains open after merged PR #6092 and later attachment recovery. No allocation was run or retried. The only other unmentioned Issue in this bounded sample, #1945, is an intake/coordination log rather than a research idea and was left out of the idea index. The sample is not an all-Issue completeness claim.
