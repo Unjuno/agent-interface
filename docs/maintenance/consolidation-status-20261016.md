@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r62: flag the #59 owner-integration branch's missing main record (2026-10-17)
+
+The 300-file `research/59-v15-owner-integration-20261012` tip records A33/A34 STOPs and prior owner-integration work. Its `research/doom/V15_OWNER_RECOVERY_INTEGRATION_A02_A32_20261012.md` summary is absent from current main. The branch has no PR head/base reference or registered worktree in the primary checkout. The ledger now requires owner, raw, and content review before any deletion; no branch was removed.
+
 ### r61: retain the Issue #6957 Xvfb A02 source with unresolved raw custody (2026-10-17)
 
 Issue #6957 records that `research/59-xvfb-audit-v3-a02-20261005` has the frozen source and inputs but lacks the declared original run outputs and independent audit streams. Its result is unresolved; the issue explicitly says preserve the branch/freeze and do not infer a disposition or rerun. The branch ledger now records that custody boundary.
