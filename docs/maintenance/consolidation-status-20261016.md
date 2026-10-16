@@ -10,6 +10,12 @@ Issue #9004の未検証案をcurrent-main `1ece47014d05db898bf73afcd722a14524462
 
 計画記載の#8874は#9000経由で証拠専用として閉鎖済み。元head `6d008b53…`の29ファイルはmainの保存パケットに保持され、RUNNER/BUILD.log欠落は未解決として明記。#8867は#9001経由で現行sourceへ採用済み。旧head `598109fd6329ef88ec469557ae4beae2a2ef3002`の6変更blobすべてがmain上の`original-candidate/`内のbytesとindex SHAに一致した。全PRページでhead/base参照を確認し、#8867 CLOSEDのみ（base依存なし）、branch unprotected、登録worktree/Issue本文・コメントの明示参照なし。期待tipをlease条件にremote refを削除し、remote不在を確認した。元PR本文と#9001保存記録は残し、現行研究の未達は変更していない。
 
+### r48：#9006/#9007のCI境界を分類（2026-10-17）
+
+PR #9006の75行はWin32 `release_all` helper用のtest-only追加で、同suite内の新規caseはpass。`native-mcp`全体は既存`test_native_handle_bridge_v1` 2件がfixtureの`binding_revision`欠落でerror、`native-win32`は既存の`test_valid_program_has_independent_effect_capture_and_release`が`release_unverified`を返してexpected `completed`と不一致でfailした。PR本文もこのverification境界を未解決としdraft/未レビューのまま保持している。今回追加caseが通ることを理由にproduction contractを弱めたり、統合済みと扱わない。
+
+PR #9007のA01/A02 method-contract初回workflowは、GitHub Actions checkout中のfetchが開始から10分でcancelされ、method-contractコードや実験候補/auditorは実行されていない。現時点で同workflowのattempt 2をrerun中。analysis-index PASSは独立に確認した。結果確定前にpass/failへ分類せず、正式allocationも再実行しない。
+
 ### r44：#8678をcurrent-main基準へ整列（2026-10-17）
 
 PR #8678は旧`docs/CURRENT_GOAL.md`全体を差分に含み、base衝突で`DIRTY`だった。branch `research/59-live-threat-guard-a01-20261009`をcurrent main `1ece47014d05db898bf73afcd722a14524462e15`へrebaseし、履歴的な長文方向は採用せずcurrent mainの短いgoal entryを維持した。実験記録29ファイル/8,946行追加は保持され、head `7551424026375469f609754140250f89bf09cad4`でPRは`CLEAN`、必須replay-gate PASS。A02のruntime failureと`formal_pass: false`は未変更で、merge・再実験は行っていない。独立レビュー待ち。
