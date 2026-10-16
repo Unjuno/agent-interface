@@ -1,0 +1,94 @@
+{
+  "schema": "independent-v15-native-x11-raw-audit-a01-v1",
+  "classification": "read-only audit of one retained native virtual-X11 construction run; no candidate replay",
+  "evidence_commit": "59e307adde701dc3e061ee3ff124c5982c20fcc9",
+  "source_head": "2b0cb591c3ebcb84d1db983612613850c08fffea",
+  "raw_sha256": "923d7ce368cafe7a05b0799d7dbcac5eb39462628099d571c9d2cc4d8d8e3aa6",
+  "checks": [
+    {
+      "name": "package_manifest_exact_tree",
+      "pass": true,
+      "detail": "tracked=30, listed=30"
+    },
+    {
+      "name": "all_package_entries_hash_and_size",
+      "pass": true,
+      "detail": "listed=30, bad=[]"
+    },
+    {
+      "name": "source_lock_exact_git_identity",
+      "pass": true,
+      "detail": "locked=81, bad=[]"
+    },
+    {
+      "name": "raw_digest_and_embedded_source_lock",
+      "pass": true,
+      "detail": "raw_sha256=923d7ce368cafe7a05b0799d7dbcac5eb39462628099d571c9d2cc4d8d8e3aa6, source_lock_sha256=c142db9f35d3420acfb4277efcc44e8fa84a984de334309c9b15af2ef75e9914"
+    },
+    {
+      "name": "recorded_candidate_exit",
+      "pass": true,
+      "detail": "exit=0, stderr=''"
+    },
+    {
+      "name": "retained_auditor_complete_pass",
+      "pass": true,
+      "detail": "checks=658, failed=[]"
+    },
+    {
+      "name": "eight_corruption_controls_rejected",
+      "pass": true,
+      "detail": "controls=8, rejected=8"
+    },
+    {
+      "name": "ordered_batch_native_edge_order",
+      "pass": true,
+      "detail": "press=['a', 's', 'w'], release=['w', 's', 'a']"
+    },
+    {
+      "name": "ordered_batch_keymaps_neutralize",
+      "pass": true,
+      "detail": "before={'a': False, 's': False, 'w': False}, after_down={'a': True, 's': True, 'w': True}, after_batch={'a': False, 's': False, 'w': False}"
+    },
+    {
+      "name": "ordered_batch_receipts_keep_admission_identity",
+      "pass": true,
+      "detail": "admissions=3, batch_rows=3, owner_records=3"
+    },
+    {
+      "name": "cleanup_preserves_per_key_identity_without_authority",
+      "pass": true,
+      "detail": "pairs=['a', 's'], verified=True"
+    },
+    {
+      "name": "late_up_cancelled_without_new_event_or_owner_record",
+      "pass": true,
+      "detail": "exception=Cancelled, window_events=4, records=1->1"
+    },
+    {
+      "name": "cancel_close_stops_owner_and_leaves_keys_up",
+      "pass": true,
+      "detail": "after_close={'a': False, 's': False}, stopped=True, alive=False"
+    },
+    {
+      "name": "xvfb_and_observer_closed",
+      "pass": true,
+      "detail": "xvfb_exit=0, observer_closed=True"
+    },
+    {
+      "name": "owned_vm_stopped_readback",
+      "pass": true,
+      "detail": "stop_exit=0, readback=['ID: 01M45XCN5QP1RX0FXKCA68PBPM', 'Name: v15-native-e0cc-20261005', 'State: stopped']"
+    }
+  ],
+  "passed": 15,
+  "total": 15,
+  "disposition": "PASS_SCOPED",
+  "limitations": [
+    "single run, not reliability evidence",
+    "private Xvfb / XTEST virtual server only",
+    "driver directly invokes backend batch methods; not V39 or production execute",
+    "no game, model, physical keyboard, application effect, useful feedback, recovery, or gameplay result",
+    "raw-only audit shares the one archived execution record"
+  ]
+}
