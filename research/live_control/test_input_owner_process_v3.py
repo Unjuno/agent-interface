@@ -68,6 +68,19 @@ def fake_owner_start_error(*,display,out,service_id):
 
 
 @contextmanager
+def fake_owner_publication_error(*,display,out,service_id):
+    import input_owner_process_v3 as api
+    original=api.publish_json_exclusive
+    def publish(path,value):
+        if Path(path).name=='recovery.json':
+            (out/'fixture-publication-failed').touch()
+            raise OSError('injected recovery publication')
+        return original(path,value)
+    with patch.object(api,'publish_json_exclusive',side_effect=publish):
+        with fake_owner(display=display,out=out,service_id=service_id) as owner:yield owner
+
+
+@contextmanager
 def fake_owner_finish_barrier(*,display,out,service_id):
     import input_owner_process_v3 as api
     original=api.publish_json_exclusive
@@ -345,6 +358,85 @@ class OwnedOwnerProcessTests(unittest.TestCase):
                 self.assertIs(handle.process,process)
                 outcomes.append(dict(fault=fault,owned_handle_retained=True,primary_preserved=True))
         ROWS.append(dict(case='startup-custody',outcomes=outcomes,scope='inert process factory/private sockets; no child'))
+
+    def test_partial_startup_allocation_closes_every_acquired_descriptor(self):
+        api=process_api();outcomes=[]
+        for fault in ('pipe','process'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temp:
+                resources=[]
+                class Resource:
+                    closed=False
+                    def __init__(self):resources.append(self)
+                    def close(self):self.closed=True
+                    def shutdown(self,_):pass
+                sockets=(Resource(),Resource())
+                class Context:
+                    def Pipe(self,**_):
+                        if fault=='pipe':raise OSError('injected pipe construction')
+                        return Resource(),Resource()
+                    def Process(self,**_):raise OSError('injected process construction')
+                with patch.object(api.socket,'socketpair',return_value=sockets), patch.object(api.multiprocessing,'get_context',return_value=Context()):
+                    with self.assertRaises(api.ServiceStartupError) as caught:
+                        api.launch_owner_service(display=':fake',out=Path(temp)/'service')
+                self.assertTrue(all(r.closed for r in resources),'every acquired descriptor must close')
+                report=caught.exception.handle.wait(.1)
+                self.assertFalse(report['verified']);self.assertFalse(report['process_alive'])
+                self.assertIsNone(report['spawn_pid'])
+                outcomes.append(dict(fault=fault,closed=len(resources),report=report))
+        ROWS.append(dict(case='partial-allocation-custody',outcomes=outcomes,scope='inert allocation failures; no process'))
+
+    def test_recovery_publication_error_waits_for_same_unresolved_owner(self):
+        api=process_api();order=[]
+        class Stop:
+            def is_set(self):return False
+            def wait(self):order.append('wait')
+        class Owner:
+            stopped=Stop();owner_id='inert-owner'
+        @contextmanager
+        def factory(**_):
+            try:yield Owner()
+            finally:order.append('context-exit')
+        class Ready:
+            def send(self,_):pass
+            def close(self):pass
+        error=OSError('injected recovery publication')
+        def publish(path,value):
+            if Path(path).name=='recovery.json':raise error
+            return 'a'*64
+        with tempfile.TemporaryDirectory() as temp, patch.object(api,'publish_json_exclusive',side_effect=publish), patch.object(api.rpc,'serve_owner',return_value={'verified':False}), patch.object(api.rpc,'_detach_socket'):
+            with self.assertRaises(OSError) as caught:
+                api._child_entry(None,Ready(),':fake',temp,'inert-generation',os.getpid(),factory)
+        self.assertIs(caught.exception,error)
+        self.assertEqual(order,['wait','context-exit'])
+        ROWS.append(dict(case='publication-fault-custody',order=order,primary_preserved=True,scope='inert child-entry; no process'))
+
+    def test_blocked_release_publication_failure_retains_service_until_settlement(self):
+        api=process_api()
+        with tempfile.TemporaryDirectory() as temp:
+            handle=api.launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=fake_owner_publication_error)
+            client=None
+            try:
+                client=OwnerRpcClient(handle.take_socket(),display=':fake',service_id=handle.service_id,timeout=.15)
+                client.call('down',make_lease(),'a')
+                (handle.out/'fixture-block-release').touch();client.close()
+                deadline=time.monotonic()+6
+                while not (handle.out/'fixture-publication-failed').exists() and time.monotonic()<deadline:time.sleep(.005)
+                self.assertTrue((handle.out/'fixture-publication-failed').exists())
+                before=handle.wait(.1)
+                self.assertTrue(before['process_alive']);self.assertFalse(before['verified'])
+                self.assertFalse((handle.out/'recovery.json').exists())
+                self.assertEqual([r['event'] for r in edges(handle.out)],[2])
+                (handle.out/'fixture-resume-release').touch();after=handle.wait(5)
+                self.assertFalse(after['process_alive']);self.assertFalse(after['verified'])
+                self.assertNotEqual(after['exit_code'],0)
+                self.assertFalse((handle.out/'finish.json').exists())
+                self.assertEqual([r['event'] for r in edges(handle.out)],[2,3])
+                ROWS.append(dict(case='blocked-publication-failure',startup=handle.startup,spawn_pid=handle.process.pid,
+                                 before=before,after=after,edges=edges(handle.out),files=handle.saved_files()))
+            finally:
+                (handle.out/'fixture-resume-release').touch()
+                if client:client.close()
+                self.finish(handle)
 
     def test_file_verified_receipt_does_not_replace_owned_process_exit(self):
         api=process_api()

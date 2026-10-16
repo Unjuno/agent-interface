@@ -91,10 +91,18 @@ def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory):
                           startup_sha256=startup_hash,core=core,service_error=service_error,
                           verified=core['verified'] is True and service_error is None,
                           file_fsync=True,directory_fsync_requested=os.name=='posix')
-            recovery_hash=publish_json_exclusive(out/'recovery.json',recovery)
-            # Do not abandon an unresolved owner thread because a caller timed out.
-            # The external owned handle remains available; wait() on the parent is finite.
-            if not native.stopped.is_set():native.stopped.wait()
+            try:
+                recovery_hash=publish_json_exclusive(out/'recovery.json',recovery)
+            finally:
+                # Publication failure cannot retire unresolved input custody.
+                # The external owned handle remains available; parent wait is finite.
+                primary=sys.exception()
+                try:
+                    if not native.stopped.is_set():native.stopped.wait()
+                except BaseException as settlement_error:
+                    if primary is not None:
+                        raise BaseExceptionGroup('recovery publication and settlement failed',[primary,settlement_error])
+                    raise
             stopped=native.stopped.is_set()
         context_ok=True
         finish=dict(schema='owned-owner-finish-v3',identity=_identity(startup),
@@ -180,11 +188,11 @@ class OwnedOwnerService:
             self._channel.close()
     def wait(self,timeout=5):
         timeout=rpc._timeout(timeout)
-        if self.process.pid is not None:
+        if self.process is not None and self.process.pid is not None:
             self.process.join(timeout)
-        alive=self.process.is_alive()
-        report=dict(service_id=self.service_id,spawn_pid=self.process.pid,
-                    process_alive=alive,exit_code=self.process.exitcode,verified=False,
+        alive=self.process is not None and self.process.is_alive()
+        report=dict(service_id=self.service_id,spawn_pid=self.process.pid if self.process else None,
+                    process_alive=alive,exit_code=self.process.exitcode if self.process else None,verified=False,
                     recovery=None,finish=None,receipt_error=None)
         if self._startup is None:
             report['receipt_error']='no accepted startup';return report
@@ -209,13 +217,16 @@ def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5):
     """Launch only this owned spawn instance. Never terminate or retry automatically."""
     display=rpc._identity(display);startup_timeout=rpc._timeout(startup_timeout)
     out=Path(out).resolve();out.mkdir(parents=True,exist_ok=False)
-    ctx=multiprocessing.get_context('spawn')
-    channel,service=socket.socketpair();parent_ready,child_ready=ctx.Pipe(duplex=False)
     service_id=uuid.uuid4().hex;supervisor_pid=os.getpid()
-    process=ctx.Process(target=_child_entry,args=(service,child_ready,display,out,service_id,
-                         supervisor_pid,_owner_factory or _default_owner),name='owned-input-owner-'+service_id[:8])
-    handle=OwnedOwnerService(process,channel,out,service_id,supervisor_pid)
+    handle=OwnedOwnerService(None,None,out,service_id,supervisor_pid)
+    service=parent_ready=child_ready=None
     try:
+        ctx=multiprocessing.get_context('spawn')
+        handle._channel,service=socket.socketpair()
+        parent_ready,child_ready=ctx.Pipe(duplex=False)
+        process=ctx.Process(target=_child_entry,args=(service,child_ready,display,out,service_id,
+                             supervisor_pid,_owner_factory or _default_owner),name='owned-input-owner-'+service_id[:8])
+        handle.process=process
         process.start();service.close();child_ready.close()
         if not parent_ready.poll(startup_timeout):raise TimeoutError('owned owner readiness deadline')
         message=parent_ready.recv()
@@ -234,7 +245,9 @@ def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5):
         return handle
     except BaseException as error:
         failures=[]
-        for close in (service.close,child_ready.close,handle.close_channel,parent_ready.close):
+        closers=[resource.close for resource in (service,child_ready,parent_ready) if resource is not None]
+        closers.append(handle.close_channel)
+        for close in closers:
             try:close()
             except BaseException as cleanup:failures.append(cleanup)
         exposed=ServiceStartupError(str(error),handle) if isinstance(error,Exception) else error
