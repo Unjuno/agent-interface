@@ -120,7 +120,9 @@ worktree対応をCSVへ記録した。32本は固有内容と所有者の確認�
 
 同じroot cloneのworktree台帳は92件中33件がprunableで、その33パスが実在しないことを確認した。
 dry-runが示した欠損metadata 33件だけを`git worktree prune`で除去し、branch refや作業ファイルは削除していない。
-59登録worktreeが残り、prunableは0件。dirtyなA16 health-zero worktreeの2 tracked変更は現存を再確認し、未変更のまま保全した。
+59登録worktreeが残り、prunableは0件。read-only statusでは52件clean、7件dirtyだった。
+変更path・branch・remote/PR参照の[一覧](dirty-worktree-review-20261016.csv)を保存し、いずれもreset・削除していない。
+dirtyなA16 health-zero worktreeの2 tracked変更を含み、raw/evidenceのuntracked項目も現存を再確認して保全した。
 
 同じバッチで、統合済みPR [#8791](https://github.com/Unjuno/agent-interface/pull/8791)
 のremote branch `fix/primary-release-array-shape-20261009` を回収した。記録tip
