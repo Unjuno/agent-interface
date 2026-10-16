@@ -5,6 +5,7 @@ from pathlib import Path
 import queue
 import time
 import unittest
+from doom_controller_failure_cleanup_v1 import reject_control_boundary_failure
 
 
 HERE = Path(__file__).resolve().parent
@@ -79,7 +80,8 @@ def load_controller_dispatch(source_path):
         decorator_list=[])
     module = ast.fix_missing_locations(ast.Module(
         body=monitor_nodes + [outer], type_ignores=[]))
-    namespace = {"queue": queue, "time": time}
+    namespace = {"queue": queue, "time": time,
+                 "reject_control_boundary_failure": reject_control_boundary_failure}
     exec(compile(module, str(source_path), "exec"), namespace)
     return namespace["build_wait"], namespace["DoomCoverSignalPairMonitor"]
 
@@ -271,7 +273,7 @@ class PairWaitDispatchTests(unittest.TestCase):
         enqueues = calls(stdout_loop, "put")
         self.assertEqual(len(decodes), 1)
         self.assertEqual(len(enqueues), 1)
-        self.assertEqual(decodes[0].lineno, enqueues[0].lineno)
+        self.assertLess(decodes[0].lineno, enqueues[0].lineno)
 
     def test_full_observation_dispatches_zero_ammo_invalidation(self):
         build_wait, monitor_type = load_controller_dispatch(CONTROLLER)

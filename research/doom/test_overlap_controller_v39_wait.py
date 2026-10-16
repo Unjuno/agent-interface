@@ -5,6 +5,7 @@ from pathlib import Path
 import queue
 import types
 import unittest
+from doom_controller_failure_cleanup_v1 import reject_control_boundary_failure
 
 SOURCE = Path(os.environ.get("V39_WAIT_SOURCE", Path(__file__).with_name("map01_overlap_controller_v39.py")))
 EMPTY = object()
@@ -45,10 +46,15 @@ class ScriptQueue:
 class Clock:
     def __init__(self):
         self.value = 0
+        self.value_ns = 0
 
     def monotonic(self):
         self.value += .01
         return self.value
+
+    def perf_counter_ns(self):
+        self.value_ns += 1
+        return self.value_ns
 
 
 def extract_wait(process, rows):
@@ -59,7 +65,8 @@ def extract_wait(process, rows):
     factory.body.append(wait)
     factory.body += ast.parse("return wait, lambda: latest").body
     module = ast.fix_missing_locations(ast.Module(body=[factory], type_ignores=[]))
-    scope = {"queue": queue, "time": Clock()}
+    scope = {"queue": queue, "time": Clock(),
+             "reject_control_boundary_failure": reject_control_boundary_failure}
     exec(compile(module, str(SOURCE), "exec"), scope)
     return scope["factory"](process, ScriptQueue(rows))
 
