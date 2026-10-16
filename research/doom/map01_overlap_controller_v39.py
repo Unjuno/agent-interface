@@ -887,7 +887,16 @@ def app_server_command_for_run(output):
         raise
 
 
+def validate_input_service_selection(args):
+    if getattr(args,'owned_input_service',False):
+        if not getattr(args,'measurement_session',False) or not getattr(args,'target_process_identity',False):
+            raise ValueError('owned input service requires measurement session and target process identity')
+        if getattr(args,'target_window_lifecycle',False):
+            raise ValueError('owned input service window lifecycle transfer is not qualified')
+
+
 def session_command(args, runtime):
+    validate_input_service_selection(args)
     identity = getattr(args, "target_process_identity", False)
     lifecycle = getattr(args, 'target_window_lifecycle', False)
     if lifecycle and not identity:
@@ -908,6 +917,7 @@ def session_command(args, runtime):
         command.append("--target-process-identity")
     if lifecycle:
         command.append('--target-window-lifecycle')
+    if getattr(args,'owned_input_service',False):command.append('--owned-input-service')
     return command
 
 
@@ -1314,9 +1324,12 @@ def main():
                         help='require shared direct-window continuity evidence; requires target process identity')
     parser.add_argument("--target-process-identity", action="store_true",
                         help="select trusted-local XRes/Linux process evidence in V15 input owner")
+    parser.add_argument('--owned-input-service',action='store_true',
+                        help='explicit independent input service; requires measurement and process identity')
     args = parser.parse_args()
     try:
         require_release_receipt_session(args)
+        validate_input_service_selection(args)
         if args.target_window_lifecycle and not args.target_process_identity:
             raise ValueError('target window lifecycle requires --target-process-identity')
     except ValueError as error:
@@ -2103,6 +2116,7 @@ def main():
                                   if args.measurement_session else "v12_default"),
           "target_process_identity":args.target_process_identity,
           "target_window_lifecycle":getattr(args,'target_window_lifecycle',False),
+          "owned_input_service":getattr(args,'owned_input_service',False),
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(
               row["model_session_id"] for row in decisions if "model_session_id" in row)),

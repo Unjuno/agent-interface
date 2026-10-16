@@ -89,7 +89,10 @@ def close_before_control_effect(executor, out, emit, operation):
         obligation = executor.release_obligation_snapshot()
         active_intent = executor.active[0] if executor.active is not None else None
         closed = executor.closed
-    if closed and active_intent is None and obligation is None:
+    backend=getattr(executor,'backend',None)
+    custody=getattr(backend,'executor_custody_snapshot',lambda:{})()
+    owner_service_obligation=custody.get('owner_service_obligation')
+    if closed and active_intent is None and obligation is None and owner_service_obligation is None:
         return
     failure = {
         "event": "control_boundary_failed",
@@ -98,6 +101,7 @@ def close_before_control_effect(executor, out, emit, operation):
         "executor_closed": closed,
         "active_intent": active_intent,
         "release_obligation": obligation,
+        "owner_service_obligation":owner_service_obligation,
         "input_recovery_required": True,
         "task_effect": "unknown",
         "grants_input_authority": False,
