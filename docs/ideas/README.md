@@ -65,3 +65,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Delegation-membership identifiability](delegation-membership-identifiability.md) — indexes #8915's unverified identical-trace discriminator without conflating membership, event causality, and actor attribution.
 
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
+
+- [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
