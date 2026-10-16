@@ -18,6 +18,14 @@ Merged [PR #5351](https://github.com/Unjuno/agent-interface/pull/5351) retains `
 
 The already indexed #8898 successor asks whether signatures remain diagnosable after a bounded number of corrupted outcomes. It is a robustness layer over declared signatures, not a substitute for establishing that the underlying fault sets are distinguishable. Keep ambiguity when corruption exceeds separability.
 
+### Fixed-budget diversity for early causal-hypothesis search — #8901
+
+**Status:** Open, unverified method-transfer proposal; no model, runtime, or investigation allocation has been run.
+
+#8901 asks whether complementary investigative lenses discover more evidence-supported causal mechanisms from retained traces, at equal total analysis budget, than repeating the strongest standalone lens. The proposal treats this as hypothesis-space coverage before a complete fault catalog or conflict model exists—not as independent confirmation, a diagnosis vote, or an authority mechanism. It requires blinded first-pass hypotheses with supporting/contradicting event IDs, calibration/held-out separation, matched budgets, planted multi-cause and out-of-catalog cases, and independent scoring. Diversity or disagreement alone is not a success metric; unsupported specificity and correct `UNKNOWN` handling are hard boundaries. See [Issue #8901](https://github.com/Unjuno/agent-interface/issues/8901).
+
+This is upstream of #5430's diagnosis over extracted conflict sets and #8894's test design for a predeclared fault catalog. It does not replace either, establish real failure prevalence, or imply live diagnosis benefit.
+
 ## Scope boundary
 
 Constrained locating arrays, adaptive fault localization, and corruption-tolerant codes are established methods in their source domains. These Issues propose finite repository-specific comparisons; they do not estimate real fault prevalence, prove product fault localization, or authorize runtime interventions. Safe-probe constraints from adjacent #6147 remain separate and must not be weakened.
