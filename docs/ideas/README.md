@@ -51,3 +51,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Control dynamics and route recovery](control-dynamics-agenda.md) — keeps route-by-disturbance evaluation (#6604) separate from source-supported path-class switching (#6586), preserving the synthetic method outcomes and the boundary to real GUI/game behavior.
 
 - [Runtime reliability under uncertainty](runtime-reliability-agenda.md) — separates liveness suspicion (#5531), timed resource deadlocks (#5410), verifier-cascade capacity (#5375), and hidden-state belief contracts (#5368), preserving distinct finite-method results, allocation failures, and unresolved integration boundaries.
+
+- [Observation load and feedback cascades](observation-load-cascade-agenda.md) — separates #8665's scoped factorial method result from #8888's implementation/audit STOP, preserving the consumed allocation and the bounded successor requirements.
