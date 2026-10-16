@@ -79,3 +79,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Partial GUI target correspondence](partial-target-correspondence.md) — updates #8675's scoped synthetic T0 result and records #8868's separate unmatched-node successor without treating either as live identity or authority.
 
 - [Privacy-preserving failure discovery integrity](privacy-discovery-integrity.md) — records #6549's scoped 24-row feasibility result and #8877's separate unverified coalition-integrity successor, without claiming DP or fleet deployment.
+
+- [Cleanup identity audit and evidence custody](cleanup-identity-audit.md) — preserves #8681's duplicate-ID failure, the single merged #8771 implementation boundary, and the distinct evidence still carried by overlapping #8687/#8838 PRs.
