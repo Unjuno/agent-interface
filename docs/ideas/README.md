@@ -83,3 +83,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Cleanup identity audit and evidence custody](cleanup-identity-audit.md) — preserves #8681's duplicate-ID failure, the single merged #8771 implementation boundary, and the distinct evidence still carried by overlapping #8687/#8838 PRs.
 
 - [Versioned semantic degradation](versioned-semantic-degradation.md) — separates #8609's independent-failure finite result from #8610's protocol-arm mismatch and #8622's corrected but custody-held common-cause result.
+
+- [Belief-space recovery and predicate synthesis](belief-recovery-and-predicate-synthesis.md) — preserves #8527's pre-run STOP, #8553's scoped result plus audit gap, and #8562's unverified successor under an ownership HOLD.
