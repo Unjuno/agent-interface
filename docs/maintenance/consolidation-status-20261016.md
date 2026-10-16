@@ -11,6 +11,12 @@ Issue #6640/#6624/#6615/#6611と関連PR・後続Issueを確認し、`docs/IDEAS
 #6615のT0/T0B失敗とT0C合成結果、#6611の合成future-reader scorer結果をそれぞれ分離した。
 新たなcandidate、model、GUI、game実行は行っていない。
 
+### r19：4件の既存案・後続結果を索引化（2026-10-16）
+
+Issue #8604/#8598/#8589/#8583と関連PRを確認した。#8604 A03はA02と同一rawのWSLc transferであり、別途ownership-gate逸脱が記録されている。
+#8598は未実行のcensoring/tail-bound案、#8589は当初method label・後続gate discrepancy・audit-only補足・レビュー時の追加実行逸脱を区別し、
+#8583は有限synthetic principal-stratumのmethod結果として記載した。いずれも実GUIや人間研究への外挿をしていない。
+
 ### r17：4件のオブジェクト記憶・復旧Issueを索引化（2026-10-16）
 
 Issue #7164/#7163/#7160/#7042を、正式コメントと現行PR状態で照合した。#7164はopen Draft #8216の
