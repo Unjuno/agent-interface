@@ -47,3 +47,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Query-private evidence-location lookup](query-private-evidence-location.md) — preserves #8000's no-eligible-workload HOLD and separate WSL-container STOP; no PIR or privacy result is claimed.
 
 - [Effect-indexed semantic deoptimization](effect-indexed-semantic-deoptimization.md) — records #8040's finite cursor-reconstruction PASS while keeping external GUI effects, runtime resumption, and its Draft evidence PR unresolved.
+
+- [Failure-episode unitization sensitivity](failure-episode-unitization-sensitivity.md) — records #7857's synthetic segmentation-sensitivity result and the separate T1 HOLD for lack of eligible continuous traces.
