@@ -20,11 +20,17 @@ def _option(name,default=None):
     if i+1>=len(args):raise ValueError(f'option requires value: {name}')
     return args[i+1]
 def _sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
-def _merge_sources(out, *, process_identity=False, window_lifecycle=False):
+def _merge_sources(out, *, process_identity=False, window_lifecycle=False,owned_input_service=False):
     path=Path(out)/'sources.json'
     if not path.exists():return False
     data=json.loads(path.read_text(encoding='utf-8'))
     additions=[HERE/'session_map01_v15.py',HERE/'map01_scorer_stdio_adapter_v1.py',HERE/'main_thread_scorer_polling_v1.py',HERE/'independent_progress_clock_v2.py',HERE/'doom_owner_thread_release_batch_backend_v1.py',HERE/'doom_typed_release_backend_v2.py',RESEARCH/'live_control/executor_v13.py',RESEARCH/'live_control/executor_v12.py',RESEARCH/'live_control/input_transition_owner_v4.py',RESEARCH/'live_control/input_transition_owner_v3.py',RESEARCH/'live_control/input_owner_v12.py',RESEARCH/'live_control/input_owner_v11.py']
+    additions.append(RESEARCH/'live_control/input_owner_rpc_v2.py')
+    if owned_input_service:
+        additions.extend([HERE/'session_owned_owner_backend.py',RESEARCH/'live_control/input_owner_service_adapter.py',
+            RESEARCH/'live_control/input_owner_cancel_v4.py',
+            RESEARCH/'live_control/input_owner_process_v3.py',RESEARCH/'live_control/session_v9.py',
+            HERE/'doom_typed_release_backend_v1.py'])
     for source in additions:data[str(source.relative_to(RESEARCH))]=_sha(source)
     if process_identity:
         identity_files = (HERE/'doom_process_identity_backend_v1.py',
@@ -40,7 +46,7 @@ def _merge_sources(out, *, process_identity=False, window_lifecycle=False):
             files[relative]=_sha(RESEARCH.parent/relative)
         (Path(out)/'target-process-identity-sources.json').write_text(json.dumps(
             {'schema':'map01-process-identity-sources-v1','path_root':'repository','files':files,
-             'window_lifecycle':window_lifecycle},
+             'window_lifecycle':window_lifecycle,'owned_input_service':owned_input_service},
             indent=2,sort_keys=True)+'\n',encoding='utf-8')
     path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n',encoding='utf-8');return True
 
@@ -122,7 +128,11 @@ class _GameProxy:
         return result
 
 def main():
+    owned_input_service='--owned-input-service' in sys.argv[1:]
+    process_identity='--target-process-identity' in sys.argv[1:]
     window_lifecycle = '--target-window-lifecycle' in sys.argv[1:]
+    if owned_input_service and (not process_identity or window_lifecycle):
+        raise ValueError('owned input service requires process identity without window lifecycle')
     if window_lifecycle and '--target-process-identity' not in sys.argv[1:]:
         raise ValueError('target window lifecycle requires target process identity')
     out=Path(_option('--out'));timeout_seconds=int(_option('--timeout-seconds','600'))
@@ -130,12 +140,13 @@ def main():
     import session_map01_v12 as base
     from executor_v13 import Executor as ReleaseOrderedExecutor
     from doom_owner_thread_release_batch_backend_v1 import Backend as TelemetryBackend
-    process_identity = '--target-process-identity' in sys.argv[1:]
     if process_identity:
         from doom_process_identity_backend_v1 import Backend as TelemetryBackend
         if window_lifecycle:
             from functools import partial
             TelemetryBackend = partial(TelemetryBackend, window_lifecycle=True)
+    if owned_input_service:
+        from session_owned_owner_backend import Backend as TelemetryBackend
     holder={};sink=ScorerFileSink(out)
     def sample_game():
         game=holder.get('game')
@@ -148,10 +159,12 @@ def main():
     base.vd.DoomGame=ctor;base.Backend=TelemetryBackend;base.Executor=ReleaseOrderedExecutor;base.sys.stdin=polling
     original_argv = sys.argv
     if process_identity:
-        sys.argv = [arg for arg in original_argv if arg not in ('--target-process-identity','--target-window-lifecycle')]
+        sys.argv = [arg for arg in original_argv if arg not in ('--target-process-identity','--target-window-lifecycle','--owned-input-service')]
     try:base.main()
     finally:
         sys.argv = original_argv
         base.vd.DoomGame=original_ctor;base.sys.stdin=original_stdin
-        sink.finalize(polling.stats());_merge_sources(out,process_identity=process_identity,window_lifecycle=window_lifecycle)
+        from input_owner_rpc_v2 import _run_cleanups
+        _run_cleanups(lambda:sink.finalize(polling.stats()),
+            lambda:_merge_sources(out,process_identity=process_identity,window_lifecycle=window_lifecycle,owned_input_service=owned_input_service))
 if __name__=='__main__':main()

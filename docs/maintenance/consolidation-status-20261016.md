@@ -6,7 +6,22 @@
 
 ## 後続の現在地
 
-### r4：#8867の計測変更を現行経路へ収束
+### r5：保全していたV15選択変更を現行mainへ結合
+
+基準main `7aeb6f933c67384ad0e8d3b25e1d68a44ec341a8`。#9001は統合済み、
+#8867は[採用先付きで終了](https://github.com/Unjuno/agent-interface/pull/8867#issuecomment-6207033828)。
+[V15選択の結合記録](../../research/integration/owned_service_session_20261016/README.md)では、
+旧`8a252071...`の変更を現行の計測・プロトコルguardと結合し、原履歴もtreeを変えず保持した。
+旧149件の結果を転用せず、通常・最適化各208メソッド/27モジュールを実行、skipなし。
+各10 session行、96 parent source pin、99 sourceのraw/LF別凍結を保存した。
+別読取は両modeで通り、各reportの15改変を拒否。所有子56 PIDは確認時点ですべて不在だった。
+
+起動/終了の原本・失敗・出版衝突・初回の解放失敗を残し、後のcleanup成功で昇格させない。
+V15オプション試験のbase.mainはスタブで、実wrapper/backend試験はFake Xと所有Python子による。
+実session/controller死亡、native解放、環境応答、task effect、matched economicsは未達。
+この結合後は旧選択branchを新しい未着手仕事として案内しない。次の整理はモデル/比較評価一族。
+
+### r4（履歴）：#8867の計測変更を現行経路へ収束
 
 基準main `5abbc37e7674d52ef452f08f64bce3b8cb82fd0b`。
 #9000はこのmainへ統合済み。#8874は原29ファイルの保全先とログ欠落を示して
