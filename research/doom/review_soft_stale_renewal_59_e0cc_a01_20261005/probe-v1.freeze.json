@@ -1,0 +1,24 @@
+{
+  "classification": "ordinary synthetic regression; not formal or live allocation",
+  "created_unix_ns": 1791178893574961000,
+  "head": "66ba74f69d1373399811f62ad950743caad770ed",
+  "source_sha256": "e3b0659710ee8fe6a06209acae7ca558d35a5bb1f595ec021af83bac909c7645",
+  "probe_sha256": "50731869945955ded3c4f90bfbe870c67fb711e8f8987bf0d6c4736bd6c2a784",
+  "cases": [
+    "soft completion after stale renewal rejection",
+    "hard invalidation while coverless",
+    "unknown invalidation while coverless",
+    "unexpected rejection fails closed"
+  ],
+  "expected": "retain original terminal/id and no cancel of rejected program; only invalidation causes one planner interrupt; no new admitted renewal",
+  "limits": [
+    "fake future/executor/planner/queue; no real thread, provider cancellation or physical release timing",
+    "exact AST-extracted wait/submit/main section only; not full CLI session"
+  ],
+  "timeout_seconds": 15,
+  "command": [
+    "bundled-python-3.12.14",
+    "-B",
+    "probe_main_loop.py"
+  ]
+}
