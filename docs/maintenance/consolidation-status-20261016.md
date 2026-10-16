@@ -26,6 +26,8 @@ adaptive cohort reuseを別の研究対象として索引化した。
 human-agent item functioningの4件を別の未検証案として記録した。
 次に#8527/#8532/#8533/#8544を確認し、期限内reachability、条件統一したrejection memory、success-cue inoculation、
 target–flanker bindingの仮説を各先行Issueと分けて索引化した。
+#8498/#8518/#8522/#8526も本文を照合し、retrieval practice、WSLc session reuse、vignette仮定の検証、
+path-conditioned read-setという別の問いを追加した。
 これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
