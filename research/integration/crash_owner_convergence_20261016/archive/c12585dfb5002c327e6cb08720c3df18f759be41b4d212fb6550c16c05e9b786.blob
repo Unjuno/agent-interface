@@ -1,0 +1,41 @@
+{
+  "arms": {
+    "A01": "STOP: owner cleanup and independent X release were observed, but candidate failed while reading the V4 wrapper's thread state and did not persist an owner receipt.",
+    "A02": "PASS_METHOD_SCOPED: real InputOwner release record and all independent gates passed."
+  },
+  "base_sha": "7f3f9293f2e0e62353b719532ef5bf01daa36a2c",
+  "decision_rule": "PASS_METHOD_SCOPED requires session SIGKILL (-9), distinct owner originally spawned by that session and no longer parented to it, kill-request < EOF < owner.close(), exact one InputOwner owner_release with matching intent/deadline and verified empty key/button/unknown/error state, stopped real V12 thread, fsynced receipt, independent X KeyPress before kill and KeyRelease/keymap-up after close begins, clean owner exit, no forced kill, and clean Xvfb exit.",
+  "environment": {
+    "hard_resource_limits": "none",
+    "host": "WSL2 Ubuntu",
+    "network": "not isolated; candidate makes no network calls",
+    "physical_input_or_game": false,
+    "python": "CPython 3.12.3",
+    "python_xlib": "0.33-2 Ubuntu package",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "experiment": "v39-v15-inputowner-process-xvfb-a06-20261012",
+  "hypothesis": "The production V4/V3/V10/V12 owner stack can retain its X connection outside the V15 session process and produce its normal verified release record after session IPC EOF.",
+  "question": "Can the exact InputOwner V4 stack selected by session V15 be moved into a detached process, receive strict lease/focus-bound local RPC, and release a held key through its real close path after its session parent is SIGKILLed?",
+  "schema": "v39-v15-inputowner-process-xvfb-a06-freeze-v1",
+  "scope": "Isolated WSL2/Xvfb process test. Real input_transition_owner_v4.InputOwner defaults through V3, V10, and V12. A minimal versioned Unix-socket request supports one allowlisted key, a Lease deadline, intent token, and supervisor-observed focused X window ID. No VizDoom session or live allocation.",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "2df84b632456388a488f2595347b6b37def29f66b47f97a44d89ed5c11b8d418",
+    "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/audit_a06.py": "79f3739ba97b9f57dd47c62a35c053ba3cf3d099c472ab2f6999ee3625f516e7",
+    "research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py": "3537f547964bd3c628c90d0b92b26d9ed6e3023136273b9a122446d03c766cd2",
+    "research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/test_protocol.py": "86a4ed3f7da3fb7c09ad86cb80d9ecb91a8e840b1d953d2f539b2f8f5a7f42e1",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "research/live_control/input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "research/live_control/input_transition_owner_v3.py": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+    "research/live_control/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0"
+  },
+  "unknowns": "No production V15 backend wiring, outer controller receipt wait or display-reuse gate, multi-key/button transport, partial/duplicate frame handling, focus change during hold, owner-service death, supervisor death, display reset, or gameplay/task effect."
+}
