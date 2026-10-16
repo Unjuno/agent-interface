@@ -1,0 +1,79 @@
+import datetime, hashlib, json, pathlib, subprocess, sys
+
+HERE=pathlib.Path(__file__).resolve().parent
+REPO=HERE.parent/'agent-interface'
+BASE='a216324bac278621af298d8336dd85e319cda2ef'
+def sha(data): return hashlib.sha256(data).hexdigest()
+paths=('runtime/cli_v1/observe.py','runtime/cli_v1/test_observe.py')
+for rel in paths:
+    data=subprocess.run(['git','show',BASE+':'+rel],cwd=REPO,capture_output=True,check=True).stdout
+    target=HERE/'baseline'/pathlib.PurePosixPath(rel).name
+    target.parent.mkdir(parents=True,exist_ok=True); target.write_bytes(data)
+source=(HERE/'baseline/observe.py').read_bytes()
+if source.count(b'import uuid\n')!=1 or source.count(b'observation=reader(target, frame, region)')!=1: raise RuntimeError('source shape')
+candidate=source.replace(b'import uuid\n',b'import copy\nimport uuid\n').replace(b'observation=reader(target, frame, region)',b'observation=copy.deepcopy(reader(target, frame, region))')
+candidate=candidate.replace(b'"""One fresh native observation, independent of input dispatch or task scoring."""',b'"""One fresh native observation, with a detached return snapshot before cleanup."""')
+(HERE/'candidate').mkdir(exist_ok=False); (HERE/'candidate/observe.py').write_bytes(candidate)
+test=(HERE/'baseline/test_observe.py').read_bytes()
+addition='''
+    def test_owned_cleanup_cannot_rewrite_returned_observation(self):
+        for fails in (False, True):
+            with self.subTest(cleanup_failure=fails):
+                payload = {"sequence": 1, "native": {"title": "first", "region": [0, 0, 400, 180]}}
+                expected = {"sequence": 1, "native": {"title": "first", "region": [0, 0, 400, 180]}}
+                def close():
+                    payload["sequence"] = 99
+                    payload["native"]["title"] = "closed"
+                    payload["native"]["region"][0] = 99
+                    if fails:
+                        raise OSError("close")
+                backend = SimpleNamespace(observe_read_only=mock.Mock(return_value=payload), close=mock.Mock(side_effect=close))
+                with mock.patch("runtime.cli_v1.observe.open_session", return_value=SimpleNamespace(backend=backend)):
+                    row = self.call()
+                self.assertEqual(row["observation"], expected)
+                self.assertEqual(row["status"], "observation_failed" if fails else "returned")
+                self.assertFalse(row["side_effect_authority"])
+                self.assertFalse(row["input_dispatched"])
+                backend.observe_read_only.assert_called_once()
+                backend.close.assert_called_once()
+                if fails:
+                    self.assertEqual(row["cleanup_error"], "OSError('close')")
+
+    def test_caller_owned_next_capture_cannot_rewrite_prior_observation(self):
+        payload = {"sequence": 0, "native": {"title": "initial", "region": [0, 0, 400, 180]}}
+        def read(*_):
+            payload["sequence"] += 1
+            payload["native"]["title"] = "capture-" + str(payload["sequence"])
+            payload["native"]["region"][0] = payload["sequence"]
+            return payload
+        backend = SimpleNamespace(observe_read_only=mock.Mock(side_effect=read), close=mock.Mock())
+        session = SimpleNamespace(backend=backend, recovery_required=True)
+        first = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 400, 180])
+        second = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 400, 180])
+        self.assertEqual(first["observation"], {"sequence": 1, "native": {"title": "capture-1", "region": [1, 0, 400, 180]}})
+        self.assertEqual(second["observation"], {"sequence": 2, "native": {"title": "capture-2", "region": [2, 0, 400, 180]}})
+        self.assertNotEqual(first["observation_id"], second["observation_id"])
+        self.assertEqual(backend.observe_read_only.call_count, 2)
+        backend.close.assert_not_called()
+        self.assertTrue(session.recovery_required)
+
+    def test_returned_snapshot_mutation_cannot_rewrite_backend_cache(self):
+        payload = {"sequence": 1, "native": {"title": "first", "region": [0, 0, 400, 180]}}
+        backend = SimpleNamespace(observe_read_only=mock.Mock(return_value=payload), close=mock.Mock())
+        session = SimpleNamespace(backend=backend, recovery_required=True)
+        row = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 400, 180])
+        row["observation"]["native"]["region"][0] = 99
+        self.assertEqual(payload["native"]["region"], [0, 0, 400, 180])
+        self.assertTrue(session.recovery_required)
+        backend.close.assert_not_called()
+
+'''
+marker=b"\n\nif __name__ == '__main__':"
+if test.count(marker)!=1: raise RuntimeError('test shape')
+newtest=test.replace(marker,addition.encode()+marker)
+(HERE/'candidate/test_observe.py').write_bytes(newtest)
+(HERE/'baseline/test_observe.py').write_bytes(newtest)
+(HERE/'original_test_observe.py.txt').write_bytes(test)
+freeze={'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'base_sha':BASE,'worker':'01a0ff58-8f42-73c3-857d-35a2636e7bd3','claim':5969235757,'kind':'ordinary regression/repair, not formal','python':sys.version,'executable_sha256':sha(pathlib.Path(sys.executable).read_bytes()),'source_sha256':{p.relative_to(HERE).as_posix():sha(p.read_bytes()) for p in HERE.rglob('*.py')},'H':'Normal cleanup/reused mutable backend return can rewrite a previously returned observation. Standard detached deepcopy before cleanup preserves its returned value.','T':'Exact source facade and original seven tests plus three new methods/four directed failures; inert selector factory seam. First baseline then candidate same10methods normal/-O, preserve all first outputs; no original studies rerun.','D':'Baseline must expose4 failures across10methods. Candidate all10 methods pass normal/-O; all original method ASTs unchanged; one reader per observation, no retry/input/native dispatch; own cleanup still once/failure explicit, supplied session close0/recovery unchanged; old/new nested payloads detached.','C':'Backend factory is a double, not an actual OS backend; old source does not enforce ownership of a reusable returned dict. Native implementations may already allocate fresh payloads.','U':'Quiescent standard nested JSON returns; no concurrent modification during deepcopy, hostile deepcopy protocols, unsupported native object serialization, physical snapshot timing, emitter authentication, GUI success/input release/model/latency benefit or general thread-safety. A copy preserves returned content, not freshness at later use.'}
+(HERE/'freeze.json').write_text(json.dumps(freeze,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+print(json.dumps({'source_files':len(freeze['source_sha256']),'freeze_sha256':sha((HERE/'freeze.json').read_bytes()),'candidate_source_sha256':sha(candidate),'test_sha256':sha(newtest)}))

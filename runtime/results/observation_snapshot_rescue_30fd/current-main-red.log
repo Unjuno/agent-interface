@@ -1,0 +1,83 @@
+test_caller_owned_capture_preserves_recovery_and_connection (runtime.cli_v1.test_observe.ObserveTests.test_caller_owned_capture_preserves_recovery_and_connection) ... ok
+test_caller_owned_failure_and_invalid_request_never_close_or_retry (runtime.cli_v1.test_observe.ObserveTests.test_caller_owned_failure_and_invalid_request_never_close_or_retry) ... ok
+test_caller_owned_next_capture_cannot_rewrite_prior_observation (runtime.cli_v1.test_observe.ObserveTests.test_caller_owned_next_capture_cannot_rewrite_prior_observation) ... FAIL
+test_close_failure_preserves_captured_observation (runtime.cli_v1.test_observe.ObserveTests.test_close_failure_preserves_captured_observation) ... ok
+test_initialization_exception_returns_observation_failure_without_retry (runtime.cli_v1.test_observe.ObserveTests.test_initialization_exception_returns_observation_failure_without_retry) ... ok
+test_invalid_region_never_opens_native_connection (runtime.cli_v1.test_observe.ObserveTests.test_invalid_region_never_opens_native_connection) ... ok
+test_no_dispatch_focus_or_release_and_unique_observation_identity (runtime.cli_v1.test_observe.ObserveTests.test_no_dispatch_focus_or_release_and_unique_observation_identity) ... ok
+test_owned_cleanup_cannot_rewrite_returned_observation (runtime.cli_v1.test_observe.ObserveTests.test_owned_cleanup_cannot_rewrite_returned_observation) ... 
+  test_owned_cleanup_cannot_rewrite_returned_observation (runtime.cli_v1.test_observe.ObserveTests.test_owned_cleanup_cannot_rewrite_returned_observation) (cleanup_failure=False) ... FAIL
+  test_owned_cleanup_cannot_rewrite_returned_observation (runtime.cli_v1.test_observe.ObserveTests.test_owned_cleanup_cannot_rewrite_returned_observation) (cleanup_failure=True) ... FAIL
+test_returned_snapshot_mutation_cannot_rewrite_backend_cache (runtime.cli_v1.test_observe.ObserveTests.test_returned_snapshot_mutation_cannot_rewrite_backend_cache) ... FAIL
+test_unsupported_and_capture_failure_close_without_dispatch (runtime.cli_v1.test_observe.ObserveTests.test_unsupported_and_capture_failure_close_without_dispatch) ... ok
+test_existing_win32_capture_is_available_without_input_dispatch (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_existing_win32_capture_is_available_without_input_dispatch) ... ok
+test_win32_artifact_request_still_refuses_before_capture (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_win32_artifact_request_still_refuses_before_capture) ... ok
+test_win32_capture_failure_is_not_retried_or_recovered (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_win32_capture_failure_is_not_retried_or_recovered) ... ok
+test_win32_invalid_region_and_unknown_target_do_not_capture (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_win32_invalid_region_and_unknown_target_do_not_capture) ... ok
+test_win32_unknown_or_stale_target_refuses_both_frames (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_win32_unknown_or_stale_target_refuses_both_frames) ... ok
+
+======================================================================
+FAIL: test_caller_owned_next_capture_cannot_rewrite_prior_observation (runtime.cli_v1.test_observe.ObserveTests.test_caller_owned_next_capture_cannot_rewrite_prior_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_observe.py", line 140, in test_caller_owned_next_capture_cannot_rewrite_prior_observation
+    self.assertEqual(first["observation"], {"sequence": 1, "native": {"title": "capture-1", "region": [1, 0, 400, 180]}})
+AssertionError: {'sequence': 2, 'native': {'title': 'capture-2', 'region': [2, 0, 400, 180]}} != {'sequence': 1, 'native': {'title': 'capture-1', 'region': [1, 0, 400, 180]}}
+- {'native': {'region': [2, 0, 400, 180], 'title': 'capture-2'}, 'sequence': 2}
+?                        ^                                  ^                ^
+
++ {'native': {'region': [1, 0, 400, 180], 'title': 'capture-1'}, 'sequence': 1}
+?                        ^                                  ^                ^
+
+
+======================================================================
+FAIL: test_owned_cleanup_cannot_rewrite_returned_observation (runtime.cli_v1.test_observe.ObserveTests.test_owned_cleanup_cannot_rewrite_returned_observation) (cleanup_failure=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_observe.py", line 120, in test_owned_cleanup_cannot_rewrite_returned_observation
+    self.assertEqual(row["observation"], expected)
+AssertionError: {'sequence': 99, 'native': {'title': 'closed', 'region': [99, 0, 400, 180]}} != {'sequence': 1, 'native': {'title': 'first', 'region': [0, 0, 400, 180]}}
+- {'native': {'region': [99, 0, 400, 180], 'title': 'closed'}, 'sequence': 99}
+?                        ----                        ^^^ ^^                ^^
+
++ {'native': {'region': [0, 0, 400, 180], 'title': 'first'}, 'sequence': 1}
+?                          +++                      ^^^ ^                ^
+
+
+======================================================================
+FAIL: test_owned_cleanup_cannot_rewrite_returned_observation (runtime.cli_v1.test_observe.ObserveTests.test_owned_cleanup_cannot_rewrite_returned_observation) (cleanup_failure=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_observe.py", line 120, in test_owned_cleanup_cannot_rewrite_returned_observation
+    self.assertEqual(row["observation"], expected)
+AssertionError: {'sequence': 99, 'native': {'title': 'closed', 'region': [99, 0, 400, 180]}} != {'sequence': 1, 'native': {'title': 'first', 'region': [0, 0, 400, 180]}}
+- {'native': {'region': [99, 0, 400, 180], 'title': 'closed'}, 'sequence': 99}
+?                        ----                        ^^^ ^^                ^^
+
++ {'native': {'region': [0, 0, 400, 180], 'title': 'first'}, 'sequence': 1}
+?                          +++                      ^^^ ^                ^
+
+
+======================================================================
+FAIL: test_returned_snapshot_mutation_cannot_rewrite_backend_cache (runtime.cli_v1.test_observe.ObserveTests.test_returned_snapshot_mutation_cannot_rewrite_backend_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_observe.py", line 153, in test_returned_snapshot_mutation_cannot_rewrite_backend_cache
+    self.assertEqual(payload["native"]["region"], [0, 0, 400, 180])
+AssertionError: Lists differ: [99, 0, 400, 180] != [0, 0, 400, 180]
+
+First differing element 0:
+99
+0
+
+- [99, 0, 400, 180]
+?  ----
+
++ [0, 0, 400, 180]
+?    +++
+
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.014s
+
+FAILED (failures=4)
