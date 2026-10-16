@@ -169,3 +169,13 @@ remote completion succeed, which does not repair independent cancellation.
 Three cells normal/-O,49 source pins and nine saved-record negatives per mode
 preserve this distinction. Next implement the independently serviced intent-bound
 cancellation/cause relay, then explicit backend selection under#59.
+
+[The independent cancellation lane](../../research/integration/owner_cancel_relay_20261016/README.md)
+now repairs that explicit relay boundary: actual backend/Executor receives the
+matching parent-lease release cause while the worker is paused or an ordinary
+reply is in flight. Normal/-O each70 methods retain the original counterexamples,
+11 new cancellation rows,51 parent pins and frozen loaded sources. First failed
+release outcomes remain unverified after late cleanup; wrong generation/control
+loss retires admission. Default backend selection is unchanged. Next connect the
+production backend custody adapter, preserving first control failure and original
+source/cause, then qualify controller/session death and native/task effects.
