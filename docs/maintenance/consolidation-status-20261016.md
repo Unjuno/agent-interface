@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r66: index WSL readiness and the disclosed WSLc process deviation (2026-10-17)
+
+The central idea index now links open #8685 and #8913 under the established #8677/#8619 Dockerless migration family. #8685's latest record supersedes only the earlier native-Ubuntu startup failure: native WSL startup and a small standard-library smoke succeeded, but no exact-current-main repository validation, WSLc run, or paired cost/memory measurement occurred; shared WSLc ownership remains unresolved. #8913 records three read-only WSLc info/images/container-list calls made despite the ownership gate. No container was launched or changed; this process deviation is not an allocation, lane release, or result, and the calls must not be repeated before owner confirmation. The index explicitly preserves these limits and links the primary Issues.
+
 ### r65: retain the unique Windows rescue test pending owner review (2026-10-17)
 
 The unprotected `rescue/win32-release-retain-7772-currentmain-20261007` tip changes only `runtime/backends/win32_v1/test_integration.py`, whose blob differs from main (`cebb009c` vs `406e63dd`). The branch adds focused release-failure, input-query, session-recovery, and unverified-key-up cases. No PR refs or registered worktree were found in the audit clone. The branch name cites #7772, but current #7772 is an unrelated image-Jacobian study and its record does not establish ownership of this Windows change. Keep the unique test source until ownership/content review identifies its intended destination; do not integrate or delete based on the name alone.
