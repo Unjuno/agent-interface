@@ -71,8 +71,9 @@ After that snapshot, `research/wsl3-dockerless-doc-inventory-8882` was reviewed 
 Issue #8882 is closed with an explicit completion record pointing to the superseding inventory
 merged by PR #8884; the branch had no current PR head/base reference or matching local checkout.
 Its exact tip `76f33cc4b6c7af55074030ddc85857b73aec3117` was deleted with a tip-fixed lease and
-verified absent. The current remote branch count is 587 and the no-PR-reference group is now 32.
-The CSV remains the pre-deletion snapshot and includes this branch as it existed at capture time.
+verified absent. The current remote branch count was 587 and the no-PR-reference group was 32
+at that intermediate capture. The comparison artifact was absent from main; the current census
+below replaces it.
 Subsequent creation of the current-main Win32 release-test PR #9006 added one open PR head; the
 live remote count is now 588 branches and 517 open PRs. The no-PR-reference group remains 32.
 The closed #8592 transfer is not a deletion signal for every associated ref: its final comment
@@ -110,6 +111,16 @@ sentinel再構成で止まったため、科学的判定なしのraw保全PR
 branch `research/8914-budgeted-discovery-t0-a01-20261016` はこの未統合PRのheadとして保持中。
 同日時点のremote refs 589本・open PR 518件にはこれを含み、削除済み・main統合済みとは数えない。
 この保全用branchは独立したWSLc・GUI・ゲーム・model作業を制限しない。
+
+同日にbranch/PR参照を再取得して比較表を[再生成](unlinked-branch-review-20261016.csv)した。
+589 remote branch、6,102件のPR参照record、PR head/base未参照32 branchを照合し、32本すべて
+unprotectedかつmainとdiverged、合計106 commit aheadで、比較APIが各branchの変更pathを報告した。
+32本中6本は監査cloneの登録worktreeにも存在する。各tip・merge base・ahead/behind・変更path・
+worktree対応をCSVへ記録した。32本は固有内容と所有者の確認が残るため削除していない。
+
+同じroot cloneのworktree台帳は92件中33件がprunableで、その33パスが実在しないことを確認した。
+dry-runが示した欠損metadata 33件だけを`git worktree prune`で除去し、branch refや作業ファイルは削除していない。
+59登録worktreeが残り、prunableは0件。dirtyなA16 health-zero worktreeの2 tracked変更は現存を再確認し、未変更のまま保全した。
 
 同じバッチで、統合済みPR [#8791](https://github.com/Unjuno/agent-interface/pull/8791)
 のremote branch `fix/primary-release-array-shape-20261009` を回収した。記録tip
