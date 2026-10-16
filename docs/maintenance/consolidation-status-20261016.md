@@ -30,6 +30,8 @@ target–flanker bindingの仮説を各先行Issueと分けて索引化した。
 path-conditioned read-setという別の問いを追加した。
 その後#8618/#8620/#8636/#8675の本文を確認し、cross-task disclosure、execution information、
 rotation-invariant visual feature、version-crossing target continuityを分離して索引に載せた。
+さらに#8493/#8494/#8594/#8595を確認し、temporal drift、shared-queue synchronization、reverse-stress synthesis、
+mediation identifiabilityをそれぞれ別の未検証課題として記録した。
 これで全Issueの分類が済んだわけではない。監査追試の詳細と未実施境界も同ページに記録した。
 Public Navigationは26 documents / 2,140 repository-relative linksで成功。PR #9005ではhead
 `1313fc6185b4e9ae8af37dc6483cc6da7d50c413`と、4件のIssue索引を含むhead
