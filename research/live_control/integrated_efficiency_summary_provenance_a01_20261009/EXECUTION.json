@@ -1,0 +1,22 @@
+{
+  "schema": "integrated_efficiency_summary_provenance_a01_execution_v1",
+  "checkout_head": "743ae74ec5be2472ff27fa06fe13d5ecf8534de5",
+  "runtime": "native Ubuntu WSL2 / Python 3.12.3",
+  "wsl_package": "2.7.13.0",
+  "wslc": "unavailable; no executable in PATH or C:/Program Files/WSL",
+  "commands": [
+    "python3 -B research/live_control/integrated_efficiency_summary_provenance_a01_20261009/freeze.py",
+    "python3 -B research/live_control/integrated_efficiency_summary_provenance_a01_20261009/audit.py --write",
+    "python3 -B research/live_control/integrated_efficiency_summary_provenance_a01_20261009/verify.py --write",
+    "python3 -B research/live_control/integrated_efficiency_summary_provenance_a01_20261009/manifest.py"
+  ],
+  "outcomes": {
+    "freeze": "completed after the initial WSL Git-pointer failure; construction details retained",
+    "candidate_audit": "exit 0; read-only audit was re-executed during packaging, final output retained in result.json",
+    "independent_verifier": "initial path failure retained; corrected verifier passed, final output retained in verification.json",
+    "model_calls": 0,
+    "gui_actions": 0,
+    "container_runs": 0,
+    "formal_allocations": 0
+  }
+}
