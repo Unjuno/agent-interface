@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r36：4件の未索引Issueを既存証拠に沿って整理（2026-10-17）
+
+#5360のtoy counterexampleとhost-only opacity evidence、#5296のmapped-geometry constructionと未承認の後続案、#5254の未実行formal LRU allocationとsource/receipt HOLD、#5205のaudit receipt STOPとunsafe-metric欠落を区別して`docs/IDEAS_AND_OUTCOMES.md`へ追加した。関連PR/Issueを再確認し、科学的結果の昇格やallocationの再実行はしていない。#5205のSTOPはその監査allocationだけに限定し、全体停止とは記述していない。
+
 ### r35：4件の配分・復帰・学習・失効研究を結果列ごとに索引化（2026-10-17）
 
 #5407の安全性/不足量と公平性のトレードオフ、scarcity-firstの有限FAIL、base-drift STOP、未検証joint-feasibility案を分離。#5404のtyped resumption PASSと未検証cue/overlap課題、#5385のcanonical T0 PASSと未評価T1 STOP、#5361のT0 PASS/T1 gate FAIL/T2 PASSを連続結果として記録した。branch参照も再照合し、remoteに#5407/#5385名の枝はなく、#5407の3 archive tagと#5385の3 archive tagは確認済みtipを指す。実験・runtimeは実行していない。
