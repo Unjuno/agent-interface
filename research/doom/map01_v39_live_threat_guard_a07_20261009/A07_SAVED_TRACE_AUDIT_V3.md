@@ -26,10 +26,26 @@ transition. Six have admissions: `cover-1`, `cover-2`, `cover-3`, `cover-4`,
 row than admission rows (three are 6/5 and two are 4/3); `cover-3` is 4/4.
 The five unmatched per-key counts make v3's custody check fail.
 
-The corresponding `input_released.owner_release` receipts report empty key
-state. That alone does not resolve whether each `input_admission` represents a
-key-down already sent or a command admitted but cancelled before sending. The
-saved owner-event trace must be reconciled to distinguish those cases. Until
-then, the v2 custody PASS is not independently confirmed by v3, and the v3
-scoped FAIL is not evidence of a physical stuck key. Keep A07's overall result
-at HOLD; do not rerun the allocation.
+## Additive terminal-release reconciliation
+
+The independent check in `audit_a07_owner_release_reconciliation.py` joins
+`input_admission` to the same-key `keys_held` acknowledgement, matches every
+`input_release_transition` to an owner-thread explicit key-up, and uses the
+terminal owner-release receipt for a key that was still held when cancellation
+arrived. All 10 cancellation rows reconcile. Four have no admission, held-key
+acknowledgement, transition, or input-release receipt. For the six admitted
+rows, all admissions match held-key acknowledgements; five have one additional
+terminal key-up receipt (three `a`, two `d`) corresponding to the one fewer
+explicit transition in v3. Each receipt reports the key down before and up
+after, a completed sync, a verified keycode entry, and an empty final server
+key state. The remaining admitted row has one explicit transition per key.
+The five unit regressions pass, including missing-terminal-keyup,
+post-cancel-admission, and duplicate-ID rejection.
+
+The supplemental JSON therefore records
+`PASS_CUSTODY_RECONCILED_SCOPED`. It explains why v3's stricter explicit-row
+count fails without erasing that v3 `FAIL` or changing either earlier audit.
+This remains X11 server-side custody evidence, not physical-key or game
+consumption evidence. A07's overall result remains HOLD because the live
+episode did not expose the preregistered health-guard/useful-feedback condition
+or complete MAP01. Do not rerun the allocation.
