@@ -20,7 +20,7 @@ PR #9007のA01/A02 method-contract初回workflowは、GitHub Actions checkout中
 
 #9007 attempt 2のmethod-contractはcheckout後18秒でPASS、analysis-index/replay-gate/public-navigationもPASS。PRはOPEN/CLEANで、A01/A02の`HOLD_AUDITOR_METHOD_FAILURE`と非科学的範囲を維持する。
 
-#9006の`native-mcp` failureをcurrent mainで限定再現した。`review_bridge()`がproduction constructorの`binding_revision=0`初期化を欠いていたため、fixtureだけを一致させる一行修理をPR #9010へ分離した。対象2テストと`test_native_handle_bridge_v1`全31件はPASS、PRのnative-mcp/replay/workspace/X11 CIは確認時点でpending。production codeは不変更。#9006の別`native-win32`失敗（`release_unverified`対`completed`）はこの修理で隠さず、未解決のまま残す。
+#9006の`native-mcp` failureをcurrent mainで限定再現した。`review_bridge()`がproduction constructorの`binding_revision=0`初期化を欠いていたため、fixtureだけを一致させる一行修理をPR #9010へ分離した。対象2テストと`test_native_handle_bridge_v1`全31件はPASS。PR CIでfixture errorsは解消したが、同じjobは別の既存relay-discovery/closeとguarded-source dependency inventoryの2件でfailure。replay/workspace/X11 checksはPASS、production code不変更。#9006の別`native-win32`失敗（`release_unverified`対`completed`）はこの修理で隠さず、未解決のまま残す。
 
 ### r44：#8678をcurrent-main基準へ整列（2026-10-17）
 
