@@ -13,10 +13,13 @@ A03 operation/attempt binding、A04 request-bound ACK、A05 emitted-frontierの�
 PR #9005のhead `c91199fe385fd995135e77d3164cff6e2221d249`でreplay-gate、Research Workspace Index、
 Public Navigationが成功。作業treeはclean。今回Issueへの投稿、実験、branch削除は行っていない。
 
-現行のbranch API snapshotは588 remote refs。ローカルrepoの登録worktreeは2件。
+現行のbranch API snapshotは588 remote refs。台帳32候補のうち4 refはremoteに存在せず、残る28 refは
+記録済みtipと一致した。4件中3件は過去の記録で削除済みだった。4件目のCLI report branchもr40で削除済みだが、
+CSV dispositionだけが古い保持判定だったため、確認済みtag peelを照合して削除済みへ訂正した。
+ローカルrepoの登録worktreeは2件。
 ローカル4 ref中、mainは基準ref、整理PR枝はPR #9005、#8914枝は専用worktree、
 残るWin32 test枝はopen Draft PR #9006 (UNSTABLE)のheadに一致する。安全に回収できる枝はこの確認では見つからず、
-remote branch削除候補32件の所有・内容照合は未完了。次はPR #9005の未レビュー状態を保ちつつ、
+残る28 refの所有・内容照合は未完了。次はPR #9005の未レビュー状態を保ちつつ、
 未参照/closed-head branchの残存候補を一件ずつowner・依存・raw保全と照合する。
 
 ### r47：#9004の有限T0結果を索引化し、#8867旧refを回収（2026-10-17）
