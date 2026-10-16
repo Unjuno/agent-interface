@@ -223,3 +223,65 @@ deletion does not remove the PR or its retained head ref.
 After deletion, all nine `refs/heads/*` names were absent and each
 `refs/pull/<number>/head` still resolved to the exact SHA in the table. No
 source or experiment was run for this remote-ref cleanup.
+
+## Fresh audit of unreferenced remote branches (2026-10-17)
+
+Refreshed GitHub state returned 564 remote branches and 521 open PRs. Comparing
+open PR head/base names with the 66 registered worktrees leaves 29 branches
+outside those references. All 29 are unprotected. This is an inventory, not a
+deletion list: absence from open PRs and worktrees does not establish that a
+branch's source or one-shot evidence is redundant.
+
+Eight branches exactly match closed PR heads. Their exact tips and linked PRs
+were read back. These are retained because their PR discussions preserve
+unique failures, stacked source lineage, or an explicit branch/evidence
+retention decision; closure of an integration PR does not erase that record.
+
+| Branch | Exact tip | PR-specific retention evidence |
+|---|---|---|
+| `research/59-renewal-soft-stale-admission-a01-20261005` | `66ba74f69d1373399811f62ad950743caad770ed` | Closed [#8006](https://github.com/Unjuno/agent-interface/pull/8006) says the branch and original evidence remain available for provenance; review found a caller-transition coverage gap. |
+| `research/59-v39-current-admission-fix-a01-20261005` | `1403c822609395f9ab21e0cdbb36b7b4c8ee044d` | Closed [#7904](https://github.com/Unjuno/agent-interface/pull/7904) has unresolved renewal-path review history and is the recorded base of stacked #8013. |
+| `research/59-v39-keymap-batch-a06-20261005` | `0a43cd9528c1de28af389945c8ce31b3e33e8bf5` | Closed [#7908](https://github.com/Unjuno/agent-interface/pull/7908) explicitly retains the distinct dropped-key-up failure and post-hoc reconciliation. |
+| `research/59-v39-renewal-invalidation-a01-20261005` | `fc3d88686ef17d3d9b721592eb64d862890cff8b` | Closed [#8013](https://github.com/Unjuno/agent-interface/pull/8013) is a stacked follow-up to #7904; retain the exact parent/child source lineage. |
+| `research/8651-observation-response-factorial-a01-20261009` | `1910f60b3f4aa8699cb7640a549732e58e4375e3` | Closed [#8655](https://github.com/Unjuno/agent-interface/pull/8655) preserves the pre-row output-path STOP; merged #8660 superseded integration, not the historical outcome. |
+| `research/8651-observation-response-factorial-a02-20261009` | `f5a4e7563862734c0e57b21cda66ddbe230e1ab6` | Closed [#8656](https://github.com/Unjuno/agent-interface/pull/8656) preserves the candidate/auditor output and `ARG_MAX` retention failure; no scientific contrast was asserted. |
+| `research/8651-observation-response-factorial-a03-20261009` | `d7022f5c2a5c9535a66519f70e1b12e5090163cf` | Closed [#8657](https://github.com/Unjuno/agent-interface/pull/8657) preserves the checksum-preflight STOP before image pull or candidate invocation. |
+| `research/v39-import-preflight-a01-20261009` | `1d7cc0e13f18484260012f2c487e86679bd8b534` | Closed [#8697](https://github.com/Unjuno/agent-interface/pull/8697) explicitly retains the branch and local reproduction artifact; its narrow Pillow preflight was superseded by broader preparation. |
+
+The remaining 21 are retained pending specific custody resolution. The unique
+frozen package `fix/8243-verifier-r2p6-20261006` and the explicit preservation
+decision for `rescue/win32-release-retain-7772-currentmain-20261007` are recorded
+above. `research/v39-retained-trajectory-posthoc-a01-20261008` differs from
+closed PR #8543's head, so that PR does not establish custody for the current
+branch tip. The other 18 have no exact closed-PR head mapping in the refreshed
+inventory. Their allocation/source contents and retained evidence destinations
+have not yet been reconciled.
+
+| Branch | Current exact tip |
+|---|---|
+| `fix/8243-verifier-r2p6-20261006` | `44f4d99480344e50f504fe5c92f5f2cd58c5dec1` |
+| `rescue/win32-release-retain-7772-currentmain-20261007` | `0d05169be4f937e534aa6c2c6abd6027d87c12ec` |
+| `research/1998-temporal-focus-payload-a10-20261009` | `86ee215887a61c5ee014db4e3dc2000ade10746e` |
+| `research/59-early-typed-guard-a01-20261012` | `075aa109c9464a8fcd1b81a35700b231bfda37bc` |
+| `research/59-v15-owner-integration-20261012` | `cf3c31e02e5d9b25240474499b1ec4393849b593` |
+| `research/59-v39-main-source-identity-a01-20261009` | `0d0f4d4a09e3b6de5b009ac315a3e57e888b195a` |
+| `research/59-v39-v15-cleanup-a05-current-main-20261005` | `4ede220fc567e74d4d7432b6eda3ade7652d8550` |
+| `research/59-xvfb-audit-v3-a02-20261005` | `1ec6556ba8568de289625b5f167e7b8c21e1f72c` |
+| `research/8553-observation-branch-a02-20261009` | `5c386c316dd5a26629f2a8bcecd058efed939ca7` |
+| `research/8581-feedback-artifact-bypass-t0-20261009` | `5c80abe8dc51e7a8ab5e42384fdce0066aca12a0` |
+| `research/8592-dpor-t0-a01-20261008` | `b0951ae1a8cfd5befbb6988935dd4d931f595fb2` |
+| `research/8592-dpor-t0-a02-20261008-r1` | `bb19587730eab16061bfe4dcd1188137140f2c04` |
+| `research/8596-chance-bounded-progress-t0-a01-20261009` | `2ecf498101453ce52869cdfb5d643bb7d2b19991` |
+| `research/8638-split-control-voi-a01-20261008` | `16d846740645a338ea11ac70c8e4e931b71f1408` |
+| `research/8648-hysteresis-c01-20261009` | `4ce63dfedcdef07d1763147dfc2575fc46077aa1` |
+| `research/8654-c06-stochastic-support-20261009` | `7f8bab0b6eece49bb5dfedb9598d3c48b30fb725` |
+| `research/carbon-window-7794-a05-bytebound-recheck-20261008` | `0b5af59e7ec4333f5c8f615176180e14229fb70d` |
+| `research/held-chord-h7k3-20261007` | `f150937577c3b84c5ab61e82cd0b920fedc3900d` |
+| `research/issue59-two-key-dual-release-a12-20261008-codex` | `4e84fc655c634267d9ec818b8a3b31b216cce99c` |
+| `research/predictive-display-t0-5935-20261006-v1` | `b4e108c52497018f5722f2e9b96feed3d9b9ded7` |
+| `research/v39-retained-trajectory-posthoc-a01-20261008` | `87f2dab936bff72c9906126884141925a20fc547` |
+
+No remote branch was deleted during this refresh. Revisit each retained candidate
+only after matching its exact current tip to its Issue/allocation and verifying
+an independently fetchable source/evidence path or a complete integrated
+successor.
