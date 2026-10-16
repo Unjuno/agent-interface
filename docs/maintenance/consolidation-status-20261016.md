@@ -18,6 +18,11 @@ Research Workspace Index、replay-gateのCIが成功。今回追記後のheadは
 merged PR #8664と一致し、#8664のC04がC03のpre-candidate STOP履歴を明記していたため、remote refだけを削除し
 GitHubで不在を確認した。Issue #8654とmainの証拠ファイルは変更していない。
 
+`fix/8243-verifier-r2p6-20261006` は別途再照合した。8ファイルすべてがopen rescue PR
+[#8375](https://github.com/Unjuno/agent-interface/pull/8375) と同一blobだが、merged Issue #8243の公開freeze
+コメントが元branch名とtipを引用しているため、このrefは保持する。PR #8375の統合後、または引用を安全に
+置き換えた公開記録が確認できた時点で再評価する。
+
 削除後のlive snapshotはremote branch 588本、全PR 6,102件、open PR 518件、PR head/baseに未参照31本。
 未参照31本の個別内容・所有確認は継続中。削除は確認できた重複ref一件に限定し、worktreeや固有rawは
 対象にしていない。
