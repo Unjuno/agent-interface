@@ -1,0 +1,265 @@
+{
+  "base_commit": "853c9bc85fb63430277e793edde108bf9f87f1d9",
+  "candidate_invocations": 1,
+  "cases": {
+    "aggregate_query_failure": {
+      "close_error_type": null,
+      "events": [
+        {
+          "admitted_ns": 176062148614600,
+          "event": "input_admission",
+          "input_ack_ns": 176062148618000,
+          "key": "F8",
+          "valid_until_ns": 176092148444300
+        },
+        {
+          "admitted_ns": 176062148655300,
+          "event": "input_admission",
+          "input_ack_ns": 176062148657400,
+          "key": "space",
+          "valid_until_ns": 176092148444300
+        }
+      ],
+      "held_after_close": [],
+      "held_after_release_all": [],
+      "held_before_release_all": [],
+      "operations": [
+        {
+          "at_ns": 176062148616300,
+          "keycode": 74,
+          "operation": "key-down"
+        },
+        {
+          "at_ns": 176062148617600,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062148656200,
+          "keycode": 65,
+          "operation": "key-down"
+        },
+        {
+          "at_ns": 176062148657200,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062148686800,
+          "keycode": 65,
+          "operation": "key-up"
+        },
+        {
+          "at_ns": 176062148688000,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062148716600,
+          "keycode": 74,
+          "operation": "key-up"
+        },
+        {
+          "at_ns": 176062148717700,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062148745700,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062148747000,
+          "operation": "pointer-query"
+        },
+        {
+          "at_ns": 176062148748400,
+          "operation": "keymap-query",
+          "ordinal": 1,
+          "outcome": "injected-unavailable"
+        },
+        {
+          "at_ns": 176062148778900,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062148779900,
+          "operation": "pointer-query"
+        },
+        {
+          "at_ns": 176062148780900,
+          "operation": "keymap-query",
+          "ordinal": 2,
+          "outcome": "returned"
+        },
+        {
+          "at_ns": 176062148788900,
+          "operation": "display-close"
+        }
+      ],
+      "owner_records_after_close": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "reason": "close",
+          "valid_until_ns": 176092148444300,
+          "verified": true,
+          "verified_ns": 176062148783400
+        }
+      ],
+      "owner_records_before_close": [],
+      "owner_stopped_after_close": true,
+      "physical_after_close": [],
+      "physical_after_release_all": [],
+      "release_error_type": "RuntimeError",
+      "release_operation_end": 11,
+      "release_operation_start": 8,
+      "release_result": null
+    },
+    "control": {
+      "close_error_type": null,
+      "events": [
+        {
+          "admitted_ns": 176062145985600,
+          "event": "input_admission",
+          "input_ack_ns": 176062145989800,
+          "key": "F8",
+          "valid_until_ns": 176092145435500
+        },
+        {
+          "admitted_ns": 176062146031600,
+          "event": "input_admission",
+          "input_ack_ns": 176062146033900,
+          "key": "space",
+          "valid_until_ns": 176092145435500
+        }
+      ],
+      "held_after_close": [],
+      "held_after_release_all": [],
+      "held_before_release_all": [],
+      "operations": [
+        {
+          "at_ns": 176062145987700,
+          "keycode": 74,
+          "operation": "key-down"
+        },
+        {
+          "at_ns": 176062145989400,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062146032700,
+          "keycode": 65,
+          "operation": "key-down"
+        },
+        {
+          "at_ns": 176062146033700,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062146068500,
+          "keycode": 65,
+          "operation": "key-up"
+        },
+        {
+          "at_ns": 176062146069800,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062146101600,
+          "keycode": 74,
+          "operation": "key-up"
+        },
+        {
+          "at_ns": 176062146103100,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062146133400,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062146135200,
+          "operation": "pointer-query"
+        },
+        {
+          "at_ns": 176062146137000,
+          "operation": "keymap-query",
+          "ordinal": 1,
+          "outcome": "returned"
+        },
+        {
+          "at_ns": 176062146169800,
+          "operation": "sync"
+        },
+        {
+          "at_ns": 176062146170900,
+          "operation": "pointer-query"
+        },
+        {
+          "at_ns": 176062146172100,
+          "operation": "keymap-query",
+          "ordinal": 2,
+          "outcome": "returned"
+        },
+        {
+          "at_ns": 176062146177600,
+          "operation": "display-close"
+        }
+      ],
+      "owner_records_after_close": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "reason": "release",
+          "valid_until_ns": 176092145435500,
+          "verified": true,
+          "verified_ns": 176062146140000
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "reason": "close",
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 176062146173200
+        }
+      ],
+      "owner_records_before_close": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "reason": "release",
+          "valid_until_ns": 176092145435500,
+          "verified": true,
+          "verified_ns": 176062146140000
+        }
+      ],
+      "owner_stopped_after_close": true,
+      "physical_after_close": [],
+      "physical_after_release_all": [],
+      "release_error_type": null,
+      "release_operation_end": 11,
+      "release_operation_start": 8,
+      "release_result": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "release",
+        "valid_until_ns": 176092145435500,
+        "verified": true,
+        "verified_ns": 176062146140000
+      }
+    }
+  },
+  "environment": {
+    "container": false,
+    "fake_xlib": true,
+    "model_calls": 0,
+    "os_input": false,
+    "vizdoom": false,
+    "x_server": false
+  },
+  "run_id": "MAP01-V39-SELECTED-KEY-OWNER-A01-20261005",
+  "schema": "map01-v39-selected-key-owner-raw-v1"
+}
