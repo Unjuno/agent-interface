@@ -55,3 +55,5 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Observation load and feedback cascades](observation-load-cascade-agenda.md) — separates #8665's scoped factorial method result from #8888's implementation/audit STOP, preserving the consumed allocation and the bounded successor requirements.
 
 - [Post-crash effect reconciliation bootstrap](crash-reconciliation-bootstrap.md) — records #8900's unverified question about independently rooted, read-only evidence paths for `UNKNOWN_RECONCILE`, with task and retry authority held revoked until classification.
+
+- [Timing privacy and control utility](timing-privacy-control-utility.md) — connects #6201's scoped synthetic metadata-leakage result to #8899's unverified controller-utility/privacy frontier, keeping safety clocks and noncritical timing treatment distinct.
