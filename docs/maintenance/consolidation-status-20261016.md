@@ -29,6 +29,18 @@ Issue #8471/#8470/#8466/#8434とmerged PRを確認した。有限列挙のswitch
 source-time expiry、equal-marginal disturbance-orderの各結果を分け、いずれも合成または有限methodの範囲に限定した。
 runtime controller、GUI安全性、実環境の効果を主張していない。
 
+### r22：現行のunlinked branch inventoryを再照合（2026-10-16）
+
+GitHub APIの全ページから587 remote branch refsと全PRのhead/base refsを照合した。現在のunlinked refは30件で、
+すべて既存CSVに記録済み。CSVにある削除済み2 refは現行一覧にも存在しない。残る30件は28件のdiverged tip、
+1件のIssue引用source、1件の固有A01 sourceとして保持中。新たな削除候補は生じていないため、branch削除は行っていない。
+
+### r23：4件のIssue結果列を実記録に合わせて訂正・追加（2026-10-16）
+
+Issue #8406/#8397/#8313/#8135の全コメントと関連PRを読み直し、古いproposal-only表現を修正した。
+#8406はT1の失敗・A16限定pass・A18 incomplete・A19未実行とcalibrationを分け、#8397はA01 STOPとA02 method resultを分離した。
+#8313のauditor coverage HOLDとduplicate STOP、#8135のA01 schema failure・A02 scoped result・未着手T1を明記した。
+
 ### r17：4件のオブジェクト記憶・復旧Issueを索引化（2026-10-16）
 
 Issue #7164/#7163/#7160/#7042を、正式コメントと現行PR状態で照合した。#7164はopen Draft #8216の
