@@ -4,6 +4,10 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r58: classify Issue #8581's frozen branch as cited source (2026-10-17)
+
+Issue #8581 remains open and its preregistration comment identifies `research/8581-feedback-artifact-bypass-t0-20261009` and freeze `5c80abe8dc51e7a8ab5e42384fdce0066aca12a0`; formal candidate/auditor counts are 0/0. The branch inventory now marks it `RETAIN_ISSUE_CITED_SOURCE`. This preserves the frozen source while successor evidence and custody are reconciled; nothing was rerun.
+
 ### r57: index Issue #8252 and retain its incomplete evidence source (2026-10-17)
 
 Issue #8252 explicitly owns `research/held-chord-h7k3-20261007`. Its comments report a scoped 12-cell backend-method result but state that the matrix raw/audit package is missing from the branch and workspace; the allocation must not be rerun. The branch's source/freeze package remains preserved pending raw delivery or custody resolution. `docs/IDEAS_AND_OUTCOMES.md` now summarizes the reported result, evidence gap, and separate closed PR #8308 boundary without promoting it to production integration.
