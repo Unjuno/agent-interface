@@ -21,6 +21,16 @@ Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not
 assign people, grant resources or replace current user instructions.
 
+## Live control update (r140)
+
+The distinct A09 allocation ran 10 decisions and crossed its health floor during
+pending inference; the guard cancelled the dependent turn and the owner verified
+empty input. Its formal result is HOLD because no useful scorer event occurred
+during model wait. A09 is consumed and is not retried. These findings apply only
+to A09; independent work and distinct authorized allocations continue. See
+[PR #8749](https://github.com/Unjuno/agent-interface/pull/8749) for the retained
+evidence.
+
 ## Remaining scientific gates
 
 | Gate | Required evidence / next boundary |
