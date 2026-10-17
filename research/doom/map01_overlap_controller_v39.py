@@ -301,6 +301,8 @@ class DoomCoverSignalPairMonitor:
         self.last_binding = binding
         self.last_frame_rgb_sha256 = observation.get("frame_rgb_sha256")
         self.last_signals = signals
+        if event_kind == "observation":
+            self.last_pair_sequence = sequence
         return None
 
 
