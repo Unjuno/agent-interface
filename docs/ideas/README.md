@@ -139,6 +139,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [No-gold effect-checker identifiability](no-gold-effect-checker-identifiability.md) — records #8887's unverified method and #8893's narrower agreement/accuracy counterexample without promoting it to full method validation.
 
+- [Skill-conditioned terminal-event memory](skill-conditioned-terminal-event-memory.md) — indexes #8886's unverified fixed-context retrieval contrast and keeps event memory separate from fresh authority/effect checks.
+
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
 
 - [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
