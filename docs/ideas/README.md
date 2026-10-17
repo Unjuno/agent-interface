@@ -162,6 +162,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, calibrated soft-signal recovery deadlines (#8024), protective-control diagnosability (#8909), and incremental stratified negative-claim maintenance (#8917), with dependencies, the executed public-path Fake X blocking characterization, and scoped A01 evidence. These source Issues remain open.
 
+- [Spatial-block position generalization](spatial-block-position-generalization.md) — preserves #6590’s method PASS, geometry/support holds, T1 audit failure, and corrected `H_FAIL_SCOPED` outcome as separate evidence.
+
 - [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). That agenda also separates finite-sample observation-channel dominance (#8911) from #6678's known-kernel comparison, and keeps image-space Jacobian adaptation (#7765) distinct from #5's safety/recovery contract. Original bodies and provenance are preserved; the three source Issues were reopened after correcting premature consolidation closures.
 
 - [Assumption-gated evidence acquisition](evidence-acquisition-policy-selection.md) — tests when greedy observation choice is justified and when bounded lookahead is worth its cost (#8879), without granting runtime authority.
