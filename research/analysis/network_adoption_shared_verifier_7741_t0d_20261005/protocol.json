@@ -1,0 +1,37 @@
+{
+  "schema": "7741-t0d-protocol-v1",
+  "allocation": "UNJUNO-7741-ADOPTION-QUEUE-T0D-20261005-01",
+  "issue": 7741,
+  "ticks": 160,
+  "principals": 24,
+  "topologies": ["ring", "star"],
+  "seeds": [101, 211, 307, 419, 503, 601, 719, 887],
+  "imitation_probabilities": [0.08, 0.2],
+  "innovation_probability": 0.012,
+  "route_start_probability": {"baseline": 0.12, "reduced_cost": 0.22},
+  "interaction_cost": {"baseline": 10, "reduced_cost": 6},
+  "service_ticks": 3,
+  "modes": [
+    "baseline_frozen_shared_1",
+    "reduced_frozen_shared_1",
+    "reduced_peer_shared_1",
+    "reduced_no_imitation_shared_1",
+    "reduced_frozen_shared_24",
+    "reduced_peer_shared_24",
+    "reduced_frozen_per_principal",
+    "reduced_peer_per_principal"
+  ],
+  "event_order": [
+    "due_job_completions_and_success_feedback",
+    "adoption_update",
+    "one_opportunity_per_principal",
+    "arrivals",
+    "FIFO_service_admission"
+  ],
+  "matched_randomness": "route-start draws are SHA256-keyed by topology/seed/tick/principal, independent of mode and imitation; adoption draws use separate keyed streams",
+  "deadline": "none; p95 is nearest-rank over completed end-to-end tick latencies; queued and in-service unfinished tasks counted separately",
+  "estimand": "For each topology/seed/imitation cell, d_shared = p95(reduced_peer_shared_1)-p95(reduced_frozen_shared_1); d_local = p95(reduced_peer_per_principal)-p95(reduced_frozen_per_principal); spillover_DiD = d_shared-d_local. A seed qualifies only if d_shared > 0 and spillover_DiD >= service_ticks (3 ticks).",
+  "decision": "PASS_METHOD_SCOPED only if independent event/accounting audit has zero errors, all 4 topology-by-imitation cells have at least 6/8 qualifying fresh seeds, and every qualifying peer effect has more unfinished work than its matched frozen condition. NO_INCREMENTAL_SHARED_SPILLOVER if audit is clean and no seed in any cell qualifies. METHOD_FAIL_OR_INCONCLUSIVE otherwise. No posthoc grid or threshold changes.",
+  "controls": "No-imitation peer-frozen p95 difference must be zero; shared-24 peer-frozen p95 difference must be zero; report per-principal differences without requiring zero, because this is the local-congestion comparator in the estimand.",
+  "scope": "Synthetic mechanism and sensitivity only; no empirical adoption, workload elasticity, task mix, verifier capacity, runtime, safety, user, or product inference. 3 ticks is a preregistered model-scale practical threshold equal to the modeled service duration, not an empirically calibrated effect size."
+}
