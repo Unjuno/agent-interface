@@ -1,0 +1,22 @@
+{
+  "allocation_id": "issue8648-c02-20261009",
+  "issue": 8648,
+  "source_base": "bb05e4d90febe7d69cd5d673426befdefafd199c",
+  "preregistration_sha256": "20a0ea5afd3cdd04717357a96ce7290d5e2fcf75c49396045c30b51f3625f90c",
+  "candidate_sha256": "4704e019ef28b5ecab1fe1641400ab96d67782a0a50dbc976b82c9747fa3e61f",
+  "auditor_sha256": "eb3e2b0a5732af0afe0dd813aba0643af8203a6d8501e3846275db9a8c1f5df2",
+  "runtime": {
+    "platform": "macOS 27.0.1 arm64",
+    "interpreter": "/run/current-system/sw/bin/python3.12",
+    "resolved_interpreter": "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/bin/python3.12",
+    "version": "Python 3.12.13",
+    "interpreter_sha256": "cd7b59db0fbd655ed71c28ef74dc0ed5ea09fa4e1f06ec16156cc05d41c510af",
+    "network": "unused"
+  },
+  "formal_invocations": {"candidate": 1, "auditor": 1, "retries": 0},
+  "commands": [
+    "/run/current-system/sw/bin/python3.12 candidate.py > results/formal-01/RAW.jsonl",
+    "/run/current-system/sw/bin/python3.12 audit.py < results/formal-01/RAW.jsonl > results/formal-01/AUDIT.json"
+  ],
+  "previous_allocation": "C01 WSLc setup STOP, no candidate/auditor run; not reused"
+}
