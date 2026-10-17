@@ -294,6 +294,17 @@ only after matching its exact current tip to its Issue/allocation and verifying
 an independently fetchable source/evidence path or a complete integrated
 successor.
 
+The V39/V15 per-key cleanup A05 branch
+`research/59-v39-v15-cleanup-a05-current-main-20261005` remains at
+`4ede220fc567e74d4d7432b6eda3ade7652d8550`, two commits ahead and 1,249
+behind current main. Its unique 28-path package records one harness setup
+failure before any candidate case (candidate raw absent; cases started 0), with
+frozen source snapshots and the predeclared no-repeat boundary for that run ID.
+No open PR uses it as head or base, and the package is not in main. Issue #59
+and coordination Issue #6957 remain open and unassigned. Preserve this
+allocation-scoped evidence package; this does not change other workers' run
+state or authorize a rerun.
+
 The V39 source-identity A01 tip `0d0f4d4a09e3b6de5b009ac315a3e57e888b195a`
 has a seven-file delta, all copied byte-for-byte under
 `research/doom/v39_current_main_source_identity_audit_a01_20261009/` in PR
