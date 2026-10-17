@@ -58,6 +58,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Outcome-conditioned GUI reversibility](outcome-conditioned-gui-reversibility.md) — preserves #7949's STOP/raw and peer-review coverage concerns.
 
+- [Post-success artifact changeability](post-success-artifact-changeability.md) — consolidates #6610's scoped synthetic result and #8578's duplicate disposition; correction-cycle refinements stay with #6610.
+
 - [Decision-value observation stopping](decision-value-observation-stopping.md) — separates #7934's historical A01/A02 results from its later noncanonical launcher STOP.
 
 - [V39/V15 retained audit provenance](v39-v15-retained-audit-provenance.md) — keeps #7921/#7933 audit failures and #8192 manifest issue separate.
