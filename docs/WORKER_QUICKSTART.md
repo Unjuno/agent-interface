@@ -16,6 +16,7 @@ when the chosen question requires it.
    offline analysis, code or tests; do not wait for unrelated shared resources.
 4. Execute a finite experiment/repair. Separate construction from formal allocation,
    preserve first outcomes and state what result changes the adoption decision.
+   Keep STOP/HOLD/FAIL scoped to its allocation; it does not stop unrelated work.
 5. Run relevant local checks. Deliver reviewable changes and evidence through a PR;
    integrate when actual permissions/protection and required checks permit it.
 6. Update the owning Issue with evidence, limits and next action; release only your
