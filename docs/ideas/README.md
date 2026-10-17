@@ -44,6 +44,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Split-control value of information](split-control-voi.md) — separates #8638 A01's missing raw-output custody from A02's scoped ranking-reversal result.
 
+- [Route/task-mix hysteresis under feedback](route-task-hysteresis.md) — separates #8648 C01's WSLc initialization STOP from C02's finite coupled-model result.
+
 - [Reset-aware ordered event coverage for GUI histories](ordered-context-event-coverage.md) — connects #7452 to merged successor #8399/#8402, distinguishes A01's unequal-universe comparison from A02's equal-denominator result, and preserves the separate #8401 protocol STOP.
 
 - [Action-conditioned incorrect-belief exposure](action-conditioned-incorrect-belief-exposure.md) — records #7986's synthetic measure without claiming live authority or safety.
