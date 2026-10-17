@@ -133,6 +133,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Bounded-error diagnosability](bounded-error-diagnosability.md) — indexes #8898's unverified robustness successor to noiseless #8894; no real error rate or new locating-array construction is claimed.
 
+- [Telemetry-channel-aware allocation](telemetry-channel-aware-allocation.md) — indexes #8897's synthetic resource-information question and separates it from observation-value, observer-cost, and WSL-accounting work.
+
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
 
 - [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
