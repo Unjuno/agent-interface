@@ -1,0 +1,29 @@
+{
+  "cancel_commands": [
+    {
+      "id": "cover-a10",
+      "op": "cancel"
+    }
+  ],
+  "case": "health_floor_crossing_with_blocked_interrupt_ack",
+  "classification": "CONSTRUCTION_ONLY_SOURCE_COMPOSITION",
+  "invalidation": "health:below_hard_minimum",
+  "latest_observation_sequence": 10,
+  "planner_result": {
+    "answer": null,
+    "answer_eligible": false,
+    "cancellation_requested": true,
+    "status": "completed"
+  },
+  "terminal_release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "verified": true
+  },
+  "timeline": [
+    "executor_cancel_write",
+    "executor_flush",
+    "planner_interrupt_request",
+    "planner_interrupt_ack"
+  ]
+}
