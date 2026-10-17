@@ -1,0 +1,10 @@
+# Reset-aware ordered event coverage for GUI histories
+
+- **Status:** unverified beyond the finite synthetic method result
+- **Source:** [#7452](https://github.com/Unjuno/agent-interface/issues/7452), successor [#8399](https://github.com/Unjuno/agent-interface/issues/8399); related coverage work [#6206](https://github.com/Unjuno/agent-interface/issues/6206) and [#6262](https://github.com/Unjuno/agent-interface/issues/6262)
+- **Idea:** Test whether reset-aware, context-stratified ordered-combination coverage can represent obligations in bounded stateful GUI histories without crediting event pairs across episode resets. Ordered t-way coverage is prior art; the transfer to this GUI-history model is the question, not a new coverage algorithm.
+- **Outcome:** Merged [PR #8402](https://github.com/Unjuno/agent-interface/pull/8402) under #8399 records A01 and A02. A01's mixed and exhaustive suites use unequal context universes, so its row reduction is not an efficiency comparison. A02 compares the same 64 authored obligations: mixed coverage uses 4 episodes/32 rows; exhaustive uses 64 episodes/128 rows. Its independent audit reconstructed both suites and rejected 4/4 hostile-input mutations. Both are CPU-only synthetic method results; no container, GUI, model, network, realistic fault corpus, or production test cost was evaluated.
+- **Preservation:** Closed unmerged [PR #8401](https://github.com/Unjuno/agent-interface/pull/8401) retains a separate A01 `STOP_PROTOCOL_DEVIATION` history. Do not pool or overwrite it with the A01 package in #8402. The STOP applies only to that construction/allocation and does not pause unrelated work.
+- **Next test:** Any claim about real GUI histories or useful coverage reduction needs a distinct authorized study with observed histories and a separately frozen allocation.
+
+Detailed records: [A01 report](../../research/analysis/ordered_context_event_coverage_7452_a01_20261008/REPORT.md) and [A02 report](../../research/analysis/ordered_context_event_coverage_7452_a02_20261008/REPORT.md).

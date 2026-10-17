@@ -2,6 +2,18 @@
 
 2026-10-15。対象は `Unjuno/agent-interface` 全体とGitHub Issue/PR。コンピューターコントロールの研究を再び見通せる状態にする。
 
+**2026-10-17 open-Issue inventory refresh:** a fresh paginated GitHub REST read
+returned 1,677 open Issues, compared with 1,678 in r3. The exact metadata and
+the three-ID delta are recorded in the [r4 inventory note](maintenance/open-issues-inventory-20261017.md)
+and [CSV snapshot](maintenance/open-issues-20261017-r4.csv). This refresh does
+not claim all open Issues have been semantically reviewed.
+
+**2026-10-17 open-PR inventory refresh:** the current listing returned 521 open
+PRs, compared with 517 in r3. The full head/base metadata is in the
+[r4 snapshot](maintenance/open-prs-20261017-r4.csv); the seven-in/three-out
+transition is separately recorded in the [delta review](maintenance/open-pr-delta-20261017.md).
+The transition review is not a disposition of all 521 open PRs.
+
 **2026-10-16 r3：** 大量ワーカーが独立した有限の仕事を選べる状態まで整理を続ける。
 [r3棚卸し](maintenance/inventory-20261016-r3.json)はIssue 1,678件、open PR 517件。
 全件の内容を判定した件数ではない。取得後の処理と未統合変更は
@@ -13,6 +25,23 @@ r2時点の取得結果はIssue 1,678件、open PR 518件（[r2取得条件](mai
 stack内のmergeはmain統合とは限らない。#5の未完了状態とcompleted closureの不整合も訂正した。
 後続の6件は保存先を示して旧PRを終了しており、元PRを直接mergeした件数ではない。
 以下の初回棚卸しは履歴として保持し、最新状態や全件レビュー済みの根拠にしない。
+
+**2026-10-17 branch cleanup receipt:** the superseded, unprotected
+`research/v39-cancel-batch-race-a01-20261009` branch was removed after its
+closed PR and current-main successor were checked. GitHub's retained
+`refs/pull/8688/head` still points to the exact source tip. See the
+[cleanup evidence](maintenance/branch-cleanup-20261017.md) for this and other
+superseded cleanup branches. No tag was pushed, avoiding unrelated
+push-triggered workflows.
+
+**2026-10-17 additional remote-ref cleanup:** three redundant branch names were
+removed after exact-head and retention checks: two main-merged fixes
+([PR #8816](https://github.com/Unjuno/agent-interface/pull/8816) and
+[#8763](https://github.com/Unjuno/agent-interface/pull/8763)) and the A07
+correction branch merged into the retained A03 source branch by
+[#8707](https://github.com/Unjuno/agent-interface/pull/8707). Related local
+worktrees and the A03 source branch remain. Evidence is in the
+[cleanup receipt](maintenance/branch-cleanup-20261017.md).
 
 ## 到達点
 
@@ -30,7 +59,7 @@ stack内のmergeはmain統合とは限らない。#5の未完了状態とcomplet
 |---|---|---|
 | 入口とオーケストレーション | README→現行ゴール→work mapから、対象範囲・既存Issue・現行成果・未達・次の有限な仕事へ辿れる。古い割当や必須レビュー人数を新しい開始条件にしない。 | 統合済み#8998/#8999をmapに反映。計画中・ローカル検証済み・main統合済みを明示。 |
 | 研究アイデアとIssue | 各テーマの独自仮説、反例、出典、依存、既存成果、最小検証、実行先が結ばれる。保存しただけの未達は未達と分かる。 | 視覚・安全制御の既存agendaを維持し、次はモデル連携・比較評価の一族を本文/コメントから整理。全件を一つの親Issueへコピーしない。 |
-| PR | 全open PRに、採用候補・修理・証拠保全・後継へ移管・根拠付き棄却の処置がある。統合/終了の正確なheadと継続先を辿れる。 | 証拠専用#8874を先行。次に#8867の現行呼出し経路との競合と計測定義を確認。#8701等の原raw不足は成功扱いせず別記。 |
+| PR | 全open PRに、採用候補・修理・証拠保全・後継へ移管・根拠付き棄却の処置がある。統合/終了の正確なheadと継続先を辿れる。 | #8874/#8867はr4/r5の記録どおり終了済み。PR #9005/#9012の重複は現行headで再照合済み。次は残るopen PRから独立成果の優先batchを選び、差分・証拠・後継を分類する。 |
 | branch/worktree | 固有変更・raw・未追跡/無視対象・依存PR・使用者を確認し、残すものには理由と所在、消すものには保全先と一致したtipの記録がある。 | まず自分の統合済みrefのみ回収。他者/所有不明の領域は削除せず、照合対象として残す。 |
 | 実装・検証 | 採用するコードが現行mainに接続され、必要なローカル検証と限界が残る。旧sourceのPASSを移植しない。 | 未統合のV15選択変更は専用branchに保全。証拠パケットの読戻し後に独立した統合として扱う。 |
 
@@ -135,3 +164,19 @@ closeコメントには **理由、保存先、科学的状態、残る問い、
 確認を止める残差を新たに判別した。過去の構成PASSを実機の解放・回復PASSへ読み替えない。
 
 [2026-10-15の統合・保全記録](maintenance/consolidation-progress-20261015.md)に、mainへ届けた修理、PR stackの収束、ローカル作業ツリーの未統合変更と保全先をまとめた。mainがクリーンであること、研究候補が保全済みであること、リポジトリ全体の整理完了は別々に確認する。
+
+Dockerless local-iteration documentation is also reconciled: successor [#8882](https://github.com/Unjuno/agent-interface/issues/8882) delivered the residual-workflow inventory in merged [PR #8884](https://github.com/Unjuno/agent-interface/pull/8884), at [`research/outputs/wsl3-docker-residual-inventory-20261012.md`](../research/outputs/wsl3-docker-residual-inventory-20261012.md). The inventory keeps native WSL as the ordinary local route and WSLc for eligible image-bound work, while retaining Docker-specific frozen recipes; it makes no performance or security-equivalence claim.
+
+**2026-10-17 PR reconciliation (snapshot at catalog head `e75b63224b0d37b0b896d1c0b66a80ef51e0e3c4`):** [PR #9005](https://github.com/Unjuno/agent-interface/pull/9005) and [PR #9012](https://github.com/Unjuno/agent-interface/pull/9012) were open, both `CLEAN`, with all reported required checks passing and no recorded review decision. They share only `docs/IDEAS_AND_OUTCOMES.md` and `docs/ideas/README.md`, with no duplicate newly added outcome IDs. PR #9005 retains the canonical family notes for constrained diagnosis, privacy discovery, lossy evidence, joint reserves, and macro validation; #9012 omits those copies and keeps its distinct entries. #9012 adds concise proposal summaries for 49 open Issues that had been represented only by machine-readable inventory; the summaries describe the questions without setting allocation status or execution authority. Later head and review state should be read from GitHub; neither PR was recorded as merged in this snapshot.
+
+**2026-10-17 open-PR delta:** a fresh GitHub read returned 521 open PRs, up from 517 in the 2026-10-16 r3 inventory: seven entered the open set and three left. The [delta review](maintenance/open-pr-delta-20261017.md) classifies those ten transitions. It preserves #8714's branch because open #8720 still uses it as its base and records the two closed V39 PRs against their existing successor/custody notes. Among newly open PRs, #9006 remains a draft: native-mcp reports four failures in relay/source-dependency/handle-bridge tests, and the native Win32 fixture returns `release_unverified` where an existing test expects `completed`. Its diff adds tests only, so it does not demonstrate verified release behavior.
+
+**2026-10-17 issue/branch reconciliation:** A fresh open-Issue export returned 1,677 issues. A direct-reference scan across current `main`, PR #9005, and PR #9012 found all 1,677 referenced and zero unreferenced. This covers current open Issues, not every historical closed issue or every PR. The citation-audit subset remains 49 Issues; separate #8872 and #8870 notes preserve their distinct unverified proposals, with #8872 retaining #5776's failed early-warning result. Nine additional closed/superseded remote branch names were removed after exact-tip, worktree, protection, open-PR and pull-ref checks; the receipts are in [the branch cleanup log](maintenance/branch-cleanup-20261017.md). This remains progress, not repository-wide completion.
+
+**2026-10-17 PR overlap correction:** A fresh file-list comparison at #9005 head `63d4d22f54adb626920b2d547a587421e63bbbfe` and #9012 head `11286bcda198719013adf6e8daeba025b8e08385` found a third shared path, `docs/ideas/skill-conditioned-terminal-event-memory.md`, in addition to the two indexes. #9005 contains the fuller #8886 proposal; #9012's duplicate page and index entry were removed. The shared outcome index had 55 Issue IDs with differently worded rows in both PRs. #9012 now combines both summaries for all 55 IDs, preserving distinct outcomes and qualifications in one row; it also moved the #8887, #8889, #8897, #8898, and #8900–#8905 research proposals out of the engineering/operations and early-history sections into `Recent open ideas`. That section has no repeated primary Issue IDs, and five byte-for-byte repeated rows were removed earlier. The corresponding 55 older rows still remain in #9005 and need cleanup before both PRs can integrate without duplicate Issue entries. The #9005 update worktree at `/private/tmp/agent-interface-9005-update` was still dirty at its original HEAD during this review and was left untouched.
+
+**2026-10-17 overlap follow-up:** PR #9005 advanced to `b0e2ff0b137ef9add65398e4ecc8e06f39ad11f7`, removing the 55 newly added primary Issue rows shared with #9012. A comparison of both current PR diffs against `main` now finds zero shared changed primary Issue IDs. The focused index check passes locally; hosted checks for #9005 are queued and neither PR has a recorded review decision. The older `/private/tmp/agent-interface-9005-update` worktree remains untouched. Its #8668 agenda update is now identical to the #9005 file at `880c6b63036`; its stale #8631/#8668 index additions are superseded by the fuller rows already present on the updated #9005 head.
+
+**2026-10-17 PR merge preview:** `git merge-tree --write-tree` across current #9005/#9012 heads found content conflicts in `docs/IDEAS_AND_OUTCOMES.md` and `docs/ideas/README.md`, despite zero overlapping changed primary Issue IDs. Keep the conflict boundary explicit; resolve both shared indexes in the authorized integration change before claiming the pair can merge cleanly.
+
+**2026-10-17 catalog branch integration:** The #9012 branch now incorporates #9005 head `880c6b63036fa297d4a5c0a68498edf94e1b48d4`. The shared indexes were resolved by retaining disjoint issue rows, selecting the fuller #59 evidence summary, combining the complementary #6468/#6284/#5521 outcomes, and removing repeated rows and page links. Local audit found 525 primary Issue rows with no duplicate IDs, 122 distinct idea-page links, and 283 resolving relative links; the research index check passed with 845 retained result/failure directories. This is a reviewable PR-branch integration, not a merge to `main`; hosted checks and review remain outstanding.

@@ -1,6 +1,6 @@
 # 入力解放・割込み・証拠・回復の研究整理
 
-2026-10-15。#2/#10/#14/#15/#16/#17の関連部分を、現行実装と残る問いへ結ぶ。
+2026-10-15、2026-10-16更新。#2/#10/#14/#15/#16/#17の関連部分と#8909の独立した診断可能性仮説を、現行実装・保存結果・残る問いへ結ぶ。
 これは役割の異なるアイデアの見取り図であり、重複扱いや一括closureの根拠ではない。
 [原Issue本文のスナップショット](sources/safety-control-issues-20261015.json)を保存した。
 コメント全文や個別実験のrawは置き換えず、各Issueと元の証拠を参照する。
@@ -87,9 +87,44 @@ Fake Xで両問い合わせ停止中の取消・原期限切れ・cleanup、遅�
 通信エラーのsticky retirementと、取消済み接続開始後に追加問い合わせを始めない回帰も確認する。
 capture・保存・input transport等は同期のままで、spike全体の採用や物理解放の保証とはしない。
 
+## #8909 保護制御下の診断可能性 A01
+
+Open Issue #8909 は、後続の安全応答が異なる故障クラスの観測履歴を、
+保護的なローカル制御が同一化してしまうかを問う。Draft
+[PR #8910](https://github.com/Unjuno/agent-interface/pull/8910) は、作成した有限モデル
+(5 states × 3 policies × 2 ticks、計15 trace)に対する `PASS_METHOD_SCOPED` を記録する。
+応答が異なるA/B組は、coverなしでは区別でき、規定したprotective-cover観測規則では
+同一化し、真実を返すと仮定したpassive sentinelにより再び区別された。独立のliteral
+oracleは15 traceすべてに一致し、モデル上で安全性を破るprefixはなく、5 mutationを拒否した。
+
+これは合成モデルの結果に限る。最初の試行で見つかったout-of-catalogのcover適格性に
+関するcandidate/oracle不一致は構築失敗として保持し、科学的証拠に数えない。sentinelの
+正確性は仮定であり、Agent Interface runtime、GUI、実測sentinel、診断不能の実環境頻度、
+本番安全性は検証していない。Issueはopenのまま。runtime policyの変更根拠にはしない。
+
+## #8917 stratified negative claimのincremental maintenance
+
+Open Issue #8917 は、absenceやcardinalityに依存するclaimを、evidence rowのinsert/deleteや
+scope不完備の後も正しく更新できるかを問う。#4431のpositive support/cycle deletion、#8624の
+stratified negative-queryに対するcounterfactual responsibility、#2305のより広いlive evidence
+maintenanceとは、問いを分けて保つ。
+
+提案中のT0は有限でdeterministicなCPU-only比較であり、`STRATIFIED_DRED`、full rebuild、
+positive-only support、global invalidationを独立oracleと比較する。claimはscope・epoch・
+completenessへ結び、条件が足りない場合は不在を断言しない。mixed insert/delete、代替positive
+support、modal absence、exactly-one、下流claim、unrelated claim、completeness欠落を扱い、
+stale negative claim、誤retraction、epoch混同、unknown coercionを監査する。Issue本文はこのT0を
+「not yet run」と明記しているため、現時点で結果・性能・GUI動作は主張しない。
+
+## Soft-signal recovery deadline — #8024
+
+Open Issue [#8024](https://github.com/Unjuno/agent-interface/issues/8024) asks whether calibration of recovery times can set a finite persistence deadline for an already-authorized local mode after one declared soft excursion. Hard identity, focus, lease, effect, and release failures remain immediate yield conditions; shifted or insufficiently calibrated episodes must remain uncertified.
+
+The A01 finite authored fixture reports `METHOD_PASS_SCOPED`: nominal held-out coverage was 9/9 and no hard event was delayed. However, a simple fixed timeout retained the same 9/9 recoverable cases as the calibrated rule, so incremental value was not shown. The result and raw evidence are in open Draft [PR #8036](https://github.com/Unjuno/agent-interface/pull/8036), not main. This establishes no real recovery distribution, GUI safety, or production deadline. Keep the issue open; any later transfer needs separate authorization and a fresh preregistered gate.
+
 ## Issueを閉じる条件
 
-この6件は今回の整理では閉じない。各原文の独自の問いと評価軸は残っている。
+この一覧のIssueは今回の整理では閉じない。各原文の独自の問いと評価軸は残っている。
 個別の有限な実験が完了した場合は、そのIssueの判定条件・原raw・結果・限界を確認して閉じ、
 上位の一般保証へ拡張しない。重複を解消する場合は固有の追試・原案・次の検証を実際の
 実行先へ引き継ぐ。保存、古さ、未担当、別の近い用語だけではcloseしない。

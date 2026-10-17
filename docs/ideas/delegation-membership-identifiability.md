@@ -1,0 +1,8 @@
+# Delegation-membership identifiability — #8915
+
+- **Status:** Unverified finite-method proposal; no result or current defect is established.
+- **Source:** Open [Issue #8915](https://github.com/Unjuno/agent-interface/issues/8915).
+- **Idea:** Test whether two execution worlds can have identical timestamps, event types, actor labels, and causal edges but different parent-delegation membership. A trace-only reconstruction should report `NON_IDENTIFIABLE` rather than guess by time or causal proximity. Compare it with immutable execution-time delegation IDs and explicit parent-delegation lineage, including missing, duplicate, forged, stale-after-revocation, and conflicting context.
+- **Overlap:** #47/#1211–#1241 concern actor attribution (who changed state); #15 concerns causal observation/action/effect lineage; #8587 reconciles source event ledgers; #5323 concerns causal effect attribution. #8915 isolates membership in overlapping delegated task contexts. These claims are related but not interchangeable.
+- **Proposed gate:** A finite simulator with an independent hidden-membership oracle should produce an indistinguishable-trace pair, require `NON_IDENTIFIABLE` from post-hoc tracing, and require exact membership recovery plus fail-closed handling from the context-bound arm. No tool action, GUI, provider, or live authority change is in scope.
+- **Boundary:** Even a method PASS would cover only authored traces. Delegation membership would not prove intent, policy compliance, causal effect, or task success, and context propagation alone would not show complete mediation of external effects.

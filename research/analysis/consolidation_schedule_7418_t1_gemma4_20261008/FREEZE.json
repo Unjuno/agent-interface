@@ -1,0 +1,78 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-GEMMA4-20261008",
+  "base_main_sha": "08d3283f6d3c61cc6b032c6c9c5a63ec464c07ff",
+  "branch": "research/8406-schedule-t1-local-gemma4-20261008",
+  "commands": [
+    "python3 -m unittest discover -s research/analysis/consolidation_schedule_7418_t1_gemma4_20261008 -p 'test_*.py' -v",
+    "python3 -B research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/candidate.py --package research/analysis/consolidation_schedule_7418_t1_gemma4_20261008 --raw research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/results/FORMAL_T1/RAW.jsonl --model-digest c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb > research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/results/FORMAL_T1/candidate.stdout.txt 2> research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/results/FORMAL_T1/candidate.stderr.txt",
+    "python3 -B research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/auditor.py research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/results/FORMAL_T1/RAW.jsonl research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/queries.json research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/episode_ledger.json --model-digest c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb --output research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/results/FORMAL_T1/AUDIT.json > research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/results/FORMAL_T1/auditor.stdout.txt 2> research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/results/FORMAL_T1/auditor.stderr.txt"
+  ],
+  "companion_to": 7418,
+  "construction_tests": "4/4 PASS before freeze; no real model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED for a >=0.10 paired exact-accuracy difference with same direction for one schedule contrast in all 3 seeds and a clean independent audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED if all pairwise abs differences are <0.10 for every seed and audit passes; otherwise UNCERTAIN; raw/model/method integrity failure => FAIL_METHOD",
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 256,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4101,
+      4102,
+      4103
+    ],
+    "temperature": 0.2,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PROTOCOL.md": "a0b23d9500a371a65c48099f6e9ba2cd65f1d8979d7ad058253ab405892dad87",
+    "README.md": "6352bc50fc6b2e904c890d120e5f702f607863f445913536b559514fc6536b29",
+    "auditor.py": "7db07e8d49dc42120fc91dd27dea8af890ff6af38fdd2e87d121ef8cde75a360",
+    "candidate.py": "1f71fa99eb12296ed6691432889b968a16b6012cc91d4f90e6f817bb9617e85c",
+    "episode_ledger.json": "0e04134afefd2f32039ecf428b4f3af969aabf92cf26dbf90b101328443257b8",
+    "prompts.json": "7ac8c338b8b47fb45ec63d9b028161c2fa492d6689a5c8580540667689591404",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "c88fdd60dfac2acf7bc65236ef248be4802170a90937a05f649d4684e64c9621"
+  },
+  "issue": 8406,
+  "model": {
+    "digest": "c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb",
+    "host": "127.0.0.1:11434",
+    "name": "gemma4:e4b",
+    "ollama_version": "0.40.0",
+    "size_bytes": 9608350718
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_gemma4_20261008",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/results/FORMAL_T1/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local Ollama model boundary",
+    "gui": "none",
+    "network": "runner calls loopback only; no external API",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  }
+}

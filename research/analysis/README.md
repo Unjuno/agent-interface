@@ -122,7 +122,7 @@
 - [Issue #7470 A04](inference_disturbance_coupling_7470_t0_a04_20261004/README.md) — eight trajectories include the seam, but the frozen centered-correlation formula has an extra 1/n normalization; not an Issue-level PASS.
 - [Issue #7470 A05](inference_disturbance_coupling_7470_t0_a05_20261004/README.md) — standard Pearson fixture, four intact circular shifts, and two periods with explicit seam; 8/8 reconstructed and 3/3 mutations rejected; finite method-scoped pass only.
 - [PR #7371 post-outcome invocation custody](owner_keyup_timestamp_order_5156_t5_review_20261004/post_outcome_invocation/README.md) — unregistered second candidate-script invocation discovered after T4; explicit protocol deviation, raw output retained, and no further candidate invocation authorized. Read alongside T4's one-shot `RUN.json`.
-- [Issue #7383 freshness-gated observation hedging T0](observation_hedging_7383_t0_20261004/REPORT.md) — synthetic independent-heavy-tail p95 improved 86.52% under the frozen threshold/work/deadline gates; correlated and shared-queue controls showed no gain. Independent audit passed 1,000 rows and rejected four mutations. Host CPU only; real capture critical-path evidence remains absent.
+- [Issue #7383 freshness-gated observation hedging T0](observation_hedging_7383_t0_20261004/REPORT.md) — two distinct synthetic results: host CPU p95 improved 86.52% on the independent-heavy-tail condition; WSLc improved 82.5% under its separate freeze. Both audits passed their row/mutation gates; correlated controls show no gain, and WSLc's shared queue worsened p95. No real capture critical-path evidence or adoption.
 - [`circuit_rejection_cost_5375_a02_20261004/REPORT.md`](circuit_rejection_cost_5375_a02_20261004/REPORT.md) — #5375 A02 WSLc one-tick finite result; 10 raw rows independently reconstructed, 4/4 mutation controls rejected, PASS_METHOD_SCOPED; A01 construction failure and auditor STOP preserved separately. No empirical production-cost, live-resilience, GUI/model, or product claim.
 - [`circuit_rejection_cost_5375_a01_20261004/REPORT.md`](circuit_rejection_cost_5375_a01_20261004/REPORT.md) — #5375 A01 exact 480-row record rescued; candidate violates frozen capacity on row 1 and the one auditor invocation STOPped on a read-only output destination. No rerun or hypothesis result.
 
@@ -485,6 +485,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
+- [`chromium_postsubmit_task_cue_1998_t0_a09_20261009/`](chromium_postsubmit_task_cue_1998_t0_a09_20261009/)
 - [`circuit_rejection_cost_5375_a01_20261004/`](circuit_rejection_cost_5375_a01_20261004/)
 - [`circuit_rejection_cost_5375_a02_20261004/`](circuit_rejection_cost_5375_a02_20261004/)
 - [`claim_disk_recovery_6509_01a0ff58/`](claim_disk_recovery_6509_01a0ff58/)
@@ -522,9 +523,12 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`confusion_adaptive_practice_8084_t0_a10_20261005/`](confusion_adaptive_practice_8084_t0_a10_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
 - [`consolidation_schedule_7418_t0_a01_20261008/`](consolidation_schedule_7418_t0_a01_20261008/)
+- [`consolidation_schedule_7418_t1_a02_gemma4_20261008/`](consolidation_schedule_7418_t1_a02_gemma4_20261008/)
+- [`consolidation_schedule_7418_t1_a03_gemma4_20261008/`](consolidation_schedule_7418_t1_a03_gemma4_20261008/)
 - [`consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/`](consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/)
 - [`consolidation_schedule_7418_t1_a12_private_preflight_20261008/`](consolidation_schedule_7418_t1_a12_private_preflight_20261008/)
 - [`consolidation_schedule_7418_t1_a13_schema_constrained_20261008/`](consolidation_schedule_7418_t1_a13_schema_constrained_20261008/)
+- [`consolidation_schedule_7418_t1_gemma4_20261008/`](consolidation_schedule_7418_t1_gemma4_20261008/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`constrained_sequence_coverage_6206_t0_v1/`](constrained_sequence_coverage_6206_t0_v1/)
@@ -552,6 +556,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
 - [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
 - [`crosslingual_visual_injection_7650_t0_a02_20261008/`](crosslingual_visual_injection_7650_t0_a02_20261008/)
+- [`cue_reliability_8654_c06_20261009/`](cue_reliability_8654_c06_20261009/)
 - [`cue_reliability_8654_c07_20261009/`](cue_reliability_8654_c07_20261009/)
 - [`cue_triggered_intention_7162_t0_20261004/`](cue_triggered_intention_7162_t0_20261004/)
 - [`cutoff_local_guard_audit_6451_t0_v1/`](cutoff_local_guard_audit_6451_t0_v1/)

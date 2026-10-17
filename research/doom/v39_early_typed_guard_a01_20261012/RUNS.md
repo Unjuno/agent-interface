@@ -1,0 +1,9 @@
+# Run record
+
+- Baseline: `origin/main` f185a9059d485a4f8d5a65e9e7f6782897f67eae. The two source blobs and v3 candidate are pinned in `FREEZE_V3.json`.
+- Candidate execution: WSLc 3.0.1.0, image `sha256:4fc7258eb9f2430d573bcbd352fc9851eee6ce96a65ff026274dfb317119bb7b`, `--pull never`, network disabled, source mounted read-only, one CPU, 30-second timeout, memory 512 MB requested. Raw invocation/output/exit are under `out/attempt4_v3_*`.
+- Outcome: 4/4 candidate tests passed. A hard health breach was invalidated by the exact V39 typed-observation branch without calling artifact readers. Soft typed evidence preserved the cover policy; coherent-pair sequence advanced only after a matching same-epoch artifact row; cross-transport content conflict and health/ammo epoch mismatch failed closed.
+- Independent source/result/argv audit: `out/audit_v1.txt`, exit 0. Container cleanup checks for all three experiment names returned no rows; see `out/container_cleanup.txt`.
+- Supporting regression run: 37 tests passed in the checked-out worktree. Those two test files differ from current main, so this is not reported as a current-main regression-suite pass; the production V39/guard files used by the construction candidate are exact current-main blobs.
+- Retained first outcomes: attempt 1 CLI mount argument rejected before candidate execution; candidate v1 had two faulty expectations; candidate v2 had one faulty expectation. They are preserved under `out/attempt1_cli_rejected/`, `out/attempt2_candidate_v1/`, and `out/attempt3_candidate_v2/`. No implementation code was changed in response.
+- Scope: no application rendering, real capture, model, Doom process, Executor, owner thread, OS/physical input, task effect, recovery completion, or live MAP01 exposure. This only establishes the typed-signal monitor boundary.

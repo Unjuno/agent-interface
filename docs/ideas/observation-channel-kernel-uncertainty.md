@@ -1,0 +1,8 @@
+# Observation-channel order under kernel uncertainty — #8911
+
+- **Status:** Proposed and unverified; no experiment is claimed.
+- **Source:** Open [Issue #8911](https://github.com/Unjuno/agent-interface/issues/8911), successor to [#6678](https://github.com/Unjuno/agent-interface/issues/6678).
+- **Idea:** Extend the known-kernel garbling comparison to finite-sample estimated observation channels. Build a preregistered joint confidence region over channel kernels and return `ROBUST A≽B` or `ROBUST B≽A` only when every data-compatible kernel pair satisfies the relation; otherwise return `UNRESOLVED`. Do not label an ambiguous confidence region as positive incomparability.
+- **Prior evidence:** #6678 defines exact finite-kernel comparison. Merged [PR #6700](https://github.com/Unjuno/agent-interface/pull/6700) is synthetic finite-kernel evidence; merged [PR #6813](https://github.com/Unjuno/agent-interface/pull/6813) is a bounded static browser fixture. #8911 proposes uncertainty-aware certification and does not revise either result.
+- **Proposed discriminator:** Freeze state labels, sampling unit/design, simultaneous confidence construction, tolerance, solver, and independent audit. Include robust forward/reverse orders, equality/boundary, near-boundary alternatives, sparse outputs, and label/dependence mutations. Audit coverage and certificates against raw counts; preserve UNKNOWN/UNRESOLVED when the region or state coverage is insufficient.
+- **Boundary:** Coverage depends on the declared sampling model, state oracle, and dependence assumptions. This proposal does not establish live GUI dominance, model utility, production benefit, or population-wide coverage; no authority changes are in scope.
