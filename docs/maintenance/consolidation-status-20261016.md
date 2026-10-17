@@ -4,6 +4,27 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r74: keep the app-server stderr family pending current-main reconstruction (2026-10-17)
+
+The unresolved bounded-stderr-drain proposal is spread across open #7094, its
+current-main rescues #8125/#8343, and stacked close-order follow-up #8357.
+Current main's `codex_app_server_client_v2.py` still has only the stderr PIPE;
+it has no independent stderr reader/tail or stderr-reader join. The #8357
+counterexample targets a detached child holding stderr after the owned leader
+exits. Its 40/40 focused normal and `-O` result and hosted checks belong to its
+old tree; its own body says the native suite could not complete in the sparse
+checkout and broader discovery had 22 failures / 87 errors, not fully
+classified. #8357 is based on #8343 and has no review decision. Its old tree is
+not current-main based (855 main-only / 6 PR-only commits); the direct source
+comparison removes current bounded-write, request-retirement, WSL environment,
+and other ownership code, so the old `CLEAN` status against #8343 is not a
+current integration gate. #8125 and #8343 are also `DIRTY` against their
+recorded bases. Keep the original evidence and all dependency refs; do not
+merge or close this family based on the old focused passes. Reconstruct the
+stderr drain and close-order fix on current main, restore all current client
+semantics, and run the native protocol suite in a complete checkout before
+fresh reviews or branch retirement.
+
 ### r73: retain #7070 until its evidence successor is refreshed and reviewed (2026-10-17)
 
 PR #7070's eight changed files are fully accounted for, but the predecessor
