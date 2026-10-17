@@ -125,6 +125,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Weak-shadow bounds for unresolved route outcomes](weak-shadow-route-outcome-bounds.md) — indexes #8903's unverified proposal against #5590/#8640/#8846; a proxy is only an auxiliary restriction, never a missing-outcome label.
 
+- [Recoverable-pause transition accounting](recoverable-pause-transition-accounting.md) — indexes #8902's within-task multi-state evaluation proposal and distinguishes it from #8068's history-conditioned repair estimand.
+
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
 
 - [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
