@@ -446,3 +446,22 @@ PR #9005's exact head `880c6b63036fa297d4a5c0a68498edf94e1b48d4` is the second p
 ## Exact-reference readback after catalog branch retirement — 2026-10-17
 
 A fresh GitHub/Git read after retiring the superseded #9005 branch found 561 remote branch heads, 520 open PRs, 525 unique open-PR head/base refs, and 65 registered worktrees. All 65 worktree paths exist and none is locked; every open-PR head/base ref resolves to a remote branch. The 27 remote branches outside those PR refs and worktree branch refs all match existing inventory rows and exact tips; no new unrecorded candidate appeared. The remaining 27 retain their recorded evidence-custody or owner-review dispositions and were not deleted by this readback.
+
+
+## Reviewed and retained: #7452 protocol-deviation branch
+
+Keep `research/7452-reset-context-event-coverage-a01-20261008` at
+`2961484f55e1a35a1b4d53b32c51a2a65f578ce1`. The remote branch is unprotected,
+and [closed unmerged PR #8401](https://github.com/Unjuno/agent-interface/pull/8401)
+and `refs/pull/8401/head` both retain this exact commit. No open PR uses the
+branch as a head or base. It is checked out cleanly in the registered worktree
+`/Users/taka/Documents/Codex/2026-10-08/agent-interface-8313-a03`.
+
+The #8399 custody comment explicitly says this branch records a pre-freeze
+protocol deviation, is not a scientific counter-result, and its pushed
+branch/history must be preserved. Merged [PR #8402](https://github.com/Unjuno/agent-interface/pull/8402)
+has a different A01 freeze at the same package path plus A02, so the two A01
+records must not be pooled or overwritten. Retain the branch and clean
+worktree; do not delete, rebase, or replace them. Its STOP applies only to that
+allocation and does not suspend unrelated work. No experiment was run during
+this custody review.
