@@ -473,3 +473,20 @@ records must not be pooled or overwritten. Retain the branch and clean
 worktree; do not delete, rebase, or replace them. Its STOP applies only to that
 allocation and does not suspend unrelated work. No experiment was run during
 this custody review.
+
+## A12 delay-treatment source custody — 2026-10-17
+
+The remote branch `research/59-live-threat-guard-a12-delay-a01-20261009` remains
+at `42a0daae8b6aceb1389a957480378763aa972770`; no all-state PR references it,
+and its registered worktree is clean. Its 14-file source/preregistration
+package is copied byte-for-byte to
+`research/doom/map01_v39_live_threat_guard_a12_delay_a01_20261009/` in PR
+#9012, with an archive note recording the original preregistration blob and
+custody limits. No result artifact was present in the committed branch or
+registered worktree, the preregistered local output directory was absent on
+the inspected host, and no matching allocation result comment was found on
+Issue #59. This does not establish whether an execution occurred elsewhere;
+it makes no outcome claim and does not authorize a launch or retry. Issue #59
+is open/unassigned. Preserve the branch until #9012 merges, then recheck its
+exact tip and references before retirement. Any A12 stop condition applies
+only to A12 and does not pause other work.
