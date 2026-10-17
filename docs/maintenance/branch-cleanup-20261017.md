@@ -393,3 +393,18 @@ merged branch names.
 | `research/8654-c06-stochastic-support-20261009` / [#8654](https://github.com/Unjuno/agent-interface/issues/8654) | Eleven C06 unique source/freeze/report/manifest blobs are absent from merged C07 audit [#8671](https://github.com/Unjuno/agent-interface/pull/8671); all 15 raw shards are exact content matches in C07. The 11 unique files are copied byte-for-byte at the original path in PR #9012 with a custody note. | After #9012 merges, recheck exact remote tip `7f8bab0b6eece49bb5dfedb9598d3c48b30fb725` and references, then retire the redundant source branch. C06 remains `FAIL_METHOD`; C07 does not rewrite it. |
 | `research/held-chord-h7k3-20261007` / [#8252](https://github.com/Unjuno/agent-interface/issues/8252) | Ten of 15 changed-path blobs are absent from current main and merged production repair [#8308](https://github.com/Unjuno/agent-interface/pull/8308); that PR does not contain this branch's frozen comparison package. | Keep the experiment source and freeze. |
 | `research/predictive-display-t0-5935-20261006-v1` / [#5935](https://github.com/Unjuno/agent-interface/issues/5935) | The Issue says this branch contains only duplicate preformal PLAN/INPUT/ENV/FREEZE metadata, with zero formal rows; canonical T0 evidence is elsewhere. FREEZE also names three source files absent from the branch tree. | Byte-identical metadata and the four-commit patch are archived in `docs/maintenance/archives/predictive-display-5935-duplicate-preformal-20261006/` in PR #9012. Retire the source branch only after that archive merges and the exact remote tip is rechecked. |
+
+## Live branch/worktree reconciliation after the 2026-10-17 archive pass
+
+A fresh read returned 562 remote branches and 521 open PRs. The primary clone
+has 65 linked worktree registrations plus its primary checkout; every linked
+worktree path exists and none is locked. Comparing remote branch names against
+the current open-PR head/base refs and all 66 checkout branch refs yields 27
+branches outside those references. All 27 names and exact tip SHAs match the
+live entries in the unreferenced-branch inventory above; no additional
+unreferenced branch was found. The two older inventory rows for
+`research/8596-chance-bounded-progress-t0-a01-20261009` and
+`research/carbon-window-7794-a05-bytebound-recheck-20261008` are absent as
+already recorded in their retirement receipts. The remaining branch names
+still have the retention or pending archive conditions listed above; this
+readback itself authorizes no further deletion.
