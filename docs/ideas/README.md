@@ -131,6 +131,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Post-crash effect-reconciliation bootstrap](post-crash-effect-reconciliation-bootstrap.md) — indexes #8900's finite root-reachability proposal while preserving UNKNOWN and keeping action/retry authority revoked.
 
+- [Bounded-error diagnosability](bounded-error-diagnosability.md) — indexes #8898's unverified robustness successor to noiseless #8894; no real error rate or new locating-array construction is claimed.
+
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
 
 - [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
