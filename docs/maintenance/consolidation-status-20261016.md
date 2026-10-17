@@ -4,6 +4,22 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r75: retain the dirty A16 checkout after remote ref retirement (2026-10-17)
+
+The 2026-10-16 unreferenced-branch snapshot listed
+`fix/doom-terminal-health-zero-a16` at `88adef65f48874d681d5600f910ec009e6e662b1`
+with a registered worktree. A fresh GitHub branch read returns 404 for the
+remote name. PR #8816 is merged with that exact head, and the commit is an
+ancestor of current main `1ece47014d05db898bf73afcd722a14524462e15` (370
+main-only, zero branch-only commits). However, the registered local checkout
+`/Users/taka/Documents/Codex/2026-10-09/agent-interface-59-live-threat-guard-a01/results-local/doom/a16-health-zero-terminal-fix`
+still has uncommitted edits in `map01_overlap_controller_v39.py` and
+`test_map01_overlap_controller_v39.py`, and no upstream remote-tracking ref.
+Open #8842 uses a separate branch. Disposition: retain this dirty checkout;
+the merged commit is redundant, but the two local edits have not been reviewed
+or preserved elsewhere. Do not reset, remove, or recreate the remote ref until
+their owner resolves or explicitly releases the worktree.
+
 ### r74: keep the app-server stderr family pending current-main reconstruction (2026-10-17)
 
 The unresolved bounded-stderr-drain proposal is spread across open #7094, its
