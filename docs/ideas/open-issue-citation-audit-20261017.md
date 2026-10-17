@@ -7,6 +7,10 @@ concise proposal summary for each Issue. Summaries describe the problem or
 research question only; the linked Issue remains the source for full scope,
 evidence, ownership, status, and execution decisions.
 
+A follow-up live recheck on the same date found 12 more open Issues without a
+direct Markdown URL. Their links and summaries are included below; a repeated
+scan of all 1,677 then-open Issues found no remaining omissions.
+
 | Issue | Idea / work line |
 |---|---|
 | [#4](https://github.com/Unjuno/agent-interface/issues/4) | Build the computer interface frontier models deserve — Reconsider the screenshot-reason-coordinate loop by designing an interface around model-level semantic intent. |
