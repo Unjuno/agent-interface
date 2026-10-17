@@ -141,8 +141,6 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [No-gold effect-checker identifiability](no-gold-effect-checker-identifiability.md) — records #8887's unverified method and #8893's narrower agreement/accuracy counterexample without promoting it to full method validation.
 
-- [Skill-conditioned terminal-event memory](skill-conditioned-terminal-event-memory.md) — indexes #8886's unverified fixed-context retrieval contrast and keeps event memory separate from fresh authority/effect checks.
-
 - [Recurrent-disturbance recovery envelope](recurrent-disturbance-recovery-envelope.md) — indexes #8872's unverified disturbance-magnitude × spacing proposal, preserves #5776's failed early-warning result, and requires consolidation if #5372 or #5776 already exposes the same endpoint.
 
 - [Independent-team route replication](independent-team-route-replication.md) — indexes #8870's unverified one-site replication proposal, distinguishing independent execution from evidence-packet audit, task sampling, and source-to-target transport.
