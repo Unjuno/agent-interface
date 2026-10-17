@@ -313,10 +313,12 @@ until that code delta and branch references receive current-main review.
 The Xlib audit-v2 package from `research/59-xvfb-audit-v3-a02-20261005` at
 `1ec6556ba8568de289625b5f167e7b8c21e1f72c` has 14 tracked files, all copied
 under `research/doom/map01_v39_xvfb_select_buffering_a05_20261005/` in PR
-#9012, with its one-commit patch retained as `ORIGINAL_COMMIT.patch`. A01 is
-pre-formal `STOP_MAIN_ADVANCED_BEFORE_PREREG_FROZEN`; A02 is construction-only.
-This branch's exact tip and references still need a fresh readback after the
-archive is integrated.
+#9012, with its one-commit patch retained as `ORIGINAL_COMMIT.patch`. A01 did
+not reach formal preregistration because main advanced before source freeze;
+A02 is construction-only. The source package retains the exact original
+machine-readable decision. These outcomes apply only to their allocations and
+do not restrict other research or repository work. This branch's exact tip and
+references still need a fresh readback after the archive is integrated.
 
 ## Retired A01 branch after exact successor-custody verification
 

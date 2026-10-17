@@ -9,12 +9,12 @@ was normalized for repository whitespace checks.
 The directory name is retained from the source tree; the README's allocations
 are Xlib audit-v3 A01 and A02.
 
-A01 stopped before formal preregistration after main advanced
-(`STOP_MAIN_ADVANCED_BEFORE_PREREG_FROZEN`); candidate and auditor invocations
-were both zero. Construction attempts and the corrected pre-run source review
-remain in the original files. A02 reached AST-compile construction only; its
-candidate and auditor invocations were also zero. These are allocation-local
-records and do not stop #59, unrelated research, or repository cleanup.
+A01 did not reach formal preregistration because main advanced before the
+source freeze; candidate and auditor invocations were both zero. The original
+source file retains the exact machine-readable decision and construction
+history. A02 reached AST-compile construction only; its candidate and auditor
+invocations were also zero. These records describe only those two allocations
+and place no restriction on #59, unrelated research, or repository cleanup.
 
 The scope is synthetic Xvfb/XTEST audit-v2 report consistency. The package
 contains no current V39 controller run, game, model, OS keyboard, physical key,
