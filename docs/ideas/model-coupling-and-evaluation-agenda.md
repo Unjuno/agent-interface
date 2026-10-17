@@ -421,10 +421,12 @@ separate hypotheses and must keep separate evidence and decisions.
 2. #8654's C07 audit is complete at method scope. Any follow-up must address
    C06's failed audit and make a distinct hypothesis decision; do not treat C07
    as evidence of agent adaptation or sampling benefit.
-3. The lowest-cost untested discriminator in this family is #9004's finite
-   common-mode-error comparison. It is independent of the consumed #6001
-   allocations and does not need a GUI/model lane, but it still needs its own
-   immutable freeze, candidate output and independent audit.
+3. #9004's frozen T0 is now consumed and found `NO_INCREMENTAL_AGREEMENT_VALUE`
+   on its synthetic traces; do not rerun that allocation. Its next stated
+   discriminator is the common-mode-error comparison against an equally
+   bounded System-1-only controller. Treat that as a distinct prospective
+   allocation with its own current-main freeze, candidate output and independent
+   audit; the existing result neither authorizes nor supplies that run.
 4. #8920's finite transition-equivalence method is another untested proposal;
    keep its variant qualification separate from empirical difficulty or
    transfer claims.
