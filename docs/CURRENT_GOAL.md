@@ -43,6 +43,10 @@ and latest ownership before shared changes, rather than reopening every history.
   implementation, local tests and authorized integration should proceed autonomously.
 - Use the smallest discriminating experiment or repair. Do not repeat a consumed
   formal allocation; preserve first outcomes, raw, frozen conditions and limits.
+- A STOP or no-retry rule applies only to its named allocation. It does not stop
+  independent workers or distinct authorized work. An open or unassigned Issue
+  is not a repository-wide pause; missing ownership or a resource reservation
+  blocks only the operation that needs it.
 - Check only resources and ownership needed by the selected operation. A dated
   inventory, open Issue or idle machine is not a resource grant. Closed historical
   logs are context; closing them does not prove release or impose a new global gate.
