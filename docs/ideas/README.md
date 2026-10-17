@@ -36,6 +36,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Open Issue inventory refresh (2026-10-17)](../maintenance/open-issues-inventory-20261017.md) — refreshes the paginated open-Issue metadata snapshot to 1,677, records its three-ID delta from r3, and states that inventory is not full semantic triage.
 
+- [Research Issue index addendum (2026-10-17)](../RESEARCH_ISSUE_INDEX_20261017_ADDENDUM.md) — captures 146 currently open research-labelled Issues missing from the historical 2026-10-02 selected index, with literal outcome markers and heuristic predecessor refs; it is discovery metadata, not semantic audit.
+
 - [Open issue citation audit (2026-10-17)](open-issue-citation-audit-20261017.md) — restores direct links and concise proposal summaries for 61 open Issues (49 in the original bounded comparison plus 12 found in a follow-up live recheck); source Issues remain authoritative for evidence, status, and execution decisions.
 
 - [Action-conditioned incorrect-belief exposure](action-conditioned-incorrect-belief-exposure.md) — records #7986's synthetic measure without claiming live authority or safety.

@@ -741,7 +741,7 @@ These Issues remain open; a scoped method result does not close the broader tran
 
 ## Filtered research, idea, and successor Issue inventory
 
-Use [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md) for the dated inventory snapshot, its counts, inclusion rule, and coverage limits. It is a discovery aid rather than a live census; refresh the selected Issue before acting. Open/closed is workflow status, not outcome.
+Use [RESEARCH_ISSUE_INDEX.md](RESEARCH_ISSUE_INDEX.md) for the historical selected index and [its 2026-10-17 research-label addendum](RESEARCH_ISSUE_INDEX_20261017_ADDENDUM.md) for open research Issues missing from that snapshot. The full [open-Issue inventory](maintenance/open-issues-inventory-20261017.md) supplies current dated metadata. These are discovery aids, not a live census or semantic audit; refresh the selected Issue before acting. Open/closed is workflow status, not outcome.
 
 ## Closed idea dispositions checked (2026-10-02)
 
