@@ -330,6 +330,16 @@ is still listed at its verified tip above; recheck branch/worktree references
 after this archive merges before considering ref retirement. Its report's
 live-lane statements are historical context, not current assignment.
 
+The `research/v39-retained-trajectory-posthoc-a01-20261008` tip
+`87f2dab936bff72c9906126884141925a20fc547` is one commit beyond closed PR
+#8543's head and contains seven changed blobs absent from current main. All
+seven files are now retained byte-for-byte at
+`research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/`
+in this PR; its four frozen inputs already exist as Git blobs. This preserves a
+posthoc reconstruction package, not a new live result. After the archive
+merges, recheck the exact tip and all PR/worktree references before retiring
+the source branch.
+
 ## Retired A01 branch after exact successor-custody verification
 
 Removed `research/8596-chance-bounded-progress-t0-a01-20261009` with an exact
