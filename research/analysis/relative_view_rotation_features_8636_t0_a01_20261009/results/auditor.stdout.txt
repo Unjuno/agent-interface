@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/worktrees/8636-rotation-invariant-view-t0/research/analysis/relative_view_rotation_features_8636_t0_a01_20261009/auditor.py", line 335, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/worktrees/8636-rotation-invariant-view-t0/research/analysis/relative_view_rotation_features_8636_t0_a01_20261009/auditor.py", line 334, in main
+    summary=audit(Path(a.output)); Path(a.result).write_text(json.dumps(summary,indent=2,sort_keys=True)+"\n"); print(json.dumps(summary,sort_keys=True))
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/worktrees/8636-rotation-invariant-view-t0/research/analysis/relative_view_rotation_features_8636_t0_a01_20261009/auditor.py", line 269, in audit
+    if r["status"]!=expected_status: raise ValueError("status does not match independent decision")
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: status does not match independent decision

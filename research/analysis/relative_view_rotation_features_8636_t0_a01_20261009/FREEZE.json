@@ -1,0 +1,76 @@
+{
+  "allocation": "UNJUNO-8636-ROTATION-FEATURES-T0-A01-20261009",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8636",
+  "base_ref": "main",
+  "base_sha": "a5f53b6ef1810b74b5539dc0048e43b128b4cb7b",
+  "branch": "research/8636-rotation-invariant-view-t0-a01-20261009",
+  "worktree": "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/worktrees/8636-rotation-invariant-view-t0",
+  "package": "research/analysis/relative_view_rotation_features_8636_t0_a01_20261009",
+  "protocol": "PROTOCOL.md",
+  "source_sha256": {
+    "README.md": "e7dbe04a0a3d831ed60ce59358bb8c55d9c05cfdd08903cf772217fef846d0e0",
+    "PROTOCOL.md": "c9bd9fabddb7127f4d68c65d2ed1a886d8a493084cf09287e33fcb646f54b9c5",
+    "candidate.py": "e058cdc69700b5cb08bbda13cb90c83caca36e238edcddbd9fde5cfced76d1a4",
+    "runner.py": "7d397754fd63fd7c04b835b5126010642d6c6457b03e410520c8b3b808d0a768",
+    "auditor.py": "36815234856348bd229b3404522a4ddf0fd996dbb5c4c5721df7ddb7101ee145",
+    "test_construction.py": "fc79d14e5eea63f8a2b1678ee71c74618791a5a553e191b4613a6b8d31ed3d17",
+    "construction/OUTCOMES.md": "3746059d2c056326effa7ee9d7b8f996e24bf756019e497c0c648e0f7b0b5712",
+    "ISSUE_COMMENT.md": "aa575cf58347c8d5569dcca627f469c615487c20d59d949501ea8194619aaf7e"
+  },
+  "candidate_formal_invocations": 0,
+  "auditor_formal_invocations": 0,
+  "run_policy": "one candidate invocation followed once by one independent raw-only auditor invocation; preserve the first outcome and do not retry or tune",
+  "commands": [
+    "python3 -B runner.py --output results/first-outcome",
+    "python3 -B auditor.py --output results/first-outcome --result results/first-outcome/audit.json"
+  ],
+  "formal_schedule": {
+    "conditions": [
+      "pure_yaw",
+      "combined_rotation",
+      "focal_shift",
+      "feature_loss"
+    ],
+    "seeds_each_condition": [
+      30000,
+      30029
+    ],
+    "arms": [
+      "raw_pixels",
+      "spherical_features",
+      "viewstate_oracle"
+    ],
+    "max_actions_per_arm": 12,
+    "action_limit_rad_per_axis": 0.08,
+    "gain": 0.72,
+    "stop_tolerance_rad": 0.015,
+    "terminal_tolerance_rad_per_axis": 0.025,
+    "pair_distance_integrity_tolerance_rad": 0.09,
+    "two_bearing_condition_floor": 0.08,
+    "feature_loss_faults": [
+      "hide_second",
+      "swap_ids",
+      "move_third",
+      "near_singular",
+      "low_texture",
+      "camera_translation",
+      "stale_frame",
+      "viewport_resize",
+      "range_variation"
+    ],
+    "feature_loss_invalid_image_arm_trials": 54,
+    "feature_loss_range_variation_is_projection_null": true
+  },
+  "H": "On fixed-position synthetic three-landmark views, the spherical feature controller reaches the same exact terminal-view criterion with no greater target-loss/action-bound violation rate than raw normalized coordinates and reduces median corrections by at least 20% on the 60 rotation-only/combined pairs. Focal shift and feature-loss strata are separate limits/stress reports.",
+  "D": {
+    "method_pass": "all 120 paired fixtures and 360 arm trials complete; source/frame/event custody and independent replay have zero errors; source/order/stale-generation/missing-release/forged-feature mutations are all rejected; all eight invalid feature-loss controls abstain for both image arms (54 trials); radial range null preserves its projection; actions stay inside the envelope and every synthetic trial has a neutral release receipt",
+    "h_supported": "method_pass and spherical terminal successes >= raw successes on primary pairs, target loss <= raw target loss, and >=0.20 median correction reduction",
+    "h_fail": "valid audited method run but quantitative hypothesis gate not met",
+    "hold": "invalid/missing inputs, integrity or oracle mismatch"
+  },
+  "runtime": {
+    "mode": "local single-process CPU-only CPython; no container, Docker/OrbStack, WSL, GUI, OS input, model, GPU, shared VM, or external effect",
+    "python": "3.14.5",
+    "platform": "Darwin 27.0.0 arm64"
+  }
+}
