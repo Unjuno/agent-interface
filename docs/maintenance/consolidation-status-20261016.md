@@ -4,6 +4,24 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r72: hold stale constructor-cleanup PR #7062 with current-main regressions (2026-10-17)
+
+PR #7062 is still a draft at `6f79681e5dc5681c984543c087e0da2117872e84`,
+has no review decision, and its reported checks pass only for that old head.
+Its recorded base is `bfcc14e08fbfe5f2f04cd0237d13559e5d62538b`; current main
+`1ece47014d05db898bf73afcd722a14524462e15` is not an ancestor (the local graph
+reports 661 main-only and 4 PR-only commits). Comparing the exact PR tree to
+current main shows that, alongside new constructor/thread-start cleanup and
+tests, it removes current WSL `CODEX_HOME` environment forwarding, custom
+process-stream ownership handling, `_closing` checks that stop request and
+notification waiters during close, and existing native-suite registrations
+for cancellation, caller composition, and verifier/journal failure cases.
+The PR's new tests do not qualify those removed current-main behaviors.
+Disposition: HOLD for a source-scoped rebase/reconstruction that preserves the
+current behavior and suite coverage, followed by checks on the resulting head
+and the required fresh review. Keep the unique startup-cleanup evidence and
+source branch until that disposition is resolved; do not merge or delete it.
+
 ### r71: hold stale, oversized startup-cleanup PR #6944 (2026-10-17)
 
 GitHub readback identifies #6944 as a draft authored by `Unjuno`, head
