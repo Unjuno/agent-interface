@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-7165-discriminator-a02-20261009/research/observation/native_discriminator_7165_a02_20261009/auditor.py", line 94, in <module>
+    main()
+    ~~~~^^
+  File "/private/tmp/agent-interface-7165-discriminator-a02-20261009/research/observation/native_discriminator_7165_a02_20261009/auditor.py", line 60, in main
+    "missing_required_cue_falls_back": expected_route({
+                                       ~~~~~~~~~~~~~~^^
+        "requirement": ["title"], "generation_match": True, "source_valid": True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "read_status": {"title": "CURRENT", "parent": "CURRENT"},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    }) == "fresh_full_fallback",
+    ^^
+  File "/private/tmp/agent-interface-7165-discriminator-a02-20261009/research/observation/native_discriminator_7165_a02_20261009/auditor.py", line 27, in expected_route
+    values_agree = oracle(row["fresh"]) in VALID
+                          ~~~^^^^^^^^^
+KeyError: 'fresh'
