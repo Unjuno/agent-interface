@@ -408,3 +408,15 @@ unreferenced branch was found. The two older inventory rows for
 already recorded in their retirement receipts. The remaining branch names
 still have the retention or pending archive conditions listed above; this
 readback itself authorizes no further deletion.
+
+## Exact-reference recheck — 2026-10-17 01:53 UTC
+
+Re-read GitHub remote heads and all open PR head/base refs, then compared them
+with the primary clone's registered worktrees. The counts remain 562 remote
+branches, 521 open PRs, and 66 worktrees. All 66 worktree paths exist, no
+worktree is locked, and all open PR head/base branch names resolve remotely.
+Exactly 27 remote names fall outside both open-PR refs and worktree branches;
+their names and exact tips match the 27 retained entries above. No additional
+unreferenced branch or newly eligible deletion was found. Archive PR #9012 is
+still open, so branches whose unique bytes are staged only there remain pending
+archive integration and exact post-integration tip/reference checks.
