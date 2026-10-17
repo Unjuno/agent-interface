@@ -135,6 +135,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Telemetry-channel-aware allocation](telemetry-channel-aware-allocation.md) — indexes #8897's synthetic resource-information question and separates it from observation-value, observer-cost, and WSL-accounting work.
 
+- [Invariant-confluence coordination overlap](invariant-confluence-coordination-overlap.md) — records #8889's substantial overlap with #5547/#5563 and preserves the narrow unresolved comparison without duplicating an allocation.
+
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
 
 - [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
