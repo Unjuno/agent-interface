@@ -294,4 +294,6 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Predicate-aware GUI history reduction](predicate-aware-gui-history-reduction.md) — separates #8592's scoped lifecycle DPOR result, #8613's phantom-membership method result, and #8663's combined finite result with an audit-count deviation.
 
+- [Controlled development feedback](controlled-development-feedback.md) — records #8072 A01 audit rejection and the distinct A02 scoped result, separated from #8319/#8327 factorial and audit work.
+
 - [Controlled feedback and raw-artifact bypass](controlled-feedback-artifact-bypass.md) — preserves #8581 A01/A02 audit failures and A03's audited no-incremental-bypass result while keeping all evidence PRs unmerged and distinct.
