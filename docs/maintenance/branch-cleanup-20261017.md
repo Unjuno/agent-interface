@@ -344,12 +344,16 @@ retiring the branch.
 The unreferenced `research/59-v15-owner-integration-20261012` branch at
 `cf3c31e02e5d9b25240474499b1ec4393849b593` has no PR using it as a head. Its
 20-commit delta from `f185a9059d485a4f8d5a65e9e7f6782897f67eae` changes 585
-paths and 416 distinct blob identities; 415 already occur in current main at
-other paths. The remaining A02–A34 summary report is now retained byte-for-byte
-in `research/doom/v15_owner_recovery_integration_a02_a34_20261012/`. The branch
-is still listed at its verified tip above; recheck branch/worktree references
-after this archive merges before considering ref retirement. Its report's
-live-lane statements are historical context, not current assignment.
+paths and 416 distinct blob identities; a fresh comparison against current
+`origin/main` found 415 identities already present at other paths. The only
+missing identity is the A02–A32 summary report, which matches
+`research/doom/v15_owner_recovery_integration_a02_a34_20261012/SOURCE_REPORT.md`
+byte-for-byte in PR #9012 head `22211c9326758e3f0bdb6ec0efd69b4522152b29`;
+that archive also contains `ARCHIVE_NOTE.md`. Issue #59 is open/unassigned, and
+no worktree is registered for this branch. Retain the exact remote tip until
+the archive merges, then recheck the branch, mainline report bytes and refs
+before retiring it. The report's live-lane statements are historical context,
+not current assignment.
 
 The `research/v39-retained-trajectory-posthoc-a01-20261008` tip
 `87f2dab936bff72c9906126884141925a20fc547` is one commit beyond closed PR
