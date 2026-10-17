@@ -294,13 +294,16 @@ only after matching its exact current tip to its Issue/allocation and verifying
 an independently fetchable source/evidence path or a complete integrated
 successor.
 
-The V39 source-identity A01 tip above was subsequently mapped to its exact
-seven-file delta and copied byte-for-byte under
+The V39 source-identity A01 tip `0d0f4d4a09e3b6de5b009ac315a3e57e888b195a`
+has a seven-file delta, all copied byte-for-byte under
 `research/doom/v39_current_main_source_identity_audit_a01_20261009/` in PR
-#9012. Its archive note records the missing `RESULT.md` and
-`results/source_audit.json` references and scopes the retained
-`HOLD_AUDIT_INPUT` to that one audit allocation. The branch is still required
-until the archive is integrated and the live tip/references are rechecked.
+#9012. A fresh tree comparison against #9012 head
+`c847c4d1a858cf280cbf3ceec6caf8ce72ce40d5` found zero missing paths and zero
+blob differences. Its archive note records the missing `RESULT.md` and
+`results/source_audit.json` references and scopes `HOLD_AUDIT_INPUT` to that
+allocation. The remote tip remains exact and no open PR uses this branch; keep
+it until #9012 integrates, then recheck registered worktrees and all refs
+before retiring its branch name. No experiment was rerun.
 
 The `research/59-early-typed-guard-a01-20261012` tip
 `075aa109c9464a8fcd1b81a35700b231bfda37bc` was mapped against the open PR #9008
