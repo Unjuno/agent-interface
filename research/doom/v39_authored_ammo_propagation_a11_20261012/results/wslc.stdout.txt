@@ -1,0 +1,10 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_positive_ammo_below_authored_action_minimum_diverges (test_a11_ammo_propagation.AmmoPropagationTests.test_positive_ammo_below_authored_action_minimum_diverges) ... ok
+test_zero_ammo_is_the_cover_monitor_boundary (test_a11_ammo_propagation.AmmoPropagationTests.test_zero_ammo_is_the_cover_monitor_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.017s
+
+OK
+A11_RESULT={"action_admission_reason": "ammo_minimum_failed", "action_admission_status": "REJECTED_PREDICATE", "action_ammo_check": {"expected": 5, "observed": 4, "operator": "minimum", "passed": false, "signal_id": "ammo"}, "classification": "CONSTRUCTION_ONLY_POLICY_PROPAGATION_COMPARISON", "cover_ammo_hard_minimum": 1, "cover_monitor_invalidated": false, "cover_soft_events": 1, "current_ammo": 4, "current_sequence": 11, "planner_authored_minimum_ammo": 5, "source_ammo": 6, "source_sequence": 10}
+A11_RESULT={"classification": "CONSTRUCTION_ONLY_ZERO_AMMO_CONTROL", "current_ammo": 0, "hard_minimum": 1, "monitor_invalidated": true, "reason": "ammo:below_hard_minimum"}

@@ -1,0 +1,48 @@
+{
+  "audit_method": "Non-executing frozen-source, test-transcript, and result audit; tests not rerun.",
+  "audit_status": "PASS_SCOPED",
+  "containerfile_hash_matches": true,
+  "interpretation": "Action minimum_ammo=5 rejects current ammo 4 while cover guard (hard minimum 1) does not invalidate; both contract boundaries are exercised, but intent equivalence is not established.",
+  "limits": [
+    "synthetic HUD values",
+    "source-level policy comparison",
+    "no pending-model or live cover cancel",
+    "no physical input/release or task effect"
+  ],
+  "main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "policy_boundary_pattern_matches": true,
+  "source_checks": [
+    {
+      "bytes_match": true,
+      "git_blob_matches": true,
+      "sha256_matches": true,
+      "source": "map01_overlap_controller_v39.py"
+    },
+    {
+      "bytes_match": true,
+      "git_blob_matches": true,
+      "sha256_matches": true,
+      "source": "observable_signal_guard_v2.py"
+    },
+    {
+      "bytes_match": true,
+      "git_blob_matches": true,
+      "sha256_matches": true,
+      "source": "action_validity_admission_v1.py"
+    },
+    {
+      "bytes_match": true,
+      "git_blob_matches": true,
+      "sha256_matches": true,
+      "source": "doom_action_validity_contract_v1.py"
+    },
+    {
+      "bytes_match": true,
+      "git_blob_matches": true,
+      "sha256_matches": true,
+      "source": "doom_signal_value_domain_v1.py"
+    }
+  ],
+  "test_hash_matches": true,
+  "transcript_exit_zero_and_results_match": true
+}
