@@ -137,6 +137,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Invariant-confluence coordination overlap](invariant-confluence-coordination-overlap.md) — records #8889's substantial overlap with #5547/#5563 and preserves the narrow unresolved comparison without duplicating an allocation.
 
+- [No-gold effect-checker identifiability](no-gold-effect-checker-identifiability.md) — records #8887's unverified method and #8893's narrower agreement/accuracy counterexample without promoting it to full method validation.
+
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
 
 - [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
