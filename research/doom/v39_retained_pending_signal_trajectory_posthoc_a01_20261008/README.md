@@ -32,8 +32,8 @@ Inputs are not duplicated: `FREEZE.json` pins the existing report and raw JSONL/
 From the repository root, run the tests in normal and optimized Python:
 
 ```sh
-python -B -m unittest discover -s research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/tests -v
-python -B -O -m unittest discover -s research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/tests -v
+python -B research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/tests/test_reconstruction.py
+python -B -O research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/tests/test_reconstruction.py
 ```
 
 To reproduce the result without overwriting the retained `RESULT.json`, choose a new output path that does not already exist:
