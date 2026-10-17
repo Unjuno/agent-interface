@@ -40,6 +40,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Open issue citation audit (2026-10-17)](open-issue-citation-audit-20261017.md) — restores direct links and concise proposal summaries for 61 open Issues (49 in the original bounded comparison plus 12 found in a follow-up live recheck); source Issues remain authoritative for evidence, status, and execution decisions.
 
+- [Reset-aware ordered event coverage for GUI histories](ordered-context-event-coverage.md) — connects #7452 to merged successor #8399/#8402, distinguishes A01's unequal-universe comparison from A02's equal-denominator result, and preserves the separate #8401 protocol STOP.
+
 - [Action-conditioned incorrect-belief exposure](action-conditioned-incorrect-belief-exposure.md) — records #7986's synthetic measure without claiming live authority or safety.
 
 - [Bandwidth inheritance for blocked verifiers](bandwidth-inheritance-blocked-verifiers.md) — links #7944/#7979 and their finite offline BWI result.
