@@ -1,0 +1,18 @@
+{
+  "schema": "issue8651-first-outcome-retention-v1",
+  "freeze_id": "8651-A02-20261009",
+  "workflow_run_id": 37804059276,
+  "run_attempt": 1,
+  "source_commit": "bc85e2b58bf5d45dcb1093ad3a081a7048c5009c",
+  "candidate_invocations": 1,
+  "candidate_exit_code": 0,
+  "auditor_invocations": 1,
+  "auditor_exit_code": 0,
+  "method_audit_exit_semantics": "The frozen auditor exits zero only when PASS_METHOD_SCOPED; the detailed AUDIT.json and raw ledger were not retained, so this allocation does not claim a publishable formal result.",
+  "raw_rows_retained": false,
+  "audit_json_retained": false,
+  "artifact_uploaded": false,
+  "retention_error": "/usr/bin/jq: Argument list too long while base64-encoding RAW.jsonl into an argument.",
+  "disposition": "STOP_EVIDENCE_RETENTION_FAILURE",
+  "rerun_same_allocation": false
+}
