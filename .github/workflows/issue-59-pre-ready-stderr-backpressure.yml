@@ -1,0 +1,27 @@
+name: Issue 59 pre-ready stderr backpressure
+
+on:
+  pull_request:
+    paths:
+      - 'research/doom/test_pre_ready_stderr_backpressure_v1.py'
+      - '.github/workflows/issue-59-pre-ready-stderr-backpressure.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  pre-ready-stderr-backpressure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /research/doom/test_pre_ready_stderr_backpressure_v1.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run bounded pre-ready pipe backpressure comparison
+        run: python -B -m unittest research/doom/test_pre_ready_stderr_backpressure_v1.py -v
