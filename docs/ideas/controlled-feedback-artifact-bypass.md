@@ -2,6 +2,10 @@
 
 This finite-method family asks whether a development-feedback restriction still changes a candidate's behavior when the candidate author can read raw evaluation artifacts through a separate tool path. It is an evaluation-boundary proposal, not a claim that historical repository results were contaminated, a reason to restrict public research records, or authorization to access private/real answer keys. All three allocations use synthetic data only.
 
+## Separate no-run preregistration freeze
+
+The branch `research/8581-feedback-artifact-bypass-t0-20261009` preserves allocation `UNJUNO-8581-CONTROLLED-FEEDBACK-ARTIFACT-BYPASS-T0-A01-20261009`. Its freeze and [preregistration comment](https://github.com/Unjuno/agent-interface/issues/8581#issuecomment-6069449898) record candidate/auditor counts of 0/0; this is a source-only, uninvoked allocation and has no formal result. It is distinct from the executed `RAW-ARTIFACT-BYPASS-8581-T0-A01-20261009` allocation in [PR #8760](https://github.com/Unjuno/agent-interface/pull/8760), whose candidate and auditor each ran once and whose auditor failed. The shared A01 label does not make these allocations identical. The seven source files from the no-run freeze are archived at their original path in PR #9012; do not infer that this freeze ran or combine its 0/0 with #8760's result.
+
 ## A01 — auditor failure
 
 - **Evidence:** open Draft [PR #8760](https://github.com/Unjuno/agent-interface/pull/8760).
