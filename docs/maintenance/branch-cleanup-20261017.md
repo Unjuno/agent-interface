@@ -420,3 +420,7 @@ their names and exact tips match the 27 retained entries above. No additional
 unreferenced branch or newly eligible deletion was found. Archive PR #9012 is
 still open, so branches whose unique bytes are staged only there remain pending
 archive integration and exact post-integration tip/reference checks.
+
+## Superseded catalog branch retirement — 2026-10-17
+
+PR #9005's exact head `880c6b63036fa297d4a5c0a68498edf94e1b48d4` is the second parent of the consolidated PR #9012 head `9371e59a0cfa827fd06ff413da73c4f4cd42e9ab`. Before retirement, #9005 was closed, its three hosted checks passed, its branch was unprotected, and no open PR used it as a head or base. The clean local worktree and local branch were removed; the remote branch and stale remote-tracking ref were deleted. The source commit remains reachable from #9012. This retires the duplicate review path while preserving its full history in the consolidated PR.
