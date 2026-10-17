@@ -54,6 +54,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Slack reclamation for sporadic control deadlines](slack-stealing-sporadic-deadlines.md) — consolidates #7778's zero-overhead and dispatch-sensitivity synthetic results while preserving priority-only as the stronger full-matrix baseline.
 
+- [Same-host WSLc iteration cost](wslc-iteration-cost.md) — records #6693’s unrun Docker-versus-WSLc comparison, its shared-runtime start gate, and the non-comparative #6352 portability result.
+
 - [Post-GA WSL filesystem placement](post-ga-wsl-filesystem-placement.md) — preserves #7970's scoped WSLc-lane readiness boundary and no-run status.
 
 - [Decision value over likelihood ambiguity](decision-value-likelihood-ambiguity.md) — records #7955's finite likelihood-set result and limits.
