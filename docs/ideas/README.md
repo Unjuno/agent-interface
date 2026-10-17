@@ -113,6 +113,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Benchmark-variant behavioral equivalence](benchmark-variant-equivalence.md) — indexes #8920's unverified finite-method proposal; no cohort, transfer, or equal-difficulty result is claimed.
 
+- [Trace-mined metamorphic relations](trace-mined-metamorphic-relations.md) — indexes #8904's unverified method-transfer proposal against the manually declared #5513 baseline; no universal relation or runtime authority is claimed.
+
 - [Censoring-aware verifier ordering](censoring-aware-verifier-ordering.md) — connects #8919's unverified online-learning proposal to the distinct static-order and drift-boundary evidence in #4258/#4733, preserving their limits and audit outcomes.
 
 - [Incremental nonmonotone claim maintenance](incremental-nonmonotone-claim-maintenance.md) — indexes #8917's unverified DRed-versus-rebuild proposal, with explicit completeness/epoch prerequisites and no GUI claim.
