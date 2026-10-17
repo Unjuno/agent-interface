@@ -240,6 +240,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Runtime reliability under uncertainty](runtime-reliability-agenda.md) — separates liveness suspicion (#5531), timed resource deadlocks (#5410), verifier-cascade capacity (#5375), and hidden-state belief contracts (#5368), preserving distinct finite-method results, allocation failures, and unresolved integration boundaries.
 
+- [Observation-fiber updateability and allocation custody](observation-fiber-updateability-custody.md) — separates #6775’s canonical nine-row result from #6774’s separately disclosed 12-row duplicate and unresolved executor custody.
+
 - [Observation load, dispatch pacing, and feedback cascades](observation-load-cascade-agenda.md) — separates #8665's scoped factorial result, #8888's implementation/audit STOP, and #8916's unverified producer-pacing proposal.
 
 - [Freshness-gated observation hedging](freshness-gated-observation-hedging.md) — keeps #7383's WSLc and host CPU simulator results distinct and preserves the untested real-capture critical-path gate.
