@@ -129,6 +129,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Functional search diversity in diagnosis](functional-search-diversity-diagnosis.md) — indexes #8901's unverified fixed-budget hypothesis-coverage comparison; disagreement and diversity alone are not evidence of better diagnosis.
 
+- [Post-crash effect-reconciliation bootstrap](post-crash-effect-reconciliation-bootstrap.md) — indexes #8900's finite root-reachability proposal while preserving UNKNOWN and keeping action/retry authority revoked.
+
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
 
 - [Split-view evidence detection](split-view-evidence-detection.md) — indexes #8912's unverified witness-gossip discriminator, keeping fork detection separate from truth, capture completeness, and authority.
