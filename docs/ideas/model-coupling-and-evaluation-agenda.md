@@ -63,7 +63,10 @@ separate hypotheses and must keep separate evidence and decisions.
 
 ## 3. Agreement-conditioned bounded continuation — #9004
 
-- **Status:** Open, unverified; no experiment or implementation is claimed.
+- **Status:** Open. The frozen CPU-only T0 earned `PASS_METHOD_SCOPED` with
+  `formal_pass=false` and `NO_INCREMENTAL_AGREEMENT_VALUE` on its synthetic
+  trace family. The allocation ran once and is consumed; broader live-control,
+  performance and product claims remain unverified.
 - **Idea:** When a fast local policy and a delayed rich planner independently
   propose semantically equivalent actions for the same versioned state, a
   short continuation lease might reduce decision gaps while retaining
@@ -76,17 +79,19 @@ separate hypotheses and must keep separate evidence and decisions.
   not by themselves authorize effects during a planner delay. It also differs
   from #57's integrated route-economics question and #59's real-time control
   gate.
-- **Next test:** The Issue proposes a finite CPU-only synthetic T0 with
-  wait-for-System-2, System-1-only, agreement-at-decision and
-  agreement-conditioned bounded-continuation arms. Retain common-mode wrong
-  agreement, stale/contradictory state, target change, authority loss,
-  emergency preemption, expiry, release failure, irreversible action and
-  unknown effect. An independent raw-only auditor must reconstruct task effect,
-  decision gaps, lease revocation and every release obligation. The
-  System-1-only arm is essential: if it performs equally, report
-  `NO_INCREMENTAL_AGREEMENT_VALUE`. This is a proposed test, not a result or
-  allocation; freeze exact source closure, output custody and mutation gates
-  before any candidate run. No GUI, live input or model call is needed for T0.
+- **Evidence:** [PR #9009](https://github.com/Unjuno/agent-interface/pull/9009)
+  retains 40 rows across ten synthetic cases and four arms; its independent
+  raw-only auditor reconstructed all rows, and the mutation suite passed 5/5.
+  Agreement-lease matched System-1-only; both acted in the same two cases with
+  four total actions. All arms had a median synthetic inter-action gap of one
+  tick, so the prospective 20% threshold was not met. No real latency, model,
+  GUI, input, game or product outcome was measured.
+- **Remaining question:** The Issue's narrower persistence hypothesis remains
+  unverified beyond these frozen traces. Any further study must identify an
+  agreement-specific benefit beyond System-1-only and use evidence suited to
+  the claim; the consumed T0 is not rerun. The existing synthetic T0 proposal
+  and its decision gates are preserved in the Issue and PR record rather than
+  presented again as future work.
 - **Decision boundary:** A method PASS can establish only the finite fixture's
   contract. A continuation-benefit claim requires separately authorized
   evidence with real timings and independent effects; the proposed 20% gap
