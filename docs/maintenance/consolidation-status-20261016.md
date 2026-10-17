@@ -4,6 +4,21 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r71: hold stale, oversized startup-cleanup PR #6944 (2026-10-17)
+
+GitHub readback identifies #6944 as a draft authored by `Unjuno`, head
+`686bb56f8e9d16aaf37f1b1b65fd177d05ab11b8`, based on main
+`3dc57ecdc21938fecc94990b57a499ebd7c4bc10` rather than current main
+`1ece47014d05db898bf73afcd722a14524462e15`. The files endpoint reports 327
+changed paths; GitHub's diff endpoint refuses the full diff because it exceeds
+its 300-file limit. Current merge state is `DIRTY`, with no checks or review
+decision reported. Disposition: HOLD; do not merge, close, or delete its source
+branch from this metadata-only triage. A source-level current-main comparison,
+content/evidence custody review, and owner decision are still required. The
+original PR body also lists unresolved retained-client pipe and later-runtime
+wait-cleanup boundaries; prior proposal approvals do not establish current
+integration approval.
+
 ### r70: archive merged release-composition branch (2026-10-17)
 
 The unreferenced `research/59-release-composition-a01-20261009` tip `e20345f04edbb5bd29925ab86e73b7114ec2520b` is an ancestor of current main `1ece47014d05db898bf73afcd722a14524462e15`. All-state PR search found #8691 as its merged head and #8693 as its merged base; exact-branch Issue search found no body/comment references, and the inspected primary clone had no registered worktree. An annotated tag, `archive/recovered/59-release-composition-a01-20261017`, preserves the exact tip and was verified by remote peel before expected-tip deletion. The snapshot row records the disposition. Current remote counts after this deletion: 584 branches and 521 open PRs. No tests or experiment were rerun for the branch cleanup.
