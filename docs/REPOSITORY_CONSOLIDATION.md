@@ -2,6 +2,12 @@
 
 2026-10-15。対象は `Unjuno/agent-interface` 全体とGitHub Issue/PR。コンピューターコントロールの研究を再び見通せる状態にする。
 
+**2026-10-17 open-Issue inventory refresh:** a fresh paginated GitHub REST read
+returned 1,677 open Issues, compared with 1,678 in r3. The exact metadata and
+the three-ID delta are recorded in the [r4 inventory note](maintenance/open-issues-inventory-20261017.md)
+and [CSV snapshot](maintenance/open-issues-20261017-r4.csv). This refresh does
+not claim all open Issues have been semantically reviewed.
+
 **2026-10-16 r3：** 大量ワーカーが独立した有限の仕事を選べる状態まで整理を続ける。
 [r3棚卸し](maintenance/inventory-20261016-r3.json)はIssue 1,678件、open PR 517件。
 全件の内容を判定した件数ではない。取得後の処理と未統合変更は
