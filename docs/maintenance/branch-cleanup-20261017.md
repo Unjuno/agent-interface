@@ -303,12 +303,16 @@ seven-file delta and copied byte-for-byte under
 until the archive is integrated and the live tip/references are rechecked.
 
 The `research/59-early-typed-guard-a01-20261012` tip
-`075aa109c9464a8fcd1b81a35700b231bfda37bc` was also mapped: its 45-file
-experiment package is copied byte-for-byte at
-`research/doom/v39_early_typed_guard_a01_20261012/` in PR #9012. The branch's
-controller-file modification is preserved only in the package's paired-recovery
-source snapshot and has not been applied to the runtime path. Keep the branch
-until that code delta and branch references receive current-main review.
+`075aa109c9464a8fcd1b81a35700b231bfda37bc` was mapped against the open PR #9008
+head `27a54639b29adef1db8a274f710e83f26a889f9f`. All 47 paths changed from the
+branch's merge base are present in #9008; 44 blobs are byte-identical and three
+differ: `research/doom/README.md`, the current runtime controller, and the
+recovery replay test. The historical controller snapshots remain in the A01
+package, while #9008 carries the repaired current-main controller and expanded
+replay. Its focused replay and research-workspace checks pass, but the PR is
+still open. Retain the source branch until #9008 merges, then recheck complete
+blob custody and all references before retiring its branch name. No game/model
+or live allocation was run for this inventory check.
 
 The Xlib audit-v2 package from `research/59-xvfb-audit-v3-a02-20261005` at
 `1ec6556ba8568de289625b5f167e7b8c21e1f72c` has 14 tracked files, all copied
