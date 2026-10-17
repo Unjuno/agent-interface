@@ -242,6 +242,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Observation load, dispatch pacing, and feedback cascades](observation-load-cascade-agenda.md) — separates #8665's scoped factorial result, #8888's implementation/audit STOP, and #8916's unverified producer-pacing proposal.
 
+- [Freshness-gated observation hedging](freshness-gated-observation-hedging.md) — keeps #7383's WSLc and host CPU simulator results distinct and preserves the untested real-capture critical-path gate.
+
 - [Post-crash effect reconciliation bootstrap](crash-reconciliation-bootstrap.md) — records #8900's unverified question about independently rooted, read-only evidence paths for `UNKNOWN_RECONCILE`, with task and retry authority held revoked until classification.
 
 - [Timing privacy and control utility](timing-privacy-control-utility.md) — connects #6201's scoped synthetic metadata-leakage result to #8899's unverified controller-utility/privacy frontier, keeping safety clocks and noncritical timing treatment distinct.
