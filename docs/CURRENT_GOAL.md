@@ -41,14 +41,8 @@ and latest ownership before shared changes, rather than reopening every history.
 
 - Follow the active user's scope and FINAL v5. Ordinary reversible investigation,
   implementation, local tests and authorized integration should proceed autonomously.
-- Use the smallest discriminating experiment or repair. Preserve each formal
-  allocation's first outcome, raw, frozen conditions and limits. Once an
-  allocation has produced its recorded outcome, continue with a distinct
-  authorized task or a separately frozen allocation; keep all independent
-  workers moving. An allocation-scoped STOP, HOLD or FAIL applies only to that
-  allocation; never publish it as a repository-wide pause or use it to stop
-  unrelated workers. An open or unassigned Issue is not a repository-wide pause.
-  Confirm ownership or reservation only for operations that depend on them.
+- Use the smallest discriminating experiment or repair. Do not repeat a consumed
+  formal allocation; preserve first outcomes, raw, frozen conditions and limits.
 - Check only resources and ownership needed by the selected operation. A dated
   inventory, open Issue or idle machine is not a resource grant. Closed historical
   logs are context; closing them does not prove release or impose a new global gate.
