@@ -4,6 +4,23 @@
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
 
+### r73: retain #7070 until its evidence successor is refreshed and reviewed (2026-10-17)
+
+PR #7070's eight changed files are fully accounted for, but the predecessor
+cannot yet be retired. Its two three-file evidence packages are blob-identical
+to the corresponding directories in open Draft PR #8335. Its remaining
+`COMMANDS.txt` and `REPORT.md` have the same blobs on current main, published by
+merged PR #8606. Thus the evidence is preserved across main and #8335; this
+does not transfer #7070's proposal votes or satisfy #8335's review gates.
+PR #8335 has no reviews and is still based on `217ae2b12378951942f56082bbd44b32171ac9e0`.
+Current main is not its ancestor (499 main-only / 4 PR-only commits); a direct
+tree comparison spans 8,664 paths, so its old `CLEAN` merge-state does not
+qualify it against today's main. Keep #7070 and its source branch as its body
+requires. Next, refresh the evidence-only successor against current main,
+preserve the six exact package blobs, resolve the report from merged #8606,
+then obtain its stated independent content and application reviews before
+retiring #7070.
+
 ### r72: hold stale constructor-cleanup PR #7062 with current-main regressions (2026-10-17)
 
 PR #7062 is still a draft at `6f79681e5dc5681c984543c087e0da2117872e84`,
