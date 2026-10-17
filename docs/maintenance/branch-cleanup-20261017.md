@@ -536,3 +536,19 @@ current state without deleting the historical source ref:
 Disposition: mark the branch as intentionally retained closed-PR provenance,
 not an unreviewed candidate or cleanup blocker. Keep the exact source and PR
 history; no experiment or deletion was performed.
+
+## Fresh remote-branch reconciliation — 2026-10-17 04:55 UTC
+
+A paginated GitHub read of all branch pages and all open-PR pages, compared
+with the primary clone's worktree registrations and the 60-row unreferenced
+inventory, returned 560 remote branches, 520 open PRs, and 65 registered
+worktrees. Every remote branch was either referenced by an open PR, checked
+out in a registered worktree, or present in the inventory; no unreferenced
+remote branch was missing from the inventory. Twenty-five inventory branch
+names are now absent remotely, and each has a branch-specific recorded
+retirement, PR-provenance, or preservation disposition. The one remaining
+dirty-worktree exception is `fix/doom-terminal-health-zero-a16`; its changes
+remain preserved for owner review. PR #9012 is still open at
+`12ce0a14747bee4d7fd1b513718a523671f9e8b4`, so its `RETAIN_UNTIL_9012_MERGED`
+source branches remain retained. This reconciliation does not authorize
+removing historical PR refs or dirty worktree content.
