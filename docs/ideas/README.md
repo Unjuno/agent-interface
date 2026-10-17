@@ -34,6 +34,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Open issues without a Markdown citation (2026-10-17)](open-issues-without-markdown-citation-20261017.md) — title-level links for 49 open Issues present in the machine-readable inventory but absent from narrative Markdown references; no result or current allocation is inferred.
+
 - [Action-conditioned incorrect-belief exposure](action-conditioned-incorrect-belief-exposure.md) — records #7986's synthetic measure without claiming live authority or safety.
 - [Bandwidth inheritance for blocked verifiers](bandwidth-inheritance-blocked-verifiers.md) — links #7944/#7979 and their finite offline BWI result.
 - [Post-GA WSL filesystem placement](post-ga-wsl-filesystem-placement.md) — preserves #7970's scoped WSLc-lane readiness boundary and no-run status.
