@@ -52,6 +52,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Bandwidth inheritance for blocked verifiers](bandwidth-inheritance-blocked-verifiers.md) — links #7944/#7979 and their finite offline BWI result.
 
+- [Slack reclamation for sporadic control deadlines](slack-stealing-sporadic-deadlines.md) — consolidates #7778's zero-overhead and dispatch-sensitivity synthetic results while preserving priority-only as the stronger full-matrix baseline.
+
 - [Post-GA WSL filesystem placement](post-ga-wsl-filesystem-placement.md) — preserves #7970's scoped WSLc-lane readiness boundary and no-run status.
 
 - [Decision value over likelihood ambiguity](decision-value-likelihood-ambiguity.md) — records #7955's finite likelihood-set result and limits.
