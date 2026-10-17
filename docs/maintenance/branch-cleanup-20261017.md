@@ -320,6 +320,16 @@ machine-readable decision. These outcomes apply only to their allocations and
 do not restrict other research or repository work. This branch's exact tip and
 references still need a fresh readback after the archive is integrated.
 
+The unreferenced `research/59-v15-owner-integration-20261012` branch at
+`cf3c31e02e5d9b25240474499b1ec4393849b593` has no PR using it as a head. Its
+20-commit delta from `f185a9059d485a4f8d5a65e9e7f6782897f67eae` changes 585
+paths and 416 distinct blob identities; 415 already occur in current main at
+other paths. The remaining A02–A34 summary report is now retained byte-for-byte
+in `research/doom/v15_owner_recovery_integration_a02_a34_20261012/`. The branch
+is still listed at its verified tip above; recheck branch/worktree references
+after this archive merges before considering ref retirement. Its report's
+live-lane statements are historical context, not current assignment.
+
 ## Retired A01 branch after exact successor-custody verification
 
 Removed `research/8596-chance-bounded-progress-t0-a01-20261009` with an exact
