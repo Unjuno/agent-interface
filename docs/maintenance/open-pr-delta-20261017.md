@@ -3,7 +3,9 @@
 This snapshot compares the live GitHub open-PR set on 2026-10-17 with
 [`open-prs-20261016-r3.csv`](open-prs-20261016-r3.csv). The set grew from 517 to
 521: seven PRs entered the open set and three left it. This is a change log for
-that delta, not a content review of all 521 PRs.
+that delta, not a content review of all 521 PRs. The complete metadata read is
+retained in [`open-prs-20261017-r4.csv`](open-prs-20261017-r4.csv), with scope
+and limits in [the inventory note](open-pr-inventory-20261017.md).
 
 ## Newly open
 
