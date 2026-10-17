@@ -252,6 +252,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Skill-conditioned terminal-event memory](skill-conditioned-terminal-event-memory.md) — records #8886's unverified fixed-context progress-memory contrast and its provenance/effect boundaries.
 
+- [Provenance-bound object memory](provenance-bound-object-memory.md) — records #7167's deterministic authority-preservation T0 while keeping model compliance and #8618's action-admission question untested and separate.
+
 - [Telemetry-aware resource allocation](telemetry-aware-resource-allocation.md) — links #8897's unverified noisy-telemetry scheduling proposal to #8488's corrected, deadline-semantics HOLD without implying host-pressure evidence or a WSL policy.
 
 - [GUI macro transfer and translation validation](gui-macro-transfer-validation.md) — separates #8890's appearance/function relation test, #7827's finite A05 result, and #8869's unverified external-interleaving successor.
