@@ -329,14 +329,17 @@ blob custody and all references before retiring its branch name. No game/model
 or live allocation was run for this inventory check.
 
 The Xlib audit-v2 package from `research/59-xvfb-audit-v3-a02-20261005` at
-`1ec6556ba8568de289625b5f167e7b8c21e1f72c` has 14 tracked files, all copied
-under `research/doom/map01_v39_xvfb_select_buffering_a05_20261005/` in PR
-#9012, with its one-commit patch retained as `ORIGINAL_COMMIT.patch`. A01 did
-not reach formal preregistration because main advanced before source freeze;
-A02 is construction-only. The source package retains the exact original
+`1ec6556ba8568de289625b5f167e7b8c21e1f72c` has 14 tracked files, all verified
+as exact Git-blob matches under `research/doom/map01_v39_xvfb_select_buffering_a05_20261005/`
+at PR #9012 head `217c5712ee16393b39147093105ff355176816df`; the archive note
+and one-commit `ORIGINAL_COMMIT.patch` are present there too. A01 did not reach
+formal preregistration because main advanced before source freeze; A02 is
+construction-only. The source package retains the exact original
 machine-readable decision. These outcomes apply only to their allocations and
-do not restrict other research or repository work. This branch's exact tip and
-references still need a fresh readback after the archive is integrated.
+do not restrict other research or repository work. Issue #59 remains open and
+unassigned, and no worktree is registered for this branch. Retain its exact
+remote tip until #9012 merges, then recheck the tip and all references before
+retiring the branch.
 
 The unreferenced `research/59-v15-owner-integration-20261012` branch at
 `cf3c31e02e5d9b25240474499b1ec4393849b593` has no PR using it as a head. Its
