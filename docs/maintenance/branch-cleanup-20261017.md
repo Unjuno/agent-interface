@@ -511,3 +511,28 @@ it makes no outcome claim and does not authorize a launch or retry. Issue #59
 is open/unassigned. Preserve the branch until #9012 merges, then recheck its
 exact tip and references before retirement. Any A12 stop condition applies
 only to A12 and does not pause other work.
+
+
+## Closed V15 release-race source retained for provenance
+
+The unreferenced-branch inventory previously left
+`research/59-v15-release-race-a01-20261009` for review. Reconciled its
+current state without deleting the historical source ref:
+
+- Exact remote tip `fb006ce540653572d6dfb666cc17837e80621641` is unprotected;
+  closed PR [#8683](https://github.com/Unjuno/agent-interface/pull/8683)
+  retains the same head and explicitly says the branch is left intact for
+  provenance. No PR uses it as a base.
+- #8683 was superseded by canonical repairs #8691 and #8693. Both are merged,
+  and their merge commits are ancestors of current main
+  `13e0b1c1b622085e0007e3ee52a744d1f2b32977`.
+- The branch's regression test is byte-identical in current main. The two
+  modified implementation files in main contain later changes beyond this
+  branch, including the verified cancellation-cleanup join.
+- The registered worktree at
+  `/Users/taka/Documents/Codex/2026-10-09/agent-interface-59-v15-release-race-a01`
+  is clean at the exact branch tip. It remains intact.
+
+Disposition: mark the branch as intentionally retained closed-PR provenance,
+not an unreviewed candidate or cleanup blocker. Keep the exact source and PR
+history; no experiment or deletion was performed.
