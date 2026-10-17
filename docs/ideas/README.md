@@ -34,7 +34,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
-- [Open issues without a Markdown citation (2026-10-17)](open-issues-without-markdown-citation-20261017.md) — concise proposal summaries for 49 open Issues found in the machine-readable inventory but absent from narrative Markdown references; source Issues remain authoritative for evidence, status, and execution decisions.
+- [Open issue citation audit (2026-10-17)](open-issue-citation-audit-20261017.md) — adds direct links and concise proposal summaries for 49 open Issues that previously appeared only in machine-readable inventory; source Issues remain authoritative for evidence, status, and execution decisions.
 
 - [Action-conditioned incorrect-belief exposure](action-conditioned-incorrect-belief-exposure.md) — records #7986's synthetic measure without claiming live authority or safety.
 - [Bandwidth inheritance for blocked verifiers](bandwidth-inheritance-blocked-verifiers.md) — links #7944/#7979 and their finite offline BWI result.

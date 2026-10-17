@@ -1,12 +1,11 @@
-# Open issues without a Markdown citation (2026-10-17)
+# Open issue citation audit (2026-10-17)
 
-These 49 Issues were open in the live GitHub inventory on 2026-10-17 and were
-present in the repository's machine-readable issue exports, but had no direct
-Issue URL reference in tracked Markdown across current `main` and catalog PRs
-#9005/#9012. This index adds a concise proposal summary for each Issue to make
-the ideas discoverable from the narrative catalog. Summaries describe the
-problem or research question only; the linked Issue remains the source for full
-scope, evidence, ownership, status, and execution decisions.
+At the 2026-10-17 inventory snapshot, these 49 open Issues appeared in the
+machine-readable exports but had no direct Issue URL in tracked Markdown across
+`main` and catalog PRs #9005/#9012. This audit now supplies those links and a
+concise proposal summary for each Issue. Summaries describe the problem or
+research question only; the linked Issue remains the source for full scope,
+evidence, ownership, status, and execution decisions.
 
 | Issue | Idea / work line |
 |---|---|

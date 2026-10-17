@@ -359,7 +359,7 @@ This index complements, rather than duplicates, the [durable design-theses ledge
 | Successor [#6819](https://github.com/Unjuno/agent-interface/issues/6819) → #6492 | Remove candidate access to synthetic pending-step truth labels and test packet invariance on four identical-public-view/conflicting-truth pairs plus six controls (14 rows). | OrbStack private-Engine T0 `PASS_METHOD_SCOPED`: candidate and raw-only independent auditor each ran once, auditor reconstructed 14/14 rows and four pairs with zero errors; 9/9 construction tests and 8/8 mutation controls passed; retries 0. This strict finite successor does not regrade #6499/#6520 and establishes no human comprehension/benefit, GUI, safety, privacy, or product result. Evidence: `research/analysis/human_return_oracle_blindness_6492_t0_a01_20261003/`. |
 ## Earlier open issues without Markdown citations
 
-The dated title-level supplement [open-issues-without-markdown-citation-20261017.md](ideas/open-issues-without-markdown-citation-20261017.md) restores narrative links for 49 open Issues already present in the machine-readable inventory. It does not add result or allocation claims.
+The dated [open-issue citation audit](ideas/open-issue-citation-audit-20261017.md) restores narrative links for 49 open Issues already present in the machine-readable inventory and adds concise proposal summaries based on their current Issue bodies. The summaries do not add result or allocation claims.
 
 ## Additional open issues indexed (2026-10-17)
 
