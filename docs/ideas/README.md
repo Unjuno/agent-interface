@@ -162,6 +162,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Decision regret over stale-feedback windows](decision-regret-stale-feedback.md) — records #8528's synthetic-method PASS separately from any causal, GUI, or deployed-safety claim.
 
+- [Safety-aware verifier backpressure](safety-aware-verifier-backpressure.md) — keeps #5372’s endogenous-demand counterexample, route-expansion result, and authoritative-cap boundary separate; preserves the unverified workload-origin transfer question.
+
 - [Persistent-sojourn gating](persistent-sojourn-gating.md) — records canonical open #6650’s `FAIL_HYPOTHESIS`, its controller-law audit limit, the #6673 serialization-only correction, and #8891’s non-independent estimator refinement.
 
 - [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, calibrated soft-signal recovery deadlines (#8024), protective-control diagnosability (#8909), and incremental stratified negative-claim maintenance (#8917), with dependencies, the executed public-path Fake X blocking characterization, and scoped A01 evidence. These source Issues remain open.
