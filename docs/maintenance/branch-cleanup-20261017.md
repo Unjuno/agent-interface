@@ -302,6 +302,14 @@ seven-file delta and copied byte-for-byte under
 `HOLD_AUDIT_INPUT` to that one audit allocation. The branch is still required
 until the archive is integrated and the live tip/references are rechecked.
 
+The `research/59-early-typed-guard-a01-20261012` tip
+`075aa109c9464a8fcd1b81a35700b231bfda37bc` was also mapped: its 45-file
+experiment package is copied byte-for-byte at
+`research/doom/v39_early_typed_guard_a01_20261012/` in PR #9012. The branch's
+controller-file modification is preserved only in the package's paired-recovery
+source snapshot and has not been applied to the runtime path. Keep the branch
+until that code delta and branch references receive current-main review.
+
 ## Retired A01 branch after exact successor-custody verification
 
 Removed `research/8596-chance-bounded-progress-t0-a01-20261009` with an exact
