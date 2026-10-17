@@ -113,8 +113,6 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Benchmark-variant behavioral equivalence](benchmark-variant-equivalence.md) — indexes #8920's unverified finite-method proposal; no cohort, transfer, or equal-difficulty result is claimed.
 
-- [Trace-mined metamorphic relations](trace-mined-metamorphic-relations.md) — indexes #8904's unverified method-transfer proposal against the manually declared #5513 baseline; no universal relation or runtime authority is claimed.
-
 - [Censoring-aware verifier ordering](censoring-aware-verifier-ordering.md) — connects #8919's unverified online-learning proposal to the distinct static-order and drift-boundary evidence in #4258/#4733, preserving their limits and audit outcomes.
 
 - [Incremental nonmonotone claim maintenance](incremental-nonmonotone-claim-maintenance.md) — indexes #8917's unverified DRed-versus-rebuild proposal, with explicit completeness/epoch prerequisites and no GUI claim.
@@ -122,6 +120,10 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Producer-side dispatch pacing](producer-side-dispatch-pacing.md) — records #8916's unverified simulator-only comparison against immediate and reactive queue-aware policies.
 
 - [Delegation-membership identifiability](delegation-membership-identifiability.md) — indexes #8915's unverified identical-trace discriminator without conflating membership, event causality, and actor attribution.
+
+- [Trace-mined metamorphic relations](trace-mined-metamorphic-relations.md) — indexes #8904's unverified method-transfer proposal against the manually declared #5513 baseline; no universal relation or runtime authority is claimed.
+
+- [Weak-shadow bounds for unresolved route outcomes](weak-shadow-route-outcome-bounds.md) — indexes #8903's unverified proposal against #5590/#8640/#8846; a proxy is only an auxiliary restriction, never a missing-outcome label.
 
 - [Budgeted hidden-failure discovery](budgeted-hidden-failure-discovery.md) — preserves #8914 A01/A02 as distinct consumed auditor-method HOLDs; neither supports a scientific conclusion and neither may be retried.
 
