@@ -294,6 +294,14 @@ only after matching its exact current tip to its Issue/allocation and verifying
 an independently fetchable source/evidence path or a complete integrated
 successor.
 
+The V39 source-identity A01 tip above was subsequently mapped to its exact
+seven-file delta and copied byte-for-byte under
+`research/doom/v39_current_main_source_identity_audit_a01_20261009/` in PR
+#9012. Its archive note records the missing `RESULT.md` and
+`results/source_audit.json` references and scopes the retained
+`HOLD_AUDIT_INPUT` to that one audit allocation. The branch is still required
+until the archive is integrated and the live tip/references are rechecked.
+
 ## Retired A01 branch after exact successor-custody verification
 
 Removed `research/8596-chance-bounded-progress-t0-a01-20261009` with an exact
