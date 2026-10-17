@@ -103,6 +103,81 @@ class CaptureContractDLL:
 
 
 class PureWin32HelperTests(unittest.TestCase):
+    def _release_backend(self, states):
+        backend = Win32Backend.__new__(Win32Backend)
+        backend.held_keys = {"CTRL": 17, "LEFT_CTRL": 17}
+        backend.held_buttons = {"left"}
+        backend.pending_unicode_ups = set()
+        events = []
+
+        class State:
+            def __init__(self):
+                self.sampled = []
+
+            def GetAsyncKeyState(self, vk):
+                self.sampled.append(vk)
+                value = states[vk]
+                return 0 if value is None else (0x8000 if value else 1)
+
+        backend.user32 = State()
+        backend._send_key = lambda vk, down: events.append(("key", vk, down))
+        backend._send = lambda item: events.append(("mouse", int(item.mi.dwFlags)))
+        return backend, events
+
+    def test_release_all_samples_alias_once_and_retires_verified_obligations(self):
+        backend, events = self._release_backend({17: False, 1: False})
+        result = backend.release_all()
+        self.assertEqual(backend.user32.sampled.count(17), 1)
+        self.assertEqual(backend.user32.sampled.count(1), 1)
+        self.assertEqual(backend.held_keys, {})
+        self.assertEqual(backend.held_buttons, set())
+        self.assertTrue(result["verified"])
+        self.assertEqual(result["keys_unknown"], [])
+        self.assertEqual(result["buttons_unknown"], [])
+        self.assertEqual(events.count(("key", 17, False)), 1)
+
+    def test_release_all_unknown_state_retains_all_obligations(self):
+        backend, _ = self._release_backend({17: None, 1: False})
+        result = backend.release_all()
+        self.assertFalse(result["verified"])
+        self.assertEqual(result["keys_unknown"], ["CTRL", "LEFT_CTRL"])
+        self.assertEqual(result["buttons_unknown"], [])
+        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+        self.assertEqual(backend.held_buttons, set())
+
+    def test_release_all_persistent_hold_then_later_clear(self):
+        backend, _ = self._release_backend({17: True, 1: False})
+        result = backend.release_all()
+        self.assertEqual(result["keys_down"], ["CTRL", "LEFT_CTRL"])
+        self.assertFalse(result["verified"])
+        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+        backend.user32.GetAsyncKeyState = lambda vk: 1
+        result = backend.release_all()
+        self.assertTrue(result["verified"])
+        self.assertEqual(backend.held_keys, {})
+
+    def test_release_all_state_query_exception_preserves_entire_ledger(self):
+        backend, _ = self._release_backend({17: False, 1: False})
+        def fail_second_query(vk):
+            if vk == 1:
+                raise OSError("injected query failure")
+            return 1
+
+        backend.user32.GetAsyncKeyState = fail_second_query
+        with self.assertRaisesRegex(Win32BackendError, "key state query failed"):
+            backend.release_all()
+        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+        self.assertEqual(backend.held_buttons, {"left"})
+
+    def test_release_all_send_failure_preserves_ledger_without_state_query(self):
+        backend, _ = self._release_backend({17: False, 1: False})
+        backend._send_key = lambda vk, down: (_ for _ in ()).throw(OSError("injected send failure"))
+        with self.assertRaisesRegex(OSError, "injected send failure"):
+            backend.release_all()
+        self.assertEqual(backend.user32.sampled, [])
+        self.assertEqual(backend.held_keys, {"CTRL": 17, "LEFT_CTRL": 17})
+        self.assertEqual(backend.held_buttons, {"left"})
+
     def test_utf16_units(self):
         self.assertEqual(utf16_units("office"), tuple(ord(ch) for ch in "office"))
         self.assertEqual(utf16_units("😀"), (0xD83D, 0xDE00))
