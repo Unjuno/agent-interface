@@ -7,7 +7,7 @@ Issue URL reference in tracked Markdown across current `main` and catalog PRs
 catalog. It does not restate the full proposals, infer results, set current
 ownership, or grant execution authority; the linked Issue remains authoritative.
 
-| Issue | Current title / idea |
+| Issue | Idea / work line |
 |---|---|
 | [#4](https://github.com/Unjuno/agent-interface/issues/4) | Build the computer interface frontier models deserve |
 | [#6](https://github.com/Unjuno/agent-interface/issues/6) | Explore reactive sensorimotor macros and background execution |
@@ -32,7 +32,7 @@ ownership, or grant execution authority; the linked Issue remains authoritative.
 | [#53](https://github.com/Unjuno/agent-interface/issues/53) | Make adaptive acquisition accounting branch-complete in a shared caller |
 | [#56](https://github.com/Unjuno/agent-interface/issues/56) | Compile GUI understanding into a symbolic planner interface and measure cold/warm end-to-end gain |
 | [#60](https://github.com/Unjuno/agent-interface/issues/60) | O2 intake: reconstruct Generation-1 provenance before any runtime or formal lease |
-| [#61](https://github.com/Unjuno/agent-interface/issues/61) | O1/G1 handoff — startup grants HELD pending O2 coordination |
+| [#61](https://github.com/Unjuno/agent-interface/issues/61) | Reconcile the four O1/G1 startup grants with O2 coordination; the source Issue scopes its recorded status to those grants. |
 | [#137](https://github.com/Unjuno/agent-interface/issues/137) | Close scorer acquisition brackets; compare real MAP01 refresh cadence without policy changes |
 | [#186](https://github.com/Unjuno/agent-interface/issues/186) | Autoresearch: fixed 10 ms watcher versus short-cue duration and onset phase |
 | [#197](https://github.com/Unjuno/agent-interface/issues/197) | Dev allocation: exact compiled-runtime staged branch revalidation |
@@ -56,5 +56,5 @@ ownership, or grant execution authority; the linked Issue remains authoritative.
 | [#2547](https://github.com/Unjuno/agent-interface/issues/2547) | Other-core control for scheduler-tail attribution after #316 |
 | [#2679](https://github.com/Unjuno/agent-interface/issues/2679) | Freedoom MAP01 finite ordinary-speed clear attempt |
 | [#3232](https://github.com/Unjuno/agent-interface/issues/3232) | Closure audit: reconcile #2737 six-task golden IPC result and missing raw accounting |
-| [#4065](https://github.com/Unjuno/agent-interface/issues/4065) | O2 performance decision: attribute compression and tile-scan cost after vectorization HOLD |
+| [#4065](https://github.com/Unjuno/agent-interface/issues/4065) | Attribute compression and tile-scan costs after vectorization for the O2 performance decision. |
 | [#4432](https://github.com/Unjuno/agent-interface/issues/4432) | Engineering #4399: promote intra-call hash reuse into the shared experimental reader |
