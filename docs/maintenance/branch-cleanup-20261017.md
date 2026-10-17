@@ -474,6 +474,27 @@ worktree; do not delete, rebase, or replace them. Its STOP applies only to that
 allocation and does not suspend unrelated work. No experiment was run during
 this custody review.
 
+## #8406 Gemma4 T1 A01–A03 evidence custody — 2026-10-17
+
+The clean worktree for `research/8406-schedule-t1-a03-running-digest-20261008`
+at `c16b3974b38fd3c3eb787b2744c5dbc27514003b` contains three distinct 15-file
+allocation packages. A01's package is byte-identical to dedicated branch
+`research/8406-schedule-t1-local-gemma4-20261008` at
+`73381cfd7e27c97ce1d428793a4727b11d6ef684`; A02's is byte-identical to
+`research/8406-schedule-t1-a02-gemma4-20261008` at
+`7ec9ef6ae38f6b7b2f560bf1b69c0f175d86720e`. The A03 package is separately
+frozen. All 45 original files and three scoped archive notes are now preserved
+at their original research paths in PR #9012.
+
+Each allocation has its own model-identity STOP and partial raw: A01 stopped
+after 3 calls, A02 after 17, and A03 after 1. Candidate invocation count is 1,
+auditor count 0 and retry count 0 for each. None is a scored scientific result;
+do not pool, resume or reclassify them. Issue #8406 remains open/unassigned,
+and no all-state PR directly uses these three branch names. Retain all branches
+until #9012 merges, then recheck exact tips, worktree state and references
+before retiring redundant refs. These outcomes are allocation-scoped and do
+not stop unrelated work.
+
 ## A12 delay-treatment source custody — 2026-10-17
 
 The remote branch `research/59-live-threat-guard-a12-delay-a01-20261009` remains
