@@ -1,0 +1,55 @@
+{
+  "experiment": "xres-client-disconnect-xvfb-a01",
+  "started_local": "2026-10-19T00:46:18.3063915+09:00",
+  "started_utc": "2026-10-18T15:46:18.306Z",
+  "source_commit": "5f35c41f6b1c1afa11326c698dc782cc7830dfbd",
+  "source_branch": "runtime/guarded-mcp-owned-process-20261018",
+  "probe_sha256": "b6be4e38101d182797a289b711106e84a5b0de3e4309bdf52488babce1f0cf39",
+  "production_helper": "runtime/guarded_x11_v1/xres_client_fence.py",
+  "production_helper_sha256": "f6c9bad600bc0575400a937ab98336f9c5ef57b29dfbd5a3943089d75c19c6d2",
+  "wslc_version": "3.0.3.0",
+  "wslc_sessions": [
+    {
+      "CreatorPid": 36732,
+      "ID": 1,
+      "Name": "wslc-cli-user"
+    }
+  ],
+  "running_container_count": 0,
+  "image_ref": "python@sha256:fd3817f3a855f6c2ada16ac9468e5ee93e361005bd226fd5a5ee1a504e038c84",
+  "image_config_python": "3.12.3",
+  "image_os": "linux",
+  "image_architecture": "amd64",
+  "pull_policy": "never",
+  "container_name": "agent-interface-xres-a01-20261019-4a59af24",
+  "network": "bridge (required for apt/pip dependency installation; run is not network-isolated)",
+  "source_mount": "read-only at /repo",
+  "cpu_limit_request": "1",
+  "memory_limit_request": "1G (not independently qualified as a hard cap)",
+  "trials": 8,
+  "display": ":91",
+  "xvfb_args": [
+    "-screen",
+    "0",
+    "800x600x24",
+    "-nolisten",
+    "tcp",
+    "-noreset"
+  ],
+  "keycode": 250,
+  "owner_protocol": "flush KeyPress; block on X sync while Xvfb SIGSTOP; kill owner",
+  "blocked_query_protocol": "separate preconnected X client issues XRes QueryClients while Xvfb SIGSTOP; parent kills client after blocked condition verified",
+  "query_wait_cooperative_seconds": 3,
+  "query_process_watchdog_seconds": 15,
+  "required_per_trial": [
+    "owner sync remained blocked",
+    "XRes query remained blocked and query helper retired within 2 seconds",
+    "exact owner client absent after Xvfb resumed",
+    "queued DOWN observed at disconnect fence",
+    "independent UP and keymap readback report up",
+    "key remains up after 50ms"
+  ],
+  "task_effect": "not tested",
+  "scope": "Xvfb virtual X server only; not physical desktop, XWayland, GUI application, or permanent server-nonresponse release",
+  "command": "C:\\Program Files\\WSL\\wslc.exe run --rm --name agent-interface-xres-a01-20261019-4a59af24 --cidfile C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\release-expiry-queued-press-mcp-20261018\\research\\integration\\xres_client_disconnect_xvfb_a01_20261019\\raw\\container.cid --pull never --cpus 1 --memory 1G --network bridge --volume \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\release-expiry-queued-press-mcp-20261018:/repo:ro\" --workdir /repo python@sha256:fd3817f3a855f6c2ada16ac9468e5ee93e361005bd226fd5a5ee1a504e038c84 python -B /repo/research/integration/xres_client_disconnect_xvfb_a01_20261019/probe.py --trials 8"
+}
