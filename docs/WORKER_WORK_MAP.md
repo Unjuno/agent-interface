@@ -1,11 +1,12 @@
 # Worker work map
 
-2026-10-19 current map. At approximately 2026-10-18 21:17 UTC, cursor-paginated
-GitHub CLI reads returned 1,675 open Issues and 512 open PRs against
-`main` `09a064739895f6bbcdd14210dd492f8804d98f99`; membership hashes are in the
-[r28 recheck](maintenance/repository-inventory-20261019-r28.md). PRs #8860 and
-#8863 have been independently audited and merged as separate scoped visual and
-ammo/cancellation boundaries; parent #59 remains open. The r22 CSVs
+2026-10-19 current map. The latest cursor-paginated GitHub CLI membership read
+was at approximately 2026-10-18 21:18 UTC against main
+`958cf28e32a153d14badd4826370088e73ffff19`: 1,675 open Issues and 512 open PRs
+([r29 snapshot](maintenance/repository-inventory-20261019-r29.md)). PRs #8860
+and #8863 have been independently audited and merged as separate scoped visual
+and ammo/cancellation boundaries; parent #59 remains open. The snapshot is
+membership only, not proof of ownership or semantic triage. The r22 CSVs
 remain immutable historical metadata snapshots, not the current PR list. This is
 not semantic review or proof of current ownership. Begin with
 [current goal](CURRENT_GOAL.md), choose one finite item
