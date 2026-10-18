@@ -43,6 +43,17 @@ with open(marker, 'w', encoding='utf-8') as f:
                'queued_ns':time.monotonic_ns()}, f)
 d.sync()  # blocks until the delayed request is processed or the server closes it
 """
+_IDLE_OWNER_START = r"""
+import json, sys, time
+from Xlib.display import Display
+
+display_name, marker = sys.argv[1:]
+d = Display(display_name)
+with open(marker, 'w', encoding='utf-8') as f:
+    json.dump({'resource_base':d.display.info.resource_id_base}, f)
+while True:
+    time.sleep(0.05)
+"""
 
 
 def _keys_down(display, keycodes):
@@ -71,6 +82,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             'server_release_number':None,
             'xres_version':None,
             'xtest_version':None,
+            'idle_control':None,
+            'idle_control_disconnect_after_kill':None,
             'owner':None,
             'disconnect_before_delay_horizon':None,
             'disconnect_before_cleanup':None,
@@ -87,6 +100,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             'post_late_cleanup_status':'not_attempted',
         }
         owner = None
+        idle_owner = None
         cleanup = None
         owner_returncode = None
         killed_ns = None
@@ -120,6 +134,42 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             self.assertFalse(any(report['key_down_before'].values()), report)
 
             with tempfile.TemporaryDirectory(prefix='xres-disconnect-fence-') as td:
+                idle_marker = Path(td)/'idle-owner.json'
+                idle_owner = subprocess.Popen(
+                    [sys.executable, '-c', _IDLE_OWNER_START,
+                     display_name, str(idle_marker)],
+                    stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+                idle_marker_deadline = time.monotonic() + 3.0
+                while (not idle_marker.exists()
+                       and time.monotonic() < idle_marker_deadline):
+                    if idle_owner.poll() is not None:
+                        break
+                    time.sleep(0.005)
+                self.assertTrue(idle_marker.exists(), {
+                    'idle_control_returncode':idle_owner.poll()})
+                idle_data = json.loads(
+                    idle_marker.read_text(encoding='utf-8'))
+                report['idle_control'] = dict(idle_data, pid=idle_owner.pid)
+                self.assertTrue(client_is_connected(
+                    observer, idle_data['resource_base']), report)
+                idle_owner.terminate()
+                try:
+                    idle_returncode = idle_owner.wait(timeout=1.0)
+                except subprocess.TimeoutExpired:
+                    idle_owner.kill()
+                    idle_returncode = idle_owner.wait(timeout=1.0)
+                report['idle_control']['returncode'] = idle_returncode
+                report['idle_control_disconnect_after_kill'] = (
+                    wait_for_client_disconnect_supervised(
+                        display_name, idle_data['resource_base'], timeout_s=2.0,
+                        poll_interval_s=0.005, terminate_grace_s=0.1,
+                    ))
+                self.assertEqual(
+                    report['idle_control_disconnect_after_kill']['status'],
+                    'disconnected', report)
+
                 marker = Path(td)/'owner.json'
                 owner = subprocess.Popen(
                     [sys.executable, '-c', _OWNER_START, display_name,
@@ -239,6 +289,9 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['final_key_down'] = _keys_down(cleanup, keycodes)
                 self.assertFalse(any(report['final_key_down'].values()), report)
         finally:
+            if idle_owner is not None and idle_owner.poll() is None:
+                idle_owner.kill()
+                idle_owner.wait(timeout=1.0)
             if owner is not None and owner.poll() is None:
                 if killed_ns is None:
                     killed_ns = time.monotonic_ns()
