@@ -1,5 +1,11 @@
 # リポジトリ全体の整理計画
 
+## 実行更新 r30 — #17 標準MCP callerへowner PIDを接続
+
+現行main `ec4d3f9417c6da2156fa2af79bda9503348c1602`へ、[PR #9068](https://github.com/Unjuno/agent-interface/pull/9068)をmergeした。`OwnedGuardedSessionOwner`はsnapshot内に`owner_process_pid`を保持していたが、必須の`expected_pid`なしでPID-qualified XRes supervisorを呼んでいた。その`TypeError`は`unknown`へ変換され、標準callerからのowner identity照合が常に無効だった。callerは正確なowner PIDを渡し、欠落・不正時はfail-closedする。修正前失敗・修正後成功の回帰テスト、owned-process 10 tests normal/`-O`、CLI matrix・X11・native MCP等のCI結果をPRに保存した。
+
+これはXRes identity observationの標準caller接続を直したもので、queue-drain/server ordering fence、物理release、有限release deadline、独立task effect、bounded recoveryは証明しない。Issue #17はopen、overall releaseは`UNKNOWN`のまま。fresh unused WSLc allocationは確認できず、ライブ実験は行っていない。次は独立したserver-side ordering/fence根拠を検討し、正式なライブ試験は所有者と未消費WSLc枠が確認できた場合だけ行う。
+
 ## 実行更新 r29 — #17 XResのresource-base再利用をPID付きで判別
 
 PR [#9064](https://github.com/Unjuno/agent-interface/pull/9064)を、XRes 1.2の`LocalClientPID`とobserver自身のPID namespace照合を追加してmergeした。head `ebe65d4f10ced2b14554ff97973a6355b4293d0b`の専用private-Xvfb run [39160684353](https://github.com/Unjuno/agent-interface/actions/runs/39160684353)ではidle controlと対象ownerのresource baseがともに`4194304`となり、owner PID `2750`終了後に同じbaseを再利用したquery helper PID `2752`をrawで確認した。PID付き判定はowner不在と分類し、8秒後まで遅延入力は観測されず、keymapは各readbackでupだった。raw・条件・適用限界は[保存packet](../research/integration/xorg_xres_disconnect_order_20261019/README.md)に固定した。
