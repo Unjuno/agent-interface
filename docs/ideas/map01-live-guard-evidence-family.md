@@ -23,7 +23,7 @@ diagnostic only and do not establish mergeability or evidence validity.
 | [#8678](https://github.com/Unjuno/agent-interface/pull/8678) | A01 prelaunch STOP plus A02: four low-effort turns, health 97→91→85, authored hard floor not crossed; cleanup stopped on an active-input-lease `ValueError`. A later audit reproduced the committed audit. | yes | `7551424026375469f609754140250f89bf09cad4` | `1ece47014d05db898bf73afcd722a14524462e15` | diverged; +1 / −478 | Preserve. Audit the frozen source and whether the lease-cleanup finding was resolved downstream; do not repeat A02. |
 | [#8701](https://github.com/Unjuno/agent-interface/pull/8701) | A03–A07: ten turns, alive but unfinished, zero kills and no exit; no hard-health guard/useful scorer condition occurred. Initial audit FAIL retained; additive reconciliation and later audit corrections are part of the packet. | no | `44f15471bd07705f1bbe565c017b6f9df29e87ec` | `1ece47014d05db898bf73afcd722a14524462e15` | diverged; +19 / −478 | Preserve. Read the latest audit counterexamples and corrections before any integration decision; do not rerun these attempts. |
 | [#8749](https://github.com/Unjuno/agent-interface/pull/8749) | A09: ten decisions; typed health crossed 100→88 while inference was pending, cancel discarded the stale answer, and a newer observation was used. Two kills, no death/exit. Original frozen auditor FAIL remains; a later review found a reconciliation defect. | yes | `3e170476db3cc8e2798f33884925f33845b398c3` | `1ece47014d05db898bf73afcd722a14524462e15` | diverged; +4 / −478 | Preserve. Audit the latest reconciliation finding and independently inspect the packet; do not infer an adoption-ready pass. |
-| [#8759](https://github.com/Unjuno/agent-interface/pull/8759) | A10: stopped at death after 13 turns, one kill, no exit; preregistered live threat-guard condition was not exposed. STOP; body says not to retry. | yes | `d31c85116df463039219368c2b64e986f9d9dd55` | `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36` | diverged; +3 / −857 | Preserve STOP and source. Audit custody and current-main dependency only; no retry. |
+| [#8759](https://github.com/Unjuno/agent-interface/pull/8759) | A10: stopped at death after 13 turns, one kill, no exit; preregistered live threat-guard condition was not exposed. STOP; body says not to retry. | yes | `d31c85116df463039219368c2b64e986f9d9dd55` | `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36` | diverged; +3 / −857 | Preserve STOP and original-audit FAIL. Public aggregate says 13/13 cancellations accounted after reconciliation, but exact freeze/raw/first audit remain local and are absent from PR/current checkout; #8763's later repair does not change A10's result. Keep draft/unmerged pending owner-attested custody; no retry. |
 | [#8782](https://github.com/Unjuno/agent-interface/pull/8782) | A11: 32 turns, alive, two kills, health 64–100, ammo 32–52; joint hard-health/useful-feedback/recovery condition not exposed. HOLD, no exit. | no | `9efecd6d5bb46d924ccdf79df53e6e8ed3727553` | `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36` | diverged; +2 / −857 | Preserve HOLD and sanitized evidence. Audit source closure and latest custody; no efficacy inference. |
 | [#8790](https://github.com/Unjuno/agent-interface/pull/8790) | A12 startup STOP plus A13: ten turns; a 1.008 s hold did not overlap the sole useful scorer event, which came 49.277 ms after the controller interval. Timing gate HOLD; one recovery was right-censored at the cap. | no | `db6ca09d10abaf3d0e8aaf5ad3f3f9f67555b763` | `a6343bb76e4dc0a4afa32a29c8a485a617faeff8` | diverged; +5 / −855 | Preserve timing HOLD/censoring. Public summary lacks hash-bound full raw/treatment-audit receipt; see the 2026-10-19 recheck. Keep unmerged pending owner-attested custody; do not rerun or reinterpret the delayed event. |
 
@@ -87,3 +87,23 @@ Disposition: keep #8790 open and unmerged pending an owner-attested retained
 raw/treatment-audit packet or equivalent hash-bound custody evidence. Do not
 rerun A12 or A13. This read-only recheck changes no Issue state, allocation, or
 result classification.
+
+## Read-only packet recheck — PR #8759 (2026-10-19)
+
+The live PR remains a draft at head `d31c85116df463039219368c2b64e986f9d9dd55`
+against base `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36`. Public A10 records a
+62.396 s episode ending in one death, one kill and no map exit; the hard-health
+gate and useful scorer-during-inference condition were both unexposed. The
+original audit is `FAIL`; public reconciliation reports 13/13 cancellations
+accounted (3 active leases with token-matched releases and 10 no-input cases
+with verified-empty terminal receipts). Keep the original FAIL and derived STOP
+separate. Merged [#8763](https://github.com/Unjuno/agent-interface/pull/8763)
+repairs the broad controller cleanup receipt but does not rewrite this run.
+
+The PR explicitly says the exact execution freeze, first audit, raw output and
+manifest remain local. Its public freeze/result are sanitized projections, and
+the exact `results-local/doom/map01-v39-live-threat-guard-a10-20261009/` path
+was absent from this checkout. Thus the public summary is not independently
+reproducible from this packet. This bounded absence does not show global raw
+loss. Keep #8759 draft/unmerged pending owner-attested raw/freeze/audit custody;
+do not rerun the consumed A10 allocation.
