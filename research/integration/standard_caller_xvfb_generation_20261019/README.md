@@ -63,10 +63,22 @@ composite child-window pixels. Preserve the exact report at
 and screenshot at
 [`raw/fourth-failed-run-39173880776-observation.png`](raw/fourth-failed-run-39173880776-observation.png)
 (SHA-256 `63373382CFA36078355BA24FEB69E5E94474E40EC28F26BB01C8BFD7F4ED18E6`,
-2,367 bytes). The fixture now paints the same checker pattern on the captured
-root surface in screen coordinates. The refusal was correct for its observed
-image; this repair changes only fixture rendering, not the guard or frozen
-conditions. All four first outcomes remain separate and preserved.
+2,367 bytes). The next fixture revision painted the checker pattern on the
+captured root surface in screen coordinates, first before mapping and then after
+mapping the opaque child. The refusal was correct for its observed image; these
+repairs change only fixture rendering, not the guard or frozen conditions. Run
+39174145812 again returned the same all-black image and
+zero-variance mint patch even after the root write was moved after mapping. Its
+JSON report is preserved at
+[`raw/fifth-failed-run-39174145812.json`](raw/fifth-failed-run-39174145812.json)
+(SHA-256 `DA48AC99B32597F2861474991909BBC7181B86C37FCBEE8E727ABDC7CC45FA07`);
+the 2,367-byte observation PNG is
+[`raw/fifth-failed-run-39174145812-observation.png`](raw/fifth-failed-run-39174145812-observation.png)
+(SHA-256 `63373382CFA36078355BA24FEB69E5E94474E40EC28F26BB01C8BFD7F4ED18E6`).
+Root writes beneath the opaque child did not affect the captured image, so the
+fixture now paints the mapped child surface directly. This is a new fixture
+hypothesis, not an observed pass. All five first outcomes remain separate and
+preserved.
 
 The synthetic property is not a product task or independent game/app success
 oracle. This does not qualify native user desktop input, XWayland, a held-input
