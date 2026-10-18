@@ -22,19 +22,19 @@ from runtime.guarded_x11_v1.xres_client_fence import (
 )
 
 
-_DELAY_MS = 3000
+_DELAY_MS = 8000
 _OWNER_START = r"""
 import json, sys, time
 from Xlib import X, XK
 from Xlib.display import Display
 from Xlib.ext import xtest
 
-display_name, marker = sys.argv[1:]
+display_name, marker, delay_ms = sys.argv[1:]
 d = Display(display_name)
 keycodes = {name:d.keysym_to_keycode(XK.string_to_keysym(name))
             for name in ('a', 'b')}
 base = d.display.info.resource_id_base
-xtest.fake_input(d, X.KeyPress, detail=keycodes['a'], time=3000)
+xtest.fake_input(d, X.KeyPress, detail=keycodes['a'], time=int(delay_ms))
 xtest.fake_input(d, X.KeyPress, detail=keycodes['b'])
 d.flush()
 with open(marker, 'w', encoding='utf-8') as f:
@@ -59,7 +59,7 @@ def _keys_down(display, keycodes):
     'requires the explicitly enabled private Xorg/Xvfb display :88',
 )
 class XResDisconnectFenceIntegrationTests(unittest.TestCase):
-    def test_delayed_xtest_request_keeps_dead_owner_client_until_event_runs(self):
+    def test_dead_owner_delayed_xtest_can_press_after_fresh_cleanup(self):
         display_name = os.environ['DISPLAY']
         result_path = os.environ.get('AGENT_INTERFACE_XORG_FENCE_RESULT')
         report = {
@@ -72,14 +72,16 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             'xtest_version':None,
             'owner':None,
             'disconnect_before_delay_horizon':None,
+            'disconnect_before_cleanup':None,
             'disconnect_after_delay_horizon':None,
             'keycodes':None,
             'key_down_before':None,
             'key_down_before_delay_horizon':None,
-            'key_down_after_disconnect':None,
+            'key_down_before_cleanup':None,
             'key_down_after_cleanup':None,
             'key_down_after_delay_horizon':None,
             'cleanup_status':'not_attempted',
+            'post_late_cleanup_status':'not_attempted',
         }
         owner = None
         cleanup = None
@@ -117,7 +119,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             with tempfile.TemporaryDirectory(prefix='xres-disconnect-fence-') as td:
                 marker = Path(td)/'owner.json'
                 owner = subprocess.Popen(
-                    [sys.executable, '-c', _OWNER_START, display_name, str(marker)],
+                    [sys.executable, '-c', _OWNER_START, display_name,
+                     str(marker), str(_DELAY_MS)],
                     stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                     stderr=subprocess.PIPE, text=True,
                 )
@@ -163,21 +166,21 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 self.assertFalse(any(
                     report['key_down_before_delay_horizon'].values()), report)
 
-                disconnect = wait_for_client_disconnect_supervised(
+                before_cleanup = wait_for_client_disconnect_supervised(
                     display_name, marker_data['resource_base'], timeout_s=5.0,
                     poll_interval_s=0.005, terminate_grace_s=0.1,
                 )
-                report['disconnect_after_delay_horizon'] = disconnect
-                report['disconnect_after_kill_ms'] = (
+                report['disconnect_before_cleanup'] = before_cleanup
+                report['before_cleanup_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
-                self.assertEqual(disconnect['status'], 'disconnected', report)
-                self.assertGreater(report['disconnect_after_kill_ms'], 2000, report)
-                self.assertLess(report['disconnect_after_kill_ms'], 5000, report)
-                report['key_down_after_disconnect'] = _keys_down(
+                report['key_down_before_cleanup'] = _keys_down(
                     observer, keycodes)
-                self.assertTrue(
-                    report['key_down_after_disconnect']['a'], report)
+                self.assertFalse(any(
+                    report['key_down_before_cleanup'].values()), report)
 
+                # Independently release while the delayed owner request is
+                # still scheduled. A later DOWN is the discriminator, not an
+                # assumed XRes disappearance time.
                 cleanup = Display(display_name)
                 for code in keycodes.values():
                     xtest.fake_input(cleanup, X.KeyRelease, detail=code)
@@ -186,17 +189,32 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['key_down_after_cleanup'] = _keys_down(cleanup, keycodes)
                 self.assertFalse(any(report['key_down_after_cleanup'].values()), report)
 
-                # Keep observing beyond the request's scheduled event time. A
-                # late DOWN after the cleanup readback fails this discriminator.
-                horizon_ns = (time.monotonic_ns()
-                              + (_DELAY_MS+500)*1_000_000)
+                # Observe beyond the owner's scheduled event time. The
+                # independent cleanup is already read back as key-up here.
+                horizon_ns = killed_ns + (_DELAY_MS+500)*1_000_000
                 while time.monotonic_ns() < horizon_ns:
                     time.sleep(min(0.02,
                         (horizon_ns-time.monotonic_ns())/1_000_000_000))
+                report['delay_event_horizon_after_kill_ms'] = (
+                    time.monotonic_ns()-killed_ns)/1_000_000
                 report['key_down_after_delay_horizon'] = _keys_down(
                     cleanup, keycodes)
-                self.assertFalse(any(
-                    report['key_down_after_delay_horizon'].values()), report)
+                report['late_input_observed'] = any(
+                    report['key_down_after_delay_horizon'].values())
+                report['disconnect_after_delay_horizon'] = (
+                    wait_for_client_disconnect_supervised(
+                        display_name, marker_data['resource_base'], timeout_s=1.0,
+                        poll_interval_s=0.005, terminate_grace_s=0.1,
+                    ))
+                self.assertTrue(
+                    report['key_down_after_delay_horizon']['a'], report)
+
+                for code in keycodes.values():
+                    xtest.fake_input(cleanup, X.KeyRelease, detail=code)
+                cleanup.sync()
+                report['post_late_cleanup_status'] = 'key_release_sync_completed'
+                report['final_key_down'] = _keys_down(cleanup, keycodes)
+                self.assertFalse(any(report['final_key_down'].values()), report)
         finally:
             if owner is not None and owner.poll() is None:
                 if killed_ns is None:
