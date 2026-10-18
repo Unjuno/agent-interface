@@ -44,9 +44,11 @@ Open successor [#8911](https://github.com/Unjuno/agent-interface/issues/8911)は
 
 以下の「入口」は現行mainで存在を確認した照合先であり、仮説全体の達成証拠ではない。
 
+**2026-10-19 #3 issue triage:** Keep [Issue #3](https://github.com/Unjuno/agent-interface/issues/3) **open / queued**; this classification does not assign a worker or consume an experiment allocation. Merged [PR #8924](https://github.com/Unjuno/agent-interface/pull/8924) archived the proposal, but the Issue was reopened after the maintainer clarified that ideas should lead to organized research. The linked `PRESENTATION_CHOICE.md` and `PRESENTATION_EMISSION.md` are about JSON result composition and output-stream receipts, not screenshot coordinate grids, so they are not evidence for #3 and are removed from that row below. A focused search of current-main tracked `research/live_control` found no grid-specific implementation or result report. First audit any retained grid comparison and its custody; if none exists, freeze a matched no-grid / always-on / selectable / coarse-to-fine comparison before running it. Do not infer a result from unrelated presentation or serialization work.
+
 | アイデア | 既存成果を探す入口 | 次の有限な検証 | 結果が変える判断 |
 |---|---|---|---|
-| #3 選択可能なgrid | #3原文、`research/live_control/PRESENTATION_CHOICE.md`、`PRESENTATION_EMISSION.md` | 既存grid介入と結果を照合後、freshな細かい/粗い対象でno-grid・always・selectable・coarse-to-fineを比較。正答率、対象誤差、補正回数、時間、実測可能なモデル費用を記録 | gridを追加/修正するか、特定条件だけに限定するか |
+| #3 選択可能なgrid | [#3原文](https://github.com/Unjuno/agent-interface/issues/3)、[`visual-interface.md`](visual-interface.md)とその[source snapshot](visual-interface-sources-20261015.json)。current-main grid-specific experiment/resultは未発見 | まず過去のgrid比較とrawの所在・custodyを確認する。なければfreshな細かい/粗い対象でno-grid・always-on・selectable・coarse-to-fineを比較する条件を固定し、正答率、対象誤差、補正回数、時間、実測可能なモデル費用を記録 | gridを追加/修正するか、特定条件だけに限定するか。先行rawや有効な結果が見つかれば重複実験を避ける |
 | #5 観測に束縛したvisual address | `runtime/USING_CURRENT_INTERFACE.md`、`research/live_control/anchor_evidence_contract_v1.py` | 使われている対象参照を追跡し、別観測・別surface・frame変更・stale参照で誤った入力権限が発生しないか調べる | 既存契約の再利用か、欠けた座標/観測bindingの修理か |
 | #5 選べるpresentation | `research/live_control/PRESENTATION_CHOICE.md`、`presentation.py` | 要求→元画像→派生表現→モデルに渡るものの経路を追い、余分なplanner往復と元画像の欠落を測る | 宣言方法や出力経路の改善が必要か |
 | #5 決定的anchor | `research/live_control/VISUAL_ANCHOR.md`、`DRAG_ANCHOR_DIAGNOSIS.md` | 残存rawでcursor変位とobject変位を区別できるか確認。未検証のdistractor/喪失条件だけを比較する | anchor方式の採用範囲、曖昧時のyield条件 |
