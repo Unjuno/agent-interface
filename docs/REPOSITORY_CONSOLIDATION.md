@@ -21,7 +21,7 @@
 
 **この整理の出口:** 新しいworkerがREADMEとwork mapから始め、現行ソースと研究familyへ移動し、範囲が競合しない有限作業を一つ選べること。全Issue/PRは最新のページング一覧に対する意味判定または明示的な`untriaged`状態を持ち、各アイデアから証拠・残る問い・次の行き先へ戻れること。未解決研究や固有成果を消さずにこの状態を達成する。
 
-**現在の全体像 (r12, 2026-10-19 JST):** 2026-10-18 16:55:44 UTCのmain `5e30a60c179ce56e73c83d0279b6698862709c8f` に対するページング再取得ではopen Issue 1,675件、open PR 514件。r11とのID比較でIssueの増減はなく、PR #9039がmainへ統合されたため1件減った。これは一覧・メタデータの確認であり、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r12 inventory](maintenance/repository-inventory-20261019-r12.md)とSHA付きCSVを現在の読み取り基準点とし、r11以前は履歴として保持する。
+**現在の全体像 (r13, 2026-10-19 JST):** 2026-10-18 17:35:43 UTCのmain `7c3a746526f6e698e595550a417cfd64afd12a4f` に対するページング再取得ではopen Issue 1,675件、open PR 514件。r12とID集合・CSV内容は同一で、main SHAだけが更新された。これは一覧・メタデータの確認であり、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r13 inventory](maintenance/repository-inventory-20261019-r13.md)とSHA付きCSVを現在の読み取り基準点とし、r12以前は履歴として保持する。
 
 **「クリーン」の完了条件:**
 
@@ -37,7 +37,7 @@
 
 | 段階 | 作業 | 出力・完了条件 |
 |---|---|---|
-| A. 基準点更新 | main SHAを記録し、全open Issue/PR一覧をページング取得。ID集合、件数、取得時刻、CSV hash、前回との差分を残す。 | **r12完了**。main更新後に再取得する。件数だけの確認と意味仕分けを分離する。 |
+| A. 基準点更新 | main SHAを記録し、全open Issue/PR一覧をページング取得。ID集合、件数、取得時刻、CSV hash、前回との差分を残す。 | **r13完了**。r12からID集合・CSVは不変、mainは`7c3a746`。件数だけの確認と意味仕分けを分離する。 |
 | B. アイデアの地図 | 既存の`IDEAS_AND_OUTCOMES`、idea index、research map、#3/#5/#8、テーマ別agendaを重複と欠落の両面で照合。研究ファミリーごとに独立仮説・結果・残差・次テストを結ぶ。 | canonical idea entryと出典Issueへの相互リンク。アイデアは結果が出るまで残す。 |
 | C. Issue disposition | Bのファミリー単位で本文・必要なコメント・後継・実装・結果を確認し、Issue自身の範囲で状態を選ぶ。 | 理由と証拠を添えた追跡可能な状態。close時は保存先、科学的状態、残る問い、実行先を記録。 |
 | D. PR統合 | PRをファミリー単位でcurrent mainとの差分とhead固定で比較し、依存stackと作業者を確認。ローカルテストと固有証拠を評価する。 | merge/close/保留それぞれの根拠、解消した重複、保全した唯一成果。main統合とIssue closeを混同しない。 |
@@ -55,7 +55,9 @@
 
 **2026-10-19 r31 — evidence-admission family:** #5305's main-tree family entry and source Issue were rechecked; #5314 and #5339 were then reconciled against their current Issue bodies/comments and merged evidence packages #5402/#5418/#5347. The new [evidence-admission family](ideas/evidence-admission-family.md) links dependency independence, conflict representation, and trust/coverage as separate stages, preserves each result and audit limitation, and gives a next evidence-custody gate. No Issue was closed, no result rerun, and no allocation was consumed. The three hypotheses remain open; the next useful step is to verify custody of #5305's held-out T1 raw before selecting a genuinely new held-out discriminator.
 
-**次の具体的な整理作業:** family entryのcoverageをIssue index・outcomes index・idea indexと照合し、raw/PR custodyのリンクを必要な範囲で補う。続いて、r12のopen集合を研究family単位で分割し、1バッチずつ本文・必要コメント・head/diff・実行者/証拠のcustodyを意味仕分けする。意味未確認は`untriaged`として残し、閉じる場合はIssue固有の完了/棄却または実在する後継への移管理由を記録する。全件分類待ちで実験と統合は止めない。
+**次の具体的な整理作業:** family entryのcoverageをIssue index・outcomes index・idea indexと照合し、raw/PR custodyのリンクを必要な範囲で補う。続いて、r13のopen集合を研究family単位で分割し、1バッチずつ本文・必要コメント・head/diff・実行者/証拠のcustodyを意味仕分けする。意味未確認は`untriaged`として残し、閉じる場合はIssue固有の完了/棄却または実在する後継への移管理由を記録する。全件分類待ちで実験と統合は止めない。
+
+**2026-10-19 r32 — current-main baseline and disposition example:** The fresh r13 snapshot at main `7c3a746526f6e698e595550a417cfd64afd12a4f` found the same 1,675 open Issue IDs and 514 open PR IDs as r12; the serialized metadata CSVs are byte-identical. This does not advance the all-item semantic review. Issue #9004 is a useful disposition example: its frozen synthetic T0 found `NO_INCREMENTAL_AGREEMENT_VALUE`, but the separately stated common-mode error question remains untested, so retain the idea entry and leave the Issue open. Do not rerun its consumed allocation. Next work remains family-by-family semantic reconciliation, then exact-head PR review; no blanket closure or workspace deletion follows from the clean-state goal.
 
 **2026-10-19 r30 — live baseline and idea-catalog seam:** A paginated `gh issue list` / `gh pr list` read at 2026-10-18 16:55:44 UTC against main `5e30a60c179ce56e73c83d0279b6698862709c8f` returned 1,675 open Issues and 514 open PRs. Compared with r11, the Issue ID set is unchanged and PR #9039 is the only removal; the merge is confirmed at this main SHA. Metadata does not establish semantic disposition or active ownership. A `docs/ideas` number-only scan is not a complete coverage test: #5305, for example, has a row in the broader research Issue index and its T0 report on main, while its later held-out STOP and transfer refinements are only in the Issue thread. Added [a linked family entry](ideas/conflict-aware-evidence-ledger.md) preserving distinct outcomes, limits and known raw-custody gap. Do not close #5305 or rerun a consumed fixture as a cleanup action.
 
