@@ -1,6 +1,7 @@
 """XRes client-presence query; not a release receipt."""
 import math
 import multiprocessing
+import os
 import sys
 import time
 
@@ -106,7 +107,7 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
     return outcome
 
 
-def _xres_disconnect_worker(send_connection, display_name, resource_base,
+def _xres_disconnect_worker(send_connection, display_name, resource_base, expected_pid,
                             deadline_ns, poll_interval_s):
     display = None
     try:
@@ -115,7 +116,8 @@ def _xres_disconnect_worker(send_connection, display_name, resource_base,
         display = Display(display_name)
         remaining_s = max(0.0, (deadline_ns - time.monotonic_ns()) / 1_000_000_000)
         disconnected = wait_for_client_disconnect(
-            display, resource_base, timeout_s=remaining_s,
+            display, resource_base, expected_pid=expected_pid,
+            timeout_s=remaining_s,
             poll_interval_s=poll_interval_s)
         send_connection.send({'status':'disconnected' if disconnected
                               else 'still_connected'})
@@ -139,20 +141,25 @@ def _xres_disconnect_worker(send_connection, display_name, resource_base,
 
 
 def wait_for_client_disconnect_supervised(display_name, resource_base, *,
+                                          expected_pid,
                                           timeout_s=0.15,
                                           poll_interval_s=0.01,
                                           terminate_grace_s=0.1):
-    """Observe exact XRes client disappearance with a killable query bound.
+    """Observe expected local X client identity with a killable query bound.
 
-    `disconnected` only means the XRes reply omitted this client. It is not a
+    `disconnected` means XRes no longer associates the expected PID with this
+    resource base. The base may already belong to another client. This is not a
     queue-drained fence or a release receipt. Any unsupported platform, query
-    error, or worker timeout returns `unknown` and must preserve UNKNOWN cleanup.
+    error, PID-namespace mismatch, or worker timeout returns `unknown` and must
+    preserve UNKNOWN cleanup.
     """
     _validate_duration('timeout_s', timeout_s)
     _validate_duration('poll_interval_s', poll_interval_s)
     _validate_duration('terminate_grace_s', terminate_grace_s)
     if type(resource_base) is not int or not 0 <= resource_base < 2**32:
         raise ValueError('X client resource base must be an unsigned 32-bit integer')
+    if type(expected_pid) is not int or not 0 < expected_pid < 2**32:
+        raise ValueError('expected_pid must be a positive unsigned 32-bit integer')
     if display_name is not None and not isinstance(display_name, str):
         raise ValueError('display_name must be a string or None')
     if sys.platform != 'linux':
@@ -161,25 +168,32 @@ def wait_for_client_disconnect_supervised(display_name, resource_base, *,
     deadline_ns = time.monotonic_ns() + int(timeout_s * 1_000_000_000)
     return supervise_xres_worker(
         _xres_disconnect_worker,
-        (display_name, resource_base, deadline_ns, poll_interval_s),
+        (display_name, resource_base, expected_pid, deadline_ns, poll_interval_s),
         timeout_s=timeout_s, terminate_grace_s=terminate_grace_s)
 
 
-def client_is_connected(connection, resource_base):
-    """Return exact client presence from one XRes QueryClients reply.
+def client_is_connected(connection, resource_base, *, expected_pid):
+    """Return whether XRes identifies this base as the expected local process.
 
-    A caller must separately bound the synchronous X request. `False` means
-    only that this reply did not list the client; it does not itself authorize
-    release or prove physical input neutrality.
+    XRes reports local PIDs in the server's namespace. First compare this
+    observer connection's reported PID to `os.getpid()`; fail closed if they
+    differ. A caller must separately bound the synchronous X request. `False`
+    means only that this reply did not identify the expected process at this
+    base; it does not authorize release or prove physical input neutrality.
     """
     if type(resource_base) is not int or not 0 <= resource_base < 2**32:
         raise ValueError('X client resource base must be an unsigned 32-bit integer')
+    if type(expected_pid) is not int or not 0 < expected_pid < 2**32:
+        raise ValueError('expected_pid must be a positive unsigned 32-bit integer')
     if not connection.has_extension('X-Resource'):
         raise RuntimeError('X-Resource unavailable')
+    from Xlib.ext import res
+
     version = connection.res_query_version()
     major, minor = getattr(version, 'server_major', None), getattr(version, 'server_minor', None)
     if (type(major) is not int or type(minor) is not int
-            or major < 1 or minor < 0):
+            or major < 1 or minor < 0
+            or (major == 1 and minor < 2)):
         raise RuntimeError('invalid X-Resource version')
     clients = getattr(connection.res_query_clients(), 'clients', None)
     if type(clients) not in (list, tuple):
@@ -193,18 +207,55 @@ def client_is_connected(connection, resource_base):
                 or base in bases):
             raise RuntimeError('invalid or ambiguous X-Resource client list')
         bases.add(base)
-    return resource_base in bases
+    if resource_base not in bases:
+        return False
+
+    query_ids = getattr(connection, 'res_query_client_ids', None)
+    if not callable(query_ids):
+        raise RuntimeError('X-Resource QueryClientIds unavailable')
+    display = getattr(connection, 'display', None)
+    setup = getattr(display, 'info', None)
+    observer_base = getattr(setup, 'resource_id_base', None)
+    if type(observer_base) is not int or not 0 <= observer_base < 2**32:
+        raise RuntimeError('observer X client resource base unavailable')
+
+    requested_bases = {resource_base, observer_base}
+    specs = [{'client':base, 'mask':res.LocalClientPIDMask}
+             for base in sorted(requested_bases)]
+    ids = getattr(query_ids(specs), 'ids', None)
+    if type(ids) not in (list, tuple) or len(ids) != len(requested_bases):
+        raise RuntimeError('missing or ambiguous X-Resource process identity')
+    pids_by_base = {}
+    for identity in ids:
+        spec = getattr(identity, 'spec', None)
+        client = getattr(spec, 'client', None)
+        mask = getattr(spec, 'mask', None)
+        values = getattr(identity, 'value', None)
+        if (type(client) is not int or client not in requested_bases
+                or client in pids_by_base
+                or type(mask) is not int or mask != res.LocalClientPIDMask
+                or type(values) not in (list, tuple) or len(values) != 1
+                or type(values[0]) is not int or values[0] <= 0):
+            raise RuntimeError('invalid X-Resource process identity')
+        pids_by_base[client] = values[0]
+    if set(pids_by_base) != requested_bases:
+        raise RuntimeError('incomplete X-Resource process identity set')
+    if pids_by_base[observer_base] != os.getpid():
+        raise RuntimeError('X-Resource PID namespace does not match observer')
+    return pids_by_base[resource_base] == expected_pid
 
 
-def wait_for_client_disconnect(connection, resource_base, *, timeout_s,
+def wait_for_client_disconnect(connection, resource_base, *, expected_pid, timeout_s,
                                poll_interval_s=0.02, clock=None, sleep=None):
-    """Poll for exact client disappearance within a cooperative time budget.
+    """Poll for the expected local process to leave this base in a time budget.
 
     X protocol calls and sleep scheduling may exceed this budget. Callers that
     need a hard response bound must supervise this helper in a separate process.
     """
     _validate_duration('timeout_s', timeout_s, allow_zero=True)
     _validate_duration('poll_interval_s', poll_interval_s)
+    if type(expected_pid) is not int or not 0 < expected_pid < 2**32:
+        raise ValueError('expected_pid must be a positive unsigned 32-bit integer')
     if clock is None:
         clock = time.monotonic
     if sleep is None:
@@ -213,7 +264,8 @@ def wait_for_client_disconnect(connection, resource_base, *, timeout_s,
     first_query = True
     while first_query or clock() < deadline:
         first_query = False
-        if not client_is_connected(connection, resource_base):
+        if not client_is_connected(connection, resource_base,
+                                   expected_pid=expected_pid):
             return True
         remaining = deadline - clock()
         if remaining <= 0:

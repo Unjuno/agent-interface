@@ -153,7 +153,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                     idle_marker.read_text(encoding='utf-8'))
                 report['idle_control'] = dict(idle_data, pid=idle_owner.pid)
                 self.assertTrue(client_is_connected(
-                    observer, idle_data['resource_base']), report)
+                    observer, idle_data['resource_base'],
+                    expected_pid=idle_owner.pid), report)
                 idle_owner.terminate()
                 try:
                     idle_returncode = idle_owner.wait(timeout=1.0)
@@ -163,7 +164,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['idle_control']['returncode'] = idle_returncode
                 report['idle_control_disconnect_after_kill'] = (
                     wait_for_client_disconnect_supervised(
-                        display_name, idle_data['resource_base'], timeout_s=2.0,
+                        display_name, idle_data['resource_base'],
+                        expected_pid=idle_owner.pid, timeout_s=2.0,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     ))
                 report['idle_control_disappeared_within_2s'] = (
@@ -190,7 +192,14 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['owner'] = dict(marker_data, pid=owner.pid)
                 self.assertEqual(marker_data['keycodes'], keycodes, report)
                 self.assertTrue(client_is_connected(
-                    observer, marker_data['resource_base']), report)
+                    observer, marker_data['resource_base'],
+                    expected_pid=owner.pid), report)
+                report['idle_resource_base_reused'] = (
+                    idle_data['resource_base'] == marker_data['resource_base'])
+                report['old_idle_pid_matches_current_base'] = client_is_connected(
+                    observer, marker_data['resource_base'],
+                    expected_pid=idle_owner.pid)
+                self.assertFalse(report['old_idle_pid_matches_current_base'], report)
 
                 time.sleep(report['kill_after_flush_ms']/1000)
                 owner.terminate()
@@ -207,23 +216,26 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 self.assertNotEqual(owner_returncode, 0, report)
 
                 early_disconnect = wait_for_client_disconnect_supervised(
-                    display_name, marker_data['resource_base'], timeout_s=1.0,
+                    display_name, marker_data['resource_base'],
+                    expected_pid=owner.pid, timeout_s=1.0,
                     poll_interval_s=0.005, terminate_grace_s=0.1,
                 )
                 report['disconnect_before_delay_horizon'] = early_disconnect
                 report['early_probe_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
-                self.assertEqual(early_disconnect['status'], 'still_connected', report)
+                self.assertEqual(early_disconnect['status'], 'disconnected', report)
                 report['key_down_before_delay_horizon'] = _keys_down(
                     observer, keycodes)
                 self.assertFalse(any(
                     report['key_down_before_delay_horizon'].values()), report)
 
                 before_cleanup = wait_for_client_disconnect_supervised(
-                    display_name, marker_data['resource_base'], timeout_s=5.0,
+                    display_name, marker_data['resource_base'],
+                    expected_pid=owner.pid, timeout_s=5.0,
                     poll_interval_s=0.005, terminate_grace_s=0.1,
                 )
                 report['disconnect_before_cleanup'] = before_cleanup
+                self.assertEqual(before_cleanup['status'], 'disconnected', report)
                 report['before_cleanup_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
                 report['key_down_before_cleanup'] = _keys_down(
@@ -259,9 +271,13 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['disconnect_after_delay_horizon'] = (
                     wait_for_client_disconnect_supervised(
                         display_name, marker_data['resource_base'],
+                        expected_pid=owner.pid,
                         timeout_s=_POST_HORIZON_XRES_TIMEOUT_S,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     ))
+                self.assertEqual(
+                    report['disconnect_after_delay_horizon']['status'],
+                    'disconnected', report)
                 report['post_horizon_xres_probe_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
                 report['key_down_after_extended_probe'] = _keys_down(
@@ -303,7 +319,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                     and cleanup is None):
                 try:
                     wait_for_client_disconnect_supervised(
-                        display_name, marker_data['resource_base'], timeout_s=1.0,
+                        display_name, marker_data['resource_base'],
+                        expected_pid=owner.pid, timeout_s=1.0,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     )
                 except Exception:
