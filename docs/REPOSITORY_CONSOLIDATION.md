@@ -2,6 +2,16 @@
 
 2026-10-15。対象は `Unjuno/agent-interface` 全体とGitHub Issue/PR。コンピューターコントロールの研究を再び見通せる状態にする。
 
+**2026-10-18 r8 現在地:** `2026-10-18 12:33:06 UTC` にGitHub REST APIを全ページ取得し、open Issue
+1,676件・open PR 514件をCSV化した。SHA-256とr5からのID差分は[r6 inventory note](maintenance/repository-inventory-20261018-r6.md)、
+個別の一覧は[Issue snapshot](maintenance/open-issues-20261018-r6.csv)と[PR snapshot](maintenance/open-prs-20261018-r6.csv)に保存した。
+PRはr5から#9007が一件減り、Issue IDの増減はなかった。これは時点付きの一覧であり、本文の意味分類・担当確認・一括closeを意味しない。
+
+同日12:31 UTCに[#9007](https://github.com/Unjuno/agent-interface/pull/9007)をmerge commit
+`7b2d531b305e178d84ab599944758a2202cf647a`で統合した。同期後のheadで9 checksすべてsuccess。
+Issue #8914に関する二つの保存済みmethod-failure結果とgzip rawを保全し、候補/監査器の再実行はしていない。
+結果は`sentinel_not_reproducible` / `HOLD_AUDITOR_METHOD_FAILURE`であり、科学的な合格・失敗やIssue完了を示さないため#8914はopenのまま。
+
 **2026-10-18 r7 現在地:** `2026-10-18 12:24 UTC` にopen Issue一覧17ページとopen PR一覧6ページを
 GitHub RESTから取得し、Issue 1,676件・PR 515件を保存した。metadata snapshotのSHA-256とr4からの
 ID差分は[refresh note](maintenance/repository-inventory-delta-20261018-r5.md)に記録した。
