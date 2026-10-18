@@ -1,9 +1,9 @@
 # Current objective and working direction
 
 Updated 2026-10-19 against `main` SHA
-`9bfacb2a388f549e64ff0a62b25e0738691bb4bc`. A paginated GitHub read at
-approximately 2026-10-18 21:06 UTC found 1,675 open Issues and 514 open PRs;
-the sorted-ID hashes match the [r25 membership recheck](maintenance/repository-inventory-20261019-r25.md).
+`48acb8a6aa56c763d08fa31c63be58d47a63f7de`. A paginated GitHub read at
+approximately 2026-10-18 21:10 UTC found 1,675 open Issues and 514 open PRs;
+the sorted-ID hashes match the [r26 membership recheck](maintenance/repository-inventory-20261019-r26.md).
 The latest complete metadata snapshot remains r22. Full semantic classification
 remains unfinished; see the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md)
 for the family-by-family review and disposition criteria. This is the short
