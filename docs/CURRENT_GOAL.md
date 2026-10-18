@@ -1,9 +1,9 @@
 # Current objective and working direction
 
 Updated 2026-10-19 against `main` SHA
-`7c3a746526f6e698e595550a417cfd64afd12a4f` at the 2026-10-19 JST r13 inventory.
+`34344716c62d04d237a149fb97aabebd56944ca8` at the 2026-10-19 JST r14 inventory.
 The cursor-paginated open set contains 1,675 Issues and 514 PRs; full semantic
-classification remains unfinished. See the [r13 inventory](maintenance/repository-inventory-20261019-r13.md)
+classification remains unfinished. See the [r14 inventory](maintenance/repository-inventory-20261019-r14.md)
 and [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for disposition
 criteria. This is the short entry point, not an experiment ledger.
 
@@ -38,11 +38,12 @@ assign people, grant resources or replace current user instructions.
 | Integrated efficiency | Matched tasks/model/settings and baseline; correctness, all attempts, token/model accounting, latency, resources and failures. |
 | Platform transfer | Qualify each supported platform/domain separately; do not transfer a Linux candidate result to Windows or another caller. |
 
-The live parent Issues remain open: [#57](https://github.com/Unjuno/agent-interface/issues/57)
+The live parent Issues [#57](https://github.com/Unjuno/agent-interface/issues/57)
 (integrated efficiency), [#59](https://github.com/Unjuno/agent-interface/issues/59)
 (real-time control), and [#2789](https://github.com/Unjuno/agent-interface/issues/2789)
-(usable desktop integration), checked 2026-10-15. Read the relevant current scope
-and latest ownership before shared changes, rather than reopening every history.
+(usable desktop integration) were rechecked OPEN on 2026-10-19. Their update
+timestamps differ; read the latest scope and ownership before shared changes
+rather than treating this status check as a fresh assignment.
 
 ## Execution and preservation
 

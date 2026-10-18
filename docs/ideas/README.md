@@ -34,7 +34,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
-- [Current open-work inventory r12 (2026-10-19)](../maintenance/repository-inventory-20261019-r12.md) — current-main metadata: 1,675 open Issues and 514 open PRs; #9039 merged since r11. Membership metadata is not semantic triage or ownership proof.
+- [Current open-work inventory r14 (2026-10-19)](../maintenance/repository-inventory-20261019-r14.md) — current-main metadata: 1,675 open Issues and 514 open PRs; Issue/PR ID sets match r13. Membership metadata is not semantic triage or ownership proof.
 - [Research and idea Issue index](../RESEARCH_ISSUE_INDEX.md) — broad discovery index with a historical state snapshot and newer addenda; check its freshness note and live Issue/evidence before disposition. This ledger is the compact hypothesis/outcome map, not a complete mirror of every research-index row.
 - [Conflict-aware evidence ledger](conflict-aware-evidence-ledger.md) — reconciles #5305's merged finite T0, held-out STOP, later policy counterexample, raw-custody gap, and unverified provenance refinements without closing the Issue or rerunning T0.
 - [Evidence-admission family](evidence-admission-family.md) — links #5314 dependency-aware quorum, #5305 conflict representation, and #5339 trust/coverage while preserving each finite result, audit failure, assumption, and unresolved boundary.
