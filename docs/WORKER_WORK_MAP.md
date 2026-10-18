@@ -41,6 +41,8 @@ UNKNOWN policy but does not establish the real server ordering or release bound.
 Next discriminator remains a real-server queue fence under an explicitly unused
 eligible allocation.
 
+**2026-10-19 cancel-response-loss fallback ([PR #9074](https://github.com/Unjuno/agent-interface/pull/9074)):** The owned MCP caller now runs its PID-qualified disconnect observer after exact-child retirement when the cancel response times out, closes, or is negative, and starts the separate bounded release helper only for `disconnected`. It uses the last parent-cached obligations, which can be stale while the child is blocked. The response and terminal state remain `UNKNOWN`, with no task success or replay and late server requests still possible. The regression failed first on all nine timeout/pipe-close/negative-ACK × disconnect-status cases, then 35 relevant owner/cancellation/recovery tests and 24 MCP server tests passed in both normal and optimized Python. This is local caller-composition evidence only: it does not prove complete input custody for the blocked operation, queue drainage, physical release, task effect, or recovery. No WSLc allocation was used. #17 remains open; next resolve complete custody and server-ordering evidence before any release claim.
+
 ## Execute and leave a usable result
 
 1. Read the selected Issue/body/comments and relevant open/closed PRs; pin the
