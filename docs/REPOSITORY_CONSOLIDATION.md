@@ -1,5 +1,18 @@
 # リポジトリ全体の整理計画
 
+**2026-10-19 r24 — XRes client-presence observer added:** Added a fail-closed
+helper around Python-Xlib `QueryClients`, with exact resource-base matching,
+catalog validation, and a cooperative finite poll budget. Six tests cover
+serialized request/reply shape, present/absent client handling, malformed
+catalogs, and bounded polling in a responsive fake. The complete selected suite
+now passes 110/110 in normal and optimized Python. This does not bound a
+blocking X request, prove that disappearance fences queued requests on a live
+server, or release input; those remain unverified. The host has no active X
+display/Xvfb, so do not promote this helper as a safety guarantee. The next
+implementation step is an externally supervised exact-client observation, then
+a native X server crash/queued-DOWN experiment before any release transfer.
+See the [integration report](../research/integration/owned_guarded_mcp_process_20261019/README.md).
+
 **2026-10-19 r23 — exact owner X-client identity seed:** The spawned owner now
 retains Python-Xlib's X connection `resource_id_base` in its standard MCP
 snapshot when well formed; a Fake X assertion verifies propagation. This makes

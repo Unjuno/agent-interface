@@ -17,7 +17,7 @@ with cleanup `UNKNOWN` and late server work possible.
 
 ## Local verification
 
-The 104 selected guarded-MCP tests passed in both normal Python and optimized
+The 110 selected guarded-MCP tests passed in both normal Python and optimized
 Python (`-O`), including the six new standard-caller tests for option
 validation, CLI forwarding, stable-generation observation/input/close,
 changed-generation stale-alias refusal, and blocked-I/O cancellation. The
@@ -76,7 +76,7 @@ and a prearmed release catalog are insufficient if a prior positive input
 request may still be queued. A production caller must establish a queue-drained
 or late-send fence before treating any independent release receipt as final;
 otherwise retain `UNKNOWN`. The preserved source for this check is the test
-itself, and the current run passed as part of the 104-test normal/`-O` suites.
+itself, and the current run passed as part of the 110-test normal/`-O` suites.
 
 ## Remaining boundary
 
@@ -108,9 +108,14 @@ readback. The [X-Resource protocol specification](https://www.x.org/releases/cur
 defines `QueryClients` as returning currently connected clients. This repository
 has not run that experiment on Xvfb/Xorg/XWayland, established behavior across
 those servers, or bounded the query itself. A stuck query remains `UNKNOWN`;
-client disappearance alone is not a release receipt. The current 104-test
-normal/`-O` suite verifies only resource-base propagation and the synthetic
-late-DOWN counterexample.
+client disappearance alone is not a release receipt. The helper also has a
+cooperative poll budget, but an X protocol call can itself block beyond that
+budget; an external process supervisor is still required for a hard caller
+response bound. The current 110-test normal/`-O` suite verifies only parser,
+presence/absence response handling, cooperative polling, resource-base
+propagation, and the synthetic late-DOWN counterexample. No live X server was
+available in this host, so no XRes disconnect fence or release transfer has
+been qualified.
 
 ## Reproduction notes
 

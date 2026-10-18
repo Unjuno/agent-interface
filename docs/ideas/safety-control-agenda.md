@@ -142,7 +142,7 @@ deadline保証ではない。次は単一authorityのwriter retirement/fenceとl
 **2026-10-19 owned-process integration (local regression, not live qualification):**
 The additive [standard MCP integration](../../research/integration/owned_guarded_mcp_process_20261019/README.md)
 adds an opt-in spawned owner for the complete guarded-X11 session. Its selected
-104-test suite passes in normal and optimized Python. A separate mutation changes
+110-test suite passes in normal and optimized Python. A separate mutation changes
 the target process-generation digest after observation/mint; the standard caller
 refuses the stale alias with `SCOPE_MISMATCH` and `input_dispatched=false`. In the
 blocked Fake X sync regression, cancellation retired the exact owner process,
@@ -156,7 +156,9 @@ queue-drained or late-send fence. Preserve UNKNOWN otherwise; this is not a live
 X ordering, task effect, physical deadline, or WSLc result.
 
 The spawned owner snapshot now carries the Xlib connection `resource_id_base`
-when available; the 104-test normal/`-O` suite verifies only Fake X propagation.
+when available; the 110-test normal/`-O` suite adds an XRes `QueryClients`
+presence helper with Fake reply/parser and cooperative poll-budget checks. It
+does not bound a blocked X request or verify a live server fence.
 XRes `QueryClients` is a concrete candidate for a later exact-client disconnect
 fence check after owner death with DOWN queued. Its current-connected-client
 reply is specified in the [X-Resource protocol](https://www.x.org/releases/current/doc/resourceproto/resproto.txt),
