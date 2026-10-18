@@ -1,0 +1,843 @@
+From 1ec6556ba8568de289625b5f167e7b8c21e1f72c Mon Sep 17 00:00:00 2001
+From: Unjuno <unjuno.org@unjuno.org>
+Date: Mon, 5 Oct 2026 17:04:01 +0900
+Subject: [PATCH] research(#59): preregister Xlib audit consistency A02
+
+---
+ .../A01_STOP.json                             |  10 ++
+ .../CONSTRUCTION_A01.json                     |  38 ++++
+ .../CONSTRUCTION_A02.json                     |  10 ++
+ .../FREEZE.json                               |  71 ++++++++
+ .../README.md                                 |   9 +
+ .../SOURCE/FREEZE_A03.json                    |  29 ++++
+ .../SOURCE/audit_v2.py                        |  92 ++++++++++
+ .../SOURCE/inputs/AUDIT_EXPECTATIONS_V2.json  |  16 ++
+ .../SOURCE/inputs/AUDIT_V2_EXPECTED.json      |  12 ++
+ .../SOURCE/inputs/RAW.json                    |  94 ++++++++++
+ .../SOURCE/probe.py                           | 163 ++++++++++++++++++
+ .../audit_v2.py                               |  92 ++++++++++
+ .../candidate.py                              |  36 ++++
+ .../independent_audit.py                      |  45 +++++
+ 14 files changed, 717 insertions(+)
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/A01_STOP.json
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/CONSTRUCTION_A01.json
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/CONSTRUCTION_A02.json
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/FREEZE.json
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/README.md
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/FREEZE_A03.json
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/audit_v2.py
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/AUDIT_EXPECTATIONS_V2.json
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/AUDIT_V2_EXPECTED.json
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/RAW.json
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/probe.py
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/audit_v2.py
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/candidate.py
+ create mode 100644 research/doom/map01_v39_xvfb_select_buffering_a05_20261005/independent_audit.py
+
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/A01_STOP.json b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/A01_STOP.json
+new file mode 100644
+index 00000000000..8009e32be15
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/A01_STOP.json
+@@ -0,0 +1,10 @@
++{
++  "allocation": "xvfb-audit-v3-a01-20261005",
++  "base_main": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5",
++  "observed_main": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
++  "terminal": "STOP_MAIN_ADVANCED_BEFORE_PREREG_FROZEN",
++  "candidate_runs": 0,
++  "auditor_runs": 0,
++  "retries": 0,
++  "issue_comment": "https://github.com/Unjuno/agent-interface/issues/6957#issuecomment-5990464854"
++}
+\ No newline at end of file
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/CONSTRUCTION_A01.json b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/CONSTRUCTION_A01.json
+new file mode 100644
+index 00000000000..9c91b3d0876
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/CONSTRUCTION_A01.json
+@@ -0,0 +1,38 @@
++{
++  "allocation": "xvfb-audit-v3-a01-20261005",
++  "construction_attempts": [
++    {
++      "id": "construction-01",
++      "command": "python -m py_compile /src/candidate.py /src/independent_audit.py /src/SOURCE/audit_v2.py",
++      "exit_code": 1,
++      "result": "[Errno 30] Read-only file system: '/src/__pycache__'",
++      "formal_roles_invoked": 0,
++      "disposition": "STOP_CONSTRUCTION_READONLY_CACHE_WRITE; preserved; exact command not retried"
++    },
++    {
++      "id": "construction-02",
++      "command": "python -B -c AST-compile candidate, auditor, and audit-v2 source in memory",
++      "exit_code": 0,
++      "result": "AST_COMPILE_OK=3",
++      "formal_roles_invoked": 0,
++      "disposition": "Passed; subsequent source inspection found candidate incorrectly read 'inputs' from upstream A03 freeze; fixed before formal source freeze"
++    },
++    {
++      "id": "construction-03",
++      "command": "python -B -c AST-compile corrected candidate, auditor, and audit-v2 source in memory",
++      "exit_code": 0,
++      "result": "AST_COMPILE_OK=3",
++      "formal_roles_invoked": 0,
++      "disposition": "Passed on final candidate source"
++    }
++  ],
++  "main_advance_stop": {
++    "base_main": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5",
++    "observed_main": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
++    "candidate_runs": 0,
++    "auditor_runs": 0,
++    "retries": 0,
++    "decision": "STOP_MAIN_ADVANCED_BEFORE_PREREG_FROZEN"
++  },
++  "candidate_source_review_note": "The initial pre-freeze candidate draft read the input table from the upstream A03 freeze. Static review caught this before any formal run; final frozen A02 candidate reads the separate A02 freeze. No candidate executed under A01."
++}
+\ No newline at end of file
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/CONSTRUCTION_A02.json b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/CONSTRUCTION_A02.json
+new file mode 100644
+index 00000000000..0f22b81c953
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/CONSTRUCTION_A02.json
+@@ -0,0 +1,10 @@
++[
++  {
++    "id": "a02-construction-01",
++    "command": "python -B -c AST-compile candidate, auditor, and audit-v2 source in memory",
++    "exit_code": 0,
++    "result": "AST_COMPILE_OK=3",
++    "formal_roles_invoked": 0,
++    "disposition": "Passed on exact frozen A02 sources; no output writes"
++  }
++]
+\ No newline at end of file
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/FREEZE.json b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/FREEZE.json
+new file mode 100644
+index 00000000000..54ed0950c1b
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/FREEZE.json
+@@ -0,0 +1,71 @@
++{
++  "schema": "xvfb-audit-v3-freeze-v1",
++  "allocation": "xvfb-audit-v3-a02-20261005",
++  "base_main": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
++  "branch": "research/59-xvfb-audit-v3-a02-20261005",
++  "path": "research/doom/map01_v39_xvfb_select_buffering_a05_20261005/",
++  "H": "A digest-recomputed raw result that contradicts its own claimed candidate status or frozen execution-display/Python-Xlib provenance should not receive an audit-v2 scoped PASS.",
++  "T": "Run unchanged audit_v2.py once on the exact original raw and once each on three digest-recomputed single-field variants: status=FAIL_DIAGNOSTIC_CONTRACT, display=:188 (frozen :189), python_xlib=[0,34] (frozen 0.33). Then run one independent audit over hashes, exact mutation deltas, and the preregistered decision matrix. No original candidate rerun.",
++  "D": "Baseline retains PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING; each inconsistent variant must return FAIL. Any variant accepted by audit-v2 is FAIL_AUDIT_CONSISTENCY. Passing the independent audit establishes only consistency checks for this bounded mutation set.",
++  "C": "The challenged fields may be descriptive rather than necessary to recompute event readiness. The original audit-v2 already checks six event identities, readiness, buffered-queue state, and Xvfb exit.",
++  "U": "Historical one-run synthetic Xvfb/XTEST diagnostic only; not the current controller loop, live gameplay, physical key state, task effect, recovery, latency, safety, or MAP01 outcome.",
++  "roles": {
++    "candidate_runs": 1,
++    "auditor_runs": 1,
++    "retries": 0,
++    "original_candidate_reruns": 0
++  },
++  "runtime": {
++    "engine": "WSLc",
++    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
++    "network": "none",
++    "cpus": 1
++  },
++  "upstream": {
++    "audit_v2_git_blob": "300882784bc6c84de3060a2777863d6995ae60c7",
++    "freeze_git_blob": "2adb933322af9945d5ad0b9d5a3526cbb6a5e632",
++    "probe_git_blob": "47730ee716fae0eab329af6fff3eb44d3d6dee9a",
++    "raw_git_blob": "3e71fb35b2c488ea20ee73da6d2b5378db3fa6a0",
++    "expectations_git_blob": "62863aae12125041ac035c5870e3c6f02be4cb64",
++    "input_raw_sha256": "7a4dab4690f6c0736adb3582bd246dbf11c8572b31f9855e5841327e1a65ea83",
++    "input_probe_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac",
++    "source_main_sha256": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5d"
++  },
++  "preregistered": {
++    "baseline": "PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING",
++    "status_contradiction": "FAIL",
++    "display_contradiction": "FAIL",
++    "python_xlib_contradiction": "FAIL"
++  },
++  "candidate_sha256": "c76f023d20c91c8ed4d80829eab81c7484e74acf53680d384baeb50b1c0d682b",
++  "independent_auditor_sha256": "131bb1bcf8c961244e3c4a65c94bc0c0a46e264915b923de7e44545897861035",
++  "inputs": {
++    "audit_v2_sha256": "4c8b06aad94b871c13d863bcfb88d1d6c157a79e598120412e9a63d568581b58",
++    "freeze_a03_sha256": "2ef55bc53f06261e30c479bfc80188ca583cc77a7563dedf38040f1ac5601ca9",
++    "probe_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac",
++    "raw_sha256": "7a4dab4690f6c0736adb3582bd246dbf11c8572b31f9855e5841327e1a65ea83",
++    "expectations_sha256": "79ba30664b6cc02ecf4fa84773fa9aaaaa75c761b5363f5bde8a3dfb0c2e0211",
++    "expected_audit_sha256": "272cf44154792e2f59e23441d26373a2856795d84b6f9b5a98ef6db1c08cd72e"
++  },
++  "construction_attempts": [
++    {
++      "id": "a02-construction-01",
++      "command": "python -B -c AST-compile candidate, auditor, and audit-v2 source in memory",
++      "exit_code": 0,
++      "result": "AST_COMPILE_OK=3",
++      "formal_roles_invoked": 0,
++      "disposition": "Passed on exact frozen A02 sources; no output writes"
++    }
++  ],
++  "source_main_sha256": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
++  "prior_allocation_a01": {
++    "base_main": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5d",
++    "terminal": "STOP_MAIN_ADVANCED_BEFORE_PREREG_FROZEN",
++    "candidate_runs": 0,
++    "auditor_runs": 0,
++    "retries": 0,
++    "source_identity_changed": false,
++    "main_at_stop": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
++    "record_issue_comment": "https://github.com/Unjuno/agent-interface/issues/6957#issuecomment-5990464854"
++  }
++}
+\ No newline at end of file
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/README.md b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/README.md
+new file mode 100644
+index 00000000000..25fd6481d9d
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/README.md
+@@ -0,0 +1,9 @@
++# A01 — Xlib audit-v2 metadata consistency challenge
++
++This is an additive follow-up to the synthetic Xvfb diagnostic merged by PR #7776. It challenges only the report-consistency boundary of its post-run audit-v2 correction; it does not rerun the original one-shot Xvfb candidate.
++
++See H/T/D/C/U and frozen decision rules in FREEZE.json. The treatment mutations replace one top-level value in the retained original RAW.json and recompute the raw JSON digest before submitting it to the unchanged audit-v2 implementation. The independent auditor checks the exact mutation deltas and result matrix from the frozen contract.
++
++Scope: synthetic Xvfb/XTEST evidence provenance only. No current V39 controller, game, model, OS keyboard, physical key, task effect, recovery, safety, or MAP01 outcome was exercised. No GPU/game allocation was requested.
++
++A01's exact-main prelaunch STOP and construction evidence are retained in A01_STOP.json and CONSTRUCTION_A01.json; no formal candidate or auditor ran under that allocation.
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/FREEZE_A03.json b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/FREEZE_A03.json
+new file mode 100644
+index 00000000000..2adb933322a
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/FREEZE_A03.json
+@@ -0,0 +1,29 @@
++{
++  "schema": "xvfb-xlib-select-buffering-freeze-v1",
++  "allocation": "construction-diagnostic-a03",
++  "hypothesis": "query_keymap on the same Python-Xlib connection that owns a selected event window can read socket bytes into Xlib's client queue, leaving fd select unreadable even though pending X events exist",
++  "source_main_at_preregistration": "a9352dc53c783f1501046d762bc36c34bc6ab480",
++  "upstream_probe_source": "research/doom/map01_v39_xvfb_per_key_release_identity_a03_20261005/SOURCE/candidate.py",
++  "upstream_probe_branch": "research/59-v39-xvfb-release-a03-20261005",
++  "upstream_probe_head": "f5e9b78103e9ecd039020adb69c457a971138713",
++  "probe_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac",
++  "environment": {
++    "execution": "WSL Ubuntu host; private Xvfb display :189",
++    "python": "3.12.3",
++    "python_xlib": "0.33",
++    "network": "no candidate network calls",
++    "input": "synthetic XTEST only; no physical keyboard events"
++  },
++  "conditions": [
++    "select on event-owning connection before any query_keymap round trip",
++    "query_keymap on event-owning connection before select",
++    "query_keymap on separate connection before select on event-owning connection"
++  ],
++  "replicates": 1,
++  "decision_rule": "PASS_METHOD_SCOPED only if all 6 expected KeyPress/KeyRelease events (type, keycode, target window) are received and Xvfb stops; otherwise FAIL_DIAGNOSTIC_CONTRACT; setup/environment exception is STOP",
++  "scope_limit": "Xvfb/Xlib queue behavior only; no actual integrated controller, game, model, physical input, task effect, threat response, safety, recovery, or MAP01 result",
++  "prior_attempts": {
++    "a01": "STOP: diagnostic harness AttributeError('detail'); preserved in issue conversation, not retried in place",
++    "a02": "FAIL: wrong client-connection ownership; recorded MappingNotify rather than the required KeyPress/KeyRelease; its unvalidated PASS label is rejected"
++  }
++}
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/audit_v2.py b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/audit_v2.py
+new file mode 100644
+index 00000000000..300882784bc
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/audit_v2.py
+@@ -0,0 +1,92 @@
++"""Corrective identity-bound audit; the retained audit-v1 result stays unchanged."""
++import hashlib
++import json
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++
++
++def audit(raw_bytes, raw, freeze, probe_bytes, expectations):
++    errors = []
++    probe_sha = hashlib.sha256(probe_bytes).hexdigest()
++    if probe_sha != freeze.get("probe_sha256"):
++        errors.append("probe SHA mismatch")
++    if raw.get("source_sha256") != probe_sha:
++        errors.append("raw source SHA mismatch")
++    if raw.get("error") is not None:
++        errors.append("candidate error present")
++    if raw.get("schema") != "xvfb-xlib-select-buffering-a03-v1":
++        errors.append("schema mismatch")
++    if expectations.get("schema") != "xvfb-xlib-select-buffering-audit-expectations-v2":
++        errors.append("expectations schema mismatch")
++
++    expected_cases = [
++        ("select-first", None, True),
++        ("same-connection-query-first", "same", False),
++        ("separate-query-connection-first", "separate", True),
++    ]
++    cases = raw.get("cases", [])
++    if len(cases) != len(expected_cases):
++        errors.append("case count")
++    keycode = expectations.get("expected_keycode")
++    window = expectations.get("expected_window")
++    for case, (name, query_mode, fd_ready) in zip(cases, expected_cases):
++        if (case.get("case"), case.get("query_mode")) != (name, query_mode):
++            errors.append(name + ": identity/order")
++        for edge_name, event_type, state_key in (("press", 2, "keymap_down_seen"),
++                                                  ("release", 3, "keymap_up_seen")):
++            edge = case.get(edge_name, {})
++            if edge.get("fd_select_ready") is not fd_ready:
++                errors.append(name + ": " + edge_name + " fd readiness")
++            if edge.get("expected_event_found") is not True:
++                errors.append(name + ": " + edge_name + " expected event missing")
++            if edge.get("expected_type") != event_type:
++                errors.append(name + ": " + edge_name + " expected type")
++            if edge.get("expected_keycode") != keycode:
++                errors.append(name + ": " + edge_name + " expected keycode")
++            if edge.get("expected_window") != window:
++                errors.append(name + ": " + edge_name + " expected window")
++            matches = [event for event in edge.get("events", [])
++                       if event.get("type") == event_type
++                       and event.get("detail") == keycode
++                       and event.get("window") == window]
++            if len(matches) != 1:
++                errors.append(name + ": " + edge_name + " exact frozen identity cardinality")
++            if query_mode is not None and case.get(state_key) is not True:
++                errors.append(name + ": " + state_key)
++            if query_mode is None and case.get(state_key) is not None:
++                errors.append(name + ": unexpected keymap query")
++            if query_mode == "same" and edge.get("xlib_pending_before_drain") != 1:
++                errors.append(name + ": expected event not already buffered in Xlib")
++    if raw.get("xvfb_exit") != 0 or raw.get("xvfb_stopped") is not True:
++        errors.append("Xvfb cleanup")
++    decision = "PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING" if not errors else "FAIL"
++    return {"schema": "xvfb-xlib-select-buffering-audit-v2",
++            "expectations_sha256": hashlib.sha256(
++                json.dumps(expectations, sort_keys=True).encode("utf-8")).hexdigest(),
++            "source_sha256": probe_sha,
++            "raw_sha256": hashlib.sha256(raw_bytes).hexdigest(),
++            "checked_cases": len(cases), "expected_edges": 6,
++            "same_connection_edges_with_fd_not_ready_but_xlib_buffered": sum(
++                1 for case in cases if case.get("query_mode") == "same"
++                for edge in (case.get("press", {}), case.get("release", {}))
++                if edge.get("fd_select_ready") is False and edge.get("xlib_pending_before_drain") == 1),
++            "independent_query_connection_edges_fd_ready": sum(
++                1 for case in cases if case.get("query_mode") == "separate"
++                for edge in (case.get("press", {}), case.get("release", {}))
++                if edge.get("fd_select_ready") is True),
++            "errors": errors, "decision": decision}
++
++
++def main():
++    raw_bytes = (HERE / "evidence" / "RAW.json").read_bytes()
++    raw = json.loads(raw_bytes)
++    freeze = json.loads((HERE / "FREEZE.json").read_text(encoding="utf-8"))
++    expectations = json.loads((HERE / "evidence" / "AUDIT_EXPECTATIONS_V2.json").read_text(encoding="utf-8"))
++    report = audit(raw_bytes, raw, freeze, (HERE / "probe.py").read_bytes(), expectations)
++    print(json.dumps(report, sort_keys=True))
++    raise SystemExit(0 if report["decision"] == "PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING" else 1)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/AUDIT_EXPECTATIONS_V2.json b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/AUDIT_EXPECTATIONS_V2.json
+new file mode 100644
+index 00000000000..62863aae121
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/AUDIT_EXPECTATIONS_V2.json
+@@ -0,0 +1,16 @@
++{
++  "schema": "xvfb-xlib-select-buffering-audit-expectations-v2",
++  "provenance": "post-run corrective contract authored after review found a digest-recomputed event-identity mutation accepted by audit-v1; these values were not part of the preregistration freeze",
++  "scope": "bind the identity asserted by this one retained diagnostic; this correction does not upgrade the experiment or its independence claim",
++  "keysym_from_frozen_probe": "a",
++  "expected_keycode": 38,
++  "expected_window": 2097152,
++  "expected_edges": [
++    {"case": "select-first", "edge": "press", "type": 2},
++    {"case": "select-first", "edge": "release", "type": 3},
++    {"case": "same-connection-query-first", "edge": "press", "type": 2},
++    {"case": "same-connection-query-first", "edge": "release", "type": 3},
++    {"case": "separate-query-connection-first", "edge": "press", "type": 2},
++    {"case": "separate-query-connection-first", "edge": "release", "type": 3}
++  ]
++}
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/AUDIT_V2_EXPECTED.json b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/AUDIT_V2_EXPECTED.json
+new file mode 100644
+index 00000000000..860b74e6cd7
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/AUDIT_V2_EXPECTED.json
+@@ -0,0 +1,12 @@
++{
++    "checked_cases": 3,
++    "decision": "PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING",
++    "errors": [],
++    "expectations_sha256": "682c076d3335fceced94fadb93612c5ac09743bbcda56bdc2b56659e31e6a574",
++    "expected_edges": 6,
++    "independent_query_connection_edges_fd_ready": 2,
++    "raw_sha256": "7a4dab4690f6c0736adb3582bd246dbf11c8572b31f9855e5841327e1a65ea83",
++    "same_connection_edges_with_fd_not_ready_but_xlib_buffered": 2,
++    "schema": "xvfb-xlib-select-buffering-audit-v2",
++    "source_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac"
++}
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/RAW.json b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/RAW.json
+new file mode 100644
+index 00000000000..3e71fb35b2c
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/inputs/RAW.json
+@@ -0,0 +1,94 @@
++{
++  "cases": [
++    {
++      "case": "select-first",
++      "keymap_down_seen": null,
++      "keymap_up_seen": null,
++      "press": {
++        "events": [
++          {"detail": -1, "type": 34, "window": null},
++          {"detail": -1, "type": 34, "window": null},
++          {"detail": 38, "type": 2, "window": 2097152}
++        ],
++        "expected_event_found": true,
++        "expected_keycode": 38,
++        "expected_type": 2,
++        "expected_window": 2097152,
++        "fd_select_ready": true,
++        "xlib_pending_before_drain": 3
++      },
++      "query_mode": null,
++      "release": {
++        "events": [{"detail": 38, "type": 3, "window": 2097152}],
++        "expected_event_found": true,
++        "expected_keycode": 38,
++        "expected_type": 3,
++        "expected_window": 2097152,
++        "fd_select_ready": true,
++        "xlib_pending_before_drain": 1
++      },
++      "setup_events_drained": []
++    },
++    {
++      "case": "same-connection-query-first",
++      "keymap_down_seen": true,
++      "keymap_up_seen": true,
++      "press": {
++        "events": [{"detail": 38, "type": 2, "window": 2097152}],
++        "expected_event_found": true,
++        "expected_keycode": 38,
++        "expected_type": 2,
++        "expected_window": 2097152,
++        "fd_select_ready": false,
++        "xlib_pending_before_drain": 1
++      },
++      "query_mode": "same",
++      "release": {
++        "events": [{"detail": 38, "type": 3, "window": 2097152}],
++        "expected_event_found": true,
++        "expected_keycode": 38,
++        "expected_type": 3,
++        "expected_window": 2097152,
++        "fd_select_ready": false,
++        "xlib_pending_before_drain": 1
++      },
++      "setup_events_drained": []
++    },
++    {
++      "case": "separate-query-connection-first",
++      "keymap_down_seen": true,
++      "keymap_up_seen": true,
++      "press": {
++        "events": [{"detail": 38, "type": 2, "window": 2097152}],
++        "expected_event_found": true,
++        "expected_keycode": 38,
++        "expected_type": 2,
++        "expected_window": 2097152,
++        "fd_select_ready": true,
++        "xlib_pending_before_drain": 1
++      },
++      "query_mode": "separate",
++      "release": {
++        "events": [{"detail": 38, "type": 3, "window": 2097152}],
++        "expected_event_found": true,
++        "expected_keycode": 38,
++        "expected_type": 3,
++        "expected_window": 2097152,
++        "fd_select_ready": true,
++        "xlib_pending_before_drain": 1
++      },
++      "setup_events_drained": []
++    }
++  ],
++  "display": ":189",
++  "error": null,
++  "python": "3.12.3",
++  "python_xlib": [0, 33],
++  "schema": "xvfb-xlib-select-buffering-a03-v1",
++  "scope": "private Xvfb; synthetic XTEST only; no game/model/physical input/task effect",
++  "source_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac",
++  "status": "PASS_METHOD_SCOPED",
++  "xvfb_exit": 0,
++  "xvfb_stopped": true,
++  "xvfb_version": ["Unrecognized option: -version", "use: X [:<display>] [option]"]
++}
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/probe.py b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/probe.py
+new file mode 100644
+index 00000000000..47730ee716f
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/SOURCE/probe.py
+@@ -0,0 +1,163 @@
++"""One-shot Xvfb diagnostic for Xlib-buffered events vs fd readiness.
++
++Scope: private Xvfb and synthetic XTEST only. No game, model, desktop window,
++physical input, task effect, or live allocation.
++"""
++import hashlib
++import json
++import os
++import select
++import subprocess
++import sys
++import time
++from pathlib import Path
++
++import Xlib
++from Xlib import X, XK, display
++from Xlib.ext import xtest
++
++
++HERE = Path(__file__).resolve().parent
++DISPLAY_NAME = ":189"
++KEYSYM = "a"
++TIMEOUT_SECONDS = 0.1
++
++
++def wait_display(server):
++    deadline = time.monotonic() + 5.0
++    last_error = None
++    while time.monotonic() < deadline:
++        if server.poll() is not None:
++            raise RuntimeError("Xvfb exited: " + server.stderr.read().decode("utf-8", "replace"))
++        try:
++            return display.Display(DISPLAY_NAME)
++        except Exception as exc:
++            last_error = repr(exc)
++            time.sleep(0.05)
++    raise TimeoutError("Xvfb startup timeout: " + str(last_error))
++
++
++def drain(conn):
++    drained = []
++    while conn.pending_events():
++        event = conn.next_event()
++        drained.append(int(event.type))
++    return drained
++
++
++def collect_one(conn, expected_type, expected_keycode, expected_window):
++    ready, _, _ = select.select([conn.fileno()], [], [], TIMEOUT_SECONDS)
++    pending = conn.pending_events()
++    found = []
++    while conn.pending_events():
++        event = conn.next_event()
++        record = {"type": int(event.type), "window": int(getattr(event, "window", 0).id)
++                  if hasattr(getattr(event, "window", None), "id") else None,
++                  "detail": int(getattr(event, "detail", -1))}
++        found.append(record)
++    matched = any(row["type"] == expected_type and row["detail"] == expected_keycode
++                  and row["window"] == expected_window for row in found)
++    return {"fd_select_ready": bool(ready), "xlib_pending_before_drain": pending,
++            "events": found, "expected_type": expected_type,
++            "expected_keycode": expected_keycode, "expected_window": expected_window,
++            "expected_event_found": matched}
++
++
++def run_case(label, query_mode):
++    event_conn = display.Display(DISPLAY_NAME)
++    driver = display.Display(DISPLAY_NAME)
++    query_conn = event_conn if query_mode == "same" else (
++        display.Display(DISPLAY_NAME) if query_mode == "separate" else None
++    )
++    try:
++        screen = event_conn.screen()
++        window = screen.root.create_window(
++            20, 20, 180, 90, 0, screen.root_depth, X.InputOutput,
++            X.CopyFromParent, event_mask=X.KeyPressMask | X.KeyReleaseMask,
++        )
++        window.map()
++        event_conn.sync()
++        event_conn.set_input_focus(window, X.RevertToParent, X.CurrentTime)
++        event_conn.sync()
++        if event_conn.get_input_focus().focus.id != window.id:
++            raise RuntimeError(label + ": focus mismatch")
++        setup_events = drain(event_conn)
++        keycode = event_conn.keysym_to_keycode(XK.string_to_keysym(KEYSYM))
++        if not keycode:
++            raise RuntimeError(label + ": keycode unavailable")
++
++        xtest.fake_input(driver, X.KeyPress, keycode)
++        driver.sync()
++        keymap_down = None
++        if query_conn is not None:
++            bitmap = query_conn.query_keymap()
++            keymap_down = bool(bitmap[keycode // 8] & (1 << (keycode % 8)))
++        press = collect_one(event_conn, X.KeyPress, keycode, int(window.id))
++
++        xtest.fake_input(driver, X.KeyRelease, keycode)
++        driver.sync()
++        keymap_up = None
++        if query_conn is not None:
++            bitmap = query_conn.query_keymap()
++            keymap_up = not bool(bitmap[keycode // 8] & (1 << (keycode % 8)))
++        release = collect_one(event_conn, X.KeyRelease, keycode, int(window.id))
++        return {"case": label, "query_mode": query_mode, "setup_events_drained": setup_events,
++                "keymap_down_seen": keymap_down, "press": press,
++                "keymap_up_seen": keymap_up, "release": release}
++    finally:
++        if query_conn is not None and query_conn is not event_conn:
++            query_conn.close()
++        driver.close()
++        event_conn.close()
++
++
++def main():
++    freeze = json.loads((HERE / "FREEZE.json").read_text(encoding="utf-8"))
++    actual_hash = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
++    if actual_hash != freeze["probe_sha256"]:
++        raise SystemExit("probe hash mismatch")
++    server = subprocess.Popen(
++        ["Xvfb", DISPLAY_NAME, "-screen", "0", "640x480x24", "-nolisten", "tcp", "-noreset", "-ac"],
++        env={**os.environ, "DISPLAY": DISPLAY_NAME}, stdin=subprocess.DEVNULL,
++        stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
++    )
++    result = {"schema": "xvfb-xlib-select-buffering-a03-v1", "status": "STOP",
++              "source_sha256": actual_hash, "display": DISPLAY_NAME,
++              "scope": "private Xvfb; synthetic XTEST only; no game/model/physical input/task effect",
++              "python": sys.version.split()[0],
++              "python_xlib": getattr(Xlib, "__version__", "unknown"),
++              "cases": [], "error": None}
++    try:
++        bootstrap = wait_display(server)
++        bootstrap.close()
++        result["xvfb_version"] = subprocess.run(
++            ["Xvfb", "-version"], capture_output=True, text=True, check=False
++        ).stderr.strip().splitlines()[:2]
++        result["cases"] = [
++            run_case("select-first", None),
++            run_case("same-connection-query-first", "same"),
++            run_case("separate-query-connection-first", "separate"),
++        ]
++        result["status"] = "PASS_METHOD_SCOPED"
++    except Exception as exc:
++        result["error"] = repr(exc)
++    finally:
++        try:
++            server.terminate()
++            server.wait(timeout=5)
++        except subprocess.TimeoutExpired:
++            server.kill()
++            server.wait(timeout=5)
++        result["xvfb_exit"] = server.returncode
++        result["xvfb_stopped"] = server.poll() is not None
++    checks = []
++    for case in result["cases"]:
++        checks.extend([case["press"]["expected_event_found"], case["release"]["expected_event_found"]])
++    if result["error"] is not None or not all(checks) or len(checks) != 6 or not result["xvfb_stopped"]:
++        result["status"] = "FAIL_DIAGNOSTIC_CONTRACT"
++    print(json.dumps(result, sort_keys=True))
++    return 0 if result["status"] == "PASS_METHOD_SCOPED" else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/audit_v2.py b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/audit_v2.py
+new file mode 100644
+index 00000000000..300882784bc
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/audit_v2.py
+@@ -0,0 +1,92 @@
++"""Corrective identity-bound audit; the retained audit-v1 result stays unchanged."""
++import hashlib
++import json
++from pathlib import Path
++
++HERE = Path(__file__).resolve().parent
++
++
++def audit(raw_bytes, raw, freeze, probe_bytes, expectations):
++    errors = []
++    probe_sha = hashlib.sha256(probe_bytes).hexdigest()
++    if probe_sha != freeze.get("probe_sha256"):
++        errors.append("probe SHA mismatch")
++    if raw.get("source_sha256") != probe_sha:
++        errors.append("raw source SHA mismatch")
++    if raw.get("error") is not None:
++        errors.append("candidate error present")
++    if raw.get("schema") != "xvfb-xlib-select-buffering-a03-v1":
++        errors.append("schema mismatch")
++    if expectations.get("schema") != "xvfb-xlib-select-buffering-audit-expectations-v2":
++        errors.append("expectations schema mismatch")
++
++    expected_cases = [
++        ("select-first", None, True),
++        ("same-connection-query-first", "same", False),
++        ("separate-query-connection-first", "separate", True),
++    ]
++    cases = raw.get("cases", [])
++    if len(cases) != len(expected_cases):
++        errors.append("case count")
++    keycode = expectations.get("expected_keycode")
++    window = expectations.get("expected_window")
++    for case, (name, query_mode, fd_ready) in zip(cases, expected_cases):
++        if (case.get("case"), case.get("query_mode")) != (name, query_mode):
++            errors.append(name + ": identity/order")
++        for edge_name, event_type, state_key in (("press", 2, "keymap_down_seen"),
++                                                  ("release", 3, "keymap_up_seen")):
++            edge = case.get(edge_name, {})
++            if edge.get("fd_select_ready") is not fd_ready:
++                errors.append(name + ": " + edge_name + " fd readiness")
++            if edge.get("expected_event_found") is not True:
++                errors.append(name + ": " + edge_name + " expected event missing")
++            if edge.get("expected_type") != event_type:
++                errors.append(name + ": " + edge_name + " expected type")
++            if edge.get("expected_keycode") != keycode:
++                errors.append(name + ": " + edge_name + " expected keycode")
++            if edge.get("expected_window") != window:
++                errors.append(name + ": " + edge_name + " expected window")
++            matches = [event for event in edge.get("events", [])
++                       if event.get("type") == event_type
++                       and event.get("detail") == keycode
++                       and event.get("window") == window]
++            if len(matches) != 1:
++                errors.append(name + ": " + edge_name + " exact frozen identity cardinality")
++            if query_mode is not None and case.get(state_key) is not True:
++                errors.append(name + ": " + state_key)
++            if query_mode is None and case.get(state_key) is not None:
++                errors.append(name + ": unexpected keymap query")
++            if query_mode == "same" and edge.get("xlib_pending_before_drain") != 1:
++                errors.append(name + ": expected event not already buffered in Xlib")
++    if raw.get("xvfb_exit") != 0 or raw.get("xvfb_stopped") is not True:
++        errors.append("Xvfb cleanup")
++    decision = "PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING" if not errors else "FAIL"
++    return {"schema": "xvfb-xlib-select-buffering-audit-v2",
++            "expectations_sha256": hashlib.sha256(
++                json.dumps(expectations, sort_keys=True).encode("utf-8")).hexdigest(),
++            "source_sha256": probe_sha,
++            "raw_sha256": hashlib.sha256(raw_bytes).hexdigest(),
++            "checked_cases": len(cases), "expected_edges": 6,
++            "same_connection_edges_with_fd_not_ready_but_xlib_buffered": sum(
++                1 for case in cases if case.get("query_mode") == "same"
++                for edge in (case.get("press", {}), case.get("release", {}))
++                if edge.get("fd_select_ready") is False and edge.get("xlib_pending_before_drain") == 1),
++            "independent_query_connection_edges_fd_ready": sum(
++                1 for case in cases if case.get("query_mode") == "separate"
++                for edge in (case.get("press", {}), case.get("release", {}))
++                if edge.get("fd_select_ready") is True),
++            "errors": errors, "decision": decision}
++
++
++def main():
++    raw_bytes = (HERE / "evidence" / "RAW.json").read_bytes()
++    raw = json.loads(raw_bytes)
++    freeze = json.loads((HERE / "FREEZE.json").read_text(encoding="utf-8"))
++    expectations = json.loads((HERE / "evidence" / "AUDIT_EXPECTATIONS_V2.json").read_text(encoding="utf-8"))
++    report = audit(raw_bytes, raw, freeze, (HERE / "probe.py").read_bytes(), expectations)
++    print(json.dumps(report, sort_keys=True))
++    raise SystemExit(0 if report["decision"] == "PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING" else 1)
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/candidate.py b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/candidate.py
+new file mode 100644
+index 00000000000..e9c399f5285
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/candidate.py
+@@ -0,0 +1,36 @@
++import hashlib,json,platform,sys
++from pathlib import Path
++import audit_v2
++INPUT=Path(sys.argv[1]); OUT=Path(sys.argv[2]); OUT.mkdir(parents=True,exist_ok=True)
++def sha(b): return hashlib.sha256(b).hexdigest()
++audit_freeze=json.loads((INPUT/"FREEZE_A03.json").read_text())
++experiment_freeze=json.loads(Path("/src/FREEZE.json").read_text())
++expect_bytes=(INPUT/"AUDIT_EXPECTATIONS_V2.json").read_bytes()
++probe=(INPUT/"probe.py").read_bytes()
++raw_bytes=(INPUT/"RAW.json").read_bytes()
++audit_bytes=Path("/src/audit_v2.py").read_bytes()
++checks={"audit_v2_sha256":sha(audit_bytes),"freeze_a03_sha256":sha((INPUT/"FREEZE_A03.json").read_bytes()),"probe_sha256":sha(probe),"raw_sha256":sha(raw_bytes),"expectations_sha256":sha(expect_bytes)}
++# The input values are frozen before the role starts; no candidate output is written on mismatch.
++expected=experiment_freeze["inputs"]
++for key,value in checks.items():
++ if value!=expected[key]: raise SystemExit("STOP_INPUT_IDENTITY:"+key)
++expect=json.loads(expect_bytes); original=json.loads(raw_bytes)
++variants=[("baseline",None),("status_contradiction",("status","FAIL_DIAGNOSTIC_CONTRACT")),("display_contradiction",("display",":188")),("python_xlib_contradiction",("python_xlib",[0,34]))]
++rows=[]
++for name,mutation in variants:
++ obj=json.loads(raw_bytes)
++ if mutation: obj[mutation[0]]=mutation[1]
++ data=json.dumps(obj,indent=2,sort_keys=True).encode()+b"\n"
++ result=audit_v2.audit(data,obj,audit_freeze,probe,expect)
++ p=OUT/(name+".raw.json"); p.write_bytes(data)
++ rows.append({"case":name,"mutation":{mutation[0]:mutation[1]} if mutation else None,"raw_path":p.name,"raw_sha256":sha(data),"audit_decision":result["decision"],"audit_errors":result["errors"],"audit_report":result})
++cg={}
++for n in ("cpu.max","memory.max","memory.swap.max"):
++ try: cg[n]=Path("/sys/fs/cgroup",n).read_text().strip()
++ except OSError as e: cg[n]="unavailable:"+type(e).__name__
++report={"schema":"xvfb-audit-v3-candidate-v1","case_count":len(rows),
++ "candidate_source_sha256":sha(Path("/src/candidate.py").read_bytes()),
++ "audit_source_sha256":checks["audit_v2_sha256"],"input_hashes":checks,
++ "runtime":{"python":platform.python_version(),"cgroup":cg},"cases":rows}
++(OUT/"CANDIDATE.json").write_text(json.dumps(report,indent=2,sort_keys=True)+"\n")
++print(json.dumps({"status":"CANDIDATE_COMPLETE","case_count":len(rows),"decisions":[r["audit_decision"] for r in rows],"runtime":report["runtime"]},sort_keys=True))
+diff --git a/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/independent_audit.py b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/independent_audit.py
+new file mode 100644
+index 00000000000..383f0ae4bb2
+--- /dev/null
++++ b/research/doom/map01_v39_xvfb_select_buffering_a05_20261005/independent_audit.py
+@@ -0,0 +1,45 @@
++import hashlib,json,sys
++from pathlib import Path
++BUNDLE=Path(sys.argv[1]); OUT=Path(sys.argv[2]); OUT.mkdir(parents=True,exist_ok=True)
++def sha(b): return hashlib.sha256(b).hexdigest()
++freeze=json.loads((BUNDLE/"FREEZE.json").read_text()); source=BUNDLE/"SOURCE"; evidence=BUNDLE/"evidence"
++candidate=json.loads((evidence/"candidate-output/CANDIDATE.json").read_text()); original=(source/"inputs/RAW.json").read_bytes()
++expected=[("baseline",None,"PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING"),("status_contradiction",{"status":"FAIL_DIAGNOSTIC_CONTRACT"},"FAIL"),("display_contradiction",{"display":":188"},"FAIL"),("python_xlib_contradiction",{"python_xlib":[0,34]},"FAIL")]
++errors=[]
++if candidate.get("schema")!="xvfb-audit-v3-candidate-v1": errors.append("candidate schema")
++if candidate.get("case_count")!=4 or len(candidate.get("cases",[]))!=4: errors.append("case cardinality")
++if candidate.get("candidate_source_sha256")!=freeze["candidate_sha256"] or sha((BUNDLE/"candidate.py").read_bytes())!=freeze["candidate_sha256"]: errors.append("candidate source identity")
++if sha(Path(__file__).read_bytes())!=freeze["independent_auditor_sha256"]: errors.append("independent auditor source identity")
++if candidate.get("audit_source_sha256")!=freeze["inputs"]["audit_v2_sha256"] or sha((BUNDLE/"audit_v2.py").read_bytes())!=freeze["inputs"]["audit_v2_sha256"]: errors.append("audit-v2 source identity")
++if sha(original)!=freeze["inputs"]["raw_sha256"]: errors.append("input raw identity")
++if sha((source/"probe.py").read_bytes())!=freeze["inputs"]["probe_sha256"]: errors.append("probe identity")
++if sha((source/"FREEZE_A03.json").read_bytes())!=freeze["inputs"]["freeze_a03_sha256"]: errors.append("freeze identity")
++if sha((source/"inputs/AUDIT_EXPECTATIONS_V2.json").read_bytes())!=freeze["inputs"]["expectations_sha256"]: errors.append("expectations identity")
++actual={r.get("case"):r for r in candidate.get("cases",[])}
++if set(actual)!=set(x[0] for x in expected): errors.append("case identity set")
++for name,mutation,decision in expected:
++ row=actual.get(name,{})
++ rawname=row.get("raw_path","")
++ if Path(rawname).name!=rawname: errors.append(name+": unsafe output path"); continue
++ p=evidence/"candidate-output"/rawname
++ if not p.is_file(): errors.append(name+": raw output missing"); continue
++ data=p.read_bytes()
++ if sha(data)!=row.get("raw_sha256"): errors.append(name+": raw hash")
++ obj=json.loads(data); expected_obj=json.loads(original)
++ if mutation:
++  for key,value in mutation.items(): expected_obj[key]=value
++ if obj!=expected_obj: errors.append(name+": unexpected raw mutation delta")
++ if row.get("audit_decision")!=decision: errors.append(name+": preregistered decision mismatch: "+str(row.get("audit_decision")))
++ nested=row.get("audit_report",{})
++ if nested.get("raw_sha256")!=sha(data): errors.append(name+": nested raw digest")
++ if nested.get("decision")!=row.get("audit_decision"): errors.append(name+": nested decision")
++ if nested.get("errors")!=row.get("audit_errors"): errors.append(name+": nested errors")
++ if name=="baseline" and row.get("audit_errors")!=[]: errors.append("baseline errors")
++decision="PASS_AUDIT_CONSISTENCY_SCOPED" if not errors else "FAIL_AUDIT_CONSISTENCY"
++report={"schema":"xvfb-audit-v3-independent-audit-v1","allocation":freeze["allocation"],
++ "candidate_source_sha256":freeze["candidate_sha256"],"auditor_source_sha256":freeze["independent_auditor_sha256"],
++ "candidate_cases":len(actual),"checked_raw_sha256":[actual[name].get("raw_sha256") for name,_,_ in expected if name in actual],
++ "errors":errors,"decision":decision}
++(OUT/"AUDIT.json").write_text(json.dumps(report,indent=2,sort_keys=True)+"\n")
++print(json.dumps(report,sort_keys=True))
++raise SystemExit(0 if not errors else 1)
+--
+2.54.0

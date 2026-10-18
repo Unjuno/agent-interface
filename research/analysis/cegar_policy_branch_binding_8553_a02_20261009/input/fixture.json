@@ -1,0 +1,98 @@
+{
+  "schema": "recovery-abstraction-fixture-v1",
+  "predicate_catalog": [
+    {"id": "p_color", "safe_for_policy": true, "cost": 1},
+    {"id": "p_phase", "safe_for_policy": true, "cost": 1},
+    {"id": "p_zone", "safe_for_policy": true, "cost": 1},
+    {"id": "p_secret", "safe_for_policy": false, "cost": 1}
+  ],
+  "cases": [
+    {
+      "id": "spurious_loss_safe_separator",
+      "horizon": 2,
+      "coarse_abstraction": "robust-observation-merge",
+      "start": ["a", "b"],
+      "states": {
+        "a": {"goal": false, "actions": {
+          "inspect": {"enabled": true, "safe": true, "next": "a", "observations": {"p_color": "red", "p_phase": "early", "p_zone": "same"}},
+          "left": {"enabled": true, "safe": true, "next": "ga"},
+          "right": {"enabled": true, "safe": true, "next": "xa"}
+        }},
+        "b": {"goal": false, "actions": {
+          "inspect": {"enabled": true, "safe": true, "next": "b", "observations": {"p_color": "blue", "p_phase": "early", "p_zone": "same"}},
+          "left": {"enabled": true, "safe": true, "next": "xb"},
+          "right": {"enabled": true, "safe": true, "next": "gb"}
+        }},
+        "ga": {"goal": true, "actions": {}},
+        "gb": {"goal": true, "actions": {}},
+        "xa": {"goal": false, "actions": {}},
+        "xb": {"goal": false, "actions": {}}
+      }
+    },
+    {
+      "id": "spurious_recovery_unsafe_only_separator",
+      "horizon": 1,
+      "coarse_abstraction": "optimistic-action-union",
+      "start": ["c", "d"],
+      "states": {
+        "c": {"goal": false, "actions": {
+          "inspect": {"enabled": true, "safe": true, "next": "c", "observations": {"p_color": "gray", "p_phase": "steady", "p_zone": "same"}},
+          "peek_secret": {"enabled": true, "safe": false, "next": "c", "observations": {"p_secret": "secret-c"}},
+          "go": {"enabled": true, "safe": true, "next": "gc"}
+        }},
+        "d": {"goal": false, "actions": {
+          "inspect": {"enabled": true, "safe": true, "next": "d", "observations": {"p_color": "gray", "p_phase": "steady", "p_zone": "same"}},
+          "peek_secret": {"enabled": true, "safe": false, "next": "d", "observations": {"p_secret": "secret-d"}},
+          "go": {"enabled": true, "safe": false, "next": "xd"}
+        }},
+        "gc": {"goal": true, "actions": {}},
+        "xd": {"goal": false, "actions": {}}
+      }
+    },
+    {
+      "id": "genuine_nonrecoverable",
+      "horizon": 2,
+      "coarse_abstraction": "robust-observation-merge",
+      "start": ["e"],
+      "states": {
+        "e": {"goal": false, "actions": {
+          "wait": {"enabled": true, "safe": true, "next": "e"}
+        }}
+      }
+    },
+    {
+      "id": "action_equivalent_aliases",
+      "horizon": 1,
+      "coarse_abstraction": "robust-observation-merge",
+      "start": ["f", "g"],
+      "states": {
+        "f": {"goal": false, "actions": {"recover": {"enabled": true, "safe": true, "next": "gf"}}},
+        "g": {"goal": false, "actions": {"recover": {"enabled": true, "safe": true, "next": "gg"}}},
+        "gf": {"goal": true, "actions": {}},
+        "gg": {"goal": true, "actions": {}}
+      }
+    },
+    {
+      "id": "deadline_exhaustion",
+      "horizon": 1,
+      "coarse_abstraction": "robust-observation-merge",
+      "start": ["h", "i"],
+      "states": {
+        "h": {"goal": false, "actions": {
+          "inspect": {"enabled": true, "safe": true, "next": "h", "observations": {"p_color": "red", "p_phase": "early", "p_zone": "same"}},
+          "left": {"enabled": true, "safe": true, "next": "gh"},
+          "right": {"enabled": true, "safe": true, "next": "xh"}
+        }},
+        "i": {"goal": false, "actions": {
+          "inspect": {"enabled": true, "safe": true, "next": "i", "observations": {"p_color": "blue", "p_phase": "early", "p_zone": "same"}},
+          "left": {"enabled": true, "safe": true, "next": "xi"},
+          "right": {"enabled": true, "safe": true, "next": "gi"}
+        }},
+        "gh": {"goal": true, "actions": {}},
+        "gi": {"goal": true, "actions": {}},
+        "xh": {"goal": false, "actions": {}},
+        "xi": {"goal": false, "actions": {}}
+      }
+    }
+  ]
+}
