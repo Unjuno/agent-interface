@@ -21,6 +21,11 @@ from runtime.backends.x11_v1.backend import X11Backend
 from runtime.cli_v1.test_mcp_process_identity import FakeX, metadata
 
 
+def _blocked_release_worker(_send_connection):
+    while True:
+        time.sleep(0.01)
+
+
 class _Cleanup:
     def __init__(self):
         self.callbacks = []
@@ -614,6 +619,89 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(terminal['task_success'])
                 self.assertFalse(terminal['replay_allowed'])
                 self.assertEqual(json.loads((root/'owner-io-entered.json').read_text()), [1])
+            finally:
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_cancel_returns_unknown_when_separate_release_worker_blocks(self):
+        """Bound caller recovery under a synthetic platform-I/O block; infer no release."""
+        from runtime.guarded_x11_v1.xres_client_fence import supervise_xres_worker
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            server = create_server(
+                {'app':20}, root, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                    alias='field', source_sequence=observed['source']['sequence'],
+                    point=[8,8], region_size=[12,12])))
+                (root/'block-owner-io').write_text('block', encoding='utf-8')
+                pending = metadata(await server.call_tool('interface_guarded_input', dict(
+                    alias='field', offset=minted['offset'], interaction='keyboard',
+                    observe_after=False, wait_for_result_ms=0,
+                    tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                self.assertEqual(pending['status'], 'pending', pending)
+                deadline = time.monotonic() + 3
+                while not (root/'owner-io-entered.json').exists() and time.monotonic() < deadline:
+                    await asyncio.sleep(0.005)
+                self.assertTrue((root/'owner-io-entered.json').exists())
+                self.assertEqual(json.loads((root/'owner-io-entered.json').read_text()), [1])
+
+                fence = {'status':'disconnected', 'worker_retired':True,
+                         'elapsed_ms':1.0}
+
+                def supervise_blocked_release(_target, _args, **kwargs):
+                    self.assertEqual(_target.__name__, '_release_retired_inputs_worker')
+                    self.assertEqual(_args[1:], ({'CTRL':1}, []))
+                    self.assertEqual(kwargs['timeout_s'], 0.25)
+                    self.assertEqual(kwargs['terminate_grace_s'], 0.1)
+                    self.assertEqual(kwargs['accepted_statuses'], ('released', 'unknown'))
+                    return supervise_xres_worker(
+                        _blocked_release_worker, (), timeout_s=0.08,
+                        terminate_grace_s=0.08,
+                        accepted_statuses=kwargs['accepted_statuses'])
+
+                started = time.monotonic()
+                with (patch('runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised',
+                            return_value=fence),
+                      patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
+                            side_effect=supervise_blocked_release)):
+                    cancel = metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+                elapsed = time.monotonic() - started
+
+                self.assertLess(elapsed, 3.0, cancel)
+                self.assertTrue(cancel['owner_process_retired'], cancel)
+                self.assertEqual(cancel['owner_client_disconnect'], fence)
+                self.assertEqual(cancel['owner_input_obligations'], {
+                    'keys':{'CTRL':1}, 'buttons':[]})
+                self.assertEqual(cancel['owner_release_attempt']['status'], 'unknown')
+                self.assertEqual(cancel['owner_release_attempt']['reason'],
+                                 'supervision_timeout')
+                self.assertTrue(cancel['owner_release_attempt']['worker_retired'])
+                self.assertFalse(cancel['release_confirmed'])
+                self.assertEqual(cancel['cleanup_status'], 'UNKNOWN')
+                self.assertIsNone(cancel['task_success'])
+                self.assertFalse(cancel['replay_allowed'])
+                self.assertTrue(cancel['late_server_request_possible'])
+
+                deadline = time.monotonic() + 3
+                terminal = None
+                while time.monotonic() < deadline:
+                    terminal = metadata(await server.call_tool('interface_results',
+                        {'call_id':pending['call_id'], 'include_image':False}))
+                    if terminal['status'] != 'pending':
+                        break
+                    await asyncio.sleep(0.005)
+                self.assertEqual(terminal['status'], 'runtime_failed', terminal)
+                self.assertFalse(terminal['release_confirmed'])
+                self.assertEqual(terminal['cleanup_status'], 'UNKNOWN')
+                self.assertIsNone(terminal['task_success'])
+                self.assertFalse(terminal['replay_allowed'])
             finally:
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
