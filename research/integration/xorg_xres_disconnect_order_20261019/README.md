@@ -35,3 +35,30 @@ the delayed-event horizon, perform the independent KeyRelease, and read again
 after a bounded post-cleanup interval. That distinguishes a delayed event from
 client-teardown timing while retaining release as `UNKNOWN`. Keep Issue #17
 open.
+
+## Follow-up run 39157339388 — 2026-10-19
+
+The follow-up at PR head `85dfeae0bfcb398f05c4b519ce515a29c4254038` extended
+the owner delay to 8,000 ms. The child was terminated about 151.8 ms after
+flush. XRes still reported `still_connected` at roughly 1.0 s, 5.0 s, and
+after the delayed-event horizon (the final query was about 1.0 s after that
+horizon). The keymap was up before cleanup, after the independent
+KeyRelease+XSync, and after the delay horizon; `late_input_observed` was false.
+The post-horizon query therefore did not represent a post-disconnect readback:
+the owner remained present in XRes. The final cleanup also read both keys up.
+
+This run did **not** reproduce a late keypress and did not meet the expected
+XRes-disappearance bound. It cannot show that an 8-second delayed request would
+execute after disconnect, because disconnect was never observed. It also does
+not establish a cleanup fence or general Xorg behavior. The follow-up CI
+artifact is [`raw/run-39157339388.json`](raw/run-39157339388.json), SHA-256
+`3d129b96ed910c28bac683422847b5802d788045404633432b8e8037fba8d4e3`.
+The integration test fails on its explicit candidate-late-press assertion;
+the other recorded PR checks pass. Keep this as a distinct bounded negative
+result, preserve release as `UNKNOWN`, and leave Issue #17 open.
+
+## Follow-up run 39157580185 — observation-only assertion
+
+After the test was changed to accept either measured key state instead of asserting the hypothesized late press, the dedicated Xvfb job passed at PR head `4ffa711d6bf4a5e60f18109dc779ed753eff4f88`. This run used X.Org release `12101011`, XRes `1.2`, XTEST `2.2`, and an 8,000 ms delayed request. The owner was terminated 151.1 ms after flush. Independent XRes probes at about 1.0 s, 5.0 s, and after the delay horizon (about 9.5 s after kill) all reported `still_connected`. Both keys were up before cleanup, after the separate KeyRelease+XSync, and after the delay horizon; `late_input_observed=false`. Final cleanup also read both keys up.
+
+This is a successful measurement procedure with a negative late-input observation for this bounded private-Xvfb run. It does not observe a state after XRes disappearance, and therefore cannot establish whether the delayed request would execute after actual client disappearance. It is not a release fence, standard-caller result, physical desktop result, or general Xorg teardown claim. The test now records either late-input outcome without making one outcome a test-pass prerequisite. Raw artifact: [`raw/run-39157580185.json`](raw/run-39157580185.json), SHA-256 `b923d0e44ff05800d7b3fb265f89becb1e4af7b3e431dd24e2f534a62d04bc4f`.
