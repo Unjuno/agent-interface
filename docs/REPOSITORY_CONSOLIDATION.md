@@ -1,5 +1,17 @@
 # リポジトリ全体の整理計画
 
+**2026-10-18 r18 — current-main count recheck:** At 14:52 UTC, fetched
+`origin/main` was `e5c5448f9ad035657f212135fa4e95d189acda95`. GitHub's paginated
+Issues endpoint returned 2,190 issue-like records, including 514 pull requests;
+the separately paginated pulls endpoint returned 514 open PRs, leaving 1,676
+open Issues. This was a count-only refresh, not an ID-set comparison, semantic
+review, ownership check, or closure decision. The latest full open-item metadata
+snapshot remains r8 at 14:25 UTC against
+`9ff8ab4df85c2359cf5d2055f54586c7e4fe816e`; it is now historical discovery
+metadata. Updated the [worker map](WORKER_WORK_MAP.md) and [current objective
+entry](CURRENT_GOAL.md) so navigation no longer labels that old SHA as current.
+No Issue, PR, branch, worktree, or historical evidence was changed.
+
 **2026-10-18 r17 — current-main family recheck:** At 14:38 UTC, GitHub `main` was `c72c9b186dac29c57ed0d63d92748bfc7ba4d971`. Fresh paginated endpoint counts were 1,676 open Issues and 514 open PRs; this was a count check, not an ID-set comparison or semantic review. The existing #59 MAP01 packet crosswalk was rechecked against this exact main: all six packet PRs remain open at their recorded heads, with no GitHub assignees, and their heads range from 478 to 857 commits behind current main. Empty assignee fields do not prove that work is released, and old heads do not justify closure. The crosswalk now records current-main distances and keeps each read-only audit scope separate. No Issue/PR state, branch, or historical packet was changed.
 
 **2026-10-18 r16 — cleanup baseline at 14:25 UTC:** At that capture, `main` was `9ff8ab4df85c2359cf5d2055f54586c7e4fe816e`. A fresh paginated metadata snapshot had 1,676 open Issues and 514 open PRs, with no ID changes from r7; the [r8 note and CSVs](maintenance/repository-inventory-20261018-r8.md) were the discovery baseline. This is not semantic review or current ownership proof. Semantic status is established one research family at a time from current Issues, current PR heads, preserved reports, and active worktrees. The cleanup has four independent ledgers: (1) idea/hypothesis and its falsifiable remainder, (2) Issue workflow and actual successor, (3) PR code/evidence/owner custody, and (4) branch/worktree recovery. Each reviewed family must link these ledgers or state which link is unknown. Unverified ideas remain searchable; closure requires verified completion of the Issue's own scope, evidence-based rejection, or a real successor that carries the remainder. PR integration/removal requires current diff, tests, unique evidence, and ownership checks. Repository-wide cleanup is complete only when every current open Issue and PR is either family-reviewed or explicitly marked untriaged in a dated inventory, each retained idea is indexed, and each local/remote ref removed has verified custody. This is a progress criterion, not a requirement to close all Issues or to finish all research before work resumes.

@@ -1,10 +1,11 @@
 # Worker work map
 
-2026-10-18 update. Current `origin/main` is `9ff8ab4df85c2359cf5d2055f54586c7e4fe816e`.
-The current metadata inventory is [r8](maintenance/repository-inventory-20261018-r8.md):
-1,676 open Issues and 514 open PRs at 14:25 UTC, against the current main SHA.
-It shows no ID-set change from r7. It is discovery metadata, not semantic review
-or proof of current ownership. See [r7](maintenance/repository-inventory-20261018-r7.md)
+2026-10-18 update. Current `origin/main` is `e5c5448f9ad035657f212135fa4e95d189acda95`.
+A fresh count-only paginated read at 14:52 UTC returned 1,676 open Issues and 514
+open PRs; it did not compare IDs or review their meaning. The latest full metadata
+inventory is [r8](maintenance/repository-inventory-20261018-r8.md), captured at
+14:25 UTC against older main `9ff8ab4df85c2359cf5d2055f54586c7e4fe816e`. It is
+discovery metadata, not semantic review or proof of current ownership. See [r7](maintenance/repository-inventory-20261018-r7.md)
 for the preceding snapshot. Begin with [current goal](CURRENT_GOAL.md), choose one finite item
 below, and verify its current Issue, source and ownership. This map is navigation;
 it adds no assignment, resource grant, reviewer quota or all-workers waiting gate.
