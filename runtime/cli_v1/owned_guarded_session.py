@@ -6,6 +6,8 @@ its future user-space writes, but never proves that queued server requests or
 physical input were released.
 """
 from copy import deepcopy
+import hashlib
+import json
 import multiprocessing
 from pathlib import Path
 import threading
@@ -25,6 +27,81 @@ _XRES_DISCONNECT_TIMEOUT_S = 0.15
 _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
 _RETIRED_RELEASE_TIMEOUT_S = 0.25
 _RETIRED_RELEASE_TERMINATE_GRACE_S = 0.1
+_OWNER_INPUT_OBLIGATIONS_SCHEMA = 'agent-interface/owner-input-obligations-v1'
+_OWNER_INPUT_OBLIGATIONS_CAPACITY = 8192
+_OWNER_INPUT_OBLIGATIONS_MAGIC = b'AIOL'
+_OWNER_INPUT_OBLIGATIONS_HEADER_SIZE = 40
+
+
+def _publish_owner_input_obligations(shared_state, keys, buttons):
+    state = {'schema':_OWNER_INPUT_OBLIGATIONS_SCHEMA,
+             'keys':dict(keys), 'buttons':list(buttons)}
+    payload = json.dumps(state, separators=(',', ':')).encode('utf-8')
+    if len(payload) + _OWNER_INPUT_OBLIGATIONS_HEADER_SIZE > len(shared_state):
+        payload = json.dumps({'schema':_OWNER_INPUT_OBLIGATIONS_SCHEMA,
+                              'status':'overflow'}, separators=(',', ':')).encode('utf-8')
+    digest = hashlib.sha256(payload).digest()
+    header = (len(payload).to_bytes(4, 'big') + digest)
+    # Invalidate first and publish the commit marker last. A terminated writer
+    # can leave only a rejected record; the parent reads after child retirement.
+    shared_state[0] = 0
+    for index, byte in enumerate(header, start=4):
+        shared_state[index] = byte
+    for index, byte in enumerate(payload, start=_OWNER_INPUT_OBLIGATIONS_HEADER_SIZE):
+        shared_state[index] = byte
+    for index, byte in enumerate(_OWNER_INPUT_OBLIGATIONS_MAGIC[1:], start=1):
+        shared_state[index] = byte
+    shared_state[0] = _OWNER_INPUT_OBLIGATIONS_MAGIC[0]
+
+
+def _read_owner_input_obligations(shared_state):
+    if shared_state is None:
+        return {'status':'unavailable', 'reason':'shared_state_unavailable'}
+    try:
+        record = bytes(shared_state[:])
+    except Exception as error:
+        return {'status':'unknown', 'reason':'shared_state_invalid',
+                'error_type':type(error).__name__}
+    if record[:4] != _OWNER_INPUT_OBLIGATIONS_MAGIC:
+        return {'status':'unknown', 'reason':'shared_state_uncommitted'}
+    payload_length = int.from_bytes(record[4:8], 'big')
+    if (payload_length <= 0
+            or payload_length + _OWNER_INPUT_OBLIGATIONS_HEADER_SIZE > len(record)):
+        return {'status':'unknown', 'reason':'shared_state_length_invalid'}
+    expected_digest = record[8:_OWNER_INPUT_OBLIGATIONS_HEADER_SIZE]
+    payload = record[_OWNER_INPUT_OBLIGATIONS_HEADER_SIZE:
+                     _OWNER_INPUT_OBLIGATIONS_HEADER_SIZE + payload_length]
+    if hashlib.sha256(payload).digest() != expected_digest:
+        return {'status':'unknown', 'reason':'shared_state_checksum_invalid'}
+    try:
+        state = json.loads(payload.decode('utf-8'))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return {'status':'unknown', 'reason':'shared_state_payload_invalid'}
+    if (not isinstance(state, dict)
+            or state.get('schema') != _OWNER_INPUT_OBLIGATIONS_SCHEMA):
+        return {'status':'unknown', 'reason':'shared_state_schema_invalid'}
+    if state.get('status') == 'overflow':
+        return {'status':'unknown', 'reason':'shared_state_overflow'}
+    keys, buttons = state.get('keys'), state.get('buttons')
+    if (not isinstance(keys, dict) or not isinstance(buttons, list)
+            or any(type(name) is not str or type(code) is not int
+                   or not 0 <= code < 256 for name, code in keys.items())
+            or any(type(button) is not str
+                   or button not in ('left', 'middle', 'right', 'x1', 'x2')
+                   for button in buttons)):
+        return {'status':'unknown', 'reason':'shared_state_obligations_invalid'}
+    return {'status':'snapshot',
+            'obligations':{'keys':keys, 'buttons':buttons}}
+
+
+def _bind_owner_input_obligation_publisher(owner, shared_state):
+    session = getattr(owner, 'session', None)
+    backend = getattr(session, 'backend', None)
+    setter = getattr(backend, 'set_input_obligation_publisher', None)
+    if not callable(setter):
+        raise RuntimeError('owned X11 backend cannot publish live input obligations')
+    setter(lambda keys, buttons: _publish_owner_input_obligations(
+        shared_state, keys, buttons))
 
 
 def _release_retired_inputs_worker(send_connection, display_name, keys, buttons):
@@ -108,7 +185,8 @@ def _control_loop(connection, stop, owner, pid):
 
 
 def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
-                                 directory, display_name, options, owner_factory):
+                                 directory, display_name, options, owner_factory,
+                                 input_obligations_state):
     owner = None
     control_stop = threading.Event()
     control_thread = None
@@ -118,6 +196,7 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                  if owner_factory is not None else
                  GuardedSessionOwner(targets, directory, display_name, **options))
         owner.get()
+        _bind_owner_input_obligation_publisher(owner, input_obligations_state)
         pid = multiprocessing.current_process().pid
         rpc_connection.send({'ok':True, 'snapshot':_owner_snapshot(owner, pid)})
         ready_sent = True
@@ -219,6 +298,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._retirement = None
         self._owner_client_disconnect = None
         self._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        self._owner_input_obligations_source = 'parent_initial_state'
+        self._owner_input_obligations_state = None
+        self._owner_input_obligations_live_read = {'status':'not_read'}
         self._owner_release_attempt = None
         self.review_required = False
 
@@ -240,6 +322,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 and all(type(button) is str
                         for button in obligations['buttons'])):
             self._owner_input_obligations = deepcopy(obligations)
+            self._owner_input_obligations_source = 'child_rpc_snapshot'
         self.session = SimpleNamespace(
             recovery_required=snapshot.get('recovery_required'),
             backend=SimpleNamespace(
@@ -260,6 +343,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         context = multiprocessing.get_context('spawn')
         rpc_parent, rpc_child = context.Pipe(duplex=True)
         control_parent, control_child = context.Pipe(duplex=True)
+        input_obligations_state = context.RawArray(
+            'B', _OWNER_INPUT_OBLIGATIONS_CAPACITY)
+        self._owner_input_obligations_state = input_obligations_state
+        _publish_owner_input_obligations(input_obligations_state, {}, [])
         process = context.Process(
             target=_serve_owned_guarded_session,
             args=(rpc_child, control_child, self.targets, str(self._owner_root),
@@ -268,7 +355,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'query_worker':self.query_worker,
                    'observation_worker':self.observation_worker,
                    'window_lifecycle':self.window_lifecycle},
-                  self._owner_factory),
+                  self._owner_factory, input_obligations_state),
             name='guarded-x11-owner-' + self.session_id[:8])
         self.state = 'opening'
         try:
@@ -346,6 +433,10 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    review_required=self.review_required,
                    owner_process=process,
                    owner_client_disconnect=deepcopy(self._owner_client_disconnect),
+                   owner_input_obligations=deepcopy(self._owner_input_obligations),
+                   owner_input_obligations_source=self._owner_input_obligations_source,
+                   owner_input_obligations_live_read=deepcopy(
+                       self._owner_input_obligations_live_read),
                    owner_release_attempt=deepcopy(self._owner_release_attempt),
                    cleanup_status='UNKNOWN' if self._execution_unknown else None,
                    authority_granted=False, restart_allowed=False)
@@ -414,20 +505,43 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
 
     def _cleanup_after_owner_retirement(self, retirement):
         if retirement.get('retired') is True:
+            live_read = _read_owner_input_obligations(
+                getattr(self, '_owner_input_obligations_state', None))
+            self._owner_input_obligations_live_read = live_read
+            if live_read.get('status') == 'snapshot':
+                self._owner_input_obligations = deepcopy(live_read['obligations'])
+                self._owner_input_obligations_source = 'retired_child_shared_state'
             client_disconnect = self._observe_owner_client_disconnect()
         else:
+            self._owner_input_obligations_live_read = {
+                'status':'not_read', 'reason':'owner_not_retired'}
             client_disconnect = {'status':'unknown', 'reason':'owner_not_retired',
                                  'worker_retired':None}
         self._owner_client_disconnect = client_disconnect
         if (retirement.get('retired') is True
-                and client_disconnect.get('status') == 'disconnected'):
+                and client_disconnect.get('status') == 'disconnected'
+                and self._owner_input_obligations_live_read.get('status') == 'snapshot'):
             release_attempt = self._release_retired_owner_inputs(
                 getattr(self, '_owner_input_obligations', {'keys':{}, 'buttons':[]}))
         else:
             release_attempt = {'status':'not_attempted',
-                               'reason':'owner_disconnect_not_confirmed'}
+                               'reason':('owner_not_retired'
+                                   if retirement.get('retired') is not True else
+                                   'owner_disconnect_not_confirmed'
+                                   if client_disconnect.get('status') != 'disconnected' else
+                                   'owner_input_obligations_unavailable')}
         self._owner_release_attempt = release_attempt
         return client_disconnect, release_attempt
+
+    def _owner_input_obligations_result_fields(self):
+        return {
+            'owner_input_obligations':deepcopy(getattr(
+                self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
+            'owner_input_obligations_source':getattr(
+                self, '_owner_input_obligations_source', 'parent_initial_state'),
+            'owner_input_obligations_live_read':deepcopy(getattr(
+                self, '_owner_input_obligations_live_read', {'status':'not_read'})),
+        }
 
     def invoke_guarded(self, operation, arguments, call_root):
         return self._call('invoke_guarded', operation=operation,
@@ -484,8 +598,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                             'owner_process_retired':retirement['retired'],
                             'owner_process_exitcode':retirement['exitcode'],
                             'owner_client_disconnect':deepcopy(client_disconnect),
-                            'owner_input_obligations':deepcopy(getattr(
-                                self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
+                            **self._owner_input_obligations_result_fields(),
                             'owner_release_attempt':deepcopy(release_attempt),
                             'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                             'task_success':None, 'replay_allowed':False,
@@ -502,8 +615,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                         'owner_process_retired':retirement['retired'],
                         'owner_process_exitcode':retirement['exitcode'],
                         'owner_client_disconnect':deepcopy(client_disconnect),
-                        'owner_input_obligations':deepcopy(getattr(
-                            self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
+                        **self._owner_input_obligations_result_fields(),
                         'owner_release_attempt':deepcopy(release_attempt),
                         'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                         'task_success':None, 'replay_allowed':False,
@@ -518,8 +630,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     'owner_process_retired':retirement['retired'],
                     'owner_process_exitcode':retirement['exitcode'],
                     'owner_client_disconnect':deepcopy(client_disconnect),
-                    'owner_input_obligations':deepcopy(getattr(
-                        self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
+                    **self._owner_input_obligations_result_fields(),
                     'owner_release_attempt':deepcopy(release_attempt),
                     'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                     'task_success':None, 'replay_allowed':False,
@@ -540,8 +651,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return dict(result, owner_process_retired=retirement['retired'],
                     owner_process_exitcode=retirement['exitcode'],
                     owner_client_disconnect=deepcopy(client_disconnect),
-                    owner_input_obligations=deepcopy(getattr(
-                        self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
+                    **self._owner_input_obligations_result_fields(),
                     owner_release_attempt=deepcopy(release_attempt),
                     release_confirmed=False, cleanup_status='UNKNOWN',
                     task_success=None, replay_allowed=False,

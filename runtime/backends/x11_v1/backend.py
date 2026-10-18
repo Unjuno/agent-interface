@@ -43,6 +43,19 @@ class X11Backend:
         self.emissions = 0
         self.capture_artifacts = None
         self.interrupted_execution = None
+        self._input_obligation_publisher = None
+
+    def set_input_obligation_publisher(self, publisher) -> None:
+        if publisher is not None and not callable(publisher):
+            raise TypeError('input obligation publisher must be callable or None')
+        self._input_obligation_publisher = publisher
+        self._publish_input_obligations()
+
+    def _publish_input_obligations(self) -> None:
+        publisher = getattr(self, '_input_obligation_publisher', None)
+        if publisher is not None:
+            publisher(
+                dict(self.held_keycodes), sorted(self.held_buttons))
 
     def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
         from .capture_artifacts import CaptureArtifacts
@@ -203,11 +216,13 @@ class X11Backend:
         if down:
             self._before_input_press()
             self._track_button_press(button)
+            self._publish_input_obligations()
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
         self.d.sync()
         if not down:
             self.held_buttons.discard(button)
+            self._publish_input_obligations()
 
     def _keycode(self, key: str) -> int:
         aliases = {
@@ -235,11 +250,13 @@ class X11Backend:
         if down:
             self._before_input_press()
             self._track_key_press(key, code)
+            self._publish_input_obligations()
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
         self.d.sync()
         if not down:
             self.held_keycodes.pop(key, None)
+            self._publish_input_obligations()
 
     def _reject_held_nonmodifier_overlap(
         self, key_sequences: list[list[str]], *, held_keycodes: dict[str, int] | None = None
@@ -474,6 +491,7 @@ class X11Backend:
         # explicit recovery must still know which releases it owes.
         self.held_keycodes = {name: code for name, code in tracked.items() if name in keys}
         self.held_buttons.intersection_update(buttons)
+        self._publish_input_obligations()
         return {
             "keys_down": keys,
             "buttons_down": buttons,

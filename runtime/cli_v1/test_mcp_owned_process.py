@@ -1,8 +1,10 @@
 """Standard MCP composition over one explicitly owned guarded-X11 process."""
 import asyncio
+import hashlib
 import threading
 from unittest.mock import Mock, patch
 import json
+import multiprocessing
 import os
 import tempfile
 import time
@@ -81,6 +83,16 @@ def _write_json(path, value):
     Path(path).write_text(json.dumps(value, sort_keys=True), encoding='utf-8')
 
 
+def _write_test_obligation_state(shared, state):
+    payload = json.dumps(state, separators=(',', ':')).encode('utf-8')
+    digest = hashlib.sha256(payload).digest()
+    record = b'AIOL' + len(payload).to_bytes(4, 'big') + digest + payload
+    shared[0] = 0
+    for index, byte in enumerate(record[1:], start=1):
+        shared[index] = byte
+    shared[0] = record[0]
+
+
 def _queued_fake_owner_factory(targets, directory, display_name, options):
     """Hold a fake XTEST request in a per-connection queue before sync."""
     cleanup = _Cleanup()
@@ -154,6 +166,125 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_x11_backend_publishes_key_obligation_before_sync_can_block(self):
+        events = []
+        backend = object.__new__(X11Backend)
+        backend.d = SimpleNamespace()
+        backend.held_keycodes = {}
+        backend.held_buttons = set()
+        backend.emissions = 0
+        backend._keycode = lambda _key: 1
+        backend._before_input_press = lambda: None
+        backend._input_obligation_publisher = lambda keys, buttons: events.append(
+            ('snapshot', dict(keys), list(buttons)))
+
+        def blocked_sync():
+            events.append(('sync',))
+            raise OSError('simulated blocked XSync')
+
+        backend.d.sync = blocked_sync
+        with patch('runtime.backends.x11_v1.backend.xtest.fake_input',
+                   side_effect=lambda _display, kind, code: events.append(
+                       ('emit', kind, code))):
+            with self.assertRaisesRegex(OSError, 'simulated blocked XSync'):
+                backend.key_state('CTRL', True)
+
+        self.assertEqual(events, [
+            ('snapshot', {'CTRL':1}, []),
+            ('emit', X.KeyPress, 1),
+            ('sync',),
+        ])
+        self.assertEqual(backend.held_keycodes, {'CTRL':1})
+
+        backend.d.sync = lambda: events.append(('sync_release',))
+        with patch('runtime.backends.x11_v1.backend.xtest.fake_input',
+                   side_effect=lambda _display, kind, code: events.append(
+                       ('emit_release', kind, code))):
+            backend.key_state('CTRL', False)
+        self.assertEqual(events[-3:], [
+            ('emit_release', X.KeyRelease, 1),
+            ('sync_release',),
+            ('snapshot', {}, []),
+        ])
+        self.assertEqual(backend.held_keycodes, {})
+
+    def test_x11_backend_publishes_button_obligation_before_sync_can_block(self):
+        events = []
+        backend = object.__new__(X11Backend)
+        backend.d = SimpleNamespace(sync=lambda: events.append(('sync',)))
+        backend.held_keycodes = {}
+        backend.held_buttons = set()
+        backend.emissions = 0
+        backend._before_input_press = lambda: None
+        backend._input_obligation_publisher = lambda keys, buttons: events.append(
+            ('snapshot', dict(keys), list(buttons)))
+
+        def blocked_sync():
+            events.append(('sync',))
+            raise OSError('simulated blocked XSync')
+
+        backend.d.sync = blocked_sync
+        with patch('runtime.backends.x11_v1.backend.xtest.fake_input',
+                   side_effect=lambda _display, kind, code: events.append(
+                       ('emit', kind, code))):
+            with self.assertRaisesRegex(OSError, 'simulated blocked XSync'):
+                backend.pointer_button('left', True)
+
+        self.assertEqual(events, [
+            ('snapshot', {}, ['left']),
+            ('emit', X.ButtonPress, 1),
+            ('sync',),
+        ])
+        self.assertEqual(backend.held_buttons, {'left'})
+
+    def test_retired_owner_with_invalid_live_ledger_does_not_release_stale_cache(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._owner_input_obligations_state = multiprocessing.get_context(
+            'spawn').RawArray('B', 8192)
+        owner._owner_client_disconnect = None
+        owner._owner_release_attempt = None
+        owner._observe_owner_client_disconnect = Mock(return_value={
+            'status':'disconnected', 'worker_retired':True,
+        })
+        owner._release_retired_owner_inputs = Mock()
+
+        client, release = owner._cleanup_after_owner_retirement({'retired':True})
+
+        self.assertEqual(client['status'], 'disconnected')
+        self.assertEqual(owner._owner_input_obligations_live_read['status'], 'unknown')
+        self.assertEqual(owner._owner_input_obligations_source, 'child_rpc_snapshot')
+        owner._release_retired_owner_inputs.assert_not_called()
+        self.assertEqual(release['status'], 'not_attempted')
+        self.assertEqual(release['reason'], 'owner_input_obligations_unavailable')
+
+    def test_retired_owner_rejects_torn_live_ledger_checksum(self):
+        shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
+        _write_test_obligation_state(shared, {
+            'schema':'agent-interface/owner-input-obligations-v1',
+            'keys':{'CTRL':1}, 'buttons':[],
+        })
+        shared[40] ^= 1
+
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._owner_input_obligations_state = shared
+        owner._owner_client_disconnect = None
+        owner._owner_release_attempt = None
+        owner._observe_owner_client_disconnect = Mock(return_value={
+            'status':'disconnected', 'worker_retired':True,
+        })
+        owner._release_retired_owner_inputs = Mock()
+
+        owner._cleanup_after_owner_retirement({'retired':True})
+
+        self.assertEqual(owner._owner_input_obligations_live_read, {
+            'status':'unknown', 'reason':'shared_state_checksum_invalid',
+        })
+        owner._release_retired_owner_inputs.assert_not_called()
+
     def test_disconnect_observer_binds_xres_query_to_owned_process_pid(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.display_name = ':17'
@@ -220,6 +351,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             ('negative_ack', True, {'ok':False, 'error':'rejected'}),
         )
         obligations = {'keys':{'CTRL':1}, 'buttons':[]}
+        stale_obligations = {'keys':{}, 'buttons':[]}
         for name, has_response, response in responses:
             for disconnect_status in ('disconnected', 'still_connected', 'unknown'):
                 with self.subTest(name=name, disconnect_status=disconnect_status):
@@ -235,9 +367,15 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     owner._control_lock = threading.Lock()
                     owner._execution_unknown = False
                     owner.review_required = False
-                    owner._owner_input_obligations = obligations
+                    owner._owner_input_obligations = stale_obligations
                     owner._owner_client_disconnect = None
                     owner._owner_release_attempt = None
+                    owner._owner_input_obligations_state = multiprocessing.get_context(
+                        'spawn').RawArray('B', 8192)
+                    _write_test_obligation_state(
+                        owner._owner_input_obligations_state, {
+                            'schema':'agent-interface/owner-input-obligations-v1',
+                            'keys':obligations['keys'], 'buttons':obligations['buttons']})
                     events = []
                     owner._retire = Mock(side_effect=lambda _reason: (
                         events.append('retire') or {'retired':True, 'exitcode':-15}))
@@ -266,6 +404,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                                          'not_attempted')
                     self.assertEqual(result['owner_client_disconnect']['status'],
                                      disconnect_status)
+                    self.assertEqual(result['owner_input_obligations'], obligations)
+                    self.assertEqual(result['owner_input_obligations_source'],
+                                     'retired_child_shared_state')
+                    self.assertEqual(result['owner_input_obligations_live_read'], {
+                        'status':'snapshot', 'obligations':obligations,
+                    })
                     self.assertFalse(result['release_confirmed'])
                     self.assertEqual(result['cleanup_status'], 'UNKNOWN')
                     self.assertIsNone(result['task_success'])
@@ -444,6 +588,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(cancel.get('owner_client_disconnect'), fence_result)
                 self.assertEqual(cancel.get('owner_input_obligations'),
                                  {'keys':{'CTRL':1}, 'buttons':[]})
+                self.assertEqual(cancel.get('owner_input_obligations_source'),
+                                 'retired_child_shared_state')
+                self.assertEqual(cancel.get('owner_input_obligations_live_read'), {
+                    'status':'snapshot',
+                    'obligations':{'keys':{'CTRL':1}, 'buttons':[]},
+                })
                 self.assertEqual(cancel.get('owner_release_attempt'), release_result)
                 release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]})
                 self.assertFalse(cancel['release_confirmed'])
