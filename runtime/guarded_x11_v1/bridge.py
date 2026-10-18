@@ -208,8 +208,14 @@ class NativeHandleBridge:
                 return {'status':'not_active','input_dispatched':False,'release_confirmed':False}
             already = ticket[1].is_set()
             ticket[1].set()
+            # Revoke reuse eligibility at acknowledgement time. The writer may
+            # be blocked inside transport and can finish without reaching its
+            # next cooperative cancellation check; callers must still review
+            # fresh state before issuing another input on this bridge.
+            self.review_required = True
             return {'status':'cancel_requested','already_requested':already,
-                    'input_dispatched':False,'release_confirmed':False,'replay_allowed':False}
+                    'input_dispatched':False,'release_confirmed':False,
+                    'review_required':True,'replay_allowed':False}
 
     def _cancel_requested(self):
         lock = getattr(self,'_cancel_lock',None)

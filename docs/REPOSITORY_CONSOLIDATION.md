@@ -1,5 +1,7 @@
 # リポジトリ全体の整理計画
 
+**2026-10-18 r14 — #17 cancellation acknowledgement seam:** In the current-main guarded MCP caller, a blocked Fake X writer could acknowledge cancel while `review_required` remained false until its next cooperative cancellation check. The retained red/green regression and normal/optimized related-suite results are in [`cancel_ack_review_fence_mcp_20261018`](../research/integration/cancel_ack_review_fence_mcp_20261018/README.md). The bounded change sets the review fence at cancel acknowledgement. It does not retire a blocked writer, retract queued input, establish native/physical release or a deadline, or verify task effect. Treat this as one caller-family item with its original raw and limitations; keep #17 open. Next gate: single-authority writer retirement/fencing and late-send rejection through the selected caller, then separately qualify native release and task effects. This is a family update, not a semantic sweep of the open Issue/PR inventory.
+
 2026-10-15。対象は `Unjuno/agent-interface` 全体とGitHub Issue/PR。コンピューターコントロールの研究を再び見通せる状態にする。
 
 **2026-10-18 r11 — ユーザー確認済みの整理目的:** リポジトリを、大量のワーカーがアイデアを失わず、互いに衝突せず、個別に着手・検証・統合できる状態へ近づける。Issue/PRを一律に閉じたり、件数をゼロにしたりすることは目標にしない。まず研究上の問いごとにアイデア、出典Issue、反対仮説、既存コード/証拠、その限界、依存、次の判別可能な作業を結ぶ。結果が出ていない案は `unverified` 等で実行候補に残し、実際の重複・完了・根拠付き棄却・実在する後継への移管だけを個別の証拠に基づいて処置する。元Issueと歴史的rawは保持し、要約は索引に留める。
