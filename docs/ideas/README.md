@@ -34,6 +34,10 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Open Issue/PR inventory r7 (2026-10-18)](../maintenance/repository-inventory-20261018-r7.md) — fresh paginated metadata snapshot: 1,676 open Issues and 514 open PRs, no membership change from r6. It is a discovery index, not full semantic triage or ownership evidence.
+
+- [MAP01 live threat-guard evidence family](map01-live-guard-evidence-family.md) — classifies six open #59 PRs by distinct retained allocation packets, exact current heads, audit status, and safe read-only follow-up boundaries; no allocation rerun or bulk disposition.
+
 - [Open Issue inventory refresh (2026-10-17)](../maintenance/open-issues-inventory-20261017.md) — refreshes the paginated open-Issue metadata snapshot to 1,677, records its three-ID delta from r3, and states that inventory is not full semantic triage.
 
 - [Model integration, matched economics and evaluation ideas](model-economics-agenda.md) — #57/#3311 execution, #5827 endpoint sensitivity, #6227 requalification cost and #8859 evidence-sufficient effort remain distinct. Includes current/legacy accounting adoption checks and original-result custody gaps; no live performance claim.

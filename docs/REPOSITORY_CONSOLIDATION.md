@@ -6,6 +6,8 @@
 
 **2026-10-18 r12 — #17 current-main update:** PR [#9027](https://github.com/Unjuno/agent-interface/pull/9027) merged at `ce1a0e93c67fafaf4f05bf25e6b86fbe50196ecc`. The selected guarded MCP caller now requires fresh visual review after `execution_failed`, preventing reuse of a still-live alias after uncertain partial input. Its Fake X queued-press expiry case still delivers an already-queued DOWN only after the fixture resumes; cleanup is then verified in Fake X, not under permanent platform nonresponse. The focused module passes 7/7 and four related modules pass 60/60 in normal and optimized Python. The [safety-control agenda](ideas/safety-control-agenda.md) and [work map](WORKER_WORK_MAP.md) link the retained packet and exact limits. Native X behavior, physical release deadline, task effect and matched efficiency remain open; next caller seam is writer retirement/fencing and late-send rejection.
 
+**2026-10-18 r13 — refreshed orchestration inventory:** On current main `f4cd5577ef57a01d7b25a389d877c9d1b3ab9d21`, a fresh paginated GitHub REST read at 13:50 UTC returned 1,676 open Issues (17 pages) and 514 open PRs (6 pages). Membership is unchanged from r6; zero Issue IDs and zero PR IDs entered or left. The r7 CSVs preserve current titles, timestamps, labels, assignees, and (for PRs) draft, author, head/base and head SHA: [Issues](maintenance/open-issues-20261018-r7.csv), [PRs](maintenance/open-prs-20261018-r7.csv). SHA-256: Issues `80fda3cd11f9abeb2c72ca0aa420fe055efb928ae0b319087608c4e25691680b`; PRs `7d9dc08157e03b437b9c9f09513141c32416a07afe79891dfc3cb76ce78bd1da`. This is a membership/metadata refresh, not semantic review or proof of current ownership. The model-economics first batch is no longer pending: #7521 was closed with #8772 as its named, still-open draft successor. Next, select PR batches by research family and compare exact current heads to main; do not treat age, draft state, or an empty assignee/reviewer field as disposition evidence.
+
 今回の収束作業は、(1) main SHAとページング済みIssue/PR一覧を時刻付きで固定、(2) 仮説と証拠で一族を束ねる、(3) 既存担当・PR stack・資源競合を確認して次の仕事を小さく切る、(4) 一族ごとに必要な実験/ローカル検証と統合を進める、(5) 差分・raw・所有者の保全確認後に限り不要refを回収、の順で進める。各バッチは「何件閉じたか」ではなく、保存されたアイデアから現在の根拠と次の独立作業へ迷わず辿れるかで評価する。全件の意味仕分けを、研究を始める前提条件にしない。
 
 **2026-10-18 r10 現在地:** 13:19 UTCのGitHub Search APIはopen Issue 1,676件・open PR 514件を返した。これは件数確認であり、全件本文・コメント・所有者の意味仕分けではない。mainの#9022は#17に関するFake X caller回帰として、選択writer内でDOWNがserver処理前に停止した後のcancel、同一call custody、解除後のcleanup UP、suffix/replay拒否を追加した。関連Issue #17、[safety-control agenda](ideas/safety-control-agenda.md)、[work map](WORKER_WORK_MAP.md)を一つの入口で結ぶ。証拠はFake X caller範囲に限り、物理deadline・writer/server非応答時のrelease・task effect・efficiencyは未達。次の有限な実装判別は、現在のselected callerでsingle-authority writer retirement/fencingとlate-send拒否を接続し、release不確実性をUNKNOWNのまま維持できるかの確認。これは全件整理の完了ではなく、独立したworkerが選べる研究一族一件の更新である。
@@ -117,7 +119,7 @@ The transition review is not a disposition of all 521 open PRs.
 
 一族の順番は、(a)主要ゴールへの寄与、(b)既存成果の再利用可能性、(c)最小の作業で仮説を判別できる度合い、(d)依存・実行可能性、(e)大量ワーカー間の競合を減らす効果で決める。古さ、Issue/PR数、レビュー待ち件数は優先度や棄却理由にしない。
 
-最初は現在の作業branchにある[モデル連携・比較評価agenda](ideas/model-economics-agenda.md)と保存済み比較packetを一つのバッチとして完成させる。PR #7521/#8772の処置は保全・差分・ローカル比較を根拠に提案段階と明示し、実際に処置するまで完了形で書かない。その次はwork mapの各テーマから一族ずつ選ぶ。既存成果がある一族も、親Issueの問い全体が達成したとは推定しない。
+最初のモデル連携・比較評価バッチは実施済みである。PR #7521を、未解決の実装・評価を引き継いだopen draft #8772へ理由を記録して移管した。親Issue #57と#8772は未完了として残る。次は最新一覧から一つのPR/Issue familyを選び、本文・必要なコメント・正確なhead差分・証拠・担当中の作業を照合して、処置または次の独立作業を決める。直近のr7一覧は候補発見用であり、全件本文確認済みとは扱わない。既存成果がある一族も、親Issueの問い全体が達成したとは推定しない。
 
 ### 全体完了の判定
 
@@ -172,9 +174,9 @@ worktrees and the A03 source branch remain. Evidence is in the
 
 | 対象 | 完了を確認する条件 | 次に行うバッチ |
 |---|---|---|
-| 入口とオーケストレーション | README→現行ゴール→work mapから、対象範囲・既存Issue・現行成果・未達・次の有限な仕事へ辿れる。古い割当や必須レビュー人数を新しい開始条件にしない。 | 統合済み#8998/#8999をmapに反映。計画中・ローカル検証済み・main統合済みを明示。 |
-| 研究アイデアとIssue | 各テーマの独自仮説、反例、出典、依存、既存成果、最小検証、実行先が結ばれる。保存しただけの未達は未達と分かる。 | 視覚・安全制御の既存agendaを維持し、次はモデル連携・比較評価の一族を本文/コメントから整理。全件を一つの親Issueへコピーしない。 |
-| PR | 全open PRに、採用候補・修理・証拠保全・後継へ移管・根拠付き棄却の処置がある。統合/終了の正確なheadと継続先を辿れる。 | #8874/#8867はr4/r5の記録どおり終了済み。PR #9005/#9012の重複は現行headで再照合済み。次は残るopen PRから独立成果の優先batchを選び、差分・証拠・後継を分類する。 |
+| 入口とオーケストレーション | README→現行ゴール→work mapから、対象範囲・既存Issue・現行成果・未達・次の有限な仕事へ辿れる。古い割当や必須レビュー人数を新しい開始条件にしない。 | #9027/#9028の結果を現行mainで照合済み。r7 inventoryを追加。次は各themeの次の独立仕事と衝突範囲を定期的にmain基準で更新する。 |
+| 研究アイデアとIssue | 各テーマの独自仮説、反例、出典、依存、既存成果、最小検証、実行先が結ばれる。保存しただけの未達は未達と分かる。 | 視覚・安全制御・モデル比較などの既存agendaを維持。未評価を明示しつつ、work mapのtheme単位で本文/コメントを読み、独自の残差を検証へつなぐ。全件を一つの親Issueへコピーしない。 |
+| PR | 全open PRに、採用候補・修理・証拠保全・後継へ移管・根拠付き棄却の処置がある。統合/終了の正確なheadと継続先を辿れる。 | r7の514件から一族ずつ意味仕分けする。最初の現行例は#59のMAP01 six-packet family crosswalk。各packet監査後、exact head・固有raw・所有・current-main差分を確認し、そのpacket単位で継続/統合/移管/終了を判断する。 |
 | branch/worktree | 固有変更・raw・未追跡/無視対象・依存PR・使用者を確認し、残すものには理由と所在、消すものには保全先と一致したtipの記録がある。 | まず自分の統合済みrefのみ回収。他者/所有不明の領域は削除せず、照合対象として残す。 |
 | 実装・検証 | 採用するコードが現行mainに接続され、必要なローカル検証と限界が残る。旧sourceのPASSを移植しない。 | 未統合のV15選択変更は専用branchに保全。証拠パケットの読戻し後に独立した統合として扱う。 |
 

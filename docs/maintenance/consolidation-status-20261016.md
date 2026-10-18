@@ -1,8 +1,31 @@
 # 現在の整理状態と次の実行順
 
-2026-10-16 JST。基準main `1ece47014d05db898bf73afcd722a14524462e15`。
+2026-10-18 UTC。最新確認main `f4cd5577ef57a01d7b25a389d877c9d1b3ab9d21`。
+現在の一覧基準・取得条件・次の整理単位は、以下のr76以降を参照する。
+それより下のmain SHAと状態記録は各時点の履歴として保持する。
 目的は、多数のワーカーが研究内容を失わず、独立した仕事を選び、検証済み成果を統合できる状態にすること。
 整理全体は未完了であり、全Issueを閉じることを完了条件にしない。
+
+### r76: refresh complete Issue/PR inventory and replace stale first-batch queue (2026-10-18)
+
+Current main at capture: `f4cd5577ef57a01d7b25a389d877c9d1b3ab9d21`.
+A fresh paginated GitHub REST read at 13:50 UTC captured all 1,676 open Issues
+(17 pages) and all 514 open PRs (6 pages). Compared with r6, no Issue or PR IDs
+entered or left. Exact snapshots:
+[Issues](open-issues-20261018-r7.csv), SHA-256
+`80fda3cd11f9abeb2c72ca0aa420fe055efb928ae0b319087608c4e25691680b`; [PRs](open-prs-20261018-r7.csv),
+SHA-256 `7d9dc08157e03b437b9c9f09513141c32416a07afe79891dfc3cb76ce78bd1da`.
+The snapshots are metadata for discovery and do not establish semantic review,
+current ownership, or a reason to close any item.
+
+The old plan's “first batch” for model economics had already been executed:
+#7521 was closed with the unresolved implementation/evaluation carried by open
+draft #8772; parent #57 remains open. The active queue is therefore to select
+one family from the current inventory, inspect source records and exact PR
+heads, then record distinct hypotheses, evidence limits, collision boundaries,
+and the next finite test. Work remains untriaged beyond previously linked
+family dispositions. No blanket Issue/PR closure or branch cleanup was done in
+this refresh.
 
 ### r75: retain the dirty A16 checkout after remote ref retirement (2026-10-17)
 
