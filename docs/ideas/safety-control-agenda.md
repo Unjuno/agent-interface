@@ -5,6 +5,8 @@
 [原Issue本文のスナップショット](sources/safety-control-issues-20261015.json)を保存した。
 コメント全文や個別実験のrawは置き換えず、各Issueと元の証拠を参照する。
 
+**2026-10-18 caller統合更新:** mainに統合された[#9014](https://github.com/Unjuno/agent-interface/pull/9014)は、Fake Xの接続別queueで独立UPとempty readbackがblocked writerより先に完了し、writer再開後のlate DOWNを防げない反例を保存した。これは合成モデル内での順序反例であり、実X orderingや物理解放を示さない。続く[#9015](https://github.com/Unjuno/agent-interface/pull/9015)は、標準guarded MCP callerをFake X release-syncで止める回帰を通常/-O各19件で通し、callerが`pending`を返してrelease確認・replayをせず、session closeをbusyのまま保ち、barrier解除後に同じcallを返すことを記録した。これはbounded caller responseとcall custodyの証拠であり、barrier中のrelease、物理deadline、task effectは未確認。次の有限な統合対象はsingle-authority writer retirement/fencingとlate-send拒否で、backend/server非応答時はUNKNOWNを維持する。
+
 ## 問い・依存・次の検証
 
 2026-10-16：[X11 custody候補の保全](../../research/integration/x11_custody_convergence_20261016/README.md)で、
@@ -16,7 +18,7 @@ V4の構成PASSの後に、読取制限による条件付きfalse-clearとdevice
 
 | Issue / 仮説 | 既存成果と今回の照合 | 残る問い・次の有限な作業 | 判断へのつながり |
 |---|---|---|---|
-| [#17 安全経路をdata/planner経路から独立させる](https://github.com/Unjuno/agent-interface/issues/17) | V39のcancel-before-planner-ack修理は#8392で統合済み。今回の公開経路Fake Xではfocus query停止中の保持が残った。 | 単一の入力権限を守って、blocked observationから独立した取消し・期限・cleanupを構成する。遅い返答と不確かなrelease readbackも検証。 | 最優先の修理。呼出し元への早い返答だけで有限解放の達成にしない。 |
+| [#17 安全経路をdata/planner経路から独立させる](https://github.com/Unjuno/agent-interface/issues/17) | V39のcancel-before-planner-ack修理は#8392で統合済み。Fake X A01/#9014は別connection UPとempty readbackによるfalse-clearを反証し、#9015は標準guarded MCP callerのblocked release-sync後も同一call custodyを確認した。 | 単一の入力権限を守ってwriter retirement/fencingとlate-send拒否を採用callerへ通す。遅い返答と不確かなrelease readbackも検証。 | callerのbounded responseは有限物理解放ではない。backend/server非応答時はUNKNOWNを保ち、physical deadlineやtask successを推定しない。 |
 | [#2 architecture risk register](https://github.com/Unjuno/agent-interface/issues/2)のprocess/backend境界 | 閉じた#821はowner crash時のcleanup、#823はX server stall時の限界を報告している。今回はそのIssue本文・結果コメントを確認した範囲であり、元rawを再監査してはいない。 | 観測処理停止、owner死亡、backend停止を別の故障として扱い、採用callerのどの境界が隔離されるか示す。その他の保守性・座標・観測・oracle等のリスクは#2に残る。 | watchdogやprocessという名前だけで下位backendのrelease保証を引き継がない。 |
 | [#10 実装言語・fault boundary・形式化](https://github.com/Unjuno/agent-interface/issues/10) | latencyをplanner/tool、interface、research overheadに分ける提案。今回の停止はmicro-optimizationでは消えない依存である。 | まず必要な権限・順序・未知状態を固定する。移植時は期限、late reply、release/verification、差分costを同条件で検証する。 | Python/Rustの速度比較と解放可能性を分離。言語移植だけを解決策として採用しない。 |
 | [#14 event attentionとinterrupt保持](https://github.com/Unjuno/agent-interface/issues/14) | #8926のCLI compositionは保存・出力選択・flushを区別した。モデル受信やACK後の解決は未検証。 | 安全取消しとplannerへの通知を分離し、critical eventの保持→配信→ACK→解決の実経路を照合する。coalescingで未解決eventを消さない。 | data-plane outageを許す範囲と、attention節約の可否を判断する。通知ACKで入力権限を復活させない。 |
