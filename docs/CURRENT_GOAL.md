@@ -1,6 +1,8 @@
 # Current objective and working direction
 
-Updated 2026-10-15. This is the short entry point, not an experiment ledger.
+Updated 2026-10-18 against `origin/main`
+`e5c5448f9ad035657f212135fa4e95d189acda95`. This is the short entry point,
+not an experiment ledger.
 
 ## Objective
 
