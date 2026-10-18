@@ -2,6 +2,8 @@
 
 2026-10-15。対象は `Unjuno/agent-interface` 全体とGitHub Issue/PR。コンピューターコントロールの研究を再び見通せる状態にする。
 
+**2026-10-18 r9 現在地:** 13:05 UTCのGitHub REST全ページ再取得でもopen Issue 1,676件・open PR 514件で、r8の件数から変化なし。これは一覧件数の再確認であり、Issue/PRの全件意味分類や担当確認ではない。入力解放・割込み一族ではmainに統合済みの#9014がFake Xの別connection UPによるfalse-clear反例を、#9015がguarded MCP callerでのblocked release-sync待ち・同一call custodyを記録する。既存の[safety-control agenda](ideas/safety-control-agenda.md)と[ideas/outcomes index](IDEAS_AND_OUTCOMES.md)へ結果と未解決境界を結び直した。物理解放期限・backend非応答時の成功・task effectは未確認で、#17はopenのままとする。
+
 **2026-10-18 r8 現在地:** `2026-10-18 12:33:06 UTC` にGitHub REST APIを全ページ取得し、open Issue
 1,676件・open PR 514件をCSV化した。SHA-256とr5からのID差分は[r6 inventory note](maintenance/repository-inventory-20261018-r6.md)、
 個別の一覧は[Issue snapshot](maintenance/open-issues-20261018-r6.csv)と[PR snapshot](maintenance/open-prs-20261018-r6.csv)に保存した。
