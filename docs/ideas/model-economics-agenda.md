@@ -22,6 +22,15 @@
 
 ## 会計PRの収束判断
 
+**2026-10-18の再照合・処置：** #7521と#8772を最新のGitHub状態で再取得した。
+どちらもdraft/openだったため、差分を比較し、#8772に#7521の実装・回帰テストが保持され、
+現行protocol runnerへの登録が加わっていることを確認した。重複元#7521は、
+後継#8772と未解決の再検証条件をPRコメントに明記してclosedとした
+（[closure comment](https://github.com/Unjuno/agent-interface/pull/7521#issuecomment-6249421799)）。
+#8772はopen/draftのままであり、current mainへの再適用・必要なローカル検証・実際の保護条件の
+確認が終わるまで統合済みと数えない。#57はopenで、統合効率・実provider会計・独立タスク効果の
+未達を維持する。この処置は重複PRを一件に収束しただけで、機能や研究課題の完了ではない。
+
 [#7521](https://github.com/Unjuno/agent-interface/pull/7521) head `82656ac75d9fed59ec1a349b89ccf6d29cb2a3c9` と
 [#8772](https://github.com/Unjuno/agent-interface/pull/8772) head `d4dc786cac84f542ea862cf830ac3c9911e67f98` の
 model実装と2-methodテストはそれぞれ同一バイト。runnerは異なり、旧runner全体を移植しない。
