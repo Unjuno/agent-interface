@@ -1,5 +1,13 @@
 # リポジトリ全体の整理計画
 
+## 実行更新 r31 — #9070統合後の現在地と整理の合格条件
+
+2026-10-18 20:11 UTCの全ページGitHub CLI再照合で、open Issueは1,675件、open PRは514件。Issue ID集合はr22 snapshotと同じで、PR集合からは#9064だけが外れた。#9064は19:53 UTCにmerge済み。基準main `92dca0df6022fd50b2b439e6863cf2a4da05851f`には#9068、#9069、#9070も統合済み。詳細と限界は[現在の整理再開点 r28](maintenance/consolidation-status-20261019-r28.md)を参照する。r22 CSVは取得時点の記録として保ち、現行open PR一覧としては使わない。
+
+今回の整理で守る成果は、Issue数やPR数のゼロ化ではなく、全アイデアの出典・仮説・反証/既存証拠・未解決点・依存・次の有限な作業を辿れること、各workerが衝突しない範囲を選べること、根拠のないcloseや証拠・作業の消失を起こさないこと。未検証・未分類の案は状態を明記して台帳に残す。Issueは個別の受入条件達成、重複元から保存済みの後継への移管、または根拠付き棄却が確認できた場合だけ閉じる。PR merge、Issue close、branch/worktree削除はそれぞれ別の判定とする。
+
+次の作業は一族ごとに有限に進める。現在のidea-index coverage gapを入口に、Issue本文と必要なコメント、関連PRの正確なhead、現行source、実験証拠を照合し、テーマ別ledgerへ結果と限界を結ぶ。並列workerには別のIssue/PR範囲・コード領域・出力先を渡し、共有indexの編集と統合は直列化する。古い/dirty/owner不明のbranch、worktree、rawは保全・所有者確認・依存照合が終わるまで移動・削除しない。全Issueの意味分類を研究再開の前提にはせず、分類未完了は明示的な作業キューとして残す。
+
 ## 実行更新 r30 — #17 標準MCP callerへowner PIDを接続
 
 現行main `ec4d3f9417c6da2156fa2af79bda9503348c1602`へ、[PR #9068](https://github.com/Unjuno/agent-interface/pull/9068)をmergeした。`OwnedGuardedSessionOwner`はsnapshot内に`owner_process_pid`を保持していたが、必須の`expected_pid`なしでPID-qualified XRes supervisorを呼んでいた。その`TypeError`は`unknown`へ変換され、標準callerからのowner identity照合が常に無効だった。callerは正確なowner PIDを渡し、欠落・不正時はfail-closedする。修正前失敗・修正後成功の回帰テスト、owned-process 10 tests normal/`-O`、CLI matrix・X11・native MCP等のCI結果をPRに保存した。
