@@ -1,5 +1,11 @@
 # リポジトリ全体の整理計画
 
+## 実行更新 r40 — #3のアイデア索引を復旧し研究へ接続
+
+2026-10-19にIssue [#3](https://github.com/Unjuno/agent-interface/issues/3)の本文と最新2コメント、およびmain `b2c5ef9d691242f4874e09c465c19b147cc5b69c`の視覚インターフェースagendaを照合した。IssueはOPENで、merged [PR #8924](https://github.com/Unjuno/agent-interface/pull/8924)の文書化だけで研究メニューから外すのは不適切として再オープンされている。grid専用の実装/結果は確認できず、JSON presentation compositionやstream receiptは別の問いである。
+
+`docs/IDEAS_AND_OUTCOMES.md`に#3の直接項目を追加し、work mapから参照できるようにした。状態はOPEN/unverified。次は、過去のgrid比較・rawの所在とcustodyを調べ、見つからなければno-grid / always-on / model-selectable / coarse-to-fineを比較する条件・fresh case・target score・correctness gate・費用計測の可否を事前固定する。現時点では実験・割当を開始しておらず、Issueも閉じていない。歴史的なr15 coverage countとIssue-index snapshotは変更していない。
+
 ## 実行更新 r31 — #9070統合後の現在地と整理の合格条件
 
 2026-10-18 20:11 UTCの全ページGitHub CLI再照合で、open Issueは1,675件、open PRは514件。Issue ID集合はr22 snapshotと同じで、PR集合からは#9064だけが外れた。#9064は19:53 UTCにmerge済み。基準main `92dca0df6022fd50b2b439e6863cf2a4da05851f`には#9068、#9069、#9070も統合済み。詳細と限界は[現在の整理再開点 r28](maintenance/consolidation-status-20261019-r28.md)を参照する。r22 CSVは取得時点の記録として保ち、現行open PR一覧としては使わない。
