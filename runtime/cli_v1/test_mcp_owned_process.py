@@ -207,6 +207,72 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
 
+    def test_close_pipe_failure_runs_retirement_cleanup(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = False
+        owner._rpc_lock = threading.Lock()
+        owner._request_locked = Mock(side_effect=OSError('owner pipe closed'))
+        owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+        disconnect = {'status':'unknown', 'reason':'query_timeout'}
+        release = {'status':'not_attempted', 'reason':'owner_disconnect_not_confirmed'}
+        owner._cleanup_after_owner_retirement = Mock(
+            return_value=(disconnect, release))
+        owner._owner_input_obligations = {'keys':{'CTRL':1}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {'status':'snapshot'}
+        owner.session_id = 'session-close-pipe-failure'
+        owner._execution_unknown = False
+        owner.review_required = False
+
+        result = owner.close()
+
+        owner._retire.assert_called_once_with('owned close result unavailable')
+        owner._cleanup_after_owner_retirement.assert_called_once_with(
+            {'retired':True, 'exitcode':-15})
+        self.assertEqual(result['owner_client_disconnect'], disconnect)
+        self.assertEqual(result['owner_release_attempt'], release)
+        self.assertFalse(result['release_confirmed'])
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertIsNone(result['task_success'])
+        self.assertFalse(result['replay_allowed'])
+
+    def test_close_forced_retirement_after_receipt_runs_cleanup(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = True
+        owner._rpc_lock = threading.Lock()
+        owner._request_locked = Mock(return_value={
+            'status':'closed', 'release_attempted':False,
+            'connection_close_attempted':True,
+        })
+        owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+        disconnect = {'status':'disconnected', 'expected_pid':4321}
+        release = {'status':'unknown', 'reason':'supervision_timeout'}
+        owner._cleanup_after_owner_retirement = Mock(
+            return_value=(disconnect, release))
+        owner._owner_input_obligations = {'keys':{'CTRL':1}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {'status':'snapshot'}
+        owner.session_id = 'session-close-retirement'
+        owner._execution_unknown = False
+        owner.review_required = False
+
+        result = owner.close()
+
+        owner._retire.assert_called_once_with(
+            'owned process did not exit after close receipt')
+        owner._cleanup_after_owner_retirement.assert_called_once_with(
+            {'retired':True, 'exitcode':-15})
+        self.assertEqual(result['owner_client_disconnect'], disconnect)
+        self.assertEqual(result['owner_release_attempt'], release)
+        self.assertFalse(result['release_confirmed'])
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertIsNone(result['task_success'])
+        self.assertFalse(result['replay_allowed'])
+
     def test_x11_backend_publishes_key_obligation_before_sync_can_block(self):
         events = []
         backend = object.__new__(X11Backend)
