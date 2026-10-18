@@ -25,7 +25,7 @@ diagnostic only and do not establish mergeability or evidence validity.
 | [#8749](https://github.com/Unjuno/agent-interface/pull/8749) | A09: ten decisions; typed health crossed 100→88 while inference was pending, cancel discarded the stale answer, and a newer observation was used. Two kills, no death/exit. Original frozen auditor FAIL remains; a later review found a reconciliation defect. | yes | `3e170476db3cc8e2798f33884925f33845b398c3` | `1ece47014d05db898bf73afcd722a14524462e15` | diverged; +4 / −478 | Preserve. Audit the latest reconciliation finding and independently inspect the packet; do not infer an adoption-ready pass. |
 | [#8759](https://github.com/Unjuno/agent-interface/pull/8759) | A10: stopped at death after 13 turns, one kill, no exit; preregistered live threat-guard condition was not exposed. STOP; body says not to retry. | yes | `d31c85116df463039219368c2b64e986f9d9dd55` | `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36` | diverged; +3 / −857 | Preserve STOP and source. Audit custody and current-main dependency only; no retry. |
 | [#8782](https://github.com/Unjuno/agent-interface/pull/8782) | A11: 32 turns, alive, two kills, health 64–100, ammo 32–52; joint hard-health/useful-feedback/recovery condition not exposed. HOLD, no exit. | no | `9efecd6d5bb46d924ccdf79df53e6e8ed3727553` | `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36` | diverged; +2 / −857 | Preserve HOLD and sanitized evidence. Audit source closure and latest custody; no efficacy inference. |
-| [#8790](https://github.com/Unjuno/agent-interface/pull/8790) | A12 startup STOP plus A13: ten turns; a 1.008 s hold did not overlap the sole useful scorer event, which came 49.277 ms after the controller interval. Timing gate HOLD; one recovery was right-censored at the cap. | no | `db6ca09d10abaf3d0e8aaf5ad3f3f9f67555b763` | `a6343bb76e4dc0a4afa32a29c8a485a617faeff8` | diverged; +5 / −855 | Preserve timing HOLD and censoring. Audit frozen source/results; do not reinterpret delayed feedback as an in-window response. |
+| [#8790](https://github.com/Unjuno/agent-interface/pull/8790) | A12 startup STOP plus A13: ten turns; a 1.008 s hold did not overlap the sole useful scorer event, which came 49.277 ms after the controller interval. Timing gate HOLD; one recovery was right-censored at the cap. | no | `db6ca09d10abaf3d0e8aaf5ad3f3f9f67555b763` | `a6343bb76e4dc0a4afa32a29c8a485a617faeff8` | diverged; +5 / −855 | Preserve timing HOLD/censoring. Public summary lacks hash-bound full raw/treatment-audit receipt; see the 2026-10-19 recheck. Keep unmerged pending owner-attested custody; do not rerun or reinterpret the delayed event. |
 
 ## What this organization establishes
 
@@ -60,3 +60,30 @@ These are work suggestions, not assignments, locks, new resource allocations, or
 merge approval. If a group has an active owner or a newer head, coordinate with
 that owner and inspect the live state before proceeding. Only the integrator
 edits this shared family index, `docs/ideas/README.md`, and the parent agenda.
+
+## Read-only packet recheck — PR #8790 (2026-10-19)
+
+The live PR remains open at head `db6ca09d10abaf3d0e8aaf5ad3f3f9f67555b763`
+against base `a6343bb76e4dc0a4afa32a29c8a485a617faeff8`. Its published result
+retains A12 as a startup STOP and A13 as a timing HOLD: the useful scorer event
+occurred 49.277 ms after the controller interval, while the 1.008 s relay hold
+did not make that event controller-visible. One recovery is right-censored at
+the ten-decision cap. Preserve the HOLD and censoring; do not call this a causal
+latency result or task success.
+
+The review thread's final correction resolves the `key_state_errors` predicate
+concern for source-conforming V12 receipts: V12 sets `verified=false` when that
+field is nonempty, so synthetic malformed-receipt acceptance is not evidence
+that any retained A13 cancellation was misclassified. It still does not
+reconstruct the allocation's actual rows. `A13_RESULT.md` says the full
+`results-local/doom/map01-v39-live-threat-guard-a13-delay-a01-20261009/`
+package, including `A13_TREATMENT_AUDIT.json`, remains local; the public PR
+contains a summary JSON with `independent_audit_pass: true` but no hash-bound
+full raw or treatment-audit receipt. The exact allocation path was absent from
+this checkout during the recheck, so local raw custody and reproducibility
+remain unverified; this is not evidence of global loss.
+
+Disposition: keep #8790 open and unmerged pending an owner-attested retained
+raw/treatment-audit packet or equivalent hash-bound custody evidence. Do not
+rerun A12 or A13. This read-only recheck changes no Issue state, allocation, or
+result classification.
