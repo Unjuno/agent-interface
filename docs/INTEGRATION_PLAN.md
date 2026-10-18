@@ -95,6 +95,12 @@ live task and matched comparison.
   after acknowledgement, while empty bitmap at release-sync is still unverified.
   The 449-method selection passes normal/-O, preserving these limits. A qualified
   input/release transport bound remains necessary for finite physical release.
+  The [current-main stdio recheck](../research/integration/guarded_stdio_wait_budget_recheck_20261018/README.md)
+  reran all 19 wait-budget and transport-custody cases normally and under `-O`.
+  The real stdio caller returned `pending` before blocked release sync resumed,
+  kept close busy, and retained the same call through later Fake X cleanup. This
+  confirms bounded response/custody for that schedule, not physical release or
+  a native/server deadline.
 
 - [Compiled semantic callback cancellation](../research/integration/compiled_observation_cancellation_20261016/README.md)
   connects the explicit observation-worker option to the actual v3 caller and
