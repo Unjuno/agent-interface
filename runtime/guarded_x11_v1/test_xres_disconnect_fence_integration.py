@@ -3,14 +3,17 @@
 This test is explicitly enabled only by the private-Xvfb integration job. It
 must not send synthetic input to an arbitrary developer DISPLAY.
 """
+import hashlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from Xlib import X, XK
 from Xlib.display import Display
@@ -64,6 +67,63 @@ def _keys_down(display, keycodes):
     }
 
 
+def _xvfb_build_provenance():
+    """Capture the executable and package versions behind a private Xvfb run."""
+    binary = shutil.which('Xvfb')
+    resolved = str(Path(binary).resolve()) if binary else None
+    digest = None
+    if resolved and Path(resolved).is_file():
+        sha = hashlib.sha256()
+        with open(resolved, 'rb') as stream:
+            for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+                sha.update(chunk)
+        digest = sha.hexdigest()
+
+    packages = {}
+    for package in ('xvfb', 'xserver-xorg-core'):
+        try:
+            result = subprocess.run(
+                ['dpkg-query', '-W', '-f=${binary:Package}=${Version}', package],
+                capture_output=True, text=True, timeout=5, check=False)
+            packages[package] = {
+                'returncode':result.returncode,
+                'stdout':result.stdout.strip(),
+                'stderr':result.stderr.strip(),
+            }
+        except Exception as error:
+            packages[package] = {'error':repr(error)}
+    return {
+        'path':binary,
+        'resolved_path':resolved,
+        'sha256':digest,
+        'packages':packages,
+    }
+
+
+class XvfbBuildProvenanceTests(unittest.TestCase):
+    def test_raw_provenance_binds_binary_hash_and_package_versions(self):
+        with tempfile.TemporaryDirectory() as td:
+            binary = Path(td)/'Xvfb'
+            binary.write_bytes(b'controlled-xvfb-binary')
+            package_results = [
+                subprocess.CompletedProcess([], 0, 'xvfb=2:21.1.11-1', ''),
+                subprocess.CompletedProcess([], 0, 'xserver-xorg-core=2:21.1.11-1', ''),
+            ]
+            with patch('runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.shutil.which',
+                       return_value=str(binary)), \
+                    patch('runtime.guarded_x11_v1.test_xres_disconnect_fence_integration.subprocess.run',
+                          side_effect=package_results):
+                result = _xvfb_build_provenance()
+            self.assertEqual(result['path'], str(binary))
+            self.assertEqual(result['resolved_path'], str(binary.resolve()))
+            self.assertEqual(result['sha256'], hashlib.sha256(
+                b'controlled-xvfb-binary').hexdigest())
+            self.assertEqual(result['packages']['xvfb']['stdout'],
+                             'xvfb=2:21.1.11-1')
+            self.assertEqual(result['packages']['xserver-xorg-core']['stdout'],
+                             'xserver-xorg-core=2:21.1.11-1')
+
+
 @unittest.skipUnless(
     sys.platform == 'linux'
     and os.environ.get('DISPLAY') == ':88'
@@ -82,6 +142,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
         result_path = os.environ.get('AGENT_INTERFACE_XORG_FENCE_RESULT')
         report = {
             'server_display':display_name,
+            'server_build_provenance':_xvfb_build_provenance(),
             'delayed_keypress_ms':_DELAY_MS,
             'kill_after_flush_ms':150,
             'server_vendor':None,

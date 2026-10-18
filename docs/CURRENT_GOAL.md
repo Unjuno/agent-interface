@@ -1,15 +1,15 @@
 # Current objective and working direction
 
-Latest full membership recheck: 2026-10-18 21:20 UTC against main
-`d8937346a331c0c69c4b8668efc9423e79725b24`; 1,675 open Issues and 511 open
-PRs. The sorted-ID hashes are in the [r30 membership recheck](maintenance/repository-inventory-20261019-r30.md).
+Latest full membership recheck: 2026-10-18 21:59 UTC against main
+`0b452ada10c7c336e0faf89699b17f1507abcd95`; 1,675 open Issues and 504 open
+PRs. The sorted-ID hashes and complete metadata snapshots are in the
+[r41 membership recheck](maintenance/repository-inventory-20261019-r41.md).
 This is membership only, not semantic review; full classification remains
 unfinished. The exact read time and baseline belong to the snapshot, not to an
-ever-changing claim that this page names the current HEAD.
-The latest complete metadata snapshot remains r22. Full semantic classification
-remains unfinished; see the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md)
-for the family-by-family review and disposition criteria. This is the short
-entry point, not an experiment ledger.
+ever-changing claim that this page names the current HEAD. See the
+[repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
+family-by-family review and disposition criteria. This is the short entry
+point, not an experiment ledger.
 
 ## Objective
 

@@ -38,6 +38,20 @@ PRは正確なhead/baseと差分、既存mainとの重なり、依存stack、意
 
 整理の合格条件は、現行の未完Issueにそれぞれ研究上の行き先または未分類キューがあり、検証済みの独立成果がmain/保存先から辿れ、PR stackとbranch/worktreeの保全状態が現物確認済みで、次の競合しない有限作業が選べること。open件数が残っていても、この条件を満たすものは「未完了」ではなく意図した研究バックログである。歴史的なraw・条件・第一結果は移動・上書きせず、索引で結ぶ。
 
+## 実行更新 r41 — 現行mainに対するIssue/PR完全一覧を固定
+
+2026-10-18 21:59 UTCに、GitHub CLIで全ページを読み、main
+`0b452ada10c7c336e0faf89699b17f1507abcd95`を基準にopen Issue 1,675件、open
+PR 504件のメタデータsnapshotを保存した。Issue ID集合のSHA-256は
+`4D45620D8AAE450E7F37C9C7A0D2B183534C44094C117671362B12BB11751678`、PR ID集合は
+`08808AE63A22380EC701F087EDB01B8EFD03A9DA2DDA09D0EC75D44EDFCF74C8`。
+[r41 inventory note](maintenance/repository-inventory-20261019-r41.md)には取得方法・限界・CSVの内容ハッシュを記録した。
+
+これはr30から続くIssue集合を再確認し、open PRが511件から504件になったことを固定する
+membership更新である。Issue/PRの意味分類、実行所有者、PRの採否、branch/worktreeの保全状態は
+判定していない。したがって、件数変化はclose・merge・削除の根拠ではなく、整理計画の意味分類と
+family単位の作業キューは継続する。未分類の仕事を止めないという既存方針も維持する。
+
 ## 実行更新 r40 — #3のアイデア索引を復旧し研究へ接続
 
 2026-10-19にIssue [#3](https://github.com/Unjuno/agent-interface/issues/3)の本文と最新2コメント、およびmain `b2c5ef9d691242f4874e09c465c19b147cc5b69c`の視覚インターフェースagendaを照合した。IssueはOPENで、merged [PR #8924](https://github.com/Unjuno/agent-interface/pull/8924)の文書化だけで研究メニューから外すのは不適切として再オープンされている。grid専用の実装/結果は確認できず、JSON presentation compositionやstream receiptは別の問いである。
