@@ -1,13 +1,13 @@
 # Current objective and working direction
 
 Updated 2026-10-19 against `origin/main` SHA
-`f47817cd70949e1a32785cbbe5161b5e8853582c`. The 2026-10-18 18:17:23 UTC
-paginated open set contains 1,675 Issues and 514 PRs, with no ID or CSV-hash
-change from r15. Full semantic classification remains unfinished; see the
-[r17 inventory](maintenance/repository-inventory-20261019-r17.md) and
-[repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for current status
-and disposition criteria. This is the short entry point, not an experiment
-ledger.
+`35e5a1c08f6ba604f0f6b2110381c9025784935e`. The 2026-10-18 18:26:54 UTC
+paginated open set contains 1,675 Issues and 514 PRs, with no ID change from
+r15; the latest full metadata remains in r15. Full semantic classification
+remains unfinished; see the [r18 membership recheck](maintenance/repository-inventory-20261019-r18.md)
+and [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for current
+status and disposition criteria. This is the short entry point, not an
+experiment ledger.
 
 ## Objective
 
