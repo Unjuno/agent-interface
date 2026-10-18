@@ -9,7 +9,7 @@
 
 **2026-10-18 lease-expiry follow-up:** merged [#9027](https://github.com/Unjuno/agent-interface/pull/9027) advances the same standard MCP/Fake X caller. With CTRL-down already queued and the server held past the original lease, the caller remains pending without release confirmation; after the barrier resumes, the queued DOWN arrives late, the next key is refused, and same-writer cleanup UP is verified by Fake X. The first run also found that an explicit new call could reuse the old still-live alias after `execution_failed`, despite `replay_allowed=false`. The caller now requires review after `execution_failed`, and the regression refuses that reuse. The selected module passes 7/7 and four related modules pass 60/60 in normal and optimized Python. Exact logs/source hashes: [retained packet](../../research/integration/press_lease_expiry_queued_server_mcp_20261018/README.md). This remains a finite Fake X result: an already-queued request is not retracted, cleanup waits for resumption, and no native X ordering, physical deadline, task effect, or permanent nonresponse guarantee is established. Continue with single-authority writer retirement/fencing and late-send rejection; keep UNKNOWN on server/backend nonresponse.
 
-**2026-10-18 requested-process-fence reconciliation:** the already-integrated [#7034 retained result](../../research/concurrency/x11_requested_process_fence_17_4d74_20261003/REPORT.md) resolves the finite Xvfb question it asked: keepalive accepted cancellation while the child was paused after a positive F9 check, then the resumed child issued F9 400.197 ms after acceptance despite a neutral checkpoint. The reference killed and reaped that exact child before acceptance; F9 was never issued, and the prearmed cleanup path released F8 with a neutral keymap readback. This is `SCOPED_REQUESTED_PROCESS_FENCE_SUPPORTED` with `HOLD_RUNTIME_PROMOTION`, not a fresh allocation or a public MCP guarantee. It used fixed cleanup scope; the distinct #7024 public-cleanup-scope allocation ended `STOP / METHOD_FAIL`, so do not infer cleanup-scope reconstruction after arbitrary owner death. The remaining integration decision is to give the standard caller an owned task-input process, connect acceptance to verified task-owner death, and require separately confirmed cleanup while reporting the task call as aborted with no completion receipt. Preserve `UNKNOWN` when owner death, server processing, or release cannot be established. Do not rerun either consumed producer.
+**2026-10-18 requested-process-fence reconciliation:** the already-integrated [#7034 retained result](../../research/concurrency/x11_requested_process_fence_17_4d74_20261003/REPORT.md) resolves the finite Xvfb question it asked: keepalive accepted cancellation while the child was paused after a positive F9 check, then the resumed child issued F9 400.197 ms after acceptance despite a neutral checkpoint. The reference killed and reaped that exact child before acceptance; F9 was never issued, and the prearmed cleanup path released F8 with a neutral keymap readback. This is `SCOPED_REQUESTED_PROCESS_FENCE_SUPPORTED` with `HOLD_RUNTIME_PROMOTION`, not a fresh allocation or a public MCP guarantee. The original #7024 public-cleanup-scope attempt ended `STOP / METHOD_FAIL`; its immutable successor [#7041](https://github.com/Unjuno/agent-interface/issues/7041) later demonstrated scoped prearmed cleanup-scope transfer after identity-checked process death, with a disjoint F9 bystander preserved. The [#7041 report](https://github.com/Unjuno/agent-interface/blob/main/research/concurrency/x11_crash_cleanup_scope_a02_17_5ce3_20261003/REPORT.md) explicitly treats this as research instrumentation, not production recovery or a public API. The remaining integration decision is to give the standard caller an owned task-input process, bind accepted cancellation to verified owner death, and transfer a prearmed cleanup-only obligation before task input; then confirm release independently while the backend responds. Preserve `UNKNOWN` when death, server processing, or release cannot be established. Do not rerun either consumed producer.
 
 **2026-10-18 standard-caller/process-owner source crosswalk:** On current main `a25f0d425191d4941b5fed1449be2305023e50be`, the guarded MCP path in [`mcp_guarded.py`](../../runtime/cli_v1/mcp_guarded.py) still constructs `GuardedSessionOwner` around an in-process [`NativeHandleBridge`](../../runtime/guarded_x11_v1/bridge.py); accepted operations enter `run_in_executor` in [`mcp_server.py`](../../runtime/cli_v1/mcp_server.py), and a wait timeout returns `pending` while the same worker retains custody. The owned-process construction instead launches [`input_owner_process_v3`](../../research/live_control/input_owner_process_v3.py) around the transition/input-owner RPC; [`OwnedOwnerAdapter`](../../research/live_control/input_owner_service_adapter.py) is selected by the research/DOOM process-identity backend in [`session_owned_owner_backend.py`](../../research/doom/session_owned_owner_backend.py). `runtime/cli_v1` has no `owner_service` selection or adapter hook. These are compatible custody patterns, not a composed standard-caller implementation: importing the research adapter alone would not move the X11 bridge or define the MCP operations/receipts. The next integration must explicitly adapt the selected guarded-X11 operation surface to one owned process, preserve caller call-ID and abort/no-success semantics, and keep cleanup `UNKNOWN` until separately confirmed. Do not promote or re-run any prior producer on the strength of this source comparison.
 
@@ -24,7 +24,7 @@ V4の構成PASSの後に、読取制限による条件付きfalse-clearとdevice
 
 | Issue / 仮説 | 既存成果と今回の照合 | 残る問い・次の有限な作業 | 判断へのつながり |
 |---|---|---|---|
-| [#17 安全経路をdata/planner経路から独立させる](https://github.com/Unjuno/agent-interface/issues/17) | V39のcancel-before-planner-ack修理は#8392で統合済み。Fake X A01/#9014は別connection UPとempty readbackによるfalse-clearを反証し、#9015はblocked release-sync時の同一call custody、#9022はserver処理前にDOWNがqueueされた後のcancelと同一writer cleanupを確認した。保存済み[#7034](../../research/concurrency/x11_requested_process_fence_17_4d74_20261003/REPORT.md)はXvfb上でtask-child kill/reap後のrequested fenceを支持するが、prearmed cleanupのみ。#9031はcancel acknowledgement時にalias review fenceを同期化した。 | 既存のprocess-fence producerを再実行せず、標準MCP callerへowned task-process retirementとその後の確認済みcleanupを接続する。callはaborted/receiptなしとし、cleanup scopeが不明ならUNKNOWNを保持する。#7024のpublic cleanup-scope STOPを解決した証拠と混同しない。 | bounded caller responseとFake X orderingは任意の物理解放deadlineではない。backend/server非応答時はUNKNOWNを保ち、physical deadlineやtask successを推定しない。完了前に#17/#59/#57は閉じない。 |
+| [#17 安全経路をdata/planner経路から独立させる](https://github.com/Unjuno/agent-interface/issues/17) | V39のcancel-before-planner-ack修理は#8392で統合済み。Fake X A01/#9014は別connection UPとempty readbackによるfalse-clearを反証し、#9015はblocked release-sync時の同一call custody、#9022はserver処理前にDOWNがqueueされた後のcancelと同一writer cleanupを確認した。保存済み[#7034](../../research/concurrency/x11_requested_process_fence_17_4d74_20261003/REPORT.md)はXvfb上でtask-child kill/reap後のrequested fenceを支持する。#7024の初回STOPを保持した[#7041 successor report](https://github.com/Unjuno/agent-interface/blob/main/research/concurrency/x11_crash_cleanup_scope_a02_17_5ce3_20261003/REPORT.md)は、DOWNが既にsyncされた後のidentity-checked deathとprearmed F8 scope transferを支持し、F9 bystanderも保持した。これは研究用catalog instrumentationであり、一般/production recoveryではない。標準MCP owned-process branchはFake Xでblocked syncのprocess retirement後もkeycode 1がdownのまま、release `UNKNOWN`を保持した。 | #7034/#7041 producerは再実行せず、standard callerでpress前の既知obligation prearmとcleanup-only authority transferを考える。ただしprocessed DOWNとserver処理前のqueued DOWNを分け、late requestをfence/queue drainできるまで独立UPをrelease proofにしない。callerはaborted/no-completion receiptのまま、未知scope/backend非応答はUNKNOWNにする。 | bounded caller responseとFake X orderingは任意の物理解放deadlineではない。#7041はsynced F8単独/fixture scopeに限る。A01は独立UP/readbackがqueued DOWNに先行しうる反例。backend/server非応答時はUNKNOWNを保ち、physical deadlineやtask successを推定しない。完了前に#17/#59/#57は閉じない。 |
 | [#2 architecture risk register](https://github.com/Unjuno/agent-interface/issues/2)のprocess/backend境界 | 閉じた#821はowner crash時のcleanup、#823はX server stall時の限界を報告している。今回はそのIssue本文・結果コメントを確認した範囲であり、元rawを再監査してはいない。 | 観測処理停止、owner死亡、backend停止を別の故障として扱い、採用callerのどの境界が隔離されるか示す。その他の保守性・座標・観測・oracle等のリスクは#2に残る。 | watchdogやprocessという名前だけで下位backendのrelease保証を引き継がない。 |
 | [#10 実装言語・fault boundary・形式化](https://github.com/Unjuno/agent-interface/issues/10) | latencyをplanner/tool、interface、research overheadに分ける提案。今回の停止はmicro-optimizationでは消えない依存である。 | まず必要な権限・順序・未知状態を固定する。移植時は期限、late reply、release/verification、差分costを同条件で検証する。 | Python/Rustの速度比較と解放可能性を分離。言語移植だけを解決策として採用しない。 |
 | [#14 event attentionとinterrupt保持](https://github.com/Unjuno/agent-interface/issues/14) | #8926のCLI compositionは保存・出力選択・flushを区別した。モデル受信やACK後の解決は未検証。 | 安全取消しとplannerへの通知を分離し、critical eventの保持→配信→ACK→解決の実経路を照合する。coalescingで未解決eventを消さない。 | data-plane outageを許す範囲と、attention節約の可否を判断する。通知ACKで入力権限を復活させない。 |
@@ -138,6 +138,45 @@ server-wide stopでもreceiptは返らなかった。通常/-Oとも同じ反例
 saved-row auditを保存した。結論はモデル内の順序反例で、実X ordering・physical release・
 deadline保証ではない。次は単一authorityのwriter retirement/fenceとlate-send拒否を実callerで
 結び、backend不応答時は有限成功を偽らずUNKNOWNを保持する必要がある。
+
+**2026-10-19 owned-process integration (local regression, not live qualification):**
+The additive [standard MCP integration](../../research/integration/owned_guarded_mcp_process_20261019/README.md)
+adds an opt-in spawned owner for the complete guarded-X11 session. Its selected
+104-test suite passes in normal and optimized Python. A separate mutation changes
+the target process-generation digest after observation/mint; the standard caller
+refuses the stale alias with `SCOPE_MISMATCH` and `input_dispatched=false`. In the
+blocked Fake X sync regression, cancellation retired the exact owner process,
+but keycode 1 remained down; the call stayed failed/aborted, release `UNKNOWN`,
+and replay refused. A composed queue regression then showed a fresh cleanup
+connection's actual `X11Backend.release_all` can return an empty verified
+readback while the retired writer still has a DOWN queued; applying that old
+request leaves keycode 1 down. This deterministic fake-transport counterexample
+means prearming a cleanup scope is insufficient by itself: first establish a
+queue-drained or late-send fence. Preserve UNKNOWN otherwise; this is not a live
+X ordering, task effect, physical deadline, or WSLc result.
+
+The spawned owner snapshot now carries the Xlib connection `resource_id_base`
+when available; the 104-test normal/`-O` suite verifies only Fake X propagation.
+XRes `QueryClients` is a concrete candidate for a later exact-client disconnect
+fence check after owner death with DOWN queued. Its current-connected-client
+reply is specified in the [X-Resource protocol](https://www.x.org/releases/current/doc/resourceproto/resproto.txt),
+but no native X server experiment or bounded query exists yet. Treat a blocked
+query or unqualified server as UNKNOWN; client disappearance alone is not
+release evidence.
+
+**2026-10-19 evidence correction for cleanup scope:** The original #7024 ended
+`STOP / METHOD_FAIL` before crash cells, but its immutable #7041 successor later
+completed the frozen 18-cell allocation and saved-only audit. The observed
+outcome was `FAIL_EMPTY_SCOPE_AS_OWNER_RELEASE_EVIDENCE` with
+`SUPPORTED_PREARMED_OWNER_SCOPE_TRANSFER_SCOPED`: after same-generation process
+death, a prearmed F8 cleanup scope released F8 in six reference cells while
+preserving the disjoint F9 bystander; empty backend scope falsely returned a
+scoped verified receipt with F8 still down in six crash cells. This narrows the
+next implementation question from “can scope be reconstructed?” to “can the
+standard caller prearm and transfer known cleanup-only obligations safely?”
+The result remains research instrumentation, not a public recovery contract.
+See the [immutable #7041 report](https://github.com/Unjuno/agent-interface/blob/main/research/concurrency/x11_crash_cleanup_scope_a02_17_5ce3_20261003/REPORT.md)
+and merged [PR #7134](https://github.com/Unjuno/agent-interface/pull/7134).
 
 ## Issueを閉じる条件
 

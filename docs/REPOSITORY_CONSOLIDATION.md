@@ -1,5 +1,68 @@
 # リポジトリ全体の整理計画
 
+**2026-10-19 r23 — exact owner X-client identity seed:** The spawned owner now
+retains Python-Xlib's X connection `resource_id_base` in its standard MCP
+snapshot when well formed; a Fake X assertion verifies propagation. This makes
+the exact client addressable for a possible XRes `QueryClients`
+disconnect-fence experiment, but is not a drained-queue, release, or native-X
+result. The X-Resource protocol defines `QueryClients` as returning currently
+connected client ranges. Next test disappearance of this exact client after an
+owner kill with DOWN queued, followed only then by fresh-connection release and
+readback. Bound the observer itself; if it stalls or the server is unqualified,
+retain cleanup `UNKNOWN`. See the [integration note](../research/integration/owned_guarded_mcp_process_20261019/README.md).
+
+**2026-10-19 r22 — queued-DOWN caller composition correction:** The owned
+guarded-MCP branch now composes owner-process retirement, the actual
+`X11Backend.release_all` method, and a synthetic per-connection request queue.
+With a DOWN queued before server processing, retirement leaves the call
+`runtime_failed` and cleanup `UNKNOWN`; a fresh cleanup connection can report an
+empty verified readback, then the old queued DOWN can land and leave keycode 1
+down. This is a deterministic Fake X model counterexample, not evidence about
+real X ordering. The 104 selected guarded-MCP tests pass in normal and optimized
+Python; nested stdio tests remain excluded because their child interpreter did
+not load the host's temporary MCP dependency. The local [integration note](../research/integration/owned_guarded_mcp_process_20261019/README.md)
+preserves scope and reproduction limits. This corrects r19-r21's earlier
+102/103 counts for the latest suite and narrows the next caller seam to a
+queue-drained/late-send fence before independent cleanup may confirm release.
+Keep #17 open and cleanup `UNKNOWN` when that fence or backend response is
+missing. This is one family-level update, not a semantic review or cleanup of
+the full Issue/PR inventory.
+
+**2026-10-19 r19 — 実装記録と作業境界の更新:** Issue #17の独立した
+caller-family workとして、guarded MCP全体をspawned owner processに置くopt-in
+経路を追加した。詳細は[ローカル回帰記録](../research/integration/owned_guarded_mcp_process_20261019/README.md)
+と[worker map](WORKER_WORK_MAP.md)へ記録した。選定102件は通常/最適化Pythonの両方で成功。
+ただしFake Xのblocked syncでownerを終了してもkeycode 1がdownのまま残り、releaseは
+UNKNOWNである。これは物理解放の解決ではなく、次の具体的な独立作業
+(retirement後のcleanup-scope再構成とbackend応答条件下の独立release確認)を絞った結果。
+Issueを一括closeせず、アイデア索引・原Issue・証拠・後続作業を家族単位で対応付ける
+既存方針を維持する。nested stdio回帰は依存の子process import問題で除外した。
+
+**2026-10-19 r20 — cleanup-scope evidence correction:** 読み直したIssue #7024/
+#7041の全コメントとmain上の[#7041 report](https://github.com/Unjuno/agent-interface/blob/main/research/concurrency/x11_crash_cleanup_scope_a02_17_5ce3_20261003/REPORT.md)
+により、#7024初回の`STOP / METHOD_FAIL`後、immutable successor #7041が18-cell
+allocationとsaved-only auditを完了していたことを確認した。empty scopeではF8がdownの
+ままなのにpublic scoped receiptがverifiedを返す一方、owner deathを同一PID世代で確認後に
+prearmed F8 cleanup-only scopeを移したreferenceは6/6でF8をreleaseし、F9 bystanderを保持。
+これはbounded Xvfb research instrumentationで、public/production recoveryではない。
+したがって次は再び「scope reconstructionが可能か」を問わず、既知のoutstanding-input
+obligationとcleanup-only capabilityを標準MCP callerがpress前にprearmし、正確なowner死後に
+移してreadbackできるかを問う。元STOPと#7041 first outcome/rawは変更せず、#17を閉じない。
+
+**2026-10-19 r21 — target-generation continuity and local verification:**
+owned-process caller regression changes the synthetic process-generation digest
+after observation/mint and before guarded input. Standard MCP returns
+`SCOPE_MISMATCH` with `input_dispatched=false`; the selected 103-test guarded-MCP
+suite passes in normal and optimized Python. This verifies the existing
+generation fence across the spawned-owner boundary in Fake X only. It does not
+qualify native target incarnation, release, task effect, MAP01, or efficiency.
+Exact limits and the excluded nested-stdio tests are in the
+[integration note](../research/integration/owned_guarded_mcp_process_20261019/README.md).
+The #7041 reference began after the DOWN was synced; the separate release-order
+counterexample shows independent UP/readback can precede a queued DOWN. The next
+test therefore separates processed from queued DOWN and requires a queue-drained
+or late-send fence before release can be confirmed.
+
 **2026-10-18 r18 — current-main count recheck:** At 14:52 UTC, fetched
 `origin/main` was `e5c5448f9ad035657f212135fa4e95d189acda95`. GitHub's paginated
 Issues endpoint returned 2,190 issue-like records, including 514 pull requests;
