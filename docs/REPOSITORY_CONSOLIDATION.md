@@ -4,6 +4,23 @@
 
 **目的:** Unjuno/agent-interfaceを、複数ワーカーが同じ現在地と証拠を見つけ、独立した作業を選び、衝突なく統合できる状態へ整理する。IssueやPRをゼロにすることは目的にしない。未検証の案、失敗、反例、raw、担当中の作業は失わず、重複・古い案も出典と状態が追える形で残す。
 
+## 2026-10-19 整理の進め方 — アイデアを残して研究を進める
+
+この計画は、コードを動かす入口・研究仮説・実験記録・実装PR・Issue/PR/worktreeの状態を同じ道筋でたどれるようにする。現在ある大量のIssueやPRを一括で閉じたり、全案を一つの親Issueへ移したりしない。まず検索可能な家族別記録を作り、その記録から次の研究または実装を選び、完了条件に達した作業だけを個別に統合・移管・終了する。
+
+| 領域 | 整理するもの | 維持する関係 | 最初の成果 |
+|---|---|---|---|
+| 利用入口と構造 | README、docs入口、ROADMAP、runtime/research/release/siteの責務と重複 | 利用者向け説明 → 現行実装 → 研究根拠 → 未達条件 | 古い説明と現行状態の食い違いを記録し、現行の正本へのリンクを直す。歴史資料は削除せず履歴として示す。 |
+| 研究アイデア | 開いた/閉じた研究Issue、提案、反例、独立仮説 | 出典Issue → family entry → 既存PASS/FAIL/STOPとraw → 限界/依存 → 次の識別実験 | 既存の`docs/ideas/`と`RESEARCH_ISSUE_INDEX.md`を照合し、番号だけの一覧で取りこぼさない。先行バッチ#5305は現行本文・全コメントを照合済み。T0、T1 STOP、後続ポリシー結果、未確認raw custodyを[family entry](ideas/conflict-aware-evidence-ledger.md)に保ち、T0の再実行とIssue closeは行わない。 |
+| 実装・証拠 | Open PR、main上の実装、保存済み実験、重複または後継成果 | Issue仮説 → 正確なPR head/diff → テストとraw → 採用範囲 → 未解決の親問い | PRは研究familyごとにmainとの差分と証拠を確認する。独自結果と唯一rawの保全前に、重複に見えるPRも閉じない。 |
+| 実行状態 | Branch、Git worktree、ローカルworkspace artifacts、割当/利用中資源 | owner/session → Issue/PR → branch/path → unique output/raw → recovery route | `known / unknown / verified`を分ける。unknown ownerや未照合pathは保持して調査し、確認済み保全先なしに削除しない。 |
+
+各familyの判定は`active / queued / deferred / duplicate-successor / completed / rejected-with-evidence / untriaged`に揃える。`untriaged`は不足を明示する有効な結果であり、`completed`へ繰り上げない。Issueを閉じるときは、Issue自身の完了条件または証拠に基づく棄却を示す。未解決の問いが残るなら、実際に継続できる後継Issue/実験先へ仮説・根拠・次の作業を移す。アイデアの文書化、経過時間、空の担当欄、似たタイトルだけでは終了理由にならない。
+
+研究を止めないため、全件棚卸しと局所作業は並行して進める。各作業の開始時に対象Issue/PR、固定headまたはmain SHA、触る出力、衝突境界を記録する。共有索引はfamily entryを一件ずつ統合する。担当不明を無主物扱いせず、独立した読み取り監査・ローカル検証は確認待ちの間も進める。PRの統合は、現行権限と保護設定に従い、ローカル検証を根拠に判断する。任意CIや架空の必須レビュアー人数を一律の停止条件にしない。
+
+**この整理の出口:** 新しいworkerがREADMEとwork mapから始め、現行ソースと研究familyへ移動し、範囲が競合しない有限作業を一つ選べること。全Issue/PRは最新のページング一覧に対する意味判定または明示的な`untriaged`状態を持ち、各アイデアから証拠・残る問い・次の行き先へ戻れること。未解決研究や固有成果を消さずにこの状態を達成する。
+
 **現在の全体像 (r12, 2026-10-19 JST):** 2026-10-18 16:55:44 UTCのmain `5e30a60c179ce56e73c83d0279b6698862709c8f` に対するページング再取得ではopen Issue 1,675件、open PR 514件。r11とのID比較でIssueの増減はなく、PR #9039がmainへ統合されたため1件減った。これは一覧・メタデータの確認であり、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r12 inventory](maintenance/repository-inventory-20261019-r12.md)とSHA付きCSVを現在の読み取り基準点とし、r11以前は履歴として保持する。
 
 **「クリーン」の完了条件:**
