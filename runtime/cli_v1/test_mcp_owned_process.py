@@ -515,18 +515,30 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
                 fence_result = {'status':'disconnected', 'worker_retired':True,
                                 'elapsed_ms':2.5}
+                observed_owner_pids = []
+
+                def observe_owner(display_name, resource_base, *, expected_pid,
+                                  timeout_s, terminate_grace_s):
+                    observed_owner_pids.append(expected_pid)
+                    return dict(fence_result, expected_pid=expected_pid)
+
                 release_result = {'status':'readback_verified',
                                    'release':{'verified':True, 'keys_down':[],
                                               'buttons_down':[], 'monotonic_ns':12}}
                 with (patch('runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised',
-                            return_value=fence_result),
+                            side_effect=observe_owner),
                       patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner._release_retired_owner_inputs',
                             return_value=release_result) as release_inputs):
                     cancelled = metadata(await server.call_tool('interface_guarded_cancel',
                         {'call_id':pending['call_id']}))
 
                 self.assertTrue(cancelled['owner_process_retired'], cancelled)
-                self.assertEqual(cancelled['owner_client_disconnect'], fence_result)
+                self.assertEqual(len(observed_owner_pids), 1)
+                self.assertIs(type(observed_owner_pids[0]), int)
+                self.assertGreater(observed_owner_pids[0], 0)
+                self.assertEqual(cancelled['owner_client_disconnect'],
+                                 dict(fence_result,
+                                      expected_pid=observed_owner_pids[0]))
                 release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]})
                 self.assertEqual(cancelled['owner_release_attempt'], release_result)
                 self.assertFalse(cancelled['release_confirmed'])
