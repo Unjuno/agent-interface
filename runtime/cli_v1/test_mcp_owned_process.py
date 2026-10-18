@@ -154,6 +154,28 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_disconnect_observer_binds_xres_query_to_owned_process_pid(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.display_name = ':17'
+        owner._snapshot_cache = {
+            'owner_x_client_resource_base': 0x1200000,
+            'owner_process_pid': 2750,
+        }
+
+        def query_owner(display_name, resource_base, *, expected_pid,
+                        timeout_s, terminate_grace_s):
+            if (display_name, resource_base, expected_pid) == (
+                    ':17', 0x1200000, 2750):
+                return {'status':'disconnected', 'expected_pid':expected_pid}
+            return {'status':'unknown', 'expected_pid':expected_pid}
+
+        with patch(
+                'runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised',
+                side_effect=query_owner):
+            result = owner._observe_owner_client_disconnect()
+
+        self.assertEqual(result, {'status':'disconnected', 'expected_pid':2750})
+
     def test_unconfirmed_cancel_retires_exact_owner_without_claiming_release(self):
         responses = (
             ('timeout', False, None),

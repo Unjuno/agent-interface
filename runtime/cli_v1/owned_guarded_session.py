@@ -356,9 +356,13 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         if type(resource_base) is not int or not 0 < resource_base < 2**32:
             return {'status':'unknown', 'reason':'resource_base_unavailable',
                     'worker_retired':None}
+        expected_pid = self._snapshot_cache.get('owner_process_pid')
+        if type(expected_pid) is not int or not 0 < expected_pid < 2**32:
+            return {'status':'unknown', 'reason':'owner_pid_unavailable',
+                    'worker_retired':None}
         try:
             result = wait_for_client_disconnect_supervised(
-                self.display_name, resource_base,
+                self.display_name, resource_base, expected_pid=expected_pid,
                 timeout_s=_XRES_DISCONNECT_TIMEOUT_S,
                 terminate_grace_s=_XRES_DISCONNECT_TERMINATE_GRACE_S)
         except Exception as error:
