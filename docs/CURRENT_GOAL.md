@@ -1,13 +1,13 @@
 # Current objective and working direction
 
-Updated 2026-10-19 against `origin/main` SHA
-`60ba70e5c1b678c56a9da45503cebbfe8c4d9d5f`. The 2026-10-18 18:42:55 UTC
-paginated open set contains 1,675 Issues and 514 PRs, with no ID-set change
-from r15; the latest full metadata remains in r15. Full semantic classification
-remains unfinished; see the [r19 membership recheck](maintenance/repository-inventory-20261019-r19.md)
-and [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for current
-status and disposition criteria. This is the short entry point, not an
-experiment ledger.
+Updated 2026-10-19 against `main` SHA
+`c7335ae7afad450053a9dd6ad0e9582c7fb43a79`. A paginated GitHub API read at
+2026-10-18 20:45:17 UTC returned 1,675 open Issues and 514 open PRs; sorted-ID
+hashes and the count-only comparison limit are in the [r23 membership recheck](maintenance/repository-inventory-20261019-r23.md).
+The latest complete metadata snapshot remains r22. Full semantic classification
+remains unfinished; see the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md)
+for the family-by-family review and disposition criteria. This is the short
+entry point, not an experiment ledger.
 
 ## Objective
 
