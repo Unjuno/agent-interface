@@ -456,22 +456,36 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 if not self._control.poll(_STARTUP_TIMEOUT_S):
                     self._execution_unknown = True
                     self.review_required = True
+                    retirement = self._retire('cancel control response unconfirmed')
                     return {'status':'cancel_unconfirmed', 'input_dispatched':None,
+                            'owner_process_retired':retirement['retired'],
+                            'owner_process_exitcode':retirement['exitcode'],
                             'release_confirmed':False, 'cleanup_status':'UNKNOWN',
-                            'replay_allowed':False}
+                            'task_success':None, 'replay_allowed':False,
+                            'late_server_request_possible':True}
                 response = self._control.recv()
             except (EOFError, OSError) as error:
                 self._execution_unknown = True
                 self.review_required = True
+                retirement = self._retire('cancel control response unconfirmed')
                 return {'status':'cancel_unconfirmed', 'error':repr(error),
-                        'input_dispatched':None, 'release_confirmed':False,
-                        'cleanup_status':'UNKNOWN', 'replay_allowed':False}
+                        'input_dispatched':None,
+                        'owner_process_retired':retirement['retired'],
+                        'owner_process_exitcode':retirement['exitcode'],
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False,
+                        'late_server_request_possible':True}
         if response.get('ok') is not True:
             self._execution_unknown = True
             self.review_required = True
+            retirement = self._retire('cancel control response unconfirmed')
             return {'status':'cancel_unconfirmed', 'input_dispatched':None,
+                    'owner_process_retired':retirement['retired'],
+                    'owner_process_exitcode':retirement['exitcode'],
                     'release_confirmed':False, 'cleanup_status':'UNKNOWN',
-                    'replay_allowed':False, 'error':response.get('error')}
+                    'task_success':None, 'replay_allowed':False,
+                    'late_server_request_possible':True,
+                    'error':response.get('error')}
         self._apply_snapshot(response.get('snapshot', {}))
         result = response['result']
         if result.get('status') != 'cancel_requested':

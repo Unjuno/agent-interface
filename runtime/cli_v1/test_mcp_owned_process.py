@@ -154,6 +154,42 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_unconfirmed_cancel_retires_exact_owner_without_claiming_release(self):
+        responses = (
+            ('timeout', False, None),
+            ('pipe_closed', True, EOFError('closed')),
+            ('negative_ack', True, {'ok':False, 'error':'rejected'}),
+        )
+        for name, has_response, response in responses:
+            with self.subTest(name=name):
+                owner = object.__new__(OwnedGuardedSessionOwner)
+                owner._process = Mock()
+                owner._process.is_alive.return_value = True
+                owner._control = Mock()
+                owner._control.poll.return_value = has_response
+                if isinstance(response, BaseException):
+                    owner._control.recv.side_effect = response
+                elif response is not None:
+                    owner._control.recv.return_value = response
+                owner._control_lock = threading.Lock()
+                owner._execution_unknown = False
+                owner.review_required = False
+                owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+
+                with patch('runtime.cli_v1.owned_guarded_session._STARTUP_TIMEOUT_S', 0):
+                    result = owner.cancel_guarded('cancel-token')
+
+                owner._retire.assert_called_once_with(
+                    'cancel control response unconfirmed')
+                self.assertEqual(result['status'], 'cancel_unconfirmed')
+                self.assertTrue(result['owner_process_retired'])
+                self.assertEqual(result['owner_process_exitcode'], -15)
+                self.assertFalse(result['release_confirmed'])
+                self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+                self.assertIsNone(result['task_success'])
+                self.assertFalse(result['replay_allowed'])
+                self.assertTrue(result['late_server_request_possible'])
+
     def test_unknown_or_present_owner_client_never_starts_release_worker(self):
         for disconnect_status in ('still_connected', 'unknown'):
             with self.subTest(disconnect_status=disconnect_status):
