@@ -11,44 +11,46 @@ by the X.Org server implementation for its client-owned delayed XTEST path.
 
 ## Source trace
 
-The inspected source is the official X.Org server 21.1.11 release archive,
-tagged `xorg-server-21.1.11`. The retained run reports vendor release number
-`12101011`. The release's `configure.ac` encodes versions as
-`10000000 + major*100000 + minor*1000 + patch`; 21.1.11 maps exactly to
-`12101011`. I downloaded the official release archive and independently
-verified SHA-256
-`1aa0ee1adad0b2db7f291f3823a4ab240c7f4aea710e89f5ef4aa232b6833403`, matching
-the release announcement. See the [X.Org release announcement and published
-hash](https://www.mail-archive.com/xorg%40lists.x.org/msg07587.html) and the
-[official source archive](https://xorg.freedesktop.org/archive/individual/xserver/xorg-server-21.1.11.tar.gz).
-This identifies the upstream 21.1.11 source matching the raw's reported
-release number; it does not yet identify the CI binary or its package source.
-The retained run log identifies GitHub runner image `ubuntu-24.04`, image
-release `ubuntu24/20261012.334`, and the workflow's later `apt-get update` /
-`apt-get install xvfb`. The image's published software list records Xvfb
-package `2:21.1.12-1ubuntu1.8`, which does not match the raw's 21.1.11 vendor
-release. Since the install step's selected package version was not retained,
-the image manifest cannot establish which binary the test launched; this is a
-provenance discrepancy to resolve, not evidence that the run used either
-version. See the [runner image manifest](https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md#installed-apt-packages)
-and the retained [run log](https://github.com/Unjuno/agent-interface/actions/runs/39160684353).
+The new raw packet for [run 39171499003](https://github.com/Unjuno/agent-interface/actions/runs/39171499003)
+records Xvfb at `/usr/bin/Xvfb`, binary SHA-256
+`6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84`, installed
+package `xvfb=2:21.1.12-1ubuntu1.8`, and X server vendor-release number
+`12101011`. The binary package maps to Ubuntu source package
+`xorg-server=2:21.1.12-1ubuntu1.8`. The source-package notice publishes SHA-256
+`5371522bd81cae405e5300957eb82ced84dea277eb5b7d8eba94e72176d37244` for the
+Ubuntu patch; its `configure.ac` and `meson.build` patches set the upstream
+version text to `21.1.11`, explaining the raw release number. The source
+package's 21.1.12 orig tarball SHA-256 is
+`f76a5878b0e6d16415cf0cd24ffc21090845fef3bc4ada45e57ea86b6c8fb75b`, and its
+`.dsc` SHA-256 is
+`e31053378207d3363ab1cd65c80edc80daafdfef79586e6f3f4a70a6ad38b34d`. These
+hashes were independently checked against the Ubuntu source-package files and
+notice. The patch does not touch `Xext/xtest.c`, `Xext/sleepuntil.c`,
+`dix/dispatch.c`, or `dix/resource.c`. Between upstream 21.1.11 and 21.1.12,
+`xtest.c`, `sleepuntil.c`, and `resource.c` are byte-identical; the only
+`dispatch.c` difference is in `ProcEstablishConnection`, outside client
+teardown. Thus the audited teardown path is present in the actual package
+source despite the version-text difference. See the [Ubuntu package
+change notice](https://lists.ubuntu.com/archives/noble-changes/2026-July/057023.html),
+[runner image manifest](https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md#installed-apt-packages),
+and [retained run log](https://github.com/Unjuno/agent-interface/actions/runs/39171499003).
 
 1. `ProcXTestFakeInput` handles a timestamped event by calling
    `ClientSleepUntil`, resetting the current request, and returning. The sleep
    helper allocates a server resource using `FakeClientID(client->index)` and
    adds that request to its pending timer list. See [`Xext/xtest.c` at the
-   release tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.11/Xext/xtest.c#L330)
+   release tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.12/Xext/xtest.c#L330)
    and [`Xext/sleepuntil.c` at the release
-   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.11/Xext/sleepuntil.c#L73).
+   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.12/Xext/sleepuntil.c#L73).
 2. The sleep-resource delete callback removes that request from the pending
    list before freeing it. The normal close path calls `FreeClientResources`
    before dropping the client from the server's client table and freeing the
    client object. See [`SertafiedDelete` at the release
-   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.11/Xext/sleepuntil.c#L132),
+   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.12/Xext/sleepuntil.c#L132),
    [`CloseDownClient` at the release
-   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.11/dix/dispatch.c#L3479),
+   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.12/dix/dispatch.c#L3479),
    and [`FreeClientResources` at the release
-   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.11/dix/resource.c#L1117).
+   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.12/dix/resource.c#L1117).
    `InitClient` sets ordinary client connections to `DestroyAll`; only the
    server's client uses `RetainPermanent` by default. The retained test owner
    helper does not send a close-down-mode request, so this is the applicable
@@ -59,27 +61,25 @@ and the retained [run log](https://github.com/Unjuno/agent-interface/actions/run
    request-processing path; it does not show that the physical application
    effect or an OS-level held-input state is independently verified. See
    [`Xext/xtest.c` at the release
-   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.11/Xext/xtest.c#L430)
+   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.12/Xext/xtest.c#L430)
    and [`mi/mieq.c` at the release
-   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.11/mi/mieq.c#L449).
+   tag](https://gitlab.freedesktop.org/xorg/xserver/-/blob/xorg-server-21.1.12/mi/mieq.c#L449).
 
 ## Bounded interpretation
 
-For upstream X.Org 21.1.11, the default-close-mode test owner has its
-server-side delayed XTEST resource removed during normal client-resource
-teardown. This narrows the Fake X late-request schedule for this specific
-delayed-XTEST/default-close-mode path. However, because the CI image manifest
-and raw vendor release disagree and the post-install package version is
-missing, do not transfer this source conclusion to the retained binary yet.
-It also does not generalize to clients that request retained resources.
+For the exact installed Ubuntu source package, the default-close-mode test
+owner has its server-side delayed XTEST resource removed during normal
+client-resource teardown. This narrows the Fake X late-request schedule for
+this specific delayed-XTEST/default-close-mode path. It does not generalize to
+clients that request retained resources.
 
 The retained PID-qualified private-Xvfb packet reports X.Org release `12101011`,
 an 8-second delayed XTEST request, owner-PID-qualified `disconnected` at about
-74.5 ms after owner termination, and keys up after the event horizon. That
-observation is consistent with upstream 21.1.11, but the exact CI package/build
-identity remains unresolved, and the run did not measure a held key already
-down followed by a separate release/readback. Keep the packet's original
-scope and HOLD/UNKNOWN labels unchanged. See the
+74.5 ms after owner termination, and keys up after the event horizon. Run
+39171499003 independently reproduced this bounded observation with the
+identified Ubuntu package; it also did not measure a held key already down
+followed by a separate release/readback. Keep the prior packet's scope and
+HOLD/UNKNOWN labels unchanged. See the
 [retained raw-backed packet](../../research/integration/xorg_xres_disconnect_order_20261019/README.md)
 and [standard-caller Fake X counterexample](../../research/integration/standard_caller_release_order_composition_20261019/README.md).
 
@@ -94,13 +94,11 @@ separate qualification.
 
 ## Next discriminator
 
-The Xvfb integration test now adds the executable path/SHA-256 and
-`dpkg-query` versions for `xvfb` and `xserver-xorg-core` to its raw report. Its
-helper test passes on Windows in normal and optimized Python; the live private
-Xvfb class was skipped there and the new collector has not yet run on Linux.
-On the next private-Xvfb run, reconcile raw `12101011` against the captured
-binary/package metadata and source patches. After that, only with a newly
-verified unused allocation, test the standard caller
+The Xvfb integration test now adds the executable path/SHA-256 and installed
+package versions to its raw report. The provenance helper test passes on
+Windows in normal and optimized Python. Run 39171499003 executes the collector
+on the private Linux Xvfb and resolves the source/version discrepancy above.
+Only with a newly verified unused allocation, test the standard caller
 with an already-held key/button, owner termination, PID-qualified disconnect,
 independent release connection, sync, and independent post-horizon
 keymap/application readback. Keep server-I/O stall as a separate arm: if
