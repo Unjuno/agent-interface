@@ -1,0 +1,325 @@
+{
+  "schema": "analogy-rejection-8500-a02-fixture-v1",
+  "seed": 850002,
+  "lookup_budget": 1,
+  "review_slot_budget": 1,
+  "context_word_budget": 64,
+  "conditions": [
+    "no_memory",
+    "prose_memory",
+    "structured_memory"
+  ],
+  "candidate_order": [
+    "R",
+    "P",
+    "F"
+  ],
+  "target_cards": [
+    {
+      "target_id": "U01",
+      "required_relation": "object-scoped-write",
+      "versions": {
+        "v1": {
+          "boundary_field": "scope",
+          "value": "cross_document"
+        },
+        "v2": {
+          "boundary_field": "scope",
+          "value": "single_document"
+        }
+      }
+    },
+    {
+      "target_id": "U02",
+      "required_relation": "sample-preserving-measurement",
+      "versions": {
+        "v1": {
+          "boundary_field": "sampling",
+          "value": "aggregate_only"
+        },
+        "v2": {
+          "boundary_field": "sampling",
+          "value": "per_action"
+        }
+      }
+    },
+    {
+      "target_id": "U03",
+      "required_relation": "proposal-before-authority",
+      "versions": {
+        "v1": {
+          "boundary_field": "authority",
+          "value": "post_commit"
+        },
+        "v2": {
+          "boundary_field": "authority",
+          "value": "pre_commit"
+        }
+      }
+    },
+    {
+      "target_id": "U04",
+      "required_relation": "bounded-retry-recovery",
+      "versions": {
+        "v1": {
+          "boundary_field": "retry",
+          "value": "repeat_non_idempotent"
+        },
+        "v2": {
+          "boundary_field": "retry",
+          "value": "idempotent_retry"
+        }
+      }
+    },
+    {
+      "target_id": "U05",
+      "required_relation": "isolated-object-update",
+      "versions": {
+        "v1": {
+          "boundary_field": "isolation",
+          "value": "shared_global"
+        },
+        "v2": {
+          "boundary_field": "isolation",
+          "value": "isolated_object"
+        }
+      }
+    },
+    {
+      "target_id": "U06",
+      "required_relation": "epoch-current-evidence",
+      "versions": {
+        "v1": {
+          "boundary_field": "freshness",
+          "value": "stale_snapshot"
+        },
+        "v2": {
+          "boundary_field": "freshness",
+          "value": "same_epoch"
+        }
+      }
+    }
+  ],
+  "mappings": [
+    {
+      "candidate_id": "R01",
+      "target_id": "U01",
+      "family": "scope-fence",
+      "proposed_relation": "object-scoped-write",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "single_document"
+    },
+    {
+      "candidate_id": "P01",
+      "target_id": "U01",
+      "family": "direct-object-write",
+      "proposed_relation": "object-scoped-write",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "direct_write"
+    },
+    {
+      "candidate_id": "F01",
+      "target_id": "U01",
+      "family": "global-cache-write",
+      "proposed_relation": "global-cache-write",
+      "mechanism_edge_present": false,
+      "evidence_current": true,
+      "source_value": "global_cache"
+    },
+    {
+      "candidate_id": "R02",
+      "target_id": "U02",
+      "family": "sampling-granularity",
+      "proposed_relation": "sample-preserving-measurement",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "per_action"
+    },
+    {
+      "candidate_id": "P02",
+      "target_id": "U02",
+      "family": "event-count-check",
+      "proposed_relation": "sample-preserving-measurement",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "event_count"
+    },
+    {
+      "candidate_id": "F02",
+      "target_id": "U02",
+      "family": "aggregate-only-summary",
+      "proposed_relation": "aggregate-only-summary",
+      "mechanism_edge_present": false,
+      "evidence_current": true,
+      "source_value": "aggregate_only"
+    },
+    {
+      "candidate_id": "R03",
+      "target_id": "U03",
+      "family": "admission-order",
+      "proposed_relation": "proposal-before-authority",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "pre_commit"
+    },
+    {
+      "candidate_id": "P03",
+      "target_id": "U03",
+      "family": "explicit-approval-step",
+      "proposed_relation": "proposal-before-authority",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "approval_step"
+    },
+    {
+      "candidate_id": "F03",
+      "target_id": "U03",
+      "family": "post-commit-check",
+      "proposed_relation": "post-commit-check",
+      "mechanism_edge_present": false,
+      "evidence_current": true,
+      "source_value": "post_commit"
+    },
+    {
+      "candidate_id": "R04",
+      "target_id": "U04",
+      "family": "retry-idempotence",
+      "proposed_relation": "bounded-retry-recovery",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "idempotent_retry"
+    },
+    {
+      "candidate_id": "P04",
+      "target_id": "U04",
+      "family": "compensating-recovery",
+      "proposed_relation": "bounded-retry-recovery",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "compensation"
+    },
+    {
+      "candidate_id": "F04",
+      "target_id": "U04",
+      "family": "unbounded-repeat",
+      "proposed_relation": "unbounded-repeat",
+      "mechanism_edge_present": false,
+      "evidence_current": true,
+      "source_value": "repeat_non_idempotent"
+    },
+    {
+      "candidate_id": "R05",
+      "target_id": "U05",
+      "family": "object-isolation",
+      "proposed_relation": "isolated-object-update",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "isolated_object"
+    },
+    {
+      "candidate_id": "P05",
+      "target_id": "U05",
+      "family": "scoped-record-update",
+      "proposed_relation": "isolated-object-update",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "scoped_row"
+    },
+    {
+      "candidate_id": "F05",
+      "target_id": "U05",
+      "family": "shared-state-update",
+      "proposed_relation": "shared-state-update",
+      "mechanism_edge_present": false,
+      "evidence_current": true,
+      "source_value": "shared_global"
+    },
+    {
+      "candidate_id": "R06",
+      "target_id": "U06",
+      "family": "epoch-freshness",
+      "proposed_relation": "epoch-current-evidence",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "same_epoch"
+    },
+    {
+      "candidate_id": "P06",
+      "target_id": "U06",
+      "family": "version-bound-observation",
+      "proposed_relation": "epoch-current-evidence",
+      "mechanism_edge_present": true,
+      "evidence_current": true,
+      "source_value": "bound_version"
+    },
+    {
+      "candidate_id": "F06",
+      "target_id": "U06",
+      "family": "cached-observation",
+      "proposed_relation": "cached-observation",
+      "mechanism_edge_present": true,
+      "evidence_current": false,
+      "source_value": "stale_snapshot"
+    }
+  ],
+  "rejection_memory": [
+    {
+      "record_id": "A02-CE01",
+      "family": "scope-fence",
+      "boundary_field": "scope",
+      "source_value": "single_document",
+      "rejected_target_value": "cross_document",
+      "prose_note": "A prior mapping failed at a specific applicability boundary; recheck before reuse."
+    },
+    {
+      "record_id": "A02-CE02",
+      "family": "sampling-granularity",
+      "boundary_field": "sampling",
+      "source_value": "per_action",
+      "rejected_target_value": "aggregate_only",
+      "prose_note": "A prior mapping failed at a specific applicability boundary; recheck before reuse."
+    },
+    {
+      "record_id": "A02-CE03",
+      "family": "admission-order",
+      "boundary_field": "authority",
+      "source_value": "pre_commit",
+      "rejected_target_value": "post_commit",
+      "prose_note": "A prior mapping failed at a specific applicability boundary; recheck before reuse."
+    },
+    {
+      "record_id": "A02-CE04",
+      "family": "retry-idempotence",
+      "boundary_field": "retry",
+      "source_value": "idempotent_retry",
+      "rejected_target_value": "repeat_non_idempotent",
+      "prose_note": "A prior mapping failed at a specific applicability boundary; recheck before reuse."
+    },
+    {
+      "record_id": "A02-CE05",
+      "family": "object-isolation",
+      "boundary_field": "isolation",
+      "source_value": "isolated_object",
+      "rejected_target_value": "shared_global",
+      "prose_note": "A prior mapping failed at a specific applicability boundary; recheck before reuse."
+    },
+    {
+      "record_id": "A02-CE06",
+      "family": "epoch-freshness",
+      "boundary_field": "freshness",
+      "source_value": "same_epoch",
+      "rejected_target_value": "stale_snapshot",
+      "prose_note": "A prior mapping failed at a specific applicability boundary; recheck before reuse."
+    }
+  ],
+  "changed_envelope_controls": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06"
+  ]
+}
