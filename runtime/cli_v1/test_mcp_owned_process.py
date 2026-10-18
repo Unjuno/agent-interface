@@ -194,6 +194,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 elif response is not None:
                     owner._control.recv.return_value = response
                 owner._control_lock = threading.Lock()
+                owner._snapshot_cache = {}
                 owner._execution_unknown = False
                 owner.review_required = False
                 owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
@@ -211,6 +212,65 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(result['task_success'])
                 self.assertFalse(result['replay_allowed'])
                 self.assertTrue(result['late_server_request_possible'])
+
+    def test_unconfirmed_cancel_attempts_only_disconnect_gated_best_effort_cleanup(self):
+        responses = (
+            ('timeout', False, None),
+            ('pipe_closed', True, EOFError('closed')),
+            ('negative_ack', True, {'ok':False, 'error':'rejected'}),
+        )
+        obligations = {'keys':{'CTRL':1}, 'buttons':[]}
+        for name, has_response, response in responses:
+            for disconnect_status in ('disconnected', 'still_connected', 'unknown'):
+                with self.subTest(name=name, disconnect_status=disconnect_status):
+                    owner = object.__new__(OwnedGuardedSessionOwner)
+                    owner._process = Mock()
+                    owner._process.is_alive.return_value = True
+                    owner._control = Mock()
+                    owner._control.poll.return_value = has_response
+                    if isinstance(response, BaseException):
+                        owner._control.recv.side_effect = response
+                    elif response is not None:
+                        owner._control.recv.return_value = response
+                    owner._control_lock = threading.Lock()
+                    owner._execution_unknown = False
+                    owner.review_required = False
+                    owner._owner_input_obligations = obligations
+                    owner._owner_client_disconnect = None
+                    owner._owner_release_attempt = None
+                    events = []
+                    owner._retire = Mock(side_effect=lambda _reason: (
+                        events.append('retire') or {'retired':True, 'exitcode':-15}))
+                    owner._observe_owner_client_disconnect = Mock(side_effect=lambda: (
+                        events.append('disconnect') or {
+                            'status':disconnect_status, 'worker_retired':True}))
+                    owner._release_retired_owner_inputs = Mock(side_effect=lambda seen: (
+                        events.append(('release', seen)) or {
+                            'status':'readback_verified', 'worker_retired':True}))
+
+                    with patch('runtime.cli_v1.owned_guarded_session._STARTUP_TIMEOUT_S', 0):
+                        result = owner.cancel_guarded('cancel-token')
+
+                    owner._retire.assert_called_once_with(
+                        'cancel control response unconfirmed')
+                    owner._observe_owner_client_disconnect.assert_called_once_with()
+                    if disconnect_status == 'disconnected':
+                        owner._release_retired_owner_inputs.assert_called_once_with(obligations)
+                        self.assertEqual(events, ['retire', 'disconnect', ('release', obligations)])
+                        self.assertEqual(result['owner_release_attempt']['status'],
+                                         'readback_verified')
+                    else:
+                        owner._release_retired_owner_inputs.assert_not_called()
+                        self.assertEqual(events, ['retire', 'disconnect'])
+                        self.assertEqual(result['owner_release_attempt']['status'],
+                                         'not_attempted')
+                    self.assertEqual(result['owner_client_disconnect']['status'],
+                                     disconnect_status)
+                    self.assertFalse(result['release_confirmed'])
+                    self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+                    self.assertIsNone(result['task_success'])
+                    self.assertFalse(result['replay_allowed'])
+                    self.assertTrue(result['late_server_request_possible'])
 
     def test_unknown_or_present_owner_client_never_starts_release_worker(self):
         for disconnect_status in ('still_connected', 'unknown'):
