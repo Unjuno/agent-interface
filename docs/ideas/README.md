@@ -2,6 +2,8 @@
 
 This directory is the compact history of ideas raised in Agent Interface.
 
+The current open-Issue baseline is the [r15 repository inventory](../maintenance/repository-inventory-20261019-r15.md). The [idea-index coverage audit](../maintenance/idea-index-coverage-20261019-r15.md) and its 491-row [triage queue](../maintenance/open-issues-missing-research-primary-row-20261019-r15.csv) identify discovery gaps; rows remain untriaged until current Issue scope, evidence, limits, and next decision are reviewed.
+
 Use this directory to connect ideas to existing evidence, dependencies, priorities and executable experiments. GitHub Issues remain the discussion and execution surface. Preserving an idea here does not remove it from research consideration or justify closing its Issue. Close only for verified completion, evidence-based rejection, or an actual successor that carries the remaining research forward. See the [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md).
 
 ## What belongs here
