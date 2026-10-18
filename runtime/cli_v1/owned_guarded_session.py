@@ -533,6 +533,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._owner_release_attempt = release_attempt
         return client_disconnect, release_attempt
 
+    def _retirement_cleanup_result_fields(self, retirement):
+        client_disconnect, release_attempt = (
+            self._cleanup_after_owner_retirement(retirement))
+        return {
+            'owner_client_disconnect':deepcopy(client_disconnect),
+            **self._owner_input_obligations_result_fields(),
+            'owner_release_attempt':deepcopy(release_attempt),
+        }
+
     def _owner_input_obligations_result_fields(self):
         return {
             'owner_input_obligations':deepcopy(getattr(
@@ -688,18 +697,26 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'connection_close_attempted':False, 'verified':True}
             self.close_report = row
             return deepcopy(row)
+        retirement_cleanup = None
+        cleanup_after_retirement_attempted = False
+
+        def retirement_cleanup_fields(retirement):
+            nonlocal retirement_cleanup, cleanup_after_retirement_attempted
+            if cleanup_after_retirement_attempted:
+                return retirement_cleanup
+            retirement_cleanup = self._retirement_cleanup_result_fields(retirement)
+            if retirement.get('retired') is True:
+                cleanup_after_retirement_attempted = True
+            return retirement_cleanup
+
         acquired = self._rpc_lock.acquire(timeout=_CLOSE_TIMEOUT_S)
         if not acquired:
             retirement = self._retire('close timed out waiting for owned operation')
-            client_disconnect, release_attempt = (
-                self._cleanup_after_owner_retirement(retirement))
             row = {'status':'cleanup_failed', 'session_id':self.session_id,
                    'release_attempted':True, 'release_confirmed':False,
                    'cleanup_status':'UNKNOWN', 'task_success':None,
                    'replay_allowed':False, 'connection_close_attempted':False,
-                   'owner_client_disconnect':deepcopy(client_disconnect),
-                   **self._owner_input_obligations_result_fields(),
-                   'owner_release_attempt':deepcopy(release_attempt),
+                   **retirement_cleanup_fields(retirement),
                    'owner_process_retired':retirement['retired'],
                    'owner_process_exitcode':retirement['exitcode'],
                    'late_server_request_possible':True, 'verified':False}
@@ -716,6 +733,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                           'release_attempted':True, 'release_confirmed':False,
                           'cleanup_status':'UNKNOWN', 'task_success':None,
                           'replay_allowed':False, 'verified':False,
+                          **retirement_cleanup_fields(retirement),
                           'owner_process_retired':retirement['retired'],
                           'owner_process_exitcode':retirement['exitcode'],
                           'late_server_request_possible':True}
@@ -726,9 +744,11 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             retirement = self._retire('owned process did not exit after close receipt')
             report = dict(report, status='cleanup_failed', verified=False,
                           release_confirmed=False, cleanup_status='UNKNOWN',
+                          task_success=None, replay_allowed=False,
+                          late_server_request_possible=True,
+                          **retirement_cleanup_fields(retirement),
                           owner_process_retired=retirement['retired'],
-                          owner_process_exitcode=retirement['exitcode'],
-                          late_server_request_possible=True)
+                          owner_process_exitcode=retirement['exitcode'])
         else:
             release = report.get('release')
             neutral = (report.get('release_attempted') is False or
