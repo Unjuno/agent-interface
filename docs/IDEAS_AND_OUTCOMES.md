@@ -49,11 +49,14 @@ candidate failed its full correctness gate (A/B/D 12/12, C 9/12); the distinct
 on the frozen gates. A12–A14 are construction checks only; A14 accepted five
 schemas, but one blank screenshot elicited task-2-like coordinates. None
 establishes live GUI effect or full-task savings. The linked [family record](ideas/reactive-macro-symbolic-interface.md)
-preserves each outcome and limit. Keep both Issues open. Open [PR #7616](https://github.com/Unjuno/agent-interface/pull/7616)
-contains a separate offline composition package whose own report says
-`FAIL_SOURCE_BASE_LABEL_MISMATCH`; preserve it pending exact source/hash audit,
-without rerunning its consumed candidate or treating passing CI as scientific
-validation.
+preserves each outcome and limit. Keep both Issues open. Merged [PR #7616](https://github.com/Unjuno/agent-interface/pull/7616)
+retains a separate #57 offline compiled-graph/pixel-handle composition package
+whose frozen result remains `FAIL_SOURCE_BASE_LABEL_MISMATCH`. A read-only audit
+reproduced that disposition without rerunning the consumed candidate. Four
+relevant module blobs matched both cited source commits and package manifests
+were verified after preserving bytes, but neither repairs the label mismatch or
+missing candidate exit code/timestamps. This is not live GUI, task-effect,
+efficiency evidence, or an acceptance result for #6/#56.
 
 ## Foundational open ideas
 
