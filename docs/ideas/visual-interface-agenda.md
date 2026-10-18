@@ -9,6 +9,8 @@ process-onlyの旧alias受理と、対象自身への購読によるDestroy拒�
 captureと入力は一つのcanonical lifecycle readerを共有する。readerごとの不透明tokenを別reader間で比較しない。
 実機の購読・可用性・最終check/use競合、task effect・回復・効率は未検証であり、#5全体は完了しない。
 
+**2026-10-18 current-main recheck:** `runtime.cli_v1.test_mcp_window_lifecycle` passed 14/14 in normal and optimized Python 3.12.3 on Ubuntu WSL, from main `8a899106b19b82afa99aa5c1fa0fe8dca18c2d9b`. Through the standard MCP caller and actual query-worker/lifecycle-reader code with Fake X transport, the tests retain `window_generation` in the call report and refuse an old alias after a modeled `DestroyNotify` without input emission. The full command outputs and source hashes are in the [recheck record](../../research/integration/target_generation_mcp_caller_recheck_20261018/README.md). This is not live X, and the test does not recreate an XID; native event delivery and the real capture-to-press race remain unqualified.
+
 関連する[#4008](https://github.com/Unjuno/agent-interface/issues/4008)の36ケースは、
 共有接続のmask置換による通知喪失、unionと別接続の条件付き保持を報告している。
 2026-10-16の照合では予定パス`research/integration/x11_subscription_composition_v1/`の
