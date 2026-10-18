@@ -76,6 +76,7 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
                     if result['status']!='pending':return result
                     await asyncio.sleep(.005)
             try:
+                cancel_review_required=None
                 if boundary=='stable':
                     pending=None;before=None
                     result=metadata(await server.call_tool('interface_guarded_input',arguments))
@@ -99,6 +100,7 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
                         mark('cancel_acknowledged')
                         self.assertEqual(cancel['status'],'cancel_requested',cancel)
                         self.assertFalse(cancel['release_confirmed']);self.assertTrue(duplicate['already_requested'])
+                        cancel_review_required=bridge.review_required
                     outstanding=await lookup(pending['call_id'])
                     busy_input=metadata(await server.call_tool('interface_guarded_input',arguments))
                     busy_close=metadata(await server.call_tool('interface_close',{}))
@@ -118,7 +120,8 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
                         worker_threads=worker_threads,clock_ns=clock[0],
                         live_worker_handles=[t.ident for t in threading.enumerate()
                             if t.ident in worker_threads and t.is_alive()],original_deadline=original_deadline,
-                        reader=bridge._observations.snapshot())
+                        reader=bridge._observations.snapshot(),review_required=bridge.review_required,
+                        cancel_review_required=cancel_review_required)
                     self.assertEqual(before['live_worker_handles'],worker_threads)
                     self.assertEqual(before['ledger'],{'CTRL':1})
                     self.assertEqual(before['down'],[] if boundary in ('press_send','release_sync','press_queued_sync','press_queued_expiry') else [1])
@@ -157,6 +160,13 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
                 else:await server.call_tool('interface_close',{})
 
     async def test_cancel_during_press_send(self):await self.cell('press_send')
+    async def test_cancel_ack_revokes_alias_before_writer_resumes(self):
+        row=await self.cell('press_send')
+        self.assertTrue(row['before_resume']['cancel']['review_required'])
+        self.assertTrue(row['before_resume']['cancel_review_required'])
+        self.assertTrue(row['before_resume']['review_required'])
+        self.assertEqual(row['result']['status'],'execution_failed')
+        self.assertEqual(row['replay']['status'],'refused')
     async def test_cancel_during_press_sync(self):await self.cell('press_sync')
     async def test_cancel_during_release_send(self):await self.cell('release_send')
     async def test_cancel_during_release_sync(self):await self.cell('release_sync')
