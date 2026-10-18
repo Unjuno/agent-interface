@@ -44,8 +44,16 @@ window refusal assertions hold. The first run stopped at `display.info.release`
 because Python-Xlib exposes the setup field as `release_number`; the captured
 raw reports `FAIL`, `AttributeError`, and no synthetic app events. The test now
 reads `release_number`; this repair does not alter the frozen conditions or
-upgrade the failed first outcome. The workflow uploads each exact JSON report
-as `standard-mcp-xvfb-generation`; inspect and retain each attempt separately,
+upgrade the failed first outcome. The second run passed observation and correctly
+refused the target because the synthetic checkerboard occupied only a small
+region, leaving the selected source patch flat. Its exact raw is retained at
+[`raw/second-failed-run-39173331320.json`](raw/second-failed-run-39173331320.json)
+(SHA-256 `DA2AE4BEFDF5BC16CC665F9AFE651F9FEFF21A0F1BD9C061F64688F3D8AF9446`).
+The fixture now paints a checkerboard across the full window so the selected
+24×24 source patch is textured in the captured full-screen coordinates. This is
+a fixture correction; the failed refusal remains preserved and is not counted
+as a successful run. The workflow uploads each exact JSON report as
+`standard-mcp-xvfb-generation`; inspect and retain each attempt separately,
 recording its SHA-256 here.
 
 The synthetic property is not a product task or independent game/app success

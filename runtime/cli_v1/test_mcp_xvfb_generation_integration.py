@@ -72,11 +72,12 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
             effect_atom = app_display.intern_atom('AI_RUNTIME_XVFB_EFFECT')
             window.change_property(effect_atom, Xatom.CARDINAL, 32, [0])
             gc = window.create_gc(foreground=0xFFFFFF)
-            for row in range(8):
-                for column in range(8):
+            for row in range((height + 15) // 16):
+                for column in range((width + 15) // 16):
                     if (row + column) % 2 == 0:
-                        window.fill_rectangle(gc, 32 + column * 4,
-                                              32 + row * 4, 4, 4)
+                        window.fill_rectangle(gc, column * 16, row * 16,
+                            min(16, width - column * 16),
+                            min(16, height - row * 16))
             window.map()
             window.set_input_focus(X.RevertToParent, X.CurrentTime)
             root.warp_pointer(x + 48, y + 48)
