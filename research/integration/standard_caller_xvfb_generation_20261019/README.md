@@ -54,11 +54,19 @@ The fixture now paints a checkerboard across the full window so the selected
 run 39173486305 still refused it as flat. Its raw is retained at
 [`raw/third-failed-run-39173486305.json`](raw/third-failed-run-39173486305.json)
 (SHA-256 `D3F71AB59D244E0994EC06E37041EDF9BB6ABDE1CE46A1473E6734802EB2D608`).
-The report exposes the exact PNG artifact path and hash, but the first workflow
-version did not upload those pixels. The next run records the precise mint
-patch's pixel standard deviation and uploads the actual observed PNG, so the
-coordinate/drawing discrepancy can be diagnosed from raw rather than guessed.
-Each failed run remains preserved and is not counted as success.
+The fourth run's diagnostic captured the actual full-screen image. It is entirely
+black; the exact 24×24 mint patch has standard deviation 0.0. The child window
+was painted, but the standard observer reads the root drawable and does not
+composite child-window pixels. Preserve the exact report at
+[`raw/fourth-failed-run-39173880776.json`](raw/fourth-failed-run-39173880776.json)
+(SHA-256 `993C3CF21D4361315217A607F79EF9E67E4E2A0E1736974540049840DBDAEE1B`)
+and screenshot at
+[`raw/fourth-failed-run-39173880776-observation.png`](raw/fourth-failed-run-39173880776-observation.png)
+(SHA-256 `63373382CFA36078355BA24FEB69E5E94474E40EC28F26BB01C8BFD7F4ED18E6`,
+2,367 bytes). The fixture now paints the same checker pattern on the captured
+root surface in screen coordinates. The refusal was correct for its observed
+image; this repair changes only fixture rendering, not the guard or frozen
+conditions. All four first outcomes remain separate and preserved.
 
 The synthetic property is not a product task or independent game/app success
 oracle. This does not qualify native user desktop input, XWayland, a held-input

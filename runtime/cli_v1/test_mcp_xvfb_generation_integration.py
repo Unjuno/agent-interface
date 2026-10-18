@@ -74,11 +74,14 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
                 event_mask=(X.KeyPressMask | X.KeyReleaseMask | X.StructureNotifyMask))
             effect_atom = app_display.intern_atom('AI_RUNTIME_XVFB_EFFECT')
             window.change_property(effect_atom, Xatom.CARDINAL, 32, [0])
-            gc = window.create_gc(foreground=0xFFFFFF)
+            # The supported observer returns a full-screen root capture. XGetImage
+            # on the root drawable does not composite child-window pixels, so
+            # ground the synthetic visual fixture on the captured root surface.
+            gc = root.create_gc(foreground=0xFFFFFF)
             for row in range((height + 15) // 16):
                 for column in range((width + 15) // 16):
                     if (row + column) % 2 == 0:
-                        window.fill_rectangle(gc, column * 16, row * 16,
+                        root.fill_rectangle(gc, x + column * 16, y + row * 16,
                             min(16, width - column * 16),
                             min(16, height - row * 16))
             window.map()
