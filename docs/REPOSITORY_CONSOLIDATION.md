@@ -1,5 +1,13 @@
 # リポジトリ全体の整理計画
 
+## 実行更新 r27 — 最新一覧と次の一族
+
+2026-10-18 19:32 UTCの全ページGitHub CLI readで、基準main `31c338fc8fecf3ef93ad802d2ac7ebee3bb9ff71`に対するopen Issue 1,675件とopen PR 515件を固定した。IssueのID集合はr15と同一で、PRは#9064だけが追加された。全metadataは[r22 inventory](maintenance/consolidation-status-20261019-r27.md)およびリンク先CSVに保存した。これは意味分類や担当確認ではない。
+
+整理の目的は、仮説・アイデア・反例・raw・未解決条件を保持し、別々のfamilyを並行して調査・実装・検証できるようにすること。全Issue/PRの精読完了まで個別作業を止めない。各作業はfamilyと出力先を限定し、共通indexだけを直列に統合する。Issueは固有の完了条件、根拠ある棄却、または実際に継続できる後継への移管が確認できた場合だけ閉じる。
+
+今回の具体的な次対象は、現在の#17 XRes disconnect observation familyである。#9064は全CIが通っているが、保存rawでは独立したidle clientと対象ownerが同じXRes resource baseを使っている。このため死後の`still_connected`が対象ownerを識別する証拠か、再利用されたbaseを後から起動した問い合わせworker自身が占めている結果かを分ける必要がある。現状は調査継続で、PR統合・物理release成功の根拠にはしない。詳細とraw参照は[r27 status](maintenance/consolidation-status-20261019-r27.md)に記録する。
+
 ## 実行計画 r26 — アイデアを保全した全体収束
 
 **目的:** Unjuno/agent-interfaceを、複数ワーカーが同じ現在地と証拠を見つけ、独立した作業を選び、衝突なく統合できる状態へ整理する。IssueやPRをゼロにすることは目的にしない。未検証の案、失敗、反例、raw、担当中の作業は失わず、重複・古い案も出典と状態が追える形で残す。
