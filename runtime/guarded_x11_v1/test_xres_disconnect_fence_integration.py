@@ -62,7 +62,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             'delayed_keypress_ms':_DELAY_MS,
             'kill_after_flush_ms':150,
             'server_vendor':None,
-            'server_release':None,
+            'server_release_number':None,
             'xres_version':None,
             'xtest_version':None,
             'owner':None,
@@ -83,7 +83,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
         try:
             info = observer.display.info
             report['server_vendor'] = str(info.vendor)
-            report['server_release'] = info.release
+            report['server_release_number'] = info.release_number
             self.assertIn('X.Org', report['server_vendor'], report)
             self.assertTrue(observer.has_extension('X-Resource'), report)
             self.assertTrue(observer.has_extension('XTEST'), report)
