@@ -5,6 +5,15 @@ from mcp.types import CallToolResult,ImageContent,TextContent
 from runtime.cli_v1.mcp_relay import Relay,PUBLIC_TOOLS
 
 class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
+    async def test_guarded_recovery_is_an_explicitly_forwardable_public_tool(self):
+        client = AsyncMock(); relay = Relay(client)
+        client.call_tool.return_value = CallToolResult(content=[])
+        arguments = {'current_binding_revision': 7}
+        row = await relay.request(json.dumps({'id':1,'tool':'interface_guarded_recover_input',
+                                              'arguments':arguments}))
+        self.assertEqual(row['status'], 'returned')
+        client.call_tool.assert_awaited_once_with('interface_guarded_recover_input', arguments)
+
     async def test_unpaired_surrogates_refuse_before_sdk_and_keep_same_id(self):
         invalid = [
             {'text': chr(0xd800)}, {'text': chr(0xdfff)},
@@ -273,7 +282,9 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_legacy_public_protocol_parity_without_changing_research(self):
         from research.live_control.native_mcp_relay_v1 import Relay as Legacy,PUBLIC_TOOLS as LEGACY_TOOLS
-        self.assertEqual(tuple(t for t in PUBLIC_TOOLS if t not in {'interface_clock', 'interface_guarded_activate_window'}),LEGACY_TOOLS)
+        self.assertEqual(tuple(t for t in PUBLIC_TOOLS if t not in {
+            'interface_clock', 'interface_guarded_activate_window', 'interface_guarded_recover_input'}),
+            LEGACY_TOOLS)
         result=CallToolResult(content=[TextContent(type='text',text='{"status":"pending"}')])
         a,b=AsyncMock(),AsyncMock();a.call_tool.return_value=b.call_tool.return_value=result
         public,legacy=Relay(a),Legacy(b,tools=LEGACY_TOOLS)
