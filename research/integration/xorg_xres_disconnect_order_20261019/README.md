@@ -82,3 +82,27 @@ This run reproduced the resource-base collision: the idle control and delayed ow
 This resolves the identity ambiguity for this private-Xvfb topology and explains why earlier base-only `still_connected` values did not prove the retired owner remained connected: the query helper itself occupied the reused resource base. Keep the earlier raw runs unchanged; do not use their base-only status as owner identity. The new receipt records expected PID, observed PID, observer PID, and both resource bases at each supervised probe. Its raw is [`raw/run-39160684353.json`](raw/run-39160684353.json), SHA-256 `1057c9c1a1eb5dba6c8b25b3254377ad772c06b6279d95451c5067e50a97e60b`.
 
 The result is limited to this responsive private Xvfb and the tested delayed XTEST request. It does not establish a blocked-server-I/O release bound, standard-caller behavior, physical/XWayland input, task effect, or general recovery. PID reuse can conservatively leave a false `still_connected` result. No WSLc allocation was used; keep Issue #17 open and release `UNKNOWN` for untested topologies.
+
+## Provenance follow-up run 39171499003 — 2026-10-18
+
+The private-Xvfb integration job passed with the updated provenance collector.
+Raw records `/usr/bin/Xvfb`, binary SHA-256
+`6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84`,
+`xvfb=2:21.1.12-1ubuntu1.8`, and vendor release `12101011`. The Ubuntu source
+package intentionally rewrites the reported upstream version to 21.1.11; the
+audited teardown files are unchanged from upstream 21.1.11 to 21.1.12 and are
+not modified by the Ubuntu patch. See the [source audit](../../../docs/maintenance/xorg-xtest-disconnect-source-audit-20261019.md).
+
+The owner queued 8,000 ms delayed fake keypresses, was terminated about
+151.3 ms after flush, and PID-qualified probes reported the owner disconnected
+about 71–80 ms after each probe began (the helper may reuse the same resource
+base, so observed PID is retained). Both keys were up before cleanup, after the
+delay horizon, and after the final independent release. `late_input_observed`
+was false. This is a bounded negative observation for delayed requests on the
+identified responsive private Xvfb. It did not start from an already-held key,
+and does not test a blocked X-server I/O path, standard-caller release,
+physical input, application task effect, MAP01, or general recovery. It does not
+change any HOLD/UNKNOWN state or qualify a WSLc allocation.
+
+Untouched raw artifact: [`raw/run-39171499003.json`](raw/run-39171499003.json),
+SHA-256 `45643faec411b8899935e27626eeb85b939743f87ab6063e7ed0a4da03fac252`.
