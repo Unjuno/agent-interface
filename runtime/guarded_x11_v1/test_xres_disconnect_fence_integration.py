@@ -43,6 +43,17 @@ with open(marker, 'w', encoding='utf-8') as f:
                'queued_ns':time.monotonic_ns()}, f)
 d.sync()  # blocks until the delayed request is processed or the server closes it
 """
+_IDLE_OWNER_START = r"""
+import json, sys, time
+from Xlib.display import Display
+
+display_name, marker = sys.argv[1:]
+d = Display(display_name)
+with open(marker, 'w', encoding='utf-8') as f:
+    json.dump({'resource_base':d.display.info.resource_id_base}, f)
+while True:
+    time.sleep(0.05)
+"""
 
 
 def _keys_down(display, keycodes):
@@ -60,6 +71,12 @@ def _keys_down(display, keycodes):
     'requires the explicitly enabled private Xorg/Xvfb display :88',
 )
 class XResDisconnectFenceIntegrationTests(unittest.TestCase):
+    def _assert_owner_pid_absent(self, receipt, owner_pid, report):
+        self.assertEqual(receipt['status'], 'disconnected', report)
+        self.assertNotEqual(receipt['observed_pid'], owner_pid, report)
+        if receipt['resource_base'] == receipt['observer_resource_base']:
+            self.assertEqual(receipt['observed_pid'], receipt['observer_pid'], report)
+
     def test_dead_owner_delayed_xtest_outcome_after_fresh_cleanup(self):
         display_name = os.environ['DISPLAY']
         result_path = os.environ.get('AGENT_INTERFACE_XORG_FENCE_RESULT')
@@ -71,6 +88,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             'server_release_number':None,
             'xres_version':None,
             'xtest_version':None,
+            'idle_control':None,
+            'idle_control_disconnect_after_kill':None,
             'owner':None,
             'disconnect_before_delay_horizon':None,
             'disconnect_before_cleanup':None,
@@ -87,6 +106,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             'post_late_cleanup_status':'not_attempted',
         }
         owner = None
+        idle_owner = None
         cleanup = None
         owner_returncode = None
         killed_ns = None
@@ -120,6 +140,47 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             self.assertFalse(any(report['key_down_before'].values()), report)
 
             with tempfile.TemporaryDirectory(prefix='xres-disconnect-fence-') as td:
+                idle_marker = Path(td)/'idle-owner.json'
+                idle_owner = subprocess.Popen(
+                    [sys.executable, '-c', _IDLE_OWNER_START,
+                     display_name, str(idle_marker)],
+                    stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+                idle_marker_deadline = time.monotonic() + 3.0
+                while (not idle_marker.exists()
+                       and time.monotonic() < idle_marker_deadline):
+                    if idle_owner.poll() is not None:
+                        break
+                    time.sleep(0.005)
+                self.assertTrue(idle_marker.exists(), {
+                    'idle_control_returncode':idle_owner.poll()})
+                idle_data = json.loads(
+                    idle_marker.read_text(encoding='utf-8'))
+                report['idle_control'] = dict(idle_data, pid=idle_owner.pid)
+                self.assertTrue(client_is_connected(
+                    observer, idle_data['resource_base'],
+                    expected_pid=idle_owner.pid), report)
+                idle_owner.terminate()
+                try:
+                    idle_returncode = idle_owner.wait(timeout=1.0)
+                except subprocess.TimeoutExpired:
+                    idle_owner.kill()
+                    idle_returncode = idle_owner.wait(timeout=1.0)
+                report['idle_control']['returncode'] = idle_returncode
+                report['idle_control_disconnect_after_kill'] = (
+                    wait_for_client_disconnect_supervised(
+                        display_name, idle_data['resource_base'],
+                        expected_pid=idle_owner.pid, timeout_s=2.0,
+                        poll_interval_s=0.005, terminate_grace_s=0.1,
+                    ))
+                self._assert_owner_pid_absent(
+                    report['idle_control_disconnect_after_kill'],
+                    idle_owner.pid, report)
+                report['idle_control_disappeared_within_2s'] = (
+                    report['idle_control_disconnect_after_kill']['status']
+                    == 'disconnected')
+
                 marker = Path(td)/'owner.json'
                 owner = subprocess.Popen(
                     [sys.executable, '-c', _OWNER_START, display_name,
@@ -140,7 +201,14 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['owner'] = dict(marker_data, pid=owner.pid)
                 self.assertEqual(marker_data['keycodes'], keycodes, report)
                 self.assertTrue(client_is_connected(
-                    observer, marker_data['resource_base']), report)
+                    observer, marker_data['resource_base'],
+                    expected_pid=owner.pid), report)
+                report['idle_resource_base_reused'] = (
+                    idle_data['resource_base'] == marker_data['resource_base'])
+                report['old_idle_pid_matches_current_base'] = client_is_connected(
+                    observer, marker_data['resource_base'],
+                    expected_pid=idle_owner.pid)
+                self.assertFalse(report['old_idle_pid_matches_current_base'], report)
 
                 time.sleep(report['kill_after_flush_ms']/1000)
                 owner.terminate()
@@ -157,23 +225,27 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 self.assertNotEqual(owner_returncode, 0, report)
 
                 early_disconnect = wait_for_client_disconnect_supervised(
-                    display_name, marker_data['resource_base'], timeout_s=1.0,
+                    display_name, marker_data['resource_base'],
+                    expected_pid=owner.pid, timeout_s=1.0,
                     poll_interval_s=0.005, terminate_grace_s=0.1,
                 )
                 report['disconnect_before_delay_horizon'] = early_disconnect
                 report['early_probe_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
-                self.assertEqual(early_disconnect['status'], 'still_connected', report)
+                self._assert_owner_pid_absent(
+                    early_disconnect, owner.pid, report)
                 report['key_down_before_delay_horizon'] = _keys_down(
                     observer, keycodes)
                 self.assertFalse(any(
                     report['key_down_before_delay_horizon'].values()), report)
 
                 before_cleanup = wait_for_client_disconnect_supervised(
-                    display_name, marker_data['resource_base'], timeout_s=5.0,
+                    display_name, marker_data['resource_base'],
+                    expected_pid=owner.pid, timeout_s=5.0,
                     poll_interval_s=0.005, terminate_grace_s=0.1,
                 )
                 report['disconnect_before_cleanup'] = before_cleanup
+                self._assert_owner_pid_absent(before_cleanup, owner.pid, report)
                 report['before_cleanup_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
                 report['key_down_before_cleanup'] = _keys_down(
@@ -209,9 +281,12 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['disconnect_after_delay_horizon'] = (
                     wait_for_client_disconnect_supervised(
                         display_name, marker_data['resource_base'],
+                        expected_pid=owner.pid,
                         timeout_s=_POST_HORIZON_XRES_TIMEOUT_S,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     ))
+                self._assert_owner_pid_absent(
+                    report['disconnect_after_delay_horizon'], owner.pid, report)
                 report['post_horizon_xres_probe_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
                 report['key_down_after_extended_probe'] = _keys_down(
@@ -239,6 +314,9 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['final_key_down'] = _keys_down(cleanup, keycodes)
                 self.assertFalse(any(report['final_key_down'].values()), report)
         finally:
+            if idle_owner is not None and idle_owner.poll() is None:
+                idle_owner.kill()
+                idle_owner.wait(timeout=1.0)
             if owner is not None and owner.poll() is None:
                 if killed_ns is None:
                     killed_ns = time.monotonic_ns()
@@ -250,7 +328,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                     and cleanup is None):
                 try:
                     wait_for_client_disconnect_supervised(
-                        display_name, marker_data['resource_base'], timeout_s=1.0,
+                        display_name, marker_data['resource_base'],
+                        expected_pid=owner.pid, timeout_s=1.0,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     )
                 except Exception:
