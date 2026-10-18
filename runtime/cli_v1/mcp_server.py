@@ -157,7 +157,8 @@ class _WorkerAdmission:
 
 def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot",
                   guarded_process_identity=False, guarded_query_worker=False, guarded_observation_worker=False,
-                  guarded_window_lifecycle=False):
+                  guarded_window_lifecycle=False, guarded_owned_process=False,
+                  _guarded_owner_factory=None):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11"):
         raise ValueError("unknown session mode")
     if type(guarded_process_identity) is not bool:
@@ -177,6 +178,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             any(not isinstance(k, str) or not k or type(v) is not int or v <= 0
                 for k, v in targets.items())):
         raise ValueError('explicit nonempty target name -> positive native ID mapping required')
+    if type(guarded_owned_process) is not bool:
+        raise ValueError('guarded_owned_process must be a boolean')
+    if guarded_owned_process and (session_mode != 'guarded-x11'
+            or not guarded_process_identity or not guarded_query_worker):
+        raise ValueError('guarded owned process requires guarded-x11, process identity and query worker')
     targets = deepcopy(targets)
     root = Path(output_directory).resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -188,10 +194,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     guarded = session_mode == 'guarded-x11'
     if guarded:
         from .mcp_guarded import GuardedSessionOwner
-        owner = GuardedSessionOwner(targets, root, display_name,
-                                    process_identity=guarded_process_identity,query_worker=guarded_query_worker,
-                                    observation_worker=guarded_observation_worker,
-                                    window_lifecycle=guarded_window_lifecycle)
+        owner_options = dict(process_identity=guarded_process_identity,
+                             query_worker=guarded_query_worker,
+                             observation_worker=guarded_observation_worker,
+                             window_lifecycle=guarded_window_lifecycle)
+        if guarded_owned_process:
+            from .owned_guarded_session import OwnedGuardedSessionOwner
+            owner = OwnedGuardedSessionOwner(targets, root, display_name,
+                **owner_options, _owner_factory=_guarded_owner_factory)
+        else:
+            owner = GuardedSessionOwner(targets, root, display_name, **owner_options)
     shutting_down = False
     server_instance_id = uuid.uuid4().hex
 
@@ -210,7 +222,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             # Finish committed workers before touching their connection. No
             # cancellation-based redispatch or close racing with active input.
             with anyio.CancelScope(shield=True):
-                if workers:
+                if workers and guarded_owned_process:
+                    done, pending = await asyncio.wait(list(workers), timeout=5.0)
+                    if pending:
+                        owner.retire('server shutdown exceeded guarded worker drain bound')
+                        await asyncio.wait(pending, timeout=2.0)
+                elif workers:
                     # Teardown's waiter must not cancel the invocation's own
                     # completion obligation if that waiter is interrupted.
                     await asyncio.gather(*(asyncio.shield(worker) for worker in list(workers)),
@@ -292,7 +309,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 elif owner is not None:
                     options.pop('display_name')
                     if operation == 'observe':
-                        report = observe_in_session(owner.get(), **options)
+                        if guarded_owned_process:
+                            report = owner.observe(**options)
+                        else:
+                            report = observe_in_session(owner.get(), **options)
                     else:
                         program = options.pop('program')
                         report = owner.dispatch(program, **options)
@@ -306,6 +326,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 report = {'status': 'runtime_failed', 'error': repr(error),
                           'operation': operation, 'operation_invoked': True,
                           'effect_status': 'unknown'}
+                if guarded_owned_process and owner is not None:
+                    session_state = owner.snapshot()
+                    report.update(release_confirmed=False, task_success=None,
+                                  replay_allowed=False, cleanup_status='UNKNOWN',
+                                  owner_process=session_state.get('owner_process'),
+                                  late_server_request_possible=True)
                 if owner is not None and owner.state == 'failed' and owner.session is None:
                     report.update(status='backend_unavailable', failure_phase='session_initialization',
                                   operation_invoked=False, input_dispatched=False, effect_status='none')
@@ -808,6 +834,8 @@ def main():
                         help='isolate active visual checks; requires guarded query worker and qualified same local X server')
     parser.add_argument('--guarded-window-lifecycle',action='store_true',
                         help='require direct target lifecycle evidence; requires guarded query worker')
+    parser.add_argument('--guarded-owned-process',action='store_true',
+                        help='run the complete guarded-X11 session in one spawned owner process; requires process identity and query worker')
     args = parser.parse_args()
     if args.guarded_process_identity and args.session_mode != 'guarded-x11':
         parser.error('--guarded-process-identity requires --session-mode guarded-x11')
@@ -817,10 +845,14 @@ def main():
         parser.error('--guarded-observation-worker requires --guarded-query-worker')
     if args.guarded_window_lifecycle and not args.guarded_query_worker:
         parser.error('--guarded-window-lifecycle requires --guarded-query-worker')
+    if args.guarded_owned_process and (args.session_mode != 'guarded-x11'
+            or not args.guarded_process_identity or not args.guarded_query_worker):
+        parser.error('--guarded-owned-process requires guarded-x11, --guarded-process-identity and --guarded-query-worker')
     options = {'guarded_process_identity':args.guarded_process_identity}
     if args.guarded_query_worker: options['guarded_query_worker'] = True
     if args.guarded_observation_worker: options['guarded_observation_worker'] = True
     if args.guarded_window_lifecycle: options['guarded_window_lifecycle'] = True
+    if args.guarded_owned_process: options['guarded_owned_process'] = True
     create_server(json.loads(args.targets.read_text(encoding='utf-8')),
                   args.output_directory, display_name=args.display, session_mode=args.session_mode,
                   **options).run(transport='stdio')

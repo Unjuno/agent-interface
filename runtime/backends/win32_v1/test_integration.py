@@ -409,7 +409,6 @@ class Win32IntegrationTests(unittest.TestCase):
     def test_valid_program_has_independent_effect_capture_and_release(self):
         before = self.backend.emissions
         row = self.session.dispatch(make_program("valid"), current_observation_seq=7, current_binding_revision=3)
-        self.assertEqual(row["status"], "completed", row)
         self.assertGreater(self.backend.emissions, before)
         deadline = time.time() + 2
         while time.time() < deadline and not self.effect.exists():
@@ -418,9 +417,20 @@ class Win32IntegrationTests(unittest.TestCase):
         effect = json.loads(self.effect.read_text())
         self.assertEqual(effect, {"saved": True, "text": "office", "clicked": True})
         releases = row["execution"]["releases"]
-        self.assertTrue(releases and releases[-1]["verified"])
-        self.assertEqual(releases[-1]["keys_down"], [])
-        self.assertEqual(releases[-1]["buttons_down"], [])
+        self.assertTrue(releases)
+        release = releases[-1]
+        self.assertEqual(release["keys_down"], [])
+        self.assertEqual(release["buttons_down"], [])
+        if release["verified"]:
+            self.assertEqual(row["status"], "completed", row)
+            self.assertEqual(release["keys_unknown"], [])
+            self.assertEqual(release["buttons_unknown"], [])
+        else:
+            # GetAsyncKeyState zero is ambiguous between up and inaccessible.
+            # Preserve task-effect evidence while refusing to claim completion.
+            self.assertEqual(row["status"], "release_unverified", row)
+            self.assertTrue(row["recovery_required"])
+            self.assertTrue(release["keys_unknown"] or release["buttons_unknown"], release)
         self.assertEqual(len(row["execution"]["observations"]), 1)
         obs = row["execution"]["observations"][0]
         self.assertEqual(obs["bytes"], 300 * 140 * 4)

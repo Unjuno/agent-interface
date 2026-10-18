@@ -1,0 +1,48 @@
+{
+  "captured_local": "2026-10-19T01:37:09.3092768+09:00",
+  "source_commit": "a1fba2db52d832228545c7ca229dcf424a172afc",
+  "python": "CPython 3.13.14",
+  "dependencies": {
+    "mcp": "1.30.0",
+    "python_xlib": "0.33",
+    "Pillow": "13.0.0"
+  },
+  "selected_suite": {
+    "runner": "run_local_validation.py",
+    "runner_sha256": "c59f8162431e0fa91514961cc6e6d59686e904013f78ad9ec5bcf3b53631396a",
+    "tests": 107,
+    "normal": "PASS",
+    "optimized": "PASS",
+    "modules": [
+      "runtime.cli_v1.test_mcp_owned_process",
+      "runtime.cli_v1.test_mcp_process_identity",
+      "runtime.cli_v1.test_mcp_transport_cancellation",
+      "runtime.cli_v1.test_mcp_wait_budget",
+      "runtime.cli_v1.test_mcp_target_queries",
+      "runtime.cli_v1.test_mcp_guarded",
+      "runtime.cli_v1.test_mcp_server"
+    ],
+    "excluded_test": "runtime.cli_v1.test_mcp_server.PublicMCPTests.test_portable_stdio_runs_outside_checkout",
+    "exclusion_reason": "runtime.distribution_v2 is absent from this frozen branch; this packaging test is not counted as a pass",
+    "raw_logs": [
+      {
+        "compressed_path": "raw/local-selected-tests-normal.log.gz",
+        "compressed_sha256": "a20f391ea718fb847cf7700cc534eb7c11d20c138fccd9e7b68a63d6d6b2541d",
+        "uncompressed_sha256": "7e2d4b25bfafc4001232c05746ba8c7170246953510ed016b7f3cc9cbea23e6e",
+        "gzip_roundtrip": "PASS"
+      },
+      {
+        "compressed_path": "raw/local-selected-tests-optimized.log.gz",
+        "compressed_sha256": "492b346ef0de0da31bf6f60fee6ae2c5ad984740c2c9d7de66e4c4bb946305ab",
+        "uncompressed_sha256": "2cab2782e72068a95133dc920e709f7c358f9e6a53dcdc6bff31f9c0370fa69a",
+        "gzip_roundtrip": "PASS"
+      }
+    ]
+  },
+  "reply_gate": {
+    "script": "../xres_blocked_owner_release_a10_20261019/verify_reply_gate.py",
+    "normal": "PASS",
+    "optimized": "PASS",
+    "output": "PASS_GATE_CLOSED_AFTER_RECV_AND_RELEASED_BYTES_VERIFIED"
+  }
+}
