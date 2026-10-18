@@ -158,13 +158,21 @@ X ordering, task effect, physical deadline, or WSLc result.
 The spawned owner snapshot now carries the Xlib connection `resource_id_base`
 when available; the 110-test normal/`-O` suite adds an XRes `QueryClients`
 presence helper with Fake reply/parser and cooperative poll-budget checks. It
-does not bound a blocked X request or verify a live server fence.
-XRes `QueryClients` is a concrete candidate for a later exact-client disconnect
-fence check after owner death with DOWN queued. Its current-connected-client
-reply is specified in the [X-Resource protocol](https://www.x.org/releases/current/doc/resourceproto/resproto.txt),
-but no native X server experiment or bounded query exists yet. Treat a blocked
-query or unqualified server as UNKNOWN; client disappearance alone is not
-release evidence.
+does not bound a blocked X request.
+
+**2026-10-19 WSLc A11 — scoped live Xvfb result:** The [retained packet](../../research/integration/xres_blocked_owner_release_a11_20261019/README.md)
+passed 8/8 trials against a responsive X.Org Xvfb. Each owner remained blocked
+in XSync with 32 reply bytes withheld. After exact owner retirement, a separate
+XRes observer saw that client disappear; key-down was still present at that
+fence, and a different X connection then sent KeyRelease, after which key-up
+was read back immediately and after 50 ms. This confirms the observable
+ordering for that Xvfb fixture and shows that process retirement alone did not
+release the key. It does not test the standard MCP caller, permanently blocked
+X-server I/O, physical desktop, XWayland, or task effect. The X-Resource
+protocol's current-client query is specified in the
+[protocol](https://www.x.org/releases/current/doc/resourceproto/resproto.txt).
+The in-process helper still lacks an externally bounded blocked-query fence;
+keep UNKNOWN if that query cannot return or the server is unqualified.
 
 **2026-10-19 evidence correction for cleanup scope:** The original #7024 ended
 `STOP / METHOD_FAIL` before crash cells, but its immutable #7041 successor later
