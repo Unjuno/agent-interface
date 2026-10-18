@@ -412,6 +412,23 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 'elapsed_ms':result.get('elapsed_ms'),
                 'release':deepcopy(release)}
 
+    def _cleanup_after_owner_retirement(self, retirement):
+        if retirement.get('retired') is True:
+            client_disconnect = self._observe_owner_client_disconnect()
+        else:
+            client_disconnect = {'status':'unknown', 'reason':'owner_not_retired',
+                                 'worker_retired':None}
+        self._owner_client_disconnect = client_disconnect
+        if (retirement.get('retired') is True
+                and client_disconnect.get('status') == 'disconnected'):
+            release_attempt = self._release_retired_owner_inputs(
+                getattr(self, '_owner_input_obligations', {'keys':{}, 'buttons':[]}))
+        else:
+            release_attempt = {'status':'not_attempted',
+                               'reason':'owner_disconnect_not_confirmed'}
+        self._owner_release_attempt = release_attempt
+        return client_disconnect, release_attempt
+
     def invoke_guarded(self, operation, arguments, call_root):
         return self._call('invoke_guarded', operation=operation,
                           arguments=deepcopy(arguments), call_root=Path(call_root))
@@ -461,9 +478,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     self._execution_unknown = True
                     self.review_required = True
                     retirement = self._retire('cancel control response unconfirmed')
+                    client_disconnect, release_attempt = (
+                        self._cleanup_after_owner_retirement(retirement))
                     return {'status':'cancel_unconfirmed', 'input_dispatched':None,
                             'owner_process_retired':retirement['retired'],
                             'owner_process_exitcode':retirement['exitcode'],
+                            'owner_client_disconnect':deepcopy(client_disconnect),
+                            'owner_input_obligations':deepcopy(getattr(
+                                self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
+                            'owner_release_attempt':deepcopy(release_attempt),
                             'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                             'task_success':None, 'replay_allowed':False,
                             'late_server_request_possible':True}
@@ -472,10 +495,16 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 self._execution_unknown = True
                 self.review_required = True
                 retirement = self._retire('cancel control response unconfirmed')
+                client_disconnect, release_attempt = (
+                    self._cleanup_after_owner_retirement(retirement))
                 return {'status':'cancel_unconfirmed', 'error':repr(error),
                         'input_dispatched':None,
                         'owner_process_retired':retirement['retired'],
                         'owner_process_exitcode':retirement['exitcode'],
+                        'owner_client_disconnect':deepcopy(client_disconnect),
+                        'owner_input_obligations':deepcopy(getattr(
+                            self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
+                        'owner_release_attempt':deepcopy(release_attempt),
                         'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                         'task_success':None, 'replay_allowed':False,
                         'late_server_request_possible':True}
@@ -483,9 +512,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             self._execution_unknown = True
             self.review_required = True
             retirement = self._retire('cancel control response unconfirmed')
+            client_disconnect, release_attempt = (
+                self._cleanup_after_owner_retirement(retirement))
             return {'status':'cancel_unconfirmed', 'input_dispatched':None,
                     'owner_process_retired':retirement['retired'],
                     'owner_process_exitcode':retirement['exitcode'],
+                    'owner_client_disconnect':deepcopy(client_disconnect),
+                    'owner_input_obligations':deepcopy(getattr(
+                        self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
+                    'owner_release_attempt':deepcopy(release_attempt),
                     'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                     'task_success':None, 'replay_allowed':False,
                     'late_server_request_possible':True,
@@ -498,23 +533,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             self._rpc_lock.release()
             return result
         retirement = self._retire('cancel retirement grace elapsed')
-        client_disconnect = (self._observe_owner_client_disconnect()
-                             if retirement['retired'] else
-                             {'status':'unknown', 'reason':'owner_not_retired',
-                              'worker_retired':None})
-        self._owner_client_disconnect = client_disconnect
-        release_attempt = (self._release_retired_owner_inputs(
-            self._owner_input_obligations)
-            if retirement['retired'] and client_disconnect.get('status') == 'disconnected'
-            else {'status':'not_attempted',
-                  'reason':'owner_disconnect_not_confirmed'})
-        self._owner_release_attempt = release_attempt
+        client_disconnect, release_attempt = self._cleanup_after_owner_retirement(
+            retirement)
         self._execution_unknown = True
         self.review_required = True
         return dict(result, owner_process_retired=retirement['retired'],
                     owner_process_exitcode=retirement['exitcode'],
                     owner_client_disconnect=deepcopy(client_disconnect),
-                    owner_input_obligations=deepcopy(self._owner_input_obligations),
+                    owner_input_obligations=deepcopy(getattr(
+                        self, '_owner_input_obligations', {'keys':{}, 'buttons':[]})),
                     owner_release_attempt=deepcopy(release_attempt),
                     release_confirmed=False, cleanup_status='UNKNOWN',
                     task_success=None, replay_allowed=False,
