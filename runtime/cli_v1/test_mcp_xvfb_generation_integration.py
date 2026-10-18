@@ -99,7 +99,7 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
                 'pid':target_pid, 'start_ticks':start_ticks}, sort_keys=True,
                 separators=(',', ':')).encode('ascii')).hexdigest()
             report.update(server={'vendor':observer.display.info.vendor,
-                'release':observer.display.info.release,
+                'release':observer.display.info.release_number,
                 'xres_version':[xres_version.server_major,xres_version.server_minor]},
                 target={'xid':window.id, 'creator_pid':os.getpid(),
                         'xres_pid':target_pid, 'start_ticks':start_ticks,
