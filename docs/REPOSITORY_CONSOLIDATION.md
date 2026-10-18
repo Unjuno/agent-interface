@@ -38,6 +38,26 @@ PRは正確なhead/baseと差分、既存mainとの重なり、依存stack、意
 
 整理の合格条件は、現行の未完Issueにそれぞれ研究上の行き先または未分類キューがあり、検証済みの独立成果がmain/保存先から辿れ、PR stackとbranch/worktreeの保全状態が現物確認済みで、次の競合しない有限作業が選べること。open件数が残っていても、この条件を満たすものは「未完了」ではなく意図した研究バックログである。歴史的なraw・条件・第一結果は移動・上書きせず、索引で結ぶ。
 
+## 実行更新 r44 — #6/#56の仮説・結果・未統合PRを分離
+
+2026-10-19に、現在OPENの[#6](https://github.com/Unjuno/agent-interface/issues/6)
+と[#56](https://github.com/Unjuno/agent-interface/issues/56)、関連するmerged
+PR #7353/#7438、およびopen PR #7616を再読した。既存の[family record](ideas/reactive-macro-symbolic-interface.md)
+に#6の広いreactive local-control案、#56のmodel-authored symbolic GUI案、A05/R02/A12–A14の結果と限界、#7616の失敗理由を分けて記録し、
+`IDEAS_AND_OUTCOMES.md`とidea ledger/work mapから辿れるようにした。
+
+判定は#6=`open-broad`, #56=`open-result-retained`, #7616=`open-review-pending`。
+PR #7616の説明はcandidate/source hash不一致を`FAIL_SOURCE_BASE_LABEL_MISMATCH`
+として報告し、candidate終了codeと正確な時刻も未保持としている。成果一式が一意なので、
+年齢・CI・題名でclose/mergeせず、次はそのexact diff・FREEZE・candidate・audit・source
+blobのread-only照合を行う。candidateは消費済みとして再実行しない。この監査は未実施であり、
+PRの統合・棄却をまだ決めていない。
+
+この一族はactive [#9099](https://github.com/Unjuno/agent-interface/pull/9099)の
+Xvfb caller repairとは独立する。複数workerは別family・PR・加筆先を使い、共有indexだけ
+直列統合する。Issue数を減らす目的で#6/#56を閉じず、完了条件・根拠・次の検証が揃うまで
+研究バックログとして保持する。
+
 ## 実行更新 r42 — 現行membership差分と最初の修理対象
 
 2026-10-18 22:37:50 UTCに、全ページを読み直してmain
