@@ -1,9 +1,9 @@
 # Current objective and working direction
 
 Updated 2026-10-19 against `main` SHA
-`c7335ae7afad450053a9dd6ad0e9582c7fb43a79`. A paginated GitHub API read at
-2026-10-18 20:45:17 UTC returned 1,675 open Issues and 514 open PRs; sorted-ID
-hashes and the count-only comparison limit are in the [r23 membership recheck](maintenance/repository-inventory-20261019-r23.md).
+`9bfacb2a388f549e64ff0a62b25e0738691bb4bc`. A paginated GitHub read at
+approximately 2026-10-18 21:06 UTC found 1,675 open Issues and 514 open PRs;
+the sorted-ID hashes match the [r25 membership recheck](maintenance/repository-inventory-20261019-r25.md).
 The latest complete metadata snapshot remains r22. Full semantic classification
 remains unfinished; see the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md)
 for the family-by-family review and disposition criteria. This is the short
@@ -64,7 +64,7 @@ rather than treating this status check as a fresh assignment.
 ## Navigation and history
 
 [Integration gates](INTEGRATION_PLAN.md) · [repository consolidation](REPOSITORY_CONSOLIDATION.md) ·
-[ideas and execution](ideas/README.md) · [research map](RESEARCH_MAP.md) ·
+[ideas and outcomes](IDEAS_AND_OUTCOMES.md) · [research map](RESEARCH_MAP.md) ·
 [current interface](../runtime/USING_CURRENT_INTERFACE.md) · [evidence map](EVIDENCE_MAP.md).
 
 The previous 2,219-line document is preserved verbatim in
