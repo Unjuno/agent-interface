@@ -114,13 +114,26 @@ def _xres_disconnect_worker(send_connection, display_name, resource_base, expect
         from Xlib.display import Display
 
         display = Display(display_name)
-        remaining_s = max(0.0, (deadline_ns - time.monotonic_ns()) / 1_000_000_000)
-        disconnected = wait_for_client_disconnect(
-            display, resource_base, expected_pid=expected_pid,
-            timeout_s=remaining_s,
-            poll_interval_s=poll_interval_s)
-        send_connection.send({'status':'disconnected' if disconnected
-                              else 'still_connected'})
+        observer_base = display.display.info.resource_id_base
+        while True:
+            observed_pid = client_pid_at_base(display, resource_base)
+            if observed_pid != expected_pid:
+                status = 'disconnected'
+                break
+            remaining_s = max(
+                0.0, (deadline_ns - time.monotonic_ns()) / 1_000_000_000)
+            if remaining_s <= 0:
+                status = 'still_connected'
+                break
+            time.sleep(min(poll_interval_s, remaining_s))
+        send_connection.send({
+            'status':status,
+            'resource_base':resource_base,
+            'expected_pid':expected_pid,
+            'observed_pid':observed_pid,
+            'observer_pid':os.getpid(),
+            'observer_resource_base':observer_base,
+        })
     except Exception as error:
         try:
             send_connection.send({'status':'unknown', 'reason':'query_failed',
@@ -172,19 +185,16 @@ def wait_for_client_disconnect_supervised(display_name, resource_base, *,
         timeout_s=timeout_s, terminate_grace_s=terminate_grace_s)
 
 
-def client_is_connected(connection, resource_base, *, expected_pid):
-    """Return whether XRes identifies this base as the expected local process.
+def client_pid_at_base(connection, resource_base):
+    """Return XRes's local PID for this base, or None if the base is absent.
 
     XRes reports local PIDs in the server's namespace. First compare this
     observer connection's reported PID to `os.getpid()`; fail closed if they
-    differ. A caller must separately bound the synchronous X request. `False`
-    means only that this reply did not identify the expected process at this
-    base; it does not authorize release or prove physical input neutrality.
+    differ. A caller must separately bound the synchronous X request. Returned
+    PIDs are server-reported process labels, not generation-safe identities.
     """
     if type(resource_base) is not int or not 0 <= resource_base < 2**32:
         raise ValueError('X client resource base must be an unsigned 32-bit integer')
-    if type(expected_pid) is not int or not 0 < expected_pid < 2**32:
-        raise ValueError('expected_pid must be a positive unsigned 32-bit integer')
     if not connection.has_extension('X-Resource'):
         raise RuntimeError('X-Resource unavailable')
     from Xlib.ext import res
@@ -242,7 +252,18 @@ def client_is_connected(connection, resource_base, *, expected_pid):
         raise RuntimeError('incomplete X-Resource process identity set')
     if pids_by_base[observer_base] != os.getpid():
         raise RuntimeError('X-Resource PID namespace does not match observer')
-    return pids_by_base[resource_base] == expected_pid
+    return pids_by_base[resource_base]
+
+
+def client_is_connected(connection, resource_base, *, expected_pid):
+    """Return whether XRes identifies this base as the expected local process.
+
+    A caller must separately bound the synchronous X request. A false result
+    does not authorize release or prove physical input neutrality.
+    """
+    if type(expected_pid) is not int or not 0 < expected_pid < 2**32:
+        raise ValueError('expected_pid must be a positive unsigned 32-bit integer')
+    return client_pid_at_base(connection, resource_base) == expected_pid
 
 
 def wait_for_client_disconnect(connection, resource_base, *, expected_pid, timeout_s,

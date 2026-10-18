@@ -71,6 +71,12 @@ def _keys_down(display, keycodes):
     'requires the explicitly enabled private Xorg/Xvfb display :88',
 )
 class XResDisconnectFenceIntegrationTests(unittest.TestCase):
+    def _assert_owner_pid_absent(self, receipt, owner_pid, report):
+        self.assertEqual(receipt['status'], 'disconnected', report)
+        self.assertNotEqual(receipt['observed_pid'], owner_pid, report)
+        if receipt['resource_base'] == receipt['observer_resource_base']:
+            self.assertEqual(receipt['observed_pid'], receipt['observer_pid'], report)
+
     def test_dead_owner_delayed_xtest_outcome_after_fresh_cleanup(self):
         display_name = os.environ['DISPLAY']
         result_path = os.environ.get('AGENT_INTERFACE_XORG_FENCE_RESULT')
@@ -168,6 +174,9 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                         expected_pid=idle_owner.pid, timeout_s=2.0,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     ))
+                self._assert_owner_pid_absent(
+                    report['idle_control_disconnect_after_kill'],
+                    idle_owner.pid, report)
                 report['idle_control_disappeared_within_2s'] = (
                     report['idle_control_disconnect_after_kill']['status']
                     == 'disconnected')
@@ -223,7 +232,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 report['disconnect_before_delay_horizon'] = early_disconnect
                 report['early_probe_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
-                self.assertEqual(early_disconnect['status'], 'disconnected', report)
+                self._assert_owner_pid_absent(
+                    early_disconnect, owner.pid, report)
                 report['key_down_before_delay_horizon'] = _keys_down(
                     observer, keycodes)
                 self.assertFalse(any(
@@ -235,7 +245,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                     poll_interval_s=0.005, terminate_grace_s=0.1,
                 )
                 report['disconnect_before_cleanup'] = before_cleanup
-                self.assertEqual(before_cleanup['status'], 'disconnected', report)
+                self._assert_owner_pid_absent(before_cleanup, owner.pid, report)
                 report['before_cleanup_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
                 report['key_down_before_cleanup'] = _keys_down(
@@ -275,9 +285,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                         timeout_s=_POST_HORIZON_XRES_TIMEOUT_S,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     ))
-                self.assertEqual(
-                    report['disconnect_after_delay_horizon']['status'],
-                    'disconnected', report)
+                self._assert_owner_pid_absent(
+                    report['disconnect_after_delay_horizon'], owner.pid, report)
                 report['post_horizon_xres_probe_after_kill_ms'] = (
                     time.monotonic_ns()-killed_ns)/1_000_000
                 report['key_down_after_extended_probe'] = _keys_down(

@@ -7,6 +7,7 @@ from types import SimpleNamespace
 
 from runtime.guarded_x11_v1.xres_client_fence import (
     client_is_connected,
+    client_pid_at_base,
     wait_for_client_disconnect,
 )
 
@@ -196,6 +197,16 @@ class XResClientFenceTests(unittest.TestCase):
 
         self.assertFalse(client_is_connected(
             connection, observer_base, expected_pid=4321))
+
+    def test_reports_the_observed_pid_for_a_reused_resource_base(self):
+        observer_base = 0x5600000
+        connection = _ReplyConnection(
+            [SimpleNamespace(resource_base=observer_base,
+                             resource_mask=0x1fffff)],
+            client_ids=self._process_ids(observer_base, os.getpid()),
+        )
+
+        self.assertEqual(client_pid_at_base(connection, observer_base), os.getpid())
 
     def test_process_identity_query_fails_closed_on_missing_or_ambiguous_pid(self):
         base = 0x1200000
