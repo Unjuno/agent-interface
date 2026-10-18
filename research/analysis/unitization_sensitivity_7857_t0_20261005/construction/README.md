@@ -1,0 +1,8 @@
+# T0 pre-freeze construction probes
+
+These host-Node v24.19.0 invocations occurred before formal freeze; they are unallocated construction checks, not T0 outcomes or retries.
+
+- C01: Candidate emitted annotations, boundary diagnostics and category agreement but serialized a function reference named occupancy instead of the computed occupancy object. JSON serialization silently omitted that field. The independent auditor correctly failed (audit=false) despite the derived values otherwise matching; all 5 input mutations were rejected. The raw outputs and debug auditor with field checks are retained.
+- C02: Candidate now serializes the computed occupancy object. The source-bound result yields 12 A units and 9 B units; exact-span match F1 0.4761904762; per-trace F1 adjacent 0, missing telemetry 0, unambiguous control 1, cascade 0.5, censored 1, stable 1, heldout 0.4. Category agreement is separately 6/6. S1 training occupancy changes from singleton/doubleton (1,2) under A to (3,0) under B; S2 remains (4,0). Heldout new-mode episode-unit rate is 2/3 vs 1/2. Sensitivity gate flags unstable boundaries; unambiguous control remains unflagged; both declared saturation decisions remain false. The independent auditor returns audit=true and 5/5 mutations rejected.
+
+The exact-span F1 is an explicitly custom exact-boundary diagnostic; it is not Krippendorff's unitizing alpha and has no population-reliability interpretation. Formal T0 will use the exact frozen source and container identity recorded in the prospective Issue comment.

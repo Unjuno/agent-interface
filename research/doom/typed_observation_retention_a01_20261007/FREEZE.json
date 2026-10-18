@@ -1,0 +1,18 @@
+{
+  "schema": "typed-observation-retention-freeze-v1",
+  "allocation_id": "typed-observation-retention-a01-20261007",
+  "kind": "model-free construction boundary test",
+  "source_commit": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "source_files": {
+    "research/doom/map01_overlap_controller_v39.py": "f76c618f5eedbe2c301eecb67c36c9064ec0de035009d0be6f8610bb1d808dc8",
+    "research/doom/session_map01_v12.py": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "research/doom/doom_typed_observation_v1.py": "038537fac0b155025bec50e92eaa9ca434cc3789498199634ded095b151ef555"
+  },
+  "decision_rule": {
+    "pass": "actual session emit closure writes ordered typed_observation and observation rows byte-equivalently to events.jsonl and delivered.jsonl, preserving nested health/ammo values and integer emit_ns; source backend emits typed evidence before image publication and full observation",
+    "fail": "any required row, nested value, order, file equality, timestamp type, or source ordering condition is false"
+  },
+  "scope": "No live game, model, GUI, X11, input, Docker, GPU, or formal #59 allocation. The check exercises the exact session emit closure with synthetic representative records and statically checks the current typed-backend source order."
+}

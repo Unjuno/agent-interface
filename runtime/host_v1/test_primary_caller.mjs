@@ -79,6 +79,40 @@ test('fresh observation rejects accidental per-call arguments before host dispat
   assert.equal(calls,0);
 });
 
+test('explicit observation budget covers helper and raw tool calls before dispatch',async()=>{
+  const calls=[];
+  const response={result:{content:[{type:'text',text:'{"status":"returned"}'}]}};
+  const closed={result:{content:[{type:'text',text:'{"status":"closed"}'}]}};
+  const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{
+    calls.push({tool,args});return tool==='interface_close'?closed:response;
+  }},'guarded-local',{},[],{maxExplicitObservations:1});
+  assert.equal(await caller.observe(),response);
+  await assert.rejects(caller.call('interface_guarded_observe',{}),/observation budget exhausted/);
+  assert.ok(caller.state().stopped);
+  await assert.rejects(caller.input('field',[0,0],'click',[]),/stopped/);
+  assert.equal(await caller.call('interface_close',{}),closed);
+  assert.deepEqual(calls,[
+    {tool:'interface_guarded_observe',args:{}},
+    {tool:'interface_close',args:{}}
+  ]);
+});
+
+test('zero observation budget refuses first direct capture before host dispatch',async()=>{
+  const calls=[];
+  const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{
+    calls.push({tool,args});return {result:{content:[{type:'text',text:'{}'}]}};
+  }},'direct-post',{},[],{observationArguments:{target:'editor'},maxExplicitObservations:0});
+  await assert.rejects(caller.observe(),/observation budget exhausted/);
+  assert.ok(caller.state().stopped);
+  assert.deepEqual(calls,[]);
+});
+
+for(const value of [-1,1.5,Number.MAX_SAFE_INTEGER+1,null])
+  test('invalid explicit observation budget '+String(value)+' is rejected at construction',()=>{
+    assert.throws(()=>createPrimaryCaller({sendPresented:async()=>{}},'guarded-local',{},[],
+      {maxExplicitObservations:value}),TypeError);
+  });
+
 test('direct observation preserves the explicit snapshotted observation configuration',async()=>{
   const calls=[];const args={target:'editor',frame:'screen_physical_px',region:[0,0,800,600]};
   const caller=createPrimaryCaller({sendPresented:async(tool,args)=>{calls.push({tool,args});return {result:{content:[{type:'text',text:'{}'}]}};}},'direct-post',{},[],{observationArguments:args});
@@ -107,6 +141,25 @@ test('an exception during neutral-release validation blocks later input',async()
   await assert.rejects(caller.call('interface_guarded_input',{alias:'x',interaction:'click'}),TypeError);
   assert.ok(caller.state().stopped);
   await assert.rejects(caller.call('interface_guarded_input',{alias:'x',interaction:'click'}),/stopped/);
+});
+
+for (const [field, value] of [
+  ['keys_down', ''],
+  ['buttons_down', {length: 0}],
+]) test('malformed neutral-release '+field+' value latches STOP before another input', async () => {
+  const meta = {status: 'completed', image_status: 'image', result: {execution: {releases: [
+    {verified: true, keys_down: [], buttons_down: [], [field]: value},
+  ]}}};
+  const reply = {result: {isError: false, content: [{type: 'text', text: JSON.stringify(meta)}]}};
+  let calls = 0;
+  const caller = createPrimaryCaller({sendPresented: async () => { calls++; return reply; }},
+    'guarded-local', {});
+  const args = {alias: 'x', interaction: 'click'};
+
+  assert.equal(await caller.call('interface_guarded_input', args), reply);
+  assert.ok(caller.state().stopped);
+  await assert.rejects(caller.call('interface_guarded_input', args), /stopped/);
+  assert.equal(calls, 1);
 });
 
 test('real host text-only declared refusal is presented and acknowledged without stopping',async()=>{
@@ -285,4 +338,20 @@ test('guarded primary rejects persistent target tools locally',async()=>{
   await assert.rejects(caller.call('interface_inspect_target',{target:'app'}),/unavailable tool/);
   assert.equal(calls,0);
   await assert.rejects(caller.call('interface_guarded_observe',{}),/trial stopped/);
+});
+
+const original={id:1,tool:'interface_validate',status:'unknown_requires_reconciliation',error:'Connection closed',recovery:'Inspect the same allocation/request. Do not replay input.',next_id:2};
+test('retained uncertain relay response returns unchanged and stops subsequent dispatch',async()=>{
+ let calls=0;const presented=[];
+ const closed={result:{isError:false,content:[{type:'text',text:'{"status":"closed"}'}]}};
+ const host={sendPresented:async(tool,args,sinks)=>{calls++;const reply=tool==='interface_close'?closed:original;await sinks.text(reply);return reply;}};
+ const caller=createPrimaryCaller(host,'guarded-local',{text:async row=>presented.push(row)});
+ let response,error;
+ try{response=await caller.call('interface_validate',{});}catch(e){error=e;}
+ assert.equal(error,undefined,'uncertain envelope must not require a secondary extraction TypeError');
+ assert.equal(response,original);assert.deepEqual(presented,[original]);assert.ok(caller.state().stopped);
+ await assert.rejects(caller.call('interface_guarded_input',{alias:'field',interaction:'click'}),/stopped/);
+ assert.equal(calls,1);
+ assert.equal(await caller.call('interface_close',{}),closed);
+ assert.equal(calls,2);assert.ok(caller.state().stopped);
 });

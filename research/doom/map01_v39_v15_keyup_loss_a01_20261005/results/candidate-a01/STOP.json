@@ -1,0 +1,12 @@
+{
+  "schema": "v39-v15-keyup-loss-construction-stop-v1",
+  "run_id": "MAP01-V39-V15-KEYUP-LOSS-A01-20261005",
+  "disposition": "STOP_FIXTURE_CONSTRUCTOR_SIGNATURE",
+  "exit_code": 1,
+  "candidate_test_started": false,
+  "candidate_raw_created": false,
+  "cause": "TypeError: DummyOwner() takes no arguments during current V15 backend construction, before fake-X release cases started.",
+  "wslc_warning": "Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "cleanup": "The WSLc command used --rm; it exited and no running container was listed afterward.",
+  "no_retry": "This frozen A01 candidate will not be rerun. A fixture repair, if attempted, must use a distinct A02 identity and output path."
+}

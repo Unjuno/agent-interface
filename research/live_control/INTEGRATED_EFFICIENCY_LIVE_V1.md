@@ -1,5 +1,11 @@
 # Integrated efficiency live result v1
 
+Post-run accounting and source-reproduction review: see
+[`INTEGRATED_EFFICIENCY_LIVE_AUDIT_RECONCILIATION_20261004.md`](INTEGRATED_EFFICIENCY_LIVE_AUDIT_RECONCILIATION_20261004.md).
+The finite allocation's historical RETAIN is preserved; the independent
+replay status is separately held where retained summaries or frozen source
+bytes do not reconcile.
+
 The preregistered `integrated-efficiency-live-01` allocation returns **RETAIN**.
 Plain, ephemeral and persistent each submitted all six task tokens exactly once
 under the independent append-only scorer. Persistent reused layout-A references

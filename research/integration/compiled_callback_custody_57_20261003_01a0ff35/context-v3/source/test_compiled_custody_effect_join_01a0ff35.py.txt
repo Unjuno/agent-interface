@@ -1,0 +1,91 @@
+"""Effect-witness admission must survive independent callback payload edits."""
+import unittest
+
+from runtime.core_v1.test_compiled_gui import Driver
+
+
+class CallbackEffectJoinTests(unittest.TestCase):
+    def mutating_driver(self):
+        driver = Driver()
+        observe = driver.observe
+        declarations, terminals, retained = [], [], []
+
+        def consuming_observer(request):
+            declarations.append(tuple(request['required_predicates']))
+            request['required_predicates'].clear()
+            return observe(request)
+
+        def local_journal(event):
+            retained.append(event)
+            driver.record('journal', event)
+            if event['event'] == 'branch_selected':
+                event['action'] = 'logger-local'
+                event['matched_conditions']['phase'] = 99
+            elif event['event'] == 'action_terminal':
+                terminals.append((event['action'], event['status'], event['release_verified']))
+                event.clear()
+            elif event['event'] == 'effect_checked':
+                event['evidence_ref'] = None
+
+        driver.observe = consuming_observer
+        driver.journal = local_journal
+        return driver, declarations, terminals, retained
+
+    def test_invalid_success_witness_stops_at_its_action_despite_callback_edits(self):
+        for value in (None, '', 0, True, False, 1.0, [], {}, 'x' * 65):
+            for stage in (1, 2):
+                with self.subTest(value=value, stage=stage):
+                    driver, declarations, terminals, _ = self.mutating_driver()
+                    verify = driver.verify
+
+                    def invalid_witness(payload):
+                        result = verify(payload)
+                        if len(driver.calls['verify_effect']) == stage:
+                            result['evidence_ref'] = value
+                        return result
+
+                    driver.verify = invalid_witness
+                    with self.assertRaisesRegex(ValueError, 'effect evidence reference'):
+                        driver.run()
+                    self.assertEqual(len(driver.calls['execute']), stage)
+                    self.assertEqual(len(driver.calls['verify_effect']), stage)
+                    # Effect verification follows the post-action observation.
+                    self.assertEqual(declarations, [('phase',)] * (stage + 1))
+                    self.assertEqual(terminals, [('enter', 'completed', True),
+                                                ('save', 'completed', True)][:stage])
+
+    def test_valid_witness_and_returned_prefix_survive_immediate_and_retained_edits(self):
+        for value in ('w', 'independent-witness', 'x' * 64):
+            with self.subTest(value=value):
+                driver, declarations, terminals, retained = self.mutating_driver()
+                verify = driver.verify
+
+                def valid_witness(payload):
+                    result = verify(payload)
+                    result['evidence_ref'] = value
+                    return result
+
+                driver.verify = valid_witness
+                result = driver.run()
+                for event in retained:
+                    event.clear()
+                self.assertEqual((result['outcome'], result['completed_transitions']),
+                                 ('TASK_SUCCEEDED', 2))
+                self.assertEqual(declarations, [('phase',)] * 3)
+                self.assertEqual(terminals, [('enter', 'completed', True),
+                                            ('save', 'completed', True)])
+                critical = result['critical_events']
+                self.assertEqual([e['event'] for e in critical],
+                                 ['branch_selected', 'action_terminal', 'effect_checked',
+                                  'branch_selected', 'action_terminal', 'effect_checked',
+                                  'branch_selected', 'runtime_finished'])
+                self.assertEqual([e['evidence_ref'] for e in critical
+                                  if e['event'] == 'effect_checked'], [value, value])
+                self.assertEqual([e['matched_conditions'] for e in critical
+                                  if e['event'] == 'branch_selected'],
+                                 [{'phase': 0}, {'phase': 1}, {'phase': 2}])
+                self.assertEqual(critical[-1]['outcome'], 'TASK_SUCCEEDED')
+
+
+if __name__ == '__main__':
+    unittest.main()

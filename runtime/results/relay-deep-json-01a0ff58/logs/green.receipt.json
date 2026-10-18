@@ -1,0 +1,41 @@
+{
+  "phase": "green",
+  "head": "41fa8296b47884b1f1db6ca5315c0aa700e49126",
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "mcp": "1.30.0",
+  "command": [
+    "<private-user>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\relay312-venv\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "runtime.cli_v1.test_mcp_relay"
+  ],
+  "cwd": "<private-user>\\Documents\\Codex\\2026-10-03\\new-chat-6\\work\\agent-interface",
+  "start_utc": "2026-10-03T03:17:44.424952+00:00",
+  "end_utc": "2026-10-03T03:17:48.291750+00:00",
+  "exit_code": 0,
+  "source": {
+    "runtime/cli_v1/mcp_relay.py": {
+      "working_sha256": "3a6450684a3f125930a4545a2e3726bcea9ce7a29f32fb19da0de8f79db7ebaa",
+      "committed_sha256": "3a6450684a3f125930a4545a2e3726bcea9ce7a29f32fb19da0de8f79db7ebaa",
+      "git_blob": "f1422b17b3e9ad76e754773f8f2188b3452e99d2"
+    },
+    "runtime/cli_v1/test_mcp_relay.py": {
+      "working_sha256": "15f64503512ea8a4534163acf6f7bc85558d9f24178f19cde0438cc7e8c8c96d",
+      "committed_sha256": "15f64503512ea8a4534163acf6f7bc85558d9f24178f19cde0438cc7e8c8c96d",
+      "git_blob": "718f4c6b497b6806d86d72338603e5d7e20f43b9"
+    },
+    "runtime/cli_v1/MCP.md": {
+      "working_sha256": "8f739203db6279a77fe747e3b3222e422675eb296c992753c8ae2062b984db96",
+      "committed_sha256": "8f739203db6279a77fe747e3b3222e422675eb296c992753c8ae2062b984db96",
+      "git_blob": "0b495ee64d039edfb5180c076a3430bca8931e24"
+    }
+  },
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "d265bb91efcb9bac730ef6d2b656532b75bb60d206be5f699863dff6285e9554",
+  "stdout_bytes": 0,
+  "stderr_bytes": 2762,
+  "scope": "ordinary test-first repair; committed-source real SDK list/validate/close only; no input"
+}

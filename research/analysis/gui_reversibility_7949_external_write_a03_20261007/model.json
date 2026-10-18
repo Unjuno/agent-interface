@@ -1,0 +1,350 @@
+{
+  "agent_write": {
+    "after": 1,
+    "before": 0,
+    "field": "x",
+    "field_revision": 1,
+    "global_revision": 1
+  },
+  "cases": [
+    {
+      "coverage_complete": true,
+      "events": [],
+      "id": "no_interference",
+      "snapshot": {
+        "field_revisions": {
+          "x": 1,
+          "y": 0
+        },
+        "fields": {
+          "x": 1,
+          "y": 0
+        },
+        "generation": 1,
+        "global_revision": 1,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [
+        {
+          "event_id": "w-y-2",
+          "field": "y",
+          "field_revision": 1,
+          "generation": 1,
+          "global_revision": 2,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 1,
+          "value": 9
+        }
+      ],
+      "id": "disjoint_y_write",
+      "snapshot": {
+        "field_revisions": {
+          "x": 1,
+          "y": 1
+        },
+        "fields": {
+          "x": 1,
+          "y": 9
+        },
+        "generation": 1,
+        "global_revision": 2,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [
+        {
+          "event_id": "w-x-2",
+          "field": "x",
+          "field_revision": 2,
+          "generation": 1,
+          "global_revision": 2,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 1,
+          "value": 7
+        }
+      ],
+      "id": "same_field_write",
+      "snapshot": {
+        "field_revisions": {
+          "x": 2,
+          "y": 0
+        },
+        "fields": {
+          "x": 7,
+          "y": 0
+        },
+        "generation": 1,
+        "global_revision": 2,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [
+        {
+          "event_id": "w-x-2",
+          "field": "x",
+          "field_revision": 2,
+          "generation": 1,
+          "global_revision": 2,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 1,
+          "value": 7
+        },
+        {
+          "event_id": "w-x-3",
+          "field": "x",
+          "field_revision": 3,
+          "generation": 1,
+          "global_revision": 3,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 2,
+          "value": 1
+        }
+      ],
+      "id": "aba_same_final_value",
+      "snapshot": {
+        "field_revisions": {
+          "x": 3,
+          "y": 0
+        },
+        "fields": {
+          "x": 1,
+          "y": 0
+        },
+        "generation": 1,
+        "global_revision": 3,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [
+        {
+          "event_id": "replace-2",
+          "fields": {
+            "x": 1,
+            "y": 0
+          },
+          "generation": 2,
+          "global_revision": 2,
+          "kind": "replace",
+          "object_id": "doc-2",
+          "seq": 1
+        }
+      ],
+      "id": "object_replaced",
+      "snapshot": {
+        "field_revisions": {
+          "x": 0,
+          "y": 0
+        },
+        "fields": {
+          "x": 1,
+          "y": 0
+        },
+        "generation": 2,
+        "global_revision": 2,
+        "object_id": "doc-2"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [
+        {
+          "event_id": "w-y-3",
+          "field": "y",
+          "field_revision": 1,
+          "generation": 1,
+          "global_revision": 3,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 2,
+          "value": 9
+        }
+      ],
+      "id": "sequence_gap",
+      "snapshot": {
+        "field_revisions": {
+          "x": 1,
+          "y": 1
+        },
+        "fields": {
+          "x": 1,
+          "y": 9
+        },
+        "generation": 1,
+        "global_revision": 3,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [
+        {
+          "event_id": "w-y-3",
+          "field": "y",
+          "field_revision": 1,
+          "generation": 1,
+          "global_revision": 3,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 2,
+          "value": 9
+        },
+        {
+          "event_id": "w-z-2",
+          "field": "z",
+          "field_revision": 1,
+          "generation": 1,
+          "global_revision": 2,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 1,
+          "value": 2
+        }
+      ],
+      "id": "out_of_order",
+      "snapshot": {
+        "field_revisions": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "fields": {
+          "x": 1,
+          "y": 9,
+          "z": 2
+        },
+        "generation": 1,
+        "global_revision": 3,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": false,
+      "events": [],
+      "id": "incomplete_coverage",
+      "snapshot": {
+        "field_revisions": {
+          "x": 1,
+          "y": 1
+        },
+        "fields": {
+          "x": 1,
+          "y": 9
+        },
+        "generation": 1,
+        "global_revision": 2,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [
+        {
+          "event_id": "w-y-2",
+          "field": "y",
+          "field_revision": 1,
+          "generation": 1,
+          "global_revision": 2,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 1,
+          "value": 9
+        }
+      ],
+      "id": "snapshot_mismatch",
+      "snapshot": {
+        "field_revisions": {
+          "x": 1,
+          "y": 1
+        },
+        "fields": {
+          "x": 1,
+          "y": 0
+        },
+        "generation": 1,
+        "global_revision": 2,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [],
+      "id": "unjournaled_revision",
+      "snapshot": {
+        "field_revisions": {
+          "x": 1,
+          "y": 0
+        },
+        "fields": {
+          "x": 1,
+          "y": 0
+        },
+        "generation": 1,
+        "global_revision": 2,
+        "object_id": "doc-1"
+      }
+    },
+    {
+      "coverage_complete": true,
+      "events": [
+        {
+          "event_id": "w-y-2",
+          "field": "y",
+          "field_revision": 1,
+          "generation": 1,
+          "global_revision": 2,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 1,
+          "value": 9
+        },
+        {
+          "event_id": "w-y-3",
+          "field": "y",
+          "field_revision": 2,
+          "generation": 1,
+          "global_revision": 3,
+          "kind": "write",
+          "object_id": "doc-1",
+          "seq": 2,
+          "value": 11
+        }
+      ],
+      "id": "two_disjoint_writes",
+      "snapshot": {
+        "field_revisions": {
+          "x": 1,
+          "y": 2
+        },
+        "fields": {
+          "x": 1,
+          "y": 11
+        },
+        "generation": 1,
+        "global_revision": 3,
+        "object_id": "doc-1"
+      }
+    }
+  ],
+  "initial_fields": {
+    "x": 0,
+    "y": 0
+  },
+  "run_id": "gui-reversibility-7949-external-write-a03-20261007",
+  "target": {
+    "generation": 1,
+    "object_id": "doc-1"
+  }
+}

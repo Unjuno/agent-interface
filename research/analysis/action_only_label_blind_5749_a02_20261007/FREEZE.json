@@ -1,0 +1,36 @@
+{
+  "experiment": "Issue #5749 action-only label-blind A02",
+  "allocation": "5749-ACTION-ONLY-LABEL-BLIND-A02-20261007",
+  "base_main": "2d227ecf86479cff093123190560bd8d63148ce4",
+  "branch": "research/action-only-adaptation-5749-a02-20261007",
+  "package_path": "research/analysis/action_only_label_blind_5749_a02_20261007",
+  "policy_input_sha256": "647051c4bd203de1ce4b5754995c9d0d41e57c27b874e6479f383dee239afb1d",
+  "scoring_key_sha256": "ce507f31f80a85f8c0538a44a56178b92bd057f226f6eb4475316f72d8f253e7",
+  "code_sha256": {
+    "candidate.py": "9e7089874740bc048ce0be0f1f763eb1b6ecbf9ea7158852f2c949d9bdc437a9",
+    "scorer.py": "f00171e1bf35a15d16500bd7fcfd2519fca2b561ba67069cc72fc32f8de63fa6",
+    "audit_core.py": "6d93b074f97f76413a544e854eb1204ff4711a3ea80201794a1852eb7af89f4b",
+    "auditor.py": "db43079d706f00263373d6c6fbd3f24da7ef0768f00cb4d553a40ee2b9dd7d8f",
+    "test_pipeline.py": "f7c0ae3d416f474b3819736e55296d2a4071ff95f6f0ec1898a131a34ca5444a",
+    "fixtures/policy_input.json": "647051c4bd203de1ce4b5754995c9d0d41e57c27b874e6479f383dee239afb1d",
+    "fixtures/scoring_key.json": "ce507f31f80a85f8c0538a44a56178b92bd057f226f6eb4475316f72d8f253e7",
+    "PROTOCOL.md": "1358f264129a0ffb4021d1c46d4dfb4bfe8d9066b8734b413f852a2705422086",
+    "README.md": "29720ef8f725bbb79cece8fcf657c9b3dfca12fb7014ed2016819f8a37b37adb"
+  },
+  "formal_invocation_budget": {
+    "candidate": 1,
+    "scorer": 1,
+    "independent_auditor": 1
+  },
+  "preformal_construction": "5/5 unittest tests PASS; Python compilation PASS; git diff --check PASS",
+  "runtime": {
+    "requested_preflight": "OrbStack context read-only inspected",
+    "docker_info": "29.4.0 linux/aarch64",
+    "cached_image_inspect": "FAIL: containerd blob operation not supported; no pull/build/repair/retry",
+    "execution_fallback": "native macOS, CPython 3.14.5, standard library only; no container isolation claim",
+    "host": "Darwin 27.0 arm64, 10 CPU, 64 GiB RAM",
+    "memory_observation": "35% free by memory_pressure -Q; vm.swapusage reports 12.34 GiB used of 13 GiB; small short-lived workload only"
+  },
+  "decision": "PASS_LABEL_BLIND_METHOD_SCOPED requires all 63 rows independently reconstructed, frozen identity agreement, no target/score field in candidate input or raw output, five mutations rejected, and zero authority grants",
+  "scope_limit": "Synthetic finite method/dataflow check only; no causal, human, GUI, effect, privacy, safety, or transfer claim"
+}

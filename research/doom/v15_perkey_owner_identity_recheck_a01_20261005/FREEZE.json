@@ -1,0 +1,36 @@
+{
+  "schema": "v15-perkey-owner-identity-recheck-freeze-v1",
+  "candidate_pr": 8065,
+  "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "candidate_base_main": "11445a7ca200404ddc80bf7ebb1dbef86eb059de",
+  "prior_defect_evidence_pr": 8079,
+  "prior_defect_evidence_head": "44ab184ada4a2a5229c4e18826c93c3acc59630f",
+  "prior_probe_head": "cceb9d2856796cc9b04364806dd67e91610cfabb",
+  "source_count": 56,
+  "source_manifest": "source-manifest.json",
+  "source_extraction": "git show <candidate_head>:<path>",
+  "source_probe_sha256": "e253d3b7bd6f86d133e563c8ec1652849d9daa6cfe267954b399b95d80d85114",
+  "initial_system_python": {
+    "python": "system python3",
+    "exit_code": 1,
+    "stop": "ModuleNotFoundError: No module named 'PIL'",
+    "boundary_reached": false
+  },
+  "executed_runtime": {
+    "python": "3.12.14",
+    "pillow": "12.3.0",
+    "path": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3"
+  },
+  "command": "python3 -B replay_startup.py results/bundled-run",
+  "routes": ["v12-perkey", "v15-default", "v15-perkey"],
+  "observed_gate": "FAIL_V15_PERKEY_SELECTED_OWNER_IDENTITY",
+  "owner_instantiated": false,
+  "session_started": false,
+  "forbidden_calls": [],
+  "live_game": false,
+  "model_calls": 0,
+  "gui": false,
+  "x_server": false,
+  "native_input": false,
+  "formal_allocation": false
+}

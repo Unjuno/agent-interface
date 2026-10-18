@@ -1,0 +1,44 @@
+{
+  "schema": "map01-v39-expiry-pending-cleanup-source-lock-v1",
+  "main_commit": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
+  "main_refresh_checked": "6183f6aaa5 (2026-10-05); the six relevant pinned source files below are byte-identical to the original freeze",
+  "candidate_pr": 7805,
+  "candidate_head": "7a696dc085cad8a49eaae50d968bc6e8d28fb45e",
+  "candidate_files": {
+    "candidate_source/bridge_v2_candidate.py": {
+      "source_ref": "PR 7805 head 7a696dc085cad8a49eaae50d968bc6e8d28fb45e",
+      "git_blob": "ee1220cdc3d93d96aa1051c072ca7dceeb59c35d"
+    },
+    "research/doom/map01_v39_cancel_executor_v12_composition_a01_20261005/candidate_source/input_owner_v13_candidate.py": {
+      "source_ref": "main commit aa2e4b623b2f4ccdcbc8e294535bab09c0092f30; PR 7805 head did not modify this file since 9d14deb",
+      "sha256": "f359d6a4f25f9dc6a9c2e479d8c401884b7aaa8c37ddeb44c25c4bfaa3e78413"
+    }
+  },
+  "main_source_sha256": {
+    "research/live_control/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+    "research/doom/map01_v39_perkey_bridge_a01/bridge.py": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "6e63390e5fa5a9dc7cf0fe2cd040ceaa3a21e0fc86366dbe67c21c41e6f937d7",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9"
+  },
+  "formal_run": "results/formal_01/candidate.json",
+  "formal_runs": {
+    "A01": {
+      "run_id": "MAP01-V39-EXPIRY-PENDING-CLEANUP-A01-FORMAL-01-20261005",
+      "candidate_sha256": "8705497c6da3425fecc6b9ee6fc083bad3f2ac23c52f63c6d3af7d162d4f37e2",
+      "audit_sha256": "2b908e6b9088c941ce1455f1a396adc98110c442064095f7e509bc0f86857f16",
+      "status": "FAIL_RECEIPT_NOT_EMITTED_BEFORE_EXPIRY_TERMINAL"
+    },
+    "A02": {
+      "run_id": "MAP01-V39-EXPIRY-PENDING-CLEANUP-A02-FORMAL-01-20261005",
+      "candidate_sha256": "7a1a85a1cc07971b2bf6aa5e1d62541305b9fe8b55482fe46506d90b90db8b4f",
+      "audit_sha256": "304b2ad133040fa27a406490eb0e7e0814e731aea41ff9a550c69036383388d8",
+      "runner_sha256": "744fe7e8c2541c2e99bace7270ef2dfc209db842fb4eebf0eb92853a69479a85",
+      "auditor_sha256": "36139b996740c6885e36a01b7a1310ab76d3e3743c6e0d88ed3ecc0dd50974a9",
+      "bridge_v3_sha256": "e698f6b42b770b277312e895397f5917d49ec99837f2bb54f6f474a847ffec62",
+      "status": "PASS_RELEASE_ALL_DRAINED_PENDING_EXPIRY_RECEIPT_SCOPED"
+    }
+  },
+  "retries": 0
+}

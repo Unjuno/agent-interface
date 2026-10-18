@@ -1,0 +1,55 @@
+{
+  "model_id": "ORDERED-CONTEXT-EVENT-7452-A01-20261008",
+  "main_sha": "ff4eac79dab728748862e34d650a39c8c2d811a3",
+  "context_pair": ["focus_generation", "surface_mode"],
+  "context_levels": {
+    "focus_generation": ["current", "stale"],
+    "surface_mode": ["editor", "dialog"],
+    "evidence_fresh": ["fresh", "stale"]
+  },
+  "held_context": {"evidence_fresh": "fresh"},
+  "events": ["ACT", "OBSERVE", "RELEASE", "REVOKE"],
+  "episode_horizon": 8,
+  "state": {
+    "initial": {"authority": "active", "held_input": false},
+    "transition": {
+      "ACT": "records an action request; correct admission requires authority=active",
+      "OBSERVE": "no authority or held-input change",
+      "RELEASE": "sets held_input=false; does not restore authority",
+      "REVOKE": "sets authority=revoked and held_input=false"
+    },
+    "reset": "Between episodes only: restore the exact initial state; never count event pairs across this boundary."
+  },
+  "oracle": {
+    "unsafe_effect": "ACT is admitted while authority=revoked",
+    "joint_fault": "A seeded faulty gate admits ACT if focus_generation=stale AND surface_mode=dialog AND a prior REVOKE exists in the same episode.",
+    "context_only_fault": "A seeded faulty gate admits ACT in surface_mode=dialog, independent of prior event order.",
+    "order_only_fault": "A seeded faulty gate admits ACT after any prior REVOKE, independent of context.",
+    "negative_control": "No faulty gate; unsafe_effect must remain false for every row."
+  },
+  "coverage": {
+    "nist_mapping": "A row is one event input annotated by context. A selected pair assignment plus event value is a 3-way combination. An ordered 2-order is an earlier row-combination eventually followed by a later row-combination. The context pair is constant within each episode.",
+    "reset_rule": "Coverage is evaluated independently per episode. Cross-episode pairs are invalid and receive no credit.",
+    "selected_denominator": "4 assignments of (focus_generation,surface_mode) × all 16 ordered event pairs, including repeated events, within one reset-bounded episode.",
+    "exhaustive_denominator": "8 assignments of all three binary context factors × all 16 ordered event pairs; each pair is an isolated 2-row episode."
+  },
+  "strategies": {
+    "context_only": "For each of 4 selected-pair assignments, one 1-row episode containing ACT; no event-order coverage claimed.",
+    "order_only": "One safe-context episode with [ACT, OBSERVE, RELEASE, REVOKE] repeated twice; event-pair order covered only at this context.",
+    "mixed_occ": "For each selected-pair assignment, one episode with [ACT, OBSERVE, RELEASE, REVOKE] repeated twice; held evidence_fresh=fresh. Context never changes within an episode.",
+    "exhaustive": "For each of 8 complete context assignments, one 2-row episode for every ordered event pair."
+  },
+  "expected_counts": {
+    "context_only_episodes": 4,
+    "context_only_rows": 4,
+    "order_only_episodes": 1,
+    "order_only_rows": 8,
+    "mixed_occ_episodes": 4,
+    "mixed_occ_rows": 32,
+    "mixed_occ_obligations": 64,
+    "exhaustive_episodes": 128,
+    "exhaustive_rows": 256,
+    "exhaustive_obligations": 128
+  },
+  "mutations": ["drop_episode", "credit_cross_reset_pair", "collapse_context_strata"]
+}

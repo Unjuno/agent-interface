@@ -1,0 +1,28 @@
+{
+  "format": "oracle-ascertainment-fixture-a01-v1",
+  "opportunities": [
+    {"id":"F01","t0_ms":100000}, {"id":"F02","t0_ms":101000},
+    {"id":"F03","t0_ms":102000}, {"id":"F04","t0_ms":103000},
+    {"id":"F05","t0_ms":104000}, {"id":"F06","t0_ms":105000},
+    {"id":"F07","t0_ms":106000}, {"id":"F08","t0_ms":107000},
+    {"id":"F09","t0_ms":108000}, {"id":"F10","t0_ms":109000},
+    {"id":"F11","t0_ms":110000}, {"id":"F12","t0_ms":111000},
+    {"id":"N13","t0_ms":112000}, {"id":"N14","t0_ms":113000},
+    {"id":"N15","t0_ms":114000}, {"id":"N16","t0_ms":115000},
+    {"id":"N17","t0_ms":116000}, {"id":"N18","t0_ms":117000}
+  ],
+  "channels": {
+    "runtime": {"source_id":"runtime-reject-log-v1","source_group":"shared-capture-stream","latency_ms":20,"detected":["F01","F05","F09","F10","N16"],"unknown":[]},
+    "watcher": {"source_id":"event-watcher-v1","source_group":"shared-capture-stream","latency_ms":35,"detected":["F01","F07","F09"],"unknown":[]},
+    "verifier": {"source_id":"effect-verifier-v1","source_group":"shared-capture-stream","latency_ms":50,"detected":["F01","F05","F11"],"unknown":["N18"]},
+    "post_effect_audit": {"source_id":"post-effect-audit-v1","source_group":"result-store-independent-view","latency_ms":100,"detected":["F01","F03","F05","F06","F07","F11","F12"],"unknown":[]}
+  },
+  "alerted_by": {
+    "runtime": {},
+    "watcher": {},
+    "verifier": {"F01":["runtime"],"F05":["runtime"],"F11":["watcher"]},
+    "post_effect_audit": {}
+  },
+  "unknown_reason": "sampling_not_performed",
+  "linkage_key_prefix": "opportunity:"
+}

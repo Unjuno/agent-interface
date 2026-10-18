@@ -1,0 +1,48 @@
+{
+  "allocation": "A03",
+  "construction": {
+    "auditor_construction_suite_invocations": 4,
+    "candidate_full_fixture_construction_calls": 9,
+    "result": "construction only; none counted as formal allocation",
+    "test_suite_invocations": 5
+  },
+  "created_utc": "2026-10-08T05:16:26.114851Z",
+  "formal_counts": {
+    "auditor_retries": 0,
+    "candidate": 1,
+    "candidate_retries": 0,
+    "independent_auditor": 1
+  },
+  "inputs": {
+    "fixtures.json": "63e02be00018be60637f10a070bc2ff76310077c507916cccc978509bfaa3c91",
+    "truth.json": "a35d7f1c615f272c3b4332ea334f8a6e50710c1d49ea65da4093854f668ad757"
+  },
+  "issue": 8502,
+  "main_sha": "e627b8954ecfbdd90ccfe35a81441a00d88047c8",
+  "runtime": {
+    "execution": "local CPU; standard library only",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10"
+  },
+  "schema": "issue8502-t0-a03-freeze-v1",
+  "seeds": {
+    "F01": 850301,
+    "F02": 850302,
+    "F03": 850303,
+    "F04": 850304,
+    "F05": 850305
+  },
+  "sources": {
+    "CONSTRUCTION.md": "8a3f4435d8ddfbb727d8669534c95a568b49663864e7993c61d86079025c81d6",
+    "PROTOCOL.md": "8cc632e8e78b2e07a0c479f69baff4530cda038b85c6d265d3d9750ec4fb90a9",
+    "README.md": "8510c13d188b86d339fd3d765082a6212c095a4359886c4c1d53310c700845de",
+    "audit.py": "ebd41a00d117f6d03a851f9bfb156a7a8e719fbe53e7622f3b46e45e5dc3b022",
+    "candidate.py": "5b8996187dbf2bc458538edecce2e3c09294295d0d0313c0a4ece928445e5141",
+    "config.json": "c284f38b9d8e38433f6996d890f8695472f88e440554ef543d5b51fa5dee5b13",
+    "freeze.py": "7fc8318339d52dd87db664e22ceda28731dff517cc8e835ae162d8b13e6de7b5",
+    "generate.py": "580dbde37c5885f48df46e0869d608a7d06e7196f9ad2296e8faf245973973c9",
+    "integrity.py": "18138b74ff8dd684058beda0c23c9a3d299a59782fdf0d203791be33ae02e1a1",
+    "test_audit.py": "3a62407b6b8470f440e852c0fe4f5c929874aaef6d72aaaad238967064562ee5",
+    "test_candidate.py": "7865db0c1633c15a7b1f17ef7c8280592e14325585f8f8534734cb78145cbff7"
+  }
+}

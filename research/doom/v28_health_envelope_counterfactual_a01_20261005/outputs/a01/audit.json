@@ -1,0 +1,45 @@
+{
+  "schema": "v28-health-envelope-counterfactual-audit-v1",
+  "passed": true,
+  "disposition": "PASS_COUNTERFACTUAL_REPLAY",
+  "raw_sha256": "25c93922c60167ee7c5baf411b9955f90375edfe410c7f5553d6b4bbf9e52ee5",
+  "source_sha256": {
+    "report": "746b8282c7cf4224bbc6e7624a777bb81afd19b80c07d0a1c2628a116f7fb8be",
+    "existing_audit": "bbdbc7b687317cb96e8a3e3ce968bd06368becf4727bcfa2ae120b765d6704e1",
+    "review": "ab90cf86feca1e48f9b89c46d186f77ca42f4e9ccde88cc855b2e1e2c5a40548",
+    "events": "5be74bb0c3bc9f321760f8b7c7dfacd9c86f5f4ecc0ffdce032e20780ffee0dc",
+    "controller": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "guard": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+  },
+  "spans_independently_reconstructed": 5,
+  "loss_values_independently_recomputed": 21,
+  "interruption_counts_by_loss_0_to_20": [
+    5,
+    5,
+    4,
+    3,
+    3,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "scope": "offline five-span historical counterfactual; no live game, model, GUI, OS input, or allocation",
+  "limitations": [
+    "historical invalidations were caused by a changed-pixel region guard, not typed health alone",
+    "no causal damage attribution or within-span observation replay",
+    "does not establish tactical appropriateness or Issue 59 completion"
+  ]
+}

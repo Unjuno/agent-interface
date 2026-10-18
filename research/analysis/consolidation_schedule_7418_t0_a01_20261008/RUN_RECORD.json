@@ -1,0 +1,48 @@
+{
+  "issue": 8406,
+  "companion_to": 7418,
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T0-A01-20261008",
+  "freeze_sha256": "b80003b6bc71cd8203f0d1a45d22eb3e2e0a1ad3144394d4abfea1e92ed8f9aa",
+  "base_sha": "bb476976d887bb0194a64a1c6ab1e7ac45d72e24",
+  "freeze_commit": "2fe66959c5bf76faf39bbb70659426e21f6ad6c1",
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "retries": 0,
+  "candidate_sha256": "3372ad299c3924c1b565e358c02f62cb8f219ab20e1644c5c4b1842afb485150",
+  "auditor_sha256": "41f06f80ebdacdf4151484f6af95515124e99055bda22b46abd5b2bacbee1627",
+  "runtime": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "network": "sandbox-exec deny network*",
+    "gui": "none",
+    "model": "none",
+    "container": "none; deterministic CPU-only contract fixture"
+  },
+  "outputs": {
+    "candidate.json": {
+      "bytes": 20655,
+      "sha256": "ce94e1bb50f02cbf6545360f8ea71c19886d547996403041cd4ac80ee4abee76"
+    },
+    "audit.json": {
+      "bytes": 68,
+      "sha256": "bf255e314417ddaf51baff3e45eb857f74a74cc0c5845fe5948cfe9bc9ea60ef"
+    },
+    "candidate.stdout.txt": {
+      "bytes": 64,
+      "sha256": "87daf649894f9e687324042ffcb7c6c3f45905d85b022b83e21967dc024784eb"
+    },
+    "auditor.stdout.txt": {
+      "bytes": 75,
+      "sha256": "3fe35dea99c1f939b1d0326e055a22684725f943dff1c9f141438a33d228f470"
+    }
+  },
+  "auditor_result": {
+    "arms": 4,
+    "errors": [],
+    "snapshots": 24,
+    "status": "PASS_METHOD_SCOPED"
+  },
+  "formal_decision": "PASS_T0_METHOD_SCOPED"
+}

@@ -1,0 +1,13 @@
+Status: STOP before candidate case execution. No RESULT.json or events.jsonl was created.
+
+Command:
+  python -m research.doom.v39_observation_pump_event_dispatch_a01_20261008.candidate
+
+Failure:
+  load_production_slices() walked every AST node and called _pending_loop(node).
+  _pending_loop read node.test before checking that node was ast.While, so it
+  raised AttributeError on the Module node. This is a candidate harness defect;
+  no event-pump branch was executed and no experimental outcome is inferred.
+
+The A01 candidate is preserved unchanged and was not rerun. A02 corrects the
+node-type guard only and is frozen at a new versioned path.

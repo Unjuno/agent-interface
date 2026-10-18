@@ -1,0 +1,9 @@
+# Time-consistent task risk across sequential decisions — #8908
+
+- **Status:** Unverified finite-method proposal; no experiment/result is recorded.
+- **Source:** Open [Issue #8908](https://github.com/Unjuno/agent-interface/issues/8908), narrow successor to [#26](https://github.com/Unjuno/agent-interface/issues/26).
+- **Idea:** On a finite two-stage scenario tree, test whether ex-ante optimization under a static terminal risk criterion produces a continuation that is rejected when the same criterion is re-solved at the same reachable information node. Compare with a recursively nested conditional-risk criterion and an expected-loss baseline under identical hard constraints.
+- **Key distinction:** A policy change after genuinely new information is not itself a preference reversal. Compare the ex-ante policy's contingent continuation with conditional re-optimization using identical information and inputs at that node. Absolute forbidden outcomes remain hard constraints; a risk budget cannot waive them or grant action authority.
+- **Proposed controls:** Exact-rational exhaustive optimization; expectation-only, no-information, anticipated-observation, and deliberately misconditioned-checker controls. Report policy agreement, conditional/terminal risk, expected loss, and feasibility; call a negative result only `NO_WITNESS_FOR_FROZEN_CASE`.
+- **Overlap:** #26 states task-level risk posture; #5424 concerns operational reliability burn/freeze; #5380 authority-property model checking; #5315/#7993 verifier-risk calibration; #6269 trajectory diagnostics. #8907 studies revealed information-acquisition costs, a related but distinct estimand. Preserve each question separately.
+- **Boundary:** Even a method PASS would establish only finite mathematical behavior for the frozen criterion/tree. It would not establish a meaningful production risk measure, calibration, low real-world risk, safety improvement, or authority to act.

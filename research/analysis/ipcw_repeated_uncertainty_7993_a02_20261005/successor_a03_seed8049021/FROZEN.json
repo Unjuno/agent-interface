@@ -1,0 +1,88 @@
+{
+  "allocation": "UNJUNO-8049-IPCW-REPEATED-UNCERTAINTY-A03-ORBSTACK-20261005",
+  "base_commit": "0db00a564daff64e47fd6931954ace0f71ab8f2b",
+  "branch": "research/8049-ht-bootstrap-a02-20261005",
+  "cohorts": 20000,
+  "formal_invocations_before_freeze": {
+    "auditor": 0,
+    "candidate": 0,
+    "retries": 0
+  },
+  "formal_seed": 8049021,
+  "frozen_at_utc": "2026-10-05T08:35:27.379403+00:00",
+  "host": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "image": "python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+  "image_id": "sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151 linux/arm64",
+  "interval": {
+    "cdf_thresholds": [
+      0.025000000001,
+      0.975000000001
+    ],
+    "clip_ticks": [
+      0,
+      300
+    ],
+    "denominator": 300,
+    "method": "stratified exact conditional percentile bootstrap",
+    "numerator": "3*K_A+K_B"
+  },
+  "issue": 8049,
+  "parent_issue": 7993,
+  "population": {
+    "marginal_risk": 0.25,
+    "resolution_probability": {
+      "A": 0.25,
+      "B": 0.75
+    },
+    "risk": {
+      "A": 0.4,
+      "B": 0.1
+    },
+    "stratum_units": 200
+  },
+  "predecessor_allocation": "A02_STOP_CONTAINER_CLI_MOUNT_SYNTAX",
+  "preflight_sha256": "88b88241ba395f3eea6dd28c483f18779c795e983c6b0e19b140db5a40d7b9e5",
+  "runtime": {
+    "candidate_oracle_mount": false,
+    "cpu_requested": 1,
+    "engine": "OrbStack Docker",
+    "memory_enforcement": "not asserted",
+    "memory_requested": "1g",
+    "network": "none",
+    "rootfs": "read-only",
+    "separate_readwrite_output": true
+  },
+  "source_references": {
+    "auditor": {
+      "path": "../auditor.py",
+      "sha256": "b4c54b307ee73aa545ca6be3c4363476010ba26851138cf0d982765fd6ebcd3b"
+    },
+    "candidate": {
+      "path": "../candidate.py",
+      "sha256": "a8d452343ecd1cd2c7d400a1232520af224cdf52a24c111f2812acd343f441e3"
+    }
+  },
+  "source_sha256": {
+    "../auditor.py": "b4c54b307ee73aa545ca6be3c4363476010ba26851138cf0d982765fd6ebcd3b",
+    "../candidate.py": "a8d452343ecd1cd2c7d400a1232520af224cdf52a24c111f2812acd343f441e3",
+    "CONSTRUCTION_LOG.md": "4cb58bb3873c7c84970a0745e2e37cff1c56884ce6246cbb917a1ca784bf86d0",
+    "MAIN_ADVANCEMENT.md": "9afa43d8c73d6776801f12982323229638346dd0dfe380919ed5440c066d6b57",
+    "PREFLIGHT.json": "88b88241ba395f3eea6dd28c483f18779c795e983c6b0e19b140db5a40d7b9e5",
+    "PROTOCOL.md": "75c3ca58f69d74792298c6b81a35cd88c53e83308cf7e1aa14c8a09de9807f69",
+    "generate.py": "3ebc8ced2f4677ede6afa2b082eedc4ba3a7ae05d83019afe785d6f68dc2c263",
+    "oracle_input.json": "01b3dd5566c607c871df5f7929bc014b9a7a8ffffb77ed37d848653f330bceb3",
+    "preflight-output/mount-smoke.txt": "352a4f750446467c7aa84dab0f0d6aa496e3f3e27a970b3011fc0027a41ffc1b",
+    "preflight-setup-stop.stderr.txt": "99515b59e1d1203d635b91bd5e9d18b58324ba843e50ed2a37b48fb67d89b403",
+    "preflight-setup-stop.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight-stdout.txt": "9dfc90943a9dbc74ebce3af816784a2294d68d6d05bd5014d244db40e81cefbb",
+    "prepare_freeze.py": "678081dc1e7183f50ae807eab87dd223f288e59408b889ca84cb212e56456dec",
+    "public_input.json": "7b10cbb24d933d6db8876a6b9b2224c38e2a3eb703db17b31e9cba67ffa06f8c",
+    "run_formal.py": "22bee1bd72259eb328a612425bc760fa3d683f413b13990cdc9c96039a0545e3",
+    "run_mount_preflight.py": "1a3226fe62fc4eb3b16c9337bd2ac493df02bdbf848ca3770015065d986f949d",
+    "test_protocol.py": "838e272aaec81be474c465659ca13f51df84060793103692f6616fa3d429df2b"
+  }
+}

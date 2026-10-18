@@ -1,0 +1,28 @@
+{
+  "schema": "v15_perkey_postrepair_a02_result_v1",
+  "status": "FAIL_REPAIR_INEFFECTIVE_AT_4158d9b",
+  "candidate_head": "4158d9b063e7cbf56828f1b0667ec2714af0ff2b",
+  "evidence_run": "run-20261005T03",
+  "independent_readback": "audit-result.json",
+  "routes": {
+    "v12-perkey": {
+      "selected_owner": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py",
+      "owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "matches_recorded_a01_owner": true
+    },
+    "v15-default": {
+      "backend_chain_contains": "doom_owner_thread_release_batch_backend_v1.Backend",
+      "backend_owner_binding": "research/live_control/input_transition_owner_v4.py"
+    },
+    "v15-perkey": {
+      "selected_owner": "research/live_control/input_owner_v12.py",
+      "owner_sha256": "01c41f5a89a211cda050466c4175050699dcac02394928859c25514574eab9df",
+      "recorded_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "matches_recorded_a01_owner": false
+    }
+  },
+  "all_routes_reached_boundary": true,
+  "forbidden_calls": [],
+  "interpretation": "The latest PR #8065 helper retains the base Backend for the opt-in route, but that selected bridge still binds the already imported current raw input_owner_v12 module. The A01 archive hash is recorded without matching the selected class source.",
+  "scope": "Startup source-selection only. No Session or owner instance, GUI, game, input, physical release, timing, task effect, live threat exposure, or live lane was exercised."
+}

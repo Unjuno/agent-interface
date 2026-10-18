@@ -1,0 +1,17 @@
+{
+  "schema": "map01-v39-mutable-release-record-custody-a01-run-v1",
+  "base_main": "4a8049327eb44b54cfcf55167adb102a710a7051",
+  "candidate_pr": 7805,
+  "candidate_head": "c4e893e8515811c77e21639237f1f2a914d4d88b",
+  "container": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "platform": "linux/arm64",
+  "network": "disabled",
+  "configured_limits": {"cpus": 1, "memory": "1g", "memory_swap": "1g", "pids": 64, "rootfs": "read-only", "repository_bind": "read-only", "formal_02_bind": "read-write"},
+  "run_ids": {
+    "A01": "MAP01-V39-MUTABLE-RELEASE-RECORD-CUSTODY-A01-FORMAL-01-20261005",
+    "A02": "MAP01-V39-MUTABLE-RELEASE-RECORD-CUSTODY-A01-FORMAL-02-20261005"
+  },
+  "A01": {"status": "STOP_CONTAINER_CLI_IMAGE_PARSE", "container_starts": 0, "candidate_executions": 0, "evidence": "STOP_A01.txt"},
+  "A02": {"container_candidate_commands": 1, "candidate_executions": 2, "baseline": 1, "diagnostic_probe": 1, "retries": 0, "output": "results/formal_02/candidate.json", "independent_audit": "results/formal_02/audit.json", "audit_wrapper_note": "AUDIT_WRAPPER_NOTE.txt", "disposition": "BASELINE_RED_DIAGNOSTIC_PROBE_SCOPED_GREEN"},
+  "container_resource_enforcement": "Configured Docker limits only; not independently verified at host cgroup level."
+}

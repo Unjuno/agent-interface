@@ -1,0 +1,48 @@
+{
+  "schema": "integrated_efficiency_live_frozen_source_audit_v1",
+  "study": "integrated-efficiency-live-01",
+  "source_commit": "54910c6f9f0594c609f1f3c6895a918caa64130f",
+  "source_count": 29,
+  "all_preregistered_source_hashes_match": true,
+  "audit_exit_code": 0,
+  "audit_stdout": "{\n  \"passed\": true,\n  \"disposition\": \"RETAIN\",\n  \"observed_break_even_task\": 2,\n  \"all_model_calls\": 17,\n  \"image_grounding_calls\": 14,\n  \"fresh_preflight_calls\": 3,\n  \"actual_usage_totals\": {\n    \"input_tokens\": 153470,\n    \"cached_input_tokens\": 4864,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 2435,\n    \"reasoning_output_tokens\": 837\n  },\n  \"final_input_tokens\": {\n    \"plain\": 63128,\n    \"ephemeral\": 63779,\n    \"persistent\": 26563\n  },\n  \"elapsed_ms\": {\n    \"plain\": 56412.291157,\n    \"ephemeral\": 73238.112924,\n    \"persistent\": 44131.281228\n  },\n  \"image_model_wait_ms\": {\n    \"plain\": 41318.410603,\n    \"ephemeral\": 48741.990964,\n    \"persistent\": 15459.873095\n  },\n  \"exact_tasks\": {\n    \"plain\": 6,\n    \"ephemeral\": 6,\n    \"persistent\": 6\n  },\n  \"old_target_pointer_admissions\": 0\n}\n",
+  "audit_stderr": "",
+  "fresh_audit_matches_preserved_audit": true,
+  "fresh_audit": {
+    "passed": true,
+    "disposition": "RETAIN",
+    "observed_break_even_task": 2,
+    "all_model_calls": 17,
+    "image_grounding_calls": 14,
+    "fresh_preflight_calls": 3,
+    "actual_usage_totals": {
+      "input_tokens": 153470,
+      "cached_input_tokens": 4864,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2435,
+      "reasoning_output_tokens": 837
+    },
+    "final_input_tokens": {
+      "plain": 63128,
+      "ephemeral": 63779,
+      "persistent": 26563
+    },
+    "elapsed_ms": {
+      "plain": 56412.291157,
+      "ephemeral": 73238.112924,
+      "persistent": 44131.281228
+    },
+    "image_model_wait_ms": {
+      "plain": 41318.410603,
+      "ephemeral": 48741.990964,
+      "persistent": 15459.873095
+    },
+    "exact_tasks": {
+      "plain": 6,
+      "ephemeral": 6,
+      "persistent": 6
+    },
+    "old_target_pointer_admissions": 0
+  },
+  "scope_note": "This replays the retained JSON audit with exact pinned source bytes. It does not rerun GUI/model execution or independently establish the original runtime checkout identity."
+}

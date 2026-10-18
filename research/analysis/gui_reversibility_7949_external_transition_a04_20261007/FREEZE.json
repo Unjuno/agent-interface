@@ -1,0 +1,20 @@
+{
+  "run_id": "gui-reversibility-7949-external-transition-a04-20261007",
+  "issue": 7949,
+  "base_commit": "9fb2dd6782d1d1477a00d14be870487fd4c54fa2",
+  "candidate_command": "python3 -B research/analysis/gui_reversibility_7949_external_transition_a04_20261007/run_candidate.py > research/analysis/gui_reversibility_7949_external_transition_a04_20261007/results/candidate.raw.json 2> research/analysis/gui_reversibility_7949_external_transition_a04_20261007/results/candidate.stderr.txt",
+  "auditor_command": "python3 -B research/analysis/gui_reversibility_7949_external_transition_a04_20261007/audit.py",
+  "max_candidate_invocations": 1,
+  "max_auditor_invocations": 1,
+  "retries": 0,
+  "runtime": "native macOS CPython standard library; no container claim",
+  "frozen_sha256": {
+    "PROTOCOL.md": "b7c0ebb6d662b3b6acf1b7f152421536b319d1e43cbaa6f78cba5c86399f0679",
+    "model.json": "ecc8d1bdf35f89b6b7090f578903b7794492bb6d717ea2b82ce0c2fb7e0e2b8d",
+    "candidate.py": "7e79fb84c9e10c96ef42ba24baed4b16b692801a6f5a832c50ebf08351083838",
+    "run_candidate.py": "ca65ee085845a7dffa7bedfb96401f8bc7b71a48adadf1f065dabd44b4c09d66",
+    "audit.py": "775363ce75a306fd753f510108d39dfe73c4ed59112f1b5bad46dff147fcf73a",
+    "test_protocol.py": "ad8fe2a589677a2837339374c4ceedfa8d54048fbf83298cc1c554acc5907935"
+  },
+  "preformal": {"unit_tests": "1/1 PASS", "py_compile": "PASS", "git_diff_check": "PASS", "candidate": 0, "auditor": 0}
+}

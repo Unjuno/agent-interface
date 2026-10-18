@@ -4,6 +4,13 @@
 
 ## Navigate
 
+Retained [Issue #59 journal-wire custody packet](appserver_journal_wire_custody_59_20261003_93c2_A01/README.md): exact saved nested-data proof and qualified rescue records, with observer/authentication and outer-auditor limits preserved; no source replay or runtime adoption.
+
+
+Retained [ExecutorV13 release-custody BaseException boundary experiment](baseexception_release_custody_59_20261005/README.md): synthetic worker-step result with custody-preserving terminal behavior, independent source audit, and scoped limits; the implementation is historical evidence, not a runtime adoption.
+
+Retained [ExecutorV13 `release_all()` BaseException custody-boundary experiment](executor_v13_release_cleanup_baseexception_59_20261005/README.md): the frozen parent regressions demonstrate the no-terminal failure; the synthetic candidate/AST audit passes, and the later integrated #7635 repair supersedes the candidate implementation. Historical evidence only; no live-control or task-effect claim.
+
 Retained [constructor-journal ownership comparison](appserver_constructor_journal_59_20261003_01a0ff34/REPORT.md): original twelve cells and traceback-retention counterexample, not a production repair or permanent-leak/cleanup-bound claim. [Saved-data rescue checks](../../runtime/results/constructor_journal_rescue_f4cc/README.md) do not replay the original factory/collector or certify current source.
 
 Retained [late/unowned response boundary](appserver_late_reply_59_20261003_df63/README.md): original Queue-backed construction, pending-ID counterfactual and first publication failures, not a production repair or real-server certificate. [Saved-data rescue](../../runtime/results/late_reply_rescue_d5ab/README.md) does not replay the original subject/collector or certify current-main behavior.
@@ -19,6 +26,8 @@ Retained [predicate Condition boundary](appserver_predicate_condition_17_2026100
 | Current Linux research caller | [CURRENT_CLIENT.md](CURRENT_CLIENT.md) |
 | EOF regression protocol registration (#59/#6953 follow-up) | [Selected-module verification and limits](appserver_eof_registration_59_01a0ff51/REPORT.md) |
 | App-server stdout-EOF stop repair (#59; native inert child scope) | [Comparison and limits](appserver_eof_stop_59_01a0ff51/REPORT.md) |
+| #8290 exited-leader process-group reap repair — historical test/archive evidence | [Original result and 285-member archive](appserver_eof_reap_59_e0cc_20261007/README.md) — host process-tree tests only; the implementation has since evolved on main, so this is not a current-head retest. |
+| #8302 independent recheck of #8290 — historical source snapshot | [A/B result and source applicability](appserver_eof_reap_independent_recheck_a01_20261007/README.md) — saved raw audit passes (base 2 failures/2 errors; candidate 8/8), but its tested main is older than current main; no live app-server or current-head claim. |
 | Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
 | Retained raw result artifacts | [results/README.md](results/README.md) |
 | Recycled-XID process-incarnation guard (Issue #3555; scoped, provenance-limited) | [XRes guard report](x11_xres_incarnation_guard_3555_v1/REPORT.md) |
@@ -668,3 +677,5 @@ or human-tempo claim.
 - [Reader retirement and late-frame custody repair](appserver_reader_retirement_57_20261003_01a0ff2d/README.md): close reports a live reader before closing the journal; preserves earlier mutex/None semantics and all first failures.
 - [Boolean reply-ID correlation regression](appserver_reply_id_5156_20261003/REPORT.md): Boolean IDs cannot correlate to numeric requests; numeric float replies and server errors retained, no genuine-provider or general protocol-conformance claim.
 - [Send before response deadline: original comparison and audit qualification](appserver_send_boundary_59_20261003_01a0ff52/README.md): six historical Mac cells, response-only timeout and finite uncertain writer; original9/12 control refusals and later12/12 correction, no transport adoption or hard deadline claim.
+
+Current finite role recovery package and scope: [PR7264/8370 convergence](../integration/finite_role_recovery_convergence_20261016/README.md). Local file-backed checks do not qualify GUI/application recovery.

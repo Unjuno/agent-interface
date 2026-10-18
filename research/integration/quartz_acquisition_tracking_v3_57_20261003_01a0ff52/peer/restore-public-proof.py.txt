@@ -1,0 +1,37 @@
+"""Independent exact byte restoration only; no restored source/helper execution."""
+from pathlib import Path
+import json,gzip,base64,hashlib,datetime,subprocess,os
+O=Path(__file__).resolve().parent
+def need(ok,msg):
+    if not ok:raise ValueError(msg)
+def sha(b):return hashlib.sha256(b).hexdigest()
+index=json.loads((O/'PACKET-INDEX.json').read_bytes());bodies=json.loads((O/'actual-packet-readbacks.json').read_bytes());joined=''
+need(len(bodies)==index['parts'],'all actual full bodies')
+for i,row in enumerate(bodies,1):
+    need(row['body']==(O/f'packet-part-{i:02}.txt').read_bytes().decode('utf-8'),'exact public full body')
+    lines=row['body'].splitlines();k=lines.index('packet-part-data-begin');need(lines[k+2]=='packet-part-data-end' and k+3==len(lines),'exact framing');joined+=lines[k+1]
+raw=base64.b64decode(joined,validate=True);need(len(raw)==index['gzip_bytes'] and sha(raw)==index['gzip_sha256'],'joined public gzip')
+decoded=gzip.decompress(raw);need(len(decoded)==index['json_bytes'] and sha(decoded)==index['json_sha256'],'decoded JSON')
+packet=json.loads(decoded);files=packet['files'];need(len(files)==index['members'] and len({f['path'] for f in files})==len(files),'distinct full members')
+manifest=[{k:f[k] for k in ('path','bytes','sha256','original_bytes','original_sha256','projection')} for f in files];need(sha(json.dumps(manifest,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode())==index['manifest_sha256'],'manifest')
+dest=O/'public-restored';dest.mkdir(exist_ok=False)
+for f in files:
+    p=dest/f['path'];need(p.resolve().is_relative_to(dest.resolve()),'contained member');b=f['utf8'].encode();need(len(b)==f['bytes'] and sha(b)==f['sha256'],'member '+f['path']);p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+images=json.loads((dest/'ACTUAL-101-IMAGES.json').read_bytes());refs=json.loads((dest/'OBSERVED-INPUT-REFERENCES.json').read_bytes());rows={(r['ref'],r['path']):r for r in refs['rows']};need(len(rows)==101==len(images),'all101 observations')
+R=O.parent.parent/'work/effect-boundary';empty=0
+for image in images:
+    row=rows[(image['ref'],image['path'])];need(row['raw_url']=='https://raw.githubusercontent.com/Unjuno/agent-interface/'+image['ref']+'/'+image['path'],'immutable retrieval')
+    if row['isError']:
+        need(image['blob']=='e69de29bb2d1d6434b8b29ae775ad8c2e48c5391' and image['via']=='native-exact0B' and 'HTTPError: 400:' in row['error'][0]['text'],'recorded exact empty exception');empty+=1
+    else:need(row['observed_utf8_bytes']==image['bytes'] and row['observed_utf8_sha256']==image['sha256'],'retained actualMCP observation')
+    b=subprocess.check_output(['git','-c','gc.auto=0','-c','maintenance.auto=false','cat-file','blob',image['blob']],cwd=R,env=dict(os.environ,GIT_NO_LAZY_FETCH='1',GIT_TERMINAL_PROMPT='0'))
+    need(len(b)==image['bytes'] and sha(b)==image['sha256'] and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==image['blob'],'restored immutable publicGit byte-image')
+    p=dest/('export' if image['ref']==packet['head'] else 'baseline')/image['path'];need(p.resolve().is_relative_to(dest.resolve()),'contained source');p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+proposal=json.loads((dest/'PROPOSAL.json').read_bytes());canonical=json.dumps(proposal,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode();need(len(canonical)==5979 and sha(canonical)==packet['proposal_digest'],'full fixed descriptor')
+changed=(dest/'93-CHANGED-IMAGES.canonical.json').read_bytes();need(len(changed)==24831 and sha(changed)=='ffb9ce701aa25b67f5046fb0aa44c413d2bd64f7c098a4e9fc2c3ba8557b0ede','exact changed map')
+freeze=json.loads((dest/'ACQUISITION-FREEZE.json').read_bytes())
+for r in freeze['source']:
+    b=(dest/'inert-source'/ (r['path']+'.txt')).read_bytes();need(len(b)==r['bytes'] and sha(b)==r['sha256'],'full frozen source member');need(b==(dest/'export'/r['path']).read_bytes(),'inert source corresponds to existing publicGit')
+first=(dest/'ACQUISITION-RAW.json').read_bytes();need(len(first)==33004 and sha(first)=='9f56b186bb31c70ab8b3d14d1bdd5f07540f5055ed94a947814a636110f2cdcf','complete unchanged first raw')
+r={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'actual_full_comment_bodies':len(bodies),'gzip_bytes':len(raw),'gzip_sha256':sha(raw),'json_bytes':len(decoded),'json_sha256':sha(decoded),'members':len(files),'manifest_sha256':index['manifest_sha256'],'restored_existing_exact_publicGit_images':101,'explicit_already_MCP_verified_cache_only':True,'new_MCP_observations':0,'declared_native_exact_empty_images':empty,'descriptor_bytes':len(canonical),'proposal_digest':sha(canonical),'full_first_raw_bytes':len(first),'full_first_raw_sha256':sha(first),'restored_source_producer_helper_executions':0,'original_formal_native_allocations_replayed':0,'main_writes':0}
+(O/'PUBLIC-RESTORE.json').write_text(json.dumps(r,indent=2)+'\n',encoding='utf-8');print(json.dumps(r))

@@ -1,0 +1,238 @@
+{
+  "schema": "v39-paired-signal-outcome-a02",
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "source_sha256": "296483811c3b95beb408cd572c86ac3fbde9dae59f11a6b4508e69b3ffd21d26",
+  "cases": [
+    {
+      "case": "valid_pair_preserves_cover",
+      "observed": null,
+      "expected": {
+        "reason": null,
+        "outcome_status": null
+      },
+      "pass": true
+    },
+    {
+      "case": "health_ammo_sequence_mismatch",
+      "observed": {
+        "event": "paired_signal_invalidation",
+        "reason": "signal_pair_epoch_mismatch",
+        "outcome": {
+          "status": "UNKNOWN",
+          "reason": "signal_pair_epoch_mismatch",
+          "requires_new_decision": true,
+          "grants_input_authority": true,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "task_success_verified": false
+        },
+        "outcomes": null,
+        "requires_new_decision": true,
+        "grants_input_authority": true
+      },
+      "expected": {
+        "reason": "signal_pair_epoch_mismatch",
+        "outcome_status": "UNKNOWN"
+      },
+      "pass": false
+    },
+    {
+      "case": "health_ammo_capture_mismatch",
+      "observed": {
+        "event": "paired_signal_invalidation",
+        "reason": "signal_pair_epoch_mismatch",
+        "outcome": {
+          "status": "UNKNOWN",
+          "reason": "signal_pair_epoch_mismatch",
+          "requires_new_decision": true,
+          "grants_input_authority": true,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "task_success_verified": false
+        },
+        "outcomes": null,
+        "requires_new_decision": true,
+        "grants_input_authority": true
+      },
+      "expected": {
+        "reason": "signal_pair_epoch_mismatch",
+        "outcome_status": "UNKNOWN"
+      },
+      "pass": false
+    },
+    {
+      "case": "health_ammo_binding_mismatch",
+      "observed": {
+        "event": "paired_signal_invalidation",
+        "reason": "signal_pair_epoch_mismatch",
+        "outcome": {
+          "status": "UNKNOWN",
+          "reason": "signal_pair_epoch_mismatch",
+          "requires_new_decision": true,
+          "grants_input_authority": true,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "task_success_verified": false
+        },
+        "outcomes": null,
+        "requires_new_decision": true,
+        "grants_input_authority": true
+      },
+      "expected": {
+        "reason": "signal_pair_epoch_mismatch",
+        "outcome_status": "UNKNOWN"
+      },
+      "pass": false
+    },
+    {
+      "case": "health_below_floor",
+      "observed": {
+        "event": "paired_signal_invalidation",
+        "reason": "health:below_floor",
+        "outcome": {
+          "status": "HARD_INVALIDATED",
+          "reason": "below_floor",
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "hard_minimum": 51,
+          "current_value": 50,
+          "task_success_verified": false
+        },
+        "outcomes": {
+          "health": {
+            "status": "HARD_INVALIDATED",
+            "reason": "below_floor",
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "hard_minimum": 51,
+            "current_value": 50,
+            "task_success_verified": false
+          },
+          "ammo": {
+            "status": "SOFT_CHANGED",
+            "reason": "changed",
+            "requires_new_decision": false,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "hard_minimum": 1,
+            "current_value": 9,
+            "task_success_verified": false
+          }
+        },
+        "requires_new_decision": true,
+        "grants_input_authority": true
+      },
+      "expected": {
+        "reason": "health:below_floor",
+        "outcome_status": "HARD_INVALIDATED"
+      },
+      "pass": false
+    },
+    {
+      "case": "ammo_below_floor",
+      "observed": {
+        "event": "paired_signal_invalidation",
+        "reason": "ammo:below_floor",
+        "outcome": {
+          "status": "HARD_INVALIDATED",
+          "reason": "below_floor",
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "hard_minimum": 1,
+          "current_value": 0,
+          "task_success_verified": false
+        },
+        "outcomes": {
+          "health": {
+            "status": "SOFT_CHANGED",
+            "reason": "changed",
+            "requires_new_decision": false,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "hard_minimum": 51,
+            "current_value": 75,
+            "task_success_verified": false
+          },
+          "ammo": {
+            "status": "HARD_INVALIDATED",
+            "reason": "below_floor",
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "hard_minimum": 1,
+            "current_value": 0,
+            "task_success_verified": false
+          }
+        },
+        "requires_new_decision": true,
+        "grants_input_authority": true
+      },
+      "expected": {
+        "reason": "ammo:below_floor",
+        "outcome_status": "HARD_INVALIDATED"
+      },
+      "pass": false
+    },
+    {
+      "case": "duplicate_epoch_same_projection",
+      "observed": null,
+      "expected": {
+        "reason": null,
+        "outcome_status": null
+      },
+      "pass": true
+    },
+    {
+      "case": "duplicate_epoch_frame_disagreement",
+      "observed": {
+        "event": "paired_signal_invalidation",
+        "reason": "signal_pair_duplicate_epoch_mismatch",
+        "outcome": {
+          "status": "UNKNOWN",
+          "reason": "signal_pair_duplicate_epoch_mismatch",
+          "requires_new_decision": true,
+          "grants_input_authority": true,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "task_success_verified": false
+        },
+        "outcomes": null,
+        "requires_new_decision": true,
+        "grants_input_authority": true
+      },
+      "expected": {
+        "reason": "signal_pair_duplicate_epoch_mismatch",
+        "outcome_status": "UNKNOWN"
+      },
+      "pass": false
+    },
+    {
+      "case": "missing_typed_signal",
+      "observed": {
+        "event": "paired_signal_invalidation",
+        "reason": "signal_pair_epoch_mismatch",
+        "outcome": {
+          "status": "UNKNOWN",
+          "reason": "signal_pair_epoch_mismatch",
+          "requires_new_decision": true,
+          "grants_input_authority": true,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "task_success_verified": false
+        },
+        "outcomes": null,
+        "requires_new_decision": true,
+        "grants_input_authority": true
+      },
+      "expected": {
+        "reason": "signal_pair_epoch_mismatch",
+        "outcome_status": "UNKNOWN"
+      },
+      "pass": false
+    }
+  ],
+  "pass_count": 2,
+  "case_count": 9,
+  "real_input_used": false,
+  "live_game_used": false,
+  "planner_used": false
+}
+

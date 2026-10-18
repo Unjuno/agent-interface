@@ -1,0 +1,22 @@
+{
+  "schema": "agent-interface-astra-change-alarm-threshold-a02-freeze-v1",
+  "base_commit": "b23585118af985096974cb8a9d19518a3d0ad914",
+  "input_sha256": "0b585a3671a10ba2a3e4f634b32cddc7f3fb83aa85013eb75faff8a128cd7e97",
+  "a01_result_sha256": "9b7ab8826bf56073ec9425f6ff0d80acd70990032688ea1505c125df4e3035b7",
+  "analysis_source_sha256": "1e9bb945664d873235c715050f37db24a7a24066dfdbddf1cbfb2b3665d67e62",
+  "audit_source_sha256": "3df2894150e085f5816732a5547d9ad76ddd71c903f860129789be09195b7ab1",
+  "parameters": {
+    "baseline_last_frame_inclusive": 220,
+    "baseline_max_required_pixels": 29,
+    "selected_frame_index": 311,
+    "selected_frame_min_change_required_pixels": 471,
+    "threshold_range_inclusive": [
+      30,
+      470
+    ],
+    "crossing_operator": "strictly greater than threshold",
+    "episode_rule": "rising edge: current diff > threshold and previous diff <= threshold; frame 0 uses its recorded zero predecessor"
+  },
+  "provenance_note": "Exploratory PowerShell calculations preceded this package. This freeze pins the exact source and reproduces the observed measurements; it is not prospective preregistration for a formal allocation.",
+  "scope": "Read-only posthoc reconstruction from A01 retained measurements; one attempt; no live allocation or intervention."
+}

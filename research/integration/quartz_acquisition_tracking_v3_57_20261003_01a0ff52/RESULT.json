@@ -1,0 +1,332 @@
+{
+  "worker": "01a0ff52-5884-7172-a388-d9ac576e13dd",
+  "status": "ORDINARY_REPAIR_PASS_INERT_ONLY",
+  "reviewer_request": 5968788602,
+  "author_hold": 5969582935,
+  "v2_head": "1fafff150ea03e1c9f6c0cf15d39a8fb6cb7e05f",
+  "review_base": "38fadf49f4b81c7754e5d558cb01a5b5e5881124",
+  "ast_changed_methods": [
+    "key_state",
+    "pointer_button"
+  ],
+  "unchanged_methods": 24,
+  "peer_restore_members": 59,
+  "peer_original_failures": [
+    {
+      "label": "healthy_key",
+      "classification": "PASS"
+    },
+    {
+      "label": "key_disposal_after_post",
+      "classification": "FAIL"
+    },
+    {
+      "label": "pointer_disposal_after_post",
+      "classification": "FAIL"
+    },
+    {
+      "label": "key_partial_post_then_raises",
+      "classification": "FAIL"
+    },
+    {
+      "label": "key_post_before_effect_control",
+      "classification": "PASS"
+    }
+  ],
+  "ordinary_results": {
+    "red": {
+      "argv": [
+        "/run/current-system/sw/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "work/quartz-acquisition-repair-v3-01a0ff52/candidate/runtime/backends/quartz_v1",
+        "-t",
+        "work/quartz-acquisition-repair-v3-01a0ff52/candidate",
+        "-p",
+        "test_acquisition_tracking.py",
+        "-v"
+      ],
+      "timeout_seconds": 20,
+      "stdin_sha256": null,
+      "started_utc": "2026-10-03T13:26:10.733443+00:00",
+      "pid": 90124,
+      "exit_code": 1,
+      "timed_out": false,
+      "ended_utc": "2026-10-03T13:26:10.931406+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 14601,
+        "sha256": "02eb8b5f8d14fd21b97dd721910b94879ea5fe783e9de7bd7a791e692a949920"
+      }
+    },
+    "green": {
+      "argv": [
+        "/run/current-system/sw/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "work/quartz-acquisition-repair-v3-01a0ff52/candidate/runtime/backends/quartz_v1",
+        "-t",
+        "work/quartz-acquisition-repair-v3-01a0ff52/candidate",
+        "-p",
+        "test_acquisition_tracking.py",
+        "-v"
+      ],
+      "timeout_seconds": 20,
+      "stdin_sha256": null,
+      "started_utc": "2026-10-03T13:26:53.994049+00:00",
+      "pid": 90260,
+      "exit_code": 0,
+      "timed_out": false,
+      "ended_utc": "2026-10-03T13:26:54.135001+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 2453,
+        "sha256": "4e727d9c741f8d7db0aaa464317180be45cfc1ae85e78a4473aedd480ba702af"
+      }
+    },
+    "affected": {
+      "argv": [
+        "/bin/bash",
+        "-c",
+        "cd work/quartz-acquisition-repair-v3-01a0ff52/candidate && /run/current-system/sw/bin/python3 -B -m unittest runtime.backends.quartz_v1.test_release_faults runtime.backends.quartz_v1.test_release_quarantine runtime.backends.quartz_v1.test_acquisition_tracking runtime.core_v1.test_contract runtime.core_v1.test_platform_probe -v"
+      ],
+      "timeout_seconds": 20,
+      "stdin_sha256": null,
+      "started_utc": "2026-10-03T13:28:05.966973+00:00",
+      "pid": 90888,
+      "exit_code": 0,
+      "timed_out": false,
+      "ended_utc": "2026-10-03T13:28:06.103412+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 12119,
+        "sha256": "becb003fc30096b2393004270c8a83887c9e0b858f395f537f14d0424851424a"
+      }
+    },
+    "optimized": {
+      "argv": [
+        "/bin/bash",
+        "-c",
+        "cd work/quartz-acquisition-repair-v3-01a0ff52/candidate && /run/current-system/sw/bin/python3 -B -O -m unittest runtime.backends.quartz_v1.test_release_faults runtime.backends.quartz_v1.test_release_quarantine runtime.backends.quartz_v1.test_acquisition_tracking runtime.core_v1.test_contract runtime.core_v1.test_platform_probe -v"
+      ],
+      "timeout_seconds": 20,
+      "stdin_sha256": null,
+      "started_utc": "2026-10-03T13:28:06.154847+00:00",
+      "pid": 90891,
+      "exit_code": 0,
+      "timed_out": false,
+      "ended_utc": "2026-10-03T13:28:06.298779+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 12119,
+        "sha256": "becb003fc30096b2393004270c8a83887c9e0b858f395f537f14d0424851424a"
+      }
+    },
+    "complete-affected": {
+      "argv": [
+        "/bin/bash",
+        "-c",
+        "cd work/quartz-acquisition-repair-v3-01a0ff52/candidate && /run/current-system/sw/bin/python3 -B -m unittest runtime.backends.quartz_v1.test_release_quarantine runtime.backends.quartz_v1.test_release_faults runtime.backends.quartz_v1.test_acquisition_tracking runtime.backends.quartz_v1.test_integration.PureQuartzTests runtime.core_v1.test_contract runtime.core_v1.test_compiled_gui -v"
+      ],
+      "timeout_seconds": 20,
+      "stdin_sha256": null,
+      "started_utc": "2026-10-03T13:29:52.177631+00:00",
+      "pid": 91984,
+      "exit_code": 0,
+      "timed_out": false,
+      "ended_utc": "2026-10-03T13:29:52.382321+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 16696,
+        "sha256": "68e7b9e3aa1f6137d9e52222bc713f97132359a6278be7c36b6e72f705abd76f"
+      }
+    },
+    "complete-optimized": {
+      "argv": [
+        "/bin/bash",
+        "-c",
+        "cd work/quartz-acquisition-repair-v3-01a0ff52/candidate && /run/current-system/sw/bin/python3 -B -O -m unittest runtime.backends.quartz_v1.test_release_quarantine runtime.backends.quartz_v1.test_release_faults runtime.backends.quartz_v1.test_acquisition_tracking runtime.backends.quartz_v1.test_integration.PureQuartzTests runtime.core_v1.test_contract runtime.core_v1.test_compiled_gui -v"
+      ],
+      "timeout_seconds": 20,
+      "stdin_sha256": null,
+      "started_utc": "2026-10-03T13:29:52.432444+00:00",
+      "pid": 92002,
+      "exit_code": 0,
+      "timed_out": false,
+      "ended_utc": "2026-10-03T13:29:52.624563+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 16696,
+        "sha256": "68e7b9e3aa1f6137d9e52222bc713f97132359a6278be7c36b6e72f705abd76f"
+      }
+    },
+    "current-combination": {
+      "argv": [
+        "/bin/bash",
+        "-c",
+        "cd work/quartz-acquisition-repair-v3-01a0ff52/candidate && /run/current-system/sw/bin/python3 -B -m unittest runtime.backends.quartz_v1.test_release_quarantine runtime.backends.quartz_v1.test_release_faults runtime.backends.quartz_v1.test_acquisition_tracking runtime.backends.quartz_v1.test_integration.PureQuartzTests runtime.core_v1.test_contract runtime.core_v1.test_compiled_gui -v"
+      ],
+      "timeout_seconds": 20,
+      "stdin_sha256": null,
+      "started_utc": "2026-10-03T13:32:28.948284+00:00",
+      "pid": 93633,
+      "exit_code": 0,
+      "timed_out": false,
+      "ended_utc": "2026-10-03T13:32:29.093978+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 16696,
+        "sha256": "a82f32d434ff3fdec5d92ee67b922b8743abdb9da2073e9161808514b6ddde7c"
+      }
+    },
+    "current-optimized": {
+      "argv": [
+        "/bin/bash",
+        "-c",
+        "cd work/quartz-acquisition-repair-v3-01a0ff52/candidate && /run/current-system/sw/bin/python3 -B -O -m unittest runtime.backends.quartz_v1.test_release_quarantine runtime.backends.quartz_v1.test_release_faults runtime.backends.quartz_v1.test_acquisition_tracking runtime.backends.quartz_v1.test_integration.PureQuartzTests runtime.core_v1.test_contract runtime.core_v1.test_compiled_gui -v"
+      ],
+      "timeout_seconds": 20,
+      "stdin_sha256": null,
+      "started_utc": "2026-10-03T13:32:29.145049+00:00",
+      "pid": 93636,
+      "exit_code": 0,
+      "timed_out": false,
+      "ended_utc": "2026-10-03T13:32:29.288155+00:00",
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 16696,
+        "sha256": "9b142872ac361e5edc936d01c40738238a451c9dc310e81256a9e9bd0fc0d46a"
+      }
+    }
+  },
+  "active_dependency_source_pins": {
+    "runtime/core_v1/backend.py": {
+      "bytes": 741,
+      "sha256": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68"
+    },
+    "runtime/core_v1/test_manifest_enum_types.py": {
+      "bytes": 4664,
+      "sha256": "97b9cfabdfec9ebcf9e0e7ad747533b4e34e252af5385163e3a8821a6281093a"
+    },
+    "runtime/core_v1/sequence.py": {
+      "bytes": 4714,
+      "sha256": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d"
+    },
+    "runtime/core_v1/__init__.py": {
+      "bytes": 823,
+      "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+    },
+    "runtime/core_v1/compiled_gui.py": {
+      "bytes": 20336,
+      "sha256": "419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1"
+    },
+    "runtime/core_v1/test_compiled_admission_sequence_01a0ff33.py": {
+      "bytes": 3304,
+      "sha256": "5ed96ae954a91b94adfc061759df7f24dbb66586c97f6f0152a8912861ec6b68"
+    },
+    "runtime/core_v1/test_platform_probe.py": {
+      "bytes": 1584,
+      "sha256": "6e5cd761e071d366039b976baa449f246f077d4e6dc38e88d2f94d0c9fac844e"
+    },
+    "runtime/core_v1/test_contract.py": {
+      "bytes": 9051,
+      "sha256": "4ace062f12a1ae5139f0c3eb15a83f0243aa6648cc5c78dca3e5b0ff86170344"
+    },
+    "runtime/core_v1/platform_probe.py": {
+      "bytes": 1898,
+      "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+    },
+    "runtime/core_v1/test_program_enum_types_e9q4.py": {
+      "bytes": 6232,
+      "sha256": "4fb54a5006130cc0f1a3d3aeed137cc5d1064f181cb7ab0933435ca2463f85eb"
+    },
+    "runtime/core_v1/test_compiled_gui.py": {
+      "bytes": 11410,
+      "sha256": "b2962f17726e8a07767a84b2c8c5e4adf0c8a16fa4c38a10fedab3c360ceebaf"
+    },
+    "runtime/core_v1/test_compiled_effect_evidence_01a0ff32.py": {
+      "bytes": 3411,
+      "sha256": "6d5f38b486f7ccd1f74dd2d2edd03d91ca0b8be87da933f8075c05d0dd2a7b4d"
+    },
+    "runtime/core_v1/contract.py": {
+      "bytes": 15230,
+      "sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1"
+    },
+    "runtime/core_v1/doctor.py": {
+      "bytes": 798,
+      "sha256": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098"
+    },
+    "runtime/backends/quartz_v1/backend.py": {
+      "bytes": 20248,
+      "sha256": "715bf681e77692a82cafc3364e9241fe79a5bcb913fe6ea92e54a51bb36a7de0"
+    },
+    "runtime/backends/quartz_v1/test_release_quarantine.py": {
+      "bytes": 8942,
+      "sha256": "0fd5c9b959baaf4bebd49df03fae68c9d565abff986d2ef8bce8858be8675191"
+    },
+    "runtime/backends/quartz_v1/session.py": {
+      "bytes": 3394,
+      "sha256": "eb6aa98ba0d64212f5aa5771651b74759b33814320337d5f06031c66b9b99177"
+    },
+    "runtime/backends/quartz_v1/__init__.py": {
+      "bytes": 222,
+      "sha256": "6184cb0c7d87edb25dc12ccfec87a4ae15f367c278e39246b38c2ec5c655c906"
+    },
+    "runtime/backends/quartz_v1/test_release_faults.py": {
+      "bytes": 13157,
+      "sha256": "8bbcf082e656284d443118af4f455bf648350d5c79aa787e23d8331005150f54"
+    },
+    "runtime/backends/quartz_v1/test_acquisition_tracking.py": {
+      "bytes": 7161,
+      "sha256": "b4ad95a70fa692b6b7cd64ec161a328108d4e8ec2c21986dd8ec7b6f73a789d6"
+    },
+    "runtime/backends/quartz_v1/test_integration.py": {
+      "bytes": 8208,
+      "sha256": "2fcec1271ba42b395e9ca5e852b8d0f743cfd025b07e547ea0b3a0f106a1fabc"
+    },
+    "runtime/backends/quartz_v1/fixture_app.py": {
+      "bytes": 1999,
+      "sha256": "8a60953edb50f8b5b54d8be5b41c46d1371b4410fe629b0b184e74309e1f19ff"
+    }
+  },
+  "old_v2_source_and_raw_retained": true,
+  "formal_replays": 0,
+  "native_calls": 0,
+  "physical_release_verified": false,
+  "first_source_pin_capture": "red-source-pins captured after RED while source unchanged; claim/criteria before RED; current core preparation failure preserved",
+  "scope": "no constructor/CDLL/physical input; own unittest regressions and saved-only literal peer reduction; no original reviewer producer or oracle executed",
+  "goal_status": "active",
+  "votes": 0,
+  "main_application": false,
+  "created_utc": "2026-10-03T13:33:48.155540+00:00"
+}

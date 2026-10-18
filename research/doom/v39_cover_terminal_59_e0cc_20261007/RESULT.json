@@ -1,0 +1,55 @@
+{
+  "status": "PASS_SCOPED_CONTROLLER_TERMINAL_BOUNDARY",
+  "base_commit": "4190104d0c72a025093c8569fdbd216b5929de0b",
+  "observed_main": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "recorded_at_utc": "2026-10-07T10:27:50.542459+00:00",
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.14",
+    "backend": "inert / synthetic transport",
+    "model_calls": 0,
+    "OS_input_calls": 0
+  },
+  "first_attempt": {
+    "file": "baseline.log",
+    "outcome": "fixture setup KeyError authored; 24 errors; no semantic result"
+  },
+  "baseline_v2": {
+    "schedules": 24,
+    "rejected_case_failures": 19,
+    "positive_controls_passed": 5,
+    "unittest_exit_code": 1
+  },
+  "baseline_v3": {
+    "additional_schedules": 2,
+    "failures": 2,
+    "unittest_exit_code": 1
+  },
+  "candidate_v1": {
+    "schedules": 24,
+    "passed": 24,
+    "unittest_exit_code": 0
+  },
+  "candidate_v2": {
+    "schedules": 26,
+    "rejected_cases_passed": 21,
+    "positive_controls_passed": 5,
+    "methods": 9,
+    "unittest_exit_code": 0
+  },
+  "related_methods": {
+    "v39": 56,
+    "renewal_dispatch_cleanup": 20,
+    "workspace_index": 22,
+    "optimized_new_tests": 9
+  },
+  "source_sha256": "16b2c3e863f2c28f197425d7fa0fc6dd24dc25dcfcfcd8f8344b7acfbe671ccd",
+  "test_sha256": "cb4757613caf43380b46d2cfe63e1788511fc93b3e9c60789f17b9a582f50968",
+  "limitations": [
+    "No actual owner, X11, GUI, native input, game, or model transport validation.",
+    "CleanupSpy observes entry to cleanup; it does not certify physical release.",
+    "Interrupt failure fixture releases the future before raising; production request_error may still wait for existing 90-second await_turn timeout.",
+    "Control-boundary sentinels stop before executing downstream renewal or final admission.",
+    "No main update or FINAL-v5 quorum."
+  ]
+}

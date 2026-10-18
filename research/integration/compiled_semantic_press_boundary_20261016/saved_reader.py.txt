@@ -1,0 +1,43 @@
+import copy,hashlib,io,json
+from pathlib import Path
+from PIL import Image
+OUT=Path(__file__).parent/'compiled-semantic-press-20261016'
+CHORD=[[2,1],[2,2],[3,2],[3,1]]
+def check(rows):
+    if len(rows)!=8 or {(r['arm'],r['change']) for r in rows}!={(a,c) for a in ('current','explicit_keyboard_guard') for c in ('stable','false','unknown','generation')}:raise ValueError('coverage')
+    for row in rows:
+        w=row['witness'][0];change=row['change'];guarded=row['arm']=='explicit_keyboard_guard'
+        if w['selected']['predicates']['field_value_matches_task'] is not True:raise ValueError('selected condition')
+        first=w['frames'][0];artifact=first['native']['native']['artifact']
+        matches=[bytes.fromhex(v) for n,v in row['native_files_hex'].items() if Path(n).name==Path(artifact['path']).name]
+        if len(matches)!=1 or hashlib.sha256(matches[0]).hexdigest()!=artifact['sha256']:raise ValueError('artifact identity')
+        with Image.open(io.BytesIO(matches[0])) as image:marker=image.getpixel((31,31))[0]
+        meaning='unknown' if marker==3 else marker>0
+        expected={'stable':True,'false':False,'unknown':'unknown','generation':True}[change]
+        if meaning!=expected or first['predicates']['field_value_matches_task']!=expected:raise ValueError('fresh native meaning')
+        blocked=change=='generation' or guarded and change in ('false','unknown')
+        prefix=1 if blocked else 2;core=row['result']['compiled_execution_receipt']
+        if core['completed_transitions']!=prefix or row['emissions']!=CHORD*prefix or row['down']:raise ValueError('input/prefix')
+        if core['outcome']!=('SAFE_YIELD' if blocked else 'TASK_SUCCEEDED'):raise ValueError('core outcome')
+        if row['result']['outcome']!=('EXECUTION_INCOMPLETE' if blocked else 'TASK_NOT_VERIFIED'):raise ValueError('false app success')
+        if guarded and change in ('false','unknown') and (not w['additional_checks'] or w['additional_checks'][0]['predicates']['field_value_matches_task']!=expected):raise ValueError('guard evidence')
+    return len(rows)
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-records.json').read_text());count=check(rows);rejected=[]
+    for name in ('hidden_input','lost_prefix','wrong_selected_condition','artifact_tamper','missing_control','false_app_success'):
+        bad=copy.deepcopy(rows);row=next(r for r in bad if r['arm']=='current' and r['change']=='false')
+        if name=='hidden_input':row['emissions']=[]
+        elif name=='lost_prefix':row['result']['compiled_execution_receipt']['completed_transitions']=1
+        elif name=='wrong_selected_condition':row['witness'][0]['selected']['predicates']['field_value_matches_task']=False
+        elif name=='artifact_tamper':
+            path=row['witness'][0]['frames'][0]['native']['native']['artifact']['path']
+            key=next(n for n in row['native_files_hex'] if Path(n).name==Path(path).name)
+            row['native_files_hex'][key]='00'
+        elif name=='missing_control':bad.pop()
+        else:row['result']['outcome']='TASK_SUCCEEDED'
+        try:check(bad)
+        except ValueError as e:rejected.append(dict(name=name,reason=str(e)))
+        else:raise ValueError('mutant accepted')
+    report[mode]=dict(rows=count,current_false_unknown_counterexamples=2,mutations_rejected=rejected)
+print(json.dumps(dict(scope='saved-only synthetic semantic/readback consistency; no candidate import or real app oracle',modes=report),indent=2))

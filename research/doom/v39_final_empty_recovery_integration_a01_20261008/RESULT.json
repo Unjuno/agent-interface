@@ -1,0 +1,27 @@
+{
+  "schema": "v39-final-empty-recovery-comparison-v1",
+  "baseline_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "71344443fbb72a5f055cca4417e26207aaabbdf3",
+  "scenario": {
+    "drained_latest_sequence": 11,
+    "pending_events_reported": false,
+    "late_sequence_left_queued": 12
+  },
+  "baseline": {
+    "executor_rejected_stale_sequence": true,
+    "controller_recovery": false,
+    "result_reference": "v39_final_empty_check_race_a01_20261008/RESULT.json"
+  },
+  "candidate": {
+    "exact_stale_rejection_helper_invoked": true,
+    "controller_recovery_and_discard_wiring_verified": true,
+    "recovered_latest_sequence": 12,
+    "recovery_batches": 1,
+    "queued_late_event_consumed": true,
+    "stale_candidate_authority": false,
+    "fresh_decision_required": true,
+    "retry_or_input_emitted": false
+  },
+  "decision": "PASS; candidate recovery closes the reproduced late-event liveness gap at the helper boundary",
+  "scope": "Exact source-bound baseline drain and PR #8643 recovery helper under a deterministic queue schedule. The Executor rejection is supported by the retained current-main experiment. Recovery side-effect APIs are narrow test doubles. No full controller process, live game, GUI, model, OS input, physical release measurement, task effect, or integrated runtime result."
+}

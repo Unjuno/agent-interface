@@ -1,0 +1,50 @@
+{
+  "allocation": "UNJUNO-8185-EXACT-ORACLE-A02-20261005-01",
+  "auditor_command": "docker run --rm --network=none --cpus=1 --memory=512m --read-only --tmpfs /tmp:rw,noexec,nosuid -e PYTHONDONTWRITEBYTECODE=1 -v \"$PWD/research/analysis/epoch_transform_chain_8185_a02_20261005/src/auditor.py:/input/auditor.py:ro\" -v \"$PWD/research/analysis/epoch_transform_chain_8185_a02_20261005/results/FORMAL_A02/public:/input/public:ro\" -v \"$PWD/research/analysis/epoch_transform_chain_8185_a02_20261005/results/FORMAL_A02/oracle:/input/oracle:ro\" -v \"$PWD/research/analysis/epoch_transform_chain_8185_a02_20261005/results/FORMAL_A02/candidate:/input/candidate:ro\" -v \"$PWD/research/analysis/epoch_transform_chain_8185_a02_20261005/results/FORMAL_A02/audit:/output:rw\" docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 python /input/auditor.py /input/public/corpus.json /input/oracle/exact_worlds.json /input/candidate/candidate.json /output/audit.json",
+  "base_commit": "b5be19963454ce5edafc945b78b100012952dd15",
+  "branch": "research/8185-exact-transform-oracle-a02-20261005",
+  "candidate_command": "docker run --rm --network=none --cpus=1 --memory=512m --read-only --tmpfs /tmp:rw,noexec,nosuid -e PYTHONDONTWRITEBYTECODE=1 -v \"$PWD/research/analysis/epoch_transform_chain_8185_a02_20261005/src/candidate.py:/input/candidate.py:ro\" -v \"$PWD/research/analysis/epoch_transform_chain_8185_a02_20261005/results/FORMAL_A02/public:/input/public:ro\" -v \"$PWD/research/analysis/epoch_transform_chain_8185_a02_20261005/results/FORMAL_A02/candidate:/output:rw\" docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 python /input/candidate.py /input/public/corpus.json /output/candidate.json",
+  "container_context": "orbstack",
+  "container_image": "docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3",
+  "container_platform": "linux/arm64",
+  "created_utc": "2026-10-05T12:59:10.722964+00:00",
+  "formal_invocations": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retry_allowed": false
+  },
+  "issue": 8201,
+  "preflight": {
+    "exclusive_local_cpu_lane": "PASS_EMPTY_DOCKER_CONTAINER_LIST",
+    "free_disk_gib_approx": 544,
+    "running_containers": 0,
+    "runtime_setup": "PASS"
+  },
+  "python": "3.12.15",
+  "resource_policy": {
+    "candidate_mounts": [
+      "candidate.py",
+      "public corpus"
+    ],
+    "cpus": 1,
+    "memory": "512m",
+    "network": "none",
+    "oracle_visible_to_candidate": false,
+    "rootfs": "read-only",
+    "tmpfs": "/tmp:rw,noexec,nosuid"
+  },
+  "scope": "Finite authored affine model only; no native API, GUI, OS input, real hit testing, timing, task effect, or product claim.",
+  "sha256": {
+    "PROTOCOL_A02.md": "21bf70eb0748a3a3869d523e2566637cc09f00384361e07212943d847e1263b4",
+    "README.md": "417cd36d7b5ab30954ca19c02f337e501d498ce5e8f99b89bca579f815516b1b",
+    "results/FORMAL_A02/oracle/exact_worlds.json": "7e978feac106eaa548fae2bcbdb91cba0917cf787b8db29bf288b70ef9ced04d",
+    "results/FORMAL_A02/public/corpus.json": "56e9cb59ac8843b6f9db1d507e0a6ea671dc9f8192c5f3aabdc943129c88e593",
+    "src/__pycache__/auditor.cpython-314.pyc": "6b1212c5532fb72efab49bf31a2955a170815b0ff081a64bd797623c72d286fe",
+    "src/__pycache__/candidate.cpython-314.pyc": "a9105c42bd66219f563ca7894c36aaeb2d145d738e21ae751e1c7e620541d790",
+    "src/__pycache__/test_protocol.cpython-314.pyc": "f2b7293f00da7303ed7b8212aec6ee6d5554a339dec1e62789f19dc2cb0e68a4",
+    "src/auditor.py": "637c492c81b16fce26bdba24fa8836ab64d2129167ae50fb55c53efb924e701a",
+    "src/candidate.py": "6a82710c3a5638cd3b3623cc345f643c6697c733c333e84201a63417897d8c73",
+    "src/make_fixture.py": "0cd6c2750ff7430105c9c1d8aa79486ebc483f7bf24f45a697028e6403933add",
+    "src/test_protocol.py": "18c3dae74f841b782588e059a3d998368521f2b18136dfc85ca83bfa5f08b4e1"
+  }
+}

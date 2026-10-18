@@ -111,4 +111,4 @@ A good `REPORT.md` states scope, assumptions, decision/disposition, retained evi
 
 ## Safety
 
-Real GUI harnesses can type, click, drag, save files, and close windows. Run them only in an isolated X session/container with disposable application state.
+Real GUI harnesses can type, click, drag, save files, and close windows. Run them only in an isolated X session or dedicated disposable environment with disposable application state. A container alone is not a security boundary for untrusted code; choose isolation appropriate to the threat model.

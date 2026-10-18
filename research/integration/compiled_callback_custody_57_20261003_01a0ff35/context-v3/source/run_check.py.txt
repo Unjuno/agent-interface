@@ -1,0 +1,31 @@
+"""Exclusive real first receipts for ordinary combination regressions."""
+from pathlib import Path
+import datetime, hashlib, json, os, subprocess, sys
+
+here = Path(__file__).resolve().parent
+stage, label, *argv = sys.argv[1:]
+cwd = here / label
+assert cwd.is_dir() and stage and argv
+for suffix in ('.stdout','.stderr','.receipt.json'):
+    assert not (here/(stage+suffix)).exists()
+started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+child = subprocess.Popen(argv,cwd=cwd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+try:
+    stdout,stderr = child.communicate(timeout=120)
+except subprocess.TimeoutExpired:
+    child.kill(); stdout,stderr = child.communicate()
+    raise
+ended = datetime.datetime.now(datetime.timezone.utc).isoformat()
+for suffix,raw in [('.stdout',stdout),('.stderr',stderr)]:
+    with (here/(stage+suffix)).open('xb') as f: f.write(raw)
+record = dict(argv=argv,cwd=str(cwd),started_utc=started,ended_utc=ended,
+              pid=child.pid,exit_code=child.returncode,
+              interpreter_sha256=hashlib.sha256(Path(argv[0]).read_bytes()).hexdigest(),
+              compiled_sha256=hashlib.sha256((cwd/'runtime/core_v1/compiled_gui.py').read_bytes()).hexdigest(),
+              join_tests_sha256=hashlib.sha256((here/'test_compiled_custody_effect_join_01a0ff35.py').read_bytes()).hexdigest(),
+              stdout_sha256=hashlib.sha256(stdout).hexdigest(),stderr_sha256=hashlib.sha256(stderr).hexdigest(),
+              scope='ordinary author integration regression; inert fixtures; no formal allocation')
+with (here/(stage+'.receipt.json')).open('x',encoding='utf-8') as f:
+    json.dump(record,f,sort_keys=True,indent=2); f.write('\n')
+print(json.dumps(record)); print(stderr.decode('utf-8','replace'))
+raise SystemExit(child.returncode)

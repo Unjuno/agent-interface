@@ -1,0 +1,40 @@
+import pathlib,json,copy,datetime,hashlib
+r=pathlib.Path(__file__).resolve().parent;g=r/'guest-public/public'
+def ensure(value,message):
+ if not value:raise ValueError(message)
+def check(result,events):
+ ensure(result['status']=='PASS_SCOPED_X11_HELD_RELEASE','producer status')
+ def one(kind):
+  rows=[x for x in events if x.get('event')==kind];ensure(len(rows)==1,'count '+kind);return rows[0]
+ accepted=one('accepted');admit=one('input_admission');cancel=one('cancel_requested');terminal=one('terminal')
+ ensure(admit['key']=='Shift_L' and cancel['matched'] is True,'admitted/cancelled input')
+ ensure(terminal==result['terminal'],'full terminal match')
+ ensure(terminal['status']=='cancelled' and type(terminal['steps_completed']) is int and terminal['steps_completed']==0,'terminal/prefix')
+ ensure(not any(x.get('event')=='step_completed' for x in events),'no completed tail')
+ for label,down in [('before',False),('down_witness',True),('after',False)]:
+  row=result[label];bitmap=bytes.fromhex(row['keymap_hex']);ensure(len(bitmap)==32,'bitmap size');code=row['key_code'];ensure(type(code) is int and code==50,'Shift code')
+  ensure(bool(bitmap[code//8] & (1<<(code%8))) is down and row['key_down'] is down,'keymap witness '+label)
+  ensure(type(row['pointer_mask']) is int and row['buttons_down_mask']==(row['pointer_mask']&0x1f00)==0,'button witness '+label)
+ release=terminal['release'];ensure(release['verified'] is True and release['keys_down']==[] and release['buttons_down']==[],'release')
+ owner=[x for x in result['owner_records'] if x['reason']=='cancelled'];ensure(len(owner)==1 and owner[0]['verified'] is True and owner[0]['keys_down']==owner[0]['buttons_down']==[],'owner cancellation receipt')
+ times=[result['before']['observed_ns'],accepted['accepted_ns'],admit['admitted_ns'],admit['input_ack_ns'],result['down_witness']['observed_ns'],cancel['requested_ns'],owner[0]['verified_ns'],terminal['release']['verified_ns'],terminal['terminal_ns'],result['after']['observed_ns']]
+ ensure(all(type(x) is int for x in times) and times==sorted(times),'observed event ordering')
+ ensure(owner[0]['valid_until_ns']==accepted['valid_until_ns']==result['submit']['valid_until_ns'] and times[-1]<accepted['valid_until_ns'],'lease identity/horizon')
+ ensure(result['executor_active_after_close'] is False and result['owner_thread_alive_after_close'] is False and all(type(x['exit_code']) is int for x in result['child_exits']),'cleanup')
+ ensure(result['verified_source_images']==141 and result['cgroup']=={'cpu.max':'100000 100000','memory.max':'805306368','pids.max':'256'},'source/resource pin')
+ ensure(result['model_calls']==result['formal_task_attempts']==0,'scope')
+ return {'ordered_clock_ns':times,'conditions':1,'admitted_Shift_downs':1,'owner_cancel_release_minus_request_ns':owner[0]['verified_ns']-cancel['requested_ns'],'terminal_minus_cancel_ns':terminal['terminal_ns']-cancel['requested_ns'],'direct_child_exits':[x['exit_code'] for x in result['child_exits']]}
+result=json.loads((g/'result.json').read_text());events=json.loads((g/'events.json').read_text());positive=check(result,events);negative=[]
+for name in ['lost_down_bitmap','invented_up_bitmap','false_release','Boolean_prefix','cancel_before_down','extra_admission']:
+ rr=copy.deepcopy(result);ee=copy.deepcopy(events)
+ if name=='lost_down_bitmap':rr['down_witness']['keymap_hex']='00'*32
+ elif name=='invented_up_bitmap':rr['after']['keymap_hex']=rr['down_witness']['keymap_hex']
+ elif name=='false_release':rr['terminal']['release']['verified']=False;next(x for x in ee if x['event']=='terminal')['release']['verified']=False
+ elif name=='Boolean_prefix':rr['terminal']['steps_completed']=False;next(x for x in ee if x['event']=='terminal')['steps_completed']=False
+ elif name=='cancel_before_down':next(x for x in ee if x['event']=='cancel_requested')['requested_ns']=rr['down_witness']['observed_ns']-1
+ else:ee.append(copy.deepcopy(next(x for x in ee if x['event']=='input_admission')))
+ try:check(rr,ee)
+ except ValueError as error:negative.append({'name':name,'rejected':True,'reason':str(error)})
+ else:raise RuntimeError('negative passed '+name)
+out={'status':'PASS_SCOPED_SAVED_AUDIT','scope':'one actual XTEST/native virtual display condition; saved-only separate implementation, no producer/import/model/task replay; timings descriptive single sample only, no scheduler bound','positive':positive,'negative':negative,'audited_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'raw_hashes':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [g/'result.json',g/'events.json']}}
+(r/'AUDIT.json').write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(out))

@@ -1,0 +1,19 @@
+{
+  "disposition": "AUDIT_VALID_OBSERVED_FAIL_WITH_ENVIRONMENT_HOLD",
+  "scientific_observation": "No TCP EOF/reset was observed in the fixed two-second interval after accepted turn/interrupt; the turn still completed as interrupted before the mock response release.",
+  "environment_validity": "HOLD_UNEXPECTED_EXTERNAL_PLUGIN_METADATA_REQUEST",
+  "checks": {
+    "frozen_candidate_hash_matches": true,
+    "installed_cli_identity_matches_freeze": true,
+    "one_loopback_responses_request": true,
+    "pending_stream_preceded_interrupt": true,
+    "matching_interrupt_rpc_accepted": true,
+    "no_socket_close_observed_during_two_second_window": true,
+    "interrupted_terminal_arrived_after_interrupt_before_release": true,
+    "mock_and_app_server_cleanup_valid": true,
+    "scientific_fail_exit_is_consistent": true,
+    "user_credential_environment_not_passed": true,
+    "unexpected_external_metadata_request_is_disclosed": true
+  },
+  "method_note": "App Server stderr records a 401 response from the external featured-plugin endpoint, but request headers were not captured, so auth state is unknown. The provider Responses request itself was served from 127.0.0.1. This prevents a zero-egress claim and may confound one transport run; it is disclosed and no retry was made. No user credential environment variables were passed."
+}

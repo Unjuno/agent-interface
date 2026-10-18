@@ -1,0 +1,34 @@
+{
+  "schema": "scorer-feedback-attribution-a06-freeze-v1",
+  "issue": 7642,
+  "parent_issue": 7629,
+  "parent_pr": 7633,
+  "main_commit": "d6a3fe646d6a8ea92a8688a1f7c54b89261f56f6",
+  "a05_commit": "690c460648917ca22ae14c92561c38e65677b30d",
+  "a05_candidate_raw_sha256": "9506457a371565b489b5e1b9f7313c05d3f13a28bd5448b4b2944211ee4f313e",
+  "path": "research/doom/scorer_feedback_attribution_59_t0_a06_20261004",
+  "branch": "research/59-scorer-vocab-a06-audit-20261004",
+  "image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "platform": "linux/amd64",
+  "network": "none",
+  "cpus": "1 requested",
+  "memory": "128m requested",
+  "uid": "65534",
+  "candidate_rerun": false,
+  "network_or_package_install": false,
+  "gpu": false,
+  "model_game_gui_input": false,
+  "source_and_input_sha256": {
+    "README.md": "0011be7abde92e156b9feb1ecfb4c1c18ca3939961652a3bacbda62e3677628a",
+    "audit_independent.py": "397d21f499ddcafa52fdef44e35a65e6403b0a3802a3342e5e57b3013ebb4013",
+    "tests\\test_audit.py": "a638aea4a673daee7a8b74387d29bb2580bfa5deba282a181e55d317cf805be3",
+    "audit_candidate.py": "6bfe8835370ab375c1296e4ed7b6a1933ad48f27e1fb4b564ff0a2ad796895ad",
+    "parents\\a05-candidate.raw.json": "9506457a371565b489b5e1b9f7313c05d3f13a28bd5448b4b2944211ee4f313e",
+    "audit_a05_raw.py": "25409f55b12993cf0dff5d2ce847fe5a593731a01f233b12ec70b42a0a5620cb"
+  },
+  "checks": [
+    "Exact frozen five-case set and ordering, all event fields, exact types, and A04/A05 dispositions match.",
+    "Candidate-side mutation tests reject duplicates, omission, relabeling, label/payload mismatch, altered polarity/useful/disposition, extra cases, and bool/integer confusion.",
+    "Separate self-contained raw-only invocation reconstructs the retained document without importing candidate or A06 candidate auditor code."
+  ]
+}

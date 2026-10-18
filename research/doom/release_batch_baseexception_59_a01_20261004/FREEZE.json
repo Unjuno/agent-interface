@@ -1,0 +1,19 @@
+{
+  "experiment_id": "release-batch-baseexception-59-a01",
+  "issue": 59,
+  "H": "ExecutorV13 may emit terminal status completed when a release-batch sink raises a BaseException carrying delivery-unknown custody, because its step handler catches only Exception.",
+  "T": "Run the exact same synthetic backend against frozen PR #7635 executor_v13.py and the patched candidate; execute raises KeyboardInterrupt carrying a release_batch_publication record, while release_all returns verified-empty.",
+  "D": "Frozen head reproduces the gap if its terminal says completed or omits custody; the candidate corrects it only if its terminal is failed and preserves the exact custody record.",
+  "C": "The baseline executor source frozen from PR #7635 head bf57eb60009867bfa36243a9b48e37bd576682c7.",
+  "U": [
+    "This synthetic executor-boundary test does not verify OS-level key state, actual sink delivery, physical input release, application effect, game behavior, or task success.",
+    "The separate composed tests cover the current release backend's sink path, but no game, model, GUI, input, container, or formal allocation runs here."
+  ],
+  "baseline_commit": "bf57eb60009867bfa36243a9b48e37bd576682c7",
+  "parent_pr": 7635,
+  "current_main_commit": "d6a3fe646d6a8ea92a8688a1f7c54b89261f56f6",
+  "baseline_path": "research/live_control/executor_v13.py",
+  "baseline_git_blob": "7ef003f5d1ae9c2aef4ac9eb4a4cb7a1ced1195c",
+  "candidate_worktree_base": "bf57eb60009867bfa36243a9b48e37bd576682c7",
+  "execution": "Local Windows CPU-only Python construction run; no shared WSLc or live allocation used."
+}

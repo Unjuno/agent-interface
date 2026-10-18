@@ -1,0 +1,116 @@
+{
+  "policy_version": "FINAL-v5",
+  "repository": "Unjuno/agent-interface",
+  "pr": 6938,
+  "change_id": "6938-quartz-release-fault-and-quarantine-v2",
+  "committee_epoch": "6938-20261003-v2-quarantine-before-votes",
+  "author_worker_id": "01a0ff52-5884-7172-a388-d9ac576e13dd",
+  "head_sha": "1fafff150ea03e1c9f6c0cf15d39a8fb6cb7e05f",
+  "review_base_sha": "9c26e204c0475bee30919e3d0e6681f393078ef1",
+  "committee": [
+    {
+      "worker_id": "01a0ff32-f520-79d2-b8cd-110e05130103",
+      "existing_record": "https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5965840137"
+    },
+    {
+      "worker_id": "01a0ff58-8f42-73c3-857d-35a2636e7bd3",
+      "existing_record": "https://github.com/Unjuno/agent-interface/pull/6882#issuecomment-5964683125"
+    },
+    {
+      "worker_id": "01a0ff52-e0cc-7e81-b3ed-36b1d84d7a9a",
+      "existing_record": "https://github.com/Unjuno/agent-interface/pull/6865#issuecomment-5965027555"
+    }
+  ],
+  "approvals_required": 2,
+  "diff_recipe": [
+    "-c",
+    "core.quotePath=true",
+    "-c",
+    "diff.mnemonicPrefix=false",
+    "diff",
+    "--no-ext-diff",
+    "--no-textconv",
+    "--no-renames",
+    "--no-color",
+    "--binary",
+    "--full-index",
+    "--text",
+    "--diff-algorithm=myers",
+    "--no-indent-heuristic",
+    "--unified=3",
+    "--inter-hunk-context=0",
+    "--src-prefix=a/",
+    "--dst-prefix=b/",
+    "--no-relative",
+    "--output-indicator-new=+",
+    "--output-indicator-old=-",
+    "--output-indicator-context= ",
+    "9c26e204c0475bee30919e3d0e6681f393078ef1",
+    "1fafff150ea03e1c9f6c0cf15d39a8fb6cb7e05f"
+  ],
+  "diff_bytes": 703462,
+  "diff_sha256": "b8be9db6b658978bdff77fb4e77405c11d4892c4a655e176f2abf1992860462b",
+  "delta": {
+    "changed_paths": 93,
+    "modified_production_files": 2,
+    "modified_backend_docs": 1,
+    "new_inert_regression_modules": 2,
+    "archived_package_files": 88,
+    "changed_blobs_canonical_bytes": 24831,
+    "changed_blobs_canonical_sha256": "ffb9ce701aa25b67f5046fb0aa44c413d2bd64f7c098a4e9fc2c3ba8557b0ede",
+    "changed_blobs_recipe": "JSON sorted-by-path array of path/mode/blob/bytes/sha256 records; json.dumps(sort_keys=True,separators=(comma,colon),ensure_ascii=True), UTF8, no trailing newline"
+  },
+  "artifacts": [
+    {
+      "path": "research/integration/quartz_release_fault_57_20261003_01a0ff52/MANIFEST.json",
+      "bytes": 4067,
+      "sha256": "c1b9cedae987d76e0fa0893ca0251b94ba4ff2aced4f6e84fb7d4f71644b3e46"
+    },
+    {
+      "path": "research/integration/quartz_release_fault_57_20261003_01a0ff52/RESULT.json",
+      "bytes": 4988,
+      "sha256": "1f122ee9ffa3c704d4381979e2acd268c01b213f0c2c3dab17b407a9d391aa8b"
+    },
+    {
+      "path": "research/integration/quartz_release_quarantine_2437_20261003_01a0ff52/MANIFEST.json",
+      "bytes": 9338,
+      "sha256": "919427299fef0258685c162e6d8015601df2d551846ae5480b6a77e9ab1cdfb0"
+    },
+    {
+      "path": "research/integration/quartz_release_quarantine_2437_20261003_01a0ff52/RESULT.json",
+      "bytes": 18127,
+      "sha256": "aebde7f7a455ea54c3b83690869bcee39865a7382366274eecf345f116d87493"
+    }
+  ],
+  "source_head": "2e242f0fc8e73279a76d8e873439350b434cce9e",
+  "validation": {
+    "old18_71": "unchanged attributed prior source receipts; first errors/intermediates preserved",
+    "quarantine_baseline12": "15 assertion failures/3 errors including subtests,exit1; no relabel",
+    "initial_repair30": "30pass/exit0",
+    "affected83": "83pass/exit0",
+    "final_boundaries85": "85pass/exit0",
+    "six_row_inert_trace": "old Quartz sticky followup3 emissions; existing X11 policy0; Quartz transfer0; three healthy controls complete; type-only X11 dependency shim; raw-only literal reducer",
+    "current_combination": "actual base636986a804a6004cd047db7e8cc5e62c02d585d8 +source2e242f0f treeb0d57d62,85pass plus9 main neighbor methods; author-only, not future actual-tree certificate",
+    "custody": "93 mode/blobs,25+61 manifest targets and original26 unchanged; source/docs whitespace+AST pass; raw stderr scoped attribute preserves first whitespace failure",
+    "publication_failures": "first sparse file/schema helper errors were before any send, preserved privately; no source/test/native/formal replay for repair",
+    "trace_custody_limit": "original trace/reducer individual PID/exit receipts absent; outputs/timestamps/source hashes retained; no formal/performance interpretation",
+    "environment": "macOS27.0.1 arm64/Python3.12.13; ordinary inert correctness work; constructor/CDLL forbidden, no OS/native/GUI/VM/model allocation"
+  },
+  "approval_conditions": [
+    "Exact head/base/digest/epoch and93 source/archive images; original26 fault packet, first outcomes/sources/native fixture/workflow remain unchanged; no consumed allocation replay.",
+    "Review all tracked release attempts/probes and original error/prefix/cleanup custody plus sticky session quarantine before admission/backend access; strict literal neutral receipts, no automatic reset/replay or added verified recovery operation.",
+    "Core refusal remains no-input; verified cleanup after execution failure permits a separately submitted fresh program; unknown/unverified cleanup remains blocked despite new images/bindings/direct cleanup/receipt mutations.",
+    "No physical release/permissions/ABI/cross-session/backend/foreign ownership/host/compositor restart/authenticated effect/verified recovery/model/task/latency/token/efficiency claim; new session/latch mutation not recovery proof.",
+    "Two distinct eligible assigned existing nonauthor approvals; fresh V2 availability/dispositions only, no oldV1/advisory vote conversion, aliases/newworkers/interruption/reciprocal condition or false separate-account GitHub review.",
+    "Author owns application and holds no lock; at least one nonauthor must confirm actual current base+planned tree and applicable core/compiled/platform/quartz/dependency/test/configuration invariance; effective GitHub requirements/ownership/cancellation and one explicit-expected-old history-preserving single-main-ref application remain separate.",
+    "New archives/helpers are inert except the two safely inert active test modules; package-local raw-log whitespace exception is disclosed and must not weaken source/docs checks. Original26/25, new62/61 manifests and public-derivative hashes must remain exact."
+  ],
+  "supersedes": {
+    "epoch": "6938-20261003-v1-before-votes",
+    "head": "4dbc9898449eb9ba90bf9561c822700ecfd96641",
+    "withdrawal_comment": 5966417722,
+    "old_approval_votes_carried": 0
+  },
+  "apply_id": null,
+  "merge_tree_sha": null
+}

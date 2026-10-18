@@ -1,0 +1,41 @@
+{
+  "schema": "v39-v15-up-order-a04-result-v1",
+  "status": "PASS_SYNTHETIC_BACKEND_UP_ORDER",
+  "candidate_started": true,
+  "candidate_exit": 0,
+  "auditor_started": true,
+  "auditor_exit": 0,
+  "container": {
+    "image": "python@sha256:8fb099199b9f2d70342674bd9dbccd3ed03a258f26bbd1d556822c6dfc60c317",
+    "platform": "linux/arm64",
+    "network": "none",
+    "read_only_root": true,
+    "cpus": 1,
+    "memory_mib": 512,
+    "tmpfs_mib": 32
+  },
+  "trace_events": 32,
+  "release_rows": 2,
+  "audit_checks": {
+    "complete_verified_empty_batch": true,
+    "empty_final_synthetic_keys": true,
+    "exactly_two_release_batch_rows": true,
+    "input_state_after_both_up_calls": true,
+    "no_keymap_query_between_explicit_ups": true,
+    "no_real_io_claimed": true,
+    "owner_history_matches_rows": true,
+    "owner_receipts_synced_non_authoritative": true,
+    "receipt_identity_and_keycode_match": true,
+    "reverse_order_key_ups": true,
+    "sample_timestamp_after_release_returns": true,
+    "two_distinct_key_downs": true
+  },
+  "scope": "Synthetic FakeXlib construction/call-order evidence only. No V39 CLI/V15 runner, real X server, application/game/model, OS input, live task effect, latency, recovery, or lease-availability claim.",
+  "artifacts": {
+    "raw": "RAW.json",
+    "audit": "AUDIT.json",
+    "runner_stdout": "RUNNER_OUTPUT.json",
+    "freeze": "FREEZE.json"
+  }
+}
+

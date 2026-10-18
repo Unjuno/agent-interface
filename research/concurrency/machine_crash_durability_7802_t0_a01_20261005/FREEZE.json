@@ -1,0 +1,16 @@
+{
+  "schema": "machine-crash-durability-7802-freeze-v1",
+  "study_id": "machine-crash-durability-7802-t0-a01-20261005",
+  "issue": 7802,
+  "source_commit": "f27c6c6293da37542678420477f9f10133ccdafb",
+  "model": "finite durable-image enumerator; no filesystem, VM, process, or power interruption",
+  "protocols": [
+    "effect_then_receipt_separate_domains",
+    "receipt_then_effect_separate_domains",
+    "effect_and_receipt_single_atomic_transaction",
+    "effect_commit_then_ack_before_receipt",
+    "corrupt_or_untrusted_record"
+  ],
+  "decision": "PASS_METHOD_SCOPED only when candidate and independent audit enumerate all allowed durable images and never authorize retry from an absent local receipt alone; unsafe classification or disagreement is FAIL; model ambiguity is HOLD.",
+  "scope": "abstract persistence-order model only; not evidence about any host filesystem, SQLite VFS, VM crash semantics, physical media, application effect, or product recovery"
+}

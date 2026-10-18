@@ -1,0 +1,17 @@
+{
+  "allocation": "8471-T0-A02",
+  "predecessor": "../README.md and ../candidate.json (retained unchanged)",
+  "base_main": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "formal_run_state": "FROZEN_READY_FOR_ONE_SHOT",
+  "inputs": {"modes": ["A", "B"], "dwell_ticks": 10,
+              "elapsed_dwell_ticks_enumerated": [0, 9],
+              "emergency_request": "alternate mode", "required_delay_ticks": 0},
+  "commands": ["python3 candidate.py", "python3 audit.py"],
+  "one_shot": {"candidate": 1, "independent_auditor": 1},
+  "source_sha256": {
+    "candidate.py": "a9dddf765e1a43a06f8e976327759fb25e18262dcb059d8a0f521d36e39fcb77",
+    "audit.py": "f637c775aaa136107a1d9e9dc06443716badba0f758d57d05534f05b1331eb1e",
+    "test_spec.md": "3d9225c778b35eda6fb85341f80f75a604cc86ff0ed132963b1819735dedb3e1"
+  },
+  "decision_gate": "PASS_METHOD_SCOPED iff 20/20 independently reconstructed and 3/3 mutations rejected"
+}

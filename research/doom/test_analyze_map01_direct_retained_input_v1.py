@@ -48,6 +48,30 @@ class Tests(unittest.TestCase):
         self.assertFalse(result["measurement_ready"])
         self.assertEqual(result["invalid_release_count"], 1)
 
+    def test_ack_before_admission_is_rejected(self):
+        events = [
+            {"event": "input_admission", "intent_token": "t", "key": "Up",
+             "admitted_ns": 110, "input_ack_ns": 100},
+            {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+             "key": "Up", "release_call_started_ns": 410,
+             "release_call_returned_ns": 420, "owner_transition_verified": True},
+        ]
+        result = candidate.analyze(events)
+        self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["invalid_release_count"], 1)
+
+    def test_release_return_before_start_is_rejected(self):
+        events = [
+            {"event": "input_admission", "intent_token": "t", "key": "Up",
+             "admitted_ns": 100, "input_ack_ns": 110},
+            {"event": "input_release_transition", "intent_token": "t", "operation": "up",
+             "key": "Up", "release_call_started_ns": 420,
+             "release_call_returned_ns": 410, "owner_transition_verified": True},
+        ]
+        result = candidate.analyze(events)
+        self.assertFalse(result["measurement_ready"])
+        self.assertEqual(result["invalid_release_count"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()

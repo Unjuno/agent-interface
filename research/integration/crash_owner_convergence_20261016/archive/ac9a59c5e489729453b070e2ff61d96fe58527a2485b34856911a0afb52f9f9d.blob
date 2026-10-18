@@ -1,0 +1,13 @@
+{
+  "classification":"PASS_DIAGNOSTIC_ONLY",
+  "diagnostic":"Coexisting per-window ButtonPress and ButtonRelease selectors; private TCP-disabled Xvfb",
+  "physical_input":false,
+  "second_focus_select":"ok",
+  "root_select":"ok",
+  "client1_mask":"KeyRelease|ButtonPress",
+  "client2_mask":"ButtonRelease",
+  "events":{"first_focus":[4],"second_focus":[],"root":[]},
+  "pointer_mask_after":0,
+  "xvfb_exit_code":0,
+  "interpretation":"ButtonPress and ButtonRelease selections coexist. In the injected immediate press/release sequence, the first focus client saw ButtonPress; no other connection saw an event. The recovery must own the release observation on the correct client path or retain the same observer that was the press recipient."
+}

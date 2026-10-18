@@ -1,0 +1,8 @@
+{
+  "status": "STOP_CANDIDATE_PROCESS",
+  "candidate_started": true,
+  "candidate_exit": 1,
+  "auditor_started": false,
+  "stderr": "Traceback (most recent call last):\n  File \"/work/candidate.py\", line 85, in <module>\n    result=backend.execute({\"down\":[\"a\",\"b\"],\"up\":[\"b\",\"a\"]},threading.Event(),\"a01-program\",0)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/sources/research/doom/doom_owner_thread_release_batch_backend_v1.py\", line 89, in execute\n    result = super().execute(step, cancel, identifier, index)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/candidate.py\", line 56, in execute\n    for key in step[\"down\"]: self.raw(key,True)\n                             ^^^^^^^^^^^^^^^^^^\n  File \"/work/sources/research/doom/doom_owner_thread_release_batch_backend_v1.py\", line 202, in raw\n    raise RuntimeError(\"keyboard input outside program/step telemetry context\")\nRuntimeError: keyboard input outside program/step telemetry context\n",
+  "interpretation": "Candidate was launched once but failed in the test-only typed-backend-v2 parent shim before first DOWN because it did not populate _input_event_context as the real parent does. No raw result and no auditor execution. This is harness STOP, not a UP-order counterexample. A02 must not be rerun."
+}

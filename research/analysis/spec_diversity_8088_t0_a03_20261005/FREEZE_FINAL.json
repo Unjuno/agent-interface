@@ -1,0 +1,22 @@
+{
+  "allocation":"SPEC-DIVERSITY-8088-T0-A03-20261005-01",
+  "base_main":"307b9e2f0420f130e9d933c037cac78501d2e547",
+  "branch":"research/spec-diversity-8088-t0-a03-20261005",
+  "contracts_sha256":"0cdb4f029dcc012c296f0359c37c83e422b7a2eb8ba93502c726b68d9d2304b7",
+  "primary_spec_sha256":"991fd19f0d3e9f218180b441030f7b5ce72eff0774252a95c01e11408af8f043",
+  "challenge_spec_sha256":"9abe525b10137f18fdf3491edcb79cd760807839aa9728f90b5e2574f438bdf4",
+  "adjudication_sha256":"6b07b01ad0a1e052ee623bec5b8756f477e2ef37c4f3155bda92d466d11e48d9",
+  "coverage_matrix_sha256":"ed8bb7bd558381dda4c1d42eb72443076cc6e2680cb35794c6c5d6bec97811d2",
+  "candidate_sha256":"dc065571871cc4fb48aa6ba716dcb2697987dc773e187a7ee6aba5c0ab98fab2",
+  "auditor_sha256":"6ee5947e9060e251c29dae3a251ea5683240a58ba41645b5b6ec3dee43fb5981",
+  "construction_output_sha256":"bfb780fd3ec601b1b7860689f894d215b0d22af9daa4287836acd3a6886ff922",
+  "construction_candidate_invocations":1,
+  "construction_auditor_invocations":1,
+  "formal_candidate_invocations":0,
+  "formal_auditor_invocations":0,
+  "retries":0,
+  "construction_gate":"PASS: 8 baselines, 6 controls each fail only the declared clause, 15 obligations, independent audit 14/14 rows",
+  "ordinary_controls":["persistence_lost","wrong_destination","move_existing_archive_to_work","collateral_edit","all_filter_stays_active","success_on_absent_target"],
+  "ordering_assumption":"No list/view order requirements added when the contract is silent; stable IDs bind record identity and source-list membership.",
+  "runtime":"native macOS 27.0.1 Python 3.14.5 stdlib CPU-only, based on same-host documented Docker image-inspection failure; no container/isolation claim"
+}

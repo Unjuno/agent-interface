@@ -1,0 +1,208 @@
+{
+  "checks": [
+    {
+      "case": "base",
+      "expected_disposition": "ELIGIBLE_IID",
+      "passed": true
+    },
+    {
+      "case": "nonexchangeable",
+      "expected_disposition": "HOLD_NONEXCHANGEABLE",
+      "passed": true
+    },
+    {
+      "case": "denominator",
+      "expected_disposition": "HOLD_NO_ELIGIBLE_DENOMINATOR",
+      "passed": true
+    },
+    {
+      "case": "taxonomy",
+      "expected_disposition": "HOLD_TAXONOMY_UNSTABLE",
+      "passed": true
+    },
+    {
+      "case": "duplicate-unit",
+      "expected_disposition": "HOLD_NONEXCHANGEABLE",
+      "passed": true
+    }
+  ],
+  "formal_audit_invocations": 5,
+  "retries": 0,
+  "runs": [
+    {
+      "exit_code": 0,
+      "name": "base",
+      "oracle_eligible_iid": 200,
+      "parsed": {
+        "audit": "PASS",
+        "decision": {
+          "gt_beats_last_k_on_exact_missing_mass": true,
+          "gt_beats_last_k_on_finite_validation": true,
+          "iid_replicates": 200,
+          "method_controls_pass": true
+        },
+        "eligible_iid_rows": 200,
+        "errors": [],
+        "held_control_rows": 4,
+        "mean_absolute_errors": {
+          "gt_truth": 0.013349999999999999,
+          "gt_validation": 0.013739999999999999,
+          "last_k_truth": 0.02105,
+          "last_k_validation": 0.021259999999999998
+        },
+        "mutation_controls": {
+          "correlated_duplicate_rejected": true,
+          "distribution_shift_held": true,
+          "missing_denominator_rejected": true,
+          "taxonomy_drift_held": true
+        },
+        "rows": 204,
+        "scheduled_iid_rows": 200
+      },
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d43a52ee339319e3d2b0c62101e4c0ac482562ce872424da8e45700907370b8b"
+    },
+    {
+      "exit_code": 1,
+      "name": "nonexchangeable",
+      "oracle_eligible_iid": 199,
+      "parsed": {
+        "audit": "FAIL",
+        "decision": {
+          "gt_beats_last_k_on_exact_missing_mass": true,
+          "gt_beats_last_k_on_finite_validation": true,
+          "iid_replicates": 199,
+          "method_controls_pass": false
+        },
+        "eligible_iid_rows": 199,
+        "errors": [
+          "iid_eligibility_count:199"
+        ],
+        "held_control_rows": 4,
+        "mean_absolute_errors": {
+          "gt_truth": 0.013366834170854273,
+          "gt_validation": 0.013798994974874372,
+          "last_k_truth": 0.02105527638190955,
+          "last_k_validation": 0.021306532663316585
+        },
+        "mutation_controls": {
+          "correlated_duplicate_rejected": true,
+          "distribution_shift_held": true,
+          "missing_denominator_rejected": true,
+          "taxonomy_drift_held": true
+        },
+        "rows": 204,
+        "scheduled_iid_rows": 200
+      },
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "60b39e151599d3381c565d3e35bf6ac05fa6d579d88d24c76790cbe2fc763550"
+    },
+    {
+      "exit_code": 1,
+      "name": "denominator",
+      "oracle_eligible_iid": 199,
+      "parsed": {
+        "audit": "FAIL",
+        "decision": {
+          "gt_beats_last_k_on_exact_missing_mass": true,
+          "gt_beats_last_k_on_finite_validation": true,
+          "iid_replicates": 199,
+          "method_controls_pass": false
+        },
+        "eligible_iid_rows": 199,
+        "errors": [
+          "validation_denominator:iid-001",
+          "iid_eligibility_count:199"
+        ],
+        "held_control_rows": 4,
+        "mean_absolute_errors": {
+          "gt_truth": 0.013366834170854273,
+          "gt_validation": 0.013798994974874372,
+          "last_k_truth": 0.02105527638190955,
+          "last_k_validation": 0.021306532663316585
+        },
+        "mutation_controls": {
+          "correlated_duplicate_rejected": true,
+          "distribution_shift_held": true,
+          "missing_denominator_rejected": true,
+          "taxonomy_drift_held": true
+        },
+        "rows": 204,
+        "scheduled_iid_rows": 200
+      },
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "0d13d4cc812d59586b773207bd5e03049f70661da8eeb1210a372487a7784bba"
+    },
+    {
+      "exit_code": 1,
+      "name": "taxonomy",
+      "oracle_eligible_iid": 199,
+      "parsed": {
+        "audit": "FAIL",
+        "decision": {
+          "gt_beats_last_k_on_exact_missing_mass": true,
+          "gt_beats_last_k_on_finite_validation": true,
+          "iid_replicates": 199,
+          "method_controls_pass": false
+        },
+        "eligible_iid_rows": 199,
+        "errors": [
+          "iid_eligibility_count:199"
+        ],
+        "held_control_rows": 4,
+        "mean_absolute_errors": {
+          "gt_truth": 0.013366834170854273,
+          "gt_validation": 0.013798994974874372,
+          "last_k_truth": 0.02105527638190955,
+          "last_k_validation": 0.021306532663316585
+        },
+        "mutation_controls": {
+          "correlated_duplicate_rejected": true,
+          "distribution_shift_held": true,
+          "missing_denominator_rejected": true,
+          "taxonomy_drift_held": true
+        },
+        "rows": 204,
+        "scheduled_iid_rows": 200
+      },
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "60b39e151599d3381c565d3e35bf6ac05fa6d579d88d24c76790cbe2fc763550"
+    },
+    {
+      "exit_code": 1,
+      "name": "duplicate-unit",
+      "oracle_eligible_iid": 199,
+      "parsed": {
+        "audit": "FAIL",
+        "decision": {
+          "gt_beats_last_k_on_exact_missing_mass": true,
+          "gt_beats_last_k_on_finite_validation": true,
+          "iid_replicates": 199,
+          "method_controls_pass": false
+        },
+        "eligible_iid_rows": 199,
+        "errors": [
+          "iid_eligibility_count:199"
+        ],
+        "held_control_rows": 4,
+        "mean_absolute_errors": {
+          "gt_truth": 0.013366834170854273,
+          "gt_validation": 0.013798994974874372,
+          "last_k_truth": 0.02105527638190955,
+          "last_k_validation": 0.021306532663316585
+        },
+        "mutation_controls": {
+          "correlated_duplicate_rejected": true,
+          "distribution_shift_held": true,
+          "missing_denominator_rejected": true,
+          "taxonomy_drift_held": true
+        },
+        "rows": 204,
+        "scheduled_iid_rows": 200
+      },
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "60b39e151599d3381c565d3e35bf6ac05fa6d579d88d24c76790cbe2fc763550"
+    }
+  ],
+  "status": "PASS_CORRECTED_GATE"
+}

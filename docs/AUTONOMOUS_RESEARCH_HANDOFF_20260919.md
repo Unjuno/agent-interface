@@ -18,7 +18,7 @@
 ## H/T/D/C/U ledger
 
 - **H:** Preserve rich-model intent; local mechanisms may refine, verify, invalidate, or yield only on fresh bounded evidence.
-- **T:** Prefer one additive successor at a time; use container-first deterministic construction before any live/model allocation; freeze source, seed, arm order, and stop rule before formal work.
+- **T:** Prefer one additive successor at a time; use deterministic construction on the least-dependency runtime allowed by the frozen protocol (native WSL, WSLc, or hosted CI) before any live/model allocation; freeze source, seed, arm order, and stop rule before formal work. Do not substitute a runtime in a consumed allocation.
 - **D:** Retain raw result, failure/STOP, source and blob identities, container/image digest, audit output, and exact invocation counters. Current retained boundaries include MAP01 task-effect admissibility, golden lifecycle mapping, bounded critical-event delivery STOP, and release readiness.
 - **C:** PASS is scoped to its exact contract. No component result promotes to runtime, GUI, model, latency, human-tempo, or product claims without a separate source-backed gate and independent audit.
 - **U:** Live watcher-to-model event delivery, ACK/expiry/recovery, source-backed golden result provenance, CLI adapter implementation, supported backend, packaged smoke, DOOM video, O3/O4 transfer, and cross-domain task value.

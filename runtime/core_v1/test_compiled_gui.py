@@ -1,4 +1,5 @@
 """Adapter boundary regression tests for the existing compiled graph."""
+import subprocess
 import unittest
 from runtime.core_v1.compiled_gui import run
 
@@ -32,6 +33,44 @@ class Driver:
  def run(self,spec=None):return run(spec or interface(),{'observe':self.observe,'admit':self.admit,'execute':self.execute,'verify_effect':self.verify,'cancelled':lambda:False,'journal':self.journal},clock=lambda:self.now)
 
 class CompiledBoundaryTests(unittest.TestCase):
+
+ def test_receipt_times_bound_observation_execution_and_effect_confirmation(self):
+  now=[0];observations=[]
+  def clock():now[0]+=10;return now[0]
+  def observe(_request):
+   now[0]+=2;i=len(observations)+1
+   row={'sequence':i,'captured_ns':now[0],'surface':'form',
+        'predicates':{'phase':i-1},'evidence_ref':f'frame{i}',
+        'evidence_digest':f'digest{i}'}
+   observations.append(row);return row
+  def admit(request):
+   return {'eligible':True,'status':'revalidated','authorization':'one-use',
+           'expected_sequence':request['observation']['sequence'],
+           'valid_until_ns':1_000_000_000}
+  def execute(_request):
+   now[0]+=3
+   return {'status':'completed','action_id':'a1','effect_ref':'e1',
+           'release':{'verified':True,'keys_down':[],'buttons_down':[]}}
+  def verify_effect(request):
+   now[0]+=5
+   return {'status':'succeeded','evidence_ref':request['observation']['evidence_ref']}
+  receipt=run(interface(),{'observe':observe,'admit':admit,'execute':execute,
+      'verify_effect':verify_effect,'cancelled':lambda:False},clock=clock)
+  self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED')
+  observed=receipt['observations']
+  transition=receipt['transitions'][0]
+  terminal=next(event for event in receipt['critical_events'] if event['event']=='action_terminal')
+  checked=next(event for event in receipt['critical_events'] if event['event']=='effect_checked')
+  self.assertLessEqual(observed[0]['observation_started_ns'],observed[0]['captured_ns'])
+  self.assertLessEqual(observed[0]['captured_ns'],observed[0]['observation_accepted_ns'])
+  self.assertLessEqual(transition['execution_started_ns'],transition['execution_accepted_ns'])
+  self.assertEqual(terminal['execution_accepted_ns'],transition['execution_accepted_ns'])
+  self.assertEqual(checked['action_id'],transition['action_id'])
+  self.assertLessEqual(transition['execution_accepted_ns'],checked['effect_observation_captured_ns'])
+  self.assertLessEqual(checked['effect_observation_captured_ns'],checked['effect_observation_accepted_ns'])
+  self.assertLessEqual(checked['effect_observation_accepted_ns'],checked['effect_verification_started_ns'])
+  self.assertLessEqual(checked['effect_verification_started_ns'],checked['effect_verification_accepted_ns'])
+  self.assertEqual(checked['effect_verification_accepted_ns']-checked['effect_verification_started_ns'],15)
 
  def test_cross_type_predicate_cannot_select_action_or_complete(self):
   for expected, observed in ((0,False),(False,0),(1,True),(True,1)):
@@ -77,6 +116,15 @@ class CompiledBoundaryTests(unittest.TestCase):
   d=Driver('observe');r=self.stopped(d,0,0);self.assertEqual(d.calls['admit'],[]);self.assertEqual(len(r['observations']),1)
  def test_late_intermediate_observation_preserves_prefix_pending_effect(self):
   d=Driver('observe',2);r=self.stopped(d,1,1);self.assertEqual(r['pending_effect']['action'],'enter');self.assertEqual(d.calls['verify_effect'],[])
+ def test_observation_adapter_failure_returns_receipt_and_never_admits_next_action(self):
+  d=Driver();base=d.observe
+  def observe(p):
+   if not d.calls['observe']:return base(p)
+   d.record('observe',p);raise subprocess.TimeoutExpired('tesseract',5)
+  d.observe=observe;r=d.run()
+  self.assertEqual((r['outcome'],r['reason']),('RUNTIME_FAILED','observation_failed'))
+  self.assertEqual(r['completed_transitions'],1);self.assertEqual(r['pending_effect']['action'],'enter')
+  self.assertEqual(len(d.calls['observe']),2);self.assertEqual(len(d.calls['admit']),1);self.assertEqual(len(d.calls['execute']),1)
  def test_late_final_observation_never_claims_completion(self):
   d=Driver('observe',3);r=self.stopped(d,2,2);self.assertEqual(r['pending_effect']['action'],'save')
  def test_late_admission_never_dispatches(self):self.stopped(Driver('admit'),0,0)

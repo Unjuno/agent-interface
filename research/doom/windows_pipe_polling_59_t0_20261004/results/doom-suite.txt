@@ -1,0 +1,764 @@
+..................EEEEEEEEEE.............................E.....................................................E.E.E..E..E..EE...E...EE...E...E.......................................................................................F....EE...............EE.............EEEE
+======================================================================
+ERROR: test_bad_environment_and_observation_fail_closed (test_doom_hud_signal_v1.DoomHudSignalTests.test_bad_environment_and_observation_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v1.py", line 69, in test_bad_environment_and_observation_fail_closed
+    DoomStatusNumberReader(WAD, expected_wad_sha256="0" * 64)
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_independent_retained_decision_frames_match_manual_review (test_doom_hud_signal_v1.DoomHudSignalTests.test_independent_retained_decision_frames_match_manual_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v1.py", line 43, in test_independent_retained_decision_frames_match_manual_review
+    reader = DoomStatusNumberReader(WAD)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_reader_follows_bound_window_geometry (test_doom_hud_signal_v1.DoomHudSignalTests.test_reader_follows_bound_window_geometry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v1.py", line 64, in test_reader_follows_bound_window_geometry
+    reading = DoomStatusNumberReader(WAD).read(observation)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_retained_exact_health_sequence (test_doom_hud_signal_v1.DoomHudSignalTests.test_retained_exact_health_sequence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v1.py", line 30, in test_retained_exact_health_sequence
+    values = {row["sequence"]: self.reader().read(row)["value"]
+                               ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v1.py", line 25, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_all_retained_v31_frames_have_exact_health_and_ammo (test_doom_hud_signal_v2.DoomHudSignalV2Tests.test_all_retained_v31_frames_have_exact_health_and_ammo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v2.py", line 31, in test_all_retained_v31_frames_have_exact_health_and_ammo
+    signals = [self.reader(signal_id).read(row) for row in observations]
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v2.py", line 24, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_ammo_matches_independent_manual_decision_review (test_doom_hud_signal_v2.DoomHudSignalV2Tests.test_ammo_matches_independent_manual_decision_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v2.py", line 40, in test_ammo_matches_independent_manual_decision_review
+    actual = {sequence: self.reader("ammo").read(observations[sequence])["value"]
+                        ^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v2.py", line 24, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_signal_anchor_and_geometry_fail_closed (test_doom_hud_signal_v2.DoomHudSignalV2Tests.test_signal_anchor_and_geometry_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v2.py", line 51, in test_signal_anchor_and_geometry_fail_closed
+    self.assertEqual(self.reader("ammo").read(observation)["status"], "unknown")
+                     ^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v2.py", line 24, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_early_event_builds_snapshot_and_reconciles_to_retained_png (test_doom_hud_signal_v3.DoomHudSignalV3Tests.test_early_event_builds_snapshot_and_reconciles_to_retained_png)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v3.py", line 56, in test_early_event_builds_snapshot_and_reconciles_to_retained_png
+    readers = {name: DoomStatusNumberReader(WAD, signal_id=name)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_in_memory_and_retained_png_paths_match_all_v31_frames (test_doom_hud_signal_v3.DoomHudSignalV3Tests.test_in_memory_and_retained_png_paths_match_all_v31_frames)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v3.py", line 26, in test_in_memory_and_retained_png_paths_match_all_v31_frames
+    readers = [DoomStatusNumberReader(WAD, signal_id=name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_in_memory_path_fails_closed_without_frame (test_doom_hud_signal_v3.DoomHudSignalV3Tests.test_in_memory_path_fails_closed_without_frame)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_doom_hud_signal_v3.py", line 42, in test_in_memory_path_fails_closed_without_frame
+    reader = DoomStatusNumberReader(WAD, signal_id="health")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_doom_typed_release_backend_v2 (unittest.loader._FailedTest.test_doom_typed_release_backend_v2)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_doom_typed_release_backend_v2
+Traceback (most recent call last):
+  File "<CPython312>\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "<WORKTREE>\research\doom\test_doom_typed_release_backend_v2.py", line 5, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous
+  File "<WORKTREE>\research\doom\doom_typed_release_backend_v1.py", line 3, in <module>
+    from input_owner_v10 import InputOwner
+  File "<WORKTREE>\research\live_control\input_owner_v10.py", line 10, in <module>
+    from Xlib import X, XK, display, error
+ModuleNotFoundError: No module named 'Xlib'
+
+
+======================================================================
+ERROR: test_breached_authored_floor_rejects_cover_and_uses_strict_source (test_map01_overlap_controller_v29.Map01TypedCoverValidityV29Tests.test_breached_authored_floor_rejects_cover_and_uses_strict_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v29.py", line 119, in test_breached_authored_floor_rejects_cover_and_uses_strict_source
+    self.reader(), observations[68],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v29.py", line 59, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_overwide_authored_loss_envelope_rejects_cover (test_map01_overlap_controller_v29.Map01TypedCoverValidityV29Tests.test_overwide_authored_loss_envelope_rejects_cover)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v29.py", line 131, in test_overwide_authored_loss_envelope_rejects_cover
+    self.reader(), observations[37],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v29.py", line 59, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_retained_trace_soft_preserves_then_hard_invalidates (test_map01_overlap_controller_v29.Map01TypedCoverValidityV29Tests.test_retained_trace_soft_preserves_then_hard_invalidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v29.py", line 104, in test_retained_trace_soft_preserves_then_hard_invalidates
+    self.reader(), observations[37],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v29.py", line 59, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_breached_authored_floor_rejects_cover_and_uses_strict_source (test_map01_overlap_controller_v30.Map01TypedCoverValidityV30Tests.test_breached_authored_floor_rejects_cover_and_uses_strict_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v30.py", line 137, in test_breached_authored_floor_rejects_cover_and_uses_strict_source
+    self.reader(), observations[68],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v30.py", line 60, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_retained_trace_soft_preserves_then_hard_invalidates (test_map01_overlap_controller_v30.Map01TypedCoverValidityV30Tests.test_retained_trace_soft_preserves_then_hard_invalidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v30.py", line 118, in test_retained_trace_soft_preserves_then_hard_invalidates
+    self.reader(), observations[37],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v30.py", line 60, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_v29_absolute_floor_and_bounded_loss_are_both_preserved (test_map01_overlap_controller_v30.Map01TypedCoverValidityV30Tests.test_v29_absolute_floor_and_bounded_loss_are_both_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v30.py", line 152, in test_v29_absolute_floor_and_bounded_loss_are_both_preserved
+    self.v29_reader(), observations[70],
+    ^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v30.py", line 71, in v29_reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_breached_authored_floor_rejects_cover_and_uses_strict_source (test_map01_overlap_controller_v31.Map01TypedCoverValidityV30Tests.test_breached_authored_floor_rejects_cover_and_uses_strict_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v31.py", line 138, in test_breached_authored_floor_rejects_cover_and_uses_strict_source
+    self.reader(), observations[68],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v31.py", line 61, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_retained_trace_soft_preserves_then_hard_invalidates (test_map01_overlap_controller_v31.Map01TypedCoverValidityV30Tests.test_retained_trace_soft_preserves_then_hard_invalidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v31.py", line 119, in test_retained_trace_soft_preserves_then_hard_invalidates
+    self.reader(), observations[37],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v31.py", line 61, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_v29_absolute_floor_and_bounded_loss_are_both_preserved (test_map01_overlap_controller_v31.Map01TypedCoverValidityV30Tests.test_v29_absolute_floor_and_bounded_loss_are_both_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v31.py", line 153, in test_v29_absolute_floor_and_bounded_loss_are_both_preserved
+    self.v29_reader(), observations[70],
+    ^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v31.py", line 72, in v29_reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_breached_authored_floor_rejects_cover_and_uses_strict_source (test_map01_overlap_controller_v32.Map01TypedCoverValidityV30Tests.test_breached_authored_floor_rejects_cover_and_uses_strict_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v32.py", line 139, in test_breached_authored_floor_rejects_cover_and_uses_strict_source
+    self.reader(), observations[68],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v32.py", line 62, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_retained_trace_soft_preserves_then_hard_invalidates (test_map01_overlap_controller_v32.Map01TypedCoverValidityV30Tests.test_retained_trace_soft_preserves_then_hard_invalidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v32.py", line 120, in test_retained_trace_soft_preserves_then_hard_invalidates
+    self.reader(), observations[37],
+    ^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v32.py", line 62, in reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_v29_absolute_floor_and_bounded_loss_are_both_preserved (test_map01_overlap_controller_v32.Map01TypedCoverValidityV30Tests.test_v29_absolute_floor_and_bounded_loss_are_both_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v32.py", line 154, in test_v29_absolute_floor_and_bounded_loss_are_both_preserved
+    self.v29_reader(), observations[70],
+    ^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_map01_overlap_controller_v32.py", line 73, in v29_reader
+    return DoomStatusNumberReader(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+ERROR: test_unchanged_mechanism_hashes (test_preregister_map01_measurement_integration_v3.Tests.test_unchanged_mechanism_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_preregister_map01_measurement_integration_v3.py", line 26, in test_unchanged_mechanism_hashes
+    for name, expected in p['unchanged_mechanism_sha256'].items():
+                          ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'unchanged_mechanism_sha256'
+
+======================================================================
+ERROR: test_workflow_hash (test_preregister_map01_measurement_integration_v3.Tests.test_workflow_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_preregister_map01_measurement_integration_v3.py", line 32, in test_workflow_hash
+    self.assertEqual(sha(REPO/p['workflow_path']),p['workflow_sha256'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\test_preregister_map01_measurement_integration_v3.py", line 7, in sha
+    def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
+                                         ^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\.github\\workflows\\map01-measurement-integration-live-03.yml'
+
+======================================================================
+ERROR: test_session_map01_v10 (unittest.loader._FailedTest.test_session_map01_v10)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v10
+Traceback (most recent call last):
+  File "<CPython312>\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "<WORKTREE>\research\doom\test_session_map01_v10.py", line 9, in <module>
+    import session_map01_v10 as session
+  File "<WORKTREE>\research\doom\session_map01_v10.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_session_map01_v11 (unittest.loader._FailedTest.test_session_map01_v11)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v11
+Traceback (most recent call last):
+  File "<CPython312>\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "<WORKTREE>\research\doom\test_session_map01_v11.py", line 9, in <module>
+    import session_map01_v11 as session
+  File "<WORKTREE>\research\doom\session_map01_v11.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_session_map01_v7 (unittest.loader._FailedTest.test_session_map01_v7)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v7
+Traceback (most recent call last):
+  File "<CPython312>\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "<WORKTREE>\research\doom\test_session_map01_v7.py", line 7, in <module>
+    import session_map01_v7 as session
+  File "<WORKTREE>\research\doom\session_map01_v7.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_session_map01_v8 (unittest.loader._FailedTest.test_session_map01_v8)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v8
+Traceback (most recent call last):
+  File "<CPython312>\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "<WORKTREE>\research\doom\test_session_map01_v8.py", line 9, in <module>
+    import session_map01_v8 as session
+  File "<WORKTREE>\research\doom\session_map01_v8.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_session_map01_v9 (unittest.loader._FailedTest.test_session_map01_v9)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_session_map01_v9
+Traceback (most recent call last):
+  File "<CPython312>\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "<WORKTREE>\research\doom\test_session_map01_v9.py", line 9, in <module>
+    import session_map01_v9 as session
+  File "<WORKTREE>\research\doom\session_map01_v9.py", line 14, in <module>
+    import vizdoom as vd
+ModuleNotFoundError: No module named 'vizdoom'
+
+
+======================================================================
+ERROR: test_retained_primary_frames_and_breach_controls (test_v31_running_action_guard_replay_v1.V31RunningActionGuardReplayTests.test_retained_primary_frames_and_breach_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_v31_running_action_guard_replay_v1.py", line 13, in test_retained_primary_frames_and_breach_controls
+    result = run()
+             ^^^^^
+  File "<WORKTREE>\research\doom\v31_running_action_guard_replay_v1.py", line 41, in run
+    signal_id: DoomStatusNumberReader(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v2.py", line 17, in __init__
+    super().__init__(wad_path, signal_id="health",
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 89, in __init__
+    lumps = _wad_lumps(wad_path, expected_wad_sha256)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 19, in _wad_lumps
+    if sha256(path) != expected_sha256:
+       ^^^^^^^^^^^^
+  File "<WORKTREE>\research\doom\doom_hud_signal_v1.py", line 14, in sha256
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "<CPython312>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<WORKTREE>\\_vizdoom\\vizdoom\\freedoom2.wad'
+
+======================================================================
+FAIL: test_frozen_plan_and_source_hashes (test_preregister_map01_measurement_integration_v2.Tests.test_frozen_plan_and_source_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>\research\doom\test_preregister_map01_measurement_integration_v2.py", line 15, in test_frozen_plan_and_source_hashes
+    path=root/name;self.assertTrue(path.is_file(),name);self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),digest,name)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'be6a9c85790f4a484629e13cfd236fbee13202378954e5c7db12c0ea57809011' != 'b2bf315d202bdb99423527de2c775b2c81d4b425b5d16e9eb00887ca4fe47ded'
+- be6a9c85790f4a484629e13cfd236fbee13202378954e5c7db12c0ea57809011
++ b2bf315d202bdb99423527de2c775b2c81d4b425b5d16e9eb00887ca4fe47ded
+ : research/doom/audit_map01_measurement_integration_v1.py
+
+----------------------------------------------------------------------
+Ran 271 tests in 2.547s
+
+FAILED (failures=1, errors=31)

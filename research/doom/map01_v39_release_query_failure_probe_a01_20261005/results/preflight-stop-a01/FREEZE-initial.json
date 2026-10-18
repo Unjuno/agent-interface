@@ -1,0 +1,57 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-freeze-v1",
+  "base_main_sha": "16c74566b64f32d7fe035c7724bcfe3865863a91",
+  "candidate_pr_head": "1ef5611356ff217f0981843ae854ef871967e999",
+  "candidate_source_refs": {
+    "SOURCE/input_owner_v13_candidate.py": "Unjuno/agent-interface PR #7805 path research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py",
+    "SOURCE/bridge_v2_candidate.py": "Unjuno/agent-interface PR #7805 path research/doom/map01_v39_cancel_release_fix_a01_20261005/bridge_v2_candidate.py"
+  },
+  "hypothesis": "Per-key up evidence is lost if aggregate pointer/keymap reconciliation raises after the physical release but before owner_release is appended.",
+  "decision": "PASS_REPRODUCED_RECORD_LOSS iff the uninjected control retains one confirmed up row and both post-up aggregate-query failures lose owner/bridge release rows while leaving the fake physical key up and stale F8 owner/bridge ledgers; else FAIL/STOP.",
+  "invocation_count": 1,
+  "retry_count": 0,
+  "inputs": {
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": {
+      "sha256": "6e63390e5fa5a9dc7cf0fe2cd040ceaa3a21e0fc86366dbe67c21c41e6f937d7",
+      "current_main_path": "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py"
+    },
+    "research/doom/map01_v39_perkey_bridge_a01/bridge.py": {
+      "sha256": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412",
+      "current_main_path": "research/doom/map01_v39_perkey_bridge_a01/bridge.py"
+    },
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": {
+      "sha256": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+      "current_main_path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py"
+    },
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": {
+      "sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+      "current_main_path": "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py"
+    },
+    "research/live_control/executor_v3.py": {
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+      "current_main_path": "research/live_control/executor_v3.py"
+    },
+    "research/live_control/lease.py": {
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+      "current_main_path": "research/live_control/lease.py"
+    }
+  },
+  "local_inputs": {
+    "SOURCE/input_owner_v13_candidate.py": {
+      "sha256": "f359d6a4f25f9dc6a9c2e479d8c401884b7aaa8c37ddeb44c25c4bfaa3e78413"
+    },
+    "SOURCE/bridge_v2_candidate.py": {
+      "sha256": "81e759b0484ac5b7854da0ebcffa917035f56b83a3dbfda40cafbb7f9f5138d1"
+    },
+    "README.md": {
+      "sha256": "d229342daf473a5c5f98c3fa92220af05e9fae5cde08a9a967d6a0c695541f56"
+    },
+    "run_probe.py": {
+      "sha256": "b0f08e6f8cece784b84403ce07ec82807b97b6dc6e04c67c41791451d2e4de53"
+    },
+    "audit_probe.py": {
+      "sha256": "da232c00989eeb487aea79edada665f8a79a7087506aa79b3e7e3287106414c6"
+    }
+  },
+  "scope": "host-only deterministic fake-display control-flow construction; no candidate allocation, real X server, OS input, GUI, game, model, container, or live allocation"
+}

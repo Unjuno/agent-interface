@@ -1,0 +1,14 @@
+import datetime,hashlib,json,os,pathlib,subprocess,sys
+R=pathlib.Path(__file__).resolve().parent
+def pin(p):
+ b=p.read_bytes();return {'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+plan={'unit':'b04b-diagnostic-ordinary-regression-v1','worker':'01a0ff33-b04b-7b51-8194-a60b82fed8a2','frozen_utc':utc(),'H':'Best-effort diagnostic hooks and record creation must preserve original startup exception identity on the selected literal handler; cleanup success remains separately reported.','T':'Ten new ordinary unit regressions, including combined BaseException hook faults, note attribute lookup, metaclass name lookup, invalid str result, non-OSError/KeyboardInterrupt record faults, event copy/JSON failure, and two controls; original seven-cell producer is not executed.','D':'Baseline RED expected; candidate all ten identity, operation, record and note assertions pass. Every actual outcome retained; ordinary repair may iterate.','C':'Explicit custom hooks and doubles witness boundary behavior, not natural frequency or physical retirement.','U':'No client construction, real process/reader, full main, native allocation replay, input/task/latency claims. Cleanup operations other than diagnostics retain their prior contract.','pins':{p.name:pin(p) for p in [R/'regression_v1.py',R/'controller-v3.py.txt',R.parent/'startup-current-b04b-v2'/'candidate-controller-v2.py.txt']}}
+path=R/'PLAN.v1.json';assert not path.exists();path.write_text(json.dumps(plan,indent=2)+'\n',encoding='utf-8')
+for label,source in [('baseline',R.parent/'startup-current-b04b-v2'/'candidate-controller-v2.py.txt'),('candidate',R/'controller-v3.py.txt')]:
+ folder=R/label;folder.mkdir(exist_ok=False);argv=[sys.executable,'-X','utf8',str(R/'regression_v1.py'),str(source),str(folder/'RAW.json')]
+ before={'argv':argv,'before_utc':utc(),'source':pin(source),'runner':pin(R/'regression_v1.py')};(folder/'BEFORE.json').write_text(json.dumps(before,indent=2)+'\n',encoding='utf-8')
+ with (folder/'stdout.bin').open('wb') as out,(folder/'stderr.bin').open('wb') as err:
+  process=subprocess.Popen(argv,stdout=out,stderr=err);started=utc();code=process.wait(timeout=45)
+ receipt={'pid':process.pid,'started_utc':started,'ended_utc':utc(),'exit_code':code,'timeout':False,'stdout':pin(folder/'stdout.bin'),'stderr':pin(folder/'stderr.bin'),'source_unchanged':pin(source)==before['source'],'runner_unchanged':pin(R/'regression_v1.py')==before['runner']};(folder/'RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8');print(json.dumps({'label':label,**receipt}))
+ assert code==(1 if label=='baseline' else 0)

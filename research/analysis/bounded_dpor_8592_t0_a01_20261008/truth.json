@@ -1,0 +1,23 @@
+{
+  "schema": "bounded-dpor-truth-v1",
+  "expected_full_schedule_counts": {
+    "lifecycle_order_faults": 5040,
+    "commuting_heavy_diagnostics": 40320
+  },
+  "expected_ordered_pair_baseline_counts": {
+    "lifecycle_order_faults": 42,
+    "commuting_heavy_diagnostics": 56
+  },
+  "required_violations": [
+    "ACK_BEFORE_EFFECT_RECEIPT"
+  ],
+  "minimum_commuting_control_reduction_fraction": 0.2,
+  "mutation_controls": [
+    "omit one reduced schedule trace",
+    "underdeclare a dependent revoke/dispatch pair as independent",
+    "corrupt a typed transition receipt",
+    "erase the safety-violation witness",
+    "remove one ordered pair from the baseline"
+  ],
+  "scope": "finite-authored-model-only"
+}

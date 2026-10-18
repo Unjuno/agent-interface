@@ -1,0 +1,37 @@
+cli_v1 (unittest.loader._FailedTest.cli_v1) ... ERROR
+cli_v1 (unittest.loader._FailedTest.cli_v1) ... ERROR
+
+======================================================================
+ERROR: cli_v1 (unittest.loader._FailedTest.cli_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: cli_v1
+Traceback (most recent call last):
+  File "<LOCAL_USER>\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_USER>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\runtime\cli_v1\__init__.py", line 3, in <module>
+    from .api import dispatch, dispatch_in_session, doctor
+  File "<LOCAL_USER>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\runtime\cli_v1\api.py", line 8, in <module>
+    from runtime.selector_v1 import BackendUnavailable, open_session, select_backend
+ModuleNotFoundError: No module named 'runtime.selector_v1'
+
+
+======================================================================
+ERROR: cli_v1 (unittest.loader._FailedTest.cli_v1)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: cli_v1
+Traceback (most recent call last):
+  File "<LOCAL_USER>\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_USER>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\runtime\cli_v1\__init__.py", line 3, in <module>
+    from .api import dispatch, dispatch_in_session, doctor
+  File "<LOCAL_USER>\Documents\Codex\2026-10-03\new-chat-6\work\agent-interface\runtime\cli_v1\api.py", line 8, in <module>
+    from runtime.selector_v1 import BackendUnavailable, open_session, select_backend
+ModuleNotFoundError: No module named 'runtime.selector_v1'
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (errors=2)

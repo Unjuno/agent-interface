@@ -1,0 +1,17 @@
+{
+  "initial_check": {
+    "command": "shasum -a 256 -c research/doom/v39_appserver_interrupt_macos_a01_20261008/PRE_RUN_SHA256SUMS",
+    "disposition": "FAILED_WRONG_WORKING_DIRECTORY",
+    "detail": "Manifest paths are package-relative; the first verification was invoked from the repository root and could not find them. This was a verification-command path error, not a candidate-run failure."
+  },
+  "corrected_check": {
+    "command": "shasum -a 256 -c PRE_RUN_SHA256SUMS",
+    "working_directory": "research/doom/v39_appserver_interrupt_macos_a01_20261008",
+    "disposition": "PASS",
+    "files": 5
+  },
+  "postrun_file_edit_attempts": {
+    "first_attempt": "FAILED_WRONG_WORKING_DIRECTORY",
+    "detail": "A later README and execution-receipt write used repository-relative paths while already inside the package; the write changed no files. The same edit was then repeated from the correct package-relative working directory."
+  }
+}

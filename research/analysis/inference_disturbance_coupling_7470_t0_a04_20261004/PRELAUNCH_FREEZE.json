@@ -1,0 +1,21 @@
+{
+  "schema": "inference-disturbance-coupling-circular-seam-prelaunch-v1",
+  "issue": 7470,
+  "allocation": "INFERENCE-DISTURBANCE-COUPLING-7470-T0-20261004-A04",
+  "predecessor": {"allocation": "A03", "disposition": "PHASE_SENSITIVITY_SEAM_OMITTED", "candidate_invocations": 1, "auditor_invocations": 1, "rerun": false},
+  "base_main": "f7e8a365b45841fe6adc69f4130eb513e4a4c4ff",
+  "source_commit": "9824ce889edb87e547d3400d2deada0a0bc81f93",
+  "branch": "research/inference-disturbance-coupling-7470-t0-a02-20261004",
+  "path": "research/analysis/inference_disturbance_coupling_7470_t0_a04_20261004",
+  "output_path": "research/analysis/inference_disturbance_coupling_7470_t0_a04_20261004/results",
+  "output_absent_at_freeze": true,
+  "invocation_limits": {"candidate": 1, "auditor": 1, "auditor_requires_candidate_exit_zero": true, "retries": 0},
+  "source_sha256": {
+    "candidate.py": "9eb9b22edacaf9ac626f99e08bdd598d6648f9055f2f3e8cfb2478deb1bf4c61",
+    "audit.py": "d472f1c8bc796034381db245bc62f81f289da2755dba511f31cef0279a79f9b4",
+    "spec.json": "7e1ba5e5a986264389aa20ecf5014be9336b1e7c72c21a037f1bd38479d6fa68",
+    "test_package.py": "cfcccb26dfc8c350b9d768f4db73091bc01a542ab8e760b8f89fef2e6cbf02e7",
+    "PREREGISTRATION.md": "be9b8b24fc843f3ed67ec8b11ea8e289a4d1c7b845ae4cddfd7b322da0376a02"
+  },
+  "environment": {"runtime": "CPython 3 standard library on macOS arm64", "container": "not used; finite no-side-effect CPU simulation", "external_effects": false}
+}

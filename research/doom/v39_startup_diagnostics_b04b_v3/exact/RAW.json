@@ -1,0 +1,346 @@
+{
+  "schema": "b04b-diagnostic-ordinary-regression-v1",
+  "pid": 44772,
+  "source_sha256": "ec095c3911fd3e3172aff1a95b3ceea58547affb38f1e1740e7322cca1ffd288",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "rows": [
+    {
+      "case": "combined_baseexception_hooks",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "repr",
+        "str",
+        "record",
+        "note"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": false,
+          "input_release_verified": false,
+          "errors": [
+            "planner close: <exception text unavailable>"
+          ],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "Primary",
+            "message": "<exception text unavailable>"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [],
+      "client_closed": false,
+      "callback_removed": false
+    },
+    {
+      "case": "event_copy_fault",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "unregister",
+        "events_iter",
+        "note"
+      ],
+      "record_attempts": [],
+      "notes": [
+        "startup cleanup record failed: RuntimeError('event copy failure')"
+      ],
+      "client_closed": true,
+      "callback_removed": true
+    },
+    {
+      "case": "json_serialization_fault",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "unregister",
+        "note"
+      ],
+      "record_attempts": [],
+      "notes": [
+        "startup cleanup record failed: TypeError('Object of type object is not JSON serializable')"
+      ],
+      "client_closed": true,
+      "callback_removed": true
+    },
+    {
+      "case": "non_string_str",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "unregister",
+        "record"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": true,
+          "input_release_verified": false,
+          "errors": [],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "Primary",
+            "message": "<exception text unavailable>"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [],
+      "client_closed": true,
+      "callback_removed": true
+    },
+    {
+      "case": "note_lookup_fault",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "record",
+        "record_repr",
+        "note_lookup",
+        "note_lookup"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": false,
+          "input_release_verified": false,
+          "errors": [
+            "planner close: OSError('ordinary close failure')"
+          ],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "Primary",
+            "message": "\u8d77\u52d5\u5931\u6557 \u2014 diagnostic regression"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [],
+      "client_closed": false,
+      "callback_removed": false
+    },
+    {
+      "case": "ordinary_cleanup_error",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "record",
+        "note"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": false,
+          "input_release_verified": false,
+          "errors": [
+            "planner close: OSError('ordinary close failure')"
+          ],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "Primary",
+            "message": "\u8d77\u52d5\u5931\u6557 \u2014 diagnostic regression"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [
+        "startup cleanup incomplete; see startup-cleanup.json"
+      ],
+      "client_closed": false,
+      "callback_removed": false
+    },
+    {
+      "case": "record_keyboardinterrupt",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "unregister",
+        "record",
+        "note"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": true,
+          "input_release_verified": false,
+          "errors": [],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "Primary",
+            "message": "\u8d77\u52d5\u5931\u6557 \u2014 diagnostic regression"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [
+        "startup cleanup record failed: KeyboardInterrupt('record interrupt')"
+      ],
+      "client_closed": true,
+      "callback_removed": true
+    },
+    {
+      "case": "record_non_oserror",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "unregister",
+        "record",
+        "note"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": true,
+          "input_release_verified": false,
+          "errors": [],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "Primary",
+            "message": "\u8d77\u52d5\u5931\u6557 \u2014 diagnostic regression"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [
+        "startup cleanup record failed: RuntimeError('record failure')"
+      ],
+      "client_closed": true,
+      "callback_removed": true
+    },
+    {
+      "case": "repr_string_subclass",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "record",
+        "note"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": false,
+          "input_release_verified": false,
+          "errors": [
+            "planner close: diagnostic subtype"
+          ],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "Primary",
+            "message": "\u8d77\u52d5\u5931\u6557 \u2014 diagnostic regression"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [
+        "startup cleanup incomplete; see startup-cleanup.json"
+      ],
+      "client_closed": false,
+      "callback_removed": false
+    },
+    {
+      "case": "type_name_fault",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "unregister",
+        "type_name",
+        "record"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": true,
+          "input_release_verified": false,
+          "errors": [],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "<exception type unavailable>",
+            "message": "type name fault"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [],
+      "client_closed": true,
+      "callback_removed": true
+    },
+    {
+      "case": "unicode_control",
+      "same_primary": true,
+      "trace": [
+        "close",
+        "unregister",
+        "record"
+      ],
+      "record_attempts": [
+        {
+          "schema": "map01-startup-cleanup-v1",
+          "session_exit_code": null,
+          "reader_joined": true,
+          "client_closed": true,
+          "input_release_verified": false,
+          "errors": [],
+          "escalations": [],
+          "stderr_complete": true,
+          "stderr_bytes": 0,
+          "stderr_reader_joined": true,
+          "startup_error": {
+            "type": "Primary",
+            "message": "\u8d77\u52d5\u5931\u6557 \u2014 diagnostic regression"
+          },
+          "startup_events": []
+        }
+      ],
+      "notes": [],
+      "client_closed": true,
+      "callback_removed": true
+    }
+  ],
+  "tests_run": 11,
+  "failures": 0,
+  "errors": 0,
+  "native_subjects": 0,
+  "result": "PASS"
+}

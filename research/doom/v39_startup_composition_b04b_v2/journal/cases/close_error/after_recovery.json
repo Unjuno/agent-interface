@@ -1,0 +1,49 @@
+{
+  "cell": "close_error",
+  "stage": "after_recovery",
+  "receipt": {
+    "schema": "map01-startup-cleanup-v1",
+    "session_exit_code": null,
+    "reader_joined": true,
+    "client_closed": true,
+    "input_release_verified": false,
+    "errors": [],
+    "escalations": [],
+    "stderr_complete": true,
+    "stderr_bytes": 0,
+    "stderr_reader_joined": true
+  },
+  "callback_retained": false,
+  "journal_closed": true,
+  "journal_close_calls": 2,
+  "events": [
+    {
+      "op": "callback_register"
+    },
+    {
+      "op": "reader_join",
+      "timeout": 1
+    },
+    {
+      "op": "journal_close",
+      "fault": true
+    },
+    {
+      "op": "fault_cleared"
+    },
+    {
+      "op": "reader_join",
+      "timeout": 1
+    },
+    {
+      "op": "journal_close",
+      "fault": false
+    },
+    {
+      "op": "callback_unregister"
+    }
+  ],
+  "start_ns": 42234926408000,
+  "end_ns": 42234926449500,
+  "elapsed_ns": 41500
+}

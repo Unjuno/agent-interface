@@ -1,0 +1,39 @@
+{
+  "allocation": "SCOPED-NOGOOD-GUI-PLAN-8473-T0-A02-20261008",
+  "issue": 8473,
+  "frozen_base_main": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "command": "docker run --rm --name issue8473-a02-candidate-20261008 --pull never --network none --read-only --cpus=1 --memory=512m --pids-limit=64 --cap-drop=ALL --security-opt=no-new-privileges --user 501:20 -v \"$PWD/candidate.py:/input/candidate.py:ro\" -v \"$PWD/candidate_inputs.json:/input/candidate_inputs.json:ro\" -v \"$PWD/formal_01:/output:rw\" --tmpfs /tmp:rw,noexec,nosuid,size=16m python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151 python3 -B /input/candidate.py /input/candidate_inputs.json /output/RAW.json"
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "command": "docker run --rm --name issue8473-a02-auditor-20261008 --pull never --network none --read-only --cpus=1 --memory=512m --pids-limit=64 --cap-drop=ALL --security-opt=no-new-privileges --user 501:20 -v \"$PWD/auditor.py:/input/auditor.py:ro\" -v \"$PWD/candidate_inputs.json:/input/candidate_inputs.json:ro\" -v \"$PWD/oracle.json:/input/oracle.json:ro\" -v \"$PWD/formal_01/RAW.json:/input/RAW.json:ro\" -v \"$PWD/audit_01:/output:rw\" --tmpfs /tmp:rw,noexec,nosuid,size=16m python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151 python3 -B /input/auditor.py /input/candidate_inputs.json /input/RAW.json /input/oracle.json /output/AUDIT.json"
+  },
+  "retries": 0,
+  "environment": {
+    "runtime": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "cgroup_version": 2,
+    "image": "python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+    "network": "none",
+    "read_only_rootfs": true,
+    "requested_limits": {"cpus": 1, "memory": "512m", "pids": 64},
+    "note": "Requested Docker limits recorded; effective resource enforcement is not independently asserted."
+  },
+  "raw_sha256": "c2bee302dff0f1c1dc74d13e6c70188c8d7bfacc90d356435588cd138dd8fe4f",
+  "audit_sha256": "1f42c8391c3bf531b37033e0e49a1421b83e3a4a940d6f189f1b49105222fbda",
+  "audit_status": "PASS_METHOD_SCOPED",
+  "audited_runs": 21,
+  "mutations_rejected": 5,
+  "local_validation": {
+    "construction_tests_normal": "8/8 PASS",
+    "construction_tests_optimized": "8/8 PASS",
+    "analysis_archive_closure_tests": "3/3 PASS",
+    "analysis_index_checker": "exit 0 in sparse mode; absent siblings explicitly not treated as removals",
+    "py_compile": "PASS",
+    "frozen_protocol_hash": "MATCH"
+  }
+}

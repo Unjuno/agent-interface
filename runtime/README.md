@@ -19,7 +19,7 @@ For local Linux-container research on Windows, use the scoped [WSL Containers (W
 | [`backends/`](backends/) | Native X11, Win32, and Quartz backend candidates; see each backend's README for its evidence boundary. |
 | [`distribution_v1/`](distribution_v1/) | Standalone doctor/bootstrap distribution work. |
 | [`distribution_v2/`](distribution_v2/) | Portable unified runtime zipapp work. |
-| [`results/`](results/) | Retained runtime-result artifacts where applicable. |
+| [`results/`](results/) | Retained runtime-result artifacts where applicable; see the [relay admission history](results/relay-admission-lineage-01a0ff58/README.md) for scoped historical UTF-8/JSON boundary evidence. |
 | `golden_desktop_*`, `golden-demo-*`, `setup-golden-demo*` | Current golden desktop demonstration runners, audits, preregistration, and reports. |
 
 Directory presence does not by itself establish platform support. Support claims remain bounded by each component's retained evidence and the user-facing release contract.

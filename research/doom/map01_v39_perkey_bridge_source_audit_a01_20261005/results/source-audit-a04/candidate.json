@@ -1,0 +1,44 @@
+{
+  "assertions": {
+    "a02_adapter_is_only_a_transition_wrapper": true,
+    "a02_freeze_omits_v39_v15_and_v4_source": true,
+    "a02_historical_owner_samples_around_each_explicit_up": true,
+    "a02_uses_injected_historical_v12_harness": true,
+    "production_batch_samples_owner_after_explicit_up": true,
+    "production_keymap_query_is_terminal_release_cleanup": true,
+    "production_up_uses_keyrelease_and_sync": true,
+    "production_v3_call_does_not_query_keymap": true,
+    "production_v4_call_does_not_query_keymap": true,
+    "trace_has_two_keymap_samples_between_up_edges": true,
+    "trace_has_two_up_edges": true,
+    "v15_selects_v39_release_batch_and_v4": true
+  },
+  "base_commit": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "counts": {
+    "a02_trace_rows": 16,
+    "key_up_edges": 2,
+    "keymap_samples_between_up_edges": 2,
+    "production_keymap_query_sites": 1
+  },
+  "interpretation": "The retained A02 between-key samples are the historical V12 owner's per-key physical-edge probes: the first up's post-sample and the next up's pre-sample. The injected transition wrapper only joins that receipt. They do not demonstrate an inter-release query in the V39 V15 production closure. Production V39 explicit-up receipts are XTest/XSync only; physical keymap is sampled at terminal cleanup, and one owner-state sample follows the ordinary release batch.",
+  "run_id": "MAP01-V39-PERKEY-SOURCE-ATTRIBUTION-A04-20261005",
+  "runner_sha256": "b640b4f7afec51b047db2a76e67c2839db6641d85d310f51f5e8646a60dcb3f8",
+  "schema": "map01-v39-perkey-source-attribution-candidate-v1",
+  "scope": "read-only source and retained-trace attribution; no candidate rerun, no live X11, GUI, OS input, game, model, application effect, threat response, recovery, or latency bound",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9",
+    "research/doom/doom_retained_input_backend_v4.py": "0e307af96760d7c70e1d2ed7f7810530d38deddec51062c8057c78d7db57b0e0",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/source/map01_v12_transition_owner.py": "3626281eb6066fa71e500160c671a3946c11fd7abb3a624d4f05d5cbed2f0db1",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "6e63390e5fa5a9dc7cf0fe2cd040ceaa3a21e0fc86366dbe67c21c41e6f937d7",
+    "research/doom/map01_v39_perkey_bridge_a02_20261005/FREEZE.json": "ba009aeddb8032f05f52582d28125d9630a2b20db602c0a3bd2b80b0b3d082ba",
+    "research/doom/map01_v39_perkey_bridge_a02_20261005/composition.py": "b0efd7d5a74d8769bb9114d9bf7ef4ce5cd2f8e09c7f01d48a8673592d84e4c0",
+    "research/doom/map01_v39_perkey_bridge_a02_20261005/results/construction-a02/operation-trace.jsonl": "7161f53e7c5c9f7eb7246751b807e5caae361d2b5c9248783ba35123c36b4c91",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/doom/test_doom_retained_input_backend_v4.py": "4050bf44a64498c8200d3b930280834cd8bf37a4d1dd3601e7d44108b1ffa14e",
+    "research/live_control/input_owner_v12.py": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+    "research/live_control/input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "research/live_control/input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3"
+  },
+  "status": "PASS_ATTRIBUTION_ONLY"
+}

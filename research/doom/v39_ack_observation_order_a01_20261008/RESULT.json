@@ -1,0 +1,154 @@
+{
+  "schema": "issue59-v39-ack-observation-order-result-a01",
+  "status": "CONSTRUCTION_OBSERVATION",
+  "main_commit": "48496b645b1cbf4c4ddea49315972724f020343c",
+  "cases": [
+    {
+      "case": "typed_before_ack",
+      "monitor_calls": 0,
+      "first_ack_event": "accepted",
+      "following_wait_event": "terminal",
+      "events": [
+        {
+          "event": "case_start",
+          "case": "typed_before_ack",
+          "order": "typed_before_ack"
+        },
+        {
+          "event": "production_wait_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 2
+        },
+        {
+          "event": "production_wait_dequeued",
+          "row_event": "accepted",
+          "sequence": null
+        },
+        {
+          "event": "ack_returned",
+          "event_type": "accepted",
+          "monitor_calls": 0,
+          "queue_depth": 1
+        },
+        {
+          "event": "production_wait_dequeued",
+          "row_event": "terminal",
+          "sequence": null
+        },
+        {
+          "event": "monitored_wait_returned",
+          "event_type": "terminal",
+          "monitor_calls": 0,
+          "queue_depth": 0
+        }
+      ]
+    },
+    {
+      "case": "ack_before_typed",
+      "monitor_calls": 1,
+      "first_ack_event": "accepted",
+      "following_wait_event": "running_action_invalidation",
+      "events": [
+        {
+          "event": "case_start",
+          "case": "ack_before_typed",
+          "order": "ack_before_typed"
+        },
+        {
+          "event": "production_wait_dequeued",
+          "row_event": "accepted",
+          "sequence": null
+        },
+        {
+          "event": "ack_returned",
+          "event_type": "accepted",
+          "monitor_calls": 0,
+          "queue_depth": 0
+        },
+        {
+          "event": "production_wait_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 2
+        },
+        {
+          "event": "monitor_observe",
+          "sequence": 2,
+          "health": 70
+        },
+        {
+          "event": "monitored_wait_returned",
+          "event_type": "running_action_invalidation",
+          "monitor_calls": 1,
+          "queue_depth": 1
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "event": "case_start",
+      "case": "typed_before_ack",
+      "order": "typed_before_ack"
+    },
+    {
+      "event": "production_wait_dequeued",
+      "row_event": "typed_observation",
+      "sequence": 2
+    },
+    {
+      "event": "production_wait_dequeued",
+      "row_event": "accepted",
+      "sequence": null
+    },
+    {
+      "event": "ack_returned",
+      "event_type": "accepted",
+      "monitor_calls": 0,
+      "queue_depth": 1
+    },
+    {
+      "event": "production_wait_dequeued",
+      "row_event": "terminal",
+      "sequence": null
+    },
+    {
+      "event": "monitored_wait_returned",
+      "event_type": "terminal",
+      "monitor_calls": 0,
+      "queue_depth": 0
+    },
+    {
+      "event": "case_start",
+      "case": "ack_before_typed",
+      "order": "ack_before_typed"
+    },
+    {
+      "event": "production_wait_dequeued",
+      "row_event": "accepted",
+      "sequence": null
+    },
+    {
+      "event": "ack_returned",
+      "event_type": "accepted",
+      "monitor_calls": 0,
+      "queue_depth": 0
+    },
+    {
+      "event": "production_wait_dequeued",
+      "row_event": "typed_observation",
+      "sequence": 2
+    },
+    {
+      "event": "monitor_observe",
+      "sequence": 2,
+      "health": 70
+    },
+    {
+      "event": "monitored_wait_returned",
+      "event_type": "running_action_invalidation",
+      "monitor_calls": 1,
+      "queue_depth": 1
+    }
+  ],
+  "scope": "Two deterministic queue orderings through the exact frozen production wait helper; fake acceptance only, no executor binary or input."
+}

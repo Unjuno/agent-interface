@@ -1,0 +1,165 @@
+{
+  "schema_version": "system-carbon-rebound-t0-source-v1",
+  "source_id": "issue-8421-synthetic-accounting-fixture-v1",
+  "claim_boundary": "synthetic accounting-method validation only; no device, model, provider, workload, GUI, or emissions measurement",
+  "session_minutes": 60,
+  "opportunity_ids": ["opp-001", "opp-002", "opp-003", "opp-004"],
+  "carbon_intensity": {
+    "region": "synthetic-common-grid",
+    "version": "fixture-grid-v1",
+    "central_g_co2e_per_kwh": "500",
+    "low_g_co2e_per_kwh": "450",
+    "high_g_co2e_per_kwh": "550",
+    "uncertainty_kind": "declared deterministic sensitivity bounds; not a statistical confidence interval"
+  },
+  "embodied_allocation": {
+    "method": "synthetic-fixed-session-allocation-v1",
+    "claim_boundary": "illustrative allocation only; not measured hardware inventory or lifecycle assessment",
+    "components": {
+      "client": {"central_g_co2e": "0.4", "low_g_co2e": "0.3", "high_g_co2e": "0.5"},
+      "provider": {"central_g_co2e": "1.6", "low_g_co2e": "1.4", "high_g_co2e": "1.8"}
+    }
+  },
+  "cases": [
+    {
+      "case_id": "no_demand_change",
+      "purpose": "same opportunities and dispositions; client energy per safe effect falls while common-boundary session energy stays equal",
+      "arms": [
+        {
+          "arm_id": "reference",
+          "opportunities": [
+            {"opportunity_id": "opp-001", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-002", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-003", "state": "failed"},
+            {"opportunity_id": "opp-004", "state": "skipped"}
+          ],
+          "activities": [
+            {"activity_id": "a-01", "opportunity_id": "opp-001", "kind": "attempt", "outcome": "success", "client_wh": "1.0", "provider_wh": "1.5"},
+            {"activity_id": "a-02", "opportunity_id": "opp-002", "kind": "attempt", "outcome": "failure", "client_wh": "0.5", "provider_wh": "0.9"},
+            {"activity_id": "a-03", "opportunity_id": "opp-002", "kind": "retry", "outcome": "success", "client_wh": "1.2", "provider_wh": "2.1"},
+            {"activity_id": "a-04", "opportunity_id": "opp-003", "kind": "attempt", "outcome": "failure", "client_wh": "0.8", "provider_wh": "1.1"},
+            {"activity_id": "a-05", "opportunity_id": "opp-003", "kind": "recovery", "outcome": "recovered_without_effect", "client_wh": "0.5", "provider_wh": "0.4"}
+          ],
+          "session_energy": [
+            {"row_id": "idle-client", "kind": "idle", "component": "client", "wh": "1.0"},
+            {"row_id": "reserved-provider", "kind": "reserved_capacity", "component": "provider", "wh": "1.0"}
+          ]
+        },
+        {
+          "arm_id": "alternate",
+          "opportunities": [
+            {"opportunity_id": "opp-001", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-002", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-003", "state": "failed"},
+            {"opportunity_id": "opp-004", "state": "skipped"}
+          ],
+          "activities": [
+            {"activity_id": "a-01", "opportunity_id": "opp-001", "kind": "attempt", "outcome": "success", "client_wh": "0.5", "provider_wh": "2.0"},
+            {"activity_id": "a-02", "opportunity_id": "opp-002", "kind": "attempt", "outcome": "failure", "client_wh": "0.25", "provider_wh": "1.2"},
+            {"activity_id": "a-03", "opportunity_id": "opp-002", "kind": "retry", "outcome": "success", "client_wh": "0.6", "provider_wh": "2.8"},
+            {"activity_id": "a-04", "opportunity_id": "opp-003", "kind": "attempt", "outcome": "failure", "client_wh": "0.4", "provider_wh": "1.4"},
+            {"activity_id": "a-05", "opportunity_id": "opp-003", "kind": "recovery", "outcome": "recovered_without_effect", "client_wh": "0.25", "provider_wh": "0.6"}
+          ],
+          "session_energy": [
+            {"row_id": "idle-client", "kind": "idle", "component": "client", "wh": "1.0"},
+            {"row_id": "reserved-provider", "kind": "reserved_capacity", "component": "provider", "wh": "1.0"}
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "beneficial_expansion",
+      "purpose": "alternate starts an additional safe opportunity while both client energy per safe effect and session operational carbon fall",
+      "arms": [
+        {
+          "arm_id": "reference",
+          "opportunities": [
+            {"opportunity_id": "opp-001", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-002", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-003", "state": "failed"},
+            {"opportunity_id": "opp-004", "state": "skipped"}
+          ],
+          "activities": [
+            {"activity_id": "a-01", "opportunity_id": "opp-001", "kind": "attempt", "outcome": "success", "client_wh": "1.0", "provider_wh": "1.5"},
+            {"activity_id": "a-02", "opportunity_id": "opp-002", "kind": "attempt", "outcome": "failure", "client_wh": "0.5", "provider_wh": "0.9"},
+            {"activity_id": "a-03", "opportunity_id": "opp-002", "kind": "retry", "outcome": "success", "client_wh": "1.2", "provider_wh": "2.1"},
+            {"activity_id": "a-04", "opportunity_id": "opp-003", "kind": "attempt", "outcome": "failure", "client_wh": "0.8", "provider_wh": "1.1"},
+            {"activity_id": "a-05", "opportunity_id": "opp-003", "kind": "recovery", "outcome": "recovered_without_effect", "client_wh": "0.5", "provider_wh": "0.4"}
+          ],
+          "session_energy": [
+            {"row_id": "idle-client", "kind": "idle", "component": "client", "wh": "1.0"},
+            {"row_id": "reserved-provider", "kind": "reserved_capacity", "component": "provider", "wh": "1.0"}
+          ]
+        },
+        {
+          "arm_id": "alternate",
+          "opportunities": [
+            {"opportunity_id": "opp-001", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-002", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-003", "state": "failed"},
+            {"opportunity_id": "opp-004", "state": "verified_safe_effect"}
+          ],
+          "activities": [
+            {"activity_id": "a-01", "opportunity_id": "opp-001", "kind": "attempt", "outcome": "success", "client_wh": "0.5", "provider_wh": "1.0"},
+            {"activity_id": "a-02", "opportunity_id": "opp-002", "kind": "attempt", "outcome": "failure", "client_wh": "0.25", "provider_wh": "0.6"},
+            {"activity_id": "a-03", "opportunity_id": "opp-002", "kind": "retry", "outcome": "success", "client_wh": "0.6", "provider_wh": "1.4"},
+            {"activity_id": "a-04", "opportunity_id": "opp-003", "kind": "attempt", "outcome": "failure", "client_wh": "0.4", "provider_wh": "0.7"},
+            {"activity_id": "a-05", "opportunity_id": "opp-003", "kind": "recovery", "outcome": "recovered_without_effect", "client_wh": "0.25", "provider_wh": "0.3"},
+            {"activity_id": "a-06", "opportunity_id": "opp-004", "kind": "attempt", "outcome": "success", "client_wh": "0.2", "provider_wh": "0.4"}
+          ],
+          "session_energy": [
+            {"row_id": "idle-client", "kind": "idle", "component": "client", "wh": "1.0"},
+            {"row_id": "reserved-provider", "kind": "reserved_capacity", "component": "provider", "wh": "1.0"}
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "seeded_sign_reversal",
+      "purpose": "alternate has lower client joules per safe effect but higher complete-session operational carbon; common intensity bounds must preserve the positive paired contrast",
+      "arms": [
+        {
+          "arm_id": "reference",
+          "opportunities": [
+            {"opportunity_id": "opp-001", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-002", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-003", "state": "failed"},
+            {"opportunity_id": "opp-004", "state": "skipped"}
+          ],
+          "activities": [
+            {"activity_id": "a-01", "opportunity_id": "opp-001", "kind": "attempt", "outcome": "success", "client_wh": "1.0", "provider_wh": "1.5"},
+            {"activity_id": "a-02", "opportunity_id": "opp-002", "kind": "attempt", "outcome": "failure", "client_wh": "0.5", "provider_wh": "0.9"},
+            {"activity_id": "a-03", "opportunity_id": "opp-002", "kind": "retry", "outcome": "success", "client_wh": "1.2", "provider_wh": "2.1"},
+            {"activity_id": "a-04", "opportunity_id": "opp-003", "kind": "attempt", "outcome": "failure", "client_wh": "0.8", "provider_wh": "1.1"},
+            {"activity_id": "a-05", "opportunity_id": "opp-003", "kind": "recovery", "outcome": "recovered_without_effect", "client_wh": "0.5", "provider_wh": "0.4"}
+          ],
+          "session_energy": [
+            {"row_id": "idle-client", "kind": "idle", "component": "client", "wh": "1.0"},
+            {"row_id": "reserved-provider", "kind": "reserved_capacity", "component": "provider", "wh": "1.0"}
+          ]
+        },
+        {
+          "arm_id": "alternate",
+          "opportunities": [
+            {"opportunity_id": "opp-001", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-002", "state": "verified_safe_effect"},
+            {"opportunity_id": "opp-003", "state": "failed"},
+            {"opportunity_id": "opp-004", "state": "verified_safe_effect"}
+          ],
+          "activities": [
+            {"activity_id": "a-01", "opportunity_id": "opp-001", "kind": "attempt", "outcome": "success", "client_wh": "0.5", "provider_wh": "2.0"},
+            {"activity_id": "a-02", "opportunity_id": "opp-002", "kind": "attempt", "outcome": "failure", "client_wh": "0.25", "provider_wh": "1.2"},
+            {"activity_id": "a-03", "opportunity_id": "opp-002", "kind": "retry", "outcome": "success", "client_wh": "0.6", "provider_wh": "2.8"},
+            {"activity_id": "a-04", "opportunity_id": "opp-003", "kind": "attempt", "outcome": "failure", "client_wh": "0.4", "provider_wh": "1.4"},
+            {"activity_id": "a-05", "opportunity_id": "opp-003", "kind": "recovery", "outcome": "recovered_without_effect", "client_wh": "0.25", "provider_wh": "0.6"},
+            {"activity_id": "a-06", "opportunity_id": "opp-004", "kind": "attempt", "outcome": "success", "client_wh": "0.2", "provider_wh": "6.0"}
+          ],
+          "session_energy": [
+            {"row_id": "idle-client", "kind": "idle", "component": "client", "wh": "1.0"},
+            {"row_id": "reserved-provider", "kind": "reserved_capacity", "component": "provider", "wh": "1.0"}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "issue8566-reconcile-a01-audit-failure-v1",
+  "classification": "AUDITOR_IMPLEMENTATION_FAILURE",
+  "candidate_rerun": false,
+  "failure": {
+    "exception": "KeyError",
+    "message": "'source_blob'",
+    "file": "audit.py",
+    "line": 25,
+    "cause": "Initial auditor looked for source_blob at the freeze root; freeze stores it under source_files[relative_path].git_blob."
+  },
+  "captured_command": "wslc run --rm --pull never --network none --memory 1G --cpus 1 ... python /work/audit.py",
+  "captured_output": "Traceback (most recent call last):\n  File \"/work/audit.py\", line 66, in <module>\n    main()\n  File \"/work/audit.py\", line 25, in main\n    checks[\"raw_source_blob\"] = raw.get(\"source_blob\") == freeze[\"source_blob\"]\n                                                          ~~~~~~^^^^^^^^^^^^^^\nKeyError: 'source_blob'",
+  "captured_exit": 1,
+  "raw_result_sha256": "c032b799266c1fbb3441af6a483ff2c196d968e1f55cfb19c3224591fad19266"
+}

@@ -1,0 +1,52 @@
+import pathlib,json,struct,zlib,hashlib,copy,datetime
+r=pathlib.Path(__file__).resolve().parent;g=r/'guest-public/public-b03'
+def png_pixels(data):
+ assert data[:8]==b'\x89PNG\r\n\x1a\n';offset=8;compressed=b'';dimensions=None
+ while offset<len(data):
+  size=struct.unpack('!I',data[offset:offset+4])[0];kind=data[offset+4:offset+8];payload=data[offset+8:offset+8+size];crc=struct.unpack('!I',data[offset+8+size:offset+12+size])[0]
+  assert zlib.crc32(kind+payload)==crc
+  if kind==b'IHDR':
+   w,h,depth,color,comp,filtering,interlace=struct.unpack('!IIBBBBB',payload);assert (depth,color,comp,filtering,interlace)==(8,2,0,0,0);dimensions=(w,h)
+  if kind==b'IDAT':compressed+=payload
+  offset+=size+12
+  if kind==b'IEND':break
+ assert offset==len(data)
+ rows=zlib.decompress(compressed);w,h=dimensions;stride=w*3;assert len(rows)==h*(stride+1);previous=bytes(stride);pixels=bytearray()
+ for y in range(h):
+  row=bytearray(rows[y*(stride+1)+1:(y+1)*(stride+1)]);kind=rows[y*(stride+1)];assert kind<=4
+  for x in range(stride):
+   left=row[x-3] if x>=3 else 0;up=previous[x];corner=previous[x-3] if x>=3 else 0
+   if kind==0:predict=0
+   elif kind==1:predict=left
+   elif kind==2:predict=up
+   elif kind==3:predict=(left+up)//2
+   else:
+    p=left+up-corner;a,b,c=abs(p-left),abs(p-up),abs(p-corner);predict=left if a<=b and a<=c else up if b<=c else corner
+   row[x]=(row[x]+predict)%256
+  pixels.extend(row);previous=row
+ return dimensions,bytes(pixels)
+def verify(result,events,png,wire):
+ assert result['status']=='PASS_CONSTRUCTION' and result['unauthenticated_probe']['exit_code']!=0
+ assert result['uid']==501 and result['cgroup']=={'cpu.max':'100000 100000','memory.max':'805306368','pids.max':'256'}
+ assert result['input_down_calls']==result['model_calls']==result['formal_task_attempts']==0
+ assert result['release']['verified'] is True and result['release']['keys_down']==[] and result['release']['buttons_down']==[]
+ assert result['owner_thread_alive_after_close'] is False and all(x['exit_code'] is not None for x in result['child_exits'])
+ assert len(events)==1 and events[0]['event']=='observation' and events[0]['sequence']==1 and events[0]['semantic_completion']=='unknown'
+ magic,length=struct.unpack('!4sI',wire[:8]);assert magic==b'AIT1';meta=json.loads(wire[8:8+length]);raw=zlib.decompress(wire[8+length:]);dimensions,pixels=png_pixels(png)
+ assert meta['kind']=='full' and meta['sequence']==1 and meta['base']==0 and meta['mode']=='RGB'
+ assert dimensions==(meta['width'],meta['height'])==(1280,800) and len(raw)==1280*800*3
+ assert pixels==raw and meta['observed_ns']==events[0]['capture_ns']==result['observation']['capture_ns']
+ return {'pixels':len(raw),'rgb_sha256':hashlib.sha256(raw).hexdigest(),'dimensions':list(dimensions),'first_exit_codes':[x['exit_code'] for x in result['child_exits']]}
+result=json.loads((g/'result.json').read_text());events=json.loads((g/'events.json').read_text());png=(g/'001.png').read_bytes();wire=(g/'001.ait').read_bytes();positive=verify(result,events,png,wire);negatives=[]
+for name in ['unauthenticated_admitted','release_unverified','child_exit_missing','PNG_wire_mismatch']:
+ rr=copy.deepcopy(result);ww=wire
+ if name=='unauthenticated_admitted':rr['unauthenticated_probe']['exit_code']=0
+ elif name=='release_unverified':rr['release']['verified']=False
+ elif name=='child_exit_missing':rr['child_exits'][0]['exit_code']=None
+ else:
+  n=struct.unpack('!I',wire[4:8])[0];raw=bytearray(zlib.decompress(wire[8+n:]));raw[0]^=1;ww=wire[:8+n]+zlib.compress(raw,1)
+ try:verify(rr,events,png,ww)
+ except AssertionError:negatives.append({'name':name,'rejected':True})
+ else:raise RuntimeError('negative accepted '+name)
+output={'status':'PASS_SCOPED_RAW_AUDIT','scope':'independent stdlib PNG/AIT byte reconstruction, recorded auth/release/exit consistency; no producer/helper imported; no physical input-down or efficiency claim','positive':positive,'negatives':negatives,'audited_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+(r/'AUDIT.json').write_text(json.dumps(output,indent=2)+'\n');print(json.dumps(output))

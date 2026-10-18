@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orbctl",
+    "run",
+    "-m",
+    "unjuno-57-5884-debian-a02-20261003",
+    "-u",
+    "root",
+    "/bin/bash",
+    "-c",
+    "systemctl is-active unjuno-57-held-d01-5884.service; ps -p 182,185,189,207 -o pid=,ppid=,stat=,comm=; test ! -e /tmp/.X120-lock && test ! -e /tmp/.X11-unix/X120"
+  ],
+  "timeout_seconds": 30,
+  "stdin_sha256": null,
+  "started_utc": "2026-10-03T14:28:07.823714+00:00"
+}

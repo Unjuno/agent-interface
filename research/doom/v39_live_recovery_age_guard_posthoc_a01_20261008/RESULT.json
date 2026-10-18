@@ -1,0 +1,84 @@
+{
+  "format": "v39-age-guard-posthoc-result-v1",
+  "classification": "OFFLINE_POSTHOC_CHARACTERIZATION",
+  "cases": [
+    {
+      "iteration": 2,
+      "observed_age_ms": 1524.789823,
+      "authored_cap_ms": 1500,
+      "retained_outcomes": {
+        "health": {
+          "status": "UNKNOWN",
+          "reason": "source_expired"
+        },
+        "ammo": {
+          "status": "UNKNOWN",
+          "reason": "source_expired"
+        }
+      },
+      "same_samples_age_cap_30000ms": {
+        "health": {
+          "status": "UNCHANGED",
+          "reason": "signal_unchanged"
+        },
+        "ammo": {
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope"
+        }
+      },
+      "health_below_hard_minimum_age_cap_30000ms": {
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum"
+      },
+      "health_below_hard_minimum_while_expired": {
+        "status": "UNKNOWN",
+        "reason": "source_expired",
+        "requires_new_decision": true,
+        "keep_existing_policy": false
+      }
+    },
+    {
+      "iteration": 5,
+      "observed_age_ms": 2133.932983,
+      "authored_cap_ms": 2000,
+      "retained_outcomes": {
+        "health": {
+          "status": "UNKNOWN",
+          "reason": "source_expired"
+        },
+        "ammo": {
+          "status": "UNKNOWN",
+          "reason": "source_expired"
+        }
+      },
+      "same_samples_age_cap_30000ms": {
+        "health": {
+          "status": "UNCHANGED",
+          "reason": "signal_unchanged"
+        },
+        "ammo": {
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope"
+        }
+      },
+      "health_below_hard_minimum_age_cap_30000ms": {
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum"
+      },
+      "health_below_hard_minimum_while_expired": {
+        "status": "UNKNOWN",
+        "reason": "source_expired",
+        "requires_new_decision": true,
+        "keep_existing_policy": false
+      }
+    }
+  ],
+  "interpretation": "A14's two observed invalidations classify as source expiry before a hard health crossing. With the age cap raised solely for counterfactual isolation, same-sample health remains unchanged and ammo is soft-changed; an explicitly synthesized health value below the frozen hard minimum is hard-invalidated. When that below-floor value is paired with an expired age, status remains UNKNOWN/source_expired, but the guard still requires a new decision and does not keep the existing policy.",
+  "limitations": [
+    "The 30000 ms cap is a diagnostic counterfactual, not a live setting recommendation.",
+    "The synthesized health crossing is not an observed A14 event.",
+    "The expired-plus-below-floor combination is a synthetic guard input, not an observed A14 event.",
+    "This establishes guard classification only, not monitor timing, enemy attribution, safe behavior, task effect, or live efficacy.",
+    "A14 remains a protocol-deviation run and its raw record is untouched."
+  ]
+}

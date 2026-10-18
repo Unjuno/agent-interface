@@ -1,0 +1,127 @@
+{
+  "analysis_base_commit": "b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3",
+  "candidate_sources": {
+    "auditor": {
+      "path": "audit_v2_a02.py",
+      "sha256": "9de115cfdffbe3acc2de086e32ef9c2db8c14ae66663f0622c4af409baeca3f2"
+    },
+    "independent_auditor": {
+      "path": "independent_audit_v2_a02.py",
+      "sha256": "76f7464099d0a1b5ab14aa5cbd64343e6f6f824e30f3e8dc93677f10fb8a9482"
+    },
+    "mutation_test": {
+      "path": "test_mutations_a02.py",
+      "sha256": "e43f0caa43f6e2c369384e2fa8c7bf41c3cc3b4b093811dfa93b3881e3b26d04"
+    }
+  },
+  "classification": "posthoc retained-evidence auditor repair; no new live allocation",
+  "decision_rule": "PASS only if the original retained RESULT is reconstructed field-for-field, including exact object keys, by both independent implementations, and all six frozen corruptions are rejected by both A02 checks. A01 is preserved as historical audit evidence.",
+  "format": "issue59-v39-fire-cover-ammo-audit-a02-freeze-v1",
+  "frozen_at": "2026-10-05",
+  "parent_package_commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "parent_package_files": {
+    "audit": {
+      "commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+      "git_blob": "a390129c6e2674da985a03f25049afb6fe24b8d1",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_59_p01_20261005/AUDIT.json",
+      "sha256": "b67e78076d51f9c78f9316ecf550693dae66e8f4eec353f59c2f5c6dcf653462"
+    },
+    "auditor": {
+      "commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+      "git_blob": "26cd13fa698417e2ecc182ba92e2b02f56965a9d",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_59_p01_20261005/audit.py",
+      "sha256": "a5c1f2479d1811114dac5857a9cef795274061fb86094de7300e9d92dab0b6ad"
+    },
+    "candidate": {
+      "commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+      "git_blob": "7cc6efac834c8a135b190cb006d4964c0ed2d082",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_59_p01_20261005/analyze.py",
+      "sha256": "aeb8492831ab9bc41a88a09347c55301009810d286a0d7163800a1a77d183e82"
+    },
+    "freeze": {
+      "commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+      "git_blob": "ec38f44a2d2bd1bc480553f7e70e5ab228b0ce30",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_59_p01_20261005/FREEZE.json",
+      "sha256": "37d4a295c3df9fde5a65327749b6d742931dca21c4997da5afdf6a474be0a342"
+    },
+    "result": {
+      "commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+      "git_blob": "2dc2f42f2b301e122162dfe76d4b0b37dc91d742",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_59_p01_20261005/RESULT.json",
+      "sha256": "4dc9eeb5dfbd79d7f6d429be8d94e38d032a9ace63f31a86336128eb0528cdce"
+    }
+  },
+  "raw_inputs": {
+    "events": {
+      "commit": "b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3",
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl",
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+    },
+    "report": {
+      "commit": "b67fc4f33a28f9cea1c4c6cb2d95a470f6be53f3",
+      "git_blob": "bff2459036dcdcc44ed100b0c0bc657e1bb8e69a",
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/report.json",
+      "sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687"
+    }
+  },
+  "reported_false_pass_mutations": [
+    {
+      "id": "disposition",
+      "path": [
+        "disposition"
+      ],
+      "value": "ZERO_AMMO_EXPOSED"
+    },
+    {
+      "id": "health_endpoints",
+      "path": [
+        "windows",
+        0,
+        "health_first_last"
+      ],
+      "value": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "policy_invalidation",
+      "path": [
+        "windows",
+        2,
+        "policy_invalidation_signal"
+      ],
+      "value": null
+    },
+    {
+      "id": "negative_wait",
+      "path": [
+        "windows",
+        0,
+        "model_wait_ms"
+      ],
+      "value": -1
+    },
+    {
+      "id": "cover_actions",
+      "path": [
+        "windows",
+        0,
+        "cover_actions"
+      ],
+      "value": [
+        "strafe_left"
+      ]
+    },
+    {
+      "id": "missing_null_field",
+      "op": "delete",
+      "path": [
+        "windows",
+        0,
+        "policy_invalidation_signal"
+      ]
+    }
+  ]
+}

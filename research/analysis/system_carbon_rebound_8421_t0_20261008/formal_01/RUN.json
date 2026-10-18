@@ -1,0 +1,34 @@
+{
+  "schema_version": "system-carbon-rebound-t0-run-v1",
+  "issue": "Unjuno/agent-interface#8421",
+  "allocation": "SYSTEM-CARBON-REBOUND-8421-T0-20261008",
+  "branch": "research/system-carbon-rebound-8421-t0-20261008",
+  "freeze_commit": "ff4a8651108cd0da4e6e78e26d3b1ce961c2956b",
+  "source_sha256": "16f414e11cda213d34823e5f160799bbba5638aa7fe6a0f734092fc5b92a355e",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "command": "python research/analysis/system_carbon_rebound_8421_t0_20261008/candidate.py research/analysis/system_carbon_rebound_8421_t0_20261008/SOURCE.json research/analysis/system_carbon_rebound_8421_t0_20261008/formal_01/RAW.json"
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "command": "python research/analysis/system_carbon_rebound_8421_t0_20261008/audit.py research/analysis/system_carbon_rebound_8421_t0_20261008/SOURCE.json research/analysis/system_carbon_rebound_8421_t0_20261008/formal_01/RAW.json research/analysis/system_carbon_rebound_8421_t0_20261008/formal_01/AUDIT.json",
+    "status": "PASS_METHOD_SCOPED"
+  },
+  "retries": 0,
+  "preformal_test_result": "PASS 4/4; five frozen hostile mutation variants rejected",
+  "raw_sha256": "b4c8ec6a78ac337a0d0a1c28c8bac3c5f2b2262ed7ace8251531babbe8607e7f",
+  "audit_sha256": "3e9beaa21de02ab9a20f72ec55afe6878b272ba983de933e5aa1097d6f10f48e",
+  "environment": {
+    "python": "CPython 3.12.13",
+    "dependencies": "stdlib only",
+    "container": false,
+    "isolation_claim": false,
+    "model_calls": 0,
+    "device_measurements": 0,
+    "provider_measurements": 0
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "recorded_at_utc": "2026-10-08T02:21:22Z"
+}

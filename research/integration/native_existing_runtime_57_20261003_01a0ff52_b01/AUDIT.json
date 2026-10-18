@@ -1,0 +1,36 @@
+{
+  "status": "PASS_SCOPED_RAW_AUDIT",
+  "scope": "independent stdlib PNG/AIT byte reconstruction, recorded auth/release/exit consistency; no producer/helper imported; no physical input-down or efficiency claim",
+  "positive": {
+    "pixels": 3072000,
+    "rgb_sha256": "fc9adf48f09b2986d918f71af4078328ceb980f3577f8710f8f66c5cfff0069c",
+    "dimensions": [
+      1280,
+      800
+    ],
+    "first_exit_codes": [
+      0,
+      1,
+      0
+    ]
+  },
+  "negatives": [
+    {
+      "name": "unauthenticated_admitted",
+      "rejected": true
+    },
+    {
+      "name": "release_unverified",
+      "rejected": true
+    },
+    {
+      "name": "child_exit_missing",
+      "rejected": true
+    },
+    {
+      "name": "PNG_wire_mismatch",
+      "rejected": true
+    }
+  ],
+  "audited_utc": "2026-10-03T14:08:57.681457+00:00"
+}

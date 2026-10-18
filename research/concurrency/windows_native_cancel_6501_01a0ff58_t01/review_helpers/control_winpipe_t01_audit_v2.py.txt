@@ -1,0 +1,14 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,subprocess,sys,hashlib,shutil,os
+R=Path(__file__).resolve().parents[1];O=R/'outputs/ownedwinpipe6501-t01';W=R/'work/ownedwinpipe6501-t01';first=json.loads((O/'AUDIT_CONTROLS_FIRST.json').read_bytes());C=W/'audit-controls-v2';C.mkdir(exist_ok=False);H=lambda b:hashlib.sha256(b).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat();rows=[]
+for old in first['rows']:
+    name=old['control'];d=C/name;shutil.copytree(W/'audit-controls'/name,d)
+    for f in ('FREEZE.json','probe.py.txt'):shutil.copyfile(O/f,d/f)
+    for mode in ('normal_D','wrapper_cancel','native_cancel'):
+        for f in ('stdout.txt','stderr.txt'):shutil.copyfile(O/mode/f,d/mode/f)
+    start=now();p=subprocess.Popen([sys.executable,'-B',str(W/'audit_v2.py'),str(d)],stdout=subprocess.PIPE,stderr=subprocess.PIPE);out,err=p.communicate(timeout=8);(d/'audit_v2.stdout.txt').write_bytes(out);(d/'audit_v2.stderr.txt').write_bytes(err)
+    rows.append({'control':name,'start_utc':start,'pid':p.pid,'end_utc':now(),'exit':p.returncode,'rejected':p.returncode!=0,'serialized_first_mutation_unchanged':all((d/'native_cancel'/f).read_bytes()==(W/'audit-controls'/name/'native_cancel'/f).read_bytes() for f in ('RESULT.json','events.json','RECEIPT.json')),'stdout_sha256':H(out),'stderr_sha256':H(err)})
+rec={'status':'PASS_NINE_CONTROLS' if all(x['rejected'] and x['serialized_first_mutation_unchanged'] for x in rows) else 'FAIL','source_sha256':H((W/'audit_v2.py').read_bytes()),'first_false_accepts_preserved':['wrong_read_tid','sequence_bool_alias'],'producer_invocations':0,'rows':rows}
+(O/'AUDIT_CONTROLS_V2.json').write_text(json.dumps(rec,sort_keys=True,indent=2)+'\n',encoding='utf8');(O/'audit_v2.py.txt').write_bytes((W/'audit_v2.py').read_bytes());print(json.dumps({'status':rec['status'],'controls':len(rows),'first_false_accepts_preserved':rec['first_false_accepts_preserved'],'start_utc':rows[0]['start_utc'],'end_utc':rows[-1]['end_utc']}));raise SystemExit(0 if rec['status']=='PASS_NINE_CONTROLS' else 1)
+

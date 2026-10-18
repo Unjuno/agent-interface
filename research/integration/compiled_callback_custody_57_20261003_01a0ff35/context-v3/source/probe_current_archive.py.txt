@@ -1,0 +1,44 @@
+"""Test only the exact committed runtime archive, with external inert fixtures."""
+from pathlib import Path
+import hashlib, importlib.util, json, subprocess, sys, unittest, zipfile
+
+here = Path(__file__).resolve().parent
+root = here.parent/'agent-interface-compiled-custody'
+manifest = json.loads((here/'current-build-manifest.json').read_text())
+archive = here/'current-runtime.pyz'
+source = json.loads((here/'source-commit.readback.json').read_text())['source_commit']
+assert manifest['source_revision'] == source
+assert manifest['sha256'] == hashlib.sha256(archive.read_bytes()).hexdigest()
+with zipfile.ZipFile(archive) as z:
+    assert sorted(z.namelist()) == manifest['entries']
+    assert len(manifest['source_files']) == 51
+    for row in manifest['source_files']:
+        raw = z.read(row['path'])
+        committed = subprocess.check_output([r'C:\Program Files\Git\cmd\git.exe','-C',str(root),'show',source+':'+row['path']])
+        assert raw == committed and len(raw) == row['bytes']
+        assert hashlib.sha256(raw).hexdigest() == row['sha256']
+sys.path.insert(0,str(archive))
+from runtime.core_v1 import compiled_gui
+assert str(archive) in compiled_gui.__file__
+assert hashlib.sha256(Path(here/'combined/runtime/core_v1/compiled_gui.py').read_bytes()).hexdigest() == '1c210ee9bbd727ba32c18630d0e0a80088c8fa9cbafe233010f7186235c95f3f'
+print(json.dumps(dict(source_revision=source,archive_sha256=manifest['sha256'],
+                      archive_bytes=manifest['bytes'],archive_entries=len(manifest['entries']),
+                      source_entries_verified=51,loaded_compiled=compiled_gui.__file__)))
+
+def load(name,path):
+    spec = importlib.util.spec_from_file_location(name,path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+
+load('runtime.core_v1.test_compiled_gui',here/'combined/runtime/core_v1/test_compiled_gui.py')
+suite = unittest.TestSuite()
+for name,path in [
+    ('archive_custody_tests',here/'combined/runtime/core_v1/test_compiled_callback_custody_01a0ff35.py'),
+    ('archive_effect_tests',here/'combined/runtime/core_v1/test_compiled_effect_evidence_01a0ff32.py'),
+    ('archive_join_tests',here/'test_compiled_custody_effect_join_01a0ff35.py')]:
+    suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(load(name,path)))
+assert suite.countTestCases() == 12
+result = unittest.TextTestRunner(verbosity=2).run(suite)
+raise SystemExit(0 if result.wasSuccessful() else 1)

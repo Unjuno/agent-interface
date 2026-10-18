@@ -1,0 +1,82 @@
+{
+  "input_sha256": "774cf782f41806e6e4633d732367f7e4b17f2eac882081164aa15c10abeb3cb9",
+  "input_line_hashes": [
+    "00b512f9b9fe1a73ca211cf40c5dd4c1d47ee66b07e4001920c45ebd7e3c4776",
+    "27947dbd18086afc0ca230a76c46c4f18c51453657f273fdfa90ec99af7fdc47"
+  ],
+  "decoded_boundaries": [
+    {
+      "encoding": "cp932",
+      "duplicate_keys": [
+        "\ud83d\ude00",
+        "\ue05e\udc98\u0080"
+      ],
+      "duplicate_key_codepoints": [
+        [
+          128512
+        ],
+        [
+          57438,
+          56472,
+          128
+        ]
+      ],
+      "keys_equal": false,
+      "text": "\u8b4c\uff65\u8b5b\uff6c\u96b1\u6a47\u6cbd\u0080",
+      "text_codepoints": [
+        35660,
+        65381,
+        35675,
+        65388,
+        38577,
+        27207,
+        27837,
+        128
+      ],
+      "text_matches_authored_unicode": false
+    },
+    {
+      "encoding": "utf-8",
+      "duplicate_keys": [
+        "\ud83d\ude00",
+        "\ud83d\ude00"
+      ],
+      "duplicate_key_codepoints": [
+        [
+          128512
+        ],
+        [
+          128512
+        ]
+      ],
+      "keys_equal": true,
+      "text": "\u65e5\u672c\u8a9e\ud83d\ude00",
+      "text_codepoints": [
+        26085,
+        26412,
+        35486,
+        128512
+      ],
+      "text_matches_authored_unicode": true
+    }
+  ],
+  "original_actual_sdk_statuses": [
+    "unknown_requires_reconciliation",
+    "refused",
+    "returned",
+    "returned",
+    "refused",
+    "returned"
+  ],
+  "original_actual_sdk_next_ids": [
+    2,
+    2,
+    3,
+    4,
+    4,
+    5
+  ],
+  "original_static_valid_true_is_not_exact_transport_proof": true,
+  "first_script_failure_remains": "ValueError: original Unicode static validation did not reproduce native encoding failure",
+  "limitations": "Retained-data deterministic byte decoding and observed static result; no server argument echo, real input or model/task/scientific PASS"
+}

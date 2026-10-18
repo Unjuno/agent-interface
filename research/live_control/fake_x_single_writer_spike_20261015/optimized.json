@@ -1,0 +1,1777 @@
+{
+  "scope": "FAKE_X_SEPARATION_SPIKE",
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "optimized": 1,
+  "cases": [
+    {
+      "arm": "coupled",
+      "mode": "healthy",
+      "boundary": {
+        "keys": [
+          1
+        ],
+        "buttons": [
+          1
+        ],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": null,
+        "revoked": false,
+        "epoch": 0,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 4
+      },
+      "backend_resumed": null,
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752280667500
+        },
+        "revoked": false,
+        "epoch": 0,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 17
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 44588
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 44588
+        },
+        {
+          "n": 4,
+          "event": "query_returned",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 5,
+          "event": "reply_admitted",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 0
+        },
+        {
+          "n": 6,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "kind": 2,
+          "code": 2,
+          "cleanup": false
+        },
+        {
+          "n": 7,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "kind": 4,
+          "code": 3,
+          "cleanup": false
+        },
+        {
+          "n": 8,
+          "event": "cleanup_requested",
+          "clock_ns": 1000000,
+          "thread_id": 44588
+        },
+        {
+          "n": 9,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 10,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "kind": 3,
+          "code": 2,
+          "cleanup": true
+        },
+        {
+          "n": 11,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "kind": 5,
+          "code": 3,
+          "cleanup": true
+        },
+        {
+          "n": 12,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 13,
+          "event": "keymap_read",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "keys": []
+        },
+        {
+          "n": 14,
+          "event": "pointer_read",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "buttons": []
+        },
+        {
+          "n": 15,
+          "event": "cleanup_returned",
+          "clock_ns": 1000000,
+          "thread_id": 44588,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752280667500
+          }
+        },
+        {
+          "n": 16,
+          "event": "owner_returned",
+          "clock_ns": 1000000,
+          "thread_id": 44588
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 44588,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "separated",
+      "mode": "healthy",
+      "boundary": {
+        "keys": [
+          1
+        ],
+        "buttons": [
+          1
+        ],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": null,
+        "revoked": false,
+        "epoch": 0,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 4
+      },
+      "backend_resumed": null,
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752281260800
+        },
+        "revoked": false,
+        "epoch": 0,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 17
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 21516
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 6224
+        },
+        {
+          "n": 4,
+          "event": "query_returned",
+          "clock_ns": 1000000,
+          "thread_id": 6224,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 5,
+          "event": "reply_admitted",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 0
+        },
+        {
+          "n": 6,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "kind": 2,
+          "code": 2,
+          "cleanup": false
+        },
+        {
+          "n": 7,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "kind": 4,
+          "code": 3,
+          "cleanup": false
+        },
+        {
+          "n": 8,
+          "event": "cleanup_requested",
+          "clock_ns": 1000000,
+          "thread_id": 21516
+        },
+        {
+          "n": 9,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 10,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "kind": 3,
+          "code": 2,
+          "cleanup": true
+        },
+        {
+          "n": 11,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "kind": 5,
+          "code": 3,
+          "cleanup": true
+        },
+        {
+          "n": 12,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 13,
+          "event": "keymap_read",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "keys": []
+        },
+        {
+          "n": 14,
+          "event": "pointer_read",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "buttons": []
+        },
+        {
+          "n": 15,
+          "event": "cleanup_returned",
+          "clock_ns": 1000000,
+          "thread_id": 21516,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752281260800
+          }
+        },
+        {
+          "n": 16,
+          "event": "owner_returned",
+          "clock_ns": 1000000,
+          "thread_id": 21516
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 21516,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "coupled",
+      "mode": "cancel",
+      "boundary": {
+        "keys": [
+          1
+        ],
+        "buttons": [
+          1
+        ],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": null,
+        "revoked": false,
+        "epoch": 0,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 5
+      },
+      "backend_resumed": null,
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752281636200
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 15
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 22148
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 22148
+        },
+        {
+          "n": 4,
+          "event": "cancel_requested",
+          "clock_ns": 1000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 5,
+          "event": "query_returned",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 6,
+          "event": "authority_revoked",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "epoch": 1,
+          "reason": "cancel"
+        },
+        {
+          "n": 7,
+          "event": "cleanup_requested",
+          "clock_ns": 1000000,
+          "thread_id": 22148
+        },
+        {
+          "n": 8,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 9,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 10,
+          "event": "keymap_read",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "keys": []
+        },
+        {
+          "n": 11,
+          "event": "pointer_read",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "buttons": []
+        },
+        {
+          "n": 12,
+          "event": "cleanup_returned",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752281636200
+          }
+        },
+        {
+          "n": 13,
+          "event": "reply_discarded",
+          "clock_ns": 1000000,
+          "thread_id": 22148,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 1
+        },
+        {
+          "n": 14,
+          "event": "owner_returned",
+          "clock_ns": 1000000,
+          "thread_id": 22148
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 22148,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "separated",
+      "mode": "cancel",
+      "boundary": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752282164900
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 12
+      },
+      "backend_resumed": null,
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752282164900
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 15
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 45340
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 42948
+        },
+        {
+          "n": 4,
+          "event": "cancel_requested",
+          "clock_ns": 1000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 5,
+          "event": "authority_revoked",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "epoch": 1,
+          "reason": "cancel"
+        },
+        {
+          "n": 6,
+          "event": "cleanup_requested",
+          "clock_ns": 1000000,
+          "thread_id": 45340
+        },
+        {
+          "n": 7,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 8,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 9,
+          "event": "keymap_read",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "keys": []
+        },
+        {
+          "n": 10,
+          "event": "pointer_read",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "buttons": []
+        },
+        {
+          "n": 11,
+          "event": "cleanup_returned",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752282164900
+          }
+        },
+        {
+          "n": 12,
+          "event": "query_returned",
+          "clock_ns": 1000000,
+          "thread_id": 42948,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 13,
+          "event": "reply_discarded",
+          "clock_ns": 1000000,
+          "thread_id": 45340,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 1
+        },
+        {
+          "n": 14,
+          "event": "owner_returned",
+          "clock_ns": 1000000,
+          "thread_id": 45340
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 45340,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "coupled",
+      "mode": "expiry",
+      "boundary": {
+        "keys": [
+          1
+        ],
+        "buttons": [
+          1
+        ],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": null,
+        "revoked": false,
+        "epoch": 0,
+        "clock_ns": 11000000,
+        "deadline_ns": 11000000,
+        "event_count": 5
+      },
+      "backend_resumed": null,
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752283011700
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 11000000,
+        "deadline_ns": 11000000,
+        "event_count": 15
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 47228,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 47228,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 47228
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 47228
+        },
+        {
+          "n": 4,
+          "event": "clock_advanced",
+          "clock_ns": 11000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 5,
+          "event": "query_returned",
+          "clock_ns": 11000000,
+          "thread_id": 47228,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 6,
+          "event": "authority_revoked",
+          "clock_ns": 11000000,
+          "thread_id": 47228,
+          "epoch": 1,
+          "reason": "expiry"
+        },
+        {
+          "n": 7,
+          "event": "cleanup_requested",
+          "clock_ns": 11000000,
+          "thread_id": 47228
+        },
+        {
+          "n": 8,
+          "event": "injected",
+          "clock_ns": 11000000,
+          "thread_id": 47228,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 9,
+          "event": "injected",
+          "clock_ns": 11000000,
+          "thread_id": 47228,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 10,
+          "event": "keymap_read",
+          "clock_ns": 11000000,
+          "thread_id": 47228,
+          "keys": []
+        },
+        {
+          "n": 11,
+          "event": "pointer_read",
+          "clock_ns": 11000000,
+          "thread_id": 47228,
+          "buttons": []
+        },
+        {
+          "n": 12,
+          "event": "cleanup_returned",
+          "clock_ns": 11000000,
+          "thread_id": 47228,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752283011700
+          }
+        },
+        {
+          "n": 13,
+          "event": "reply_discarded",
+          "clock_ns": 11000000,
+          "thread_id": 47228,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 1
+        },
+        {
+          "n": 14,
+          "event": "owner_returned",
+          "clock_ns": 11000000,
+          "thread_id": 47228
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 47228,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "separated",
+      "mode": "expiry",
+      "boundary": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752283562100
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 11000000,
+        "deadline_ns": 11000000,
+        "event_count": 12
+      },
+      "backend_resumed": null,
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752283562100
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 11000000,
+        "deadline_ns": 11000000,
+        "event_count": 15
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 30332,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 30332,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 30332
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 34068
+        },
+        {
+          "n": 4,
+          "event": "clock_advanced",
+          "clock_ns": 11000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 5,
+          "event": "authority_revoked",
+          "clock_ns": 11000000,
+          "thread_id": 30332,
+          "epoch": 1,
+          "reason": "expiry"
+        },
+        {
+          "n": 6,
+          "event": "cleanup_requested",
+          "clock_ns": 11000000,
+          "thread_id": 30332
+        },
+        {
+          "n": 7,
+          "event": "injected",
+          "clock_ns": 11000000,
+          "thread_id": 30332,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 8,
+          "event": "injected",
+          "clock_ns": 11000000,
+          "thread_id": 30332,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 9,
+          "event": "keymap_read",
+          "clock_ns": 11000000,
+          "thread_id": 30332,
+          "keys": []
+        },
+        {
+          "n": 10,
+          "event": "pointer_read",
+          "clock_ns": 11000000,
+          "thread_id": 30332,
+          "buttons": []
+        },
+        {
+          "n": 11,
+          "event": "cleanup_returned",
+          "clock_ns": 11000000,
+          "thread_id": 30332,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752283562100
+          }
+        },
+        {
+          "n": 12,
+          "event": "query_returned",
+          "clock_ns": 11000000,
+          "thread_id": 34068,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 13,
+          "event": "reply_discarded",
+          "clock_ns": 11000000,
+          "thread_id": 30332,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 1
+        },
+        {
+          "n": 14,
+          "event": "owner_returned",
+          "clock_ns": 11000000,
+          "thread_id": 30332
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 30332,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "separated",
+      "mode": "duplicate_cancel",
+      "boundary": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752284157800
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 13
+      },
+      "backend_resumed": null,
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752284157800
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 16
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 19804
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 29604
+        },
+        {
+          "n": 4,
+          "event": "cancel_requested",
+          "clock_ns": 1000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 5,
+          "event": "cancel_requested",
+          "clock_ns": 1000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 6,
+          "event": "authority_revoked",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "epoch": 1,
+          "reason": "cancel"
+        },
+        {
+          "n": 7,
+          "event": "cleanup_requested",
+          "clock_ns": 1000000,
+          "thread_id": 19804
+        },
+        {
+          "n": 8,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 9,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 10,
+          "event": "keymap_read",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "keys": []
+        },
+        {
+          "n": 11,
+          "event": "pointer_read",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "buttons": []
+        },
+        {
+          "n": 12,
+          "event": "cleanup_returned",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752284157800
+          }
+        },
+        {
+          "n": 13,
+          "event": "query_returned",
+          "clock_ns": 1000000,
+          "thread_id": 29604,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 14,
+          "event": "reply_discarded",
+          "clock_ns": 1000000,
+          "thread_id": 19804,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 1
+        },
+        {
+          "n": 15,
+          "event": "owner_returned",
+          "clock_ns": 1000000,
+          "thread_id": 19804
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 19804,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "separated",
+      "mode": "cleanup_sync_block",
+      "boundary": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": null,
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 10
+      },
+      "backend_resumed": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752284705100
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 13
+      },
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752284705100
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 16
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 13320
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 29244
+        },
+        {
+          "n": 4,
+          "event": "cancel_requested",
+          "clock_ns": 1000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 5,
+          "event": "authority_revoked",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "epoch": 1,
+          "reason": "cancel"
+        },
+        {
+          "n": 6,
+          "event": "cleanup_requested",
+          "clock_ns": 1000000,
+          "thread_id": 13320
+        },
+        {
+          "n": 7,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 8,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 9,
+          "event": "backend_block",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "boundary": "cleanup_sync"
+        },
+        {
+          "n": 10,
+          "event": "keymap_read",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "keys": []
+        },
+        {
+          "n": 11,
+          "event": "pointer_read",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "buttons": []
+        },
+        {
+          "n": 12,
+          "event": "cleanup_returned",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752284705100
+          }
+        },
+        {
+          "n": 13,
+          "event": "query_returned",
+          "clock_ns": 1000000,
+          "thread_id": 29244,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 14,
+          "event": "reply_discarded",
+          "clock_ns": 1000000,
+          "thread_id": 13320,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 1
+        },
+        {
+          "n": 15,
+          "event": "owner_returned",
+          "clock_ns": 1000000,
+          "thread_id": 13320
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 13320,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "separated",
+      "mode": "cleanup_emit_block",
+      "boundary": {
+        "keys": [
+          1
+        ],
+        "buttons": [
+          1
+        ],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": null,
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 8
+      },
+      "backend_resumed": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752285186700
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 14
+      },
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 305752285186700
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 17
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 35176
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 5468
+        },
+        {
+          "n": 4,
+          "event": "cancel_requested",
+          "clock_ns": 1000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 5,
+          "event": "authority_revoked",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "epoch": 1,
+          "reason": "cancel"
+        },
+        {
+          "n": 6,
+          "event": "cleanup_requested",
+          "clock_ns": 1000000,
+          "thread_id": 35176
+        },
+        {
+          "n": 7,
+          "event": "backend_block",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "boundary": "cleanup_emit"
+        },
+        {
+          "n": 8,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 9,
+          "event": "backend_block",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "boundary": "cleanup_emit"
+        },
+        {
+          "n": 10,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 11,
+          "event": "keymap_read",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "keys": []
+        },
+        {
+          "n": 12,
+          "event": "pointer_read",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "buttons": []
+        },
+        {
+          "n": 13,
+          "event": "cleanup_returned",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "receipt": {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 305752285186700
+          }
+        },
+        {
+          "n": 14,
+          "event": "query_returned",
+          "clock_ns": 1000000,
+          "thread_id": 5468,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 15,
+          "event": "reply_discarded",
+          "clock_ns": 1000000,
+          "thread_id": 35176,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 1
+        },
+        {
+          "n": 16,
+          "event": "owner_returned",
+          "clock_ns": 1000000,
+          "thread_id": 35176
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 35176,
+      "pending_backend_keys": {},
+      "pending_backend_buttons": []
+    },
+    {
+      "arm": "separated",
+      "mode": "unknown_readback",
+      "boundary": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": true,
+        "observation_blocked": true,
+        "receipt": {
+          "verified": false,
+          "error": "OSError('fake readback unavailable')",
+          "state": "unknown"
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 11
+      },
+      "backend_resumed": null,
+      "final": {
+        "keys": [],
+        "buttons": [],
+        "owner_alive": false,
+        "observation_blocked": false,
+        "receipt": {
+          "verified": false,
+          "error": "OSError('fake readback unavailable')",
+          "state": "unknown"
+        },
+        "revoked": true,
+        "epoch": 1,
+        "clock_ns": 1000000,
+        "deadline_ns": 11000000,
+        "event_count": 14
+      },
+      "events": [
+        {
+          "n": 0,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 35940,
+          "kind": 2,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 1,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 35940,
+          "kind": 4,
+          "code": 1,
+          "cleanup": false
+        },
+        {
+          "n": 2,
+          "event": "prefix_held",
+          "clock_ns": 1000000,
+          "thread_id": 35940
+        },
+        {
+          "n": 3,
+          "event": "query_started",
+          "clock_ns": 1000000,
+          "thread_id": 36488
+        },
+        {
+          "n": 4,
+          "event": "cancel_requested",
+          "clock_ns": 1000000,
+          "thread_id": 38440
+        },
+        {
+          "n": 5,
+          "event": "authority_revoked",
+          "clock_ns": 1000000,
+          "thread_id": 35940,
+          "epoch": 1,
+          "reason": "cancel"
+        },
+        {
+          "n": 6,
+          "event": "cleanup_requested",
+          "clock_ns": 1000000,
+          "thread_id": 35940
+        },
+        {
+          "n": 7,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 35940,
+          "kind": 3,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 8,
+          "event": "injected",
+          "clock_ns": 1000000,
+          "thread_id": 35940,
+          "kind": 5,
+          "code": 1,
+          "cleanup": true
+        },
+        {
+          "n": 9,
+          "event": "readback_error",
+          "clock_ns": 1000000,
+          "thread_id": 35940
+        },
+        {
+          "n": 10,
+          "event": "cleanup_unknown",
+          "clock_ns": 1000000,
+          "thread_id": 35940,
+          "receipt": {
+            "verified": false,
+            "error": "OSError('fake readback unavailable')",
+            "state": "unknown"
+          }
+        },
+        {
+          "n": 11,
+          "event": "query_returned",
+          "clock_ns": 1000000,
+          "thread_id": 36488,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          }
+        },
+        {
+          "n": 12,
+          "event": "reply_discarded",
+          "clock_ns": 1000000,
+          "thread_id": 35940,
+          "proof": {
+            "epoch": 0,
+            "source_id": "fake-source-0",
+            "deadline_ns": 11000000
+          },
+          "current_epoch": 1
+        },
+        {
+          "n": 13,
+          "event": "owner_returned",
+          "clock_ns": 1000000,
+          "thread_id": 35940
+        }
+      ],
+      "errors": [],
+      "owner_thread_id": 35940,
+      "pending_backend_keys": {
+        "CTRL": 1
+      },
+      "pending_backend_buttons": [
+        "left"
+      ]
+    }
+  ],
+  "freeze_sha256": "6882834e18283d5b94be83486e371d6b563237c54dad2d33fcee7a382178e97f",
+  "real_x_connection": false,
+  "live_allocation_invocations": 0
+}

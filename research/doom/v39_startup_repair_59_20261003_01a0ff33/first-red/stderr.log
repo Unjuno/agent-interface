@@ -1,0 +1,14 @@
+test_missing_fixture_closes_cooperative_child_and_client (test_map01_v39_startup_cleanup_01a0ff33.StartupOwnershipTests.test_missing_fixture_closes_cooperative_child_and_client) ... FAIL
+
+======================================================================
+FAIL: test_missing_fixture_closes_cooperative_child_and_client (test_map01_v39_startup_cleanup_01a0ff33.StartupOwnershipTests.test_missing_fixture_closes_cooperative_child_and_client)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PRIVATE_WORK>\source\research\doom\test_map01_v39_startup_cleanup_01a0ff33.py", line 96, in test_missing_fixture_closes_cooperative_child_and_client
+    self.assertIsNotNone(s['owned'][0].poll())
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.160s
+
+FAILED (failures=1)

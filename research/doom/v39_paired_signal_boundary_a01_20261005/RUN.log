@@ -1,0 +1,10 @@
+Command: wslc.exe run --rm --network none --cpus 1 --memory 512M --volume <package>:/work --workdir /work python:3.12-slim python candidate.py raw.json
+Exit: 0
+Stdout: {"pass_count": 9, "case_count": 9, "source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca"}
+Stderr warning: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+
+Audit command: wslc.exe run --rm --network none --cpus 1 --memory 512M --volume <package>:/work --workdir /work python:3.12-slim python audit.py raw.json
+Audit exit: 0
+Audit stdout: {"independent_audit": "PASS", "checks": 12, "source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca"}
+Audit stderr warning: same host kernel/cgroup swap-limit warning.
+Candidate runs: 1 (frozen run); exploratory harness attempt before freeze: 1 corrected assertion-shape mismatch, not used as result.

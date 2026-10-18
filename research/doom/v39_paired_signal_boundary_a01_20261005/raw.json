@@ -1,0 +1,66 @@
+{
+  "source_file": "/work/controller_source.py",
+  "source_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "extract": "AST-selected exact helper/class definitions; dependencies stubbed only at ObservableSignalGuard/reader interfaces",
+  "cases": [
+    {
+      "case": "valid_pair_preserves_cover",
+      "observed": null,
+      "expected": null,
+      "pass": true
+    },
+    {
+      "case": "health_ammo_sequence_mismatch",
+      "observed": "signal_pair_epoch_mismatch",
+      "expected": "signal_pair_epoch_mismatch",
+      "pass": true
+    },
+    {
+      "case": "health_ammo_capture_mismatch",
+      "observed": "signal_pair_epoch_mismatch",
+      "expected": "signal_pair_epoch_mismatch",
+      "pass": true
+    },
+    {
+      "case": "health_ammo_binding_mismatch",
+      "observed": "signal_pair_epoch_mismatch",
+      "expected": "signal_pair_epoch_mismatch",
+      "pass": true
+    },
+    {
+      "case": "health_below_floor",
+      "observed": "health:below_floor",
+      "expected": "health:below_floor",
+      "pass": true
+    },
+    {
+      "case": "ammo_below_floor",
+      "observed": "ammo:below_floor",
+      "expected": "ammo:below_floor",
+      "pass": true
+    },
+    {
+      "case": "duplicate_epoch_same_projection",
+      "observed": null,
+      "expected": null,
+      "pass": true
+    },
+    {
+      "case": "duplicate_epoch_frame_disagreement",
+      "observed": "signal_pair_duplicate_epoch_mismatch",
+      "expected": "signal_pair_duplicate_epoch_mismatch",
+      "pass": true
+    },
+    {
+      "case": "missing_typed_signal",
+      "observed": "signal_pair_epoch_mismatch",
+      "expected": "signal_pair_epoch_mismatch",
+      "pass": true
+    }
+  ],
+  "pass_count": 9,
+  "case_count": 9,
+  "real_input_used": false,
+  "live_game_used": false,
+  "planner_used": false
+}

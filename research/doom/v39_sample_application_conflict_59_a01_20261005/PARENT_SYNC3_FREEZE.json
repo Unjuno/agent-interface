@@ -1,0 +1,14 @@
+{
+  "protocol": "v39-sample-conflict-current-parent-regression-v1",
+  "parent_pr": 7662,
+  "parent_pr_head": "efb712b1aa6f01d67ed119b266ef479645cfb96a",
+  "code_parent_pr": 7602,
+  "code_parent_head": "a7f9e9e3c4bd31199bde3a14761783ead619ad08",
+  "candidate_commit_before_check": "df8f3e4d96d96fcbb76396ba958fb0edc0d456da",
+  "controller_blob_sha1": "7494e8f217dc86e94cb1bca2fd37475cd53b7e9c",
+  "test_blob_sha1": "11655c905c47531e5367eb4a067bf39d99c94df8",
+  "command": "python -m unittest research.doom.test_map01_v39_typed_state_feedback.V39TypedStateFeedbackTests.test_application_consumption_claim_must_not_contradict_adapter_projection -v",
+  "environment": "Windows CPython 3.11.9",
+  "decision": "PASS only if the focused test completes and all six evidence layers across DOWN/UP with five non-false values fail closed with null intervals while the positive receipt remains paired.",
+  "scope": "Deterministic unit projection only; no GUI, X server, game, input, model, application effect, recovery, or allocation."
+}

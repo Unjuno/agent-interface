@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import threading
+from copy import deepcopy
 
 from doom_typed_release_backend_v2 import Backend as Previous, suite
 from input_transition_owner_v4 import InputOwner
@@ -11,10 +12,106 @@ class Backend(Previous):
     """Opt-in release composition; controller and default backend are unchanged."""
 
     def __init__(self, session, out, emit, signal_readers):
+        self._executor_custody_lock = threading.RLock()
+        self._executor_custody_owner = None
+        self._executor_release_obligation = None
         super().__init__(session, out, emit, signal_readers)
-        self.owner.close()
-        self.owner = InputOwner(session.name)
+        if getattr(self,'_provided_input_owner',None) is None:
+            self.owner.close()
+            self.owner=InputOwner(session.name)
         self._release_batch = threading.local()
+        self._last_release_batch_delivery = None
+
+    def claim_executor_custody(self, token):
+        with self._executor_custody_lock:
+            if token is None:
+                raise ValueError("executor custody requires a nonempty owner token")
+            if self._executor_release_obligation is not None:
+                raise ValueError("backend input release unverified; no replacement authority")
+            if self._executor_custody_owner is not None:
+                raise ValueError("backend executor custody occupied; close the current executor first")
+            self._executor_custody_owner = token
+
+    def retain_executor_release_obligation(self, token, obligation):
+        with self._executor_custody_lock:
+            if self._executor_custody_owner is None or self._executor_custody_owner is not token:
+                raise ValueError("executor does not own this backend")
+            if self._executor_release_obligation is None:
+                self._executor_release_obligation = deepcopy(obligation)
+
+    def release_executor_custody(self, token):
+        with self._executor_custody_lock:
+            if self._executor_custody_owner is None or self._executor_custody_owner is not token:
+                raise ValueError("executor does not own this backend")
+            if self._executor_release_obligation is not None:
+                raise ValueError("backend input release unverified; no replacement authority")
+            self._executor_custody_owner = None
+
+    def executor_custody_snapshot(self):
+        with self._executor_custody_lock:
+            return {"schema": "map01-backend-executor-custody-v1",
+                    "executor_attached": self._executor_custody_owner is not None,
+                    "release_obligation": deepcopy(self._executor_release_obligation),
+                    "grants_input_authority": False}
+
+    def _delivery_ledger(self, context):
+        ledger = context.get("delivery_ledger")
+        if ledger is None:
+            ledger = {
+                "schema": "release-batch-delivery-v1",
+                "identifier": context["identifier"],
+                "step": context.get("step"),
+                "size": 0,
+                "positions": [],
+            }
+            context["delivery_ledger"] = ledger
+            self._last_release_batch_delivery = ledger
+        # A text step can publish several held-key batches before execute()
+        # returns. Keep local receipt coordinates, but append custody positions
+        # for each new row rather than reusing position zero of the first batch.
+        # Retain each row alongside its index so Python cannot recycle its id.
+        bindings = context.setdefault("delivery_rows", {})
+        rows = context["rows"]
+        for position, row in enumerate(rows):
+            row.setdefault("release_batch_position", position)
+            row.setdefault("release_batch_size", len(rows))
+            binding = bindings.get(id(row))
+            if binding is None:
+                delivery_position = len(ledger["positions"])
+                bindings[id(row)] = (row, delivery_position)
+                ledger["positions"].append({
+                    "position": delivery_position,
+                    "step": row.get("release_batch_step", context.get("step")),
+                    "key": row.get("key"),
+                    "state": "not_attempted",
+                })
+            else:
+                delivery_position = binding[1]
+            row["release_batch_delivery_position"] = delivery_position
+        ledger["size"] = len(ledger["positions"])
+        return ledger
+
+    @staticmethod
+    def _copy_delivery_ledger(ledger):
+        if not isinstance(ledger, dict):
+            return None
+        return {**ledger, "positions": [dict(position)
+                                         for position in ledger.get("positions", [])]}
+
+    def _set_delivery_state(self, context, row, state):
+        ledger = self._delivery_ledger(context)
+        position = context["delivery_rows"][id(row)][1]
+        ledger["positions"][position]["state"] = state
+
+    def _attach_delivery_ledger(self, error, context=None):
+        ledger = (context.get("delivery_ledger") if context is not None
+                  else self._last_release_batch_delivery)
+        publication = self._copy_delivery_ledger(ledger)
+        if publication is not None:
+            try:
+                error.release_batch_publication = publication
+            except (AttributeError, TypeError):
+                pass
 
     def execute(self, step, cancel, identifier, index):
         previous = getattr(self._release_batch, "context", None)
@@ -22,11 +119,14 @@ class Backend(Previous):
             context = previous
         else:
             context = {"rows": [], "identifier": identifier}
+            self._last_release_batch_delivery = None
         context["step"] = index
+        context.setdefault("pending_ups", [])
         self._release_batch.context = context
         try:
             result = super().execute(step, cancel, identifier, index)
         except BaseException as exc:
+            self._materialize_unknown_pending_ups(context)
             disposition = (
                 "publication_exception"
                 if context.get("publication_error_type") is not None
@@ -35,7 +135,9 @@ class Backend(Previous):
             self._finish_incomplete_release_batch(context, exc, disposition)
             raise
 
-        if context["rows"]:
+        self._flush_pending_ups(context)
+
+        if context["rows"] or context.get("cancelled_pending_ups"):
             self._release_batch.context = context
         else:
             try:
@@ -47,6 +149,7 @@ class Backend(Previous):
     def _publish_incomplete_release_batch(self, context, error, *, disposition):
         """Keep observed per-key up receipts when later cleanup cannot finish."""
         rows = context["rows"]
+        self._delivery_ledger(context)
         size = len(rows)
         for position, row in enumerate(rows):
             row.setdefault("release_batch_size", size)
@@ -65,7 +168,12 @@ class Backend(Previous):
                     "release_batch_disposition identifies the exception boundary"
                 ),
             })
-            self.emit(row)
+            try:
+                self.emit(row)
+            except BaseException:
+                self._set_delivery_state(context, row, "unknown")
+                raise
+            self._set_delivery_state(context, row, "confirmed_incomplete")
 
     def _finish_incomplete_release_batch(self, context, error, disposition):
         try:
@@ -80,6 +188,13 @@ class Backend(Previous):
                     + type(publish_exc).__name__
                 )
         finally:
+            self._attach_delivery_ledger(error, context)
+            cancelled_pending = self._cancelled_pending_up_records(context)
+            if cancelled_pending:
+                try:
+                    error.cancelled_pending_ups = cancelled_pending
+                except (AttributeError, TypeError):
+                    pass
             context["rows"].clear()
             try:
                 del self._release_batch.context
@@ -88,10 +203,18 @@ class Backend(Previous):
 
     def release_all(self):
         context = getattr(self._release_batch, "context", None)
+        if context is not None:
+            self._flush_pending_ups(context)
         try:
             result = super().release_all()
         except BaseException as exc:
             if context is not None:
+                cancelled_pending = self._cancelled_pending_up_records(context)
+                if cancelled_pending:
+                    try:
+                        exc.cancelled_pending_ups = cancelled_pending
+                    except (AttributeError, TypeError):
+                        pass
                 if context["rows"]:
                     self._finish_incomplete_release_batch(
                         context, exc, "release_all_exception"
@@ -101,26 +224,59 @@ class Backend(Previous):
                         del self._release_batch.context
                     except AttributeError:
                         pass
+            if context is not None:
+                self._attach_delivery_ledger(exc, context)
             raise
         if context is not None and context["rows"]:
-            self._publish_release_batch(
-                context,
-                terminal_cleanup_verified=(
-                    isinstance(result, dict) and result.get("verified") is True
-                ),
-            )
             try:
-                del self._release_batch.context
-            except AttributeError:
-                pass
+                self._publish_release_batch(
+                    context,
+                    terminal_cleanup_verified=(
+                        isinstance(result, dict) and result.get("verified") is True
+                    ),
+                )
+            except BaseException as exc:
+                self._finish_incomplete_release_batch(
+                    context, exc, "publication_exception"
+                )
+                raise
+            else:
+                try:
+                    del self._release_batch.context
+                except AttributeError:
+                    pass
+        ledger = context.get("delivery_ledger") if context is not None else None
+        if isinstance(ledger, dict) and isinstance(result, dict):
+            result = dict(result)
+            result["release_batch_delivery"] = self._copy_delivery_ledger(ledger)
+        if context is not None and context.get("cancelled_pending_ups") and isinstance(result, dict):
+            result = dict(result)
+            result["cancelled_pending_ups"] = self._cancelled_pending_up_records(context)
         return result
+
+    @staticmethod
+    def _cancelled_pending_up_records(context):
+        return [
+            {
+                "key": item["key"],
+                "identifier": item["input_context"][0],
+                "step": item["input_context"][1],
+                "backend_owned_before_release": item["backend_owned_before_release"],
+                "disposition": "not_attempted_owner_cancel_release",
+            }
+            for item in context.get("cancelled_pending_ups", [])
+        ]
 
     def raw(self, key, down):
         input_context = self._input_event_context
         if input_context is None:
             raise RuntimeError("keyboard input outside program/step telemetry context")
 
+        context = getattr(self._release_batch, "context", None)
+
         if down:
+            if context is not None:
+                self._flush_pending_ups(context)
             record = self.owner.call("down", self.lease, key)
             self.held.add(key)
             if record is not None:
@@ -131,32 +287,93 @@ class Backend(Previous):
                 self.emit(row)
             return None
 
-        context = getattr(self._release_batch, "context", None)
         if context is None:
             self.owner.call("up", self.lease, key)
             self.held.discard(key)
             return None
 
-        was_backend_owned = key in self.held
+        context.setdefault("pending_ups", []).append({
+            "key": key,
+            "backend_owned_before_release": key in self.held,
+            "input_context": input_context,
+        })
+        self.held.discard(key)
+        if not self.held:
+            self._flush_pending_ups(context)
+        return None
+
+    def _flush_pending_ups(self, context):
+        pending = context.get("pending_ups", [])
+        if not pending:
+            return
+        cancel = getattr(self.lease, "cancel", None)
+        cancel_requested = getattr(cancel, "is_set", None)
+        if callable(cancel_requested) and cancel_requested():
+            # The owner watcher has revoked this lease and performed its own
+            # verified release. These queued step-UPs were never attempted;
+            # do not send them through the ordinary lease-bound up_batch RPC.
+            context["cancelled_pending_ups"] = [dict(item) for item in pending]
+            context["pending_ups"] = []
+            return
         records = getattr(self.owner, "records", None)
         record_count = len(records) if isinstance(records, list) else None
-        row = self.owner.call("up", self.lease, key)
-        self.held.discard(key)
-        if not isinstance(row, dict) or row.get("event") != "input_release_transition":
-            raise AssertionError("v4 release wrapper did not return transition receipt")
-        row = dict(row)
-        row["backend_owned_before_release"] = was_backend_owned
-        row["release_batch_identifier"] = context["identifier"]
-        row["release_batch_step"] = context["step"]
-        row["id"], row["step"] = input_context
-        row["owner_cleanup_record_count_before_release"] = record_count
-        context["rows"].append(row)
+        try:
+            transitions = self.owner.call(
+                "up_batch", self.lease, [item["key"] for item in pending]
+            )
+        except Exception:
+            # If the owner recorded an interruption while this queued UP was
+            # in flight, let the lease surface that cause. The buffered batch
+            # remains unknown and must not be replayed.
+            self.lease.check()
+            raise
+        if type(transitions) is not list or len(transitions) != len(pending):
+            raise AssertionError("v4 release batch did not return one transition per UP")
+        context["pending_ups"] = []
+        for item, transition in zip(pending, transitions):
+            if (not isinstance(transition, dict)
+                    or transition.get("event") != "input_release_transition"):
+                raise AssertionError("v4 release batch returned an invalid transition")
+            row = dict(transition)
+            row["backend_owned_before_release"] = item["backend_owned_before_release"]
+            row["release_batch_identifier"] = context["identifier"]
+            row["release_batch_step"] = context["step"]
+            row["id"], row["step"] = item["input_context"]
+            row["owner_cleanup_record_count_before_release"] = record_count
+            context["rows"].append(row)
         if not self.held:
             self._publish_release_batch(context)
-        return None
+
+    def _materialize_unknown_pending_ups(self, context):
+        """Retain rows after an ambiguous batch-call failure without replaying UPs."""
+        pending = context.get("pending_ups", [])
+        if not pending:
+            return
+        context["pending_ups"] = []
+        for item in pending:
+            identifier, step = item["input_context"]
+            context["rows"].append({
+                "event": "input_release_transition",
+                "operation": "up",
+                "key": item["key"],
+                "id": identifier,
+                "step": step,
+                "owner_id": self.owner.owner_id,
+                "intent_token": getattr(self.lease, "intent_token", None),
+                "owner_transition_verified": False,
+                "owner_thread_keyup_verified": False,
+                "owner_thread_keyup_receipt": None,
+                "backend_owned_before_release": item["backend_owned_before_release"],
+                "release_batch_identifier": context["identifier"],
+                "release_batch_step": context["step"],
+                "owner_cleanup_record_count_before_release": None,
+                "ordinary_release_candidate": False,
+                "release_batch_call_outcome": "unknown_no_retry",
+            })
 
     def _publish_release_batch(self, context, *, terminal_cleanup_verified=None):
         rows = context["rows"]
+        self._delivery_ledger(context)
         records = getattr(self.owner, "records", None)
         counts = [row.get("owner_cleanup_record_count_before_release") for row in rows]
         counts_valid = (
@@ -267,5 +484,7 @@ class Backend(Previous):
             try:
                 self.emit(row)
             except BaseException as exc:
+                self._set_delivery_state(context, row, "unknown")
                 context["publication_error_type"] = type(exc).__name__
                 raise
+            self._set_delivery_state(context, row, "confirmed")

@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "allocation_id": "UNJUNO-7059-VERDICT-FREE-T0-A02-20261007-01",
+  "fixture_sha256": "e0030f96368cf184847cc3d60f842c2e49dea83a2fbf4ded92186cfe0fe18b6a",
+  "raw_sha256": "e6f40d961b88b1b328f6154a1a19af3a214552c6bde2689476135de0e37e7f01",
+  "status": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "case_count": 5,
+  "row_count": 10,
+  "rows": [
+    {
+      "case_id": "C01_NULL_CHANGE",
+      "arm": "ROSTER_NOT_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 4,
+      "truth": "VALID_EFFECT",
+      "false_pass": false,
+      "correctness": "CORRECT",
+      "incomplete_tool_log": false,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C01_NULL_CHANGE",
+      "arm": "ROSTER_TRUTHFULLY_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 4,
+      "truth": "VALID_EFFECT",
+      "false_pass": false,
+      "correctness": "CORRECT",
+      "incomplete_tool_log": false,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C02_HARMFUL_MISSED_CHECK",
+      "arm": "ROSTER_NOT_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 3,
+      "truth": "FAULTY_EFFECT",
+      "false_pass": true,
+      "correctness": "INCORRECT",
+      "incomplete_tool_log": false,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C02_HARMFUL_MISSED_CHECK",
+      "arm": "ROSTER_TRUTHFULLY_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 3,
+      "truth": "FAULTY_EFFECT",
+      "false_pass": true,
+      "correctness": "INCORRECT",
+      "incomplete_tool_log": false,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C03_EFFICIENT_SAME_CORRECTNESS",
+      "arm": "ROSTER_NOT_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 3,
+      "truth": "VALID_EFFECT",
+      "false_pass": false,
+      "correctness": "CORRECT",
+      "incomplete_tool_log": false,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C03_EFFICIENT_SAME_CORRECTNESS",
+      "arm": "ROSTER_TRUTHFULLY_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 3,
+      "truth": "VALID_EFFECT",
+      "false_pass": false,
+      "correctness": "CORRECT",
+      "incomplete_tool_log": false,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C04_LEGITIMATE_UNKNOWN",
+      "arm": "ROSTER_NOT_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 4,
+      "truth": "AMBIGUOUS_EFFECT",
+      "false_pass": false,
+      "correctness": "CORRECT",
+      "incomplete_tool_log": false,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C04_LEGITIMATE_UNKNOWN",
+      "arm": "ROSTER_TRUTHFULLY_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 4,
+      "truth": "AMBIGUOUS_EFFECT",
+      "false_pass": false,
+      "correctness": "CORRECT",
+      "incomplete_tool_log": false,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C05_MISSING_TOOL_LOG",
+      "arm": "ROSTER_NOT_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 4,
+      "truth": "VALID_EFFECT",
+      "false_pass": false,
+      "correctness": "HOLD_MISSING_TOOL_LOG",
+      "incomplete_tool_log": true,
+      "peer_content_after_commit": true
+    },
+    {
+      "case_id": "C05_MISSING_TOOL_LOG",
+      "arm": "ROSTER_TRUTHFULLY_ADVERTISED",
+      "reviewer_count": 2,
+      "request_count": 4,
+      "truth": "VALID_EFFECT",
+      "false_pass": false,
+      "correctness": "HOLD_MISSING_TOOL_LOG",
+      "incomplete_tool_log": true,
+      "peer_content_after_commit": true
+    }
+  ],
+  "mutation_checks": [
+    {
+      "name": "missing_tool_event",
+      "rejected": true,
+      "error_count": 4
+    },
+    {
+      "name": "peer_content_exposure",
+      "rejected": true,
+      "error_count": 2
+    },
+    {
+      "name": "duplicate_reviewer_identity",
+      "rejected": true,
+      "error_count": 2
+    },
+    {
+      "name": "request_context_mutation",
+      "rejected": true,
+      "error_count": 1
+    },
+    {
+      "name": "event_order_mutation",
+      "rejected": true,
+      "error_count": 2
+    },
+    {
+      "name": "early_peer_content_release",
+      "rejected": true,
+      "error_count": 1
+    }
+  ],
+  "mutation_rejections": 6,
+  "model_or_human_calls": 0,
+  "limitations": [
+    "authored synthetic measurement ledger only",
+    "no model or human behavior measured",
+    "no GUI, user data, authority, or task-effect claim"
+  ]
+}

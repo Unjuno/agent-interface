@@ -1,0 +1,84 @@
+{
+  "schema": "spec-diversity-decomposition-v1",
+  "role": "challenge_specification",
+  "input_sha256": "0cdfaae2acad9eb7412b2ad94a0b48f5a5e8fc3bfac94ee690293ed38d629902",
+  "contracts": {
+    "C01_add_work_persists_once": {
+      "requirements": [
+        {"kind":"postcondition","text":"A task titled exactly Plan launch is present in Work after reload, exactly once","quote":"After reloading the list, “Plan launch” must appear exactly once in Work."},
+        {"kind":"forbidden_side_effect","text":"All pre-existing items and list data remain unchanged","quote":"Do not change any pre-existing item or list."}
+      ],
+      "unknowns": [
+        {"question":"The newly created task's generated ID and default completion/date fields are unspecified","basis":"The contract specifies title, list, cardinality and existing-data preservation, but no generated ID/default fields."},
+        {"question":"The persistence mechanism/reload durability level is unspecified","basis":"The observable criterion is after reloading; no storage mechanism is named."}
+      ],
+      "evidence": ["post-reload Work rows and exact title count","pre/post diff of pre-existing items and lists"]
+    },
+    "C02_add_archive_only": {
+      "requirements": [
+        {"kind":"postcondition","text":"Pack kit is present exactly once in Archive after both lists reload","quote":"After reloading both lists, it must appear exactly once in Archive"},
+        {"kind":"postcondition","text":"Pack kit is absent from Work","quote":"to Archive, not Work"},
+        {"kind":"forbidden_side_effect","text":"Every pre-existing item and list is unchanged","quote":"Do not change any pre-existing item or list."}
+      ],
+      "unknowns": [
+        {"question":"Generated ID/default fields for Pack kit are unspecified","basis":"Only title, destination, uniqueness and preservation are specified."}
+      ],
+      "evidence": ["both reloaded lists","exact title cardinalities by list","pre/post preserved-state comparison"]
+    },
+    "C03_complete_one_id": {
+      "requirements": [
+        {"kind":"postcondition","text":"task-2 completed is true after reload","quote":"After reloading Work, task-2 is complete"},
+        {"kind":"forbidden_side_effect","text":"All non-completion fields of task-2 remain unchanged","quote":"every other field of task-2"},
+        {"kind":"forbidden_side_effect","text":"Every other item and Archive remain unchanged","quote":"every other item, and Archive are unchanged."}
+      ],
+      "unknowns": [],
+      "evidence": ["reloaded records keyed by stable ID","field-level pre/post diff across both lists"]
+    },
+    "C04_rename_preserves_fields": {
+      "requirements": [
+        {"kind":"postcondition","text":"Only task-1 title becomes Draft v2 after reload","quote":"Rename only item ID task-1 from “Draft” to “Draft v2”."},
+        {"kind":"forbidden_side_effect","text":"task-1 ID, completion and due date stay fixed","quote":"preserve its ID, completion state, and due date"},
+        {"kind":"forbidden_side_effect","text":"All other items and lists are unchanged","quote":"all other items and lists remain unchanged."}
+      ],
+      "unknowns": [],
+      "evidence": ["reloaded records keyed by stable ID","field-level pre/post diff"]
+    },
+    "C05_clear_completed_only": {
+      "requirements": [
+        {"kind":"postcondition","text":"Every completed Work item is removed after reload","quote":"remove every completed item from Work"},
+        {"kind":"forbidden_side_effect","text":"Every active Work item is preserved unchanged","quote":"preserve every active item unchanged"},
+        {"kind":"forbidden_side_effect","text":"Archive is unchanged","quote":"leave Archive unchanged."}
+      ],
+      "unknowns": [],
+      "evidence": ["reloaded lists","completion-state partition before removal","exact retained/removed IDs and records"]
+    },
+    "C06_filter_is_view_only": {
+      "requirements": [
+        {"kind":"postcondition","text":"Active filter displays all and only active Work items","quote":"Show all and only active Work items."},
+        {"kind":"forbidden_side_effect","text":"No task records, counts, or Archive change","quote":"do not change task records, counts, or Archive."},
+        {"kind":"postcondition","text":"Selecting All restores visibility of all Work items","quote":"Selecting All afterward restores visibility of all Work items."}
+      ],
+      "unknowns": [],
+      "evidence": ["visible IDs under Active and All","pre/post records and counts","Archive diff"]
+    },
+    "C07_duplicate_title_id_target": {
+      "requirements": [
+        {"kind":"postcondition","text":"Only task-4 becomes complete","quote":"Mark only ID task-4 complete."},
+        {"kind":"forbidden_side_effect","text":"task-2 remains unchanged despite identical title","quote":"Preserve task-2"},
+        {"kind":"forbidden_side_effect","text":"All other fields and items remain unchanged","quote":"and all other fields and items unchanged."}
+      ],
+      "unknowns": [],
+      "evidence": ["post-state keyed by ID","field-level diff verifying task-2 unchanged"]
+    },
+    "C08_missing_target_unknown": {
+      "requirements": [
+        {"kind":"terminal","text":"Return UNKNOWN_TARGET for absent task-9","quote":"Make no changes and return UNKNOWN_TARGET"},
+        {"kind":"forbidden_side_effect","text":"Make no changes to any item or list","quote":"Make no changes"},
+        {"kind":"forbidden_side_effect","text":"Do not select another item or report success","quote":"do not guess another item or report success."}
+      ],
+      "unknowns": [],
+      "evidence": ["exact terminal status","whole-state before/after identity","action target ID and success flag"]
+    }
+  },
+  "author_note": "No completion/default values or persistence mechanism inferred where omitted. Reload is treated only as the observable boundary named in each request."
+}

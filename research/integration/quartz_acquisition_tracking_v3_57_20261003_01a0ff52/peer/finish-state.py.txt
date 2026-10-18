@@ -1,0 +1,9 @@
+"""Read actual owned-child liveness and tracked checkout; no source execution."""
+from pathlib import Path
+import subprocess,json,datetime
+O=Path(__file__).resolve().parent;R=O.parent.parent/'work/effect-boundary'
+p=subprocess.run(['powershell','-NoProfile','-Command','Get-Process -Id 37608 -ErrorAction SilentlyContinue | Select-Object Id,ProcessName,StartTime | ConvertTo-Json -Compress'],capture_output=True)
+g=subprocess.run(['git','-c','gc.auto=0','-c','maintenance.auto=false','status','--porcelain','--untracked-files=no'],cwd=R,capture_output=True)
+h=subprocess.run(['git','rev-parse','HEAD'],cwd=R,capture_output=True)
+r={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'owned_producer_pid':37608,'process_query_exit':p.returncode,'process_query_stdout':p.stdout.decode('utf-8','replace'),'process_query_stderr':p.stderr.decode('utf-8','replace'),'absent_at_query':not p.stdout.strip(),'tracked_status_exit':g.returncode,'tracked_status_stdout':g.stdout.decode(),'tracked_status_stderr':g.stderr.decode(),'head_exit':h.returncode,'head':h.stdout.decode().strip(),'producer_replays':0,'main_writes':0}
+(O/'FINISH-STATE.json').write_text(json.dumps(r,indent=2)+'\n',encoding='utf-8');print(json.dumps(r))

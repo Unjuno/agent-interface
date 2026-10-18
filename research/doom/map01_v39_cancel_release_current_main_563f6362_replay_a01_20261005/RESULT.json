@@ -1,0 +1,18 @@
+{
+  "schema": "map01_v39_cancel_release_current_main_replay_result_v1",
+  "disposition": "PASS_SCOPED_CURRENT_MAIN_REPLAY",
+  "base_main_commit": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "integration_tree_commit": "daf631a449aebb04ef43e4a831fe1bea1df65aeb",
+  "runtime": "CPython 3.12.14, macOS 27.0 arm64",
+  "suites": {
+    "candidate": {"count": 13, "exit": 0},
+    "candidate_optimized": {"count": 13, "exit": 0},
+    "executor_v12": {"count": 3, "exit": 0},
+    "owner_compatibility": {"count": 10, "exit": 0},
+    "v39_bridge": {"count": 2, "exit": 0},
+    "source_audit": {"exit": 0, "result": "AUDIT_PASS_SOURCE_LOCK_AND_28_PRIMARY_TESTS_PLUS_13_OPTIMIZED_REPEAT_AND_91_PACKAGE_FILES"}
+  },
+  "raw_only_audit": "PASS_RAW_ONLY_CURRENT_MAIN_REPLAY",
+  "scope": "Deterministic host fake-display regression replay only. No real X11, OS input, application consumption, Doom/game, model, threat response, useful feedback, recovery efficacy, gameplay, latency, safety, or live allocation is demonstrated.",
+  "initial_audit_wrapper_error": "audit-attempt01.log preserves the first wrapper failure; raw test outcomes were unchanged and the corrected independent auditor passed."
+}

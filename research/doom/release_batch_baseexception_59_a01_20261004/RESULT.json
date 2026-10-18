@@ -1,0 +1,46 @@
+{
+  "audit_exit_code": 0,
+  "baseline_commit": "bf57eb60009867bfa36243a9b48e37bd576682c7",
+  "baseline_report": {
+    "terminal_custody": null,
+    "terminal_error": null,
+    "terminal_status": "completed",
+    "uncaught_thread_exceptions": [
+      {
+        "exception": "release sink acknowledgement interrupted",
+        "exception_type": "KeyboardInterrupt"
+      }
+    ]
+  },
+  "candidate_report": {
+    "terminal_custody": {
+      "confirmed_positions": [
+        0
+      ],
+      "error_type": "KeyboardInterrupt",
+      "event": "input_release_transition",
+      "identifier": "base-sink-failure",
+      "key": "b",
+      "not_attempted_positions": [],
+      "position": 1,
+      "size": 2,
+      "status": "delivery_unknown",
+      "step": 0
+    },
+    "terminal_error": "KeyboardInterrupt('release sink acknowledgement interrupted')",
+    "terminal_status": "failed",
+    "uncaught_thread_exceptions": []
+  },
+  "candidate_source_sha256": "cb3196e033fd73281f0940fd76d1f89aae76f17b417639990b959c142e1fcc1b",
+  "diff_check_exit_code": 0,
+  "experiment_exit_code": 0,
+  "experiment_id": "release-batch-baseexception-59-a01",
+  "independent_audit": "PASS_BASEEXCEPTION_CUSTODY_FAIL_CLOSED",
+  "py_compile_exit_code": 0,
+  "scope": "Synthetic executor custody and mocked owner/backend construction only; no physical release, task effect, live-control, or MAP01 claim.",
+  "tests": {
+    "command": "python -m unittest research.doom.test_release_backend_v3_actual_composition research.doom.test_release_backend_v3_composition research.doom.test_session_map01_v13_release_telemetry research.doom.test_session_map01_v15 research.live_control.test_executor_v13 -v",
+    "count": 28,
+    "exit_code": 0
+  }
+}

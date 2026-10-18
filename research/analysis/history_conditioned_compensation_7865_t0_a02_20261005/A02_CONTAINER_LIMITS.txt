@@ -1,0 +1,11 @@
+Diagnostic invocation used the same pinned python:3.12.11-slim image and requested limits after the formal test container had exited. This was a read-only cgroup inspection, not another candidate/oracle run.
+
+Command flags: --network none --cpus=1 --memory=1g --pids-limit=64
+
+Observed /sys/fs/cgroup values:
+cpu.max: 100000 100000
+memory.max: 1073741824
+memory.swap.max: 1073741824
+pids.max: 64
+
+Swap was not disabled. No claim of zero swap is made.

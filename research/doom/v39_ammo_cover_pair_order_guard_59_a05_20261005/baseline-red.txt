@@ -1,0 +1,52 @@
+test_boolean_observation_sequence_is_rejected_as_invalid_pair (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_boolean_observation_sequence_is_rejected_as_invalid_pair) ... ok
+test_boolean_or_float_signal_epoch_alias_invalidates_pair (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_boolean_or_float_signal_epoch_alias_invalidates_pair) ... ok
+test_capture_or_binding_mismatch_invalidates_fire_cover (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_capture_or_binding_mismatch_invalidates_fire_cover) ... ok
+test_capture_timestamp_must_advance_with_sequence (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_capture_timestamp_must_advance_with_sequence) ... ERROR
+test_current_binding_bool_integer_alias_invalidates_pair (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_current_binding_bool_integer_alias_invalidates_pair) ... FAIL
+test_fire_cover_refuses_source_signals_from_different_observations (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_fire_cover_refuses_source_signals_from_different_observations) ... ok
+test_fire_cover_refuses_unavailable_source_ammo (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_fire_cover_refuses_unavailable_source_ammo) ... ok
+test_misaligned_health_ammo_epoch_invalidates_before_guard_evaluation (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_misaligned_health_ammo_epoch_invalidates_before_guard_evaluation) ... ok
+test_nonfire_cover_keeps_health_only_monitor (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_nonfire_cover_keeps_health_only_monitor) ... ok
+test_only_fire_containing_cover_requires_paired_ammo_guard (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_only_fire_containing_cover_requires_paired_ammo_guard) ... ok
+test_out_of_order_pair_after_valid_sample_invalidates_fire_cover (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_out_of_order_pair_after_valid_sample_invalidates_fire_cover) ... ok
+test_positive_ammo_decrease_is_retained_as_soft_cover_feedback (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_positive_ammo_decrease_is_retained_as_soft_cover_feedback) ... ok
+test_source_binding_bool_integer_alias_is_rejected (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_source_binding_bool_integer_alias_is_rejected) ... FAIL
+test_zero_ammo_in_same_fresh_frame_invalidates_fire_cover (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_zero_ammo_in_same_fresh_frame_invalidates_fire_cover) ... ok
+
+======================================================================
+ERROR: test_capture_timestamp_must_advance_with_sequence (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_capture_timestamp_must_advance_with_sequence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/test_map01_overlap_controller_v39_dual_signal_prior_tmp.py", line 208, in test_capture_timestamp_must_advance_with_sequence
+    self.assertEqual(event["reason"], "signal_pair_nonadvancing_capture_time")
+                     ~~~~~^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+FAIL: test_current_binding_bool_integer_alias_invalidates_pair (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_current_binding_bool_integer_alias_invalidates_pair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/test_map01_overlap_controller_v39_dual_signal_prior_tmp.py", line 239, in test_current_binding_bool_integer_alias_invalidates_pair
+    self.assertEqual(event["reason"], "signal_pair_epoch_mismatch")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ammo:binding_changed' != 'signal_pair_epoch_mismatch'
+- ammo:binding_changed
++ signal_pair_epoch_mismatch
+
+
+======================================================================
+FAIL: test_source_binding_bool_integer_alias_is_rejected (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_source_binding_bool_integer_alias_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/test_map01_overlap_controller_v39_dual_signal_prior_tmp.py", line 218, in test_source_binding_bool_integer_alias_is_rejected
+    self.assertEqual(receipt["status"], "rejected_source_health_ammo_pair")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'admitted' != 'rejected_source_health_ammo_pair'
+- admitted
++ rejected_source_health_ammo_pair
+
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.002s
+
+FAILED (failures=2, errors=1)

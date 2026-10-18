@@ -1,0 +1,24 @@
+import hashlib,json,os,subprocess,sys
+from pathlib import Path
+from datetime import datetime,timezone
+root=Path(__file__).resolve().parents[2];work=Path(__file__).resolve().parent;out=root/'outputs/x11-explicit-up-01a0ff2c'
+phase=sys.argv[1];dest=out/phase;dest.mkdir(exist_ok=False)
+sha=lambda b:hashlib.sha256(b).hexdigest();utc=lambda:datetime.now(timezone.utc).isoformat()
+src=json.loads((out/'SOURCE_INPUTS.json').read_text(encoding='utf8'))
+baseline=next(r['content'] for r in src['records'] if r['path'].endswith('x11_v1/backend.py')).encode()
+path=work/('candidate_backend.py.txt' if phase!='baselineRED' else 'baseline_backend.py.txt')
+if phase=='baselineRED':path.write_bytes(baseline)
+pins={str(path.name):sha(path.read_bytes()),'test_explicit_up.py':sha((work/'test_explicit_up.py').read_bytes()),'SOURCE_INPUTS.json':sha((out/'SOURCE_INPUTS.json').read_bytes()),'PLAN.json':sha((out/'PLAN.json').read_bytes()),'run.py':sha(Path(__file__).read_bytes())}
+argv=[sys.executable]+(['-O'] if phase=='optimizedGREEN' else [])+['-B',str(work/'test_explicit_up.py')]
+env=dict(os.environ);env['X11_LEDGER_BACKEND_SOURCE']=str(path);env['PYTHONIOENCODING']='utf-8'
+start=utc();child=subprocess.Popen(argv,cwd=work,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+receipt={'phase':phase,'kind':'ordinary inert source construction','argv':argv,'pid':child.pid,'supervisor_pid':os.getpid(),'started_utc':start,'source_pins':pins,'native_calls':0,'formal_replay':0}
+(dest/'START.json').write_text(json.dumps(receipt,indent=2),encoding='utf8')
+try:stdout,stderr=child.communicate(timeout=30);timeout=False
+except subprocess.TimeoutExpired:
+    child.kill();stdout,stderr=child.communicate();timeout=True
+(dest/'stdout.txt').write_bytes(stdout);(dest/'stderr.txt').write_bytes(stderr)
+receipt.update(ended_utc=utc(),exit_code=child.returncode,timeout=timeout,streams={n:{'bytes':len(b),'sha256':sha(b)} for n,b in [('stdout.txt',stdout),('stderr.txt',stderr)]},source_unchanged=sha(path.read_bytes())==pins[path.name] and sha((work/'test_explicit_up.py').read_bytes())==pins['test_explicit_up.py'])
+(dest/'RESULT.json').write_text(json.dumps(receipt,indent=2),encoding='utf8')
+print(json.dumps(receipt));print(stderr.decode('utf8'))
+sys.exit(child.returncode)

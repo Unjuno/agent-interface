@@ -1,0 +1,38 @@
+{
+  "auditor_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<formal-output>,target=/out python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/audit.py /out",
+  "auditor_invocations": 1,
+  "auditor_sha256": "fb25a64aa9ff587b0650f12658eee962b521eedea33fb73a8c1e21a55b1b2439",
+  "base_main_sha": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "branch": "fix/59-v12-release-sample-failure-main-a01-20261005",
+  "candidate_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<formal-output>,target=/out python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/candidate.py",
+  "candidate_invocations": 1,
+  "candidate_sha256": "111b56cd8d67baca1719f68340f6c9ba9019a6d033bb6ad9802b71e80cb32ac0",
+  "created_utc": "2026-10-05T05:51:50.023529+00:00",
+  "formal_output_path": "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\outputs\\v39-terminal-release-sample-error-a01-20261005",
+  "frozen_copy_hashes_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "472d533b76bb282204f2f844d5b38128cbecd8adc3d886a494f39383dfcc95e6",
+    "input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "test_input_owner_v12_explicit_up_cancel.py": "0c75a1b07e89c11b8a16ec887904b56d70e74ce2816900617dbe6afb3df73e95"
+  },
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "network": "none",
+  "package": "research/doom/v39_terminal_release_sample_error_a01_20261005",
+  "pass_gate": "retained unverified owner-release receipt; touched key unknown with typed error; bounded retry verified empty; all raw mutation controls rejected",
+  "requested_cpu_memory": "1 CPU; 512 MiB (not proof of enforcement)",
+  "retry_count": 0,
+  "schema": "v39-terminal-release-sample-error-pre-run-v1",
+  "scope": "synthetic fake-X cleanup sample error only; no live-game allocation",
+  "source_freeze_commit": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "source_hashes_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "472d533b76bb282204f2f844d5b38128cbecd8adc3d886a494f39383dfcc95e6",
+    "input_transition_owner_v3.py": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456",
+    "input_transition_owner_v4.py": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "test_input_owner_v12_explicit_up_cancel.py": "0c75a1b07e89c11b8a16ec887904b56d70e74ce2816900617dbe6afb3df73e95"
+  }
+}\n

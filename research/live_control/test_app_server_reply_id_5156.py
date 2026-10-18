@@ -48,10 +48,13 @@ class ReplyIdRegression(unittest.TestCase):
             self.assertFalse(client._reader.is_alive())
             self.assertEqual(client._responses, {})
             rows = [json.loads(line) for line in journal.read_text(encoding='utf8').splitlines()]
-            self.assertIs(type(rows[0]['message']['id']), int)
+            sent = [row for row in rows if row['direction'] == 'sent']
+            received = [row for row in rows if row['direction'] == 'received']
+            self.assertEqual(len(sent), 1)
+            self.assertIs(type(sent[0]['message']['id']), int)
             if method != 'fixture/error':
-                self.assertEqual([row['message'].get('id') for row in rows[1:]], [True, False, None, 1.0])
-                self.assertIs(type(rows[-1]['message']['id']), float)
+                self.assertEqual([row['message'].get('id') for row in received], [True, False, None, 1.0])
+                self.assertIs(type(received[-1]['message']['id']), float)
 
     def test_boolean_noise_preserves_numeric_reply_and_notification(self):
         self.exercise('fixture/result')

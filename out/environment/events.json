@@ -1,0 +1,100 @@
+{
+  "events": [
+    {
+      "id": "sole-loss-alpha-first:TASK_ONLY",
+      "action": "alpha",
+      "effect": true,
+      "receipt": false,
+      "capture_status": "NONE",
+      "independent_readback": false
+    },
+    {
+      "id": "sole-loss-alpha-first:WITNESS_AWARE",
+      "action": "zeta",
+      "effect": true,
+      "receipt": true,
+      "capture_status": "NONE",
+      "independent_readback": false
+    },
+    {
+      "id": "sole-loss-preserve-first:TASK_ONLY",
+      "action": "alpha",
+      "effect": true,
+      "receipt": true,
+      "capture_status": "NONE",
+      "independent_readback": false
+    },
+    {
+      "id": "sole-loss-preserve-first:WITNESS_AWARE",
+      "action": "alpha",
+      "effect": true,
+      "receipt": true,
+      "capture_status": "NONE",
+      "independent_readback": false
+    },
+    {
+      "id": "independent-readback:TASK_ONLY",
+      "action": "alpha",
+      "effect": true,
+      "receipt": false,
+      "capture_status": "SAFE_BASELINE_READBACK",
+      "independent_readback": true
+    },
+    {
+      "id": "independent-readback:WITNESS_AWARE",
+      "action": "alpha",
+      "effect": true,
+      "receipt": false,
+      "capture_status": "SAFE_BASELINE_READBACK",
+      "independent_readback": true
+    },
+    {
+      "id": "perturbing-capture:TASK_ONLY",
+      "action": "alpha",
+      "effect": true,
+      "receipt": false,
+      "capture_status": "PERTURBS_STATE",
+      "independent_readback": false
+    },
+    {
+      "id": "perturbing-capture:WITNESS_AWARE",
+      "action": "zeta",
+      "effect": true,
+      "receipt": true,
+      "capture_status": "PERTURBS_STATE",
+      "independent_readback": false
+    },
+    {
+      "id": "urgent-stop:TASK_ONLY",
+      "action": "YIELD_URGENT_STOP",
+      "effect": false,
+      "receipt": false,
+      "capture_status": "NONE",
+      "independent_readback": false
+    },
+    {
+      "id": "urgent-stop:WITNESS_AWARE",
+      "action": "YIELD_URGENT_STOP",
+      "effect": false,
+      "receipt": false,
+      "capture_status": "NONE",
+      "independent_readback": false
+    },
+    {
+      "id": "prior-receipt:TASK_ONLY",
+      "action": "NO_ACTION_PRIOR_RECEIPT",
+      "effect": false,
+      "receipt": true,
+      "capture_status": "NONE",
+      "independent_readback": false
+    },
+    {
+      "id": "prior-receipt:WITNESS_AWARE",
+      "action": "NO_ACTION_PRIOR_RECEIPT",
+      "effect": false,
+      "receipt": true,
+      "capture_status": "NONE",
+      "independent_readback": false
+    }
+  ]
+}

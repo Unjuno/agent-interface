@@ -1,0 +1,17 @@
+{
+  "schema": "lens-law-sealed-truth-v1",
+  "rows": [
+    {"case_id":"valid-set","status":"PASS","reason":null,"laws":{"get_put":true,"put_get":true,"put_put":true},"baselines":{"final_label_only":true,"replay_consistency":true}},
+    {"case_id":"benign-hidden","status":"PASS","reason":null,"laws":{"get_put":true,"put_get":true,"put_put":true},"baselines":{"final_label_only":true,"replay_consistency":true}},
+    {"case_id":"wrong-field","status":"VIOLATION","reason":"SCOPED_LENS_LAW_VIOLATION","laws":{"get_put":true,"put_get":false,"put_put":true},"baselines":{"final_label_only":false,"replay_consistency":true}},
+    {"case_id":"ignored","status":"VIOLATION","reason":"SCOPED_LENS_LAW_VIOLATION","laws":{"get_put":true,"put_get":false,"put_put":true},"baselines":{"final_label_only":false,"replay_consistency":true}},
+    {"case_id":"duplicate-callback","status":"VIOLATION","reason":"SCOPED_LENS_LAW_VIOLATION","laws":{"get_put":false,"put_get":true,"put_put":false},"baselines":{"final_label_only":true,"replay_consistency":true}},
+    {"case_id":"first-write-wins","status":"VIOLATION","reason":"SCOPED_LENS_LAW_VIOLATION","laws":{"get_put":true,"put_get":true,"put_put":false},"baselines":{"final_label_only":true,"replay_consistency":true}},
+    {"case_id":"lossy-projection","status":"UNKNOWN","reason":"AMBIGUOUS_APPLICABILITY","laws":null,"baselines":null},
+    {"case_id":"stale","status":"UNKNOWN","reason":"STALE_EPOCH","laws":null,"baselines":null},
+    {"case_id":"partial","status":"NOT_APPLICABLE","reason":"PARTIAL_DOMAIN","laws":null,"baselines":null},
+    {"case_id":"pending","status":"UNKNOWN","reason":"COMPLETION_PENDING","laws":null,"baselines":null},
+    {"case_id":"completed","status":"PASS","reason":null,"laws":{"get_put":true,"put_get":true,"put_put":true},"baselines":{"final_label_only":true,"replay_consistency":true}},
+    {"case_id":"counter","status":"NOT_APPLICABLE","reason":"NON_IDEMPOTENT","laws":null,"baselines":null}
+  ]
+}

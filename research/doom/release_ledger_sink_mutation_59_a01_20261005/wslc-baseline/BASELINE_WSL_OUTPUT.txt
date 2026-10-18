@@ -1,0 +1,49 @@
+test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) ... FAIL
+test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) ... FAIL
+
+======================================================================
+FAIL: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_release_backend_v3_actual_composition.py", line 447, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+AssertionError: Lists differ: [{'po[102 chars]e': 'not_attempted'}, {'position': 2, 'step': [43 chars]te'}] != [{'po[102 chars]e': 'unknown'}, {'position': 2, 'step': 0, 'ke[37 chars]te'}]
+
+First differing element 1:
+{'position': 1, 'step': 0, 'key': 'b', 'state': 'not_attempted'}
+{'position': 1, 'step': 0, 'key': 'b', 'state': 'unknown'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed', 'step': 0},
+-  {'key': 'b', 'position': 1, 'state': 'not_attempted', 'step': 0},
+?                                          ^^^^^^^^^^^
+
++  {'key': 'b', 'position': 1, 'state': 'unknown', 'step': 0},
+?                                        +++  ^^
+
+   {'key': 'c', 'position': 2, 'state': 'confirmed_incomplete', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_release_backend_v3_actual_composition.py", line 464, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+AssertionError: Lists differ: [{'po[113 chars]e': 'not_attempted'}, {'position': 2, 'step': [36 chars]ed'}] != [{'po[113 chars]e': 'unknown'}, {'position': 2, 'step': 0, 'ke[30 chars]ed'}]
+
+First differing element 1:
+{'position': 1, 'step': 0, 'key': 'b', 'state': 'not_attempted'}
+{'position': 1, 'step': 0, 'key': 'b', 'state': 'unknown'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+-  {'key': 'b', 'position': 1, 'state': 'not_attempted', 'step': 0},
+?                                          ^^^^^^^^^^^
+
++  {'key': 'b', 'position': 1, 'state': 'unknown', 'step': 0},
+?                                        +++  ^^
+
+   {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.056s
+
+FAILED (failures=2)

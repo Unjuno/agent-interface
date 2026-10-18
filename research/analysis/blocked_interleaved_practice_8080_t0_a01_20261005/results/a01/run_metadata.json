@@ -1,0 +1,47 @@
+{
+  "allocation": "BLOCKED-INTERLEAVED-PRACTICE-8080-T0-A01-20261005-01",
+  "architecture": "arm64",
+  "base_main": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
+  "commands": [
+    {
+      "command": "python3 candidate.py --output results/a01/raw.json",
+      "elapsed_seconds": 0.064105,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "RAW_WRITTEN results/a01/raw.json\n"
+    },
+    {
+      "command": "python3 auditor.py --raw results/a01/raw.json --output results/a01/audit.json",
+      "elapsed_seconds": 0.061584,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "METHOD_PASS_SCOPED errors=0 output=results/a01/audit.json\n"
+    },
+    {
+      "command": "python3 selftest.py --raw results/a01/raw.json",
+      "elapsed_seconds": 0.063426,
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "{\"candidate_reproduced\": true, \"initial\": \"METHOD_PASS_SCOPED\", \"mutations_rejected\": {\"duplicated_variant_attempt\": true, \"failed_inverse\": true, \"false_forward_effect\": true, \"heldout_leak\": true, \"omitted_attempt\": true}, \"status\": \"PASS\"}\n"
+    }
+  ],
+  "container_image": null,
+  "container_status": "NOT_USED; frozen target is a pure finite schedule/effect contract with no OS/GUI dependency",
+  "disposition": "METHOD_PASS_SCOPED",
+  "elapsed_seconds": 0.18957,
+  "ended_at_utc": "2026-10-05T08:11:46.941140Z",
+  "hashes": {
+    "auditor.py": "3a5fed34b1bff95546679c6fc9b9b57948b48714bfcc1280914519600243b66c",
+    "candidate.py": "530c07f1caf2e58291fe545bbe3e579189dca7b0c33b30044bf9efdcb983b9b6",
+    "design.json": "5058f8819c2fb2fd94132a8ee2378c19be29893f319329ce5b6e6e5d977281fa",
+    "results/a01/audit.json": "26150a5c6c90b6b158ed3d4aa16b83679c026d1b4bd65c4d65ebaea9838eec72",
+    "results/a01/raw.json": "5783e26d7bcd4472405fbdb3960c4c3e54d581719abd37f8afbec5dc82fb3fc6",
+    "scorer_fixture.json": "beda8841fb16a6f56fbffd49ff35e05729c2e159d8260301917ab2bfecdac412",
+    "selftest.py": "c2c1d7d8ce8a87f2071a981a74432e4decbb469ab4effb6bb7d83f74b7317ef7"
+  },
+  "host_os": "27.0.1",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "schema": "blocked-interleaved-8080-run-metadata-v1",
+  "source_commit": "80279fb1b157133a1824d2d0b99d3ab6570c3283",
+  "started_at_utc": "2026-10-05T08:11:46.751570Z"
+}

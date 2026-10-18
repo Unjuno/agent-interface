@@ -1,0 +1,13 @@
+{
+  "schema": "issue8502-t0-a03-run-v1",
+  "allocation": "A03",
+  "freeze_sha256": "9d55eddefd971dde08bb03e634fba0a2c4998ee39b404717b7cf2034c4811d83",
+  "runtime": {"python": "3.12.10", "platform": "Windows-11-10.0.26200-SP0", "execution": "local CPU; standard library only"},
+  "construction": {"latest_test_command": "python -B -m unittest -v test_candidate.py test_audit.py", "result": "7/7 passed", "py_compile": "passed", "formal": false},
+  "formal": [
+    {"role": "candidate", "invocation": 1, "command": "python -B candidate.py --dir .", "exit_code": 0, "stdout": "{\"decision_rows\": 5, \"output_sha256\": \"49570a235b0b58d1ce4711c73ee6fcd2d3fa36006e1b4741aba55cc722d20ca0\"}", "retries": 0},
+    {"role": "independent_auditor", "invocation": 1, "command": "python -B audit.py --dir .", "exit_code": 0, "stdout": "{\"audit_sha256\": \"6cabcd53f75478e7771192e8152ebacd94dd1fd1bbafc7189c76398a4cf7ee43\", \"decision\": \"PASS_METHOD_SCOPED\", \"errors\": [], \"mutation_rejections\": {\"missing_result\": true, \"sparse_accepted\": true, \"tampered_input_digest\": true, \"wrong_class\": true, \"wrong_seed\": true, \"wrong_threshold_localization\": true}}", "retries": 0}
+  ],
+  "external_or_runtime_calls": {"network": false, "container": false, "model": false, "gpu": false, "gui": false, "participant_data": false},
+  "limitations": ["synthetic finite method only", "no human measurement-invariance inference", "no product/runtime/safety claim"]
+}

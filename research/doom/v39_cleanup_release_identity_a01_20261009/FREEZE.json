@@ -1,0 +1,17 @@
+{
+  "format": "v39-cleanup-release-identity-freeze-v1",
+  "environment": "Windows PowerShell; CPython 3.11; CPU-only; no WSLc executable; no model/game/GUI/OS input/live resource.",
+  "test_sha256": "4c06c8bbe17096b331ce97e0d93347124497233f87e04199f18f30c14547589b",
+  "regression_matrix": [
+    "19 relevant cleanup/source-refresh tests, normal and python -O",
+    "16 V39 controller tests, normal and python -O",
+    "21 pending-observation-drain tests, normal and python -O"
+  ],
+  "classification": "offline construction regression and local repair",
+  "baseline_helper_git_blob": "d04e167ed182d5faf935e6c23132b164fe9a16ac",
+  "candidate_helper_sha256": "bc8d3550e6c2d057c7b615b38e424de3497418547e835490429f526853e1fe28",
+  "hypothesis": "Failure cleanup must not certify a verified-empty terminal release as matching an accepted operation when that release explicitly carries a different intent token.",
+  "decision": "The baseline helper must incorrectly pass the explicit mismatch negative control; candidate must reject mismatch, accept exact match, and preserve legacy terminals that omit the optional token.",
+  "freeze_note": "Source/test hashes recorded before the regression matrix. Initial TDD red/green checks were exploratory and their raw logs are retained.",
+  "source_main": "d66ee6cd4f9c09387845bc0765855cbede0c0874"
+}

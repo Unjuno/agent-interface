@@ -1,0 +1,481 @@
+"""X11/XTEST implementation of the runtime core v1 backend boundary.
+
+This implementation is intentionally narrow: X11 only, strict ASCII text, and
+explicitly registered target windows. It never decides admission itself.
+"""
+from __future__ import annotations
+
+import hashlib
+import time
+from typing import Any
+from Xlib import X, XK, display, protocol
+from Xlib.ext import xtest
+
+from runtime.core_v1.contract import OFFICE_FLOOR, WINDOW_ACTIVATE, capability_manifest, validate_backend_manifest
+
+BUTTON_MAP = {"left": 1, "middle": 2, "right": 3, "x1": 8, "x2": 9}
+BUTTON_MASKS = {1: X.Button1Mask, 2: X.Button2Mask, 3: X.Button3Mask}
+
+
+class X11BackendError(RuntimeError):
+    pass
+
+
+class X11ExecutionError(X11BackendError):
+    """A stopped program whose completed prefix and release evidence survive."""
+    def __init__(self, execution):
+        self.execution = execution
+        super().__init__(execution["error"])
+
+
+class X11Backend:
+    def __init__(self, display_name: str, targets: dict[str, int]):
+        self.d = display.Display(display_name)
+        self.root = self.d.screen().root
+        if not self.d.has_extension("XTEST"):
+            raise X11BackendError("XTEST unavailable")
+        self.targets = {
+            name: self.d.create_resource_object("window", wid)
+            for name, wid in targets.items()
+        }
+        self.held_keycodes: dict[str, int] = {}
+        self.held_buttons: set[str] = set()
+        self.emissions = 0
+        self.capture_artifacts = None
+
+    def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
+        from .capture_artifacts import CaptureArtifacts
+        self.capture_artifacts = CaptureArtifacts(directory, retain_rgb=retain_rgb)
+
+    def observe_read_only(self, target, frame, region):
+        # Unlike a program's focus/observe sequence this does not change focus,
+        # send input, release somebody else's held input, or renew a lease.
+        return self.capture(target, frame, *region)
+
+    def close(self) -> None:
+        self.d.close()
+
+    def manifest(self) -> dict[str, Any]:
+        row = capability_manifest(
+            "x11-v1",
+            "linux",
+            "x11",
+            OFFICE_FLOOR | ({WINDOW_ACTIVATE} if self._activation_supported() else set()),
+            frames=("screen_physical_px", "window_client"),
+            permissions=("x11-display-access",),
+        )
+        row["capabilities"]["input.text"]["detail"] = "strict ASCII letters/digits/space/._- plus layout-checked :/"
+        row["capabilities"]["event.feedback"]["detail"] = "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+        row["capabilities"][WINDOW_ACTIVATE]["detail"] = "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+        return validate_backend_manifest(row)
+
+    def monotonic_ns(self) -> int:
+        return time.monotonic_ns()
+
+    def _target(self, name: str):
+        if name not in self.targets:
+            raise X11BackendError(f"unknown target {name}")
+        return self.targets[name]
+
+    def _focus_within(self, window_id: int) -> bool:
+        # GTK may use an InputOnly child for keyboard input. A transient sibling
+        # is a separate client and is not accepted by this ancestry check.
+        try:
+            focus = self.d.get_input_focus().focus
+            seen = set()
+            for _ in range(64):
+                identifier = getattr(focus, "id", None)
+                if type(identifier) is not int or identifier <= 0 or identifier in seen:
+                    return False
+                if identifier == window_id:
+                    return True
+                seen.add(identifier)
+                focus = focus.query_tree().parent
+        except Exception:
+            return False
+        return False
+
+    def focus(self, target: str) -> None:
+        win = self._target(target)
+        if self._focus_within(win.id):
+            return
+        win.set_input_focus(X.RevertToParent, X.CurrentTime)
+        self.d.sync()
+        if not self._focus_within(win.id):
+            raise X11BackendError("focus verification failed")
+
+    def _window_property(self, name):
+        prop = self.root.get_full_property(self.d.intern_atom(name), X.AnyPropertyType)
+        if prop is None or prop.format != 32 or len(prop.value) > 4096:
+            return []
+        return [int(value) for value in prop.value]
+
+    def _activation_supported(self):
+        try:
+            return self.d.intern_atom('_NET_ACTIVE_WINDOW') in self._window_property('_NET_SUPPORTED')
+        except Exception:
+            return False
+
+    def _activation_target(self, target):
+        win = self._target(target)
+        if not self._activation_supported():
+            raise X11BackendError('EWMH activation unavailable')
+        if win.id not in self._window_property('_NET_CLIENT_LIST'):
+            raise X11BackendError('activation target is not a managed client')
+        return win
+
+    def activate(self, target, timeout_ms, receipt):
+        win = self._activation_target(target)
+        started = time.monotonic_ns()
+        receipt.update(target=target, window_id=win.id, started_ns=started,
+                       requested_ms=timeout_ms, request_attempted=False,
+                       status='unconfirmed', visual_confirmation=False)
+        # External window controller, like a task switcher. No fabricated user
+        # timestamp or client identity; the WM may ignore this request.
+        event = protocol.event.ClientMessage(window=win.id,
+            client_type=self.d.intern_atom('_NET_ACTIVE_WINDOW'),
+            data=(32, [2, X.CurrentTime, 0, 0, 0]))
+        try:
+            receipt['request_attempted'] = True
+            self.root.send_event(event, event_mask=X.SubstructureRedirectMask | X.SubstructureNotifyMask)
+            self.d.flush()
+            deadline = started + timeout_ms * 1_000_000
+            while True:
+                active = self._window_property('_NET_ACTIVE_WINDOW')
+                receipt['active_window_ids'] = active
+                receipt['focus_within_target'] = self._focus_within(win.id)
+                if active == [win.id] and receipt['focus_within_target']:
+                    receipt['status'] = 'active_and_focused'
+                    return
+                remaining = deadline - time.monotonic_ns()
+                if remaining <= 0:
+                    receipt['status'] = 'timeout'
+                    raise X11BackendError('activation not confirmed; request may take effect later')
+                time.sleep(min(.01, remaining / 1_000_000_000))
+        finally:
+            receipt['ended_ns'] = time.monotonic_ns()
+
+    def geometry(self, target: str) -> dict[str, int]:
+        win = self._target(target)
+        geo = win.get_geometry()
+        translated = self.root.translate_coords(win, 0, 0)
+        return {"x": translated.x, "y": translated.y, "width": geo.width, "height": geo.height}
+
+    def _root_point(self, target: str, frame: str, x: int, y: int) -> tuple[int, int]:
+        if frame == "screen_physical_px":
+            return x, y
+        if frame == "window_client":
+            g = self.geometry(target)
+            return g["x"] + x, g["y"] + y
+        raise X11BackendError(f"unsupported frame {frame}")
+
+    def pointer_move(self, target: str, frame: str, x: int, y: int) -> None:
+        rx, ry = self._root_point(target, frame, x, y)
+        xtest.fake_input(self.d, X.MotionNotify, x=rx, y=ry)
+        self.emissions += 1
+        self.d.sync()
+
+    def pointer_button(self, button: str, down: bool) -> None:
+        number = BUTTON_MAP[button]
+        # A request can reach the server even if sending/synchronizing raises.
+        # Own the cleanup obligation before attempting the press.
+        if down:
+            self.held_buttons.add(button)
+        xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
+        self.emissions += 1
+        self.d.sync()
+
+    def _keycode(self, key: str) -> int:
+        aliases = {
+            "CTRL": "Control_L", "SHIFT": "Shift_L", "ALT": "Alt_L",
+            "ENTER": "Return", "TAB": "Tab", "ESC": "Escape", "SPACE": "space",
+        }
+        keysym = XK.string_to_keysym(aliases.get(key, key))
+        if keysym == 0 and len(key) == 1:
+            keysym = XK.string_to_keysym(key.lower())
+        code = self.d.keysym_to_keycode(keysym)
+        if not code:
+            suggestions = {"RIGHT": "Right", "LEFT": "Left", "UP": "Up", "DOWN": "Down",
+                           "HOME": "Home", "END": "End", "BACKSPACE": "BackSpace",
+                           "DELETE": "Delete", "INSERT": "Insert"}
+            hint = f"; X11 keysym names are case-sensitive, use {suggestions[key]}" if key in suggestions else ""
+            raise X11BackendError(f"unmapped key {key}{hint}")
+        return code
+
+    def key_state(self, key: str, down: bool) -> None:
+        # Release/repeat the physical key originally pressed even if the
+        # logical mapping changed while it was held.
+        code = self.held_keycodes.get(key)
+        if code is None:
+            code = self._keycode(key)
+        if down:
+            self.held_keycodes[key] = code
+        xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
+        self.emissions += 1
+        self.d.sync()
+
+    def key_chord(self, keys: list[str]) -> None:
+        for key in keys:
+            self.key_state(key, True)
+        for key in reversed(keys):
+            self.key_state(key, False)
+
+    def _refresh_keyboard_mapping(self) -> bool:
+        # This connection does not subscribe to window event streams. Consume
+        # queued mapping notifications after a server barrier. The caller must
+        # not continue a preflighted keyboard suffix after a keyboard/modifier
+        # change; refreshing caches alone does not revalidate that suffix.
+        # A notification can repeat an unchanged map, so callers compare snapshots.
+        self.d.sync()
+        notified = False
+        for _ in range(self.d.pending_events()):
+            event = self.d.next_event()
+            if event.type == X.MappingNotify:
+                self.d.refresh_keyboard_mapping(event)
+                if event.request in {X.MappingKeyboard, X.MappingModifier}:
+                    notified = True
+        return notified
+
+    def _keyboard_mapping_snapshot(self):
+        """Read the core keysyms/modifier bindings used by this narrow backend."""
+        info = self.d.display.info
+        return (
+            info.min_keycode, info.max_keycode,
+            tuple(tuple(row) for row in self.d.get_keyboard_mapping(
+                info.min_keycode, info.max_keycode - info.min_keycode + 1)),
+            tuple(tuple(row) for row in self.d.get_modifier_mapping()),
+        )
+
+    def preflight(self, program: dict[str, Any]):
+        """Validate before input; return the core keyboard map used for preflight."""
+        keyboard_mapping = None
+        if any(op["op"] in {"text", "key_chord", "key_state"} for op in program["ops"]):
+            self._refresh_keyboard_mapping()
+            keyboard_mapping = self._keyboard_mapping_snapshot()
+        focused = False
+        for op in program["ops"]:
+            kind = op["op"]
+            if kind in {"focus", "activate"}:
+                self._target(op["target"])
+                if kind == 'activate':
+                    self._activation_target(op['target'])
+                focused = True
+            elif kind in {"pointer_move", "observe"} and not focused:
+                raise X11BackendError(f"{kind} requires focused target; put focus or activate before this operation in the same program; prior dispatch focus is not inherited")
+            elif kind == "verify":
+                raise X11BackendError("verify predicates are not implemented by the X11 backend; observe and explicitly review application state")
+            elif kind == "text":
+                self._text_plan(op["text"])
+            elif kind == "key_chord":
+                for key in op["keys"]:
+                    self._keycode(key)
+            elif kind == "key_state":
+                self._keycode(op["key"])
+        return keyboard_mapping
+
+    def _text_plan(self, value: str) -> list[list[str]]:
+        plan = []
+        symbols = {":": "colon", "/": "slash", "=": "equal", "*": "asterisk", "_": "underscore"}
+        for ch in value:
+            if ch in symbols:
+                # Resolve the symbol from the live map. Do not assume a US
+                # physical key or silently type the unshifted neighbour.
+                name = symbols[ch]
+                code = self._keycode(name)
+                symbol = ord(ch)
+                if self.d.keycode_to_keysym(code, 0) == symbol:
+                    keys = [name]
+                elif self.d.keycode_to_keysym(code, 1) == symbol:
+                    keys = ["SHIFT", name]
+                else:
+                    raise X11BackendError(f"unsupported text layout for {ch!r}")
+                for key in keys:
+                    self._keycode(key)
+                plan.append(keys)
+                continue
+            if not (ch.isascii() and (ch.isalpha() or ch.isdigit() or ch in ".-")):
+                if ch != " ":
+                    raise X11BackendError(f"unsupported text character U+{ord(ch):04X}")
+            if ch in {" ", ".", "-"}:
+                keys = {" ": ["SPACE"], ".": ["period"], "-": ["minus"]}[ch]
+            elif ch.isupper():
+                keys = ["SHIFT", ch.lower()]
+            else:
+                keys = [ch]
+            for key in keys:
+                self._keycode(key)
+            plan.append(keys)
+        return plan
+
+    def text(self, value: str) -> None:
+        # Resolve the entire supported payload before emitting its first key.
+        for keys in self._text_plan(value):
+            self.key_chord(keys)
+
+    def scroll(self, dx: int, dy: int) -> None:
+        buttons = [4] * max(0, -dy) + [5] * max(0, dy)
+        buttons += [6] * max(0, -dx) + [7] * max(0, dx)
+        for number in buttons:
+            xtest.fake_input(self.d, X.ButtonPress, number)
+            xtest.fake_input(self.d, X.ButtonRelease, number)
+            self.emissions += 2
+        self.d.sync()
+
+    def take_capture_rgb(self, artifact):
+        return self.capture_artifacts.take_rgb(artifact)
+
+    def capture(self, target: str, frame: str, x: int, y: int, w: int, h: int) -> dict[str, Any]:
+        if self.capture_artifacts is not None:
+            self.capture_artifacts.discard_rgb()
+        win = self._target(target)
+        if frame == "window_client":
+            source, sx, sy = win, x, y
+        elif frame == "screen_physical_px":
+            source, sx, sy = self.root, x, y
+        else:
+            raise X11BackendError(f"unsupported capture frame {frame}")
+        capture_started_ns = time.monotonic_ns()
+        image = source.get_image(sx, sy, w, h, X.ZPixmap, 0xFFFFFFFF)
+        capture_ended_ns = time.monotonic_ns()
+        if image is None:
+            raise X11BackendError("capture returned no image")
+        raw = bytes(image.data)
+        row = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(), "width": w, "height": h}
+        if self.capture_artifacts is not None:
+            row.update(target=target, native_window_id=win.id, frame=frame,
+                       region=[x, y, w, h], capture_started_ns=capture_started_ns,
+                       capture_ended_ns=capture_ended_ns)
+            try:
+                info = self.d.display.info
+                fmt = next(f for f in info.pixmap_formats if f.depth == image.depth)
+                visual = next(v for screen in info.roots for d in screen.allowed_depths
+                              for v in d.visuals if v.visual_id == image.visual)
+                row["artifact"] = self.capture_artifacts.write(
+                    raw, w, h, depth=image.depth, bits_per_pixel=fmt.bits_per_pixel,
+                    scanline_pad=fmt.scanline_pad, byte_order=info.image_byte_order,
+                    masks=(visual.red_mask, visual.green_mask, visual.blue_mask),
+                    true_color=visual.visual_class == X.TrueColor)
+            except Exception as error:
+                # Keep the actual observation and completed input evidence even
+                # if image presentation fails. Never take a replacement capture.
+                row["artifact_error"] = repr(error)
+        return row
+
+    def _physical_keys_down(self, tracked: dict[str, int] | None = None) -> list[str]:
+        keymap = self.d.query_keymap()
+        rows = []
+        for name, code in (tracked or self.held_keycodes).items():
+            if keymap[code // 8] & (1 << (code % 8)):
+                rows.append(name)
+        return sorted(rows)
+
+    def _physical_buttons_down(self) -> list[str]:
+        mask = self.root.query_pointer().mask
+        reverse = {1: "left", 2: "middle", 3: "right"}
+        return sorted(reverse[n] for n, bit in BUTTON_MASKS.items() if mask & bit)
+
+    def release_all(self) -> dict[str, Any]:
+        tracked = dict(self.held_keycodes)
+        for code in list(self.held_keycodes.values()):
+            xtest.fake_input(self.d, X.KeyRelease, code)
+            self.emissions += 1
+        for button in list(self.held_buttons):
+            xtest.fake_input(self.d, X.ButtonRelease, BUTTON_MAP[button])
+            self.emissions += 1
+        self.d.sync()
+        keys = self._physical_keys_down(tracked)
+        buttons = self._physical_buttons_down()
+        # Preserve uncertain/down inputs until readback succeeds. A subsequent
+        # explicit recovery must still know which releases it owes.
+        self.held_keycodes = {name: code for name, code in tracked.items() if name in keys}
+        self.held_buttons.intersection_update(buttons)
+        return {
+            "keys_down": keys,
+            "buttons_down": buttons,
+            "verified": not keys and not buttons,
+            "monotonic_ns": time.monotonic_ns(),
+        }
+
+    def _wait_update(self, timeout_ms: int) -> None:
+        """Fixed delay; scoped backends may interrupt it at their own deadline."""
+        time.sleep(timeout_ms / 1000.0)
+
+    def execute(self, program: dict[str, Any]) -> dict[str, Any]:
+        keyboard_mapping = self.preflight(program)
+        current_target: str | None = None
+        observations: list[dict[str, Any]] = []
+        releases: list[dict[str, Any]] = []
+        waits: list[dict[str, Any]] = []
+        activations: list[dict[str, Any]] = []
+        started = time.monotonic_ns()
+        emissions_before = self.emissions
+        completed_ops = []
+        index = None
+
+        def evidence():
+            return {
+                "started_ns": started, "ended_ns": time.monotonic_ns(),
+                "emissions": self.emissions,
+                "program_emissions": self.emissions - emissions_before,
+                "observations": observations, "releases": releases,
+                "waits": waits,
+                "activations": activations,
+                "completed_ops": completed_ops,
+            }
+
+        keyboard_mapping_changed = False
+        try:
+            for index, op in enumerate(program["ops"]):
+                kind = op["op"]
+                if kind in {"text", "key_chord", "key_state"}:
+                    if self._refresh_keyboard_mapping():
+                        keyboard_mapping_changed |= self._keyboard_mapping_snapshot() != keyboard_mapping
+                    releasing_key = kind == "key_state" and op["down"] is False
+                    if keyboard_mapping_changed and not releasing_key:
+                        raise X11BackendError("keyboard mapping changed after program preflight")
+                if kind == "focus":
+                    current_target = op["target"]
+                    self.focus(current_target)
+                elif kind == 'activate':
+                    current_target = op['target']
+                    receipt = {'operation_index': index}
+                    activations.append(receipt)
+                    self.activate(current_target, op['timeout_ms'], receipt)
+                elif kind == "key_chord": self.key_chord(op["keys"])
+                elif kind == "key_state": self.key_state(op["key"], op["down"])
+                elif kind == "text": self.text(op["text"])
+                elif kind == "pointer_move":
+                    if current_target is None: raise X11BackendError("pointer_move requires focused target")
+                    self.pointer_move(current_target, op["frame"], op["x"], op["y"])
+                elif kind == "pointer_button": self.pointer_button(op["button"], op["down"])
+                elif kind == "scroll": self.scroll(op["dx"], op["dy"])
+                elif kind == "observe":
+                    if current_target is None: raise X11BackendError("observe requires focused target")
+                    captured = self.capture(current_target, op["frame"], op["x"], op["y"], op["w"], op["h"])
+                    observations.append(dict(captured, operation_index=index))
+                elif kind == "wait_update":
+                    wait = {"operation_index": index, "requested_ms": op["timeout_ms"],
+                            "started_ns": time.monotonic_ns(), "completed": False,
+                            "kind": "fixed_delay", "update_observed": None}
+                    waits.append(wait)
+                    try:
+                        self._wait_update(op["timeout_ms"])
+                        wait["completed"] = True
+                    finally:
+                        wait["ended_ns"] = time.monotonic_ns()
+                elif kind == "verify":
+                    raise X11BackendError("verify predicates are not implemented by the X11 backend")
+                elif kind == "release_all": releases.append(self.release_all())
+                else: raise X11BackendError(f"unsupported op {kind}")
+                completed_ops.append(index)
+        except Exception as error:
+            try:
+                releases.append(self.release_all())
+            except Exception as release_error:
+                releases.append({"verified": False, "error": repr(release_error),
+                                 "monotonic_ns": time.monotonic_ns()})
+            partial = evidence()
+            partial.update(error=repr(error), failed_op=index,
+                           failed_op_effect="unknown; may have emitted partial input")
+            raise X11ExecutionError(partial) from error
+        return evidence()

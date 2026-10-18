@@ -1,0 +1,19 @@
+Frozen parent #7635 current head: 12522ccd0b58d3333da1d241d1b04f2c888c46e6
+Parent backend blob: 924c99a3838ba49ad0b4ec07aaa568b1a09a1713
+Parent test blob: e0a1371247ed1b61ac177503102e64f5710569d3
+Candidate: same parent plus the two-file A01 candidate diff.
+
+Windows Python 3.11 candidate backend suite:
+python -c 'import unittest; from research.doom.test_release_backend_v3_actual_composition import ActualReleaseCompositionTests as T; names=[n for n in unittest.defaultTestLoader.getTestCaseNames(T) if n != "test_executor_terminal_retains_actual_backend_delivery_positions"]; suite=unittest.TestSuite(T(n) for n in names); result=unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())'
+
+Windows syntax and whitespace checks:
+python -m py_compile research/doom/doom_owner_thread_release_batch_backend_v1.py research/doom/test_release_backend_v3_actual_composition.py
+git diff --check
+
+WSLc baseline red check (read-only source, separate writable output mount):
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --user 1000:1000 --env PYTHONDONTWRITEBYTECODE=1 --volume "<baseline-worktree>:/src:ro" --volume "<evidence>/wslc-baseline:/out" --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -lc 'python -m unittest research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger -v > /out/BASELINE_WSL_OUTPUT.txt 2>&1; result=$?; printf "%s\n" "$result" > /out/BASELINE_WSL_EXIT_CODE.txt; cat /out/BASELINE_WSL_OUTPUT.txt; exit 0'
+
+WSLc candidate backend suite (read-only source, separate writable output mount):
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --user 1000:1000 --env PYTHONDONTWRITEBYTECODE=1 --volume "<candidate-worktree>:/src:ro" --volume "<evidence>/wslc-candidate:/out" --workdir /src python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 sh -lc 'python -c ''import unittest; from research.doom.test_release_backend_v3_actual_composition import ActualReleaseCompositionTests as T; names=[n for n in unittest.defaultTestLoader.getTestCaseNames(T) if n != "test_executor_terminal_retains_actual_backend_delivery_positions"]; suite=unittest.TestSuite(T(n) for n in names); result=unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())'' > /out/CANDIDATE_WSL_OUTPUT.txt 2>&1; result=$?; printf "%s\n" "$result" > /out/CANDIDATE_WSL_EXIT_CODE.txt; cat /out/CANDIDATE_WSL_OUTPUT.txt; exit $result'
+
+The actual local Windows paths were task-specific; container image, limits, mounts, network policy and commands are recorded above. The WSLc host warned that swap/cgroup memory-limit support was unavailable.

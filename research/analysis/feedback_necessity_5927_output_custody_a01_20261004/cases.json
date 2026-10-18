@@ -1,0 +1,98 @@
+{
+  "schema": "feedback-necessity-epistemic-controls-cases-v1",
+  "cases": [
+    {
+      "id": "known-save-intent-effect-unknown",
+      "decision": "claim task completion or continue recovery",
+      "initial_transcript": [
+        {
+          "id": "planner_intent",
+          "declared": true,
+          "fresh": true,
+          "values": {
+            "persisted": "save value 41",
+            "modal_blocked": "save value 41"
+          }
+        },
+        {
+          "id": "dispatch_ack",
+          "declared": true,
+          "fresh": true,
+          "values": {
+            "persisted": "dispatch accepted",
+            "modal_blocked": "dispatch accepted"
+          }
+        }
+      ],
+      "worlds": [
+        {
+          "id": "persisted",
+          "safe_progress_actions": ["claim_completion"],
+          "oracle_safe_progress_actions": ["claim_completion"]
+        },
+        {
+          "id": "modal_blocked",
+          "safe_progress_actions": ["dismiss_modal_and_retry"],
+          "oracle_safe_progress_actions": ["dismiss_modal_and_retry"]
+        }
+      ],
+      "channels": [
+        {
+          "id": "independent_persistence_receipt",
+          "declared": true,
+          "fresh": true,
+          "values": {
+            "persisted": "saved=true",
+            "modal_blocked": "saved=false"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fresh-local-receipt-no-extra-tool",
+      "decision": "claim task completion or continue recovery",
+      "initial_transcript": [
+        {
+          "id": "planner_intent",
+          "declared": true,
+          "fresh": true,
+          "values": {
+            "persisted": "save value 41",
+            "modal_blocked": "save value 41"
+          }
+        },
+        {
+          "id": "dispatch_ack",
+          "declared": true,
+          "fresh": true,
+          "values": {
+            "persisted": "dispatch accepted",
+            "modal_blocked": "dispatch accepted"
+          }
+        },
+        {
+          "id": "fresh_local_typed_effect_receipt",
+          "declared": true,
+          "fresh": true,
+          "values": {
+            "persisted": "saved=true",
+            "modal_blocked": "saved=false"
+          }
+        }
+      ],
+      "worlds": [
+        {
+          "id": "persisted",
+          "safe_progress_actions": ["claim_completion"],
+          "oracle_safe_progress_actions": ["claim_completion"]
+        },
+        {
+          "id": "modal_blocked",
+          "safe_progress_actions": ["dismiss_modal_and_retry"],
+          "oracle_safe_progress_actions": ["dismiss_modal_and_retry"]
+        }
+      ],
+      "channels": []
+    }
+  ]
+}

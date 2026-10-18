@@ -9,6 +9,7 @@ This package builds one deterministic `agent-interface-runtime.pyz` containing t
 - `runtime/selector_v1`;
 - `runtime/cli_v1`;
 - opt-in [scoped X11 Python API](../guarded_x11_v1/README.md) (`runtime/guarded_x11_v1`);
+- opt-in [scoped Win32 Python API](../guarded_win32_v1/README.md) (`runtime.guarded_win32_v1`);
 - X11, Win32 and Quartz promoted backend/session modules.
 
 The archive contains no tests, fixtures, research tree or retained evidence. It is built from exact committed Git blob bytes with fixed ZIP timestamps/mode/order, so Windows checkout newline conversion cannot change the artifact.
@@ -64,6 +65,7 @@ Requirements:
 - Python 3.12+;
 - Linux/X11: `python-xlib` plus a usable `DISPLAY`;
 - Windows: promoted Win32 backend, explicit HWND targets;
+- optional `runtime.guarded_win32_v1` API: Pillow;
 - macOS: promoted Quartz backend, explicit PID targets, Accessibility + Screen Recording permissions;
 - Wayland-only Linux: not promoted and fails closed.
 

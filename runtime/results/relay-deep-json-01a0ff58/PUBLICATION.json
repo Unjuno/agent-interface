@@ -1,0 +1,45 @@
+{
+  "projection": {
+    "logs/red.stdout.log": {
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "published_bytes": 0,
+      "operation": "user-home prefix replacement only; no newline normalization"
+    },
+    "logs/red.stderr.log": {
+      "original_sha256": "5e6a22be0aa7c691d109e5b38601aedde08c7da172048932c80a49e086368248",
+      "published_sha256": "de67a0ac37024b091893c9c91dfacf50aac94a0b2d2f75e80ea061916af675bd",
+      "original_bytes": 12863,
+      "published_bytes": 12905,
+      "operation": "user-home prefix replacement only; no newline normalization"
+    },
+    "logs/red.receipt.json": {
+      "original_sha256": "6c975cae42079a7b563176b83f531c9432817a690d5961bbc38da0a46d9047a9",
+      "published_sha256": "ce98de662d039aebb0a342b482a8d3f6e4170052c22c53713be2a5cfcaa72352",
+      "operation": "recursive user-home prefix replacement in string values; JSON re-encoding; original retained privately"
+    },
+    "logs/green.stdout.log": {
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "published_bytes": 0,
+      "operation": "user-home prefix replacement only; no newline normalization"
+    },
+    "logs/green.stderr.log": {
+      "original_sha256": "d265bb91efcb9bac730ef6d2b656532b75bb60d206be5f699863dff6285e9554",
+      "published_sha256": "826858990e61eb54bd04cd9687378c8bcb9d1a7a7a75e83230f0f91d4a1029cc",
+      "original_bytes": 2762,
+      "published_bytes": 2766,
+      "operation": "user-home prefix replacement only; no newline normalization"
+    },
+    "logs/green.receipt.json": {
+      "original_sha256": "f0c5b3015a65d3fa9eec9bd3b155816891b510445b81f41d0a63f0192f220765",
+      "published_sha256": "28cf2ddd1b081d3cd7ac7b4210696ba5056786ab927d3d4d2c8151217e8f03ed",
+      "operation": "recursive user-home prefix replacement in string values; JSON re-encoding; original retained privately"
+    }
+  },
+  "originals_retained": true,
+  "source_snapshots_exact": true,
+  "first_red_tests_note": "Exact first-red test bytes preserved; candidate test bytes differ only by CRLF-to-LF normalization."
+}

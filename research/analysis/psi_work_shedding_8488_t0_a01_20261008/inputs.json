@@ -1,0 +1,166 @@
+{
+  "schema": "psi-work-shedding-8488-t0-a01-v1",
+  "timebase_ms": 1000,
+  "horizon_ticks": 16,
+  "worker_slots": 2,
+  "optional_classes": ["speculative", "reconstructible_cache"],
+  "mandatory_classes": ["mandatory_verify", "freshness_observation", "mandatory_release"],
+  "thresholds": {
+    "queue_enter_waiting_mandatory": 2,
+    "free_memory_enter_mib": 128,
+    "psi_memory_some_enter_ms_in_1s": 150,
+    "psi_enter_consecutive_windows": 2,
+    "psi_memory_some_exit_ms_in_1s": 50,
+    "psi_exit_consecutive_windows": 2,
+    "psi_cooldown_ticks": 3,
+    "psi_exit_requires_no_mandatory_obligation": true
+  },
+  "policies": ["fixed_concurrency", "queue_deadline", "free_memory", "psi_memory"],
+  "traces": [
+    {
+      "id": "memory_burst_primary",
+      "purpose": "predeclared primary; early memory stall signal precedes fresh mandatory obligations",
+      "psi_delay_ticks": 0,
+      "memory_some_ms_in_1s": [0, 0, 160, 170, 300, 300, 300, 200, 120, 40, 40, 20, 0, 0, 0, 0],
+      "cpu_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "io_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "memory_stall_active": [false, false, true, true, true, true, true, true, false, false, false, false, false, false, false, false],
+      "nonmemory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "free_memory_mib": [512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512],
+      "arrivals": [
+        {"tick": 0, "id": "S1", "class": "speculative", "service": 12, "evidence_id": "E-S1"},
+        {"tick": 0, "id": "C1", "class": "reconstructible_cache", "service": 12, "evidence_id": "E-C1"},
+        {"tick": 4, "id": "V1", "class": "mandatory_verify", "service": 2, "deadline": 6, "evidence_id": "E-V1"},
+        {"tick": 5, "id": "O1", "class": "freshness_observation", "service": 2, "deadline": 10, "evidence_id": "E-O1"},
+        {"tick": 5, "id": "R1", "class": "mandatory_release", "service": 1, "deadline": 8, "evidence_id": "E-R1"},
+        {"tick": 6, "id": "V2", "class": "mandatory_verify", "service": 2, "deadline": 12, "evidence_id": "E-V2"}
+      ],
+      "evidence_ids": ["RAW-00", "RAW-01", "RAW-02", "RAW-03", "RAW-04", "RAW-05", "RAW-06", "RAW-07", "RAW-08", "RAW-09", "RAW-10", "RAW-11", "RAW-12", "RAW-13", "RAW-14", "RAW-15"]
+    },
+    {
+      "id": "memory_burst_delayed_signal",
+      "purpose": "notification delay sensitivity control",
+      "psi_delay_ticks": 2,
+      "memory_some_ms_in_1s": [0, 0, 160, 170, 300, 300, 300, 200, 120, 40, 40, 20, 0, 0, 0, 0],
+      "cpu_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "io_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "memory_stall_active": [false, false, true, true, true, true, true, true, false, false, false, false, false, false, false, false],
+      "nonmemory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "free_memory_mib": [512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512],
+      "arrivals": [
+        {"tick": 0, "id": "S1", "class": "speculative", "service": 12, "evidence_id": "E-S1"},
+        {"tick": 0, "id": "C1", "class": "reconstructible_cache", "service": 12, "evidence_id": "E-C1"},
+        {"tick": 4, "id": "V1", "class": "mandatory_verify", "service": 2, "deadline": 6, "evidence_id": "E-V1"},
+        {"tick": 5, "id": "O1", "class": "freshness_observation", "service": 2, "deadline": 10, "evidence_id": "E-O1"},
+        {"tick": 5, "id": "R1", "class": "mandatory_release", "service": 1, "deadline": 8, "evidence_id": "E-R1"},
+        {"tick": 6, "id": "V2", "class": "mandatory_verify", "service": 2, "deadline": 12, "evidence_id": "E-V2"}
+      ],
+      "evidence_ids": ["RAW-00", "RAW-01", "RAW-02", "RAW-03", "RAW-04", "RAW-05", "RAW-06", "RAW-07", "RAW-08", "RAW-09", "RAW-10", "RAW-11", "RAW-12", "RAW-13", "RAW-14", "RAW-15"]
+    },
+    {
+      "id": "short_memory_spike",
+      "purpose": "single-window spike must not toggle the two-window PSI gate",
+      "psi_delay_ticks": 0,
+      "memory_some_ms_in_1s": [0, 0, 0, 240, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "cpu_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "io_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "memory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "nonmemory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "free_memory_mib": [512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512],
+      "arrivals": [
+        {"tick": 0, "id": "S1", "class": "speculative", "service": 6, "evidence_id": "E-S1"},
+        {"tick": 0, "id": "C1", "class": "reconstructible_cache", "service": 6, "evidence_id": "E-C1"}
+      ],
+      "evidence_ids": ["RAW-00", "RAW-01", "RAW-02", "RAW-03", "RAW-04", "RAW-05", "RAW-06", "RAW-07", "RAW-08", "RAW-09", "RAW-10", "RAW-11", "RAW-12", "RAW-13", "RAW-14", "RAW-15"]
+    },
+    {
+      "id": "unrelated_cpu_io_pressure",
+      "purpose": "CPU and I/O pressure must not be mislabeled as memory PSI",
+      "psi_delay_ticks": 0,
+      "memory_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "cpu_some_ms_in_1s": [0, 0, 300, 300, 300, 300, 300, 300, 0, 0, 0, 0, 0, 0, 0, 0],
+      "io_some_ms_in_1s": [0, 0, 240, 240, 240, 240, 240, 240, 0, 0, 0, 0, 0, 0, 0, 0],
+      "memory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "nonmemory_stall_active": [false, false, true, true, true, true, true, true, false, false, false, false, false, false, false, false],
+      "free_memory_mib": [512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512],
+      "arrivals": [
+        {"tick": 0, "id": "S1", "class": "speculative", "service": 12, "evidence_id": "E-S1"},
+        {"tick": 0, "id": "C1", "class": "reconstructible_cache", "service": 12, "evidence_id": "E-C1"},
+        {"tick": 4, "id": "V1", "class": "mandatory_verify", "service": 2, "deadline": 6, "evidence_id": "E-V1"},
+        {"tick": 5, "id": "R1", "class": "mandatory_release", "service": 1, "deadline": 8, "evidence_id": "E-R1"}
+      ],
+      "evidence_ids": ["RAW-00", "RAW-01", "RAW-02", "RAW-03", "RAW-04", "RAW-05", "RAW-06", "RAW-07", "RAW-08", "RAW-09", "RAW-10", "RAW-11", "RAW-12", "RAW-13", "RAW-14", "RAW-15"]
+    },
+    {
+      "id": "psi_unavailable",
+      "purpose": "unavailable PSI is UNKNOWN, never synthesized as zero",
+      "psi_delay_ticks": 0,
+      "memory_some_ms_in_1s": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+      "cpu_some_ms_in_1s": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+      "io_some_ms_in_1s": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+      "memory_stall_active": [true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false],
+      "nonmemory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "free_memory_mib": [512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512],
+      "arrivals": [
+        {"tick": 0, "id": "S1", "class": "speculative", "service": 12, "evidence_id": "E-S1"},
+        {"tick": 0, "id": "C1", "class": "reconstructible_cache", "service": 12, "evidence_id": "E-C1"},
+        {"tick": 4, "id": "V1", "class": "mandatory_verify", "service": 2, "deadline": 6, "evidence_id": "E-V1"},
+        {"tick": 5, "id": "R1", "class": "mandatory_release", "service": 1, "deadline": 8, "evidence_id": "E-R1"}
+      ],
+      "evidence_ids": ["RAW-00", "RAW-01", "RAW-02", "RAW-03", "RAW-04", "RAW-05", "RAW-06", "RAW-07", "RAW-08", "RAW-09", "RAW-10", "RAW-11", "RAW-12", "RAW-13", "RAW-14", "RAW-15"]
+    },
+    {
+      "id": "low_free_memory_no_stall",
+      "purpose": "free-memory-only false alarm with no PSI stall",
+      "psi_delay_ticks": 0,
+      "memory_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "cpu_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "io_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "memory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "nonmemory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "free_memory_mib": [64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64],
+      "arrivals": [
+        {"tick": 0, "id": "S1", "class": "speculative", "service": 6, "evidence_id": "E-S1"},
+        {"tick": 0, "id": "C1", "class": "reconstructible_cache", "service": 6, "evidence_id": "E-C1"}
+      ],
+      "evidence_ids": ["RAW-00", "RAW-01", "RAW-02", "RAW-03", "RAW-04", "RAW-05", "RAW-06", "RAW-07", "RAW-08", "RAW-09", "RAW-10", "RAW-11", "RAW-12", "RAW-13", "RAW-14", "RAW-15"]
+    },
+    {
+      "id": "recovered_memory_backlog",
+      "purpose": "pressure clears while mandatory backlog remains; shed latch waits for obligations",
+      "psi_delay_ticks": 0,
+      "memory_some_ms_in_1s": [0, 0, 160, 170, 300, 100, 40, 40, 0, 0, 0, 0, 0, 0, 0, 0],
+      "cpu_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "io_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "memory_stall_active": [false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false],
+      "nonmemory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "free_memory_mib": [512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512],
+      "arrivals": [
+        {"tick": 0, "id": "S1", "class": "speculative", "service": 12, "evidence_id": "E-S1"},
+        {"tick": 0, "id": "C1", "class": "reconstructible_cache", "service": 12, "evidence_id": "E-C1"},
+        {"tick": 4, "id": "V1", "class": "mandatory_verify", "service": 2, "deadline": 12, "evidence_id": "E-V1"},
+        {"tick": 4, "id": "V2", "class": "mandatory_verify", "service": 2, "deadline": 13, "evidence_id": "E-V2"},
+        {"tick": 5, "id": "R1", "class": "mandatory_release", "service": 1, "deadline": 12, "evidence_id": "E-R1"},
+        {"tick": 6, "id": "O1", "class": "freshness_observation", "service": 2, "deadline": 14, "evidence_id": "E-O1"}
+      ],
+      "evidence_ids": ["RAW-00", "RAW-01", "RAW-02", "RAW-03", "RAW-04", "RAW-05", "RAW-06", "RAW-07", "RAW-08", "RAW-09", "RAW-10", "RAW-11", "RAW-12", "RAW-13", "RAW-14", "RAW-15"]
+    },
+    {
+      "id": "repeated_short_spikes",
+      "purpose": "alternating sub-threshold memory spikes must not chatter",
+      "psi_delay_ticks": 0,
+      "memory_some_ms_in_1s": [0, 200, 0, 200, 0, 200, 0, 200, 0, 200, 0, 200, 0, 200, 0, 0],
+      "cpu_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "io_some_ms_in_1s": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "memory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "nonmemory_stall_active": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "free_memory_mib": [512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512, 512],
+      "arrivals": [
+        {"tick": 0, "id": "S1", "class": "speculative", "service": 8, "evidence_id": "E-S1"},
+        {"tick": 0, "id": "C1", "class": "reconstructible_cache", "service": 8, "evidence_id": "E-C1"},
+        {"tick": 6, "id": "V1", "class": "mandatory_verify", "service": 1, "deadline": 12, "evidence_id": "E-V1"}
+      ],
+      "evidence_ids": ["RAW-00", "RAW-01", "RAW-02", "RAW-03", "RAW-04", "RAW-05", "RAW-06", "RAW-07", "RAW-08", "RAW-09", "RAW-10", "RAW-11", "RAW-12", "RAW-13", "RAW-14", "RAW-15"]
+    }
+  ]
+}

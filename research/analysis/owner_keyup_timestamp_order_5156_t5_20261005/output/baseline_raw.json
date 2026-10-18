@@ -1,0 +1,41 @@
+{
+  "schema": "owner-keyup-timestamp-order-raw-v1",
+  "phase": "baseline",
+  "base_commit": "e561b25b700680df4e6ffd2b92faf1dde1682ef7",
+  "source_sha256": "163a32ce20516bdfc034eb4c6659141e53e3ef11b8526372042fb5e9d509e63a",
+  "cases_sha256": "c3926ac2fde99ce3a5fa3947528bcc417edcf8ba2ced633cc0b074b7795dcf20",
+  "results": [
+    {
+      "id": "ordinary_order",
+      "expected_ready": true,
+      "measurement_ready": true,
+      "hold_count": 1,
+      "invalid_release_count": 0,
+      "unmatched_admission_count": 0
+    },
+    {
+      "id": "all_equal_boundary",
+      "expected_ready": true,
+      "measurement_ready": true,
+      "hold_count": 1,
+      "invalid_release_count": 0,
+      "unmatched_admission_count": 0
+    },
+    {
+      "id": "ack_before_admission",
+      "expected_ready": false,
+      "measurement_ready": true,
+      "hold_count": 1,
+      "invalid_release_count": 0,
+      "unmatched_admission_count": 0
+    },
+    {
+      "id": "release_return_before_start",
+      "expected_ready": false,
+      "measurement_ready": true,
+      "hold_count": 1,
+      "invalid_release_count": 0,
+      "unmatched_admission_count": 0
+    }
+  ]
+}

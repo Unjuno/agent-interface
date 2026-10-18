@@ -1,0 +1,41 @@
+{
+  "schema": "wslc-local-smoke-7924-a02-freeze-v1",
+  "allocation": "wslc-local-smoke-7924-a02-20261008",
+  "issue": 7924,
+  "main_sha": "6da5dc940fdb97866cfb900ca747edb8c94b2790",
+  "branch": "research/wslc-local-smoke-7924-a02-20261008",
+  "path": "research/analysis/wslc_local_smoke_7924_a02_20261008/",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "wsl_package": "3.0.1.0",
+  "wslc_version": "3.0.1.0",
+  "source_sha256": {
+    "fixture.txt": "a534d2138b0a8fbb37c0930c54f8c9922acbd1dd8109d9abd69c8659271dc965",
+    "probe.py": "85a545d12b2d58b32d5e02727f47b734d41a0ddb21d2682774c49a8a41f1daf1",
+    "auditor.py": "be690ffa85bffa08d55da9644b7c2c3e447b329701441295540ad2e8ed344e37",
+    "PROTOCOL.json": "58e4b4e0594c999a5b22d8d81061080eb0bb1a8fbcf47b054959bdcf6c0c87cc"
+  },
+  "candidate_container_name": "unjuno-7924-a02-cand-6da5dc94",
+  "auditor_container_name": "unjuno-7924-a02-audit-6da5dc94",
+  "commands": {
+    "candidate": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --name unjuno-7924-a02-cand-6da5dc94 --cidfile CANDIDATE_CID.txt --env FIXTURE_SHA256=a534d2138b0a8fbb37c0930c54f8c9922acbd1dd8109d9abd69c8659271dc965 --volume <package-directory>:/src:ro --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B probe.py",
+    "auditor": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --name unjuno-7924-a02-audit-6da5dc94 --cidfile AUDITOR_CID.txt --volume <package-directory>:/src:ro --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B auditor.py",
+    "cleanup_verification": "wslc container inspect <exact-cid-from-corresponding-cidfile>; expected named object not found after --rm"
+  },
+  "preflight": {
+    "current_main_worktree_clean_tracked_files": true,
+    "wslc_active_process_count": 0,
+    "prior_container_or_image_inventory_performed": false,
+    "docker_used": false,
+    "preflight_utc": "2026-10-08T02:44:21Z"
+  },
+  "invocations": {
+    "candidate": 1,
+    "auditor": 1,
+    "retries": 0,
+    "image_pulls": 0,
+    "global_container_list_calls": 0,
+    "docker_calls": 0
+  },
+  "first_failure_is_final": true,
+  "memory_limit_claim": "512M requested only; hard enforcement is not established"
+}

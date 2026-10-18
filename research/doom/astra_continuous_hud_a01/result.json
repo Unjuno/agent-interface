@@ -1,0 +1,118 @@
+{
+  "schema": "agent-interface-astra-continuous-hud-a01-v1",
+  "status": "POSTHOC_PASS_SCOPED",
+  "question": "Can retained video expose a transient HUD health excursion during a model wait that decision-frame sampling misses?",
+  "H_T_D_C_U": {
+    "H": "At least one timestamped intermediate state during a model wait differs from both adjacent decision-frame HUD health values.",
+    "T": "Decode the retained video at its authored frame cadence, align to the first-observation anchor and model/cover intervals, and visually inspect the decision and selected source frames.",
+    "D": "PASS_SCOPED if the selected intermediate HUD value differs from both adjacent decision samples, the sample maps inside the wait and active cover, and source/video timing checks pass.",
+    "C": "Health may fall and recover from different causes (including pickup); a red-pixel ROI change is not a health classifier or a control response.",
+    "U": "One retained attempt, 5 source samples/s in a rendered video, manual visual transcription, no causal or intervention evidence."
+  },
+  "observation": {
+    "decision_before": 5,
+    "decision_before_health_percent_manual": 84,
+    "selected_video_frame_index": 311,
+    "selected_video_time_s": 31.1,
+    "selected_source_control_elapsed_s": 62.2,
+    "selected_health_percent_manual": 77,
+    "decision_after": 6,
+    "decision_after_health_percent_manual": 84,
+    "transient_drop_percent_points": 7,
+    "recovered_by_next_decision_sample": true,
+    "manual_visual_transcription": true,
+    "selected_frame_file": "video-frame-311.png",
+    "selected_frame_sha256": "94c2a10ddfac9c11aa28d033c8648453b0aae7c89acbf349c6e3bf7b56366e75",
+    "decision_before_source_frame": "211.png",
+    "decision_before_source_frame_sha256": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300",
+    "decision_after_source_frame": "252.png",
+    "decision_after_source_frame_sha256": "5813b591566221a3753f9e6f1261907cd5289e0aaa987c4728987c959e331fc6",
+    "visible_close_enemy_in_selected_frame": true
+  },
+  "timing": {
+    "timeline_anchor": "first observation capture_ns, matching render_map01_timeline_v1.py",
+    "sample_ns": 11876078605188,
+    "latest_observation_id": "cover-5",
+    "latest_observation_sequence": 226,
+    "latest_observation_age_ms": 195.335121,
+    "decision5_model_start_source_s": 57.531515605,
+    "decision5_model_end_source_s": 71.26417355,
+    "cover5_accepted_source_s": 57.204072223,
+    "cover5_terminal_source_s": 67.49873234,
+    "cover5_steps": [
+      {
+        "op": "coast",
+        "duration_ms": 5000,
+        "sample_ms": 250
+      },
+      {
+        "op": "coast",
+        "duration_ms": 5000,
+        "sample_ms": 250
+      }
+    ],
+    "cover5_input_authority": false,
+    "sample_during_decision5_model_wait": true,
+    "sample_during_cover5": true
+  },
+  "pixel_change_probe": {
+    "roi_video_xywh": [
+      90,
+      490,
+      120,
+      55
+    ],
+    "red_threshold_rgb": [
+      140,
+      70,
+      70
+    ],
+    "samples": 780,
+    "source_sample_interval_s": 0.2,
+    "stable_baseline_through_decision4_frame_index": 220,
+    "stable_baseline_max_mask_xor_pixels": 29,
+    "change_threshold_mask_xor_pixels": 60,
+    "selected_frame_mask_xor_from_previous_pixels": 471,
+    "selected_frame_exceeds_threshold": true,
+    "interpretation": "A bounded ROI change alarm distinguishes this selected glyph transition from the stable pre-damage baseline; it is not OCR or a health-direction estimate."
+  },
+  "source_sha256": {
+    "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+    "research/doom/results/map01-astra-attempt-v1/video.json": "adc28ec07940266a577ce4a1353dde7bee5810e3cb46e83afe006c3732f59779",
+    "research/doom/results/map01-astra-attempt-v1/report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "research/doom/results/map01-astra-attempt-v1/events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "research/doom/results/map01-astra-attempt-v1/frame-manifest.json": "e0cbb11901cedaae1283d228593307c0e771a51a31b21e7bb1de8db0650d2935",
+    "research/doom/render_map01_timeline_v1.py": "d94e182e5b6853f371baac59f1463c65b5d6701d34f6d71b50a3ae499c3a7003",
+    "research/doom/results/map01-astra-attempt-v1/frames/00.png": "d17b0cdb63c7a9b64513c512553cd7012890ee8d5588c8ce149f268329cfba71",
+    "research/doom/results/map01-astra-attempt-v1/frames/01.png": "e5370c4cc21b4cdc4ad2211bf13b7af268d04904a693991fbcc1368c64d9d1f1",
+    "research/doom/results/map01-astra-attempt-v1/frames/02.png": "ab866d22079953994ac4d2b2a96841f3d99beb1a4f79ddfcef8af42a54011f41",
+    "research/doom/results/map01-astra-attempt-v1/frames/03.png": "8829ca399a58012392ffc3f76066d43b31b09b7afcefe6be7693c5633e3f0ce4",
+    "research/doom/results/map01-astra-attempt-v1/frames/04.png": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965",
+    "research/doom/results/map01-astra-attempt-v1/frames/05.png": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300",
+    "research/doom/results/map01-astra-attempt-v1/frames/06.png": "5813b591566221a3753f9e6f1261907cd5289e0aaa987c4728987c959e331fc6",
+    "research/doom/results/map01-astra-attempt-v1/frames/07.png": "c56a2542b3dea4f863a87ff0387ae756d2922768cd43432f8bf0501365bed95a",
+    "research/doom/results/map01-astra-attempt-v1/frames/08.png": "76ee920671ef35600b631af08202dbffae09d5b7dd4487d90d418568c07e7866",
+    "research/doom/results/map01-astra-attempt-v1/frames/09.png": "762030fb454865797cfe6dbb526a6ab1297d36e05cb4ab413c2c7b0a2646cace",
+    "research/doom/results/map01-astra-attempt-v1/frames/10.png": "9f0c6ec5fd0be82ea60ec8790e4f83d34f6d4ddb183dbffef17f15b5714a83c0",
+    "research/doom/results/map01-astra-attempt-v1/frames/11.png": "6df9a66e2d658b95003ff776f105082329a9dbbb704eeedf926adc0c33459a31",
+    "research/doom/results/map01-astra-attempt-v1/frames/12.png": "066db883b20bfd57270a87258eadd38cc816364d246c16db5ae586a01c14b366"
+  },
+  "generated_sha256": {
+    "samples.csv": "0b585a3671a10ba2a3e4f634b32cddc7f3fb83aa85013eb75faff8a128cd7e97",
+    "video-frame-311.png": "94c2a10ddfac9c11aa28d033c8648453b0aae7c89acbf349c6e3bf7b56366e75"
+  },
+  "limits": [
+    "Single retained run and one manually transcribed event; exploratory posthoc analysis, not a new allocation.",
+    "Video is a sampled/replayed observation trace; it does not prove the controller consumed or acted on each intermediate screenshot.",
+    "The transient health decrease and recovery cannot be causally assigned to enemy damage, movement, a pickup, or a specific policy step.",
+    "The red-pixel ROI detector signals change only; it does not identify health, direction, threat semantics, task progress, or useful effect.",
+    "No local guard response, recovery benefit, physical-input safety, survival benefit, or MAP01 exit is established."
+  ],
+  "execution_environment": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python_version": "3.12.14",
+    "wslc_available": false,
+    "method_note": "Posthoc local CPU analysis on Windows; wslc.exe was not available, and no container or external runtime was needed for this retained-video decode."
+  },
+  "next_test_implication": "A separately authorized fresh-current-main threat-exposure run should retain timestamped observations through model waits and score whether an interruption/escalation uses fresh evidence; do not infer this from renewed old policy or viewport-change receipts."
+}

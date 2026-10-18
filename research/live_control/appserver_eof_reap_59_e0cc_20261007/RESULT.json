@@ -1,0 +1,49 @@
+{
+  "format": "appserver-eof-reap-result-v1",
+  "base_main": "9fb2dd6782d1d1477a00d14be870487fd4c54fa2",
+  "repair_status": "PASS_SCOPED_REGRESSION",
+  "baseline_tests": {
+    "methods": 5,
+    "passed": 1,
+    "failures": 2,
+    "errors": 2,
+    "exit_code": 1
+  },
+  "candidate_process_tree_tests": {
+    "methods": 8,
+    "passed": 8,
+    "exit_code": 0
+  },
+  "focused_modules": 7,
+  "focused_normal": {
+    "methods": 29,
+    "passed": 29,
+    "exit_code": 0
+  },
+  "focused_optimized": {
+    "methods": 29,
+    "passed": 29,
+    "exit_code": 0
+  },
+  "original_controller_cells": 8,
+  "independent_raw_audit": {
+    "checks": 18,
+    "passed": 18
+  },
+  "repaired_controller_cells": {
+    "eof": "PASS",
+    "rpc_error": "PASS"
+  },
+  "original_eof_close_error": "PermissionError at os.killpg on unreaped exited leader; retained",
+  "source_sha256": "79f71eee5bed5db3da2cabd273e6d4639938fa1ce85d52b01711d56346e3eb67",
+  "test_sha256": "f3c405499d6e9a4b6debace1632666a3d15c44e85fdee23b7ef62536ba4095f8",
+  "main_applied": false,
+  "nonauthor_quorum": false,
+  "limits": [
+    "No live app-server/model/game/GUI/native-input run",
+    "Actual local Popen/OS process-group cleanup, synthetic V39 application session and cleanup spy",
+    "No physical-release proof or shutdown worst-case bound",
+    "Ack without completion still waits; one-second construction watchdog used, no 90-second wait measured",
+    "Root authored original8280; helper review is not nonauthor whole-PR quorum"
+  ]
+}

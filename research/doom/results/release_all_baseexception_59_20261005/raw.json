@@ -1,0 +1,60 @@
+{
+  "baseline": {
+    "active_after_close": true,
+    "commit": "61e5e877101f3182f64986406a5552917d554446",
+    "executor_source_sha256": "7829182db13a6cdf8139593863f4d693bfe79eeaae16be48ffbbc6c8b4a8df26",
+    "include_custody": true,
+    "release": null,
+    "terminal_count": 0,
+    "terminal_error": null,
+    "terminal_status": null,
+    "worker_excepthook": [
+      "KeyboardInterrupt"
+    ]
+  },
+  "candidate": {
+    "active_after_close": false,
+    "commit": "636f61941e3da887a1641e4399c2f0e3373a7974",
+    "executor_source_sha256": "d30704a832f07800ed613be6fd48c4d4369c818437793fa4381adb09bd40302b",
+    "include_custody": true,
+    "release": {
+      "error": "KeyboardInterrupt('release sink interrupted during cleanup')",
+      "release_batch_delivery": {
+        "identifier": "cleanup-interrupt",
+        "positions": [
+          {
+            "key": "a",
+            "position": 0,
+            "state": "unknown",
+            "step": 0
+          }
+        ],
+        "schema": "release-batch-delivery-v1",
+        "size": 1,
+        "step": 0
+      },
+      "verified": false
+    },
+    "terminal_count": 1,
+    "terminal_error": "KeyboardInterrupt('release sink interrupted during cleanup')",
+    "terminal_status": "failed",
+    "worker_excepthook": [
+      "KeyboardInterrupt"
+    ]
+  },
+  "candidate_dependency_sha256": {
+    "research/live_control/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
+  },
+  "dependencies_identical": true,
+  "dependency_sha256": {
+    "research/live_control/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
+  },
+  "experiment": "issue-59-release-all-baseexception-a01",
+  "host": "win32",
+  "python": "3.11.9",
+  "scope": "synthetic ExecutorV13/release sink only; no OS input or live allocation"
+}

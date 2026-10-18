@@ -1,0 +1,2836 @@
+{
+  "allocation_id": "7944-BWI-T0-A01-20261005-01",
+  "base_main": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "fixture_sha256": "33a4ac08a22da0f557b452f38f7951980d988b2726b1c0df1fecf5d652852261",
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 1,
+  "freeze_sha256": "bcba2cf99e818675c8c1c314a6c10404b6a5f333cf9dceedea125ddff819d17e",
+  "frozen_source_sha256": {
+    "ENVIRONMENT.json": "bbe23393a56a363ab3ed25f3ba764c1eebd1d75dadc95dd20fcc94bb3d850d70",
+    "PRE-RUN.md": "dcf3116e628a1ff2c884ee3ab09094ed8e7e577fc87bbd723b8608c5176bc776",
+    "PROTOCOL.md": "ab3eb5a60d5f1f74e47c23711e93b486ba852fd0bf40a790fe1bc3d17c3adf70",
+    "README.md": "e923ca3c91b15ffc00a07f295180926f95807179ae4f81c9e58bf1367b285c58",
+    "audit.py": "4e9d173956a9294155a3ef3ac76758e18664b39aee9b4a222bec176b8d7087eb",
+    "candidate.py": "bb000a7a27ae04fd09c5317ac89fa7d8a53a20306911bad1d7b039b446900285",
+    "fixture.json": "33a4ac08a22da0f557b452f38f7951980d988b2726b1c0df1fecf5d652852261",
+    "results/README.md": "05618e491f7f1ce67218e398e838d4dca9fdbea254cdbcdb7c92438e56b9db69",
+    "test_construction.py": "699cc542695cd74bca86d8c526a1e49be12422db44b4e31ec7d18b197d180e49"
+  },
+  "policy_order": [
+    "NONE",
+    "PI_HOME_CHARGED",
+    "BWI"
+  ],
+  "retry_count": 0,
+  "runs": [
+    {
+      "cancelled_jobs": [],
+      "case_id": "budget_inversion",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 7
+        }
+      ],
+      "freshness": {
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "best-effort": 1,
+        "holder": 7,
+        "verifier": 8
+      },
+      "pending_jobs": [],
+      "policy": "NONE",
+      "server_ticks": {
+        "BE": 1,
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "budget_inversion",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 7
+        }
+      ],
+      "freshness": {
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "best-effort": 1,
+        "holder": 7,
+        "verifier": 8
+      },
+      "pending_jobs": [],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "BE": 1,
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "budget_inversion",
+      "deadline_misses": [],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": "verifier",
+          "inherited": true,
+          "job": "holder",
+          "reason": "bandwidth-inheritance",
+          "server_charged": "W",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 1
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 2
+        }
+      ],
+      "freshness": {
+        "verifier": "ADMITTED_FRESH"
+      },
+      "inherited_ticks": 1,
+      "job_completion": {
+        "best-effort": 3,
+        "holder": 1,
+        "verifier": 2
+      },
+      "pending_jobs": [],
+      "policy": "BWI",
+      "server_ticks": {
+        "BE": 1,
+        "H": 0,
+        "W": 2
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "no_contention",
+      "deadline_misses": [],
+      "decisions": [],
+      "events": [
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 1
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        }
+      ],
+      "freshness": {},
+      "inherited_ticks": 0,
+      "job_completion": {
+        "best-effort": 2,
+        "holder": 7,
+        "verifier": 1
+      },
+      "pending_jobs": [],
+      "policy": "NONE",
+      "server_ticks": {
+        "BE": 1,
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "no_contention",
+      "deadline_misses": [],
+      "decisions": [],
+      "events": [
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 1
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        }
+      ],
+      "freshness": {},
+      "inherited_ticks": 0,
+      "job_completion": {
+        "best-effort": 2,
+        "holder": 7,
+        "verifier": 1
+      },
+      "pending_jobs": [],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "BE": 1,
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "no_contention",
+      "deadline_misses": [],
+      "decisions": [],
+      "events": [
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 1
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        }
+      ],
+      "freshness": {},
+      "inherited_ticks": 0,
+      "job_completion": {
+        "best-effort": 2,
+        "holder": 7,
+        "verifier": 1
+      },
+      "pending_jobs": [],
+      "policy": "BWI",
+      "server_ticks": {
+        "BE": 1,
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "waiter_budget_exhaustion",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 7,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 8,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 9,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 10,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 11,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 12,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 12
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 13
+        }
+      ],
+      "freshness": {
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "best-effort": 1,
+        "holder": 13,
+        "verifier": 14
+      },
+      "pending_jobs": [],
+      "policy": "NONE",
+      "server_ticks": {
+        "BE": 1,
+        "H": 2,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "waiter_budget_exhaustion",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 7,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 8,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 9,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 10,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 11,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 12,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 12
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 13
+        }
+      ],
+      "freshness": {
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "best-effort": 1,
+        "holder": 13,
+        "verifier": 14
+      },
+      "pending_jobs": [],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "BE": 1,
+        "H": 2,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "waiter_budget_exhaustion",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": "verifier",
+          "inherited": true,
+          "job": "holder",
+          "reason": "bandwidth-inheritance",
+          "server_charged": "W",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "best-effort",
+          "reason": "home",
+          "server_charged": "BE",
+          "time": 1
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 7
+        }
+      ],
+      "freshness": {
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 1,
+      "job_completion": {
+        "best-effort": 2,
+        "holder": 7,
+        "verifier": 8
+      },
+      "pending_jobs": [],
+      "policy": "BWI",
+      "server_ticks": {
+        "BE": 1,
+        "H": 1,
+        "W": 2
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "unlock_at_replenishment_boundary",
+      "deadline_misses": [],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 3
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 4
+        }
+      ],
+      "freshness": {
+        "verifier": "ADMITTED_FRESH"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 4,
+        "verifier": 5
+      },
+      "pending_jobs": [],
+      "policy": "NONE",
+      "server_ticks": {
+        "BE": 0,
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "unlock_at_replenishment_boundary",
+      "deadline_misses": [],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": "verifier",
+          "inherited": false,
+          "job": "holder",
+          "reason": "priority-inheritance",
+          "server_charged": "H",
+          "time": 3
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 4
+        }
+      ],
+      "freshness": {
+        "verifier": "ADMITTED_FRESH"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 4,
+        "verifier": 5
+      },
+      "pending_jobs": [],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "BE": 0,
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "unlock_at_replenishment_boundary",
+      "deadline_misses": [],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": "verifier",
+          "inherited": true,
+          "job": "holder",
+          "reason": "bandwidth-inheritance",
+          "server_charged": "W",
+          "time": 2
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 3
+        }
+      ],
+      "freshness": {
+        "verifier": "ADMITTED_FRESH"
+      },
+      "inherited_ticks": 1,
+      "job_completion": {
+        "holder": 3,
+        "verifier": 4
+      },
+      "pending_jobs": [],
+      "policy": "BWI",
+      "server_ticks": {
+        "BE": 0,
+        "H": 0,
+        "W": 2
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "two_waiters",
+      "deadline_misses": [
+        "waiter1",
+        "waiter2"
+      ],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 4,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "waiter2"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "waiter1",
+          "reason": "home",
+          "server_charged": "W1",
+          "time": 7
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "waiter2",
+          "reason": "home",
+          "server_charged": "W2",
+          "time": 8
+        }
+      ],
+      "freshness": {
+        "waiter1": "UNKNOWN_STALE",
+        "waiter2": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 7,
+        "waiter1": 8,
+        "waiter2": 9
+      },
+      "pending_jobs": [],
+      "policy": "NONE",
+      "server_ticks": {
+        "H": 1,
+        "W1": 1,
+        "W2": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "two_waiters",
+      "deadline_misses": [
+        "waiter1",
+        "waiter2"
+      ],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 4,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "waiter2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "waiter2"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "waiter1",
+          "reason": "home",
+          "server_charged": "W1",
+          "time": 7
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "waiter2",
+          "reason": "home",
+          "server_charged": "W2",
+          "time": 8
+        }
+      ],
+      "freshness": {
+        "waiter1": "UNKNOWN_STALE",
+        "waiter2": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 7,
+        "waiter1": 8,
+        "waiter2": 9
+      },
+      "pending_jobs": [],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "H": 1,
+        "W1": 1,
+        "W2": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "two_waiters",
+      "deadline_misses": [
+        "waiter1"
+      ],
+      "decisions": [
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "waiter1"
+        },
+        {
+          "eligible": true,
+          "leaf": "holder",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "waiter2"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": "waiter1",
+          "inherited": true,
+          "job": "holder",
+          "reason": "bandwidth-inheritance",
+          "server_charged": "W1",
+          "time": 0
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "waiter2",
+          "reason": "home",
+          "server_charged": "W2",
+          "time": 1
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "waiter1",
+          "reason": "home",
+          "server_charged": "W1",
+          "time": 6
+        }
+      ],
+      "freshness": {
+        "waiter1": "UNKNOWN_STALE",
+        "waiter2": "ADMITTED_FRESH"
+      },
+      "inherited_ticks": 1,
+      "job_completion": {
+        "holder": 1,
+        "waiter1": 7,
+        "waiter2": 2
+      },
+      "pending_jobs": [],
+      "policy": "BWI",
+      "server_ticks": {
+        "H": 0,
+        "W1": 2,
+        "W2": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "nested_acyclic_chain",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 1,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 2,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 3,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 4,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 5,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 6,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 7,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "h2",
+          "reason": "home",
+          "server_charged": "H2",
+          "time": 6
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "h1",
+          "reason": "home",
+          "server_charged": "H1",
+          "time": 7
+        },
+        {
+          "budget_after": 2,
+          "budget_before": 3,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 8
+        }
+      ],
+      "freshness": {
+        "h1": "ADMITTED_FRESH",
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "h1": 8,
+        "h2": 7,
+        "verifier": 9
+      },
+      "pending_jobs": [],
+      "policy": "NONE",
+      "server_ticks": {
+        "H1": 1,
+        "H2": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "nested_acyclic_chain",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 1,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 2,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 3,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 4,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 5,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 6,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 7,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "h2",
+          "reason": "home",
+          "server_charged": "H2",
+          "time": 6
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "h1",
+          "reason": "home",
+          "server_charged": "H1",
+          "time": 7
+        },
+        {
+          "budget_after": 2,
+          "budget_before": 3,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 8
+        }
+      ],
+      "freshness": {
+        "h1": "ADMITTED_FRESH",
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "h1": 8,
+        "h2": 7,
+        "verifier": 9
+      },
+      "pending_jobs": [],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "H1": 1,
+        "H2": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "nested_acyclic_chain",
+      "deadline_misses": [],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h1"
+        },
+        {
+          "eligible": true,
+          "leaf": "h2",
+          "reason": "ELIGIBLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": true,
+          "leaf": "h1",
+          "reason": "ELIGIBLE",
+          "time": 1,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 2,
+          "budget_before": 3,
+          "donor": "verifier",
+          "inherited": true,
+          "job": "h2",
+          "reason": "bandwidth-inheritance",
+          "server_charged": "W",
+          "time": 0
+        },
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": "verifier",
+          "inherited": true,
+          "job": "h1",
+          "reason": "bandwidth-inheritance",
+          "server_charged": "W",
+          "time": 1
+        },
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 2
+        }
+      ],
+      "freshness": {
+        "h1": "ADMITTED_FRESH",
+        "verifier": "ADMITTED_FRESH"
+      },
+      "inherited_ticks": 2,
+      "job_completion": {
+        "h1": 2,
+        "h2": 1,
+        "verifier": 3
+      },
+      "pending_jobs": [],
+      "policy": "BWI",
+      "server_ticks": {
+        "H1": 0,
+        "H2": 0,
+        "W": 3
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "dependency_cycle",
+      "deadline_misses": [
+        "h1",
+        "h2",
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 1,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 1,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 2,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 2,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 3,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 3,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 4,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 4,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 5,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 5,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 6,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 6,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 7,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 7,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 7,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [],
+      "freshness": {
+        "h1": "UNKNOWN_STALE",
+        "h2": "UNKNOWN_STALE",
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "h1": null,
+        "h2": null,
+        "verifier": null
+      },
+      "pending_jobs": [
+        "h1",
+        "h2",
+        "verifier"
+      ],
+      "policy": "NONE",
+      "server_ticks": {
+        "H1": 0,
+        "H2": 0,
+        "W": 0
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "dependency_cycle",
+      "deadline_misses": [
+        "h1",
+        "h2",
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 1,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 1,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 2,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 2,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 3,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 3,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 4,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 4,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 5,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 5,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 6,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 6,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 7,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 7,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 7,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [],
+      "freshness": {
+        "h1": "UNKNOWN_STALE",
+        "h2": "UNKNOWN_STALE",
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "h1": null,
+        "h2": null,
+        "verifier": null
+      },
+      "pending_jobs": [
+        "h1",
+        "h2",
+        "verifier"
+      ],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "H1": 0,
+        "H2": 0,
+        "W": 0
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "dependency_cycle",
+      "deadline_misses": [
+        "h1",
+        "h2",
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 0,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 1,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 1,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 2,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 2,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 3,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 3,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "DEPENDENCY_CYCLE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 4,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 4,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 5,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 5,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 6,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 6,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 6,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 7,
+          "waiter": "h1"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNAUTHENTICATED_EDGE",
+          "time": 7,
+          "waiter": "h2"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "EXPIRED_EDGE",
+          "time": 7,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [],
+      "freshness": {
+        "h1": "UNKNOWN_STALE",
+        "h2": "UNKNOWN_STALE",
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "h1": null,
+        "h2": null,
+        "verifier": null
+      },
+      "pending_jobs": [
+        "h1",
+        "h2",
+        "verifier"
+      ],
+      "policy": "BWI",
+      "server_ticks": {
+        "H1": 0,
+        "H2": 0,
+        "W": 0
+      }
+    },
+    {
+      "cancelled_jobs": [
+        "verifier"
+      ],
+      "case_id": "cancelled_waiter",
+      "deadline_misses": [],
+      "decisions": [],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        }
+      ],
+      "freshness": {
+        "verifier": "CANCELLED"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 7,
+        "verifier": null
+      },
+      "pending_jobs": [],
+      "policy": "NONE",
+      "server_ticks": {
+        "H": 1,
+        "W": 0
+      }
+    },
+    {
+      "cancelled_jobs": [
+        "verifier"
+      ],
+      "case_id": "cancelled_waiter",
+      "deadline_misses": [],
+      "decisions": [],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        }
+      ],
+      "freshness": {
+        "verifier": "CANCELLED"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 7,
+        "verifier": null
+      },
+      "pending_jobs": [],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "H": 1,
+        "W": 0
+      }
+    },
+    {
+      "cancelled_jobs": [
+        "verifier"
+      ],
+      "case_id": "cancelled_waiter",
+      "deadline_misses": [],
+      "decisions": [],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        }
+      ],
+      "freshness": {
+        "verifier": "CANCELLED"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 7,
+        "verifier": null
+      },
+      "pending_jobs": [],
+      "policy": "BWI",
+      "server_ticks": {
+        "H": 1,
+        "W": 0
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "remote_nonpreemptible_resource",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 6,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 7
+        }
+      ],
+      "freshness": {
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 7,
+        "verifier": 8
+      },
+      "pending_jobs": [],
+      "policy": "NONE",
+      "server_ticks": {
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "remote_nonpreemptible_resource",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 6,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 7
+        }
+      ],
+      "freshness": {
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 7,
+        "verifier": 8
+      },
+      "pending_jobs": [],
+      "policy": "PI_HOME_CHARGED",
+      "server_ticks": {
+        "H": 1,
+        "W": 1
+      }
+    },
+    {
+      "cancelled_jobs": [],
+      "case_id": "remote_nonpreemptible_resource",
+      "deadline_misses": [
+        "verifier"
+      ],
+      "decisions": [
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 0,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 1,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 2,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 3,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 4,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 5,
+          "waiter": "verifier"
+        },
+        {
+          "eligible": false,
+          "leaf": null,
+          "reason": "UNSUPPORTED_RESOURCE",
+          "time": 6,
+          "waiter": "verifier"
+        }
+      ],
+      "events": [
+        {
+          "budget_after": 0,
+          "budget_before": 1,
+          "donor": null,
+          "inherited": false,
+          "job": "holder",
+          "reason": "home",
+          "server_charged": "H",
+          "time": 6
+        },
+        {
+          "budget_after": 1,
+          "budget_before": 2,
+          "donor": null,
+          "inherited": false,
+          "job": "verifier",
+          "reason": "home",
+          "server_charged": "W",
+          "time": 7
+        }
+      ],
+      "freshness": {
+        "verifier": "UNKNOWN_STALE"
+      },
+      "inherited_ticks": 0,
+      "job_completion": {
+        "holder": 7,
+        "verifier": 8
+      },
+      "pending_jobs": [],
+      "policy": "BWI",
+      "server_ticks": {
+        "H": 1,
+        "W": 1
+      }
+    }
+  ],
+  "schema": "issue7944-bwi-t0-a01-raw-v1"
+}

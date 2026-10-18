@@ -1,0 +1,172 @@
+{
+  "answer_return_ns": 23982187170166,
+  "cancel_request": {
+    "id": "cover-0",
+    "op": "cancel"
+  },
+  "cover_terminal": {
+    "event": "terminal",
+    "id": "cover-0",
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "verified": true
+    },
+    "status": "cancelled"
+  },
+  "event_order": [
+    "executor_cancel",
+    "planner_interrupt"
+  ],
+  "final_admission": {
+    "action_validity": null,
+    "controller_decided_ns": 23982187234416,
+    "executor_admission": null,
+    "grants_input_authority": false,
+    "input_authority_admitted": false,
+    "planner_terminal": {
+      "answer_eligible": true,
+      "status": "completed",
+      "terminal_observed_ns": 23982187120125,
+      "turn_id": "planner-0"
+    },
+    "policy_invalidation": {
+      "event": "paired_signal_invalidation",
+      "grants_input_authority": false,
+      "monitor_received_ns": 23982187107583,
+      "outcome": {
+        "current_value": 87,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-0",
+        "hard_minimum": 88,
+        "keep_existing_policy": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "semantic_change_identified": true,
+        "signal_id": "health",
+        "source_age_ms": 300.0,
+        "source_value": 100,
+        "status": "HARD_INVALIDATED",
+        "task_success_verified": false
+      },
+      "outcome_evaluated_ns": 23982187120125,
+      "outcomes": {
+        "ammo": {
+          "current_value": 4,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "map01-0-ammo",
+          "hard_minimum": 1,
+          "keep_existing_policy": true,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "signal_unchanged",
+          "requires_new_decision": false,
+          "semantic_change_identified": false,
+          "signal_id": "ammo",
+          "source_age_ms": 300.0,
+          "source_value": 4,
+          "status": "UNCHANGED",
+          "task_success_verified": false
+        },
+        "health": {
+          "current_value": 87,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "map01-0",
+          "hard_minimum": 88,
+          "keep_existing_policy": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "below_hard_minimum",
+          "requires_new_decision": true,
+          "semantic_change_identified": true,
+          "signal_id": "health",
+          "source_age_ms": 300.0,
+          "source_value": 100,
+          "status": "HARD_INVALIDATED",
+          "task_success_verified": false
+        }
+      },
+      "reason": "health:below_hard_minimum",
+      "requires_new_decision": true,
+      "sequence": 13,
+      "signals": {
+        "ammo": {
+          "binding": {
+            "focus": 7,
+            "geometry": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "surface": 9
+          },
+          "capture_ns": 1300000000,
+          "format": "observable-signal-v1",
+          "sequence": 13,
+          "signal_id": "ammo",
+          "status": "observed",
+          "value": 4
+        },
+        "health": {
+          "binding": {
+            "focus": 7,
+            "geometry": [
+              0,
+              0,
+              640,
+              480
+            ],
+            "surface": 9
+          },
+          "capture_ns": 1300000000,
+          "format": "observable-signal-v1",
+          "sequence": 13,
+          "signal_id": "health",
+          "status": "observed",
+          "value": 87
+        }
+      }
+    },
+    "reason": "below_hard_minimum",
+    "revocation": null,
+    "schema": "final-action-admission-v2",
+    "status": "REJECTED_POLICY_INVALIDATED"
+  },
+  "formal_allocation_invocations": 0,
+  "game_model_gui_os_input": false,
+  "hard_minimum": 88,
+  "invalidation_evaluated_ns": 23982187120125,
+  "invalidation_reason": "health:below_hard_minimum",
+  "observations": [
+    {
+      "expected": "SOFT_CHANGED",
+      "health": 89,
+      "sequence": 11
+    },
+    {
+      "expected": "SOFT_CHANGED",
+      "health": 88,
+      "sequence": 12
+    },
+    {
+      "expected": "HARD_INVALIDATED",
+      "health": 87,
+      "sequence": 13
+    }
+  ],
+  "planner_answer_eligible_after_interrupt": true,
+  "planner_interrupt": {
+    "status": "interrupt_requested"
+  },
+  "planner_started_before_observations": true,
+  "schema": "v39-currentmain-health-guard-boundary-a01",
+  "soft_event_count": 2,
+  "source_health": 100,
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "source_sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+  "threat_present": true,
+  "threat_present_is_synthetic_metadata": true
+}

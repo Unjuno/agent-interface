@@ -1,0 +1,48 @@
+{
+  "schema": "map01-astra-decision4-dense-hud-replay-result-v1",
+  "run_id": "MAP01-ASTRA-WAIT-HUD-REPLAY-A01-20261005",
+  "base_commit": "88d875cc0916accb1a5fa36057253686f0586f1e",
+  "status": "PASS_DESCRIPTIVE_VIDEO_FRAME_BOUNDARY_RECONSTRUCTION",
+  "candidate_invocations": 1,
+  "independent_audit_invocations": 1,
+  "candidate_status": "PASS_DESCRIPTIVE_VIDEO_FRAME_BOUNDARY_RECONSTRUCTION",
+  "independent_audit_status": "PASS_DESCRIPTIVE_VIDEO_FRAME_BOUNDARY_RECONSTRUCTION",
+  "decision": 4,
+  "model_inference_duration_ns": 11741060121,
+  "video_samples": {
+    "fps": 10,
+    "playback_speed": 2.0,
+    "game_seconds_per_encoded_frame": 0.2,
+    "frames_analyzed": 60,
+    "first_pending_overlay_sample_game_seconds": 44.6,
+    "last_health_baseline_sample_game_seconds": 46.8,
+    "first_changed_health_sample_game_seconds": 47.0,
+    "last_pending_overlay_sample_game_seconds": 56.2,
+    "first_local_plan_overlay_sample_game_seconds": 56.4
+  },
+  "health": {
+    "manual_hud_at_game_46_8": 100,
+    "manual_hud_at_game_47_0": 96,
+    "manual_hud_at_game_56_2": 94,
+    "manual_hud_at_game_56_4": 87,
+    "interpretation": "100 to 96 is first visibly sampled inside the model-pending interval. The 94 to 87 decrement lies across the final pending / first local-plan video samples, so it is not attributed to inference alone."
+  },
+  "ammo": {
+    "manual_hud_at_game_44_6": 46,
+    "manual_hud_at_game_53_6": 38,
+    "manual_hud_at_game_53_8": 37,
+    "manual_hud_at_game_56_2": 37,
+    "interpretation": "Nine rounds of net ammo decrease are visible between the first sampled cover-4 wait frame and the 53.8-second frame; the count remains 37 at the final pending sample. The earlier report's broader 48 to 37 window begins before this first pending sample."
+  },
+  "next_plan": [
+    {"action": "backward", "extent": "short"},
+    {"action": "turn_right", "extent": "short"}
+  ],
+  "limits": [
+    "This is one retained, edited 2x video from one failed run, sampled at 0.2 game-second intervals.",
+    "HUD values and overlay phases are manual visual transcriptions; the automated candidate only detects a health ROI pixel-state change.",
+    "A first changed HUD sample bounds visible display change, not the exact underlying damage event between frames.",
+    "This does not establish why damage occurred, semantic threat detection, policy appropriateness, causal survival effect, operational guard quality, live V39 behavior, feedback usefulness, recovery efficacy, latency bounds, or MAP01 success.",
+    "No game, model, GUI, OS input, or live allocation was run; the private live-game lane remains unassigned."
+  ]
+}

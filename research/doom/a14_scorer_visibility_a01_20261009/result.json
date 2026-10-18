@@ -1,0 +1,37 @@
+{
+  "classification": "A14_POSTHOC_SCORER_VISIBILITY_AND_SIGNAL_SCOPE",
+  "source_main_sha": "f93612d8e8e9eb7a4920c84f69e2ba258e5d0a77",
+  "source_run_classification": "EXPLORATORY_PROTOCOL_DEVIATION",
+  "source_hashes": {
+    "scorer-samples.jsonl": "9d98c317a1a5d9d9324fe3ca75964374a7d74dccd08b83050e8e6334e2971b13",
+    "scorer-summary.json": "72c5752a0bf6a8d7e2a784c5ec39d8974f6a6b52169cbc6afc2b76b096570605",
+    "score.json": "96d408f95314b94b974a6de282e4fb1395714288d94a31c47fb6456bb92009ca",
+    "events.jsonl": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a"
+  },
+  "samples": 1519,
+  "controller_visible_true": 0,
+  "scorer_events": 0,
+  "positive_useful_events": 0,
+  "negative_events": 0,
+  "distinct_terminal_progress_states": 1,
+  "health_or_ammo_fields_in_sample_payload": false,
+  "sample_interval_ms": {
+    "median": 28.5704835,
+    "p95_nearest_rank": 28.64628,
+    "max": 115.923526
+  },
+  "terminal_score": {
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "death_count": 0,
+    "kill_count": 0,
+    "wall_control_ns": 43463978450
+  },
+  "interpretation": "The retained independent scorer emitted no events, was not visible to the controller, and sampled only terminal/progress flags that remained constant. This does not establish a static or threat-free scene; its sample payload contains no health, ammo, threat identity, or visual evidence.",
+  "limits": [
+    "A14 is an exploratory protocol deviation and is not a preregistered efficacy result.",
+    "Posthoc scorer evidence cannot establish what a connected live controller would observe or do.",
+    "No game, model, GUI, OS input, or container was started for this analysis."
+  ]
+}

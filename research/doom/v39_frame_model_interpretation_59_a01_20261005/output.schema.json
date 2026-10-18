@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "visible_hostile": {"type": "boolean"},
+    "health": {"type": ["integer", "null"]},
+    "ammo": {"type": ["integer", "null"]},
+    "cover_recommendation": {
+      "type": "string",
+      "enum": ["CONTINUE", "STOP_OR_SWITCH", "UNCERTAIN"]
+    },
+    "rationale": {"type": "string"}
+  },
+  "required": ["visible_hostile", "health", "ammo", "cover_recommendation", "rationale"]
+}

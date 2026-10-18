@@ -1,0 +1,23 @@
+{
+  "allocation": "UNJUNO-7831-DSMS-A02-20261005",
+  "issue": 7831,
+  "repository": "Unjuno/agent-interface",
+  "base_main_sha": "88d875cc0916accb1a5fa36057253686f0586f1e",
+  "container_image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "container_platform": "linux/arm64",
+  "container_flags": ["--network=none", "--cpus=1", "--memory=1g", "--pids-limit=64"],
+  "source_sha256": {
+    "PROTOCOL_A02.md": "af4f253570ed96258585f8a900f8a2a54d181c046a08a2bc7085d3c022da1c18",
+    "fixtures.py": "616ff6f4b8dd132235b9cca1c6e79ab28d005ff234373382e3aed77959a9609a",
+    "candidate.py": "b313f2a5a0370855c2426b06d6bcb253a87cc4d9e5b3316da02af89585c45cd9",
+    "oracle.py": "c70067dcf5cbdcfc96d490030fadf9ce54cda9e582816e301f8b350b1240c794",
+    "test_a02.py": "1efbed9e0309b9d6775a1c22474f16812156cd45e7b698c90a1c040fd58797f3"
+  },
+  "pre_freeze_gate": "Host Python 3 unittest: 8/8 PASS in 0.005 seconds",
+  "formal_command": "python -B -m unittest -v test_a02",
+  "formal_invocations": 0,
+  "retry_policy": "one formal container invocation; preserve any failure and do not rerun as A02",
+  "decision_gate": "PASS_METHOD_SCOPED only when all 8 tests pass; otherwise FAIL/HOLD. Matrix contains 128 trace/config rows and 512 policy rows.",
+  "scope": "finite synthetic method model only; no GUI, model, live application, user data, or external effect",
+  "status": "FROZEN_BEFORE_FORMAL_RUN"
+}

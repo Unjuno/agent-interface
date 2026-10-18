@@ -1,0 +1,37 @@
+test_continuous_fresh_rows_stop_at_fake_deadline (__main__.Boundary.test_continuous_fresh_rows_stop_at_fake_deadline) ... ERROR
+test_expired_fresh_arrival_stops_before_restart (__main__.Boundary.test_expired_fresh_arrival_stops_before_restart) ... ok
+test_new_match_consumed_before_wait (__main__.Boundary.test_new_match_consumed_before_wait) ... ERROR
+test_unchanged_queue_wait_once_linear (__main__.Boundary.test_unchanged_queue_wait_once_linear) ... ok
+
+======================================================================
+ERROR: test_continuous_fresh_rows_stop_at_fake_deadline (__main__.Boundary.test_continuous_fresh_rows_stop_at_fake_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-boundary-b64b/test_boundary.py", line 123, in test_continuous_fresh_rows_stop_at_fake_deadline
+    client.wait_notification(predicate, timeout=3)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-boundary-b64b/r02.py.txt", line 114, in wait_notification
+    self._condition.wait(remaining)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-boundary-b64b/test_boundary.py", line 31, in wait
+    raise WaitReached()
+WaitReached
+
+======================================================================
+ERROR: test_new_match_consumed_before_wait (__main__.Boundary.test_new_match_consumed_before_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-boundary-b64b/test_boundary.py", line 104, in test_new_match_consumed_before_wait
+    self.assertIs(client.wait_notification(predicate, timeout=1), fresh)
+                  ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-boundary-b64b/r02.py.txt", line 114, in wait_notification
+    self._condition.wait(remaining)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-boundary-b64b/test_boundary.py", line 31, in wait
+    raise WaitReached()
+WaitReached
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (errors=2)

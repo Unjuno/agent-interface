@@ -1,0 +1,84 @@
+{
+  "study": "issue-5865-negative-delivery-t0a-a02",
+  "ttl": 10,
+  "query": {"target_id": "save-button", "surface_id": "window-4", "scope": "panel-main", "predicate_version": 1, "epoch": 7},
+  "seed": {"evaluation_id": "eval-0", "request_id": "seed-0", "time": 0, "result": "NO_MATCH_WITHIN_CERTIFIED_SCOPE", "writer_coverage": true, "coherent": true, "clock_mapping": "known", "source_id": "tree-v3"},
+  "cases": {
+    "forward_cycle": {
+      "seed": true,
+      "actions": [
+        {"type": "copy", "from": "A", "to": "B", "time": 8},
+        {"type": "lookup", "request_id": "forward-8", "at": "B", "time": 8, "query": {}, "provider_available": true, "provider_result": "NO_MATCH_WITHIN_CERTIFIED_SCOPE"},
+        {"type": "copy", "from": "B", "to": "C", "time": 16},
+        {"type": "lookup", "request_id": "forward-16", "at": "C", "time": 16, "query": {}, "provider_available": true, "provider_result": "NO_MATCH_WITHIN_CERTIFIED_SCOPE"}
+      ]
+    },
+    "exact_expiry_boundary": {
+      "seed": true,
+      "actions": [
+        {"type": "lookup", "request_id": "expiry-9", "at": "A", "time": 9, "query": {}, "provider_available": true, "provider_result": "NO_MATCH_WITHIN_CERTIFIED_SCOPE"},
+        {"type": "lookup", "request_id": "expiry-10", "at": "A", "time": 10, "query": {}, "provider_available": true, "provider_result": "NO_MATCH_WITHIN_CERTIFIED_SCOPE"}
+      ]
+    },
+    "predicate_changed_target_present": {
+      "seed": true,
+      "actions": [
+        {"type": "lookup", "request_id": "predicate-v2", "at": "A", "time": 5, "query": {"predicate_version": 2}, "provider_available": true, "provider_result": "MATCH_FOUND"}
+      ]
+    },
+    "insertion_with_invalidation": {
+      "seed": true,
+      "actions": [
+        {"type": "insert_target", "time": 5, "target_id": "save-button"},
+        {"type": "invalidate", "time": 5, "target_id": "save-button"},
+        {"type": "lookup", "request_id": "insertion-8", "at": "A", "time": 8, "query": {}, "provider_available": true, "provider_result": "MATCH_FOUND"}
+      ]
+    },
+    "missing_writer_coverage": {
+      "seed": true,
+      "seed_overrides": {"writer_coverage": false},
+      "actions": [
+        {"type": "lookup", "request_id": "coverage-missing", "at": "A", "time": 5, "query": {}, "provider_available": false, "provider_result": null}
+      ]
+    },
+    "unknown_clock_offset": {
+      "seed": true,
+      "seed_overrides": {"clock_mapping": "unknown"},
+      "actions": [
+        {"type": "lookup", "request_id": "clock-unknown", "at": "B", "time": 5, "query": {}, "provider_available": false, "provider_result": null}
+      ]
+    },
+    "timeout_target_present_healthy_route": {
+      "seed": false,
+      "actions": [
+        {"type": "route_failure", "request_id": "route-failure-0", "time": 0, "query": {}, "route": "A", "failure_class": "TIMEOUT", "retry_after": 5},
+        {"type": "route_probe", "request_id": "route-probe-1", "time": 1, "query": {}, "routes": [{"route": "A", "outcome": "TIMEOUT"}, {"route": "B", "outcome": "MATCH_FOUND"}]}
+      ]
+    },
+    "failure_cooldown_copy": {
+      "seed": false,
+      "actions": [
+        {"type": "route_failure", "request_id": "cooldown-failure-0", "time": 0, "query": {}, "route": "A", "failure_class": "TIMEOUT", "retry_after": 5},
+        {"type": "copy_failure", "time": 4, "route": "A", "to": "B"},
+        {"type": "route_probe", "request_id": "cooldown-probe-6", "at": "B", "time": 6, "query": {}, "routes": [{"route": "A", "outcome": "MATCH_FOUND"}, {"route": "B", "outcome": "MATCH_FOUND"}]},
+        {"type": "route_probe", "request_id": "cooldown-probe-16", "at": "B", "time": 16, "query": {}, "routes": [{"route": "A", "outcome": "MATCH_FOUND"}, {"route": "B", "outcome": "MATCH_FOUND"}]}
+      ]
+    },
+    "evicted_entry": {
+      "seed": true,
+      "actions": [
+        {"type": "evict", "time": 1, "at": "A"},
+        {"type": "lookup", "request_id": "evicted-2", "at": "A", "time": 2, "query": {}, "provider_available": false, "provider_result": null}
+      ]
+    },
+    "fresh_source_reevaluation": {
+      "seed": true,
+      "actions": [
+        {"type": "fresh_evaluation", "request_id": "fresh-5", "time": 5, "at": "B", "result": "NO_MATCH_WITHIN_CERTIFIED_SCOPE"},
+        {"type": "copy", "from": "B", "to": "C", "time": 14},
+        {"type": "lookup", "request_id": "fresh-14", "at": "C", "time": 14, "query": {}, "provider_available": true, "provider_result": "NO_MATCH_WITHIN_CERTIFIED_SCOPE"},
+        {"type": "lookup", "request_id": "fresh-16", "at": "C", "time": 16, "query": {}, "provider_available": true, "provider_result": "NO_MATCH_WITHIN_CERTIFIED_SCOPE"}
+      ]
+    }
+  }
+}

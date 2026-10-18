@@ -1,0 +1,3 @@
+# A13 disposition: FAIL_METHOD; schema diagnostic passed
+
+The candidate and auditor each ran once. All 390 candidate calls completed. Structured output constrained all 126 emitted claims to the five allowed kinds (zero invalid enum values), and the raw auditor found no schema/request drift. The full transition audit still failed because final `batch_2` omitted the required conflict claim in all three seeds, producing 6 errors. Cadence metrics remain descriptive only. Preserve raw, audit, preflight, and logs under `results/FORMAL_T1_A13/`; hashes and metrics are in `RESULTS.md`. No retry, prompt repair, or pooling is permitted for this allocation.

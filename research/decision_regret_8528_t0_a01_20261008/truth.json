@@ -1,0 +1,15 @@
+{
+  "schema": "decision-regret-8528-audit-truth-v1",
+  "loss_definition": "unit 0/1 loss for mismatch between selected action and exact finite target state; this is a toy fixture convention, not user/task utility",
+  "loss_table": {"A":{"A":0,"B":1},"B":{"A":1,"B":0}},
+  "cases": {
+    "age_tie_stable": {"state_by_tick":{"0":"A","1":"A","2":"A","3":"A","4":"A","5":"A"},"hard_safety_event_ticks":[],"unsafe_exposure_ticks":[]},
+    "age_tie_changed": {"state_by_tick":{"0":"A","1":"A","2":"A","3":"B","4":"B","5":"B"},"hard_safety_event_ticks":[],"unsafe_exposure_ticks":[]},
+    "fresh_misleading": {"state_by_tick":{"5":"B"},"hard_safety_event_ticks":[],"unsafe_exposure_ticks":[]},
+    "no_open_opportunity": {"state_by_tick":{"0":"B","1":"B"},"hard_safety_event_ticks":[],"unsafe_exposure_ticks":[]},
+    "action_set_change": {"state_by_tick":{"2":"B","3":"B","4":"B","5":"B"},"hard_safety_event_ticks":[],"unsafe_exposure_ticks":[]},
+    "hard_safety_control": {"state_by_tick":{"0":"B"},"hard_safety_event_ticks":[0],"unsafe_exposure_ticks":[0]},
+    "causal_use_unidentified": {"state_by_tick":{"5":"B"},"hard_safety_event_ticks":[],"unsafe_exposure_ticks":[]},
+    "unknown_truth_clock": {"state_by_tick":{},"hard_safety_event_ticks":[],"unsafe_exposure_ticks":[]}
+  }
+}

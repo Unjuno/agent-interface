@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "a01_source_hashes_exact": true,
+    "base_main_exact": true,
+    "candidate_accepted_declared_complete_graph": true,
+    "classification_scoped": true,
+    "independent_hidden_consumer_needs_evicted_field": true,
+    "required_hidden_record_evicted": true,
+    "unknown_scope_fails_closed": true
+  },
+  "classification": "PASS_COUNTEREXAMPLE_SCOPED",
+  "limit": "counterfactual completeness assertion only; no real workflow/runtime claim",
+  "passed": true,
+  "schema": "issue7367-completeness-boundary-a01-audit-v1"
+}

@@ -1,0 +1,484 @@
+{
+  "schema": "clarification-timing-independent-audit-v1",
+  "disposition": "PASS_METHOD_SCOPED",
+  "requests_reconstructed": 15,
+  "policy_rows_reconstructed": 45,
+  "mandatory_events_reconstructed": 1,
+  "mutation_checks": {
+    "allRowsReconstructed": true,
+    "mandatoryBypassZeroDelay": true,
+    "zeroSlackYields": true,
+    "noResponseDoesNotAct": true,
+    "refusalDoesNotAct": true,
+    "unauthorizedChoiceDoesNotAct": true,
+    "lateReplyDoesNotAct": true,
+    "staleAnswerDoesNotAct": true,
+    "canceledPromptHasNoInterruptionCost": true,
+    "staleQuestionCanceledBeforeDelivery": true,
+    "exactDeadlineAccepted": true,
+    "syntheticCostDiscriminator": true
+  },
+  "outcomes": [
+    {
+      "request_id": "C01-low-window-tradeoff",
+      "policy": "immediate",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 2,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C01-low-window-tradeoff",
+      "policy": "latest_safe",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 8,
+      "answer_tick": 10,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 5,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C01-low-window-tradeoff",
+      "policy": "low_cost_window",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 6,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 1,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C02-unavailable-signal",
+      "policy": "immediate",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 1,
+      "answer_tick": 2,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C02-unavailable-signal",
+      "policy": "latest_safe",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 7,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C02-unavailable-signal",
+      "policy": "low_cost_window",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 7,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C03-unknown-signal",
+      "policy": "immediate",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 1,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C03-unknown-signal",
+      "policy": "latest_safe",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 7,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C03-unknown-signal",
+      "policy": "low_cost_window",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 7,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C04-zero-slack",
+      "policy": "immediate",
+      "outcome": "YIELD_NO_SAFE_RESPONSE_WINDOW",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C04-zero-slack",
+      "policy": "latest_safe",
+      "outcome": "YIELD_NO_SAFE_RESPONSE_WINDOW",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C04-zero-slack",
+      "policy": "low_cost_window",
+      "outcome": "YIELD_NO_SAFE_RESPONSE_WINDOW",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C05-nondeferrable-urgent",
+      "policy": "immediate",
+      "outcome": "REFUSAL_YIELD",
+      "prompt_delivery_tick": 5,
+      "answer_tick": 6,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C05-nondeferrable-urgent",
+      "policy": "latest_safe",
+      "outcome": "REFUSAL_YIELD",
+      "prompt_delivery_tick": 5,
+      "answer_tick": 6,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C05-nondeferrable-urgent",
+      "policy": "low_cost_window",
+      "outcome": "REFUSAL_YIELD",
+      "prompt_delivery_tick": 5,
+      "answer_tick": 6,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C06-version-changes-before-delivery",
+      "policy": "immediate",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 1,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C06-version-changes-before-delivery",
+      "policy": "latest_safe",
+      "outcome": "CANCEL_STALE_BEFORE_DELIVERY",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C06-version-changes-before-delivery",
+      "policy": "low_cost_window",
+      "outcome": "CANCEL_STALE_BEFORE_DELIVERY",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C07-version-changes-at-delivery",
+      "policy": "immediate",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 1,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C07-version-changes-at-delivery",
+      "policy": "latest_safe",
+      "outcome": "CANCEL_STALE_BEFORE_DELIVERY",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C07-version-changes-at-delivery",
+      "policy": "low_cost_window",
+      "outcome": "CANCEL_STALE_BEFORE_DELIVERY",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C08-no-response",
+      "policy": "immediate",
+      "outcome": "NO_RESPONSE_YIELD",
+      "prompt_delivery_tick": 0,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C08-no-response",
+      "policy": "latest_safe",
+      "outcome": "NO_RESPONSE_YIELD",
+      "prompt_delivery_tick": 8,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C08-no-response",
+      "policy": "low_cost_window",
+      "outcome": "NO_RESPONSE_YIELD",
+      "prompt_delivery_tick": 8,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C09-refusal",
+      "policy": "immediate",
+      "outcome": "REFUSAL_YIELD",
+      "prompt_delivery_tick": 1,
+      "answer_tick": 3,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 2,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C09-refusal",
+      "policy": "latest_safe",
+      "outcome": "REFUSAL_YIELD",
+      "prompt_delivery_tick": 8,
+      "answer_tick": 10,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C09-refusal",
+      "policy": "low_cost_window",
+      "outcome": "REFUSAL_YIELD",
+      "prompt_delivery_tick": 8,
+      "answer_tick": 10,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C10-response-exceeds-bound",
+      "policy": "immediate",
+      "outcome": "LATE_REPLY_YIELD",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 3,
+      "response_deadline_missed": true,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C10-response-exceeds-bound",
+      "policy": "latest_safe",
+      "outcome": "LATE_REPLY_YIELD",
+      "prompt_delivery_tick": 8,
+      "answer_tick": 11,
+      "response_deadline_missed": true,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C10-response-exceeds-bound",
+      "policy": "low_cost_window",
+      "outcome": "LATE_REPLY_YIELD",
+      "prompt_delivery_tick": 8,
+      "answer_tick": 11,
+      "response_deadline_missed": true,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C11-answer-at-inclusive-deadline",
+      "policy": "immediate",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 2,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C11-answer-at-inclusive-deadline",
+      "policy": "latest_safe",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 6,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 2,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C11-answer-at-inclusive-deadline",
+      "policy": "low_cost_window",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 6,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 2,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C12-version-changes-after-delivery",
+      "policy": "immediate",
+      "outcome": "STALE_ANSWER_YIELD",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 2,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C12-version-changes-after-delivery",
+      "policy": "latest_safe",
+      "outcome": "CANCEL_STALE_BEFORE_DELIVERY",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C12-version-changes-after-delivery",
+      "policy": "low_cost_window",
+      "outcome": "CANCEL_STALE_BEFORE_DELIVERY",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C13-hard-event-bypasses-pending-question",
+      "policy": "immediate",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 1,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C13-hard-event-bypasses-pending-question",
+      "policy": "latest_safe",
+      "outcome": "CANCEL_STALE_BEFORE_DELIVERY",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C13-hard-event-bypasses-pending-question",
+      "policy": "low_cost_window",
+      "outcome": "CANCEL_STALE_BEFORE_DELIVERY",
+      "prompt_delivery_tick": null,
+      "answer_tick": null,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": null,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C14-no-window-fallback",
+      "policy": "immediate",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 1,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C14-no-window-fallback",
+      "policy": "latest_safe",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 8,
+      "answer_tick": 9,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C14-no-window-fallback",
+      "policy": "low_cost_window",
+      "outcome": "AUTHORIZED_EFFECT",
+      "prompt_delivery_tick": 8,
+      "answer_tick": 9,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": true
+    },
+    {
+      "request_id": "C15-unauthorized-choice",
+      "policy": "immediate",
+      "outcome": "INVALID_ANSWER_YIELD",
+      "prompt_delivery_tick": 0,
+      "answer_tick": 1,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 3,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C15-unauthorized-choice",
+      "policy": "latest_safe",
+      "outcome": "INVALID_ANSWER_YIELD",
+      "prompt_delivery_tick": 7,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": false
+    },
+    {
+      "request_id": "C15-unauthorized-choice",
+      "policy": "low_cost_window",
+      "outcome": "INVALID_ANSWER_YIELD",
+      "prompt_delivery_tick": 7,
+      "answer_tick": 8,
+      "response_deadline_missed": false,
+      "synthetic_interruption_cost": 4,
+      "modeled_effect": false
+    }
+  ],
+  "mandatory_routes": [
+    {
+      "request_id": "C13-hard-event-bypasses-pending-question",
+      "event_id": "M13-focus-revoked",
+      "arrival_tick": 3,
+      "delivery_tick": 3,
+      "bypass": true
+    }
+  ],
+  "scope": "synthetic finite event semantics and authored interruption-cost scoring only; no human measurement or runtime scheduler claim",
+  "freeze_allocation": "CLARIFICATION-TIMING-5959-T0-A01-20261008"
+}

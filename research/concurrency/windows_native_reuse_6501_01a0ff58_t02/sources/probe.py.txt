@@ -1,0 +1,82 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import os,sys,json,time,threading,ctypes,msvcrt,hashlib,errno,platform
+from ctypes import wintypes as wt
+OUT=Path(sys.argv[1]);MODE=sys.argv[2];assert MODE in ('normal_B_D','stale_handle','check_then_call','locked_gate');OUT.mkdir(exist_ok=False)
+events=[];eventlock=threading.Lock();ownerlock=threading.Lock();now=lambda:datetime.now(timezone.utc).isoformat();state={'active':0};ids={};outcomes={};done={1:threading.Event(),2:threading.Event()};entered={1:threading.Event(),2:threading.Event()};wrote={1:False,2:False};pairs={};h=None;t=None
+def emit(kind,**fields):
+    with eventlock:events.append(dict(seq=len(events),kind=kind,monotonic_ns=time.monotonic_ns(),**fields))
+def save():
+    with eventlock:b=json.dumps(events,sort_keys=True).encode()+b'\n'
+    (OUT/'events.json').write_bytes(b)
+k=ctypes.WinDLL('kernel32',use_last_error=True)
+k.OpenThread.argtypes=[wt.DWORD,wt.BOOL,wt.DWORD];k.OpenThread.restype=wt.HANDLE
+k.GetThreadIOPendingFlag.argtypes=[wt.HANDLE,ctypes.POINTER(wt.BOOL)];k.GetThreadIOPendingFlag.restype=wt.BOOL
+k.CancelSynchronousIo.argtypes=[wt.HANDLE];k.CancelSynchronousIo.restype=wt.BOOL
+k.ReadFile.argtypes=[wt.HANDLE,wt.LPVOID,wt.DWORD,ctypes.POINTER(wt.DWORD),wt.LPVOID];k.ReadFile.restype=wt.BOOL
+k.CloseHandle.argtypes=[wt.HANDLE];k.CloseHandle.restype=wt.BOOL
+k.GetModuleHandleW.argtypes=[wt.LPCWSTR];k.GetModuleHandleW.restype=wt.HMODULE
+k.GetModuleFileNameW.argtypes=[wt.HMODULE,wt.LPWSTR,wt.DWORD];k.GetModuleFileNameW.restype=wt.DWORD
+def module(name):
+    handle=k.GetModuleHandleW(name);buf=ctypes.create_unicode_buffer(32768);n=k.GetModuleFileNameW(handle,buf,len(buf));assert handle and 0<n<len(buf);p=Path(buf.value);b=p.read_bytes();return dict(name=name,path=str(p),bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+r=dict(mode=MODE,start_utc=now(),pid=os.getpid(),python=sys.version,platform=platform.platform(),source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),dependencies=[module(n) for n in ('kernel32.dll','python312.dll','ucrtbase.dll')],status='STARTED')
+(OUT/'START.json').write_text(json.dumps(r,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n')
+def write(gen,purpose):
+    assert not wrote[gen];emit('write_requested',generation=gen,purpose=purpose,hex='44');n=os.write(pairs[gen][1],b'D');wrote[gen]=True;emit('write_return',generation=gen,purpose=purpose,count=n);assert n==1
+def reader():
+    ids['tid']=threading.get_native_id();emit('worker_enter',tid=ids['tid'])
+    for gen in (1,2):
+        with ownerlock:state['active']=gen;emit('generation_admitted',generation=gen,tid=ids['tid'],owner_lock_held=True)
+        emit('read_enter',generation=gen,tid=ids['tid'],read_os_handle=msvcrt.get_osfhandle(pairs[gen][0]));entered[gen].set();buf=ctypes.create_string_buffer(1);n=wt.DWORD();ctypes.set_last_error(0);rc=k.ReadFile(msvcrt.get_osfhandle(pairs[gen][0]),buf,1,ctypes.byref(n),None);err=ctypes.get_last_error();v=dict(return_nonzero=bool(rc),last_error=err,count=int(n.value),hex=buf.raw[:n.value].hex());outcomes[gen]=v;emit('read_return',generation=gen,tid=ids['tid'],**v);done[gen].set()
+    emit('worker_exit',tid=ids['tid'])
+def pending(gen):
+    until=time.monotonic()+2;positives=0
+    while time.monotonic()<until and positives<3:
+        v=wt.BOOL();ctypes.set_last_error(0);rc=k.GetThreadIOPendingFlag(h,ctypes.byref(v));err=ctypes.get_last_error();emit('pending_query',generation=gen,tid=ids['tid'],handle=int(h),return_nonzero=bool(rc),last_error=err,pending=bool(v.value),generation_done=done[gen].is_set(),data_written=wrote[gen],active_generation=state['active']);save();assert rc
+        positives=positives+1 if v.value and not done[gen].is_set() and not wrote[gen] and state['active']==gen else 0;time.sleep(.005)
+    assert positives==3,'admission requires three generation-specific witnesses'
+try:
+    for gen in (1,2):
+        rd,wr=os.pipe();pairs[gen]=(rd,wr);emit('pipe_owned',generation=gen,read_fd=rd,write_fd=wr,read_os_handle=msvcrt.get_osfhandle(rd),write_os_handle=msvcrt.get_osfhandle(wr))
+    t=threading.Thread(target=reader,name='t02-exclusive-reused-worker',daemon=True);t.start();assert entered[1].wait(2)
+    ctypes.set_last_error(0);h=k.OpenThread(0x0041,False,ids['tid']);emit('thread_handle_open',tid=ids['tid'],handle=int(h) if h else None,access=0x0041,last_error=ctypes.get_last_error());assert h;pending(1)
+    if MODE=='check_then_call':
+        with ownerlock:
+            allowed=state['active']==1;emit('early_generation_check',requested_generation=1,active_generation=state['active'],allowed=allowed,owner_lock_held=True)
+        emit('early_check_lock_released',requested_generation=1);assert allowed
+    write(1,'normal_A');assert done[1].wait(2) and entered[2].wait(2);assert outcomes[1]['return_nonzero'] and outcomes[1]['count']==1 and outcomes[1]['hex']=='44';pending(2)
+    emit('action_requested',mode=MODE,requested_generation=2 if MODE=='normal_B_D' else 1,active_generation=state['active'],tid=ids['tid'],handle=int(h))
+    if MODE=='normal_B_D':write(2,'primary_B')
+    elif MODE=='locked_gate':
+        with ownerlock:
+            allowed=state['active']==1;emit('current_generation_check',requested_generation=1,active_generation=state['active'],allowed=allowed,owner_lock_held=True)
+            if allowed:raise RuntimeError('unexpected generation admission')
+            emit('stale_request_refused',requested_generation=1,active_generation=state['active'],native_cancel_called=False,owner_lock_held=True)
+    else:
+        emit('native_cancel_requested',requested_generation=1,active_generation=state['active'],tid=ids['tid'],handle=int(h),early_check_allowed=MODE=='check_then_call');ctypes.set_last_error(0);rc=k.CancelSynchronousIo(h);err=ctypes.get_last_error();emit('native_cancel_return',requested_generation=1,active_generation=state['active'],tid=ids['tid'],handle=int(h),return_nonzero=bool(rc),last_error=err);r['native_cancel']=dict(return_nonzero=bool(rc),last_error=err)
+        if not rc and err!=1168:raise RuntimeError('native cancellation infrastructure failure')
+    until=time.monotonic()+.5
+    while not done[2].is_set() and time.monotonic()<until:time.sleep(.005)
+    primary=dict(generation_A_done=done[1].is_set(),generation_B_done=done[2].is_set(),active_generation=state['active'],outcomes={str(g):dict(v) for g,v in outcomes.items()});emit('primary_snapshot',**primary);r['primary']=primary
+    if not done[2].is_set():write(2,'cleanup_B')
+    assert done[2].wait(2);t.join(2);emit('thread_join',tid=ids['tid'],alive=t.is_alive());assert not t.is_alive();r.update(status='COMPLETE_OBSERVATIONS',native_tid=ids['tid'],final_outcomes={str(g):dict(v) for g,v in outcomes.items()})
+except BaseException as e:r.update(status='STOP_INFRASTRUCTURE',failure=repr(e))
+finally:
+    if t and t.is_alive():
+        for gen in (1,2):
+            if not done[gen].is_set() and not wrote[gen]:write(gen,'emergency_cleanup')
+        t.join(2);emit('emergency_join',alive=t.is_alive())
+    if h:
+        rc=k.CloseHandle(h);emit('thread_handle_close',handle=int(h),return_nonzero=bool(rc))
+        if not rc:r['status']='STOP_INFRASTRUCTURE'
+    if not t or not t.is_alive():
+        for gen,pair in pairs.items():
+            for fd in pair:
+                os.close(fd)
+                try:os.fstat(fd)
+                except OSError as e:emit('fd_closed',generation=gen,fd=fd,errno=e.errno);assert e.errno==errno.EBADF
+                else:r['status']='STOP_INFRASTRUCTURE'
+    else:r.update(status='STOP_INFRASTRUCTURE',cleanup_unknown=True)
+    r.update(end_utc=now(),thread_alive_final=bool(t and t.is_alive()),event_count=len(events));save();(OUT/'RESULT.json').write_text(json.dumps(r,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n')
+print(json.dumps(dict(mode=MODE,status=r['status'],pid=r['pid'],primary=r.get('primary'),final=r.get('final_outcomes'))))
+raise SystemExit(0 if r['status']=='COMPLETE_OBSERVATIONS' else 2)

@@ -1,0 +1,47 @@
+import copy,hashlib,json,pathlib
+p=pathlib.Path(__file__).parent
+r=json.loads((p/'task-response.json').read_text(encoding='utf-8'))
+events=[json.loads(x) for x in r['stdout'].splitlines()]
+target='2f23 remote <&> 東京';near=target+' extra';edited='2f23 remote edited 東京'
+def row(i,t,c=False):return {'id':str(i),'title':t,'completed':c,'editing':False}
+stages=[([],0,'#/'),([row(1,target)],1,'#/'),([row(1,target),row(2,near)],2,'#/'),([row(1,edited),row(2,near)],2,'#/'),([row(1,edited,True),row(2,near)],1,'#/'),([row(1,edited,True)],1,'#/completed'),([row(2,near)],1,'#/active'),([row(1,edited,True),row(2,near)],1,'#/'),([],0,'#/')]
+names=['focus-new-'+target,'type-new-'+target,'blur-new-'+target,'focus-new-'+near,'type-new-'+near,'blur-new-'+near,'edit-target-open','edit-target-fill','edit-target-commit','complete-target','filter-#/completed','filter-#/active','filter-#/','reload-memory-storage']
+def check(e):
+    obs=[x for x in e if x['kind']=='observation']
+    assert len(obs)==9
+    for i,(o,(rows,n,f)) in enumerate(zip(obs,stages)):
+        s=o['state'];assert type(o['step']) is int and o['step']==i
+        assert s['input']=='' and s['active']==n and type(s['active']) is int and s['selected']==f
+        assert sorted(s['rows'],key=lambda x:int(x['id']))==rows
+        assert all(type(x['completed']) is bool and type(x['editing']) is bool for x in s['rows'])
+    starts=[x['name'] for x in e if x['kind']=='action-start'];returns=[x['name'] for x in e if x['kind']=='action-return']
+    assert starts==returns==names
+    pending=None;index=0
+    for x in e:
+        if x['kind']=='action-start':assert pending is None;pending=x['name']
+        elif x['kind']=='action-return':assert pending==x['name'];pending=None
+        elif x['kind']=='observation':assert pending is None and x['step']==index;index+=1
+    assert pending is None and index==9
+    edit=[x['state'] for x in e if x['kind']=='editing-observation'];assert len(edit)==1
+    assert sorted(edit[0]['rows'],key=lambda x:int(x['id']))==[row(1,target)|{'editing':True},row(2,near)]
+    assert e[-1]=={'kind':'terminal','outcome':'PASS_FINITE_REMOTE_DEMO_TASK','durability':'EXPECTED_MEMORY_RESET_ONLY','taskReplay':0}
+assert r['success'] is True and type(r['exitCode']) is int and r['exitCode']==0 and r['stderr']==''
+check(events)
+controls=[]
+for name in ['wrong-target','lost-near-title','no-edit-effect','missing-return','extra-action','false-reset']:
+    c=copy.deepcopy(events)
+    if name=='wrong-target':next(x for x in c if x['kind']=='observation' and x['step']==4)['state']['rows'][0]['completed']=True
+    if name=='lost-near-title':next(x for x in c if x['kind']=='observation' and x['step']==3)['state']['rows'].pop(0)
+    if name=='no-edit-effect':next(x for x in c if x['kind']=='observation' and x['step']==3)['state']['rows'][1]['title']=target
+    if name=='missing-return':c.pop(next(i for i,x in enumerate(c) if x['kind']=='action-return'))
+    if name=='extra-action':c.insert(-1,{'kind':'action-start','name':'unexpected-replay'})
+    if name=='false-reset':next(x for x in c if x['kind']=='observation' and x['step']==8)['state']['rows']=[row(1,edited,True)]
+    try:check(c)
+    except AssertionError:controls.append({'name':name,'outcome':'REFUSED'})
+    else:raise AssertionError('false acceptance '+name)
+for a in json.loads((p/'pins.json').read_text(encoding='utf-8')):
+    i=['https://todomvc.com/examples/javascript-es6/dist/','https://todomvc.com/examples/javascript-es6/dist/app.bundle.js','https://todomvc.com/examples/javascript-es6/dist/base.js'].index(a['url'])
+    b=(p/('asset-'+str(i)+'.txt')).read_bytes();assert len(b)==a['bytes'] and hashlib.sha256(b).hexdigest()==a['sha256']
+life=json.loads((p/'lifecycle.json').read_text(encoding='utf-8'));stop=json.loads(life['stopRawText'][0]['text']);assert stop['success'] is True and stop['status']=='stopped'
+out={'status':'PASS_SAVED_FINITE_TASK_EVIDENCE','observations':9,'actions':14,'editingObservations':1,'negativeControls':controls,'sourcePinsVerified':3,'stop':stop,'limits':['provider-reported browser effects','no main integration','no efficiency comparison','no physical input-release verification','fetched source not authenticated loaded image','shared team credits cannot attribute unit cost'],'replays':0}
+(p/'checked.json').write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps(out,ensure_ascii=False))

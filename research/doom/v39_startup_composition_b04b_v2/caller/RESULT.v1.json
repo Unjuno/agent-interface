@@ -1,0 +1,143 @@
+{
+  "rows": [
+    {
+      "cell": "baseline_healthy",
+      "source_sha256": "a0bcfa076970b7cf6d048155478952958280b7958e0bbe486c0f1f12a55e4f0e",
+      "exception_is_original": true,
+      "exception_type": "ValueError",
+      "exception_message": "起動失敗 — preserve this exact exception",
+      "exception_notes": [],
+      "journal_closed_before_cleanup": false,
+      "callback_retained_before_cleanup": true,
+      "journal_close_attempts_before_cleanup": 0,
+      "startup_artifact": null,
+      "operations_before_cleanup": [
+        "client_factory",
+        "callback_register",
+        "initialize"
+      ],
+      "start_ns": 43132671914000,
+      "end_ns": 43132685434000
+    },
+    {
+      "cell": "candidate_healthy",
+      "source_sha256": "31782095e0d926ea1842d47c2ce584cbccb830c2ed8fdb96cefa4697a79c91a7",
+      "exception_is_original": true,
+      "exception_type": "ValueError",
+      "exception_message": "起動失敗 — preserve this exact exception",
+      "exception_notes": [],
+      "journal_closed_before_cleanup": true,
+      "callback_retained_before_cleanup": false,
+      "journal_close_attempts_before_cleanup": 1,
+      "startup_artifact": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true,
+        "startup_error": {
+          "type": "ValueError",
+          "message": "起動失敗 — preserve this exact exception"
+        },
+        "startup_events": []
+      },
+      "operations_before_cleanup": [
+        "client_factory",
+        "callback_register",
+        "initialize",
+        "callback_unregister"
+      ],
+      "start_ns": 43132696785000,
+      "end_ns": 43132708781500
+    },
+    {
+      "cell": "candidate_held_lock",
+      "source_sha256": "31782095e0d926ea1842d47c2ce584cbccb830c2ed8fdb96cefa4697a79c91a7",
+      "exception_is_original": true,
+      "exception_type": "ValueError",
+      "exception_message": "起動失敗 — preserve this exact exception",
+      "exception_notes": [
+        "startup cleanup incomplete; see startup-cleanup.json"
+      ],
+      "journal_closed_before_cleanup": false,
+      "callback_retained_before_cleanup": true,
+      "journal_close_attempts_before_cleanup": 0,
+      "startup_artifact": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": false,
+        "input_release_verified": false,
+        "errors": [
+          "planner close: TimeoutError('app-server journal close timed out')"
+        ],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true,
+        "startup_error": {
+          "type": "ValueError",
+          "message": "起動失敗 — preserve this exact exception"
+        },
+        "startup_events": []
+      },
+      "operations_before_cleanup": [
+        "client_factory",
+        "owned_lock_acquire",
+        "callback_register",
+        "initialize"
+      ],
+      "start_ns": 43132717892100,
+      "end_ns": 43133737340500
+    },
+    {
+      "cell": "candidate_close_error",
+      "source_sha256": "31782095e0d926ea1842d47c2ce584cbccb830c2ed8fdb96cefa4697a79c91a7",
+      "exception_is_original": true,
+      "exception_type": "ValueError",
+      "exception_message": "起動失敗 — preserve this exact exception",
+      "exception_notes": [
+        "startup cleanup incomplete; see startup-cleanup.json"
+      ],
+      "journal_closed_before_cleanup": false,
+      "callback_retained_before_cleanup": true,
+      "journal_close_attempts_before_cleanup": 1,
+      "startup_artifact": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": null,
+        "reader_joined": true,
+        "client_closed": false,
+        "input_release_verified": false,
+        "errors": [
+          "planner close: OSError('injected caller journal close error')"
+        ],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true,
+        "startup_error": {
+          "type": "ValueError",
+          "message": "起動失敗 — preserve this exact exception"
+        },
+        "startup_events": []
+      },
+      "operations_before_cleanup": [
+        "client_factory",
+        "callback_register",
+        "initialize"
+      ],
+      "start_ns": 43133750039600,
+      "end_ns": 43133762901000
+    }
+  ],
+  "all_owned_journals_and_callbacks_retired": true,
+  "subject_native_peers": 0,
+  "real_client_constructor_executions": 0,
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "result": "PASS_FULL_STARTUP_FAULT_SCOPED"
+}

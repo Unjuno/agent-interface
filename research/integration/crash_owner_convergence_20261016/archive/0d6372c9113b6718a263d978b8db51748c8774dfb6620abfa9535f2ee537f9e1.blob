@@ -1,0 +1,15 @@
+{
+  "candidate_invocations": 0,
+  "classification": "Runner infrastructure STOP before candidate launch",
+  "finding": "Bash interpreted a CRLF carriage return in set -euo pipefail as part of the option name. The candidate was not started; no Xvfb, session child, owner, or input was created. A06 receives no hypothesis result and is not retried. A07 will make the runner LF-only and is a new successor allocation.",
+  "hashes": {
+    "research/doom/v39_v15_process_owner_xvfb_a06_20261012/FREEZE.json": "e26c8b8caa175a3d50dffcc3c624b63fe18eb0095b2bb1a7e1c80e5a1d741231",
+    "research/doom/v39_v15_process_owner_xvfb_a06_20261012/PLAN.md": "14f68719dbb657ba83699b7db3a13369cf383bc871f62d5412e9dadc548f0d37",
+    "research/doom/v39_v15_process_owner_xvfb_a06_20261012/candidate.py": "d9b322258e602b1e739a028b39e8530fe834334a4388ada07dd50fb378cb7d53",
+    "research/doom/v39_v15_process_owner_xvfb_a06_20261012/results/RUNNER_RAW.json": "54e42e7f38f5f1540bdeee69bf9bbebde8d041c8b07b81b76c2d027f59c43911",
+    "research/doom/v39_v15_process_owner_xvfb_a06_20261012/run_candidate.sh": "afb1113d55f614d495c522a6a88c491f2c4cf157048358cebc512cb2907870bb"
+  },
+  "retries": 0,
+  "schema": "v39-v15-process-owner-xvfb-a06-audit-v1",
+  "status": "STOP_INFRA_RUNNER_LINE_ENDINGS"
+}

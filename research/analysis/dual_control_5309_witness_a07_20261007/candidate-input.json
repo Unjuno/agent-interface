@@ -1,0 +1,28 @@
+{
+  "allocation": "5309-WITNESS-A07-ORBSTACK-20261007",
+  "actions": ["a-progress-witness-loss", "b-progress-preserve-witness"],
+  "models": {
+    "generic_ig": {"predicted_ig_bits": {"a-progress-witness-loss": 1.0, "b-progress-preserve-witness": 1.0}},
+    "witness_aware": {
+      "predicted_ig_bits": {"a-progress-witness-loss": 1.0, "b-progress-preserve-witness": 1.0},
+      "predicted_witness_survival": {"a-progress-witness-loss": false, "b-progress-preserve-witness": true}
+    },
+    "receipt_to_task_action": {"receipt-a": "commit-a", "receipt-b": "commit-b"}
+  },
+  "cases": [
+    {"case_id":"case-01","scenario":"primary","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-a","receipt_fresh":true,"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-01"}},
+    {"case_id":"case-02","scenario":"primary","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-b","receipt_fresh":true,"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-02"}},
+    {"case_id":"case-03","scenario":"witness-irrelevant","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-a","receipt_fresh":true,"preexisting_effect_receipt":"proof-01","action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-01"}},
+    {"case_id":"case-04","scenario":"witness-irrelevant","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-b","receipt_fresh":true,"preexisting_effect_receipt":"proof-02","action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-02"}},
+    {"case_id":"case-05","scenario":"no-safe-path","admissible_actions":[],"receipt_symbol":"receipt-a","receipt_fresh":true,"action_effect_receipts":{}},
+    {"case_id":"case-06","scenario":"no-safe-path","admissible_actions":[],"receipt_symbol":"receipt-b","receipt_fresh":true,"action_effect_receipts":{}},
+    {"case_id":"case-07","scenario":"stale-receipt","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-a","receipt_fresh":false,"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-01"}},
+    {"case_id":"case-08","scenario":"stale-receipt","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-b","receipt_fresh":false,"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-02"}},
+    {"case_id":"case-09","scenario":"duplicate-receipt","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-a","receipt_fresh":true,"duplicate_event_ids":["r1","r1"],"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-01"}},
+    {"case_id":"case-10","scenario":"duplicate-receipt","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-b","receipt_fresh":true,"duplicate_event_ids":["r1","r1"],"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-02"}},
+    {"case_id":"case-11","scenario":"urgent-stop","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-a","receipt_fresh":true,"urgent_stop":true,"release_verified":true,"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-01"}},
+    {"case_id":"case-12","scenario":"urgent-stop","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-b","receipt_fresh":true,"urgent_stop":true,"release_verified":true,"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":"proof-02"}},
+    {"case_id":"case-13","scenario":"misspecified-model","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-a","receipt_fresh":true,"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":null}},
+    {"case_id":"case-14","scenario":"misspecified-model","admissible_actions":["a-progress-witness-loss","b-progress-preserve-witness"],"receipt_symbol":"receipt-b","receipt_fresh":true,"action_effect_receipts":{"a-progress-witness-loss":null,"b-progress-preserve-witness":null}}
+  ]
+}

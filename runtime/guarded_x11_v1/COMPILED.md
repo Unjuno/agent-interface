@@ -54,10 +54,12 @@ bridge. Its output directory also retains the fixed plan, graph events,
 reference resolutions, admissions, full input receipts, effect verdicts and
 final graph receipt. These files are not fsync-backed crash durability. Keep
 the raw bridge artifacts with their recorded paths/hash links. Retained receipts
-or authorization strings cannot resume a finished invocation. A callback or
-I/O exception is retained and propagated; inspect completed/uncertain input
-before choosing a new action. There is no automatic retry or release claim
-when an execution supplies no actual release evidence.
+or authorization strings cannot resume a finished invocation. Capture and
+perception exceptions are retained, then returned by the graph as
+`RUNTIME_FAILED / observation_failed` with the verified prefix; inspect
+completed/uncertain input before choosing a new action. Failures outside the
+observation boundary propagate after retention. There is no automatic retry or
+release claim when an execution supplies no actual release evidence.
 
 `TASK_SUCCEEDED` is a local graph verdict. Independently score application task
 and collateral effects after the controller is terminal. Method deadline
@@ -143,13 +145,25 @@ No valid observation sequence/history entry is published for that capture.
 The latest evidence still refers to the last valid frame, not the changed
 capture. Review the actual window and obtain fresh grounding before new input.
 There is no automatic window selection, retry, confirmation or effect success.
-Other capture, callback, artifact and I/O errors still propagate and are retained.
+Untyped errors during observation still retain an exception record, then return
+`RUNTIME_FAILED / observation_failed`; failures outside observation propagate
+and are retained.
 
 [Primary Calc successor](../results/calc-compiled-pixel-admission-05/README.md)
 exercised the actual capture binding change and returned this typed receipt.
 After explicit primary modal review/new grounding/confirmation, the independently
 read saved workbook matched317/529. The preceding startup failure is retained.
 This qualifies the boundary and one saved task, not a speed or token improvement.
+
+## Callback receipt failures
+
+Current callback receipt behavior is documented in the
+[source-bound #7954 convergence](../../research/integration/compiled_callback_convergence_20261016/README.md).
+Ordinary verifier exceptions retain a scoped adapter witness and return a typed
+core failure with known prefix/release. Post-input journal failure stops later
+input and retains in-memory failure evidence, including paired terminal sink
+failure. Pre-input journal exceptions still propagate. These receipts do not
+establish durable publication, independent application effects or recovery.
 
 ## Failed Inkscape keyboard transfer
 

@@ -1,0 +1,46 @@
+{
+  "outcome": "PASS_STRICT_STOP_BOUNDARY",
+  "full_task_outcome": "HOLD_RELEASE_TELEMETRY",
+  "ui_operations": 3,
+  "real_added_rows": 1,
+  "runtime_completed_transitions": 0,
+  "subsequent_inputs": 0,
+  "negative_controls": [
+    {
+      "name": "invented-neutral",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "false-core-success",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "extra-input",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "false-completion-effect",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "missing-terminal",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "false-callbacks",
+      "outcome": "REFUSED"
+    }
+  ],
+  "source_sha256": "419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1",
+  "actual_submitted_code_sha256": "6cad67a5a1ef30471dc13439fb69a3f8c0b4f6cdce2cc72584695f39595aebaf",
+  "submitted_trailing_whitespace": "PowerShell GetContent transport trimEnd; frozen semantic source/interface unchanged, exact submitted string retained separately",
+  "provider_runtime_elapsed_ns": 107926705,
+  "stop": {
+    "success": true,
+    "status": "stopped",
+    "sessionDurationMs": 171000,
+    "creditsBilled": 6
+  },
+  "scope": "Actual unchanged main compiled module/asyncio bridge/public Playwright app effect; no physical neutrality or whole task/efficiency proof",
+  "native_pid": "UNKNOWN"
+}

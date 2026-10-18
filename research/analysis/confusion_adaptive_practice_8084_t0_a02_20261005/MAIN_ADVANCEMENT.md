@@ -1,0 +1,3 @@
+# Main advancement after the frozen A02 allocation
+
+A02 froze at `48ec7eefec90db47af9cb434fdc1a8dbab327c7a`. Before delivery, `origin/main` advanced to `c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5d` in 12 paths, all under `research/doom/scorer_endpoint_composition_59_a01_20261005/`. The update did not touch this allocation, Issue #8080/#8084 records, `docs/CURRENT_GOAL.md`, `ROADMAP.md`, `research/analysis/README.md`, or `.github/workflows/analysis-index.yml`. It is a separate #59 evidence package; A02's frozen source, cases and executed outputs remain unchanged. The latest main is incorporated for delivery and CI.

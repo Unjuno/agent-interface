@@ -1,0 +1,21 @@
+{
+  "schema": "v39-initial-cover-ack-race-binding-comparison-v1",
+  "baseline_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "6671acd1395238f3b0805e6cbe03aea12da028bf",
+  "baseline": {
+    "latest_sequence": 11,
+    "pending_events": false,
+    "queued_late_sequence": 12
+  },
+  "candidate": {
+    "wrapper_wired_into_main": true,
+    "sequence_bound_before_submit": 11,
+    "fresh_sequence_after_rejection": 12,
+    "late_hard_crossing": "health:below_hard_minimum",
+    "old_cover_policy": "discarded_until_fresh_plan",
+    "queue_empty": true,
+    "cover_retried": false
+  },
+  "decision": "PASS; wrapper preserves pre-submit sequence and recovers final-empty late event",
+  "scope": "Exact current-main drain and exact latest-candidate initial-cover recovery wrapper/helper; source-level main wiring; deterministic queue and mock monitor. No full controller, live game, GUI, model, OS input, physical release measurement, or task effect."
+}

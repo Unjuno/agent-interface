@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "accepted_event_was_sink_visible_before_exception": true,
+    "accepted_sink_exception_observed": true,
+    "baseline_hook_not_called": true,
+    "candidate_and_comparison_heads_match": true,
+    "close_failure_reproduced": true,
+    "failed_close_leaves_stale_slot": true,
+    "frozen_source_hashes_match": true,
+    "no_terminal_or_release_claim": true,
+    "no_worker_or_backend_step": true,
+    "run_id_matches_freeze": true,
+    "run_schema_matches": true,
+    "uncertain_admission_slot_and_id_retained": true
+  },
+  "classification": "COMPOSITION_STOP_REPRODUCED",
+  "errors": [],
+  "passed": true,
+  "schema": "admission-baseline-sink-compose-a02-audit-v2",
+  "scope": "saved-record audit only; no game, model, X server, or physical input",
+  "supersedes": "AUDIT-v1.json only for source-head label normalization; no candidate rerun"
+}

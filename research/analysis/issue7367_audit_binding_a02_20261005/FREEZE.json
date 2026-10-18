@@ -1,0 +1,28 @@
+{
+  "schema": "issue7367-a02-freeze-binding-v1",
+  "run_id": "ISSUE7367-A02-RETAINED-BYTE-BINDING-20261005",
+  "frozen_at_utc": "2026-10-05",
+  "parent_a01_pr": 7515,
+  "parent_a01_head_commit": "543561e1721656d4944219d7ae611e285527a54f",
+  "scope": "read-only audit of retained A01 evidence; no candidate rerun",
+  "decision": "PASS_RETAINED_BYTES_SCOPED only when all frozen source/workload bindings, independent continuation checks, and canonical record bindings pass; else FAIL_FREEZE_BINDING",
+  "formal_command": "python -B audit_v2.py --root source --raw source/container-out/RAW.json",
+  "formal_environment": "Windows host CPython 3.12.10; host-native read-only audit; no Docker/WSLc operation or container claim",
+  "formal_invocations": 1,
+  "source_sha256": {
+    "audit_v2.py": "fd17e635efea1d96a6f84baa6db890aa7277e03cb10d670c8ea93f4e5b8ee333",
+    "test_audit_v2.py": "fa007cb32b8c6e89e122b63258191065ac1edad392f1db9ec019c2cbc373dd60",
+    "PROTOCOL.md": "1f692d2fbf38e019b044e8d0caad4afb71482be426a783c9c68a2a2a93dad8fd",
+    "REPORT.md": "e951e6e395e66a7a1c2c5a56ceb9d58b9a780675271f0ec537bc67b7a547b7ce"
+  },
+  "retained_a01_sha256": {
+    "PRE-RUN.json": "43cde96a305005f21e8a5ee8ec140c194d209c1444811301dfbf98a612fb128f",
+    "workload.json": "37263f1731de25e71285bf1fc3527935380ef1ea315949df4985da1eebd3cc09",
+    "run_a01.py": "a622c7a4c89173430dadb48e967df5b2f645da8140555f129952f5d777a3998b",
+    "audit_a01.py": "b9c6a13691f9854d326c6681a3ba8646fdd17d33047c83e4d01f6a6e23ee7561",
+    "container-out/RAW.json": "10b099427f49972438ac155bb1d5677e4a9c550f417af9ff15e65167056d1b33",
+    "container-out/AUDIT.json": "751d3bd377d477c27664e774de4dd879e501a37f1e421f1eafb12cdfe8eb0bb5"
+  },
+  "formal_output_sha256": "2f010aa92945042c984f73cae94bb9791d058060bf7efb7fdfb26dfdb5ed7443",
+  "unit_tests": "3 passed; legacy auditor accepts self-consistent mutated-workload control; successor accepts retained bytes and rejects mutation"
+}

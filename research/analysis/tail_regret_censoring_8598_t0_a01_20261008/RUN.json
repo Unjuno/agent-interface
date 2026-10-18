@@ -1,0 +1,41 @@
+{
+  "schema": "8598-run-v1",
+  "freeze_commit": "0bb4070a9243bfbe4300bb39d6883152d930a586",
+  "parent_main": "5e81aa5aeae63f396ff5e8341f11d876703bb836",
+  "candidate": {
+    "command": "python -B candidate.py --input inputs/public_input.json --output raw/candidate.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_file": "raw/candidate.stdout.txt",
+    "stderr": "",
+    "output_bytes": 1749401,
+    "output_sha256": "61e0b59978f023d158dec6e51472cc9c418295640e9b994582c18427b57c5815"
+  },
+  "auditor": {
+    "command": "python -B auditor.py --public inputs/public_input.json --truth inputs/truth.json --candidate raw/candidate.json --output raw/audit.json",
+    "invocations": 1,
+    "exit_code": 1,
+    "stdout_file": "raw/audit.stdout.txt",
+    "stderr": "",
+    "output_bytes": 807,
+    "output_sha256": "d6ce3d1c4a80d673684d425c92c7ab88f5f03fee0afcdfbac42bb97dbc54dc56"
+  },
+  "launcher_setup_error_before_candidate": "One orchestration process creation failed because an invalid working directory was supplied; Python/candidate.py did not start and no exit code/output was produced. See INVOCATION_NOTE.md. Not counted as a candidate CLI invocation.",
+  "result": {
+    "status": "FAIL_METHOD",
+    "audit_integrity": "PASS",
+    "audit_errors": 0,
+    "assigned_opportunities": 24576,
+    "cohorts_reconstructed": 768,
+    "partial_tail_contains_truth": 768,
+    "partial_tail_false_unique": 0,
+    "recorded_covariate_ipcw_correct": 10,
+    "recorded_covariate_resolved_only_correct": 20,
+    "positivity_unsupported_tail": 256,
+    "latent_resolved_only_misranks": 26,
+    "latent_partial_unknown": 128
+  },
+  "runtime": "CPython 3.12.10; Windows x86_64; host CPU; no Docker/WSLc",
+  "retries": 0,
+  "source_or_input_changes_after_freeze": 0
+}

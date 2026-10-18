@@ -1,0 +1,22 @@
+{
+  "candidate_max_runs": 1,
+  "python_version": "Python 3.11.9",
+  "test": "Run exactly one native Windows App Server session; hold one mock response for a fixed 1.0 s after turn/interrupt is sent; record interrupt send, RPC acknowledgement, client EOF, gate release, and turn/completed using perf_counter_ns and sequence IDs.",
+  "isolation": "temporary CODEX_HOME; localhost-only Responses mock; API credential env vars removed; read-only thread sandbox; no provider/model/game/GUI/input",
+  "cli_sha256": "37762753b554982eef1c109303d1be652b6397f1479e844794353a85650199c6",
+  "full_client_request_schema_sha256": "4a6fc883c2e84c4721bfabd6756ca5bb6e99675a8938768d8bc9cc67ff984700",
+  "decision": "PASS_WINDOW_ABORT requires accepted interrupt, one request, HTTP disconnect before fixed gate release, matching turn/completed status interrupted, and no server errors. TIMING_MEASURABLE requires perf_counter resolution <=1 us and timestamps for send, ack, disconnect, and release. Otherwise retain FAIL/STOP/TIMING_UNRESOLVED; no retry.",
+  "experiment_id": "turn-interrupt-a03-qpc-20261005",
+  "uncertainty": "No latency distribution or SLA inference; no actual provider, game, GUI, OS input, physical release, task feedback, recovery, ammo/progress, or terminal outcome.",
+  "protocol_timeout_seconds": 12,
+  "cli_version": "codex-cli 0.160.0",
+  "current_main": "9146507c2689da7d4444d8febda848fa7dd4bcd1",
+  "retries": 0,
+  "candidate_sha256": "b658c1b33e36fcc9a3e2b654b80bc22913a21d4ae77fea906aed1e506798a84a",
+  "hypothesis": "Codex CLI 0.160.0 turn/interrupt aborts a held local Responses HTTP request and completes the active turn as interrupted; QueryPerformanceCounter-backed perf_counter can measure request-close and turn-completion timing.",
+  "cli_path": "<CODEX_CLI_PATH>",
+  "pending_window_seconds": 1.0,
+  "status": "frozen_before_candidate",
+  "perf_counter_preflight": "{\"implementation\": \"QueryPerformanceCounter()\", \"resolution\": 1e-07, \"monotonic\": true, \"adjustable\": false}",
+  "counterevidence": "The remote model provider may continue inference/billing after HTTP cancellation; endpoint close does not prove provider work stopped. This is one host/CLI sample only."
+}

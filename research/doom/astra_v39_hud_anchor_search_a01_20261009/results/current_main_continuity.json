@@ -1,0 +1,14 @@
+{
+  "candidate_frozen_base": "5f1761cec6b6b8cb4513aef6dbe0429d35569e97",
+  "checked_current_main": "d66ee6cd4f9c09387845bc0765855cbede0c0874",
+  "checked_utc_date": "2026-10-08",
+  "unchanged_paths": [
+    "research/doom/doom_hud_signal_v1.py",
+    "research/doom/doom_hud_signal_v2.py",
+    "research/doom/doom_hud_signal_v3.py",
+    "research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json",
+    "research/doom/results/map01-astra-attempt-v1/frames"
+  ],
+  "comparison": "git diff --quiet candidate_frozen_base checked_current_main -- unchanged_paths returned 0",
+  "meaning": "The reader implementation, frozen transfer metadata, and frame corpus used by A02 were unchanged by the intervening merge of PR #8670. This confirms source continuity, not a new candidate run or a live control result."
+}

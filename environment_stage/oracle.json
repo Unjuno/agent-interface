@@ -1,0 +1,10 @@
+{
+  "cases": [
+    {"id":"sole-loss-alpha-first","prior_receipt":false,"independent_readback":false,"capture_status":"NONE","actions":[{"id":"alpha","effect":true,"receipt_survives":false},{"id":"zeta","effect":true,"receipt_survives":true}]},
+    {"id":"sole-loss-preserve-first","prior_receipt":false,"independent_readback":false,"capture_status":"NONE","actions":[{"id":"alpha","effect":true,"receipt_survives":true},{"id":"zeta","effect":true,"receipt_survives":false}]},
+    {"id":"independent-readback","prior_receipt":false,"independent_readback":true,"capture_status":"SAFE_BASELINE_READBACK","actions":[{"id":"alpha","effect":true,"receipt_survives":false},{"id":"omega","effect":true,"receipt_survives":true}]},
+    {"id":"perturbing-capture","prior_receipt":false,"independent_readback":false,"capture_status":"PERTURBS_STATE","actions":[{"id":"alpha","effect":true,"receipt_survives":false},{"id":"zeta","effect":true,"receipt_survives":true}]},
+    {"id":"urgent-stop","prior_receipt":false,"independent_readback":false,"capture_status":"NONE","actions":[{"id":"alpha","effect":true,"receipt_survives":false},{"id":"zeta","effect":true,"receipt_survives":true}]},
+    {"id":"prior-receipt","prior_receipt":true,"independent_readback":false,"capture_status":"NONE","actions":[{"id":"alpha","effect":true,"receipt_survives":false},{"id":"zeta","effect":true,"receipt_survives":true}]}
+  ]
+}

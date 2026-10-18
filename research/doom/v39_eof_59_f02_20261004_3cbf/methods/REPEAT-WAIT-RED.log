@@ -1,0 +1,54 @@
+test_live_child_empty_eof_not_silent_timeout (test_pipe.RealPipeBoundary.test_live_child_empty_eof_not_silent_timeout) ... ok
+test_parser_cause_not_replaced_with_eof (test_pipe.RealPipeBoundary.test_parser_cause_not_replaced_with_eof) ... ok
+test_ready_precedes_eof_failure (test_pipe.RealPipeBoundary.test_ready_precedes_eof_failure) ... ok
+test_repeated_wait_does_not_lose_eof_state (test_pipe.RealPipeBoundary.test_repeated_wait_does_not_lose_eof_state) ... FAIL
+test_repeated_wait_does_not_lose_parser_failure (test_pipe.RealPipeBoundary.test_repeated_wait_does_not_lose_parser_failure) ... FAIL
+test_terminal_precedes_eof_failure (test_pipe.RealPipeBoundary.test_terminal_precedes_eof_failure) ... ok
+
+======================================================================
+FAIL: test_repeated_wait_does_not_lose_eof_state (test_pipe.RealPipeBoundary.test_repeated_wait_does_not_lose_eof_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/packages/v39_eof_59_f02_20261004_3cbf/test_pipe.py", line 29, in exercise
+    wait(lambda row: False, timeout=.1)
+  File "exact-reader-f01", line 354, in wait
+TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/packages/v39_eof_59_f02_20261004_3cbf/test_pipe.py", line 59, in test_repeated_wait_does_not_lose_eof_state
+    self.exercise('', waits=2)
+  File "/packages/v39_eof_59_f02_20261004_3cbf/test_pipe.py", line 31, in exercise
+    self.assertEqual(type(error).__name__, '_SessionReaderFailure', f'wait attempt {attempt + 1}')
+AssertionError: 'TimeoutError' != '_SessionReaderFailure'
+- TimeoutError
++ _SessionReaderFailure
+ : wait attempt 2
+
+======================================================================
+FAIL: test_repeated_wait_does_not_lose_parser_failure (test_pipe.RealPipeBoundary.test_repeated_wait_does_not_lose_parser_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/packages/v39_eof_59_f02_20261004_3cbf/test_pipe.py", line 29, in exercise
+    wait(lambda row: False, timeout=.1)
+  File "exact-reader-f01", line 354, in wait
+TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/packages/v39_eof_59_f02_20261004_3cbf/test_pipe.py", line 62, in test_repeated_wait_does_not_lose_parser_failure
+    self.exercise('not-json\n', waits=2)
+  File "/packages/v39_eof_59_f02_20261004_3cbf/test_pipe.py", line 31, in exercise
+    self.assertEqual(type(error).__name__, '_SessionReaderFailure', f'wait attempt {attempt + 1}')
+AssertionError: 'TimeoutError' != '_SessionReaderFailure'
+- TimeoutError
++ _SessionReaderFailure
+ : wait attempt 2
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.745s
+
+FAILED (failures=2)
+{"Status":"exited","Running":false,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":0,"ExitCode":1,"Error":"","StartedAt":"2026-10-03T23:03:08.440841073Z","FinishedAt":"2026-10-03T23:03:09.442873102Z"}

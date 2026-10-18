@@ -1,0 +1,16 @@
+{
+  "schema": "v39-main-vs-pr8643-regression-control-freeze-v1",
+  "execution_id": "v39-main-vs-pr8643-regression-control-a07-20261009",
+  "dependency_base_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "main_commit": "5cfe661826c5742eb26da2ba9a9304ae0cb480d4",
+  "candidate_commit": "e5579183f8a083ad51d331a19b1ec8a8e37bf714",
+  "controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "test_path": "research/doom/test_map01_overlap_controller_v39.py",
+  "test_count": 10,
+  "expected_main_regressions": [
+    "test_stale_partial_action_does_not_reuse_discarded_remaining_cover",
+    "test_initial_cover_invalidation_cancels_before_planner_and_requires_empty_release",
+    "test_cover_invalidation_receipt_distinguishes_preacceptance_from_cancel"
+  ],
+  "live_execution": false
+}

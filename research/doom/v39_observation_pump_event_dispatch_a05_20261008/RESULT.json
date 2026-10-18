@@ -1,0 +1,88 @@
+{
+  "schema": "issue59-v39-observation-pump-event-dispatch-result-a05",
+  "status": "CONSTRUCTION_OBSERVATION",
+  "main_commit": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "planner_pending_at_observation": true,
+  "source_health": 100,
+  "current_health": 84,
+  "hard_minimum": 88,
+  "terminal": {
+    "event": "terminal",
+    "id": "cover-1",
+    "status": "cancelled",
+    "release": {
+      "verified": true,
+      "keys_down": [],
+      "buttons_down": []
+    }
+  },
+  "planner_interrupt_outcome": "requested",
+  "events": [
+    {
+      "event": "observation_enqueued",
+      "sequence": 2
+    },
+    {
+      "event": "planner_future_poll",
+      "done": false
+    },
+    {
+      "event": "observation_dequeued",
+      "row_event": "typed_observation",
+      "sequence": 2
+    },
+    {
+      "event": "monitor_received",
+      "sequence": 2,
+      "future_pending": true
+    },
+    {
+      "event": "monitor_invalidated",
+      "reason": "health:below_hard_minimum",
+      "requires_new_decision": true,
+      "grants_input_authority": false
+    },
+    {
+      "event": "planner_interrupt_called",
+      "handle": "turn-1"
+    },
+    {
+      "event": "executor_cancel_write",
+      "op": "cancel",
+      "id": "cover-1"
+    },
+    {
+      "event": "executor_cancel_flush"
+    },
+    {
+      "event": "planner_interrupt_transport",
+      "handle": "turn-1"
+    },
+    {
+      "event": "terminal_dequeued",
+      "row_event": "terminal",
+      "id": "cover-1",
+      "status": "cancelled",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": []
+      }
+    },
+    {
+      "event": "planner_interrupt_outcome",
+      "outcome": "requested"
+    },
+    {
+      "event": "verified_terminal_returned",
+      "id": "cover-1",
+      "status": "cancelled",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": []
+      }
+    }
+  ],
+  "scope": "Pinned production wait/pending-loop/cancel-helper AST slices with synthetic rows and deterministic fakes only."
+}

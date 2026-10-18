@@ -1,0 +1,14 @@
+Allocation A05 construction (not a formal candidate or audit):
+
+WSLc command:
+wslc.exe run --pull never --network none --rm --name looming-5905-a05-builder -v <source>:/src:ro -v <bundle>:/out python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/generate.py /out
+
+Result:
+{"approaches": 24, "cases": 30, "controls": 6, "input_files": 151, "input_manifest_sha256": "1f97f68c4a3737ff4e747924d1fff1665f340ddca4ef102e6704de1f9d7ef1b8", "truth_sha256": "a5c5d034fbd7ea7a04e87ed74a248fa737f1e5eda629ad1157c00f5e5d61d7e0"}
+
+Separate WSLc construction check (candidate/auditor source syntax only; no evaluation):
+wslc.exe run --pull never --network none --cpus 1 --rm --name looming-5905-a05-construction -v <source>:/src:ro -v <bundle>:/bundle:ro python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -c <AST, 30-case/150-frame shape, and truth-separation assertions>
+
+Result: CONSTRUCTION_PASS syntax=3 cases=30 frames=150 truth_separate=1.
+
+These are preformal construction activities attached to A05. A05 then terminally STOPped before candidate because main advanced. A06 reused the already-generated frozen inputs unchanged; no candidate scoring or audit was done in either construction container.

@@ -1,0 +1,28 @@
+{
+  "after_external_cleanup": {
+    "process_poll": [],
+    "reader_alive": []
+  },
+  "close_fault": true,
+  "ended_ns": 15054010165100,
+  "fault": "initialize",
+  "mode": "cooperative",
+  "model": false,
+  "name": "cleanup-error",
+  "physical_input": false,
+  "pre_external_cleanup": {
+    "calls": [
+      "client_acquired",
+      "initialize",
+      "client_close"
+    ],
+    "client_closes": [
+      1
+    ],
+    "observed_ns": 15054010006800,
+    "process_poll": [],
+    "reader_alive": []
+  },
+  "source_sha256": "48f52e4caaa341514321f9132514667c63915c18a2cba7aeaedc484b0f2d65cb",
+  "started_ns": 15054008276000
+}

@@ -107,6 +107,51 @@ def record_executor_admission(receipt, accepted):
     return result
 
 
+def record_executor_stale_rejection(receipt, rejection):
+    """Record a fail-closed stale-sequence rejection before any input admission."""
+    receipt = _v2(receipt)
+    validity = receipt.get("action_validity")
+    prior_status = receipt.get("status")
+    prior_admission = receipt.get("executor_admission")
+    ready_before_first_admission = prior_status == "READY_FOR_FRESH_EXECUTOR_ADMISSION"
+    after_prior_admission = prior_status == "INPUT_ADMITTED"
+    expected = {"event", "id", "reason", "expected_sequence",
+                "observed_sequence", "controller_received_ns"}
+    if (type(rejection) is not dict or
+            not (ready_before_first_admission or after_prior_admission) or
+            receipt.get("input_authority_admitted") is not after_prior_admission or
+            (ready_before_first_admission and prior_admission is not None) or
+            (after_prior_admission and
+             (type(prior_admission) is not dict or
+              rejection.get("id") == prior_admission.get("id"))) or
+            type(validity) is not dict or validity.get("status") != "VALID_CURRENT" or
+            set(rejection) != expected or
+            rejection.get("event") != "rejected" or
+            not isinstance(rejection.get("id"), str) or not rejection["id"] or
+            rejection.get("reason") !=
+            "latest observation sequence required before input" or
+            type(rejection.get("expected_sequence")) is not int or
+            rejection["expected_sequence"] < validity["snapshot"].get("sequence") or
+            type(rejection.get("observed_sequence")) is not int or
+            rejection["observed_sequence"] <= rejection["expected_sequence"] or
+            type(rejection.get("controller_received_ns")) is not int or
+            rejection["controller_received_ns"] <
+            validity["controller_decided_ns"] or
+            (after_prior_admission and
+             rejection["controller_received_ns"] < prior_admission.get("accepted_ns", 0))):
+        raise ValueError("exact post-validity Executor stale-sequence rejection required")
+    result = deepcopy(receipt)
+    result.update({"status": ("REVOKED_EXECUTOR_STALE_SEQUENCE"
+                               if after_prior_admission else
+                               "REJECTED_EXECUTOR_STALE_SEQUENCE"),
+                   "reason": "latest_observation_sequence_required_before_input",
+                   "executor_rejection": deepcopy(rejection),
+                   "requires_new_decision": True,
+                   "input_authority_admitted": False,
+                   "grants_input_authority": False})
+    return result
+
+
 def record_post_admission_revocation(receipt, policy_invalidation, controller_decided_ns):
     """Record later revocation while retaining the historical acceptance."""
     receipt = _v2(receipt)

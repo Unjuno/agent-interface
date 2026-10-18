@@ -1,0 +1,16 @@
+{
+  "schema": "issue8566-reconcile-alias-a01-unit-audit-failure-v1",
+  "classification": "AUDITOR_EXPECTED_HASH_TYPO",
+  "candidate_rerun": false,
+  "unit_test_rerun": false,
+  "failure": {
+    "check": "baseline_log_sha",
+    "expected": "931a48e8bb4a9bfebbb220e208eb6f400f93532c50754d2d0cfc2711856861c16",
+    "observed": "931a48e8bb4a9bfebb220e208eb6f400f93532c50754d2d0cfc2711856861c16",
+    "auditor": "unit_audit.py",
+    "cause": "The hard-coded expected SHA had one extra hexadecimal b; the WSLc baseline output was unchanged."
+  },
+  "failed_audit_sha256": "0995fc6cd073362e6318673c788ed8f56af435e2d1b4611717f3cc5ea84260a",
+  "baseline_test_log_sha256": "931a48e8bb4a9bfebb220e208eb6f400f93532c50754d2d0cfc2711856861c16",
+  "candidate_test_log_sha256": "c20bdd4a21ffa660aa226b0a0136738f69268fdc8c5333bd7bff59b7ea8fd0cc"
+}

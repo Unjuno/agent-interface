@@ -1,0 +1,42 @@
+{
+  "allocation": "MRT-7834-A06-20261005",
+  "moderators": [
+    "M0",
+    "M1"
+  ],
+  "moderator_mass": {
+    "M0": 0.5,
+    "M1": 0.5
+  },
+  "potential_outcomes": {
+    "M0": {
+      "0": 10,
+      "1": 12
+    },
+    "M1": {
+      "0": 20,
+      "1": 19
+    }
+  },
+  "treatment_propensity": {
+    "M0": 0.75,
+    "M1": 0.25
+  },
+  "controls": [
+    {
+      "id": "zero_treatment_support_M1",
+      "p": 0,
+      "timing": "pre-treatment"
+    },
+    {
+      "id": "moderator_observed_post_treatment",
+      "p": 0.25,
+      "timing": "post-treatment"
+    },
+    {
+      "id": "unknown_propensity_M1",
+      "p": null,
+      "timing": "pre-treatment"
+    }
+  ]
+}

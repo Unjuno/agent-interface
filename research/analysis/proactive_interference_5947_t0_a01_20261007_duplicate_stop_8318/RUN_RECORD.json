@@ -1,0 +1,17 @@
+{
+  "allocation_id": "5947-MULTI-UPDATE-PROVENANCE-T0-A01-20261007",
+  "issue": 8313,
+  "parent_issue": 5947,
+  "freeze_commit": "bd6e0efcda5713e40edd143746dd8a89de99b324",
+  "base_commit": "798ac5ad709168ff1d27b115f10f4f96b126bb71",
+  "candidate": {"invocations":1,"exit_code":0,"output":"results/candidate/raw.json","bytes":52039,"sha256":"e3edb93ea783e64f68174a0e9f4c6975001a5c6335db36a39d4bc4da6a190106"},
+  "auditor": {"invocations":1,"exit_code":0,"output":"results/auditor/audit.json","bytes":414,"sha256":"2bcd8a45f0aa87ce6cba378bccb9175da5bbadf588c35fcad58b5fc2befb38cb","status":"PASS_FIXTURE_METHOD_SCOPED","rows":32,"errors":0,"mutations_rejected":4},
+  "allocation_disposition":"STOP_DUPLICATE_ALLOCATION_ALREADY_CONSUMED",
+  "duplicate_of_pr":8317,
+  "duplicate_reason":"PR #8317 consumed the same allocation_id, base_commit, and fixture-only T0; its HOLD_AUDITOR_COVERAGE is authoritative. This run is retained only as duplicate execution/custody evidence and cannot repair, replace, pool with, or supersede the predecessor.",
+  "retries":0,
+  "construction": {"host_tests":"10/10 PASS","container_tests":"10/10 PASS","analysis_index_tests":"22/22 PASS","analysis_index":"768 entries OK"},
+  "preformal_launcher_incident":"Construction-only container test invocation had wrong working directory and failed import; candidate/auditor formal CLIs were not invoked. Corrected construction-only container test passed.",
+  "runtime": {"image":"python:3.14-alpine@sha256:f6a589d43c42b9e7f7dc67a12d37132491f362859a5d750607710cc56da3bc72","platform":"linux/arm64","network":"none","cpus":1,"memory":"128m","pids_limit":32,"source_read_only":true,"raw_read_only_to_auditor":true},
+  "scope":"Synthetic fixture integrity only; no model, human, GUI, tokenizer, task effect, latency, product, or safety inference."
+}

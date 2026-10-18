@@ -1,0 +1,41 @@
+{
+  "all_mutations_rejected": true,
+  "bootstrap_interval_coverage": 0.94935,
+  "cohort_count": 20000,
+  "complete_case_cohort_count": 20000,
+  "complete_case_mean": 0.17506368824255628,
+  "complete_case_population_limit": 0.175,
+  "disposition": "PASS_METHOD_SCOPED",
+  "empirical_ht_sd": 0.044156988628755195,
+  "exact_ht_sd": 0.04420595736624948,
+  "exact_ht_variance": 0.0019541666666666666,
+  "gates": {
+    "bootstrap_coverage_within_0_006": true,
+    "mean_within_four_mcse": true,
+    "sd_within_2_5_percent": true
+  },
+  "ht_mean": 0.250325,
+  "ht_mean_tolerance_four_mcse": 0.0012503332889007366,
+  "mutation_controls": [
+    {
+      "control": "drop_cohort",
+      "rejected": true
+    },
+    {
+      "control": "alter_ht_numerator",
+      "rejected": true
+    },
+    {
+      "control": "invert_interval",
+      "rejected": true
+    },
+    {
+      "control": "relabel_cohort",
+      "rejected": true
+    }
+  ],
+  "schema": "unjuno.issue8049.audit.a02.v1",
+  "target_risk": 0.25,
+  "unique_bootstrap_count_pairs": 571,
+  "unit_identities_reconstructed": 8000000
+}

@@ -1,0 +1,40 @@
+{
+  "actions": 0,
+  "auditor_invocations_in_A02": 1,
+  "candidate_invocations_in_A02": 0,
+  "disposition": "PASS_RETAINED_RAW_AUDIT_SCOPED",
+  "errors": [],
+  "fixture_sha256": "1c8b74dfdd8ec7c5a5950133709ae95e40cc687edb12ac128d66f696c79e54fb",
+  "hostile_mutations_rejected": {
+    "collapse_conflict_as_safe": true,
+    "forged_provenance": true,
+    "misalign_checkpoint": true,
+    "mutate_episode": true,
+    "omit_rare_exception": true
+  },
+  "model_outputs": 0,
+  "query_visibility_rows_total": 64,
+  "raw_sha256": "2c79a10fa6530d74ac17ea9c67816b9517c63235a4cd32fcf70a2d463d4d9f70",
+  "retries": 0,
+  "schedule_counts": {
+    "batch_4": {
+      "updates": 3,
+      "visibility_rows": 16
+    },
+    "episodic_only": {
+      "updates": 0,
+      "visibility_rows": 16
+    },
+    "per_episode": {
+      "updates": 12,
+      "visibility_rows": 16
+    },
+    "terminal": {
+      "updates": 1,
+      "visibility_rows": 16
+    }
+  },
+  "source_episode_count": 12,
+  "status": "PASS",
+  "task_effect_claims": 0
+}

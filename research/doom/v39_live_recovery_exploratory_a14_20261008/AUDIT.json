@@ -1,0 +1,115 @@
+{
+  "schema": "map01-v39-live-a14-audit-v3",
+  "status": "EXPLORATORY_PROTOCOL_DEVIATION",
+  "freeze_source_main": "9d9c42c80f946762e8742ddb2739d07d33db136d",
+  "frozen_purpose": "identify startup stage under exact V39 AppServer-initialized, V15 session path; no planner turn or model call",
+  "actual_planner_turns": 6,
+  "reported_planner_turns": 6,
+  "planner_interruptions": 2,
+  "planner_interrupted_completions": 2,
+  "policy_invalidations": [
+    {
+      "iteration": 2,
+      "cover_id": "cover-2",
+      "source_health": 79,
+      "current_health": 79,
+      "hard_health_floor": 69,
+      "source_age_ms": 1524.789823,
+      "source_ammo": 43,
+      "current_ammo": 42,
+      "reason": "health:source_expired",
+      "planner_terminal": "interrupted",
+      "answer_eligible": false,
+      "discard_reason": "policy_dependency_invalidated",
+      "final_admission": "REJECTED_POLICY_INVALIDATED",
+      "release_verified_empty": true,
+      "interrupt_completion_before_release_before_terminal": true,
+      "hard_boundary_crossing": false
+    },
+    {
+      "iteration": 5,
+      "cover_id": "cover-5",
+      "source_health": 53,
+      "current_health": 53,
+      "hard_health_floor": 33,
+      "source_age_ms": 2133.932983,
+      "source_ammo": 41,
+      "current_ammo": 39,
+      "reason": "health:source_expired",
+      "planner_terminal": "interrupted",
+      "answer_eligible": false,
+      "discard_reason": "policy_dependency_invalidated",
+      "final_admission": "REJECTED_POLICY_INVALIDATED",
+      "release_verified_empty": true,
+      "interrupt_completion_before_release_before_terminal": true,
+      "hard_boundary_crossing": false
+    }
+  ],
+  "post_invalidation_turn3": {
+    "status": "REJECTED_ACTION_NOT_CURRENT",
+    "discard_reason": "action_not_current"
+  },
+  "post_invalidation_turn4": {
+    "status": "INPUT_ADMITTED",
+    "action": [
+      {
+        "action": "retreat_fire",
+        "extent": "medium"
+      }
+    ]
+  },
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 43463978450,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 258042510940610
+  },
+  "protocol_deviation_reasons": {
+    "planner_turns_when_forbidden": true,
+    "declared_diagnostic_source_not_executed": true
+  },
+  "declared_diagnostic_source_sha256": "f3a3ba259cf9b3caeeb1467422c011e3e77f853d6b765df6f6de8e71f4ca7059",
+  "runtime_diagnostic_source_sha256": "096fb9968a412e2c539af708408e5be1bcb408c5ecb53bd2740431fc0ced9e23",
+  "runtime_source_hash_mismatches": [],
+  "diagnostic_adapter_executed": false,
+  "raw_file_count": 370,
+  "raw_total_bytes": 49603380,
+  "raw_checksum_report": {
+    "manifest_sha256": "e8b14fabebbf877eebbaf45f44fc2302f189a9a1969f507e3321ba0936ac7112",
+    "manifest_entries": 370,
+    "raw_file_count": 370,
+    "matched_files": 370,
+    "missing_paths": [],
+    "unlisted_paths": [],
+    "mismatched_paths": [],
+    "passed": true
+  },
+  "raw_report_sha256": "cf089fa6119f0ca6d2174adff9503cd0b200115d5d2f6255ee11f050b0a4d121",
+  "runtime_event_stream_sha256": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a",
+  "planner_protocol_sha256": "97d7c38290dbc0254a1d1fcc139a055a2b1e3afc9be5f8a5f7795c1ceea12a91",
+  "checks": {
+    "six_started_turns_match_report": true,
+    "two_source_expiry_interruptions": true,
+    "both_answers_ineligible_and_discarded": true,
+    "both_interrupt_release_terminal_orders_observed": true,
+    "both_per_key_releases_verified_empty": true,
+    "neither_invalidation_crossed_health_or_ammo_hard_floor": true,
+    "fresh_turn_3_answer_rejected_as_not_current": true,
+    "later_turn_4_action_admitted": true,
+    "terminal_score_no_death_kill_or_map_exit": true,
+    "original_freeze_mismatch_detected": true,
+    "runtime_source_hashes_match_staged_manifest_or_diagnostic_adapter": true,
+    "all_raw_files_match_checksum_manifest": true
+  },
+  "scope": "Raw consistency audit only. The freeze mismatch invalidates preregistered efficacy claims; the threat-triggered health/ammo gate was not reached."
+}

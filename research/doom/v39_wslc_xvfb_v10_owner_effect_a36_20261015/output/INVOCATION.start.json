@@ -1,0 +1,31 @@
+{
+  "output_parent": "D:\\codex-research\\v39-xvfb-a09-a36-output",
+  "argv": [
+    "run",
+    "--rm",
+    "--name",
+    "map01-v39-wslc-a36-20261015",
+    "--network",
+    "none",
+    "--cpus",
+    "1",
+    "--memory",
+    "1G",
+    "--pull",
+    "never",
+    "--volume",
+    "D:\\codex-research\\v39-xvfb-a09-env-20261012:/mnt/d/codex-research/v39-xvfb-a09-env-20261012:ro",
+    "--volume",
+    "C:\\Users\\user\\Documents\\Codex\\2026-10-14\\work\\pr8771-currentmain-integration\\research\\doom\\v39_wslc_xvfb_v10_owner_effect_a36_20261015\\INPUT:/study/SOURCE:ro",
+    "--volume",
+    "D:\\codex-research\\v39-xvfb-a09-a36-output:/study/OUTPUT:rw",
+    "--workdir",
+    "/study/SOURCE",
+    "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "/bin/bash",
+    "/study/SOURCE/run-a36.sh"
+  ],
+  "experiment_id": "MAP01-V39-WSLC-V10-APP-EFFECT-A36-20261015-01",
+  "schema": "map01-v39-wslc-start-a36-v1",
+  "prepared_at_utc": "2026-10-15T04:07:28.8026627+00:00"
+}

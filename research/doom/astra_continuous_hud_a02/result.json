@@ -1,0 +1,87 @@
+{
+  "schema": "agent-interface-astra-change-alarm-threshold-a02-v1",
+  "status": "EXPLORATORY_SCOPED",
+  "question": "Can a fixed scalar threshold on A01's red-mask XOR signal uniquely isolate the manually selected frame-311 change within this retained run?",
+  "H_T_D_C_U": {
+    "H": "Among scalar thresholds above the stable pre-decision baseline that still detect frame 311, no threshold yields a single event episode in this 780-frame trace.",
+    "T": "Recompute threshold-crossing episodes from all 780 retained A01 CSV rows for every integer threshold 30 through 470 pixels; an episode begins above threshold after the preceding frame is at or below threshold.",
+    "D": "The scoped calculation reproduces baseline maximum 29 pixels, frame-311 change 471 pixels, and a minimum episode count greater than one among thresholds that detect frame 311.",
+    "C": "Other episodes may be real health changes or other meaningful HUD updates, not nuisance or false alarms. A static threshold could still be useful as a broad observation trigger if its cost and response policy are acceptable.",
+    "U": "One rendered attempt, one fixed ROI and color threshold, 5 video frames/s at 2x playback (0.2 source seconds between rows), no semantic labels for the other episodes, no live detector or controller response."
+  },
+  "input": {
+    "path": "research/doom/astra_continuous_hud_a01/samples.csv",
+    "sha256": "0b585a3671a10ba2a3e4f634b32cddc7f3fb83aa85013eb75faff8a128cd7e97",
+    "bytes": 70891,
+    "rows": 780,
+    "frame_range_inclusive": [
+      0,
+      779
+    ],
+    "source_elapsed_range_s": [
+      0.0,
+      155.8
+    ],
+    "source_step_s": 0.2
+  },
+  "measurements": {
+    "stable_baseline_through_frame_220_max_mask_xor_pixels": 29,
+    "selected_frame_index": 311,
+    "selected_frame_mask_xor_pixels": 471,
+    "candidate_thresholds_inclusive_pixels": [
+      30,
+      470
+    ],
+    "candidate_threshold_count": 441,
+    "minimum_episodes_while_detecting_selected_frame": 6,
+    "thresholds_attaining_minimum": [
+      466,
+      467,
+      468,
+      469,
+      470
+    ],
+    "selected_threshold_examples": {
+      "30": {
+        "episodes": 31,
+        "selected_frame_311_detected": true
+      },
+      "60": {
+        "episodes": 30,
+        "selected_frame_311_detected": true
+      },
+      "100": {
+        "episodes": 30,
+        "selected_frame_311_detected": true
+      },
+      "200": {
+        "episodes": 28,
+        "selected_frame_311_detected": true
+      },
+      "300": {
+        "episodes": 15,
+        "selected_frame_311_detected": true
+      },
+      "400": {
+        "episodes": 10,
+        "selected_frame_311_detected": true
+      },
+      "466": {
+        "episodes": 6,
+        "selected_frame_311_detected": true
+      },
+      "470": {
+        "episodes": 6,
+        "selected_frame_311_detected": true
+      }
+    }
+  },
+  "interpretation": "The generic ROI-change threshold is not a unique event selector in this trace. This does not establish a false-alarm rate, health-classification performance, or that the other events should be ignored. It is insufficient by itself to authorize policy interruption or escalation.",
+  "decision": "Do not treat the A01 scalar ROI-change alarm alone as a live policy-interrupt trigger. A fresh live test needs a semantically grounded state delta or an explicitly bounded observation-only response, followed by a tested policy-validity decision.",
+  "generated_at_utc": "2026-10-04T07:09:10.748775+00:00",
+  "environment": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9",
+    "runner": "local posthoc CPU analysis; no game, model, GUI, OS input, or container launched"
+  }
+}

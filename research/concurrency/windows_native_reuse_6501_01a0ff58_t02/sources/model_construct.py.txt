@@ -1,0 +1,15 @@
+from itertools import permutations
+import json
+rows=[]
+for order in permutations('CSN'):
+    if order.index('C')>order.index('N'):continue
+    current=1;allowed=None;target=None
+    for step in order:
+        if step=='C':allowed=current==1
+        elif step=='S':current=2
+        elif step=='N':target=current if allowed else None
+    held_admissible=not (order.index('C')<order.index('S')<order.index('N'))
+    rows.append(dict(order=''.join(order),released_check_target=target,held_check_schedule_admissible=held_admissible))
+assert len(rows)==3 and sum(r['released_check_target']==2 for r in rows)==1
+assert all(r['released_check_target']!=2 for r in rows if r['held_check_schedule_admissible'])
+print(json.dumps({'scope':'queued-operation model only; no OS admission atomicity','rows':rows},sort_keys=True))

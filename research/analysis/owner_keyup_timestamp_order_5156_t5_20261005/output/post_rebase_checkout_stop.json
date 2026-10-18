@@ -1,0 +1,11 @@
+{
+  "schema": "owner-keyup-timestamp-order-checkout-integrity-stop-v1",
+  "phase": "post-rebase audit verification",
+  "disposition": "STOP_AUDIT_INTEGRITY",
+  "affected": ["baseline_raw.json", "repaired_raw.json"],
+  "observed_errors": ["cases_hash", "source_hash"],
+  "candidate_invocations_during_stop": 0,
+  "cause": "The Windows working tree retained CRLF copies after the byte-preservation attribute was added, while the committed package blobs and raw candidate hashes were LF. The raw-only audit correctly rejected the mismatched source bytes.",
+  "recovery": "Rewrote the 15 tracked package files from their exact HEAD blobs with git cat-file. git ls-files --eol then showed i/lf and w/lf for the frozen cases, sources, and manifest; all four auditor tests passed against the same retained raw outputs.",
+  "scope": "Checkout-byte integrity only. No candidate rerun, formal allocation retry, X11, game, model, GUI, GPU, OS input, or shared-container use."
+}

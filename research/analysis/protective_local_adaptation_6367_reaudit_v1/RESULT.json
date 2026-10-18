@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "status": "PASS_TOP_LEVEL_AUDIT",
+  "expected": {
+    "decision": "FAIL_SAFETY",
+    "mechanism_attribution_eligible": false
+  },
+  "mismatches": [],
+  "unit_tests": {
+    "command": "python -m unittest -v test_audit_top_level",
+    "passed": 4,
+    "failed": 0
+  },
+  "candidate_or_original_auditor_reexecuted": false,
+  "scope": "post-review top-level report disposition consistency for frozen synthetic events only"
+}

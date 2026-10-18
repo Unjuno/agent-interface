@@ -1,0 +1,18 @@
+{
+  "reviewed_after_candidate_run": true,
+  "purpose": "Bind the terminal-propagation interpretation to the exact ExecutorV13 source snapshots. These files were inspected after the frozen backend candidate run and did not affect the hypothesis, injection, or decision rule.",
+  "snapshots": {
+    "main": {
+      "commit": "d6a3fe646d6a8ea92a8688a1f7c54b89261f56f6",
+      "path": "research/live_control/executor_v13.py",
+      "sha256": "90b5c7e5e7309a9f815d82dd0bd8dae0a6b109d04587b565f97195076bfb7683"
+    },
+    "pr7635": {
+      "head": "bf57eb60009867bfa36243a9b48e37bd576682c7",
+      "path": "research/live_control/executor_v13.py",
+      "sha256": "2ca292cb466630a3864da904046387ad1fe09f94236d24056634f4b382a32a86"
+    }
+  },
+  "observed_consumer_contract": "ExecutorV13 emits terminal.release_batch_publication only when the caught exception carries a dict-valued release_batch_publication attribute. Neither backend snapshot set that attribute on this incomplete-publication sink failure, so this branch cannot provide the per-position terminal field.",
+  "limit": "Source-path implication only. ExecutorV13 was not run as part of A01."
+}

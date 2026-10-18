@@ -24,6 +24,7 @@ LOCAL_EXECUTION_YIELD_REASONS = {
     "missing_symbol", "association_changed", "authority_unavailable",
     "effect_failed", "effect_unavailable", "no_progress", "cancelled",
     "budget_exhausted", "delivery_uncertain", "execution_failed",
+    "execution_refused",
 }
 
 

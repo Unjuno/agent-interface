@@ -1,0 +1,8 @@
+Frozen candidate: one run; Windows 10 build 26300, CPython 3.11.9.
+Observed fast control: 1 sample, 1 readiness poll, command_ready, 16 bytes unread.
+Observed ready-at-entry overrun: 4 samples, 0 polls, deadline_overrun, 16 bytes unread, 101.4 ms.
+Observed during-callback overrun: 4 samples, 0 polls, deadline_overrun, 16 bytes unread, 102.0 ms.
+python audit.py — PASS_AUDIT_FAIL_REPRODUCED_CANDIDATE_LABEL_MISMATCH (6/6 substantive checks).
+python -m unittest -v test_audit.py — PASS (4 tests).
+Construction stops/pre-freeze output are retained; see RUN.md and RESULT.json/RESULT_V2.json.
+No live/game/model/GUI/input/container experiment.

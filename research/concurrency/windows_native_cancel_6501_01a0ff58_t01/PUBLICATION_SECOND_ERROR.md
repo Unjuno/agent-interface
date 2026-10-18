@@ -1,0 +1,1 @@
+Second publisher stopped before branch/send only on the preserved frozen PLAN.md final blank line. Original first protocol bytes are unchanged. Version3 adds exact PLAN.md blank-at-EOF preservation and retains both first diagnostics/candidate objects. No scientific gate/source/input/raw rewrite or native/formal rerun.

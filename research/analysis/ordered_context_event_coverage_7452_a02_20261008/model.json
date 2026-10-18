@@ -1,0 +1,40 @@
+{
+  "model_id": "ORDERED-CONTEXT-EVENT-7452-A02-20261008",
+  "parent_evidence": "ordered_context_event_coverage_7452_a01_20261008",
+  "context_assignments": [
+    ["current", "editor"],
+    ["current", "dialog"],
+    ["stale", "editor"],
+    ["stale", "dialog"]
+  ],
+  "held_context": {"evidence_fresh": "fresh"},
+  "events": ["ACT", "OBSERVE", "RELEASE", "REVOKE"],
+  "episode_rules": {
+    "initial_authority": "active",
+    "REVOKE": "authority=revoked and held_input=false",
+    "RELEASE": "held_input=false; authority unchanged",
+    "reset": "restore initial state only between episodes; event pairs are episode-local"
+  },
+  "unsafe_effect": "ACT admitted while authority=revoked",
+  "oracle_semantics": "Seeded-mutant positive controls report whether the faulty admission predicate activates. The separate negative control executes the correct authority gate and reports unsafe effects; mutant activation is not itself a claim of observed downstream effect.",
+  "mutants": {
+    "joint": "admit ACT iff focus_generation=stale AND surface_mode=dialog AND an earlier REVOKE exists in this episode",
+    "context_only": "admit ACT in surface_mode=dialog regardless of authority and event order",
+    "order_only": "admit ACT after any earlier REVOKE in this episode regardless of context",
+    "negative_control": "correct gate: admit ACT iff authority=active"
+  },
+  "coverage": {
+    "same_universe": "4 context assignments x 16 ordered event pairs = 64 obligations for mixed and exhaustive",
+    "mixed": "one 8-row episode per context assignment: [ACT, OBSERVE, RELEASE, REVOKE] repeated twice",
+    "exhaustive": "one 2-row episode for each context assignment and ordered event pair"
+  },
+  "expected": {
+    "episodes": {"context_only": 4, "order_only": 1, "mixed_occ": 4, "exhaustive": 64},
+    "rows": {"context_only": 4, "order_only": 8, "mixed_occ": 32, "exhaustive": 128},
+    "obligations": {"mixed_occ": 64, "exhaustive": 64},
+    "mixed_detects": ["joint", "context_only", "order_only"],
+    "separate_suites_miss_joint": true,
+    "negative_control_unsafe_effect": false,
+    "hostile_input_mutations_rejected": 4
+  }
+}

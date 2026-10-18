@@ -1,0 +1,105 @@
+name: Issue 8654 C02 raw-custody successor
+
+on:
+  push:
+    branches:
+      - research/8654-c02-raw-custody-20261009
+    paths-ignore:
+      - 'research/analysis/cue_feedback_8654_c02_20261009/results/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: issue-8654-c02-raw-custody
+  cancel-in-progress: false
+
+jobs:
+  finite-method-allocation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.10'
+      - name: Verify frozen source checkout
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          python --version
+          sha256sum research/analysis/cue_feedback_8654_c02_20261009/PREREG.md research/analysis/cue_feedback_8654_c02_20261009/candidate.py research/analysis/cue_feedback_8654_c02_20261009/audit.py
+
+      - name: Run candidate once and fsync raw before audit
+        id: candidate
+        continue-on-error: true
+        run: |
+          python -B research/analysis/cue_feedback_8654_c02_20261009/candidate.py \
+            --raw research/analysis/cue_feedback_8654_c02_20261009/results/candidate.jsonl \
+            --receipt research/analysis/cue_feedback_8654_c02_20261009/results/candidate_receipt.json \
+            > research/analysis/cue_feedback_8654_c02_20261009/results/candidate_stdout.json
+
+      - name: Durably upload raw candidate before auditor
+        id: raw_upload
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-8654-c02-prerun-raw-${{ github.sha }}
+          path: |
+            research/analysis/cue_feedback_8654_c02_20261009/results/candidate.jsonl
+            research/analysis/cue_feedback_8654_c02_20261009/results/candidate_receipt.json
+            research/analysis/cue_feedback_8654_c02_20261009/results/candidate_stdout.json
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Run independent raw-only auditor once
+        id: audit
+        if: steps.raw_upload.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python -B research/analysis/cue_feedback_8654_c02_20261009/audit.py \
+            --raw research/analysis/cue_feedback_8654_c02_20261009/results/candidate.jsonl \
+            --output research/analysis/cue_feedback_8654_c02_20261009/results/audit.json \
+            > research/analysis/cue_feedback_8654_c02_20261009/results/auditor_stdout.json
+
+      - name: Record first outcome and publish evidence on branch
+        id: publish
+        if: always()
+        env:
+          CANDIDATE_OUTCOME: ${{ steps.candidate.outcome }}
+          RAW_UPLOAD_OUTCOME: ${{ steps.raw_upload.outcome }}
+          AUDIT_OUTCOME: ${{ steps.audit.outcome }}
+        run: |
+          python -B research/analysis/cue_feedback_8654_c02_20261009/finalize.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/analysis/cue_feedback_8654_c02_20261009/results/
+          git commit -m "research(#8654): retain C02 first outcome"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Upload complete retained package
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-8654-c02-complete-${{ github.sha }}
+          path: research/analysis/cue_feedback_8654_c02_20261009/results/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Fail workflow if candidate, custody, audit, or publication failed
+        if: always()
+        env:
+          CANDIDATE_OUTCOME: ${{ steps.candidate.outcome }}
+          RAW_UPLOAD_OUTCOME: ${{ steps.raw_upload.outcome }}
+          AUDIT_OUTCOME: ${{ steps.audit.outcome }}
+          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
+        run: |
+          test "$CANDIDATE_OUTCOME" = success
+          test "$RAW_UPLOAD_OUTCOME" = success
+          test "$AUDIT_OUTCOME" = success
+          test "$PUBLISH_OUTCOME" = success
+          python -B -c "import json; from pathlib import Path; r=json.loads(Path('research/analysis/cue_feedback_8654_c02_20261009/results/audit.json').read_text()); assert r['integrity_status']=='PASS_METHOD_SCOPED'"

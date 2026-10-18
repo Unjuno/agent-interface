@@ -1,0 +1,22 @@
+{
+  "allocation": "NEGATIVE-HANDOFF-EXPIRY-5865-T0-A01-20261008",
+  "issue": 8466,
+  "frozen_base_main": "1aaa633c4f1aeec25e4b4617d92dd93af3b20603",
+  "candidate": {"invocations": 1, "exit_code": 0},
+  "auditor": {"invocations": 1, "exit_code": 0},
+  "retries": 0,
+  "container": {
+    "runtime": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "image": "python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+    "network": "none",
+    "read_only_rootfs": true,
+    "requested_limits": {"cpus": 1, "memory": "512m", "pids": 64},
+    "note": "Requested Docker limits recorded; effective enforcement is not independently asserted."
+  },
+  "raw_sha256": "1d71d497b3ca08eccbd8afeddb7e226982684340405cb1e447e1cee7ab79467b",
+  "audit_sha256": "6f08dfd9ca45ec9b61fed457a77c0f6ca0eeb5199de00e95e4d75641ebb488a5",
+  "audit_status": "PASS_METHOD_SCOPED",
+  "rows_reconstructed": 10,
+  "mutations_rejected": 6
+}

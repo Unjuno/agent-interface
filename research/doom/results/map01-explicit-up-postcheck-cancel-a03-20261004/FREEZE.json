@@ -1,0 +1,28 @@
+{
+  "run_id": "EXPLICIT-UP-POSTCHECK-CANCEL-A03-20261004",
+  "source_merge_tree": "71b723028a2db51a7f14a6db653d7f3789fa988b",
+  "source_pr7449_head": "a6da76741c91d8cfa0f035445c1fd6b8b864560e",
+  "source_pr7441_head": "5bd1cf7e38e1716e92ab76253d50b48a2385b7f4",
+  "main_base": "0db425b379f9438bf6b13c95dce1b763750b06d5",
+  "candidate_invocations": 1,
+  "retry": false,
+  "candidate_command": "python3 candidate.py",
+  "audit_command": "python3 audit.py",
+  "harness_delta": "include lease.py; use owner._inner for the actual v12 owner",
+  "tested_source_delta_from_A01_A02": "none",
+  "files": {
+    "candidate.py": "92e7a02df9d4d2f2d7545ef347e5a7b47d7da1992640cb415b7dcc2488d50e99",
+    "audit.py": "8a0147da6474d9e6ec1dfb953e8357e16c7b0b09cfe995095a242e40f4df1576",
+    "PLAN.md": "21541aa1a88433400f9c6ceac682ac5c4aafacb8c0877b1d569a52cc5ef27aba",
+    "ENVIRONMENT.json": "cf55b103df6ab630d4288070b14f17c5948a94493129545ee66c96219f144c94",
+    "README.md": "8386fb07ba2d67c595106daa7d7e5d2ff620f02ea95a7873d82c16dd387a6ff8",
+    "RUN_COMMANDS.md": "c2ba8d3bb168edcba911db7c34e3510b3dd5eaf54e3a3b80cd425fc7f08330c5",
+    "source_snapshot/research/live_control/input_owner_v12.py": "0d3240f17fb6a1950dd1f327984d4d210fed6faa1e40517664187801820d470e",
+    "source_snapshot/research/live_control/input_transition_owner_v4.py": "af8f43321cc165cda6df1bdcff56cda356fd75fca0bc64aebd43aa17d89726e4",
+    "source_snapshot/research/live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "source_snapshot/research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "source_snapshot/research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "source_snapshot/research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "decision_rule": "See PLAN.md"
+}

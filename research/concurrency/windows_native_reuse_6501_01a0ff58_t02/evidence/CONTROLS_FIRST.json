@@ -1,0 +1,82 @@
+{
+  "audit_source_sha256": "2763cd35b2d70a4e1d7cf4a61f9e80265a98b987ac6f5ad25ef4277cf1ad137e",
+  "controls": [
+    {
+      "accepted": false,
+      "bytes": 6011,
+      "failure": "AssertionError()",
+      "mode": "normal_B_D",
+      "name": "bool_event_seq",
+      "sha256": "bea5814fcdcf5b09f0c9efff6a428b4c720f916d09a508bf63686ead558998fb"
+    },
+    {
+      "accepted": false,
+      "bytes": 6215,
+      "failure": "AssertionError()",
+      "mode": "stale_handle",
+      "name": "wrong_B_read_tid",
+      "sha256": "899a8976b87f88635dbbaf31832618a86cc41a25dc4c97ca62f2cf9a316546d6"
+    },
+    {
+      "accepted": false,
+      "bytes": 6215,
+      "failure": "AssertionError()",
+      "mode": "stale_handle",
+      "name": "pipe_B_fd_alias",
+      "sha256": "d93bc220cff7c1720fe14012a270a67693cb973c5c5f7361a3e26adb34a6ee9e"
+    },
+    {
+      "accepted": true,
+      "bytes": 6212,
+      "failure": null,
+      "mode": "stale_handle",
+      "name": "primary_result_bool_alias",
+      "sha256": "c39569d3be7c9fc48d72b391e998053e6a1bd5f4f22c60e61f704fe4e282dc05"
+    },
+    {
+      "accepted": true,
+      "bytes": 6211,
+      "failure": null,
+      "mode": "stale_handle",
+      "name": "final_result_read_bool_alias",
+      "sha256": "7e773cb4296861c0ac95e93813f29784aeb664b06bd3aad917efad9f1cf3147b"
+    },
+    {
+      "accepted": false,
+      "bytes": 6502,
+      "failure": "AssertionError()",
+      "mode": "check_then_call",
+      "name": "late_early_generation_check",
+      "sha256": "0904cf0fc7a1467cef038909c56724d92de718866deffd88caf1ab7c60338ece"
+    },
+    {
+      "accepted": false,
+      "bytes": 6370,
+      "failure": "AssertionError()",
+      "mode": "locked_gate",
+      "name": "coherent_locked_completion_promotion",
+      "sha256": "eb4907c84c2281f73a6e920a59881527385c9e1b7d28a626792b6ad40b0d7b6c"
+    },
+    {
+      "accepted": false,
+      "bytes": 6007,
+      "failure": "AssertionError()",
+      "mode": "normal_B_D",
+      "name": "bool_result_pid",
+      "sha256": "34914a714e99214c6c86018031e12c73358f80f7ca007a2d26560358649e2005"
+    },
+    {
+      "accepted": false,
+      "bytes": 6215,
+      "failure": "AssertionError()",
+      "mode": "stale_handle",
+      "name": "cancel_wrong_generation",
+      "sha256": "4aa119247bc427feec6c48df23f0d5e12e6575fa9305180439b4cae9a55f7c3e"
+    }
+  ],
+  "end_utc": "2026-10-03T16:01:40.681504+00:00",
+  "false_accepts": 2,
+  "native_replay": 0,
+  "pid": 11088,
+  "start_utc": "2026-10-03T16:01:40.673882+00:00"
+}

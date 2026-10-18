@@ -1,0 +1,51 @@
+{
+  "experiment_id": "UNJUNO-7778-SLACK-RECLAMATION-T0-20261005-01",
+  "issue": 7778,
+  "source_commit": "a38c61334ff5dbd7d17269467c26f74e9ad4a84f",
+  "branch": "research/7778-slack-reclamation-t0-20261005",
+  "package_path": "research/analysis/slack_reclamation_7778_t0_20261005",
+  "hypothesis": "On every control-feasible trace in the frozen finite release envelope, demand-guarded slack stealing meets every hard control deadline and completes more best-effort payload on the preregistered positive-slack subset than static Q=2/P=8 reservation at the same unit-speed single-CPU capacity; infeasible cases are explicitly not claimed safe.",
+  "model": {
+    "processor_count": 1,
+    "service_per_tick": 1,
+    "tick_interval": "[t,t+1)",
+    "horizon_ticks": 32,
+    "preemption": "unit-slot preemptive",
+    "control_deadline": "absolute deadline = selected release + frozen relative deadline",
+    "same_stream_minimum_interarrival": "job-specific frozen integer bound",
+    "static_server": {"period_ticks": 8, "control_budget_ticks": 2, "best_effort_budget_ticks": 6, "unused_control_budget": "expires; never borrowed"},
+    "overhead_sensitivity": "0 or 1 unit charged once before each job's first payload unit; charged against the same processor/server capacity"
+  },
+  "matrix": {
+    "fixed_seed_cases": 16,
+    "additional_frozen_boundary_cases": ["exact-boundary", "joint-infeasible"],
+    "control_jobs_per_case": "1-3",
+    "best_effort_jobs_per_case": 2,
+    "policies": ["PRIORITY_ONLY", "STATIC_RESERVATION", "DEMAND_GUARDED_SLACK_STEAL"],
+    "overhead_values": [0, 1],
+    "formal_policy_rows": 108,
+    "positive_slack_subset": "late_single and late_separated_three profiles; every allowed control release is >=16, while both best-effort jobs are released at tick 0",
+    "refusal_controls": ["unknown WCET", "non-preemptive job", "unrecognized job class"]
+  },
+  "auditor": "Separate raw-event implementation with exhaustive unit-slot schedule enumeration; no import of candidate.py. It independently checks exact input identity, all release/job provenance, one-slot capacity, budget replenishment/caps, action selection, each slack grant against every remaining finite release assignment, actual hard-deadline feasibility, and maximum best-effort payload under hard deadlines.",
+  "decision": {
+    "method_pass": "zero raw reconstruction errors, exact exhaustive-oracle agreement, fail-closed refusals, and all frozen mutation challenges rejected",
+    "hypothesis_pass": "zero guarded-policy control misses on every oracle-feasible case across both overhead factors, plus strictly more guarded best-effort payload than static reservation in aggregate over the frozen positive-slack subset at overhead=0",
+    "stop_rule": "candidate and auditor each run once; preserve any failure and do not tune or repeat the formal case matrix"
+  },
+  "execution_environment": {
+    "planned_host": "OrbStack Docker on local macOS",
+    "container_gate": "STOP_CONTAINER_BACKEND_CONTENT_STORE: daemon reports operation not supported while reading image blobs; no image was successfully inspected and no container was run",
+    "fallback": "host CPython 3.14.5 on local ARM64 only because the model has no container-specific behavior and makes no host timing, resource enforcement, or isolation claim; distinct from Python 3.12 CI",
+    "container_claim": false
+  },
+  "frozen_sha256": {
+    "README.md": "4cf8c78b4840f99df3c9ffdfe2c26bf7fdc0b81eab87516632784f5d99852784",
+    "build_cases.py": "d4c058a5a8fb7ee0eebb1c75ff3210727a5d0e126d61fe521c148ce01f9d98c6",
+    "cases.json": "279f60d361ff0f1fee0a38d2771e5c92ae7444b72631b21e4ad77fa285be9fb7",
+    "candidate.py": "705850fb730dfe8c38503b19fb34e3088b629e50d94f141f87241dc7b354f7e4",
+    "auditor.py": "d219808b6b330c87888e29b32c274b3afea0417735d976ea9e994de68fcaeeb5",
+    "test_method.py": "e6489a4cf40db9ba3367cc979b1712fe2e5952925f8673debc05a77419362dee"
+  },
+  "scope": "finite synthetic scheduler-method result only; not the consumed #7722 experiment, not a replay of #7748/#7762, and not evidence about host/WSL/cgroup/OrbStack scheduling, real-time guarantees, GUI effects, key-up, physical release, safety, or product performance"
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "blocked-interleaved-8080-freeze-v1",
+  "allocation": "BLOCKED-INTERLEAVED-PRACTICE-8080-T0-A01-20261005-01",
+  "frozen_at_utc": "2026-10-05T08:10:21Z",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8080",
+  "related_issue": "https://github.com/Unjuno/agent-interface/issues/8084",
+  "base_main": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
+  "method": "pure deterministic synthetic schedule/effect contract; no OS or GUI dependency",
+  "host": "macOS 27.0.1 arm64; Python 3.14.5",
+  "candidate_input_allowlist": ["design.json"],
+  "auditor_only_input": "scorer_fixture.json",
+  "participant_allocation": false,
+  "human_or_gui_effect": false,
+  "source_sha256": {
+    "design.json": "5058f8819c2fb2fd94132a8ee2378c19be29893f319329ce5b6e6e5d977281fa",
+    "scorer_fixture.json": "beda8841fb16a6f56fbffd49ff35e05729c2e159d8260301917ab2bfecdac412",
+    "candidate.py": "530c07f1caf2e58291fe545bbe3e579189dca7b0c33b30044bf9efdcb983b9b6",
+    "auditor.py": "3a5fed34b1bff95546679c6fc9b9b57948b48714bfcc1280914519600243b66c",
+    "selftest.py": "c2c1d7d8ce8a87f2071a981a74432e4decbb469ab4effb6bb7d83f74b7317ef7"
+  },
+  "container": "not used; deterministic finite method check only",
+  "decision_gate": "METHOD_PASS_SCOPED only if exact schedules, equal exposures/feedback, held-out isolation, independent forward/inverse effects, and all five mutation controls pass"
+}

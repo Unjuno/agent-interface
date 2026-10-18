@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "independent_event_derivation_passes": true,
+    "probe_identity_matches": true,
+    "recorded_expectations_pass": true,
+    "result_has_three_cases": true,
+    "scope_is_construction_only": true,
+    "source_identity_matches": true
+  },
+  "derived_case_checks": {
+    "advancing_epoch_hash_change": true,
+    "same_epoch_different_hash_cross_transport": true,
+    "same_epoch_same_hash_cross_transport": true
+  },
+  "scope": "Arithmetic and event-relation audit of saved synthetic output; does not validate live threat semantics or gameplay.",
+  "status": "PASS_BOUNDARY_AUDIT"
+}

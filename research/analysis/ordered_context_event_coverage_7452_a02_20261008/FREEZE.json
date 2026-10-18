@@ -1,0 +1,35 @@
+{
+  "freeze_id": "ORDERED-CONTEXT-EVENT-7452-A02-20261008-F1",
+  "issue": 8399,
+  "parent": "A01 preserved unchanged; this successor corrects only A01's unequal comparison denominator and strengthens its auditor controls.",
+  "main_sha_at_design": "2f36f501f11931e052dbc3fb0000a9200bff7f50",
+  "execution_environment": {
+    "mode": "host_cpu_only",
+    "python": "Python 3.12.13",
+    "network_gui_model": "not used",
+    "container": "not used; finite standard-library-only method probe under the issue's CPU-only scope; no container claim"
+  },
+  "input_sha256": {
+    "README.md": "9e0dbd540840a362dd4fa2450826573ee44057eaab26c94e769a91dfba90b30a",
+    "model.json": "96193272741812ae13306573ccdd4b249c0cc98e87948d8e6d95f426c721cea6",
+    "candidate.py": "5300702c2775ba4584ec18c40840a2bd912bfa867911095cb68e82c25ce5a968",
+    "audit.py": "a7fa829b484277b1a03003fc2deb2d6841456b0e8aeb443a64d134f37563ef42",
+    "test_construction.py": "cb0b0e142eed072c50294b0f39702f7361d398b5bcb33176607882064b184380"
+  },
+  "preformal_tests": "python -m unittest discover -s research/analysis/ordered_context_event_coverage_7452_a02_20261008 -v (1 test passed before freeze)",
+  "formal_invocations": [
+    "python research/analysis/ordered_context_event_coverage_7452_a02_20261008/candidate.py /tmp/ordered-context-event-a02-candidate.json",
+    "python research/analysis/ordered_context_event_coverage_7452_a02_20261008/audit.py /tmp/ordered-context-event-a02-candidate.json research/analysis/ordered_context_event_coverage_7452_a02_20261008/AUDIT.json"
+  ],
+  "expected_gate": {
+    "same_obligation_universe": 64,
+    "mixed": {"episodes": 4, "rows": 32},
+    "exhaustive": {"episodes": 64, "rows": 128},
+    "separate_suites_miss_joint": true,
+    "mixed_mutant_gate_activation": ["joint", "context_only", "order_only"],
+    "negative_control_unsafe_effect": false,
+    "hostile_input_mutations_rejected": ["drop_episode", "corrupt_universe", "credit_cross_reset_pair", "collapse_context_strata"],
+    "cross_reset_pairs_credited": 0
+  },
+  "claim_limit": "PASS_METHOD_SCOPED only for this enumerated synthetic state machine and equal 64-obligation denominator. Mutant trigger is gate activation, not downstream effect. No GUI, product, safety, general fault-detection rate, or general OCC efficiency claim. Preserve first formal outcome; retries zero."
+}

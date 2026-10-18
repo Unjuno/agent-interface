@@ -1,0 +1,46 @@
+"""Finite ordinary regression children, preserve every first outcome."""
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import platform
+import subprocess
+import sys
+import time
+
+WORK = Path(__file__).parent
+REPO = WORK.parent / 'agent-interface'
+STAGE = sys.argv[1]
+MODULES = sys.argv[2:]
+OUTPUT = WORK / STAGE
+OUTPUT.mkdir(exist_ok=False)
+paths = ['runtime/backends/quartz_v1/session.py', 'runtime/backends/quartz_v1/backend.py',
+         'runtime/backends/quartz_v1/test_release_faults.py', 'runtime/backends/quartz_v1/test_release_quarantine.py',
+         'runtime/backends/x11_v1/session.py', 'runtime/core_v1/contract.py']
+pins = {}
+for path in paths:
+    blob = (REPO / path).read_bytes()
+    (OUTPUT / (path.replace('/', '__') + '.txt')).write_bytes(blob)
+    pins[path] = {'bytes': len(blob), 'sha256': hashlib.sha256(blob).hexdigest()}
+command = [sys.executable, '-B', '-m', 'unittest', *MODULES, '-v']
+record = {'kind': 'ordinary_inert_regression_not_formal_allocation', 'stage': STAGE,
+          'command': command, 'cwd': str(REPO), 'source_pins': pins,
+          'python': platform.python_version(), 'platform': platform.platform(),
+          'started_utc': datetime.now(timezone.utc).isoformat(), 'timeout_seconds': 20}
+(OUTPUT / 'START.json').write_text(json.dumps(record, indent=2) + '\n')
+started = time.monotonic_ns()
+try:
+    child = subprocess.run(command, cwd=REPO, capture_output=True, timeout=20)
+    stdout, stderr, code = child.stdout, child.stderr, child.returncode
+except subprocess.TimeoutExpired as failure:
+    stdout, stderr, code = failure.stdout or b'', failure.stderr or b'', None
+record.update(ended_utc=datetime.now(timezone.utc).isoformat(), elapsed_ns=time.monotonic_ns()-started,
+              exit_code=code, elapsed_interpretation='custody_only_not_performance', child_reaped=True)
+for name, data in [('stdout.txt', stdout), ('stderr.txt', stderr)]:
+    if len(data) > 1_048_576:
+        raise ValueError('ordinary child exceeded declared output envelope')
+    (OUTPUT / name).write_bytes(data)
+    record[name] = {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+(OUTPUT / 'END.json').write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps({'stage': STAGE, 'exit_code': code, 'stdout_bytes': len(stdout), 'stderr_bytes': len(stderr)}))
+print(stderr.decode()[-7000:])

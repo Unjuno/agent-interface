@@ -1,0 +1,28 @@
+{
+  "experiment": "Issue #5313 retained-receipt successor A01",
+  "base_commit": "dd37f2ddbdb0a424e43676545595f5537e435473",
+  "source_receipt_manifest_sha256": "e16b8b33e7dc787aff10ab049c1f76af2b27e1088a2d7ef2bd859a5d67c673e1",
+  "source_metadata_sha256": "2f159c63302f8b8ce146c85d0c395af831a37f1422e1a74d4048444fc689c87f",
+  "source_snapshot_sha256": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+  "experiment_code_sha256": {
+    "audit.py": "41297ffbf9f7007d05e994f8796578cc74db67b679cc6c8ad28563acf92abd86",
+    "audit_core.py": "7ab10b9a910dc91ec2516b8c219ead1d71aeb48857634d16758846a4eb4a51bd",
+    "candidate.py": "870b606c2112df12170b013b9b7d285a566bf355f7197903ec5ebf4938003936",
+    "run_candidate.py": "73c5df34e58879a4f162e5be4ed6a47d6e26b68109d687e84cdd73af1fb32a1b",
+    "test_auditor.py": "9b02983801e3903b1395397a3ed95736f565941e2c1bd2cb4972114948288f5f",
+    "test_candidate.py": "52aa55a026761ffa721dce09accdeed59d1c7ad3aafd947f0c608512475fcbde",
+    "test_mutations.py": "142c9fb18a647444a947b2476aaf8919d32c129203c17935d98c830a8bdcdbef",
+    "PROTOCOL.md": "2ba0a1a0274e60d5fd5e5d525b92aa28a19dfd4378c7bb20e7351a92a821867d",
+    "README.md": "eea60be9c067a03484f72f3f71dc5c7db8e6160fdd7f7bc90563b4d9bb34f0f5",
+    "candidate.raw.json": "ab3ea920aac088be34ebb6283ca8668e94af439d1305206b8676c74259fc25e7",
+    "audit.json": "e47895df85213633de799f91aa6dd75c4407aa618b8f07b9b0e66abae6e56fd4",
+    "REPORT.md": "2bff6781518fc8f1881fc01047941cc0d6fd1619fd95e1b73b48e825565fd22e"
+  },
+  "formal_invocations_authorized": {
+    "candidate": 1,
+    "independent_auditor": 1
+  },
+  "preformal_tests": "13/13 PASS; python compile and git diff --check PASS",
+  "container_preflight": "OrbStack image inspect failed with containerd blob operation not supported; no container repair or retry",
+  "scope": "Saved receipt interpretation only; no native replay, model, GUI, production, fault-attribution, or repair-efficacy claim"
+}

@@ -1,0 +1,19 @@
+{
+  "auditor_sha256": "be6319a8d5fdaa6d77e1f13f415ad4735f7f211c997372d5da2949ef5eb39b9e",
+  "candidate_sha256": "d9c72c5a719b318c7fee8cd1129d6a22077c1e75fb9e5f6b8409df7b31dbb28a",
+  "created_utc": "2026-10-04T04:21:29Z",
+  "decision": "Counterexample only if all cases emit one fake KeyPress and KeyRelease with verified empty owner receipt, v10 and v12-cancel record release, cancellation pre-keyup and v12 sample-false < cancellation-visible < keyup, and ordinary v12 remains un-cancelled/release. If v12 reports cancelled in the post-sample condition reject hypothesis; incomplete custody/effect is STOP.",
+  "hypothesis": "Cancellation made visible after the explicit-release cause sample but before the first key-up side effect is still recorded as ordinary release by current-main v10 and additive PR7440 v12.",
+  "plan_sha256": "82689c934979c0c8583d962bd780e5af81d74bfd2af4a9f37c11821d2e76112c",
+  "run_id": "MAP01-V39-CANCEL-RELEASE-CAUSE-C03-20261004",
+  "scope": "Construction-only deterministic fake-Xlib scheduling boundary; no X server, physical input, app, game, model, or formal/live allocation.",
+  "source_commits": {
+    "main_v10": "aacbdbcb67daf22ebb277a9826305184de458ca3",
+    "pr7440_v12": "b90cf06b705df350fd74437c3b40c93fa546696b"
+  },
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "662f28840bd9a84a51611a2da23681c5fec53d2b6ab00b78675a9380855c8077"
+  },
+  "treatment": "One fake-Xlib owner-thread cycle per exact source: main v10 cancellation after dequeue; PR #7440 v12 cancellation by a separate Python thread synchronized after the false cause sample; and v12 ordinary-release control."
+}

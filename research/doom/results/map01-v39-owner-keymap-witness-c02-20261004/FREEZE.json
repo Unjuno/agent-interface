@@ -1,0 +1,44 @@
+{
+  "allocation_id": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01",
+  "network_isolation": "none",
+  "protocol": {
+    "auditor_invocations": 1,
+    "candidate_invocations": 1,
+    "network_calls": "none",
+    "occurrences": 2,
+    "owner_lifecycle": "explicit InputOwner.release after each backend raw key-up",
+    "retry": "none",
+    "xvfb_tcp_enabled": false
+  },
+  "runtime_environment_sha256": "65c2d1dd07469b3596b13ea65b727e5fe7598cfe0dd29d8afcb1f094176ecd39",
+  "schema": "map01-v39-owner-keymap-witness-freeze-v1",
+  "sha256": {
+    "ENVIRONMENT.json": "65c2d1dd07469b3596b13ea65b727e5fe7598cfe0dd29d8afcb1f094176ecd39",
+    "README.md": "5a515857b01a1d3deac4bb9358253c75087c888f5f385ef279b0efe2af6e2927",
+    "SETUP.md": "7568a81be043799c39040fc7d6912a1813b66f0e6f9b06a87775a18dc6fa1c29",
+    "audit.py": "0c11d5e2533f5de205acc74ed2efdd9f1624f0b9d0234d97bdea6bf6e39d3445",
+    "candidate.py": "1be9dd71ab140789d0736674828a32f1017beb71286655f7753302bce9697466",
+    "capture_environment.py": "d5ec56d69c266dd0626e571aefb3607d3065ab57582270ff46b420b121b54dd9",
+    "cases.json": "993916255d2e2e49fc352e1dfd5624dcb8986b18b532798c9f769c7a839e1ad5",
+    "sources/doom_typed_release_backend_v3.py": "61f66e3b6afc92b2b646d0fe9e38ffc841e405e8955fc98eed3c2b6f2b843adb",
+    "sources/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "sources/input_transition_owner_v3.py": "b4064c12465dcdf3ccb763d95093a25e2ee8892149da3a1718c6f47bb5a15078"
+  },
+  "source_provenance": {
+    "doom_typed_release_backend_v3.py": {
+      "branch": "research/59-v39-release-telemetry",
+      "commit": "2b9cc1ab0b157ef1cad1e7282c97fdf901269a2d",
+      "repository": "Unjuno/agent-interface"
+    },
+    "input_owner_v10.py": {
+      "commit": "13bab54ea6d91978247ecc1b70e5060db752367a",
+      "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "repository": "Unjuno/agent-interface"
+    },
+    "input_transition_owner_v3.py": {
+      "commit": "cf4904c678830ebe1de84ec34c07df01f8be8b34",
+      "pull_request": 7376,
+      "repository": "Unjuno/agent-interface"
+    }
+  }
+}

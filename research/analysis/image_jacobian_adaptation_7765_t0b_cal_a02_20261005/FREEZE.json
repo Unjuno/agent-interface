@@ -1,0 +1,19 @@
+{
+  "experiment_id": "UNJUNO-7765-IMAGE-JACOBIAN-T0B-CAL-A02-20261005-01",
+  "issue": 7765,
+  "source_commit": "3b307da1af94d40c68b11c3edfcb75e93f43023d",
+  "predecessor": "T0B calibration A01 STOP_CALIBRATION_AUDIT_FAILED; A01 seeds 1000-1019 are excluded.",
+  "source_sha256": {
+    "CALIBRATION_PROTOCOL.json": "5e2bdc72ad0f768f9d0b53e94fbcffac2e476a58277dd18137be2fad9375e125",
+    "calibrate.py": "d5a11eb4cd67f4a4028bcc4a4a16ec7dc84fe83029418bbcab88c6bccdf3fb04",
+    "audit_calibration.py": "7fc7ccd7d059b57aa37d16ba5bf7d28cb1a0dc3544826d49c6eb60cc90b96082",
+    "test_protocol.py": "e28871991d573037ab25fce93d4550de598a1d108c8fd5aa6942d9324b84cc28"
+  },
+  "H": "Separate-seed calibration yields a defensible fixed gain for the later disjoint held-out online-Jacobian comparison.",
+  "T": "One calibrator/auditor run: grid [0.4,0.5,0.6,0.7,0.8,0.9], 20 fresh seeds 3000-3019 each on gain_drift and cross_coupling; 240 rows. Held-out 4000-4029 is not read or run here.",
+  "D": "Select the lowest aggregate correction count among gains with complete reconstructed trace, every goal reached, and zero action-bound violations; tie to smaller gain. Any audit error or no eligible gain is STOP.",
+  "C": "Every gain uses the same frozen action/task generation and paired seed/condition grid. Independent auditor has a construction test for exact cross-coupling RNG consumption.",
+  "U": "Training calibration is only parameter selection on the authored synthetic plant and establishes no held-out adaptation benefit.",
+  "runtime": "Host CPython due OrbStack pinned-image content-store failure; no host timing or resource claim.",
+  "invocations": {"calibrator": 1, "independent_auditor": 1, "retries": 0}
+}

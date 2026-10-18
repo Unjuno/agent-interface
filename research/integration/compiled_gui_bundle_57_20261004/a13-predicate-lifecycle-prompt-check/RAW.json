@@ -1,0 +1,161 @@
+{
+  "answer": {
+    "contract": {
+      "actions": [
+        {
+          "expected_effect": [
+            {
+              "predicate": "exact_token_visible",
+              "value": true
+            }
+          ],
+          "name": "enter_authorized_token",
+          "operation": "enter_token",
+          "target_symbol": "value_field"
+        },
+        {
+          "expected_effect": [
+            {
+              "predicate": "exact_saved_title",
+              "value": true
+            }
+          ],
+          "name": "save_value",
+          "operation": "submit_form",
+          "target_symbol": "save_button"
+        }
+      ],
+      "interface_id": "observation-fixture-save",
+      "method": {
+        "initial_state": "enter_token",
+        "max_runtime_ms": 10000,
+        "max_transitions": 3,
+        "name": "token-entry-and-save",
+        "states": [
+          {
+            "branches": [
+              {
+                "action": "enter_authorized_token",
+                "next_state": "submit_token",
+                "outcome": "action",
+                "reason": null,
+                "when": [
+                  {
+                    "predicate": "target_valid",
+                    "value": true
+                  }
+                ]
+              }
+            ],
+            "name": "enter_token"
+          },
+          {
+            "branches": [
+              {
+                "action": "save_value",
+                "next_state": "verify_saved",
+                "outcome": "action",
+                "reason": null,
+                "when": [
+                  {
+                    "predicate": "target_valid",
+                    "value": true
+                  },
+                  {
+                    "predicate": "exact_token_visible",
+                    "value": true
+                  }
+                ]
+              }
+            ],
+            "name": "submit_token"
+          },
+          {
+            "branches": [
+              {
+                "action": null,
+                "next_state": null,
+                "outcome": "complete",
+                "reason": null,
+                "when": [
+                  {
+                    "predicate": "exact_saved_title",
+                    "value": true
+                  }
+                ]
+              }
+            ],
+            "name": "verify_saved"
+          }
+        ],
+        "version": "1.0"
+      },
+      "symbols": [
+        {
+          "name": "value_field",
+          "role": "field"
+        },
+        {
+          "name": "save_button",
+          "role": "submit"
+        }
+      ]
+    },
+    "field_point": [
+      260,
+      401
+    ],
+    "submit_point": [
+      376,
+      401
+    ],
+    "value_crop": [
+      118,
+      392,
+      334,
+      412
+    ]
+  },
+  "answer_sha256": "b55f0dceba9d7f20c1ee4f3f69acdfdca588a5bb67cef3d73f37c266f87f3c9f",
+  "argv_sha256": "4a3049d96549d51093d595b900123bee05b1d01a50abff05b81ce0a1878208bf",
+  "cli_event_types": [
+    "thread.started",
+    "turn.started",
+    "item.completed",
+    "turn.completed"
+  ],
+  "cli_stderr_sha256": "a0b4faded6e8c3e62650cf1feafac544b62806536f26d2bea6923275f1853b59",
+  "cli_stdout_sha256": "96f3543f2fc3ad342d34111adf983c7409919df287aebc43371fbf7e2074f953",
+  "cli_version": "codex-cli 0.146.1",
+  "elapsed_ns": 25990428000,
+  "exit_code": 0,
+  "inputs": {
+    "candidate_sha256": "48549d1000a0a307436479fe64ae47fb0322d1e42f2a90a70e613691445526a7",
+    "image_sha256": "dceef5c6abee047328d99007369db0fade828b26a02fb83ba931896ae818ed21",
+    "model_catalog_sha256": "31635e8aeb77521c4b55fe1171cd246939df3e4cbae557b3e073efc1eb09aa3d",
+    "prompt_sha256": "8398ebec2581d05810dcbf3a39bf1389ffaf135edf25b62a8728bb6a2fa8d601",
+    "schema_sha256": "1b79d332398ea3e9d816c4982c441a34b4536a79d4fc0be2a9fac7457876d964",
+    "task_sha256": "80535efedb1af9bfa1b16346d66f27b10bf1119c21038629b08e3cb79356fc64"
+  },
+  "provider_attempts": 1,
+  "provider_thread_ids": [
+    "01a105bd-1b24-7c93-9252-057c1e48f048"
+  ],
+  "requested_effort": "low",
+  "requested_model": "gpt-5.6-luna",
+  "status": "captured",
+  "timed_out": false,
+  "timeout_seconds": 90,
+  "usage_events": [
+    {
+      "type": "turn.completed",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 13786,
+        "output_tokens": 522,
+        "reasoning_output_tokens": 206
+      }
+    }
+  ]
+}

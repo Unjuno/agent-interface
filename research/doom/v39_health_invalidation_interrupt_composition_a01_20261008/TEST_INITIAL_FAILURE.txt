@@ -1,0 +1,11 @@
+First verification outcome (preserved; candidate not rerun):
+
+`python -B -m unittest -v research.doom.v39_health_invalidation_interrupt_composition_a01_20261008.test_audit`
+
+`test_event_order_mutation_is_rejected` failed because `assertRaisesRegex` observed no `ValueError`. The mutation test computed the second list index after its first assignment, which restored the original order and did not mutate the candidate result. The candidate output and passing AUDIT.json were not changed. The test now captures both indices before swapping; AUDIT_V2 adds a complete sequence-order check.
+
+Second verification outcome (preserved; candidate and both audit outputs unchanged):
+
+`python -B -m unittest -v research.doom.v39_health_invalidation_interrupt_composition_a01_20261008.test_audit`
+
+The corrected event swap was rejected by the auditor with `ValueError: monitor/cancel/interrupt/terminal/answer order mismatch`, as intended. The test still failed because its regex expected `event order mismatch`, which did not match the actual wording. The assertion now matches the stable phrase `order mismatch`.

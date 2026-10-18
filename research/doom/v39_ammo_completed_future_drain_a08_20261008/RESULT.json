@@ -1,0 +1,344 @@
+{
+  "schema": "issue59-v39-ammo-completed-future-drain-result-a08-v1",
+  "status": "CONSTRUCTION_OBSERVATION",
+  "main_commit": "48496b645b1cbf4c4ddea49315972724f020343c",
+  "main_order_lines": {
+    "drain": 987,
+    "planner_result": 1003,
+    "final_admission": 1027
+  },
+  "cases": [
+    {
+      "case": "positive-floor-soft-control",
+      "source_health": 100,
+      "current_health": 100,
+      "source_ammo": 50,
+      "current_ammo": 1,
+      "ammo_hard_minimum": 1,
+      "planner_future_done_before_drain": true,
+      "planner_status": "completed",
+      "planner_answer_eligible": true,
+      "answer": {
+        "action": "stale"
+      },
+      "monitor_disposition": "soft_change",
+      "invalidation_reason": null,
+      "terminal": {
+        "event": "terminal",
+        "id": "cover-a08",
+        "status": "completed",
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        }
+      },
+      "final_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "READY_FOR_ACTION_VALIDITY",
+        "reason": "planner_complete_and_policy_current_requires_fresh_action_check",
+        "planner_terminal": {
+          "turn_id": "turn-a08",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 439534376695500
+        },
+        "policy_invalidation": null,
+        "controller_decided_ns": 439534376695600,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": null
+      },
+      "incoming_empty_after_drain": true,
+      "events": [
+        {
+          "event": "planner_thread_started"
+        },
+        {
+          "event": "planner_turn_started",
+          "thread_id": "thread-a08"
+        },
+        {
+          "event": "typed_observation_enqueued",
+          "sequence": 2,
+          "ammo": 1
+        },
+        {
+          "event": "matching_terminal_enqueued",
+          "status": "completed"
+        },
+        {
+          "event": "planner_turn_completed",
+          "turn_id": "turn-a08"
+        },
+        {
+          "event": "planner_future_completed",
+          "answer_eligible": true
+        },
+        {
+          "event": "future_done_checked",
+          "done": true
+        },
+        {
+          "event": "queue_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 2,
+          "id": null,
+          "status": null,
+          "release": null
+        },
+        {
+          "event": "actual_monitor_received",
+          "sequence": 2,
+          "future_done": true
+        },
+        {
+          "event": "actual_monitor_disposition",
+          "reason": null,
+          "requires_new_decision": false,
+          "grants_input_authority": false
+        },
+        {
+          "event": "queue_dequeued",
+          "row_event": "terminal",
+          "sequence": null,
+          "id": "cover-a08",
+          "status": "completed",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        },
+        {
+          "event": "completed_terminal_validated",
+          "status": "completed",
+          "verified_empty": true
+        },
+        {
+          "event": "completed_answer_read",
+          "answer_eligible": true,
+          "answer": {
+            "action": "stale"
+          }
+        },
+        {
+          "event": "final_admission",
+          "status": "READY_FOR_ACTION_VALIDITY",
+          "reason": "planner_complete_and_policy_current_requires_fresh_action_check",
+          "input_authority_admitted": false
+        }
+      ]
+    },
+    {
+      "case": "zero-ammo-completed-future",
+      "source_health": 100,
+      "current_health": 100,
+      "source_ammo": 50,
+      "current_ammo": 0,
+      "ammo_hard_minimum": 1,
+      "planner_future_done_before_drain": true,
+      "planner_status": "completed",
+      "planner_answer_eligible": true,
+      "answer": {
+        "action": "stale"
+      },
+      "monitor_disposition": "hard_invalidation",
+      "invalidation_reason": "ammo:below_hard_minimum",
+      "terminal": {
+        "event": "terminal",
+        "id": "cover-a08",
+        "status": "completed",
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        }
+      },
+      "final_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "turn-a08",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 439534376817700
+        },
+        "policy_invalidation": {
+          "event": "paired_signal_invalidation",
+          "reason": "ammo:below_hard_minimum",
+          "sequence": 2,
+          "signals": {
+            "health": {
+              "status": "observed",
+              "signal_id": "health",
+              "value": 100,
+              "sequence": 2,
+              "capture_ns": 2000000,
+              "binding": {
+                "surface_id": "synthetic-v39-ammo-completion-drain"
+              }
+            },
+            "ammo": {
+              "status": "observed",
+              "signal_id": "ammo",
+              "value": 0,
+              "sequence": 2,
+              "capture_ns": 2000000,
+              "binding": {
+                "surface_id": "synthetic-v39-ammo-completion-drain"
+              }
+            }
+          },
+          "outcomes": {
+            "health": {
+              "format": "observable-signal-guard-outcome-v1",
+              "guard_id": "map01-1",
+              "signal_id": "health",
+              "status": "UNCHANGED",
+              "reason": "signal_unchanged",
+              "source_value": 100,
+              "current_value": 100,
+              "hard_minimum": 88,
+              "source_age_ms": 1.0,
+              "keep_existing_policy": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "may_only_preserve_or_reduce_existing_authority": true,
+              "semantic_change_identified": false,
+              "task_success_verified": false
+            },
+            "ammo": {
+              "format": "observable-signal-guard-outcome-v1",
+              "guard_id": "map01-1-ammo",
+              "signal_id": "ammo",
+              "status": "HARD_INVALIDATED",
+              "reason": "below_hard_minimum",
+              "source_value": 50,
+              "current_value": 0,
+              "hard_minimum": 1,
+              "source_age_ms": 1.0,
+              "keep_existing_policy": false,
+              "requires_new_decision": true,
+              "grants_input_authority": false,
+              "may_only_preserve_or_reduce_existing_authority": true,
+              "semantic_change_identified": true,
+              "task_success_verified": false
+            }
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-1-ammo",
+            "signal_id": "ammo",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 50,
+            "current_value": 0,
+            "hard_minimum": 1,
+            "source_age_ms": 1.0,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "outcome_evaluated_ns": 439534376809900,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "monitor_received_ns": 439534376795000
+        },
+        "controller_decided_ns": 439534376817800,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": null
+      },
+      "incoming_empty_after_drain": true,
+      "events": [
+        {
+          "event": "planner_thread_started"
+        },
+        {
+          "event": "planner_turn_started",
+          "thread_id": "thread-a08"
+        },
+        {
+          "event": "typed_observation_enqueued",
+          "sequence": 2,
+          "ammo": 0
+        },
+        {
+          "event": "matching_terminal_enqueued",
+          "status": "completed"
+        },
+        {
+          "event": "planner_turn_completed",
+          "turn_id": "turn-a08"
+        },
+        {
+          "event": "planner_future_completed",
+          "answer_eligible": true
+        },
+        {
+          "event": "future_done_checked",
+          "done": true
+        },
+        {
+          "event": "queue_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 2,
+          "id": null,
+          "status": null,
+          "release": null
+        },
+        {
+          "event": "actual_monitor_received",
+          "sequence": 2,
+          "future_done": true
+        },
+        {
+          "event": "actual_monitor_disposition",
+          "reason": "ammo:below_hard_minimum",
+          "requires_new_decision": true,
+          "grants_input_authority": false
+        },
+        {
+          "event": "queue_dequeued",
+          "row_event": "terminal",
+          "sequence": null,
+          "id": "cover-a08",
+          "status": "completed",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        },
+        {
+          "event": "completed_terminal_validated",
+          "status": "completed",
+          "verified_empty": true
+        },
+        {
+          "event": "completed_answer_read",
+          "answer_eligible": true,
+          "answer": {
+            "action": "stale"
+          }
+        },
+        {
+          "event": "final_admission",
+          "status": "REJECTED_POLICY_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "input_authority_admitted": false
+        }
+      ]
+    }
+  ],
+  "scope": "Frozen current-main queue-drain, paired monitor, planner adapter, and final-admission composition with synthetic observations and deterministic fakes only."
+}

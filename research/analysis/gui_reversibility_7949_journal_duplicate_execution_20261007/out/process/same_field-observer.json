@@ -1,0 +1,15 @@
+{
+  "case_id": "same_field",
+  "stage": "observer",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/taka/Documents/Codex/2026-09-19/new-chat-7/agent-interface-7949-journal-a01/research/analysis/gui_reversibility_7949_journal_a01_20261007/observer.py",
+    "/Users/taka/Documents/Codex/2026-09-19/new-chat-7/agent-interface-7949-journal-a01/research/analysis/gui_reversibility_7949_journal_a01_20261007/out/db/same_field.sqlite",
+    "same_field"
+  ],
+  "exit": 0,
+  "stdout": "{\"case_id\":\"same_field\",\"certificate\":{\"agent_field\":\"agent_value\",\"agent_original\":\"original\",\"base_revision\":0,\"baseline_state\":{\"agent_value\":\"original\",\"external_value\":\"old\",\"revision\":0}},\"journal\":[{\"after_value\":\"agent-external\",\"before_value\":\"original\",\"field\":\"agent_value\",\"revision\":1,\"seq\":1}],\"state\":{\"agent_value\":\"agent-external\",\"external_value\":\"old\",\"revision\":1}}\n",
+  "stderr": "",
+  "started_unix_ns": 1791377359175279000,
+  "ended_unix_ns": 1791377359206333000
+}

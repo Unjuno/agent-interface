@@ -1,0 +1,38 @@
+{
+  "experiment": "issue-59-release-all-baseexception-a01",
+  "frozen_at": "2026-10-05",
+  "question": "Does ExecutorV13 emit a failed terminal with release-batch custody when backend.release_all raises a custody-bearing BaseException after successful execution?",
+  "hypothesis": "The pre-fix parent exits its worker without a terminal and leaves the active intent occupied; the candidate emits exactly one failed terminal with the attached delivery ledger, clears the active intent, then propagates the same KeyboardInterrupt.",
+  "minimum_test": "Load executor_v13.py from each pinned Git commit while verifying its direct runtime dependencies have identical hashes. Run a real ExecutorV13 worker thread with a no-op successful execute and a synthetic release_all that raises KeyboardInterrupt carrying one unknown row. Capture terminal events and threading.excepthook.",
+  "decision": {
+    "pass": "Baseline has no terminal and an occupied active intent; candidate has exactly one failed terminal with exact custody, verified=false, a cleared active intent, and one propagated KeyboardInterrupt.",
+    "fail": "Any expected field or worker outcome differs.",
+    "scope": "Synthetic ExecutorV13/release sink construction only; no OS input, game, GUI, model, or live allocation."
+  },
+  "competing_explanation": "The exception may arise from another finalization callback or the terminal event sink; this test isolates only backend.release_all after a successful step.",
+  "uncertainty": "The synthetic backend carries an exact custody attribute but does not model physical release or durable sink persistence. WSLc is not installed on this host; execution is Windows CPU-only.",
+  "sources": {
+    "baseline_commit": "61e5e877101f3182f64986406a5552917d554446",
+    "baseline_executor_sha256": "7829182db13a6cdf8139593863f4d693bfe79eeaae16be48ffbbc6c8b4a8df26",
+    "candidate_commit": "636f61941e3da887a1641e4399c2f0e3373a7974",
+    "candidate_executor_sha256": "d30704a832f07800ed613be6fd48c4d4369c818437793fa4381adb09bd40302b",
+    "executor_path": "research/live_control/executor_v13.py",
+    "dependency_sha256": {
+      "research/live_control/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+      "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+      "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
+    },
+    "dependency_paths": [
+      "research/live_control/executor_v12.py",
+      "research/live_control/executor_v3.py",
+      "research/live_control/lease_release_v1.py"
+    ]
+  },
+  "attempts": {
+    "baseline_reference": 1,
+    "candidate": 1
+  },
+  "retries": 0,
+  "network_in_runner": false,
+  "game_model_gui_or_native_input": false
+}

@@ -1,0 +1,43 @@
+{
+  "allocation": "6501-WINDOWS-READFILE-T01-01a0ff58-20261003",
+  "c01_dependencies": [
+    {
+      "bytes": 861984,
+      "name": "kernel32.dll",
+      "path": "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+      "sha256": "4f7e85e01b521aa002692b1e868bee9a3a9ba19b815ce5d16d2e959fb0289feb"
+    },
+    {
+      "bytes": 6985520,
+      "name": "python312.dll",
+      "path": "C:\\Users\\PUBLIC_USER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python312.dll",
+      "sha256": "c1ce6d603041759061139f482c4b90c4ac9db676e30abf52fda66a794aab1bd0"
+    },
+    {
+      "bytes": 1377512,
+      "name": "ucrtbase.dll",
+      "path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+      "sha256": "5c52e3a303baaac0e0af8bd9b96134993da34bc9d834a31ef37e1d2cdc7fe192"
+    }
+  ],
+  "claim": 5970043999,
+  "comparative_invocations": 3,
+  "created_utc": "2026-10-03T14:26:45.323182+00:00",
+  "inputs": {
+    "outputs/ownedwinpipe6501-t01/PLAN.md": "ea7a3999b8f7d1766a493da4f3e3cbc050cfd83ede6d7277fd438806e71af339",
+    "work/ownedwinpipe6501-t01/audit.py": "16188ed33ed296d9b3182a38e965430f26830ebf9c759aa4343a9b8d34143108",
+    "work/ownedwinpipe6501-t01/probe.py": "ae2866b4033b75c8e397eeb26ef351db07d595818be2a679732a26a4841c9ce8",
+    "work/ownedwinpipe6501-t01/supervisor.py": "034cb324afaa56062a0f7d628054577cb904bac13f8ffc155609c34085e6b7b5"
+  },
+  "order": [
+    "normal_D",
+    "wrapper_cancel",
+    "native_cancel"
+  ],
+  "outer_seconds": 8,
+  "python_binary": {
+    "path": "C:\\Users\\PUBLIC_USER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "sha256": "372c2eae555b344520bf147be0096e009069aeca4e7f78d6aecea6d53158056a"
+  },
+  "worker": "01a0ff58-6178-7ea1-a6d5-cf09260b91e3"
+}

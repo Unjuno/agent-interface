@@ -1,0 +1,16 @@
+python --version
+Python 3.12.10
+python -B -m unittest -v test_audit_v2 (exit 0)
+test_joint_distribution_change_is_rejected (test_audit_v2.RawAuditV2MutationTests.test_joint_distribution_change_is_rejected) ... ok
+test_missing_probability_mass_is_rejected (test_audit_v2.RawAuditV2MutationTests.test_missing_probability_mass_is_rejected) ... ok
+test_source_relabel_is_rejected (test_audit_v2.RawAuditV2MutationTests.test_source_relabel_is_rejected) ... ok
+test_target_relabel_is_rejected (test_audit_v2.RawAuditV2MutationTests.test_target_relabel_is_rejected) ... ok
+test_unmodified_record_passes (test_audit_v2.RawAuditV2MutationTests.test_unmodified_record_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.006s
+
+OK
+candidate invocations=0
+started_utc=2026-10-04T17:58:16.7461670Z
+finished_utc=2026-10-04T17:58:17.2409353Z

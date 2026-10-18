@@ -14,6 +14,8 @@ class DeadlineTests(unittest.TestCase):
         self.backend.owner = SimpleNamespace(active=('field',[0,0]), deadline=11_000_000)
         self.backend.owner._focus_within_target = Mock(return_value=True)
         self.backend.emissions = 0
+        self.backend.held_keycodes = {}
+        self.backend._keycode = Mock(side_effect={'CTRL':1,'a':2}.__getitem__)
         self.backend.preflight = Mock()
         # This fixture isolates expiry at physical emission, without an X server.
         self.backend._refresh_keyboard_mapping = Mock(return_value=False)
@@ -36,6 +38,56 @@ class DeadlineTests(unittest.TestCase):
             emit.assert_not_called()
             self.backend.key_state('CTRL', False)
             emit.assert_called_once_with('CTRL', False)
+
+    def test_focus_query_consuming_deadline_never_emits_keypress(self):
+        def delayed_focus():
+            self.now = 11_000_000
+            return True
+        self.backend.owner._focus_within_target.side_effect = delayed_focus
+        self.backend.d = SimpleNamespace(sync=Mock())
+        with patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emit:
+            with self.assertRaisesRegex(X11BackendError, 'expired'):
+                self.backend.key_state('a', True)
+            emit.assert_not_called()
+        self.assertEqual(self.backend.held_keycodes, {})
+
+    def test_key_mapping_consuming_deadline_never_emits_keypress(self):
+        def delayed_mapping(key):
+            self.now = 11_000_000
+            return 2
+        self.backend._keycode.side_effect = delayed_mapping
+        self.backend.d = SimpleNamespace(sync=Mock())
+        with patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emit:
+            with self.assertRaisesRegex(X11BackendError, 'expired'):
+                self.backend.key_state('a', True)
+            emit.assert_not_called()
+        self.assertEqual(self.backend.held_keycodes, {})
+
+    def test_pointer_query_consuming_deadline_never_emits_buttonpress(self):
+        self.backend.owner.check = Mock(return_value={'point':[20,30]})
+        self.backend.owner.moved_point = [20,30]
+        self.backend.held_buttons = set()
+        self.backend.d = SimpleNamespace(sync=Mock())
+        def delayed_pointer():
+            self.now = 11_000_000
+            return SimpleNamespace(root_x=20, root_y=30)
+        self.backend.root = SimpleNamespace(query_pointer=delayed_pointer)
+        with patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emit:
+            with self.assertRaisesRegex(X11BackendError, 'expired'):
+                self.backend.pointer_button('left', True)
+            emit.assert_not_called()
+        self.assertEqual(self.backend.held_buttons, set())
+
+    def test_expired_button_release_does_not_query_focus_or_block_cleanup(self):
+        self.now = 11_000_000
+        self.backend.held_buttons = {'left'}
+        self.backend.d = SimpleNamespace(sync=Mock())
+        self.backend.owner.check = Mock(side_effect=AssertionError('release must not re-admit'))
+        with patch('runtime.backends.x11_v1.backend.xtest.fake_input') as emit:
+            self.backend.pointer_button('left', False)
+            emit.assert_called_once()
+        self.assertEqual(self.backend.held_buttons, set())
+        self.backend.owner._focus_within_target.assert_not_called()
 
     def test_focus_loss_after_modifier_releases_without_following_key(self):
         emitted = []

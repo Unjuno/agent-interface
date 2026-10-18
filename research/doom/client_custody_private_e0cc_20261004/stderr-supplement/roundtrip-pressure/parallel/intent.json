@@ -1,0 +1,11 @@
+{
+  "utc": "2026-10-03T22:05:36.093695+00:00",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-c",
+    "import sys,json\nrows=[json.loads(sys.stdin.readline()) for _ in range(4)]\nfor index,row in enumerate(reversed(rows)):\n sys.stderr.buffer.write(bytes([65+index])*307200)\n sys.stderr.buffer.flush()\n print(json.dumps({\"id\":row[\"id\"],\"result\":row[\"params\"]}),flush=True)\n"
+  ],
+  "requests": 4,
+  "stderr_bytes_per_request": 307200,
+  "decision": "all four exact responses; 1228800 drained bytes; final tail 65536 D bytes; reader/process/FD retirement required"
+}

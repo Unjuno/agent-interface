@@ -1,0 +1,168 @@
+{
+  "admission": {
+    "admitted_ns": 197220933604637,
+    "event": "input_admission",
+    "input_ack_ns": 197220933778694,
+    "intent_token": "alias-cleanup-a01",
+    "key": "a",
+    "valid_until_ns": 197240933507835
+  },
+  "cleanup": {
+    "owner_closed": true,
+    "owner_stopped": true,
+    "owner_thread_alive": false,
+    "terminal_release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 197221086222847,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 197221085699400,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 197221085992855
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            197221085699400,
+            197221086222847
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 197240933507835,
+      "verified": true,
+      "verified_ns": 197221087123524
+    },
+    "xvfb_exit": 0
+  },
+  "close_returned": true,
+  "display": ":131",
+  "errors": [],
+  "keycodes": {
+    "A": 38,
+    "a": 38
+  },
+  "observations": {
+    "close_needed_after_refusal": true,
+    "key_event_after_refusal": null,
+    "press_event": {
+      "keycode": 38,
+      "observed_ns": 197220933955603,
+      "type": 2,
+      "window": 2097152
+    },
+    "release_event_after_close": {
+      "keycode": 38,
+      "observed_ns": 197221087722081,
+      "type": 3,
+      "window": 2097152
+    },
+    "server_down_after_close": false,
+    "server_down_after_refusal": true,
+    "server_down_before_alias": true
+  },
+  "owner_id": "280fe8c36dfc434ea238f4ceda380465",
+  "owner_records_after_close": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 197221086222847,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 197221085699400,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 197221085992855
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            197221085699400,
+            197221086222847
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "close",
+      "valid_until_ns": 197240933507835,
+      "verified": true,
+      "verified_ns": 197221087123524
+    }
+  ],
+  "owner_records_before_close": [],
+  "owner_thread_started": true,
+  "query_keymap_calls": [
+    {
+      "returned_ns": 197220934040082,
+      "role": "observer_or_other",
+      "started_ns": 197220933966263
+    },
+    {
+      "returned_ns": 197220934238276,
+      "role": "observer_or_other",
+      "started_ns": 197220934145906
+    },
+    {
+      "returned_ns": 197221085685043,
+      "role": "observer_or_other",
+      "started_ns": 197221085415237
+    },
+    {
+      "returned_ns": 197221086217907,
+      "role": "observer_or_other",
+      "started_ns": 197221085994686
+    },
+    {
+      "returned_ns": 197221087115605,
+      "role": "observer_or_other",
+      "started_ns": 197221086822153
+    },
+    {
+      "returned_ns": 197221088170966,
+      "role": "observer_or_other",
+      "started_ns": 197221087728931
+    }
+  ],
+  "refusal": {
+    "message": "distinct resolved keycodes required for up_batch",
+    "raised": true,
+    "type": "ValueError"
+  },
+  "schema": "release-batch-alias-owner-cleanup-a01-raw-v1",
+  "scope": "one synthetic alias refusal and owner-close cleanup on private Xvfb; no game/model/physical input",
+  "status": "CANDIDATE_COMPLETE",
+  "xvfb_pid": 7
+}

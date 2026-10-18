@@ -1,0 +1,47 @@
+{
+  "checks": [
+    "schema identity",
+    "source commit matches freeze",
+    "source digest matches freeze",
+    "probe digest matches freeze",
+    "exact four frozen cases retained",
+    "cancelled_neutral: baseline disposition",
+    "cancelled_neutral: candidate disposition",
+    "cancelled_neutral: planner interrupt and cancel precede terminal validation",
+    "cancelled_neutral: cancel targets matched cover id",
+    "cancelled_neutral: planner interrupt and cancel precede terminal validation",
+    "cancelled_neutral: cancel targets matched cover id",
+    "completed_neutral: baseline disposition",
+    "completed_neutral: candidate disposition",
+    "completed_neutral: planner interrupt and cancel precede terminal validation",
+    "completed_neutral: cancel targets matched cover id",
+    "completed_neutral: planner interrupt and cancel precede terminal validation",
+    "completed_neutral: cancel targets matched cover id",
+    "completed_nonempty: baseline disposition",
+    "completed_nonempty: candidate disposition",
+    "completed_nonempty: planner interrupt and cancel precede terminal validation",
+    "completed_nonempty: cancel targets matched cover id",
+    "completed_nonempty: planner interrupt and cancel precede terminal validation",
+    "completed_nonempty: cancel targets matched cover id",
+    "failed_neutral: baseline disposition",
+    "failed_neutral: candidate disposition",
+    "failed_neutral: planner interrupt and cancel precede terminal validation",
+    "failed_neutral: cancel targets matched cover id",
+    "failed_neutral: planner interrupt and cancel precede terminal validation",
+    "failed_neutral: cancel targets matched cover id",
+    "three outcome corruption controls rejected"
+  ],
+  "checks_passed": 30,
+  "disposition": "CURRENT_HELPER_REJECTS_COMPLETED_NEUTRAL; CANDIDATE_ACCEPTS_ONLY_CANCELLED_OR_COMPLETED_WITH_VERIFIED_EMPTY_RELEASE",
+  "limits": [
+    "AST-extracted helper and test doubles only",
+    "no live experiment or race-frequency estimate"
+  ],
+  "mutation_controls_rejected": {
+    "drop_safe_completed": true,
+    "promote_failed_neutral": true,
+    "promote_nonempty_completed": true
+  },
+  "result_sha256": "c1f38fa8d0225e36f67bc241151d2081dd22a965f398045156b693c3ff1fe974",
+  "schema": "v39-cover-terminal-race-audit-a01-v1"
+}

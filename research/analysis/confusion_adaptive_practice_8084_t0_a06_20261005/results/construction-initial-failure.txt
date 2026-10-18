@@ -1,0 +1,4 @@
+Command: python.exe -m unittest -v research/analysis/confusion_adaptive_practice_8084_t0_a06_20261005/test_method.py
+Runtime: CPython 3.12.10, Windows x64
+Result: 2 tests passed; `test_candidate_has_no_scoring_or_class_labels` failed because its forbidden substring `rates` also matched the candidate's legitimate empirical-rate variable. Candidate, generator, and auditor were not invoked.
+Disposition: construction-test defect only. The assertion was narrowed to hidden truth/schema identifiers; this file preserves the first failure. The corrected construction suite is a separate check below.

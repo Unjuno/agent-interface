@@ -1,0 +1,11 @@
+--- a/research/live_control/adaptive_acquisition_caller_v3.py
++++ b/research/live_control/adaptive_acquisition_caller_v3.py
+@@ -311,7 +311,7 @@
+                       "model_wait_ns": (sum(row["wait_ns"] for row in attempts)
+                           if wait_coverage == len(attempts) else None),
+                       "model_wait_coverage": wait_coverage,
+-                      "cost": sum(costs) if len(costs) == len(model_calls) else None,
++                      "cost": sum(costs) if len(costs) == len(attempts) else None,
+                       "cached_input_semantics": "subset of input_tokens; never added to input total"},
+                   "phase_timings": phases,
+                   "input_authority": ("none" if execution_progress is not None and

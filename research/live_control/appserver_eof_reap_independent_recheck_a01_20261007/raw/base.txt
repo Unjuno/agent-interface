@@ -1,0 +1,80 @@
+test_close_kills_sigterm_ignoring_descendant_of_live_leader (__main__.AppServerProcessTreeCleanupTests.test_close_kills_sigterm_ignoring_descendant_of_live_leader) ... ok
+test_close_kills_sigterm_ignoring_descendant_without_inherited_pipes (__main__.AppServerProcessTreeCleanupTests.test_close_kills_sigterm_ignoring_descendant_without_inherited_pipes) ... ok
+test_close_reaps_eof_leader_without_prior_poll (__main__.AppServerProcessTreeCleanupTests.test_close_reaps_eof_leader_without_prior_poll) ... ERROR
+test_close_retires_inherited_stdout_descendant_after_leader_exit (__main__.AppServerProcessTreeCleanupTests.test_close_retires_inherited_stdout_descendant_after_leader_exit) ... ok
+test_signal_reaps_exit_race_then_observes_absent_group (__main__.AppServerProcessTreeCleanupTests.test_signal_reaps_exit_race_then_observes_absent_group) ... ERROR
+test_signal_reaps_exited_leader_and_still_signals_descendants (__main__.AppServerProcessTreeCleanupTests.test_signal_reaps_exited_leader_and_still_signals_descendants) ... FAIL
+test_signal_retains_permission_failure_for_live_leader (__main__.AppServerProcessTreeCleanupTests.test_signal_retains_permission_failure_for_live_leader) ... ok
+test_signal_retains_persistent_permission_failure_after_exit (__main__.AppServerProcessTreeCleanupTests.test_signal_retains_persistent_permission_failure_after_exit) ... FAIL
+
+======================================================================
+ERROR: test_close_reaps_eof_leader_without_prior_poll (__main__.AppServerProcessTreeCleanupTests.test_close_reaps_eof_leader_without_prior_poll)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/frozen_test.py", line 23, in test_close_reaps_eof_leader_without_prior_poll
+    client.close(timeout=1)
+    ~~~~~~~~~~~~^^^^^^^^^^^
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/source/codex_app_server_client_v2.py", line 172, in close
+    self._signal_owned_group(signal.SIGTERM)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/source/codex_app_server_client_v2.py", line 150, in _signal_owned_group
+    os.killpg(self.process.pid, signum)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_signal_reaps_exit_race_then_observes_absent_group (__main__.AppServerProcessTreeCleanupTests.test_signal_reaps_exit_race_then_observes_absent_group)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/frozen_test.py", line 50, in test_signal_reaps_exit_race_then_observes_absent_group
+    client._signal_owned_group(signal.SIGTERM)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/source/codex_app_server_client_v2.py", line 150, in _signal_owned_group
+    os.killpg(self.process.pid, signum)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1245, in _execute_mock_call
+    raise result
+PermissionError: unreaped leader
+
+======================================================================
+FAIL: test_signal_reaps_exited_leader_and_still_signals_descendants (__main__.AppServerProcessTreeCleanupTests.test_signal_reaps_exited_leader_and_still_signals_descendants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/frozen_test.py", line 43, in test_signal_reaps_exited_leader_and_still_signals_descendants
+    client._signal_owned_group(signal.SIGTERM)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/source/codex_app_server_client_v2.py", line 150, in _signal_owned_group
+    os.killpg(self.process.pid, signum)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1247, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/frozen_test.py", line 41, in signal_group
+    self.assertTrue(client.process.poll.called)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_signal_retains_persistent_permission_failure_after_exit (__main__.AppServerProcessTreeCleanupTests.test_signal_retains_persistent_permission_failure_after_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/eof-reap-base-0_wao2om/frozen_test.py", line 69, in test_signal_retains_persistent_permission_failure_after_exit
+    self.assertIs(raised.exception, error)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PermissionError('first denial') is not PermissionError('surviving group denied')
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.812s
+
+FAILED (failures=2, errors=2)

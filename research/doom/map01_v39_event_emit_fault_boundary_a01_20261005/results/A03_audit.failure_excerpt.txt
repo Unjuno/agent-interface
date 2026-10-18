@@ -1,0 +1,7 @@
+Captured failure excerpt from independent A03 audit output; exit receipt is A03_auditor_exit.txt. This excerpt omits the large raw-row repr on the assertion line.
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/src/audit.py", line 16, in <module>
+    for key,n in b.items(): assert row['before_retry'][key]['rows']==n
+AssertionError: after_first_append before_retry events.jsonl expected 1; observed 0; first_error="[Errno 2] No such file or directory: 'a'"
+audit_exit=1

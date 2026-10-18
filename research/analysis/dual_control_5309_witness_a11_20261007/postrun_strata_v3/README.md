@@ -1,0 +1,7 @@
+# A11 post-run strata successor V3
+
+This is a separate, one-shot read-only diagnostic allocation created after review found that V2's source/freeze/result provenance was rewritten after a completion had already been recorded. The pre-correction V2 package is preserved in Git commit `b846b2867873883ccc4ecc3c9e1de107412f4f1c`; the subsequent V2 rewrite is commit `90e62c7e10d5dcf8be8c48f5cb1f944114cad1cc`. Both commits remain ancestors of this branch. V3 does not adjudicate whether either V2 version executed as claimed and does not retroactively repair V2.
+
+V3 reads only the frozen A11 candidate input, choices, raw rows, and oracle. It does not run the candidate, environment, or formal auditor. The diagnostic allocation ID is distinct from the source workload allocation. Its sole purpose is to reconstruct the descriptive strata from retained bytes and keep that post-hoc result separate from A11's formal `FAIL_AUDIT_MISSPECIFIED_STRATUM_GATE`.
+
+See `FREEZE.md` for H/T/D/C/U, exact source hashes, and the one permitted command. The single invocation produced matching stdout/result bytes with a 264-row reconstruction payload, but the outer zsh wrapper then failed while capturing the process status. Per the frozen stop rule, the terminal allocation disposition is `STOP_WRAPPER_EXIT_STATUS_CAPTURE_FAILED`; the embedded payload is retained but is not promoted to a V3 PASS. No retry was made. See `RUN_RECORD.md` and `DISPOSITION.md`.

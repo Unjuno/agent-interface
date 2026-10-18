@@ -1,0 +1,8 @@
+Construction checks (before source freeze):
+  python -B -m unittest -v test_construction.py
+
+Frozen allocation, single candidate call then single independent audit call:
+  python -B candidate.py fixture.json results/candidate-output.json
+  python -B auditor.py fixture.json results/candidate-output.json results/audit.json
+
+Candidate retries: 0. Auditor retries: 0. Do not rerun either formal command after source freeze.

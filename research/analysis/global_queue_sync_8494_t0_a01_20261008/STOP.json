@@ -1,0 +1,20 @@
+{
+  "allocation": "Issue #8494 T0 A01",
+  "disposition": "STOP_CONTAINER_CONTENT_STORE_UNAVAILABLE",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "container_created": false,
+  "image_pull_attempted": false,
+  "prune_or_delete_attempted": false,
+  "engine_observation": {
+    "docker_client": "29.5.2",
+    "docker_server": "29.4.0",
+    "docker_info": "responded; Linux server, 10 CPUs, 16808173568 bytes memory",
+    "docker_image_inspect": "failed before image identity could be pinned",
+    "docker_image_list": "failed before image inventory could be read",
+    "error": "containerd content-store blob open returned operation not supported"
+  },
+  "fallback": "No host execution: Issue #8494 requires isolated container for this CPU-only T0; no alternate container runtime was available in PATH.",
+  "formal_source_frozen": false,
+  "construction_only": true
+}

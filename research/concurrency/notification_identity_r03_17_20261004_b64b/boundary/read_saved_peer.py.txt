@@ -1,0 +1,99 @@
+"""Saved-data audit only. Never imports or executes recovered source/helpers."""
+import base64
+import copy
+import gzip
+import hashlib
+import json
+from pathlib import Path
+
+
+def require(value, label):
+    if not value:
+        raise AssertionError(label)
+
+
+def check_rows(rows):
+    require(len(rows) == 3, 'complete two-arm domain plus summary')
+    old, revised, summary = rows
+    require(old['arm'] == 'baseline' and revised['arm'] == 'candidate', 'arm order')
+    for row in (old, revised):
+        require(row['threads_retired'] is True and row['errors'] == [], 'retirement')
+        require(row['actual_source_read_used'] is True, 'reader observation')
+        require(row['remaining'] == [], 'remainder')
+        require([x['message']['params']['tag'] for x in row['received_records']] == ['new', 'marker'], 'reader order')
+        first = row['trace'][0]
+        require(first['event'] == 'condition_wait' and first['stage'] == 'predicate-release', 'public nested release')
+        require(first['thread'] == 'outer' and first['queued'] == ['old'], 'initial custody')
+        require(row['trace'][1] == {'event': 'predicate_return', 'queued': ['new'], 'selected': 'old'}, 'fresh queued before return')
+    require(old['returns'] == {'consumer': 'old', 'nested': 'marker', 'outer': 'old'}, 'baseline duplicate')
+    require(old['duplicate_consumed_identity'] is True, 'baseline identity observation')
+    require(revised['returns'] == {'consumer': 'old', 'nested': 'marker', 'outer': 'new'}, 'R02 partition')
+    require(revised['duplicate_consumed_identity'] is False, 'R02 identity observation')
+    require(revised['predicate_visits'] == ['old', 'new'], 'R02 callback order')
+    require(revised['queued_at_observation'] == ['new'], 'queued fresh')
+    require(revised['fallback_entered'] is True, 'wait entered')
+    require(len(revised['trace']) == 4, 'complete trace')
+    wait = revised['trace'][2]
+    require(wait['event'] == 'condition_wait' and wait['stage'] == 'post-predicate', 'wait after callback')
+    require(wait['thread'] == 'outer' and wait['queued'] == ['new'], 'eligible queued at wait')
+    require(revised['trace'][3] == {'event': 'observer_extra_notify', 'queued': ['new']}, 'extra wake')
+    require(summary['all_threads_retired'] is True and summary['arms'] == 2, 'summary')
+
+
+def main():
+    root = Path(__file__).resolve().parent
+    raw = (root / 'peer/packet.json.gz').read_bytes()
+    require(len(raw) == 34342 and hashlib.sha256(raw).hexdigest() == 'cf596dcf0c12ea9384bc6c9db332c51e0c700be1508c7b2500cc524887503999', 'transport pin')
+    decoded = gzip.decompress(raw)
+    require(hashlib.sha256(decoded).hexdigest() == 'dbb94020be9dbfab52aa9f2c5897ccb00430257195809ba6a71b6b79d44b7efe', 'packet pin')
+    packet = json.loads(decoded)
+    require(len(packet['members']) == 34, 'all members')
+    members = {}
+    for name, record in packet['members'].items():
+        value = base64.b64decode(record['base64'], validate=True)
+        require(len(value) == record['bytes'] and hashlib.sha256(value).hexdigest() == record['sha256'], 'member pin: ' + name)
+        members[name] = value
+    source = members['source-and-helpers/candidate.py.txt.data']
+    require(source == (root / 'r02.py.txt').read_bytes(), 'own public R02 byte join')
+    require(hashlib.sha1(b'blob ' + str(len(source)).encode() + b'\0' + source).hexdigest() == 'a91c90a9c22d8dc299912afafc661a905a7b6dc5', 'Git blob')
+    result = json.loads(members['public-reentry/RESULT.json'])
+    require(result['exit_code'] == 0 and result['timeout'] is False, 'actual termination')
+    require(result['pid'] == 13076 and result['supervisor_pid'] == 22928, 'receipt identity')
+    require(result['source_pins']['candidate.py.txt'] == hashlib.sha256(source).hexdigest(), 'receipt source')
+    joins = {x['path']: x for x in json.loads(members['PUBLIC_JOINS.json'])}
+    for stream in ('stdout.txt', 'stderr.txt'):
+        path = 'public-reentry/' + stream
+        b = members[path]
+        actual = result['streams'][stream]
+        projection = joins[path]
+        require(len(b) == projection['public_bytes'] and hashlib.sha256(b).hexdigest() == projection['public_sha256'], 'public projection')
+        require(actual['bytes'] == projection['original_bytes'] and actual['sha256'] == projection['original_sha256'], 'original stream join')
+    rows = [json.loads(line) for line in members['public-reentry/stdout.txt'].decode().splitlines()]
+    check_rows(rows)
+    mutations = []
+    for label in ('missing', 'wrong-return', 'wait-without-fresh', 'no-extra-wake', 'unretired'):
+        changed = copy.deepcopy(rows)
+        if label == 'missing':
+            changed.pop()
+        elif label == 'wrong-return':
+            changed[1]['returns']['outer'] = 'old'
+            changed[1]['duplicate_consumed_identity'] = True
+        elif label == 'wait-without-fresh':
+            changed[1]['trace'][2]['queued'] = []
+            changed[1]['queued_at_observation'] = []
+        elif label == 'no-extra-wake':
+            changed[1]['trace'].pop()
+        else:
+            changed[1]['threads_retired'] = False
+            changed[2]['all_threads_retired'] = False
+        try:
+            check_rows(changed)
+        except AssertionError:
+            mutations.append(label)
+        else:
+            raise AssertionError('negative accepted: ' + label)
+    print(json.dumps({'saved_only': True, 'members_verified': 34, 'public_reentry_finding': 'queued-new-before-post-predicate-wait', 'negative_controls_rejected': mutations, 'producer_replays': 0}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

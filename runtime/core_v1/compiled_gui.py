@@ -179,15 +179,32 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
     transitions = []
     observations = []
     critical_events = []
+    unresolved_execution = None
+    execution_attempted = False
+    journal_failure_type = None
 
     def emit(event):
+        nonlocal journal_failure_type
         row = copy.deepcopy(event)
-        journal(row)
         if row["event"] in {"branch_selected", "admission_refused",
-                            "action_terminal", "effect_checked", "runtime_finished"}:
+                            "action_terminal", "effect_checked",
+                            "cancellation_check_failed", "effect_verification_failed",
+                            "runtime_finished"}:
             critical_events.append(row)
+        if journal_failure_type is not None:
+            return
+        try:
+            # Sink mutation cannot rewrite private returned evidence.
+            journal(copy.deepcopy(row))
+        except Exception as error:
+            if not execution_attempted:
+                # Preserve the existing pre-dispatch callback contract.
+                raise
+            journal_failure_type = type(error).__name__
 
     def finish(outcome, reason):
+        if journal_failure_type is not None:
+            outcome, reason = "RUNTIME_FAILED", "execution_failed"
         ended = clock()
         receipt = {
             "format": "compiled-gui-runtime-receipt-v1",
@@ -213,26 +230,56 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         final_event = {"event": "runtime_finished", "outcome": outcome,
                        "reason": reason, "completed_transitions": len(transitions)}
         emit(final_event)
+        if journal_failure_type is not None:
+            # A terminal sink can fail even when another failure already set
+            # RUNTIME_FAILED. Retain both facts and never retry that sink.
+            receipt["outcome"], receipt["reason"] = "RUNTIME_FAILED", "execution_failed"
+            critical_events[-1] = {"event": "runtime_finished", "outcome": "RUNTIME_FAILED",
+                                  "reason": "execution_failed", "completed_transitions": len(transitions)}
+            critical_events.insert(-1, {"event": "journal_write_failed",
+                                       "error_type": journal_failure_type})
         receipt["critical_events"] = critical_events
+        if unresolved_execution is not None:
+            receipt["unresolved_execution"] = unresolved_execution.copy()
         return receipt
 
     def expired():
         return clock() >= deadline
 
-    while True:
-        if adapters["cancelled"]():
+    def cancellation_stop():
+        try:
+            cancelled = adapters["cancelled"]()
+            if type(cancelled) is not bool:
+                raise TypeError("cancellation-state callback must return bool")
+        except Exception as error:
+            emit({"event": "cancellation_check_failed",
+                  "error_type": type(error).__name__})
+            return finish("RUNTIME_FAILED", "execution_failed")
+        if cancelled:
             return finish("SAFE_YIELD", "cancelled")
+        return None
+
+    while True:
+        stopped = cancellation_stop()
+        if stopped is not None:
+            return stopped
         if clock() >= deadline:
             return finish("SAFE_YIELD", "budget_exhausted")
+        observation_started_ns = clock()
         try:
             raw = adapters["observe"]({"state": state,
-                                        "required_predicates": interface["predicates"]})
+                                        "required_predicates": interface["predicates"].copy()})
         except ObservationAssociationChanged:
             # Preserve completed actions and pending effects, without inventing
             # a sequence, usable image, effect verdict, or permission to replay.
             return finish("SAFE_YIELD", "association_changed")
-        observed_ns = clock()
+        except Exception:
+            # Adapter failures (for example an OCR timeout) invalidate this
+            # observation. Return the verified prefix and never infer a branch.
+            return finish("RUNTIME_FAILED", "observation_failed")
         observation, refusal = _observation(raw, interface, previous_sequence)
+        # The parsed observation is privately copied before invoking the supplied clock.
+        observed_ns = clock()
         if refusal:
             return finish("SAFE_YIELD", refusal)
         if (observation["captured_ns"] > observed_ns or
@@ -240,44 +287,70 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                  observation["captured_ns"] < effect_not_before_ns)):
             return finish("SAFE_YIELD", "stale_observation")
         previous_sequence = observation["sequence"]
-        observations.append({key: copy.deepcopy(observation[key]) for key in
+        observations.append({**{key: copy.deepcopy(observation[key]) for key in
                              ("sequence", "captured_ns", "evidence_ref",
-                              "evidence_digest", "predicates")})
+                              "evidence_digest", "predicates")},
+                             "observation_started_ns": observation_started_ns,
+                             "observation_accepted_ns": observed_ns})
         emit({"event": "observation_recorded", "state": state,
               "sequence": observation["sequence"],
               "evidence_ref": observation["evidence_ref"]})
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
 
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
 
         if pending_effect is not None:
+            effect_timing = {
+                "action_id": transitions[-1]["action_id"],
+                "execution_accepted_ns": transitions[-1]["execution_accepted_ns"],
+                "effect_observation_captured_ns": observation["captured_ns"],
+                "effect_observation_accepted_ns": observed_ns,
+                "effect_verification_started_ns": None,
+                "effect_verification_accepted_ns": None,
+            }
             if observation["evidence_digest"] == previous_digest:
                 return finish("SAFE_YIELD", "no_progress")
             expected = pending_effect["expected_effect"]
             observed = observation["predicates"]
-            unknown = any(key not in observed or observed.get(key) == "unknown"
-                          for key in expected)
+            unknown = any(key not in observed or
+                          (observed[key] == "unknown" and
+                           not _matches(observed[key], value))
+                          for key, value in expected.items())
             mismatch = any(not _matches(observed.get(key), value)
                            for key, value in expected.items())
             if unknown or mismatch:
                 status = "unavailable" if unknown else "failed"
                 emit({"event": "effect_checked", "action": pending_effect["action"],
                       "status": status, "evidence_ref": observation["evidence_ref"],
-                      "verifier": "compiled_predicate_condition"})
+                      "verifier": "compiled_predicate_condition", **effect_timing})
                 return finish("SAFE_YIELD", "effect_" + status)
-            effect = adapters["verify_effect"]({
-                "expected_effect": copy.deepcopy(expected),
-                "action": pending_effect["action"],
-                "effect_ref": pending_effect["effect_ref"],
-                "observation": copy.deepcopy(observation),
-            })
+            effect_timing["effect_verification_started_ns"] = clock()
+            try:
+                effect = adapters["verify_effect"]({
+                    "expected_effect": copy.deepcopy(expected),
+                    "action": pending_effect["action"],
+                    "effect_ref": pending_effect["effect_ref"],
+                    "observation": copy.deepcopy(observation),
+                })
+            except Exception as error:
+                effect_timing["effect_verification_accepted_ns"] = clock()
+                emit({"event": "effect_verification_failed", "action": pending_effect["action"],
+                      "error_type": type(error).__name__, **effect_timing})
+                return finish("RUNTIME_FAILED", "effect_unavailable")
             _exact(effect, {"status", "evidence_ref"}, "effect verdict")
+            effect = effect.copy()
             if effect["status"] not in {"succeeded", "failed", "unavailable"}:
                 raise ValueError("typed effect status required")
             if effect["status"] == "succeeded":
                 _name(effect["evidence_ref"], "effect evidence reference")
+            effect_timing["effect_verification_accepted_ns"] = clock()
             emit({"event": "effect_checked", "action": pending_effect["action"],
-                  "status": effect["status"], "evidence_ref": effect["evidence_ref"]})
+                  "status": effect["status"], "evidence_ref": effect["evidence_ref"],
+                  **effect_timing})
+            if journal_failure_type is not None:
+                return finish("RUNTIME_FAILED", "execution_failed")
             if effect["status"] != "succeeded":
                 reason = "effect_failed" if effect["status"] == "failed" else "effect_unavailable"
                 return finish("SAFE_YIELD", reason)
@@ -300,6 +373,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
               "outcome": branch["outcome"], "action": branch["action"],
               "matched_conditions": copy.deepcopy(branch["when"]),
               "evidence_ref": observation["evidence_ref"]})
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
         if branch["outcome"] == "complete":
@@ -309,8 +384,9 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
 
         if len(transitions) >= interface["method"]["max_transitions"]:
             return finish("SAFE_YIELD", "budget_exhausted")
-        if adapters["cancelled"]():
-            return finish("SAFE_YIELD", "cancelled")
+        stopped = cancellation_stop()
+        if stopped is not None:
+            return stopped
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
         action_name = branch["action"]
@@ -328,6 +404,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return finish("SAFE_YIELD", "budget_exhausted")
         _exact(admission, {"eligible", "status", "authorization",
                            "expected_sequence", "valid_until_ns"}, "admission")
+        # Keep returned fields private before validating and calling adapters.
+        admission = admission.copy()
         if type(admission["eligible"]) is not bool:
             raise ValueError("boolean admission eligibility required")
         if not admission["eligible"]:
@@ -345,10 +423,13 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 type(admission["valid_until_ns"]) is not int or
                 admission["valid_until_ns"] <= clock()):
             raise ValueError("fresh revalidated admission required")
-        if adapters["cancelled"]():
-            return finish("SAFE_YIELD", "cancelled")
+        stopped = cancellation_stop()
+        if stopped is not None:
+            return stopped
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
+        execution_attempted = True
+        execution_started_ns = clock()
         terminal = adapters["execute"]({
             "action": action_name,
             "operation": action["operation"],
@@ -356,7 +437,6 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             "expected_sequence": admission["expected_sequence"],
             "valid_until_ns": min(admission["valid_until_ns"], deadline),
         })
-        execution_finished_ns = clock()
         terminal_fields = {"status", "action_id", "effect_ref", "release"}
         delivery = {}
         if type(terminal) is dict and "input_dispatched" in terminal:
@@ -367,18 +447,47 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 raise ValueError("no-input terminal must be an explicit refusal")
             delivery["input_dispatched"] = terminal["input_dispatched"]
         _exact(terminal, terminal_fields, "execution terminal")
+        terminal = terminal.copy()
         release = terminal["release"]
         _exact(release, {"verified", "keys_down", "buttons_down"}, "release")
+        if (type(release["keys_down"]) is not list or
+                type(release["buttons_down"]) is not list):
+            # Execution already occurred. Do not call user container hooks or
+            # turn malformed evidence into a no-input assertion/completion.
+            # Retain only bounded scalar references for external reconciliation;
+            # this receipt does not perform input cleanup or authorize replay.
+            unresolved_execution = {
+                "action": action_name,
+                "reason": "malformed_release_container",
+                "release_verified": False,
+                "input_dispatched": delivery.get("input_dispatched"),
+            }
+            for key in ("action_id", "effect_ref"):
+                value = terminal[key]
+                unresolved_execution[key] = (
+                    value if type(value) is str and 0 < len(value) <= 64 else None)
+            emit({"event": "action_terminal", "action": action_name,
+                  "status": "invalid_release", "action_id": unresolved_execution["action_id"],
+                  "release_verified": False, **delivery})
+            return finish("RUNTIME_FAILED", "execution_failed")
         released = (release["verified"] is True and release["keys_down"] == [] and
                     release["buttons_down"] == [])
+        preinput_refusal = (terminal.get("input_dispatched") is False and
+                            terminal["status"] == "refused" and
+                            release["keys_down"] == [] and release["buttons_down"] == [])
+        # Retain terminal scalars and release decisions before another supplied
+        # callback can mutate the adapter's returned dictionaries or lists.
+        # Sampling after local validation is a conservative effect lower bound.
+        execution_accepted_ns = clock()
         emit({"event": "action_terminal", "action": action_name,
               "status": terminal["status"], "action_id": terminal["action_id"],
-              "release_verified": released, **delivery})
+              "release_verified": released,
+              "execution_started_ns": execution_started_ns,
+              "execution_accepted_ns": execution_accepted_ns, **delivery})
         # An explicitly attested pre-input refusal has no new release receipt.
         # Stop without inventing neutrality, a completed action or a replay.
         # Unknown delivery and reported held input keep the stricter failure path.
-        if (terminal.get("input_dispatched") is False and terminal["status"] == "refused"
-                and release["keys_down"] == [] and release["buttons_down"] == []):
+        if preinput_refusal:
             return finish("SAFE_YIELD", "execution_refused")
         if not released:
             return finish("RUNTIME_FAILED", "execution_failed")
@@ -398,12 +507,16 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             "action_id": terminal["action_id"],
             "effect_ref": terminal["effect_ref"],
             "release_verified": True,
+            "execution_started_ns": execution_started_ns,
+            "execution_accepted_ns": execution_accepted_ns,
         })
         pending_effect = {"action": action_name,
                           "expected_effect": copy.deepcopy(action["expected_effect"]),
                           "effect_ref": terminal["effect_ref"]}
-        effect_not_before_ns = execution_finished_ns
+        effect_not_before_ns = execution_accepted_ns
         previous_digest = observation["evidence_digest"]
         state = branch["next_state"]
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")

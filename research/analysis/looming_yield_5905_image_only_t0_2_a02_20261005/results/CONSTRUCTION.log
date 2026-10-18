@@ -1,0 +1,9 @@
+Construction command (Windows host, preformal only):
+python "package/src/build_fixture.py"
+python -m unittest discover -s "package/src" -p "test_method.py" -v
+
+Construction result: 3/3 PASS:
+test_marker_change_is_in_image ... ok
+test_radius_measurement_monotone ... ok
+test_roundtrip_pgm ... ok
+Runtime 0.034 s. This did not call candidate.main, create candidate raw, run the formal WSLc candidate, or consume the one candidate invocation. Candidate/auditor/retry counts at freeze: 0/0/0.

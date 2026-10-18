@@ -1,0 +1,27 @@
+{
+  "allocation": "PREFERENCE-MANIPULATION-7678-T0-A02-20261005-01",
+  "auditor": {
+    "command": [
+      "/usr/local/bin/python",
+      "-B",
+      "audit.py",
+      "/out/candidate-output.json",
+      "/out/audit-output.json",
+      "/src/FREEZE_A02.json"
+    ],
+    "exit_code": 0
+  },
+  "auditor_invocations": 1,
+  "candidate": {
+    "command": [
+      "/usr/local/bin/python",
+      "-B",
+      "candidate.py",
+      "/out/candidate-output.json"
+    ],
+    "exit_code": 0
+  },
+  "candidate_invocations": 1,
+  "retry_count": 0,
+  "schema": "preference-manipulation-7678-t0-a02-run-v1"
+}

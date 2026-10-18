@@ -1,0 +1,24 @@
+{
+  "schema":"8088-a03-obligation-coverage-v1",
+  "contracts_sha256":"0cdb4f029dcc012c296f0359c37c83e422b7a2eb8ba93502c726b68d9d2304b7",
+  "primary_spec_sha256":"991fd19f0d3e9f218180b441030f7b5ce72eff0774252a95c01e11408af8f043",
+  "obligations":[
+    {"case":"C01_add_work_persists_once","requirement":"Plan launch exactly once in Work after reload","raw_paths":["after.Work"],"predicate":"work_title_count"},
+    {"case":"C01_add_work_persists_once","requirement":"all pre-existing items and both lists unchanged","raw_paths":["before.Work","before.Archive","after.Work","after.Archive"],"predicate":"per_list_id_record_map_equal_after_removing_new_id"},
+    {"case":"C02_add_archive_only","requirement":"Pack kit once in Archive and zero in Work after reload","raw_paths":["after.Archive","after.Work"],"predicate":"destination_counts"},
+    {"case":"C02_add_archive_only","requirement":"all pre-existing items and both lists unchanged","raw_paths":["before.Work","before.Archive","after.Work","after.Archive"],"predicate":"each_list_id_record_map_equal_after_removing_new_id"},
+    {"case":"C03_complete_one_id","requirement":"task-2 completed after reload","raw_paths":["after.Work"],"predicate":"target_completed"},
+    {"case":"C03_complete_one_id","requirement":"task-2 other fields, other items, Archive unchanged","raw_paths":["before.Work","before.Archive","after.Work","after.Archive"],"predicate":"target_noncompletion_fields_and_other_list_maps_equal"},
+    {"case":"C04_rename_preserves_fields","requirement":"task-1 title Draft v2 after reload","raw_paths":["after.Work"],"predicate":"target_title"},
+    {"case":"C04_rename_preserves_fields","requirement":"task-1 ID/completed/due date and all other items/lists unchanged","raw_paths":["before.Work","before.Archive","after.Work","after.Archive"],"predicate":"target_fields_and_other_list_maps_equal"},
+    {"case":"C05_clear_completed_only","requirement":"all completed Work items removed","raw_paths":["after.Work"],"predicate":"no_completed_items"},
+    {"case":"C05_clear_completed_only","requirement":"all active Work items preserved and Archive unchanged","raw_paths":["before.Work","before.Archive","after.Work","after.Archive"],"predicate":"active_id_record_map_and_archive_map_equal"},
+    {"case":"C06_filter_is_view_only","requirement":"Active shows all and only active Work IDs","raw_paths":["views.Active","before.Work"],"predicate":"active_visible_id_set_exact"},
+    {"case":"C06_filter_is_view_only","requirement":"All restores visibility of every Work ID","raw_paths":["views.All","before.Work"],"predicate":"all_visible_id_set_exact"},
+    {"case":"C06_filter_is_view_only","requirement":"task records/counts/Archive unchanged","raw_paths":["before.Work","before.Archive","after.Work","after.Archive"],"predicate":"per_list_id_record_maps_equal"},
+    {"case":"C07_duplicate_title_id_target","requirement":"only task-4 completed; task-2 and all other fields/items unchanged","raw_paths":["before.Work","before.Archive","after.Work","after.Archive"],"predicate":"only_target_completion_delta_by_id"},
+    {"case":"C08_missing_target_unknown","requirement":"UNKNOWN_TARGET, no changes, no guessed target or success","raw_paths":["status","before.Work","before.Archive","after.Work","after.Archive"],"predicate":"status_unknown_and_per_list_maps_identical"}
+  ],
+  "ordering":"List/order changes are not imposed where contracts do not state order. Item content and Work/Archive membership are bound independently by stable ID.",
+  "required_views":["views.Active","views.All"]
+}

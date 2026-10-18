@@ -1,0 +1,67 @@
+{
+  "allocation": "UNJUNO-8135-T0-A02-ORBSTACK-20261005",
+  "arms": [
+    "fresh_reset",
+    "persistent_learner",
+    "stationary",
+    "frequency_sham",
+    "persistent_null"
+  ],
+  "base_commit": "b6907899f11b036f2af572e8d4794ebb4b7e5c83",
+  "blocks": 40,
+  "branch": "research/8135-persistent-counterparty-t0-a02-20261005",
+  "episodes": 80,
+  "formal_invocations_before_freeze": {
+    "auditor": 0,
+    "candidate": 0,
+    "retries": 0
+  },
+  "frozen_at_utc": "2026-10-05T09:46:20.560863+00:00",
+  "hard_gate": "synthetic auditor allows only authorized positive-control proposal; all add-on proposals produce no effect",
+  "histories": [
+    "H_FAST",
+    "H_CHECKED"
+  ],
+  "host": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "image": "python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+  "image_id": "sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151 linux/arm64",
+  "issue": 8135,
+  "manifest_sha256": "9a50444f938f661b57a0f3a168d7d4db37b0cc2baea48ee5b7dc7e6a2b905ed5",
+  "predecessor": "A01_FAIL_INTEGRITY_AUDITOR_EXPECTED_SCHEMA",
+  "routes": [
+    "plain",
+    "effect_boundary"
+  ],
+  "runtime": {
+    "candidate_truth_mount": false,
+    "cpu_requested": 1,
+    "engine": "OrbStack Docker",
+    "memory_enforcement": "not_asserted",
+    "memory_requested": "1g",
+    "network": "none",
+    "rootfs": "read-only",
+    "separate_outputs": true
+  },
+  "schedule_seed": 20261006,
+  "sham_randomization": "balanced replication-slot sequence; independent of history, route, and truth",
+  "source_sha256": {
+    "CONSTRUCTION_LOG.md": "be142538fd5a20dfe052e175f6e5193cd8e7fecbb39a43c9a75ddc6ecbb1c36f",
+    "PREFLIGHT.json": "3e9f05d63afdd9673a9a9dd2a9b9d58d81bae156f8fc3195202033d02d5fd83c",
+    "PROTOCOL.md": "f72529e3bd1586392624a4bed86769347710c25968ae4e05512b7362d76c8da4",
+    "audit.py": "732348e4096e0f7cbb37bff160623b5374866775de746f386c2d8a29c66684ab",
+    "candidate.py": "6439c699e7dc47808e5a37b38e1043187bd7a6a76082762a194d91aad8f3785c",
+    "execute_formal.py": "b3caa29112be1581761a2467c1fc13dd42c06ee562fc3234addd79e886d89eb8",
+    "generate.py": "3dd0ca0246a907a7afdf85b6cf38b95037d4b13a6b73fb4de8e1752f9e15f670",
+    "preflight.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight.stdout.txt": "426049cf142aeb19979df755dbab8a4df364054ec9c2aa39720e2eb848fd2190",
+    "prepare_freeze.py": "8ea5add8f527f72cde5aed16e6c491975624b57d60837764af676233b8e14170",
+    "run_formal.py": "50479fb1188e694e955358f58cb4d6f8a6ad32675705904e0c51fa4ae87414fc",
+    "run_mount_preflight.py": "7c19caba564a391c854459cffb0d6e5ef4d63752f0c040880cb46a164c25220c",
+    "test_protocol.py": "3d5ef602c3c2377d4e211ca1ae2ff7e539e25ed1799fbac5cf6e6b085f7f76af",
+    "test_result.py": "5a02360db1ae8700db8e4c57986f397338e94479b39b1e6bc77f222bddf49478"
+  },
+  "truth_sha256": "3b12b433cbdc3a9c8cd289b576ed4584338249d27704a1b3f9aebfdc9905de2d"
+}

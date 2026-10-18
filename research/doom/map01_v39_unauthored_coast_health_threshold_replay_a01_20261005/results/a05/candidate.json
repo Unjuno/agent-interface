@@ -1,0 +1,80 @@
+{
+  "schema": "map01-v39-unauthored-coast-health-threshold-replay-result-v1",
+  "status": "PASS_A04_TRACE_REPLAY",
+  "source_health": 30,
+  "source_sequence": 216,
+  "model_start_ns": 9113893069981,
+  "planner_terminal_observed_ns": 9126593953232,
+  "observations_during_pending_interval": 45,
+  "sweep": [
+    {
+      "threshold_loss_points": 5,
+      "first_cross": {
+        "sequence": 220,
+        "capture_ns": 9114604243578,
+        "health": 24,
+        "loss_points": 6,
+        "elapsed_from_model_start_ms": 711.173597,
+        "remaining_to_planner_terminal_ms": 11989.709654
+      }
+    },
+    {
+      "threshold_loss_points": 10,
+      "first_cross": {
+        "sequence": 224,
+        "capture_ns": 9115814196906,
+        "health": 18,
+        "loss_points": 12,
+        "elapsed_from_model_start_ms": 1921.126925,
+        "remaining_to_planner_terminal_ms": 10779.756326
+      }
+    },
+    {
+      "threshold_loss_points": 15,
+      "first_cross": {
+        "sequence": 243,
+        "capture_ns": 9121158337943,
+        "health": 10,
+        "loss_points": 20,
+        "elapsed_from_model_start_ms": 7265.267962,
+        "remaining_to_planner_terminal_ms": 5435.615289
+      }
+    },
+    {
+      "threshold_loss_points": 20,
+      "first_cross": {
+        "sequence": 243,
+        "capture_ns": 9121158337943,
+        "health": 10,
+        "loss_points": 20,
+        "elapsed_from_model_start_ms": 7265.267962,
+        "remaining_to_planner_terminal_ms": 5435.615289
+      }
+    },
+    {
+      "threshold_loss_points": 25,
+      "first_cross": {
+        "sequence": 261,
+        "capture_ns": 9126240119534,
+        "health": 4,
+        "loss_points": 26,
+        "elapsed_from_model_start_ms": 12347.049553,
+        "remaining_to_planner_terminal_ms": 353.833698
+      }
+    }
+  ],
+  "existing_final_action_rule": {
+    "operator": "max_decrease_from_source > max_allowed causes rejection",
+    "max_allowed_loss_points": 20,
+    "observed_final_health": 4,
+    "final_action_rejection_reason": "health_max_decrease_from_source_failed"
+  },
+  "negative_control_decision4": {
+    "source_sequence": 204,
+    "source_health": 30,
+    "monitor_health": 30,
+    "reason": "health:source_expired",
+    "interpretation": "no health-loss threshold would fire at its recorded cancellation observation"
+  },
+  "scope": "one posthoc trace; no interruption was enacted; timing only"
+}

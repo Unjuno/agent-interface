@@ -1,0 +1,203 @@
+{
+  "backend_class": "doom_owner_thread_release_batch_backend_v1.Backend",
+  "backend_held_after": [],
+  "between_up_operations": [
+    {
+      "at_ns": 176459808384000,
+      "op": "sync"
+    }
+  ],
+  "events": [
+    {
+      "admitted_ns": 176459808270800,
+      "event": "input_admission",
+      "id": "cover-startup-a01",
+      "input_ack_ns": 176459808275800,
+      "intent_token": "intent-v39-startup-a01",
+      "key": "F8",
+      "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+      "step": 2,
+      "valid_until_ns": 176469808198000
+    },
+    {
+      "admitted_ns": 176459808329900,
+      "event": "input_admission",
+      "id": "cover-startup-a01",
+      "input_ack_ns": 176459808334200,
+      "intent_token": "intent-v39-startup-a01",
+      "key": "SPACE",
+      "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+      "step": 2,
+      "valid_until_ns": 176469808198000
+    },
+    {
+      "backend_owned_before_release": true,
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "id": "cover-startup-a01",
+      "intent_token": "intent-v39-startup-a01",
+      "intent_token_matches_after_batch": true,
+      "key": "SPACE",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+      "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owned_keycodes_after_batch": [],
+      "owner_cleanup_intervened": false,
+      "owner_cleanup_record_count_before_release": 0,
+      "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+      "owner_identity_matches_after_batch": true,
+      "owner_release_history_complete": true,
+      "owner_sample_after_finished_ns": 176459808490100,
+      "owner_sample_after_started_ns": 176459808486200,
+      "owner_sample_ordered_after_batch": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "intent-v39-startup-a01",
+        "key": "SPACE",
+        "keycode": 65,
+        "operation": "up",
+        "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+        "owner_keyrelease_started_ns": 176459808381600,
+        "owner_sync_returned_ns": 176459808384300,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 176469808198000
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_thread_keyup_verified_after_batch": true,
+      "owner_transition_verified": true,
+      "physical_verification_authoritative": false,
+      "release_batch_complete": true,
+      "release_batch_delivery_position": 0,
+      "release_batch_identifier": "cover-startup-a01",
+      "release_batch_position": 0,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_size": 2,
+      "release_batch_step": 2,
+      "release_call_bracket_ns": 40200,
+      "release_call_returned_ns": 176459808403600,
+      "release_call_started_ns": 176459808363400,
+      "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+      "step": 2,
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 176469808198000
+    },
+    {
+      "backend_owned_before_release": true,
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "id": "cover-startup-a01",
+      "intent_token": "intent-v39-startup-a01",
+      "intent_token_matches_after_batch": true,
+      "key": "F8",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+      "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owned_keycodes_after_batch": [],
+      "owner_cleanup_intervened": false,
+      "owner_cleanup_record_count_before_release": 1,
+      "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+      "owner_identity_matches_after_batch": true,
+      "owner_release_history_complete": true,
+      "owner_sample_after_finished_ns": 176459808490100,
+      "owner_sample_after_started_ns": 176459808486200,
+      "owner_sample_ordered_after_batch": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "intent-v39-startup-a01",
+        "key": "F8",
+        "keycode": 74,
+        "operation": "up",
+        "owner_id": "decd09ff9b94458ba08ba2f0c00aea38",
+        "owner_keyrelease_started_ns": 176459808435000,
+        "owner_sync_returned_ns": 176459808436800,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 176469808198000
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_thread_keyup_verified_after_batch": true,
+      "owner_transition_verified": true,
+      "physical_verification_authoritative": false,
+      "release_batch_complete": true,
+      "release_batch_delivery_position": 1,
+      "release_batch_identifier": "cover-startup-a01",
+      "release_batch_position": 1,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_size": 2,
+      "release_batch_step": 2,
+      "release_call_bracket_ns": 34900,
+      "release_call_returned_ns": 176459808453200,
+      "release_call_started_ns": 176459808418300,
+      "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+      "step": 2,
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 176469808198000
+    }
+  ],
+  "fake_display_counts": {
+    "injections": 4,
+    "queries": 0,
+    "syncs": 4
+  },
+  "fake_physical_after": [],
+  "keymap_queries_between_ups": 0,
+  "operations": [
+    {
+      "at_ns": 176459808272200,
+      "keycode": 74,
+      "op": "key-down"
+    },
+    {
+      "at_ns": 176459808274700,
+      "op": "sync"
+    },
+    {
+      "at_ns": 176459808331500,
+      "keycode": 65,
+      "op": "key-down"
+    },
+    {
+      "at_ns": 176459808333600,
+      "op": "sync"
+    },
+    {
+      "at_ns": 176459808382200,
+      "keycode": 65,
+      "op": "key-up"
+    },
+    {
+      "at_ns": 176459808384000,
+      "op": "sync"
+    },
+    {
+      "at_ns": 176459808435500,
+      "keycode": 74,
+      "op": "key-up"
+    },
+    {
+      "at_ns": 176459808436600,
+      "op": "sync"
+    }
+  ],
+  "owner_class": "input_transition_owner_v4.InputOwner",
+  "schema": "v39-startup-release-order-candidate-v1",
+  "selector_source": "def session_command(args, runtime):\n    # Keep the established v12 session as the default. The opt-in v15 wrapper\n    # adds scorer-only progress sampling and per-key release telemetry without\n    # exposing scorer state through the controller event stream.\n    session = (\"session_map01_v15.py\"\n               if getattr(args, \"measurement_session\", False)\n               else \"session_map01_v12.py\")\n    return [sys.executable, str(HERE / session),\n            \"--out\", str(runtime), \"--seed\", str(args.seed),\n            \"--timeout-seconds\", \"600\", \"--skill\", \"1\",\n            \"--load-fixture-manifest\", str(args.load_fixture_manifest.resolve())]",
+  "selector_source_verified": true
+}

@@ -1,0 +1,3 @@
+Test: CancellationReceiptTests.test_executor_cancel_terminal_contains_one_verified_cleanup_receipt
+Disposition: HOLD_CONSTRUCTION
+The real ExecutorV3-created Lease lacked the observed `expected_focus` field required by the InputOwner owner guard, so the fake-display input stopped before admission. The captured event stream ended with terminal status `failed`, error `ValueError('observed input focus required')`, and no input admission. This was a fixture omission; it did not exercise the cancellation hypothesis.

@@ -1,0 +1,15 @@
+test_expired_program_exit_drains_owner_cleanup_without_cancel_event (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_expired_program_exit_drains_owner_cleanup_without_cancel_event) ... FAIL
+
+======================================================================
+FAIL: test_expired_program_exit_drains_owner_cleanup_without_cancel_event (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_expired_program_exit_drains_owner_cleanup_without_cancel_event)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-v39-cancel-release-fix-a01/research/doom/map01_v39_cancel_release_fix_a01_20261005/test_cancel_release.py", line 226, in test_expired_program_exit_drains_owner_cleanup_without_cancel_event
+    self.assertEqual(len(ups), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (failures=1)

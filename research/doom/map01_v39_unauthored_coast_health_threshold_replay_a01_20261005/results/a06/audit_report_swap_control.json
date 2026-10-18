@@ -1,0 +1,10 @@
+{
+  "control": "decision4_source_monitor_report_reference_swap",
+  "attempt": "A06 control harness first outcome",
+  "exit_code": 1,
+  "disposition": "CONTROL_SETUP_FAILURE",
+  "failure": "The legacy auditor received RESULT_DIR=legacy-results/a05, while the copied candidate was placed under results/a05. It stopped before testing the swapped-report assertion.",
+  "conclusion_about_audit_gap": "none",
+  "retained_inputs_modified": false,
+  "follow_up": "A separately frozen A07 control copies the same immutable candidate into the legacy auditor's selected RESULT_DIR; A06 and A05 are unchanged."
+}

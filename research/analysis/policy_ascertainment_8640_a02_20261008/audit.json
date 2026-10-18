@@ -1,0 +1,122 @@
+{
+  "allocation": "issue-8640-method-a02",
+  "status": "PASS_METHOD_SCOPED",
+  "independentRawAudit": "PASS",
+  "scenarios": {
+    "complete": {
+      "worlds": 4096,
+      "mass": 1,
+      "truth": {
+        "A": 0.75,
+        "B": 0.25
+      },
+      "reversalProbability": 0,
+      "expectedIPW": {
+        "A": 0.75,
+        "B": 0.25
+      },
+      "ipwBias": {
+        "A": 0,
+        "B": 0
+      },
+      "boundsCoverMass": {
+        "A": 1,
+        "B": 1
+      }
+    },
+    "route_dependent": {
+      "worlds": 4096,
+      "mass": 1.0000000000000013,
+      "truth": {
+        "A": 0.75,
+        "B": 0.25
+      },
+      "reversalProbability": 0.8573749999999998,
+      "expectedIPW": {
+        "A": 0.7500000000000003,
+        "B": 0.25000000000000033
+      },
+      "ipwBias": {
+        "A": 3.3306690738754696e-16,
+        "B": 3.3306690738754696e-16
+      },
+      "boundsCoverMass": {
+        "A": 1.0000000000000013,
+        "B": 1.0000000000000013
+      }
+    },
+    "fixed_horizon": {
+      "worlds": 4096,
+      "mass": 1,
+      "truth": {
+        "A": 0.75,
+        "B": 0.25
+      },
+      "reversalProbability": 1,
+      "expectedIPW": {
+        "A": null,
+        "B": null
+      },
+      "ipwBias": {
+        "A": null,
+        "B": null
+      },
+      "boundsCoverMass": {
+        "A": 1,
+        "B": 1
+      }
+    },
+    "zero_probability": {
+      "worlds": 4096,
+      "mass": 1,
+      "truth": {
+        "A": 0.25,
+        "B": 0.5
+      },
+      "reversalProbability": 0,
+      "expectedIPW": {
+        "A": null,
+        "B": 0.5
+      },
+      "ipwBias": {
+        "A": null,
+        "B": 0
+      },
+      "boundsCoverMass": {
+        "A": 1,
+        "B": 1
+      }
+    },
+    "hidden_misspecified": {
+      "worlds": 4096,
+      "mass": 0.999999999999976,
+      "truth": {
+        "A": 0.75,
+        "B": 0.25
+      },
+      "reversalProbability": 0.38143750000000015,
+      "expectedIPW": {
+        "A": 0.15000000000000344,
+        "B": 0.2500000000000022
+      },
+      "ipwBias": {
+        "A": -0.5999999999999965,
+        "B": 2.220446049250313e-15
+      },
+      "boundsCoverMass": {
+        "A": 0.999999999999976,
+        "B": 0.999999999999976
+      }
+    }
+  },
+  "mutations": {
+    "drop_world": "REJECTED",
+    "false_observation": "REJECTED",
+    "mislogged_probability": "REJECTED",
+    "changed_horizon": "REJECTED",
+    "hide_zero_probability": "REJECTED"
+  },
+  "mutationRejected": 5,
+  "mutationTotal": 5,
+  "scope": "finite synthetic identification method only; no historical or live inference"
+}

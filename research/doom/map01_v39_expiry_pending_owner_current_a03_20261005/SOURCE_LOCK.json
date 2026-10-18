@@ -1,0 +1,63 @@
+{
+  "schema": "map01-v39-expiry-pending-current-owner-a03-source-lock-v1",
+  "base_main": "dccf55e264f434ca27f2948fe53be09919047819",
+  "candidate_pr": 7805,
+  "candidate_head": "c4e893e8515811c77e21639237f1f2a914d4d88b",
+  "candidate_source": {
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/input_owner_v13_candidate.py": {
+      "git_blob": "123cd29146e5cf9bfd96f4a749c5d421e34ec1e9",
+      "sha256": "0e3c65aadfba76b644f1ca99afa267bc873bc120320a4b0cac67dafb82cfa814"
+    },
+    "research/doom/map01_v39_cancel_release_fix_a01_20261005/bridge_v2_candidate.py": {
+      "git_blob": "ee1220cdc3d93d96aa1051c072ca7dceeb59c35d",
+      "sha256": "81e759b0484ac5b7854da0ebcffa917035f56b83a3dbfda40cafbb7f9f5138d1"
+    }
+  },
+  "main_source_sha256": {
+    "research/live_control/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/doom/map01_v39_perkey_bridge_a01/bridge.py": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "6e63390e5fa5a9dc7cf0fe2cd040ceaa3a21e0fc86366dbe67c21c41e6f937d7",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9"
+  },
+  "experiment_source_sha256": {
+    "candidate_source/input_owner_v13_candidate.py": "0e3c65aadfba76b644f1ca99afa267bc873bc120320a4b0cac67dafb82cfa814",
+    "candidate_source/bridge_v2_candidate.py": "81e759b0484ac5b7854da0ebcffa917035f56b83a3dbfda40cafbb7f9f5138d1",
+    "candidate_source/bridge_v3_probe.py": "c83405638baabf66307cb01980d3abe12702f3e3ad84ae1ab76d9fc5209c98e3",
+    "preflight.py": "8b13e922828cba60e776c82eefcb393f19bf2e38dee7416d9741d5b92380ad89",
+    "run_candidate.py": "57e496a5bd0a7a9a4ca9412e4a3732adc3c03363a82a67eadbc02ca4daa4bce4",
+    "audit.py": "00540638232ab8828d4dd80a60dc82f642054141c0777a68afdf384efa1d7a09",
+    "run_candidate_a04.py": "dd6b981a2193f3c32cf04438cee1eeafc46a2e2045223a0c1dde232580914d17",
+    "audit_a04.py": "d0adf74afbb3e53990854fb35bbd9dc7858453cc1ca219200419b7dcd3e9d949"
+  },
+  "container": {
+    "reference": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "image_config_id": "sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "source_mount": "read-only",
+    "results_mount": "read-write"
+  },
+  "attempts": {
+    "A03": {
+      "run_id": "MAP01-V39-EXPIRY-PENDING-CURRENT-OWNER-A03-FORMAL-01-20261005",
+      "container_invocations": 1,
+      "candidate_invocations": 0,
+      "status": "STOP_CONSTRUCTION_RUNNER_ROOT_LAYOUT"
+    },
+    "A04": {
+      "run_id": "MAP01-V39-EXPIRY-PENDING-CURRENT-OWNER-A04-FORMAL-01-20261005",
+      "container_preflight": "PREFLIGHT_OK_NO_KEY_EVENTS",
+      "container_preflight_command": "network-none root-mount immutable image preflight.py",
+      "container_candidate_invocations": 1,
+      "candidate_output": "results/formal_02/candidate.json",
+      "candidate_sha256": "30dc76e3139fbb13ec4cd9e8e0bc14572b94788a6d9d04fc6870f4143c85fc79",
+      "audit_output": "results/formal_02/audit.json",
+      "audit_sha256": "636a07aeecd8f7b3c7d0690f6b20c3d3c0e0c491bee56d6a9a6b273120de897e",
+      "status": "PASS_CURRENT_OWNER_PENDING_EXPIRY_RECEIPT_SCOPED"
+    }
+  },
+  "retries": 0
+}

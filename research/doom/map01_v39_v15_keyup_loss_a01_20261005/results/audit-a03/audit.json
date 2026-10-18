@@ -1,0 +1,88 @@
+{
+  "checks": [
+    {
+      "detail": "v39-v15-keyup-loss-a03-raw-v1",
+      "name": "raw_schema",
+      "pass": true
+    },
+    {
+      "detail": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+      "name": "raw_base",
+      "pass": true
+    },
+    {
+      "detail": "{\"application_effect\": false, \"doom\": false, \"gui\": false, \"model\": false, \"physical_keyboard\": false, \"real_x11\": false}",
+      "name": "claims_false",
+      "pass": true
+    },
+    {
+      "detail": "count=2",
+      "name": "two_cases",
+      "pass": true
+    },
+    {
+      "detail": "expected injected loss false",
+      "name": "normal_case_present",
+      "pass": true
+    },
+    {
+      "detail": "expected injected loss true",
+      "name": "loss_case_present",
+      "pass": true
+    },
+    {
+      "detail": "[]",
+      "name": "normal_server_empty",
+      "pass": true
+    },
+    {
+      "detail": "True",
+      "name": "normal_batch_verified",
+      "pass": true
+    },
+    {
+      "detail": "recovered=True error=None",
+      "name": "normal_terminal_clean",
+      "pass": true
+    },
+    {
+      "detail": "[38]",
+      "name": "loss_exposes_key_down",
+      "pass": true
+    },
+    {
+      "detail": "False",
+      "name": "loss_batch_does_not_claim_physical",
+      "pass": true
+    },
+    {
+      "detail": "True",
+      "name": "loss_batch_owner_verified",
+      "pass": true
+    },
+    {
+      "detail": "error=RuntimeError: owner release not verified: [38] records=1",
+      "name": "loss_terminal_diagnostic",
+      "pass": true
+    },
+    {
+      "detail": "False",
+      "name": "loss_not_recovered",
+      "pass": true
+    },
+    {
+      "detail": "{\"research/doom/doom_owner_thread_release_batch_backend_v1.py\": {\"actual\": \"925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9\", \"expected\": \"925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9\", \"pass\": true}, \"research/doom/doom_typed_release_backend_v2.py\": {\"actual\": \"7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4\", \"expected\": \"7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4\", \"pass\": true}, \"research/doom/session_map01_v15.py\": {\"actual\": \"661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724\", \"expected\": \"661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724\", \"pass\": true}, \"research/live_control/executor_v3.py\": {\"actual\": \"ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a\", \"expected\": \"ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a\", \"pass\": true}, \"research/live_control/input_owner_v10.py\": {\"actual\": \"ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b\", \"expected\": \"ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b\", \"pass\": true}, \"research/live_control/input_owner_v12.py\": {\"actual\": \"cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a\", \"expected\": \"cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a\", \"pass\": true}, \"research/live_control/input_transition_owner_v3.py\": {\"actual\": \"b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456\", \"expected\": \"b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456\", \"pass\": true}, \"research/live_control/input_transition_owner_v4.py\": {\"actual\": \"dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3\", \"expected\": \"dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3\", \"pass\": true}, \"research/live_control/lease.py\": {\"actual\": \"e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f\", \"expected\": \"e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f\", \"pass\": true}}",
+      "name": "production_sources_match_freeze",
+      "pass": true
+    },
+    {
+      "detail": "efaed5191b25020f2f0b77bd55f9f0feb84b0c746df0f1b958c706c63f2fc2bd",
+      "name": "candidate_matches_freeze",
+      "pass": true
+    }
+  ],
+  "decision": "FAIL_BATCH_PHYSICAL_RELEASE_NOT_ESTABLISHED",
+  "raw_sha256": "a3bb8ed49e2e6eb457a2acb3b8000ea83869309d444438f57c774dbaa0b9def5",
+  "schema": "v39-v15-keyup-loss-a03-audit-v1",
+  "status": "PASS_RAW_AND_SOURCE_AUDIT"
+}

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "audit.py", line 23, in <module>
+    assert "OK" in log, name
+AssertionError: source_audit
+
+Cause: the wrapper applied unittest output formatting to the source-audit command, whose successful output is a specific AUDIT_PASS marker without the text "OK". No test suite or retained result was rerun or changed to repair this wrapper check.

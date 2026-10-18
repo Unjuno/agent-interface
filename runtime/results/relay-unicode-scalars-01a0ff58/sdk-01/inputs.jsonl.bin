@@ -1,0 +1,7 @@
+{"id":1,"tool":"interface_validate","arguments":{"program":{"text":"\u8cc7\u6599\ud83d\ude00","nested":{"\u00e9":[null,true,7]}}}}
+{"id":2,"tool":"interface_validate","arguments":{"program":{"nested":[{"text":"\ud800"}]}}}
+{"id":2,"tool":"interface_validate","arguments":{"program":{"\udfff":"invalid key"}}}
+{"id":2,"tool":"interface_validate","arguments":{"program":{"split":"\ud800x\udc00"}}}
+{"id":2,"tool":"interface_validate","arguments":{"program":{"paired":"\ud83d\ude00","looks":"\\ud800"}}}
+{"id":2,"tool":"interface_validate","arguments":{"program":{"repeat":"accepted id must not enter again"}}}
+{"id":3,"tool":"interface_validate","arguments":{"program":{"final":"\udbff\udfff","text":"\u65e5\u672c\u8a9e"}}}

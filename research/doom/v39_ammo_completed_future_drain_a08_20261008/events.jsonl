@@ -1,0 +1,28 @@
+{"case": "positive-floor-soft-control", "event": "planner_thread_started"}
+{"case": "positive-floor-soft-control", "event": "planner_turn_started", "thread_id": "thread-a08"}
+{"ammo": 1, "case": "positive-floor-soft-control", "event": "typed_observation_enqueued", "sequence": 2}
+{"case": "positive-floor-soft-control", "event": "matching_terminal_enqueued", "status": "completed"}
+{"case": "positive-floor-soft-control", "event": "planner_turn_completed", "turn_id": "turn-a08"}
+{"answer_eligible": true, "case": "positive-floor-soft-control", "event": "planner_future_completed"}
+{"case": "positive-floor-soft-control", "done": true, "event": "future_done_checked"}
+{"case": "positive-floor-soft-control", "event": "queue_dequeued", "id": null, "release": null, "row_event": "typed_observation", "sequence": 2, "status": null}
+{"case": "positive-floor-soft-control", "event": "actual_monitor_received", "future_done": true, "sequence": 2}
+{"case": "positive-floor-soft-control", "event": "actual_monitor_disposition", "grants_input_authority": false, "reason": null, "requires_new_decision": false}
+{"case": "positive-floor-soft-control", "event": "queue_dequeued", "id": "cover-a08", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "row_event": "terminal", "sequence": null, "status": "completed"}
+{"case": "positive-floor-soft-control", "event": "completed_terminal_validated", "status": "completed", "verified_empty": true}
+{"answer": {"action": "stale"}, "answer_eligible": true, "case": "positive-floor-soft-control", "event": "completed_answer_read"}
+{"case": "positive-floor-soft-control", "event": "final_admission", "input_authority_admitted": false, "reason": "planner_complete_and_policy_current_requires_fresh_action_check", "status": "READY_FOR_ACTION_VALIDITY"}
+{"case": "zero-ammo-completed-future", "event": "planner_thread_started"}
+{"case": "zero-ammo-completed-future", "event": "planner_turn_started", "thread_id": "thread-a08"}
+{"ammo": 0, "case": "zero-ammo-completed-future", "event": "typed_observation_enqueued", "sequence": 2}
+{"case": "zero-ammo-completed-future", "event": "matching_terminal_enqueued", "status": "completed"}
+{"case": "zero-ammo-completed-future", "event": "planner_turn_completed", "turn_id": "turn-a08"}
+{"answer_eligible": true, "case": "zero-ammo-completed-future", "event": "planner_future_completed"}
+{"case": "zero-ammo-completed-future", "done": true, "event": "future_done_checked"}
+{"case": "zero-ammo-completed-future", "event": "queue_dequeued", "id": null, "release": null, "row_event": "typed_observation", "sequence": 2, "status": null}
+{"case": "zero-ammo-completed-future", "event": "actual_monitor_received", "future_done": true, "sequence": 2}
+{"case": "zero-ammo-completed-future", "event": "actual_monitor_disposition", "grants_input_authority": false, "reason": "ammo:below_hard_minimum", "requires_new_decision": true}
+{"case": "zero-ammo-completed-future", "event": "queue_dequeued", "id": "cover-a08", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "row_event": "terminal", "sequence": null, "status": "completed"}
+{"case": "zero-ammo-completed-future", "event": "completed_terminal_validated", "status": "completed", "verified_empty": true}
+{"answer": {"action": "stale"}, "answer_eligible": true, "case": "zero-ammo-completed-future", "event": "completed_answer_read"}
+{"case": "zero-ammo-completed-future", "event": "final_admission", "input_authority_admitted": false, "reason": "below_hard_minimum", "status": "REJECTED_POLICY_INVALIDATED"}

@@ -1,0 +1,9 @@
+A02 construction record
+
+- Test-first: `test_cli_exit_contract.py` was added against the copied A01 auditor before changing CLI logic. The PASS-contract test failed (`main()` returned 1); failure contract passed. Full suite at that point: 7 passed, 1 failed.
+- Narrow fix: auditor CLI returns 0 for `PASS_DUPLICATE_ID_BOUNDARY_SCOPED`; non-PASS continues to return 1. Raw schema changed to `7748-duplicate-id-a02-raw-v1`. Frozen cases and duplicate-ID boundary logic unchanged.
+- Post-fix construction: `python3 -B -m unittest discover -s research/analysis/processor_demand_witness_7748_duplicate_id_a02_20261005 -p 'test_*.py' -v` — 8/8 passed.
+- Syntax: `python3 -B -m py_compile ...` for candidate, auditor and both test modules — passed.
+- Formal allocations are separate: candidate invoked once and auditor invoked once, both exit 0; retries 0. See RUN.json and preserved results/ receipts.
+
+- Supplemental post-run raw-auditor function probes rejected duplicate-marked-eligible, post-candidate identity mutation, and omitted-row mutations. Stored separately; formal CLI invocation counts unchanged.

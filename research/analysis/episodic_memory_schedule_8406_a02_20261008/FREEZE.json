@@ -1,0 +1,45 @@
+{
+  "freeze_id": "ISSUE-8406-A02-RETAINED-RAW-AUDIT-20261008-F1",
+  "issue": 8406,
+  "successor_of": "ISSUE-8406-T0-A01-20261008-F1",
+  "main_sha_at_A01": "a0d0602b89b1f5a05f851728fe90684ec4bfeff5",
+  "a01_stop_commit": "d5757dbea86b780a73b86eae497eeb6ccd7d2d87",
+  "parent_evidence": {
+    "issue": 7418,
+    "source_path": "research/analysis/exception_preserving_skill_7418_t0_20261004/fixture.json",
+    "source_sha256": "1c8b74dfdd8ec7c5a5950133709ae95e40cc687edb12ac128d66f696c79e54fb",
+    "preservation": "read-only; parent result and prior experiment remain unchanged"
+  },
+  "retained_raw": {
+    "a01_stop_path": "research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/formal_01/RAW.json",
+    "sha256": "2c79a10fa6530d74ac17ea9c67816b9517c63235a4cd32fcf70a2d463d4d9f70",
+    "candidate_invocations_in_A02": 0
+  },
+  "input_sha256": {
+    "README.md": "43660bb8094ca4955eabb3d0733b5833b36840673647d7c680fa919dafa2a3c9",
+    "PROTOCOL.md": "8a4ebd04f36cc73043c7a44b89246c93bf35b0bd1736db583e7f44875fe0518d",
+    "audit.py": "6b0973a08ef9f9fe1f308c60609f4a8572d83a624acbf84f0dd5beaab67b539c",
+    "test_contract.py": "63899c0e9fc57aac781695f1bd4998aaa7af9b071688b50e0992551a174595ec"
+  },
+  "preformal_checks": {
+    "unit_tests": "python -m unittest discover -s research/analysis/episodic_memory_schedule_8406_a02_20261008 -v (3 passed)",
+    "py_compile": "passed",
+    "git_diff_check": "passed"
+  },
+  "execution": {
+    "environment": "macOS host CPython 3.12.13, Python standard library, offline local files",
+    "container": "not used; audit-only stdlib workload, no isolation claim",
+    "candidate_command": null,
+    "audit_command": "python research/analysis/episodic_memory_schedule_8406_a02_20261008/audit.py research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/formal_01/RAW.json research/analysis/episodic_memory_schedule_8406_a02_20261008/formal_01/AUDIT.json",
+    "invocation_counts": {"candidate": 0, "auditor": 1, "retries": 0}
+  },
+  "expected_gate": {
+    "source_episodes": 12,
+    "query_visibility_rows": {"each_arm": 16, "total": 64},
+    "updates": {"episodic_only": 0, "per_episode": 12, "batch_4": 3, "terminal": 1},
+    "hostile_controls": ["forged_provenance", "omit_rare_exception", "collapse_conflict_as_safe", "mutate_episode", "misalign_checkpoint"],
+    "pass_disposition": "PASS_RETAINED_RAW_AUDIT_SCOPED",
+    "fail_disposition": "FAIL_RETAINED_RAW_AUDIT",
+    "claim_boundary": "A02 audits only retained A01 bytes and validator controls. A01 remains STOP; no model-facing schedule sensitivity, semantic memory, GUI, task effect, or policy finding."
+  }
+}

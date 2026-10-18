@@ -6,7 +6,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from test_running_action_guard_v2 import (COMMANDS, admission, guard_v2,
-    program, snapshot)
+    program, snapshot, terminal)
 from running_action_guard_v3 import RunningActionGuardV3, RELEASED_PENDING
 
 
@@ -17,6 +17,54 @@ def guard_v3():
 
 
 class RunningActionGuardV3Tests(unittest.TestCase):
+    def test_stale_executor_rejection_closes_unadmitted_candidate_without_authority(self):
+        guard = guard_v3()
+        rejected = {"event": "rejected", "id": "plan-0",
+                    "reason": "latest observation sequence required before input",
+                    "expected_sequence": 2, "observed_sequence": 3,
+                    "controller_received_ns": 220}
+        receipt = guard.record_preacceptance_rejection(rejected)
+        self.assertEqual(receipt["state"], "REJECTED_BEFORE_PROGRAM_ADMISSION")
+        self.assertFalse(receipt["current_input_authority"])
+        self.assertFalse(receipt["physical_input_may_be_down"])
+        self.assertTrue(receipt["physical_release_verified"])
+        self.assertTrue(receipt["requires_new_decision"])
+        self.assertEqual(receipt["program_bindings"], [])
+        self.assertIsNone(receipt["historical_first_admission"])
+        self.assertEqual(receipt["invalidation"]["rejection"], rejected)
+
+    def test_stale_rejection_must_be_fresh_and_unaccepted(self):
+        for changes in (
+            {"reason": "unsupported operation"},
+            {"observed_sequence": 2},
+            {"expected_sequence": 1},
+        ):
+            guard = guard_v3(); rejected = {
+                "event": "rejected", "id": "plan-0",
+                "reason": "latest observation sequence required before input",
+                "expected_sequence": 2, "observed_sequence": 3,
+                "controller_received_ns": 220}
+            rejected.update(changes)
+            with self.assertRaises(ValueError):
+                guard.record_preacceptance_rejection(rejected)
+
+    def test_stale_rejection_after_completed_segment_preserves_history_and_release(self):
+        guard = guard_v3(); primary = program("primary", COMMANDS[:1], [0])
+        submit, accepted = admission("primary-0", primary)
+        accepted["intent_token"] = "lease-token-1"
+        guard.admit_program(primary, submit, accepted)
+        guard.record_completed_terminal(terminal("primary-0", "completed", 220))
+        rejection = {"event": "rejected", "id": "primary-1",
+                     "reason": "latest observation sequence required before input",
+                     "expected_sequence": 2, "observed_sequence": 3,
+                     "controller_received_ns": 230}
+        receipt = guard.record_preacceptance_rejection(rejection)
+        self.assertEqual(receipt["state"], "REJECTED_BEFORE_PROGRAM_ADMISSION")
+        self.assertEqual(len(receipt["program_bindings"]), 1)
+        self.assertEqual(receipt["historical_first_admission"]["id"], "primary-0")
+        self.assertTrue(receipt["physical_release_verified"])
+        self.assertFalse(receipt["physical_input_may_be_down"])
+
     def armed(self):
         guard = guard_v3(); p = program("primary", COMMANDS[:1], [0])
         submit, accepted = admission("p1", p)

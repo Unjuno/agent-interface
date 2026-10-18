@@ -1,0 +1,19 @@
+{
+  "schema": "edge_vision_preflight_audit_v1",
+  "study_id": "edge-vision-preflight-01",
+  "classification": "SETUP_SCHEMA_REJECTED_BEFORE_MODEL_INFERENCE",
+  "attempts_started": 1,
+  "completed_turns": 0,
+  "usage_receipt": null,
+  "provider_error": {
+    "type": "invalid_request_error",
+    "code": "invalid_json_schema",
+    "message": "The response schema used oneOf, which is not permitted."
+  },
+  "thread_id": "01a109a7-38ac-75f3-93bd-4e35bab2e261",
+  "raw_events": "calls/run-02/events.jsonl",
+  "stderr": "calls/run-02/stderr.txt",
+  "response": null,
+  "task_input_or_effect": "none",
+  "interpretation": "No visual grounding result was produced. This is a structured-output setup defect, not evidence for or against model grounding capability. The preregistered one-attempt allocation is closed and will not be retried."
+}

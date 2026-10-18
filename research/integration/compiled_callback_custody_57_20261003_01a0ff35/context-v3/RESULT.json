@@ -1,0 +1,43 @@
+{
+  "AST_equal": true,
+  "actual_command_exit_codes": {
+    "combined-join-01": 1,
+    "combined-join-02": 0,
+    "combined-optimized-01": 0,
+    "committed-archive-01": 0,
+    "committed-build-01": 0,
+    "custody-only-01": 1,
+    "custody-only-02": 1,
+    "existing-join-01": 0,
+    "guard-only-01": 1,
+    "guard-only-02": 1
+  },
+  "archive_bytes": 407620,
+  "archive_entries": 56,
+  "archive_sha256": "fdeded4095ea8191d25c95a435f2936370ad878cd8d439198c58153cf0f92421",
+  "archive_source_entries_changed_from_original": [
+    "runtime/core_v1/compiled_gui.py"
+  ],
+  "canonical_compiled_sha256": "1c210ee9bbd727ba32c18630d0e0a80088c8fa9cbafe233010f7186235c95f3f",
+  "combined_tree": "2b38495ffc960f09806309f1d0a62025a73a7559",
+  "committed_archive": "12 related methods pass on exact archive; every51 actual source entry matches source commit.",
+  "correction": "Only expected observation-count expression stage -> stage+1 with explanatory comment. Malformed/valid inputs, ValueError match, action counts and all thresholds unchanged.",
+  "final_baselines": "guard-only:18 failures/3 errors before action due predicate-list alias; custody-only:18 failures because malformed success refs advance, valid family passes.",
+  "final_existing": "10 methods pass: original own7 plus delivered6900 three methods.",
+  "final_join": "2 methods pass normal and -O, covering18 invalid and3 valid subcases per cell.",
+  "final_test_definition_sha256": "e5da6777efd48f8771c07d8dc8f9257b6fc41b303e818c5b61b193d0eda82336",
+  "first_combined_result": "18 assertion failures: expected observation count was stage, but post-action effect verification follows observation stage+1. Valid family passed. No runtime repair needed.",
+  "first_test_definition_sha256": "dac6978258553e94661c97907e58f9a4f8f58f433e24a4cb9afafcf0c5cd7eb5",
+  "limitations": [
+    "Trusted synchronous built-in JSON callbacks only; no hostile custom objects/concurrent callbacks.",
+    "No physical input/task effects, native backends, timing/performance or copy-cost claim.",
+    "No required GitHub gate fulfillment, nonauthor vote/certificate, apply lock or main write.",
+    "Original63 evidence files and original votes remain historical; new content proposal required."
+  ],
+  "named_main": "636986a804a6004cd047db7e8cc5e62c02d585d8",
+  "reused_results": "Original83 core and29 guarded are historical evidence; not recertified unchanged-source results for this new compiled source. No original suite replay. Scope relies on new affected-contract checks.",
+  "scope": "ordinary author integration; no formal allocation",
+  "source_commit": "e272c2a66b311e51edf75fc6cf12bfb2e2b16be8",
+  "working_compiled_sha256": "31bc10d20530c8fa6a975ea52c5a952abc4c778b9866af91b92ce46b3fd0df9b",
+  "working_equals_canonical_after_CRLF_to_LF": true
+}

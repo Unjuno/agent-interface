@@ -1,0 +1,16 @@
+{
+  "schema": "issue59-v39-ready-submit-freeze-v1",
+  "experiment": "issue59-v39-ready-to-submit-queue-race-a03-20261008",
+  "kind": "synthetic source-order check; no live allocation or input",
+  "main_commit": "48496b645b1cbf4c4ddea49315972724f020343c",
+  "source": {
+    "path": "research/doom/map01_overlap_controller_v39.py",
+    "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
+  },
+  "hypothesis": "A typed observation queued after stale action-readiness can be consumed and discarded by the first post-submit acceptance wait, which has no observation monitor, before the later running-action wait can see it.",
+  "test": "Parse frozen V39 main; assert readiness precedes execute_segment, submit write precedes its first acceptance wait with no monitor, and a later terminal wait has action_monitor. Execute the exact nested production wait function against a deterministic fake queue containing typed health 100-to-70 then acceptance rows; inspect remaining queue and monitor calls.",
+  "decision": "PASS_TYPED_OBSERVATION_DROPPED_AT_ACK only if the frozen AST anchors agree and the exact production wait returns acceptance after consuming the typed row without invoking the monitor, leaving no row for later monitoring. No executor input claim is permitted.",
+  "counterhypothesis": "The production wait may retain, route, or monitor typed observations even when no observation_monitor argument is provided.",
+  "retry_policy": "One deterministic source-slice run; audits and mutation tests are read-only."
+}

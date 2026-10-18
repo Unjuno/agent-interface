@@ -1,0 +1,34 @@
+{
+  "freeze_id": "ORDERED-CONTEXT-EVENT-7452-A01-20261008-F1",
+  "issue": 8399,
+  "main_sha_at_design": "ff4eac79dab728748862e34d650a39c8c2d811a3",
+  "execution_environment": {
+    "mode": "host_cpu_only",
+    "python": "Python 3.12.13",
+    "network": "not used",
+    "gui_or_model": "not used",
+    "deviation": "Container startup has repeatedly failed in prior isolated preflights; this bounded finite constructor/auditor uses no external runtime and Issue #8399 permits CPU-only method validation. This is not container evidence."
+  },
+  "input_sha256": {
+    "README.md": "2162560b737d60cf98d971794621d7cdc4aa7e188cf2fbfe80592a200253ed76",
+    "model.json": "23e41ac29e0e2a2186bda36107d89400cb883bd296b94d3def8f5b6364351dd3",
+    "candidate.py": "8e9e9aace85d8dd1790eac0aa814742855422ffd739fc4595e43bf2c2acff563",
+    "audit.py": "dae4db0c44f3050847f6c3abadd9a1b8dd8bae32e53123d5d458b1dae1cf5fa1",
+    "test_construction.py": "3845c4a06f78e8b4ab0765d57e6db742973d82dd681b5585a8e8e30a923ccdd5"
+  },
+  "preformal_tests": "python -m unittest discover -s research/analysis/ordered_context_event_coverage_7452_a01_20261008 -v (2 passed before freeze)",
+  "formal_invocations": [
+    "python research/analysis/ordered_context_event_coverage_7452_a01_20261008/candidate.py /tmp/ordered-context-event-candidate.json",
+    "python research/analysis/ordered_context_event_coverage_7452_a01_20261008/audit.py /tmp/ordered-context-event-candidate.json research/analysis/ordered_context_event_coverage_7452_a01_20261008/AUDIT.json"
+  ],
+  "expected": {
+    "episodes": {"context_only": 4, "order_only": 1, "mixed_occ": 4, "exhaustive": 128},
+    "rows": {"context_only": 4, "order_only": 8, "mixed_occ": 32, "exhaustive": 256},
+    "mixed_occ_obligations": 64,
+    "exhaustive_obligations": 128,
+    "mixed_mutants_detected": ["joint", "context_only", "order_only"],
+    "cross_reset_pairs_credited": 0,
+    "negative_control_unsafe_effect": false
+  },
+  "gate": "PASS_METHOD_SCOPED only if independent raw audit passes, expected suite reconstruction/counts and mutation detection match, and reset-boundary pairs receive no credit. Otherwise preserve one-shot outputs as FAIL/STOP; no retries. No GUI, safety, product, or general t-way efficacy claim."
+}

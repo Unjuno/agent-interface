@@ -3,6 +3,7 @@ import json, os, subprocess, sys, tempfile, time, unittest
 from pathlib import Path
 
 from runtime.core_v1.contract import SCHEMA_PROGRAM, office_readiness
+from runtime.core_v1.sequence import expand_text_gaps
 from runtime.backends.x11_v1.backend import X11Backend
 from runtime.backends.x11_v1.session import X11RuntimeSession
 
@@ -153,6 +154,42 @@ class X11IntegrationTests(unittest.TestCase):
         self.assertEqual(releases[-1]["keys_down"], [])
         self.assertEqual(releases[-1]["buttons_down"], [])
         self.assertEqual(len(row["execution"]["observations"]), 1)
+
+    def test_held_shift_survives_paced_text_and_has_independent_effect(self):
+        # The first uppercase tap borrows Shift; the following lowercase tap
+        # must still see that held modifier. Losing the hold would save "Ab".
+        program = make_program("paced-held-shift", text="Ab")
+        index = next(i for i, op in enumerate(program["ops"]) if op["op"] == "text")
+        program["ops"][index:index + 1] = [
+            {"op": "key_state", "key": "SHIFT", "down": True},
+            {"op": "text", "text": "Ab", "gap_ms": 20},
+            {"op": "key_state", "key": "SHIFT", "down": False},
+        ]
+        program["ops"], _ = expand_text_gaps(program["ops"])
+        row = self.session.dispatch(program, current_observation_seq=7, current_binding_revision=3)
+        self.assertEqual(row["status"], "completed")
+        self.assertEqual(json.loads(self.effect.read_text()), {"saved": True, "text": "AB"})
+        self.assertTrue(row["execution"]["releases"][-1]["verified"])
+        self.assertEqual(self.backend.held_keycodes, {})
+
+    def test_paced_held_letter_refuses_before_native_program_input(self):
+        program = make_program("paced-held-letter", text="ba")
+        index = next(i for i, op in enumerate(program["ops"]) if op["op"] == "text")
+        program["ops"][index:index + 1] = [
+            {"op": "key_state", "key": "a", "down": True},
+            {"op": "text", "text": "ba", "gap_ms": 20},
+            {"op": "key_state", "key": "a", "down": False},
+        ]
+        program["ops"], _ = expand_text_gaps(program["ops"])
+        before = self.backend.emissions
+        row = self.session.dispatch(program, current_observation_seq=7, current_binding_revision=3)
+        self.assertEqual(row["status"], "refused")
+        self.assertEqual(row["error"], "BACKEND_CONSTRAINT")
+        self.assertFalse(row["program_execution_started"])
+        self.assertEqual(row["program_emissions"], 0)
+        self.assertEqual(self.backend.emissions, before)
+        self.assertFalse(self.effect.exists())
+        self.assertTrue(row["release"]["verified"])
 
     def test_synchronous_pointer_grab_keeps_recovery_explicit(self):
         from Xlib import X, display

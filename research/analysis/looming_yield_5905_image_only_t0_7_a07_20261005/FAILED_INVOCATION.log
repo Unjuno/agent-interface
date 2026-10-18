@@ -1,0 +1,20 @@
+Exact command (formal candidate invocation 1):
+wslc run --pull never --network none --cpus 1 --rm --name looming-5905-a07-candidate -v <evidence>:/src:ro -v <evidence>\constructed\observations:/input\observations:ro -v <evidence>\candidate-output:/output python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/candidate.py /input
+
+Exit code: 1. Exact stderr:
+Traceback (most recent call last):
+  File "/src/candidate.py", line 63, in <module>
+    main(sys.argv[1])
+  File "/src/candidate.py", line 26, in main
+    manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/input/manifest.json'
+
+Candidate expected the mounted root to contain manifest.json and item_NN/ directly. The command mounted the observations directory under /input/observations, producing /input/observations/manifest.json, but passed /input as the candidate root. The invocation did not read the corpus; no candidate output was written. This is terminal for A07; do not rerun candidate or start auditor under A07.
+

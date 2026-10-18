@@ -1,0 +1,10 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib,runpy,os
+R=Path(__file__).resolve().parents[2];W=R/'work/ownedwinpipe6501-t02';O=R/'outputs/ownedwinpipe6501-t02';H=lambda b:hashlib.sha256(b).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat();reduce=runpy.run_path(str(W/'audit_v2.py'))['reduce'];first=json.loads((O/'CONTROLS_FIRST.json').read_bytes());rows=[];start=now()
+for c in first['controls']:
+    b=(O/'controls-v1'/(c['name']+'.json')).read_bytes();assert len(b)==c['bytes'] and H(b)==c['sha256'];d=json.loads(b);accepted=False;failure=None
+    try:reduce(c['mode'],d['events'],d['result']);accepted=True
+    except (AssertionError,KeyError,ValueError,TypeError) as e:failure=repr(e)
+    rows.append(dict(name=c['name'],sha256=H(b),accepted=accepted,failure=failure))
+report=dict(start_utc=start,end_utc=now(),pid=os.getpid(),source_sha256=H((W/'audit_v2.py').read_bytes()),same_original_mutation_images=True,controls=rows,false_accepts=sum(c['accepted'] for c in rows),native_replay=0);(O/'CONTROLS_V2.json').write_text(json.dumps(report,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps(report));assert report['false_accepts']==0

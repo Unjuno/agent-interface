@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/src/audit.py", line 183, in <module>
+    main(sys.argv[1], sys.argv[2], Path(sys.argv[3]))
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/audit.py", line 158, in main
+    "pixel_changed": metric_frontier(rebuilt, truth, "pixel_changed", PIXEL_THRESHOLDS),
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/audit.py", line 86, in metric_frontier
+    labels = {r["sequence_id"]: r for r in truth}
+              ~^^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'

@@ -1,0 +1,17 @@
+{
+  "allocation": "interval-ttc-audit-only-a04-20261005",
+  "candidate_invocations": 0,
+  "generator_invocations": 0,
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "retries": 0,
+  "disposition": "PASS_RAW_RECONCILIATION_ONLY",
+  "runtime": "WSLc 3.0.1.0; python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f; linux/amd64; --pull never --network none --cpus 1 --memory 512M",
+  "source_mount": "read-only",
+  "output_mount": "read-write",
+  "command": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <repo>/research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A04_AUDIT_ONLY:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/research/vision/interval_ttc_bounded_error_v1/audit_only_a04.py /src/research/vision/interval_ttc_bounded_error_v1 /out/AUDIT_REPORT.json",
+  "stdout": "",
+  "stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "a02_candidate_auditor_generator_reinvoked": false,
+  "a03_candidate_auditor_generator_reinvoked": false
+}

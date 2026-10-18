@@ -1,0 +1,12 @@
+Raw extraction (read-only):
+git show origin/pr-7881:research/doom/map01_v39_startup_release_order_a01_20261005/results/a03/RAW.json > research/doom/map01_v39_effect_identity_join_a01_20261005/RAW.json
+
+Source freeze: use source_sha256 values from PR #7881 FREEZE.json, excluding the two package-only PLAN.md and candidate.py paths; retrieve each remaining tracked source from current main 88d875cc0916accb1a5fa36057253686f0586f1e and assert LF-normalized SHA-256 equality before copying to sources/.
+
+Container probe:
+docker image ls --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+Observed: Docker daemon content-store blob read failed with operation not supported; no test/candidate was run in Docker.
+
+Executed once on host (Python standard library):
+python3 research/doom/map01_v39_effect_identity_join_a01_20261005/run.py
+python3 research/doom/map01_v39_effect_identity_join_a01_20261005/audit.py

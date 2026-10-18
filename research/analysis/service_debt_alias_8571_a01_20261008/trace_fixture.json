@@ -1,0 +1,109 @@
+{
+  "schema": "service-debt-alias-trace-fixture-v1",
+  "allocation_id": "SERVICE-DEBT-ALIAS-8571-A01",
+  "base_revision": "5215aab506f43c8a02470d495b7352b1326a9580",
+  "horizon": 4,
+  "policies": ["fifo", "presented_service_debt", "trusted_parent_service_debt"],
+  "base_requests": [
+    {"id":"A0","caller_id":"A","arrival":0,"ordinal":0,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+    {"id":"B0","caller_id":"B","arrival":0,"ordinal":1,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+    {"id":"A1","caller_id":"A","arrival":0,"ordinal":2,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+    {"id":"B1","caller_id":"B","arrival":0,"ordinal":3,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+    {"id":"A2","caller_id":"A","arrival":0,"ordinal":4,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+    {"id":"B2","caller_id":"B","arrival":0,"ordinal":5,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+    {"id":"A3","caller_id":"A","arrival":0,"ordinal":6,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+    {"id":"B3","caller_id":"B","arrival":0,"ordinal":7,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null}
+  ],
+  "alias_partitions": [
+    {"id":"alias_p01_k1","blocks":[[0,1,2,3]]},
+    {"id":"alias_p02_k2a","blocks":[[0],[1,2,3]]},
+    {"id":"alias_p03_k2b","blocks":[[1],[0,2,3]]},
+    {"id":"alias_p04_k2c","blocks":[[2],[0,1,3]]},
+    {"id":"alias_p05_k2d","blocks":[[3],[0,1,2]]},
+    {"id":"alias_p06_k2e","blocks":[[0,1],[2,3]]},
+    {"id":"alias_p07_k2f","blocks":[[0,2],[1,3]]},
+    {"id":"alias_p08_k2g","blocks":[[0,3],[1,2]]},
+    {"id":"alias_p09_k3a","blocks":[[0,1],[2],[3]]},
+    {"id":"alias_p10_k3b","blocks":[[0,2],[1],[3]]},
+    {"id":"alias_p11_k3c","blocks":[[0,3],[1],[2]]},
+    {"id":"alias_p12_k3d","blocks":[[1,2],[0],[3]]},
+    {"id":"alias_p13_k3e","blocks":[[1,3],[0],[2]]},
+    {"id":"alias_p14_k3f","blocks":[[2,3],[0],[1]]},
+    {"id":"alias_p15_k4","blocks":[[0],[1],[2],[3]]}
+  ],
+  "extra_cases": [
+    {
+      "id":"fragmentation_base",
+      "requests":[
+        {"id":"FB_A0","caller_id":"FA","arrival":0,"ordinal":0,"service":2,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"FB_B0","caller_id":"FB","arrival":0,"ordinal":1,"service":2,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"FB_A1","caller_id":"FA","arrival":0,"ordinal":2,"service":2,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"FB_B1","caller_id":"FB","arrival":0,"ordinal":3,"service":2,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null}
+      ],
+      "trusted_parents":{"FA":"A","FB":"B"},"parent_claims":{},"release_times":[]
+    },
+    {
+      "id":"fragmentation_split",
+      "requests":[
+        {"id":"FS_A0a","caller_id":"FA","arrival":0,"ordinal":0,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"FS_B0","caller_id":"FB","arrival":0,"ordinal":1,"service":2,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"FS_A0b","caller_id":"FA","arrival":0,"ordinal":2,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"FS_B1","caller_id":"FB","arrival":0,"ordinal":3,"service":2,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"FS_A1a","caller_id":"FA","arrival":0,"ordinal":4,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"FS_A1b","caller_id":"FA","arrival":0,"ordinal":5,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null}
+      ],
+      "trusted_parents":{"FA":"A","FB":"B"},"parent_claims":{},"release_times":[]
+    },
+    {
+      "id":"honest_three_principals",
+      "requests":[
+        {"id":"H_A","caller_id":"HA","arrival":0,"ordinal":0,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"H_B","caller_id":"HB","arrival":0,"ordinal":1,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"H_C","caller_id":"HC","arrival":0,"ordinal":2,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null}
+      ],
+      "trusted_parents":{"HA":"A","HB":"B","HC":"C"},"parent_claims":{},"release_times":[]
+    },
+    {
+      "id":"revoked_principal",
+      "requests":[
+        {"id":"R_A0","caller_id":"RA","arrival":0,"ordinal":0,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":0},
+        {"id":"R_B0","caller_id":"RB","arrival":0,"ordinal":1,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"R_B1","caller_id":"RB","arrival":0,"ordinal":2,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"R_B2","caller_id":"RB","arrival":0,"ordinal":3,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"R_B3","caller_id":"RB","arrival":0,"ordinal":4,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null}
+      ],
+      "trusted_parents":{"RA":"A","RB":"B"},"parent_claims":{},"release_times":[]
+    },
+    {
+      "id":"missing_joint_grant",
+      "requests":[
+        {"id":"J_A0","caller_id":"JA","arrival":0,"ordinal":0,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"J_B0","caller_id":"JB","arrival":0,"ordinal":1,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"J_A1","caller_id":"JA","arrival":0,"ordinal":2,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":false,"conflict_free":true,"revoked_at":null},
+        {"id":"J_B1","caller_id":"JB","arrival":0,"ordinal":3,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null}
+      ],
+      "trusted_parents":{"JA":"A","JB":"B"},"parent_claims":{},"release_times":[]
+    },
+    {
+      "id":"false_parent_claim",
+      "requests":[
+        {"id":"F_A0","caller_id":"FA0","arrival":0,"ordinal":0,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"F_B0","caller_id":"FB","arrival":0,"ordinal":1,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"F_A1","caller_id":"FA1","arrival":0,"ordinal":2,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"F_B1","caller_id":"FB","arrival":0,"ordinal":3,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null}
+      ],
+      "trusted_parents":{"FA0":"A","FA1":"A","FB":"B"},"parent_claims":{"FA0":"B"},"release_times":[]
+    },
+    {
+      "id":"mandatory_release",
+      "requests":[
+        {"id":"M_A0","caller_id":"MA","arrival":0,"ordinal":0,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"M_B0","caller_id":"MB","arrival":0,"ordinal":1,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"M_A1","caller_id":"MA","arrival":0,"ordinal":2,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null},
+        {"id":"M_B1","caller_id":"MB","arrival":0,"ordinal":3,"service":1,"deadline":20,"authority_current":true,"fresh":true,"joint_grant":true,"conflict_free":true,"revoked_at":null}
+      ],
+      "trusted_parents":{"MA":"A","MB":"B"},"parent_claims":{},"release_times":[2]
+    }
+  ]
+}
+

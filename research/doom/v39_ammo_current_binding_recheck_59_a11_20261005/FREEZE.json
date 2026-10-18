@@ -1,0 +1,22 @@
+{
+  "format": "issue59-v39-ammo-current-binding-a11-freeze-v1",
+  "current_main": "3dbbda05eb8d5067ee2c2969615e472a0f20f562",
+  "pre_fix_commit": "c6f310ffde6d6e697f668c5a822b1f57fe06497c",
+  "fixed_contract_commit": "9707310d203e04591d3648debda2733e475b53aa",
+  "tested_head": "048b10d9a91a81b026a8b097da50322160603e2c",
+  "source_sha256": {
+    "research/doom/doom_action_validity_contract_v1.py": "1aeb8443816c81e6417b6dd770fe40616150887ff6f637042b6a8216ef84568c",
+    "research/doom/map01_overlap_controller_v39.py": "98cd5964af2d439cb1c94dcdd1c3f6b66b3618cde956a2e91a3665ab4f92eb9d",
+    "research/doom/test_doom_action_validity_exact_binding_v1.py": "50a5b6c74206435f07d216072055e5044acf8ce958db450b7ef7e94975f6c057",
+    "research/doom/test_doom_action_validity_contract_v1.py": "5f90c04d7097101e28ce0d51e3ef5c7ffa45d593f934b0db4a3e8e35f4fe2f7f",
+    "research/doom/test_map01_overlap_controller_v39_pair_duplicate_consistency.py": "119dd23bfc537a7754365accc08a92b5c077bdc2ce4b455964edd541c4316167",
+    "research/doom/test_map01_overlap_controller_v39_dual_signal.py": "d8f2bac98b33447b5fec941f45cde1fc5877a112c9fc7d565e1b10cc459bfcd1",
+    "research/doom/test_map01_overlap_controller_v39.py": "924b62b7c078422f5525435f75bcda82a77db37eca103384dec58ef48a83a882",
+    "research/doom/test_overlap_controller_v39_wait.py": "efe87ade28fea5130fe53dc3bd8d5416b92a1fbd74f52ba7d9063a07d15be618",
+    "research/doom/test_source_refresh_v1.py": "3dd0662069421679a8257db012088fed9266d88835a8363e08a00d1f083bbab7"
+  },
+  "runtime": "CPython 3.14 via uv with Pillow, NumPy, and python-xlib dependencies",
+  "formal_live_allocation_invocations": 0,
+  "decision_gate": "The current-admission regression fails on the pre-fix controller and passes on the fixed head; all 49 focused tests pass; changed Python files compile; git diff --check is clean.",
+  "scope": "synthetic source/current signals only; no live game or task-effect evidence"
+}

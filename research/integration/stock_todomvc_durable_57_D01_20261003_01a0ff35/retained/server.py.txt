@@ -1,0 +1,25 @@
+import pathlib,http.server,socket,time,json,datetime,hashlib,os
+R=pathlib.Path(__file__).resolve().parent;root=R/'site';stop=False;requests=[]
+class Handler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self,*a,**k):super().__init__(*a,directory=str(root),**k)
+    def log_message(self,format,*a):pass
+    def do_GET(self):
+        global stop
+        requests.append({'path':self.path,'utc':datetime.datetime.now(datetime.timezone.utc).isoformat()})
+        if len(requests)>64:stop=True;self.send_error(429);return
+        if self.path=='/__stop':
+            b=b'D01 owned server stopped';self.send_response(200);self.end_headers();self.wfile.write(b);stop=True
+        else:super().do_GET()
+class Exclusive(http.server.HTTPServer):
+    allow_reuse_address=False
+    def server_bind(self):self.socket.setsockopt(socket.SOL_SOCKET,socket.SO_EXCLUSIVEADDRUSE,1);super().server_bind()
+server=Exclusive(('127.0.0.1',62024),Handler);server.timeout=.25
+print(json.dumps({'kind':'START','pid':os.getpid(),'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'origin':'http://127.0.0.1:62024','timeout_s':120}),flush=True)
+deadline=time.monotonic()+120
+try:
+    while not stop and time.monotonic()<deadline:server.handle_request()
+finally:
+    server.server_close()
+    (R/'SERVER_REQUESTS.json').write_text(json.dumps(requests,indent=2),encoding='utf-8')
+    pins=json.loads((R/'SOURCE.json').read_bytes())['files'];same=all(hashlib.sha256((R/x['path']).read_bytes()).hexdigest()==x['sha256'] for x in pins)
+    print(json.dumps({'kind':'FINAL','utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'socket_fd':server.socket.fileno(),'explicit_stop':stop,'source_unchanged':same,'requests':len(requests)}),flush=True)

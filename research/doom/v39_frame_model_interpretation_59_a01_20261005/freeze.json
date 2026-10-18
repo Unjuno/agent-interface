@@ -1,0 +1,70 @@
+{
+  "freeze_version": 1,
+  "frozen_at_utc": "2026-10-05T04:34:03.569777+00:00",
+  "issue": 59,
+  "allocation": "v39-frame-model-interpretation-59-a01-20261005",
+  "source_main_commit": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "input": {
+    "source_repo_path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/200.png",
+    "source_png_path": "source.png",
+    "png_sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+    "source_events_path": "source_events.jsonl",
+    "source_events_sha256": "00be5954201dcd78912934775cdf5e606c17a7240d01e5a782e8dd331d359818",
+    "sequence": 200,
+    "observation_id": "cover-5",
+    "program_step_index": 7,
+    "program_sha256": "4dadb62c53840d0dad2cc29451202f40a038de954c0d4c11f34ba7b737a15b6e",
+    "dimensions_px": [
+      1280,
+      800
+    ],
+    "decoded_rgb_sha256": "7731f923af45dce8dec01270372f18edce3633e626f3b02a0c43439eec745f1c",
+    "independent_visual_annotation": {
+      "visible_hostile": true,
+      "visible_hostile_count": 1
+    },
+    "typed_hud_reference": {
+      "health": 51,
+      "ammo": 38
+    }
+  },
+  "candidate": {
+    "client": "codex-cli 0.146.1",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "invocations": 1,
+    "ephemeral_session": true,
+    "model_generated_shell_sandbox": "read-only",
+    "game_or_gui_actions": false,
+    "retry_policy": "no retry; preserve first outcome",
+    "prompt_path": "prompt.txt",
+    "prompt_sha256": "a8abe3f41f472aca178528af0b9c26a03cd38cc31c4c67ad41878891cc341754",
+    "output_schema_path": "output.schema.json",
+    "output_schema_sha256": "b1d6abbd374c89d4850550a4aa2f2bcfa29bd854444309a857e55af2d005aca3",
+    "command": "python3 run_once.py (runner invokes one frozen codex exec command and records argv/stdout/stderr/exit status under raw/)",
+    "runner_sha256": "88fac8f128d874944994da577585ba20c7a1e1e7a3b06fd48418c4f6f24ad86d",
+    "auditor_sha256": "aed308f5fe8881567c8282347ac928ff858fac245b9024a46f6d49af10dffdfa",
+    "execution_environment": "macOS host Codex CLI; remote model inference required; no game/controller/GUI interaction",
+    "tool_call_policy": "Prompt forbids tool use. The CLI runs with read-only sandbox; any non-message item in JSONL makes the audit STOP."
+  },
+  "decision": {
+    "pass": "CLI exits 0, final response conforms to frozen JSON schema, visible_hostile is true, health is 51, and ammo is 38",
+    "fail": "completed response is schema-valid but any of the three scored values is wrong",
+    "stop": "CLI/model/service failure, malformed/schema-invalid response, missing final response, or incomplete raw evidence; do not repeat this allocation",
+    "recommendation": "record CONTINUE/STOP_OR_SWITCH/UNCERTAIN but do not score it or execute it"
+  },
+  "scope_limits": [
+    "one retained screenshot",
+    "one CLI invocation",
+    "no live game or controller",
+    "no action-effect, responsiveness, latency-benefit, or completion claim"
+  ],
+  "duplicate_review": {
+    "reviewed_at_utc": "2026-10-05T04:34:03.569777+00:00",
+    "issue_59_state": "OPEN",
+    "issue_59_updated_at": "2026-10-05T04:23:48Z",
+    "pr_7950": "OPEN; synthetic frame-identity/API boundary, no pixels or threat classifier; distinct from this actual-frame model-interpretation probe.",
+    "pr_7913": "OPEN; frame-color proxy and typed-health composition evidence without model or GUI; distinct from this selected-model interpretation probe.",
+    "pr_7927": "OPEN; retrospective Astra video review, no model or current-main V39 live threat exposure; distinct input/method."
+  }
+}

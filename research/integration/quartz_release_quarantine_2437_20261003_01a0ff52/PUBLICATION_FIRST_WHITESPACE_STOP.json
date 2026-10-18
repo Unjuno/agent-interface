@@ -1,0 +1,16 @@
+{
+  "kind": "retained_raw_log_whitespace_failure_not_scientific_or_runtime_failure",
+  "archive_commit": "e06e9a333ce77cd1632777fd6d8c63606d9da4df",
+  "command": [
+    "/run/current-system/sw/bin/git",
+    "diff",
+    "--check",
+    "2e242f0fc8e73279a76d8e873439350b434cce9e",
+    "e06e9a333ce77cd1632777fd6d8c63606d9da4df"
+  ],
+  "observed_diagnostic_exit_code": 2,
+  "stdout": "research/integration/quartz_release_quarantine_2437_20261003_01a0ff52/checks/baseline/stderr.txt:5: trailing whitespace.\n+test_malformed_or_contradictory_release_cannot_complete (runtime.backends.quartz_v1.test_release_quarantine.QuartzReleaseQuarantineTests.test_malformed_or_contradictory_release_cannot_complete) ... \n",
+  "stderr": "",
+  "original_tool_check": "cached diff check also reported this exact raw unittest trailing-space line before the initial60file commit; shell command sequence then continued to commit, terminal outerexit0 was not check success",
+  "resolution": "Keep raw bytes; apply package-local whitespace exception only to captured stderr streams. Source/docs retain checks; no producer/test or native/formal replay."
+}

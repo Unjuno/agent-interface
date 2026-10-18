@@ -23,7 +23,9 @@ class MappingBoundaryTests(unittest.TestCase):
             return result
         backend.d.query_keymap.side_effect=query
         backend.root.query_pointer.return_value=SimpleNamespace(mask=0)
-        backend._keycode=lambda name:mapping['code']
+        # Keep the held letter distinct from the later chord: this test
+        # exercises a map change, not a pre-existing physical-key collision.
+        backend._keycode=lambda name:{'CTRL':37,'s':39}.get(name,mapping['code'])
         backend._text_plan=mock.Mock(return_value=[])
         backend.text=mock.Mock()
         def emit(display,kind,code):

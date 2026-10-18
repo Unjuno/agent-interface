@@ -1,0 +1,58 @@
+{
+  "allocation": "MRT-7834-A03-20261005",
+  "base_audit": true,
+  "oracle_proximal": 1,
+  "oracle_distal": -2,
+  "no_carryover_unweighted": 1.4999999999999996,
+  "no_history_propensity_weighted": 1,
+  "executed_only": 4,
+  "expected_rows": 30,
+  "observed_rows": 30,
+  "mutation_count": 11,
+  "mutations": [
+    {
+      "id": "wrong_allocation",
+      "rejected": true
+    },
+    {
+      "id": "drop_row",
+      "rejected": true
+    },
+    {
+      "id": "wrong_propensity",
+      "rejected": true
+    },
+    {
+      "id": "wrong_proximal",
+      "rejected": true
+    },
+    {
+      "id": "wrong_distal",
+      "rejected": true
+    },
+    {
+      "id": "claim_task_success_from_proximal",
+      "rejected": true
+    },
+    {
+      "id": "post_treatment_eligibility",
+      "rejected": true
+    },
+    {
+      "id": "wrong_no_carryover_contrast",
+      "rejected": true
+    },
+    {
+      "id": "zero_support_gate",
+      "rejected": true
+    },
+    {
+      "id": "missing_window_gate",
+      "rejected": true
+    },
+    {
+      "id": "interference_gate",
+      "rejected": true
+    }
+  ]
+}

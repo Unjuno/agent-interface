@@ -1,0 +1,267 @@
+{
+  "cells": [
+    {
+      "arm": "original",
+      "case": "unavailable",
+      "cost_tag": {
+        "type": "none"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "b78ca3baa528c1f71ad97135ac5f5cf3743100299d85adfbb54be9f405c0769e"
+    },
+    {
+      "arm": "original",
+      "case": "zero",
+      "cost_tag": {
+        "type": "int",
+        "decimal": "0"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "ebdf7ef6d72abb6293cbe6c499b1218dc21913457be76f9f6d4bf91158059201"
+    },
+    {
+      "arm": "original",
+      "case": "integer",
+      "cost_tag": {
+        "type": "int",
+        "decimal": "3"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "e8a22fd5e3e0b8d08237f52c4cf159875ee6174efa20239cb865db67258efd5a"
+    },
+    {
+      "arm": "original",
+      "case": "fraction",
+      "cost_tag": {
+        "type": "float",
+        "hex": "0x1.0000000000000p-3"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "e970d5d521c96fb414fe3da5c9a6097225422f6664810b8b79ea5395db8e2ef5"
+    },
+    {
+      "arm": "original",
+      "case": "finite_credit",
+      "cost_tag": {
+        "type": "float",
+        "hex": "-0x1.0000000000000p-3"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "ab97fc2b04e504290c48eeb0e038621765241bbccd493179f716109a4be738bd"
+    },
+    {
+      "arm": "original",
+      "case": "large_integer",
+      "cost_tag": {
+        "type": "int",
+        "decimal": "32317006071311007300714876688669951960444102669715484032130345427524655138867890893197201411522913463688717960921898019494119559150490921095088152386448283120630877367300996091750197750389652106796057638384067568276792218642619756161838094338476170470581645852036305042887575891541065808607552399123930385521914333389668342420684974786564569494856176035326322058077805659331026192708460314150258592864177116725943603718461857357598351152301645904403697613233287231227125684710820209725157101726931323469678542580656697935045997268352998638215525166389437335543602135433229604645318478604952148193555853611059596230656"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "f9e942c194cc06d2eead9a872bdbbf4916c92ef562984107476d1160c604d794"
+    },
+    {
+      "arm": "original",
+      "case": "false_bool",
+      "cost_tag": {
+        "type": "bool",
+        "value": false
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "22ee1709ea36c6dfda913939f7a0e9628af6f10ca76cc51b79137acb46060475"
+    },
+    {
+      "arm": "original",
+      "case": "true_bool",
+      "cost_tag": {
+        "type": "bool",
+        "value": true
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "e88555c401d1c1fe1cdf915ad004431859ef779f1eff69885999aa087895fb92"
+    },
+    {
+      "arm": "original",
+      "case": "nan",
+      "cost_tag": {
+        "type": "float",
+        "hex": "nan"
+      },
+      "accepted": true,
+      "strict_json_representable": false,
+      "input_sha256": "5c9289486ef72f576b38eda7182336f7f20ac5bc9ee29aa743da155c3d49765d"
+    },
+    {
+      "arm": "original",
+      "case": "positive_infinity",
+      "cost_tag": {
+        "type": "float",
+        "hex": "inf"
+      },
+      "accepted": true,
+      "strict_json_representable": false,
+      "input_sha256": "9cca369aaf18c3af30bdb101b1994ef3cf0783f0aedb85c5ca127ec852650111"
+    },
+    {
+      "arm": "original",
+      "case": "negative_infinity",
+      "cost_tag": {
+        "type": "float",
+        "hex": "-inf"
+      },
+      "accepted": true,
+      "strict_json_representable": false,
+      "input_sha256": "065e5ed0d866238949382bc77813c4b124b136c72a66291aad164822352ce913"
+    },
+    {
+      "arm": "original",
+      "case": "numeric_string",
+      "cost_tag": {
+        "type": "str",
+        "value": "0.125"
+      },
+      "accepted": false,
+      "strict_json_representable": true,
+      "input_sha256": "25ce9506301c7c99852f92c4adddc50dd2f6b8147ee497f515a3cd1efabb370c"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "unavailable",
+      "cost_tag": {
+        "type": "none"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "b78ca3baa528c1f71ad97135ac5f5cf3743100299d85adfbb54be9f405c0769e"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "zero",
+      "cost_tag": {
+        "type": "int",
+        "decimal": "0"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "ebdf7ef6d72abb6293cbe6c499b1218dc21913457be76f9f6d4bf91158059201"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "integer",
+      "cost_tag": {
+        "type": "int",
+        "decimal": "3"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "e8a22fd5e3e0b8d08237f52c4cf159875ee6174efa20239cb865db67258efd5a"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "fraction",
+      "cost_tag": {
+        "type": "float",
+        "hex": "0x1.0000000000000p-3"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "e970d5d521c96fb414fe3da5c9a6097225422f6664810b8b79ea5395db8e2ef5"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "finite_credit",
+      "cost_tag": {
+        "type": "float",
+        "hex": "-0x1.0000000000000p-3"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "ab97fc2b04e504290c48eeb0e038621765241bbccd493179f716109a4be738bd"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "large_integer",
+      "cost_tag": {
+        "type": "int",
+        "decimal": "32317006071311007300714876688669951960444102669715484032130345427524655138867890893197201411522913463688717960921898019494119559150490921095088152386448283120630877367300996091750197750389652106796057638384067568276792218642619756161838094338476170470581645852036305042887575891541065808607552399123930385521914333389668342420684974786564569494856176035326322058077805659331026192708460314150258592864177116725943603718461857357598351152301645904403697613233287231227125684710820209725157101726931323469678542580656697935045997268352998638215525166389437335543602135433229604645318478604952148193555853611059596230656"
+      },
+      "accepted": true,
+      "strict_json_representable": true,
+      "input_sha256": "f9e942c194cc06d2eead9a872bdbbf4916c92ef562984107476d1160c604d794"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "false_bool",
+      "cost_tag": {
+        "type": "bool",
+        "value": false
+      },
+      "accepted": false,
+      "strict_json_representable": true,
+      "input_sha256": "22ee1709ea36c6dfda913939f7a0e9628af6f10ca76cc51b79137acb46060475"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "true_bool",
+      "cost_tag": {
+        "type": "bool",
+        "value": true
+      },
+      "accepted": false,
+      "strict_json_representable": true,
+      "input_sha256": "e88555c401d1c1fe1cdf915ad004431859ef779f1eff69885999aa087895fb92"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "nan",
+      "cost_tag": {
+        "type": "float",
+        "hex": "nan"
+      },
+      "accepted": false,
+      "strict_json_representable": false,
+      "input_sha256": "5c9289486ef72f576b38eda7182336f7f20ac5bc9ee29aa743da155c3d49765d"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "positive_infinity",
+      "cost_tag": {
+        "type": "float",
+        "hex": "inf"
+      },
+      "accepted": false,
+      "strict_json_representable": false,
+      "input_sha256": "9cca369aaf18c3af30bdb101b1994ef3cf0783f0aedb85c5ca127ec852650111"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "negative_infinity",
+      "cost_tag": {
+        "type": "float",
+        "hex": "-inf"
+      },
+      "accepted": false,
+      "strict_json_representable": false,
+      "input_sha256": "065e5ed0d866238949382bc77813c4b124b136c72a66291aad164822352ce913"
+    },
+    {
+      "arm": "private_candidate",
+      "case": "numeric_string",
+      "cost_tag": {
+        "type": "str",
+        "value": "0.125"
+      },
+      "accepted": false,
+      "strict_json_representable": true,
+      "input_sha256": "25ce9506301c7c99852f92c4adddc50dd2f6b8147ee497f515a3cd1efabb370c"
+    }
+  ],
+  "full_raw_in_packet": true
+}

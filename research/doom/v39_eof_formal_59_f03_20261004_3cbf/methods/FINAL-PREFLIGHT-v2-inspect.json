@@ -1,0 +1,226 @@
+[
+    {
+        "Id": "86c385af98a6d29a819718acf04fcd609e2ecdbb47e17b400a7dc235a1f30524",
+        "Created": "2026-10-04T00:56:55.281902055Z",
+        "Path": "/bin/sh",
+        "Args": [
+            "-c",
+            "set -eu; archive_sha=$(sha256sum /input.tar); printf \"%s\\n\" \"$archive_sha\"; test \"${archive_sha%% *}\" = f175219bf56bcbf7c8664e4b4737fec03b3f57b425db07de6cf387b8aeb11119; mkdir -p /tmp/input; tar xf /input.tar -C /tmp/input; cd /tmp/input; sha256sum research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit_saved.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/PROTOCOL.md research/doom/v39_eof_formal_59_f03_20261004_3cbf/CUSTODY_PROTOCOL.md research/doom/v39_eof_59_f02_20261004_3cbf/candidate.py research/doom/v39_os_pipe_59_f01_20261004_3cbf/probe.py research/doom/v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz; id; cat /sys/fs/cgroup/cpu.max /sys/fs/cgroup/memory.max /sys/fs/cgroup/memory.swap.max /sys/fs/cgroup/pids.max; test \"$(cat /sys/fs/cgroup/cpu.max)\" = \"100000 100000\"; test \"$(cat /sys/fs/cgroup/memory.max)\" = \"1073741824\"; test \"$(cat /sys/fs/cgroup/memory.swap.max)\" = \"0\"; test \"$(cat /sys/fs/cgroup/pids.max)\" = \"128\""
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-04T00:56:55.408904797Z",
+            "FinishedAt": "2026-10-04T00:56:55.484367749Z"
+        },
+        "Image": "sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b",
+        "ResolvConfPath": "/var/lib/docker/containers/86c385af98a6d29a819718acf04fcd609e2ecdbb47e17b400a7dc235a1f30524/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/86c385af98a6d29a819718acf04fcd609e2ecdbb47e17b400a7dc235a1f30524/hostname",
+        "HostsPath": "/var/lib/docker/containers/86c385af98a6d29a819718acf04fcd609e2ecdbb47e17b400a7dc235a1f30524/hosts",
+        "LogPath": "/var/lib/docker/containers/86c385af98a6d29a819718acf04fcd609e2ecdbb47e17b400a7dc235a1f30524/86c385af98a6d29a819718acf04fcd609e2ecdbb47e17b400a7dc235a1f30524-json.log",
+        "Name": "/f03-final-preflight-bd0177147a",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,nosuid,size=256m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 1073741824,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 1073741824,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 128,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/home/taka/f03-final-preflight-bd0177147a/input.tar",
+                    "Target": "/input.tar",
+                    "ReadOnly": true
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/home/taka/f03-final-preflight-bd0177147a/input.tar",
+                "Destination": "/input.tar",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "86c385af98a6",
+            "Domainname": "",
+            "User": "501:501",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.15",
+                "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "set -eu; archive_sha=$(sha256sum /input.tar); printf \"%s\\n\" \"$archive_sha\"; test \"${archive_sha%% *}\" = f175219bf56bcbf7c8664e4b4737fec03b3f57b425db07de6cf387b8aeb11119; mkdir -p /tmp/input; tar xf /input.tar -C /tmp/input; cd /tmp/input; sha256sum research/doom/v39_eof_formal_59_f03_20261004_3cbf/runner.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/audit_saved.py research/doom/v39_eof_formal_59_f03_20261004_3cbf/PROTOCOL.md research/doom/v39_eof_formal_59_f03_20261004_3cbf/CUSTODY_PROTOCOL.md research/doom/v39_eof_59_f02_20261004_3cbf/candidate.py research/doom/v39_os_pipe_59_f01_20261004_3cbf/probe.py research/doom/v39_native_fault_59_e05_20261004_3cbf/source-closure.tar.gz; id; cat /sys/fs/cgroup/cpu.max /sys/fs/cgroup/memory.max /sys/fs/cgroup/memory.swap.max /sys/fs/cgroup/pids.max; test \"$(cat /sys/fs/cgroup/cpu.max)\" = \"100000 100000\"; test \"$(cat /sys/fs/cgroup/memory.max)\" = \"1073741824\"; test \"$(cat /sys/fs/cgroup/memory.swap.max)\" = \"0\"; test \"$(cat /sys/fs/cgroup/pids.max)\" = \"128\""
+            ],
+            "Image": "sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b",
+            "Volumes": null,
+            "WorkingDir": "/tmp",
+            "Entrypoint": null,
+            "Labels": {
+                "owner": "01a0b98d-3cbf-7710-b1a4-28c16e0b49da",
+                "stage": "setup-only"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "713bb17855a91ad0e3ae7c9d01e85c9126d83e364c9ead60d026b0cf2a89dfa4",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:560af28c711a2bf94cf9bedef4f5e47b26f86ea5bc79211c603addb74237540b",
+            "size": 1839,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]

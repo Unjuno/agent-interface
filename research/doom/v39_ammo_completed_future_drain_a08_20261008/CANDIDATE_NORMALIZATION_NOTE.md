@@ -1,0 +1,3 @@
+# A08 candidate whitespace correction
+
+The one-shot candidate was executed once with the exact original bytes preserved in Git commit `9c77f1df8ba32301eb49793b372cbfb3947553c0` at `research/doom/v39_ammo_completed_future_drain_a08_20261008/candidate.py` (SHA-256 `1f027419cc2c7a49b64049c7f9beaeceb3bf26cee594ed0554508706ed72a0f1`). The original `MANIFEST.json` and `MANIFEST_V2.json` remain unchanged and record that candidate version. The current `candidate.py` has only terminal blank lines removed (SHA-256 `efc351f6caf319703e47dc45fd6923da54d11a255e630a2891d2924d8768880b`); it was not rerun. `MANIFEST_V3.json` records both identities.

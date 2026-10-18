@@ -1,0 +1,77 @@
+{
+  "captures": 72,
+  "captures_per_state": {
+    "s0": 24,
+    "s1": 24,
+    "s2": 24
+  },
+  "channels_per_capture": [
+    "accessibility_snapshot.txt",
+    "full_png.png",
+    "left_roi_png.png",
+    "mutation_delta.json",
+    "right_roi_png.png"
+  ],
+  "disposition": "HOLD_NO_SAFE_ACTION_EFFECT_LABELS",
+  "independent_safe_action_or_effect_labels": false,
+  "limits": [
+    "one authored deterministic static browser fixture; repetitions are technical, not independent GUI samples",
+    "capture identity groups the five channel artifacts but no capture timestamp is retained in manifest rows",
+    "no independently labeled safe next-action or measured action/effect outcome is present in per-capture rows",
+    "loss matrices define hypothetical decision costs; they are not observed action effects",
+    "no model, real application, Agent Interface runtime, safety, latency, acquisition-cost, or product inference"
+  ],
+  "old_audit_scope": "prior raw-only audit record reports 72/72 and zero errors; original 360 artifact bytes not re-downloaded",
+  "paired_same_capture_modalities": true,
+  "prior_report_mentions_no_action_effect": false,
+  "researcher_authored_loss_matrices_present": true,
+  "schema": "issue7712_t1_retained_data_feasibility_v1",
+  "source_blob_checks": [
+    {
+      "expected": "8a2ad6369a8e0eb03232350c6b49165fbb61426f",
+      "observed": "8a2ad6369a8e0eb03232350c6b49165fbb61426f",
+      "pass": true,
+      "path": "research/analysis/blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/formal_01/raw/manifest.json"
+    },
+    {
+      "expected": "b165bcc5d58a6a8c82fea72fe39742e48d91af2a",
+      "observed": "b165bcc5d58a6a8c82fea72fe39742e48d91af2a",
+      "pass": true,
+      "path": "research/analysis/blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/schedule.json"
+    },
+    {
+      "expected": "bf447f6100b1d999803b49fe034f184844562f0f",
+      "observed": "bf447f6100b1d999803b49fe034f184844562f0f",
+      "pass": true,
+      "path": "research/analysis/blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/states.json"
+    },
+    {
+      "expected": "802c34b40c747767daa7ab4a6cdfc4a0713f155c",
+      "observed": "802c34b40c747767daa7ab4a6cdfc4a0713f155c",
+      "pass": true,
+      "path": "research/analysis/blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/FREEZE.json"
+    },
+    {
+      "expected": "8958a50729e382e960f13897701dd49d5efa6a82",
+      "observed": "8958a50729e382e960f13897701dd49d5efa6a82",
+      "pass": true,
+      "path": "research/analysis/blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/formal_01/audit/audit.json"
+    },
+    {
+      "expected": "ae77d0878cbd147ba4b80c6659369d15693b6226",
+      "observed": "ae77d0878cbd147ba4b80c6659369d15693b6226",
+      "pass": true,
+      "path": "research/analysis/blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/REPORT.md"
+    }
+  ],
+  "source_commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "state_oracle_independent_of_model": "yes; authored fixture RGB/state oracle, no model evaluated",
+  "timestamp_or_capture_epoch_field_in_manifest": false,
+  "unique_artifact_hashes_per_channel": {
+    "accessibility_snapshot.txt": 3,
+    "full_png.png": 3,
+    "left_roi_png.png": 2,
+    "mutation_delta.json": 1,
+    "right_roi_png.png": 2
+  }
+}

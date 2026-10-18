@@ -99,10 +99,15 @@ def main() -> int:
         action="store_true",
         help="rewrite the generated retained-result/failure/STOP directory block in README.md",
     )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="require complete index membership even in a sparse checkout",
+    )
     args = parser.parse_args()
 
     names = retained_result_dirs()
-    sparse = checkout_is_sparse()
+    sparse = checkout_is_sparse() and not args.strict
     current = README.read_text(encoding="utf-8")
     expected = with_generated_block(current, render_block(names))
 

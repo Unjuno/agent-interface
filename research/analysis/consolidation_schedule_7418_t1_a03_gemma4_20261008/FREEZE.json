@@ -1,0 +1,93 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A03-GEMMA4-20261008",
+  "base_main_sha": "08d3283f6d3c61cc6b032c6c9c5a63ec464c07ff",
+  "branch": "research/8406-schedule-t1-a03-running-digest-20261008",
+  "commands": [
+    "python3 -m unittest discover -s research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008 -p 'test_*.py' -v",
+    "python3 -B research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/candidate.py --package research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008 --raw research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/results/FORMAL_T1_A03/RAW.jsonl --model-digest c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb > research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/results/FORMAL_T1_A03/candidate.stdout.txt 2> research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/results/FORMAL_T1_A03/candidate.stderr.txt",
+    "python3 -B research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/auditor.py research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/results/FORMAL_T1_A03/RAW.jsonl research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/queries.json research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/episode_ledger.json --model-digest c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb --output research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/results/FORMAL_T1_A03/AUDIT.json > research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/results/FORMAL_T1_A03/auditor.stdout.txt 2> research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/results/FORMAL_T1_A03/auditor.stderr.txt"
+  ],
+  "companion_to": 7418,
+  "construction_tests": "4/4 PASS before freeze; no A03 model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED for a >=0.10 paired exact-accuracy difference with same direction for one schedule contrast in all 3 seeds and a clean independent audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED if all pairwise abs differences are <0.10 for every seed and audit passes; otherwise UNCERTAIN; raw/model/method integrity failure => FAIL_METHOD",
+  "delta_from_T1_A02": [
+    "fresh seed set 4301/4302/4303",
+    "check exact loaded runner digest via /api/ps before and after each call instead of mutable installed-tag enumeration",
+    "request model name uses the currently loaded runner alias gemma4:e4b"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 256,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4301,
+      4302,
+      4303
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PROTOCOL.md": "7dc240c6b454a4f3d5d6ba3edeef130826623d4352b95ada041f03437bce0b7d",
+    "README.md": "55ee58b1bc0c3a92a849f2898422725693ae49ff14c9bdff68d95d4f0aaa02b8",
+    "auditor.py": "e8877084154a9afbb325245994df85253c92804689d91664c91108110bf69806",
+    "candidate.py": "477ed6674b8d403a1ad5f3e64c6b233928856c63e19d32965bbdabcf16f0f900",
+    "episode_ledger.json": "1d561a56c29db15a4777f406c8189f0a16c9a746eeab9dceb404cd3b038fde88",
+    "prompts.json": "7ac8c338b8b47fb45ec63d9b028161c2fa492d6689a5c8580540667689591404",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "4c6434d52c35629ae4c8d3ddcb95242bba6a91a99b2007af553a4e56d6540836"
+  },
+  "identity_gate": "GET /api/ps must show exactly one gemma4:e4b runner at the frozen digest before and after every generation; response rows retain both observed digests. The installed tag list is not used as the loaded-process identity gate.",
+  "issue": 8406,
+  "model": {
+    "host": "127.0.0.1:11434",
+    "ollama_version": "0.40.0",
+    "parameters": "8.0B",
+    "quantization": "Q4_K_M",
+    "request_name": "gemma4:e4b",
+    "running_process_digest": "c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb",
+    "running_process_name": "gemma4:e4b",
+    "size_bytes": 9638940507
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008",
+  "pre_freeze_HEAD": "7ec9ef6ae38f6b7b2f560bf1b69c0f175d86720e",
+  "predecessor_stop_commits": [
+    "73381cfd7e",
+    "7ec9ef6ae3"
+  ],
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/results/FORMAL_T1_A03/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local Ollama model boundary",
+    "gui": "none",
+    "network": "runner calls loopback only; no external API",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  }
+}

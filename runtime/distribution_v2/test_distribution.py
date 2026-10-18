@@ -189,6 +189,32 @@ print('archive method passed without optional dependencies')
                 self.assertFalse(support["wayland"]["promoted"])
             self.assertFalse(any("test" in name.lower() or "fixture" in name.lower() or "research" in name.lower() for name in expected))
 
+    def test_portable_archive_includes_guarded_win32_api_and_dependency(self):
+        root = Path(__file__).resolve().parents[2]
+        guarded_sources = {
+            "runtime/guarded_win32_v1/__init__.py",
+            "runtime/guarded_win32_v1/bridge.py",
+            "runtime/guarded_win32_v1/effect.py",
+            "runtime/guarded_win32_v1/fresh.py",
+            "runtime/guarded_win32_v1/pixel_worker.py",
+            "runtime/guarded_win32_v1/reference.py",
+            "runtime/guarded_win32_v1/retained.py",
+            "runtime/guarded_win32_v1/supervisor.py",
+            "runtime/guarded_win32_v1/worker_effect.py",
+        }
+        with tempfile.TemporaryDirectory() as td:
+            td = Path(td)
+            archive_path = td / "runtime.pyz"
+            build(root, archive_path, td / "manifest.json", td / "sum")
+            with zipfile.ZipFile(archive_path) as archive:
+                missing = sorted(guarded_sources - set(archive.namelist()))
+                self.assertEqual(missing, [])
+                support = json.loads(archive.read("SUPPORT.json"))
+                self.assertEqual(
+                    support["optional_dependencies"]["guarded_win32_python_api"],
+                    ["Pillow"],
+                )
+
     def test_malformed_targets_fail_before_native_backend(self):
         root = Path(__file__).resolve().parents[2]
         with tempfile.TemporaryDirectory() as td:

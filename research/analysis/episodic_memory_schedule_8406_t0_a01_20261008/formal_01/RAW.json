@@ -1,0 +1,1978 @@
+{
+  "fixture_sha256": "1c8b74dfdd8ec7c5a5950133709ae95e40cc687edb12ac128d66f696c79e54fb",
+  "query_dependencies": {
+    "contradictory": [
+      "conflict-safe",
+      "conflict-forbidden"
+    ],
+    "heldout-04": [
+      "safe-01",
+      "safe-02",
+      "safe-03",
+      "safe-04",
+      "safe-05",
+      "safe-06",
+      "safe-07",
+      "safe-08",
+      "safe-specificity"
+    ],
+    "protected-heldout": [
+      "exception-protected"
+    ],
+    "unrepresented": []
+  },
+  "schedules": {
+    "batch_4": {
+      "query_visibility": [
+        {
+          "available_episode_ids": [],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 3,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": null,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "PARTIAL",
+          "latest_update_prefix": 4,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 4,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 4,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": 4,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "PARTIAL",
+          "latest_update_prefix": 8,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 8,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 8,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": 8,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": [
+            "exception-protected"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": 12,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        }
+      ],
+      "updates": [
+        {
+          "after_episode": 4,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            }
+          ]
+        },
+        {
+          "after_episode": 8,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            },
+            {
+              "id": "safe-08",
+              "sha256": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964"
+            }
+          ]
+        },
+        {
+          "after_episode": 12,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            },
+            {
+              "id": "safe-08",
+              "sha256": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964"
+            },
+            {
+              "id": "safe-specificity",
+              "sha256": "65449bc28836a620360cb0852389de499c1cf914b2e257622b5e8a9f569ef8b4"
+            },
+            {
+              "id": "exception-protected",
+              "sha256": "edfa06b780ca76cff256031eb59487ab5bbff893665cabc178523dacf5c93301"
+            },
+            {
+              "id": "conflict-safe",
+              "sha256": "a53aaaa61a793c134c1877d3d2044489627d7781fd6bc1651071045f1b49af4f"
+            },
+            {
+              "id": "conflict-forbidden",
+              "sha256": "6e797722deb5f271edf5231078b380440de68a4b01f4e021e9b9a622e6a186f3"
+            }
+          ]
+        }
+      ]
+    },
+    "episodic_only": {
+      "query_visibility": [
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ],
+          "checkpoint": 3,
+          "evidence_state": "PARTIAL",
+          "latest_update_prefix": null,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ],
+          "checkpoint": 3,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": null,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "PARTIAL",
+          "latest_update_prefix": null,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": null,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "FULL",
+          "latest_update_prefix": null,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": null,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": null,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": null,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": [
+            "exception-protected"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": null,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": null,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        }
+      ],
+      "updates": []
+    },
+    "per_episode": {
+      "query_visibility": [
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ],
+          "checkpoint": 3,
+          "evidence_state": "PARTIAL",
+          "latest_update_prefix": 3,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 3,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 3,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03"
+          ],
+          "checkpoint": 3,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": 3,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "PARTIAL",
+          "latest_update_prefix": 6,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 6,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 6,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06"
+          ],
+          "checkpoint": 6,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": 6,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 9,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 9,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": 9,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "checkpoint": 9,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": 9,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": [
+            "exception-protected"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": 12,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        }
+      ],
+      "updates": [
+        {
+          "after_episode": 1,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            }
+          ]
+        },
+        {
+          "after_episode": 2,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            }
+          ]
+        },
+        {
+          "after_episode": 3,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            }
+          ]
+        },
+        {
+          "after_episode": 4,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            }
+          ]
+        },
+        {
+          "after_episode": 5,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            }
+          ]
+        },
+        {
+          "after_episode": 6,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            }
+          ]
+        },
+        {
+          "after_episode": 7,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            }
+          ]
+        },
+        {
+          "after_episode": 8,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            },
+            {
+              "id": "safe-08",
+              "sha256": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964"
+            }
+          ]
+        },
+        {
+          "after_episode": 9,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            },
+            {
+              "id": "safe-08",
+              "sha256": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964"
+            },
+            {
+              "id": "safe-specificity",
+              "sha256": "65449bc28836a620360cb0852389de499c1cf914b2e257622b5e8a9f569ef8b4"
+            }
+          ]
+        },
+        {
+          "after_episode": 10,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            },
+            {
+              "id": "safe-08",
+              "sha256": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964"
+            },
+            {
+              "id": "safe-specificity",
+              "sha256": "65449bc28836a620360cb0852389de499c1cf914b2e257622b5e8a9f569ef8b4"
+            },
+            {
+              "id": "exception-protected",
+              "sha256": "edfa06b780ca76cff256031eb59487ab5bbff893665cabc178523dacf5c93301"
+            }
+          ]
+        },
+        {
+          "after_episode": 11,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            },
+            {
+              "id": "safe-08",
+              "sha256": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964"
+            },
+            {
+              "id": "safe-specificity",
+              "sha256": "65449bc28836a620360cb0852389de499c1cf914b2e257622b5e8a9f569ef8b4"
+            },
+            {
+              "id": "exception-protected",
+              "sha256": "edfa06b780ca76cff256031eb59487ab5bbff893665cabc178523dacf5c93301"
+            },
+            {
+              "id": "conflict-safe",
+              "sha256": "a53aaaa61a793c134c1877d3d2044489627d7781fd6bc1651071045f1b49af4f"
+            }
+          ]
+        },
+        {
+          "after_episode": 12,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            },
+            {
+              "id": "safe-08",
+              "sha256": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964"
+            },
+            {
+              "id": "safe-specificity",
+              "sha256": "65449bc28836a620360cb0852389de499c1cf914b2e257622b5e8a9f569ef8b4"
+            },
+            {
+              "id": "exception-protected",
+              "sha256": "edfa06b780ca76cff256031eb59487ab5bbff893665cabc178523dacf5c93301"
+            },
+            {
+              "id": "conflict-safe",
+              "sha256": "a53aaaa61a793c134c1877d3d2044489627d7781fd6bc1651071045f1b49af4f"
+            },
+            {
+              "id": "conflict-forbidden",
+              "sha256": "6e797722deb5f271edf5231078b380440de68a4b01f4e021e9b9a622e6a186f3"
+            }
+          ]
+        }
+      ]
+    },
+    "terminal": {
+      "query_visibility": [
+        {
+          "available_episode_ids": [],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 3,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 3,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": null,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 6,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 6,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": null,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 9,
+          "evidence_state": "NONE",
+          "latest_update_prefix": null,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [],
+          "checkpoint": 9,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": null,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "heldout-04",
+          "required_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ],
+          "retrieved_source_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "protected-heldout",
+          "required_source_ids": [
+            "exception-protected"
+          ],
+          "retrieved_source_ids": [
+            "exception-protected"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "FULL",
+          "latest_update_prefix": 12,
+          "query_id": "contradictory",
+          "required_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "retrieved_source_ids": [
+            "conflict-safe",
+            "conflict-forbidden"
+          ]
+        },
+        {
+          "available_episode_ids": [
+            "safe-01",
+            "safe-02",
+            "safe-03",
+            "safe-04",
+            "safe-05",
+            "safe-06",
+            "safe-07",
+            "safe-08",
+            "safe-specificity",
+            "exception-protected",
+            "conflict-safe",
+            "conflict-forbidden"
+          ],
+          "checkpoint": 12,
+          "evidence_state": "NO_SOURCE_REQUIRED",
+          "latest_update_prefix": 12,
+          "query_id": "unrepresented",
+          "required_source_ids": [],
+          "retrieved_source_ids": []
+        }
+      ],
+      "updates": [
+        {
+          "after_episode": 12,
+          "episode_refs": [
+            {
+              "id": "safe-01",
+              "sha256": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428"
+            },
+            {
+              "id": "safe-02",
+              "sha256": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583"
+            },
+            {
+              "id": "safe-03",
+              "sha256": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080"
+            },
+            {
+              "id": "safe-04",
+              "sha256": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783"
+            },
+            {
+              "id": "safe-05",
+              "sha256": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a"
+            },
+            {
+              "id": "safe-06",
+              "sha256": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1"
+            },
+            {
+              "id": "safe-07",
+              "sha256": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58"
+            },
+            {
+              "id": "safe-08",
+              "sha256": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964"
+            },
+            {
+              "id": "safe-specificity",
+              "sha256": "65449bc28836a620360cb0852389de499c1cf914b2e257622b5e8a9f569ef8b4"
+            },
+            {
+              "id": "exception-protected",
+              "sha256": "edfa06b780ca76cff256031eb59487ab5bbff893665cabc178523dacf5c93301"
+            },
+            {
+              "id": "conflict-safe",
+              "sha256": "a53aaaa61a793c134c1877d3d2044489627d7781fd6bc1651071045f1b49af4f"
+            },
+            {
+              "id": "conflict-forbidden",
+              "sha256": "6e797722deb5f271edf5231078b380440de68a4b01f4e021e9b9a622e6a186f3"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "schema": "issue8406-schedule-harness-a01-v1",
+  "source_episode_ids": [
+    "safe-01",
+    "safe-02",
+    "safe-03",
+    "safe-04",
+    "safe-05",
+    "safe-06",
+    "safe-07",
+    "safe-08",
+    "safe-specificity",
+    "exception-protected",
+    "conflict-safe",
+    "conflict-forbidden"
+  ],
+  "source_episode_sha256": {
+    "conflict-forbidden": "6e797722deb5f271edf5231078b380440de68a4b01f4e021e9b9a622e6a186f3",
+    "conflict-safe": "a53aaaa61a793c134c1877d3d2044489627d7781fd6bc1651071045f1b49af4f",
+    "exception-protected": "edfa06b780ca76cff256031eb59487ab5bbff893665cabc178523dacf5c93301",
+    "safe-01": "94e315738286dbd138d429800b5ad64c74131fa331b0a0874cebbece8732c428",
+    "safe-02": "0e58bfcc672b978673282c66dd98ff83baddb8c01becf2484af11db7e1b7f583",
+    "safe-03": "3333611f561aae88cf1865b1253b330081ecbfd57dcd1f959081cdbfc293c080",
+    "safe-04": "46702e8693af0094adf63df7cc5110644cbdcd4caa2340fc9784e61a176b6783",
+    "safe-05": "c49fc93448b7737e79947200ce862f106a13b6a6290f4ca1a67c110fe023ab3a",
+    "safe-06": "e93cba3a107dc8d79d1c21a2a52ef5fd5e0e471c70526782baad0e9f8d128cd1",
+    "safe-07": "458a74d9cb033339b8b5df4291073866585332d8be0f14cf4444ea43611b0e58",
+    "safe-08": "d41e75a6cb4f5a5376e3f60c847d2a4383c1888a0a43e887355a54ce215b6964",
+    "safe-specificity": "65449bc28836a620360cb0852389de499c1cf914b2e257622b5e8a9f569ef8b4"
+  }
+}

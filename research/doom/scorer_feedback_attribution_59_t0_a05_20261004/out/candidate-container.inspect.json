@@ -1,0 +1,78 @@
+[
+  {
+    "Config": {
+      "Cmd": [
+        "sh",
+        "-c",
+        "python -m unittest discover -s /src/parents/scorer_feedback_attribution_59_t0_a04_20261004 -v && python /src/tests/test_a05.py && python /src/run_candidate.py"
+      ],
+      "Entrypoint": null,
+      "Env": [
+        "PYTHONDONTWRITEBYTECODE=1",
+        "PYTHONPATH=/src:/src/parents/scorer_feedback_attribution_59_t0_a04_20261004:/src/parents/main",
+        "A05_OUT=/out/candidate.raw.json",
+        "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "LANG=C.UTF-8",
+        "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+        "PYTHON_VERSION=3.12.15",
+        "PYTHON_SHA256=c2c4321961fab0fb999d66e0cecf521c2ab3994c7992873ea99e306c1094fd5a"
+      ],
+      "Healthcheck": null,
+      "Image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+      "Labels": {},
+      "StopTimeout": null,
+      "User": "65534",
+      "WorkingDir": "/src"
+    },
+    "Created": "2026-10-04T14:20:36.158103347Z",
+    "HostConfig": {
+      "Memory": 134217728,
+      "NanoCpus": 1000000000,
+      "NetworkMode": "none",
+      "Ulimits": []
+    },
+    "Id": "1bef6a1377d48b4f55c6d9358cbe3e800d48f7c3dd7a8f1bf1c1333d99b778a4",
+    "Image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "Labels": {},
+    "Mounts": [
+      {
+        "Destination": "/src",
+        "Name": "",
+        "ReadWrite": false,
+        "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\repo\\work\\research-59-scorer-vocab-a05-main-20261004\\research\\doom\\scorer_feedback_attribution_59_t0_a05_20261004",
+        "Type": "bind"
+      },
+      {
+        "Destination": "/out",
+        "Name": "",
+        "ReadWrite": true,
+        "Source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\repo\\work\\research-59-scorer-vocab-a05-main-20261004\\research\\doom\\scorer_feedback_attribution_59_t0_a05_20261004\\out\\candidate",
+        "Type": "bind"
+      }
+    ],
+    "Name": "/ai59-vocab-a05-candidate-20261004",
+    "NetworkSettings": {
+      "Networks": {
+        "none": {
+          "Aliases": [],
+          "DriverOpts": {},
+          "Gateway": "",
+          "IPAMConfig": null,
+          "IPAddress": "",
+          "IPPrefixLen": 0,
+          "Links": [],
+          "MacAddress": ""
+        }
+      }
+    },
+    "Ports": {},
+    "State": {
+      "ExitCode": 0,
+      "FinishedAt": "2026-10-04T14:20:37.753071955Z",
+      "Health": null,
+      "Running": false,
+      "StartedAt": "2026-10-04T14:20:36.447238459Z",
+      "Status": "exited"
+    }
+  }
+]

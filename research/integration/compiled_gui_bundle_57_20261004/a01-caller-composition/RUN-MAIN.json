@@ -1,0 +1,1504 @@
+{
+  "cases": {
+    "outer_effect_unavailable": {
+      "compiled": [
+        {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "stage": 0,
+                "submit_target": true
+              },
+              "outcome": "action",
+              "state": "editing"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "submit",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "submit",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "submit",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "stage": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 73291,
+          "ended_ns": 86770601645791,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "composition-smoke",
+          "latest_evidence_ref": "frame-3",
+          "method": "enter-then-submit",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 86770601573791,
+              "evidence_digest": "d1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "field_changed": false,
+                "stage": 0,
+                "submit_target": true
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 86770601598916,
+              "evidence_digest": "d2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 86770601628875,
+              "evidence_digest": "d3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "field_changed": true,
+                "stage": 2,
+                "submit_target": true
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private-test-double",
+          "started_ns": 86770601572500,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "editing",
+              "matched_conditions": {
+                "stage": 0,
+                "submit_target": true
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "submit",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      ],
+      "journal_events": [
+        {
+          "event": "stage_started",
+          "stage": "reuse_revalidate",
+          "started_ns": 86770601468833
+        },
+        {
+          "ended_ns": 86770601488916,
+          "event": "stage_completed",
+          "stage": "reuse_revalidate"
+        },
+        {
+          "event": "stage_started",
+          "stage": "final_revalidate",
+          "started_ns": 86770601492208
+        },
+        {
+          "ended_ns": 86770601511541,
+          "event": "stage_completed",
+          "stage": "final_revalidate"
+        },
+        {
+          "event": "stage_started",
+          "stage": "execute",
+          "started_ns": 86770601514250
+        },
+        {
+          "ended_ns": 86770601675750,
+          "event": "stage_completed",
+          "stage": "execute"
+        },
+        {
+          "event": "stage_started",
+          "stage": "verify_effect",
+          "started_ns": 86770601679083
+        },
+        {
+          "ended_ns": 86770601681166,
+          "event": "stage_completed",
+          "stage": "verify_effect"
+        },
+        {
+          "attempted_calls": 0,
+          "event": "adaptive_route_finished",
+          "outcome": "TASK_NOT_VERIFIED",
+          "reason": "unavailable",
+          "repair_path": "none"
+        }
+      ],
+      "result": {
+        "accounting": {
+          "attempted_calls": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total",
+          "completed_calls": 0,
+          "cost": 0,
+          "duplicate_call_ids": [],
+          "model_wait_coverage": 0,
+          "model_wait_ns": 0,
+          "usage_coverage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_totals": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "visible_image_coverage": 0,
+          "visible_images_submitted": 0
+        },
+        "attempt_ledger": [],
+        "cache_update": {
+          "case": "positive",
+          "interface": {
+            "actions": {
+              "enter": {
+                "expected_effect": {
+                  "field_changed": true
+                },
+                "operation": "enter",
+                "target_symbol": "field"
+              },
+              "submit": {
+                "expected_effect": {
+                  "stage": 2
+                },
+                "operation": "submit",
+                "target_symbol": "field"
+              }
+            },
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "composition-smoke",
+            "method": {
+              "initial_state": "editing",
+              "max_runtime_ms": 10000,
+              "max_transitions": 2,
+              "name": "enter-then-submit",
+              "states": {
+                "done": {
+                  "branches": [
+                    {
+                      "action": null,
+                      "next_state": null,
+                      "outcome": "complete",
+                      "reason": null,
+                      "when": {
+                        "stage": 2
+                      }
+                    }
+                  ]
+                },
+                "editing": {
+                  "branches": [
+                    {
+                      "action": "enter",
+                      "next_state": "filled",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "stage": 0,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                },
+                "filled": {
+                  "branches": [
+                    {
+                      "action": "submit",
+                      "next_state": "done",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "field_changed": true,
+                        "stage": 1,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "version": "1"
+            },
+            "predicates": [
+              "stage",
+              "field_changed",
+              "submit_target"
+            ],
+            "session_scope": "private-test-double",
+            "surface": "form",
+            "symbols": {
+              "field": {
+                "dependencies": [
+                  "stage",
+                  "submit_target"
+                ],
+                "identity_predicate": "submit_target",
+                "kind": "target_reference",
+                "target_reference": "field-ref"
+              }
+            }
+          }
+        },
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "comparable_to_full_cold": false,
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ]
+        },
+        "delivery": "confirmed",
+        "execution_progress": null,
+        "input_authority": "consumed_by_recorded_execute_stage",
+        "model_call_ledger": [],
+        "outcome": "TASK_NOT_VERIFIED",
+        "phase_timings": [
+          {
+            "elapsed_ns": 20083,
+            "ended_ns": 86770601488916,
+            "stage": "reuse_revalidate",
+            "started_ns": 86770601468833
+          },
+          {
+            "elapsed_ns": 19333,
+            "ended_ns": 86770601511541,
+            "stage": "final_revalidate",
+            "started_ns": 86770601492208
+          },
+          {
+            "elapsed_ns": 161500,
+            "ended_ns": 86770601675750,
+            "stage": "execute",
+            "started_ns": 86770601514250
+          },
+          {
+            "elapsed_ns": 2083,
+            "ended_ns": 86770601681166,
+            "stage": "verify_effect",
+            "started_ns": 86770601679083
+          }
+        ],
+        "reason": "unavailable",
+        "repair_path": "none",
+        "repair_trace": [
+          {
+            "stage": "reuse_revalidate",
+            "status": "revalidated"
+          }
+        ],
+        "route": "reuse",
+        "selected_target": {
+          "case": "positive",
+          "interface": {
+            "actions": {
+              "enter": {
+                "expected_effect": {
+                  "field_changed": true
+                },
+                "operation": "enter",
+                "target_symbol": "field"
+              },
+              "submit": {
+                "expected_effect": {
+                  "stage": 2
+                },
+                "operation": "submit",
+                "target_symbol": "field"
+              }
+            },
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "composition-smoke",
+            "method": {
+              "initial_state": "editing",
+              "max_runtime_ms": 10000,
+              "max_transitions": 2,
+              "name": "enter-then-submit",
+              "states": {
+                "done": {
+                  "branches": [
+                    {
+                      "action": null,
+                      "next_state": null,
+                      "outcome": "complete",
+                      "reason": null,
+                      "when": {
+                        "stage": 2
+                      }
+                    }
+                  ]
+                },
+                "editing": {
+                  "branches": [
+                    {
+                      "action": "enter",
+                      "next_state": "filled",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "stage": 0,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                },
+                "filled": {
+                  "branches": [
+                    {
+                      "action": "submit",
+                      "next_state": "done",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "field_changed": true,
+                        "stage": 1,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "version": "1"
+            },
+            "predicates": [
+              "stage",
+              "field_changed",
+              "submit_target"
+            ],
+            "session_scope": "private-test-double",
+            "surface": "form",
+            "symbols": {
+              "field": {
+                "dependencies": [
+                  "stage",
+                  "submit_target"
+                ],
+                "identity_predicate": "submit_target",
+                "kind": "target_reference",
+                "target_reference": "field-ref"
+              }
+            }
+          }
+        },
+        "stages": {
+          "acquire_anchor": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "acquire_expansion": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "anchor_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "coarse_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "execute": {
+            "reason": null,
+            "status": "completed"
+          },
+          "expanded_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "final_revalidate": {
+            "reason": null,
+            "status": "completed"
+          },
+          "local_repair": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "observe_source": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_observe": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "reuse_revalidate": {
+            "reason": null,
+            "status": "completed"
+          },
+          "verify_effect": {
+            "reason": null,
+            "status": "completed"
+          }
+        },
+        "task_effect": "unavailable"
+      }
+    },
+    "warm_changed": {
+      "compiled": [
+        {
+          "completed_transitions": 1,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "stage": 0,
+                "submit_target": true
+              },
+              "outcome": "action",
+              "state": "editing"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "completed_transitions": 1,
+              "event": "runtime_finished",
+              "outcome": "SAFE_YIELD",
+              "reason": "unknown_state"
+            }
+          ],
+          "elapsed_ns": 45542,
+          "ended_ns": 86770601363458,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "composition-smoke",
+          "latest_evidence_ref": "frame-2",
+          "method": "enter-then-submit",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 86770601319500,
+              "evidence_digest": "d1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "field_changed": false,
+                "stage": 0,
+                "submit_target": true
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 86770601347416,
+              "evidence_digest": "d2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": false
+              },
+              "sequence": 2
+            }
+          ],
+          "outcome": "SAFE_YIELD",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "unknown_state",
+          "session_scope": "private-test-double",
+          "started_ns": 86770601317916,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "editing",
+              "matched_conditions": {
+                "stage": 0,
+                "submit_target": true
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            }
+          ]
+        }
+      ],
+      "journal_events": [
+        {
+          "event": "stage_started",
+          "stage": "reuse_revalidate",
+          "started_ns": 86770601212416
+        },
+        {
+          "ended_ns": 86770601232750,
+          "event": "stage_completed",
+          "stage": "reuse_revalidate"
+        },
+        {
+          "event": "stage_started",
+          "stage": "final_revalidate",
+          "started_ns": 86770601236375
+        },
+        {
+          "ended_ns": 86770601255833,
+          "event": "stage_completed",
+          "stage": "final_revalidate"
+        },
+        {
+          "event": "stage_started",
+          "stage": "execute",
+          "started_ns": 86770601258875
+        },
+        {
+          "ended_ns": 86770601386083,
+          "event": "stage_completed",
+          "stage": "execute"
+        },
+        {
+          "attempted_calls": 0,
+          "event": "adaptive_route_finished",
+          "outcome": "EXECUTION_INCOMPLETE",
+          "reason": "unknown_state",
+          "repair_path": "none"
+        }
+      ],
+      "result": {
+        "accounting": {
+          "attempted_calls": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total",
+          "completed_calls": 0,
+          "cost": 0,
+          "duplicate_call_ids": [],
+          "model_wait_coverage": 0,
+          "model_wait_ns": 0,
+          "usage_coverage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_totals": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "visible_image_coverage": 0,
+          "visible_images_submitted": 0
+        },
+        "attempt_ledger": [],
+        "cache_update": {
+          "case": "changed",
+          "interface": {
+            "actions": {
+              "enter": {
+                "expected_effect": {
+                  "field_changed": true
+                },
+                "operation": "enter",
+                "target_symbol": "field"
+              },
+              "submit": {
+                "expected_effect": {
+                  "stage": 2
+                },
+                "operation": "submit",
+                "target_symbol": "field"
+              }
+            },
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "composition-smoke",
+            "method": {
+              "initial_state": "editing",
+              "max_runtime_ms": 10000,
+              "max_transitions": 2,
+              "name": "enter-then-submit",
+              "states": {
+                "done": {
+                  "branches": [
+                    {
+                      "action": null,
+                      "next_state": null,
+                      "outcome": "complete",
+                      "reason": null,
+                      "when": {
+                        "stage": 2
+                      }
+                    }
+                  ]
+                },
+                "editing": {
+                  "branches": [
+                    {
+                      "action": "enter",
+                      "next_state": "filled",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "stage": 0,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                },
+                "filled": {
+                  "branches": [
+                    {
+                      "action": "submit",
+                      "next_state": "done",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "field_changed": true,
+                        "stage": 1,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "version": "1"
+            },
+            "predicates": [
+              "stage",
+              "field_changed",
+              "submit_target"
+            ],
+            "session_scope": "private-test-double",
+            "surface": "form",
+            "symbols": {
+              "field": {
+                "dependencies": [
+                  "stage",
+                  "submit_target"
+                ],
+                "identity_predicate": "submit_target",
+                "kind": "target_reference",
+                "target_reference": "field-ref"
+              }
+            }
+          }
+        },
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "comparable_to_full_cold": false,
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ]
+        },
+        "delivery": "confirmed_partial",
+        "execution_progress": {
+          "completed_actions": 1,
+          "reason": "unknown_state",
+          "status": "safe_yield"
+        },
+        "input_authority": "consumed_by_recorded_execute_stage",
+        "model_call_ledger": [],
+        "outcome": "EXECUTION_INCOMPLETE",
+        "phase_timings": [
+          {
+            "elapsed_ns": 20334,
+            "ended_ns": 86770601232750,
+            "stage": "reuse_revalidate",
+            "started_ns": 86770601212416
+          },
+          {
+            "elapsed_ns": 19458,
+            "ended_ns": 86770601255833,
+            "stage": "final_revalidate",
+            "started_ns": 86770601236375
+          },
+          {
+            "elapsed_ns": 127208,
+            "ended_ns": 86770601386083,
+            "stage": "execute",
+            "started_ns": 86770601258875
+          }
+        ],
+        "reason": "unknown_state",
+        "repair_path": "none",
+        "repair_trace": [
+          {
+            "stage": "reuse_revalidate",
+            "status": "revalidated"
+          }
+        ],
+        "route": "reuse",
+        "selected_target": {
+          "case": "changed",
+          "interface": {
+            "actions": {
+              "enter": {
+                "expected_effect": {
+                  "field_changed": true
+                },
+                "operation": "enter",
+                "target_symbol": "field"
+              },
+              "submit": {
+                "expected_effect": {
+                  "stage": 2
+                },
+                "operation": "submit",
+                "target_symbol": "field"
+              }
+            },
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "composition-smoke",
+            "method": {
+              "initial_state": "editing",
+              "max_runtime_ms": 10000,
+              "max_transitions": 2,
+              "name": "enter-then-submit",
+              "states": {
+                "done": {
+                  "branches": [
+                    {
+                      "action": null,
+                      "next_state": null,
+                      "outcome": "complete",
+                      "reason": null,
+                      "when": {
+                        "stage": 2
+                      }
+                    }
+                  ]
+                },
+                "editing": {
+                  "branches": [
+                    {
+                      "action": "enter",
+                      "next_state": "filled",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "stage": 0,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                },
+                "filled": {
+                  "branches": [
+                    {
+                      "action": "submit",
+                      "next_state": "done",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "field_changed": true,
+                        "stage": 1,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "version": "1"
+            },
+            "predicates": [
+              "stage",
+              "field_changed",
+              "submit_target"
+            ],
+            "session_scope": "private-test-double",
+            "surface": "form",
+            "symbols": {
+              "field": {
+                "dependencies": [
+                  "stage",
+                  "submit_target"
+                ],
+                "identity_predicate": "submit_target",
+                "kind": "target_reference",
+                "target_reference": "field-ref"
+              }
+            }
+          }
+        },
+        "stages": {
+          "acquire_anchor": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "acquire_expansion": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "anchor_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "coarse_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "execute": {
+            "reason": null,
+            "status": "completed"
+          },
+          "expanded_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "final_revalidate": {
+            "reason": null,
+            "status": "completed"
+          },
+          "local_repair": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "observe_source": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_observe": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "reuse_revalidate": {
+            "reason": null,
+            "status": "completed"
+          },
+          "verify_effect": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          }
+        },
+        "task_effect": null
+      }
+    },
+    "warm_positive": {
+      "compiled": [
+        {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "stage": 0,
+                "submit_target": true
+              },
+              "outcome": "action",
+              "state": "editing"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "submit",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "submit",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "submit",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "stage": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 100208,
+          "ended_ns": 86770601085208,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "composition-smoke",
+          "latest_evidence_ref": "frame-3",
+          "method": "enter-then-submit",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 86770600987666,
+              "evidence_digest": "d1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "field_changed": false,
+                "stage": 0,
+                "submit_target": true
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 86770601023875,
+              "evidence_digest": "d2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 86770601064750,
+              "evidence_digest": "d3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "field_changed": true,
+                "stage": 2,
+                "submit_target": true
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private-test-double",
+          "started_ns": 86770600985000,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "editing",
+              "matched_conditions": {
+                "stage": 0,
+                "submit_target": true
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "submit",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "field_changed": true,
+                "stage": 1,
+                "submit_target": true
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      ],
+      "journal_events": [
+        {
+          "event": "stage_started",
+          "stage": "reuse_revalidate",
+          "started_ns": 86770600856416
+        },
+        {
+          "ended_ns": 86770600883000,
+          "event": "stage_completed",
+          "stage": "reuse_revalidate"
+        },
+        {
+          "event": "stage_started",
+          "stage": "final_revalidate",
+          "started_ns": 86770600889000
+        },
+        {
+          "ended_ns": 86770600909250,
+          "event": "stage_completed",
+          "stage": "final_revalidate"
+        },
+        {
+          "event": "stage_started",
+          "stage": "execute",
+          "started_ns": 86770600913458
+        },
+        {
+          "ended_ns": 86770601117625,
+          "event": "stage_completed",
+          "stage": "execute"
+        },
+        {
+          "event": "stage_started",
+          "stage": "verify_effect",
+          "started_ns": 86770601121416
+        },
+        {
+          "ended_ns": 86770601123583,
+          "event": "stage_completed",
+          "stage": "verify_effect"
+        },
+        {
+          "attempted_calls": 0,
+          "event": "adaptive_route_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "verified_effect",
+          "repair_path": "none"
+        }
+      ],
+      "result": {
+        "accounting": {
+          "attempted_calls": 0,
+          "cached_input_semantics": "subset of input_tokens; never added to input total",
+          "completed_calls": 0,
+          "cost": 0,
+          "duplicate_call_ids": [],
+          "model_wait_coverage": 0,
+          "model_wait_ns": 0,
+          "usage_coverage": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "usage_totals": {
+            "cache_write_input_tokens": 0,
+            "cached_input_tokens": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "reasoning_output_tokens": 0
+          },
+          "visible_image_coverage": 0,
+          "visible_images_submitted": 0
+        },
+        "attempt_ledger": [],
+        "cache_update": {
+          "case": "positive",
+          "interface": {
+            "actions": {
+              "enter": {
+                "expected_effect": {
+                  "field_changed": true
+                },
+                "operation": "enter",
+                "target_symbol": "field"
+              },
+              "submit": {
+                "expected_effect": {
+                  "stage": 2
+                },
+                "operation": "submit",
+                "target_symbol": "field"
+              }
+            },
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "composition-smoke",
+            "method": {
+              "initial_state": "editing",
+              "max_runtime_ms": 10000,
+              "max_transitions": 2,
+              "name": "enter-then-submit",
+              "states": {
+                "done": {
+                  "branches": [
+                    {
+                      "action": null,
+                      "next_state": null,
+                      "outcome": "complete",
+                      "reason": null,
+                      "when": {
+                        "stage": 2
+                      }
+                    }
+                  ]
+                },
+                "editing": {
+                  "branches": [
+                    {
+                      "action": "enter",
+                      "next_state": "filled",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "stage": 0,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                },
+                "filled": {
+                  "branches": [
+                    {
+                      "action": "submit",
+                      "next_state": "done",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "field_changed": true,
+                        "stage": 1,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "version": "1"
+            },
+            "predicates": [
+              "stage",
+              "field_changed",
+              "submit_target"
+            ],
+            "session_scope": "private-test-double",
+            "surface": "form",
+            "symbols": {
+              "field": {
+                "dependencies": [
+                  "stage",
+                  "submit_target"
+                ],
+                "identity_predicate": "submit_target",
+                "kind": "target_reference",
+                "target_reference": "field-ref"
+              }
+            }
+          }
+        },
+        "coarse_origin": "caller_provided",
+        "comparison": {
+          "class": "warm_reuse",
+          "comparable_to_full_cold": false,
+          "omitted_stages": [
+            "observe_source",
+            "coarse_model",
+            "acquire_anchor",
+            "anchor_model"
+          ]
+        },
+        "delivery": "confirmed",
+        "execution_progress": {
+          "status": "completed"
+        },
+        "input_authority": "consumed_by_recorded_execute_stage",
+        "model_call_ledger": [],
+        "outcome": "TASK_SUCCEEDED",
+        "phase_timings": [
+          {
+            "elapsed_ns": 26584,
+            "ended_ns": 86770600883000,
+            "stage": "reuse_revalidate",
+            "started_ns": 86770600856416
+          },
+          {
+            "elapsed_ns": 20250,
+            "ended_ns": 86770600909250,
+            "stage": "final_revalidate",
+            "started_ns": 86770600889000
+          },
+          {
+            "elapsed_ns": 204167,
+            "ended_ns": 86770601117625,
+            "stage": "execute",
+            "started_ns": 86770600913458
+          },
+          {
+            "elapsed_ns": 2167,
+            "ended_ns": 86770601123583,
+            "stage": "verify_effect",
+            "started_ns": 86770601121416
+          }
+        ],
+        "reason": "verified_effect",
+        "repair_path": "none",
+        "repair_trace": [
+          {
+            "stage": "reuse_revalidate",
+            "status": "revalidated"
+          }
+        ],
+        "route": "reuse",
+        "selected_target": {
+          "case": "positive",
+          "interface": {
+            "actions": {
+              "enter": {
+                "expected_effect": {
+                  "field_changed": true
+                },
+                "operation": "enter",
+                "target_symbol": "field"
+              },
+              "submit": {
+                "expected_effect": {
+                  "stage": 2
+                },
+                "operation": "submit",
+                "target_symbol": "field"
+              }
+            },
+            "format": "compiled-gui-interface-v1",
+            "interface_id": "composition-smoke",
+            "method": {
+              "initial_state": "editing",
+              "max_runtime_ms": 10000,
+              "max_transitions": 2,
+              "name": "enter-then-submit",
+              "states": {
+                "done": {
+                  "branches": [
+                    {
+                      "action": null,
+                      "next_state": null,
+                      "outcome": "complete",
+                      "reason": null,
+                      "when": {
+                        "stage": 2
+                      }
+                    }
+                  ]
+                },
+                "editing": {
+                  "branches": [
+                    {
+                      "action": "enter",
+                      "next_state": "filled",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "stage": 0,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                },
+                "filled": {
+                  "branches": [
+                    {
+                      "action": "submit",
+                      "next_state": "done",
+                      "outcome": "action",
+                      "reason": null,
+                      "when": {
+                        "field_changed": true,
+                        "stage": 1,
+                        "submit_target": true
+                      }
+                    }
+                  ]
+                }
+              },
+              "version": "1"
+            },
+            "predicates": [
+              "stage",
+              "field_changed",
+              "submit_target"
+            ],
+            "session_scope": "private-test-double",
+            "surface": "form",
+            "symbols": {
+              "field": {
+                "dependencies": [
+                  "stage",
+                  "submit_target"
+                ],
+                "identity_predicate": "submit_target",
+                "kind": "target_reference",
+                "target_reference": "field-ref"
+              }
+            }
+          }
+        },
+        "stages": {
+          "acquire_anchor": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "acquire_expansion": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "anchor_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "coarse_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "execute": {
+            "reason": null,
+            "status": "completed"
+          },
+          "expanded_model": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "final_revalidate": {
+            "reason": null,
+            "status": "completed"
+          },
+          "local_repair": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "observe_source": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_observe": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "post_model_revalidate": {
+            "reason": "branch_not_reached",
+            "status": "skipped"
+          },
+          "reuse_revalidate": {
+            "reason": null,
+            "status": "completed"
+          },
+          "verify_effect": {
+            "reason": null,
+            "status": "completed"
+          }
+        },
+        "task_effect": "succeeded"
+      }
+    }
+  },
+  "schema": "compiled-caller-composition-a01-v1",
+  "source_sha256": {
+    "caller": "8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca",
+    "compiled": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014"
+  }
+}

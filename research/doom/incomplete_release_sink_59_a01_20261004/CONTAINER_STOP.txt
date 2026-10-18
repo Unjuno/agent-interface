@@ -1,0 +1,11 @@
+OrbStack engine inspection:
+
+`docker context show` -> `orbstack`
+
+`docker info --format 'engine={{.ServerVersion}} os={{.OperatingSystem}} cpus={{.NCPU}}'` -> `engine=29.4.0 os=OrbStack cpus=10`
+
+`docker image ls --digests` failed before any container launch with:
+
+`Error response from daemon: rpc error: code = Unknown desc = blob sha256:a14e964ad615fa8315eec5f1e2539eb781f10647872c42e0cbe5b1400c15cb45 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/a14e964ad615fa8315eec5f1e2539eb781f10647872c42e0cbe5b1400c15cb45: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/a14e964ad615fa8315eec5f1e2539eb781f10647872c42e0cbe5b1400c15cb45: operation not supported`
+
+No image pull, daemon reset, package install, or container retry was attempted. The small deterministic source-construction probe proceeded on host CPU; its scope does not depend on OS or container semantics.

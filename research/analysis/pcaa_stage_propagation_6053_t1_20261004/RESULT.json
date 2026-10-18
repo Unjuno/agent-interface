@@ -1,0 +1,50 @@
+{
+  "checks": {
+    "effect_scoring_present_but_within_same_engine": true,
+    "held_out_source_process_seed_isolation_established": false,
+    "matched_exogenous_perturbation_or_counterfactual_path": false,
+    "stage_level_event_and_result_ledger": true
+  },
+  "claim_limit": "A source-eligibility HOLD does not show that stagewise amplification occurs or that checkpoints help. No T2 run or controller-effect claim is made.",
+  "observations": {
+    "arena_cli_options": [
+      "--autoclose",
+      "--clock",
+      "--difficulty",
+      "--report",
+      "--seed",
+      "--set",
+      "--suite"
+    ],
+    "event_fields": [
+      "sim_time",
+      "wall_offset",
+      "stage_index",
+      "event",
+      "detail"
+    ],
+    "perturbation_or_counterfactual_terms_in_arena_engine": false,
+    "public_state_keys": [
+      "done",
+      "schema",
+      "sim_time"
+    ],
+    "recovery_event_source_lines": [
+      "self._event(\"recovery_interrupt\", {\"kind\": \"target_relocated\"})"
+    ],
+    "report_fields_present": [
+      "episode",
+      "success",
+      "stage_results",
+      "events"
+    ],
+    "session_init_parameters": [
+      "self",
+      "spec"
+    ],
+    "source_isolation_gap_explicitly_documented": true,
+    "t2_pair_or_arm_cli": false
+  },
+  "schema": "issue-6053-pcaa-stage-propagation-t1-result-v1",
+  "status": "HOLD_NO_ELIGIBLE_CHAIN"
+}

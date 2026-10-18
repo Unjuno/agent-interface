@@ -1,0 +1,1 @@
+wsl.exe -d Ubuntu -- sh -lc "cd /mnt/d/issue59-v39-release-rescue/research/doom/v39_live_recovery_age_guard_posthoc_a01_20261008 && python3 -B run_experiment.py && python3 -B -m unittest -v && python3 -B audit_result.py"

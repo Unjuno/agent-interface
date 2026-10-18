@@ -1,0 +1,35 @@
+[
+  {
+    "expected": "HOLD_UNKNOWN_WCET",
+    "id": "unknown-wcet",
+    "input": {
+      "class": "control",
+      "id": "c0",
+      "preemptible": true,
+      "wcet": null
+    },
+    "result": "HOLD_UNKNOWN_WCET"
+  },
+  {
+    "expected": "UNKNOWN_MODEL_MISMATCH",
+    "id": "nonpreemptible",
+    "input": {
+      "class": "control",
+      "id": "c0",
+      "preemptible": false,
+      "wcet": 1
+    },
+    "result": "UNKNOWN_MODEL_MISMATCH"
+  },
+  {
+    "expected": "REJECT_INVALID_JOB_CLASS",
+    "id": "invalid-job-class",
+    "input": {
+      "class": "unrecognized",
+      "id": "c0",
+      "preemptible": true,
+      "wcet": 1
+    },
+    "result": "REJECT_INVALID_JOB_CLASS"
+  }
+]

@@ -1,0 +1,14 @@
+node:internal/fs/promises:916
+  return await PromisePrototypeThen(
+         ^
+
+Error: EEXIST: file already exists, mkdir '$REVIEW_WORKSPACE\outputs\primary-request-snapshot-01a0ff32\candidate'
+    at async mkdir (node:internal/fs/promises:916:10)
+    at async file:///$REVIEW_WORKSPACE/outputs/primary-request-snapshot-01a0ff32/probe.mjs:12:1 {
+  errno: -4075,
+  code: 'EEXIST',
+  syscall: 'mkdir',
+  path: '$REVIEW_WORKSPACE\\outputs\\primary-request-snapshot-01a0ff32\\candidate'
+}
+
+Node.js v24.19.0

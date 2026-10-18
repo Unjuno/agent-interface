@@ -1,0 +1,30 @@
+{
+  "id": "astra-camera-stabilized-cue-a01-20261005",
+  "question": "Does integer translation registration suppress the one retained warm-pixel cue at 22.7 s that PR #7913 visually described as a wall indicator shifting during camera movement?",
+  "H": "On the exact same ten decoded frames and fixed warm-pixel threshold used by PR #7913, translation-aligning the preceding warm mask will reduce the 22.7 s new-warm-pixel count from the prior value 186 to below 40, without a registration shift at the search boundary.",
+  "T": "One candidate invocation decodes source-video seconds [21.5,23.5) at 5 fps to 320x280 RGB. For each adjacent pair, search integer dx,dy in [-16,16] minimizing median absolute integer-luma error over y=30..229, excluding the prior weapon mask x=130..189,y=145..229 and center reticle x=156..164,y=96..104. Tie-break by rounded score, Manhattan shift, |dy|,dy,dx. Compare newly appearing warm pixels before and after translating the prior mask. Warm predicate and threshold are fixed from referenced A01: R>=170, 45<=G<=190, B<=95, R>=1.25*G; >=40 pixels triggers.",
+  "D": "First require the unregistered ten-count vector to equal the retained A01 reference [4,15,96,0,0,0,186,213,176,57], otherwise STOP_CONTROL_DIVERGENCE. HOLD if the 22.7 s registration reaches the +/-16 px search boundary. PASS_LOCAL_TRANSLATION_SUPPRESSION only if the unregistered 22.7 s cue triggers and the registered count is <40; otherwise FAIL_WALL_CUE_NOT_SUPPRESSED. This gate concerns one reference-frame artifact only; the 21.9 s muzzle-flash cue is an expected remaining confound and is not a detector PASS.",
+  "C": "The apparent wall indicator label comes from the two-frame visual review retained in PR #7913, not an independent semantic label. Camera motion may include rotation/parallax; a moving enemy may resemble background motion; global translation can erase relevant motion or preserve unrelated color changes.",
+  "U": "One edited historical video, ten frames, one translation-only method, and one manually described reference artifact. No actual enemy classification, detector precision/recall, current-main V39 runtime response, live input, physical release, task effect, survival, recovery, or MAP01 success is measured.",
+  "frozen_main_sha": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "source_video_path": "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4",
+  "source_video_git_blob": "983e2f43e878b56d0d05cd4d7db5125a55566cc8",
+  "source_video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "reference": {
+    "pr": "https://github.com/Unjuno/agent-interface/pull/7913",
+    "head_sha": "3cd63cd8c7fa1debbab743294e2056d987c4725f",
+    "raw_sha256": "b6fee496a45ec9d88a6d50b060cbfef2c781fa8d44020d80542b9ba8f77a9e27",
+    "unregistered_counts": [4, 15, 96, 0, 0, 0, 186, 213, 176, 57]
+  },
+  "candidate_sha256": "e98db804d79aadb32865cc0c8371f74c630e41bc3ccdbbd9265fd7b5a2da613b",
+  "auditor_sha256": "71bf097ae33bd1c7870b153791df7f1ac4292b92ea6802b030781e4fbea300c2",
+  "construction_test_sha256": "67627c019ba06c167c7c5df873cb88e22e19e653493eee31a2ffab02fd5f646c",
+  "construction_test": "python3 -B -m unittest -v test_candidate.py — 3 passed before freeze",
+  "candidate_command": "python3 -B research/doom/astra_camera_stabilized_cue_a01_20261005/candidate.py research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4 research/doom/astra_camera_stabilized_cue_a01_20261005",
+  "auditor_command": "python3 -B research/doom/astra_camera_stabilized_cue_a01_20261005/audit.py",
+  "runtime": "Host macOS Python 3.14.5, NumPy 2.5.2, FFmpeg 8.1.2. OrbStack Docker server responds, but docker image inventory returned an unsupported containerd blob read error; no image pull or container invocation was attempted.",
+  "network": "Candidate consumes only the retained local video; no network access, game, model, GUI, or OS input.",
+  "planned_candidate_invocations": 1,
+  "planned_auditor_invocations": 1,
+  "planned_retries": 0
+}

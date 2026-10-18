@@ -1,0 +1,13 @@
+{
+  "worker": "e0cc",
+  "parent": 59,
+  "review_pr": 8065,
+  "head": "cceb9d2856796cc9b04364806dd67e91610cfabb",
+  "main_observed": "7a9398add78d9095e5a85a60d324513fc3c2a1e3",
+  "kind": "ordinary source startup-selection regression, not formal allocation",
+  "H": "V15's prior release-backend import caches current input_owner_v12, defeating V12's archived A01 path selection while recording the archived source hash.",
+  "T": "Run exact exported session source in fresh processes for V12-perkey, V15-default and V15-perkey; replace only optional GUI bindings and stop at suite.Session construction after source/backend selection. No owner thread starts.",
+  "D": "Perkey routes must select the owner bound by the archived A01 file, and selected owner identity must agree with source selection; default V15 must retain its current transition wrapper. Any mismatch is a reproduced selection defect, not physical-release proof.",
+  "C": "A process-global module cache explains selection; do not attribute timing or OS behavior to this source-level check.",
+  "U": "No real GUI/backend/input/model/container, cleanup behavior, live threat exposure or task effect. Preserve first construction errors and narrow corrections. Separate review is not a vote."
+}

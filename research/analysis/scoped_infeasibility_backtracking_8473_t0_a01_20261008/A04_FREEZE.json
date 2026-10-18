@@ -1,0 +1,16 @@
+{
+  "allocation": "8473-SCOPED-INFEASIBILITY-T0-A04-20261008-01",
+  "type": "audit-only independent mutation challenge",
+  "predecessors": ["A01_STOP_AUDITOR_MUTATION_CONTROL", "A02_STOP_AUDITOR_MUTATION_CONTROL", "A03_PASS_METHOD_SCOPED with mutation assertions later judged too structural"],
+  "base_main": "eeec9a355adc82ccd4cace8ea36f145a60c8805f",
+  "candidate_sha256": "625347d60bab02b5912ab2e4354519a2da2416b1939238cbaf9a84468525ce5f",
+  "fixture_sha256": "c0f6eb4812dda1e5dfbd86cc71d6cc33b9a9dfc1ec4b564d1a0df148125872de",
+  "auditor_sha256": "610f24df096e1817b2f26f3cb22a8bc497ff8cacfea29d795a84afa94e690e80",
+  "formal_input": "immutable A03 candidate.raw.json",
+  "candidate_invocations": 0,
+  "auditor_invocations": 1,
+  "mutation_rule": "Each of the five controls must alter a fixture or raw record and the independent validator must reject the altered evidence; baseline must pass first.",
+  "decision": "PASS_AUDIT_V2 only if baseline raw passes the independent exhaustive oracle and all five concretely mutated inputs are rejected for the expected reason; otherwise preserve STOP and do not retry A04.",
+  "host": "Darwin arm64; CPython 3.14.5; standard library only; no network",
+  "container_status": "host-only; prior OrbStack content-store STOP retained; no pull or repair"
+}

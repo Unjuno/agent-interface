@@ -1,0 +1,41 @@
+{
+  "schema": "7748-class-enum-a01-freeze-v1",
+  "allocation_id": "7748-CLASS-ENUM-A01-20261005-01",
+  "issue": 8061,
+  "parent_issue": 7748,
+  "related_issue": 7778,
+  "base_main": "3239217f54c199b582924ee69c7c80402f418a63",
+  "branch": "research/7748-class-enum-a01-20261005",
+  "result_path": "research/analysis/processor_demand_witness_7748_class_enum_a01_20261005/",
+  "freeze_utc": "2026-10-05T07:05:40Z",
+  "model": "deterministic integer-tick preemptive one-CPU finite class-validation method test",
+  "case_count": 7,
+  "formal_invocation_budget": {
+    "candidate": 1,
+    "raw_only_auditor": 1,
+    "retries": 0
+  },
+  "container": {
+    "image": "docker.io/library/python@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d",
+    "image_config_id": "sha256:04e0b4721883a7b878e91662548cd04ddbc2f256cfa86f43920b92557198c1c3",
+    "preflight": "STOP_OCI_BPF_PERMISSION_DENIED",
+    "execution": "host-only CPython 3.14.5 fallback explicitly permitted by Issue #8061 and PROTOCOL.md"
+  },
+  "predecessor_sha256": {
+    "#7748/auditor.py": "12c19b924892747e8bddca85fa0b18ec1e8e03c230667cd3f503cbeee3326114",
+    "#7748/candidate.py": "12627d9d02586acbd301a969a1215c037d95b5e0e5aad280ec1efda3755a15ed",
+    "#7748/cases.json": "66b7660a61f2944ee76db3ca3f592cceefaa85874687ba0fa4bd09863d694163",
+    "#7748/formal_01/RAW.json": "5bf70ee7509e820ffafe4463fd734c80757296ac66a538a6127a7a2ab95bedfe"
+  },
+  "source_sha256": {
+    "PROTOCOL.md": "874612227f090277c394d5c4f77290a884e4c8cc3981613ec537a1bc85917eb6",
+    "README.md": "35a323ec67eccebb40c4b5437960b92a166b00c6cb1476f756ce5827075c35ac",
+    "ENVIRONMENT.json": "53105c83939d0cb5cd4fbee8f04ae75a0aa99d0fba2bc7f76c4c2ae5afa27baa",
+    "cases.json": "b265f1b22a1cff12b8a57cf7a918d625175c09328a691055c0f4ab00a74d125e",
+    "candidate.py": "1bef788a78347c1ce3225a451dd239ac93dd44ba15424c022f4aad25435e6603",
+    "audit.py": "5d757238462c2f95196cca70c51f5f12ae7be3d4d5ba4317b9da49dca97fbffb",
+    "test_class_gate.py": "20361682db4a3fe9d2fc975b1610d8ff9b52f9e69a1135bdabfee7c1042be42a",
+    "PRE-RUN.md": "23086f024518e4ff65d5c636d0065606a726724a042faa0f1b0bcb1695ec317c",
+    "CONSTRUCTION.log": "b3c07594786f24a4aa438a1279ac6342d1fbb1731c01c70df55b6adad9a719dc"
+  }
+}

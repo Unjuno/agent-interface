@@ -1,0 +1,45 @@
+{
+  "schema": "map01-v39-expiry-barrier-record-custody-a02-v1",
+  "disposition": "FAIL_CANDIDATE_RECEIPT_CUSTODY",
+  "hypothesis_reproduced": true,
+  "scope": "Exact PR #7829 candidate bridge/owner in a current-main fake-Xlib harness, two deterministic interleavings: cancel/expiry and non-cancelled DecisionRequired/release-barrier composition",
+  "main_commit": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "candidate_commit": "70c76483c46108bdd70bf2fb90679d948a5f156f",
+  "container": {
+    "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "cpus": 1,
+    "memory_bytes": 1073741824,
+    "pids_limit": 64
+  },
+  "tests": {
+    "mutable_record_custody_schedules": {
+      "count": 2,
+      "exit": 0
+    },
+    "existing_candidate_regressions": {
+      "count": 12,
+      "exit": 0
+    }
+  },
+  "observations": {
+    "same_record_mutated_to_verified_empty": true,
+    "emitted_release_receipts": 1,
+    "final_receipt_classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+    "confirmed_physical_up_receipts": 0,
+    "duplicate_receipts": 0,
+    "fake_physical_state_empty": true,
+    "actual_candidate_execute_exit_barrier_exercised": true,
+    "noncancelled_decision_required_release_barrier_composed": true,
+    "decision_required_terminal_status": "needs_decision",
+    "decision_required_terminal_release_verified": true,
+    "decision_required_receipt_actuation_id_matched_admission": true,
+    "decision_required_receipt_classification": "PHYSICAL_SAMPLE_UNAVAILABLE"
+  },
+  "limits": [
+    "No real X11 or application-consumption evidence",
+    "No useful-feedback, bounded-recovery, gameplay, safety, or latency evidence",
+    "No live allocation; Issue #59 remains open"
+  ]
+}

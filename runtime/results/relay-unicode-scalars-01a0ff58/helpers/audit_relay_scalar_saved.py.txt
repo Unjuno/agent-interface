@@ -1,0 +1,60 @@
+import pathlib,json,hashlib,datetime,copy,subprocess
+ROOT=pathlib.Path(__file__).resolve().parent;R=ROOT/'relay-unicode-scalar-repair';OUT=R/'saved-audit-01';OUT.mkdir(exist_ok=False)
+sha=lambda b:hashlib.sha256(b).hexdigest();j=lambda p:json.loads(p.read_bytes())
+def need(ok,label):
+    if not ok:raise ValueError(label)
+def instant(s):return datetime.datetime.fromisoformat(s.replace('Z','+00:00'))
+def verify(frames,parent,server,result):
+    expected=['returned','refused','refused','refused','returned','refused','returned'];ids=[2,2,2,2,3,3,4]
+    before=[p for p in parent if p['event']=='before_request'];responses=[p for p in parent if p['event']=='response']
+    need(len(before)==len(responses)==len(frames)==7,'seven original frames')
+    need([r['frame'] for r in before]==list(range(1,8))==[r['frame'] for r in responses],'ordered frames')
+    need(result['responses']==[r['response'] for r in responses],'parent/result response join')
+    need(len(result['actual_children'])==1 and type(result['actual_children'][0]['returncode']) is int and result['actual_children'][0]['returncode']==0,'actual SDK child exit')
+    closed=[p for p in parent if p['event']=='actual_sdk_children_closed'];spawn=[p for p in parent if p['event']=='actual_sdk_child_spawn']
+    need(len(closed)==len(spawn)==1 and closed[0]['children']==result['actual_children'] and spawn[0]['pid']==result['actual_children'][0]['pid'],'original child identity')
+    calls=[r for r in server if r['event']=='synthetic_tool_entry'];need(len(calls)==3 and all(r['pid']==spawn[0]['pid'] for r in server),'three actual SDK entries')
+    received=[]
+    for i,(wire,before_row,response) in enumerate(zip(frames,before,responses)):
+        request=json.loads(wire);row=response['response'];need(before_row['wire_sha256']==sha(wire),'exact frame hash')
+        need(row['status']==expected[i] and type(row['next_id']) is int and row['next_id']==ids[i],'status and preserved consumed-id history')
+        need(instant(before_row['utc'])<=instant(response['utc']),'request response chronology')
+        if i in [1,2,3,5]:need(row['dispatched'] is False and 'sdk_entry_ns' not in row and 'sdk_return_ns' not in row,'pre-SDK refusal boundary')
+        else:
+            need(row['id']==request['id'] and type(row['id']) is int and row['result']['isError'] is False,'accepted identity')
+            echo=json.loads(row['result']['content'][0]['text'])['received'];need(echo==request['arguments']['program'],'valid exact Unicode argument transfer');received.append(echo)
+    need([r['program'] for r in calls]==received,'actual tool entry arguments')
+    need(type(result['synthetic_entries']) is int and result['synthetic_entries']==3,'typed synthetic entry count')
+    return {'frames':7,'statuses':expected,'next_ids':ids,'actual_entries':3,'child_pid':spawn[0]['pid'],'child_actual_exit':0}
+
+before={'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'input':'new SDK saved raw/source/receipts and original peer two-frame packet; no actors executed'};(OUT/'BEFORE.json').write_text(json.dumps(before,indent=2))
+peer=R/'peer-sdk-boundary';manifest=j(peer/'MANIFEST.json')
+for name,row in manifest['files'].items():
+    b=(peer/name).read_bytes();need(len(b)==row['bytes'] and sha(b)==row['sha256'],'peer public manifest')
+need(len(manifest['files'])==23,'peer manifest count')
+original=subprocess.check_output(['git','-c','gc.auto=0','-c','maintenance.auto=false','show','4a39948c8bd1f04cbca8def8e4baa8f06e53a2f2:runtime/cli_v1/mcp_relay.py'],cwd=ROOT/'agent-interface')
+need(original==(peer/'source/exact_relay.py.txt').read_bytes(),'peer exact V5 source')
+sdk=R/'sdk-01';freeze=j(sdk/'FREEZE.json');wire=(sdk/'inputs.jsonl.bin').read_bytes();need(sha(wire)==freeze['wire_sha256'] and len(wire)==freeze['wire_bytes'],'frozen wire bytes')
+for name,row in freeze['sources'].items():need(sha(pathlib.Path(name).read_bytes())==row['sha256'],'frozen source identity')
+result=j(sdk/'RESULT.json');parent=[json.loads(x) for x in (sdk/'parent.jsonl').read_text().splitlines()];server=[json.loads(x) for x in (sdk/'server.jsonl').read_text().splitlines()];frames=wire.splitlines()
+healthy=verify(frames,parent,server,result);need(instant(freeze['started_utc'])<instant(parent[0]['utc'])<instant(result['ended_utc']),'freeze before child/result')
+rec=j(R/'sdk-command-01/RECEIPT.json');need(rec['actual_exit']==0 and rec['child_pid']==result['driver_pid'],'actual driver termination')
+for stream in ['stdout','stderr']:
+    b=(R/'sdk-command-01'/(stream+'.bin')).read_bytes();need(sha(b)==rec[stream+'_sha256'] and len(b)==rec[stream+'_bytes'],'capture raw stream receipt')
+test=j(R/'green-02/RECEIPT.json');need(test['actual_exit']==0 and test['sources_unchanged'] is True,'affected test actual exit')
+controls=[]
+def check(name,change):
+    p=copy.deepcopy(parent);s=copy.deepcopy(server);r=copy.deepcopy(result);change(p,s,r)
+    try:verify(frames,p,s,r)
+    except ValueError as e:controls.append({'name':name,'rejected':True,'reason':str(e)});return
+    raise ValueError('ineffective control '+name)
+def mutate_response(p,r,i,field,value):
+    rows=[x for x in p if x['event']=='response'];rows[i]['response'][field]=value;r['responses'][i][field]=value
+check('refused_id_advanced',lambda p,s,r:mutate_response(p,r,1,'next_id',3))
+check('refused_dispatch_true',lambda p,s,r:mutate_response(p,r,2,'dispatched',True))
+check('refusal_sdk_entry_added',lambda p,s,r:mutate_response(p,r,3,'sdk_entry_ns',1))
+check('second_actual_tool_entry_duplicate',lambda p,s,r:s.append(copy.deepcopy(s[1])))
+check('lost_rich_unicode',lambda p,s,r:s[1]['program'].update(text='changed')))
+check('childzero_bool',lambda p,s,r:r['actual_children'][0].update(returncode=False))
+check('count_bool',lambda p,s,r:r.update(synthetic_entries=True))
+report={'decision':'PASS_NEW_SCALAR_ADMISSION_SAVED_JOINS','sdk':healthy,'controls':controls,'peer_manifest_targets':23,'peer_first_scope':'V5 exactsource/actualCancelledError/consumedID2/child1 remains separate, not rerun or erased','actual_test_methods':18,'sdk_driver_actual_exit':0,'source_dependencies':freeze['dependencies'],'source_producer_replays':0,'main_sends':0,'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()};(OUT/'RESULT.json').write_text(json.dumps(report,indent=2));print(json.dumps(report))

@@ -1,0 +1,34 @@
+{
+  "schema": "wslc-local-smoke-7924-a02-protocol-v1",
+  "issue": 7924,
+  "allocation": "wslc-local-smoke-7924-a02-20261008",
+  "question": "Can a current-main, unique, disposable WSLc container use the documented digest-pinned offline/read-only local-container path on this host without inspecting or altering prior containers?",
+  "candidate": {
+    "invocations": 1,
+    "mode": "foreground disposable container with unique name, CID receipt, --rm, no network, one CPU, requested 512M memory",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "source_mount": "/src:ro",
+    "operation": "verify the frozen fixture SHA-256 and attempt one write under the read-only mount; expected errno EROFS (30)",
+    "pull_policy": "never",
+    "network": "none"
+  },
+  "auditor": {
+    "invocations": 1,
+    "operation": "independently validate frozen source hashes, retained candidate JSON, fixture digest, EROFS, scope counters, and PASS status"
+  },
+  "cleanup": {
+    "automatic": "--rm on each uniquely named invocation",
+    "verification": "targeted inspect of each exact CID from its CID file; no list or global inventory",
+    "prior_state": "do not inspect, stop, remove, or prune any pre-existing container or image"
+  },
+  "decision": {
+    "pass": "candidate and auditor each exit 0; frozen fixture matches; write fails with EROFS; exact CID inspection reports absent; no disallowed call occurs",
+    "stop": "first nonzero/ambiguous outcome or failed gate is retained; no retry and no image pull"
+  },
+  "claim_limits": [
+    "no Docker comparison or general Docker compatibility claim",
+    "512M is a requested setting only; no effective limit/swap/OOM claim",
+    "no iteration-speed, memory-relief, or peak-memory claim",
+    "one host, one image digest, one CPU-only fixture and one normal-exit invocation per role"
+  ]
+}

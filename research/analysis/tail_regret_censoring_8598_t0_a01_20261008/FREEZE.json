@@ -1,0 +1,32 @@
+{
+  "schema": "8598-freeze-v1",
+  "issue": 8598,
+  "allocation": "T0-A01",
+  "base_main_sha": "5e81aa5aeae63f396ff5e8341f11d876703bb836",
+  "branch": "research/8598-tail-regret-censoring-a01-20261008",
+  "runtime": "CPython 3.12.10; Windows x86_64; PowerShell 7.6.6",
+  "fixture": {
+    "cohorts": 768,
+    "opportunities": 24576,
+    "public_input_bytes": 5257788,
+    "public_input_sha256": "df37ab25e69ee90ee29e99dbcaefe8004ad26533f4c4a5c92f3e6317b783109b",
+    "truth_bytes": 5607676,
+    "truth_sha256": "67ff68c78aec6a53516819b0ef6994c2987047e0314ff6291d99cd185b69ef95"
+  },
+  "construction": {
+    "tests_normal": 18,
+    "tests_optimized": 18,
+    "status": "PASS_CONSTRUCTION_ONLY",
+    "recorded_covariate_ipcw_correct": 10,
+    "recorded_covariate_resolved_only_correct": 20,
+    "formal_candidate_invocations": 0,
+    "formal_auditor_invocations": 0,
+    "fixture_regeneration_overwrite_attempt": "FileExistsError; existing frozen bytes preserved"
+  },
+  "formal_order": [
+    "python -B candidate.py --input inputs/public_input.json --output raw/candidate.json",
+    "python -B auditor.py --public inputs/public_input.json --truth inputs/truth.json --candidate raw/candidate.json --output raw/audit.json"
+  ],
+  "formal_policy": "Each CLI exactly once after this source/fixture commit is read-back hash verified; no retries, overwrites, or source/fixture edits after freeze.",
+  "runtime_boundary": "Host CPU only as authorized by Issue #8598; no container, Docker, WSLc, model, GUI, network, human, or live allocation."
+}

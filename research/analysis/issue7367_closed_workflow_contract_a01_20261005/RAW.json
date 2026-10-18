@@ -1,0 +1,164 @@
+{
+  "a01_source_sha256": "a622c7a4c89173430dadb48e967df5b2f645da8140555f129952f5d777a3998b",
+  "base_main": "dd6143ef23033afcbfbd48d06d818d434d34d7d5",
+  "cases": {
+    "baseline": {
+      "disposition": "PROVEN_DEAD_EVICTION",
+      "evicted_ids": [
+        "completed-note",
+        "obsolete-observation",
+        "release-history",
+        "stale-summary"
+      ],
+      "live_ids": [
+        "external-effect",
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "task-intent"
+      ],
+      "manifest_sha256": "7582cc499a8a44df4a3a302d71abb5fe8256a5398dcaf118df706fd2983d083d",
+      "reachable_nodes": [
+        "compare_history",
+        "current",
+        "done",
+        "effect",
+        "frontier",
+        "recovery",
+        "retry"
+      ],
+      "reason": "complete_graph_fixed_point",
+      "selected_ids": [
+        "external-effect",
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "task-intent"
+      ]
+    },
+    "changed_after_compile": {
+      "disposition": "UNKNOWN_KEEP",
+      "evicted_ids": [],
+      "reason": "manifest_changed_after_compile",
+      "selected_ids": [
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "external-effect",
+        "task-intent",
+        "obsolete-observation",
+        "completed-note",
+        "stale-summary",
+        "release-history"
+      ]
+    },
+    "declared_hidden_consumer": {
+      "disposition": "PROVEN_DEAD_EVICTION",
+      "evicted_ids": [
+        "obsolete-observation",
+        "release-history",
+        "stale-summary"
+      ],
+      "live_ids": [
+        "completed-note",
+        "external-effect",
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "task-intent"
+      ],
+      "manifest_sha256": "d609c733efe77f06a9ac357254f54dc345e74b760f82816428ccb9a090b464de",
+      "reachable_nodes": [
+        "audit",
+        "compare_history",
+        "current",
+        "done",
+        "effect",
+        "frontier",
+        "recovery",
+        "retry"
+      ],
+      "reason": "complete_graph_fixed_point",
+      "selected_ids": [
+        "completed-note",
+        "external-effect",
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "task-intent"
+      ]
+    },
+    "declared_hidden_consumer_execution": {
+      "fields": {
+        "completed-note": {
+          "terminal_receipt": "scan-4"
+        }
+      },
+      "status": "EXECUTED_DECLARED_NODE"
+    },
+    "declared_node_execution": {
+      "fields": {
+        "obs-v2": {
+          "health": 68
+        },
+        "task-intent": {
+          "target": "finish-level"
+        }
+      },
+      "status": "EXECUTED_DECLARED_NODE"
+    },
+    "unauthorized_dispatch": {
+      "allowed_targets": [
+        "done"
+      ],
+      "disposition": "UNKNOWN_KEEP",
+      "evicted_ids": [],
+      "selected_ids": [
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "external-effect",
+        "task-intent",
+        "obsolete-observation",
+        "completed-note",
+        "stale-summary",
+        "release-history"
+      ]
+    },
+    "unknown_successor": {
+      "disposition": "UNKNOWN_KEEP",
+      "evicted_ids": [],
+      "reason": "unknown_successor",
+      "selected_ids": [
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "external-effect",
+        "task-intent",
+        "obsolete-observation",
+        "completed-note",
+        "stale-summary",
+        "release-history"
+      ]
+    },
+    "unsupported_dynamic_read": {
+      "disposition": "UNKNOWN_KEEP",
+      "evicted_ids": [],
+      "reason": "unsupported_node_or_dynamic_operation",
+      "selected_ids": [
+        "obs-v1",
+        "obs-v2",
+        "recovery-state",
+        "external-effect",
+        "task-intent",
+        "obsolete-observation",
+        "completed-note",
+        "stale-summary",
+        "release-history"
+      ]
+    }
+  },
+  "limitation": "closed declarative machine workflow only; does not prove coverage of future user intent or arbitrary model-visible conversation",
+  "manifest_sha256": "7582cc499a8a44df4a3a302d71abb5fe8256a5398dcaf118df706fd2983d083d",
+  "schema": "issue7367-closed-workflow-contract-a01-raw-v1"
+}

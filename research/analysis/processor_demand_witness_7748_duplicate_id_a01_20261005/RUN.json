@@ -1,0 +1,12 @@
+{
+  "allocation_id": "7748-DUPLICATE-ID-A01-20261005-01",
+  "frozen_main": "3c2254ddc4446bec9a8ab4871ed05defa0a900f9",
+  "runtime": "CPython 3.14.5, macOS arm64, host-only",
+  "container_preflight": "STOP_INFRA_CONTENT_STORE_BLOB_UNAVAILABLE",
+  "candidate": {"invocations": 1, "exit_code": 0, "stderr_empty": true},
+  "raw_only_auditor": {"invocations": 1, "exit_code": 1, "json_status": "PASS_DUPLICATE_ID_BOUNDARY_SCOPED", "errors": [], "stderr_empty": true},
+  "formal_retries": 0,
+  "disposition": "STOP_AUDITOR_EXIT_MISMATCH",
+  "reason": "CLI maps predecessor PASS_CLASS_BOUNDARY_SCOPED status to exit 0; the new PASS_DUPLICATE_ID_BOUNDARY_SCOPED status therefore returned exit 1 despite an empty audit error list",
+  "claims_excluded": ["formal method PASS", "general schedulability", "host/container timing", "runtime", "GUI", "safety", "task effect", "physical release"]
+}

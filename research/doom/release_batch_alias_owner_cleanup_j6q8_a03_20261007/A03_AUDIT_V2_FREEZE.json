@@ -1,0 +1,12 @@
+{
+  "schema": "release-batch-alias-owner-cleanup-a03-audit-v2-freeze-v1",
+  "frozen_at_utc": "2026-10-07T08:41:00Z",
+  "raw_sha256": "b16fb6f5f572f1e1e6a7a98a080e9cb8b0ef619d60fe76c0f02720dca64ba6b8",
+  "base_freeze_sha256": "c179402f50bce509e5e05976158fb58dd69bf4107535cb104bd516f7a9c06b59",
+  "candidate_sha256": "6a0e67d6b692803e8bd6208a9d919a5c0a4a217101e86cd6ff297a1fdd785808",
+  "auditor_sha256": "17150e40c973702bf0ff0c7915a9d0d3a0a445d8dc4d411ce906849172eab1d1",
+  "decision": "PASS only if all structural checks and exact raw/source/candidate bindings match; preserve A03 audit-v1 FAIL",
+  "reason": "Versioned read-only correction for audit-v1 raw schema mismatch: bind release window to recorded press-event window instead of absent client_window field. No candidate rerun.",
+  "command": "python3 -B /study/audit_v2.py --raw /out/A03/RAW.json --freeze /study/FREEZE.json --audit-freeze /study/A03_AUDIT_V2_FREEZE.json --candidate /study/candidate.py --out /out/A03/AUDIT_V2.json",
+  "output_absent": true
+}

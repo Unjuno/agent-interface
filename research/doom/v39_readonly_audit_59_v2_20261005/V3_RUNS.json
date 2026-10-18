@@ -1,0 +1,42 @@
+{
+  "schema": "v39-readonly-audit-v3-postrun-runs-v1",
+  "experiment_id": "V39-READONLY-AUDIT-59-A03-V3-20261005",
+  "source_archive_commit": "719ef679c977a925db3a6d1fe15f9cd93cf2b42c",
+  "runs": [
+    {
+      "name": "v3_py_compile",
+      "exit": "out/v3/pycompile.exit.txt",
+      "stdout": "out/v3/pycompile.stdout.txt",
+      "command": "py -3.11 -B -m py_compile research/doom/v39_readonly_audit_59_v2_20261005/audit_readonly_v3.py research/doom/v39_readonly_audit_59_v2_20261005/test_readonly_audit_v3.py",
+      "exit_code": 0,
+      "stderr": "out/v3/pycompile.stderr.txt"
+    },
+    {
+      "name": "v3_tests",
+      "exit": "out/v3/tests.exit.txt",
+      "stdout": "out/v3/tests.stdout.txt",
+      "tests": 4,
+      "command": "py -3.11 -B -m unittest -v research.doom.v39_readonly_audit_59_v2_20261005.test_readonly_audit_v3",
+      "exit_code": 0,
+      "stderr": "out/v3/tests.stderr.txt"
+    },
+    {
+      "name": "untouched_readonly_v3_audit",
+      "exit": "out/v3/readonly_audit.exit.txt",
+      "stderr": "out/v3/readonly_audit.stderr.txt",
+      "stdout": "out/v3/readonly_audit.stdout.txt",
+      "command": "py -3.11 -B research/doom/v39_readonly_audit_59_v2_20261005/audit_readonly_v3.py --archive research/doom/v39_application_consumption_conflict_59_a01_20261005",
+      "exit_code": 0,
+      "status": "PASS_READ_ONLY_ARCHIVE_AUDIT"
+    },
+    {
+      "name": "frozen_v2_provenance",
+      "exit": "out/v3/v2_provenance.exit.txt",
+      "stderr": "out/v3/v2_provenance.stderr.txt",
+      "stdout": "out/v3/v2_provenance.stdout.txt",
+      "command": "py -3.11 -B research/doom/v39_readonly_audit_59_v2_20261005/audit_provenance.py",
+      "exit_code": 0,
+      "status": "PASS_A02_PROVENANCE_AUDIT"
+    }
+  ]
+}

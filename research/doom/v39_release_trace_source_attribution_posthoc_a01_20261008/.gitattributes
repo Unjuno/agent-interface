@@ -1,0 +1,6 @@
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+# Frozen source bytes include mixed/CRLF endings; this must override *.py.
+inputs/executed_sources/** -text whitespace=cr-at-eol
+inputs/executed_sources/doom/session_map01_v12.py whitespace=cr-at-eol,-blank-at-eof

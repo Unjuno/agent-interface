@@ -1,0 +1,26 @@
+{
+  "audit_scope": "frozen input/output/source integrity and baseline-vs-candidate result reconstruction",
+  "baseline_raw_sha256": "c032b799266c1fbb3441af6a483ff2c196d968e1f55cfb19c3224591fad19266",
+  "candidate_raw_sha256": "f10e9e839cf0de59c9ba4e9568ff5f24e89900f77de6db5fa1afdd71bd4661e9",
+  "checks": {
+    "baseline_audit_sha": true,
+    "baseline_raw_sha": true,
+    "baseline_reproduces_all_aliases": true,
+    "baseline_source_blob": true,
+    "candidate_base_blob": true,
+    "candidate_case_order": true,
+    "candidate_control_passes": true,
+    "candidate_freeze_sha": true,
+    "candidate_raw_sha": true,
+    "candidate_rejects_all_aliases": true,
+    "candidate_result_label": true,
+    "candidate_runner_sha": true,
+    "candidate_source_hash": true,
+    "initial_audit_failure_preserved": true
+  },
+  "checks_passed": 14,
+  "checks_total": 14,
+  "classification": "PASS_EXACT_IDENTITY",
+  "passed": true,
+  "schema": "issue8566-reconcile-alias-a01-independent-candidate-audit-v1"
+}

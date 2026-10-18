@@ -1,0 +1,102 @@
+{
+  "schema": "v39-renewal-stale-sequence-frozen-source-a02-audit-v2",
+  "disposition": "FROZEN_SOURCE_STALE_RENEWAL_REJECTION_REPRODUCED",
+  "main_sha": "b6907899f11b036f2af572e8d4794ebb4b7e5c83",
+  "test_modes": [
+    "normal",
+    "optimized"
+  ],
+  "checks": [
+    {
+      "check": "source_sha256",
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "pass": true,
+      "sha256": "f76c618f5eedbe2c301eecb67c36c9064ec0de035009d0be6f8610bb1d808dc8",
+      "bytes": 79833
+    },
+    {
+      "check": "source_sha256",
+      "path": "research/doom/doom_controller_failure_cleanup_v1.py",
+      "pass": true,
+      "sha256": "e7738973991459f5fe9553383afb4000a1cbb6c755bc5763f11eab85c32dead8",
+      "bytes": 10767
+    },
+    {
+      "check": "normal_exit_0",
+      "pass": true
+    },
+    {
+      "check": "optimized_exit_0",
+      "pass": true
+    },
+    {
+      "check": "py_compile_exit_0",
+      "pass": true
+    },
+    {
+      "check": "normal_sequence_7_to_8",
+      "pass": true
+    },
+    {
+      "check": "normal_stale_rejection",
+      "pass": true
+    },
+    {
+      "check": "normal_expected_runtime_error",
+      "pass": true
+    },
+    {
+      "check": "normal_no_planner_interrupt",
+      "pass": true
+    },
+    {
+      "check": "normal_await_precedes_cleanup_close",
+      "pass": true
+    },
+    {
+      "check": "normal_prior_release_empty",
+      "pass": true
+    },
+    {
+      "check": "normal_cleanup_incomplete",
+      "pass": true
+    },
+    {
+      "check": "normal_no_live_input",
+      "pass": true
+    },
+    {
+      "check": "optimized_sequence_7_to_8",
+      "pass": true
+    },
+    {
+      "check": "optimized_stale_rejection",
+      "pass": true
+    },
+    {
+      "check": "optimized_expected_runtime_error",
+      "pass": true
+    },
+    {
+      "check": "optimized_no_planner_interrupt",
+      "pass": true
+    },
+    {
+      "check": "optimized_await_precedes_cleanup_close",
+      "pass": true
+    },
+    {
+      "check": "optimized_prior_release_empty",
+      "pass": true
+    },
+    {
+      "check": "optimized_cleanup_incomplete",
+      "pass": true
+    },
+    {
+      "check": "optimized_no_live_input",
+      "pass": true
+    }
+  ],
+  "scope": "Synthetic source-extracted construction only; no game, model, GUI, X server, native input, container, allocation, event-frequency estimate, or task-effect claim."
+}

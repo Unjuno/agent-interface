@@ -1,0 +1,10 @@
+test_reused_lease_id_cannot_match_another_lease_admission ... FAIL
+
+Traceback (most recent call last):
+  File "research/live_control/test_input_transition_owner_v3.py", line 117, in test_reused_lease_id_cannot_match_another_lease_admission
+    self.assertFalse(row['owner_release_history_complete'])
+AssertionError: True is not false
+
+Ran 1 test in 0.001s
+FAILED (failures=1)
+EXPECTED_RED_EXIT=1

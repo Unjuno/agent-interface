@@ -1,0 +1,9 @@
+{
+  "attempt": 1,
+  "command": "wsl.exe -d Ubuntu -- sh -lc 'cd /mnt/d/issue59-v39-release-rescue && python3 -B -m unittest -v research.doom.v39_current_main_cancel_executor_handoff_a01_20261008.test_current_handoff'",
+  "classification": "FIXTURE_SOURCE_RETRIEVAL_FAILURE",
+  "observed_error": "WSL Git reported an unresolvable Windows-style alternate object path and then could not resolve research/live_control/lease.py at frozen commit 708ca59a8128f07fdb7e13a36704c6b2f79c9fb6.",
+  "scope": "The test stopped before constructing the ExecutorV13 fixture or invoking the current-main helper. No model, GUI, game, or OS input was used.",
+  "repair": "Bundle and hash-check the nine ExecutorV13 software modules from the frozen 708ca59a8128f07fdb7e13a36704c6b2f79c9fb6 source, plus the exact prior event harness. Retain current-main controller, planner adapter, and App Server client snapshots from 24319711a2b4f8c782c2648522f30dc70b4c9b09.",
+  "post_repair_result": "The same deterministic scenario passed under Ubuntu WSL; see RESULT.json and AUDIT.json."
+}

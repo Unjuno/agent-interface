@@ -1,0 +1,13 @@
+mode=candidate
+command=["/usr/local/bin/python", "-m", "unittest", "test_doom_typed_artifact_reconciliation_v1", "-v"]
+exit=0
+--- stdout ---
+--- stderr ---
+test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) ... ok
+test_exact_identity_pair_matches (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_exact_identity_pair_matches) ... ok
+test_nested_boolean_integer_pointer_binding_alias_does_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_nested_boolean_integer_pointer_binding_alias_does_not_match) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.038s
+
+OK

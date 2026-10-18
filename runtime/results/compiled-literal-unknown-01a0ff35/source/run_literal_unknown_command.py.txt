@@ -1,0 +1,36 @@
+import datetime
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+OUT = Path(__file__).resolve().parent / 'compiled-literal-unknown-01a0ff35'
+
+def main():
+    label, variant, *args = sys.argv[1:]
+    path = OUT / (label + '.receipt.json')
+    if path.exists():
+        raise RuntimeError('command-label-already-used')
+    source = OUT / variant / 'runtime/core_v1/compiled_gui.py'
+    test = OUT / variant / 'runtime/core_v1/test_compiled_literal_unknown_01a0ff35.py'
+    freeze = {'label': label, 'variant': variant, 'argv': [sys.executable, '-B', *args],
+              'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              'python':sys.version, 'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
+              'test_sha256':hashlib.sha256(test.read_bytes()).hexdigest(),
+              'source_freeze_sha256':hashlib.sha256((OUT/'SOURCE_FREEZE.json').read_bytes()).hexdigest()}
+    (OUT / (label+'.before.json')).write_bytes((json.dumps(freeze,sort_keys=True,indent=2)+'\n').encode())
+    r = subprocess.run(freeze['argv'],cwd=OUT/variant,capture_output=True,timeout=60)
+    for stream in ['stdout','stderr']:
+        data = getattr(r,stream)
+        (OUT/(label+'.'+stream+'.txt')).write_bytes(data)
+        freeze[stream+'_sha256'] = hashlib.sha256(data).hexdigest()
+    freeze.update({'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit_code':r.returncode,
+                   'source_unchanged_after':hashlib.sha256(source.read_bytes()).hexdigest()==freeze['source_sha256'],
+                   'test_unchanged_after':hashlib.sha256(test.read_bytes()).hexdigest()==freeze['test_sha256']})
+    path.write_bytes((json.dumps(freeze,sort_keys=True,indent=2)+'\n').encode())
+    print(json.dumps({'label':label,'exit_code':r.returncode,'stdout':r.stdout.decode('utf-8','replace'),
+                      'stderr':r.stderr.decode('utf-8','replace')},ensure_ascii=True))
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,72 @@
+{
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+  "cwd": "/private/tmp/agent-interface-v39-cancel-release-fix-a01",
+  "commands": {
+    "candidate": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release",
+        "-v"
+      ],
+      "exit": 0
+    },
+    "candidate_optimized": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-O",
+        "-m",
+        "unittest",
+        "research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release",
+        "-v"
+      ],
+      "exit": 0
+    },
+    "executor_v12": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition",
+        "-v"
+      ],
+      "exit": 0
+    },
+    "owner_compatibility": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "research/doom/map01_v39_cancel_release_fix_a01_20261005/run_owner_compat_suite.py"
+      ],
+      "exit": 0
+    },
+    "v39_bridge": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "research/doom/map01_v39_perkey_bridge_a01",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit": 0
+    },
+    "source_audit": {
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py"
+      ],
+      "exit": 0
+    }
+  }
+}

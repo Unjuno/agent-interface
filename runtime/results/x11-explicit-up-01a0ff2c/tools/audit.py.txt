@@ -1,0 +1,54 @@
+import copy,hashlib,json,os,re,sys,traceback
+from pathlib import Path
+from datetime import datetime,timezone
+root=Path(__file__).resolve().parents[2];work=Path(__file__).resolve().parent;out=root/'outputs/x11-explicit-up-01a0ff2c';dest=out/'audit-first';dest.mkdir(exist_ok=False)
+sha=lambda b:hashlib.sha256(b).hexdigest();utc=lambda:datetime.now(timezone.utc).isoformat()
+r={'pid':os.getpid(),'started_utc':utc(),'argv':sys.argv,'reader_sha256':sha(Path(__file__).read_bytes()),'producer_execution':0,'native_calls':0};(dest/'START.json').write_text(json.dumps(r,indent=2),encoding='utf8')
+checks=[]
+def check(ok,label):
+    if not ok:raise ValueError(label)
+    checks.append(label)
+def valid(row):
+    name=row['case'];value=row['value'];held=row['held_keycodes'];buttons=row['held_buttons']
+    if name=='untracked':return value.get('error')=='INVALID_PROGRAM' and row['emissions']==0 and row['events']==[] and not row['recovery_required'] and held=={} and buttons==[] and row['api_keys']==[38] and row['api_buttons']==[1]
+    if name=='untracked_direct':return held=={} and buttons==[] and row['api_keys']==[38] and row['api_buttons']==[1] and value['keys_down']==[] and value['buttons_down']==['left'] and value['verified'] is False
+    if name.endswith('_recover'):
+        return value.get('status')=='input_recovered' and value['release_attempted'] is True and value['replay_allowed'] is False and value['task_success'] is None and not row['api_keys'] and not row['api_buttons'] and not held and not buttons and not row['recovery_required']
+    if name.endswith('_stubborn_followup'):
+        return value.get('error')=='INPUT_RECOVERY_REQUIRED' and value['input_dispatched'] is False and row['recovery_required'] is True and (held=={'a':38} or buttons==['left'])
+    if name in ('key_query','button_query','send','sync'):
+        return value.get('status')=='execution_failed' and row['recovery_required'] is True and held==({'a':38} if name!='button_query' else {}) and buttons==(['left'] if name=='button_query' else [])
+    releases=value.get('execution',{}).get('releases',[])
+    if not releases:return False
+    release=releases[-1];down=bool(row['api_keys'] or row['api_buttons'])
+    return value['status']==('release_unverified' if down else 'completed') and row['recovery_required'] is down and release['verified'] is (not down) and set(held.values())==set(row['api_keys']) and buttons==(['left'] if row['api_buttons'] else []) and set(release['keys_down'])==set(held) and release['buttons_down']==buttons
+try:
+    phases=['baselineRED','baselineRED-corrected','firstGREEN','optimizedGREEN','activeRED','activeGREEN','activeGREEN-optimized'];sets={};receipts=[]
+    for phase in phases:
+        folder=out/phase;receipt=json.loads((folder/'RESULT.json').read_text());check(type(receipt['exit_code']) is int and receipt['exit_code']==(1 if 'RED' in phase else 0),'original status '+phase)
+        check(receipt['timeout'] is False and receipt['source_unchanged'] is True,'source stable/finite '+phase)
+        for name,pin in receipt['streams'].items():
+            b=(folder/name).read_bytes();check(len(b)==pin['bytes'] and sha(b)==pin['sha256'],'whole stream '+phase+'/'+name)
+        rows=[json.loads(line) for line in (folder/'stdout.txt').read_text().splitlines()];sets[phase]=rows
+        stderr=(folder/'stderr.txt').read_text();check('Ran 8 tests' in stderr,'8 full methods '+phase)
+        check(('FAILED (failures=8)' if phase=='baselineRED' else 'FAILED (failures=7)' if 'RED' in phase else '\nOK\n') in stderr,'first results preserved '+phase)
+        if 'GREEN' in phase:check(all(valid(row) for row in rows),'independent ledger/status/ownership oracle '+phase)
+        receipts.append({k:receipt[k] for k in ('phase','pid','started_utc','ended_utc','exit_code','streams')})
+    check(sets['firstGREEN']==sets['optimizedGREEN']==sets['activeGREEN']==sets['activeGREEN-optimized'],'all candidate literal rows equal across loader and optimized conditions')
+    check(sets['baselineRED-corrected']==sets['activeRED'],'corrected construction and portable baseline exact rows')
+    check(json.loads((out/'firstGREEN/RESULT.json').read_text())['source_pins']['test_explicit_up.py']==json.loads((out/'baselineRED-corrected/RESULT.json').read_text())['source_pins']['test_explicit_up.py'],'corrected comparison same test definition')
+    check(json.loads((out/'activeGREEN/RESULT.json').read_text())['source_pins']['runtime/backends/x11_v1/test_explicit_up_ledger.py']==json.loads((out/'activeRED/RESULT.json').read_text())['source_pins']['runtime/backends/x11_v1/test_explicit_up_ledger.py'],'portable comparison same test definition')
+    cases={row['case']:row for row in sets['activeGREEN']};base={row['case']:row for row in sets['activeRED']}
+    check(sum(base[c]['value'].get('status')=='completed' and base[c]['api_keys']==[38] and not base[c]['held_keycodes'] for c in ('key_pair_stubborn','key_chord_stubborn','ascii_text_stubborn','remap_after_up'))==4,'four first baseline false completions')
+    check(base['button_pair_stubborn']['value']['status']=='release_unverified' and base['button_pair_stubborn']['held_buttons']==[],'baseline button detected but owned retry obligation lost')
+    for c in ('key_pair','key_chord','ascii_text','button_pair'):
+        first=cases[c+'_stubborn'];second=cases[c+'_stubborn_followup'];check(first['events']==second['events'] and first['emissions']==second['emissions'],'followup zero emissions '+c)
+    negatives=[]
+    for name,change in [('lost_key',lambda x:x.update(held_keycodes={})),('false_completed',lambda x:x['value'].update(status='completed')),('wrong_physical_code',lambda x:x.update(held_keycodes={'a':39}))]:
+        row=copy.deepcopy(cases['key_pair_stubborn']);change(row);check(not valid(row),'copy negative '+name);negatives.append(name)
+    row=copy.deepcopy(cases['button_pair_stubborn']);row['held_buttons']=[];check(not valid(row),'copy negative lost_button');negatives.append('lost_button')
+    row=copy.deepcopy(cases['key_query']);row['held_keycodes']={};check(not valid(row),'copy negative query_fault_ledger');negatives.append('query_fault_ledger')
+    row=copy.deepcopy(cases['key_pair_stubborn_recover']);row['value']['replay_allowed']=True;check(not valid(row),'copy negative recovery_task_replay');negatives.append('recovery_task_replay')
+    r.update(status='PASS_SCOPED_SAVED_DATA',checks=checks,candidate_rows=len(sets['activeGREEN']),all_candidate_endpoints=4,receipts=receipts,negative_controls=negatives,baseline_false_completions=4,baseline_button_custody_loss=True,first_fixture_failure_retained=True,physical_release=False,main_sends=0);code=0
+except BaseException as error:r.update(status='READER_FAILURE',error=repr(error),traceback=traceback.format_exc(),checks_completed=checks);code=1
+r.update(ended_utc=utc(),exit_code=code);data=json.dumps(r,indent=2);(dest/'RESULT.json').write_text(data,encoding='utf8');(dest/'stdout.txt').write_text(data+'\n',encoding='utf8');print(json.dumps({k:v for k,v in r.items() if k not in ('checks','checks_completed','receipts','argv')}));sys.exit(code)

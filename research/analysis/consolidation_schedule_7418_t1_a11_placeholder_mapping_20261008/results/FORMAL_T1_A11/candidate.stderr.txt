@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1-a11-placeholder-mapping/research/analysis/consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/candidate.py", line 153, in <module>
+    main()
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1-a11-placeholder-mapping/research/analysis/consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/candidate.py", line 148, in main
+    count = run(model, prompts, queries, Path(args.raw), args.base_url, args.model_digest)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1-a11-placeholder-mapping/research/analysis/consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/candidate.py", line 65, in run
+    digest, size = load_model_tag(base_url)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1-a11-placeholder-mapping/research/analysis/consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/candidate.py", line 49, in load_model_tag
+    raise RuntimeError("expected exactly one private model tag")
+RuntimeError: expected exactly one private model tag

@@ -1,0 +1,19 @@
+{
+  "record_type":"source_extracted_behavioral_revalidation",
+  "protocol_conformance":"DEVIATED_FROM_FROZEN_T",
+  "preregistered_18_test_suite_executions":0,
+  "custom_AST_probe_executions":1,
+  "disposition":"PASS_A06_CURRENT_HEAD_DISPATCH_AND_DEDUP_BOUNDARY",
+  "source_commit":"6cd1d2d8e0d5753819f2608941496e916dfc994c",
+  "source_blob":"d4f91d3102ef8124fdfbbd6374a3015c4e079a89",
+  "source_event_types":["observation","typed_observation"],
+  "cases":{
+    "full_only_zero_ammo":"policy_invalidation:ammo:below_hard_minimum",
+    "typed_then_full_duplicate":"accepted_once;soft_event_count=1;sequence=11",
+    "full_then_typed_duplicate":"accepted_once;soft_event_count=1;sequence=11",
+    "reader_error":"policy_invalidation:signal_pair_source_unavailable",
+    "same_epoch_mismatched_pair":"policy_invalidation:signal_pair_duplicate_epoch_mismatch"
+  },
+  "deviation":"The frozen T specified running all 18 unittest methods. A broader sparse-checkout fetch stalled; instead, before a full suite was executed, one offline AST harness exercised the exact production wait() and monitor definitions in five frozen-target boundary cases. This result is not represented as the frozen 18-test run or a full-suite pass.",
+  "scope":"Synthetic source-extracted construction only; no live game, GUI, model, OS input, allocation, physical release, useful task effect, recovery, or MAP01 evidence."
+}

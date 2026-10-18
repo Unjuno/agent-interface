@@ -1,0 +1,13 @@
+import pathlib,json,urllib.request,hashlib,datetime
+R=pathlib.Path(__file__).resolve().parent;meta=json.loads((R/'SOURCE_METADATA.json').read_bytes());ref='25a9e31eb32db752d959df18e4d214295a2875e8'
+rows=[{'path':'examples/vanillajs/index.html','sha':'73b5906946649e8d5cfb4bd54559f1498944eaeb'}]
+for index,prefix in [(0,'examples/vanillajs/node_modules/'),(1,'examples/vanillajs/js/')]:
+    rows.extend(dict(x,path=prefix+x['path']) for x in meta[index]['tree'] if x['type']=='blob')
+rows.extend(x for x in meta[2] if x['path'] in ['license.md','learn.json'])
+pins=[]
+for row in rows:
+    with urllib.request.urlopen('https://raw.githubusercontent.com/tastejs/todomvc/'+ref+'/'+row['path'],timeout=15) as response:b=response.read(262145)
+    assert len(b)<=262144 and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==row['sha']
+    target=R/'site'/row['path'];target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(b)
+    pins.append({'path':target.relative_to(R).as_posix(),'git_blob':row['sha'],'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+(R/'SOURCE.json').write_text(json.dumps({'source':ref,'retrieved_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'files':pins,'unchanged':True},indent=2),encoding='utf-8');print(len(pins),sum(x['bytes'] for x in pins))

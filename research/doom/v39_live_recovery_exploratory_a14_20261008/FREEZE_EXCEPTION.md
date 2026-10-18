@@ -1,0 +1,7 @@
+# A14 freeze/run mismatch — retained as an execution exception
+
+The original `ORIGINAL_FREEZE.json` describes a model-free startup diagnostic. The actual Docker command invoked the unmodified full `map01_overlap_controller_v39.py` with `--iterations 6 --seed 991044 --model gpt-6.1-sol --effort medium --measurement-session`. It therefore made six planner turns. Only `session_map01_v12.py` carried the declared diagnostic stage markers; no early-return patch was applied to the controller.
+
+The source of the mismatch is a runner-preparation error: the planned controller adapter was never included in the A14 tree/command. The live process was allowed to end at the runner's six-decision bound, and its first output was preserved. Do not rewrite the freeze or classify this as a successful preregistered experiment. Treat the run as exploratory raw evidence only. The original command, process exit, complete raw directory, and checksums are retained beside this note.
+
+The freeze also described a marker-enabled diagnostic `session_map01_v12.py`. Inspection of the mounted `source-main-708ca59a` tree and `raw/runtime/sources.json` shows that the marker-enabled file was not executed: A14 used the ordinary staged source (SHA-256 `096fb9968a412e2c539af708408e5be1bcb408c5ecb53bd2740431fc0ced9e23`). Therefore, stage-marker observations are not A14 evidence and must not be used to claim which initialization stage was reached. `DIAGNOSTIC_ADAPTER.json` and the audit record the discrepancy.

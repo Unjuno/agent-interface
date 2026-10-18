@@ -1,0 +1,6 @@
+python temporal_orphan_audit.py
+python audit_temporal_order.py
+python -m py_compile temporal_orphan_audit.py audit_temporal_order.py
+
+Both scripts retrieve the pinned raw stream and verify its SHA-256 before analysis.
+The run was host-only (Windows CPython 3.11.9); WSL returned Input/output error and C: had 0 free bytes.

@@ -1,0 +1,124 @@
+{
+  "schema": "agent-interface/v39-stale-rejection-outer-continue-freeze-v1",
+  "source_main_commit": "d66ee6cd4f9c09387845bc0765855cbede0c0874",
+  "reviewed_pr_head": "8ae79f7209077955ca9dabccdf6e817c9ca029d5",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "platform_id": "darwin",
+  "test_path": "research/doom/test_map01_v39_stale_rejection_continue.py",
+  "mutation": {
+    "target_path": "research/doom/map01_overlap_controller_v39.py",
+    "deleted_line_number": 1798,
+    "deleted_line": "                continue",
+    "meaning": "remove the direct continue from the outer stale_rejection branch"
+  },
+  "source_count": 21,
+  "source_files": {
+    "research/doom/doom_action_snapshot_v1.py": {
+      "sha256": "f6efc8c8ac0957dfa0d8cf5e8190e4e58b2e71fa328021c816f01d36af476f38",
+      "git_blob": "756626d2a3745b50a32b89e1ae64b33eea24b2aa",
+      "bytes": 2005
+    },
+    "research/doom/doom_action_validity_contract_v1.py": {
+      "sha256": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e",
+      "git_blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+      "bytes": 4146
+    },
+    "research/doom/doom_controller_failure_cleanup_v1.py": {
+      "sha256": "e7738973991459f5fe9553383afb4000a1cbb6c755bc5763f11eab85c32dead8",
+      "git_blob": "d04e167ed182d5faf935e6c23132b164fe9a16ac",
+      "bytes": 10767
+    },
+    "research/doom/doom_hud_signal_v1.py": {
+      "sha256": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+      "git_blob": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "bytes": 8615
+    },
+    "research/doom/doom_hud_signal_v2.py": {
+      "sha256": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff",
+      "git_blob": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "bytes": 867
+    },
+    "research/doom/doom_hud_signal_v3.py": {
+      "sha256": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7",
+      "git_blob": "083338b4565176aaea560d800ce0210f17b6852f",
+      "bytes": 3695
+    },
+    "research/doom/doom_signal_value_domain_v1.py": {
+      "sha256": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+      "git_blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+      "bytes": 483
+    },
+    "research/doom/doom_source_refresh_v1.py": {
+      "sha256": "f3a9c66bc069a98b3240f5256810123e4f61931fd648e03b3e564aedec545743",
+      "git_blob": "51c12ff4f2816f022bb86be9f5f6a951467d38b7",
+      "bytes": 4364
+    },
+    "research/doom/doom_typed_observation_v1.py": {
+      "sha256": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+      "git_blob": "ddeb95efe76c32f4c77d0b1d25f08e395a536a2e",
+      "bytes": 9724
+    },
+    "research/doom/map01_overlap_controller_v39.py": {
+      "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+      "git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+      "bytes": 112524
+    },
+    "research/doom/map01_stagnation_v1.py": {
+      "sha256": "669d61eb473c486e693a478b1941a7b40102d2049e0a437e5982143544d60a54",
+      "git_blob": "be03ef1295c27e25dc63df3a9121f5c7f5296bfb",
+      "bytes": 2128
+    },
+    "research/doom/test_map01_v39_stale_rejection_continue.py": {
+      "sha256": "8d169ed5ac3442e1d8e9ec12a15888376a40b4e4a8f83bee2327811ad7da96ea",
+      "git_blob": "37d31c015c4c12a3b2231fcde986b0a64d061aaf",
+      "bytes": 2088
+    },
+    "research/live_control/action_validity_admission_v1.py": {
+      "sha256": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a",
+      "git_blob": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+      "bytes": 8763
+    },
+    "research/live_control/codex_app_server_client_v2.py": {
+      "sha256": "1d85460d2c3a22d6f7fb78f6b0e29904980dcc0bd158e6ce35d4d13a55cad0b7",
+      "git_blob": "8553874221761a7807c846c7dcd66c22fc6340ff",
+      "bytes": 18840
+    },
+    "research/live_control/final_action_admission_v1.py": {
+      "sha256": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+      "git_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "bytes": 6160
+    },
+    "research/live_control/final_action_admission_v2.py": {
+      "sha256": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01",
+      "git_blob": "2078194e704d603c6bd864030cc570abc542455c",
+      "bytes": 9505
+    },
+    "research/live_control/observable_signal_guard_v2.py": {
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "bytes": 7404
+    },
+    "research/live_control/persistent_planner_adapter_v2.py": {
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "bytes": 11709
+    },
+    "research/live_control/running_action_guard_v1.py": {
+      "sha256": "009418d261659db986e907b7ff9843e554aea5e5094fd96e38791ff6e69f6683",
+      "git_blob": "b679af39a1eefc09b8d1c06b934ef6a594212776",
+      "bytes": 10306
+    },
+    "research/live_control/running_action_guard_v2.py": {
+      "sha256": "13f224c491dfe455a9e50ab78eafbcd00bd08303b397b75a814e2558ce63fe7a",
+      "git_blob": "0e74ae977603be8279b48b334cfd24d25dd30b4b",
+      "bytes": 13255
+    },
+    "research/live_control/running_action_guard_v3.py": {
+      "sha256": "bcc0dc5961a54a315a05558d800f94ff119fa6106ed91e0fa0ba14131d470732",
+      "git_blob": "bbefdba8edfd83e886baf556caf28aca66ac88fb",
+      "bytes": 4462
+    }
+  },
+  "scope": "AST control-flow regression and mutation only; no controller runtime, model, game, GUI, OS input, physical release or task effect"
+}

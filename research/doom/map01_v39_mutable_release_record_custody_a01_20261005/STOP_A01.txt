@@ -1,0 +1,8 @@
+Run ID: MAP01-V39-MUTABLE-RELEASE-RECORD-CUSTODY-A01-FORMAL-01-20261005
+
+Disposition: STOP_CONTAINER_CLI_IMAGE_PARSE; candidate executions=0; container starts=0.
+
+Exact attempted command:
+docker run --rm --platform linux/arm64 --network none --cpus=1 --memory=1g --memory-swap=1g --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m --mount type=bind,src=/private/tmp/agent-interface-59-executor-v12-a01,dst=/workspace,readonly --mount type=bind,src=/private/tmp/agent-interface-59-executor-v12-a01/research/doom/map01_v39_mutable_release_record_custody_a01_20261005/results/formal_01,dst=/workspace/research/doom/map01_v39_mutable_release_record_custody_a01_20261005/results/formal_01 --workdir /workspace PYTHONDONTWRITEBYTECODE=1 python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python -B research/doom/map01_v39_mutable_release_record_custody_a01_20261005/run_candidate.py
+
+Exact CLI output: `docker: invalid reference format: repository name (library/PYTHONDONTWRITEBYTECODE=1) must be lowercase`. Docker interpreted the misplaced environment assignment as the image reference. The daemon did not create a container and no candidate code ran; no A01 candidate output was created or replaced. This setup failure is preserved; the corrected invocation is separately labeled A02 and has a separate write-once candidate output directory. A later A02 audit-wrapper path mistake is documented separately in `AUDIT_WRAPPER_NOTE.txt`.

@@ -179,6 +179,10 @@ def compact_receipt(view, *, report_refs=False):
     def visit(value, path):
         if isinstance(value, dict):
             target = index.get(_encoded(value))
+            # Empty event indexes cannot supply a reference. Keep the root encoding
+            # above so invalid JSON still fails before bypassing descendant work.
+            if not index:
+                return value
             if target is not None:
                 references[path] = target
                 return {'event_ref': target}

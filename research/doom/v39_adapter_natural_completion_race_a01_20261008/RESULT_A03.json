@@ -1,0 +1,64 @@
+{
+  "schema": "v39-adapter-reader-completion-race-a02-v1",
+  "status": "PASS_EXACT_READER_ROUTES_COMPLETION_BEFORE_INTERRUPT_REPLY",
+  "main": "4a38cb226fd465bbf6b600b1e2f9aa20564f8e01",
+  "source_blobs": {
+    "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "research/live_control/persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15",
+    "research/live_control/codex_app_server_client_v2.py": "8553874221761a7807c846c7dcd66c22fc6340ff"
+  },
+  "events": [
+    {
+      "event": "executor_cancel_write",
+      "at_ns": 454306945973600
+    },
+    {
+      "event": "executor_cancel_flush",
+      "at_ns": 454306945978500
+    },
+    {
+      "event": "interrupt_request_written",
+      "at_ns": 454306945989200
+    },
+    {
+      "event": "client_received_turn/completed",
+      "at_ns": 454306946106500
+    },
+    {
+      "event": "turn_completion_consumed",
+      "at_ns": 454306946161100
+    },
+    {
+      "event": "planner_await_returned",
+      "at_ns": 454306946168900
+    },
+    {
+      "event": "interrupt_response_injected",
+      "at_ns": 454306946210500
+    },
+    {
+      "event": "client_received_1",
+      "at_ns": 454306946253700
+    },
+    {
+      "event": "verified_empty_terminal_observed",
+      "at_ns": 454306946277100
+    }
+  ],
+  "completion_consumed_before_interrupt_response": true,
+  "turn_result": {
+    "status": "completed",
+    "cancellation_requested": true,
+    "answer_eligible": false,
+    "answer": null,
+    "error": "answer belongs to an invalidated observation"
+  },
+  "helper_terminal": {
+    "status": "cancelled",
+    "release": {
+      "verified": true,
+      "keys_down": [],
+      "buttons_down": []
+    }
+  }
+}

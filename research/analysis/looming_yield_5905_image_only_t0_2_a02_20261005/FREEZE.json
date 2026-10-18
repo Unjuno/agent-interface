@@ -1,0 +1,36 @@
+{
+  "schema": "looming-yield-freeze-a02-v1",
+  "allocation": "LOOMING-YIELD-5905-T0.2-IMAGE-ONLY-20261005",
+  "issue": 5905,
+  "branch": "research/5905-image-only-cues-a02-20261005",
+  "base_main": "d9bb339b0ba9285cdef57fc347437d25e5943ef1",
+  "prior_allocation": "LOOMING-YIELD-5905-T0-ISOLATED-ORB-20261001-01",
+  "prior_disposition": "STOP_MAIN_ADVANCED_AFTER_FREEZE",
+  "candidate_invocations": 1,
+  "independent_auditor_invocations": 1,
+  "retry_budget": 0,
+  "prereg_comment": 5988734721,
+  "container": {
+    "runtime": "WSLc 3.0.1.0",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_config_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested": "512m",
+    "gpu": "none"
+  },
+  "source_sha256": {
+    "PREREG.md": "2f0714a539b6ccc2023d1fb42cdb7730300ca80e0764c638f58104d8b5302767",
+    "src/build_fixture.py": "d0e99087ada52f655f741459d0da8a2a372697dfccc707cc61956cb6dba3c53d",
+    "src/candidate.py": "9098787548d7a61a30d3ac1a95478a5c676aba2c0402fe02847d9dc4381a88f7",
+    "src/audit.py": "72957151b953717803f89923323126d3755e219fb7b4298be57a4bec3b47581d",
+    "src/test_method.py": "310af61bcf330192c335f7f03dce8c8570ffb5d445b5601071d0ec7401ad8ec0",
+    "candidate_input/observations.json": "d29ae866e8c899f881c283a951b19876b1215d589c55d2f14e14b4e77ef18040",
+    "audit_input/observations.json": "d29ae866e8c899f881c283a951b19876b1215d589c55d2f14e14b4e77ef18040",
+    "audit_input/truth.json": "53d92b1b2bf47ce2b0ca4e8a2fda8eff78020aaf16b3417b6d234a19e939b8cc",
+    "inputs/observations.json.gz": "3532f7a9460b987aca44a188fdcd39c7a5852d25a6cb6587f10677719dc4ed12",
+    "inputs/truth.json.gz": "623bba0b88b1a31a53c9fc20635c5586ed6884f6fb82c040f10540a6ff622ffb"
+  },
+  "construction": "3/3 host unit tests; candidate.main not run"
+}

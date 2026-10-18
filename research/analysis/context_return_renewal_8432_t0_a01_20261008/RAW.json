@@ -1,0 +1,1839 @@
+{
+  "format": "context-return-renewal-t0-raw-v1",
+  "allocation_id": "8432-context-return-method-t0-a01",
+  "candidate_invocations": 1,
+  "model_calls": 0,
+  "gui_calls": 0,
+  "external_network_calls": 0,
+  "cue_support": [
+    "X"
+  ],
+  "action_support": [
+    "old_choice",
+    "corrected_choice"
+  ],
+  "episodes": [
+    {
+      "track_id": "context_return",
+      "history_treatment": "chronological",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "return_A"
+      ],
+      "history": {
+        "treatment": "chronological",
+        "records": [
+          {
+            "event_id": "acquire_A-1",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-2",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-3",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-4",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-1",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-2",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-3",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-4",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          }
+        ]
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "return_A",
+          "context_marker": "A",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "return_A-1",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-2",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-3",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-4",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "continued_B",
+      "history_treatment": "chronological",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "continue_B"
+      ],
+      "history": {
+        "treatment": "chronological",
+        "records": [
+          {
+            "event_id": "acquire_A-1",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-2",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-3",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-4",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-1",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-2",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-3",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-4",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          }
+        ]
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "continue_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "continue_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "novel_C",
+      "history_treatment": "chronological",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "novel_C"
+      ],
+      "history": {
+        "treatment": "chronological",
+        "records": [
+          {
+            "event_id": "acquire_A-1",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-2",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-3",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-4",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-1",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-2",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-3",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-4",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          }
+        ]
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "novel_C",
+          "context_marker": "C",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "novel_C-1",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-2",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-3",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-4",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "context_return",
+      "history_treatment": "context_tagged",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "return_A"
+      ],
+      "history": {
+        "treatment": "context_tagged",
+        "applicability": {
+          "A": "context-A-only",
+          "B": "context-B-only"
+        },
+        "records": [
+          {
+            "event_id": "acquire_A-1",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-2",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-3",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-4",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-1",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-2",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-3",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-4",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          }
+        ]
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "return_A",
+          "context_marker": "A",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "return_A-1",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-2",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-3",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-4",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "continued_B",
+      "history_treatment": "context_tagged",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "continue_B"
+      ],
+      "history": {
+        "treatment": "context_tagged",
+        "applicability": {
+          "A": "context-A-only",
+          "B": "context-B-only"
+        },
+        "records": [
+          {
+            "event_id": "acquire_A-1",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-2",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-3",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-4",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-1",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-2",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-3",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-4",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          }
+        ]
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "continue_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "continue_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "novel_C",
+      "history_treatment": "context_tagged",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "novel_C"
+      ],
+      "history": {
+        "treatment": "context_tagged",
+        "applicability": {
+          "A": "context-A-only",
+          "B": "context-B-only"
+        },
+        "records": [
+          {
+            "event_id": "acquire_A-1",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-2",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-3",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "acquire_A-4",
+            "phase": "acquire_A",
+            "context_marker": "A",
+            "mapping_id": "A",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-1",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-2",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-3",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "old_choice",
+            "observed_outcome": 0,
+            "source_kind": "fixed_outcome_example"
+          },
+          {
+            "event_id": "correct_B-4",
+            "phase": "correct_B",
+            "context_marker": "B",
+            "mapping_id": "B",
+            "cue_id": "X",
+            "action": "corrected_choice",
+            "observed_outcome": 1,
+            "source_kind": "fixed_outcome_example"
+          }
+        ]
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "novel_C",
+          "context_marker": "C",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "novel_C-1",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-2",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-3",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-4",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "context_return",
+      "history_treatment": "none",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "return_A"
+      ],
+      "history": {
+        "treatment": "none",
+        "records": []
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "return_A",
+          "context_marker": "A",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "return_A-1",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-2",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-3",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "return_A-4",
+              "context_marker": "A",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "continued_B",
+      "history_treatment": "none",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "continue_B"
+      ],
+      "history": {
+        "treatment": "none",
+        "records": []
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "continue_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "continue_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "continue_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "track_id": "novel_C",
+      "history_treatment": "none",
+      "environment_phase_order": [
+        "acquire_A",
+        "correct_B",
+        "test_B",
+        "novel_C"
+      ],
+      "history": {
+        "treatment": "none",
+        "records": []
+      },
+      "test_phases": [
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "test_B-1",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-2",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-3",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "test_B-4",
+              "context_marker": "B",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        },
+        {
+          "phase": "novel_C",
+          "context_marker": "C",
+          "mapping_id": "B",
+          "trials": [
+            {
+              "trial_id": "novel_C-1",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-2",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-3",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            },
+            {
+              "trial_id": "novel_C-4",
+              "context_marker": "C",
+              "cue_id": "X",
+              "mapping_id": "B",
+              "action_support": [
+                "old_choice",
+                "corrected_choice"
+              ],
+              "outcome_oracle": {
+                "old_choice": 0,
+                "corrected_choice": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "diagnostic_proposal_traces": {
+    "no_signal": {
+      "context_return": [
+        "old_choice",
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice"
+      ],
+      "continued_B": [
+        "old_choice",
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice"
+      ],
+      "novel_C": [
+        "old_choice",
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice"
+      ]
+    },
+    "seeded_return_signal": {
+      "context_return": [
+        "old_choice",
+        "old_choice",
+        "corrected_choice",
+        "old_choice"
+      ],
+      "continued_B": [
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice",
+        "corrected_choice"
+      ],
+      "novel_C": [
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice",
+        "corrected_choice"
+      ]
+    }
+  },
+  "diagnostic_trace_label": "deterministic scorer controls only; not model observations",
+  "current_mapping_id": "B",
+  "executed_effects": false
+}
+

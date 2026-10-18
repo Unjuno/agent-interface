@@ -1,0 +1,94 @@
+{
+  "allocation": "MRT-7834-A03-20261005",
+  "freeze_comment": 5986196185,
+  "base_main_at_freeze": "853c9bc85fb63430277e793edde108bf9f87f1d9",
+  "runtime": {
+    "runtime": "Microsoft WSLc",
+    "wslc_version": "3.0.1.0",
+    "wsl_version": "3.0.1.0",
+    "kernel": "6.18.40.1",
+    "platform": "linux/amd64",
+    "image": "node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402",
+    "image_id": "sha256:7c3b093add7c43400ee83b815ab2cda98794a10045bcf76ce9bb2f89b97cbc5c",
+    "node": "v22.23.3",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_cap_requested": false,
+    "gpu": "not applicable to finite enumerator"
+  },
+  "sources": [
+    {
+      "path": "candidate.js",
+      "git_blob": "ae209124dc65f44dbf4291251331ca3ac589b454",
+      "sha256": "e7fd497f01c9c57c80e84acecf5e0fec574865ba0156da9d1459a1bbd477dca8"
+    },
+    {
+      "path": "auditor.js",
+      "git_blob": "f9dca6e630c8377c0a3213339c2bbd28777ee4e6",
+      "sha256": "475e4c939803b29d42d08f768a44cb3536c92ac25f2a8603a82b6041318ab9f5"
+    },
+    {
+      "path": "fixture.json",
+      "git_blob": "2992f2f6ff8ab8c50e4347caa9cd7f45f08ecce9",
+      "sha256": "22f35b4b1dabe4eb532abd7a1db9ea72c936a51ee4e10ff40c17c1525f667735"
+    },
+    {
+      "path": "runner.js",
+      "git_blob": "3391ed768260e1d55872e8ed16d6b176dac6711a",
+      "sha256": "67aad0648dfeae0dccaae0ef580abd8d9661c7113a5e1ac151d3680a7e017ae8"
+    }
+  ],
+  "candidate": {
+    "command": "wslc.exe run --rm --pull never --network none --cpus 1 --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a03-20261005\\src:/src:ro\" --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a03-20261005\\candidate-out:/out\" --workdir /src node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 node /src/runner.js candidate",
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "stdout": "{\"mode\":\"candidate\",\"allocation\":\"MRT-7834-A03-20261005\",\"rows\":30,\"eligible_weight\":3}\n",
+    "raw_git_blob": "d71058146cc9c98e0c8acdf17d20fd93ba2149df",
+    "raw_sha256": "ef50bd0825c1db59703250cace78b0692d6a9d5be8d211a238741b1ff6424422"
+  },
+  "auditor": {
+    "command": "wslc.exe run --rm --pull never --network none --cpus 1 --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a03-20261005\\src:/src:ro\" --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a03-20261005\\candidate-out:/input:ro\" --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a03-20261005\\audit-out:/out\" --workdir /src node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 node /src/runner.js audit",
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "stdout": "{\"mode\":\"audit\",\"allocation\":\"MRT-7834-A03-20261005\",\"base_audit\":true,\"expected_rows\":30,\"observed_rows\":30,\"mutation_count\":11,\"rejected_mutations\":11}\n",
+    "raw_git_blob": "e7a74ef3d31a697aa0a34a29bbed98d8553ede18",
+    "raw_sha256": "a054ca0cdf2ab99c05fc1736c487573f981ad204c3f0a07e299df84328fd9f2c"
+  },
+  "preflight": {
+    "image_smoke": {
+      "exit_code": 0,
+      "stdout": "{\"probe\":\"WSLC_NODE_PREFLIGHT\",\"version\":\"v22.23.3\",\"platform\":\"linux\",\"arch\":\"x64\"}\n"
+    },
+    "mount_smoke": {
+      "exit_code": 0,
+      "stdout": "{\"mount\":\"PASS\",\"source_chars\":1028,\"source_write\":\"EROFS\",\"platform\":\"linux\",\"arch\":\"x64\"}\n",
+      "temporary_probe_removed": true
+    },
+    "running_containers_before_candidate": 0
+  },
+  "outcome": {
+    "status": "PASS_METHOD_SCOPED_A03",
+    "rows": 30,
+    "eligible_weight": 3,
+    "proximal_ipw": 1,
+    "proximal_oracle": 1,
+    "distal_effect": -2,
+    "no_carryover_unweighted": 1.4999999999999996,
+    "no_history_ipw": 1,
+    "executed_only": 4,
+    "controls": {
+      "zero_propensity": "NONIDENTIFIABLE",
+      "missing_window": "NONIDENTIFIABLE",
+      "post_treatment_eligibility": "NONIDENTIFIABLE",
+      "session_interference": "NONIDENTIFIABLE"
+    },
+    "mutation_controls": 11,
+    "mutations_rejected": 11,
+    "task_success_claim": false
+  },
+  "scope": "finite authored construction only",
+  "host_c_free_bytes_at_recording": 30675402752
+}

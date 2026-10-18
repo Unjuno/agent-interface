@@ -1,0 +1,66 @@
+import sys,os,json,time,pathlib,datetime,subprocess,traceback,hashlib,threading
+root=pathlib.Path('/home/study/57-held-d01');public=root/'public';public.mkdir()
+source=pathlib.Path('/home/study/57-existing-b01/source-b03');sys.path.insert(0,str(source));sys.path.insert(0,str(source/'research/live_control'))
+result={'run_id':'57-native-held-release-D01-20261003-5884','started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pid':os.getpid(),'model_calls':0,'formal_task_attempts':0,'scope':'one ordinary XTEST Shift hold/cancel/release construction'}
+session=None;backend=None;engine=None;server=None;observer=None;events=[];event_lock=threading.Lock();terminal_event=threading.Event()
+def emit(event):
+ with event_lock:events.append(event)
+ if event.get('event')=='terminal':terminal_event.set()
+def key_probe(code):
+ bitmap=bytes(observer.query_keymap());pointer=observer.screen().root.query_pointer()
+ return {'observed_ns':time.perf_counter_ns(),'key_code':code,'key_down':bool(bitmap[code//8] & (1<<(code%8))),'keymap_hex':bitmap.hex(),'pointer_mask':int(pointer.mask),'buttons_down_mask':int(pointer.mask)&0x1f00}
+try:
+ manifest=json.loads((root/'source-manifest.json').read_text())
+ for rel,row in manifest.items():
+  data=(source/rel).read_bytes();assert len(data)==row['bytes'] and hashlib.sha256(data).hexdigest()==row['sha256']
+ result['verified_source_images']=len(manifest)
+ cg=pathlib.Path('/sys/fs/cgroup')/pathlib.Path(open('/proc/self/cgroup').read().strip().split('::')[1].lstrip('/'))
+ result['cgroup']={f:(cg/f).read_text().strip() for f in ('cpu.max','memory.max','pids.max')}
+ assert result['cgroup']=={'cpu.max':'100000 100000','memory.max':'805306368','pids.max':'256'} and os.getuid()==501
+ import gui_suite as suite
+ import integrated_efficiency_runtime_v1 as fixture
+ from session_v33 import Backend
+ from executor_v4 import Executor
+ from Xlib import display,XK
+ session=suite.Session();goal,output,server=fixture.prepare(session,'chromium',57031004,'/usr/bin/chromium')
+ result['display']=session.name;result['session_children']=[{'pid':p.pid,'argv':p.args} for p in session.procs]
+ for p in session.procs:
+  argv=pathlib.Path('/proc',str(p.pid),'cmdline').read_bytes().split(bytes([0]));assert b'--no-sandbox' not in argv and b'-ac' not in argv
+ backend=Backend(session,public,emit);engine=Executor(backend,emit);backend.snapshot('d01-initial',0)
+ observer=display.Display(session.name);code=observer.keysym_to_keycode(XK.string_to_keysym('Shift_L'));assert code!=0
+ before=key_probe(code);result['before']=before;assert not before['key_down'] and before['buttons_down_mask']==0
+ identifier='d01-shift-cancel';intent_deadline=time.perf_counter_ns()+5000000000
+ result['submit']={'identifier':identifier,'program':[{'op':'hold','keys':['Shift_L'],'duration_ms':3000}],'expected_sequence':backend.sequence,'valid_until_ns':intent_deadline,'submitted_ns':time.perf_counter_ns()}
+ engine.submit(identifier,result['submit']['program'],backend.sequence,intent_deadline)
+ deadline=time.monotonic()+2
+ while time.monotonic()<deadline:
+  probe=key_probe(code)
+  if probe['key_down']:result['down_witness']=probe;break
+  if terminal_event.is_set():raise RuntimeError('terminal arrived before independent down witness')
+  time.sleep(.002)
+ else:raise RuntimeError('no independent down witness within2seconds')
+ result['cancel_matched']=engine.cancel(identifier);assert result['cancel_matched']
+ assert terminal_event.wait(6),'terminal missing'
+ with event_lock:terminal=next(x for x in events if x.get('event')=='terminal' and x.get('id')==identifier)
+ result['terminal']=terminal;assert terminal['status']=='cancelled' and terminal['steps_completed']==0
+ release=terminal['release'];assert release['verified'] is True and release['keys_down']==[] and release['buttons_down']==[]
+ after=key_probe(code);result['after']=after;assert not after['key_down'] and after['buttons_down_mask']==0
+ result['owner_records']=list(backend.owner.records)
+ assert len([x for x in events if x.get('event')=='input_admission'])==1
+ assert not [x for x in events if x.get('event')=='step_completed']
+ result['status']='PASS_SCOPED_X11_HELD_RELEASE'
+except Exception as error:
+ result['status']='FAIL_X11_HELD_RELEASE' if any(x.get('event')=='input_admission' for x in events) else 'STOP_PREINPUT_CONSTRUCTION'
+ result['error']=repr(error);(public/'traceback.txt').write_text(traceback.format_exc())
+finally:
+ try:
+  if engine is not None:engine.close();result['executor_active_after_close']=engine.active is not None
+  if observer is not None:observer.close()
+  if backend is not None:backend.close();result['owner_thread_alive_after_close']=backend.owner.thread.is_alive()
+  if server is not None:server.shutdown();server.server_close()
+  if session is not None:session.close();result['child_exits']=[{'pid':p.pid,'exit_code':p.poll()} for p in session.procs]
+ except Exception as error:result['cleanup_error']=repr(error);result['status']='FAIL_CLEANUP'
+ (public/'events.json').write_text(json.dumps(events,indent=2)+'\n')
+ result['ended_utc']=datetime.datetime.now(datetime.timezone.utc).isoformat();result['public_bytes_before_result']=sum(p.stat().st_size for p in public.rglob('*') if p.is_file());assert result['public_bytes_before_result']<33554432
+ (public/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
+raise SystemExit(0 if result['status']=='PASS_SCOPED_X11_HELD_RELEASE' else 3)

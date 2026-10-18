@@ -1,0 +1,71 @@
+[
+  {
+    "argv": [
+      "git",
+      "-C",
+      "<OWNED_GIT_REPO>",
+      "show",
+      "bb6bceb7c089112a9fe52c43a48310bf0b96bfac:research/doom/map01_overlap_controller_v39.py"
+    ],
+    "pid": 28908,
+    "start_utc": "2026-10-03T13:06:02.478655+00:00",
+    "end_utc": "2026-10-03T13:06:02.564686+00:00",
+    "exit": 0,
+    "stdout_bytes": 62270,
+    "stdout_sha256": "a0bcfa076970b7cf6d048155478952958280b7958e0bbe486c0f1f12a55e4f0e",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "-C",
+      "<OWNED_OLD_REPO>",
+      "show",
+      "9c26e204c0475bee30919e3d0e6681f393078ef1:research/doom/map01_overlap_controller_v39.py"
+    ],
+    "pid": 29932,
+    "start_utc": "2026-10-03T13:06:02.564686+00:00",
+    "end_utc": "2026-10-03T13:06:02.638588+00:00",
+    "exit": 0,
+    "stdout_bytes": 62265,
+    "stdout_sha256": "cbc44c171f9d83417380af4fb5c06ef7dbf9bb2862c2c40a997bd66f3a985e5e",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "-C",
+      "<OWNED_OLD_REPO>",
+      "show",
+      "aa0f889066834fe4c408838504b29a4cabb0fa39:research/doom/map01_overlap_controller_v39.py"
+    ],
+    "pid": 38852,
+    "start_utc": "2026-10-03T13:06:02.638588+00:00",
+    "end_utc": "2026-10-03T13:06:02.733950+00:00",
+    "exit": 0,
+    "stdout_bytes": 67763,
+    "stdout_sha256": "3a462c8444d65e36c6ffb05d614bcde56818c8f1f0866b774e0fbb910305083c",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "git",
+      "merge-file",
+      "-p",
+      "<OWNED_OUTPUT_ROOT>\\current-controller.py.txt",
+      "<OWNED_OUTPUT_ROOT>\\old-base-controller.py.txt",
+      "<OWNED_OUTPUT_ROOT>\\old-head-controller.py.txt"
+    ],
+    "pid": 15904,
+    "start_utc": "2026-10-03T13:06:02.735183+00:00",
+    "end_utc": "2026-10-03T13:06:02.778671+00:00",
+    "exit": 1,
+    "stdout_bytes": 69684,
+    "stdout_sha256": "8bfa1df381fc83aeeb5b7ce75600727c5cf2f452b2246e459259758b837929cb",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

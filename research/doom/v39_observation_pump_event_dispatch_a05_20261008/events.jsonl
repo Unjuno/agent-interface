@@ -1,0 +1,12 @@
+{"event": "observation_enqueued", "sequence": 2}
+{"done": false, "event": "planner_future_poll"}
+{"event": "observation_dequeued", "row_event": "typed_observation", "sequence": 2}
+{"event": "monitor_received", "future_pending": true, "sequence": 2}
+{"event": "monitor_invalidated", "grants_input_authority": false, "reason": "health:below_hard_minimum", "requires_new_decision": true}
+{"event": "planner_interrupt_called", "handle": "turn-1"}
+{"event": "executor_cancel_write", "id": "cover-1", "op": "cancel"}
+{"event": "executor_cancel_flush"}
+{"event": "planner_interrupt_transport", "handle": "turn-1"}
+{"event": "terminal_dequeued", "id": "cover-1", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "row_event": "terminal", "status": "cancelled"}
+{"event": "planner_interrupt_outcome", "outcome": "requested"}
+{"event": "verified_terminal_returned", "id": "cover-1", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "status": "cancelled"}

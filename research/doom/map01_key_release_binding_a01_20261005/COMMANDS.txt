@@ -1,0 +1,16 @@
+## A01, retained setup failure
+WSLc with read-only /src and writable /out; initial candidate attempted to write to /src and failed. See CONSTRUCTION_ATTEMPT_01.json. No cases were evaluated.
+
+## A02, frozen run (2026-10-05; FAIL_METHOD, output preserved)
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<package>/.tmp/a02,target=/out python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 /src/research/doom/map01_key_release_binding_a01_20261005/candidate.py /out
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<package>/.tmp/a02,target=/out python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 /src/research/doom/map01_key_release_binding_a01_20261005/audit.py /out
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --env PYTHONPYCACHEPREFIX=/out/pycache --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<package>/.tmp/a02,target=/out python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 -m py_compile /src/research/doom/map01_key_release_binding_a01_20261005/candidate.py /src/research/doom/map01_key_release_binding_a01_20261005/audit.py
+
+The A02 candidate stdout showed four actual semantic reasons that differed from its frozen expected labels. The combined shell command did not retain individual process exit codes. A02 is `FAIL_METHOD_EXPECTED_REASON_LABELS_NOT_ENFORCED`; its candidate and auditor outputs are preserved as candidate-output-a02.json and audit-output-a02.json.
+
+## A03, frozen corrected-label run (2026-10-05)
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<package>/.tmp/a03,target=/out python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 /src/research/doom/map01_key_release_binding_a01_20261005/candidate.py /out/a03
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<package>/.tmp/a03,target=/out python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 /src/research/doom/map01_key_release_binding_a01_20261005/audit.py /out/a03
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --env PYTHONPYCACHEPREFIX=/out/pycache --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<package>/.tmp/a03,target=/out python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python3 -m py_compile /src/research/doom/map01_key_release_binding_a01_20261005/candidate.py /src/research/doom/map01_key_release_binding_a01_20261005/audit.py
+
+Candidate/auditor/py_compile exit codes: 0/0/0. Candidate passed baseline + six fault classifications; independent audit `PASS`, all seven cases. WSLc emitted: “Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.” Each invoked container used `--rm`; no runtime or GUI input was used.

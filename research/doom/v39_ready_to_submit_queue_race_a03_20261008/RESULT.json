@@ -1,0 +1,57 @@
+{
+  "schema": "issue59-v39-ready-submit-result-a03",
+  "status": "SYNTHETIC_PRODUCTION_WAIT_TRACE",
+  "frozen_main": "48496b645b1cbf4c4ddea49315972724f020343c",
+  "anchors": {
+    "readiness_line": 1136,
+    "submit_write_line": 1179,
+    "ack_wait_line": 1180,
+    "later_monitored_wait_line": 1198
+  },
+  "events": [
+    {
+      "event": "action_readiness",
+      "status": "READY_FOR_FRESH_EXECUTOR_ADMISSION",
+      "source_sequence": 1,
+      "source_health": 100
+    },
+    {
+      "event": "typed_observation_queued",
+      "sequence": 2,
+      "health": 70,
+      "hard_minimum": 80
+    },
+    {
+      "event": "submit_written",
+      "expected_sequence": 1,
+      "input_emission": "NOT_MODELED"
+    },
+    {
+      "event": "production_wait_dequeued",
+      "row_event": "typed_observation",
+      "sequence": 2
+    },
+    {
+      "event": "production_wait_dequeued",
+      "row_event": "accepted",
+      "sequence": null
+    },
+    {
+      "event": "acceptance_returned",
+      "id": "action-0"
+    },
+    {
+      "event": "monitor_call_count_after_ack",
+      "count": 0
+    },
+    {
+      "event": "queued_rows_after_ack",
+      "count": 0
+    },
+    {
+      "event": "legacy_latest_after_ack",
+      "value": null
+    }
+  ],
+  "scope": "Exact frozen wait helper and AST caller anchors with fake queue/process; no executor binary, acceptance by a real executor, input, GUI, game, or OS behavior."
+}

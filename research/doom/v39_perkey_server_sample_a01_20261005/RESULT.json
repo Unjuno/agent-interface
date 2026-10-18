@@ -1,0 +1,63 @@
+{
+  "schema": "v39-v15-per-key-server-keymap-sample-result-v1",
+  "decision": "PASS_SOURCE_COMPOSITION_ONLY",
+  "environment": "Windows CPython 3.11.9; CPU-only fake-display harness",
+  "base_commit": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "observed": {
+    "baseline": {
+      "keyrelease_positions": [
+        4,
+        6
+      ],
+      "query_keymap_positions": [
+        9
+      ],
+      "first_query_after_last_release": true,
+      "release_rows_with_per_edge_sample": 0
+    },
+    "candidate": {
+      "keyrelease_positions": [
+        4,
+        7
+      ],
+      "query_keymap_positions": [
+        6,
+        9,
+        11
+      ],
+      "query_between_first_and_second_release": true,
+      "per_edge_states": [
+        "UP",
+        "UP"
+      ],
+      "physical_verification_authoritative": false
+    },
+    "negative_controls": {
+      "still_down": {
+        "sample": "DOWN",
+        "owner_transition_verified": false,
+        "terminal_cleanup": "RuntimeError"
+      },
+      "query_exception": {
+        "sample": "UNAVAILABLE",
+        "error_type": "OSError",
+        "owner_transition_verified": false
+      }
+    }
+  },
+  "checks": {
+    "normal_mode": 28,
+    "optimized_mode": 28,
+    "all_exit_codes_zero": true
+  },
+  "scope_limit": "Fake Xlib establishes call ordering and candidate receipt composition only. The additional synchronous query changes inter-release schedule; live latency and application/physical effects remain unmeasured.",
+  "not_run": [
+    "live V39 threat exposure",
+    "useful feedback",
+    "matched recovery",
+    "physical key state",
+    "real X11 or OS input",
+    "model/game/GUI/container/MAP01 allocation"
+  ]
+}
+

@@ -1,0 +1,23 @@
+test_reader_appended_match_is_rechecked_before_eof (test_fresh.Fresh.test_reader_appended_match_is_rechecked_before_eof) ... ERROR
+
+======================================================================
+ERROR: test_reader_appended_match_is_rechecked_before_eof (test_fresh.Fresh.test_reader_appended_match_is_rechecked_before_eof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-fresh-before-wait-b64b/test_fresh.py", line 21, in test_reader_appended_match_is_rechecked_before_eof
+    result=client.wait_notification(predicate,timeout=1)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-fresh-before-wait-b64b/codex_app_server_client_v2.py", line 103, in wait_notification
+    if predicate(message):
+       ~~~~~~~~~^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-fresh-before-wait-b64b/test_fresh.py", line 18, in predicate
+    client._read()  # actual reader method, inert one-line input then EOF
+    ~~~~~~~~~~~~^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/notification-fresh-before-wait-b64b/codex_app_server_client_v2.py", line 34, in _read
+    self._record("received", message)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+TypeError: Fresh.test_reader_appended_match_is_rechecked_before_eof.<locals>.<lambda>() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)

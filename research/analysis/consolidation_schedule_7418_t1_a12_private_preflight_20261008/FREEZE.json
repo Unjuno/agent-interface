@@ -1,0 +1,134 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A12-PRIVATE-PREFLIGHT-20261008",
+  "issue": 8406,
+  "base_main_sha": "44cae8f802ca1109dd03a5627fb3073bcc3c55cc",
+  "branch": "research/8406-schedule-t1-a12-private-preflight-20261008",
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a12_private_preflight_20261008",
+  "pre_freeze_HEAD": "44cae8f802ca1109dd03a5627fb3073bcc3c55cc",
+  "predecessors": [
+    "T1 A10 FAIL_METHOD (54 transition errors)",
+    "T1 A11 STOP before generation (empty private model tag)"
+  ],
+  "delta_from_A11": [
+    "fresh allocation and seeds 5201/5202/5203",
+    "dedicated private-store identity preflight checks API tag, manifest, and every digest-addressed blob before formal candidate"
+  ],
+  "model_acquisition": {
+    "server_start": "OLLAMA_MODELS=/tmp/unjuno-8406-t1-a12-ollama-store OLLAMA_HOST=127.0.0.1:11435 ollama serve",
+    "pull": "OLLAMA_HOST=http://127.0.0.1:11435 ollama pull qwen3:8b",
+    "preflight_result": "results/FORMAL_T1_A12/PREFLIGHT.json"
+  },
+  "preflight": {
+    "model": "qwen3:8b",
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "tag_size_bytes": 5225388164,
+    "manifest": "/tmp/unjuno-8406-t1-a12-ollama-store/manifests/registry.ollama.ai/library/qwen3/8b",
+    "checked_layers": [
+      {
+        "digest": "sha256:a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+        "size_bytes": 5225374496,
+        "media_type": "application/vnd.ollama.image.model"
+      },
+      {
+        "digest": "sha256:ae370d884f108d16e7cc8fd5259ebc5773a0afa6e078b11f4ed7e39a27e0dfc4",
+        "size_bytes": 1723,
+        "media_type": "application/vnd.ollama.image.template"
+      },
+      {
+        "digest": "sha256:d18a5cc71b84bc4af394a31116bd3932b42241de70c77d2b76d69a314ec8aa12",
+        "size_bytes": 11338,
+        "media_type": "application/vnd.ollama.image.license"
+      },
+      {
+        "digest": "sha256:cff3f395ef3756ab63e58b0ad1b32bb6f802905cae1472e6a12034e4246fbbdb",
+        "size_bytes": 120,
+        "media_type": "application/vnd.ollama.image.params"
+      },
+      {
+        "digest": "sha256:500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "size_bytes": 859,
+        "media_type": "application/vnd.docker.distribution.manifest.v2+json"
+      }
+    ],
+    "all_manifest_blobs_present_and_size_matched": true,
+    "api_tag_count": 1,
+    "base_url": "http://127.0.0.1:11435"
+  },
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "seeds": [
+      5201,
+      5202,
+      5203
+    ],
+    "query_calls": 360,
+    "consolidation_calls": 30,
+    "maximum_total_calls": 390,
+    "query_num_predict": 128,
+    "consolidation_num_predict": 2048,
+    "num_ctx": 8192,
+    "temperature": 0.2,
+    "top_p": 0.9,
+    "think": false,
+    "format": "json",
+    "retries": 0
+  },
+  "model": {
+    "request_name": "qwen3:8b",
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "parameters": "8.2B",
+    "quantization": "Q4_K_M",
+    "ollama_version": "0.40.0",
+    "host": "127.0.0.1:11435",
+    "private_store": "/tmp/unjuno-8406-t1-a12-ollama-store"
+  },
+  "runtime": {
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+    "container": "none; host-local private Ollama",
+    "network": "loopback model API; model pull completed before freeze",
+    "gui": "none",
+    "action_authority": "none",
+    "user_data": "none"
+  },
+  "source_t0_model_sha256": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+  "construction_tests": "14/14 PASS before freeze; py_compile PASS; private tag/blob preflight PASS",
+  "transition_contract": [
+    "exactly one canonical claim per visible episode",
+    "copy prior claims unchanged",
+    "exception kind and exact/forbidden effect faithfully mapped",
+    "fact key is the value of fact_key input slot",
+    "history key combines version and field; full baseline-to-current relation",
+    "conflicts only for same fact-key/scope with differing visible observations",
+    "exact provenance and no unknown source IDs"
+  ],
+  "decision_rule": ">=0.10 consistent paired contrast across seeds plus clean full transition/raw audit => PASS_CADENCE_SENSITIVITY_SCOPED; all contrasts within margin plus all gates clean => PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED; failed transition/method gate => FAIL_METHOD; otherwise UNCERTAIN",
+  "frozen_sha256": {
+    "README.md": "dd3fd9ba6a1ce086a8649e7ff3281676b538baeb880e7736f28c4117ab7dad55",
+    "PROTOCOL.md": "57c0c97b59f8f02113d8e510a53c3ae8694fae8151d8794904eec4b9415630df",
+    "candidate.py": "b04b249425dd2258a75a4f135aafe6e1c79ededcd56349ea179d66db7d152038",
+    "auditor.py": "04ca4cfbdfc812faa468f89bf96929fa5dc2c8df0da7f6ef6b113b40f5020a83",
+    "preflight.py": "529c5398ae2ba27df3ba4cd5e3f8bad0b0de6ab8eeb19b3b989eefa1a5ef1d9b",
+    "test_construction.py": "4820f752449dd1609ba723e3a0f71521bcb9e8be78ed2e569ad5390f053a0ee0",
+    "episode_ledger.json": "cf0616d174cdd35a673c0b221ec83e5417ca72fb29bbe61939f865c91f2b03ac",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "prompts.json": "c28cf6efa3f7dfb735d7972bcabe0a3e15d67d9491e66ce7d0aa73d88899ae0c",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "RUN_RECORD.json": "043c54d46a589f24a61a28a78c4c434317e7b55968a7c368cc9450e11e6c9031"
+  },
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a12_private_preflight_20261008/results/FORMAL_T1_A12/RAW.jsonl",
+  "preregistration": "to be posted to Issue #8406 before candidate invocation"
+}

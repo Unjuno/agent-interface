@@ -1,0 +1,68 @@
+import pathlib,base64,json,hashlib
+p=pathlib.Path(__file__).parent
+def branch(when,outcome,action=None,next_state=None):return {'when':when,'outcome':outcome,'action':action,'next_state':next_state,'reason':None}
+interface={'format':'compiled-gui-interface-v1','interface_id':'remote-release-I01','session_scope':'owned-unprofiled-I01','surface':'owned-todomvc-I01','predicates':['surface_ok','empty','created','completed'],'symbols':{'new_input':{'kind':'target_reference','target_reference':'new-todo','identity_predicate':'surface_ok','dependencies':['surface_ok','empty']},'owned_row':{'kind':'target_reference','target_reference':'owned-target','identity_predicate':'surface_ok','dependencies':['surface_ok','created']}},'actions':{'add':{'target_symbol':'new_input','operation':'add-unique-todo','expected_effect':{'created':True}},'complete':{'target_symbol':'owned_row','operation':'complete-owned-todo','expected_effect':{'completed':True}}},'method':{'name':'add-and-complete','version':'I01','initial_state':'empty','max_transitions':2,'max_runtime_ms':5000,'states':{'empty':{'branches':[branch({'surface_ok':True,'empty':True},'action','add','created')]},'created':{'branches':[branch({'surface_ok':True,'created':True},'action','complete','done')]},'done':{'branches':[branch({'surface_ok':True,'completed':True},'complete')]}}}}
+(p/'interface.json').write_text(json.dumps(interface,ensure_ascii=False,indent=2),encoding='utf-8')
+source=(p/'compiled_gui.py.txt').read_bytes()
+header='import asyncio,base64,hashlib,json,time\ncore={}\nsource=base64.b64decode('+repr(base64.b64encode(source).decode())+')\nassert hashlib.sha256(source).hexdigest()=='+repr(hashlib.sha256(source).hexdigest())+'\nexec(compile(source,"frozen-main-compiled_gui.py","exec"),core)\ninterface=json.loads('+repr(json.dumps(interface))+')\n'
+body=r'''
+loop=asyncio.get_running_loop()
+target='2f23 I01 release-boundary 東京'
+sequence=0
+last_raw=None
+permit=None
+calls=[]
+domjs="() => ({url:location.href,input:document.querySelector('.new-todo').value,rows:[...document.querySelectorAll('.todo-list li')].map(e=>({id:e.dataset.id,title:e.querySelector('label').textContent,completed:e.querySelector('.toggle').checked}))})"
+def emit(kind,**value):print(json.dumps({'kind':kind,**value},ensure_ascii=False),flush=True)
+def bridge(coro):return asyncio.run_coroutine_threadsafe(coro,loop).result(timeout=3)
+def capture():return bridge(page.evaluate(domjs))
+def observe(request):
+    global sequence,last_raw
+    calls.append('observe');last_raw=capture();sequence+=1
+    rows=last_raw['rows'];empty=rows==[] and last_raw['input']==''
+    exact=len(rows)==1 and rows[0]['title']==target and rows[0]['id']=='1' and last_raw['input']==''
+    predicates={'surface_ok':last_raw['url']=='https://todomvc.com/examples/javascript-es6/dist/','empty':empty,'created':exact and rows[0]['completed'] is False,'completed':exact and rows[0]['completed'] is True}
+    digest=hashlib.sha256(json.dumps(last_raw,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    emit('observe',request=request,raw=last_raw,sequence=sequence,predicates=predicates)
+    return {'sequence':sequence,'captured_ns':time.perf_counter_ns(),'surface':interface['surface'],'predicates':predicates,'evidence_ref':'dom-'+str(sequence),'evidence_digest':digest}
+def admit(request):
+    global permit
+    calls.append('admit');fresh=capture()
+    assert fresh==last_raw and request['observation']['sequence']==sequence and request['session_scope']==interface['session_scope']
+    expires=time.perf_counter_ns()+2000000000
+    permit={'action':request['action'],'sequence':sequence,'expires':expires,'token':'owned-'+str(sequence)}
+    emit('admit',action=request['action'],fresh=fresh,expected_sequence=sequence,valid_until_ns=expires)
+    return {'eligible':True,'status':'revalidated','authorization':permit['token'],'expected_sequence':sequence,'valid_until_ns':expires}
+async def dispatch_add():
+    for name,fn in [('focus',lambda:page.locator('.new-todo').click(timeout=1500)),('type',lambda:page.locator('.new-todo').press_sequentially(target,timeout=1500)),('commit-blur',lambda:page.locator('.new-todo').press('Tab',timeout=1500))]:
+        emit('ui_start',operation=name,time_ns=time.perf_counter_ns());await fn();emit('ui_return',operation=name,time_ns=time.perf_counter_ns())
+def execute(request):
+    global permit
+    calls.append('execute');assert permit is not None
+    assert request['authorization']==permit['token'] and request['action']==permit['action'] and request['expected_sequence']==permit['sequence'] and time.perf_counter_ns()<min(request['valid_until_ns'],permit['expires'])
+    fresh=capture();assert fresh==last_raw
+    permit=None
+    assert request['action']=='add' and request['operation']=='add-unique-todo'
+    bridge(dispatch_add());after=capture()
+    emit('post_action_dom',raw=after)
+    terminal={'status':'completed','action_id':'owned-add-1','effect_ref':'owned-add-effect-1','release':{'verified':False,'keys_down':['unknown'],'buttons_down':['unknown']}}
+    emit('terminal',value=terminal,release_evidence='Provider exposes no keys/buttons neutral-state receipt; do not infer physical release from returned Playwright operations.')
+    return terminal
+def verify_effect(request):
+    calls.append('verify_effect');raise AssertionError('must not reach effect verification after unknown release')
+def cancelled():return False
+def journal(event):emit('core_event',event=event)
+def run_core():
+    return core['run'](interface,{'observe':observe,'admit':admit,'execute':execute,'verify_effect':verify_effect,'cancelled':cancelled,'journal':journal})
+core['validate'](interface)
+receipt=await asyncio.to_thread(run_core)
+emit('receipt',value=receipt,calls=calls)
+assert receipt['outcome']=='RUNTIME_FAILED' and receipt['reason']=='execution_failed' and receipt['completed_transitions']==0 and calls==['observe','admit','execute']
+after=await page.evaluate(domjs)
+assert after['input']=='' and after['rows']==[{'id':'1','title':target,'completed':False}]
+emit('boundary_result',outcome='PASS_STRICT_STOP_AFTER_REAL_EFFECT',main_task_outcome='HOLD_RELEASE_TELEMETRY',after=after,task_replay=0)
+'''
+code=header+body
+(p/'probe.py.txt').write_text(code,encoding='utf-8')
+freeze={'unit':'firecrawl-compiled-release-2f23-I01','H':'Actual unchanged compiled core must stop after real provider app effect without verified release telemetry','T':'One fresh owned empty demo, core observe/admit/execute via qualified asyncio bridge, add unique item; proposed second completion must remain unexecuted','D':'PASS_BOUNDARY iff RUNTIME_FAILED/execution_failed, completed0, only observe/admit/execute, one exact unchecked app row; full task HOLD regardless; any further input or fabricated neutral receipt FAIL','C':'Returned Playwright calls/API completion do not imply neutral-state evidence; no hidden store/controller mutation or manual held input','U':'Provider CPU/RAM/PIDs and physical release unknown; clock is provider perf_counter_ns, local clocks separate; no efficiency/model comparison','source_sha256':hashlib.sha256(source).hexdigest(),'probe_sha256':hashlib.sha256(code.encode()).hexdigest(),'interface_sha256':hashlib.sha256(json.dumps(interface).encode()).hexdigest(),'task_attempts':1,'formal_replays':0,'timeout_seconds':30,'stop_owned_session':True}
+(p/'freeze.json').write_text(json.dumps(freeze,indent=2),encoding='utf-8');print(json.dumps(freeze))

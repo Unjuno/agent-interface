@@ -1,0 +1,35 @@
+{
+  "schema": "v39-v15-per-key-server-keymap-sample-freeze-v1",
+  "experiment_base_commit": "69dd261430cb1ed875f5a76411c4a2a54777c114",
+  "publication_base_commit": "e7c916989da30741b00c234efd264067d0899851",
+  "baseline_sources": {
+    "research/doom/map01_overlap_controller_v39.py": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+    "research/doom/session_map01_v15.py": "f71ca01426a703e4160c9403395fed03416c772e",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "f249ef036a9ec56740961af4aee375a28d9e133f",
+    "research/doom/doom_typed_release_backend_v2.py": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+    "research/live_control/input_transition_owner_v4.py": "02c23c34e9382650a46e80d75fe49d5409153b75",
+    "research/live_control/input_transition_owner_v3.py": "7d990a654804ba3ed7d406baee40c31b6cb27375",
+    "research/live_control/input_owner_v12.py": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+    "research/doom/test_session_map01_v15.py": "99aab6dae2c3834f795860546ed4ba34620e8b94"
+  },
+  "candidate_blobs": {
+    "research/live_control/input_owner_v12.py": "e03e530c82330cea65d185a31147dfd6059ed326",
+    "research/live_control/input_transition_owner_v5.py": "596b420751437d6ad97658fbc257d7f2b7d82b81",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "3e82f600dde62c50c14adae900ddae713d484aa6",
+    "research/doom/doom_owner_thread_release_batch_backend_v2.py": "073311421e2bc17366f51d2879c60b5cd31a910c",
+    "research/doom/session_map01_v15.py": "795508842b51a2ce44419edd61f9d6d54cfd294b",
+    "research/doom/test_session_map01_v15.py": "ed5d9959be82f41b4009cf9ccd22346accb16781",
+    "research/doom/test_owner_keyup_server_sample_v5.py": "6d62fcf99d500271e7c1ebe2db78632673ea2f9d"
+  },
+  "selected_path": {
+    "v39_selector_sha": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+    "v15_backend": "doom_owner_thread_release_batch_backend_v2",
+    "backend_v2_parent": "doom_owner_thread_release_batch_backend_v1",
+    "owner_adapter": "input_transition_owner_v5",
+    "prior_adapter": "input_transition_owner_v4",
+    "owner": "input_owner_v12"
+  },
+  "treatment": "Only the opt-in V15 selected path enables a post-XSync query_keymap sample after every explicit KeyRelease. V12 callers default to no extra sample.",
+  "run_scope": "Exact source implementation layers for V15 release batching and V4/V3/V12 owner receipt joins; fake game-facing base and fake Xlib only. Two keys are pressed and then released in sequence.",
+  "decision_gate": "PASS_SOURCE_COMPOSITION_ONLY iff current V1 baseline has no query between its two explicit key-ups, V2 records one post-sync server-keymap state sample per edge, and DOWN or UNAVAILABLE per-edge samples prevent owner_transition_verified."
+}

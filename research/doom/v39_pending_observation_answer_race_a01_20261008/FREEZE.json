@@ -1,0 +1,20 @@
+{
+  "experiment": "issue59-v39-pending-observation-answer-race-a01-20261008",
+  "kind": "CPU-only source-boundary construction and regression; no live allocation",
+  "frozen_at_utc": "2026-10-08T03:00:00Z",
+  "main_commit": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "controller_git_blob": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a",
+  "hypothesis": "If a typed observation is already queued when the planner future becomes done, the current while-not-future-done loop can skip the observation monitor and allow an answer based on stale policy assumptions to proceed.",
+  "test": "Compare the frozen loop condition with a bounded snapshot drain of already-queued events; verify hard invalidation is surfaced, a queued cover terminal is retained, soft events preserve the answer path, and empty backlog returns immediately.",
+  "decision": "Add a bounded drain at the completed-future boundary and route any invalidation through the existing cancel/discard path.",
+  "scope_limits": [
+    "The baseline race is a deterministic control-flow boundary, not a measured production race frequency.",
+    "The focused local test executed the exact added helper extracted from the PR source; the full controller module was not imported in the temporary harness.",
+    "A queue snapshot cannot include observations not yet delivered by the reader thread.",
+    "No real HUD timing, App Server timing, physical release, task effect, or live threat outcome is established."
+  ],
+  "counterhypothesis": "The completed-future boundary may never coincide with a relevant event backlog in practice, or queued rows may be stale/non-actionable.",
+  "allocation": "No GPU, model, GUI, live game, or shared desktop resource used."
+}
+

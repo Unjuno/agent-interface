@@ -3,12 +3,23 @@ import sys
 import threading
 import types
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 
+class Parent:
+    def execute(self, step, cancel, identifier, index):
+        actions = step.get("actions")
+        if actions is None:
+            actions = [(key, True) for key in step.get("keys", [])]
+        for key, down in actions:
+            self.raw(key, down)
+        return "ok"
+
+
 parent = types.ModuleType("doom_typed_coast_backend_v1")
-parent.Backend = object
+parent.Backend = Parent
 parent.suite = object()
 sys.modules["doom_typed_coast_backend_v1"] = parent
 wrapper = types.ModuleType("input_transition_owner_v3")
@@ -114,6 +125,344 @@ def make_backend(held, owner, lease=None):
 
 
 class Tests(unittest.TestCase):
+    def test_down_emits_executor_admission_identity_and_ordinal(self):
+        log = []
+        owner = Owner(log)
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        result = obj.execute({"keys": ["a", "a"]}, None, "trial-7", 12)
+
+        self.assertEqual(result, "ok")
+        self.assertEqual([(row["id"], row["step"], row["admission_position"])
+                          for row in rows],
+                         [("trial-7", 12, 0), ("trial-7", 12, 1)])
+        self.assertEqual([row["key"] for row in rows], ["a", "a"])
+        self.assertEqual(log, [("down", "a"), ("down", "a")])
+
+    def test_release_receipt_carries_matching_admission_identity(self):
+        owner = Owner([])
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        result = obj.execute({"actions": [("a", True), ("a", False)]},
+                             None, "trial-8", 3)
+
+        self.assertEqual(result, "ok")
+        admissions = [row for row in rows if row.get("event") == "input_admission"]
+        releases = [row for row in rows if row.get("event") == "input_release_transition"]
+        self.assertEqual(len(admissions), 1)
+        self.assertEqual(len(releases), 1)
+        self.assertEqual(
+            (releases[0]["id"], releases[0]["step"], releases[0]["admission_position"]),
+            (admissions[0]["id"], admissions[0]["step"],
+             admissions[0]["admission_position"]),
+        )
+        self.assertEqual(releases[0]["key"], admissions[0]["key"])
+
+    def test_duplicate_same_key_admissions_leave_release_unmatched(self):
+        owner = Owner([])
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("a", True), ("a", False)]},
+                    None, "trial-9", 4)
+
+        releases = [row for row in rows if row.get("event") == "input_release_transition"]
+        self.assertEqual(len(releases), 1)
+        self.assertNotIn("admission_position", releases[0])
+        self.assertEqual(releases[0]["admission_identity_status"],
+                         "ambiguous_multiple_admissions")
+
+    def test_owner_admission_key_mismatch_is_not_joined_to_release(self):
+        owner = Owner([])
+        original_call = owner.call
+
+        def call(op, lease=None, key=None):
+            row = original_call(op, lease, key)
+            if op == "down":
+                row["key"] = "other"
+            return row
+
+        owner.call = call
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("a", False)]},
+                    None, "trial-12", 7)
+
+        release = next(row for row in rows
+                       if row.get("event") == "input_release_transition")
+        self.assertNotIn("admission_position", release)
+        self.assertEqual(release["admission_identity_status"],
+                         "unmatched_no_admission")
+        admission = next(row for row in rows if row.get("event") == "input_admission")
+        self.assertFalse(admission["admission_key_matches_request"])
+
+    def test_owner_release_key_mismatch_is_not_joined_to_admission(self):
+        owner = Owner([])
+        original_call = owner.call
+
+        def call(op, lease=None, key=None):
+            row = original_call(op, lease, key)
+            if op == "up":
+                row["key"] = "other"
+            return row
+
+        owner.call = call
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("a", False)]},
+                    None, "trial-13", 8)
+
+        release = next(row for row in rows
+                       if row.get("event") == "input_release_transition")
+        self.assertNotIn("admission_position", release)
+        self.assertEqual(release["admission_identity_status"],
+                         "release_key_mismatch")
+        self.assertFalse(release["release_key_matches_request"])
+        self.assertFalse(release["owner_transition_verified"])
+
+    def test_repeated_same_key_cycles_emit_one_correlated_release_each(self):
+        owner = Owner([])
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("a", False),
+                                  ("a", True), ("a", False)]},
+                    None, "trial-10", 5)
+
+        admissions = [row for row in rows if row.get("event") == "input_admission"]
+        releases = [row for row in rows if row.get("event") == "input_release_transition"]
+        self.assertEqual([row["admission_position"] for row in admissions], [0, 1])
+        self.assertEqual([row["admission_position"] for row in releases], [0, 1])
+        self.assertEqual([row["admission_identity_status"] for row in releases],
+                         ["matched", "matched"])
+
+    def test_multi_key_releases_keep_identity_when_release_order_differs(self):
+        owner = Owner([])
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.execute({"actions": [("a", True), ("space", True),
+                                  ("space", False), ("a", False)]},
+                    None, "trial-11", 6)
+
+        admissions = {row["key"]: row["admission_position"] for row in rows
+                      if row.get("event") == "input_admission"}
+        releases = {row["key"]: row["admission_position"] for row in rows
+                    if row.get("event") == "input_release_transition"}
+        self.assertEqual(admissions, {"a": 0, "space": 1})
+        self.assertEqual(releases, {"a": 0, "space": 1})
+        release_context = {
+            (row["release_batch_identifier"], row["release_batch_step"], row["key"]):
+                row["admission_position"]
+            for row in rows if row.get("event") == "input_release_transition"
+        }
+        self.assertEqual(release_context,
+                         {("trial-11", 6, "a"): 0, ("trial-11", 6, "space"): 1})
+
+    def test_admission_context_joins_per_key_release_independent_of_order(self):
+        log = []
+        owner = Owner(log)
+        obj = make_backend(set(), owner)
+        rows = []
+        obj.emit = rows.append
+
+        obj.raw("a", True)
+        obj.raw("b", True)
+        obj.raw("b", False)
+        obj.raw("a", False)
+
+        admissions = {
+            (row["id"], row["step"], row["key"]): row["admission_position"]
+            for row in rows if row.get("event") == "input_admission"
+        }
+        releases = {
+            (row["release_batch_identifier"], row["release_batch_step"], row["key"]):
+                row["release_batch_position"]
+            for row in rows if row.get("event") == "input_release_transition"
+        }
+
+        self.assertEqual(set(admissions), set(releases))
+        self.assertEqual(admissions, {("p1", 0, "a"): 0, ("p1", 0, "b"): 1})
+        self.assertEqual(releases, {("p1", 0, "b"): 0, ("p1", 0, "a"): 1})
+        self.assertNotEqual(admissions, releases)
+
+    def test_v12_physical_measurements_survive_v4_context_and_consumer_replay(self):
+        package_name = "map01_v39_perkey_bridge_a01"
+        package = types.ModuleType(package_name)
+        package.__path__ = [str(HERE / package_name)]
+        original_package_attrs = vars(package).copy()
+
+        # Keep a pre-existing package object with no child attribute. Importing
+        # ``package.bridge`` mutates this object even when sys.modules is restored.
+        with patch.dict(sys.modules, {package_name: package}):
+            original_sys_modules = sys.modules.copy()
+            original_sys_path = sys.path[:]
+            self._run_with_import_isolation(self._exercise_v12_physical_measurements)
+            self.assertEqual(sys.modules, original_sys_modules)
+            self.assertEqual(sys.path, original_sys_path)
+            self.assertEqual(vars(package), original_package_attrs)
+
+            def import_bridge_then_fail():
+                bridge_test_path = HERE / package_name / "test_bridge.py"
+                bridge_spec = importlib.util.spec_from_file_location(
+                    "perkey_bridge_test_failure_probe", bridge_test_path
+                )
+                bridge_test = importlib.util.module_from_spec(bridge_spec)
+                bridge_spec.loader.exec_module(bridge_test)
+                raise RuntimeError("injected failure after bridge import")
+
+            with self.assertRaisesRegex(RuntimeError, "injected failure"):
+                self._run_with_import_isolation(import_bridge_then_fail)
+            self.assertEqual(sys.modules, original_sys_modules)
+            self.assertEqual(sys.path, original_sys_path)
+            self.assertEqual(vars(package), original_package_attrs)
+
+    def _run_with_import_isolation(self, exercise):
+        original_sys_path = sys.path[:]
+        bridge_package = sys.modules.get("map01_v39_perkey_bridge_a01")
+        missing = object()
+        original_bridge_attr = (
+            vars(bridge_package).get("bridge", missing)
+            if bridge_package is not None else missing
+        )
+        try:
+            # Include helper setup in the isolation boundary, not just assertions.
+            with patch.dict(sys.modules):
+                exercise()
+        finally:
+            sys.path[:] = original_sys_path
+            if bridge_package is not None:
+                if original_bridge_attr is missing:
+                    vars(bridge_package).pop("bridge", None)
+                else:
+                    bridge_package.bridge = original_bridge_attr
+
+    def _exercise_v12_physical_measurements(self):
+        bridge_test_path = (
+            HERE / "map01_v39_perkey_bridge_a01" / "test_bridge.py"
+        )
+        bridge_spec = importlib.util.spec_from_file_location(
+            "perkey_bridge_test_for_v4", bridge_test_path
+        )
+        bridge_test = importlib.util.module_from_spec(bridge_spec)
+        bridge_spec.loader.exec_module(bridge_test)
+        harness_module = bridge_test.load_v12_test_harness()
+        harness = harness_module.Harness(harness_module.owner_module)
+        owner_module = harness_module.owner_module
+        original_keysym_mapper = owner_module.XK.string_to_keysym
+
+        try:
+            # The shared fake X display normally aliases every keysym to one code.
+            owner_module.XK.string_to_keysym = (
+                lambda key: {"F8": 1, "F9": 2}.get(key, 0)
+            )
+            harness.d.keysym_to_keycode = lambda keysym: {
+                1: 74, 2: 75
+            }.get(keysym, 0)
+            sys.modules["input_owner_v12"] = owner_module
+            transition_path = (
+                HERE / "map01_attack_onset_phase_allocation_02_v1" / "source"
+                / "map01_v12_transition_owner.py"
+            )
+            transition_spec = importlib.util.spec_from_file_location(
+                "v12_transition_owner_for_v4", transition_path
+            )
+            transition_module = importlib.util.module_from_spec(transition_spec)
+            transition_spec.loader.exec_module(transition_module)
+            owner = transition_module.InputOwner.__new__(transition_module.InputOwner)
+            owner._inner = harness.owner
+
+            lease = harness_module.Lease(intent="intent-v39-a01")
+            lease.interruption_snapshot = lambda: None
+            obj = make_backend(set(), owner, lease)
+            rows = []
+            obj.emit = rows.append
+            obj.execute({"actions": [
+                ("F8", True), ("F9", True),
+                ("F9", False), ("F8", False),
+            ]},
+                        None, "cover-7", 2)
+
+            downs = {row["key"]: row for row in rows
+                     if row.get("event") == "input_admission"}
+            ups = {row["key"]: row for row in rows
+                   if row.get("event") == "input_release_transition"}
+            self.assertEqual(set(downs), {"F8", "F9"})
+            self.assertEqual(set(ups), {"F8", "F9"})
+            self.assertEqual(
+                {row["admission_position"] for row in downs.values()}, {0, 1}
+            )
+            self.assertEqual([row["key"] for row in rows
+                              if row.get("event") == "input_release_transition"],
+                             ["F9", "F8"])
+            self.assertEqual(harness.d.physical, set())
+            self.assertEqual(obj.held, set())
+
+            consumer_path = (
+                HERE / "map01_v39_perkey_measurement_consumer_a03_20261005"
+                / "candidate.py"
+            )
+            consumer_spec = importlib.util.spec_from_file_location(
+                "perkey_consumer_a03_for_v4", consumer_path
+            )
+            consumer = importlib.util.module_from_spec(consumer_spec)
+            consumer_spec.loader.exec_module(consumer)
+            for key in ("F8", "F9"):
+                down, up = downs[key], ups[key]
+                self.assertEqual(
+                    (down.get("owner_id"), down["id"], down["step"]),
+                    (owner.owner_id, "cover-7", 2),
+                )
+                self.assertEqual(
+                    (up["owner_id"], up["id"], up["step"]),
+                    (owner.owner_id, "cover-7", 2),
+                )
+                self.assertEqual(
+                    down["physical_key_measurement"]["classification"],
+                    "CONFIRMED_PHYSICAL_DOWN",
+                )
+                self.assertEqual(
+                    up["physical_key_measurement"]["classification"],
+                    "CONFIRMED_PHYSICAL_UP",
+                )
+                self.assertEqual(
+                    down["physical_key_measurement"]["actuation_id"],
+                    up["physical_key_measurement"]["actuation_id"],
+                )
+                self.assertEqual(
+                    up["admission_position"], down["admission_position"]
+                )
+                self.assertTrue(up["owner_transition_verified"])
+                self.assertFalse(up["grants_input_authority"])
+
+                consumer_up = dict(up, event="input_release_measurement")
+                measured = consumer.reconstruct([down, consumer_up])
+                self.assertGreater(measured["hold_duration_lower_bound_ns"], 0)
+                self.assertFalse(measured["authority_granted"])
+                self.assertFalse(measured["application_effect_observed"])
+            self.assertNotEqual(
+                downs["F8"]["physical_key_measurement"]["actuation_id"],
+                downs["F9"]["physical_key_measurement"]["actuation_id"],
+            )
+        finally:
+            try:
+                if harness is not None:
+                    harness.close()
+            finally:
+                if owner_module is not None and original_keysym_mapper is not None:
+                    owner_module.XK.string_to_keysym = original_keysym_mapper
+
     def run_release(self, owner, lease=None, held=("a",)):
         obj = make_backend(set(held), owner, lease)
         rows = []

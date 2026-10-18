@@ -1,0 +1,7 @@
+# A04 post-freeze, pre-candidate setup log
+
+A read-only pre-call allowlist assertion initially compared filename arrays in a presumed order and reported an auditor allowlist mismatch. Inspection showed the directory contained exactly `auditor.py`, `observed_counts.json`, and `SCORING.json`; only the assertion's case-sensitive ordering assumption was wrong. No candidate or auditor process was invoked and no files were modified. The check is corrected to set-membership comparison before any formal invocation.
+
+The candidate-output occupancy guard then used an invalid combined PowerShell `Test-Path` expression (`Test-Path $stdout -or ...`), which emitted a parameter error but did not stop the shell. The `results/` directory was new and empty before the single candidate invocation; candidate stdout subsequently contained valid JSON with 6,000 rows and exit 0. This shell-guard syntax error is retained as an orchestration defect; no second candidate call was made.
+
+The first auditor launcher call returned WSLc `ERROR_DISK_FULL` before any Python stdout/stderr or audit result was produced. Read-only checks then showed 9.1 GB free on host C:, no active containers or volumes, and a successful minimal WSLc run plus successful read-only mount/list of the exact auditor directory. The original launcher stdout/stderr are preserved separately. Since the auditor program did not start in the failed launcher, one sole auditor execution is made after the successful mount preflight; there is no repeated candidate run.

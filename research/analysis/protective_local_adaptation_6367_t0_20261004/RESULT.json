@@ -1,0 +1,59 @@
+{
+  "allocation": "PROTECTIVE-ADAPTATION-6367-T0-20261004-01",
+  "candidate_commit_sha": "836d6e32f7f7854edd01503b5dbc4d202869ed89",
+  "status": "METHOD_PASS_SCOPED",
+  "scope": "finite synthetic event-state method test only",
+  "formal_counts": {
+    "candidate_invocations": 1,
+    "candidate_exit": 0,
+    "independent_auditor_invocations": 1,
+    "auditor_exit": 0,
+    "retries": 0
+  },
+  "preflight": {
+    "command": "python3 -m unittest -v test_frozen_fixture test_candidate test_auditor",
+    "tests_passed": 11,
+    "tests_failed": 0,
+    "candidate_mutations_rejected": 3
+  },
+  "candidate": {
+    "decision": "FAIL_SAFETY",
+    "interpretation": "expected because the frozen safety-violation control must override its planted useful effect",
+    "offer_count": 18,
+    "pair_count": 9,
+    "paired_success_delta": 0.2222222222222222,
+    "aggregate_delta_use": "NOT_AN_ESTIMAND; descriptive arithmetic across deliberately heterogeneous positive/null/negative controls; interpret only case-level paired contrasts",
+    "post_policy_subgroup_effect": null
+  },
+  "auditor": {
+    "status": "PASS_AUDIT",
+    "findings": [],
+    "offer_count": 18,
+    "event_count": 18,
+    "pair_count": 9
+  },
+  "case_statuses": {
+    "benefit": "OBSERVED_ALL_OFFER_B_ADVANTAGE",
+    "null": "NO_DIFFERENCE_ALL_OFFER",
+    "suppression": "OBSERVED_ALL_OFFER_B_DISADVANTAGE",
+    "exposure-shift": "HOLD_MECHANISM_EVIDENCE",
+    "false-fresh-cue": "HOLD_MECHANISM_EVIDENCE",
+    "missing-occupancy": "HOLD_MECHANISM_EVIDENCE",
+    "safety-violation": "FAIL_SAFETY",
+    "selection-trap": "NO_DIFFERENCE_ALL_OFFER"
+  },
+  "selection_trap": {
+    "offers": 4,
+    "pairs": 2,
+    "all_offer_paired_delta": 0.0,
+    "adapted_only_estimate": null
+  },
+  "candidate_sha256": "b7a972a525f0374d88e6e67b7994d39bf067f6da291a5183a46c0b0f71a31169",
+  "auditor_sha256": "b7fb04d2e01bf6ff8a250ca6135c1ecb3dbad15e26ee167732200b2245deede9",
+  "fixture_sha256": "ee65068b79ee1a92d2e1a4e46c7f5a10dea11bb5657fdfd7d87b81d46341c45b",
+  "events_sha256": "465c48afe8cb386800ab0aaa51bea4fbc711b8939b7a43dcb41c3be6b89451ac",
+  "candidate_output_sha256": "18a22c539d5d15fa1e40ffc03c481f0013e9e10e564c1fe966a4404bc765bce2",
+  "audit_output_sha256": "a9ca39caa7e71b1c6dce84a5f4caa740119a5877f083f842bca5aa1892e07f39",
+  "container": "NOT_RUN",
+  "live_or_product_claim": false
+}

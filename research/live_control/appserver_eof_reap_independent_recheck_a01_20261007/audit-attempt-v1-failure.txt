@@ -1,0 +1,9 @@
+command: python3 -B audit_recheck.py
+stdout: AUDIT_FAIL base_missing_eof_regression
+exit_code: 1
+
+The first auditor predicate expected the short unittest display name, but the
+retained verbose runner includes the class-qualified test name. The underlying
+base log contains the intended ERROR and Darwin PermissionError. The raw test
+logs and candidate result were not changed. Auditor v2 now matches the full
+unittest display form and checks the pinned test blob and manifest.

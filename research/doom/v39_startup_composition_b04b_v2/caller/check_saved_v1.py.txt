@@ -1,0 +1,22 @@
+import copy,hashlib,json,pathlib
+R=pathlib.Path(__file__).resolve().parent;canonical=lambda x:json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=False)
+def ck(v,m):
+ if not v:raise ValueError(m)
+def check(d):
+ ck(d['result']=='PASS_FULL_STARTUP_FAULT_SCOPED' and d['all_owned_journals_and_callbacks_retired'] is True and type(d['subject_native_peers']) is int and d['subject_native_peers']==0 and type(d['real_client_constructor_executions']) is int and d['real_client_constructor_executions']==0,'qualified terminal state');ck(len(d['rows'])==4,'count')
+ for row,cell in zip(d['rows'],['baseline_healthy','candidate_healthy','candidate_held_lock','candidate_close_error']):
+  success=cell=='candidate_healthy';baseline=cell=='baseline_healthy';held=cell=='candidate_held_lock';ck(row['cell']==cell and row['exception_is_original'] is True and row['exception_type']=='ValueError' and row['exception_message']=='起動失敗 — preserve this exact exception','original error observation');ck(row['journal_closed_before_cleanup'] is success and row['callback_retained_before_cleanup'] is (not success),'caller custody');ck(type(row['journal_close_attempts_before_cleanup']) is int and row['journal_close_attempts_before_cleanup']==(0 if baseline or held else 1),'close count');expected_notes=[] if baseline or success else ['startup cleanup incomplete; see startup-cleanup.json'];ck(row['exception_notes']==expected_notes,'original annotation');ops=['client_factory']+(['owned_lock_acquire'] if held else [])+['callback_register','initialize']+(['callback_unregister'] if success else []);ck(row['operations_before_cleanup']==ops,'operation order');ck(type(row['start_ns']) is int and type(row['end_ns']) is int and row['end_ns']>=row['start_ns'],'clock endpoints')
+  if baseline:ck(row['startup_artifact'] is None,'baseline no artifact')
+  else:
+   expected=dict(schema='map01-startup-cleanup-v1',session_exit_code=None,reader_joined=True,client_closed=success,input_release_verified=False,errors=[] if success else ['planner close: '+("TimeoutError('app-server journal close timed out')" if held else "OSError('injected caller journal close error')")],escalations=[],stderr_complete=True,stderr_bytes=0,stderr_reader_joined=True,startup_error=dict(type='ValueError',message='起動失敗 — preserve this exact exception'),startup_events=[]);ck(canonical(row['startup_artifact'])==canonical(expected),'entire typed caller artifact')
+def main():
+ raw=(R/'RESULT.v1.json').read_bytes();d=json.loads(raw);check(d)
+ for row in d['rows']:ck(canonical(json.loads((R/'cases'/row['cell']/'raw.json').read_bytes()))==canonical(row),'individual full raw')
+ changes=[('error_identity_alias',lambda x:x['rows'][0].__setitem__('exception_is_original',1)),('error_message',lambda x:x['rows'][1]['startup_artifact']['startup_error'].__setitem__('message','other')),('error_annotation',lambda x:x['rows'][2].__setitem__('exception_notes',[])),('false_complete',lambda x:x['rows'][2]['startup_artifact'].__setitem__('client_closed',True)),('callback_loss',lambda x:x['rows'][3].__setitem__('callback_retained_before_cleanup',False)),('removed_error',lambda x:x['rows'][3]['startup_artifact'].__setitem__('errors',[])),('input_alias',lambda x:x['rows'][1]['startup_artifact'].__setitem__('input_release_verified',0)),('wrong_order',lambda x:x['rows'][2]['operations_before_cleanup'].reverse()),('native_alias',lambda x:x.__setitem__('subject_native_peers',False)),('missing_control',lambda x:x['rows'].pop(0))];refused=[]
+ for name,operation in changes:
+  a=copy.deepcopy(d);operation(a);ck(canonical(a)!=canonical(d),'effective mutation')
+  try:check(a)
+  except (ValueError,TypeError,KeyError):refused.append(name)
+  else:raise ValueError('accepted corruption '+name)
+ result=dict(original_sha256=hashlib.sha256(raw).hexdigest(),rows=4,effective_corruptions_refused=refused,subject_executions=0,result='PASS_SAVED_CALLER_ORACLE');(R/'SAVED_CHECK.v1.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))
+if __name__=='__main__':main()

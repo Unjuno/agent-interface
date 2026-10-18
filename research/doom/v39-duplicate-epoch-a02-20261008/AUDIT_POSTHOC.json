@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "derived_result_id_matches_a02_freeze": true,
+    "live_scope_not_claimed": true,
+    "normalization_changes_only_id_and_adds_provenance": true,
+    "probe_hash_and_size_match_freeze": true,
+    "raw_candidate_reports_expected_case_checks": true,
+    "raw_output_has_declared_prior_id": true,
+    "raw_output_id_matches_a02_freeze": false,
+    "source_hash_and_size_match_freeze": true,
+    "three_raw_cases_independently_reconstructed": true
+  },
+  "derived_case_checks": {
+    "advancing_epoch_hash_change": true,
+    "same_epoch_different_hash_cross_transport": true,
+    "same_epoch_same_hash_cross_transport": true
+  },
+  "deviation": "Raw candidate output embeds the prior A01 ID instead of the frozen A02 ID. Raw bytes and the initial unbound audit are preserved; RESULT_POSTHOC.json changes only that identity field and labels the derivation.",
+  "scope": "Posthoc saved-data reconstruction only; no candidate rerun, live threat semantics, or gameplay claim.",
+  "status": "PASS_OUTCOME_RECONSTRUCTION_WITH_PROVENANCE_DEVIATION"
+}

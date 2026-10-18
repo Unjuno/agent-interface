@@ -1,0 +1,9 @@
+Running as unit: unjuno-57-existing-b01-5884.service
+  File "/home/study/57-existing-b01/driver.py", line 22
+    argv=pathlib.Path('/proc',str(p.pid),'cmdline').read_bytes().split(b'  assert '--no-sandbox' not in argv and '-ac' not in argv
+                                                                                                                     ^
+SyntaxError: unterminated string literal (detected at line 22)
+Finished with result: exit-code
+Main processes terminated with: code=exited/status=1
+Service runtime: 15ms
+CPU time consumed: 14ms

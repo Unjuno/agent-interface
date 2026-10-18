@@ -1,0 +1,20 @@
+[
+  {
+    "path": "research/doom/map01_overlap_controller_v39.py",
+    "before_sha256": "21b5235bdb2d2c4986456fdff2b12ae42c1a8239efd62b7ee238e9ae33792bde",
+    "after_sha256": "d164d01e46f63dfa6f356db55a2f5fd45928243108cfc630b9da2a406c2525cb",
+    "change": "map host NODE path to pinned Linux CLI image ; map host Codex CLI path to pinned image ; omit MCP config overrides absent from isolated image ; defer planner session until V15 ready and first observation ; start planner at first fresh observation"
+  },
+  {
+    "path": "research/doom/session_map01_v12.py",
+    "before_sha256": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2",
+    "after_sha256": "2888e268903975d73d2b40fe31ab312d6a73a5bb32cb98a072386f0ef538442c",
+    "change": "clear inherited XAUTHORITY only immediately before DoomGame.init"
+  },
+  {
+    "path": "wslpath",
+    "before_sha256": null,
+    "after_sha256": "60b19bcd0f08dbd4b1af530921ea728ca070ffc0cf2b722bfbe88f393024e65e",
+    "change": "LF container cwd passthrough shim"
+  }
+]

@@ -1,0 +1,214 @@
+{
+  "schema": "issue59-v39-ammo-cancel-composition-result-v1",
+  "status": "CONSTRUCTION_OBSERVATION",
+  "main_commit": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "cases": [
+    {
+      "case": "positive-floor-soft-control",
+      "source_ammo": 50,
+      "ammo": 1,
+      "ammo_hard_minimum": 1,
+      "health": 100,
+      "disposition": "soft_change",
+      "invalidation_reason": null,
+      "cancel_fails": false,
+      "terminal": null,
+      "helper_error": null,
+      "answer_eligible": true,
+      "answer": {
+        "action": "stale"
+      },
+      "cancellation_requested": false,
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1",
+          "input": "pending answer based on earlier observation"
+        },
+        {
+          "event": "monitor_disposition",
+          "outcome": "soft_change",
+          "reason": null,
+          "requires_new_decision": false,
+          "grants_input_authority": false
+        },
+        {
+          "event": "answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "answer_classified",
+          "answer_eligible": true,
+          "answer": {
+            "action": "stale"
+          },
+          "cancellation_requested": false
+        }
+      ]
+    },
+    {
+      "case": "zero-ammo-cancel-first",
+      "source_ammo": 50,
+      "ammo": 0,
+      "ammo_hard_minimum": 1,
+      "health": 100,
+      "disposition": "hard_invalidation",
+      "invalidation_reason": "ammo:below_hard_minimum",
+      "cancel_fails": false,
+      "terminal": {
+        "event": "terminal",
+        "id": "cover-1",
+        "status": "cancelled",
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        }
+      },
+      "helper_error": null,
+      "answer_eligible": false,
+      "answer": null,
+      "cancellation_requested": true,
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1",
+          "input": "pending answer based on earlier observation"
+        },
+        {
+          "event": "monitor_disposition",
+          "outcome": "hard_invalidation",
+          "reason": "ammo:below_hard_minimum",
+          "requires_new_decision": true,
+          "grants_input_authority": false
+        },
+        {
+          "event": "executor_cancel_write",
+          "op": "cancel",
+          "id": "cover-1"
+        },
+        {
+          "event": "executor_cancel_flush"
+        },
+        {
+          "event": "planner_interrupt_transport",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_terminal",
+          "status": "cancelled",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        },
+        {
+          "event": "helper_returned",
+          "interrupt_outcome": "requested"
+        },
+        {
+          "event": "answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "answer_classified",
+          "answer_eligible": false,
+          "answer": null,
+          "cancellation_requested": true
+        }
+      ]
+    },
+    {
+      "case": "zero-ammo-cancel-write-failure",
+      "source_ammo": 50,
+      "ammo": 0,
+      "ammo_hard_minimum": 1,
+      "health": 100,
+      "disposition": "hard_invalidation",
+      "invalidation_reason": "ammo:below_hard_minimum",
+      "cancel_fails": true,
+      "terminal": {
+        "event": "terminal",
+        "id": "cover-1",
+        "status": "cancelled",
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        }
+      },
+      "helper_error": "executor cancel write failed before planner interruption: OSError('synthetic executor cancel failure')",
+      "answer_eligible": false,
+      "answer": null,
+      "cancellation_requested": true,
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1",
+          "input": "pending answer based on earlier observation"
+        },
+        {
+          "event": "monitor_disposition",
+          "outcome": "hard_invalidation",
+          "reason": "ammo:below_hard_minimum",
+          "requires_new_decision": true,
+          "grants_input_authority": false
+        },
+        {
+          "event": "executor_cancel_write",
+          "op": "cancel",
+          "id": "cover-1"
+        },
+        {
+          "event": "planner_interrupt_transport",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_terminal",
+          "status": "cancelled",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        },
+        {
+          "event": "helper_error",
+          "message": "executor cancel write failed before planner interruption: OSError('synthetic executor cancel failure')"
+        },
+        {
+          "event": "answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "answer_classified",
+          "answer_eligible": false,
+          "answer": null,
+          "cancellation_requested": true
+        }
+      ]
+    }
+  ],
+  "scope": "Synthetic paired HUD and fake transport composition only; no live timing, key state, tactical policy, or task effect."
+}

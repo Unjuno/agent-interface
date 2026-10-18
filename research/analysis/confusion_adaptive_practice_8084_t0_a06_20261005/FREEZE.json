@@ -1,0 +1,29 @@
+{
+  "allocation": "CONFUSION-ADAPTIVE-PRACTICE-8084-A06-20261005-01",
+  "frozen_at_local": "2026-10-05",
+  "base_main": "19a6b723e58ccfd2b8265e88659589ef9223fcc9",
+  "branch": "research/8084-diagnostic-threshold-sensitivity-a06-20261005",
+  "protocol": "PROTOCOL.md",
+  "host": "Windows x64; CPython 3.12.10; standard library only",
+  "execution": {
+    "network": "none by source design; no network libraries or calls",
+    "container": "none; container-free analytical test; weaker isolation disclosed",
+    "candidate_runs": 1,
+    "auditor_runs": 1,
+    "fixture_generator_runs": 1,
+    "replicates_per_profile_sample_size": 5000
+  },
+  "sha256_lf_normalized": {
+    "PROTOCOL.md": "C6F3D991333B564D75E52FED3139ABC1C5F995609C930E38CE6B6E359DB9C38F",
+    "SCORING.json": "14682105FA09D67DD1D71FBB486D2979C260360D6549C514110FA14C4071B59E",
+    "generate.py": "FA325DDA93BDA0EB452AFA86A7E7D24AAF3C8F5B24C7653034F5CFFDF281B60C",
+    "candidate/candidate.py": "0F617EC6C82391F1088D5DD7CD42AF8FB2DAC0C90536F46AA4F3AB27F8E98F56",
+    "auditor/auditor.py": "D7FC96B4B87A5D6C5BF5D8D3938F5DE600E7328D8A3525EFF8A1E11B50C87EC7",
+    "test_method.py": "2AC617D0560A2A740BEBB77A1D5FE5C8DC42468F719211B4A3046826C8017BC6"
+  },
+  "construction": {
+    "initial_tests": "1 of 3 failed: isolation assertion falsely prohibited the candidate's empirical-rate variable; preserved at results/construction-initial-failure.txt",
+    "corrected_tests": "3/3 normal and 3/3 under -O passed before freeze",
+    "binomialvariate": "present in CPython 3.12.10"
+  }
+}

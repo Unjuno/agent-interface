@@ -13,7 +13,25 @@ from executor_v3 import Cancelled, DecisionRequired
 
 
 class InputOwner:
-    def __init__(self, display_name):
+    def __init__(self, display_name, *, process_identity=False, window_lifecycle=False, _window_reader=None):
+        if type(process_identity) is not bool:
+            raise ValueError('process_identity must be a boolean')
+        if type(window_lifecycle) is not bool or (window_lifecycle and not process_identity):
+            raise ValueError('window lifecycle requires explicit process identity')
+        if _window_reader is not None and not window_lifecycle:
+            raise ValueError('borrowed window reader requires lifecycle selection')
+        self.window_reader = None
+        self._owns_window_reader = False
+        self.identity_reader = None
+        if process_identity:
+            from target_process_identity_v1 import IdentityReader
+            self.identity_reader = IdentityReader(display_name)
+            if window_lifecycle:
+                if _window_reader is not None and not isinstance(_window_reader, IdentityReader):
+                    self.identity_reader.close()
+                    raise ValueError('canonical IdentityReader required')
+                self.window_reader = _window_reader or IdentityReader(display_name)
+                self._owns_window_reader = _window_reader is None
         self.requests = queue.Queue()
         self.owner_id = uuid.uuid4().hex
         self.records = []
@@ -40,6 +58,10 @@ class InputOwner:
             self.error = exc
             self.records.append(dict(event='owner_failed', error=repr(exc), verified=False))
         finally:
+            if self.identity_reader is not None:
+                self.identity_reader.close()
+            if self.window_reader is not None and self._owns_window_reader:
+                self.window_reader.close()
             self.ready.set()
             self.stopped.set()
 
@@ -63,6 +85,8 @@ class InputOwner:
 
     def close(self):
         if not self.closed:
+            if self.identity_reader is not None:
+                self.identity_reader.close()
             try:
                 if not self.stopped.is_set() and not self.stop_requested.is_set():
                     self.call('close')
@@ -88,16 +112,214 @@ class InputOwner:
         active_pointer = False
         revision = 0
         fault = None
+        release_pending = False
         self.ready.set()
 
-        def focus_id():
+        def key_is_down(code):
+            bitmap = d.query_keymap()
+            return bool(bitmap[code // 8] & (1 << (code % 8)))
+
+        def sample_key_down(code):
+            try:
+                return key_is_down(code), None, time.perf_counter_ns()
+            except Exception as exc:
+                return None, {"type": type(exc).__name__, "message": str(exc)[:200]}, time.perf_counter_ns()
+
+        def release_key(code, *, max_attempts=3, force_first=False):
+            attempts = []
+            server_down, before_error, _ = sample_key_down(code)
+            for attempt in range(1, max_attempts + 1):
+                if server_down is False and not (force_first and attempt == 1):
+                    break
+                observed_down_before = server_down
+                started_ns = time.perf_counter_ns()
+                release_error = None
+                try:
+                    xtest.fake_input(d, X.KeyRelease, code)
+                except Exception as exc:
+                    release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_error = None
+                try:
+                    d.sync()
+                except Exception as exc:
+                    sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_returned_ns = time.perf_counter_ns() if sync_error is None else None
+                server_down, after_error, sampled_ns = sample_key_down(code)
+                attempts.append({
+                    "attempt": attempt,
+                    "keyrelease_started_ns": started_ns,
+                    "sync_returned_ns": sync_returned_ns,
+                    "keymap_sampled_ns": sampled_ns,
+                    "server_key_down_before": observed_down_before,
+                    "server_key_down_after": server_down,
+                    "keymap_before_error": before_error,
+                    "keymap_after_error": after_error,
+                    "keyrelease_error": release_error,
+                    "sync_error": sync_error,
+                })
+                before_error = after_error
+                if server_down is False:
+                    break
+            return attempts, server_down is False
+
+        def release_keys_batch(lease, keys):
+            nonlocal fault,release_pending
+            if (type(keys) is not list or not keys or
+                    any(not isinstance(key, str) or not key for key in keys) or
+                    len(set(keys)) != len(keys)):
+                raise ValueError('unique non-empty key list required for up_batch')
+            if active is not lease or lease is None:
+                raise ValueError('up_batch requires the active input lease')
+            codes = []
+            for key in keys:
+                code = d.keysym_to_keycode(XK.string_to_keysym(key))
+                if not code or held.get(code) is not lease:
+                    raise ValueError('up_batch key is unavailable or not owned')
+                codes.append((key, code))
+
+            # The pre-sample occurs before the ordered UP sequence. Send every
+            # original explicit UP before sampling again; this preserves the
+            # release-batch no-query-between-UPs contract.
+            try:
+                before_bitmap = d.query_keymap()
+                before_error = None
+            except Exception as exc:
+                before_bitmap = None
+                before_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+            attempt_rows = {}
+            for key, code in codes:
+                started_ns = time.perf_counter_ns()
+                release_error = None
+                try:
+                    xtest.fake_input(d, X.KeyRelease, code)
+                except Exception as exc:
+                    release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_error = None
+                try:
+                    d.sync()
+                except Exception as exc:
+                    sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sync_ns = time.perf_counter_ns() if sync_error is None else None
+                attempt_rows[code] = [{
+                    'attempt': 1,
+                    'keyrelease_started_ns': started_ns,
+                    'sync_returned_ns': sync_ns,
+                    'keymap_sampled_ns': None,
+                    'server_key_down_before': (
+                        bool(before_bitmap[code // 8] & (1 << (code % 8)))
+                        if before_bitmap is not None else None),
+                    'server_key_down_after': None,
+                    'keymap_before_error': before_error,
+                    'keymap_after_error': None,
+                    'keyrelease_error': release_error,
+                    'sync_error': sync_error,
+                }]
+
+            try:
+                bitmap = d.query_keymap()
+                sample_error = None
+                sampled_ns = time.perf_counter_ns()
+            except Exception as exc:
+                bitmap = None
+                sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sampled_ns = time.perf_counter_ns()
+            receipts = []
+            for key, code in codes:
+                attempts = attempt_rows[code]
+                server_down = (
+                    bool(bitmap[code // 8] & (1 << (code % 8)))
+                    if bitmap is not None else None)
+                attempts[0]['keymap_sampled_ns'] = sampled_ns
+                attempts[0]['server_key_down_after'] = server_down
+                attempts[0]['keymap_after_error'] = sample_error
+                while server_down is True and len(attempts) < 3:
+                    started_ns = time.perf_counter_ns()
+                    release_error = None
+                    try:
+                        xtest.fake_input(d, X.KeyRelease, code)
+                    except Exception as exc:
+                        release_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                    sync_error = None
+                    try:
+                        d.sync()
+                    except Exception as exc:
+                        sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                    sync_ns = time.perf_counter_ns() if sync_error is None else None
+                    try:
+                        bitmap = d.query_keymap()
+                        sample_error = None
+                        sampled_ns = time.perf_counter_ns()
+                    except Exception as exc:
+                        bitmap = None
+                        sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                        sampled_ns = time.perf_counter_ns()
+                    server_down = (
+                        bool(bitmap[code // 8] & (1 << (code % 8)))
+                        if bitmap is not None else None)
+                    attempts.append({
+                        'attempt': len(attempts) + 1,
+                        'keyrelease_started_ns': started_ns,
+                        'sync_returned_ns': sync_ns,
+                        'keymap_sampled_ns': sampled_ns,
+                        'server_key_down_before': True,
+                        'server_key_down_after': server_down,
+                        'keymap_before_error': None,
+                        'keymap_after_error': sample_error,
+                        'keyrelease_error': release_error,
+                        'sync_error': sync_error,
+                    })
+                    if server_down is None:
+                        break
+                verified = server_down is False
+                if verified:
+                    held.pop(code, None)
+                receipt = dict(
+                    event='owner_explicit_keyup', operation='up',
+                    owner_id=self.owner_id, key=key, keycode=code,
+                    intent_token=getattr(lease, 'intent_token', None),
+                    valid_until_ns=getattr(lease, 'deadline', None),
+                    owner_keyrelease_started_ns=attempts[0]['keyrelease_started_ns'],
+                    owner_sync_returned_ns=attempts[-1]['sync_returned_ns'],
+                    owner_keymap_sampled_ns=attempts[-1]['keymap_sampled_ns'],
+                    server_keyup_verified=verified,
+                    server_keyup_attempt_count=len(attempts),
+                    server_keyup_attempts=attempts,
+                    server_key_down_after_keyup=server_down,
+                    key_state_source='x11_query_keymap',
+                    cancel_requested_after_sync=lease.cancel.is_set(),
+                    server_sync_completed=any(row['sync_error'] is None for row in attempts),
+                    physical_verification_authoritative=False,
+                    release_batch_initial_up_count=len(codes),
+                    release_batch_key_order=[item[0] for item in codes])
+                self.records.append(receipt)
+                receipts.append(receipt)
+            if any(not receipt["server_keyup_verified"] for receipt in receipts):
+                fault = RuntimeError("input owner failed closed after unverified key-up")
+                release_pending = True
+            return receipts
+
+        focus_query_failed = False
+
+        def focus_id(lease=None):
+            if self.identity_reader is not None and lease is not None:
+                return self.identity_reader.read_focus(lease.expected_surface,
+                    perf_deadline_ns=lease.deadline,
+                    cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
             value=d.get_input_focus().focus
             return value.id if hasattr(value,'id') else value
 
         def invalid_focus(lease, pointer=False):
+            nonlocal focus_query_failed
+            focus_query_failed = False
             if not hasattr(lease,'expected_focus'):
                 raise ValueError('observed input focus required')
-            actual=focus_id()
+            try:
+                actual=focus_id(lease)
+            except Exception:
+                if self.identity_reader is None:
+                    raise
+                focus_query_failed = True
+                return True
             if not pointer:return actual != lease.expected_focus
             surface=getattr(lease,'expected_surface',None)
             if surface in (None,0,1) or actual in (None,0,1) or lease.expected_focus in (None,0,1):return True
@@ -157,6 +379,59 @@ class InputOwner:
                 node = child
             return False
 
+        active_identity = None
+        checked_identity = None
+        active_window_identity = None
+        checked_window_identity = None
+        next_identity_check = 0
+
+        def identity_matches(lease):
+            nonlocal checked_identity, checked_window_identity
+            if self.identity_reader is None:
+                return True
+            from target_process_identity_v1 import valid_source
+            source = getattr(lease, 'target_process_identity', None)
+            if (not valid_source(source) or source[3] != lease.deadline or
+                    source[1] != getattr(lease, 'expected_surface', None) or
+                    (active is lease and source != active_identity)):
+                return False
+            try:
+                current = self.identity_reader.read(source[1], perf_deadline_ns=source[3],
+                    cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
+                valid = (current == source[2] and source == lease.target_process_identity and
+                         source[3] == lease.deadline)
+                if self.window_reader is not None:
+                    window_source = getattr(lease, 'target_window_identity', None)
+                    if (not valid_source(window_source) or window_source[:2] != source[:2]
+                            or window_source[3] != source[3]
+                            or (active is lease and window_source != active_window_identity)):
+                        return False
+                    window = self.window_reader.read_window(source[1], perf_deadline_ns=source[3],
+                        cancelled=lambda: self.stop_requested.is_set() or lease.cancel.is_set())
+                    valid = (valid and window == window_source[2]
+                             and window_source == lease.target_window_identity
+                             and source == lease.target_process_identity and source[3] == lease.deadline)
+                    if valid: checked_window_identity = window_source
+                if valid:
+                    checked_identity = source
+                return valid
+            except Exception:
+                return False
+
+        def final_identity_fence(lease):
+            if self.identity_reader is None:
+                return
+            lease.check()
+            if lease.cancel.is_set():
+                raise Cancelled()
+            if (lease.target_process_identity != checked_identity or
+                    lease.deadline != checked_identity[3] or getattr(lease, 'focus_invalid', False)):
+                lease.focus_invalid = True
+                raise DecisionRequired('target process source changed before input')
+            if self.window_reader is not None and getattr(lease, 'target_window_identity', None) != checked_window_identity:
+                lease.focus_invalid = True
+                raise DecisionRequired('target window source changed before input')
+
         def pointer_guard(lease, x, y):
             if fault is not None:
                 raise RuntimeError('input owner failed closed') from fault
@@ -171,34 +446,107 @@ class InputOwner:
             lease.check()
             if lease.cancel.is_set():
                 raise Cancelled()
+            if not identity_matches(lease):
+                lease.focus_invalid = True
+                raise DecisionRequired('target process identity unavailable or changed')
+            if self.identity_reader is not None and (
+                    invalid_focus(lease, pointer=True) or not geometry_matches(lease) or
+                    not hit_surface(lease, x, y)):
+                lease.focus_invalid = True
+                raise DecisionRequired('pointer binding changed during identity read')
+            final_identity_fence(lease)
 
         def release(reason):
-            nonlocal active,revision
+            nonlocal active,revision,fault,release_pending
             revision += 1
-            for code in list(held):
-                xtest.fake_input(d, X.KeyRelease, code)
-            for button in list(buttons):
-                xtest.fake_input(d, X.ButtonRelease, button)
-            d.sync()
-            mask = d.screen().root.query_pointer().mask
-            buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
-            bitmap = d.query_keymap()
-            down = [code for code in touched if bitmap[code // 8] & (1 << (code % 8))]
+            release_pending = True
+            key_release_attempts = {}
+            key_state_errors = []
+            # Include every key this owner touched, not only keys still present
+            # in bookkeeping. A lost explicit up must remain recoverable here.
+            release_codes = list(held)
+            release_codes.extend(sorted(set(touched) - set(held)))
+            for code in release_codes:
+                attempts, verified = release_key(code)
+                key_release_attempts[str(code)] = {
+                    "attempts": attempts, "verified": verified,
+                }
+            # An explicit ButtonRelease may be acknowledged by XSync while
+            # the server still reports the button down. Retry every touched
+            # button that remains down, including one removed from `buttons`.
+            try:
+                before_mask = d.screen().root.query_pointer().mask
+            except Exception as exc:
+                key_state_errors.append({"source": "pointer_before", "type": type(exc).__name__, "message": str(exc)[:200]})
+                retry_buttons = set(buttons) | set(touched_buttons)
+            else:
+                retry_buttons = {
+                    button for button in touched_buttons
+                    if before_mask & (X.Button1Mask << (button - 1))
+                }
+            for button in sorted(retry_buttons):
+                try:
+                    xtest.fake_input(d, X.ButtonRelease, button)
+                except Exception as exc:
+                    key_state_errors.append({"source": "button_release", "button": button,
+                                             "type": type(exc).__name__, "message": str(exc)[:200]})
+            try:
+                d.sync()
+            except Exception as exc:
+                key_state_errors.append({"source": "button_release_sync", "type": type(exc).__name__,
+                                         "message": str(exc)[:200]})
+            try:
+                mask = d.screen().root.query_pointer().mask
+                buttons_down = [b for b in touched_buttons if mask & (X.Button1Mask << (b-1))]
+            except Exception as exc:
+                key_state_errors.append({"source": "pointer_after", "type": type(exc).__name__, "message": str(exc)[:200]})
+                buttons_down = sorted(set(buttons) | set(touched_buttons))
+            down = []
+            unknown_keys = []
+            for code in sorted(touched):
+                sampled, sample_error, _ = sample_key_down(code)
+                if sampled is True:
+                    down.append(code)
+                elif sampled is None:
+                    unknown_keys.append(code)
+                    key_state_errors.append({"source": "keymap_after", "keycode": code, **sample_error})
             if reason == 'release' and active is not None and active.cancel.is_set():
                 reason = 'cancelled'
-            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down, buttons_down=buttons_down,
-                          keys_down=down, verified_ns=time.perf_counter_ns(),
-                          valid_until_ns=active.deadline if active else None)
+            record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down and not unknown_keys and not key_state_errors, buttons_down=buttons_down,
+                          keys_down=down, keys_unknown=unknown_keys, key_state_errors=key_state_errors, verified_ns=time.perf_counter_ns(),
+                          valid_until_ns=active.deadline if active else None,
+                          intent_token=getattr(active, 'intent_token', None) if active else None,
+                          key_release_attempts=key_release_attempts,
+                          key_release_intervals_ns=[
+                              {"keycode": int(code), "interval_ns": [
+                                  attempts[0]["keyrelease_started_ns"],
+                                  attempts[-1]["keymap_sampled_ns"]]}
+                              for code, value in key_release_attempts.items()
+                              if (attempts := value["attempts"])
+                          ],
+                          key_state_source='x11_query_keymap')
+            if self.identity_reader is not None:
+                record['target_process_identity'] = list(active_identity) if active_identity is not None else None
+                record['target_process_identity_reader'] = self.identity_reader.worker.snapshot()
+                record['target_focus_query_failed'] = focus_query_failed
+            if self.window_reader is not None:
+                record['target_window_identity'] = list(active_window_identity) if active is not None and active_window_identity is not None else None
+                record['target_window_identity_reader'] = self.window_reader.worker.snapshot()
             if active is not None and hasattr(active, 'record_interruption'):
                 active.record_interruption(record)
             self.records.append(record)
-            if down or buttons_down:
-                raise RuntimeError('owner release not verified: ' + repr(down))
+            if down or buttons_down or unknown_keys or key_state_errors:
+                error = RuntimeError('owner release not verified: ' + repr(down))
+                error.owner_release_record = record
+                fault = error
+                raise error
             buttons.clear()
             touched_buttons.clear()
             held.clear()
             touched.clear()
             active = None
+            fault = None
+            release_pending = False
             return record
 
         try:
@@ -210,6 +558,15 @@ class InputOwner:
                 if active is not None:
                     expired = time.perf_counter_ns() >= active.deadline
                     changed=invalid_focus(active,pointer=active_pointer)
+                    query_invalidated = self.identity_reader is not None and focus_query_failed
+                    expired = time.perf_counter_ns() >= active.deadline
+                    generation_changed = False
+                    if (not expired and not changed and not active.cancel.is_set() and
+                            self.identity_reader is not None and time.perf_counter_ns() >= next_identity_check):
+                        generation_changed = not identity_matches(active)
+                        next_identity_check = time.perf_counter_ns() + 20_000_000
+                        changed = generation_changed
+                        expired = time.perf_counter_ns() >= active.deadline
                     surface_changed=False
                     if buttons and not changed:
                         point=d.screen().root.query_pointer()
@@ -218,7 +575,12 @@ class InputOwner:
                     if changed:active.focus_invalid=True
                     if expired or active.cancel.is_set() or changed:
                         try:
-                            release('expired' if expired else ('surface_changed' if surface_changed else ('focus_changed' if changed else 'cancelled')))
+                            release('expired' if expired else (
+                                ('stop_requested' if self.stop_requested.is_set() else
+                                 ('cancelled' if active.cancel.is_set() else
+                                  ('target_query_invalidated' if query_invalidated else 'target_generation_invalidated')))
+                                if generation_changed or query_invalidated else
+                                ('surface_changed' if surface_changed else ('focus_changed' if changed else 'cancelled'))))
                         except Exception as exc:
                             fault = exc
                             active = None
@@ -231,6 +593,10 @@ class InputOwner:
                     continue
                 closing = op == 'close'
                 try:
+                    if release_pending and op not in (
+                            'release', 'close', 'input_state', 'surface_context'):
+                        raise RuntimeError(
+                            'input owner release pending; retry release before actuation')
                     continuation = op == 'continue_move'
                     if continuation:
                         if not isinstance(key,dict) or set(key)!={'owner_id','expected_revision','x','y','reply_until_ns'}:
@@ -246,7 +612,7 @@ class InputOwner:
                         if not all(point.mask & (X.Button1Mask << (b-1)) for b in buttons):
                             raise DecisionRequired('held button no longer physically down')
                         op='move';key={'x':key['x'],'y':key['y']}
-                    if op in ('move','button_down','button_up','wheel','down','up'):revision += 1
+                    if op in ('move','button_down','button_up','wheel','down','up','up_batch'):revision += 1
                     if op == 'input_state':
                         started=time.perf_counter_ns();point=d.screen().root.query_pointer();focus=focus_id();finished=time.perf_counter_ns()
                         result=dict(owner_id=self.owner_id,revision=revision,sample_started_ns=started,sample_finished_ns=finished,
@@ -254,7 +620,8 @@ class InputOwner:
                             pointer=[point.root_x,point.root_y],focus=focus,
                             active_lease_deadline_ns=active.deadline if active else None,
                             active_lease_time_valid=active is not None and finished<active.deadline,
-                            cancel_requested=active.cancel.is_set() if active else False)
+                            cancel_requested=active.cancel.is_set() if active else False,
+                            release_pending=release_pending)
                     elif op == 'surface_context':
                         result = surface_context(key)
                     elif op in ('release', 'close'):
@@ -291,6 +658,8 @@ class InputOwner:
                             if continuation and time.perf_counter_ns()>=reply_deadline:raise DecisionRequired('continuation response expired')
                             active = lease
                             active_pointer = True
+                            active_identity = checked_identity
+                            active_window_identity = checked_window_identity
                             admitted = time.perf_counter_ns()
                             if op == 'move':
                                 xtest.fake_input(d,X.MotionNotify,x=x,y=y)
@@ -304,12 +673,20 @@ class InputOwner:
                                 button = 4 if key > 0 else 5
                                 for _ in range(abs(key)):
                                     pointer_guard(lease,x,y)
+                                    # Track before emission: delivery may precede an exception.
+                                    touched_buttons.add(button)
                                     xtest.fake_input(d,X.ButtonPress,button)
                                     xtest.fake_input(d,X.ButtonRelease,button)
                             d.sync()
                             result = dict(event='pointer_admission', operation=op, payload=key,
                                           admitted_ns=admitted,input_ack_ns=time.perf_counter_ns(),
                                           valid_until_ns=lease.deadline, surface=lease.expected_surface)
+                            if self.identity_reader is not None:
+                                result['target_process_identity'] = list(checked_identity)
+                            if self.window_reader is not None:
+                                result['target_window_identity'] = list(checked_window_identity)
+                    elif op == 'up_batch':
+                        result = release_keys_batch(lease, key)
                     elif op in ('down', 'up'):
                         code = d.keysym_to_keycode(XK.string_to_keysym(key))
                         if not code:
@@ -325,40 +702,68 @@ class InputOwner:
                             lease.check()
                             if lease.cancel.is_set():
                                 raise Cancelled()
+                            if not identity_matches(lease):
+                                lease.focus_invalid = True
+                                raise DecisionRequired('target process identity unavailable or changed')
+                            if self.identity_reader is not None and invalid_focus(lease):
+                                lease.focus_invalid = True
+                                raise DecisionRequired('focus changed during identity read')
+                            final_identity_fence(lease)
                             admitted = time.perf_counter_ns()
                             active = lease
                             active_pointer = False
+                            active_identity = checked_identity
+                            active_window_identity = checked_window_identity
                             touched.add(code)
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
-                            result = dict(event='input_admission', key=key, admitted_ns=admitted,
+                            result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
                                           input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
+                            if self.identity_reader is not None:
+                                result['target_process_identity'] = list(checked_identity)
+                            if self.window_reader is not None:
+                                result['target_window_identity'] = list(checked_window_identity)
                         else:
                             # Cleanup from an old intent must never release a newer hold.
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
                             if code in held:
-                                owner_keyrelease_started_ns = time.perf_counter_ns()
-                                xtest.fake_input(d, X.KeyRelease, code)
-                                d.sync()
-                                owner_sync_returned_ns = time.perf_counter_ns()
+                                key_release_attempts, server_keyup_verified = release_key(
+                                    code, force_first=True)
+                                owner_keyrelease_started_ns = key_release_attempts[0]["keyrelease_started_ns"]
+                                owner_sync_returned_ns = key_release_attempts[-1]["sync_returned_ns"]
+                                owner_keymap_sampled_ns = key_release_attempts[-1]["keymap_sampled_ns"]
                                 cancel = getattr(lease, 'cancel', None)
                                 cancel_requested_after_sync = (
                                     cancel.is_set() if callable(getattr(cancel, 'is_set', None))
                                     else None
                                 )
-                                del held[code]
-                                self.records.append(dict(
+                                receipt = dict(
                                     event='owner_explicit_keyup', operation='up',
                                     owner_id=self.owner_id, key=key, keycode=code,
                                     intent_token=getattr(lease, 'intent_token', None),
                                     valid_until_ns=getattr(lease, 'deadline', None),
                                     owner_keyrelease_started_ns=owner_keyrelease_started_ns,
                                     owner_sync_returned_ns=owner_sync_returned_ns,
+                                    owner_keymap_sampled_ns=owner_keymap_sampled_ns,
+                                    server_keyup_verified=server_keyup_verified,
+                                    server_keyup_attempt_count=len(key_release_attempts),
+                                    server_keyup_attempts=key_release_attempts,
+                                    server_key_down_after_keyup=not server_keyup_verified,
+                                    key_state_source='x11_query_keymap',
                                     cancel_requested_after_sync=cancel_requested_after_sync,
-                                    server_sync_completed=True,
-                                    physical_verification_authoritative=False))
+                                    server_sync_completed=any(
+                                        row['sync_error'] is None for row in key_release_attempts
+                                    ),
+                                    physical_verification_authoritative=False)
+                                self.records.append(receipt)
+                                if not server_keyup_verified:
+                                    error = RuntimeError(
+                                        'explicit key-up not observed in X11 keymap: ' + str(code))
+                                    error.owner_explicit_keyup_record = receipt
+                                    raise error
+                                del held[code]
                             result = None
                     else:
                         raise ValueError('unknown input operation')
@@ -366,6 +771,10 @@ class InputOwner:
                         result.update(continuation=True,owner_id=self.owner_id,revision=revision)
                     reply.append((True, result))
                 except Exception as exc:
+                    explicit_up = getattr(exc, "owner_explicit_keyup_record", None)
+                    if isinstance(explicit_up, dict) and not explicit_up.get("server_keyup_verified"):
+                        fault = exc
+                        release_pending = True
                     reply.append((False, exc))
                 finally:
                     done.set()

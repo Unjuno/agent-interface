@@ -1,0 +1,31 @@
+{
+  "candidate_sha256": "d36f0b96437c47b0f65b052b38396c6175b2158ff7c633241b969868962bd241",
+  "checks": {
+    "a_and_A_resolve_to_same_nonzero_keycode": true,
+    "alias_batch_refused_as_duplicate_resolved_code": false,
+    "close_delivered_matching_key_release": false,
+    "close_returned_and_owner_stopped": false,
+    "exactly_one_terminal_release_record": false,
+    "focused_key_down_admitted": false,
+    "no_explicit_keyup_record_before_close": true,
+    "refusal_preserved_held_key": false,
+    "server_keymap_empty_after_close": false,
+    "terminal_owner_release_verified_empty": false,
+    "xvfb_exited_zero": true
+  },
+  "decision": "STOP",
+  "errors": [
+    "candidate_incomplete_or_error",
+    "focused_key_down_admitted",
+    "alias_batch_refused_as_duplicate_resolved_code",
+    "refusal_preserved_held_key",
+    "close_delivered_matching_key_release",
+    "server_keymap_empty_after_close",
+    "terminal_owner_release_verified_empty",
+    "close_returned_and_owner_stopped",
+    "exactly_one_terminal_release_record"
+  ],
+  "raw_sha256": "84a168483e6843e32075fb2eff0d5802e2970df23339cdd820427e8b8cbd62a6",
+  "schema": "release-batch-alias-owner-cleanup-a01-audit-v1",
+  "scope": "one guarded alias-refusal followed by actual V4/V3/V12 owner-close cleanup on isolated Xvfb; no game, task, physical keyboard, or live allocation"
+}

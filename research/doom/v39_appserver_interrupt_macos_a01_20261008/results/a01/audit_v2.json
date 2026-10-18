@@ -1,0 +1,18 @@
+{
+  "disposition": "PASS_A01_AUDIT_V2",
+  "checks": {
+    "frozen_candidate_hash_matches": true,
+    "expected_app_server_version": true,
+    "first_turn_interrupted": true,
+    "second_turn_completed": true,
+    "same_thread_distinct_turns": true,
+    "two_requests_reached_loopback_mock": true,
+    "fresh_request_precedes_release_by_event_barrier": true,
+    "fresh_request_contains_marker": true,
+    "fresh_request_contains_valid_2x2_png": true,
+    "both_processes_exit_zero": true,
+    "reported_disposition_pass": true,
+    "frozen_cli_identity_matches": true
+  },
+  "method_note": "first_response_released_at was not retained because the server thread recorded it after result assembly. The strict event barrier is accepted only with the frozen runner source ordering second_seen.wait before release_first.set; the separate release timestamp is therefore unobserved."
+}

@@ -1,0 +1,88 @@
+From 7ab328b95d455ccc2595a22693fe81fce7485ff3 Mon Sep 17 00:00:00 2001
+From: Unjuno <unjuno.org@unjuno.org>
+Date: Tue, 6 Oct 2026 20:14:09 +0900
+Subject: [PATCH 1/4] research(#5935): freeze T0 source hashes, corpus and
+ gates before formal
+
+
+diff --git a/research/human_factors/predictive_display_t0_5935_v1/PLAN.md b/research/human_factors/predictive_display_t0_5935_v1/PLAN.md
+new file mode 100644
+index 00000000000..3665d598eef
+--- /dev/null
++++ b/research/human_factors/predictive_display_t0_5935_v1/PLAN.md
+@@ -0,0 +1,11 @@
++# #5935 T0 — predictive-display evidence-role semantics
++
++H: A bounded human-facing forecast card can keep OBSERVED facts, PREDICTED state, typed effect status and UNKNOWN fields distinct, invalidate forecasts on fresh contradiction, and never promote prediction into action/effect authority. A deliberately overconfident/mislabeled forecast must fail validation.
++
++T: Six frozen event traces from #5935 T0 (stable target; target moved after capture; delayed save ACK; partial/unknown effect; abrupt regime change; predictor miss) crossed with four presentations: DELAYED_FACTS, BOUNDED_FORECAST, FACT_TAKEOVER_PACKET and BAD_OVERCONFIDENT negative control = 24 rows. Standard-library-only, no participant/model/GUI/input/network experiment. One formal invocation after public source/input/gate freeze; separate independent audit.
++
++D: METHOD_PASS_SCOPED iff all 18 legitimate presentations validate, all 6 BAD_OVERCONFIDENT controls reject, observed/effect provenance is exact, contradictions invalidate bounded forecasts, fresh-inspection option exists, action/effect authority remains false on every row, auditor errors=[], and >=8 effective evidence mutations reject. Missing denominator/source/process evidence is STOP/HOLD. This cannot support H_PASS_SCOPED human benefit.
++
++C: Correct semantic typing does not prove people notice or understand it. Fact-only takeover packets may dominate forecasts. A predictor can be wrong while the presentation contract remains valid; forecast quality and role safety are separate.
++
++U: No participant comprehension, accessibility, decision time, real display rendering, live application state, model/provider, action authority, effect truth beyond frozen trace oracle, or production usability is measured. T1 requires separate consent/governance and is not authorized here.
+-- 
+2.54.0
+
+
+From b84684f72be3be835592552fd59196d83bb0bff1 Mon Sep 17 00:00:00 2001
+From: Unjuno <unjuno.org@unjuno.org>
+Date: Tue, 6 Oct 2026 20:14:13 +0900
+Subject: [PATCH 2/4] research(#5935): freeze T0 source hashes, corpus and
+ gates before formal
+
+
+diff --git a/research/human_factors/predictive_display_t0_5935_v1/INPUT.json b/research/human_factors/predictive_display_t0_5935_v1/INPUT.json
+new file mode 100644
+index 00000000000..7d2632efabb
+--- /dev/null
++++ b/research/human_factors/predictive_display_t0_5935_v1/INPUT.json
+@@ -0,0 +1,8 @@
++[
++ {"case_id":"stable_target","observed_frame_id":"f1","observed_ns":1000000000,"decision_ns":1050000000,"contradiction_ns":null,"current_changed":false,"effect_status":"NONE","forecast_state":"target_stable","unknowns":[]},
++ {"case_id":"target_moved_after_capture","observed_frame_id":"f2","observed_ns":2000000000,"decision_ns":2220000000,"contradiction_ns":2150000000,"current_changed":true,"effect_status":"NONE","forecast_state":"target_right","unknowns":["CURRENT_TARGET"]},
++ {"case_id":"delayed_save_ack","observed_frame_id":"f3","observed_ns":3000000000,"decision_ns":3050000000,"contradiction_ns":null,"current_changed":false,"effect_status":"PENDING","forecast_state":"saved","unknowns":["SAVE_EFFECT"]},
++ {"case_id":"partial_unknown_effect","observed_frame_id":"f4","observed_ns":4000000000,"decision_ns":4060000000,"contradiction_ns":null,"current_changed":false,"effect_status":"PARTIAL","forecast_state":"complete","unknowns":["REMAINING_EFFECT"]},
++ {"case_id":"abrupt_regime_change","observed_frame_id":"f5","observed_ns":5000000000,"decision_ns":5120000000,"contradiction_ns":5080000000,"current_changed":true,"effect_status":"UNKNOWN","forecast_state":"continue","unknowns":["CURRENT_STATE","EFFECT"]},
++ {"case_id":"predictor_miss","observed_frame_id":"f6","observed_ns":6000000000,"decision_ns":6060000000,"contradiction_ns":null,"current_changed":false,"effect_status":"NONE","forecast_state":"wrong_target","unknowns":[]}
++]
+-- 
+2.54.0
+
+
+From ad2fa8a74515a3bc3c18b46ebb504a1b06388b50 Mon Sep 17 00:00:00 2001
+From: Unjuno <unjuno.org@unjuno.org>
+Date: Tue, 6 Oct 2026 20:14:16 +0900
+Subject: [PATCH 3/4] research(#5935): freeze T0 source hashes, corpus and
+ gates before formal
+
+
+diff --git a/research/human_factors/predictive_display_t0_5935_v1/ENVIRONMENT.json b/research/human_factors/predictive_display_t0_5935_v1/ENVIRONMENT.json
+new file mode 100644
+index 00000000000..b5be2f46355
+--- /dev/null
++++ b/research/human_factors/predictive_display_t0_5935_v1/ENVIRONMENT.json
+@@ -0,0 +1 @@
++{"python":"3.13.5","platform":"linux-x86_64","dependencies":"stdlib-only","participants":0,"model_provider":false,"gui_input":false,"experimental_network":false,"docker_or_orbstack":false}
+-- 
+2.54.0
+
+
+From b4e108c52497018f5722f2e9b96feed3d9b9ded7 Mon Sep 17 00:00:00 2001
+From: Unjuno <unjuno.org@unjuno.org>
+Date: Tue, 6 Oct 2026 20:14:19 +0900
+Subject: [PATCH 4/4] research(#5935): freeze T0 source hashes, corpus and
+ gates before formal
+
+
+diff --git a/research/human_factors/predictive_display_t0_5935_v1/FREEZE.json b/research/human_factors/predictive_display_t0_5935_v1/FREEZE.json
+new file mode 100644
+index 00000000000..19df321002b
+--- /dev/null
++++ b/research/human_factors/predictive_display_t0_5935_v1/FREEZE.json
+@@ -0,0 +1 @@
++{"allocation":"predictive-display-t0-5935-20261006-01","formal_rows":24,"reruns":0,"files":{"study.py":"ccba60af334ddfe80f3b462dac532f2d7af50e3bd3b74cd270297427ccc8abb4","audit.py":"838abec3875a9864764bef7f90ceb1d6676a2cf76cdccd05de3b9038d07f94d4","INPUT.json":"1b15569c39a9ca128a996be4be9128340e8f2010fb1aa29b4b30018d5f262a0e","test_contract.py":"0178de3697b516ca6dbdf8fd87007950000764cf57d777baa973859f01511fc7","PLAN.md":"a1b96e7ad5e67d159e298e977cd1bc8e261c083d6a82ceca3783d0a6a86c58f4","ENVIRONMENT.json":"496418fb318bf2e256c0890c3f519c0dc12f9cd46425e81533042a2f4e8387f9"}}
+-- 
+2.54.0
+

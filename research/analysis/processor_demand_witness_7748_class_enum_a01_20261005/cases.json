@@ -1,0 +1,56 @@
+{
+  "schema": "7748-class-enum-a01-cases-v1",
+  "cases": [
+    {
+      "id": "recognized_mixed_feasible",
+      "source_id": "class-fixture-01",
+      "jobs": [
+        {"id": "c0", "class": "control", "release": 0, "execution": 1, "deadline": 2, "preemptible": true},
+        {"id": "b0", "class": "best_effort", "release": 0, "execution": 1, "deadline": 3, "preemptible": true}
+      ]
+    },
+    {
+      "id": "best_effort_joint_overload",
+      "source_id": "class-fixture-02",
+      "jobs": [
+        {"id": "c1", "class": "control", "release": 0, "execution": 1, "deadline": 1, "preemptible": true},
+        {"id": "b1", "class": "best_effort", "release": 0, "execution": 1, "deadline": 1, "preemptible": true}
+      ]
+    },
+    {
+      "id": "unknown_safety_critical_overload",
+      "source_id": "class-fixture-03",
+      "jobs": [
+        {"id": "safety0", "class": "safety_critical", "release": 0, "execution": 2, "deadline": 1, "preemptible": true}
+      ]
+    },
+    {
+      "id": "near_miss_control_class",
+      "source_id": "class-fixture-04",
+      "jobs": [
+        {"id": "c2", "class": "contorl", "release": 0, "execution": 2, "deadline": 1, "preemptible": true}
+      ]
+    },
+    {
+      "id": "missing_class",
+      "source_id": "class-fixture-05",
+      "jobs": [
+        {"id": "c3", "release": 0, "execution": 1, "deadline": 1, "preemptible": true}
+      ]
+    },
+    {
+      "id": "null_class",
+      "source_id": "class-fixture-06",
+      "jobs": [
+        {"id": "c4", "class": null, "release": 0, "execution": 1, "deadline": 1, "preemptible": true}
+      ]
+    },
+    {
+      "id": "non_string_class",
+      "source_id": "class-fixture-07",
+      "jobs": [
+        {"id": "c5", "class": 1, "release": 0, "execution": 1, "deadline": 1, "preemptible": true}
+      ]
+    }
+  ]
+}

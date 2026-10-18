@@ -1,0 +1,30 @@
+{
+  "experiment_id": "UNJUNO-7778-SLACK-RECLAMATION-T0-20261005-01",
+  "issue": 7778,
+  "source_commit": "a38c61334ff5dbd7d17269467c26f74e9ad4a84f",
+  "freeze_sha256": "e77e3590a485b14e19ebda71801d7a4049b4e7d2643ec4236a2226540164756b",
+  "method_status": "PASS_METHOD_SCOPED",
+  "hypothesis_status": "H_PASS_SCOPED",
+  "candidate_runs": 1,
+  "auditor_runs": 1,
+  "raw_rows": 108,
+  "audit_errors": 0,
+  "refusal_controls_passed": 3,
+  "positive_slack_cases": 8,
+  "positive_slack_overhead_units": 0,
+  "positive_slack_static_payload_units": 192,
+  "positive_slack_guarded_payload_units": 222,
+  "positive_slack_payload_delta": 30,
+  "positive_slack_payload_relative_delta_percent": 15.625,
+  "overhead0_full_matrix_soft_payload_units": {
+    "PRIORITY_ONLY": 502,
+    "STATIC_RESERVATION": 432,
+    "DEMAND_GUARDED_SLACK_STEAL": 475
+  },
+  "control_feasible_cases": {"overhead0": 17, "overhead1": 12},
+  "guarded_deadline_miss_jobs_on_feasible_cases": 0,
+  "infeasible_model_factor_pairs": 7,
+  "container_run": false,
+  "execution_runtime": "host CPython 3.14.5, ARM64; not resource/timing evidence",
+  "scope": "finite synthetic scheduler-method only"
+}

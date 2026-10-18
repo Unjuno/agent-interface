@@ -1,0 +1,239 @@
+{
+  "allocation_id": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01",
+  "candidate_complete": true,
+  "candidate_invocations": 1,
+  "environment_sha256": "65c2d1dd07469b3596b13ea65b727e5fe7598cfe0dd29d8afcb1f094176ecd39",
+  "events": [
+    {
+      "admitted_ns": 93393898338635,
+      "event": "input_admission",
+      "input_ack_ns": 93393898441677,
+      "intent_token": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:01",
+      "key": "w",
+      "valid_until_ns": 93401898178051
+    },
+    {
+      "backend_owned_before_release": true,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "intent_token": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:01",
+      "intent_token_matches_after_batch": true,
+      "key": "w",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+      "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owned_keycodes_after_batch": [],
+      "owner_cleanup_intervened": false,
+      "owner_id": "b4c58be4c17a43d48175341ecbcd6406",
+      "owner_identity_matches_after_batch": true,
+      "owner_release_history_complete": true,
+      "owner_sample_after_finished_ns": 93393898889513,
+      "owner_sample_after_started_ns": 93393898810513,
+      "owner_sample_ordered_after_batch": true,
+      "owner_transition_verified": true,
+      "physical_verification_authoritative": false,
+      "release_batch_identifier": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:01",
+      "release_batch_position": 0,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_size": 1,
+      "release_batch_step": 0,
+      "release_call_bracket_ns": 168251,
+      "release_call_returned_ns": 93393898754096,
+      "release_call_started_ns": 93393898585845,
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 93401898178051
+    },
+    {
+      "admitted_ns": 93393899476850,
+      "event": "input_admission",
+      "input_ack_ns": 93393899519142,
+      "intent_token": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:02",
+      "key": "w",
+      "valid_until_ns": 93401899357057
+    },
+    {
+      "backend_owned_before_release": true,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "intent_token": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:02",
+      "intent_token_matches_after_batch": true,
+      "key": "w",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+      "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owned_keycodes_after_batch": [],
+      "owner_cleanup_intervened": false,
+      "owner_id": "b4c58be4c17a43d48175341ecbcd6406",
+      "owner_identity_matches_after_batch": true,
+      "owner_release_history_complete": true,
+      "owner_sample_after_finished_ns": 93393899851643,
+      "owner_sample_after_started_ns": 93393899785935,
+      "owner_sample_ordered_after_batch": true,
+      "owner_transition_verified": true,
+      "physical_verification_authoritative": false,
+      "release_batch_identifier": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:02",
+      "release_batch_position": 0,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_size": 1,
+      "release_batch_step": 1,
+      "release_call_bracket_ns": 129834,
+      "release_call_returned_ns": 93393899754101,
+      "release_call_started_ns": 93393899624267,
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 93401899357057
+    }
+  ],
+  "failure": null,
+  "freeze_sha256": "d841dd4f27ba730dd7196782805d6eff48a98ea885b2bde37df7ef27d5a35e3e",
+  "occurrences": [
+    {
+      "intent_token": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:01",
+      "occurrence": 1,
+      "post_down": {
+        "bitmap_hex": "0000000200000000000000000000000000000000000000000000000000000000",
+        "bitmap_sha256": "03de22d278e3be1e8fdb7da3ee6679e6d514dee8fc118fb27a91664cdebed8af",
+        "key_down": true,
+        "keycode": 25,
+        "keys_down": [
+          25
+        ],
+        "sample_finished_ns": 93393898567261,
+        "sample_started_ns": 93393898517053
+      },
+      "post_up": {
+        "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "bitmap_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+        "key_down": false,
+        "keycode": 25,
+        "keys_down": [],
+        "sample_finished_ns": 93393899336182,
+        "sample_started_ns": 93393899294015
+      },
+      "pre_down": {
+        "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "bitmap_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+        "key_down": false,
+        "keycode": 25,
+        "keys_down": [],
+        "sample_finished_ns": 93393898212092,
+        "sample_started_ns": 93393898182384
+      }
+    },
+    {
+      "intent_token": "MAP01-V39-OWNER-KEYMAP-WITNESS-C02-20261004-01:02",
+      "occurrence": 2,
+      "post_down": {
+        "bitmap_hex": "0000000200000000000000000000000000000000000000000000000000000000",
+        "bitmap_sha256": "03de22d278e3be1e8fdb7da3ee6679e6d514dee8fc118fb27a91664cdebed8af",
+        "key_down": true,
+        "keycode": 25,
+        "keys_down": [
+          25
+        ],
+        "sample_finished_ns": 93393899607059,
+        "sample_started_ns": 93393899568309
+      },
+      "post_up": {
+        "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "bitmap_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+        "key_down": false,
+        "keycode": 25,
+        "keys_down": [],
+        "sample_finished_ns": 93393900093687,
+        "sample_started_ns": 93393900064311
+      },
+      "pre_down": {
+        "bitmap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "bitmap_sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+        "key_down": false,
+        "keycode": 25,
+        "keys_down": [],
+        "sample_finished_ns": 93393899382516,
+        "sample_started_ns": 93393899360641
+      }
+    }
+  ],
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 93401898178051,
+      "verified": true,
+      "verified_ns": 93393899249348
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 93401899357057,
+      "verified": true,
+      "verified_ns": 93393900036978
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "close",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 93393900334063
+    }
+  ],
+  "owner_state_before_close": {
+    "active_lease_deadline_ns": null,
+    "active_lease_time_valid": false,
+    "cancel_requested": false,
+    "focus": 1,
+    "owned_buttons": [],
+    "owned_keycodes": [],
+    "owner_id": "b4c58be4c17a43d48175341ecbcd6406",
+    "physical_pointer_mask": 0,
+    "pointer": [
+      320,
+      240
+    ],
+    "revision": 6,
+    "sample_finished_ns": 93393900202104,
+    "sample_started_ns": 93393900137937
+  },
+  "schema": "map01-v39-owner-keymap-witness-raw-v1",
+  "scope": "actual current-main InputOwner v10 on private Xvfb; backend raw method exercised; base initializer stubbed",
+  "source_sha256": {
+    "sources/doom_typed_release_backend_v3.py": "61f66e3b6afc92b2b646d0fe9e38ffc841e405e8955fc98eed3c2b6f2b843adb",
+    "sources/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "sources/input_transition_owner_v3.py": "b4064c12465dcdf3ccb763d95093a25e2ee8892149da3a1718c6f47bb5a15078"
+  },
+  "xvfb_argv": [
+    "Xvfb",
+    "-displayfd",
+    "1",
+    "-screen",
+    "0",
+    "640x480x24",
+    "-nolisten",
+    "tcp",
+    "-ac"
+  ],
+  "xvfb_display_number": 0,
+  "xvfb_displayfd_ready": true,
+  "xvfb_exit_code_after_cleanup": 0,
+  "xvfb_exit_code_after_controlled_terminate": 0,
+  "xvfb_keycode": 25,
+  "xvfb_lock_removed": true,
+  "xvfb_pid": 637,
+  "xvfb_socket_removed": true,
+  "xvfb_stderr": "The XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\nThe XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\n",
+  "xvfb_stderr_fatal": false,
+  "xvfb_tcp_enabled": false
+}

@@ -1,0 +1,20 @@
+import datetime,hashlib,json,os,shutil,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent;phase=sys.argv[1];out=root/phase;out.mkdir(exist_ok=False)
+assert phase in ['first-red','green-normal','green-optimized']
+folder=root/('baseline' if phase=='first-red' else 'candidate')
+shutil.copyfile(root/'test_caller_cost_coverage.py',folder/'test_caller_cost_coverage.py')
+pin=lambda p:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+utc=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+freeze={p.name:pin(p) for p in folder.glob('*.py')}
+modules=['test_caller_cost_coverage']+([] if phase=='first-red' else ['test_adaptive_acquisition_caller_v3'])
+command=[sys.executable]+(['-O'] if phase=='green-optimized' else [])+['-m','unittest','-v',*modules]
+env=os.environ.copy();env['TRACE_OUTPUT']=str(out/'rows.jsonl');env['PYTHONDONTWRITEBYTECODE']='1'
+(out/'PLAN.json').write_text(json.dumps({'utc_before_spawn':utc(),'phase':phase,'supervisor_pid':os.getpid(),'command':command,'cwd':str(folder),'freeze':freeze,'guard_seconds':10,'resource':'inert synthetic adapters/virtual clock; no model/GUI/native peers','tests':9 if phase=='first-red' else21},indent=2)+'\n',encoding='utf-8')
+start=utc();p=subprocess.Popen(command,cwd=folder,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+timeout=False
+try:stdout,stderr=p.communicate(timeout=10)
+except subprocess.TimeoutExpired:timeout=True;p.kill();stdout,stderr=p.communicate(timeout=3)
+(out/'stdout.bin').write_bytes(stdout);(out/'stderr.bin').write_bytes(stderr)
+r={'pid':p.pid,'supervisor_pid':os.getpid(),'start_utc':start,'end_utc':utc(),'exit_code':p.returncode,'guard_expired':timeout,'stdout':pin(out/'stdout.bin'),'stderr':pin(out/'stderr.bin'),'rows':pin(out/'rows.jsonl') if (out/'rows.jsonl').exists() else None,'freeze_unchanged':all(pin(folder/k)==v for k,v in freeze.items())}
+(out/'RESULT.json').write_text(json.dumps(r,indent=2)+'\n',encoding='utf-8');print(json.dumps(r));print(stderr.decode('utf-8'))

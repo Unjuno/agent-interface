@@ -1,0 +1,29 @@
+{
+  "schema": "issue-8470-compositional-gain-t0-a01-result-v1",
+  "issue": 8470,
+  "parent_issue": 59,
+  "base_main": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "disposition": "PASS_METHOD_SCOPED",
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "retries": 0,
+  "rows_reconstructed": 8,
+  "row_mismatches": 0,
+  "mutations_rejected": 3,
+  "unsafe_certificates": 0,
+  "decision_gates_passed": 9,
+  "cases": {
+    "C01_uncoupled_positive": "CERTIFIED; peak=1; max_row_gain=2/5",
+    "C02_cross_coupled_unstable": "NO_COMPOSITION_CERTIFICATE; UNSTABLE_ENVELOPE; isolated_checks=4/4; crosses_bound_step=4; peak=390625/65536",
+    "C03_delayed_jitter_shared_actuator_stable": "CERTIFIED; delay_max=2; max_row_gain=123/200; peak=1/2",
+    "C04_unit_eigenvalue_boundary": "NO_COMPOSITION_CERTIFICATE; BOUNDED_NONCONVERGENT_ENVELOPE",
+    "C05_stable_conservative_reject": "NO_COMPOSITION_CERTIFICATE; STABLE_ENVELOPE; max_row_gain=1; peak=1",
+    "C06_release_lag_included": "NO_COMPOSITION_CERTIFICATE; max_row_gain=1; crosses_bound=true; peak=12442849/781250",
+    "C07_held_input_cap_refusal": "NO_COMPOSITION_CERTIFICATE; hold_contract_valid=false",
+    "C08_estimator_disturbance_feature_escape": "NO_COMPOSITION_CERTIFICATE; max_row_gain=4/5; peak=45172/15625"
+  },
+  "scope": "Finite synthetic exact-rational method test only; no application/runtime, task, model, GUI, safety, or product inference.",
+  "execution": "Python 3.12.10 standard library; CPU-only attached local execution environment; no Docker or WSLc invocation."
+}

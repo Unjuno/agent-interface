@@ -1,0 +1,70 @@
+{
+  "schema": "v39-readonly-audit-v2-run-log-v1",
+  "experiment_id": "V39-READONLY-AUDIT-59-A02-V2-20261005",
+  "source_commit": "719ef679c977a925db3a6d1fe15f9cd93cf2b42c",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "cwd": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005",
+  "runs": [
+    {
+      "name": "pycompile",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-B",
+        "-m",
+        "py_compile",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_readonly_audit_59_v2_20261005\\audit_readonly_v2.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_readonly_audit_59_v2_20261005\\probe_legacy_mutation.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_readonly_audit_59_v2_20261005\\test_readonly_audit.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_readonly_audit_59_v2_20261005\\run_frozen_checks.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_readonly_audit_59_v2_20261005\\verify_manifest.py"
+      ],
+      "exit_code": 0,
+      "stdout_file": "out/pycompile.stdout.txt",
+      "stderr_file": "out/pycompile.stderr.txt",
+      "exit_file": "out/pycompile.exit.txt"
+    },
+    {
+      "name": "tests",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "research.doom.v39_readonly_audit_59_v2_20261005.test_readonly_audit"
+      ],
+      "exit_code": 0,
+      "stdout_file": "out/tests.stdout.txt",
+      "stderr_file": "out/tests.stderr.txt",
+      "exit_file": "out/tests.exit.txt"
+    },
+    {
+      "name": "mutability_probe",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-B",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_readonly_audit_59_v2_20261005\\probe_legacy_mutation.py",
+        "--experiment-id",
+        "V39-READONLY-AUDIT-59-A02-V2-20261005",
+        "--out",
+        "MUTABILITY_RESULT_A02.json"
+      ],
+      "exit_code": 0,
+      "stdout_file": "out/mutability_probe.stdout.txt",
+      "stderr_file": "out/mutability_probe.stderr.txt",
+      "exit_file": "out/mutability_probe.exit.txt"
+    },
+    {
+      "name": "readonly_audit",
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-B",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_readonly_audit_59_v2_20261005\\audit_readonly_v2.py"
+      ],
+      "exit_code": 0,
+      "stdout_file": "out/readonly_audit.stdout.txt",
+      "stderr_file": "out/readonly_audit.stderr.txt",
+      "exit_file": "out/readonly_audit.exit.txt"
+    }
+  ]
+}

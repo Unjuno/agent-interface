@@ -1,0 +1,30 @@
+{
+  "schema": "map01-v39-owner-keymap-witness-fail-closed-recheck-v1",
+  "created_utc": "2026-10-04T04:18:02Z",
+  "question": "Does the supplemental auditor replace stale PASS output and fail closed on malformed top-level input without changing retained experiment evidence?",
+  "auditor_sha256": "83474c9b870e436cc298acfdf0df5c4ae361df22f464821ed5974aa9c894b9bc",
+  "retained_raw_sha256": "80deae01ca6167c91c66e70d725be290b7959750dc1c76e1f344d9f18014e453",
+  "retained_raw_reaudit": {
+    "exit_code": 0,
+    "gate": "PASS_V39_XVFB_KEYMAP_TEMPORAL_BINDING_SCOPED",
+    "failed_checks": [],
+    "candidate_rerun": false,
+    "method": "Run the repaired CLI in a temporary copy of the unchanged retained inputs and frozen source files."
+  },
+  "entrypoint_regressions": {
+    "valid_inputs_replace_stale_report_with_pass": "PASS",
+    "non_object_roots_replace_stale_pass_with_fail": {
+      "candidate.raw.json": "PASS",
+      "cases.json": "PASS",
+      "FREEZE.json": "PASS",
+      "candidate.started.json": "PASS",
+      "ENVIRONMENT.json": "PASS"
+    },
+    "invalid_json_replaces_stale_pass_with_fail": "PASS"
+  },
+  "test_run": {
+    "command": "python3 -m pytest -q research/doom/results/map01-v39-owner-keymap-witness-c02-20261004/test_audit_temporal_v2.py research/doom/results/map01-v39-owner-keymap-witness-c02-20261004/test_audit.py",
+    "result": "19 passed, 5 subtests passed"
+  },
+  "scope": "Offline audit/report-path robustness only; no candidate, X server, game, model, input, or allocation was run. This does not establish physical input, application effect, useful feedback, bounded recovery, or live threat control."
+}

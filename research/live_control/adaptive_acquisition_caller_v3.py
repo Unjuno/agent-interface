@@ -215,6 +215,22 @@ def _execution_decision(value):
     return copy.deepcopy(value)
 
 
+class ExecutionReceiptError(RuntimeError):
+    """An adapter returned execution evidence before auxiliary work failed.
+
+    Trusted execute adapters may use this after obtaining a validated receipt;
+    an ordinary exception with a similarly named attribute is not evidence.
+    """
+
+    def __init__(self, execution_progress, error):
+        self._execution_progress = _execution_decision(execution_progress)
+        super().__init__('execution receipt auxiliary failure: ' + _error_text(error))
+
+    @property
+    def execution_progress(self):
+        return copy.deepcopy(self._execution_progress)
+
+
 def _effect_receipt(value):
     """Keep small, retrievable evidence references while dropping raw evidence."""
     decision = _decision(value, {"succeeded", "failed", "unavailable"})
@@ -287,6 +303,10 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                 execute_invoked = True
             value = callback(detached_payload)
         except Exception as error:
+            if name == "execute" and isinstance(error, ExecutionReceiptError):
+                # Capture the trusted adapter's returned receipt before the
+                # failure clock/journal can themselves fail.
+                returned_execution = _execution_decision(error.execution_progress)
             ended = clock(); stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})

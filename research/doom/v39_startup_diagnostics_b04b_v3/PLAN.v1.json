@@ -1,0 +1,24 @@
+{
+  "unit": "b04b-diagnostic-ordinary-regression-v1",
+  "worker": "01a0ff33-b04b-7b51-8194-a60b82fed8a2",
+  "frozen_utc": "2026-10-03T14:15:30.134899+00:00",
+  "H": "Best-effort diagnostic hooks and record creation must preserve original startup exception identity on the selected literal handler; cleanup success remains separately reported.",
+  "T": "Ten new ordinary unit regressions, including combined BaseException hook faults, note attribute lookup, metaclass name lookup, invalid str result, non-OSError/KeyboardInterrupt record faults, event copy/JSON failure, and two controls; original seven-cell producer is not executed.",
+  "D": "Baseline RED expected; candidate all ten identity, operation, record and note assertions pass. Every actual outcome retained; ordinary repair may iterate.",
+  "C": "Explicit custom hooks and doubles witness boundary behavior, not natural frequency or physical retirement.",
+  "U": "No client construction, real process/reader, full main, native allocation replay, input/task/latency claims. Cleanup operations other than diagnostics retain their prior contract.",
+  "pins": {
+    "regression_v1.py": {
+      "bytes": 6488,
+      "sha256": "3adee7ec9e203dd47e01f985dcd42b33071dafa3b8a2492c70f1a82f50cd25d8"
+    },
+    "controller-v3.py.txt": {
+      "bytes": 68727,
+      "sha256": "7e7f1e2ce4a96d27bff64a3c0cd3ee84794b514d5c3211f6e6df8aab6399582c"
+    },
+    "candidate-controller-v2.py.txt": {
+      "bytes": 67768,
+      "sha256": "31782095e0d926ea1842d47c2ce584cbccb830c2ed8fdb96cefa4697a79c91a7"
+    }
+  }
+}

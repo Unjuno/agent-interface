@@ -1,0 +1,96 @@
+{
+  "allocation": "MACHINE-CRASH-7802-T0-20261005-01",
+  "crash_models": {
+    "PROCESS": "The operating-system page cache survives process termination. Recovery reads writes visible to a restarted process, even if no stable-storage barrier completed.",
+    "MACHINE": "Only states allowed by the declared synthetic persistence contract survive. Unsynced data or directory entries may be absent; unsynced data may be torn; separate stores may persist in either order."
+  },
+  "effect_oracle": "Effect state is supplied independently of the local receipt; UNKNOWN means no reliable external effect observation.",
+  "receipt_states": ["DONE", "NOT_STARTED", "ABSENT", "PENDING", "TORN"],
+  "scenarios": [
+    {
+      "id": "effect-then-buffered-done-before-sync",
+      "boundary": "Effect is independently durable; DONE bytes exist only in the process-visible page cache before file/directory sync.",
+      "process_images": [{"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}],
+      "machine_images": [
+        {"effect": "CONFIRMED", "receipt": "ABSENT", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "TORN", "receipt_bytes_valid": false}
+      ]
+    },
+    {
+      "id": "external-effect-before-receipt-write",
+      "boundary": "External effect completed; local receipt update has not crossed a stable-storage barrier.",
+      "process_images": [{"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}],
+      "machine_images": [
+        {"effect": "CONFIRMED", "receipt": "ABSENT", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "PENDING", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "TORN", "receipt_bytes_valid": false}
+      ]
+    },
+    {
+      "id": "receipt-first-before-external-effect",
+      "boundary": "A completion receipt is synced before an external effect is attempted; the crash occurs before that effect.",
+      "process_images": [{"effect": "NO_EFFECT_CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}],
+      "machine_images": [{"effect": "NO_EFFECT_CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}]
+    },
+    {
+      "id": "same-store-atomic-transaction",
+      "boundary": "The effect record and completion receipt share one atomic store transaction.",
+      "process_images": [
+        {"effect": "NO_EFFECT_CONFIRMED", "receipt": "ABSENT", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}
+      ],
+      "machine_images": [
+        {"effect": "NO_EFFECT_CONFIRMED", "receipt": "ABSENT", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}
+      ]
+    },
+    {
+      "id": "separate-effect-and-receipt-stores",
+      "boundary": "Effect and receipt are independent persistence domains; every Boolean survival pairing is represented.",
+      "process_images": [{"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}],
+      "machine_images": [
+        {"effect": "CONFIRMED", "receipt": "ABSENT", "receipt_bytes_valid": true},
+        {"effect": "NO_EFFECT_CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true},
+        {"effect": "NO_EFFECT_CONFIRMED", "receipt": "ABSENT", "receipt_bytes_valid": true}
+      ]
+    },
+    {
+      "id": "commit-durable-before-ack",
+      "boundary": "Both effect and receipt are durable but acknowledgement has not reached the caller.",
+      "process_images": [{"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}],
+      "machine_images": [{"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}]
+    },
+    {
+      "id": "file-synced-directory-entry-not-synced",
+      "boundary": "Receipt file contents were synced but the containing directory entry was not; rename/entry may survive or be lost.",
+      "process_images": [{"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}],
+      "machine_images": [
+        {"effect": "CONFIRMED", "receipt": "ABSENT", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}
+      ]
+    },
+    {
+      "id": "reordered-receipt-before-effect-persistence",
+      "boundary": "The separate receipt store reaches stable storage before the external effect store; ordering is not assumed.",
+      "process_images": [{"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}],
+      "machine_images": [
+        {"effect": "NO_EFFECT_CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true},
+        {"effect": "CONFIRMED", "receipt": "DONE", "receipt_bytes_valid": true}
+      ]
+    },
+    {
+      "id": "checksum-detects-torn-receipt",
+      "boundary": "A torn or checksum-invalid receipt is not trusted as terminal evidence.",
+      "process_images": [{"effect": "UNKNOWN", "receipt": "TORN", "receipt_bytes_valid": false}],
+      "machine_images": [{"effect": "UNKNOWN", "receipt": "TORN", "receipt_bytes_valid": false}]
+    },
+    {
+      "id": "external-effect-oracle-unavailable",
+      "boundary": "A valid local completion receipt exists, but the independent external-effect oracle is unavailable.",
+      "process_images": [{"effect": "UNKNOWN", "receipt": "DONE", "receipt_bytes_valid": true}],
+      "machine_images": [{"effect": "UNKNOWN", "receipt": "DONE", "receipt_bytes_valid": true}]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1/research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/candidate.py", line 121, in <module>
+    main()
+    ~~~~^^
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1/research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/candidate.py", line 116, in main
+    count = run(model, prompts, queries, Path(args.raw), args.base_url, args.model_digest)
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1/research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/candidate.py", line 100, in run
+    invoke(record,payload)
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1/research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/candidate.py", line 60, in invoke
+    current_digest, _ = load_model_digest(base_url)
+                        ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1/research/analysis/consolidation_schedule_7418_t1_gemma4_20261008/candidate.py", line 48, in load_model_digest
+    raise RuntimeError("expected exactly one frozen model tag")
+RuntimeError: expected exactly one frozen model tag

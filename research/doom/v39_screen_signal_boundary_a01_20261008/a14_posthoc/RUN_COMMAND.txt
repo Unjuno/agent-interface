@@ -1,0 +1,5 @@
+From this addendum directory, using the raw event stream retained in PR #8403:
+  python -B analyze.py <A14-package>/raw/runtime/events.jsonl
+  python -B audit.py
+
+The analyst verifies byte count and SHA-256 before extracting the reduced trace. The exact original local source path is intentionally not embedded in the analysis script. The retained candidate was executed with the A14 event stream from the local package; the event-stream hash and size are pinned in FREEZE.json.

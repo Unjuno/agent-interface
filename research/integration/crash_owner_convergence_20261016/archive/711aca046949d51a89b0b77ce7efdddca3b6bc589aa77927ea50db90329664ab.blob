@@ -1,0 +1,21 @@
+{
+  "candidate_invocations": 1,
+  "classification": "Candidate setup/configuration error before input admission; hypothesis untested",
+  "finding": "Durable JSONL observation succeeded and captured input_owner_process_ready. The candidate then attempted key \"w\", which input_owner_process_v1 rejects because the RPC allowlist is {Left,Right,Up,Down,a,d,e,space,Shift_L}. The child emitted no arm record and no held-key admission; supervisor timed out and cleaned up. This is not a recovery failure or pass. A05 is not retried. A06 will use allowlisted key \"a\" under a new frozen allocation.",
+  "raw_sha256": "9ed1a1f819e7e3831ed2bacb0988f030487b611d78359f8b765ed058f6d8a716",
+  "receipt_sha256": null,
+  "retries": 0,
+  "schema": "v39-v15-process-owner-xvfb-a05-audit-v1",
+  "source_sha256": {
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/FREEZE.json": "eae9bc2e49044b95b82073586852a63411c40dc4329a988ea76b27b0ebec81cf",
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/PLAN.md": "e33d35e97cf499d22c2f1d345020393f5313f5823aa9d70c7b88af8ef41eb39a",
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/candidate.py": "9b8f7920731f525bf29ef28a9a5367e68128d4c92cd7296a091584934a8a9cfe",
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/results/A01/RAW.json": "9ed1a1f819e7e3831ed2bacb0988f030487b611d78359f8b765ed058f6d8a716",
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json": "13391d7605948e451911fa7e41edf252b272872a48468c62f5c6cdc4997fe1ea",
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/results/A01/input-owner-process/input-owner-recovery-v1.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/results/A01/session-events.jsonl": "645b332a6a168d487f20925c70cd0bb97c9aae544d240621f18af0d836e6f8ea",
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/results/A01/session.stderr.log": "540c9ac064bf6f53fb7b6298359e2378e614e4fb811a19ed3309cd19d2ede44b",
+    "research/doom/v39_v15_process_owner_xvfb_a05_20261012/run_candidate.sh": "9af2b50335bc2418f2cd2a455339b811d96222e5eec20e2b341cf8cfe95a8380"
+  },
+  "status": "STOP_CANDIDATE_SETUP_KEY_NOT_ALLOWLISTED"
+}

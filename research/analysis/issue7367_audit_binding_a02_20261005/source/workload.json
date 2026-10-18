@@ -1,0 +1,45 @@
+{
+  "schema": "issue7367-a01-workload-v1",
+  "frontier": "frontier",
+  "nodes": {
+    "frontier": {"uses": []},
+    "current": {"uses": [["obs-v2", "health"], ["task-intent", "target"]]},
+    "compare_history": {"uses": [["obs-v1", "health"], ["obs-v2", "health"]]},
+    "recovery": {"uses": [["recovery-state", "checkpoint"], ["recovery-state", "last_action"]]},
+    "retry": {"uses": [["recovery-state", "checkpoint"]]},
+    "effect": {"uses": [["external-effect", "request_id"], ["external-effect", "status"]]},
+    "done": {"uses": []}
+  },
+  "edges": {
+    "frontier": ["current"],
+    "current": ["done", "compare_history", "recovery", "effect"],
+    "compare_history": ["done"],
+    "recovery": ["retry", "effect"],
+    "retry": ["recovery", "effect"],
+    "effect": ["done"],
+    "done": []
+  },
+  "continuations": [
+    {"id": "current-only", "nodes": ["current"]},
+    {"id": "historical-compare", "nodes": ["current", "compare_history"]},
+    {"id": "delayed-recovery", "nodes": ["current", "recovery", "retry", "recovery", "effect"]},
+    {"id": "unresolved-effect", "nodes": ["current", "effect"]}
+  ],
+  "scope": {"graph_complete": true, "dynamic_consumers_possible": false},
+  "records": [
+    {"id": "obs-v1", "version": 1, "created_seq": 1, "fields": {"health": 71, "tick": 10, "frame_digest": "a1"}},
+    {"id": "obs-v2", "version": 2, "created_seq": 8, "fields": {"health": 68, "tick": 18, "frame_digest": "b2"}},
+    {"id": "recovery-state", "version": 1, "created_seq": 5, "fields": {"checkpoint": "door-3", "last_action": "use", "attempt": 1}},
+    {"id": "external-effect", "version": 1, "created_seq": 7, "fields": {"request_id": "submit-91", "status": "unresolved", "required_receipt": "release-91"}},
+    {"id": "task-intent", "version": 1, "created_seq": 6, "fields": {"target": "finish-level", "source": "planner-22"}},
+    {"id": "obsolete-observation", "version": 4, "created_seq": 2, "fields": {"health": 90, "tick": 4, "frame_digest": "old"}},
+    {"id": "completed-note", "version": 1, "created_seq": 3, "fields": {"text": "completed inventory scan", "terminal_receipt": "scan-4"}},
+    {"id": "stale-summary", "version": 1, "created_seq": 4, "fields": {"text": "door likely open", "source": "unverified"}},
+    {"id": "release-history", "version": 1, "created_seq": 9, "fields": {"text": "no release receipt yet", "for_request": "submit-91"}}
+  ],
+  "task_conditioned_ids": ["obs-v2", "task-intent", "external-effect"],
+  "recency_budget_count": 4,
+  "mutation_targets": {
+    "dead_candidate_ids": ["obsolete-observation", "completed-note", "stale-summary", "release-history"]
+  }
+}

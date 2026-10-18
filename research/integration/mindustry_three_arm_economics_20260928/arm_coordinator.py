@@ -21,6 +21,7 @@ class ArmCoordinator:
         self.task_records: list[dict] = []
         self.pending_resolution = False
         self.attempt_started = False
+        self.target_dispatch_started = False
 
     def resolve(self, observation: dict, width: int, height: int,
                 palette_slots: list[dict], model_call) -> dict:
@@ -70,5 +71,6 @@ class ArmCoordinator:
         result = self.lifecycle.advance()
         self.pending_resolution = False
         self.attempt_started = False
+        self.target_dispatch_started = False
         self.resolved_bundle = None
         return result

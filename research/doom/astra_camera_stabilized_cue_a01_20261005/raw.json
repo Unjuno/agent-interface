@@ -1,0 +1,163 @@
+{
+  "format": "astra_camera_stabilized_cue_a01_v1",
+  "video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "reference_a01_raw_sha256": "b6fee496a45ec9d88a6d50b060cbfef2c781fa8d44020d80542b9ba8f77a9e27",
+  "ffmpeg_command": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-ss",
+    "21.5",
+    "-i",
+    "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4",
+    "-t",
+    "2.0",
+    "-vf",
+    "fps=5,scale=320:280",
+    "-f",
+    "rawvideo",
+    "-pix_fmt",
+    "rgb24",
+    "pipe:1"
+  ],
+  "frame_count": 10,
+  "frame_size_bytes": 2688000,
+  "frames_rgb_sha256": "e0ce64678e5a246186c442a1bf88a3d34bb6d52d721438dde9a3e7b8e941a8b1",
+  "parameters": {
+    "fps": 5,
+    "width": 320,
+    "height": 280,
+    "max_shift_px": 16,
+    "warm_pixel_threshold": 40
+  },
+  "rows": [
+    {
+      "frame": 0,
+      "video_time_s": 21.5,
+      "estimated_shift_current_vs_previous_px": null,
+      "registration_median_luma_error": null,
+      "new_warm_pixels_unregistered": 4,
+      "new_warm_pixels_registered": 4,
+      "trigger_unregistered": false,
+      "trigger_registered": false
+    },
+    {
+      "frame": 1,
+      "video_time_s": 21.7,
+      "estimated_shift_current_vs_previous_px": [
+        0,
+        0
+      ],
+      "registration_median_luma_error": 16.0,
+      "new_warm_pixels_unregistered": 15,
+      "new_warm_pixels_registered": 15,
+      "trigger_unregistered": false,
+      "trigger_registered": false
+    },
+    {
+      "frame": 2,
+      "video_time_s": 21.9,
+      "estimated_shift_current_vs_previous_px": [
+        0,
+        0
+      ],
+      "registration_median_luma_error": 27.0,
+      "new_warm_pixels_unregistered": 96,
+      "new_warm_pixels_registered": 96,
+      "trigger_unregistered": true,
+      "trigger_registered": true
+    },
+    {
+      "frame": 3,
+      "video_time_s": 22.1,
+      "estimated_shift_current_vs_previous_px": [
+        0,
+        -4
+      ],
+      "registration_median_luma_error": 19.0,
+      "new_warm_pixels_unregistered": 0,
+      "new_warm_pixels_registered": 0,
+      "trigger_unregistered": false,
+      "trigger_registered": false
+    },
+    {
+      "frame": 4,
+      "video_time_s": 22.3,
+      "estimated_shift_current_vs_previous_px": [
+        0,
+        14
+      ],
+      "registration_median_luma_error": 20.0,
+      "new_warm_pixels_unregistered": 0,
+      "new_warm_pixels_registered": 0,
+      "trigger_unregistered": false,
+      "trigger_registered": false
+    },
+    {
+      "frame": 5,
+      "video_time_s": 22.5,
+      "estimated_shift_current_vs_previous_px": [
+        0,
+        15
+      ],
+      "registration_median_luma_error": 10.0,
+      "new_warm_pixels_unregistered": 0,
+      "new_warm_pixels_registered": 0,
+      "trigger_unregistered": false,
+      "trigger_registered": false
+    },
+    {
+      "frame": 6,
+      "video_time_s": 22.7,
+      "estimated_shift_current_vs_previous_px": [
+        12,
+        0
+      ],
+      "registration_median_luma_error": 29.0,
+      "new_warm_pixels_unregistered": 186,
+      "new_warm_pixels_registered": 186,
+      "trigger_unregistered": true,
+      "trigger_registered": true
+    },
+    {
+      "frame": 7,
+      "video_time_s": 22.9,
+      "estimated_shift_current_vs_previous_px": [
+        0,
+        0
+      ],
+      "registration_median_luma_error": 9.0,
+      "new_warm_pixels_unregistered": 213,
+      "new_warm_pixels_registered": 213,
+      "trigger_unregistered": true,
+      "trigger_registered": true
+    },
+    {
+      "frame": 8,
+      "video_time_s": 23.1,
+      "estimated_shift_current_vs_previous_px": [
+        16,
+        0
+      ],
+      "registration_median_luma_error": 3.0,
+      "new_warm_pixels_unregistered": 176,
+      "new_warm_pixels_registered": 145,
+      "trigger_unregistered": true,
+      "trigger_registered": true
+    },
+    {
+      "frame": 9,
+      "video_time_s": 23.3,
+      "estimated_shift_current_vs_previous_px": [
+        0,
+        0
+      ],
+      "registration_median_luma_error": 1.0,
+      "new_warm_pixels_unregistered": 57,
+      "new_warm_pixels_registered": 57,
+      "trigger_unregistered": true,
+      "trigger_registered": true
+    }
+  ]
+}

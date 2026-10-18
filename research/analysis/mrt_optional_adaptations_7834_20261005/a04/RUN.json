@@ -1,0 +1,135 @@
+{
+  "allocation": "MRT-7834-A04-20261005",
+  "freeze_comment": 5986448843,
+  "qualification_comment": 5986498125,
+  "outcome_comment": 5986505971,
+  "base_main_at_freeze": "6f34c5c0c5bc3116d8e7c25f29aa1b92cc4a01b",
+  "sources": {
+    "candidate": {
+      "git_blob": "770b9f7c38a61c5bed08d9626ecbec4dfe466f9b",
+      "sha256": "197795fe6ab89946061bede30b19d59ca32b3f0833c3b17624825bc6035d6cca"
+    },
+    "auditor": {
+      "git_blob": "ad257ce38bb0453cd976c88996a11dbb36224f47",
+      "sha256": "69f07c3b0848034188ef8256836e7b0393b8aceb76c1d70b6ead70a814dab694"
+    },
+    "fixture": {
+      "git_blob": "dd30196595561d9f0d1fe59e05086f09c40bded7",
+      "sha256": "a65f3217a71d8c2edd9dfb28107b6801309fc0bc2c21ae44d6d949a11939dd04"
+    },
+    "runner": {
+      "git_blob": "062eab2ba87fcb0ec8d124886e09ce641acd3502",
+      "sha256": "5594bdfa0005ab69760fc0d469165000f04e9ebb05f06d3777ce482219d9bf35"
+    }
+  },
+  "runtime": {
+    "runtime": "WSLc 3.0.1.0",
+    "wsl": "3.0.1.0",
+    "kernel": "6.18.40.1",
+    "platform": "linux/amd64",
+    "image": "node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402",
+    "image_id": "sha256:7c3b093add7c43400ee83b815ab2cda98794a10045bcf76ce9bb2f89b97cbc5c",
+    "node": "v22.23.3",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_cap_requested": false,
+    "gpu_used": false,
+    "source_read_only": true,
+    "separate_outputs": true
+  },
+  "preflight": {
+    "exit_code": 0,
+    "source_chars": 14797,
+    "readonly_write_error": "EROFS",
+    "platform": "linux/x64",
+    "temporary_output_removed": true
+  },
+  "candidate": {
+    "command": "wslc.exe run --rm --pull never --network none --cpus 1 --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a04-20261005\\src:/src:ro\" --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a04-20261005\\candidate-out:/out\" --workdir /src node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 node /src/runner.js candidate",
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "stdout": "{\"mode\":\"candidate\",\"allocation\":\"MRT-7834-A04-20261005\",\"rows\":2600,\"eligible_weight\":2.9999999999999853,\"observation_rate\":0.800000000000001}\n",
+    "raw": {
+      "git_blob": "6c91fbb5cfedb8298ee3c9b2232dd6c1fbd28817",
+      "bytes": 1061911,
+      "sha256": "b7195bf614f0851798abc3d59551fb7b2e8303b69436ac74d2ef3ded24608d9a"
+    }
+  },
+  "auditor": {
+    "command": "wslc.exe run --rm --pull never --network none --cpus 1 --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a04-20261005\\src:/src:ro\" --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a04-20261005\\candidate-out:/input:ro\" --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\_tmp\\mrt7834-a04-20261005\\audit-out:/out\" --workdir /src node@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 node /src/runner.js audit",
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "stdout": "{\"mode\":\"audit\",\"allocation\":\"MRT-7834-A04-20261005\",\"base_audit\":true,\"expected_rows\":2600,\"observed_rows\":2600,\"mutation_count\":17,\"rejected_mutations\":17}\n",
+    "raw": {
+      "git_blob": "38d097562a8ca2b8c82f66874871f512284378fb",
+      "bytes": 1622,
+      "sha256": "bbe713bcadec446af7c21349d539eb9bcedae64c4b86dd0a2178c473c5c3582e"
+    }
+  },
+  "result": {
+    "status": "PASS_METHOD_SCOPED_A04_QUALIFIED",
+    "rows": 2600,
+    "eligible_weight": 2.9999999999999853,
+    "oracle_weight": 3,
+    "observation_rate": 0.800000000000001,
+    "oracle_observation_rate": 0.7999999999999972,
+    "arm1_vs0": 2.583333333333349,
+    "oracle_arm1_vs0": 2.583333333333336,
+    "arm2_vs0": 0.16666666666666777,
+    "oracle_arm2_vs0": 0.16666666666666674,
+    "execution_fractions": [
+      0.9081632653061221,
+      0.6388888888888892,
+      0.6428571428571429
+    ],
+    "distal_by_type": {
+      "0": 8.44375,
+      "1": 9.443750000000001
+    },
+    "distal_oracle_by_type": {
+      "0": 8.44375,
+      "1": 9.44375
+    },
+    "controls": 6,
+    "all_controls_nonidentifiable": true,
+    "mutations": 17,
+    "rejected": 17,
+    "task_success_claim": false,
+    "freeze_count_discrepancy": "freeze prose five; fixture six; all six tested and passed"
+  },
+  "construction": {
+    "C01": {
+      "candidate": 1,
+      "auditor": 1,
+      "base_audit": false,
+      "rejected": 16,
+      "total": 16,
+      "auditor_blob": "c5bda42b98dc0ae3005673d736c04f7f7ce06c71",
+      "fixture_blob": "e4bc2f753e10582706401c180523dda3e6b80b1c",
+      "summary_blob": "875440964b889315e149939f56d59587d6e8eb7b"
+    },
+    "C02": {
+      "candidate": 1,
+      "auditor": 1,
+      "base_audit": true,
+      "rejected": 13,
+      "total": 17,
+      "auditor_blob": "4f1433d4ea6c8c43c5133208f0c1771af2efd89b",
+      "summary_blob": "a5c65cb4986a6e484d8d9bc0b1ceecef8cffcb1c"
+    },
+    "C03": {
+      "candidate": 1,
+      "auditor": 1,
+      "base_audit": true,
+      "rejected": 17,
+      "total": 17,
+      "summary_blob": "3b4ac9e2bf010df33ebfa06fe797b67ff083eb0c"
+    }
+  },
+  "host_c_free_bytes": 29372125184,
+  "active_containers_after": 0,
+  "scope": "one finite authored method case only"
+}

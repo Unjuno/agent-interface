@@ -1,0 +1,14 @@
+From research/doom:
+  python -B -m unittest -v test_owner_keyup_server_sample_v5
+  python -B -m unittest -v test_session_map01_v15
+  python -B -m unittest -v test_release_backend_v3_actual_composition
+  python -B -m unittest -v test_release_backend_v3_composition
+Repeat the four commands with python -O -B.
+
+From research/live_control:
+  python -B -m unittest -v test_input_owner_v12_explicit_up_cancel
+  python -B -m unittest -v test_input_transition_owner_v4
+Repeat the two commands with python -O -B.
+
+Trace generation calls run_fake_batch() from test_owner_keyup_server_sample_v5.py, choosing release backend V1 or V2 and, for controls, sticky_key=38 or fail_query=[True]. Full stdout for all 12 focused suite invocations and resulting JSON traces are retained alongside this file.
+

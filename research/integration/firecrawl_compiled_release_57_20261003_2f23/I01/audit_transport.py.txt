@@ -1,0 +1,8 @@
+import pathlib,json,hashlib
+p=pathlib.Path(__file__).parent
+r=json.loads((p/'submitted-request-public.json').read_text(encoding='utf-8'))['code'];f=json.loads((p/'freeze.json').read_text(encoding='utf-8'))
+normalized=r.replace('\r\n','\n').rstrip()+'\n'
+assert hashlib.sha256(normalized.encode()).hexdigest()==f['probe_sha256']
+assert normalized==(p/'probe.py.txt').read_text(encoding='utf-8')
+out={'actual_submitted_code_sha256':hashlib.sha256(r.encode()).hexdigest(),'frozen_generated_code_sha256':f['probe_sha256'],'actual_CRLF_count':r.count('\r\n'),'normalization':'CRLF to LF plus restore one terminal newline','normalized_bytes_exact_frozen_generated_code':True,'qualification':'Original checked.json describes only trimEnd; this forward audit corrects omission of Windows write_text CRLF conversion. Code tokens/interface/embedded original20336 source bytes unchanged, not raw payload byte identity.'}
+(p/'transport-audit.json').write_text(json.dumps(out,indent=2),encoding='utf-8');print(json.dumps(out))

@@ -1,0 +1,26 @@
+{
+  "schema": "v1",
+  "issue": 59,
+  "candidate_pr": 7910,
+  "candidate_head": "416846ef59b08c862cca84c128d1853e16a6143a",
+  "candidate_base": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "current_main": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "source_identity": {
+    "current_main_path": "research/live_control/input_owner_v12.py",
+    "current_main_sha256": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+    "candidate_path": "research/live_control/input_owner_v12.py",
+    "candidate_sha256": "bf3570508d32394ed91b8e747e4ee620fab8668cb7bd4d5b986458ee18295603",
+    "candidate_test_origin": "research/live_control/test_input_owner_v12_cleanup_after_explicit_up.py",
+    "original_test_sha256": "4522f6d3d3dc5c71a9db01137781e6e3f825809043c037f9255a859892687e9a",
+    "transformed_test_sha256": "cc957130b8ce74f8790cc5be7fcbb4e990eb22a998cfd3cdb0e6515b4635e25e",
+    "transformation": "in-memory adaptation: A/B map to keycodes 65/74; admit B then A; drop first two explicit KeyRelease deliveries; record release attempts; assert cleanup sequence"
+  },
+  "execution": {
+    "host_engine": "OrbStack Docker 29.4.0",
+    "image": "python:3.14-slim",
+    "image_digest": "sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+    "interpreter": "Python 3.14.8",
+    "actual_execution": "Fetched source and transformed test executed from memory in isolated Docker container; test and source SHA-256 values above identify exact inputs.",
+    "local_checkout": "not required; attempted lazy checkout/archive stalled; current-main source read through GitHub MCP and compared with PR base."
+  }
+}

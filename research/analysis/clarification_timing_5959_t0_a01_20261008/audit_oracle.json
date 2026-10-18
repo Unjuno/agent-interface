@@ -1,0 +1,20 @@
+{
+  "schema": "clarification-timing-audit-oracle-v1",
+  "cases": [
+    {"request_id":"C01-low-window-tradeoff","version_changes":[],"reply":{"delay_ticks":2,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A","B"],"synthetic_cost_by_tick":{"0":4,"3":2,"6":1,"8":5}},
+    {"request_id":"C02-unavailable-signal","version_changes":[],"reply":{"delay_ticks":1,"kind":"AUTHORIZED_CHOICE","choice":"B"},"authorized_choices":["A","B"],"synthetic_cost_by_tick":{"1":3,"4":1,"7":4}},
+    {"request_id":"C03-unknown-signal","version_changes":[],"reply":{"delay_ticks":1,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A","B"],"synthetic_cost_by_tick":{"0":4,"7":3}},
+    {"request_id":"C04-zero-slack","version_changes":[],"reply":{"delay_ticks":0,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"4":2}},
+    {"request_id":"C05-nondeferrable-urgent","version_changes":[],"reply":{"delay_ticks":1,"kind":"REFUSAL"},"authorized_choices":["A"],"synthetic_cost_by_tick":{}},
+    {"request_id":"C06-version-changes-before-delivery","version_changes":[{"tick":4,"version":"v2"}],"reply":{"delay_ticks":1,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"0":4,"6":1}},
+    {"request_id":"C07-version-changes-at-delivery","version_changes":[{"tick":6,"version":"v2"}],"reply":{"delay_ticks":1,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"0":4,"6":1}},
+    {"request_id":"C08-no-response","version_changes":[],"reply":null,"authorized_choices":["A"],"synthetic_cost_by_tick":{"0":3,"8":4}},
+    {"request_id":"C09-refusal","version_changes":[],"reply":{"delay_ticks":2,"kind":"REFUSAL"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"1":2,"8":4}},
+    {"request_id":"C10-response-exceeds-bound","version_changes":[],"reply":{"delay_ticks":3,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"0":3,"8":4}},
+    {"request_id":"C11-answer-at-inclusive-deadline","version_changes":[],"reply":{"delay_ticks":2,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"0":3,"6":2}},
+    {"request_id":"C12-version-changes-after-delivery","version_changes":[{"tick":1,"version":"v2"}],"reply":{"delay_ticks":2,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"0":3,"2":1,"8":4}},
+    {"request_id":"C13-hard-event-bypasses-pending-question","version_changes":[{"tick":3,"version":"v2"}],"reply":{"delay_ticks":1,"kind":"AUTHORIZED_CHOICE","choice":"A"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"0":3,"6":1}},
+    {"request_id":"C14-no-window-fallback","version_changes":[],"reply":{"delay_ticks":1,"kind":"AUTHORIZED_CHOICE","choice":"B"},"authorized_choices":["A","B"],"synthetic_cost_by_tick":{"0":3,"8":4}},
+    {"request_id":"C15-unauthorized-choice","version_changes":[],"reply":{"delay_ticks":1,"kind":"AUTHORIZED_CHOICE","choice":"Z"},"authorized_choices":["A"],"synthetic_cost_by_tick":{"0":3,"7":4}}
+  ]
+}

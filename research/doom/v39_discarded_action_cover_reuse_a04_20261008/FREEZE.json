@@ -1,0 +1,17 @@
+{
+  "schema": "v39-discarded-action-cover-reuse-freeze-v1",
+  "issue": 59,
+  "execution_id": "v39-discarded-action-cover-reuse-a04-20261008",
+  "baseline_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "7221ec319cc11f660cbba39900eb12c4c409845b",
+  "source": "research/doom/map01_overlap_controller_v39.py",
+  "baseline": {
+    "blob": "fec805219fec1155beb0e2608024663bc8c7e127",
+    "sha256": "e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754"
+  },
+  "candidate": {
+    "blob": "a2463c34849e89d8ca50ecc39eda78cd21fddf49",
+    "sha256": "60d027b1955720431d813648b0fb1cf49a90aff25c4f3025023fc433c52265b2"
+  },
+  "decision_gate": "When a prior active action completed some work but its remaining action was discarded after stale rejection, reusable_cover must return no stale cover; fully completed and legacy valid decisions retain established reuse behavior."
+}

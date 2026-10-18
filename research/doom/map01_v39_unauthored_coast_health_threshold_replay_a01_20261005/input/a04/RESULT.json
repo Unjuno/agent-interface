@@ -1,0 +1,42 @@
+{
+  "schema": "issue59-v39-threat-exposure-result-v1",
+  "id": "map01-v39-threat-currentmain-a04",
+  "status": "EXECUTED_LIMITED_RESULT_NOT_TASK_SUCCESS",
+  "main_sha": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "seed": 991034,
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "model_turns": 6,
+  "model_wall_seconds": 67.772028792,
+  "total_model_tokens": 73458,
+  "threat_exposure": "EXPOSED: enemy visually present in frames 205 and 216 while cover-4 was active; health/ammo were independently typed at 30/43 then 30/42.",
+  "primary_observation": "The V39 guard interrupted decision 4 before model completion and canceled cover-4. The invalidation was health:source_expired (source age 1605.6 ms), not a semantic health change; health was 30 at both source and current sample. A preceding ammo loss 43 to 42 was treated as SOFT_CHANGED and kept the policy.",
+  "release_recovery": {
+    "monitor_to_verified_empty_ms": 7.655,
+    "monitor_to_cancel_terminal_ms": 41.135,
+    "explicit_keyups": 6,
+    "keyups_server_sync_completed": 6,
+    "physical_key_state_proven": false,
+    "owner_empty_releases": "14/14"
+  },
+  "feedback": "Model language/action choice tracked the independently typed health fall (97 to 79; decision 1 called out the 18-point loss and switched toward retreat/fire). This is descriptive alignment, not a causal counterfactual. The independent scorer emitted zero positive task-progress events.",
+  "post_cancel_recovery": "The next fresh model answer took 12.70 s. During that wait typed health fell from 30 to 4; the answer was not admitted as current. Release was bounded, but useful task recovery was not demonstrated.",
+  "terminal": {
+    "health_min_observed": 4,
+    "ammo_start_end": [
+      45,
+      42
+    ],
+    "kill_count": 0,
+    "death_count": 0,
+    "player_dead": false,
+    "map_exit": false,
+    "episode_finished": false
+  },
+  "limits": [
+    "No kill, MAP01 exit, or verified task progress.",
+    "Per-key XSync receipt does not prove physical key state or application consumption.",
+    "One exposure only; no causal safety or survival claim.",
+    "V15 startup remained intermittent in earlier no-model constructions; native DoomGame.init was observed hanging, root trigger unresolved."
+  ]
+}

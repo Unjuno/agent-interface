@@ -1,0 +1,304 @@
+{
+  "rows": [
+    {
+      "case": "occluded-with-rearrangement",
+      "outcome": "PLAN_FOUND",
+      "policy": "NO_FEEDBACK",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "retry-direct",
+          "reason": "visible:panel-A",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "direct",
+          "reason": "visible:panel-A",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "rearrange-then-open",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "rearrange-then-open",
+          "step": 1
+        },
+        {
+          "event": "selected",
+          "plan": "rearrange-then-open"
+        }
+      ],
+      "selected": "rearrange-then-open"
+    },
+    {
+      "case": "occluded-with-rearrangement",
+      "outcome": "NO_PLAN",
+      "policy": "GLOBAL_BLACKLIST",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "retry-direct",
+          "reason": "visible:panel-A",
+          "step": 0
+        },
+        {
+          "event": "pruned",
+          "plan": "direct",
+          "reason": "global_blacklist"
+        },
+        {
+          "event": "pruned",
+          "plan": "rearrange-then-open",
+          "reason": "global_blacklist"
+        }
+      ],
+      "selected": null
+    },
+    {
+      "case": "occluded-with-rearrangement",
+      "outcome": "PLAN_FOUND",
+      "policy": "SCOPED_NOGOOD",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "retry-direct",
+          "reason": "visible:panel-A",
+          "step": 0
+        },
+        {
+          "event": "pruned",
+          "plan": "direct",
+          "reason": "scoped_nogood",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "rearrange-then-open",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "rearrange-then-open",
+          "step": 1
+        },
+        {
+          "event": "selected",
+          "plan": "rearrange-then-open"
+        }
+      ],
+      "selected": "rearrange-then-open"
+    },
+    {
+      "case": "focus-unavailable-with-recovery",
+      "outcome": "PLAN_FOUND",
+      "policy": "NO_FEEDBACK",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "type-now",
+          "reason": "focus:editor",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "refocus-then-type",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "refocus-then-type",
+          "step": 1
+        },
+        {
+          "event": "selected",
+          "plan": "refocus-then-type"
+        }
+      ],
+      "selected": "refocus-then-type"
+    },
+    {
+      "case": "focus-unavailable-with-recovery",
+      "outcome": "NO_PLAN",
+      "policy": "GLOBAL_BLACKLIST",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "type-now",
+          "reason": "focus:editor",
+          "step": 0
+        },
+        {
+          "event": "pruned",
+          "plan": "refocus-then-type",
+          "reason": "global_blacklist"
+        }
+      ],
+      "selected": null
+    },
+    {
+      "case": "focus-unavailable-with-recovery",
+      "outcome": "PLAN_FOUND",
+      "policy": "SCOPED_NOGOOD",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "type-now",
+          "reason": "focus:editor",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "refocus-then-type",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "refocus-then-type",
+          "step": 1
+        },
+        {
+          "event": "selected",
+          "plan": "refocus-then-type"
+        }
+      ],
+      "selected": "refocus-then-type"
+    },
+    {
+      "case": "truly-infeasible",
+      "outcome": "NO_PLAN",
+      "policy": "NO_FEEDBACK",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "unavailable-target",
+          "reason": "visible:control-Z",
+          "step": 0
+        }
+      ],
+      "selected": null
+    },
+    {
+      "case": "truly-infeasible",
+      "outcome": "NO_PLAN",
+      "policy": "GLOBAL_BLACKLIST",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "unavailable-target",
+          "reason": "visible:control-Z",
+          "step": 0
+        }
+      ],
+      "selected": null
+    },
+    {
+      "case": "truly-infeasible",
+      "outcome": "NO_PLAN",
+      "policy": "SCOPED_NOGOOD",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": false,
+          "plan": "unavailable-target",
+          "reason": "visible:control-Z",
+          "step": 0
+        }
+      ],
+      "selected": null
+    },
+    {
+      "case": "transient-stale-then-feasible",
+      "outcome": "PLAN_FOUND",
+      "policy": "NO_FEEDBACK",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "same-action-after-refresh",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "same-action-after-refresh",
+          "step": 1
+        },
+        {
+          "event": "selected",
+          "plan": "same-action-after-refresh"
+        }
+      ],
+      "selected": "same-action-after-refresh"
+    },
+    {
+      "case": "transient-stale-then-feasible",
+      "outcome": "PLAN_FOUND",
+      "policy": "GLOBAL_BLACKLIST",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "same-action-after-refresh",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "same-action-after-refresh",
+          "step": 1
+        },
+        {
+          "event": "selected",
+          "plan": "same-action-after-refresh"
+        }
+      ],
+      "selected": "same-action-after-refresh"
+    },
+    {
+      "case": "transient-stale-then-feasible",
+      "outcome": "PLAN_FOUND",
+      "policy": "SCOPED_NOGOOD",
+      "rows": [
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "same-action-after-refresh",
+          "step": 0
+        },
+        {
+          "event": "query",
+          "feasible": true,
+          "plan": "same-action-after-refresh",
+          "step": 1
+        },
+        {
+          "event": "selected",
+          "plan": "same-action-after-refresh"
+        }
+      ],
+      "selected": "same-action-after-refresh"
+    }
+  ],
+  "schema": "scoped-infeasibility-candidate-v1"
+}

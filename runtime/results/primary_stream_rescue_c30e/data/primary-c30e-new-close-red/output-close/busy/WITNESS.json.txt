@@ -1,0 +1,41 @@
+{
+  "kind": "busy",
+  "setup": {
+    "callback": "function",
+    "execute": 1,
+    "statuses": [
+      "busy"
+    ]
+  },
+  "before_release": {
+    "outcome": "pending",
+    "settlements": 0,
+    "execute": 1,
+    "closes": 1,
+    "errors": 0
+  },
+  "boundary": {
+    "outcome": "pending",
+    "settlements": 0,
+    "execute": 1,
+    "closes": 1,
+    "errors": 0,
+    "code": null
+  },
+  "final": {
+    "outcome": "rejected",
+    "settlements": 1,
+    "execute": 1,
+    "closes": 1,
+    "errors": 0,
+    "code": "ERR_STREAM_DESTROYED",
+    "input_errors": 0,
+    "output_errors": 1,
+    "output_closes": 1,
+    "foreign_error": true,
+    "foreign_close": true
+  },
+  "statuses": [
+    "busy"
+  ]
+}

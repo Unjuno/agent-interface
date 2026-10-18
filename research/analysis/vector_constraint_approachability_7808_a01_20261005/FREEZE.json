@@ -1,0 +1,42 @@
+{
+  "schema": "vca7808-freeze-v1",
+  "allocation": "VCA-7808-WSLC-A01-20261005",
+  "base_commit": "aa2e4b623b2f4ccdcbc8e294535bab09c0092f30",
+  "base_branch": "main",
+  "package_path": "research/analysis/vector_constraint_approachability_7808_a01_20261005/",
+  "branch": "research/7808-vector-approachability-a01-20261005",
+  "frozen_at_utc": "2026-10-04 22:45:06 UTC",
+  "source_sha256": {
+    "PLAN.md": "B0E761C57152733393645AE21E2DFB13EB90955E5690D5EA12E12EA745089B55",
+    "fixture.json": "A13D22CF42C4F64B87223EE4B11A2692FA3195C9BF02F00AEFF44C4DE9CB5A14",
+    "candidate.py": "C5C8A1A660A5612BF85C5721A37DEC1DE186C2536E728DF865A15913649BF3F4",
+    "audit.py": "D93055B1CC88F557484A2B88EF97B9B82E33895119A36E811491CB7A733D5A13",
+    "test_protocol.py": "F2C3D3D8B546419592EA02DA5844BD07559986A4DA49DBDAC81C50FCDEC88134"
+  },
+  "environment": {
+    "runtime": "WSLc 3.0.1.0",
+    "container_image": "python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "python": "3.12.15",
+    "dependencies": "standard library only",
+    "network": "none",
+    "configured_cpus": 1,
+    "configured_memory": "128m",
+    "resource_warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+    "enforcement_note": "Memory was configured but cgroup/memory enforcement was not independently verified."
+  },
+  "construction": {
+    "host_final": "PASS 5/5",
+    "wslc_final": "PASS 5/5",
+    "formal_candidate_invocations_before_freeze": 0,
+    "formal_auditor_invocations_before_freeze": 0,
+    "formal_outputs_absent": true,
+    "history": "An earlier host construction process was stopped after uncached repeated oracle enumeration; after caching, one 4/5 construction run exposed a wrong assertion (expected 6, observed 0) for the frozen minimum-total-cost baseline. Inspection confirmed the trace; the assertion was corrected before freeze. No formal output was written."
+  },
+  "formal_commands": {
+    "candidate": "python -B candidate.py --fixture fixture.json --output candidate.raw.json",
+    "auditor": "python -B audit.py --fixture fixture.json --candidate candidate.raw.json --output audit.raw.json",
+    "invocation_limit": "one candidate invocation, one auditor invocation, zero retries"
+  },
+  "decision_gate": "PLAN.md"
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "v39-adapter-reader-completion-race-a02-freeze-v1",
+  "experiment": "v39-adapter-natural-completion-race-a02-20261008",
+  "main_commit": "6b232760a9d3edad2f57a18bff1236b807b8f8ff",
+  "parent_experiment": "v39-adapter-natural-completion-race-a01-20261008",
+  "hypothesis": "The actual CodexAppServerClient stdout reader correctly routes turn/completed notifications and correlated interrupt responses when completion arrives first during a pending interrupt request.",
+  "trigger": "Run exact current-main _read, request, wait_notification, wait_turn_completed and exact planner interrupt/await methods; after turn/interrupt is written, send turn/completed on stdout first, withhold RPC response until await_turn returns, then send the correlated response.",
+  "decision_gate": "PASS only if exact _read puts the matching turn/completed in the notification queue, exact request collects only the correlated reply, completion is returned while interrupt response is still withheld, answer_eligible=false and answer=null, and the V39 helper accepts only a verified-empty terminal after the response.",
+  "sources": [
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+      "local": "source/controller_v39.py"
+    },
+    {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "local": "source/persistent_planner_adapter_v2.py"
+    },
+    {
+      "path": "research/live_control/codex_app_server_client_v2.py",
+      "git_blob": "8553874221761a7807c846c7dcd66c22fc6340ff",
+      "local": "source/codex_app_server_client_v2.py"
+    }
+  ],
+  "scope": "AST-extracted production methods and in-memory JSONL stdout stream; no live App Server, game, model, GUI or OS input.",
+  "formal_status": "deterministic software-composition construction check",
+  "live_allocation": "none"
+}

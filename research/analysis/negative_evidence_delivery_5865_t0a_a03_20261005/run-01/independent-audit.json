@@ -1,0 +1,32 @@
+{
+  "case_policy_rows": 30,
+  "errors": [],
+  "false_negatives": {
+    "naive_sliding_untyped": [
+      "predicate_changed_target_present",
+      "insertion_with_invalidation",
+      "timeout_target_present_healthy_route",
+      "failure_cooldown_copy"
+    ],
+    "no_reuse": [],
+    "origin_bound_typed": []
+  },
+  "mutation_controls": {
+    "duplicate_raw_event_rejected": true,
+    "expired_forward_reuse_rejected": true,
+    "failure_forward_does_not_renew_cooldown": true,
+    "healthy_route_suppression_rejected": true,
+    "omitted_producer_receipt_rejected": true,
+    "predicate_scope_mismatch_rejected": true
+  },
+  "raw_event_rows": 99,
+  "status": "PASS_AUDIT",
+  "unsupported_negative_claims": {
+    "naive_sliding_untyped": [
+      "missing_writer_coverage",
+      "unknown_clock_offset"
+    ],
+    "no_reuse": [],
+    "origin_bound_typed": []
+  }
+}

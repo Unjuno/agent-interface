@@ -1,0 +1,12 @@
+import datetime, hashlib, json, pathlib, subprocess, sys
+R = pathlib.Path(__file__).resolve().parent; dest = R / 'diagnostics'; dest.mkdir(exist_ok=False)
+source = R / 'controller-v4.py.txt'; runner = R.parent / 'startup-diagnostics-b04b-v3/regression_v2.py'
+def utc(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def pin(p):
+ b = p.read_bytes(); return {'bytes': len(b), 'sha256': hashlib.sha256(b).hexdigest()}
+argv = [sys.executable, '-X', 'utf8', str(runner), str(source), str(dest / 'RAW.json')]
+before = {'utc': utc(), 'argv': argv, 'source': pin(source), 'runner': pin(runner)}; (dest / 'BEFORE.json').write_text(json.dumps(before, indent=2), encoding='utf-8')
+p = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE); start = utc(); out, err = p.communicate(timeout=25); p.stdout.close(); p.stderr.close()
+(dest / 'stdout.bin').write_bytes(out); (dest / 'stderr.bin').write_bytes(err)
+receipt = {'pid': p.pid, 'start_utc': start, 'end_utc': utc(), 'exit_code': p.returncode, 'stdout': pin(dest / 'stdout.bin'), 'stderr': pin(dest / 'stderr.bin'), 'source_unchanged': pin(source) == before['source'], 'runner_unchanged': pin(runner) == before['runner'], 'pipes_closed': p.stdout.closed and p.stderr.closed}
+(dest / 'RECEIPT.json').write_text(json.dumps(receipt, indent=2), encoding='utf-8'); print(json.dumps(receipt)); print(err.decode('utf-8')); sys.exit(p.returncode)

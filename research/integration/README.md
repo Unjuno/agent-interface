@@ -42,6 +42,8 @@ Integration work should make the composed boundary explicit: runtime + caller, a
 
 Child directory names are retained provenance, not a canonical architecture tree. Use each experiment's report for the exact composition and decision rule.
 
+- [#3311 A01 saved click-to-text boundary audit](calc3311_click_text_boundary_20261004_01a0ff51/README.md) — frozen source hashes and saved FODS agree; the first key follows the click without a selected-cell acknowledgement. The saved effect failure is independently reproduced, but native key-to-cell routing and causal attribution remain unobserved. No GUI, input, model, or formal allocation was rerun.
+
 - [Primary stdio busy-bound evidence rescue (#57)](primary_stdio_busy_rescue_20261003/README.md) — PR #6902's finite Windows/Node evidence and CI-selection records are preserved without integrating its unverified runtime/workflow changes; scope remains `PASS_PRIMARY_BUSY_BOUND_SCOPED`.
 
 - [Tk first-character #5260 allocation proposal and construction record](tk_firstchar_5260_a01_20261002/PREREG.md) — 96-row GUI allocation is explicitly **HOLD_NOT_AUTHORIZED**; three construction-only probes are retained, with smoke-03 passing the scoped runner/auditor gate. No formal first-character trials were run.
@@ -93,6 +95,8 @@ Child directory names are retained provenance, not a canonical architecture tree
 Historical and superseded integration paths remain in place when their exact names are part of the evidence chain.
 
 ## Current local constructions
+
+- [`fake_x_single_writer_caller_20261018/README.md`](fake_x_single_writer_caller_20261018/README.md) — queued-before-server-processing Fake X schedule composed with the guarded MCP caller; three modules pass 29/29 normal and optimized against main `7265bab`. Full CLI discovery is 434/435 in both modes, with the one WSL Git-metadata error retained. Scoped caller-custody construction only; no WSLc allocation or physical-release guarantee.
 
 - [`public_mcp_geometry_review_2907_construction01_v1/REPORT.md`](public_mcp_geometry_review_2907_construction01_v1/REPORT.md) — three additive Docker constructions for same-root geometry review and stale-binding refusal. Construction03 passes the scoped mechanism audit; overall formal disposition remains HOLD (runner decision mismatch, no independent app-effect oracle, and no mixed-app controller acceptance).
 

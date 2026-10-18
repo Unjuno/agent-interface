@@ -1,0 +1,3 @@
+Initial successor implementation STOP (construction code defect)
+
+The first WSLc attempt ran the strict audit before mutation suites. It exited 1 on the unchanged input: audit_successor_v2.py line 60 raised AssertionError because the candidate required emitted.get("edge") == "up". The exact retained raw has no outer edge member (the physical-key measurement contains nested edge="up"). This over-strict predicate rejected the positive control. The first source is retained as audit_successor_a02_initial_failed.py. The correction rejects a contradictory outer edge when that optional outer field is present, while preserving the raw positive. This is a construction failure, not a candidate/runtime result.

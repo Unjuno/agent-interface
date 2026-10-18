@@ -1,0 +1,432 @@
+"""Owned Python process construction. Only Fake X; no physical/native display."""
+from contextlib import contextmanager
+import importlib.util
+import base64
+import hashlib
+import json
+import multiprocessing
+import os
+from pathlib import Path
+import socket
+import sys
+import tempfile
+import threading
+import time
+import unittest
+from unittest.mock import patch
+
+HERE=Path(__file__).resolve().parent
+sys.path[:0]=[str(HERE),str(HERE.parent/'doom'),str(HERE.parents[1])]
+from input_owner_rpc_v2 import OwnerRpcClient
+from lease_release_v1 import Lease
+from test_map01_process_identity_backend import backend_fixture,native
+
+ROWS=[]
+
+def process_api():
+    import input_owner_process_v3
+    return input_owner_process_v3
+
+
+@contextmanager
+def fake_owner(*,display,out,service_id):
+    # Spawn imports this function; no real display is touched before this fixture.
+    with backend_fixture() as (backend,events,generation,fake):
+        if display!=':fake':raise ValueError('Fake factory accepts only :fake')
+        stop=threading.Event()
+        def crash_watch():
+            while not stop.wait(.005):
+                if (out/'fixture-crash').exists():os._exit(71)
+        watcher=threading.Thread(target=crash_watch,name='owned-fake-crash-watch',daemon=True)
+        watcher.start()
+        previous=native.xtest.fake_input.side_effect
+        def emit(connection,event,code):
+            if event==native.X.KeyRelease and (out/'fixture-block-release').exists():
+                while not (out/'fixture-resume-release').exists():
+                    if stop.wait(.005):raise RuntimeError('fake release test retired')
+            result=previous(connection,event,code)
+            row=dict(event=event,code=code,down=sorted(fake.down),pid=os.getpid(),thread=threading.get_ident(),at_ns=time.perf_counter_ns())
+            with (out/'fixture-edges.jsonl').open('a',encoding='utf-8') as stream:
+                stream.write(json.dumps(row)+'\n');stream.flush();os.fsync(stream.fileno())
+            return result
+        native.xtest.fake_input.side_effect=emit
+        try:yield backend.owner
+        finally:stop.set();watcher.join(1)
+
+
+@contextmanager
+def fake_owner_exit_error(*,display,out,service_id):
+    with fake_owner(display=display,out=out,service_id=service_id) as owner:
+        yield owner
+        raise RuntimeError('injected context exit failure')
+
+
+@contextmanager
+def fake_owner_start_error(*,display,out,service_id):
+    raise RuntimeError('injected context startup failure')
+    yield None
+
+
+@contextmanager
+def fake_owner_finish_barrier(*,display,out,service_id):
+    import input_owner_process_v3 as api
+    original=api.publish_json_exclusive
+    def publish(path,value):
+        result=original(path,value)
+        if Path(path).name=='finish.json':
+            api.publish_json_exclusive=original
+            while not (out/'fixture-resume-exit').exists():time.sleep(.005)
+        return result
+    api.publish_json_exclusive=publish
+    with fake_owner(display=display,out=out,service_id=service_id) as owner:yield owner
+
+
+def client_process(sock,ready,control,service_id):
+    client=None
+    try:
+        client=OwnerRpcClient(sock,display=':fake',service_id=service_id,timeout=2)
+        lease=make_lease()
+        admission=client.call('down',lease,'a')
+        ready.send(dict(pid=os.getpid(),parent_pid=os.getppid(),admission=admission))
+        command=control.recv()
+        if command=='crash':os._exit(73)
+        if command!='close':raise ValueError('test control command')
+    finally:
+        if client is not None:client.close()
+        else:sock.close()
+        ready.close();control.close()
+
+
+def make_lease():
+    lease=Lease(time.perf_counter_ns()+10_000_000_000)
+    lease.intent_token='owned-process-test-intent'
+    lease.expected_focus=lease.expected_surface=41
+    lease.expected_geometry=[0,0,32,32]
+    lease.target_process_identity=(1,41,'a'*64,lease.deadline)
+    return lease
+
+
+def edges(out):
+    path=out/'fixture-edges.jsonl'
+    return [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
+
+
+class OwnedOwnerProcessTests(unittest.TestCase):
+    def test_module_available(self):
+        self.assertIsNotNone(importlib.util.find_spec('input_owner_process_v3'),
+                             'Independent owner process and bound receipt implementation absent')
+
+    def launch(self,temp):
+        return process_api().launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=fake_owner)
+
+    def finish(self,handle):
+        handle.close_channel()
+        (handle.out/'fixture-resume-release').touch()
+        (handle.out/'fixture-resume-exit').touch()
+        handle.process.join(6)
+        forced=False
+        if handle.process.is_alive():
+            forced=True;(handle.out/'fixture-crash').touch();handle.process.join(4)
+        matched=[r for r in ROWS if r.get('service_id')==handle.service_id or (r.get('startup') or {}).get('service_id')==handle.service_id]
+        if not matched:
+            row=dict(case='failure-cleanup-capture',service_id=handle.service_id,startup=handle.startup,
+                spawn_pid=handle.process.pid,report=handle.wait(.1),files=handle.saved_files())
+            ROWS.append(row);matched=[row]
+        for row in matched:row['cleanup']=dict(forced=forced,process_alive=handle.process.is_alive(),exit_code=handle.process.exitcode)
+        self.assertFalse(handle.process.is_alive(),'owned fake service still running')
+        self.assertFalse(forced,'test required crash fallback')
+
+    def test_normal_close_binds_saved_receipts_and_owned_process_exit(self):
+        with tempfile.TemporaryDirectory() as temp:
+            handle=self.launch(temp);client=None
+            try:
+                client=OwnerRpcClient(handle.take_socket(),display=':fake',service_id=handle.service_id)
+                admission=client.call('down',make_lease(),'a')
+                close=client.close();report=handle.wait(5)
+                self.assertTrue(close['verified'])
+                self.assertTrue(report['verified'],report)
+                self.assertFalse(handle.process.is_alive())
+                self.assertEqual([r['event'] for r in edges(handle.out)],[2,3])
+                self.assertNotEqual(handle.startup['pid'],os.getpid())
+                for name,metadata in handle.saved_files().items():
+                    self.assertIn('bytes_b64',metadata,'Saved raw must survive newline projection')
+                    self.assertEqual(base64.b64decode(metadata['bytes_b64']),(handle.out/name).read_bytes())
+                with self.assertRaises(RuntimeError):handle.take_socket()
+                ROWS.append(dict(case='normal',startup=handle.startup,spawn_pid=handle.process.pid,
+                                 admission=admission,report=report,edges=edges(handle.out),files=handle.saved_files()))
+            finally:
+                if client:client.close()
+                self.finish(handle)
+
+    def test_actual_client_process_abrupt_exit_leaves_service_to_release(self):
+        with tempfile.TemporaryDirectory() as temp:
+            handle=self.launch(temp);ctx=multiprocessing.get_context('spawn')
+            ready_parent,ready_child=ctx.Pipe(duplex=False)
+            control_child,control_parent=ctx.Pipe(duplex=False)
+            channel=handle.take_socket()
+            child=ctx.Process(target=client_process,args=(channel,ready_child,control_child,handle.service_id))
+            child.start();channel.close();ready_child.close();control_child.close()
+            client_ready=None
+            try:
+                self.assertTrue(ready_parent.poll(5),'client admission not reported')
+                client_ready=ready_parent.recv()
+                self.assertTrue(handle.process.is_alive())
+                control_parent.send('crash');child.join(5)
+                self.assertFalse(child.is_alive());self.assertNotEqual(child.exitcode,0)
+                report=handle.wait(5)
+                self.assertTrue(report['verified'],report)
+                self.assertEqual([r['event'] for r in edges(handle.out)],[2,3])
+                self.assertNotEqual(client_ready['pid'],handle.startup['pid'])
+                ROWS.append(dict(case='client-death',startup=handle.startup,spawn_pid=handle.process.pid,
+                                 client_spawn_pid=child.pid,client_ready=client_ready,client_exit=child.exitcode,
+                                 report=report,edges=edges(handle.out),files=handle.saved_files()))
+            finally:
+                if child.is_alive():
+                    try:control_parent.send('crash')
+                    except (BrokenPipeError,OSError):pass
+                child.join(5);ready_parent.close();control_parent.close()
+                self.finish(handle)
+                self.assertFalse(child.is_alive())
+
+    def test_owner_process_death_has_no_acceptable_release_receipt(self):
+        with tempfile.TemporaryDirectory() as temp:
+            handle=self.launch(temp);client=None
+            try:
+                client=OwnerRpcClient(handle.take_socket(),display=':fake',service_id=handle.service_id)
+                client.call('down',make_lease(),'a')
+                (handle.out/'fixture-crash').touch()
+                report=handle.wait(5)
+                self.assertFalse(handle.process.is_alive())
+                self.assertFalse(report['verified']);self.assertNotEqual(report['exit_code'],0)
+                self.assertEqual([r['event'] for r in edges(handle.out)],[2])
+                ROWS.append(dict(case='service-death',startup=handle.startup,spawn_pid=handle.process.pid,
+                                 report=report,edges=edges(handle.out),files=handle.saved_files()))
+            finally:
+                if client:client.close()
+                self.finish(handle)
+
+    def test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade(self):
+        with tempfile.TemporaryDirectory() as temp:
+            handle=self.launch(temp);client=None
+            try:
+                client=OwnerRpcClient(handle.take_socket(),display=':fake',service_id=handle.service_id,timeout=.15)
+                client.call('down',make_lease(),'a')
+                (handle.out/'fixture-block-release').touch()
+                local=client.close();before=handle.wait(5)
+                self.assertFalse(local['verified']);self.assertFalse(before['verified'])
+                self.assertTrue(before['process_alive'])
+                self.assertFalse(before['recovery']['core']['owner_thread_stopped'])
+                first=(handle.out/'recovery.json').read_bytes()
+                (handle.out/'fixture-resume-release').touch()
+                after=handle.wait(5)
+                self.assertFalse(handle.process.is_alive());self.assertEqual(after['exit_code'],0)
+                self.assertFalse(after['verified'])
+                self.assertEqual((handle.out/'recovery.json').read_bytes(),first)
+                self.assertTrue(after['finish']['owner_thread_stopped'])
+                self.assertEqual([r['event'] for r in edges(handle.out)],[2,3])
+                ROWS.append(dict(case='blocked-release',startup=handle.startup,spawn_pid=handle.process.pid,
+                                 local_close=local,before=before,after=after,initial_unchanged=True,
+                                 edges=edges(handle.out),files=handle.saved_files()))
+            finally:
+                (handle.out/'fixture-resume-release').touch()
+                if client:client.close()
+                self.finish(handle)
+
+    def test_wrong_generation_and_overwrite_are_refused(self):
+        api=process_api()
+        with tempfile.TemporaryDirectory() as temp:
+            handle=self.launch(temp);client=None
+            try:
+                client=OwnerRpcClient(handle.take_socket(),display=':fake',service_id=handle.service_id)
+                client.close();report=handle.wait(5);self.assertTrue(report['verified'])
+                expected=dict(handle.startup);expected['service_id']='different-generation'
+                with self.assertRaises(ValueError):api.read_service_receipt(handle.out,expected)
+                before=(handle.out/'recovery.json').read_bytes()
+                with self.assertRaises(FileExistsError):api.publish_json_exclusive(handle.out/'recovery.json',{'overwrite':True})
+                self.assertEqual((handle.out/'recovery.json').read_bytes(),before)
+                with self.assertRaises(FileExistsError):api.launch_owner_service(display=':fake',out=handle.out,_owner_factory=fake_owner)
+                ROWS.append(dict(case='generation-and-exclusive',startup=handle.startup,spawn_pid=handle.process.pid,
+                                 report=report,wrong_generation_refused=True,overwrite_refused=True,
+                                 files=handle.saved_files()))
+            finally:
+                if client:client.close()
+                self.finish(handle)
+
+    def test_context_exit_failure_cannot_promote_initial_verified_owner_close(self):
+        api=process_api()
+        with tempfile.TemporaryDirectory() as temp:
+            handle=api.launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=fake_owner_exit_error)
+            client=None
+            try:
+                client=OwnerRpcClient(handle.take_socket(),display=':fake',service_id=handle.service_id)
+                client.call('down',make_lease(),'a');client.close()
+                report=handle.wait(5)
+                self.assertFalse(report['verified']);self.assertFalse(report['process_alive'])
+                self.assertNotEqual(report['exit_code'],0)
+                self.assertTrue(report['recovery']['verified'])
+                self.assertIsNone(report['finish'])
+                self.assertTrue((handle.out/'failure.json').exists())
+                ROWS.append(dict(case='context-exit-failure',startup=handle.startup,spawn_pid=handle.process.pid,
+                                 report=report,edges=edges(handle.out),files=handle.saved_files()))
+            finally:
+                if client:client.close()
+                self.finish(handle)
+
+    def test_startup_failure_returns_owned_handle_and_unverified_saved_failure(self):
+        api=process_api()
+        with tempfile.TemporaryDirectory() as temp:
+            with self.assertRaises(api.ServiceStartupError) as caught:
+                api.launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=fake_owner_start_error)
+            handle=caught.exception.handle
+            try:
+                report=handle.wait(5)
+                self.assertFalse(report['verified']);self.assertFalse(report['process_alive'])
+                self.assertIsNone(handle.startup)
+                self.assertTrue((handle.out/'failure.json').exists())
+                with self.assertRaises(RuntimeError):handle.take_socket()
+                ROWS.append(dict(case='startup-failure',service_id=handle.service_id,startup=None,
+                                 spawn_pid=handle.process.pid,report=report,files=handle.saved_files()))
+            finally:self.finish(handle)
+
+    def test_export_hash_is_bound_to_one_observation_of_each_saved_file(self):
+        api=process_api()
+        with tempfile.TemporaryDirectory() as temp:
+            handle=api.OwnedOwnerService.__new__(api.OwnedOwnerService);handle.out=Path(temp)
+            target=handle.out/'fixture-edges.jsonl';target.write_bytes(b'old\n')
+            original=Path.read_bytes;reads=[]
+            def changing(path):
+                if path==target:
+                    reads.append(1)
+                    return b'old\n' if len(reads)==1 else b'new\n'
+                return original(path)
+            with patch.object(Path,'read_bytes',changing):saved=handle.saved_files()[target.name]
+            raw=base64.b64decode(saved['bytes_b64'])
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),saved['sha256'])
+            ROWS.append(dict(case='export-snapshot',sha256=saved['sha256'],bytes_b64=saved['bytes_b64'],
+                             consistent=True,scope='inert changing-file read; no process'))
+
+    def test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody(self):
+        api=process_api();outcomes=[]
+        for fault in ('interrupt','interrupt-and-close','start-failure'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temp:
+                primary=KeyboardInterrupt('startup interrupt');cleanup=OSError('ready pipe close')
+                class Ready:
+                    def poll(self,_):raise primary
+                    def close(self):
+                        if fault=='interrupt-and-close':raise cleanup
+                class ChildReady:
+                    def close(self):pass
+                class FakeProcess:
+                    pid=None;exitcode=None
+                    def start(self):
+                        if fault=='start-failure':raise RuntimeError('spawn construction failed')
+                        self.pid=12345
+                    def join(self,_):raise AssertionError('unstarted/fake process must not be joined')
+                    def is_alive(self):return False
+                process=FakeProcess()
+                class Context:
+                    def Pipe(self,**_):return Ready(),ChildReady()
+                    def Process(self,**_):return process
+                expected=api.ServiceStartupError if fault=='start-failure' else (BaseExceptionGroup if fault=='interrupt-and-close' else KeyboardInterrupt)
+                with patch.object(api.multiprocessing,'get_context',return_value=Context()):
+                    with self.assertRaises(expected) as caught:
+                        api.launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=fake_owner)
+                if fault=='start-failure':
+                    handle=caught.exception.handle;report=handle.wait(.1)
+                    self.assertFalse(report['verified']);self.assertFalse(report['process_alive'])
+                    self.assertIsNone(report['exit_code'])
+                else:
+                    handle=getattr(caught.exception,'owner_service_handle',None)
+                    self.assertIsNotNone(handle,'Fatal startup must retain its owned handle')
+                    if fault=='interrupt':self.assertIs(caught.exception,primary)
+                    else:
+                        self.assertIs(caught.exception.exceptions[0],primary)
+                        self.assertIs(caught.exception.exceptions[1],cleanup)
+                self.assertIs(handle.process,process)
+                outcomes.append(dict(fault=fault,owned_handle_retained=True,primary_preserved=True))
+        ROWS.append(dict(case='startup-custody',outcomes=outcomes,scope='inert process factory/private sockets; no child'))
+
+    def test_partial_startup_allocation_closes_every_acquired_descriptor(self):
+        api=process_api();outcomes=[]
+        for fault in ('pipe','process'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temp:
+                resources=[]
+                class Resource:
+                    closed=False
+                    def __init__(self):resources.append(self)
+                    def close(self):self.closed=True
+                    def shutdown(self,_):pass
+                sockets=(Resource(),Resource())
+                class Context:
+                    def Pipe(self,**_):
+                        if fault=='pipe':raise OSError('injected pipe construction')
+                        return Resource(),Resource()
+                    def Process(self,**_):raise OSError('injected process construction')
+                with patch.object(api.socket,'socketpair',return_value=sockets), patch.object(api.multiprocessing,'get_context',return_value=Context()):
+                    with self.assertRaises(api.ServiceStartupError) as caught:
+                        api.launch_owner_service(display=':fake',out=Path(temp)/'service')
+                self.assertTrue(all(r.closed for r in resources),'every acquired descriptor must close')
+                report=caught.exception.handle.wait(.1)
+                self.assertFalse(report['verified']);self.assertFalse(report['process_alive'])
+                self.assertIsNone(report['spawn_pid'])
+                outcomes.append(dict(fault=fault,closed=len(resources),report=report))
+        ROWS.append(dict(case='partial-allocation-custody',outcomes=outcomes,scope='inert allocation failures; no process'))
+
+    def test_recovery_publication_error_waits_for_same_unresolved_owner(self):
+        api=process_api();order=[]
+        class Stop:
+            def is_set(self):return False
+            def wait(self):order.append('wait')
+        class Owner:
+            stopped=Stop();owner_id='inert-owner'
+        @contextmanager
+        def factory(**_):
+            try:yield Owner()
+            finally:order.append('context-exit')
+        class Ready:
+            def send(self,_):pass
+            def close(self):pass
+        error=OSError('injected recovery publication')
+        def publish(path,value):
+            if Path(path).name=='recovery.json':raise error
+            return 'a'*64
+        with tempfile.TemporaryDirectory() as temp, patch.object(api,'publish_json_exclusive',side_effect=publish), patch.object(api.rpc,'serve_owner',return_value={'verified':False}), patch.object(api.rpc,'_detach_socket'):
+            with self.assertRaises(OSError) as caught:
+                api._child_entry(None,Ready(),':fake',temp,'inert-generation',os.getpid(),factory)
+        self.assertIs(caught.exception,error)
+        self.assertEqual(order,['wait','context-exit'])
+        ROWS.append(dict(case='publication-fault-custody',order=order,primary_preserved=True,scope='inert child-entry; no process'))
+
+    def test_file_verified_receipt_does_not_replace_owned_process_exit(self):
+        api=process_api()
+        with tempfile.TemporaryDirectory() as temp:
+            handle=api.launch_owner_service(display=':fake',out=Path(temp)/'service',_owner_factory=fake_owner_finish_barrier)
+            client=None
+            try:
+                client=OwnerRpcClient(handle.take_socket(),display=':fake',service_id=handle.service_id)
+                client.call('down',make_lease(),'a');client.close()
+                deadline=time.monotonic()+3
+                while not (handle.out/'finish.json').exists() and time.monotonic()<deadline:time.sleep(.005)
+                self.assertTrue((handle.out/'finish.json').exists())
+                before=handle.wait(.1)
+                self.assertTrue(before['process_alive']);self.assertTrue(before['receipt_verified'])
+                self.assertFalse(before['verified'])
+                (handle.out/'fixture-resume-exit').touch()
+                after=handle.wait(5)
+                self.assertTrue(after['verified']);self.assertFalse(after['process_alive'])
+                ROWS.append(dict(case='exit-commit-barrier',startup=handle.startup,spawn_pid=handle.process.pid,
+                                 before=before,after=after,edges=edges(handle.out),files=handle.saved_files()))
+            finally:
+                (handle.out/'fixture-resume-exit').touch()
+                if client:client.close()
+                self.finish(handle)
+
+
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser();parser.add_argument('--red',action='store_true');parser.add_argument('--out',type=Path)
+    args=parser.parse_args()
+    suite=unittest.TestSuite([OwnedOwnerProcessTests('test_module_available')]) if args.red else unittest.defaultTestLoader.loadTestsFromTestCase(OwnedOwnerProcessTests)
+    result=unittest.TextTestRunner(verbosity=2).run(suite)
+    if args.out:args.out.write_text(json.dumps(dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),rows=ROWS),indent=2)+'\n',encoding='utf-8')
+    raise SystemExit(not result.wasSuccessful())

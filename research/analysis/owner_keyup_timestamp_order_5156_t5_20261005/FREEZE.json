@@ -1,0 +1,15 @@
+{
+  "schema": "owner-keyup-timestamp-order-freeze-v1",
+  "issue": 5156,
+  "allocation": "OWNER-KEYUP-TIMESTAMP-ORDER-5156-T5-20261005-01",
+  "kind": "offline analyzer construction; no shared resource or X11 allocation",
+  "base_main": "e561b25b700680df4e6ffd2b92faf1dde1682ef7",
+  "main_revalidation_commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "base_analyzer_git_blob": "f3d5fe315df8f4296351f1a5fc666d50ecaa6745",
+  "main_revalidation_analyzer_git_blob": "f3d5fe315df8f4296351f1a5fc666d50ecaa6745",
+  "baseline_source_sha256": "163a32ce20516bdfc034eb4c6659141e53e3ef11b8526372042fb5e9d509e63a",
+  "repaired_source_sha256": "c4f95e0e8bb3c25f871ec5c4723d5fbdad633fb8a6f955b5449145d01aeb53c1",
+  "case_sha256": "c3926ac2fde99ce3a5fa3947528bcc417edcf8ba2ced633cc0b074b7795dcf20",
+  "source_change": "require nondecreasing admitted, input-ack, release-start, release-return timestamps before emitting a measurement interval",
+  "boundaries": "equal timestamps remain valid; no physical key-up instant is inferred"
+}

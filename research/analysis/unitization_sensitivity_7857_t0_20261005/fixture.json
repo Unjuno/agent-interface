@@ -1,0 +1,383 @@
+{
+  "allocation": "UNITIZATION-7857-T0-A01-20261005",
+  "claim_scope": "Synthetic T0 construction only; exact-span match F1 is a declared custom boundary diagnostic, not Krippendorff's unitizing alpha.",
+  "traces": [
+    {
+      "id": "adjacent",
+      "stratum": "S1",
+      "phase": "train",
+      "duration": 100,
+      "latent": [
+        {
+          "mode": "A",
+          "start": 10,
+          "end": 20
+        },
+        {
+          "mode": "A",
+          "start": 22,
+          "end": 30
+        }
+      ],
+      "quiet_gap": 2
+    },
+    {
+      "id": "missing",
+      "stratum": "S1",
+      "phase": "train",
+      "duration": 100,
+      "latent": [
+        {
+          "mode": "C",
+          "start": 30,
+          "end": 40
+        }
+      ],
+      "telemetry_gaps": [
+        [
+          34,
+          37
+        ]
+      ]
+    },
+    {
+      "id": "control",
+      "stratum": "S1",
+      "phase": "train",
+      "duration": 100,
+      "latent": [
+        {
+          "mode": "D",
+          "start": 10,
+          "end": 20
+        }
+      ],
+      "unambiguous": true
+    },
+    {
+      "id": "cascade",
+      "stratum": "S2",
+      "phase": "train",
+      "duration": 100,
+      "latent": [
+        {
+          "mode": "B",
+          "start": 10,
+          "end": 18
+        },
+        {
+          "mode": "C",
+          "start": 16,
+          "end": 25
+        }
+      ],
+      "overlap": true
+    },
+    {
+      "id": "censor",
+      "stratum": "S2",
+      "phase": "train",
+      "duration": 50,
+      "right_censored": true,
+      "latent": [
+        {
+          "mode": "E",
+          "start": 45,
+          "end": 60,
+          "censored": true
+        }
+      ]
+    },
+    {
+      "id": "stable",
+      "stratum": "S2",
+      "phase": "train",
+      "duration": 100,
+      "latent": [
+        {
+          "mode": "A",
+          "start": 50,
+          "end": 58
+        }
+      ]
+    },
+    {
+      "id": "heldout",
+      "stratum": "S1",
+      "phase": "heldout",
+      "duration": 100,
+      "latent": [
+        {
+          "mode": "F",
+          "start": 10,
+          "end": 16
+        },
+        {
+          "mode": "F",
+          "start": 19,
+          "end": 25
+        },
+        {
+          "mode": "A",
+          "start": 30,
+          "end": 35
+        }
+      ],
+      "quiet_gap": 3
+    }
+  ],
+  "segmentations": {
+    "A": [
+      {
+        "trace": "adjacent",
+        "stratum": "S1",
+        "phase": "train",
+        "mode": "A",
+        "start": 10,
+        "end": 20,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "adjacent",
+        "stratum": "S1",
+        "phase": "train",
+        "mode": "A",
+        "start": 22,
+        "end": 30,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "missing",
+        "stratum": "S1",
+        "phase": "train",
+        "mode": "C",
+        "start": 30,
+        "end": 34,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "missing",
+        "stratum": "S1",
+        "phase": "train",
+        "mode": "C",
+        "start": 37,
+        "end": 40,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "control",
+        "stratum": "S1",
+        "phase": "train",
+        "mode": "D",
+        "start": 10,
+        "end": 20,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "cascade",
+        "stratum": "S2",
+        "phase": "train",
+        "mode": "B",
+        "start": 10,
+        "end": 18,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "cascade",
+        "stratum": "S2",
+        "phase": "train",
+        "mode": "C",
+        "start": 16,
+        "end": 25,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "censor",
+        "stratum": "S2",
+        "phase": "train",
+        "mode": "E",
+        "start": 45,
+        "end": 50,
+        "censored": true,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "stable",
+        "stratum": "S2",
+        "phase": "train",
+        "mode": "A",
+        "start": 50,
+        "end": 58,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "heldout",
+        "stratum": "S1",
+        "phase": "heldout",
+        "mode": "F",
+        "start": 10,
+        "end": 16,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "heldout",
+        "stratum": "S1",
+        "phase": "heldout",
+        "mode": "F",
+        "start": 19,
+        "end": 25,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "heldout",
+        "stratum": "S1",
+        "phase": "heldout",
+        "mode": "A",
+        "start": 30,
+        "end": 35,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      }
+    ],
+    "B": [
+      {
+        "trace": "adjacent",
+        "stratum": "S1",
+        "phase": "train",
+        "mode": "A",
+        "start": 10,
+        "end": 30,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "missing",
+        "stratum": "S1",
+        "phase": "train",
+        "mode": "C",
+        "start": 30,
+        "end": 40,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "control",
+        "stratum": "S1",
+        "phase": "train",
+        "mode": "D",
+        "start": 10,
+        "end": 20,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "cascade",
+        "stratum": "S2",
+        "phase": "train",
+        "mode": "B",
+        "start": 10,
+        "end": 16,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "cascade",
+        "stratum": "S2",
+        "phase": "train",
+        "mode": "C",
+        "start": 16,
+        "end": 25,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "censor",
+        "stratum": "S2",
+        "phase": "train",
+        "mode": "E",
+        "start": 45,
+        "end": 50,
+        "censored": true,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "stable",
+        "stratum": "S2",
+        "phase": "train",
+        "mode": "A",
+        "start": 50,
+        "end": 58,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "heldout",
+        "stratum": "S1",
+        "phase": "heldout",
+        "mode": "F",
+        "start": 10,
+        "end": 25,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      },
+      {
+        "trace": "heldout",
+        "stratum": "S1",
+        "phase": "heldout",
+        "mode": "A",
+        "start": 30,
+        "end": 35,
+        "censored": false,
+        "boundary_basis": "pre-outcome telemetry"
+      }
+    ]
+  },
+  "aligned_category_pairs": [
+    {
+      "unit": "control-D",
+      "a": "D",
+      "b": "D"
+    },
+    {
+      "unit": "cascade-B",
+      "a": "B",
+      "b": "B"
+    },
+    {
+      "unit": "cascade-C",
+      "a": "C",
+      "b": "C"
+    },
+    {
+      "unit": "censored-E",
+      "a": "E",
+      "b": "E"
+    },
+    {
+      "unit": "stable-A",
+      "a": "A",
+      "b": "A"
+    },
+    {
+      "unit": "heldout-known-A",
+      "a": "A",
+      "b": "A"
+    }
+  ],
+  "thresholds": {
+    "max_unitizing_f1_for_control_flag": 0.999999,
+    "heldout_new_rate_delta_flag": 0.1,
+    "saturation_singleton_fraction": 0.15,
+    "saturation_new_mode_rate": 0.5
+  }
+}

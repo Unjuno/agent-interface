@@ -1,0 +1,31 @@
+{
+  "auditor_invocations": 0,
+  "candidate_invocations": 0,
+  "candidate_sha256": "6439c699e7dc47808e5a37b38e1043187bd7a6a76082762a194d91aad8f3785c",
+  "command": [
+    "docker",
+    "run",
+    "--pull=never",
+    "--rm",
+    "--network=none",
+    "--read-only",
+    "--tmpfs",
+    "/tmp:rw,noexec,nosuid,size=16m",
+    "--cap-drop=ALL",
+    "--security-opt=no-new-privileges",
+    "--cpus=1",
+    "--memory=1g",
+    "--mount",
+    "type=bind,src=/Users/taka/Documents/Codex/2026-09-19/new-chat-2/work/issue7834-mrt-t0-a01-20261005/research/analysis/persistent_counterparty_8135_t0_a01_20261005/candidate.py,dst=/src/candidate.py,readonly",
+    "python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+    "python",
+    "-B",
+    "-c",
+    "from pathlib import Path; print('bytes='+str(Path('/src/candidate.py').stat().st_size))"
+  ],
+  "exit": 0,
+  "kind": "CONTAINER_PREFLIGHT_NOT_EXPERIMENT",
+  "stderr": "",
+  "stdout": "bytes=2815\n",
+  "timestamp_utc": "2026-10-05T09:41:08.794797+00:00"
+}

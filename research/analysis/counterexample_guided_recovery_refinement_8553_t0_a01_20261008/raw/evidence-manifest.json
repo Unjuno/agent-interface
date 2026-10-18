@@ -1,0 +1,24 @@
+{
+  "schema": "recovery-abstraction-evidence-manifest-v1",
+  "base_main": "6ea1269defb6d48a607f13b08f1aa2d223ba06e9",
+  "python": "CPython 3.12.10",
+  "formal_invocations": {
+    "candidate": {"count": 1, "exit": 0, "stdout": "candidate.stdout.txt"},
+    "independent_audit": {"count": 1, "exit": 0, "stdout": "audit.stdout.txt"},
+    "retries": 0
+  },
+  "construction_tests": {"count": 6, "passed": 6, "exit": 0, "stdout": "construction.stdout.txt"},
+  "frozen_sources": "source-manifest.json",
+  "frozen_sources_sha256": "a11cec303e9911f7c2cddb7b86eb9a78f94e40df50d4959495ae7e828a00c55c",
+  "report": {"path": "../REPORT.md", "sha256": "56bd93eac5576d5be7e7d3d1b38c3b513a466494814487dd27d7adc7b6526a5f"},
+  "artifacts": [
+    {"path": "audit.exit.txt", "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"},
+    {"path": "audit.json", "sha256": "13f845490888e4704792726714077711cee58c66323c8ddcd6121119ec363c59"},
+    {"path": "audit.stdout.txt", "sha256": "f7257a205b7878c7106f640e11a30899301f38b0c75e73ac558b366b03b7a1bc"},
+    {"path": "candidate.exit.txt", "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"},
+    {"path": "candidate.json", "sha256": "0bf12edd869f39c7a00338b74597c9264f70a98bd3629a89f9604c0df162622e"},
+    {"path": "candidate.stdout.txt", "sha256": "6183cc73cd70cf408f8fe79d5b0555cfc4982953ebd91fea90ccafb1fa75e005"},
+    {"path": "construction.exit.txt", "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"},
+    {"path": "construction.stdout.txt", "sha256": "c897b466840af8faa4f6d7b080c87af2905f7b5c6f829966f93a4a9d77e1af8c"}
+  ]
+}

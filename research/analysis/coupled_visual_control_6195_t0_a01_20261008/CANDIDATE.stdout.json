@@ -1,0 +1,554 @@
+[
+  {
+    "crosses_feature_limit": false,
+    "delay_max": 0,
+    "disposition": "CERTIFIED",
+    "gain_envelope_status": "STABLE_ENVELOPE",
+    "gain_matrix": [
+      [
+        "2/5",
+        "0"
+      ],
+      [
+        "0",
+        "2/5"
+      ]
+    ],
+    "hold_contract_valid": true,
+    "id": "C01_uncoupled_positive",
+    "max_row_gain": "2/5",
+    "peak_feature": "1",
+    "subsystem_checks": {
+      "actuator_controller": true,
+      "current": true,
+      "delayed": true,
+      "release": true
+    },
+    "trajectory": [
+      [
+        "1",
+        "1"
+      ],
+      [
+        "2/5",
+        "2/5"
+      ],
+      [
+        "4/25",
+        "4/25"
+      ],
+      [
+        "8/125",
+        "8/125"
+      ],
+      [
+        "16/625",
+        "16/625"
+      ],
+      [
+        "32/3125",
+        "32/3125"
+      ],
+      [
+        "64/15625",
+        "64/15625"
+      ],
+      [
+        "128/78125",
+        "128/78125"
+      ],
+      [
+        "256/390625",
+        "256/390625"
+      ],
+      [
+        "512/1953125",
+        "512/1953125"
+      ],
+      [
+        "1024/9765625",
+        "1024/9765625"
+      ],
+      [
+        "2048/48828125",
+        "2048/48828125"
+      ],
+      [
+        "4096/244140625",
+        "4096/244140625"
+      ]
+    ]
+  },
+  {
+    "crosses_feature_limit": true,
+    "delay_max": 0,
+    "disposition": "NO_COMPOSITION_CERTIFICATE",
+    "gain_envelope_status": "UNSTABLE_ENVELOPE",
+    "gain_matrix": [
+      [
+        "1/2",
+        "3/4"
+      ],
+      [
+        "3/4",
+        "1/2"
+      ]
+    ],
+    "hold_contract_valid": true,
+    "id": "C02_cross_coupled_unstable",
+    "max_row_gain": "5/4",
+    "peak_feature": "390625/65536",
+    "subsystem_checks": {
+      "actuator_controller": true,
+      "current": true,
+      "delayed": true,
+      "release": true
+    },
+    "trajectory": [
+      [
+        "1",
+        "1"
+      ],
+      [
+        "5/4",
+        "5/4"
+      ],
+      [
+        "25/16",
+        "25/16"
+      ],
+      [
+        "125/64",
+        "125/64"
+      ],
+      [
+        "625/256",
+        "625/256"
+      ],
+      [
+        "3125/1024",
+        "3125/1024"
+      ],
+      [
+        "15625/4096",
+        "15625/4096"
+      ],
+      [
+        "78125/16384",
+        "78125/16384"
+      ],
+      [
+        "390625/65536",
+        "390625/65536"
+      ]
+    ]
+  },
+  {
+    "crosses_feature_limit": false,
+    "delay_max": 2,
+    "disposition": "CERTIFIED",
+    "gain_envelope_status": "STABLE_ENVELOPE",
+    "gain_matrix": [
+      [
+        "41/100",
+        "41/200"
+      ],
+      [
+        "41/200",
+        "41/100"
+      ]
+    ],
+    "hold_contract_valid": true,
+    "id": "C03_delayed_jitter_shared_actuator_stable",
+    "max_row_gain": "123/200",
+    "peak_feature": "1/2",
+    "subsystem_checks": {
+      "actuator_controller": true,
+      "current": true,
+      "delayed": true,
+      "release": true
+    },
+    "trajectory": [
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "313/1000",
+        "313/1000"
+      ],
+      [
+        "1633/5000",
+        "1633/5000"
+      ],
+      [
+        "8233/25000",
+        "8233/25000"
+      ],
+      [
+        "32563/125000",
+        "32563/125000"
+      ],
+      [
+        "253703/1250000",
+        "253703/1250000"
+      ],
+      [
+        "663659/3125000",
+        "663659/3125000"
+      ],
+      [
+        "5330973/31250000",
+        "5330973/31250000"
+      ],
+      [
+        "42703413/312500000",
+        "42703413/312500000"
+      ],
+      [
+        "22080013/195312500",
+        "22080013/195312500"
+      ],
+      [
+        "1639615533/15625000000",
+        "1639615533/15625000000"
+      ],
+      [
+        "4035646079/39062500000",
+        "4035646079/39062500000"
+      ],
+      [
+        "35274124113/390625000000",
+        "35274124113/390625000000"
+      ]
+    ]
+  },
+  {
+    "crosses_feature_limit": false,
+    "delay_max": 0,
+    "disposition": "NO_COMPOSITION_CERTIFICATE",
+    "gain_envelope_status": "BOUNDED_NONCONVERGENT_ENVELOPE",
+    "gain_matrix": [
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ]
+    ],
+    "hold_contract_valid": true,
+    "id": "C04_unit_eigenvalue_boundary",
+    "max_row_gain": "1",
+    "peak_feature": "1",
+    "subsystem_checks": {
+      "actuator_controller": true,
+      "current": true,
+      "delayed": true,
+      "release": true
+    },
+    "trajectory": [
+      [
+        "1",
+        "0"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "1/2"
+      ]
+    ]
+  },
+  {
+    "crosses_feature_limit": false,
+    "delay_max": 0,
+    "disposition": "NO_COMPOSITION_CERTIFICATE",
+    "gain_envelope_status": "STABLE_ENVELOPE",
+    "gain_matrix": [
+      [
+        "7/10",
+        "3/10"
+      ],
+      [
+        "1/5",
+        "3/5"
+      ]
+    ],
+    "hold_contract_valid": true,
+    "id": "C05_stable_conservative_reject",
+    "max_row_gain": "1",
+    "peak_feature": "1",
+    "subsystem_checks": {
+      "actuator_controller": true,
+      "current": false,
+      "delayed": true,
+      "release": true
+    },
+    "trajectory": [
+      [
+        "1",
+        "1"
+      ],
+      [
+        "1",
+        "4/5"
+      ],
+      [
+        "47/50",
+        "17/25"
+      ],
+      [
+        "431/500",
+        "149/250"
+      ],
+      [
+        "3911/5000",
+        "53/100"
+      ],
+      [
+        "35327/50000",
+        "11861/25000"
+      ],
+      [
+        "63691/100000",
+        "106493/250000"
+      ],
+      [
+        "2868143/5000000",
+        "957413/2500000"
+      ],
+      [
+        "25821479/50000000",
+        "8612621/25000000"
+      ],
+      [
+        "232426079/500000000",
+        "15499441/50000000"
+      ],
+      [
+        "2091965783/5000000000",
+        "697409309/2500000000"
+      ],
+      [
+        "3765643267/10000000000",
+        "6276421637/25000000000"
+      ],
+      [
+        "169456044167/500000000000",
+        "56486746157/250000000000"
+      ]
+    ]
+  },
+  {
+    "crosses_feature_limit": true,
+    "delay_max": 1,
+    "disposition": "NO_COMPOSITION_CERTIFICATE",
+    "gain_envelope_status": "BOUNDED_NONCONVERGENT_ENVELOPE",
+    "gain_matrix": [
+      [
+        "1",
+        "0"
+      ],
+      [
+        "0",
+        "1"
+      ]
+    ],
+    "hold_contract_valid": true,
+    "id": "C06_release_lag_included",
+    "max_row_gain": "1",
+    "peak_feature": "12442849/781250",
+    "subsystem_checks": {
+      "actuator_controller": true,
+      "current": true,
+      "delayed": true,
+      "release": true
+    },
+    "trajectory": [
+      [
+        "1/2",
+        "1/2"
+      ],
+      [
+        "1/5",
+        "1/5"
+      ],
+      [
+        "41/25",
+        "41/25"
+      ],
+      [
+        "539/250",
+        "539/250"
+      ],
+      [
+        "7099/1250",
+        "7099/1250"
+      ],
+      [
+        "42849/6250",
+        "42849/6250"
+      ],
+      [
+        "442849/31250",
+        "442849/31250"
+      ],
+      [
+        "2442849/156250",
+        "2442849/156250"
+      ],
+      [
+        "12442849/781250",
+        "12442849/781250"
+      ]
+    ]
+  },
+  {
+    "crosses_feature_limit": false,
+    "delay_max": 0,
+    "disposition": "NO_COMPOSITION_CERTIFICATE",
+    "gain_envelope_status": "STABLE_ENVELOPE",
+    "gain_matrix": [
+      [
+        "1/2",
+        "0"
+      ],
+      [
+        "0",
+        "3/10"
+      ]
+    ],
+    "hold_contract_valid": false,
+    "id": "C07_held_input_cap_refusal",
+    "max_row_gain": "1/2",
+    "peak_feature": "1",
+    "subsystem_checks": {
+      "actuator_controller": true,
+      "current": true,
+      "delayed": true,
+      "release": true
+    },
+    "trajectory": [
+      [
+        "1",
+        "1"
+      ],
+      [
+        "1/2",
+        "3/10"
+      ],
+      [
+        "1/4",
+        "9/100"
+      ],
+      [
+        "1/8",
+        "27/1000"
+      ],
+      [
+        "1/16",
+        "81/10000"
+      ],
+      [
+        "1/32",
+        "243/100000"
+      ],
+      [
+        "1/64",
+        "729/1000000"
+      ],
+      [
+        "1/128",
+        "2187/10000000"
+      ],
+      [
+        "1/256",
+        "6561/100000000"
+      ]
+    ]
+  },
+  {
+    "crosses_feature_limit": true,
+    "delay_max": 1,
+    "disposition": "NO_COMPOSITION_CERTIFICATE",
+    "gain_envelope_status": "STABLE_ENVELOPE",
+    "gain_matrix": [
+      [
+        "4/5",
+        "0"
+      ],
+      [
+        "0",
+        "4/5"
+      ]
+    ],
+    "hold_contract_valid": true,
+    "id": "C08_estimator_disturbance_feature_escape",
+    "max_row_gain": "4/5",
+    "peak_feature": "45172/15625",
+    "subsystem_checks": {
+      "actuator_controller": true,
+      "current": true,
+      "delayed": true,
+      "release": true
+    },
+    "trajectory": [
+      [
+        "1",
+        "1"
+      ],
+      [
+        "8/5",
+        "8/5"
+      ],
+      [
+        "43/25",
+        "43/25"
+      ],
+      [
+        "272/125",
+        "272/125"
+      ],
+      [
+        "1588/625",
+        "1588/625"
+      ],
+      [
+        "8168/3125",
+        "8168/3125"
+      ],
+      [
+        "45172/15625",
+        "45172/15625"
+      ]
+    ]
+  }
+]

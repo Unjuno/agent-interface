@@ -1,0 +1,77 @@
+{
+  "case_results": {
+    "changed_target": {
+      "authority": "resolution only; ordinary admission remains required",
+      "eligible": false,
+      "point": null,
+      "reason": "region_pixels_missing",
+      "status": "MISSING"
+    },
+    "duplicate_target": {
+      "authority": "resolution only; ordinary admission remains required",
+      "eligible": false,
+      "point": null,
+      "reason": "multiple_exact_region_matches",
+      "status": "AMBIGUOUS"
+    },
+    "focus_changed": {
+      "authority": "resolution only; ordinary admission remains required",
+      "eligible": false,
+      "point": null,
+      "reason": "focus_or_surface_changed",
+      "status": "SCOPE_MISMATCH"
+    },
+    "local_move": {
+      "authority": "resolution only; ordinary admission remains required",
+      "eligible": false,
+      "point": null,
+      "reason": "local_translation_not_allowed",
+      "status": "MOVED"
+    },
+    "missing_alias": {
+      "authority": "resolution only; ordinary admission remains required",
+      "eligible": false,
+      "point": null,
+      "reason": "unknown_session_alias",
+      "status": "MISSING"
+    },
+    "stale_observation": {
+      "authority": "resolution only; ordinary admission remains required",
+      "eligible": false,
+      "point": null,
+      "reason": "expired_or_nonfresh_observation",
+      "status": "STALE"
+    },
+    "unchanged_fresh": {
+      "authority": "resolution only; ordinary admission remains required",
+      "eligible": true,
+      "point": [
+        80,
+        48
+      ],
+      "reason": "exact_region_match",
+      "status": "VALID"
+    },
+    "window_translation": {
+      "authority": "resolution only; ordinary admission remains required",
+      "eligible": true,
+      "point": [
+        85,
+        48
+      ],
+      "reason": "exact_region_match",
+      "status": "REVALIDATED"
+    }
+  },
+  "claim_scope": "synthetic image + current target-handle APIs; no model, GUI, or input dispatch",
+  "flat_source_refused_before_registry_insert": true,
+  "fresh_sequence": 2,
+  "input_dispatch_count": 0,
+  "model_coordinate": [
+    80,
+    48
+  ],
+  "out_of_bounds_refused": true,
+  "schema": "coordinate-grounding-a01-result-v1",
+  "source_sequence": 1
+}

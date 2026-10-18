@@ -1,0 +1,44 @@
+from pathlib import Path
+import json,hashlib,sys
+O=Path(sys.argv[1]);H=lambda b:hashlib.sha256(b).hexdigest()
+rows=[]
+for mode in ('normal_D','wrapper_cancel','native_cancel'):
+    d=O/mode;r=json.loads((d/'RESULT.json').read_bytes());ev=json.loads((d/'events.json').read_bytes());receipt=json.loads((d/'RECEIPT.json').read_bytes())
+    assert r['mode']==mode and r['status']=='COMPLETE_OBSERVATIONS' and type(r['pid']) is int and r['pid']==receipt['pid']
+    assert receipt['exit']==0 and not receipt['timeout'] and receipt['owned_child_terminal'] and receipt['inputs_unchanged']
+    assert r['thread_alive_final'] is False and r['event_count']==len(ev)
+    assert [e['seq'] for e in ev]==list(range(len(ev))) and all(type(e['monotonic_ns']) is int for e in ev)
+    assert all(a['monotonic_ns']<=b['monotonic_ns'] for a,b in zip(ev,ev[1:]))
+    def one(kind):
+        x=[e for e in ev if e['kind']==kind];assert len(x)==1;return x[0]
+    enter=one('reader_enter');handle=one('thread_handle_open');assert type(enter['tid']) is int and enter['tid']==handle['tid']==r['native_tid'] and handle['access']==65 and type(handle['handle']) is int
+    queries=[e for e in ev if e['kind']=='pending_query'];action=one('action_requested')
+    assert len(queries)>=3
+    for e in queries[-3:]:
+        assert e['return_nonzero'] is True and e['pending'] is True and e['worker_done'] is False and e['data_written'] is False and e['tid']==enter['tid'] and e['handle']==handle['handle'] and handle['seq']<e['seq']<action['seq']
+    result=one('read_return');exitrow=one('reader_exit');joined=one('thread_join');close=one('thread_handle_close');snapshot=one('primary_snapshot');pipe=one('pipe_owned');closed=[e for e in ev if e['kind']=='fd_closed']
+    assert action['seq']<result['seq']<exitrow['seq']<joined['seq']<close['seq'] and joined['alive'] is False and close['return_nonzero'] is True and close['handle']==handle['handle']
+    assert {e['fd'] for e in closed}=={pipe['read_fd'],pipe['write_fd']} and len(closed)==2 and all(e['errno']==9 and e['seq']>close['seq'] for e in closed)
+    for name in ('return_nonzero',):assert type(result[name]) is bool
+    for name in ('last_error','count'):assert type(result[name]) is int
+    actual={key:result[key] for key in ('return_nonzero','last_error','count','hex')};assert actual==r['final_outcome']
+    assert all(type(snapshot[x]) is bool for x in ('worker_done','caller_done','caller_cancelled'))
+    assert {x:snapshot[x] for x in ('worker_done','caller_done','caller_cancelled','outcome')}==r['primary']
+    if snapshot['worker_done']:assert snapshot['outcome']==actual and result['seq']<snapshot['seq']
+    else:assert snapshot['outcome']=={} and snapshot['seq']<result['seq']
+    writes=[e for e in ev if e['kind']=='write_requested'];returns=[e for e in ev if e['kind']=='write_return']
+    assert len(writes)==len(returns)
+    for w in writes:
+        ret=[e for e in returns if e['purpose']==w['purpose']];assert len(ret)==1 and ret[0]['count']==1 and type(ret[0]['count']) is int and w['seq']<ret[0]['seq'];assert w['seq']<result['seq']
+    if mode=='normal_D':assert len(writes)==1 and writes[0]['purpose']=='primary' and actual['return_nonzero'] is True and actual['count']==1 and actual['hex']=='44' and snapshot['worker_done']
+    if mode=='wrapper_cancel':assert one('wrapper_cancel_return')['return_true'] is True and action['seq']<one('caller_cancelled')['seq']<snapshot['seq'] and snapshot['caller_cancelled'] is True
+    if mode=='native_cancel':
+        cancel=one('native_cancel_return');assert type(cancel['return_nonzero']) is bool and type(cancel['last_error']) is int
+        assert {x:cancel[x] for x in ('return_nonzero','last_error')}==r['native_cancel']
+    rows.append({'mode':mode,'primary':r['primary'],'final':actual,'events':len(ev),'events_sha256':H((d/'events.json').read_bytes()),'native_cancel':r.get('native_cancel')})
+normal,wrapper,native=rows
+predicted=not wrapper['primary']['worker_done'] and wrapper['final']['hex']=='44' and native['native_cancel']['return_nonzero'] and native['primary']['worker_done'] and native['final']=={'return_nonzero':False,'last_error':995,'count':0,'hex':''}
+status='PASS_H' if predicted else 'UNCERTAIN_RACE' if native['native_cancel']=={'return_nonzero':False,'last_error':1168} else 'COUNTEREXAMPLE_H'
+result={'status':status,'rows':rows,'scope':'synthetic owned one-shot ReadFile only; no pooled-thread, task, performance or runtime claim'}
+(O/'AUDIT.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n',encoding='utf8');print(json.dumps(result))
+

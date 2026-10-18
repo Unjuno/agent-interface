@@ -1,0 +1,49 @@
+test_full_observation_without_typed_companion_is_dispatched (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_full_observation_without_typed_companion_is_dispatched) ... FAIL
+test_typed_then_full_duplicate_epoch_is_processed_once (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_typed_then_full_duplicate_epoch_is_processed_once) ... FAIL
+test_full_then_typed_duplicate_epoch_is_processed_once (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_full_then_typed_duplicate_epoch_is_processed_once) ... FAIL
+test_full_observation_reader_error_invalidates_instead_of_escaping (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_full_observation_reader_error_invalidates_instead_of_escaping) ... ERROR
+
+======================================================================
+ERROR: test_full_observation_reader_error_invalidates_instead_of_escaping (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_full_observation_reader_error_invalidates_instead_of_escaping)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/test_map01_overlap_controller_v39_dual_signal_prior_tmp.py", line 313, in test_full_observation_reader_error_invalidates_instead_of_escaping
+    event = monitor.observe(observation(11, 1_100_000_000))
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/map01_overlap_controller_v39_prior_tmp.py", line 202, in observe
+    signals = {name: reader.read(observation)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/test_map01_overlap_controller_v39_dual_signal_prior_tmp.py", line 304, in read
+    raise OSError("fixture image unavailable")
+OSError: fixture image unavailable
+
+======================================================================
+FAIL: test_full_observation_without_typed_companion_is_dispatched (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_full_observation_without_typed_companion_is_dispatched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/test_map01_overlap_controller_v39_dual_signal_prior_tmp.py", line 242, in test_full_observation_without_typed_companion_is_dispatched
+    self.assertIn("observation", controller.DoomCoverSignalPairMonitor.event_types)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'observation' not found in {'typed_observation'}
+
+======================================================================
+FAIL: test_typed_then_full_duplicate_epoch_is_processed_once (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_typed_then_full_duplicate_epoch_is_processed_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/test_map01_overlap_controller_v39_dual_signal_prior_tmp.py", line 274, in test_typed_then_full_duplicate_epoch_is_processed_once
+    self.assertIn("observation", controller.DoomCoverSignalPairMonitor.event_types)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'observation' not found in {'typed_observation'}
+
+======================================================================
+FAIL: test_full_then_typed_duplicate_epoch_is_processed_once (research.doom.test_map01_overlap_controller_v39_dual_signal_prior_tmp.PairedCoverGuardTests.test_full_then_typed_duplicate_epoch_is_processed_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-7/work/r59-ammo-pair-guard/research/doom/test_map01_overlap_controller_v39_dual_signal_prior_tmp.py", line 298, in test_full_then_typed_duplicate_epoch_is_processed_once
+    self.assertIsNone(monitor.observe(typed))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'event': 'paired_signal_invalidation', 'reason': 'signal_pair_nonadvancing_sequence', 'sequence': 11, 'signals': {'health': {'format': 'observable-signal-v1', 'status': 'observed', 'signal_id': 'health', 'value': 100, 'sequence': 11, 'capture_ns': 1100000000, 'binding': {'focus': 7, 'surface': 9, 'geometry': [0, 0, 640, 480]}}, 'ammo': {'format': 'observable-signal-v1', 'status': 'observed', 'signal_id': 'ammo', 'value': 2, 'sequence': 11, 'capture_ns': 1100000000, 'binding': {'focus': 7, 'surface': 9, 'geometry': [0, 0, 640, 480]}}}, 'outcomes': None, 'outcome': {'status': 'UNKNOWN', 'reason': 'signal_pair_nonadvancing_sequence', 'requires_new_decision': True, 'grants_input_authority': False, 'may_only_preserve_or_reduce_existing_authority': True, 'task_success_verified': False}, 'outcome_evaluated_ns': 147036733997208, 'requires_new_decision': True, 'grants_input_authority': False} is not None
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=3, errors=1)

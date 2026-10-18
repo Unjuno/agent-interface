@@ -1,0 +1,9 @@
+Formal candidate/auditor command requested: linux/arm64, --cpus=1, --memory=1g, --pids-limit=64, --network none.
+
+A separate post-run read-only diagnostic container, using the same pinned image and the same CPU/memory/PID flags, observed:
+cpu.max=100000 100000
+memory.max=1073741824
+memory.swap.max=1073741824
+pids.max=64
+
+The formal runner itself did not read /sys/fs/cgroup, so these readings are runtime corroboration from a separate diagnostic container, not measurements sampled inside the formal candidate/auditor container. Swap was not disabled: the cgroup exposed a 1 GiB swap limit. Do not infer zero swap use or stronger enforcement from the Docker request alone.

@@ -1,0 +1,38 @@
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+import time
+
+root = Path(__file__).resolve().parent
+source = root / 'source-pr8065'
+run_dir = root / sys.argv[1]
+run_dir.mkdir(exist_ok=False)
+probe = root / 'probe_startup.py'
+manifest = json.loads((root / 'source-manifest.json').read_text())
+for path, item in manifest['files'].items():
+    if hashlib.sha256((source / path).read_bytes()).hexdigest() != item['sha256']:
+        raise RuntimeError('source changed: ' + path)
+receipts = []
+for route in ('v12-perkey', 'v15-default', 'v15-perkey'):
+    command = [sys.executable, '-B', str(probe), str(source), str(run_dir / route), route]
+    started = time.time_ns()
+    result = subprocess.run(command, capture_output=True, timeout=20)
+    (run_dir / (route + '.stdout.txt')).write_bytes(result.stdout)
+    (run_dir / (route + '.stderr.txt')).write_bytes(result.stderr)
+    receipt = {'route': route, 'command': command, 'exit_code': result.returncode,
+        'started_unix_ns': started, 'ended_unix_ns': time.time_ns(),
+        'stdout_sha256': hashlib.sha256(result.stdout).hexdigest(),
+        'stderr_sha256': hashlib.sha256(result.stderr).hexdigest(),
+        'probe_sha256': hashlib.sha256(probe.read_bytes()).hexdigest()}
+    (run_dir / (route + '.receipt.json')).write_text(json.dumps(receipt, indent=2) + '\n')
+    receipts.append(receipt)
+    print(json.dumps({'route': route, 'exit_code': result.returncode,
+        'stderr': result.stderr.decode()[-1500:]}))
+    if result.returncode:
+        break
+(run_dir / 'source-manifest.json').write_bytes((root / 'source-manifest.json').read_bytes())
+(run_dir / 'probe_startup.py.txt').write_bytes(probe.read_bytes())
+(run_dir / 'summary.json').write_text(json.dumps(receipts, indent=2) + '\n')
+sys.exit(any(item['exit_code'] for item in receipts))

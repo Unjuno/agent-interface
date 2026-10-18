@@ -1,0 +1,3 @@
+Input identity STOP (construction provenance error)
+
+The first passing construction replay used the checked-out main package copy, not the exact source-locked raw bytes. GitHub blob 78d7e68c6a5b98fc55829e6bab378c0f06cbb335 has SHA-256 7a1a85a1cc07971b2bf6aa5e1d62541305b9fe8b55482fe46506d90b90db8b4f and ends with one LF. The main package copy at blob 76df157013096bcd0ec43c337e7b43953e967eb1 had SHA-256 961b867713d9fbbef923b61b6271b6f4f8a94a488b4833f344e3583411b433cf and one extra final LF. That run is excluded from the final result. The final run used the exact fetched original blob; the local Git blob SHA and SHA-256 both matched.

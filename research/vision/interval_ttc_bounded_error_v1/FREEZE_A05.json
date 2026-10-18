@@ -1,0 +1,45 @@
+{
+  "issue": 8157,
+  "allocation": "interval-ttc-posthoc-retained-raw-a05-20261006",
+  "freeze_commit": "2bad05dab1ea975f4fa34600d22db10b63db38f7",
+  "formal_a02_disposition_preserved": "FAIL_METHOD",
+  "formal_a03_disposition_preserved": "STOP_AUDITOR_RUNTIME_ERROR",
+  "a04_prerequisite": "PASS_RAW_RECONCILIATION_ONLY",
+  "protocol": "PROTOCOL_A05_POSTHOC_SCORE_AUDIT.md",
+  "protocol_sha256": "840e9733f2fe1ef956d10a3e7b9dd82c18b66d7d5c720fc7a53c20a5bf4d3197",
+  "program": "audit_only_a05.py",
+  "program_sha256": "128fe5a4cdc4f0ed1c848f7bf8fbe52f56eea235c487b4d56650c57c1384f0a3",
+  "tests": "test_audit_only_a05.py",
+  "tests_sha256": "760103d6f18b9463a41b4b5e9de62a0e72602ae40bef3fbee051fcb4601d1bc8",
+  "a02_protocol_sha256": "38bb8cd79fa7c51bdc1df3ef1f20bf33dd01479bbfefa149f776b52d1b8a34f1",
+  "a04_report_sha256": "aacd1864216bdef5431e15bf48c344024f7194b5b7ab7f5f0e42466c6cbedcf5",
+  "a02_artifact_sha256": {
+    "public": "c04d597eb90483b51e055704dbfd72429d83fb9f804d78b0470fee97192315d9",
+    "oracle": "298fbe931ae91ebbf31abb89f17ad0e652cb9418cb5d2b108c7f9d2a14d3410c",
+    "candidate": "c35b44be558110784b94a92d9b0d2df83db75c519218fd6ea88a65055cd54557"
+  },
+  "runtime": {
+    "name": "WSLc",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpus": 1,
+    "memory": "512M",
+    "source_mount": "read-only",
+    "output_mount": "read-write",
+    "pull": "never",
+    "remove_after_exit": true
+  },
+  "command": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --volume <repo>:/src:ro --volume <repo>/research/vision/interval_ttc_bounded_error_v1/results/POSTHOC_A05_METHOD_SCORE_AUDIT:/out:rw --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/research/vision/interval_ttc_bounded_error_v1/audit_only_a05.py /src/research/vision/interval_ttc_bounded_error_v1 /out/AUDIT_REPORT.json",
+  "invocations": {
+    "a05_auditor": 1,
+    "a05_retries": 0,
+    "candidate": 0,
+    "generator": 0,
+    "a02_auditor_rerun": 0,
+    "a03_auditor_rerun": 0,
+    "a04_auditor_rerun": 0
+  },
+  "decision_scope": "posthoc score diagnostic on immutable A02 raw only; no new formal allocation and no change to A02 FAIL_METHOD"
+}

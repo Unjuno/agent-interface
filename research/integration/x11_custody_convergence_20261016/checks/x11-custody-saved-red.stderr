@@ -1,0 +1,98 @@
+EEEEFEE
+======================================================================
+ERROR: test_changed_and_truncated_capsules_are_rejected (__main__.SavedPublicationTests.test_changed_and_truncated_capsules_are_rejected) (change='changed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 55, in test_changed_and_truncated_capsules_are_rejected
+    root = self.copied()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 18, in copied
+    shutil.copytree(HERE / 'capsules', root / 'capsules')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 591, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [WinError 3] �w�肳�ꂽ�p�X��������܂���B: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\integration\\x11_custody_convergence_20261016\\capsules'
+
+======================================================================
+ERROR: test_changed_and_truncated_capsules_are_rejected (__main__.SavedPublicationTests.test_changed_and_truncated_capsules_are_rejected) (change='truncated')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 55, in test_changed_and_truncated_capsules_are_rejected
+    root = self.copied()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 18, in copied
+    shutil.copytree(HERE / 'capsules', root / 'capsules')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 591, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [WinError 3] �w�肳�ꂽ�p�X��������܂���B: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\integration\\x11_custody_convergence_20261016\\capsules'
+
+======================================================================
+ERROR: test_changed_or_missing_public_member_is_rejected (__main__.SavedPublicationTests.test_changed_or_missing_public_member_is_rejected) (change='changed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 33, in test_changed_or_missing_public_member_is_rejected
+    root = self.copied()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 18, in copied
+    shutil.copytree(HERE / 'capsules', root / 'capsules')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 591, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [WinError 3] �w�肳�ꂽ�p�X��������܂���B: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\integration\\x11_custody_convergence_20261016\\capsules'
+
+======================================================================
+ERROR: test_changed_or_missing_public_member_is_rejected (__main__.SavedPublicationTests.test_changed_or_missing_public_member_is_rejected) (change='missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 33, in test_changed_or_missing_public_member_is_rejected
+    root = self.copied()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 18, in copied
+    shutil.copytree(HERE / 'capsules', root / 'capsules')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 591, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [WinError 3] �w�肳�ꂽ�p�X��������܂���B: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\integration\\x11_custody_convergence_20261016\\capsules'
+
+======================================================================
+ERROR: test_extra_member_or_fabricated_omission_is_rejected (__main__.SavedPublicationTests.test_extra_member_or_fabricated_omission_is_rejected) (name='unexpected.txt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 45, in test_extra_member_or_fabricated_omission_is_rejected
+    root = self.copied()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 18, in copied
+    shutil.copytree(HERE / 'capsules', root / 'capsules')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 591, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [WinError 3] �w�肳�ꂽ�p�X��������܂���B: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\integration\\x11_custody_convergence_20261016\\capsules'
+
+======================================================================
+ERROR: test_extra_member_or_fabricated_omission_is_rejected (__main__.SavedPublicationTests.test_extra_member_or_fabricated_omission_is_rejected) (name='continuation33/COPYING')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 45, in test_extra_member_or_fabricated_omission_is_rejected
+    root = self.copied()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 18, in copied
+    shutil.copytree(HERE / 'capsules', root / 'capsules')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 591, in copytree
+    with os.scandir(src) as itr:
+         ~~~~~~~~~~^^^^^
+FileNotFoundError: [WinError 3] �w�肳�ꂽ�p�X��������܂���B: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\integration\\x11_custody_convergence_20261016\\capsules'
+
+======================================================================
+FAIL: test_complete_publication_keeps_omissions_and_historical_scope (__main__.SavedPublicationTests.test_complete_publication_keeps_omissions_and_historical_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\x11_custody_convergence_20261016\test_saved_publication.py", line 24, in test_complete_publication_keeps_omissions_and_historical_scope
+    self.assertEqual(report['public_members'], 391)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 391
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.005s
+
+FAILED (failures=1, errors=6)

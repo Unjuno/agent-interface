@@ -1,0 +1,38 @@
+{
+  "allocation": "C05",
+  "issue": 8654,
+  "status": "STOP_RAW_CUSTODY_NOT_RETAINED",
+  "branch": "research/8654-c05-propensity-misspec-20261009",
+  "base_main_sha": "cb3fb7cea16ab57c5474164dc17b88f7ff51daa9",
+  "frozen_candidate_path": "research/analysis/cue_reliability_8654_c05_20261009/candidate.js",
+  "frozen_candidate_blob_commit": "5fa176a6202c12c690eb488d97884337174ef0c5",
+  "frozen_candidate_sha256": "07e2c4ec72c2081a3b5b01d2ac9174e0d5ed6276e487255cece3eb3e3142ae9e",
+  "frozen_auditor_path": "research/analysis/cue_reliability_8654_c05_20261009/audit.js",
+  "frozen_auditor_blob_commit": "2f4b9f5543faa200a64a19a7241784579b541597",
+  "frozen_auditor_sha256": "966a0b4ea44554572ea8d481ee91fd80419a59e898ec66fbc6fdda0c21950896",
+  "execution": {
+    "environment": "local Windows PowerShell CPU process; no container, Docker, WSLc, model, GUI, or network access from candidate",
+    "node": "v24.6.0",
+    "invocations": 1,
+    "candidate_rows_emitted": 771,
+    "raw_bytes": 1094378,
+    "raw_sha256": "db2a81c6d611b4dc9d3484727ea06fb746dcd889621fceea9a465002b0aa8b04"
+  },
+  "auditor_observation": {
+    "invocations": 1,
+    "rows_reconstructed": 771,
+    "unique_ids": 771,
+    "probability_mass_groups": 6,
+    "each_group_mass": 1,
+    "known_propensity_exact_expectation": true,
+    "greedy_rows_unidentifiable": true,
+    "mutations_rejected": "4/4"
+  },
+  "stop_reason": "The candidate's stdout was captured in a transient tool response but the raw JSONL was not durably stored before the response was returned. Only byte count and SHA-256 remain; do not promote the scientific result.",
+  "prohibited": [
+    "Do not rerun or regenerate this consumed C05 allocation.",
+    "Do not claim PASS_METHOD_SCOPED from the transient audit summary.",
+    "Do not infer a real-agent, GUI, model-learning, safety, latency, or product result."
+  ],
+  "source_status": "Candidate and auditor sources are preserved on the branch. Their contents were read back byte-for-byte before the single execution."
+}

@@ -1,0 +1,104 @@
+{
+  "experiment": "issue59-screen-signal-boundary-a01-20261008",
+  "scope": "Synthetic current-main controller behavior only; not live threat efficacy.",
+  "screen_only_change": {
+    "ammo_current": 50,
+    "ammo_source": 50,
+    "frame_hash_changed": true,
+    "health_current": 100,
+    "health_source": 100,
+    "result": null
+  },
+  "status": "CONSTRUCTION_OBSERVATION",
+  "typed_hard_crossing": {
+    "ammo_current": 50,
+    "ammo_source": 50,
+    "frame_hash_changed": true,
+    "health_current": 79,
+    "health_source": 100,
+    "result": {
+      "event": "paired_signal_invalidation",
+      "grants_input_authority": false,
+      "monitor_received_ns": 437116307880700,
+      "outcome": {
+        "current_value": 79,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "health",
+        "hard_minimum": 80,
+        "keep_existing_policy": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "semantic_change_identified": true,
+        "signal_id": "health",
+        "source_age_ms": 1.0,
+        "source_value": 100,
+        "status": "HARD_INVALIDATED",
+        "task_success_verified": false
+      },
+      "outcome_evaluated_ns": 437116307894200,
+      "outcomes": {
+        "ammo": {
+          "current_value": 50,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "ammo",
+          "hard_minimum": 1,
+          "keep_existing_policy": true,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "signal_unchanged",
+          "requires_new_decision": false,
+          "semantic_change_identified": false,
+          "signal_id": "ammo",
+          "source_age_ms": 1.0,
+          "source_value": 50,
+          "status": "UNCHANGED",
+          "task_success_verified": false
+        },
+        "health": {
+          "current_value": 79,
+          "format": "observable-signal-guard-outcome-v1",
+          "grants_input_authority": false,
+          "guard_id": "health",
+          "hard_minimum": 80,
+          "keep_existing_policy": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "reason": "below_hard_minimum",
+          "requires_new_decision": true,
+          "semantic_change_identified": true,
+          "signal_id": "health",
+          "source_age_ms": 1.0,
+          "source_value": 100,
+          "status": "HARD_INVALIDATED",
+          "task_success_verified": false
+        }
+      },
+      "reason": "health:below_hard_minimum",
+      "requires_new_decision": true,
+      "sequence": 2,
+      "signals": {
+        "ammo": {
+          "binding": {
+            "surface_id": "synthetic-map01"
+          },
+          "capture_ns": 2000000,
+          "sequence": 2,
+          "signal_id": "ammo",
+          "status": "observed",
+          "value": 50
+        },
+        "health": {
+          "binding": {
+            "surface_id": "synthetic-map01"
+          },
+          "capture_ns": 2000000,
+          "sequence": 2,
+          "signal_id": "health",
+          "status": "observed",
+          "value": 79
+        }
+      }
+    }
+  }
+}

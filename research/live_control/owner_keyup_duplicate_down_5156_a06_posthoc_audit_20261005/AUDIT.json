@@ -1,0 +1,101 @@
+{
+  "candidate_exit": "0",
+  "classification": "READ_ONLY_POSTHOC_RECONSTRUCTION_NOT_FORMAL_REAUDIT",
+  "custody_errors": [],
+  "formal_allocation_disposition": "STOP_CONSUMED_UNCHANGED",
+  "input_snapshot_status": "PASS",
+  "limitations": [
+    "A05 is not the consumed formal auditor invocation and does not upgrade A04.",
+    "The A04 freeze has Git-blob mismatches and missing local manifest entries; copied dependencies match the declared base commit, but the freeze defects remain STOP evidence.",
+    "The trace is fake-Xlib/direct-owner only and has no real X11, physical, application, game, feedback, recovery, latency, safety, or authority interpretation."
+  ],
+  "original_formal_auditor_exit": "1",
+  "postrun_sha256_mismatches": [],
+  "raw_base_error_count": 0,
+  "raw_errors": [],
+  "raw_reconstruction": "PASS_SCOPED",
+  "result_sha256": "6f75f798185ce627d33ea2b0326fed436ea38dc6789fa04525c4c0afc1a2c307",
+  "schema": "owner-keyup-duplicate-down-a06-posthoc-audit-v2",
+  "scientific_outcome": "NOT_ASSIGNED_BY_A05",
+  "source_provenance": {
+    "a04_pre_run_source_commit": "2e5641aea33a204bc27681abf70c2d619302b6cf",
+    "copied_dependency_checks": [
+      {
+        "copied_git_blob": "81484e6146bb8b93a007f338df3e504620924a45",
+        "copied_sha256": "0e307af96760d7c70e1d2ed7f7810530d38deddec51062c8057c78d7db57b0e0",
+        "copy_matches_pinned_base": true,
+        "freeze_manifest_git_blob": "c4382f9738939eb36b1779b127e6ed7bdd9c7175",
+        "freeze_manifest_matches_base": false,
+        "path": "research/doom/doom_retained_input_backend_v4.py",
+        "pinned_base_git_blob": "81484e6146bb8b93a007f338df3e504620924a45"
+      },
+      {
+        "copied_git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+        "copied_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+        "copy_matches_pinned_base": true,
+        "freeze_manifest_git_blob": "051e8a71591528e752fb542325e1bf43fb2f9ed3",
+        "freeze_manifest_matches_base": false,
+        "path": "research/live_control/input_owner_v10.py",
+        "pinned_base_git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e"
+      },
+      {
+        "copied_git_blob": "99dfc7c9907b018e7473bc2ba8a7393a5b221f51",
+        "copied_sha256": "b4064c12465dcdf3ccb763d95093a25e2ee8892149da3a1718c6f47bb5a15078",
+        "copy_matches_pinned_base": true,
+        "freeze_manifest_git_blob": "067d3673f0061dd3025985fe9c437f9b6de6abdb",
+        "freeze_manifest_matches_base": false,
+        "path": "research/live_control/input_transition_owner_v3.py",
+        "pinned_base_git_blob": "99dfc7c9907b018e7473bc2ba8a7393a5b221f51"
+      }
+    ],
+    "formal_auditor_source_sha256": "3cd5ac7e52680655e771f5eff3fcd8eed9cfbfda39d3eb63da562b4277f58ba9",
+    "formal_freeze_manifest_mismatches": [
+      {
+        "actual": "81484e6146bb8b93a007f338df3e504620924a45",
+        "expected": "c4382f9738939eb36b1779b127e6ed7bdd9c7175",
+        "path": "Git blob research/doom/doom_retained_input_backend_v4.py"
+      },
+      {
+        "actual": "341b3c01649943ddaad5f28431a792c4889cc36e",
+        "expected": "051e8a71591528e752fb542325e1bf43fb2f9ed3",
+        "path": "Git blob research/live_control/input_owner_v10.py"
+      },
+      {
+        "actual": "99dfc7c9907b018e7473bc2ba8a7393a5b221f51",
+        "expected": "067d3673f0061dd3025985fe9c437f9b6de6abdb",
+        "path": "Git blob research/live_control/input_transition_owner_v3.py"
+      }
+    ],
+    "formal_freeze_manifest_missing_paths": [
+      {
+        "expected_sha256": "7d9cf55c8aa02328f5329666337ba40c96d46d8b5ac81cec984a4bcf0b602d01",
+        "path": "prefreeze-audit-attempts.log"
+      }
+    ],
+    "frozen_formal_auditor_source_matches_pre_run_source": true,
+    "main_commit": "a9352dc53c783f1501046d762bc36c34bc6ab480",
+    "root_freeze_manifest_mismatches": [
+      {
+        "actual": "81484e6146bb8b93a007f338df3e504620924a45",
+        "expected": "c4382f9738939eb36b1779b127e6ed7bdd9c7175",
+        "path": "Git blob research/doom/doom_retained_input_backend_v4.py"
+      },
+      {
+        "actual": "341b3c01649943ddaad5f28431a792c4889cc36e",
+        "expected": "051e8a71591528e752fb542325e1bf43fb2f9ed3",
+        "path": "Git blob research/live_control/input_owner_v10.py"
+      },
+      {
+        "actual": "99dfc7c9907b018e7473bc2ba8a7393a5b221f51",
+        "expected": "067d3673f0061dd3025985fe9c437f9b6de6abdb",
+        "path": "Git blob research/live_control/input_transition_owner_v3.py"
+      }
+    ],
+    "root_freeze_manifest_missing_paths": [
+      {
+        "expected_sha256": "7d9cf55c8aa02328f5329666337ba40c96d46d8b5ac81cec984a4bcf0b602d01",
+        "path": "prefreeze-audit-attempts.log"
+      }
+    ]
+  }
+}

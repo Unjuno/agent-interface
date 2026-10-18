@@ -1,0 +1,17 @@
+# Issue #8502 T0 A01 — synthetic ordinal comparability gate
+
+**Scope:** method validation only. This package does not estimate or establish human workload, scalar invariance, latent-mean comparability, accessibility conformance, task benefit, or safety. No participant data, GUI, model, network, GPU, container, or runtime was used.
+
+## H / T / D / C / U
+
+- **H:** A frozen response-screen can flag large planted ordinal threshold, item-loading, and factor-structure changes; accept a sufficiently sampled invariant control at its declared practical margins; and return `UNCERTAIN` rather than accept an underpowered sample.
+- **T:** Freeze five synthetic two-group, six-item, five-category ordinal fixtures: (F01) common one-factor model, (F02) one item's thresholds shifted, (F03) one item's loading shifted while its latent response variance remains one, (F04) one-factor to two-factor structure change, and (F05) identical model with only 20 responses per group. Generate ordinal responses from fixed seeded Gaussian latent variables and cutpoints. Candidate uses only response values and fixture IDs, never the truth labels. It applies a two-stage screen: maximum cumulative-category-proportion difference >0.15 for threshold flags; otherwise absolute item-correlation difference >0.22, with a single-node star localized as a loading pattern and other changed-edge patterns classified as structural. Minimum n/group is 100. An independently written raw-only auditor recomputes the summaries and decisions from fixture bytes and checks the separate truth table, source/input hashes, localization, and mutation controls.
+- **D:** `METHOD_PASS_SCOPED` only if all five fixtures receive the predeclared class/localization, the invariant control is not flagged, the underpowered fixture is `UNCERTAIN`, the independent audit agrees, and all hostile mutations are rejected. Any mismatch is `FAIL_METHOD`. This is a deliberately coarse screening method validation, not a psychometric model-fit result.
+- **C:** Finite fixtures use known one-/two-factor generators, large planted effects, fixed cutpoints and one seed per condition. A simple moment screen may miss subtle DIF, confound actual latent-distribution changes with measurement changes, or classify other covariance patterns incorrectly. Synthetic truth does not make real human construct validity known.
+- **U:** No human responses, language/accessibility variants, route/task effects, real latent-mean differences, adequate power study, ordinal CFA/IRT, or empirical workload construct. A `COMPATIBLE_SCREEN` result is not permission to compare human means.
+
+## Frozen construction decisions
+
+There are six ordinal items with scores 0–4 and group labels `A`/`B`; those labels are the only condition identifiers. Thresholds for the baseline distribution are `[-1.0,-0.3,0.3,1.0]`; common loadings are 0.80. F02 shifts all four cutpoints for item 2 in group B by +0.65. F03 changes only item 2's group-B loading to 0.10, preserving unit latent-response variance with independent residual noise. F04 changes group B to independent factors for items 0–2 and 3–5. The full fixtures use 1,500 responses per group; F05 uses 20 per group. Seeds and generated source bytes are recorded in `FREEZE.json` after construction.
+
+No threshold, correlation, sample-size or classification rule may be changed after formal candidate output is created. Candidate and auditor each run once against the frozen input; failures remain terminal for A01.

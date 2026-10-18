@@ -1,0 +1,16 @@
+{
+  "host_os": "macOS 27.0.1",
+  "python": "Python 3.14.5",
+  "container_runtime": "OrbStack Docker context",
+  "container_preflight": {
+    "command": "docker image ls --digests",
+    "result": "STOP before candidate execution",
+    "error": "daemon returned code Unknown while opening a content blob: operation not supported",
+    "candidate_started": false
+  },
+  "candidate_runtime": "host Python, deterministic fake Xlib only",
+  "network": "not used by candidate",
+  "gpu": "not used",
+  "game_or_gui": "not started",
+  "predecessor_stops": ["A01 source import omitted lease.py", "A02 used wrong wrapper nesting"]
+}

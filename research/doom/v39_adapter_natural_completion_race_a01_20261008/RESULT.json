@@ -1,0 +1,45 @@
+{
+  "schema": "v39-adapter-natural-completion-race-a01-v1",
+  "status": "PASS_COMPLETION_RETAINED_BUT_ANSWER_INVALIDATED",
+  "main": "286b4e197cf2cf1cdceea18ca65c2c0bb95c8c52",
+  "source_blobs": {
+    "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "research/live_control/persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15",
+    "research/live_control/codex_app_server_client_v2.py": "8553874221761a7807c846c7dcd66c22fc6340ff"
+  },
+  "events": [
+    {
+      "event": "executor_cancel_write",
+      "at_ns": 451877653248700
+    },
+    {
+      "event": "executor_cancel_flush",
+      "at_ns": 451877653251600
+    },
+    {
+      "event": "interrupt_request_written",
+      "at_ns": 451877653260000
+    },
+    {
+      "event": "turn_completed_notification_received",
+      "at_ns": 451877653449000
+    },
+    {
+      "event": "interrupt_response_received",
+      "at_ns": 451877653556200
+    }
+  ],
+  "planner_completion_before_interrupt_ack": true,
+  "turn_result": {
+    "status": "completed",
+    "cancellation_requested": true,
+    "answer_eligible": false,
+    "answer": null,
+    "error": "answer belongs to an invalidated observation"
+  },
+  "assertions": {
+    "completion_observed_while_interrupt_response_pending": true,
+    "late_answer_rejected": true,
+    "executor_cancel_before_interrupt_request": true
+  }
+}

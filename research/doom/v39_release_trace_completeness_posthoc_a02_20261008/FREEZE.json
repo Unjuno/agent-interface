@@ -1,0 +1,60 @@
+{
+  "schema": "map01-v39-release-trace-completeness-freeze-v2",
+  "kind": "posthoc_retained_trace_analysis",
+  "frozen_main": "6149fc1856ce86de41b168de8ca12690347f524d",
+  "frozen_main_role": "Git container for retrieving immutable retained evidence; the original live allocation source freeze is recorded in the frozen preregistration input.",
+  "allocation_id": "map01-v39-coast-liveness-live-01",
+  "inputs": {
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl": {
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+      "bytes": 565849
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/owner-events.json": {
+      "git_blob": "596daf6e8f42669bd022c8dbe2d047929242e94c",
+      "sha256": "cdf628825312e6eb0cd810f7d0b3a77e52c1c2f646099bc07a34b4e3a90c08b7",
+      "bytes": 2575
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/report.json": {
+      "git_blob": "bff2459036dcdcc44ed100b0c0bc657e1bb8e69a",
+      "sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+      "bytes": 344806
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/audit-v2.json": {
+      "git_blob": "a46d707c2c71450af2f7f8f2ab16bd4ddac6771b",
+      "sha256": "bb03c350009169283f36c8f0c0a919bb18d46e828ac68b99f40a567d2f141bfc",
+      "bytes": 2025
+    },
+    "research/doom/map01_v39_coast_liveness_live_v1_prereg.json": {
+      "git_blob": "5971e036dc4a860f515e1b357169899f9effa97d",
+      "sha256": "f02e48e0eede9cb33e9ff4865abd20b6081d2cba4068b2cab8e137465b374770",
+      "bytes": 5958
+    }
+  },
+  "decision_rule": "PASS_TRACE_RECONCILIATION only when all cancel requests match one cancelled terminal with a verified empty terminal release, and every active interruption receipt is empty, verified and time-ordered. Report early-release event coverage separately; its absence is an observed gap, not a failed release.",
+  "scope_limits": [
+    "Historical one-shot live run; no gameplay or model rerun.",
+    "Aggregate owner empty-state timestamps only; no per-key up timestamps.",
+    "No independent application-consumption or useful-feedback timestamp.",
+    "Posthoc association; no source repair or causal performance claim."
+  ],
+  "predecessor_a01": {
+    "commit": "a0d0602b89b1f5a05f851728fe90684ec4bfeff5",
+    "artifacts": {
+      "result": {
+        "path": "research/doom/v39_release_trace_completeness_posthoc_a01_20261008/RESULT.json",
+        "git_blob": "ca2596a2244eb4cc2c62992f873a9c0cc242b0a0",
+        "sha256": "9f9a4cbb21498b045d35434aea88490b4878855af76bf90cc0f2679dc5c67e0a",
+        "bytes": 5815,
+        "preserved_copy": "predecessor/A01-RESULT-v2.json"
+      },
+      "audit": {
+        "path": "research/doom/v39_release_trace_completeness_posthoc_a01_20261008/AUDIT.json",
+        "git_blob": "adbbd45921479d990cb73f3e61c9c9af47a30377",
+        "sha256": "00e4938981f5ed894c6b9b67444db941a72d1319d666da64499759b7cd4b6fdd",
+        "bytes": 573,
+        "preserved_copy": "predecessor/A01-AUDIT-v2.json"
+      }
+    }
+  }
+}

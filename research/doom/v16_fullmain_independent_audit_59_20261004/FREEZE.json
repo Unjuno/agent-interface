@@ -1,0 +1,18 @@
+{
+  "schema": "issue59-v16-fullmain-independent-audit-freeze-v1",
+  "base_commit": "2fde408576e02ae735fc80cc1f8f835961394e4c",
+  "source_records": [
+    "research/doom/v16_fullmain_59_4d74_20261004/",
+    "research/doom/v16_one_hold_59_4d74_20261004/"
+  ],
+  "audit": "audit.py",
+  "adapter_replay": "adapter_replay.py",
+  "adapter_dependency": "dependency/SOURCE_PINS.json",
+  "tests": "test_audit.py",
+  "commands": [
+    "python -B research/doom/v16_fullmain_independent_audit_59_20261004/audit.py --repo .",
+    "python -B research/doom/v16_fullmain_independent_audit_59_20261004/adapter_replay.py --repo .",
+    "python -B -m unittest discover -s research/doom/v16_fullmain_independent_audit_59_20261004 -p test_*.py -v"
+  ],
+  "scope": "Read-only audit and adapter replay over retained no-action and one-hold outputs; no new experiment allocation, input, GUI launch, model call, or resource reservation. Adapter dependency source is pinned to draft PR #7561 and copied byte-for-byte."
+}

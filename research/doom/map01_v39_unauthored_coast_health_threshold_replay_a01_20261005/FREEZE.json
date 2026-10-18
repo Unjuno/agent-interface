@@ -1,0 +1,20 @@
+{
+  "schema": "map01-v39-unauthored-coast-health-threshold-replay-freeze-v1",
+  "allocation_id": "MAP01-V39-COAST-HEALTH-THRESHOLD-REPLAY-A01-20261005",
+  "status_scope": "posthoc_deterministic_replay_of_one_retained_live_trace",
+  "selected_main": "95316efef54b092fc2f0264539223830cdb9ba21",
+  "source_exposure_pr": "https://github.com/Unjuno/agent-interface/pull/7990",
+  "source_exposure_head": "3c6862937f30a22aad6380699f23da92d5d2c6f9",
+  "source_raw_archive_sha256": "b6e8529a51e89e6f1c51374fbd27f121bab594c92014ee2fe73aa2f94ef98163",
+  "source_event_sha256": "31ec4ce34b502fb6873ab8a7aecb33564f5069dfc3e498399ce1aa41199d133a",
+  "source_report_sha256": "a3158839e9832df3bbd46b5b2f1f4341b42996639257122687d3a3290e85a8cc",
+  "decision_index": 5,
+  "thresholds_health_loss_points": [5, 10, 15, 20, 25],
+  "crossing_operator": "source_health - observed_health >= threshold",
+  "model_pending_interval_ns": {
+    "start": 9113893069981,
+    "planner_terminal_observed": 9126593953232,
+    "controller_model_end": 9126594040406
+  },
+  "interpretation_freeze": "Report only observed first-cross timing and remaining time before the original terminal. No counterfactual model response, interruption efficacy, task effect, or safe operational threshold is inferred."
+}

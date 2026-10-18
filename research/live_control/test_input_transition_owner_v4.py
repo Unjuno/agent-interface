@@ -27,6 +27,16 @@ class OwnerReceiptJoinTests(unittest.TestCase):
                         "owner_id": self.owner_id, "intent_token": lease.intent_token,
                         "valid_until_ns": lease.deadline,
                         "owner_keyrelease_started_ns": 12, "owner_sync_returned_ns": 13,
+                        "owner_keymap_sampled_ns": 14,
+                        "server_keyup_verified": True,
+                        "server_key_down_after_keyup": False,
+                        "server_keyup_attempt_count": 1,
+                        "server_keyup_attempts": [{"attempt": 1,
+                            "keyrelease_started_ns": 12, "sync_returned_ns": 13,
+                            "keymap_sampled_ns": 14,
+                            "server_key_down_before": True,
+                            "server_key_down_after": False}],
+                        "key_state_source": "x11_query_keymap",
                         "cancel_requested_after_sync": False,
                         "server_sync_completed": True,
                         "physical_verification_authoritative": False,
@@ -68,6 +78,7 @@ class OwnerReceiptJoinTests(unittest.TestCase):
         transition_module.InputOwner = Previous
         saved_owner = sys.modules.get("input_owner_v12")
         saved_transition = sys.modules.get("input_transition_owner_v3")
+        saved_candidate = sys.modules.pop('input_transition_owner_v4',None)
         sys.modules["input_owner_v12"] = owner_module
         sys.modules["input_transition_owner_v3"] = transition_module
         sys.path.insert(0, str(HERE))
@@ -83,6 +94,7 @@ class OwnerReceiptJoinTests(unittest.TestCase):
         finally:
             sys.path.remove(str(HERE))
             sys.modules.pop("input_transition_owner_v4", None)
+            if saved_candidate is not None:sys.modules['input_transition_owner_v4']=saved_candidate
             if saved_owner is None:
                 sys.modules.pop("input_owner_v12", None)
             else:

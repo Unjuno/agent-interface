@@ -1,0 +1,28 @@
+{
+  "schema": "application-qualified-draft-7409-post-run-qualification-v1",
+  "formal_allocation": "APPLICATION-QUALIFIED-DRAFT-7409-T0-A01-20261005-01",
+  "formal_invocations_after_original_run": {"candidate": 0, "auditor": 0, "retries": 0},
+  "preserved_original_audit": {
+    "disposition": "METHOD_PASS_SCOPED",
+    "sha256": "9b74747dad9938159f76f7139ebcdc5c760173b389f724f33ce339839e2547eb"
+  },
+  "post_run_disposition": "HOLD_AUDIT_WEAKNESS",
+  "decision": "Do not accept the recorded METHOD_PASS_SCOPED as satisfying the T0 gate. The required live-revision check is only self-asserted and is not evidenced by candidate transitions or independently reconstructed raw fields.",
+  "findings": [
+    {
+      "file": "frozen/candidate.py",
+      "lines": "65-66, 79, 96, 114",
+      "evidence": "The candidate derives a human revision from fixture input and computes field overlaps, but never reads base_revision or compares the base revision with the current live revision. It writes revision_checked=true as a constant in the conflict, hold, and promotion outputs."
+    },
+    {
+      "file": "frozen/auditor.py",
+      "lines": "23, 48-50, 56, 64, 73, 110",
+      "evidence": "The auditor independently checks the field-overlap set, but likewise never verifies a base/current revision comparison. Its reconstructed rows hardcode revision_checked=true; the unchecked_revision_change mutation merely changes this output bit and is rejected by row equality."
+    },
+    {
+      "file": "results/a01/candidate.raw.json",
+      "evidence": "C4 reports revision_checked=true and promotes to r3, but contains no observed base/current revision pair or check receipt. The raw output cannot establish that a revision comparison governed promotion."
+    }
+  ],
+  "scope": "Other fixture outputs and the original candidate/auditor bytes remain unchanged. The two conflict cases, refusal cases, and disjoint field merges remain observed synthetic outputs, but the overall T0 METHOD_PASS_SCOPED gate is not accepted. No real-application or T1 claim is made."
+}

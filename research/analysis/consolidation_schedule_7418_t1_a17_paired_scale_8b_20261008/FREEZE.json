@@ -1,0 +1,38 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A17-PAIRED-SCALE-8B-20261008",
+  "status": "FROZEN_PREREGISTERED_NOT_RUN",
+  "model": "qwen3:8b",
+  "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "parameter_size": "8.19B",
+  "quantization": "Q4_K_M",
+  "seeds": [
+    5601,
+    5602,
+    5603
+  ],
+  "paired_a16_seeds": true,
+  "planned_calls": {
+    "query": 360,
+    "consolidation": 30,
+    "total": 390
+  },
+  "single_intervention": "Model scale changes from Qwen3 14B to Qwen3 8B; same numeric seeds 5601/5602/5603 and all prompt/fixture/schedule/decoder/auditor controls are retained.",
+  "a16_prompt_sha256": "fda487bf348e18f45676643d9eb64363a003d5f7f80d50d182990f2d3388edf4",
+  "a16_queries_sha256": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+  "preflight_sha256": "6da8bac784df465ba4d249a5b956e457ee0ad88a5c0065ec089dad2cbb4490db",
+  "files": {
+    "candidate.py": "6bd652cdf2f438f4547c6a5240896e7d4744f8ea620652b37ae81abde74350fd",
+    "auditor.py": "6990ac8997bf212a7f12e635435095ddf1c399b9bd10c94050f5323b10066fa1",
+    "preflight.py": "529c5398ae2ba27df3ba4cd5e3f8bad0b0de6ab8eeb19b3b989eefa1a5ef1d9b",
+    "test_construction.py": "2375357d66433b69a75020e8d8659a7f3f389c0f70905cc3ed021ba0bda9efb3",
+    "episode_ledger.json": "968a27cd68b265ffa69c28d2c7a296f48031d7a1410ad3c6e697444336c9a8b2",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "prompts.json": "fda487bf348e18f45676643d9eb64363a003d5f7f80d50d182990f2d3388edf4",
+    "summarize_metrics.py": "e4620d2574a94f5152427a069618fb2bcad23ab74218ca67162a6837b2431712",
+    "README.md": "cbd9e13ac1033d2640cd48ecd903ce3af9790ffdf499c607ed5c956005082c87",
+    "PROTOCOL.md": "d2d4294866a4809e1adc801f17121f6b7a6ea188dcbc279b1d88204dc9acc57f",
+    "RUN_RECORD.json": "b9b794e7fa0e5a377dc0d72dd42c09cb60be41cddb80c2ff313ae5b6ceb7d3b4"
+  },
+  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406#issuecomment-6052360718"
+}

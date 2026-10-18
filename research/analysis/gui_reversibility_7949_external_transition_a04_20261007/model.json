@@ -1,0 +1,43 @@
+{
+  "run_id": "gui-reversibility-7949-external-transition-a04-20261007",
+  "horizon": 1,
+  "cases": [
+    {
+      "id": "pre_interference",
+      "coverage_complete": true,
+      "events": [],
+      "base_revision": 1,
+      "certificate_revision": 1,
+      "snapshot_revision": 1,
+      "start": "100",
+      "target": "000",
+      "recovery": {"restore_snapshot": {"100": "000"}},
+      "expected": "UNIVERSALLY_UNIFORM"
+    },
+    {
+      "id": "stale_then_refreshed",
+      "coverage_complete": true,
+      "events": [{"seq": 1, "revision": 2, "event_id": "external-b-write", "before": "100", "after": "110", "writer": "external"}],
+      "base_revision": 1,
+      "certificate_revision": 1,
+      "snapshot_revision": 2,
+      "start": "110",
+      "target": "010",
+      "recovery": {"clear_owned_a": {"110": "010"}},
+      "expected_stale": "UNKNOWN_STALE_CERTIFICATE",
+      "expected_refreshed": "UNIVERSALLY_UNIFORM"
+    },
+    {
+      "id": "journal_gap",
+      "coverage_complete": true,
+      "events": [{"seq": 2, "revision": 3, "event_id": "external-b-write", "before": "100", "after": "110", "writer": "external"}],
+      "base_revision": 1,
+      "certificate_revision": 1,
+      "snapshot_revision": 3,
+      "start": "110",
+      "target": "010",
+      "recovery": {"clear_owned_a": {"110": "010"}},
+      "expected": "UNKNOWN"
+    }
+  ]
+}

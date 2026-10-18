@@ -1,0 +1,38 @@
+{
+  "schema": "map01-v39-expiry-pending-current-owner-study-run-v1",
+  "run_id": "MAP01-V39-EXPIRY-PENDING-CURRENT-OWNER-A04-FORMAL-01-20261005",
+  "base_main": "dccf55e264f434ca27f2948fe53be09919047819",
+  "candidate_pr": 7805,
+  "candidate_head": "c4e893e8515811c77e21639237f1f2a914d4d88b",
+  "candidate_executions": 1,
+  "container_invocations": 3,
+  "candidate_output": "results/formal_02/candidate.json",
+  "audit_output": "results/formal_02/audit.json",
+  "container": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "platform": "linux/arm64",
+  "network": "disabled",
+  "status": "A03_STOP_A04_PASS_CURRENT_OWNER_PENDING_EXPIRY_RECEIPT_SCOPED",
+  "stop_evidence": "STOP_A03.txt",
+  "stop_detail": "A03 container started but runner exited before candidate execution because package-only /work mount invalidated HERE.parents[2].",
+  "formal_runs": {
+    "A03": {
+      "run_id": "MAP01-V39-EXPIRY-PENDING-CURRENT-OWNER-A03-FORMAL-01-20261005",
+      "container_invocations": 1,
+      "candidate_executions": 0,
+      "status": "STOP_CONSTRUCTION_RUNNER_ROOT_LAYOUT"
+    },
+    "A04": {
+      "run_id": "MAP01-V39-EXPIRY-PENDING-CURRENT-OWNER-A04-FORMAL-01-20261005",
+      "container_preflight_invocations": 1,
+      "container_preflight": "PREFLIGHT_OK_NO_KEY_EVENTS",
+      "container_invocations": 2,
+      "container_candidate_invocations": 1,
+      "candidate_executions": 1,
+      "candidate_output": "results/formal_02/candidate.json",
+      "audit_output": "results/formal_02/audit.json",
+      "candidate_sha256": "30dc76e3139fbb13ec4cd9e8e0bc14572b94788a6d9d04fc6870f4143c85fc79",
+      "audit_sha256": "636a07aeecd8f7b3c7d0690f6b20c3d3c0e0c491bee56d6a9a6b273120de897e",
+      "status": "PASS_CURRENT_OWNER_PENDING_EXPIRY_RECEIPT_SCOPED"
+    }
+  }
+}

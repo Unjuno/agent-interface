@@ -1,0 +1,25 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib,runpy,os,copy
+R=Path(__file__).resolve().parents[2];W=R/'work/ownedwinpipe6501-t02';O=R/'outputs/ownedwinpipe6501-t02';H=lambda b:hashlib.sha256(b).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat();start=now()
+v2=(W/'audit_v2.py').read_bytes();assert H(v2)=='54f838f0c4cd93dfa605fa98c5ebc29e26fa2a148a166ea6e445d816d1d47e0c'
+fn=runpy.run_path(str(W/'audit_v2.py'))['reduce'];mode='stale_handle';ev=json.loads((O/mode/'events.json').read_bytes());res=json.loads((O/mode/'RESULT.json').read_bytes());m=copy.deepcopy(ev);clocks=[e['monotonic_ns'] for e in m];writes=[e for e in m if e['kind'] in ('write_requested','write_return') and e['generation']==1];assert len(writes)==2
+m=[e for e in m if e not in writes];at=next(i for i,e in enumerate(m) if e['kind']=='read_return' and e['generation']==1)+1;m[at:at]=writes
+for i,e in enumerate(m):e['seq']=i;e['monotonic_ns']=clocks[i]
+image=(json.dumps({'events':m,'result':res},sort_keys=True,separators=(',',':'))+'\n').encode();target=O/'controls-causality-v2';target.mkdir(exist_ok=False);(target/'A_write_after_read.json').write_bytes(image);d=json.loads(image);first_accept=False
+try:fn(mode,d['events'],d['result']);first_accept=True
+except (AssertionError,KeyError,TypeError,ValueError):pass
+first={'pid':os.getpid(),'start_utc':start,'end_utc':now(),'source_sha256':H(v2),'name':'A_write_after_read','mutation_sha256':H(image),'mutation_bytes':len(image),'accepted':first_accept,'native_replay':0,'definition':'Move complete generation1 write-request/return payload after actual read-return1, reindex events and assign original nondecreasing clock sample vector to preserve clock admissibility; original/result bytes not changed.'}
+(O/'CAUSALITY_V2_FIRST.json').write_text(json.dumps(first,indent=2)+'\n',encoding='utf8',newline='\n');assert first_accept is True
+src=v2.decode();old="    wa=writers(1);assert len(wa)==1 and wa[0]['purpose']=='normal_A' and wa[0]['hex']=='44'\n";assert src.count(old)==1;src=src.replace(old,old+"    assert wa[0]['seq']<v1['seq'] # Request must precede read completion; write return may race.\n").replace("O/'AUDIT_V2.json'","O/'AUDIT_V3.json'");(W/'audit_v3.py').write_text(src,encoding='utf8',newline='\n')
+module=runpy.run_path(str(W/'audit_v3.py'));module['main']();newfn=module['reduce'];controls=[]
+for c in json.loads((O/'CONTROLS_FIRST.json').read_bytes())['controls']:
+    b=(O/'controls-v1'/(c['name']+'.json')).read_bytes();assert len(b)==c['bytes'] and H(b)==c['sha256'];q=json.loads(b)
+    try:newfn(c['mode'],q['events'],q['result'])
+    except (AssertionError,KeyError,TypeError,ValueError) as e:controls.append({'name':c['name'],'sha256':H(b),'refused':True,'failure':repr(e)})
+    else:raise AssertionError('prior mutation accepted')
+try:newfn(mode,d['events'],d['result'])
+except (AssertionError,KeyError,TypeError,ValueError) as e:controls.append({'name':'A_write_after_read','sha256':H(image),'refused':True,'failure':repr(e)})
+else:raise AssertionError('new causal mutation accepted')
+report={'pid':os.getpid(),'start_utc':start,'end_utc':now(),'source_v2_sha256':H(v2),'source_v3_sha256':H((W/'audit_v3.py').read_bytes()),'same_original_nine_images':True,'controls':controls,'native_replay':0,'formal_sources_unchanged':True,'status':'PASS_SAME_RAW_TEN_CONTROLS'}
+(O/'CAUSALITY_V3.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps({k:report[k] for k in ['pid','start_utc','end_utc','status','source_v3_sha256']}))

@@ -1,0 +1,22 @@
+{
+  "candidate_view": [
+    {"case_id":"old_correct","start_tick":0,"end_tick":10,"authority_active":true,"belief_active":true,"belief_states":["normal"],"admitted_actions":[],"action_available":true,"capture_tick":0,"effects":[]},
+    {"case_id":"stale_transition","start_tick":4,"end_tick":10,"authority_active":true,"belief_active":true,"belief_states":["normal"],"admitted_actions":["submit"],"action_available":true,"capture_tick":0,"effects":[]},
+    {"case_id":"fresh_misbound","start_tick":9,"end_tick":14,"authority_active":true,"belief_active":true,"belief_states":["normal"],"admitted_actions":["submit"],"action_available":true,"capture_tick":13,"effects":[]},
+    {"case_id":"no_authority","start_tick":0,"end_tick":8,"authority_active":false,"belief_active":true,"belief_states":["normal"],"admitted_actions":["submit"],"action_available":true,"capture_tick":0,"effects":[]},
+    {"case_id":"revoked_no_opportunity","start_tick":0,"end_tick":8,"authority_active":false,"belief_active":true,"belief_states":["normal"],"admitted_actions":["submit"],"action_available":false,"capture_tick":0,"effects":[]},
+    {"case_id":"unsafe_emission","start_tick":2,"end_tick":10,"authority_active":true,"belief_active":true,"belief_states":["normal"],"admitted_actions":["submit"],"action_available":true,"capture_tick":0,"effects":[{"tick":5,"action":"submit"}]},
+    {"case_id":"unknown_truth","start_tick":0,"end_tick":8,"authority_active":true,"belief_active":true,"belief_states":["normal"],"admitted_actions":["submit"],"action_available":true,"capture_tick":0,"effects":[]},
+    {"case_id":"ambiguous_clock","start_tick":0,"end_tick":8,"authority_active":true,"belief_active":true,"belief_states":["normal"],"admitted_actions":["submit"],"action_available":true,"capture_tick":0,"effects":[]}
+  ],
+  "truth_sidecar": [
+    {"case_id":"old_correct","truth_state":"normal","truth_forbidden_actions":["submit"],"truth_known":true,"clock_order_known":true},
+    {"case_id":"stale_transition","truth_state":"modal","truth_forbidden_actions":["submit"],"truth_known":true,"clock_order_known":true},
+    {"case_id":"fresh_misbound","truth_state":"modal","truth_forbidden_actions":["submit"],"truth_known":true,"clock_order_known":true},
+    {"case_id":"no_authority","truth_state":"modal","truth_forbidden_actions":["submit"],"truth_known":true,"clock_order_known":true},
+    {"case_id":"revoked_no_opportunity","truth_state":"modal","truth_forbidden_actions":["submit"],"truth_known":true,"clock_order_known":true},
+    {"case_id":"unsafe_emission","truth_state":"modal","truth_forbidden_actions":["submit"],"truth_known":true,"clock_order_known":true},
+    {"case_id":"unknown_truth","truth_state":null,"truth_forbidden_actions":["submit"],"truth_known":false,"clock_order_known":true},
+    {"case_id":"ambiguous_clock","truth_state":"modal","truth_forbidden_actions":["submit"],"truth_known":true,"clock_order_known":false}
+  ]
+}

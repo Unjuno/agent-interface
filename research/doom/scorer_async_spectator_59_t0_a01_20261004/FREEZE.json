@@ -1,0 +1,63 @@
+{
+  "base_main": "c9a02437e8565b340464ed9cde736fa9e5642ab4",
+  "decision": {
+    "close_must_return": true,
+    "counterexample": "successful update; empty available buttons; state tic advances; episode_time delta > 1",
+    "fail": "available buttons nonempty, no snapshot tic advance, or input/setup failure",
+    "preflight_stop_if_package_or_wad_pin_mismatch": true,
+    "scoped_non_counterexample": "successful update; empty available buttons; state tic advances; episode_time delta <= 1 (one run only)"
+  },
+  "host": {
+    "machine": "arm64",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "runtime_route": "native macOS fallback; OrbStack daemon responds but image inventory fails on content-store blob open: operation not supported; no container run/retry"
+  },
+  "id": "SCORER-REFRESH-59-ASYNC-SPECTATOR-01",
+  "issue": "Unjuno/agent-interface#59",
+  "kind": "one-shot neutral runtime qualification; not a live controller allocation",
+  "limits": "A single headless native macOS run cannot qualify WSLc/OrbStack behavior, X11, scorer producer freshness for changed scores, useful effect, physical release, live controller admission, or bounded recovery.",
+  "protocol": {
+    "available_buttons": [],
+    "available_game_variables": [
+      "DEATHCOUNT",
+      "KILLCOUNT"
+    ],
+    "game_processes": 1,
+    "home_and_xdg_dirs": "unique child directories under the run root",
+    "map": "MAP01",
+    "mode": "ASYNC_SPECTATOR",
+    "positive_input_calls": 0,
+    "retries": 0,
+    "samples": [
+      "initial",
+      "after passive 150ms",
+      "before acknowledged advance_action(1,True)",
+      "after acknowledged advance_action(1,True)",
+      "after passive 150ms"
+    ],
+    "sdl_video_driver": "dummy",
+    "seed": 40104,
+    "ticrate": 35,
+    "timeout_tics": 175,
+    "window_visible": false,
+    "working_directory": "/tmp/async-spectator-qualification-a01-20261004"
+  },
+  "runtime": {
+    "expected_freedoom2_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+    "package": "ViZDoom",
+    "version": "1.3.0",
+    "wheel": "/tmp/vizdoom-wheel-preflight/vizdoom-1.3.0-cp314-cp314-macosx_14_0_arm64.whl",
+    "wheel_sha256": "a514d48a302c5c46239d88e6d51371946245390bb7fa84e25825b6991ce9b9d5"
+  },
+  "source": {
+    "file": "experiment.py",
+    "python_dependency_note": "venv created with system-site-packages; numpy 2.5.2 reused; vizdoom wheel installed locally with --no-index --no-deps",
+    "sha256": "727b076cae21ff268a6dc35e6b34faf3a63c019132706fb4886660f5be8b23f7"
+  },
+  "target_session_source": {
+    "path": "research/doom/session_map01_v12.py",
+    "ref": "3e498aebd77e500d5a7b1ac9d434d37350a9f597",
+    "sha256": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2"
+  }
+}

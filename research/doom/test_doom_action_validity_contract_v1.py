@@ -57,6 +57,22 @@ class DoomActionValidityContractTests(unittest.TestCase):
             build_contract([{"action": "strafe_right", "extent": "short"}], authored(),
                            signal("health", 85), signal("ammo", 47))
 
+    def test_observed_signal_domain_is_enforced_at_action_source(self):
+        command = [{"action": "retreat_fire", "extent": "short"}]
+        for health, ammo in ((0, 47), (201, 47), (85, -1), (85, 1000),
+                             (True, 47), (85, 12.0)):
+            with self.subTest(health=health, ammo=ammo):
+                with self.assertRaises(ValueError):
+                    build_contract(command, authored(), signal("health", health),
+                                   signal("ammo", ammo))
+
+    def test_domain_endpoints_remain_admissible(self):
+        value = build_contract(
+            [{"action": "retreat_fire", "extent": "short"}], authored(),
+            signal("health", 200), signal("ammo", 999))
+        self.assertEqual(value["source"]["signals"]["health"]["value"], 200)
+        self.assertEqual(value["source"]["signals"]["ammo"]["value"], 999)
+
 
 if __name__ == "__main__":
     unittest.main()

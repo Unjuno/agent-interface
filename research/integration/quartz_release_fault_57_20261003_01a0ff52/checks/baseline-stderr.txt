@@ -1,0 +1,285 @@
+test_button_probe_failure_preserves_only_unresolved_tracking (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_button_probe_failure_preserves_only_unresolved_tracking) ... ERROR
+test_core_refusal_does_not_attempt_backend_execution_or_cleanup (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_core_refusal_does_not_attempt_backend_execution_or_cleanup) ... ok
+test_emission_error_cannot_become_verified_even_if_readback_is_up (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_emission_error_cannot_become_verified_even_if_readback_is_up) ... ERROR
+test_execution_error_survives_unexpected_cleanup_exception (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_execution_error_survives_unexpected_cleanup_exception) ... ERROR
+test_failed_prefix_and_cleanup_receipt_reach_session_without_tail (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_failed_prefix_and_cleanup_receipt_reach_session_without_tail) ... ERROR
+test_key_probe_failure_is_unknown_and_other_probes_continue (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_key_probe_failure_is_unknown_and_other_probes_continue) ... ERROR
+test_known_down_input_is_not_forgotten (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_known_down_input_is_not_forgotten) ... FAIL
+test_multiple_faults_all_survive_without_retries (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_multiple_faults_all_survive_without_retries) ... ERROR
+test_null_button_event_does_not_skip_next_button (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_null_button_event_does_not_skip_next_button) ... ERROR
+test_null_first_key_event_does_not_skip_other_inputs (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_null_first_key_event_does_not_skip_other_inputs) ... ERROR
+test_pointer_creation_failure_does_not_skip_next_button (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_pointer_creation_failure_does_not_skip_next_button) ... ERROR
+test_post_error_keeps_event_release_and_other_input_cleanup (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_post_error_keeps_event_release_and_other_input_cleanup) ... ERROR
+test_preflight_error_keeps_original_detail_and_cleanup_failure (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_preflight_error_keeps_original_detail_and_cleanup_failure) ... ERROR
+test_success_releases_and_verifies_all_tracked_inputs (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_success_releases_and_verifies_all_tracked_inputs) ... ok
+test_unverified_terminal_cleanup_cannot_complete_session (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_unverified_terminal_cleanup_cannot_complete_session) ... FAIL
+test_verified_terminal_cleanup_still_completes_session (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_verified_terminal_cleanup_still_completes_session) ... ok
+
+======================================================================
+ERROR: test_button_probe_failure_preserves_only_unresolved_tracking (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_button_probe_failure_preserves_only_unresolved_tracking)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 160, in test_button_probe_failure_preserves_only_unresolved_tracking
+    row = self.backend.release_all()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 322, in release_all
+    buttons = sorted(button for button in tracked_buttons if self.cg.CGEventSourceButtonState(KCG_EVENT_SOURCE_STATE_COMBINED_SESSION, BUTTONS[button][0]))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 322, in <genexpr>
+    buttons = sorted(button for button in tracked_buttons if self.cg.CGEventSourceButtonState(KCG_EVENT_SOURCE_STATE_COMBINED_SESSION, BUTTONS[button][0]))
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 63, in CGEventSourceButtonState
+    self.call("button_read", number)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 25, in call
+    raise fault
+OSError: left state unavailable
+
+======================================================================
+ERROR: test_emission_error_cannot_become_verified_even_if_readback_is_up (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_emission_error_cannot_become_verified_even_if_readback_is_up)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 178, in test_emission_error_cannot_become_verified_even_if_readback_is_up
+    row = self.backend.release_all()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 317, in release_all
+    for code in list(self.held_keys.values()): self._post(self.cg.CGEventCreateKeyboardEvent(None, code, False))
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 236, in _post
+    raise QuartzBackendError("CGEvent creation failed")
+runtime.backends.quartz_v1.backend.QuartzBackendError: CGEvent creation failed
+
+======================================================================
+ERROR: test_execution_error_survives_unexpected_cleanup_exception (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_execution_error_survives_unexpected_cleanup_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 333, in execute
+    elif kind=="text": self.text(op["text"])
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+runtime.backends.quartz_v1.backend.QuartzBackendError: original text failure
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 203, in test_execution_error_survives_unexpected_cleanup_exception
+    self.backend.execute({"ops": [{"op": "text", "text": "x"}]})
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 343, in execute
+    releases.append(self.release_all()); raise
+                    ^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+OSError: cleanup failed
+
+======================================================================
+ERROR: test_failed_prefix_and_cleanup_receipt_reach_session_without_tail (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_failed_prefix_and_cleanup_receipt_reach_session_without_tail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 333, in execute
+    elif kind=="text": self.text(op["text"])
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+runtime.backends.quartz_v1.backend.QuartzBackendError: text refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 220, in test_failed_prefix_and_cleanup_receipt_reach_session_without_tail
+    row = self.dispatch([{"op": "key_state", "key": "A", "down": True},
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 97, in dispatch
+    return QuartzRuntimeSession(self.backend).dispatch(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/session.py", line 17, in dispatch
+    try: result=self.backend.execute(program)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 343, in execute
+    releases.append(self.release_all()); raise
+                    ^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 317, in release_all
+    for code in list(self.held_keys.values()): self._post(self.cg.CGEventCreateKeyboardEvent(None, code, False))
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 238, in _post
+    self.cg.CGEventPost(KCG_HID_EVENT_TAP, event)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 51, in CGEventPost
+    self.call("post", (kind, target, down))
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 25, in call
+    raise fault
+OSError: A release failed
+
+======================================================================
+ERROR: test_key_probe_failure_is_unknown_and_other_probes_continue (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_key_probe_failure_is_unknown_and_other_probes_continue)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 151, in test_key_probe_failure_is_unknown_and_other_probes_continue
+    row = self.backend.release_all()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 321, in release_all
+    keys = sorted(name for name, code in tracked_keys.items() if self.cg.CGEventSourceKeyState(KCG_EVENT_SOURCE_STATE_COMBINED_SESSION, code))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 321, in <genexpr>
+    keys = sorted(name for name, code in tracked_keys.items() if self.cg.CGEventSourceKeyState(KCG_EVENT_SOURCE_STATE_COMBINED_SESSION, code))
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 59, in CGEventSourceKeyState
+    self.call("key_read", code)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 25, in call
+    raise fault
+OSError: A state unavailable
+
+======================================================================
+ERROR: test_multiple_faults_all_survive_without_retries (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_multiple_faults_all_survive_without_retries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 189, in test_multiple_faults_all_survive_without_retries
+    row = self.backend.release_all()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 317, in release_all
+    for code in list(self.held_keys.values()): self._post(self.cg.CGEventCreateKeyboardEvent(None, code, False))
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 236, in _post
+    raise QuartzBackendError("CGEvent creation failed")
+runtime.backends.quartz_v1.backend.QuartzBackendError: CGEvent creation failed
+
+======================================================================
+ERROR: test_null_button_event_does_not_skip_next_button (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_null_button_event_does_not_skip_next_button)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 143, in test_null_button_event_does_not_skip_next_button
+    row = self.backend.release_all()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 319, in release_all
+    number, _, up_type = BUTTONS[button]; x, y = self.pointer_position(); self._post(self.cg.CGEventCreateMouseEvent(None, up_type, CGPoint(x, y), number))
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 236, in _post
+    raise QuartzBackendError("CGEvent creation failed")
+runtime.backends.quartz_v1.backend.QuartzBackendError: CGEvent creation failed
+
+======================================================================
+ERROR: test_null_first_key_event_does_not_skip_other_inputs (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_null_first_key_event_does_not_skip_other_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 117, in test_null_first_key_event_does_not_skip_other_inputs
+    row = self.backend.release_all()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 317, in release_all
+    for code in list(self.held_keys.values()): self._post(self.cg.CGEventCreateKeyboardEvent(None, code, False))
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 236, in _post
+    raise QuartzBackendError("CGEvent creation failed")
+runtime.backends.quartz_v1.backend.QuartzBackendError: CGEvent creation failed
+
+======================================================================
+ERROR: test_pointer_creation_failure_does_not_skip_next_button (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_pointer_creation_failure_does_not_skip_next_button)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 134, in test_pointer_creation_failure_does_not_skip_next_button
+    row = self.backend.release_all()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 319, in release_all
+    number, _, up_type = BUTTONS[button]; x, y = self.pointer_position(); self._post(self.cg.CGEventCreateMouseEvent(None, up_type, CGPoint(x, y), number))
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 264, in pointer_position
+    if not event: raise QuartzBackendError("CGEventCreate failed")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+runtime.backends.quartz_v1.backend.QuartzBackendError: CGEventCreate failed
+
+======================================================================
+ERROR: test_post_error_keeps_event_release_and_other_input_cleanup (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_post_error_keeps_event_release_and_other_input_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 126, in test_post_error_keeps_event_release_and_other_input_cleanup
+    row = self.backend.release_all()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 317, in release_all
+    for code in list(self.held_keys.values()): self._post(self.cg.CGEventCreateKeyboardEvent(None, code, False))
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/backend.py", line 238, in _post
+    self.cg.CGEventPost(KCG_HID_EVENT_TAP, event)
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 51, in CGEventPost
+    self.call("post", (kind, target, down))
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 25, in call
+    raise fault
+OSError: post A failed
+
+======================================================================
+ERROR: test_preflight_error_keeps_original_detail_and_cleanup_failure (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_preflight_error_keeps_original_detail_and_cleanup_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/session.py", line 13, in dispatch
+    try: self.backend.preflight(program)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+runtime.backends.quartz_v1.backend.QuartzBackendError: bad target
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 245, in test_preflight_error_keeps_original_detail_and_cleanup_failure
+    row = self.dispatch([])
+          ^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 97, in dispatch
+    return QuartzRuntimeSession(self.backend).dispatch(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/session.py", line 15, in dispatch
+    release=self.backend.release_all()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/p1b85dd3syy1yx8q039m1c6v2x2l4w0a-python3-3.12.13/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+OSError: cleanup unavailable
+
+======================================================================
+FAIL: test_known_down_input_is_not_forgotten (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_known_down_input_is_not_forgotten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 172, in test_known_down_input_is_not_forgotten
+    self.assertEqual(self.backend.held_keys, {"A": 0})
+AssertionError: {} != {'A': 0}
+- {}
++ {'A': 0}
+
+======================================================================
+FAIL: test_unverified_terminal_cleanup_cannot_complete_session (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_unverified_terminal_cleanup_cannot_complete_session)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface/runtime/backends/quartz_v1/test_release_faults.py", line 235, in test_unverified_terminal_cleanup_cannot_complete_session
+    self.assertEqual(self.backend.held_keys, {"A": 0})
+AssertionError: {} != {'A': 0}
+- {}
++ {'A': 0}
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.009s
+
+FAILED (failures=2, errors=11)

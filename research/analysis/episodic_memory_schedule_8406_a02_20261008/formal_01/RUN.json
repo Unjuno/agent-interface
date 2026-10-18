@@ -1,0 +1,29 @@
+{
+  "freeze_id": "ISSUE-8406-A02-RETAINED-RAW-AUDIT-20261008-F1",
+  "freeze_commit": "c83d44de30ac1f4ee8a8cd30bec157a43d5d9a68",
+  "preregistration_issue_comment_id": 6050564399,
+  "github_readback": {
+    "freeze_manifest": "matched frozen values on branch research/episodic-memory-schedule-8406-a02-20261008",
+    "retained_a01_raw_sha256": "2c79a10fa6530d74ac17ea9c67816b9517c63235a4cd32fcf70a2d463d4d9f70"
+  },
+  "candidate_invocations": 0,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "command": "python research/analysis/episodic_memory_schedule_8406_a02_20261008/audit.py research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/formal_01/RAW.json research/analysis/episodic_memory_schedule_8406_a02_20261008/formal_01/AUDIT.json",
+  "exit_code": 0,
+  "disposition": "PASS_RETAINED_RAW_AUDIT_SCOPED",
+  "audit_sha256": "dfaaa4645318be16ade953fdc548f51a3ddc639334ac6c170e06aa4721de1269",
+  "raw_sha256": "2c79a10fa6530d74ac17ea9c67816b9517c63235a4cd32fcf70a2d463d4d9f70",
+  "fixture_sha256": "1c8b74dfdd8ec7c5a5950133709ae95e40cc687edb12ac128d66f696c79e54fb",
+  "source_episode_count": 12,
+  "schedule_counts": {
+    "episodic_only": {"updates": 0, "visibility_rows": 16},
+    "per_episode": {"updates": 12, "visibility_rows": 16},
+    "batch_4": {"updates": 3, "visibility_rows": 16},
+    "terminal": {"updates": 1, "visibility_rows": 16}
+  },
+  "hostile_mutations_rejected": 5,
+  "model_outputs": 0,
+  "actions": 0,
+  "task_effect_claims": 0
+}

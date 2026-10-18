@@ -1,0 +1,102 @@
+{
+  "schema": "v39-current-main-cancel-executor-handoff-freeze-v1",
+  "experiment": "v39-current-main-cancel-executor-handoff-a01-20261008",
+  "current_main_commit": "8ec1369bf81025ed433b4391871f9bb503198c19",
+  "current_main_sources": [
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "local_path": "source/controller_v39.py",
+      "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+      "bytes": 85952,
+      "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
+    },
+    {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "local_path": "source/persistent_planner_adapter_v2.py",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "bytes": 11709,
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674"
+    },
+    {
+      "path": "research/live_control/codex_app_server_client_v2.py",
+      "local_path": "source/codex_app_server_client_v2.py",
+      "git_blob": "8553874221761a7807c846c7dcd66c22fc6340ff",
+      "bytes": 18840,
+      "sha256": "1d85460d2c3a22d6f7fb78f6b0e29904980dcc0bd158e6ce35d4d13a55cad0b7"
+    },
+    {
+      "path": "research/doom/v39_cancel_before_interrupt_ack_a01_20261008/test_handoff.py",
+      "local_path": "source/prior_handoff_harness.py",
+      "git_blob": "d500fc6c1be02de9e70f9d5990486dd45c001542",
+      "bytes": 11449,
+      "sha256": "6351babbcd500814fee72fdf08ec62dfbc7212e53e15d9fcd3cd3376c0855d71"
+    }
+  ],
+  "executor_stack_commit": "708ca59a8128f07fdb7e13a36704c6b2f79c9fb6",
+  "executor_stack_modules": [
+    {
+      "name": "lease.py",
+      "path": "research/live_control/lease.py",
+      "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "bytes": 899,
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    {
+      "name": "lease_cause_v1.py",
+      "path": "research/live_control/lease_cause_v1.py",
+      "git_blob": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474",
+      "bytes": 924,
+      "sha256": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918"
+    },
+    {
+      "name": "lease_cause_v2.py",
+      "path": "research/live_control/lease_cause_v2.py",
+      "git_blob": "7428e22919b019a62fa80f2162ce5c0bc1d9231b",
+      "bytes": 1228,
+      "sha256": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47"
+    },
+    {
+      "name": "lease_release_v1.py",
+      "path": "research/live_control/lease_release_v1.py",
+      "git_blob": "e325bd358874ae003e066f5d592c045b0ebef56e",
+      "bytes": 816,
+      "sha256": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff"
+    },
+    {
+      "name": "executor_v3.py",
+      "path": "research/live_control/executor_v3.py",
+      "git_blob": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "bytes": 3794,
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+    },
+    {
+      "name": "executor_v5.py",
+      "path": "research/live_control/executor_v5.py",
+      "git_blob": "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+      "bytes": 4408,
+      "sha256": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400"
+    },
+    {
+      "name": "executor_v11.py",
+      "path": "research/live_control/executor_v11.py",
+      "git_blob": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+      "bytes": 1915,
+      "sha256": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676"
+    },
+    {
+      "name": "executor_v12.py",
+      "path": "research/live_control/executor_v12.py",
+      "git_blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "bytes": 11757,
+      "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+    },
+    {
+      "name": "executor_v13.py",
+      "path": "research/live_control/executor_v13.py",
+      "git_blob": "9eb5ed4dcd42cae07bea69530136f78f9e65fb33",
+      "bytes": 10689,
+      "sha256": "fc4bad32859561c0d236f283c75d154f8221365c82b1df19c12c358d99045e6e"
+    }
+  ],
+  "scope": "Exact current-main controller helper, planner adapter, and client request composition with the retained prior ExecutorV13 software stack and simulated backend/owner; no OS input."
+}

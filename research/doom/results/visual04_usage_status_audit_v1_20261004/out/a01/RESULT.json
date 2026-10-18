@@ -1,0 +1,164 @@
+{
+  "completed_turn_last_snapshot_sum": {
+    "inputTokens": 48773,
+    "outputTokens": 1100
+  },
+  "disposition": "PASS_STATUS_AWARE_RECORD_JOIN",
+  "errors": [],
+  "interrupted_usage_interpretation": "UNKNOWN; repeated or changed snapshots do not establish an incremental amount",
+  "raw_file_hashes": {
+    "run/SAVED_READMISSION_AUDIT.json": {
+      "bytes": 6594,
+      "sha256": "b497f2bf3d7a7f2bb9eae695bd37d17234ee88b8e7420ee1145418935a5358c5"
+    },
+    "run/USAGE_QUALIFICATION.json": {
+      "bytes": 1149,
+      "sha256": "7be9d643df88499970d05a36d279e2ee6934e18c7f25ff90a77676aadf7d6d7d"
+    },
+    "run/episode/report.json": {
+      "bytes": 266746,
+      "sha256": "5b7872544042080813f0d45f1c8892dbbaa2b69a17feb4eaec20160e29178a2a"
+    },
+    "run/host.stdout.jsonl": {
+      "bytes": 272677,
+      "sha256": "0a7212196fee55625d6cbe4c4e5f7c0c974efbc2ffdd8cae0ea7d17725ca6259"
+    }
+  },
+  "scope": "Raw notification/report identity and status join only; no billing, exact all-attempt cost, controller defect, causal benefit, or live control claim.",
+  "source_commit": "5ce152e1479bedac08f55db45d24b3dd1405cb16",
+  "turn_usage": [
+    {
+      "last_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 8960,
+        "inputTokens": 10237,
+        "outputTokens": 312,
+        "reasoningOutputTokens": 159,
+        "totalTokens": 10549
+      },
+      "status": "completed",
+      "total_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 8960,
+        "inputTokens": 10237,
+        "outputTokens": 312,
+        "reasoningOutputTokens": 159,
+        "totalTokens": 10549
+      },
+      "turn_id": "01a10644-6a8f-7eb3-9a48-41ca63d88018",
+      "usage_treatment": "COMPLETED_TURN_LAST_SNAPSHOT_REPORTED"
+    },
+    {
+      "last_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 8960,
+        "inputTokens": 10237,
+        "outputTokens": 312,
+        "reasoningOutputTokens": 159,
+        "totalTokens": 10549
+      },
+      "snapshot_relation_to_prior_completed": "EXACT_REPEAT",
+      "status": "interrupted",
+      "total_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 8960,
+        "inputTokens": 10237,
+        "outputTokens": 312,
+        "reasoningOutputTokens": 159,
+        "totalTokens": 10549
+      },
+      "turn_id": "01a10644-8b36-7831-9679-ef895c7ef411",
+      "usage_treatment": "INTERRUPTED_INCREMENT_UNKNOWN"
+    },
+    {
+      "last_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 9984,
+        "inputTokens": 11799,
+        "outputTokens": 263,
+        "reasoningOutputTokens": 102,
+        "totalTokens": 12062
+      },
+      "status": "completed",
+      "total_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 18944,
+        "inputTokens": 22036,
+        "outputTokens": 575,
+        "reasoningOutputTokens": 261,
+        "totalTokens": 22611
+      },
+      "turn_id": "01a10644-9e33-7010-80e5-cff355d124ab",
+      "usage_treatment": "COMPLETED_TURN_LAST_SNAPSHOT_REPORTED"
+    },
+    {
+      "last_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 11136,
+        "inputTokens": 12587,
+        "outputTokens": 312,
+        "reasoningOutputTokens": 133,
+        "totalTokens": 12899
+      },
+      "status": "completed",
+      "total_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 30080,
+        "inputTokens": 34623,
+        "outputTokens": 887,
+        "reasoningOutputTokens": 394,
+        "totalTokens": 35510
+      },
+      "turn_id": "01a10644-b94a-7290-9dd4-b948b1d3080f",
+      "usage_treatment": "COMPLETED_TURN_LAST_SNAPSHOT_REPORTED"
+    },
+    {
+      "last_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 11136,
+        "inputTokens": 12587,
+        "outputTokens": 312,
+        "reasoningOutputTokens": 133,
+        "totalTokens": 12899
+      },
+      "snapshot_relation_to_prior_completed": "EXACT_REPEAT",
+      "status": "interrupted",
+      "total_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 30080,
+        "inputTokens": 34623,
+        "outputTokens": 887,
+        "reasoningOutputTokens": 394,
+        "totalTokens": 35510
+      },
+      "turn_id": "01a10644-d797-7c12-b382-71b4ac7ee6d0",
+      "usage_treatment": "INTERRUPTED_INCREMENT_UNKNOWN"
+    },
+    {
+      "last_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 11136,
+        "inputTokens": 14150,
+        "outputTokens": 213,
+        "reasoningOutputTokens": 48,
+        "totalTokens": 14363
+      },
+      "status": "completed",
+      "total_snapshot": {
+        "cacheWriteInputTokens": 0,
+        "cachedInputTokens": 41216,
+        "inputTokens": 48773,
+        "outputTokens": 1100,
+        "reasoningOutputTokens": 442,
+        "totalTokens": 49873
+      },
+      "turn_id": "01a10644-f054-7f20-ab8e-2d05d9068c7a",
+      "usage_treatment": "COMPLETED_TURN_LAST_SNAPSHOT_REPORTED"
+    }
+  ],
+  "unknown_interrupted_turns": [
+    "01a10644-8b36-7831-9679-ef895c7ef411",
+    "01a10644-d797-7c12-b382-71b4ac7ee6d0"
+  ],
+  "usage_semantics": "Last and total snapshots are reported as retained fields, not asserted to be per-turn or per-response deltas."
+}

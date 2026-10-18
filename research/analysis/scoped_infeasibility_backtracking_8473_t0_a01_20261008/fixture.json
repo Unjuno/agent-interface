@@ -1,0 +1,51 @@
+{
+  "schema": "scoped-infeasibility-8473-a01-v1",
+  "cases": [
+    {
+      "id": "occluded-with-rearrangement",
+      "generation": 7,
+      "plans": [
+        {"id": "retry-direct", "steps": [{"action": "open-target", "target": "panel-A", "surface": "canvas", "requires": ["visible:panel-A", "focus:canvas"]}]},
+        {"id": "direct", "steps": [{"action": "open-target", "target": "panel-A", "surface": "canvas", "requires": ["visible:panel-A", "focus:canvas"]}]},
+        {"id": "rearrange-then-open", "steps": [{"action": "move-obstruction", "target": "icon-X", "surface": "canvas", "requires": ["visible:icon-X", "focus:canvas"]}, {"action": "open-target", "target": "panel-A", "surface": "canvas", "requires": ["visible:panel-A", "focus:canvas"]}]}
+      ],
+      "truth": {"visible:panel-A": false, "visible:icon-X": true, "focus:canvas": true},
+      "transitions": [{"after_action": "move-obstruction", "set": {"visible:panel-A": true}}],
+      "failure": {"step": 0, "condition": "visible:panel-A", "kind": "verified_blocker", "target": "panel-A", "surface": "canvas", "generation": 7}
+    },
+    {
+      "id": "focus-unavailable-with-recovery",
+      "generation": 3,
+      "plans": [
+        {"id": "type-now", "steps": [{"action": "type", "target": "field-B", "surface": "editor", "requires": ["focus:editor", "enabled:field-B"]}]},
+        {"id": "refocus-then-type", "steps": [{"action": "focus-window", "target": "window", "surface": "desktop", "requires": ["visible:window"]}, {"action": "type", "target": "field-B", "surface": "editor", "requires": ["focus:editor", "enabled:field-B"]}]}
+      ],
+      "truth": {"focus:editor": false, "enabled:field-B": true, "visible:window": true},
+      "transitions": [{"after_action": "focus-window", "set": {"focus:editor": true}}],
+      "failure": {"step": 0, "condition": "focus:editor", "kind": "verified_blocker", "target": "field-B", "surface": "editor", "generation": 3}
+    },
+    {
+      "id": "truly-infeasible",
+      "generation": 9,
+      "plans": [{"id": "unavailable-target", "steps": [{"action": "activate", "target": "control-Z", "surface": "dialog", "requires": ["visible:control-Z", "enabled:control-Z"]}]}],
+      "truth": {"visible:control-Z": false, "enabled:control-Z": false},
+      "transitions": [],
+      "failure": {"step": 0, "condition": "visible:control-Z", "kind": "verified_blocker", "target": "control-Z", "surface": "dialog", "generation": 9}
+    },
+    {
+      "id": "transient-stale-then-feasible",
+      "generation": 4,
+      "plans": [{"id": "same-action-after-refresh", "steps": [{"action": "refresh-observation", "target": "canvas", "surface": "canvas", "requires": ["focus:canvas"]}, {"action": "open-target", "target": "panel-C", "surface": "canvas", "requires": ["visible:panel-C", "focus:canvas"]}]}],
+      "truth": {"visible:panel-C": false, "focus:canvas": true},
+      "transitions": [{"after_action": "refresh-observation", "set": {"visible:panel-C": true}}],
+      "failure": {"step": 0, "condition": "visible:panel-C", "kind": "verified_blocker", "target": "panel-C", "surface": "canvas", "generation": 4}
+    }
+  ],
+  "controls": {
+    "unknown": {"kind": "timeout", "promote_to_impossible": false},
+    "generation_change": {"increment": 1, "invalidate_scoped_nogood": true},
+    "contradictory_observation": {"invalidate_scoped_nogood": true},
+    "expiry": {"max_generation": 0},
+    "mutation_names": ["omit_blocker", "global_overgeneralization", "reuse_after_generation_change", "timeout_as_infeasible", "delete_available_alternative"]
+  }
+}

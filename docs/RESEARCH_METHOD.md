@@ -10,6 +10,8 @@ Use the cheapest method that can actually decide the question.
 - If the result depends on operating-system behavior, GUI/application behavior, timing, hardware, model output, tokens, or an unknown distribution, measure it empirically.
 - For mixed questions, prove the safety/semantic part analytically and experiment only on the residual empirical part.
 - Never promote an analytical result beyond its assumptions, and never use repeated experiments as a substitute for a proof when the exact state space is already known and tractable.
+- A container is not required for every experiment. On Windows with WSL 3.x, prefer native WSL execution when the protocol needs no container boundary; use WSL Containers (`wslc`) when a pinned Linux image or container isolation is useful and the workflow does not require Docker Engine APIs, Compose, or an unverified Docker-specific feature. Keep study-frozen runtime requirements unchanged; runtime substitution requires a separately frozen successor. See [WSL Containers and local runtime selection](../.github/wslc-local-containers.md).
+- Containerization alone is not a security-boundary claim. Match the runtime and mounts to the experiment's threat model; do not run untrusted code on the assumption that WSL or a container isolates it from the Windows host.
 
 ## Decision flow
 
@@ -27,7 +29,7 @@ flowchart TD
     G -->|no| K[Retain scoped analytical result]
     G -->|yes| E
     E --> F[Freeze H/T/D/C/U<br/>and measurement conditions]
-    F --> C[Container or live experiment]
+    F --> C[Choose native WSL, WSLc, hosted CI, or live allocation<br/>from dependencies and threat model]
     C --> I[Independent audit]
     I --> Z[Retain PASS / FAIL / HOLD<br/>with scope limits]
 ```
@@ -41,7 +43,7 @@ flowchart TD
 | Ordering / ABA / lease / generation semantics | Transition-system reasoning plus adversarial sequence enumeration | Scheduler/backend timing only when timing is part of the claim |
 | Serialization / codec exactness | Round-trip property, exact byte comparison, exhaustive bounded cases where feasible | Throughput/latency on target hosts |
 | Algorithmic correctness | Proof or reference-oracle equivalence, then focused tests | Distribution-dependent performance |
-| OS / GUI / application behavior | Small construction test followed by frozen live measurement | Required; these properties are environment-dependent |
+| OS / GUI / application behavior | Small construction test on the target native OS/runtime followed by frozen live measurement | Required; choose native WSL, WSLc, hosted CI, or a dedicated isolated environment according to the property being measured |
 | Latency / throughput / tail behavior | Controlled measurement with named clock/endpoints | Required; do not infer from code structure alone |
 | Model accuracy / tokens / planner behavior | Same-model controlled experiment with actual usage accounting | Required |
 | Integrated end-to-end capability | Compose proven invariants, then matched cross-domain live evaluation | Required before integrated/product claims |

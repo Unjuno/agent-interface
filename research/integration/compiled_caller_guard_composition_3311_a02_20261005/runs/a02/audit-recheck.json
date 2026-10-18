@@ -1,0 +1,25 @@
+{
+  "audit": "PASS_COMPOSED_RECEIPT_RECONSTRUCTION",
+  "experiment_id": "compiled-caller-guard-3311-20261005-a02",
+  "model_requests": 0,
+  "os_inputs": 0,
+  "v1": {
+    "effect": "failed",
+    "inner": "TASK_SUCCEEDED",
+    "operations": [
+      "enter_exact_token",
+      "activate_submit"
+    ],
+    "outer": "TASK_NOT_VERIFIED"
+  },
+  "v2": {
+    "completed_actions": 1,
+    "delivery": "confirmed_partial",
+    "inner": "SAFE_YIELD",
+    "operations": [
+      "enter_exact_token"
+    ],
+    "outer": "EXECUTION_INCOMPLETE",
+    "reason": "effect_failed"
+  }
+}

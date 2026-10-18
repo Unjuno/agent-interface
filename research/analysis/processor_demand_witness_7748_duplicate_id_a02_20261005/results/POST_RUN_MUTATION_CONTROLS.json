@@ -1,0 +1,32 @@
+{
+  "cases": {
+    "duplicate_marked_eligible": {
+      "case_count": 3,
+      "errors": [
+        "result:duplicate_job_identity"
+      ],
+      "status": "FAIL_AUDIT"
+    },
+    "omitted_row": {
+      "case_count": 3,
+      "errors": [
+        "case_count",
+        "missing:duplicate_job_identity"
+      ],
+      "status": "FAIL_AUDIT"
+    },
+    "post_candidate_identity_mutation": {
+      "case_count": 3,
+      "errors": [
+        "input:duplicate_job_identity"
+      ],
+      "status": "FAIL_AUDIT"
+    }
+  },
+  "classification": "supplemental_post_run_audit_function_probes_not_formal_cli_invocations",
+  "formal_candidate_auditor_invocations_unchanged": {
+    "auditor": 1,
+    "candidate": 1,
+    "retries": 0
+  }
+}

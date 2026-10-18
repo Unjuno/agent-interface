@@ -1,0 +1,25 @@
+{
+  "schema": "map01-v39-frame-signal-boundary-freeze-v1",
+  "experiment_id": "map01-v39-frame-signal-boundary-a01-20261005",
+  "question": "Does current V39 paired health/ammo cover monitoring react to a fresh advancing observation whose frame hash changes while typed health and ammo stay constant?",
+  "hypothesis": "No. The monitor evaluates paired health/ammo signal values and uses frame hashes only to validate duplicate transport epochs; it does not classify threat content across advancing frames.",
+  "source_commit": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "source_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "method": "AST-extract the exact paired-monitor helpers/class from the frozen source blob. Feed one valid typed health/ammo epoch (84 health, 37 ammo), then an advancing epoch with the same typed values and binding but a different 64-hex frame hash. No runtime, game, model, GUI, OS input, or container is invoked.",
+  "decision": {
+    "PASS": "The monitor returns an invalidation requiring a new decision for the advancing changed-frame case.",
+    "FAIL": "The monitor returns no invalidation for the advancing changed-frame case.",
+    "HOLD": "Source identity or runner construction does not match the frozen contract."
+  },
+  "controls": [
+    "The first observation establishes the already-admitted monitor baseline.",
+    "Health and ammo remain exact typed values 84 and 37 at the same focus/surface/geometry binding.",
+    "Sequence and capture time advance; only the frame hash changes."
+  ],
+  "limits": [
+    "The changed frame is represented by a changed hash; this does not run a visual parser or establish that an enemy is visible.",
+    "A no-invalidation result identifies a current monitor-input gap only; it does not establish live policy efficacy, task outcome, latency, or safety.",
+    "The live V39 threat-exposure allocation remains unassigned and is not run."
+  ]
+}

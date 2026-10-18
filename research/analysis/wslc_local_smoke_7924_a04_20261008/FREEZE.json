@@ -1,0 +1,51 @@
+{
+  "schema": "wslc-local-smoke-7924-a04-freeze-v1",
+  "allocation": "wslc-local-smoke-7924-a04-20261008",
+  "issue": 8455,
+  "source_main_sha": "4864ee82c11a729c26ffdcbafc4d95c9d99e1f65",
+  "branch": "research/wslc-local-smoke-7924-a04-current-main-20261008",
+  "path": "research/analysis/wslc_local_smoke_7924_a04_20261008/",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "wsl_package": "3.0.1.0",
+  "wslc_version": "3.0.1.0",
+  "a02_source_commit": "d13480e51a6116afdef2ac4797f0fedc3385cf56",
+  "preflight_container_name": "unjuno-8455-a04-preflight-4864ee82-20261008",
+  "formal_auditor_container_name": "unjuno-8455-a04-audit-4864ee82-82068b8f21ea",
+  "source_sha256": {
+    "A02_IMPORT_MANIFEST.json": "a5c32194b58156501584da28c3f9ba8cd7bfec66814ea46dfc4eda52e45844b1",
+    "PROTOCOL.json": "cd7bd86177b0fd57490ac569e656eddc8b6ddb1c87524ce65cfe976111885e43",
+    "auditor.py": "c2e8c40ad49f226566642b7f7ba4945f873dc9062380b583007aaa1f6fc397a5",
+    "preflight_receipt_shapes.py": "8bce9939cf498c06ac8c63154b3df76274d2f032ca5533807411a2d66c7cbd7b",
+    "PREFLIGHT_CID.txt": "79574a87b8b04d448156a4ae79ea0e644e61bf267aa73e58781cff2341c65b63",
+    "PREFLIGHT_RECEIPT.json": "1fd86cbcf59a095f4e4a1699fa4e44bcf5b0e5ad777be76fa470cf7df710e020",
+    "PREFLIGHT_CLEANUP.json": "4472c024fc6321045a771598aad5be258723fba3e9fe321940b7dcadb816fb8f"
+  },
+  "commands": {
+    "preflight": "wslc run --rm --pull never --network none --cpus 1 --name unjuno-8455-a04-preflight-4864ee82-20261008 --cidfile PREFLIGHT_CID.txt --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-github-mcp-main-2\\repo-7924-a04-main-20261008\\research\\analysis\\wslc_local_smoke_7924_a04_20261008:/src:ro\" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B preflight_receipt_shapes.py",
+    "formal_auditor": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --name unjuno-8455-a04-audit-4864ee82-82068b8f21ea --cidfile AUDITOR_CID.txt --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-github-mcp-main-2\\repo-7924-a04-main-20261008\\research\\analysis\\wslc_local_smoke_7924_a04_20261008:/src:ro\" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B auditor.py",
+    "formal_cleanup": "wslc container inspect <exact-cid-from-AUDITOR_CID.txt>; expected named object not found after --rm"
+  },
+  "preflight": {
+    "receipt_shape_smoke": "PASS_PREFLIGHT_RECEIPT_SHAPES",
+    "formal_audit": false,
+    "current_main_worktree_clean_tracked_files": true,
+    "wslc_active_process_count": 0,
+    "pinned_image_inspect": "exact pinned digest verified present; no global image inventory",
+    "docker_used": false,
+    "global_container_list_calls": 0,
+    "preflight_utc": "2026-10-08T03:10:44Z"
+  },
+  "invocations": {
+    "pre_freeze_shape_smokes": 1,
+    "formal_a04_auditor": 1,
+    "candidate_reruns": 0,
+    "a02_auditor_reruns": 0,
+    "a03_auditor_reruns": 0,
+    "retries_after_formal_invocation": 0,
+    "image_pulls": 0,
+    "docker_calls": 0,
+    "global_container_list_calls": 0
+  },
+  "memory_claim": "512M requested only; WSLc may warn that effective cgroup/swap enforcement is unavailable",
+  "formal_first_failure_is_final": true
+}

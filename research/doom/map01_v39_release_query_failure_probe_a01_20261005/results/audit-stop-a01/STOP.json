@@ -1,0 +1,14 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-audit-stop-v1",
+  "disposition": "AUDIT_WRAPPER_FAILED_HASH_SHAPE_COMPARISON",
+  "audit_attempt": 1,
+  "candidate_probe_rerun": false,
+  "raw_case_count": 3,
+  "reported_mismatch_count": 14,
+  "diagnosis": "The auditor compared computed SHA-256 strings with the entire expected-hash object. The 14 mismatches were six raw-source hash comparisons and eight local-source comparisons; raw case checks themselves recorded no mismatch.",
+  "preserved": [
+    "AUDIT-attempt01.json",
+    "RESULT-attempt01.json"
+  ],
+  "next": "Use a separately named audit_probe_v2.py that compares each expected sha256 field and independently verifies the raw rows. The candidate probe remains single-invocation."
+}

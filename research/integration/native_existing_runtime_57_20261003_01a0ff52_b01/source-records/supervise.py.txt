@@ -1,0 +1,25 @@
+import argparse, datetime, hashlib, json, pathlib, subprocess, time
+
+p=argparse.ArgumentParser()
+p.add_argument('phase'); p.add_argument('--timeout',type=int,default=300)
+p.add_argument('--stdin'); p.add_argument('argv',nargs=argparse.REMAINDER)
+a=p.parse_args(); argv=a.argv[1:] if a.argv[:1]==['--'] else a.argv
+root=pathlib.Path(__file__).resolve().parent; dest=root/a.phase
+dest.mkdir(exist_ok=False)
+raw=pathlib.Path(a.stdin).read_bytes() if a.stdin else None
+plan={'argv':argv,'timeout_seconds':a.timeout,'stdin_sha256':hashlib.sha256(raw).hexdigest() if raw is not None else None,'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+(dest/'plan.json').write_text(json.dumps(plan,indent=2)+'\n')
+with (dest/'stdout').open('wb') as out, (dest/'stderr').open('wb') as err:
+    proc=subprocess.Popen(argv,stdin=subprocess.PIPE if raw is not None else subprocess.DEVNULL,stdout=out,stderr=err)
+    (dest/'pid.json').write_text(json.dumps({'pid':proc.pid,'started_utc':plan['started_utc']})+'\n')
+    timeout=False
+    try: proc.communicate(raw,timeout=a.timeout)
+    except subprocess.TimeoutExpired:
+        timeout=True; proc.terminate()
+        try: proc.wait(timeout=10)
+        except subprocess.TimeoutExpired: proc.kill(); proc.wait()
+result={**plan,'pid':proc.pid,'exit_code':proc.returncode,'timed_out':timeout,'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+for name in ('stdout','stderr'):
+    data=(dest/name).read_bytes(); result[name]={'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}
+(dest/'result.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result)); raise SystemExit(124 if timeout else proc.returncode)

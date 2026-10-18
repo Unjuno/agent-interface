@@ -1,0 +1,12 @@
+{
+  "schema": "a15_initial_audit_failure_capture_v1",
+  "command": [
+    "python3",
+    "research/integration/a15_planner_missing_target_abstention_20261004/audit.py"
+  ],
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "{\n  \"schema\": \"a15_transition_abstention_audit_v1\",\n  \"disposition\": \"FAIL_OR_INCOMPLETE\",\n  \"error\": \"ValueError: field point is not on the requested right half\"\n}\n",
+  "stderr_sha256": "cd73cb1e8a802a0b3555f8dd7090f280753113d449b70bc063160f2a2eb6bd25",
+  "interpretation": "The frozen helper adds a field_point.x >= 220 requirement not present in PLAN.md or PROMPT.txt; it rejected the otherwise in-region x=130 answer. This is an audit implementation defect, not a model-call retry or change to the preregistered decision rule."
+}

@@ -1,0 +1,7 @@
+From repository root:
+
+  python -B research/doom/v39_ammo_pending_pump_a06_20261008/candidate.py
+  python -B research/doom/v39_ammo_pending_pump_a06_20261008/audit.py
+  python -B -m unittest -v research.doom.v39_ammo_pending_pump_a06_20261008.test_audit
+
+The candidate is one-shot and writes both RESULT.json and events.jsonl once. Its production source inputs are pinned in FREEZE.json.

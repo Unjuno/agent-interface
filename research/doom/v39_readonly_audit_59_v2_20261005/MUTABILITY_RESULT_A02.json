@@ -1,0 +1,36 @@
+{
+  "experiment_id": "V39-READONLY-AUDIT-59-A02-V2-20261005",
+  "legacy_auditor": {
+    "added_files": [],
+    "changed_files": [
+      "raw/AUDIT.json"
+    ],
+    "exit_code": 0,
+    "raw_audit_sha256_after": "8e5980da83ac1b0d8516bb12af8e52937825f2fc2f4781120765616e797b438e",
+    "raw_audit_sha256_before": "d46a7733360e64271e154f2c0ab9894a114fd6f391574ffe055b09ab2fa7846a",
+    "stderr": "",
+    "stdout_disposition": "PASS_SAVED_RESULT_AUDIT",
+    "write_mutation_reproduced": true
+  },
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "readonly_v2": {
+    "added_files": [],
+    "archive_bytes_unchanged": true,
+    "changed_files": [],
+    "disposition": "PASS_READ_ONLY_ARCHIVE_AUDIT",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "{\n  \"archive_path\": \"C:\\\\Users\\\\user\\\\AppData\\\\Local\\\\Temp\\\\v39-audit-readonly-v2-adb4za6o\\\\readonly\",\n  \"baseline_false_accept_count\": 4,\n  \"candidate_false_accept_count\": 0,\n  \"errors\": [],\n  \"interval_sweep\": {\n    \"baseline\": {\n      \"cases\": 100,\n      \"incomplete\": 85,\n      \"ordered\": 15\n    },\n    \"candidate\": {\n      \"cases\": 100,\n      \"incomplete\": 85,\n      \"ordered\": 15\n    }\n  },\n  \"manifest_members\": 18,\n  \"preserved_first_audit_consistent\": true,\n  \"scope\": \"saved-result and archive-integrity audit only; no files are written; does not validate X-server behavior, application consumption, live input, or task effect\",\n  \"status\": \"PASS_READ_ONLY_ARCHIVE_AUDIT\"\n}\n"
+  },
+  "schema": "v39-readonly-audit-v2-construction-result-v1",
+  "scope": "Archived-output audit behavior only; no game, model, GUI, OS input, or shared container use.",
+  "source_archive": "research\\doom\\v39_application_consumption_conflict_59_a01_20261005",
+  "source_archive_sha256s_sha256": "7ecbce601ca686142dd8d9de27c05c39e14295d68f97b76bb251ed79df3f62a5",
+  "source_sha256": {
+    "probe_runner": "0a71968f64b9354ef82501cc1104c17dce8dd8cb9b640278ac9fd34bfe490612",
+    "readonly_auditor": "27c5cc50363c8d3ea0d892f061c30014f177bdf5f24714af38f9e948cd53b0be",
+    "test_module": "6ae6395ef93a87cc34cc027566807f41b64168c047db88acaae9562af0992723"
+  },
+  "status": "PASS_V1_MUTATION_REPRODUCED_V2_READ_ONLY"
+}

@@ -1,0 +1,31 @@
+{"case": "healthy_completion", "event": "observation_enqueued", "sequence": 2}
+{"case": "healthy_completion", "event": "observation_enqueued", "sequence": 3}
+{"case": "healthy_completion", "event": "observation_enqueued", "sequence": 4}
+{"case": "healthy_completion", "done": false, "event": "planner_future_poll"}
+{"case": "healthy_completion", "event": "observation_dequeued", "row_event": "typed_observation", "sequence": 2}
+{"case": "healthy_completion", "event": "monitor_received", "future_pending": true, "sequence": 2}
+{"case": "healthy_completion", "event": "observation_dequeued", "row_event": "typed_observation", "sequence": 3}
+{"case": "healthy_completion", "event": "monitor_received", "future_pending": true, "sequence": 3}
+{"case": "healthy_completion", "event": "observation_dequeued", "row_event": "typed_observation", "sequence": 4}
+{"case": "healthy_completion", "event": "monitor_received", "future_pending": true, "sequence": 4}
+{"case": "healthy_completion", "event": "terminal_dequeued", "id": "cover-0", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "row_event": "terminal", "status": "completed"}
+{"case": "healthy_completion", "event": "cleanup_stage", "stage": "cover_terminal_validation"}
+{"case": "healthy_completion", "done": false, "event": "planner_future_poll"}
+{"case": "healthy_completion", "event": "cover_renewed", "id": "cover-0-renew-0"}
+{"case": "healthy_completion", "done": false, "event": "planner_future_poll"}
+{"case": "healthy_completion", "event": "terminal_dequeued", "id": "cover-1", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "row_event": "terminal", "status": "completed"}
+{"case": "healthy_completion", "done": false, "event": "planner_future_poll"}
+{"case": "healthy_completion", "done": true, "event": "planner_future_poll"}
+{"case": "invalidation", "event": "observation_enqueued", "sequence": 2}
+{"case": "invalidation", "event": "observation_enqueued", "sequence": 3}
+{"case": "invalidation", "done": false, "event": "planner_future_poll"}
+{"case": "invalidation", "event": "observation_dequeued", "row_event": "typed_observation", "sequence": 2}
+{"case": "invalidation", "event": "monitor_received", "future_pending": true, "sequence": 2}
+{"case": "invalidation", "event": "observation_dequeued", "row_event": "typed_observation", "sequence": 3}
+{"case": "invalidation", "event": "monitor_received", "future_pending": true, "sequence": 3}
+{"case": "invalidation", "event": "monitor_invalidated", "grants_input_authority": false, "reason": "health:below_hard_minimum", "requires_new_decision": true}
+{"case": "invalidation", "event": "planner_interrupt_called", "handle": "turn-1"}
+{"case": "invalidation", "event": "executor_cancel_write", "id": "cover-0", "op": "cancel"}
+{"case": "invalidation", "event": "executor_cancel_flush"}
+{"case": "invalidation", "event": "planner_interrupt_transport", "handle": "turn-1"}
+{"case": "invalidation", "event": "terminal_dequeued", "id": "cover-0", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "row_event": "terminal", "status": "cancelled"}

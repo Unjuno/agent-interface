@@ -1,0 +1,71 @@
+{
+  "cases": [
+    {
+      "case": "explicit_empty_control",
+      "error_type": null,
+      "outcome": "accepted",
+      "receipt": {
+        "released": true,
+        "request_id": "A01-explicit_empty_control",
+        "terminal": true
+      }
+    },
+    {
+      "case": "held_key",
+      "error_type": null,
+      "outcome": "accepted",
+      "receipt": {
+        "released": true,
+        "request_id": "A01-held_key",
+        "terminal": true
+      }
+    },
+    {
+      "case": "held_button",
+      "error_type": null,
+      "outcome": "accepted",
+      "receipt": {
+        "released": true,
+        "request_id": "A01-held_button",
+        "terminal": true
+      }
+    },
+    {
+      "case": "missing_keys_down",
+      "error_type": null,
+      "outcome": "accepted",
+      "receipt": {
+        "released": true,
+        "request_id": "A01-missing_keys_down",
+        "terminal": true
+      }
+    },
+    {
+      "case": "missing_buttons_down",
+      "error_type": null,
+      "outcome": "accepted",
+      "receipt": {
+        "released": true,
+        "request_id": "A01-missing_buttons_down",
+        "terminal": true
+      }
+    },
+    {
+      "case": "verified_false",
+      "error_type": "SocketSubmitStop",
+      "outcome": "rejected",
+      "receipt": null
+    },
+    {
+      "case": "missing_release",
+      "error_type": "SocketSubmitStop",
+      "outcome": "rejected",
+      "receipt": null
+    }
+  ],
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "source_commit": "8ff7afed76c1d81eabac9d0c37d4191b352045a4",
+  "source_git_blob": "ffaa64cb04f0457c11e52393b32a5ba9b2b733b0",
+  "source_path": "research/integration/mindustry_three_arm_economics_20260928/target_socket_submit_v1.py",
+  "source_sha256": "fcce7256405387f8f5ab0a95e1ecbe4ad450b4ad1ff99fcfbeca6a9d8ecb6370"
+}

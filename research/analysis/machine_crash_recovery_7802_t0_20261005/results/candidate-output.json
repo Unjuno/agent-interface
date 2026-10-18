@@ -1,0 +1,343 @@
+[
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "effect-then-buffered-done-before-sync"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "ABSENT",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "effect-then-buffered-done-before-sync"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 1,
+    "model": "MACHINE",
+    "scenario": "effect-then-buffered-done-before-sync"
+  },
+  {
+    "classification": "CORRUPT_OR_UNTRUSTED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "TORN",
+      "receipt_bytes_valid": false
+    },
+    "image_index": 2,
+    "model": "MACHINE",
+    "scenario": "effect-then-buffered-done-before-sync"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "external-effect-before-receipt-write"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "ABSENT",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "external-effect-before-receipt-write"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "PENDING",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 1,
+    "model": "MACHINE",
+    "scenario": "external-effect-before-receipt-write"
+  },
+  {
+    "classification": "CORRUPT_OR_UNTRUSTED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "TORN",
+      "receipt_bytes_valid": false
+    },
+    "image_index": 2,
+    "model": "MACHINE",
+    "scenario": "external-effect-before-receipt-write"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "NO_EFFECT_CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "receipt-first-before-external-effect"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "NO_EFFECT_CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "receipt-first-before-external-effect"
+  },
+  {
+    "classification": "NO_EFFECT_CONFIRMED",
+    "image": {
+      "effect": "NO_EFFECT_CONFIRMED",
+      "receipt": "ABSENT",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "same-store-atomic-transaction"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 1,
+    "model": "PROCESS",
+    "scenario": "same-store-atomic-transaction"
+  },
+  {
+    "classification": "NO_EFFECT_CONFIRMED",
+    "image": {
+      "effect": "NO_EFFECT_CONFIRMED",
+      "receipt": "ABSENT",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "same-store-atomic-transaction"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 1,
+    "model": "MACHINE",
+    "scenario": "same-store-atomic-transaction"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "separate-effect-and-receipt-stores"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "ABSENT",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "separate-effect-and-receipt-stores"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "NO_EFFECT_CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 1,
+    "model": "MACHINE",
+    "scenario": "separate-effect-and-receipt-stores"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 2,
+    "model": "MACHINE",
+    "scenario": "separate-effect-and-receipt-stores"
+  },
+  {
+    "classification": "NO_EFFECT_CONFIRMED",
+    "image": {
+      "effect": "NO_EFFECT_CONFIRMED",
+      "receipt": "ABSENT",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 3,
+    "model": "MACHINE",
+    "scenario": "separate-effect-and-receipt-stores"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "commit-durable-before-ack"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "commit-durable-before-ack"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "file-synced-directory-entry-not-synced"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "ABSENT",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "file-synced-directory-entry-not-synced"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 1,
+    "model": "MACHINE",
+    "scenario": "file-synced-directory-entry-not-synced"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "reordered-receipt-before-effect-persistence"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "NO_EFFECT_CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "reordered-receipt-before-effect-persistence"
+  },
+  {
+    "classification": "EFFECT_AND_RECEIPT_CONFIRMED",
+    "image": {
+      "effect": "CONFIRMED",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 1,
+    "model": "MACHINE",
+    "scenario": "reordered-receipt-before-effect-persistence"
+  },
+  {
+    "classification": "CORRUPT_OR_UNTRUSTED",
+    "image": {
+      "effect": "UNKNOWN",
+      "receipt": "TORN",
+      "receipt_bytes_valid": false
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "checksum-detects-torn-receipt"
+  },
+  {
+    "classification": "CORRUPT_OR_UNTRUSTED",
+    "image": {
+      "effect": "UNKNOWN",
+      "receipt": "TORN",
+      "receipt_bytes_valid": false
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "checksum-detects-torn-receipt"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "UNKNOWN",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "PROCESS",
+    "scenario": "external-effect-oracle-unavailable"
+  },
+  {
+    "classification": "UNKNOWN_RECONCILE",
+    "image": {
+      "effect": "UNKNOWN",
+      "receipt": "DONE",
+      "receipt_bytes_valid": true
+    },
+    "image_index": 0,
+    "model": "MACHINE",
+    "scenario": "external-effect-oracle-unavailable"
+  }
+]

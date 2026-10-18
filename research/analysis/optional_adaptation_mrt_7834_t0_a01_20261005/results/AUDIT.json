@@ -1,0 +1,80 @@
+{
+  "auditor_invocations": 1,
+  "candidate_invocations": 1,
+  "control_count": 5,
+  "control_results": [
+    {
+      "control": "zero_propensity_history",
+      "control_passed": true,
+      "disposition": "NONIDENTIFIABLE_ZERO_SUPPORT",
+      "errors": [
+        "NONIDENTIFIABLE_ZERO_SUPPORT",
+        "RAW_PATH_OR_EVENT_RECONSTRUCTION_MISMATCH",
+        "RAW_ESTIMAND_RECONSTRUCTION_FAILED"
+      ]
+    },
+    {
+      "control": "post_assignment_eligibility",
+      "control_passed": true,
+      "disposition": "REJECTED_POST_TREATMENT_ELIGIBILITY",
+      "errors": [
+        "REJECTED_POST_TREATMENT_ELIGIBILITY",
+        "RAW_PATH_OR_EVENT_RECONSTRUCTION_MISMATCH"
+      ]
+    },
+    {
+      "control": "missing_proximal_window",
+      "control_passed": true,
+      "disposition": "RETAINED_AS_UNKNOWN_NOT_DROPPED",
+      "errors": [
+        "MISSING_PROXIMAL_WINDOW",
+        "RAW_PATH_OR_EVENT_RECONSTRUCTION_MISMATCH",
+        "RAW_ESTIMAND_RECONSTRUCTION_FAILED"
+      ]
+    },
+    {
+      "control": "cross_session_interference",
+      "control_passed": true,
+      "disposition": "REJECTED_INTERFERENCE_VIOLATION",
+      "errors": [
+        "REJECTED_INTERFERENCE_VIOLATION"
+      ]
+    },
+    {
+      "control": "proximal_distal_inversion",
+      "control_passed": true,
+      "disposition": "DISTINCT_NON_SURROGATE_ENDPOINTS"
+    }
+  ],
+  "executed_only_baseline_biased": true,
+  "naive_assignment_baseline_biased": true,
+  "raw_errors": [],
+  "raw_reconstruction_valid": true,
+  "raw_sha256": "91e2a9bc12926533b8d3d7355d531cabbb7eef06af392bd4a752de828559d44c",
+  "reconstructed": {
+    "distal_episode_success_by_execution_policy": {
+      "none": 1.0,
+      "some": 0.0
+    },
+    "executed_only_contrast": 0.48664761904761883,
+    "expected_eligible_opportunities": 6.0,
+    "ipw_excursion_estimate": 0.14999999999999994,
+    "ipw_excursion_estimate_by_carryover_history": {
+      "none": 0.12545454545454543,
+      "some": 0.2999999999999999
+    },
+    "mandatory_control_violations": 0,
+    "oracle_excursion_effect": 0.15000000000000005,
+    "oracle_excursion_effect_by_carryover_history": {
+      "none": 0.12545454545454549,
+      "some": 0.29999999999999993
+    },
+    "proximal_and_distal_are_separate_endpoints": true,
+    "unweighted_assignment_contrast": 0.16044973544973545
+  },
+  "retries": 0,
+  "schema": "issue7834-mrt-t0-a01-independent-audit-v1",
+  "scope": "exact finite synthetic model only; no GUI, user, runtime, task, or product claim",
+  "source_hashes_match_freeze": true,
+  "status": "PASS_METHOD_SCOPED"
+}

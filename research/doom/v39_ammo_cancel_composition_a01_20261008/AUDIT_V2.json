@@ -1,0 +1,14 @@
+{
+  "schema": "issue59-v39-ammo-cancel-composition-audit-v2",
+  "status": "PASS_CONSTRUCTION_COMPOSITION",
+  "checks": {
+    "frozen_sources_match": true,
+    "positive_floor_preserves_pending_answer": true,
+    "zero_ammo_invalidates_pending_answer": true,
+    "executor_cancel_precedes_planner_interrupt": true,
+    "cancelled_terminal_verifies_empty_release": true,
+    "cancel_write_failure_still_interrupts_and_surfaces": true,
+    "exact_unique_case_names": true
+  },
+  "result_sha256": "59c535a488df4b0fab36e4dabd993368ddf95d44f2bf26b6ebc4e46b5a55b676"
+}

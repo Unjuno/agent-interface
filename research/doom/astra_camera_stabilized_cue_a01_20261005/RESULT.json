@@ -1,0 +1,26 @@
+{
+  "format": "astra_camera_stabilized_cue_a01_result_v1",
+  "experiment_id": "astra-camera-stabilized-cue-a01-20261005",
+  "scientific_disposition": "FAIL_WALL_CUE_NOT_SUPPRESSED",
+  "evidence_integrity": "PASS_RAW_RECONSTRUCTION",
+  "candidate_exit_code": 0,
+  "candidate_invocations": 1,
+  "auditor_exit_code": 0,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "reference_sample": {
+    "video_time_s": 22.7,
+    "estimated_shift_current_vs_previous_px": [12, 0],
+    "unregistered_new_warm_pixels": 186,
+    "registered_new_warm_pixels": 186,
+    "threshold": 40
+  },
+  "remaining_confounds": {
+    "video_time_s": 21.9,
+    "description": "the prior visually reviewed muzzle-flash cue remains 96 new warm pixels before and after registration"
+  },
+  "source_video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "frames_rgb_sha256": "e0ce64678e5a246186c442a1bf88a3d34bb6d52d721438dde9a3e7b8e941a8b1",
+  "frozen_main_sha": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "scope": "one translation-registration cue-suppression hypothesis on ten retained historical frames; not threat classification or live control"
+}

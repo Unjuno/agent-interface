@@ -1,0 +1,21 @@
+{
+  "base_nodes": [
+    {"id": "observe_left", "kind": "observe", "deps": [], "reads": {"left_source": 1}},
+    {"id": "observe_right", "kind": "observe", "deps": [], "reads": {"right_source": 1}},
+    {"id": "derive_left", "kind": "compute", "deps": ["observe_left"], "reads": {"left_cfg": 1}},
+    {"id": "derive_right", "kind": "compute", "deps": ["observe_right"], "reads": {"right_cfg": 1}},
+    {"id": "prepare_right", "kind": "prepare", "deps": ["derive_right"], "reads": {"right_draft": 1}},
+    {"id": "send_left", "kind": "effect", "deps": ["derive_left"], "receipt": "verified_effect", "idempotent": true},
+    {"id": "verify_terminal", "kind": "verify", "deps": ["send_left"], "receipt": "verified_terminal"}
+  ],
+  "cases": {
+    "revision_none": {"provenance_complete": true, "current_versions": {"left_source": 1, "right_source": 1, "left_cfg": 1, "right_cfg": 1, "right_draft": 1}},
+    "revision_left": {"provenance_complete": true, "current_versions": {"left_source": 1, "right_source": 1, "left_cfg": 2, "right_cfg": 1, "right_draft": 1}},
+    "revision_right": {"provenance_complete": true, "current_versions": {"left_source": 1, "right_source": 1, "left_cfg": 1, "right_cfg": 2, "right_draft": 1}},
+    "revision_both": {"provenance_complete": true, "current_versions": {"left_source": 1, "right_source": 1, "left_cfg": 2, "right_cfg": 2, "right_draft": 1}},
+    "revision_left_incomplete": {"provenance_complete": false, "current_versions": {"left_source": 1, "right_source": 1, "left_cfg": 2, "right_cfg": 1, "right_draft": 1}},
+    "ambiguous_effect": {"provenance_complete": true, "current_versions": {"left_source": 1, "right_source": 1, "left_cfg": 1, "right_cfg": 1, "right_draft": 1}, "receipt_overrides": {"send_left": "ambiguous_delivery", "verify_terminal": "unknown"}},
+    "verified_no_effect": {"provenance_complete": true, "current_versions": {"left_source": 1, "right_source": 1, "left_cfg": 1, "right_cfg": 1, "right_draft": 1}, "receipt_overrides": {"send_left": "verified_no_effect", "verify_terminal": "not_applicable"}},
+    "boolean_version_alias": {"provenance_complete": true, "current_versions": {"left_source": 1, "right_source": 1, "left_cfg": true, "right_cfg": 1, "right_draft": 1}}
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "decision-value-7934-freeze-v1",
+  "allocation": "7934-DECISION-VALUE-ACQUISITION-A01-20261007",
+  "issue": 7934,
+  "base_main": "8c8b37424fdb43482412240868574813fae46c2e",
+  "branch": "research/decision-value-7934-a01-20261007",
+  "package": "research/analysis/decision_value_7934_a01_20261007",
+  "protocol": "PROTOCOL.md",
+  "formal_calls": {
+    "candidate": 1,
+    "scorer": 1,
+    "auditor": 1,
+    "retries": 0
+  },
+  "worlds": 21,
+  "policy_world_rows": 84,
+  "policies": [
+    "cost_only",
+    "entropy_threshold",
+    "decision_value",
+    "oracle_best_check"
+  ],
+  "source_and_input_sha256": {
+    "HYPOTHESIS.md": "08431c008acdc13181f85c5f432f43f784b9db5eec7a8fb3cf4282fab6ed2aa3",
+    "PROTOCOL.md": "e2b45068e8594714ecc0fc8b212773e9c088b248bc11f2eef6a46b218c3c4835",
+    "PREFLIGHT.json": "83f954b8ed6389a2c31115beb03e741ccdc227b8c6a6fb84c04e30414579248d",
+    "README.md": "be3ef9ef1df79f4cbed086c31df192967a43d0fcac26aaee1dfa0095998d92d4",
+    "candidate.py": "9df7f1a07f59687fb9c58ca6d532353569575ee183d4db54dd28ae268960837f",
+    "scorer.py": "f0b2bcbf60dd25a3d066e582d8a260b45637ed0c20928b94329a7ac1eef199e8",
+    "auditor.py": "4139ca7b54abc68a59e3c1c9eb833a78e7b3447ddf0a0a6f88539cd2ae52a728",
+    "test_pipeline.py": "c942fce9c72654bba5de0acb3a09e1514b174ec32639b9c2c257b30f04dea4db",
+    "fixtures/candidate_model.json": "f6913328e69b82e3eb7c27b98327d79015397c4cafe4186b6bd1ffaec39f0575",
+    "fixtures/scoring_key.json": "a1757f37904e9c3f1cb8392f27941ee615ff03c72c31aacf3ffd3df6a44ceced"
+  },
+  "frozen_decision_rules": {
+    "cost_only_max_cost": 1.0,
+    "entropy_threshold_bits": 0.4,
+    "entropy_threshold_max_cost": 1.0,
+    "decision_value_minimum_net": 0.0,
+    "tie_break": "lexicographic",
+    "route_loss_scale": "authored loss-equivalent units",
+    "random_seed": null,
+    "enumeration": "exhaustive deterministic finite worlds"
+  },
+  "runtime": {
+    "planned": "native fallback; no container/isolation claim",
+    "host": "macOS Darwin arm64",
+    "python": "CPython 3.14.5",
+    "container_preflight": "OrbStack Docker 29.4.0 linux/arm64 reachable; python:3.12-slim image inspect failed on containerd content blob with operation not supported; docker image ls failed on another blob; no pull/build/restart/prune/repair"
+  },
+  "formal_commands": [
+    "python3 -B candidate.py fixtures/candidate_model.json results/formal01/candidate.raw.json",
+    "python3 -B scorer.py fixtures/candidate_model.json fixtures/scoring_key.json results/formal01/candidate.raw.json results/formal01/score.json",
+    "python3 -B auditor.py fixtures/candidate_model.json fixtures/scoring_key.json results/formal01/candidate.raw.json results/formal01/score.json results/formal01/audit.json"
+  ]
+}

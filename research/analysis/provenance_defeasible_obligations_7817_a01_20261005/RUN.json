@@ -1,0 +1,52 @@
+{
+  "allocation_id": "PROVENANCE-DEFEASIBLE-7817-T0-A01-20261005-01",
+  "audit": {
+    "authority_emitted": false,
+    "case_rows": 10,
+    "errors": [],
+    "mutation_rows": 5,
+    "scope": "finite authored obligations only",
+    "status": "PASS_METHOD_SCOPED"
+  },
+  "auditor_exit_code": 0,
+  "auditor_invocations": 1,
+  "candidate_exit_code": 0,
+  "candidate_invocations": 1,
+  "candidate_rows": 10,
+  "commands": [
+    "python -B research/analysis/provenance_defeasible_obligations_7817_a01_20261005/candidate.py research/analysis/provenance_defeasible_obligations_7817_a01_20261005/fixture.json research/analysis/provenance_defeasible_obligations_7817_a01_20261005/raw/candidate.json",
+    "python -B research/analysis/provenance_defeasible_obligations_7817_a01_20261005/audit.py research/analysis/provenance_defeasible_obligations_7817_a01_20261005/raw/candidate.json research/analysis/provenance_defeasible_obligations_7817_a01_20261005/raw/audit.json"
+  ],
+  "formal_runner": "Windows PowerShell / CPython 3.11.9",
+  "freeze_source_hashes_verified": true,
+  "hostile_mutation_rows": 5,
+  "raw_files": {
+    "raw/audit.json": {
+      "bytes": 147,
+      "sha256": "4bf856fff5bedda3afed9cc972d84783684080a14ea5fb952fe42ed0932ad9fc"
+    },
+    "raw/audit.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/audit.stdout.txt": {
+      "bytes": 158,
+      "sha256": "e9bc6c2d7a4c937a9527360768b91da62f5f21e646ce7beca769cea5763c2a44"
+    },
+    "raw/candidate.json": {
+      "bytes": 2849,
+      "sha256": "a721c4ebaa9e9f1aee0e572bf3884f7820df6f77291b49a3578a5cd4c45f02b8"
+    },
+    "raw/candidate.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/candidate.stdout.txt": {
+      "bytes": 122,
+      "sha256": "f64b8f2df14298c559c25a8584e3598314b0fb71416c75056fe672c7720d51ec"
+    }
+  },
+  "raw_output_independent_rerun": false,
+  "retries": 0,
+  "timestamps": "Exact process timestamps were not captured; no fabricated timing is reported."
+}

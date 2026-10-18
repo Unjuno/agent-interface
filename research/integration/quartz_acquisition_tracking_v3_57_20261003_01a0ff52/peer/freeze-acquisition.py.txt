@@ -1,0 +1,11 @@
+"""Prospective freeze only; no candidate module import or producer execution."""
+from pathlib import Path
+import json,hashlib,datetime,sys,platform
+O=Path(__file__).resolve().parent;E=O/'export'
+paths=['runtime/backends/quartz_v1/backend.py','runtime/backends/quartz_v1/session.py','runtime/backends/quartz_v1/__init__.py','runtime/core_v1/__init__.py','runtime/core_v1/contract.py','runtime/core_v1/platform_probe.py','runtime/core_v1/compiled_gui.py']
+pins=[]
+for path in paths:
+    b=(E/path).read_bytes();pins.append({'path':path,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+base=(O/'baseline/runtime/backends/quartz_v1/backend.py').read_bytes()
+freeze={'frozen_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'id':'review6938-v2-f520-acquisition-post-fault-a01','head':'1fafff150ea03e1c9f6c0cf15d39a8fb6cb7e05f','review_base':'9c26e204c0475bee30919e3d0e6681f393078ef1','source':pins,'baseline_backend':{'bytes':len(base),'sha256':hashlib.sha256(base).hexdigest()},'probe_sha256':hashlib.sha256((O/'probe-acquisition-a01.py').read_bytes()).hexdigest(),'plan_sha256':hashlib.sha256((O/'ACQUISITION-PLAN.json').read_bytes()).hexdigest(),'python_version':sys.version,'python_binary_sha256':hashlib.sha256(Path(sys.executable).read_bytes()).hexdigest(),'platform':platform.platform(),'argv':['<BUNDLED_PYTHON>','-I','-B','outputs/review-6938-v2-01a0ff32/probe-acquisition-a01.py'],'runtime_test_fixture_author_helper_imports':False,'real_graphics_constructor_CDLL_calls_allowed':False,'own_controlled_virtual_APIs_only':True,'actual_ctypes_Structure_declarations_only':'candidate pure structures may instantiate; no Mac library/OS-input method'}
+(O/'ACQUISITION-FREEZE.json').write_text(json.dumps(freeze,indent=2)+'\n',encoding='utf-8');print(json.dumps(freeze))

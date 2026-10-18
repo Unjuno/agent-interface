@@ -44,6 +44,34 @@ class FreezeLineageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "SHA-256 mismatch"):
             lineage.verify_lineage("current_final", data)
 
+    def test_jointly_replaced_member_and_manifest_still_fails_pinned_tree(self):
+        """A mutable fixture plus its matching mutable digest is not authority."""
+        original_manifest = lineage.MANIFESTS["current_final"]["snapshot"]
+        original_bytes = original_manifest.read_bytes()
+        archive_data = members(ARCHIVES["current_final"])
+        member_path = next(iter(archive_data))
+        old_digest = __import__("hashlib").sha256(archive_data[member_path]).hexdigest()
+        archive_data[member_path] += b"jointly-substituted"
+        new_digest = __import__("hashlib").sha256(archive_data[member_path]).hexdigest()
+        manifest_bytes = original_bytes.replace(
+            f"{old_digest}  {member_path}".encode(),
+            f"{new_digest}  {member_path}".encode(),
+        )
+        self.assertNotEqual(manifest_bytes, original_bytes)
+
+        with tempfile.TemporaryDirectory() as temp:
+            mutated_manifest = Path(temp) / "PRELAUNCH_FREEZE.md"
+            mutated_manifest.write_bytes(manifest_bytes)
+            with mock.patch.dict(
+                lineage.MANIFESTS["current_final"],
+                {"snapshot": mutated_manifest},
+            ):
+                # The attacker can update a free-standing manifest and archive
+                # digest, but cannot rewrite the hard-coded historical commit,
+                # Git object witness, or authenticated source-tree blob.
+                with self.assertRaisesRegex(ValueError, "snapshot does not match"):
+                    lineage.verify_lineage("current_final", archive_data)
+
     def test_witness_object_corruption_fails_git_object_hash(self):
         payload = json.loads(lineage.WITNESS.read_text(encoding="utf-8"))
         oid, record = next(iter(payload["objects"].items()))

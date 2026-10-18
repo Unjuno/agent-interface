@@ -1,0 +1,52 @@
+import base64,copy,hashlib,json,pathlib,sqlite3,tempfile
+P=pathlib.Path(__file__).resolve().parent;sha=lambda b:hashlib.sha256(b).hexdigest()
+expected={'SHARED_GENERIC':2,'SHARED_ROUTED':4,'AMPLE_GENERIC':4,'AMPLE_ROUTED':4,'EXPIRED_ROUTED':0,'FORBIDDEN_ROUTED':3}
+def need(x,m):
+    if not x:raise ValueError(m)
+def verify(raw,db=True):
+    need(len(raw['arms'])==6 and raw['requests']==24,'cohort')
+    need([a['name'] for a in raw['arms']]==list(expected),'arm order')
+    for a in raw['arms']:
+        need(len(a['receipts'])==4 and a['integrity']=='ok','receipt denominator')
+        occupancy=[0,0];offers={};responses={};effects=[];acquired=set();seq=0
+        for e in a['events']:
+            need(type(e['seq']) is int and e['seq']==seq,'event order');seq+=1
+            kind=e['kind']
+            if kind=='OFFER':
+                q=e['request'];i=q['intent'];recipient=q['recipient'];route=q['route'];need(type(recipient) is int and type(route) is int and type(q['expires_ns']) is int,'exact payload types');need(i not in offers and i==a['name']+'-'+str(recipient),'intent uniqueness')
+                need(route==(recipient%2 if a['routed'] else 0),'advice binding')
+                reason='EXPIRED' if e['received_ns']>=q['expires_ns'] else 'FORBIDDEN' if a['forbidden_recipient3'] and recipient==3 and route!=0 else 'CAPACITY' if occupancy[route]>=a['capacity_each'] else None
+                offers[i]=(q,reason)
+            elif kind=='SLOT_ACQUIRED':
+                q,reason=offers[e['intent']];need(reason is None and e['intent'] not in acquired and e['route']==q['route'],'legal acquisition');occupancy[e['route']]+=1;acquired.add(e['intent']);need(occupancy[e['route']]<=a['capacity_each'],'capacity')
+            elif kind=='EFFECT_COMMITTED':
+                need(e['intent'] in acquired,'effect admitted');q,reason=offers[e['intent']];need(e['recipient']==q['recipient'] and e['route']==q['route'],'effect identity');effects.append([e['intent'],e['recipient'],e['route'],'DONE'])
+            elif kind=='RESPONSE':
+                r=e['response'];q,reason=offers[r['intent']];need(r['reason']==reason and r['status']==('APPLIED' if reason is None else 'REFUSED'),'response truth');need(r['intent'] not in responses,'one response');responses[r['intent']]=r
+            elif kind=='SLOT_RELEASED':
+                need(len(responses)==4 and occupancy[e['route']]>0,'release after cohort');occupancy[e['route']]-=1
+            else:raise ValueError('unknown event')
+        need(occupancy==[0,0] and len(offers)==4 and len(responses)==4,'release conservation')
+        need(len(effects)==expected[a['name']] and len({e[0] for e in effects})==len(effects) and sorted(effects)==a['closed_rows'],'exact effects')
+        for r in a['receipts']:
+            q=r['request'];b=json.dumps(q,sort_keys=True).encode();o=r['response_utf8'].encode();need(r['http_status']==200 and len(b)==r['request_bytes'] and sha(b)==r['request_sha256'] and len(o)==r['response_bytes'] and sha(o)==r['response_sha256'],'native HTTP streams');need(json.loads(o)==responses[q['intent']],'receipt event join')
+        need(a['terminal']=={'server_thread_alive':False,'client_threads_alive':[False]*4,'errors':[]},'thread termination')
+        image=base64.b64decode(a['db']['base64'],validate=True);need(len(image)==a['db']['bytes'] and sha(image)==a['db']['sha256'],'DB bytes')
+        if db:
+            need(image==(P/'native-first'/a['db']['name']).read_bytes(),'original saved file')
+            with tempfile.TemporaryDirectory() as d:
+                path=pathlib.Path(d)/'copy.sqlite';path.write_bytes(image);c=sqlite3.connect(path.as_uri()+'?mode=ro&immutable=1',uri=True);got=c.execute('SELECT intent,recipient,route,value FROM effects ORDER BY intent').fetchall();ok=c.execute('PRAGMA integrity_check').fetchone()[0];c.close();need([list(r) for r in got]==a['closed_rows'] and ok=='ok' and path.read_bytes()==image,'independent DB copy')
+    return True
+raw=json.loads((P/'native-first/RAW.json').read_text(encoding='utf-8'));verify(raw);controls=[]
+for label in ('DROP_OFFER','FORGE_EFFECT','ERASE_RELEASE','FALSE_SUCCESS'):
+    x=copy.deepcopy(raw)
+    if label=='DROP_OFFER':x['arms'][0]['receipts'].pop()
+    elif label=='FORGE_EFFECT':x['arms'][0]['closed_rows'][0][1]=99
+    elif label=='ERASE_RELEASE':x['arms'][1]['events'].pop()
+    else:next(e for e in x['arms'][4]['events'] if e['kind']=='RESPONSE')['response']['status']='APPLIED'
+    try:verify(x,db=False)
+    except ValueError as e:controls.append({'kind':label,'refused':True,'error':str(e),'record':x});continue
+    raise RuntimeError('copied control admitted')
+(P/'CONTROLS.json').write_text(json.dumps(controls,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+result={'decision':'RETAIN_SCOPED_PRIVATE_CAPACITY_TRANSFER','arms':6,'offers':24,'effects':[len(a['closed_rows']) for a in raw['arms']],'controls_refused':[c['kind'] for c in controls],'producer_replays':0,'main_requests':0,'limits':'Static parallel-capacity assignment explains result; deliberate slot holding; no deployment/adoption/task/physicalrelease/latency/H_PASS'}
+(P/'AUDIT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))

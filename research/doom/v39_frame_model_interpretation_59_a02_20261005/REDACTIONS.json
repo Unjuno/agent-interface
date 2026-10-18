@@ -1,0 +1,61 @@
+{
+  "reason": "Remove private local paths and ephemeral Codex thread identifier before publication to the public repository.",
+  "preservation": "Exact pre-redaction originals are retained under raw/private-local with directory mode 0700 and files mode 0600; that exact path is locally excluded from Git.",
+  "original_sha256": {
+    "events.jsonl": {
+      "sha256": "42585664c0ce46983efaa0d3e0658f7d5d411de7aa62dda7c1506057a56093be",
+      "private_copy": "events.jsonl.original"
+    },
+    "stderr.txt": {
+      "sha256": "8634405492bb93710349363471c75142b0ea237021ccfddc513d3e7d71e35164",
+      "private_copy": "stderr.txt.original"
+    },
+    "invocation.json": {
+      "sha256": "e4fe267c2a7b7f6c8075656cdf1a07c9915f0a80cdb3b640fd4b5b80d744091d",
+      "private_copy": "invocation.json.original"
+    },
+    "version-preflight.json": {
+      "sha256": "66aca7128ac6cac367c8d2af6030beafb93b1ffa09b78386bd55f1a6380ab6e2",
+      "private_copy": "version-preflight.json.original"
+    },
+    "final.txt": {
+      "sha256": "ff6a620869911d9cfdfb0b8eb815e4fbbba75f99eb5349bebb6d611e24a29cd0",
+      "private_copy": "final.txt.original"
+    },
+    "exit-code.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "private_copy": "exit-code.txt.original"
+    },
+    "prompt.stdin.txt": {
+      "sha256": "a8abe3f41f472aca178528af0b9c26a03cd38cc31c4c67ad41878891cc341754",
+      "private_copy": "prompt.stdin.txt.original"
+    }
+  },
+  "published_sha256": {
+    "events.jsonl": {
+      "sha256": "c3381a585935a4733d761961a37c4dfd8b36fa0c1c7ccfe1aa8916306c80956e"
+    },
+    "stderr.txt": {
+      "sha256": "8634405492bb93710349363471c75142b0ea237021ccfddc513d3e7d71e35164"
+    },
+    "invocation.json": {
+      "sha256": "38b2890237c71b7bee6192c26d7dfc5867a5cf95ed39ccea108f8a19071b1a3e"
+    },
+    "version-preflight.json": {
+      "sha256": "66aca7128ac6cac367c8d2af6030beafb93b1ffa09b78386bd55f1a6380ab6e2"
+    },
+    "final.txt": {
+      "sha256": "ff6a620869911d9cfdfb0b8eb815e4fbbba75f99eb5349bebb6d611e24a29cd0"
+    },
+    "exit-code.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "prompt.stdin.txt": {
+      "sha256": "a8abe3f41f472aca178528af0b9c26a03cd38cc31c4c67ad41878891cc341754"
+    }
+  },
+  "transformations": {
+    "events.jsonl": "local worktree/home paths and ephemeral thread identifier replaced; all other bytes retained.",
+    "invocation.json": "local worktree/home paths and ephemeral thread identifier replaced; all other bytes retained."
+  }
+}

@@ -1,0 +1,24 @@
+import json,hashlib
+from pathlib import Path
+R=Path(__file__).resolve().parent;D=R/'probe-01'
+def require(value,message):
+    if not value:raise RuntimeError(message)
+def sha(b):return hashlib.sha256(b).hexdigest()
+f=json.loads((D/'FREEZE.json').read_bytes());raw=(D/'inputs.jsonl.bin').read_bytes();inputs=[json.loads(x) for x in raw.splitlines()]
+require(sha(raw)==f['input_sha256'] and len(inputs)==f['input_frames']==2,'wire freeze')
+for path,pin in f['sources'].items():
+    b=Path(path).read_bytes();require(sha(b)==pin['sha256'] and len(b)==pin['bytes'],'source '+path)
+p=[json.loads(x) for x in (D/'parent.jsonl').read_bytes().splitlines()];s=[json.loads(x) for x in (D/'server.jsonl').read_bytes().splitlines()];r=json.loads((D/'RESULT.json').read_bytes());outer=json.loads((R/'probe-command-01/RESULT.json').read_bytes())
+requests=[x for x in p if x['event']=='before_request'];responses=[x for x in p if x['event']=='response'];escaped=[x for x in p if x['event']=='request_escaped'];tools=[x for x in s if x['event']=='actual_tool_entry']
+require([x['frame'] for x in requests]==[1,2],'requests');require([x['next_id'] for x in requests]==[1,2],'before IDs')
+require(len(tools)==len(responses)==len(escaped)==1,'counts');require(tools[0]['program']==inputs[0]['arguments']['program'],'server exact arguments')
+response=responses[0]['response'];require(response['status']=='returned' and response['next_id']==2,'valid return')
+echo=json.loads(response['result']['content'][0]['text']);require(echo['received']==tools[0]['program'],'echo equality')
+require(escaped[0]['frame']==2 and escaped[0]['type']=='CancelledError' and escaped[0]['next_id']==3,'escaped cancellation')
+require(r['final_next_id']==3 and r['child_launches']==1 and r['replayed_requests']==0,'result counts')
+require(r['children'][0]['actual_returncode']==1 and len({x['pid'] for x in s})==1 and s[0]['pid']==r['children'][0]['pid'],'actual child')
+require('PydanticSerializationError' in r['outer_exception']['repr'] and r['outer_exception']['type']=='ExceptionGroup','SDK cause')
+require(outer['returncode']==0,'wrapper capture');require([x['monotonic_ns'] for x in p]==sorted(x['monotonic_ns'] for x in p),'causal order')
+require(inputs[1]['arguments']['program']['text']=='\ud800','invalid scalar input')
+report={'decision':'CONFIRMED_POST_ADMISSION_SDK_CANCELLATION_BOUNDARY','actual_child_exit':1,'wrapper_exit':0,'server_tool_calls':1,'requests':2,'responses':1,'escaped_type':'CancelledError','final_next_id':3,'valid_unicode_exact_echo':True,'scalar_invalid_unicode':'lone U+D800, ASCII JSON wire is UTF8-valid','source_pins':len(f['sources']),'no_replay_observed':True,'scope':'one private CPython3.13.14/MCP1.30/Pydantic context; not UTF8 repair failure, task/physical release, general transport failure rate or broad response guarantee'}
+(R/'AUDIT.json').write_text(json.dumps(report,indent=2),encoding='utf-8');print(json.dumps(report))

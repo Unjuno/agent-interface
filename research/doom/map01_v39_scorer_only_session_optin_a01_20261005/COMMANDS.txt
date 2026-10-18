@@ -1,0 +1,7 @@
+python -B -m unittest -v test_map01_overlap_controller_v39
+python -B -m unittest -v test_session_map01_v15
+python -B -m unittest -v -k event_clock -k non_progress -k scorer_files -k terminal_repeat test_map01_scorer_stdio_adapter_v1
+python -B -m py_compile research/doom/map01_overlap_controller_v39.py research/doom/test_map01_overlap_controller_v39.py
+git diff --check
+python -B -m unittest -v test_release_backend_v3_composition
+python -B -m unittest -v test_release_backend_v3_actual_composition

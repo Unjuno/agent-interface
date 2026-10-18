@@ -1,0 +1,606 @@
+{
+  "schema": "issue59-authored-health-loss-boundary-result-v1",
+  "status": "CONSTRUCTION_OBSERVATION",
+  "main_commit": "bb476976d887bb0194a64a1c6ab1e7ac45d72e24",
+  "controller_sha256": "c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95",
+  "guard_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "motivating_triage_sha256": "4af4a25cdb4dc2cd1c035e7faef05d676284e0fd34542989a1371652147d2796",
+  "pending_model": true,
+  "synthetic_typed_health_source": 100,
+  "critical_health_minimum": 80,
+  "maximum_health_loss_values": [
+    0,
+    20
+  ],
+  "rows": [
+    {
+      "maximum_health_loss": 0,
+      "hard_minimum": 100,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 100
+      },
+      "exact_floor": {
+        "health": 100,
+        "status": "UNCHANGED",
+        "reason": "signal_unchanged",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 100
+      },
+      "one_below_floor": {
+        "health": 99,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 100
+      }
+    },
+    {
+      "maximum_health_loss": 1,
+      "hard_minimum": 99,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 99
+      },
+      "exact_floor": {
+        "health": 99,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 99
+      },
+      "one_below_floor": {
+        "health": 98,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 99
+      }
+    },
+    {
+      "maximum_health_loss": 2,
+      "hard_minimum": 98,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 98
+      },
+      "exact_floor": {
+        "health": 98,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 98
+      },
+      "one_below_floor": {
+        "health": 97,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 98
+      }
+    },
+    {
+      "maximum_health_loss": 3,
+      "hard_minimum": 97,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 97
+      },
+      "exact_floor": {
+        "health": 97,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 97
+      },
+      "one_below_floor": {
+        "health": 96,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 97
+      }
+    },
+    {
+      "maximum_health_loss": 4,
+      "hard_minimum": 96,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 96
+      },
+      "exact_floor": {
+        "health": 96,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 96
+      },
+      "one_below_floor": {
+        "health": 95,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 96
+      }
+    },
+    {
+      "maximum_health_loss": 5,
+      "hard_minimum": 95,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 95
+      },
+      "exact_floor": {
+        "health": 95,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 95
+      },
+      "one_below_floor": {
+        "health": 94,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 95
+      }
+    },
+    {
+      "maximum_health_loss": 6,
+      "hard_minimum": 94,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 94
+      },
+      "exact_floor": {
+        "health": 94,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 94
+      },
+      "one_below_floor": {
+        "health": 93,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 94
+      }
+    },
+    {
+      "maximum_health_loss": 7,
+      "hard_minimum": 93,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 93
+      },
+      "exact_floor": {
+        "health": 93,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 93
+      },
+      "one_below_floor": {
+        "health": 92,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 93
+      }
+    },
+    {
+      "maximum_health_loss": 8,
+      "hard_minimum": 92,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 92
+      },
+      "exact_floor": {
+        "health": 92,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 92
+      },
+      "one_below_floor": {
+        "health": 91,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 92
+      }
+    },
+    {
+      "maximum_health_loss": 9,
+      "hard_minimum": 91,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 91
+      },
+      "exact_floor": {
+        "health": 91,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 91
+      },
+      "one_below_floor": {
+        "health": 90,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 91
+      }
+    },
+    {
+      "maximum_health_loss": 10,
+      "hard_minimum": 90,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 90
+      },
+      "exact_floor": {
+        "health": 90,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 90
+      },
+      "one_below_floor": {
+        "health": 89,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 90
+      }
+    },
+    {
+      "maximum_health_loss": 11,
+      "hard_minimum": 89,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 89
+      },
+      "exact_floor": {
+        "health": 89,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 89
+      },
+      "one_below_floor": {
+        "health": 88,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 89
+      }
+    },
+    {
+      "maximum_health_loss": 12,
+      "hard_minimum": 88,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 88
+      },
+      "exact_floor": {
+        "health": 88,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 88
+      },
+      "one_below_floor": {
+        "health": 87,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 88
+      }
+    },
+    {
+      "maximum_health_loss": 13,
+      "hard_minimum": 87,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 87
+      },
+      "exact_floor": {
+        "health": 87,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 87
+      },
+      "one_below_floor": {
+        "health": 86,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 87
+      }
+    },
+    {
+      "maximum_health_loss": 14,
+      "hard_minimum": 86,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 86
+      },
+      "exact_floor": {
+        "health": 86,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 86
+      },
+      "one_below_floor": {
+        "health": 85,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 86
+      }
+    },
+    {
+      "maximum_health_loss": 15,
+      "hard_minimum": 85,
+      "triage_value_84": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 85
+      },
+      "exact_floor": {
+        "health": 85,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 85
+      },
+      "one_below_floor": {
+        "health": 84,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 85
+      }
+    },
+    {
+      "maximum_health_loss": 16,
+      "hard_minimum": 84,
+      "triage_value_84": {
+        "health": 84,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 84
+      },
+      "exact_floor": {
+        "health": 84,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 84
+      },
+      "one_below_floor": {
+        "health": 83,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 84
+      }
+    },
+    {
+      "maximum_health_loss": 17,
+      "hard_minimum": 83,
+      "triage_value_84": {
+        "health": 84,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 83
+      },
+      "exact_floor": {
+        "health": 83,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 83
+      },
+      "one_below_floor": {
+        "health": 82,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 83
+      }
+    },
+    {
+      "maximum_health_loss": 18,
+      "hard_minimum": 82,
+      "triage_value_84": {
+        "health": 84,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 82
+      },
+      "exact_floor": {
+        "health": 82,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 82
+      },
+      "one_below_floor": {
+        "health": 81,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 82
+      }
+    },
+    {
+      "maximum_health_loss": 19,
+      "hard_minimum": 81,
+      "triage_value_84": {
+        "health": 84,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 81
+      },
+      "exact_floor": {
+        "health": 81,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 81
+      },
+      "one_below_floor": {
+        "health": 80,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 81
+      }
+    },
+    {
+      "maximum_health_loss": 20,
+      "hard_minimum": 80,
+      "triage_value_84": {
+        "health": 84,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 80
+      },
+      "exact_floor": {
+        "health": 80,
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "hard_minimum": 80
+      },
+      "one_below_floor": {
+        "health": 79,
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "hard_minimum": 80
+      }
+    }
+  ],
+  "scope": "Current-source construction boundary only; no live threat, timing, input, recovery, or task-effect evidence."
+}

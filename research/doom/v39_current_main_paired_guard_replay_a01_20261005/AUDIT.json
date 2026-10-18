@@ -1,0 +1,34 @@
+{
+  "ammo_hard_minimum": 1,
+  "candidate_imported": false,
+  "checked_event_rows": 53,
+  "consecutive_observation_sequences": [
+    166,
+    218
+  ],
+  "controller_imported": false,
+  "first_hard_threshold_crossing": {
+    "ammo": 37,
+    "health": 48,
+    "sequence": 218
+  },
+  "frame_rgb_anchors": {
+    "166": {
+      "png_sha256": "8c5e9c02dbc988693ec2126e92d9a2867d0f77ca9223e69356bcc6132b4b99d3",
+      "rgb_sha256": "0722bc91d81488afcfc1adbde03e219faf05ba533189059c0e27e3c892f5a385"
+    },
+    "200": {
+      "png_sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+      "rgb_sha256": "7731f923af45dce8dec01270372f18edce3633e626f3b02a0c43439eec745f1c"
+    },
+    "218": {
+      "png_sha256": "c711f3c36ff56778378a0f82275474615aac9879c2f61ce0d8d4ae8270e5a448",
+      "rgb_sha256": "fd7f813b9b2c15d1c33c8e0d4514747697c62df515c8a1905b7492f5c16cc60b"
+    }
+  },
+  "health_hard_minimum": 51,
+  "historical_turn_interrupted_and_discarded": true,
+  "schema": "v39-current-main-paired-guard-replay-independent-audit-v1",
+  "scope_limit": "This replays the exact retained typed health/ammo rows through the current monitor only. It does not execute the current live capture/session/interrupt/release path, establish task effect or recovery, or replace a fresh assigned live run.",
+  "status": "PASS_POSTHOC_REPLAY_ONLY"
+}

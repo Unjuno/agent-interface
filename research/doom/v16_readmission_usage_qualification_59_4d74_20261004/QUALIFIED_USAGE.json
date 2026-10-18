@@ -1,0 +1,251 @@
+{
+  "disposition": "PASS_SNAPSHOT_RECONCILIATION; HOLD_FULL_USAGE_INTERPRETATION",
+  "scope": "turn-identified thread/tokenUsage/updated snapshots only; no claim that `last` is a per-turn delta or complete response-level usage",
+  "report_snapshot_consistency": "PASS",
+  "thread_ids": [
+    "01a10644-50d4-7cf0-9a65-e3cb2fab4e35"
+  ],
+  "usage_notification_count": 6,
+  "foreign_thread_notification_count": 0,
+  "malformed_usage_notification_count": 0,
+  "unmatched_notification_turn_ids": [],
+  "orphan_notification_turn_ids": [],
+  "duplicate_report_turn_ids": [],
+  "snapshot_mismatch_turn_ids": [],
+  "missing_snapshot_turn_ids": [],
+  "unknown_status_turn_ids": [],
+  "turns": [
+    {
+      "iteration": 0,
+      "turn_id": "01a10644-6a8f-7eb3-9a48-41ca63d88018",
+      "status": "completed",
+      "notification_count": 1,
+      "latest_notification": {
+        "total": {
+          "totalTokens": 10549,
+          "inputTokens": 10237,
+          "cachedInputTokens": 8960,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 312,
+          "reasoningOutputTokens": 159
+        },
+        "last": {
+          "totalTokens": 10549,
+          "inputTokens": 10237,
+          "cachedInputTokens": 8960,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 312,
+          "reasoningOutputTokens": 159
+        },
+        "modelContextWindow": 258400
+      },
+      "report_usage_matches_latest_notification": true,
+      "snapshot_consistency": "MATCH",
+      "snapshot_repeats_previous_completed": null
+    },
+    {
+      "iteration": 1,
+      "turn_id": "01a10644-8b36-7831-9679-ef895c7ef411",
+      "status": "interrupted",
+      "notification_count": 1,
+      "latest_notification": {
+        "total": {
+          "totalTokens": 10549,
+          "inputTokens": 10237,
+          "cachedInputTokens": 8960,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 312,
+          "reasoningOutputTokens": 159
+        },
+        "last": {
+          "totalTokens": 10549,
+          "inputTokens": 10237,
+          "cachedInputTokens": 8960,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 312,
+          "reasoningOutputTokens": 159
+        },
+        "modelContextWindow": 258400
+      },
+      "report_usage_matches_latest_notification": true,
+      "snapshot_consistency": "MATCH",
+      "snapshot_repeats_previous_completed": true
+    },
+    {
+      "iteration": 2,
+      "turn_id": "01a10644-9e33-7010-80e5-cff355d124ab",
+      "status": "completed",
+      "notification_count": 1,
+      "latest_notification": {
+        "total": {
+          "totalTokens": 22611,
+          "inputTokens": 22036,
+          "cachedInputTokens": 18944,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 575,
+          "reasoningOutputTokens": 261
+        },
+        "last": {
+          "totalTokens": 12062,
+          "inputTokens": 11799,
+          "cachedInputTokens": 9984,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 263,
+          "reasoningOutputTokens": 102
+        },
+        "modelContextWindow": 258400
+      },
+      "report_usage_matches_latest_notification": true,
+      "snapshot_consistency": "MATCH",
+      "snapshot_repeats_previous_completed": null
+    },
+    {
+      "iteration": 3,
+      "turn_id": "01a10644-b94a-7290-9dd4-b948b1d3080f",
+      "status": "completed",
+      "notification_count": 1,
+      "latest_notification": {
+        "total": {
+          "totalTokens": 35510,
+          "inputTokens": 34623,
+          "cachedInputTokens": 30080,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 887,
+          "reasoningOutputTokens": 394
+        },
+        "last": {
+          "totalTokens": 12899,
+          "inputTokens": 12587,
+          "cachedInputTokens": 11136,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 312,
+          "reasoningOutputTokens": 133
+        },
+        "modelContextWindow": 258400
+      },
+      "report_usage_matches_latest_notification": true,
+      "snapshot_consistency": "MATCH",
+      "snapshot_repeats_previous_completed": null
+    },
+    {
+      "iteration": 4,
+      "turn_id": "01a10644-d797-7c12-b382-71b4ac7ee6d0",
+      "status": "interrupted",
+      "notification_count": 1,
+      "latest_notification": {
+        "total": {
+          "totalTokens": 35510,
+          "inputTokens": 34623,
+          "cachedInputTokens": 30080,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 887,
+          "reasoningOutputTokens": 394
+        },
+        "last": {
+          "totalTokens": 12899,
+          "inputTokens": 12587,
+          "cachedInputTokens": 11136,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 312,
+          "reasoningOutputTokens": 133
+        },
+        "modelContextWindow": 258400
+      },
+      "report_usage_matches_latest_notification": true,
+      "snapshot_consistency": "MATCH",
+      "snapshot_repeats_previous_completed": true
+    },
+    {
+      "iteration": 5,
+      "turn_id": "01a10644-f054-7f20-ab8e-2d05d9068c7a",
+      "status": "completed",
+      "notification_count": 1,
+      "latest_notification": {
+        "total": {
+          "totalTokens": 49873,
+          "inputTokens": 48773,
+          "cachedInputTokens": 41216,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 1100,
+          "reasoningOutputTokens": 442
+        },
+        "last": {
+          "totalTokens": 14363,
+          "inputTokens": 14150,
+          "cachedInputTokens": 11136,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 213,
+          "reasoningOutputTokens": 48
+        },
+        "modelContextWindow": 258400
+      },
+      "report_usage_matches_latest_notification": true,
+      "snapshot_consistency": "MATCH",
+      "snapshot_repeats_previous_completed": null
+    }
+  ],
+  "completed_turn_last_snapshot_sum": {
+    "inputTokens": 48773,
+    "outputTokens": 1100
+  },
+  "completed_turn_last_snapshot_sum_scope": "observed last snapshots, not total token consumption",
+  "completed_turn_ids_in_snapshot_sum": [
+    "01a10644-6a8f-7eb3-9a48-41ca63d88018",
+    "01a10644-9e33-7010-80e5-cff355d124ab",
+    "01a10644-b94a-7290-9dd4-b948b1d3080f",
+    "01a10644-f054-7f20-ab8e-2d05d9068c7a"
+  ],
+  "completed_turn_ids_missing_last_snapshot": [],
+  "interrupted_turn_ids": [
+    "01a10644-8b36-7831-9679-ef895c7ef411",
+    "01a10644-d797-7c12-b382-71b4ac7ee6d0"
+  ],
+  "interrupted_incremental_usage": "UNKNOWN",
+  "response_level_usage_record_count": 0,
+  "full_attempt_usage": "NOT_ESTABLISHED",
+  "limits": [
+    "turn IDs route notifications but do not define the semantics of `last`",
+    "repeated interrupted snapshots do not prove zero incremental cost",
+    "thread total/last snapshots are not response-level usage records",
+    "this audit makes no claim about billing"
+  ],
+  "frozen_input_verification": {
+    "status": "PASS",
+    "source_commit": "8a462fa02d01801b166a4ae00edaa41a6f29eb67",
+    "files": [
+      {
+        "path": "research/doom/v16_visual_readmission_59_4d74_20261004/run/episode/report.json",
+        "sha256": "5b7872544042080813f0d45f1c8892dbbaa2b69a17feb4eaec20160e29178a2a",
+        "matches_freeze": true
+      },
+      {
+        "path": "research/doom/v16_visual_readmission_59_4d74_20261004/run/host.stdout.jsonl",
+        "sha256": "0a7212196fee55625d6cbe4c4e5f7c0c974efbc2ffdd8cae0ea7d17725ca6259",
+        "matches_freeze": true
+      },
+      {
+        "path": "research/doom/v16_visual_readmission_59_4d74_20261004/run/episode/planner-protocol.jsonl",
+        "sha256": "5b2b7732faba1dc69481421c3d2bfefbe3d5c1025d89c4522009dae33146da69",
+        "matches_freeze": true
+      },
+      {
+        "path": "research/doom/v16_visual_readmission_59_4d74_20261004/run/SAVED_READMISSION_AUDIT.json",
+        "sha256": "b497f2bf3d7a7f2bb9eae695bd37d17234ee88b8e7420ee1145418935a5358c5",
+        "matches_freeze": true
+      },
+      {
+        "path": "research/doom/v16_visual_readmission_59_4d74_20261004/run/USAGE_QUALIFICATION.json",
+        "sha256": "7be9d643df88499970d05a36d279e2ee6934e18c7f25ff90a77676aadf7d6d7d",
+        "matches_freeze": true
+      }
+    ]
+  },
+  "preserved_first_audit": {
+    "path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\usage-qualified-audit-20261004\\research\\doom\\v16_visual_readmission_59_4d74_20261004\\run\\SAVED_READMISSION_AUDIT.json",
+    "original_claimed_sum": {
+      "input": 71597,
+      "output": 1724
+    },
+    "note": "preserved historical output; not reused as qualified usage"
+  }
+}

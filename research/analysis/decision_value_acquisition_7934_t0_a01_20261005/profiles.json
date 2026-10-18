@@ -1,0 +1,31 @@
+{
+  "schema": "decision-value-acquisition-7934-t0-a01-v1",
+  "seed_start": 7934000,
+  "seed_count": 128,
+  "budget": 0.06,
+  "entropy_threshold_bits": 0.05,
+  "routes": ["A", "B"],
+  "profiles": {
+    "agreement": {
+      "state_prior": [[0, 0, 0.495], [0, 1, 0.005], [1, 0, 0.495], [1, 1, 0.005]],
+      "checks": [
+        {"id": "xcheck", "cost": 0.001, "kind": "noisy_x", "accuracy": 0.8},
+        {"id": "ycheck", "cost": 0.05, "kind": "perfect_y", "accuracy": 1.0}
+      ]
+    },
+    "disagreement": {
+      "state_prior": [[0, 0, 0.25], [0, 1, 0.25], [1, 0, 0.25], [1, 1, 0.25]],
+      "checks": [
+        {"id": "xcheck", "cost": 0.05, "kind": "noisy_x", "accuracy": 0.8},
+        {"id": "ycheck", "cost": 0.001, "kind": "perfect_y", "accuracy": 1.0}
+      ]
+    },
+    "correlated": {
+      "state_prior": [[0, 0, 0.35], [0, 1, 0.15], [1, 0, 0.15], [1, 1, 0.35]],
+      "checks": [
+        {"id": "xcheck", "cost": 0.02, "kind": "noisy_x", "accuracy": 0.8},
+        {"id": "ycheck", "cost": 0.001, "kind": "perfect_y", "accuracy": 1.0}
+      ]
+    }
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "cases": [
+    {
+      "calls": [
+        [
+          "input",
+          2,
+          38
+        ],
+        [
+          "sync",
+          1
+        ],
+        [
+          "input",
+          2,
+          38
+        ],
+        [
+          "sync",
+          2
+        ],
+        [
+          "input",
+          3,
+          38
+        ],
+        [
+          "sync",
+          3
+        ],
+        [
+          "sync",
+          4
+        ]
+      ],
+      "events": [
+        {
+          "admission_id": "4105b3d2622f4cd6aa76b3128006d876:admission:1",
+          "admission_key_matches_request": true,
+          "admission_position": 0,
+          "admission_sequence": 1,
+          "admitted_ns": 4666861984,
+          "event": "input_admission",
+          "id": "trial-duplicate-down",
+          "input_ack_ns": 4666868952,
+          "intent_token": "token-duplicate-down",
+          "key": "A",
+          "owner_id": "4105b3d2622f4cd6aa76b3128006d876",
+          "step": 13,
+          "valid_until_ns": 24666094949
+        },
+        {
+          "admission_id": "4105b3d2622f4cd6aa76b3128006d876:admission:2",
+          "admission_key_matches_request": true,
+          "admission_position": 1,
+          "admission_sequence": 2,
+          "admitted_ns": 4666972335,
+          "event": "input_admission",
+          "id": "trial-duplicate-down",
+          "input_ack_ns": 4666976676,
+          "intent_token": "token-duplicate-down",
+          "key": "A",
+          "owner_id": "4105b3d2622f4cd6aa76b3128006d876",
+          "step": 13,
+          "valid_until_ns": 24666094949
+        },
+        {
+          "active_deadline_matches": true,
+          "admission_id": "4105b3d2622f4cd6aa76b3128006d876:admission:2",
+          "admission_identity_status": "ambiguous_multiple_admissions",
+          "backend_owned_before_release": true,
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "intent_token": "token-duplicate-down",
+          "intent_token_matches_after_batch": true,
+          "interruption_clear": true,
+          "key": "A",
+          "lease_time_valid_at_request": true,
+          "local_focus_invalid_clear": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "measurement_contract_v4": "v3 back-to-back release ordering plus fail-closed post-batch authority revalidation using the existing single owner sample and the lease interruption record",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owned_keycodes_after_batch": [],
+          "owner_cleanup_intervened": false,
+          "owner_id": "4105b3d2622f4cd6aa76b3128006d876",
+          "owner_identity_matches_after_batch": true,
+          "owner_keyup_interval_ordered": true,
+          "owner_keyup_join": "MATCHED_EXPLICIT_KEYUP",
+          "owner_keyup_receipt": {
+            "admission_id": "4105b3d2622f4cd6aa76b3128006d876:admission:2",
+            "batch_release_id": null,
+            "event": "owner_keyup",
+            "grants_input_authority": false,
+            "intent_token": "token-duplicate-down",
+            "key": "A",
+            "key_down_after": null,
+            "key_state_after_known": false,
+            "keycode": 38,
+            "owner_id": "4105b3d2622f4cd6aa76b3128006d876",
+            "owner_keyup_started_ns": 4667061710,
+            "owner_sync_returned_ns": 4667064611,
+            "physical_verification_authoritative": false,
+            "reason": "explicit_up",
+            "receipt_id": "53fe45c18792437390e92ce740f25c83",
+            "schema": "owner-keyup-v11",
+            "sync_error": null,
+            "xsync_completed": true
+          },
+          "owner_release_history_complete": true,
+          "owner_sample_after_finished_ns": 4667206824,
+          "owner_sample_after_started_ns": 4667202947,
+          "owner_sample_ordered_after_batch": true,
+          "owner_transition_verified": true,
+          "physical_verification_authoritative": false,
+          "post_batch_authority_verified": true,
+          "post_cancel_clear": true,
+          "post_lease_time_valid": true,
+          "release_batch_identifier": "trial-duplicate-down",
+          "release_batch_keys_match_requests": true,
+          "release_batch_position": 0,
+          "release_batch_schema": "input-release-batch-v4",
+          "release_batch_size": 1,
+          "release_batch_step": 13,
+          "release_call_bracket_ns": 96515,
+          "release_call_returned_ns": 4667126934,
+          "release_call_started_ns": 4667030419,
+          "release_key_matches_request": true,
+          "sampled_focus_matches": true,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 24666094949
+        }
+      ],
+      "final_down": [],
+      "identifier": "trial-duplicate-down",
+      "intent_token": "token-duplicate-down",
+      "name": "duplicate_down",
+      "owner_id": "4105b3d2622f4cd6aa76b3128006d876",
+      "owner_records": [
+        {
+          "admission_id": "4105b3d2622f4cd6aa76b3128006d876:admission:2",
+          "batch_release_id": null,
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-duplicate-down",
+          "key": "A",
+          "key_down_after": null,
+          "key_state_after_known": false,
+          "keycode": 38,
+          "owner_id": "4105b3d2622f4cd6aa76b3128006d876",
+          "owner_keyup_started_ns": 4667061710,
+          "owner_sync_returned_ns": 4667064611,
+          "physical_verification_authoritative": false,
+          "reason": "explicit_up",
+          "receipt_id": "53fe45c18792437390e92ce740f25c83",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_receipt_ids": [],
+          "reason": "close",
+          "valid_until_ns": 24666094949,
+          "verified": true,
+          "verified_ns": 4667304489
+        }
+      ],
+      "step": 13,
+      "sync_calls": 4
+    }
+  ],
+  "runner_error": null,
+  "schema": "owner-keyup-duplicate-down-result-v1"
+}

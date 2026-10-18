@@ -1,0 +1,54 @@
+"""Post-result read of saved byte spellings; no SDK or producer invocation."""
+import hashlib
+import io
+import json
+from pathlib import Path
+
+ROOT=Path(__file__).resolve().parent
+E=ROOT/'relay-utf8-repair'
+OUT=E/'saved-byte-inspection-01'
+OUT.mkdir(exist_ok=False)
+source=E/'first-committed-original-sdk-01/stdin.bin'
+raw=source.read_bytes()
+def sha(data):return hashlib.sha256(data).hexdigest()
+before={'kind':'post-result retained-data diagnostic, not preregistered independent oracle',
+        'input_sha256':sha(raw),'reader_sha256':sha(Path(__file__).read_bytes()),
+        'purpose':'Explain why original SDK returned static_valid true for a Unicode text line despite locale decoding; verify differing text and duplicate-key identity at the byte boundary',
+        'known_original_first_check_failure':'Expected Unicode static SDK serialization failure, but actual row returned static_valid true; first capture/check failure remains unchanged'}
+(OUT/'BEFORE.json').write_text(json.dumps(before,indent=2)+'\n',encoding='utf-8')
+lines=raw.splitlines(keepends=True)
+rows=[]
+for encoding in ['cp932','utf-8']:
+    duplicate_line=io.TextIOWrapper(io.BytesIO(lines[0]),encoding=encoding,errors='surrogateescape').readline()
+    pairs=json.loads(duplicate_line,object_pairs_hook=lambda value:value)
+    root=dict(pairs);arguments=dict(root['arguments']);program_pairs=arguments['program']
+    keys=[pair[0] for pair in program_pairs]
+    valid_line=io.TextIOWrapper(io.BytesIO(lines[2]),encoding=encoding,errors='surrogateescape').readline()
+    text=json.loads(valid_line)['arguments']['program']['ops'][0]['text']
+    rows.append({'encoding':encoding,'duplicate_keys':keys,
+                 'duplicate_key_codepoints':[[ord(c) for c in key] for key in keys],
+                 'keys_equal':keys[0]==keys[1], 'text':text,
+                 'text_codepoints':[ord(c) for c in text],
+                 'text_matches_authored_unicode':text=='\u65e5\u672c\u8a9e\U0001f600'})
+if rows[0]['keys_equal'] or rows[0]['text_matches_authored_unicode']:
+    raise ValueError('original cp932 boundary contrast absent')
+if not rows[1]['keys_equal'] or not rows[1]['text_matches_authored_unicode']:
+    raise ValueError('UTF8 boundary did not preserve authored semantics')
+actual=json.loads((E/'first-committed-original-sdk-01/RECEIPT.json').read_text())
+stdout=(E/'first-committed-original-sdk-01/stdout.bin').read_bytes()
+if sha(stdout)!=actual['stdout_sha256']:
+    raise ValueError('original stream changed')
+sdk=[json.loads(line) for line in stdout.splitlines()]
+static=json.loads(sdk[2]['result']['content'][0]['text'])
+if static['static_valid'] is not True:
+    raise ValueError('unexpected original static result')
+report={'input_sha256':sha(raw),'input_line_hashes':[sha(lines[0]),sha(lines[2])],
+        'decoded_boundaries':rows,'original_actual_sdk_statuses':[r['status'] for r in sdk],
+        'original_actual_sdk_next_ids':[r['next_id'] for r in sdk],
+        'original_static_valid_true_is_not_exact_transport_proof':True,
+        'first_script_failure_remains':'ValueError: original Unicode static validation did not reproduce native encoding failure',
+        'limitations':'Retained-data deterministic byte decoding and observed static result; no server argument echo, real input or model/task/scientific PASS'}
+(OUT/'RESULT.json').write_text(json.dumps(report,indent=2,ensure_ascii=True)+'\n',encoding='utf-8')
+print(json.dumps({'duplicate_equal_cp932':False,'duplicate_equal_utf8':True,
+                  'original_unicode_text_changed_by_cp932':True,'original_static_result_was_true':True,
+                  'report_sha256':sha((OUT/'RESULT.json').read_bytes())}))

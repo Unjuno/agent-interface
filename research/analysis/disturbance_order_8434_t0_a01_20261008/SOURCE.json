@@ -1,0 +1,37 @@
+{
+  "format": "disturbance-order-8434-t0-a01-source-v1",
+  "allocation": "DISTURBANCE-ORDER-8434-T0-A01-20261008",
+  "issue": 8434,
+  "predecessor_issue": 6604,
+  "sequence_length": 32,
+  "labels": ["A", "B"],
+  "count_per_label": 16,
+  "intensity_per_event": 1,
+  "duration_per_event": 1,
+  "structures": ["iid", "clustered", "alternating", "heldout_block"],
+  "calibration_seeds": [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112],
+  "heldout_seeds": [1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012],
+  "material_margin_safe_effects": 4,
+  "routes": {
+    "switch_reconfigure": "The first opportunity of each maximal same-label run is missed for reconfiguration; every later opportunity in that run yields one correct safe effect.",
+    "two_step_cache": "The first opportunity of the full sequence is a shared cold-start miss; within every run, opportunities after the first two are missed because the cached evidence expires after two opportunities.",
+    "null_a": "One correct safe effect at every opportunity, independent of order.",
+    "null_b": "One correct safe effect at every opportunity, independent of order."
+  },
+  "schedule_rules": {
+    "iid": "Construct exactly 16 A and 16 B labels, then shuffle with Python random.Random(seed).",
+    "clustered": "Four runs of length 8, alternating labels; first label is A for even seeds and B for odd seeds.",
+    "alternating": "Alternate labels for all 32 opportunities; first label is A for even seeds and B for odd seeds.",
+    "heldout_block": "Two runs of length 16; first label is A for even seeds and B for odd seeds."
+  },
+  "analysis": {
+    "paired_delta": "switch_reconfigure safe_effects minus two_step_cache safe_effects, paired by structure and seed.",
+    "pass_gate": "On held-out seeds, at least one non-IID correlated structure has median paired delta >= +4 and at least one has median paired delta <= -4; null_a and null_b remain identical for every schedule; every route has zero forbidden effects and empty-release failures.",
+    "confidence": "Finite deterministic fixture; no statistical confidence interval or real-workload inference."
+  },
+  "limits": [
+    "Authored deterministic method fixture only.",
+    "No model, provider, GUI, operating-system input, physical release, or real disturbance schedule.",
+    "No real-world prevalence, route efficacy, safety, human-tempo, or product claim."
+  ]
+}

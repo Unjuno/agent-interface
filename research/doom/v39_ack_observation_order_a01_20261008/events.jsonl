@@ -1,0 +1,12 @@
+{"case": "typed_before_ack", "event": "case_start", "order": "typed_before_ack"}
+{"event": "production_wait_dequeued", "row_event": "typed_observation", "sequence": 2}
+{"event": "production_wait_dequeued", "row_event": "accepted", "sequence": null}
+{"event": "ack_returned", "event_type": "accepted", "monitor_calls": 0, "queue_depth": 1}
+{"event": "production_wait_dequeued", "row_event": "terminal", "sequence": null}
+{"event": "monitored_wait_returned", "event_type": "terminal", "monitor_calls": 0, "queue_depth": 0}
+{"case": "ack_before_typed", "event": "case_start", "order": "ack_before_typed"}
+{"event": "production_wait_dequeued", "row_event": "accepted", "sequence": null}
+{"event": "ack_returned", "event_type": "accepted", "monitor_calls": 0, "queue_depth": 0}
+{"event": "production_wait_dequeued", "row_event": "typed_observation", "sequence": 2}
+{"event": "monitor_observe", "health": 70, "sequence": 2}
+{"event": "monitored_wait_returned", "event_type": "running_action_invalidation", "monitor_calls": 1, "queue_depth": 1}

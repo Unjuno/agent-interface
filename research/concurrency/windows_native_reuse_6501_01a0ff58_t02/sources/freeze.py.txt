@@ -1,0 +1,16 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import os,sys,ctypes,hashlib,json,subprocess
+from ctypes import wintypes as wt
+R=Path(__file__).resolve().parents[2];W=R/'work/ownedwinpipe6501-t02';O=R/'outputs/ownedwinpipe6501-t02';now=lambda:datetime.now(timezone.utc).isoformat();H=lambda b:hashlib.sha256(b).hexdigest();assert not (O/'FREEZE.json').exists()
+argv=[sys.executable,str(W/'model_construct.py')];start=now();p=subprocess.Popen(argv,stdout=subprocess.PIPE,stderr=subprocess.PIPE);out,err=p.communicate(timeout=5);(O/'CONSTRUCTION.stdout.txt').write_bytes(out);(O/'CONSTRUCTION.stderr.txt').write_bytes(err);assert p.returncode==0
+c=dict(argv=argv,pid=p.pid,start_utc=start,end_utc=now(),exit=p.returncode,stdout_sha256=H(out),stderr_sha256=H(err),kind='ordinary finite-model construction; not native comparison')
+(O/'CONSTRUCTION.json').write_text(json.dumps(c,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n')
+k=ctypes.WinDLL('kernel32',use_last_error=True);k.GetModuleHandleW.argtypes=[wt.LPCWSTR];k.GetModuleHandleW.restype=wt.HMODULE;k.GetModuleFileNameW.argtypes=[wt.HMODULE,wt.LPWSTR,wt.DWORD];k.GetModuleFileNameW.restype=wt.DWORD
+deps=[]
+for name in ('kernel32.dll','python312.dll','ucrtbase.dll'):
+    handle=k.GetModuleHandleW(name);buf=ctypes.create_unicode_buffer(32768);n=k.GetModuleFileNameW(handle,buf,len(buf));assert handle and 0<n<len(buf);p=Path(buf.value);b=p.read_bytes();deps.append(dict(name=name,path=str(p),bytes=len(b),sha256=H(b)))
+files=[W/n for n in ('probe.py','audit.py','supervisor.py','model_construct.py')]+[O/n for n in ('PLAN.md','CONSTRUCTION.json','CONSTRUCTION.stdout.txt','CONSTRUCTION.stderr.txt')]
+source={p.relative_to(R).as_posix():dict(bytes=len(p.read_bytes()),sha256=H(p.read_bytes())) for p in files}
+f=dict(created_utc=now(),worker='01a0ff58-6178-7ea1-a6d5-cf09260b91e3',policy='FINAL-v5',claim=5970770590,allocation='6501-WINDOWS-REUSED-READ-T02-20261004-6178',base='4dc7fa83e6146439144e7c46240a40e8c7ca1b1b',modes=['normal_B_D','stale_handle','check_then_call','locked_gate'],sources=source,dependencies=deps,python=dict(path=sys.executable,version=sys.version,bytes=len(Path(sys.executable).read_bytes()),sha256=H(Path(sys.executable).read_bytes())),formal_counts=dict(each=1,success_retries=0),bounds=dict(primary_seconds=.5,admission_seconds=2,join_seconds=2,outer_seconds=10,output_bytes=1024*1024),unknown=dict(common_deadline=None,N=None))
+(O/'FREEZE.json').write_text(json.dumps(f,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps(f,sort_keys=True))

@@ -1,0 +1,96 @@
+{
+  "base_commit": "0f50064a7ea7a69c51cb6751ac313b0c8b5ec9e2",
+  "base_owner_sha256": "09cc23e67e6a3de1b0029fbb0184cdf54d3d8e29561281870d2b0b76027511d8",
+  "candidate_owner_sha256": "f46dd62edd085afe29fe031f74a31397bb568f583affde0a26ac79686625d433",
+  "cases": {
+    "candidate_explicit_up_telemetry": {
+      "event": "input_release_rpc",
+      "grants_input_authority": false,
+      "intent_token": "intent-a01",
+      "interval": [
+        104940068488500,
+        104940068526541
+      ],
+      "parent_owner_module": "input_owner_v11",
+      "physical_events": [
+        [
+          2,
+          38
+        ],
+        [
+          3,
+          38
+        ]
+      ]
+    },
+    "candidate_forced_post_sample_cancel": {
+      "buttons_down": [],
+      "cancel_sampled_ns": 104940058724000,
+      "cancel_visible_ns": 104940058727958,
+      "keys_down": [],
+      "owner_class": "owner_under_test.InputOwner",
+      "parent_owner_module": "input_owner_v11",
+      "physical_events": [
+        [
+          2,
+          38
+        ],
+        [
+          3,
+          38
+        ]
+      ],
+      "reason": "cancelled",
+      "release_reply_verified": true,
+      "setter_finished": true,
+      "verified": true
+    },
+    "candidate_ordinary_release": {
+      "buttons_down": [],
+      "cancel_sampled_ns": null,
+      "cancel_visible_ns": null,
+      "keys_down": [],
+      "owner_class": "owner_under_test.InputOwner",
+      "parent_owner_module": "input_owner_v11",
+      "physical_events": [
+        [
+          2,
+          38
+        ],
+        [
+          3,
+          38
+        ]
+      ],
+      "reason": "release",
+      "release_reply_verified": true,
+      "setter_finished": true,
+      "verified": true
+    },
+    "parent_forced_post_sample_cancel": {
+      "buttons_down": [],
+      "cancel_sampled_ns": 104940053514333,
+      "cancel_visible_ns": 104940053518666,
+      "keys_down": [],
+      "owner_class": "owner_under_test.InputOwner",
+      "parent_owner_module": "input_owner_v11",
+      "physical_events": [
+        [
+          2,
+          38
+        ],
+        [
+          3,
+          38
+        ]
+      ],
+      "reason": "release",
+      "release_reply_verified": true,
+      "setter_finished": true,
+      "verified": true
+    }
+  },
+  "platform": "darwin",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "schema": "owner-telemetry-cancel-cause-a01-v1"
+}

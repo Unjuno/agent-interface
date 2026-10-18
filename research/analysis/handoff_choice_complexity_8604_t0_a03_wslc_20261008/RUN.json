@@ -1,0 +1,40 @@
+{
+  "schema": "8604-a03-run-v1",
+  "freeze_commit": "dd2a4bfdc6273efa8487898743a18994e2bb1bf3",
+  "parent_main_sha": "379c8255863244b75fc88d01cf9648546a45dffb",
+  "candidate": {
+    "command": "wslc run --pull never --rm --name 8604-t0-a03-candidate-20261008 --cpus 1 --memory 512M --network none --mount type=bind,source=<A03-package>,target=/work --workdir /work python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B candidate.py --input spec.json --output raw/candidate.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_file": "raw/candidate.stdout.txt",
+    "stdout": "CANDIDATE_COMPLETE cards=24",
+    "stderr_file": "raw/candidate.stderr.txt",
+    "stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+    "output_bytes": 41149,
+    "output_sha256": "3171b417d38cdc7d3f1cbb9ec10b0b1e52b5c38ed6553ec1c0a4bb8d1cdbb1ac",
+    "byte_identical_to_a02": true
+  },
+  "auditor": {
+    "command": "wslc run --pull never --rm --name 8604-t0-a03-auditor-20261008 --cpus 1 --memory 512M --network none --mount type=bind,source=<A03-package>,target=/work --workdir /work python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B auditor.py --spec spec.json --candidate raw/candidate.json --output raw/audit.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_file": "raw/audit.stdout.txt",
+    "stdout": "AUDIT_COMPLETE PASS errors=0",
+    "stderr_file": "raw/audit.stderr.txt",
+    "stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+    "output_bytes": 152,
+    "output_sha256": "76cfcc6e71ed86a532bbced1a972d7c9d6c5e6a11f40059717f90a41815ab143",
+    "byte_identical_to_a02": true,
+    "audit_integrity": "PASS",
+    "audit_errors": 0,
+    "cards_reconstructed": 24,
+    "comprehension_keys_reconstructed": 120
+  },
+  "construction_tests_normal": 6,
+  "construction_tests_optimized": 6,
+  "setup_preflight": "Read-only WSLc mount/interpreter check passed; cgroup/swap warning retained in SETUP.json. Initial empty test discovery was resolved by copying A02 tests before freeze; formal CLIs were not involved.",
+  "retries": 0,
+  "source_or_input_changes_after_freeze": 0,
+  "result": "PASS_TRANSFER_SCOPED",
+  "runtime_boundary": "WSLc CPU-only artifact portability; resource-limit enforcement not established; no human, latency, GUI, model, action-dispatch, safety, or product claim."
+}

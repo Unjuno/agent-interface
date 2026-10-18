@@ -1,0 +1,39 @@
+{
+  "issue": 8397,
+  "allocation": "OBS-OMISSION-REGRET-8397-T0-A02-20261008",
+  "freeze_sha256": "a17b12b4b9b9dde2b353d82243b6e8ae09823b698e637a6454a8d035bd64c7f4",
+  "base_sha": "2f36f501f11931e052dbc3fb0000a9200bff7f50",
+  "freeze_commit": "86ca4388d77c96f7b53024e4701ee5cce346ef75",
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "retries": 0,
+  "candidate_sha256": "c9c4bd827cbdb63a0af761c480285741223d3f51299b79414a47e5585452c0b6",
+  "auditor_sha256": "8b5af23d1f1917db664f31a53cbbab57f274ed7468a125f1cec2c26d5cf3ef6a",
+  "runtime": "native macOS CPython 3.14.5 under sandbox-exec; network denied; no container/isolation claim",
+  "outputs": {
+    "candidate.json": {
+      "bytes": 2581,
+      "sha256": "05a6edcd6855b730ffea55dd50289d607494923442535c9bb7673aa07fee8565"
+    },
+    "audit.json": {
+      "bytes": 53,
+      "sha256": "74e2c1c97c549200d1461523605e58a4aeaf7eef415d58efade3ecab3ef481e8"
+    },
+    "candidate.stdout.txt": {
+      "bytes": 48,
+      "sha256": "16f580fc83826b73a7fb2463ea86b20cf467a36b003a6f639b6d19c08a615974"
+    },
+    "auditor.stdout.txt": {
+      "bytes": 58,
+      "sha256": "990e29fcdda1d9490216c94e42f87ea7c722607aa5d4debca7791d261a3af6e0"
+    }
+  },
+  "audit": {
+    "errors": [],
+    "rows": 8,
+    "status": "PASS_METHOD_SCOPED"
+  },
+  "decision": "PASS_METHOD_SCOPED"
+}

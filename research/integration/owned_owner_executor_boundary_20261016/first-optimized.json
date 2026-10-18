@@ -1,0 +1,2888 @@
+{
+  "tests": 3,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "optimize": 1,
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "parent_pid": 4116,
+  "rows": [
+    {
+      "case": "local-paused-cancel",
+      "metadata_shim_only": false,
+      "paused": {
+        "cancelled_at_ns": 347200832025000,
+        "observed_at_ns": 347201086070000,
+        "worker_alive": true,
+        "resume_set": false,
+        "parent_cancel": true,
+        "parent_interruption": {
+          "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+          "record": {
+            "event": "owner_release",
+            "reason": "cancelled",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347200832104000,
+            "valid_until_ns": 347210831352400,
+            "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keyrelease_started_ns": 347200832081000,
+                    "sync_returned_ns": 347200832093700,
+                    "keymap_sampled_ns": 347200832096100,
+                    "server_key_down_before": true,
+                    "server_key_down_after": false,
+                    "keymap_before_error": null,
+                    "keymap_after_error": null,
+                    "keyrelease_error": null,
+                    "sync_error": null
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "keycode": 38,
+                "interval_ns": [
+                  347200832081000,
+                  347200832096100
+                ]
+              }
+            ],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347210831352400
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          }
+        },
+        "edges": null,
+        "local_down": [],
+        "events": [
+          {
+            "event": "typed_observation",
+            "schema": "doom-typed-observation-v1",
+            "id": "source",
+            "step": 0,
+            "sequence": 1,
+            "capture_ns": 347200757470600,
+            "pointer_binding": {
+              "focus": 41,
+              "surface": 41,
+              "geometry": [
+                0,
+                0,
+                32,
+                32
+              ]
+            },
+            "signals": {
+              "ammo": {
+                "value": 20,
+                "signal_id": "ammo",
+                "sequence": 1,
+                "binding": {
+                  "focus": 41,
+                  "surface": 41,
+                  "geometry": [
+                    0,
+                    0,
+                    32,
+                    32
+                  ]
+                },
+                "status": "observed",
+                "format": "observable-signal-v1",
+                "capture_ns": 347200757470600,
+                "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "health": {
+                "value": 97,
+                "signal_id": "health",
+                "sequence": 1,
+                "binding": {
+                  "focus": 41,
+                  "surface": 41,
+                  "geometry": [
+                    0,
+                    0,
+                    32,
+                    32
+                  ]
+                },
+                "status": "observed",
+                "format": "observable-signal-v1",
+                "capture_ns": 347200757470600,
+                "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              }
+            },
+            "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+            "frame_size": [
+              32,
+              32
+            ],
+            "typed_extraction_started_ns": 347200762397500,
+            "typed_ready_ns": 347200762411800,
+            "capture_to_typed_ready_ms": 4.9412,
+            "artifact_published": false,
+            "grants_input_authority": false,
+            "target_process_identity": {
+              "sequence": 1,
+              "surface": 41,
+              "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          },
+          {
+            "event": "observation",
+            "id": "source",
+            "step": 0,
+            "sequence": 1,
+            "capture_ns": 347200757470600,
+            "context_ns": 347200762322600,
+            "context": {
+              "windows": "fixture"
+            },
+            "image": "D:\\CodexData\\Temp\\tmp8bosrrv6\\001.png",
+            "image_reused": false,
+            "image_prepare_ns": 68419300,
+            "image_ready_ns": 347200831174700,
+            "input_focus_before": 41,
+            "input_focus_after": 41,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 41,
+              "surface": 41,
+              "geometry": [
+                0,
+                0,
+                32,
+                32
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 41,
+              "surface": 41,
+              "geometry": [
+                0,
+                0,
+                32,
+                32
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 41,
+              "surface": 41,
+              "geometry": [
+                0,
+                0,
+                32,
+                32
+              ]
+            },
+            "capture_ms": 0.0441,
+            "wire_bytes": 226,
+            "exact": true,
+            "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+            "typed_ready_ns": 347200762411800,
+            "typed_emit_return_ns": 347200762467200,
+            "artifact_ready_ns": 347200831323300,
+            "capture_to_artifact_ready_ms": 73.8527,
+            "semantic_completion": "unknown",
+            "target_process_identity": {
+              "sequence": 1,
+              "surface": 41,
+              "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          },
+          {
+            "event": "accepted",
+            "id": "local-paused-cancel",
+            "steps": 1,
+            "program_sha256": "9c48eb651c5d7bd5d8527f42877d2b3425ede10035839f2b91ef7ff92bff3f60",
+            "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+            "valid_until_ns": 347210831352400,
+            "accepted_ns": 347200831455700
+          },
+          {
+            "event": "step_started",
+            "id": "local-paused-cancel",
+            "step": 0,
+            "operation": "hold",
+            "issued_ns": 347200831607900
+          },
+          {
+            "event": "input_admission",
+            "key": "a",
+            "keycode": 38,
+            "admitted_ns": 347200831920800,
+            "input_ack_ns": 347200831942700,
+            "valid_until_ns": 347210831352400,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347210831352400
+            ],
+            "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+            "id": "local-paused-cancel",
+            "step": 0,
+            "owner_id": "b7882e358eed4dc392a1ac0423b0ee4c"
+          },
+          {
+            "event": "cancel_requested",
+            "id": "local-paused-cancel",
+            "matched": true,
+            "requested_ns": 347200832032100
+          },
+          {
+            "event": "input_released",
+            "id": "local-paused-cancel",
+            "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+            "owner_release": {
+              "event": "owner_release",
+              "reason": "cancelled",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 347200832104000,
+              "valid_until_ns": 347210831352400,
+              "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 347200832081000,
+                      "sync_returned_ns": 347200832093700,
+                      "keymap_sampled_ns": 347200832096100,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    347200832081000,
+                    347200832096100
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                347210831352400
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            },
+            "published_ns": 347200832266200,
+            "program_terminal_pending": true,
+            "grants_input_authority": false
+          }
+        ]
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "local-paused-cancel",
+        "status": "cancelled",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "key_state_errors": [],
+          "verified_ns": 347201086997600,
+          "valid_until_ns": null,
+          "intent_token": null,
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_source": "x11_query_keymap",
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347210831352400
+          ],
+          "target_process_identity_reader": {
+            "retired": true,
+            "pending": false,
+            "thread_alive": false,
+            "close_error": null
+          },
+          "target_focus_query_failed": false,
+          "release_call_started_ns": 347201086946400,
+          "release_call_returned_ns": 347201087049600,
+          "release_batch_delivery": {
+            "schema": "release-batch-delivery-v1",
+            "identifier": "local-paused-cancel",
+            "step": 0,
+            "size": 0,
+            "positions": []
+          },
+          "cancelled_pending_ups": [
+            {
+              "key": "a",
+              "identifier": "local-paused-cancel",
+              "step": 0,
+              "backend_owned_before_release": true,
+              "disposition": "not_attempted_owner_cancel_release"
+            }
+          ]
+        },
+        "interruption": {
+          "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+          "record": {
+            "event": "owner_release",
+            "reason": "cancelled",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347200832104000,
+            "valid_until_ns": 347210831352400,
+            "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keyrelease_started_ns": 347200832081000,
+                    "sync_returned_ns": 347200832093700,
+                    "keymap_sampled_ns": 347200832096100,
+                    "server_key_down_before": true,
+                    "server_key_down_after": false,
+                    "keymap_before_error": null,
+                    "keymap_after_error": null,
+                    "keyrelease_error": null,
+                    "sync_error": null
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "keycode": 38,
+                "interval_ns": [
+                  347200832081000,
+                  347200832096100
+                ]
+              }
+            ],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347210831352400
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          }
+        },
+        "decision_reason": null,
+        "terminal_ns": 347201087186200,
+        "semantic_completion": "program status only; task scoring is separate"
+      },
+      "events": [
+        {
+          "event": "typed_observation",
+          "schema": "doom-typed-observation-v1",
+          "id": "source",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 347200757470600,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "value": 20,
+              "signal_id": "ammo",
+              "sequence": 1,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347200757470600,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "health": {
+              "value": 97,
+              "signal_id": "health",
+              "sequence": 1,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347200757470600,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          },
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "frame_size": [
+            32,
+            32
+          ],
+          "typed_extraction_started_ns": 347200762397500,
+          "typed_ready_ns": 347200762411800,
+          "capture_to_typed_ready_ms": 4.9412,
+          "artifact_published": false,
+          "grants_input_authority": false,
+          "target_process_identity": {
+            "sequence": 1,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "observation",
+          "id": "source",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 347200757470600,
+          "context_ns": 347200762322600,
+          "context": {
+            "windows": "fixture"
+          },
+          "image": "D:\\CodexData\\Temp\\tmp8bosrrv6\\001.png",
+          "image_reused": false,
+          "image_prepare_ns": 68419300,
+          "image_ready_ns": 347200831174700,
+          "input_focus_before": 41,
+          "input_focus_after": 41,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "capture_ms": 0.0441,
+          "wire_bytes": 226,
+          "exact": true,
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "typed_ready_ns": 347200762411800,
+          "typed_emit_return_ns": 347200762467200,
+          "artifact_ready_ns": 347200831323300,
+          "capture_to_artifact_ready_ms": 73.8527,
+          "semantic_completion": "unknown",
+          "target_process_identity": {
+            "sequence": 1,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "accepted",
+          "id": "local-paused-cancel",
+          "steps": 1,
+          "program_sha256": "9c48eb651c5d7bd5d8527f42877d2b3425ede10035839f2b91ef7ff92bff3f60",
+          "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+          "valid_until_ns": 347210831352400,
+          "accepted_ns": 347200831455700
+        },
+        {
+          "event": "step_started",
+          "id": "local-paused-cancel",
+          "step": 0,
+          "operation": "hold",
+          "issued_ns": 347200831607900
+        },
+        {
+          "event": "input_admission",
+          "key": "a",
+          "keycode": 38,
+          "admitted_ns": 347200831920800,
+          "input_ack_ns": 347200831942700,
+          "valid_until_ns": 347210831352400,
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347210831352400
+          ],
+          "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+          "id": "local-paused-cancel",
+          "step": 0,
+          "owner_id": "b7882e358eed4dc392a1ac0423b0ee4c"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "local-paused-cancel",
+          "matched": true,
+          "requested_ns": 347200832032100
+        },
+        {
+          "event": "input_released",
+          "id": "local-paused-cancel",
+          "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+          "owner_release": {
+            "event": "owner_release",
+            "reason": "cancelled",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347200832104000,
+            "valid_until_ns": 347210831352400,
+            "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keyrelease_started_ns": 347200832081000,
+                    "sync_returned_ns": 347200832093700,
+                    "keymap_sampled_ns": 347200832096100,
+                    "server_key_down_before": true,
+                    "server_key_down_after": false,
+                    "keymap_before_error": null,
+                    "keymap_after_error": null,
+                    "keyrelease_error": null,
+                    "sync_error": null
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "keycode": 38,
+                "interval_ns": [
+                  347200832081000,
+                  347200832096100
+                ]
+              }
+            ],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347210831352400
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          },
+          "published_ns": 347200832266200,
+          "program_terminal_pending": true,
+          "grants_input_authority": false
+        },
+        {
+          "event": "keys_held",
+          "id": "local-paused-cancel",
+          "step": 0,
+          "keys": [
+            "a"
+          ],
+          "input_ack_ns": 347201086698700
+        },
+        {
+          "event": "terminal",
+          "id": "local-paused-cancel",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347201086997600,
+            "valid_until_ns": null,
+            "intent_token": null,
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347210831352400
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": false,
+              "close_error": null
+            },
+            "target_focus_query_failed": false,
+            "release_call_started_ns": 347201086946400,
+            "release_call_returned_ns": 347201087049600,
+            "release_batch_delivery": {
+              "schema": "release-batch-delivery-v1",
+              "identifier": "local-paused-cancel",
+              "step": 0,
+              "size": 0,
+              "positions": []
+            },
+            "cancelled_pending_ups": [
+              {
+                "key": "a",
+                "identifier": "local-paused-cancel",
+                "step": 0,
+                "backend_owned_before_release": true,
+                "disposition": "not_attempted_owner_cancel_release"
+              }
+            ]
+          },
+          "interruption": {
+            "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+            "record": {
+              "event": "owner_release",
+              "reason": "cancelled",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 347200832104000,
+              "valid_until_ns": 347210831352400,
+              "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 347200832081000,
+                      "sync_returned_ns": 347200832093700,
+                      "keymap_sampled_ns": 347200832096100,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    347200832081000,
+                    347200832096100
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                347210831352400
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          },
+          "decision_reason": null,
+          "terminal_ns": 347201087186200,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ],
+      "records": [
+        {
+          "event": "owner_release",
+          "reason": "cancelled",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "key_state_errors": [],
+          "verified_ns": 347200832104000,
+          "valid_until_ns": 347210831352400,
+          "intent_token": "b6d26f3e9c05417bb73787b0ac99abbc",
+          "key_release_attempts": {
+            "38": {
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "keyrelease_started_ns": 347200832081000,
+                  "sync_returned_ns": 347200832093700,
+                  "keymap_sampled_ns": 347200832096100,
+                  "server_key_down_before": true,
+                  "server_key_down_after": false,
+                  "keymap_before_error": null,
+                  "keymap_after_error": null,
+                  "keyrelease_error": null,
+                  "sync_error": null
+                }
+              ],
+              "verified": true
+            }
+          },
+          "key_release_intervals_ns": [
+            {
+              "keycode": 38,
+              "interval_ns": [
+                347200832081000,
+                347200832096100
+              ]
+            }
+          ],
+          "key_state_source": "x11_query_keymap",
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347210831352400
+          ],
+          "target_process_identity_reader": {
+            "retired": true,
+            "pending": false,
+            "thread_alive": true,
+            "close_error": null
+          },
+          "target_focus_query_failed": false
+        },
+        {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "key_state_errors": [],
+          "verified_ns": 347201086997600,
+          "valid_until_ns": null,
+          "intent_token": null,
+          "key_release_attempts": {},
+          "key_release_intervals_ns": [],
+          "key_state_source": "x11_query_keymap",
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347210831352400
+          ],
+          "target_process_identity_reader": {
+            "retired": true,
+            "pending": false,
+            "thread_alive": false,
+            "close_error": null
+          },
+          "target_focus_query_failed": false
+        }
+      ]
+    },
+    {
+      "case": "remote-paused-cancel",
+      "metadata_shim_only": true,
+      "paused": {
+        "cancelled_at_ns": 347202354923800,
+        "observed_at_ns": 347202609382100,
+        "worker_alive": true,
+        "resume_set": false,
+        "parent_cancel": true,
+        "parent_interruption": null,
+        "edges": [
+          {
+            "event": 2,
+            "code": 38,
+            "down": [
+              38
+            ],
+            "pid": 45400,
+            "thread": 32440,
+            "at_ns": 347202308911200
+          }
+        ],
+        "local_down": null,
+        "events": [
+          {
+            "event": "typed_observation",
+            "schema": "doom-typed-observation-v1",
+            "id": "source",
+            "step": 0,
+            "sequence": 1,
+            "capture_ns": 347202307374500,
+            "pointer_binding": {
+              "focus": 41,
+              "surface": 41,
+              "geometry": [
+                0,
+                0,
+                32,
+                32
+              ]
+            },
+            "signals": {
+              "ammo": {
+                "value": 20,
+                "signal_id": "ammo",
+                "sequence": 1,
+                "binding": {
+                  "focus": 41,
+                  "surface": 41,
+                  "geometry": [
+                    0,
+                    0,
+                    32,
+                    32
+                  ]
+                },
+                "status": "observed",
+                "format": "observable-signal-v1",
+                "capture_ns": 347202307374500,
+                "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "health": {
+                "value": 97,
+                "signal_id": "health",
+                "sequence": 1,
+                "binding": {
+                  "focus": 41,
+                  "surface": 41,
+                  "geometry": [
+                    0,
+                    0,
+                    32,
+                    32
+                  ]
+                },
+                "status": "observed",
+                "format": "observable-signal-v1",
+                "capture_ns": 347202307374500,
+                "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              }
+            },
+            "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+            "frame_size": [
+              32,
+              32
+            ],
+            "typed_extraction_started_ns": 347202307456600,
+            "typed_ready_ns": 347202307468000,
+            "capture_to_typed_ready_ms": 0.0935,
+            "artifact_published": false,
+            "grants_input_authority": false,
+            "target_process_identity": {
+              "sequence": 1,
+              "surface": 41,
+              "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          },
+          {
+            "event": "observation",
+            "id": "source",
+            "step": 0,
+            "sequence": 1,
+            "capture_ns": 347202307374500,
+            "context_ns": 347202307403800,
+            "context": {
+              "windows": "fixture"
+            },
+            "image": "D:\\CodexData\\Temp\\tmpn14soian\\001.png",
+            "image_reused": false,
+            "image_prepare_ns": 229800,
+            "image_ready_ns": 347202307979700,
+            "input_focus_before": 41,
+            "input_focus_after": 41,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 41,
+              "surface": 41,
+              "geometry": [
+                0,
+                0,
+                32,
+                32
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 41,
+              "surface": 41,
+              "geometry": [
+                0,
+                0,
+                32,
+                32
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 41,
+              "surface": 41,
+              "geometry": [
+                0,
+                0,
+                32,
+                32
+              ]
+            },
+            "capture_ms": 0.0404,
+            "wire_bytes": 226,
+            "exact": true,
+            "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+            "typed_ready_ns": 347202307468000,
+            "typed_emit_return_ns": 347202307507100,
+            "artifact_ready_ns": 347202308108600,
+            "capture_to_artifact_ready_ms": 0.7341,
+            "semantic_completion": "unknown",
+            "target_process_identity": {
+              "sequence": 1,
+              "surface": 41,
+              "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          },
+          {
+            "event": "accepted",
+            "id": "remote-paused-cancel",
+            "steps": 1,
+            "program_sha256": "9c48eb651c5d7bd5d8527f42877d2b3425ede10035839f2b91ef7ff92bff3f60",
+            "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+            "valid_until_ns": 347212308132100,
+            "accepted_ns": 347202308219600
+          },
+          {
+            "event": "step_started",
+            "id": "remote-paused-cancel",
+            "step": 0,
+            "operation": "hold",
+            "issued_ns": 347202308330700
+          },
+          {
+            "event": "input_admission",
+            "key": "a",
+            "keycode": 38,
+            "admitted_ns": 347202308888900,
+            "input_ack_ns": 347202354346300,
+            "valid_until_ns": 347212308132100,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347212308132100
+            ],
+            "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+            "id": "remote-paused-cancel",
+            "step": 0,
+            "owner_id": "f31f32921ba34b5f90af3c68ce5a3bcd"
+          },
+          {
+            "event": "cancel_requested",
+            "id": "remote-paused-cancel",
+            "matched": true,
+            "requested_ns": 347202354936900
+          }
+        ]
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "remote-paused-cancel",
+        "status": "cancelled",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "cancelled",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "key_state_errors": [],
+          "verified_ns": 347202695208200,
+          "valid_until_ns": 347212308132100,
+          "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+          "key_release_attempts": {
+            "38": {
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "keyrelease_started_ns": 347202639264100,
+                  "sync_returned_ns": 347202695180800,
+                  "keymap_sampled_ns": 347202695193100,
+                  "server_key_down_before": true,
+                  "server_key_down_after": false,
+                  "keymap_before_error": null,
+                  "keymap_after_error": null,
+                  "keyrelease_error": null,
+                  "sync_error": null
+                }
+              ],
+              "verified": true
+            }
+          },
+          "key_release_intervals_ns": [
+            {
+              "keycode": 38,
+              "interval_ns": [
+                347202639264100,
+                347202695193100
+              ]
+            }
+          ],
+          "key_state_source": "x11_query_keymap",
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347212308132100
+          ],
+          "target_process_identity_reader": {
+            "retired": false,
+            "pending": false,
+            "thread_alive": true,
+            "close_error": null
+          },
+          "target_focus_query_failed": false,
+          "release_call_started_ns": 347202639223400,
+          "release_call_returned_ns": 347202695330000,
+          "release_batch_delivery": {
+            "schema": "release-batch-delivery-v1",
+            "identifier": "remote-paused-cancel",
+            "step": 0,
+            "size": 0,
+            "positions": []
+          },
+          "cancelled_pending_ups": [
+            {
+              "key": "a",
+              "identifier": "remote-paused-cancel",
+              "step": 0,
+              "backend_owned_before_release": true,
+              "disposition": "not_attempted_owner_cancel_release"
+            }
+          ]
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 347202695614700,
+        "semantic_completion": "program status only; task scoring is separate"
+      },
+      "events": [
+        {
+          "event": "typed_observation",
+          "schema": "doom-typed-observation-v1",
+          "id": "source",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 347202307374500,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "value": 20,
+              "signal_id": "ammo",
+              "sequence": 1,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347202307374500,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "health": {
+              "value": 97,
+              "signal_id": "health",
+              "sequence": 1,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347202307374500,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          },
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "frame_size": [
+            32,
+            32
+          ],
+          "typed_extraction_started_ns": 347202307456600,
+          "typed_ready_ns": 347202307468000,
+          "capture_to_typed_ready_ms": 0.0935,
+          "artifact_published": false,
+          "grants_input_authority": false,
+          "target_process_identity": {
+            "sequence": 1,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "observation",
+          "id": "source",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 347202307374500,
+          "context_ns": 347202307403800,
+          "context": {
+            "windows": "fixture"
+          },
+          "image": "D:\\CodexData\\Temp\\tmpn14soian\\001.png",
+          "image_reused": false,
+          "image_prepare_ns": 229800,
+          "image_ready_ns": 347202307979700,
+          "input_focus_before": 41,
+          "input_focus_after": 41,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "capture_ms": 0.0404,
+          "wire_bytes": 226,
+          "exact": true,
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "typed_ready_ns": 347202307468000,
+          "typed_emit_return_ns": 347202307507100,
+          "artifact_ready_ns": 347202308108600,
+          "capture_to_artifact_ready_ms": 0.7341,
+          "semantic_completion": "unknown",
+          "target_process_identity": {
+            "sequence": 1,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "accepted",
+          "id": "remote-paused-cancel",
+          "steps": 1,
+          "program_sha256": "9c48eb651c5d7bd5d8527f42877d2b3425ede10035839f2b91ef7ff92bff3f60",
+          "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+          "valid_until_ns": 347212308132100,
+          "accepted_ns": 347202308219600
+        },
+        {
+          "event": "step_started",
+          "id": "remote-paused-cancel",
+          "step": 0,
+          "operation": "hold",
+          "issued_ns": 347202308330700
+        },
+        {
+          "event": "input_admission",
+          "key": "a",
+          "keycode": 38,
+          "admitted_ns": 347202308888900,
+          "input_ack_ns": 347202354346300,
+          "valid_until_ns": 347212308132100,
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347212308132100
+          ],
+          "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+          "id": "remote-paused-cancel",
+          "step": 0,
+          "owner_id": "f31f32921ba34b5f90af3c68ce5a3bcd"
+        },
+        {
+          "event": "cancel_requested",
+          "id": "remote-paused-cancel",
+          "matched": true,
+          "requested_ns": 347202354936900
+        },
+        {
+          "event": "keys_held",
+          "id": "remote-paused-cancel",
+          "step": 0,
+          "keys": [
+            "a"
+          ],
+          "input_ack_ns": 347202609559500
+        },
+        {
+          "event": "terminal",
+          "id": "remote-paused-cancel",
+          "status": "cancelled",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "event": "owner_release",
+            "reason": "cancelled",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347202695208200,
+            "valid_until_ns": 347212308132100,
+            "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keyrelease_started_ns": 347202639264100,
+                    "sync_returned_ns": 347202695180800,
+                    "keymap_sampled_ns": 347202695193100,
+                    "server_key_down_before": true,
+                    "server_key_down_after": false,
+                    "keymap_before_error": null,
+                    "keymap_after_error": null,
+                    "keyrelease_error": null,
+                    "sync_error": null
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "keycode": 38,
+                "interval_ns": [
+                  347202639264100,
+                  347202695193100
+                ]
+              }
+            ],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347212308132100
+            ],
+            "target_process_identity_reader": {
+              "retired": false,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false,
+            "release_call_started_ns": 347202639223400,
+            "release_call_returned_ns": 347202695330000,
+            "release_batch_delivery": {
+              "schema": "release-batch-delivery-v1",
+              "identifier": "remote-paused-cancel",
+              "step": 0,
+              "size": 0,
+              "positions": []
+            },
+            "cancelled_pending_ups": [
+              {
+                "key": "a",
+                "identifier": "remote-paused-cancel",
+                "step": 0,
+                "backend_owned_before_release": true,
+                "disposition": "not_attempted_owner_cancel_release"
+              }
+            ]
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 347202695614700,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ],
+      "records": [
+        {
+          "event": "owner_release",
+          "reason": "cancelled",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "key_state_errors": [],
+          "verified_ns": 347202695208200,
+          "valid_until_ns": 347212308132100,
+          "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+          "key_release_attempts": {
+            "38": {
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "keyrelease_started_ns": 347202639264100,
+                  "sync_returned_ns": 347202695180800,
+                  "keymap_sampled_ns": 347202695193100,
+                  "server_key_down_before": true,
+                  "server_key_down_after": false,
+                  "keymap_before_error": null,
+                  "keymap_after_error": null,
+                  "keyrelease_error": null,
+                  "sync_error": null
+                }
+              ],
+              "verified": true
+            }
+          },
+          "key_release_intervals_ns": [
+            {
+              "keycode": 38,
+              "interval_ns": [
+                347202639264100,
+                347202695193100
+              ]
+            }
+          ],
+          "key_state_source": "x11_query_keymap",
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347212308132100
+          ],
+          "target_process_identity_reader": {
+            "retired": false,
+            "pending": false,
+            "thread_alive": true,
+            "close_error": null
+          },
+          "target_focus_query_failed": false
+        }
+      ],
+      "client_close": {
+        "schema": "input-owner-service-close-v2",
+        "display": ":fake",
+        "service_id": "e4751f2b10a8401c982fbfcb31f7c151",
+        "verified": true,
+        "owner_thread_stopped": true,
+        "close_error": null,
+        "protocol_error": null,
+        "release_records": [
+          {
+            "event": "owner_release",
+            "reason": "cancelled",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347202695208200,
+            "valid_until_ns": 347212308132100,
+            "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [
+                  {
+                    "attempt": 1,
+                    "keyrelease_started_ns": 347202639264100,
+                    "sync_returned_ns": 347202695180800,
+                    "keymap_sampled_ns": 347202695193100,
+                    "server_key_down_before": true,
+                    "server_key_down_after": false,
+                    "keymap_before_error": null,
+                    "keymap_after_error": null,
+                    "keyrelease_error": null,
+                    "sync_error": null
+                  }
+                ],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [
+              {
+                "keycode": 38,
+                "interval_ns": [
+                  347202639264100,
+                  347202695193100
+                ]
+              }
+            ],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347212308132100
+            ],
+            "target_process_identity_reader": {
+              "retired": false,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          },
+          {
+            "event": "owner_release",
+            "reason": "close",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347202701164900,
+            "valid_until_ns": null,
+            "intent_token": null,
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347212308132100
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": false,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          }
+        ],
+        "physical_verification_authoritative": false
+      },
+      "service_report": {
+        "service_id": "e4751f2b10a8401c982fbfcb31f7c151",
+        "spawn_pid": 45400,
+        "process_alive": false,
+        "exit_code": 0,
+        "verified": true,
+        "recovery": {
+          "core": {
+            "close_error": null,
+            "display": ":fake",
+            "owner_thread_stopped": true,
+            "physical_verification_authoritative": false,
+            "protocol_error": null,
+            "release_records": [
+              {
+                "buttons_down": [],
+                "event": "owner_release",
+                "intent_token": "38ff1580a2964cffa3b17e7ea5ed91de",
+                "key_release_attempts": {
+                  "38": {
+                    "attempts": [
+                      {
+                        "attempt": 1,
+                        "keymap_after_error": null,
+                        "keymap_before_error": null,
+                        "keymap_sampled_ns": 347202695193100,
+                        "keyrelease_error": null,
+                        "keyrelease_started_ns": 347202639264100,
+                        "server_key_down_after": false,
+                        "server_key_down_before": true,
+                        "sync_error": null,
+                        "sync_returned_ns": 347202695180800
+                      }
+                    ],
+                    "verified": true
+                  }
+                },
+                "key_release_intervals_ns": [
+                  {
+                    "interval_ns": [
+                      347202639264100,
+                      347202695193100
+                    ],
+                    "keycode": 38
+                  }
+                ],
+                "key_state_errors": [],
+                "key_state_source": "x11_query_keymap",
+                "keys_down": [],
+                "keys_unknown": [],
+                "reason": "cancelled",
+                "target_focus_query_failed": false,
+                "target_process_identity": [
+                  1,
+                  41,
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  347212308132100
+                ],
+                "target_process_identity_reader": {
+                  "close_error": null,
+                  "pending": false,
+                  "retired": false,
+                  "thread_alive": true
+                },
+                "valid_until_ns": 347212308132100,
+                "verified": true,
+                "verified_ns": 347202695208200
+              },
+              {
+                "buttons_down": [],
+                "event": "owner_release",
+                "intent_token": null,
+                "key_release_attempts": {},
+                "key_release_intervals_ns": [],
+                "key_state_errors": [],
+                "key_state_source": "x11_query_keymap",
+                "keys_down": [],
+                "keys_unknown": [],
+                "reason": "close",
+                "target_focus_query_failed": false,
+                "target_process_identity": [
+                  1,
+                  41,
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  347212308132100
+                ],
+                "target_process_identity_reader": {
+                  "close_error": null,
+                  "pending": false,
+                  "retired": true,
+                  "thread_alive": false
+                },
+                "valid_until_ns": null,
+                "verified": true,
+                "verified_ns": 347202701164900
+              }
+            ],
+            "schema": "input-owner-service-close-v2",
+            "service_id": "e4751f2b10a8401c982fbfcb31f7c151",
+            "verified": true
+          },
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "f31f32921ba34b5f90af3c68ce5a3bcd",
+            "parent_pid": 4116,
+            "pid": 45400,
+            "service_id": "e4751f2b10a8401c982fbfcb31f7c151",
+            "supervisor_pid": 4116
+          },
+          "schema": "owned-owner-recovery-v3",
+          "service_error": null,
+          "startup_sha256": "877ad8358f81c9ad590f974c0f263f8b5614b6388e06f0a60d65e6243059cc1a",
+          "verified": true
+        },
+        "finish": {
+          "context_exit_success": true,
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "f31f32921ba34b5f90af3c68ce5a3bcd",
+            "parent_pid": 4116,
+            "pid": 45400,
+            "service_id": "e4751f2b10a8401c982fbfcb31f7c151",
+            "supervisor_pid": 4116
+          },
+          "initial_verification": true,
+          "owner_thread_stopped": true,
+          "recovery_sha256": "988b443302e5c5e148011cb77d7aaad7071fa46da57c7d3cca2e6daaee87400f",
+          "schema": "owned-owner-finish-v3",
+          "service_error": null,
+          "startup_sha256": "877ad8358f81c9ad590f974c0f263f8b5614b6388e06f0a60d65e6243059cc1a",
+          "verified": true
+        },
+        "receipt_error": null,
+        "receipt_verified": true
+      },
+      "startup": {
+        "schema": "owned-owner-startup-v3",
+        "service_id": "e4751f2b10a8401c982fbfcb31f7c151",
+        "display": ":fake",
+        "pid": 45400,
+        "parent_pid": 4116,
+        "supervisor_pid": 4116,
+        "owner_id": "f31f32921ba34b5f90af3c68ce5a3bcd",
+        "started_perf_ns": 347201558804400,
+        "python_optimize": 1,
+        "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+        "generation_kind": "fresh logical launch UUID; no native PID start-time proof",
+        "source_sha256_lf": {
+          "research/live_control/test_owned_owner_executor_boundary.py": "31d7a706b9d4e14fcd8addfec188e7cb42a0bae2620eaf83cacb61bcd2baa117",
+          "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+          "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+          "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+          "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+          "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+          "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+          "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+          "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+          "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+          "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+          "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+          "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+          "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+          "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+          "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+          "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+          "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+          "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+          "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+          "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+          "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+          "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+          "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+          "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+          "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+          "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+          "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+          "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+          "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+          "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+          "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+          "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+          "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+          "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+          "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+          "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+          "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+          "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+          "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+          "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+          "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+          "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe",
+          "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+          "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+          "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
+          "research/live_control/test_input_owner_process_v3.py": "cc31e41b8388eef4f6b13daa1ebaaecc4fe02b4d3fe21781235582ca756cc0fe",
+          "research/live_control/input_owner_process_v3.py": "dc1fee4736a3b059dc9ee6a86dc9d88626e2da84f927c75ce20f329ac311cf1f"
+        }
+      },
+      "spawn_pid": 45400,
+      "files": {
+        "finish.json": {
+          "sha256": "f08a6f66bfc375dfe1132f3df7fefce7a0b3a4988efd38c2a1351f55badc036c",
+          "bytes_b64": "ewogICJjb250ZXh0X2V4aXRfc3VjY2VzcyI6IHRydWUsCiAgImRpcmVjdG9yeV9mc3luY19yZXF1ZXN0ZWQiOiBmYWxzZSwKICAiZmlsZV9mc3luYyI6IHRydWUsCiAgImlkZW50aXR5IjogewogICAgImRpc3BsYXkiOiAiOmZha2UiLAogICAgIm93bmVyX2lkIjogImYzMWYzMjkyMWJhMzRiNWY5MGFmM2M2OGNlNWEzYmNkIiwKICAgICJwYXJlbnRfcGlkIjogNDExNiwKICAgICJwaWQiOiA0NTQwMCwKICAgICJzZXJ2aWNlX2lkIjogImU0NzUxZjJiMTBhODQwMWM5ODJmYmZjYjMxZjdjMTUxIiwKICAgICJzdXBlcnZpc29yX3BpZCI6IDQxMTYKICB9LAogICJpbml0aWFsX3ZlcmlmaWNhdGlvbiI6IHRydWUsCiAgIm93bmVyX3RocmVhZF9zdG9wcGVkIjogdHJ1ZSwKICAicmVjb3Zlcnlfc2hhMjU2IjogIjk4OGI0NDMzMDJlNWM1ZTE0ODAxMWNiNzdkN2FhYWQ3MDcxZmE0NmRhNTdjN2QzY2NhMmU2ZGFhZWU4NzQwMGYiLAogICJzY2hlbWEiOiAib3duZWQtb3duZXItZmluaXNoLXYzIiwKICAic2VydmljZV9lcnJvciI6IG51bGwsCiAgInN0YXJ0dXBfc2hhMjU2IjogIjg3N2FkODM1OGY4MWM5YWQ1OTBmOTc0YzBmMjYzZjhiNTYxNGI2Mzg4ZTA2ZjBhNjBkNjVlNjI0MzA1OWNjMWEiLAogICJ2ZXJpZmllZCI6IHRydWUKfQo="
+        },
+        "fixture-edges.jsonl": {
+          "sha256": "eca4b341c939fcc1136401a862dceb27c7a637c74c81594f797d306deadec27c",
+          "bytes_b64": "eyJldmVudCI6IDIsICJjb2RlIjogMzgsICJkb3duIjogWzM4XSwgInBpZCI6IDQ1NDAwLCAidGhyZWFkIjogMzI0NDAsICJhdF9ucyI6IDM0NzIwMjMwODkxMTIwMH0NCnsiZXZlbnQiOiAzLCAiY29kZSI6IDM4LCAiZG93biI6IFtdLCAicGlkIjogNDU0MDAsICJ0aHJlYWQiOiAzMjQ0MCwgImF0X25zIjogMzQ3MjAyNjM5MzkzMTAwfQ0K"
+        },
+        "recovery.json": {
+          "sha256": "988b443302e5c5e148011cb77d7aaad7071fa46da57c7d3cca2e6daaee87400f",
+          "bytes_b64": "ewogICJjb3JlIjogewogICAgImNsb3NlX2Vycm9yIjogbnVsbCwKICAgICJkaXNwbGF5IjogIjpmYWtlIiwKICAgICJvd25lcl90aHJlYWRfc3RvcHBlZCI6IHRydWUsCiAgICAicGh5c2ljYWxfdmVyaWZpY2F0aW9uX2F1dGhvcml0YXRpdmUiOiBmYWxzZSwKICAgICJwcm90b2NvbF9lcnJvciI6IG51bGwsCiAgICAicmVsZWFzZV9yZWNvcmRzIjogWwogICAgICB7CiAgICAgICAgImJ1dHRvbnNfZG93biI6IFtdLAogICAgICAgICJldmVudCI6ICJvd25lcl9yZWxlYXNlIiwKICAgICAgICAiaW50ZW50X3Rva2VuIjogIjM4ZmYxNTgwYTI5NjRjZmZhM2IxN2U3ZWE1ZWQ5MWRlIiwKICAgICAgICAia2V5X3JlbGVhc2VfYXR0ZW1wdHMiOiB7CiAgICAgICAgICAiMzgiOiB7CiAgICAgICAgICAgICJhdHRlbXB0cyI6IFsKICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAiYXR0ZW1wdCI6IDEsCiAgICAgICAgICAgICAgICAia2V5bWFwX2FmdGVyX2Vycm9yIjogbnVsbCwKICAgICAgICAgICAgICAgICJrZXltYXBfYmVmb3JlX2Vycm9yIjogbnVsbCwKICAgICAgICAgICAgICAgICJrZXltYXBfc2FtcGxlZF9ucyI6IDM0NzIwMjY5NTE5MzEwMCwKICAgICAgICAgICAgICAgICJrZXlyZWxlYXNlX2Vycm9yIjogbnVsbCwKICAgICAgICAgICAgICAgICJrZXlyZWxlYXNlX3N0YXJ0ZWRfbnMiOiAzNDcyMDI2MzkyNjQxMDAsCiAgICAgICAgICAgICAgICAic2VydmVyX2tleV9kb3duX2FmdGVyIjogZmFsc2UsCiAgICAgICAgICAgICAgICAic2VydmVyX2tleV9kb3duX2JlZm9yZSI6IHRydWUsCiAgICAgICAgICAgICAgICAic3luY19lcnJvciI6IG51bGwsCiAgICAgICAgICAgICAgICAic3luY19yZXR1cm5lZF9ucyI6IDM0NzIwMjY5NTE4MDgwMAogICAgICAgICAgICAgIH0KICAgICAgICAgICAgXSwKICAgICAgICAgICAgInZlcmlmaWVkIjogdHJ1ZQogICAgICAgICAgfQogICAgICAgIH0sCiAgICAgICAgImtleV9yZWxlYXNlX2ludGVydmFsc19ucyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgImludGVydmFsX25zIjogWwogICAgICAgICAgICAgIDM0NzIwMjYzOTI2NDEwMCwKICAgICAgICAgICAgICAzNDcyMDI2OTUxOTMxMDAKICAgICAgICAgICAgXSwKICAgICAgICAgICAgImtleWNvZGUiOiAzOAogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgImtleV9zdGF0ZV9lcnJvcnMiOiBbXSwKICAgICAgICAia2V5X3N0YXRlX3NvdXJjZSI6ICJ4MTFfcXVlcnlfa2V5bWFwIiwKICAgICAgICAia2V5c19kb3duIjogW10sCiAgICAgICAgImtleXNfdW5rbm93biI6IFtdLAogICAgICAgICJyZWFzb24iOiAiY2FuY2VsbGVkIiwKICAgICAgICAidGFyZ2V0X2ZvY3VzX3F1ZXJ5X2ZhaWxlZCI6IGZhbHNlLAogICAgICAgICJ0YXJnZXRfcHJvY2Vzc19pZGVudGl0eSI6IFsKICAgICAgICAgIDEsCiAgICAgICAgICA0MSwKICAgICAgICAgICJhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhIiwKICAgICAgICAgIDM0NzIxMjMwODEzMjEwMAogICAgICAgIF0sCiAgICAgICAgInRhcmdldF9wcm9jZXNzX2lkZW50aXR5X3JlYWRlciI6IHsKICAgICAgICAgICJjbG9zZV9lcnJvciI6IG51bGwsCiAgICAgICAgICAicGVuZGluZyI6IGZhbHNlLAogICAgICAgICAgInJldGlyZWQiOiBmYWxzZSwKICAgICAgICAgICJ0aHJlYWRfYWxpdmUiOiB0cnVlCiAgICAgICAgfSwKICAgICAgICAidmFsaWRfdW50aWxfbnMiOiAzNDcyMTIzMDgxMzIxMDAsCiAgICAgICAgInZlcmlmaWVkIjogdHJ1ZSwKICAgICAgICAidmVyaWZpZWRfbnMiOiAzNDcyMDI2OTUyMDgyMDAKICAgICAgfSwKICAgICAgewogICAgICAgICJidXR0b25zX2Rvd24iOiBbXSwKICAgICAgICAiZXZlbnQiOiAib3duZXJfcmVsZWFzZSIsCiAgICAgICAgImludGVudF90b2tlbiI6IG51bGwsCiAgICAgICAgImtleV9yZWxlYXNlX2F0dGVtcHRzIjoge30sCiAgICAgICAgImtleV9yZWxlYXNlX2ludGVydmFsc19ucyI6IFtdLAogICAgICAgICJrZXlfc3RhdGVfZXJyb3JzIjogW10sCiAgICAgICAgImtleV9zdGF0ZV9zb3VyY2UiOiAieDExX3F1ZXJ5X2tleW1hcCIsCiAgICAgICAgImtleXNfZG93biI6IFtdLAogICAgICAgICJrZXlzX3Vua25vd24iOiBbXSwKICAgICAgICAicmVhc29uIjogImNsb3NlIiwKICAgICAgICAidGFyZ2V0X2ZvY3VzX3F1ZXJ5X2ZhaWxlZCI6IGZhbHNlLAogICAgICAgICJ0YXJnZXRfcHJvY2Vzc19pZGVudGl0eSI6IFsKICAgICAgICAgIDEsCiAgICAgICAgICA0MSwKICAgICAgICAgICJhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhIiwKICAgICAgICAgIDM0NzIxMjMwODEzMjEwMAogICAgICAgIF0sCiAgICAgICAgInRhcmdldF9wcm9jZXNzX2lkZW50aXR5X3JlYWRlciI6IHsKICAgICAgICAgICJjbG9zZV9lcnJvciI6IG51bGwsCiAgICAgICAgICAicGVuZGluZyI6IGZhbHNlLAogICAgICAgICAgInJldGlyZWQiOiB0cnVlLAogICAgICAgICAgInRocmVhZF9hbGl2ZSI6IGZhbHNlCiAgICAgICAgfSwKICAgICAgICAidmFsaWRfdW50aWxfbnMiOiBudWxsLAogICAgICAgICJ2ZXJpZmllZCI6IHRydWUsCiAgICAgICAgInZlcmlmaWVkX25zIjogMzQ3MjAyNzAxMTY0OTAwCiAgICAgIH0KICAgIF0sCiAgICAic2NoZW1hIjogImlucHV0LW93bmVyLXNlcnZpY2UtY2xvc2UtdjIiLAogICAgInNlcnZpY2VfaWQiOiAiZTQ3NTFmMmIxMGE4NDAxYzk4MmZiZmNiMzFmN2MxNTEiLAogICAgInZlcmlmaWVkIjogdHJ1ZQogIH0sCiAgImRpcmVjdG9yeV9mc3luY19yZXF1ZXN0ZWQiOiBmYWxzZSwKICAiZmlsZV9mc3luYyI6IHRydWUsCiAgImlkZW50aXR5IjogewogICAgImRpc3BsYXkiOiAiOmZha2UiLAogICAgIm93bmVyX2lkIjogImYzMWYzMjkyMWJhMzRiNWY5MGFmM2M2OGNlNWEzYmNkIiwKICAgICJwYXJlbnRfcGlkIjogNDExNiwKICAgICJwaWQiOiA0NTQwMCwKICAgICJzZXJ2aWNlX2lkIjogImU0NzUxZjJiMTBhODQwMWM5ODJmYmZjYjMxZjdjMTUxIiwKICAgICJzdXBlcnZpc29yX3BpZCI6IDQxMTYKICB9LAogICJzY2hlbWEiOiAib3duZWQtb3duZXItcmVjb3ZlcnktdjMiLAogICJzZXJ2aWNlX2Vycm9yIjogbnVsbCwKICAic3RhcnR1cF9zaGEyNTYiOiAiODc3YWQ4MzU4ZjgxYzlhZDU5MGY5NzRjMGYyNjNmOGI1NjE0YjYzODhlMDZmMGE2MGQ2NWU2MjQzMDU5Y2MxYSIsCiAgInZlcmlmaWVkIjogdHJ1ZQp9Cg=="
+        },
+        "startup.json": {
+          "sha256": "877ad8358f81c9ad590f974c0f263f8b5614b6388e06f0a60d65e6243059cc1a",
+          "bytes_b64": "ewogICJkaXNwbGF5IjogIjpmYWtlIiwKICAiZ2VuZXJhdGlvbl9raW5kIjogImZyZXNoIGxvZ2ljYWwgbGF1bmNoIFVVSUQ7IG5vIG5hdGl2ZSBQSUQgc3RhcnQtdGltZSBwcm9vZiIsCiAgIm93bmVyX2lkIjogImYzMWYzMjkyMWJhMzRiNWY5MGFmM2M2OGNlNWEzYmNkIiwKICAicGFyZW50X3BpZCI6IDQxMTYsCiAgInBpZCI6IDQ1NDAwLAogICJweXRob25fb3B0aW1pemUiOiAxLAogICJweXRob25fdmVyc2lvbiI6ICIzLjEzLjE0ICh0YWdzL3YzLjEzLjE0OmZkMTc5OTcsIEp1biAxMCAyMDI2LCAxMzowMzo0OCkgW01TQyB2LjE5NDQgNjQgYml0IChBTUQ2NCldIiwKICAic2NoZW1hIjogIm93bmVkLW93bmVyLXN0YXJ0dXAtdjMiLAogICJzZXJ2aWNlX2lkIjogImU0NzUxZjJiMTBhODQwMWM5ODJmYmZjYjMxZjdjMTUxIiwKICAic291cmNlX3NoYTI1Nl9sZiI6IHsKICAgICJyZXNlYXJjaC9kb29tL2Rvb21fb3duZXJfdGhyZWFkX3JlbGVhc2VfYmF0Y2hfYmFja2VuZF92MS5weSI6ICJhZWQ0MzhhNTZlZWM1NjEwYjQ0NGUyZGI1ZTY4NTg3OTEwMmQ5ZGQ2MjEyN2U1OWQ2MzQ2M2I4OTIyOTQzYmZlIiwKICAgICJyZXNlYXJjaC9kb29tL2Rvb21fcHJvY2Vzc19pZGVudGl0eV9iYWNrZW5kX3YxLnB5IjogIjczMjBhM2UzNDgzZDBlNGJiNjM4ZTdkMmQxZmNmYjFiZmVhYjMyMDAyNzI1NjIxOGViNTc1YTViMTRjOWVjNzYiLAogICAgInJlc2VhcmNoL2Rvb20vZG9vbV9zaWduYWxfdmFsdWVfZG9tYWluX3YxLnB5IjogIjBlOTdmNTkyZDNhM2Y2ZjY2MTIwYWJjYTdmN2ViZmJiNTYyZDNjN2EzYzIyNzYzNWNjOGJjOGE3YTUwODgzZjEiLAogICAgInJlc2VhcmNoL2Rvb20vZG9vbV90eXBlZF9jb2FzdF9iYWNrZW5kX3YxLnB5IjogImZkYTU0MWUxMjQxNGQ2Yzc3YjQxNzg3ZWFmMjA4ZThkYWU2YjQ2Mjg0NmFkNDAxZDRjN2IyMzViOGFlMmIwNzkiLAogICAgInJlc2VhcmNoL2Rvb20vZG9vbV90eXBlZF9vYnNlcnZhdGlvbl92MS5weSI6ICIxM2JjOWU0ZTQxNjY3YjYxMjg4MmQ3MmMzYzhhMzZjMzQxYjU1NjFmODQ5MjM1ZmQwZWJhNjljMzhlM2EyZWIxIiwKICAgICJyZXNlYXJjaC9kb29tL2Rvb21fdHlwZWRfcmVsZWFzZV9iYWNrZW5kX3YxLnB5IjogImNlZWY1MDg4MWRjMDYxOWZmZWU1YjdlZjU1MWNlMDg1MWYyNjUwYzczNzFmYzM3Nzc1YTgwNzU1ZjA3N2QxMmYiLAogICAgInJlc2VhcmNoL2Rvb20vZG9vbV90eXBlZF9yZWxlYXNlX2JhY2tlbmRfdjIucHkiOiAiNzE5MmQxYTQ3YjE2NzdjZTIyNTg0ZWViYmVjNTFiMTljN2FhNTVjNjcxMjJkMmE5Yzg1ZTUyOGZmMDk1YWRmNCIsCiAgICAicmVzZWFyY2gvZG9vbS90ZXN0X21hcDAxX3Byb2Nlc3NfaWRlbnRpdHlfYmFja2VuZC5weSI6ICI3MDIwZDJlZGFiNzA0ZjgxMTU5MzBlNzIyNmM4MDhhNzExOGE2NTZmNTYwNjZhYzg3ZGI4YTIyOTE5ZDI2ZGFkIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvYWN0aW9uX3ZhbGlkaXR5X2FkbWlzc2lvbl92MS5weSI6ICIxNmE2N2ZhYjRlOTZjYmExMjM0NDg0ODNhN2NlMzViYmI4NmQyNWNlMDY5YWVmNGQxMjZlM2M1MjUyZDk4MDIxIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvY29hc3RfYmFja2VuZF92MS5weSI6ICJmYmUyZWIwODdkMmVmMTdkNWYwMGM5YzE1YmYxZTZkNzUwMTBmNzA4ZDE5YjUyOTgyY2RmNDM1NzNjYTMzMDA5IiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvZXhlY3V0b3JfdjExLnB5IjogImVjOThiNmU0NGFlODIwZTZiMjk1NWMwNjJmNDMxYzMzYTFkODZlNGE2MjZhYjYwYjRlNzIxNzg1MDg5ODg2NzYiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9leGVjdXRvcl92MTIucHkiOiAiYzMwMTUwOGZlMGJhMDg2YzVkNmRiMTE5MzUyZWQyODNmYzNhNTBiNjcyZmQzMjNiYjFmNDJiODQ4MzU2Mzk2NSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2V4ZWN1dG9yX3YxMy5weSI6ICJkMTI5MzRlN2RkZmE0ODg4YWNhZWY5M2MzN2RjNTQ3NzMzNjljM2MzYTcyYTNhMmRmY2M4ZmUyNzE0ZDA2ODhiIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvZXhlY3V0b3JfdjMucHkiOiAiZWEzZmE4Yzk3NTFhNmE0MWI0ODE0YWQ2ZTBkMDNiZWM4NTE2Njc2NWIwYTQxZDI0ODhhNTE3NTBkMTdiM2E0YSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2V4ZWN1dG9yX3Y1LnB5IjogImEzNmQ0NWJmMTdkNGQxNzQ2ODNkOTgyZmQ4M2ZmZjI0Yzg3MTQ5ZGY3OWRjM2Y3YzBmNzIzNWM1OWM3NDI0MDAiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9pbnB1dF9vd25lci5weSI6ICJhOWZhODlkM2U1ZDAxMmI2OGZmMjYyYTk3NTI4NTY1ZGQxNmNiZWM2ZjIxZmZkOWNiNTM5ZTk0OGQ5NWFlN2UzIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvaW5wdXRfb3duZXJfcHJvY2Vzc192My5weSI6ICJkYzFmZWU0NzM2YTNiMDU5ZGM5ZWU2YTg2ZGM5ZDg4NjI2ZTJkYTg0ZjkyN2M3NWNlMjBmMzI5YWMzMTFjZjFmIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvaW5wdXRfb3duZXJfcnBjX3YyLnB5IjogImEyM2Q0NzE4MWNkMDg4ZmJhNjQ4NGJhNDRjYjk1M2I1ZmZlZTJmZTY2OTQ3Y2Y5NTg3YzQ3ZjcxNTNmMDNkOGMiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9pbnB1dF9vd25lcl92MTAucHkiOiAiZmQ2ODFlZjkzYzU2ODY3NGMyODJlNDdjZGFjZDA1YTcwNWQ4YjhkZGYzMTQxNzIyZjg0NzdiMTljNTViYTA0OSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2lucHV0X293bmVyX3YxMS5weSI6ICI0ZjZiNjEwMjYxMTdkNGQ5YmU4YTk3M2M2NWQ0OTFmZThhOWIwZWJiYzkwYmQ5OGMwNzM4Y2QwYWFjMDk4MjFjIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvaW5wdXRfb3duZXJfdjEyLnB5IjogIjZjYzEwOTc3MzhhZWE4YTg5YzI4NDBlNWQ3OGUzOTJlMTg0NGNmMWU3M2I1OGE5NTIwYWI2NmEwYjk1MDMxYzkiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9pbnB1dF9vd25lcl92Mi5weSI6ICJiZmQyNDM1NjM2NWJiYTM0YzU1MDU2MmNiY2U0ZjMzMjgyN2FlN2Q4OTIyZWVmNDZiZTIwM2FmMjM3MzBiZTIyIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvaW5wdXRfb3duZXJfdjUucHkiOiAiYjE3N2EzODkzMjE0ZTI0NTMzM2RjZGE3YmM1YWRjMjkxYjljODBhYTY1NTYxYmIxNmY0NWRjYTRiYjM5OTM0NyIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2lucHV0X3RyYW5zaXRpb25fb3duZXJfdjMucHkiOiAiYmY5OTEyNjMzZmUxNmQzMjhkZTNjZGRlNzdiMGZlMzE4OTJkYWVjM2M0ODk4NTRjMmUzN2ViYTkxY2NlNWUzNSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2lucHV0X3RyYW5zaXRpb25fb3duZXJfdjQucHkiOiAiYTk0YjBkZTEzOWRhN2E2ZjQyM2ZkNDY2ZTBmMjFjZTM2YTllZjgzZjk3MjFiZmM3NTdkN2RmODNhNTU1MmE4NSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2xlYXNlLnB5IjogImU3MWY5ODUwZDM5OTlhMzFmY2I4NmMwMGY5ZWY3YThiYTE5YmFlOGQzYThiZGMxMWJmN2JkNjIwODE3YTUzNWYiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9sZWFzZV9jYXVzZV92MS5weSI6ICIxZmYzODU2YTYwYWYyNmU0MDVmZDRjMjE2ZTIwNmM2MTQ2NjQ0YjBjMDMyNGY0NmJiOGNlMzE3NmExZjRkMzA1IiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvbGVhc2VfY2F1c2VfdjIucHkiOiAiNmE2MWNhYmM1NDA4NDFmNzZlZDUxOGM0ZTBkNDk4NjlmNjYwMGVkNzNmMTRlZDAzMDM0NGQ2NGFkMzgwNWE0NyIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2xlYXNlX3JlbGVhc2VfdjEucHkiOiAiYjRiMTUyMWI1MjA3ZWExNDY1NDQ2M2Y3NjliMDUzMzc2ODU3NTBlOTA0MGJlZDM2YThhY2YwMDZhYTFkMzRmZiIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3F1aWV0X3dpbmRvdy5weSI6ICI0YmE1OTUzOTg4NmIzODJkYTgxMjY1ZTJhMmM1YjY0NTFhM2Q3MDViZmIyYWNhNTAyM2E2OTI2MWM5MWZjMWUwIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvc2Vzc2lvbl92MTAucHkiOiAiYTNjNDgwYTczZGEwNDI2Zjc2NmVkYzE3MTg1YmI5NzNmNTY5M2NlYjM1OTIxMDlhOGI0MTFiNGVlZGYzZGUwZCIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjQucHkiOiAiMDRmMDZkN2I3ODdiYWE3N2NhZTIwZDBjNTFiNTYzY2NjNDk4NWRjMTliNDczMDhkN2MyNDMxOGM1YTllN2ZlZSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjUucHkiOiAiMDQxZGEzNDYyMGJmYjQyNWUxNGFhMWNhZmMwOWVlNTQ4MWZjMzc4Mzg5ZmUwZTcxNmYzZDg3MTBiMWIwY2QxMiIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjYucHkiOiAiY2JmN2I1NDFjNjBhMjY5OGZlOGUxNTVhMjM5YmQ4ZTc4NmUzMzEzZTJjZDRkOTM0ODI0NzZkMTM4MDEyMmNjNyIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjcucHkiOiAiNjhjOGIzYjdmNWZjM2NkNzkwN2I1YmJjNmIwMmZhMmJlOGFjNzI1ZGEyYjY0YmE1MmUxOTQyNTE1ZDcyMWUxMSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjgucHkiOiAiMjJkOWEzMzZmZWYwYzk3MGJmZmNmZDQ4NWNkOTkzNjAyOThmNzg4YjkwOWYxZTcwZjE5NTkxMjlmMDc4YmU0MCIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjkucHkiOiAiNjgwOGEzMjMyYWU2ZGQ4ZDhiM2VhNjA4Y2RjZmU4ZmI4NThkNDdhY2JlODc1MzBkYmI0ZTdiODZlM2Q2NGVlMCIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3RhcmdldF9wcm9jZXNzX2lkZW50aXR5X3YxLnB5IjogImQwNjlmY2RlMzY3MWMzMDQ0YTA3MDkwNDMyYjAxZTkwNDRkYzA3MzY3YzBkZTIwZDk4NDViYzZkYjllMTI1M2UiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC90ZXN0X2lucHV0X293bmVyX3Byb2Nlc3NfdjMucHkiOiAiY2MzMWU0MWI4Mzg4ZWVmNGY2YjEzZGFhMWViYWFlY2M0ZmUwMmI0ZDNmZTIxNzgxMjM1NTgyY2E3NTZjYzBmZSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Rlc3RfaW5wdXRfb3duZXJfdjEyX2V4cGxpY2l0X3VwX2NhbmNlbC5weSI6ICJkM2I3MjE2ODljMGEyZDM4YTkwMTY5YTA2OTg1Y2M4NjZjMGM2MTE2ZmMzMWQxNmNjYzczZGU0YWYwZjM5NjQ1IiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvdGVzdF9vd25lZF9vd25lcl9leGVjdXRvcl9ib3VuZGFyeS5weSI6ICIzMWQ3YTcwNmI5ZDRlMTRmY2Q4YWRkZmVjMTg4ZTdjYjQyYTBiYWUyNjIwZWFmODNjYWNiNjFiY2QyYmFhMTE3IiwKICAgICJyZXNlYXJjaC9vYnNlcnZhdGlvbl9nYXRpbmcvZXhhY3RfZ2F0ZS5weSI6ICI2NzgwNjI0NTEzYTk1MDM5NjU3NzM0ZTc2YzA0MjA0NDdhM2Y5YWI0OWY5OGUxZjMxMzdhMTlhOTFiYzMxOTQ0IiwKICAgICJyZXNlYXJjaC9vYnNlcnZhdGlvbl9nYXRpbmcvZ3VpX3N1aXRlLnB5IjogIjk1M2EwNzhhMDZkNTViOTI3OGJkN2IzMWUxNzY0MDQ5MTIzNDBhNGYxMzQwN2UxZGIzNDNiNzc3NjY0NWU5N2YiLAogICAgInJlc2VhcmNoL29ic2VydmF0aW9uX3RpbGVzL2ltYWdlX2FydGlmYWN0LnB5IjogIjdiZjZiNzFkODExYWFlZmE3NWU4N2Y1ZDlkMjBmZDkyNzVmYzkyODEwNGU5MTBkZWFjYTllM2YwMGM1NTM2M2UiLAogICAgInJlc2VhcmNoL29ic2VydmF0aW9uX3RpbGVzL3RpbGVfdHJhbnNwb3J0LnB5IjogIjIwNmNjYzc0MmJjNzQ1ZTBmNGVjOWU2NjgwOWIyNjUwYzNmZTdjZjdiZjlhYTVlMjZjZGY4NjU5OTkzNjQ1MGEiLAogICAgInJlc2VhcmNoL3JlYWxfYXBwc192MS9yZWFsX2FwcF9zdWl0ZV92MS5weSI6ICJmZjgxOTVjMGUxNzEyYmUyZjVlZDIzNWMyMTU4NGE5YjFiZTA0ZjA0NWI2MGFkN2U1YTYwNGU4MGYyZWYxNzY0IiwKICAgICJydW50aW1lL2d1YXJkZWRfeDExX3YxL19faW5pdF9fLnB5IjogIjFkYmIwOTU1MDhhNmRiN2ZkMGM5NmU2NGVlZjcyNzZiMDJhMGQ0ZTU3ZTE5NmRmYzk2YWYzN2VmZjZhODI1NWEiLAogICAgInJ1bnRpbWUvZ3VhcmRlZF94MTFfdjEvcHJvY2Vzc19pZGVudGl0eS5weSI6ICI3YjQ4YzQyNmIzODlhNTEzYjM5OWJjODkxY2I0N2E3ZDlkYzg2MmU5ZmJkODI0ZDEwNDVhM2MzZDkzOTE0NTc3IiwKICAgICJydW50aW1lL2d1YXJkZWRfeDExX3YxL3RhcmdldF9xdWVyaWVzLnB5IjogImJkZDU1ZjNiZDRkZjU2MWZkNDQ4MjUzYjNhOTNkNjQ4ODJjYjI0ZGNhZTA4ZWNiMzdmMjExMmUyZmU2ZDc0OGEiCiAgfSwKICAic3RhcnRlZF9wZXJmX25zIjogMzQ3MjAxNTU4ODA0NDAwLAogICJzdXBlcnZpc29yX3BpZCI6IDQxMTYKfQo="
+        }
+      },
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ],
+          "pid": 45400,
+          "thread": 32440,
+          "at_ns": 347202308911200
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": [],
+          "pid": 45400,
+          "thread": 32440,
+          "at_ns": 347202639393100
+        }
+      ]
+    },
+    {
+      "case": "remote-normal",
+      "metadata_shim_only": true,
+      "terminal": {
+        "event": "terminal",
+        "id": "remote-normal",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "key_state_errors": [],
+          "verified_ns": 347203449316300,
+          "valid_until_ns": 347213341020100,
+          "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+          "key_release_attempts": {
+            "38": {
+              "attempts": [],
+              "verified": true
+            }
+          },
+          "key_release_intervals_ns": [],
+          "key_state_source": "x11_query_keymap",
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347213341020100
+          ],
+          "target_process_identity_reader": {
+            "retired": false,
+            "pending": false,
+            "thread_alive": true,
+            "close_error": null
+          },
+          "target_focus_query_failed": false,
+          "release_call_started_ns": 347203449279600,
+          "release_call_returned_ns": 347203449339800
+        },
+        "interruption": null,
+        "decision_reason": null,
+        "terminal_ns": 347203449535700,
+        "semantic_completion": "program status only; task scoring is separate"
+      },
+      "events": [
+        {
+          "event": "typed_observation",
+          "schema": "doom-typed-observation-v1",
+          "id": "source",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 347203340205900,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "value": 20,
+              "signal_id": "ammo",
+              "sequence": 1,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347203340205900,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "health": {
+              "value": 97,
+              "signal_id": "health",
+              "sequence": 1,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347203340205900,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          },
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "frame_size": [
+            32,
+            32
+          ],
+          "typed_extraction_started_ns": 347203340288900,
+          "typed_ready_ns": 347203340300400,
+          "capture_to_typed_ready_ms": 0.0945,
+          "artifact_published": false,
+          "grants_input_authority": false,
+          "target_process_identity": {
+            "sequence": 1,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "observation",
+          "id": "source",
+          "step": 0,
+          "sequence": 1,
+          "capture_ns": 347203340205900,
+          "context_ns": 347203340235100,
+          "context": {
+            "windows": "fixture"
+          },
+          "image": "D:\\CodexData\\Temp\\tmp6cqf9bli\\001.png",
+          "image_reused": false,
+          "image_prepare_ns": 282100,
+          "image_ready_ns": 347203340878200,
+          "input_focus_before": 41,
+          "input_focus_after": 41,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "capture_ms": 0.037,
+          "wire_bytes": 226,
+          "exact": true,
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "typed_ready_ns": 347203340300400,
+          "typed_emit_return_ns": 347203340335100,
+          "artifact_ready_ns": 347203340997700,
+          "capture_to_artifact_ready_ms": 0.7918,
+          "semantic_completion": "unknown",
+          "target_process_identity": {
+            "sequence": 1,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "accepted",
+          "id": "remote-normal",
+          "steps": 1,
+          "program_sha256": "9c48eb651c5d7bd5d8527f42877d2b3425ede10035839f2b91ef7ff92bff3f60",
+          "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+          "valid_until_ns": 347213341020100,
+          "accepted_ns": 347203341096000
+        },
+        {
+          "event": "step_started",
+          "id": "remote-normal",
+          "step": 0,
+          "operation": "hold",
+          "issued_ns": 347203341210900
+        },
+        {
+          "event": "input_admission",
+          "key": "a",
+          "keycode": 38,
+          "admitted_ns": 347203341765800,
+          "input_ack_ns": 347203388059600,
+          "valid_until_ns": 347213341020100,
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347213341020100
+          ],
+          "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+          "id": "remote-normal",
+          "step": 0,
+          "owner_id": "420107f68d5d4c8f991c75a5821a35d1"
+        },
+        {
+          "event": "keys_held",
+          "id": "remote-normal",
+          "step": 0,
+          "keys": [
+            "a"
+          ],
+          "input_ack_ns": 347203388430700
+        },
+        {
+          "event": "typed_observation",
+          "schema": "doom-typed-observation-v1",
+          "id": "remote-normal",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 347203388597600,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "value": 20,
+              "signal_id": "ammo",
+              "sequence": 2,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347203388597600,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "health": {
+              "value": 97,
+              "signal_id": "health",
+              "sequence": 2,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347203388597600,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          },
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "frame_size": [
+            32,
+            32
+          ],
+          "typed_extraction_started_ns": 347203388709100,
+          "typed_ready_ns": 347203388722800,
+          "capture_to_typed_ready_ms": 0.1252,
+          "artifact_published": false,
+          "grants_input_authority": false,
+          "target_process_identity": {
+            "sequence": 2,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "observation",
+          "id": "remote-normal",
+          "step": 0,
+          "sequence": 2,
+          "capture_ns": 347203388597600,
+          "context_ns": 347203388640300,
+          "context": {
+            "windows": "fixture"
+          },
+          "image": "D:\\CodexData\\Temp\\tmp6cqf9bli\\001.png",
+          "image_reused": true,
+          "image_prepare_ns": 61100,
+          "image_ready_ns": 347203389345700,
+          "input_focus_before": 41,
+          "input_focus_after": 41,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "capture_ms": 0.0396,
+          "wire_bytes": 210,
+          "exact": true,
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "typed_ready_ns": 347203388722800,
+          "typed_emit_return_ns": 347203388769800,
+          "artifact_ready_ns": 347203389489700,
+          "capture_to_artifact_ready_ms": 0.8921,
+          "semantic_completion": "unknown",
+          "target_process_identity": {
+            "sequence": 2,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "input_release_transition",
+          "transition_schema": "input-release-transition-v3",
+          "operation": "up",
+          "key": "a",
+          "owner_id": "420107f68d5d4c8f991c75a5821a35d1",
+          "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+          "valid_until_ns": 347213341020100,
+          "release_call_started_ns": 347203404912200,
+          "release_call_returned_ns": 347203447601500,
+          "release_call_bracket_ns": 42689300,
+          "owner_transition_verified": true,
+          "admission_receipt": {
+            "event": "input_admission",
+            "operation": "down",
+            "key": "a",
+            "owner_id": "420107f68d5d4c8f991c75a5821a35d1",
+            "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+            "valid_until_ns": 347213341020100,
+            "admitted_ns": 347203341765800,
+            "input_ack_ns": 347203388059600
+          },
+          "admission_receipt_valid": true,
+          "owner_explicit_keyup_failure": null,
+          "grants_input_authority": false,
+          "lease_time_valid_at_request": true,
+          "cancel_requested_at_request": false,
+          "focus_invalid_at_request": false,
+          "ordinary_release_candidate": true,
+          "owner_release_history_complete": true,
+          "owner_cleanup_intervened": false,
+          "measurement_contract": "one serialized owner-thread batch brackets ordered explicit UPs; per-key keymap samples occur after the original UP batch",
+          "owner_thread_keyup_receipt": {
+            "event": "owner_explicit_keyup",
+            "operation": "up",
+            "owner_id": "420107f68d5d4c8f991c75a5821a35d1",
+            "key": "a",
+            "keycode": 38,
+            "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+            "valid_until_ns": 347213341020100,
+            "owner_keyrelease_started_ns": 347203404974800,
+            "owner_sync_returned_ns": 347203447524200,
+            "owner_keymap_sampled_ns": 347203447536200,
+            "server_keyup_verified": true,
+            "server_keyup_attempt_count": 1,
+            "server_keyup_attempts": [
+              {
+                "attempt": 1,
+                "keyrelease_started_ns": 347203404974800,
+                "sync_returned_ns": 347203447524200,
+                "keymap_sampled_ns": 347203447536200,
+                "server_key_down_before": true,
+                "server_key_down_after": false,
+                "keymap_before_error": null,
+                "keymap_after_error": null,
+                "keyrelease_error": null,
+                "sync_error": null
+              }
+            ],
+            "server_key_down_after_keyup": false,
+            "key_state_source": "x11_query_keymap",
+            "cancel_requested_after_sync": false,
+            "server_sync_completed": true,
+            "physical_verification_authoritative": false,
+            "release_batch_initial_up_count": 1,
+            "release_batch_key_order": [
+              "a"
+            ]
+          },
+          "owner_thread_keyup_receipt_count": 1,
+          "owner_thread_keyup_history_complete": true,
+          "owner_thread_keyup_verified": true,
+          "cancel_requested_after_sync": false,
+          "release_measurement_contract_v4": "one identity-bound XTest KeyRelease/XSync receipt per key is joined after an ordered UP batch; keymap samples follow the original UP sequence and verify X-server state only",
+          "backend_owned_before_release": true,
+          "release_batch_identifier": "remote-normal",
+          "release_batch_step": 0,
+          "id": "remote-normal",
+          "step": 0,
+          "owner_cleanup_record_count_before_release": 0,
+          "release_batch_position": 0,
+          "release_batch_size": 1,
+          "release_batch_delivery_position": 0,
+          "release_batch_schema": "input-release-batch-v3",
+          "release_batch_complete": true,
+          "owner_sample_after_started_ns": 347203448074400,
+          "owner_sample_after_finished_ns": 347203448079800,
+          "owner_sample_ordered_after_batch": true,
+          "owner_identity_matches_after_batch": true,
+          "intent_token_matches_after_batch": true,
+          "owned_keycodes_after_batch": [],
+          "owner_thread_keyup_verified_after_batch": true,
+          "physical_verification_authoritative": false,
+          "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication"
+        },
+        {
+          "event": "typed_observation",
+          "schema": "doom-typed-observation-v1",
+          "id": "remote-normal",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 347203448595900,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "signals": {
+            "ammo": {
+              "value": 20,
+              "signal_id": "ammo",
+              "sequence": 3,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347203448595900,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "health": {
+              "value": 97,
+              "signal_id": "health",
+              "sequence": 3,
+              "binding": {
+                "focus": 41,
+                "surface": 41,
+                "geometry": [
+                  0,
+                  0,
+                  32,
+                  32
+                ]
+              },
+              "status": "observed",
+              "format": "observable-signal-v1",
+              "capture_ns": 347203448595900,
+              "wad_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          },
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "frame_size": [
+            32,
+            32
+          ],
+          "typed_extraction_started_ns": 347203448681600,
+          "typed_ready_ns": 347203448692200,
+          "capture_to_typed_ready_ms": 0.0963,
+          "artifact_published": false,
+          "grants_input_authority": false,
+          "target_process_identity": {
+            "sequence": 3,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "observation",
+          "id": "remote-normal",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 347203448595900,
+          "context_ns": 347203448617200,
+          "context": {
+            "windows": "fixture"
+          },
+          "image": "D:\\CodexData\\Temp\\tmp6cqf9bli\\001.png",
+          "image_reused": true,
+          "image_prepare_ns": 37300,
+          "image_ready_ns": 347203449023700,
+          "input_focus_before": 41,
+          "input_focus_after": 41,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 41,
+            "surface": 41,
+            "geometry": [
+              0,
+              0,
+              32,
+              32
+            ]
+          },
+          "capture_ms": 0.0304,
+          "wire_bytes": 210,
+          "exact": true,
+          "frame_rgb_sha256": "1a7493ff2f2bde5f78405d46eb01abfeaea9b0a95fa5b6cec211b05faa0cf1d3",
+          "typed_ready_ns": 347203448692200,
+          "typed_emit_return_ns": 347203448725300,
+          "artifact_ready_ns": 347203449126800,
+          "capture_to_artifact_ready_ms": 0.5309,
+          "semantic_completion": "unknown",
+          "target_process_identity": {
+            "sequence": 3,
+            "surface": 41,
+            "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        {
+          "event": "step_completed",
+          "id": "remote-normal",
+          "step": 0,
+          "completed_ns": 347203449145200
+        },
+        {
+          "event": "terminal",
+          "id": "remote-normal",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347203449316300,
+            "valid_until_ns": 347213341020100,
+            "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347213341020100
+            ],
+            "target_process_identity_reader": {
+              "retired": false,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false,
+            "release_call_started_ns": 347203449279600,
+            "release_call_returned_ns": 347203449339800
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 347203449535700,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ],
+      "records": [
+        {
+          "event": "owner_explicit_keyup",
+          "operation": "up",
+          "owner_id": "420107f68d5d4c8f991c75a5821a35d1",
+          "key": "a",
+          "keycode": 38,
+          "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+          "valid_until_ns": 347213341020100,
+          "owner_keyrelease_started_ns": 347203404974800,
+          "owner_sync_returned_ns": 347203447524200,
+          "owner_keymap_sampled_ns": 347203447536200,
+          "server_keyup_verified": true,
+          "server_keyup_attempt_count": 1,
+          "server_keyup_attempts": [
+            {
+              "attempt": 1,
+              "keyrelease_started_ns": 347203404974800,
+              "sync_returned_ns": 347203447524200,
+              "keymap_sampled_ns": 347203447536200,
+              "server_key_down_before": true,
+              "server_key_down_after": false,
+              "keymap_before_error": null,
+              "keymap_after_error": null,
+              "keyrelease_error": null,
+              "sync_error": null
+            }
+          ],
+          "server_key_down_after_keyup": false,
+          "key_state_source": "x11_query_keymap",
+          "cancel_requested_after_sync": false,
+          "server_sync_completed": true,
+          "physical_verification_authoritative": false,
+          "release_batch_initial_up_count": 1,
+          "release_batch_key_order": [
+            "a"
+          ]
+        },
+        {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "keys_unknown": [],
+          "key_state_errors": [],
+          "verified_ns": 347203449316300,
+          "valid_until_ns": 347213341020100,
+          "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+          "key_release_attempts": {
+            "38": {
+              "attempts": [],
+              "verified": true
+            }
+          },
+          "key_release_intervals_ns": [],
+          "key_state_source": "x11_query_keymap",
+          "target_process_identity": [
+            1,
+            41,
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            347213341020100
+          ],
+          "target_process_identity_reader": {
+            "retired": false,
+            "pending": false,
+            "thread_alive": true,
+            "close_error": null
+          },
+          "target_focus_query_failed": false
+        }
+      ],
+      "client_close": {
+        "schema": "input-owner-service-close-v2",
+        "display": ":fake",
+        "service_id": "3bd1e76471bc4edcafd5f33d1b5e6806",
+        "verified": true,
+        "owner_thread_stopped": true,
+        "close_error": null,
+        "protocol_error": null,
+        "release_records": [
+          {
+            "event": "owner_release",
+            "reason": "release",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347203449316300,
+            "valid_until_ns": 347213341020100,
+            "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+            "key_release_attempts": {
+              "38": {
+                "attempts": [],
+                "verified": true
+              }
+            },
+            "key_release_intervals_ns": [],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347213341020100
+            ],
+            "target_process_identity_reader": {
+              "retired": false,
+              "pending": false,
+              "thread_alive": true,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          },
+          {
+            "event": "owner_release",
+            "reason": "close",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "keys_unknown": [],
+            "key_state_errors": [],
+            "verified_ns": 347203452580100,
+            "valid_until_ns": null,
+            "intent_token": null,
+            "key_release_attempts": {},
+            "key_release_intervals_ns": [],
+            "key_state_source": "x11_query_keymap",
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              347213341020100
+            ],
+            "target_process_identity_reader": {
+              "retired": true,
+              "pending": false,
+              "thread_alive": false,
+              "close_error": null
+            },
+            "target_focus_query_failed": false
+          }
+        ],
+        "physical_verification_authoritative": false
+      },
+      "service_report": {
+        "service_id": "3bd1e76471bc4edcafd5f33d1b5e6806",
+        "spawn_pid": 37688,
+        "process_alive": false,
+        "exit_code": 0,
+        "verified": true,
+        "recovery": {
+          "core": {
+            "close_error": null,
+            "display": ":fake",
+            "owner_thread_stopped": true,
+            "physical_verification_authoritative": false,
+            "protocol_error": null,
+            "release_records": [
+              {
+                "buttons_down": [],
+                "event": "owner_release",
+                "intent_token": "8e8d5d6652644b3cba5d6faa444cbaf0",
+                "key_release_attempts": {
+                  "38": {
+                    "attempts": [],
+                    "verified": true
+                  }
+                },
+                "key_release_intervals_ns": [],
+                "key_state_errors": [],
+                "key_state_source": "x11_query_keymap",
+                "keys_down": [],
+                "keys_unknown": [],
+                "reason": "release",
+                "target_focus_query_failed": false,
+                "target_process_identity": [
+                  1,
+                  41,
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  347213341020100
+                ],
+                "target_process_identity_reader": {
+                  "close_error": null,
+                  "pending": false,
+                  "retired": false,
+                  "thread_alive": true
+                },
+                "valid_until_ns": 347213341020100,
+                "verified": true,
+                "verified_ns": 347203449316300
+              },
+              {
+                "buttons_down": [],
+                "event": "owner_release",
+                "intent_token": null,
+                "key_release_attempts": {},
+                "key_release_intervals_ns": [],
+                "key_state_errors": [],
+                "key_state_source": "x11_query_keymap",
+                "keys_down": [],
+                "keys_unknown": [],
+                "reason": "close",
+                "target_focus_query_failed": false,
+                "target_process_identity": [
+                  1,
+                  41,
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  347213341020100
+                ],
+                "target_process_identity_reader": {
+                  "close_error": null,
+                  "pending": false,
+                  "retired": true,
+                  "thread_alive": false
+                },
+                "valid_until_ns": null,
+                "verified": true,
+                "verified_ns": 347203452580100
+              }
+            ],
+            "schema": "input-owner-service-close-v2",
+            "service_id": "3bd1e76471bc4edcafd5f33d1b5e6806",
+            "verified": true
+          },
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "420107f68d5d4c8f991c75a5821a35d1",
+            "parent_pid": 4116,
+            "pid": 37688,
+            "service_id": "3bd1e76471bc4edcafd5f33d1b5e6806",
+            "supervisor_pid": 4116
+          },
+          "schema": "owned-owner-recovery-v3",
+          "service_error": null,
+          "startup_sha256": "5578c29c95e1d380e7d6f058221d52652033014119069940f81292ae5cdf2379",
+          "verified": true
+        },
+        "finish": {
+          "context_exit_success": true,
+          "directory_fsync_requested": false,
+          "file_fsync": true,
+          "identity": {
+            "display": ":fake",
+            "owner_id": "420107f68d5d4c8f991c75a5821a35d1",
+            "parent_pid": 4116,
+            "pid": 37688,
+            "service_id": "3bd1e76471bc4edcafd5f33d1b5e6806",
+            "supervisor_pid": 4116
+          },
+          "initial_verification": true,
+          "owner_thread_stopped": true,
+          "recovery_sha256": "a078cfb286156166be820af837e05058d54612b7a6b26d2ac725daf7574f7d51",
+          "schema": "owned-owner-finish-v3",
+          "service_error": null,
+          "startup_sha256": "5578c29c95e1d380e7d6f058221d52652033014119069940f81292ae5cdf2379",
+          "verified": true
+        },
+        "receipt_error": null,
+        "receipt_verified": true
+      },
+      "startup": {
+        "schema": "owned-owner-startup-v3",
+        "service_id": "3bd1e76471bc4edcafd5f33d1b5e6806",
+        "display": ":fake",
+        "pid": 37688,
+        "parent_pid": 4116,
+        "supervisor_pid": 4116,
+        "owner_id": "420107f68d5d4c8f991c75a5821a35d1",
+        "started_perf_ns": 347203226869700,
+        "python_optimize": 1,
+        "python_version": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+        "generation_kind": "fresh logical launch UUID; no native PID start-time proof",
+        "source_sha256_lf": {
+          "research/live_control/test_owned_owner_executor_boundary.py": "31d7a706b9d4e14fcd8addfec188e7cb42a0bae2620eaf83cacb61bcd2baa117",
+          "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+          "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+          "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+          "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+          "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+          "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+          "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+          "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+          "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+          "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+          "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+          "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+          "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+          "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+          "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+          "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+          "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+          "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+          "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+          "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+          "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+          "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+          "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+          "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+          "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+          "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+          "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+          "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+          "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+          "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+          "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+          "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+          "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+          "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+          "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+          "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+          "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+          "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+          "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+          "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+          "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+          "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+          "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe",
+          "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+          "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+          "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
+          "research/live_control/test_input_owner_process_v3.py": "cc31e41b8388eef4f6b13daa1ebaaecc4fe02b4d3fe21781235582ca756cc0fe",
+          "research/live_control/input_owner_process_v3.py": "dc1fee4736a3b059dc9ee6a86dc9d88626e2da84f927c75ce20f329ac311cf1f"
+        }
+      },
+      "spawn_pid": 37688,
+      "files": {
+        "finish.json": {
+          "sha256": "9ee25835e2fe633c213eda0b072e707054bf734c26a22ffd4c5dfad9aadb6fe6",
+          "bytes_b64": "ewogICJjb250ZXh0X2V4aXRfc3VjY2VzcyI6IHRydWUsCiAgImRpcmVjdG9yeV9mc3luY19yZXF1ZXN0ZWQiOiBmYWxzZSwKICAiZmlsZV9mc3luYyI6IHRydWUsCiAgImlkZW50aXR5IjogewogICAgImRpc3BsYXkiOiAiOmZha2UiLAogICAgIm93bmVyX2lkIjogIjQyMDEwN2Y2OGQ1ZDRjOGY5OTFjNzVhNTgyMWEzNWQxIiwKICAgICJwYXJlbnRfcGlkIjogNDExNiwKICAgICJwaWQiOiAzNzY4OCwKICAgICJzZXJ2aWNlX2lkIjogIjNiZDFlNzY0NzFiYzRlZGNhZmQ1ZjMzZDFiNWU2ODA2IiwKICAgICJzdXBlcnZpc29yX3BpZCI6IDQxMTYKICB9LAogICJpbml0aWFsX3ZlcmlmaWNhdGlvbiI6IHRydWUsCiAgIm93bmVyX3RocmVhZF9zdG9wcGVkIjogdHJ1ZSwKICAicmVjb3Zlcnlfc2hhMjU2IjogImEwNzhjZmIyODYxNTYxNjZiZTgyMGFmODM3ZTA1MDU4ZDU0NjEyYjdhNmIyNmQyYWM3MjVkYWY3NTc0ZjdkNTEiLAogICJzY2hlbWEiOiAib3duZWQtb3duZXItZmluaXNoLXYzIiwKICAic2VydmljZV9lcnJvciI6IG51bGwsCiAgInN0YXJ0dXBfc2hhMjU2IjogIjU1NzhjMjljOTVlMWQzODBlN2Q2ZjA1ODIyMWQ1MjY1MjAzMzAxNDExOTA2OTk0MGY4MTI5MmFlNWNkZjIzNzkiLAogICJ2ZXJpZmllZCI6IHRydWUKfQo="
+        },
+        "fixture-edges.jsonl": {
+          "sha256": "257e5b4e80f92abcc09bfc756aad8b2e22e299f807cd5efdba7073be79cba364",
+          "bytes_b64": "eyJldmVudCI6IDIsICJjb2RlIjogMzgsICJkb3duIjogWzM4XSwgInBpZCI6IDM3Njg4LCAidGhyZWFkIjogMjc0NTIsICJhdF9ucyI6IDM0NzIwMzM0MTc4ODEwMH0NCnsiZXZlbnQiOiAzLCAiY29kZSI6IDM4LCAiZG93biI6IFtdLCAicGlkIjogMzc2ODgsICJ0aHJlYWQiOiAyNzQ1MiwgImF0X25zIjogMzQ3MjAzNDA1MTE5NzAwfQ0K"
+        },
+        "recovery.json": {
+          "sha256": "a078cfb286156166be820af837e05058d54612b7a6b26d2ac725daf7574f7d51",
+          "bytes_b64": "ewogICJjb3JlIjogewogICAgImNsb3NlX2Vycm9yIjogbnVsbCwKICAgICJkaXNwbGF5IjogIjpmYWtlIiwKICAgICJvd25lcl90aHJlYWRfc3RvcHBlZCI6IHRydWUsCiAgICAicGh5c2ljYWxfdmVyaWZpY2F0aW9uX2F1dGhvcml0YXRpdmUiOiBmYWxzZSwKICAgICJwcm90b2NvbF9lcnJvciI6IG51bGwsCiAgICAicmVsZWFzZV9yZWNvcmRzIjogWwogICAgICB7CiAgICAgICAgImJ1dHRvbnNfZG93biI6IFtdLAogICAgICAgICJldmVudCI6ICJvd25lcl9yZWxlYXNlIiwKICAgICAgICAiaW50ZW50X3Rva2VuIjogIjhlOGQ1ZDY2NTI2NDRiM2NiYTVkNmZhYTQ0NGNiYWYwIiwKICAgICAgICAia2V5X3JlbGVhc2VfYXR0ZW1wdHMiOiB7CiAgICAgICAgICAiMzgiOiB7CiAgICAgICAgICAgICJhdHRlbXB0cyI6IFtdLAogICAgICAgICAgICAidmVyaWZpZWQiOiB0cnVlCiAgICAgICAgICB9CiAgICAgICAgfSwKICAgICAgICAia2V5X3JlbGVhc2VfaW50ZXJ2YWxzX25zIjogW10sCiAgICAgICAgImtleV9zdGF0ZV9lcnJvcnMiOiBbXSwKICAgICAgICAia2V5X3N0YXRlX3NvdXJjZSI6ICJ4MTFfcXVlcnlfa2V5bWFwIiwKICAgICAgICAia2V5c19kb3duIjogW10sCiAgICAgICAgImtleXNfdW5rbm93biI6IFtdLAogICAgICAgICJyZWFzb24iOiAicmVsZWFzZSIsCiAgICAgICAgInRhcmdldF9mb2N1c19xdWVyeV9mYWlsZWQiOiBmYWxzZSwKICAgICAgICAidGFyZ2V0X3Byb2Nlc3NfaWRlbnRpdHkiOiBbCiAgICAgICAgICAxLAogICAgICAgICAgNDEsCiAgICAgICAgICAiYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYSIsCiAgICAgICAgICAzNDcyMTMzNDEwMjAxMDAKICAgICAgICBdLAogICAgICAgICJ0YXJnZXRfcHJvY2Vzc19pZGVudGl0eV9yZWFkZXIiOiB7CiAgICAgICAgICAiY2xvc2VfZXJyb3IiOiBudWxsLAogICAgICAgICAgInBlbmRpbmciOiBmYWxzZSwKICAgICAgICAgICJyZXRpcmVkIjogZmFsc2UsCiAgICAgICAgICAidGhyZWFkX2FsaXZlIjogdHJ1ZQogICAgICAgIH0sCiAgICAgICAgInZhbGlkX3VudGlsX25zIjogMzQ3MjEzMzQxMDIwMTAwLAogICAgICAgICJ2ZXJpZmllZCI6IHRydWUsCiAgICAgICAgInZlcmlmaWVkX25zIjogMzQ3MjAzNDQ5MzE2MzAwCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiYnV0dG9uc19kb3duIjogW10sCiAgICAgICAgImV2ZW50IjogIm93bmVyX3JlbGVhc2UiLAogICAgICAgICJpbnRlbnRfdG9rZW4iOiBudWxsLAogICAgICAgICJrZXlfcmVsZWFzZV9hdHRlbXB0cyI6IHt9LAogICAgICAgICJrZXlfcmVsZWFzZV9pbnRlcnZhbHNfbnMiOiBbXSwKICAgICAgICAia2V5X3N0YXRlX2Vycm9ycyI6IFtdLAogICAgICAgICJrZXlfc3RhdGVfc291cmNlIjogIngxMV9xdWVyeV9rZXltYXAiLAogICAgICAgICJrZXlzX2Rvd24iOiBbXSwKICAgICAgICAia2V5c191bmtub3duIjogW10sCiAgICAgICAgInJlYXNvbiI6ICJjbG9zZSIsCiAgICAgICAgInRhcmdldF9mb2N1c19xdWVyeV9mYWlsZWQiOiBmYWxzZSwKICAgICAgICAidGFyZ2V0X3Byb2Nlc3NfaWRlbnRpdHkiOiBbCiAgICAgICAgICAxLAogICAgICAgICAgNDEsCiAgICAgICAgICAiYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYSIsCiAgICAgICAgICAzNDcyMTMzNDEwMjAxMDAKICAgICAgICBdLAogICAgICAgICJ0YXJnZXRfcHJvY2Vzc19pZGVudGl0eV9yZWFkZXIiOiB7CiAgICAgICAgICAiY2xvc2VfZXJyb3IiOiBudWxsLAogICAgICAgICAgInBlbmRpbmciOiBmYWxzZSwKICAgICAgICAgICJyZXRpcmVkIjogdHJ1ZSwKICAgICAgICAgICJ0aHJlYWRfYWxpdmUiOiBmYWxzZQogICAgICAgIH0sCiAgICAgICAgInZhbGlkX3VudGlsX25zIjogbnVsbCwKICAgICAgICAidmVyaWZpZWQiOiB0cnVlLAogICAgICAgICJ2ZXJpZmllZF9ucyI6IDM0NzIwMzQ1MjU4MDEwMAogICAgICB9CiAgICBdLAogICAgInNjaGVtYSI6ICJpbnB1dC1vd25lci1zZXJ2aWNlLWNsb3NlLXYyIiwKICAgICJzZXJ2aWNlX2lkIjogIjNiZDFlNzY0NzFiYzRlZGNhZmQ1ZjMzZDFiNWU2ODA2IiwKICAgICJ2ZXJpZmllZCI6IHRydWUKICB9LAogICJkaXJlY3RvcnlfZnN5bmNfcmVxdWVzdGVkIjogZmFsc2UsCiAgImZpbGVfZnN5bmMiOiB0cnVlLAogICJpZGVudGl0eSI6IHsKICAgICJkaXNwbGF5IjogIjpmYWtlIiwKICAgICJvd25lcl9pZCI6ICI0MjAxMDdmNjhkNWQ0YzhmOTkxYzc1YTU4MjFhMzVkMSIsCiAgICAicGFyZW50X3BpZCI6IDQxMTYsCiAgICAicGlkIjogMzc2ODgsCiAgICAic2VydmljZV9pZCI6ICIzYmQxZTc2NDcxYmM0ZWRjYWZkNWYzM2QxYjVlNjgwNiIsCiAgICAic3VwZXJ2aXNvcl9waWQiOiA0MTE2CiAgfSwKICAic2NoZW1hIjogIm93bmVkLW93bmVyLXJlY292ZXJ5LXYzIiwKICAic2VydmljZV9lcnJvciI6IG51bGwsCiAgInN0YXJ0dXBfc2hhMjU2IjogIjU1NzhjMjljOTVlMWQzODBlN2Q2ZjA1ODIyMWQ1MjY1MjAzMzAxNDExOTA2OTk0MGY4MTI5MmFlNWNkZjIzNzkiLAogICJ2ZXJpZmllZCI6IHRydWUKfQo="
+        },
+        "startup.json": {
+          "sha256": "5578c29c95e1d380e7d6f058221d52652033014119069940f81292ae5cdf2379",
+          "bytes_b64": "ewogICJkaXNwbGF5IjogIjpmYWtlIiwKICAiZ2VuZXJhdGlvbl9raW5kIjogImZyZXNoIGxvZ2ljYWwgbGF1bmNoIFVVSUQ7IG5vIG5hdGl2ZSBQSUQgc3RhcnQtdGltZSBwcm9vZiIsCiAgIm93bmVyX2lkIjogIjQyMDEwN2Y2OGQ1ZDRjOGY5OTFjNzVhNTgyMWEzNWQxIiwKICAicGFyZW50X3BpZCI6IDQxMTYsCiAgInBpZCI6IDM3Njg4LAogICJweXRob25fb3B0aW1pemUiOiAxLAogICJweXRob25fdmVyc2lvbiI6ICIzLjEzLjE0ICh0YWdzL3YzLjEzLjE0OmZkMTc5OTcsIEp1biAxMCAyMDI2LCAxMzowMzo0OCkgW01TQyB2LjE5NDQgNjQgYml0IChBTUQ2NCldIiwKICAic2NoZW1hIjogIm93bmVkLW93bmVyLXN0YXJ0dXAtdjMiLAogICJzZXJ2aWNlX2lkIjogIjNiZDFlNzY0NzFiYzRlZGNhZmQ1ZjMzZDFiNWU2ODA2IiwKICAic291cmNlX3NoYTI1Nl9sZiI6IHsKICAgICJyZXNlYXJjaC9kb29tL2Rvb21fb3duZXJfdGhyZWFkX3JlbGVhc2VfYmF0Y2hfYmFja2VuZF92MS5weSI6ICJhZWQ0MzhhNTZlZWM1NjEwYjQ0NGUyZGI1ZTY4NTg3OTEwMmQ5ZGQ2MjEyN2U1OWQ2MzQ2M2I4OTIyOTQzYmZlIiwKICAgICJyZXNlYXJjaC9kb29tL2Rvb21fcHJvY2Vzc19pZGVudGl0eV9iYWNrZW5kX3YxLnB5IjogIjczMjBhM2UzNDgzZDBlNGJiNjM4ZTdkMmQxZmNmYjFiZmVhYjMyMDAyNzI1NjIxOGViNTc1YTViMTRjOWVjNzYiLAogICAgInJlc2VhcmNoL2Rvb20vZG9vbV9zaWduYWxfdmFsdWVfZG9tYWluX3YxLnB5IjogIjBlOTdmNTkyZDNhM2Y2ZjY2MTIwYWJjYTdmN2ViZmJiNTYyZDNjN2EzYzIyNzYzNWNjOGJjOGE3YTUwODgzZjEiLAogICAgInJlc2VhcmNoL2Rvb20vZG9vbV90eXBlZF9jb2FzdF9iYWNrZW5kX3YxLnB5IjogImZkYTU0MWUxMjQxNGQ2Yzc3YjQxNzg3ZWFmMjA4ZThkYWU2YjQ2Mjg0NmFkNDAxZDRjN2IyMzViOGFlMmIwNzkiLAogICAgInJlc2VhcmNoL2Rvb20vZG9vbV90eXBlZF9vYnNlcnZhdGlvbl92MS5weSI6ICIxM2JjOWU0ZTQxNjY3YjYxMjg4MmQ3MmMzYzhhMzZjMzQxYjU1NjFmODQ5MjM1ZmQwZWJhNjljMzhlM2EyZWIxIiwKICAgICJyZXNlYXJjaC9kb29tL2Rvb21fdHlwZWRfcmVsZWFzZV9iYWNrZW5kX3YxLnB5IjogImNlZWY1MDg4MWRjMDYxOWZmZWU1YjdlZjU1MWNlMDg1MWYyNjUwYzczNzFmYzM3Nzc1YTgwNzU1ZjA3N2QxMmYiLAogICAgInJlc2VhcmNoL2Rvb20vZG9vbV90eXBlZF9yZWxlYXNlX2JhY2tlbmRfdjIucHkiOiAiNzE5MmQxYTQ3YjE2NzdjZTIyNTg0ZWViYmVjNTFiMTljN2FhNTVjNjcxMjJkMmE5Yzg1ZTUyOGZmMDk1YWRmNCIsCiAgICAicmVzZWFyY2gvZG9vbS90ZXN0X21hcDAxX3Byb2Nlc3NfaWRlbnRpdHlfYmFja2VuZC5weSI6ICI3MDIwZDJlZGFiNzA0ZjgxMTU5MzBlNzIyNmM4MDhhNzExOGE2NTZmNTYwNjZhYzg3ZGI4YTIyOTE5ZDI2ZGFkIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvYWN0aW9uX3ZhbGlkaXR5X2FkbWlzc2lvbl92MS5weSI6ICIxNmE2N2ZhYjRlOTZjYmExMjM0NDg0ODNhN2NlMzViYmI4NmQyNWNlMDY5YWVmNGQxMjZlM2M1MjUyZDk4MDIxIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvY29hc3RfYmFja2VuZF92MS5weSI6ICJmYmUyZWIwODdkMmVmMTdkNWYwMGM5YzE1YmYxZTZkNzUwMTBmNzA4ZDE5YjUyOTgyY2RmNDM1NzNjYTMzMDA5IiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvZXhlY3V0b3JfdjExLnB5IjogImVjOThiNmU0NGFlODIwZTZiMjk1NWMwNjJmNDMxYzMzYTFkODZlNGE2MjZhYjYwYjRlNzIxNzg1MDg5ODg2NzYiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9leGVjdXRvcl92MTIucHkiOiAiYzMwMTUwOGZlMGJhMDg2YzVkNmRiMTE5MzUyZWQyODNmYzNhNTBiNjcyZmQzMjNiYjFmNDJiODQ4MzU2Mzk2NSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2V4ZWN1dG9yX3YxMy5weSI6ICJkMTI5MzRlN2RkZmE0ODg4YWNhZWY5M2MzN2RjNTQ3NzMzNjljM2MzYTcyYTNhMmRmY2M4ZmUyNzE0ZDA2ODhiIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvZXhlY3V0b3JfdjMucHkiOiAiZWEzZmE4Yzk3NTFhNmE0MWI0ODE0YWQ2ZTBkMDNiZWM4NTE2Njc2NWIwYTQxZDI0ODhhNTE3NTBkMTdiM2E0YSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2V4ZWN1dG9yX3Y1LnB5IjogImEzNmQ0NWJmMTdkNGQxNzQ2ODNkOTgyZmQ4M2ZmZjI0Yzg3MTQ5ZGY3OWRjM2Y3YzBmNzIzNWM1OWM3NDI0MDAiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9pbnB1dF9vd25lci5weSI6ICJhOWZhODlkM2U1ZDAxMmI2OGZmMjYyYTk3NTI4NTY1ZGQxNmNiZWM2ZjIxZmZkOWNiNTM5ZTk0OGQ5NWFlN2UzIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvaW5wdXRfb3duZXJfcHJvY2Vzc192My5weSI6ICJkYzFmZWU0NzM2YTNiMDU5ZGM5ZWU2YTg2ZGM5ZDg4NjI2ZTJkYTg0ZjkyN2M3NWNlMjBmMzI5YWMzMTFjZjFmIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvaW5wdXRfb3duZXJfcnBjX3YyLnB5IjogImEyM2Q0NzE4MWNkMDg4ZmJhNjQ4NGJhNDRjYjk1M2I1ZmZlZTJmZTY2OTQ3Y2Y5NTg3YzQ3ZjcxNTNmMDNkOGMiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9pbnB1dF9vd25lcl92MTAucHkiOiAiZmQ2ODFlZjkzYzU2ODY3NGMyODJlNDdjZGFjZDA1YTcwNWQ4YjhkZGYzMTQxNzIyZjg0NzdiMTljNTViYTA0OSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2lucHV0X293bmVyX3YxMS5weSI6ICI0ZjZiNjEwMjYxMTdkNGQ5YmU4YTk3M2M2NWQ0OTFmZThhOWIwZWJiYzkwYmQ5OGMwNzM4Y2QwYWFjMDk4MjFjIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvaW5wdXRfb3duZXJfdjEyLnB5IjogIjZjYzEwOTc3MzhhZWE4YTg5YzI4NDBlNWQ3OGUzOTJlMTg0NGNmMWU3M2I1OGE5NTIwYWI2NmEwYjk1MDMxYzkiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9pbnB1dF9vd25lcl92Mi5weSI6ICJiZmQyNDM1NjM2NWJiYTM0YzU1MDU2MmNiY2U0ZjMzMjgyN2FlN2Q4OTIyZWVmNDZiZTIwM2FmMjM3MzBiZTIyIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvaW5wdXRfb3duZXJfdjUucHkiOiAiYjE3N2EzODkzMjE0ZTI0NTMzM2RjZGE3YmM1YWRjMjkxYjljODBhYTY1NTYxYmIxNmY0NWRjYTRiYjM5OTM0NyIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2lucHV0X3RyYW5zaXRpb25fb3duZXJfdjMucHkiOiAiYmY5OTEyNjMzZmUxNmQzMjhkZTNjZGRlNzdiMGZlMzE4OTJkYWVjM2M0ODk4NTRjMmUzN2ViYTkxY2NlNWUzNSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2lucHV0X3RyYW5zaXRpb25fb3duZXJfdjQucHkiOiAiYTk0YjBkZTEzOWRhN2E2ZjQyM2ZkNDY2ZTBmMjFjZTM2YTllZjgzZjk3MjFiZmM3NTdkN2RmODNhNTU1MmE4NSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2xlYXNlLnB5IjogImU3MWY5ODUwZDM5OTlhMzFmY2I4NmMwMGY5ZWY3YThiYTE5YmFlOGQzYThiZGMxMWJmN2JkNjIwODE3YTUzNWYiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC9sZWFzZV9jYXVzZV92MS5weSI6ICIxZmYzODU2YTYwYWYyNmU0MDVmZDRjMjE2ZTIwNmM2MTQ2NjQ0YjBjMDMyNGY0NmJiOGNlMzE3NmExZjRkMzA1IiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvbGVhc2VfY2F1c2VfdjIucHkiOiAiNmE2MWNhYmM1NDA4NDFmNzZlZDUxOGM0ZTBkNDk4NjlmNjYwMGVkNzNmMTRlZDAzMDM0NGQ2NGFkMzgwNWE0NyIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL2xlYXNlX3JlbGVhc2VfdjEucHkiOiAiYjRiMTUyMWI1MjA3ZWExNDY1NDQ2M2Y3NjliMDUzMzc2ODU3NTBlOTA0MGJlZDM2YThhY2YwMDZhYTFkMzRmZiIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3F1aWV0X3dpbmRvdy5weSI6ICI0YmE1OTUzOTg4NmIzODJkYTgxMjY1ZTJhMmM1YjY0NTFhM2Q3MDViZmIyYWNhNTAyM2E2OTI2MWM5MWZjMWUwIiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvc2Vzc2lvbl92MTAucHkiOiAiYTNjNDgwYTczZGEwNDI2Zjc2NmVkYzE3MTg1YmI5NzNmNTY5M2NlYjM1OTIxMDlhOGI0MTFiNGVlZGYzZGUwZCIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjQucHkiOiAiMDRmMDZkN2I3ODdiYWE3N2NhZTIwZDBjNTFiNTYzY2NjNDk4NWRjMTliNDczMDhkN2MyNDMxOGM1YTllN2ZlZSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjUucHkiOiAiMDQxZGEzNDYyMGJmYjQyNWUxNGFhMWNhZmMwOWVlNTQ4MWZjMzc4Mzg5ZmUwZTcxNmYzZDg3MTBiMWIwY2QxMiIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjYucHkiOiAiY2JmN2I1NDFjNjBhMjY5OGZlOGUxNTVhMjM5YmQ4ZTc4NmUzMzEzZTJjZDRkOTM0ODI0NzZkMTM4MDEyMmNjNyIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjcucHkiOiAiNjhjOGIzYjdmNWZjM2NkNzkwN2I1YmJjNmIwMmZhMmJlOGFjNzI1ZGEyYjY0YmE1MmUxOTQyNTE1ZDcyMWUxMSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjgucHkiOiAiMjJkOWEzMzZmZWYwYzk3MGJmZmNmZDQ4NWNkOTkzNjAyOThmNzg4YjkwOWYxZTcwZjE5NTkxMjlmMDc4YmU0MCIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Nlc3Npb25fdjkucHkiOiAiNjgwOGEzMjMyYWU2ZGQ4ZDhiM2VhNjA4Y2RjZmU4ZmI4NThkNDdhY2JlODc1MzBkYmI0ZTdiODZlM2Q2NGVlMCIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3RhcmdldF9wcm9jZXNzX2lkZW50aXR5X3YxLnB5IjogImQwNjlmY2RlMzY3MWMzMDQ0YTA3MDkwNDMyYjAxZTkwNDRkYzA3MzY3YzBkZTIwZDk4NDViYzZkYjllMTI1M2UiLAogICAgInJlc2VhcmNoL2xpdmVfY29udHJvbC90ZXN0X2lucHV0X293bmVyX3Byb2Nlc3NfdjMucHkiOiAiY2MzMWU0MWI4Mzg4ZWVmNGY2YjEzZGFhMWViYWFlY2M0ZmUwMmI0ZDNmZTIxNzgxMjM1NTgyY2E3NTZjYzBmZSIsCiAgICAicmVzZWFyY2gvbGl2ZV9jb250cm9sL3Rlc3RfaW5wdXRfb3duZXJfdjEyX2V4cGxpY2l0X3VwX2NhbmNlbC5weSI6ICJkM2I3MjE2ODljMGEyZDM4YTkwMTY5YTA2OTg1Y2M4NjZjMGM2MTE2ZmMzMWQxNmNjYzczZGU0YWYwZjM5NjQ1IiwKICAgICJyZXNlYXJjaC9saXZlX2NvbnRyb2wvdGVzdF9vd25lZF9vd25lcl9leGVjdXRvcl9ib3VuZGFyeS5weSI6ICIzMWQ3YTcwNmI5ZDRlMTRmY2Q4YWRkZmVjMTg4ZTdjYjQyYTBiYWUyNjIwZWFmODNjYWNiNjFiY2QyYmFhMTE3IiwKICAgICJyZXNlYXJjaC9vYnNlcnZhdGlvbl9nYXRpbmcvZXhhY3RfZ2F0ZS5weSI6ICI2NzgwNjI0NTEzYTk1MDM5NjU3NzM0ZTc2YzA0MjA0NDdhM2Y5YWI0OWY5OGUxZjMxMzdhMTlhOTFiYzMxOTQ0IiwKICAgICJyZXNlYXJjaC9vYnNlcnZhdGlvbl9nYXRpbmcvZ3VpX3N1aXRlLnB5IjogIjk1M2EwNzhhMDZkNTViOTI3OGJkN2IzMWUxNzY0MDQ5MTIzNDBhNGYxMzQwN2UxZGIzNDNiNzc3NjY0NWU5N2YiLAogICAgInJlc2VhcmNoL29ic2VydmF0aW9uX3RpbGVzL2ltYWdlX2FydGlmYWN0LnB5IjogIjdiZjZiNzFkODExYWFlZmE3NWU4N2Y1ZDlkMjBmZDkyNzVmYzkyODEwNGU5MTBkZWFjYTllM2YwMGM1NTM2M2UiLAogICAgInJlc2VhcmNoL29ic2VydmF0aW9uX3RpbGVzL3RpbGVfdHJhbnNwb3J0LnB5IjogIjIwNmNjYzc0MmJjNzQ1ZTBmNGVjOWU2NjgwOWIyNjUwYzNmZTdjZjdiZjlhYTVlMjZjZGY4NjU5OTkzNjQ1MGEiLAogICAgInJlc2VhcmNoL3JlYWxfYXBwc192MS9yZWFsX2FwcF9zdWl0ZV92MS5weSI6ICJmZjgxOTVjMGUxNzEyYmUyZjVlZDIzNWMyMTU4NGE5YjFiZTA0ZjA0NWI2MGFkN2U1YTYwNGU4MGYyZWYxNzY0IiwKICAgICJydW50aW1lL2d1YXJkZWRfeDExX3YxL19faW5pdF9fLnB5IjogIjFkYmIwOTU1MDhhNmRiN2ZkMGM5NmU2NGVlZjcyNzZiMDJhMGQ0ZTU3ZTE5NmRmYzk2YWYzN2VmZjZhODI1NWEiLAogICAgInJ1bnRpbWUvZ3VhcmRlZF94MTFfdjEvcHJvY2Vzc19pZGVudGl0eS5weSI6ICI3YjQ4YzQyNmIzODlhNTEzYjM5OWJjODkxY2I0N2E3ZDlkYzg2MmU5ZmJkODI0ZDEwNDVhM2MzZDkzOTE0NTc3IiwKICAgICJydW50aW1lL2d1YXJkZWRfeDExX3YxL3RhcmdldF9xdWVyaWVzLnB5IjogImJkZDU1ZjNiZDRkZjU2MWZkNDQ4MjUzYjNhOTNkNjQ4ODJjYjI0ZGNhZTA4ZWNiMzdmMjExMmUyZmU2ZDc0OGEiCiAgfSwKICAic3RhcnRlZF9wZXJmX25zIjogMzQ3MjAzMjI2ODY5NzAwLAogICJzdXBlcnZpc29yX3BpZCI6IDQxMTYKfQo="
+        }
+      },
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ],
+          "pid": 37688,
+          "thread": 27452,
+          "at_ns": 347203341788100
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": [],
+          "pid": 37688,
+          "thread": 27452,
+          "at_ns": 347203405119700
+        }
+      ]
+    }
+  ],
+  "source_sha256_lf": {
+    "research/live_control/test_owned_owner_executor_boundary.py": "31d7a706b9d4e14fcd8addfec188e7cb42a0bae2620eaf83cacb61bcd2baa117",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+    "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+    "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+    "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+    "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+    "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+    "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+    "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+    "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+    "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+    "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+    "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+    "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+    "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+    "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+    "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+    "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+    "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+    "research/live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0",
+    "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+    "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+    "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+    "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+    "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+    "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+    "research/doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+    "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "research/doom/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+    "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "aed438a56eec5610b444e2db5e685879102d9dd62127e59d63463b8922943bfe",
+    "research/doom/doom_process_identity_backend_v1.py": "7320a3e3483d0e4bb638e7d2d1fcfb1bfeab320027256218eb575a5b14c9ec76",
+    "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+    "research/live_control/input_owner_rpc_v2.py": "a23d47181cd088fba6484ba44cb953b5ffee2fe66947cf9587c47f7153f03d8c",
+    "research/live_control/test_input_owner_process_v3.py": "cc31e41b8388eef4f6b13daa1ebaaecc4fe02b4d3fe21781235582ca756cc0fe",
+    "research/live_control/input_owner_process_v3.py": "dc1fee4736a3b059dc9ee6a86dc9d88626e2da84f927c75ce20f329ac311cf1f"
+  }
+}

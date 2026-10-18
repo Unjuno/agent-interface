@@ -1,0 +1,90 @@
+{
+  "schema": "observation-omission-8397-t0-a01-v1",
+  "tick_interval": "one abstract deterministic task step; not wall-clock time",
+  "visibility_rule": "An observation is model-visible only when captured=true, delivered=true, and event.tick < completion_tick. Omission intervals are half-open [start,end) and affect only optional observations. Mandatory safety observations bypass omission.",
+  "scenarios": [
+    {
+      "scenario_id": "before_sensitive_decision",
+      "completion_tick": 4,
+      "required_observation_ids": ["decision_cue"],
+      "exact_effect": "target_saved",
+      "failed_effect": "target_missed",
+      "safety_event_id": null,
+      "events": [
+        {"event_id":"setup_0","tick":0,"kind":"optional","captured":true,"delivered":true,"bytes":11},
+        {"event_id":"setup_1","tick":1,"kind":"optional","captured":true,"delivered":true,"bytes":13},
+        {"event_id":"decision_cue","tick":2,"kind":"optional","captured":true,"delivered":true,"bytes":17}
+      ],
+      "arms": [
+        {"arm_id":"baseline","omit_intervals":[]},
+        {"arm_id":"omit_before_decision","omit_intervals":[[0,2]]}
+      ]
+    },
+    {
+      "scenario_id": "crosses_relevant_transition",
+      "completion_tick": 5,
+      "required_observation_ids": ["transition_cue"],
+      "exact_effect": "target_saved",
+      "failed_effect": "target_missed",
+      "safety_event_id": null,
+      "events": [
+        {"event_id":"baseline_context","tick":0,"kind":"optional","captured":true,"delivered":true,"bytes":12},
+        {"event_id":"transition_cue","tick":2,"kind":"optional","captured":true,"delivered":true,"bytes":19},
+        {"event_id":"post_transition","tick":3,"kind":"optional","captured":true,"delivered":true,"bytes":15}
+      ],
+      "arms": [
+        {"arm_id":"baseline","omit_intervals":[]},
+        {"arm_id":"omit_across_transition","omit_intervals":[[1,3]]}
+      ]
+    },
+    {
+      "scenario_id": "after_verified_completion",
+      "completion_tick": 3,
+      "required_observation_ids": ["pre_completion_cue"],
+      "exact_effect": "task_complete",
+      "failed_effect": "task_incomplete",
+      "safety_event_id": null,
+      "events": [
+        {"event_id":"pre_completion_cue","tick":2,"kind":"optional","captured":true,"delivered":true,"bytes":16},
+        {"event_id":"post_completion_capture","tick":4,"kind":"optional","captured":true,"delivered":true,"bytes":23}
+      ],
+      "arms": [
+        {"arm_id":"baseline","omit_intervals":[]},
+        {"arm_id":"omit_after_completion","omit_intervals":[[3,6]]}
+      ]
+    },
+    {
+      "scenario_id": "captured_but_undelivered",
+      "completion_tick": 4,
+      "required_observation_ids": ["undelivered_cue"],
+      "exact_effect": "target_saved",
+      "failed_effect": "target_missed",
+      "safety_event_id": null,
+      "events": [
+        {"event_id":"undelivered_cue","tick":1,"kind":"optional","captured":true,"delivered":false,"bytes":21},
+        {"event_id":"visible_context","tick":2,"kind":"optional","captured":true,"delivered":true,"bytes":9}
+      ],
+      "arms": [
+        {"arm_id":"baseline","omit_intervals":[]},
+        {"arm_id":"omit_undelivered_window","omit_intervals":[[0,3]]}
+      ]
+    },
+    {
+      "scenario_id": "mandatory_safety_cue",
+      "completion_tick": 5,
+      "required_observation_ids": [],
+      "exact_effect": "safe_stop",
+      "failed_effect": "unsafe_continue",
+      "safety_event_id": "mandatory_revoke",
+      "events": [
+        {"event_id":"optional_before","tick":1,"kind":"optional","captured":true,"delivered":true,"bytes":10},
+        {"event_id":"mandatory_revoke","tick":2,"kind":"mandatory_safety","captured":true,"delivered":true,"bytes":7},
+        {"event_id":"optional_after","tick":3,"kind":"optional","captured":true,"delivered":true,"bytes":14}
+      ],
+      "arms": [
+        {"arm_id":"baseline","omit_intervals":[]},
+        {"arm_id":"omit_optional_around_safety","omit_intervals":[[1,4]]}
+      ]
+    }
+  ]
+}

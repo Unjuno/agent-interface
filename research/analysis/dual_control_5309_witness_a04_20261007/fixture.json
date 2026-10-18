@@ -1,0 +1,52 @@
+{
+  "allocation": "5309-WITNESS-A04-HOSTCPU-20261007",
+  "seed": 53091007,
+  "states": ["hidden-a", "hidden-b"],
+  "receipt_symbols": {"hidden-a": "receipt-a", "hidden-b": "receipt-b"},
+  "actions": {
+    "task_only": ["commit-a", "commit-b"],
+    "generic_ig": ["a-progress-witness-loss", "b-progress-preserve-witness"],
+    "witness_aware": ["a-progress-witness-loss", "b-progress-preserve-witness"]
+  },
+  "truth": {
+    "hidden-a": {"correct_commit": "commit-a", "effect_witness": "effect-a"},
+    "hidden-b": {"correct_commit": "commit-b", "effect_witness": "effect-b"}
+  },
+  "model": {
+    "predicted_information_gain_bits": {
+      "a-progress-witness-loss": 1.0,
+      "b-progress-preserve-witness": 1.0
+    },
+    "predicted_witness_survival": {
+      "a-progress-witness-loss": false,
+      "b-progress-preserve-witness": true
+    },
+    "predicted_observation": {
+      "a-progress-witness-loss": "effect-witness",
+      "b-progress-preserve-witness": "effect-witness"
+    }
+  },
+  "realized": {
+    "a-progress-witness-loss": {"observation": "state receipt exact", "payload_type": "state-only", "witness_survives": false, "fresh": true, "cost": 1},
+    "b-progress-preserve-witness": {"observation": "state receipt exact", "payload_type": "state-plus-effect", "witness_survives": true, "fresh": true, "cost": 1},
+    "commit-a": {"cost": 1},
+    "commit-b": {"cost": 1}
+  },
+  "scenario_overrides": {
+    "misspecified-model": {
+      "a-progress-witness-loss": {"payload_type": "state-only", "witness_survives": false},
+      "b-progress-preserve-witness": {"payload_type": "state-only", "witness_survives": false}
+    }
+  },
+  "controls": [
+    {"id":"witness-irrelevant","witness_already_available":true,"expected":"no-extra-action"},
+    {"id":"no-safe-path","safe_action_set":[],"expected":"UNKNOWN"},
+    {"id":"stale-receipt","receipt_fresh":false,"expected":"UNKNOWN"},
+    {"id":"duplicate-receipt","receipt_duplicate":true,"expected":"consume-once"},
+    {"id":"urgent-stop","stop_before_commit":true,"expected":"STOP_AND_RELEASE"},
+    {"id":"misspecified-model","witness_survival_model_wrong":true,"expected":"UNKNOWN_MODEL_MISMATCH"}
+  ],
+  "risk_budget": 1,
+  "authority_grants_allowed": 0,
+  "mutations": ["truth-label-swap","receipt-stale-to-fresh","duplicate-count-as-two","witness-loss-hidden","authority-grant","wrong-effect-accepted"]
+}

@@ -1,0 +1,85 @@
+{
+  "allocation": "MRT-7834-A04-20261005",
+  "base_audit": true,
+  "expected_rows": 2600,
+  "observed_rows": 2600,
+  "eligible_weight": 3,
+  "observation_rate": 0.7999999999999972,
+  "oracle_arm1_vs0": 2.583333333333336,
+  "oracle_arm2_vs0": 0.16666666666666674,
+  "distal_oracle_by_type": {
+    "0": 8.44375,
+    "1": 9.44375
+  },
+  "mutation_count": 17,
+  "mutations": [
+    {
+      "id": "wrong_allocation",
+      "rejected": true
+    },
+    {
+      "id": "drop_row",
+      "rejected": true
+    },
+    {
+      "id": "wrong_assignment_probability",
+      "rejected": true
+    },
+    {
+      "id": "wrong_propensity",
+      "rejected": true
+    },
+    {
+      "id": "wrong_censor_probability",
+      "rejected": true
+    },
+    {
+      "id": "censored_as_observed",
+      "rejected": true
+    },
+    {
+      "id": "wrong_arm1_effect",
+      "rejected": true
+    },
+    {
+      "id": "wrong_arm2_effect",
+      "rejected": true
+    },
+    {
+      "id": "wrong_observation_rate",
+      "rejected": true
+    },
+    {
+      "id": "wrong_distal",
+      "rejected": true
+    },
+    {
+      "id": "proximal_as_task_success",
+      "rejected": true
+    },
+    {
+      "id": "zero_assignment_support_gate",
+      "rejected": true
+    },
+    {
+      "id": "zero_observation_support_gate",
+      "rejected": true
+    },
+    {
+      "id": "missing_window_gate",
+      "rejected": true
+    },
+    {
+      "id": "post_treatment_eligibility_gate",
+      "rejected": true
+    },
+    {
+      "id": "session_interference_gate",
+      "rejected": true
+    },
+    {
+      "id": "unbounded_carryover_gate",
+      "rejected": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "experiment": "issue59-screen-signal-boundary-a03-a14-cover-wait-overlap-20261008",
+  "kind": "posthoc descriptive analysis of exploratory protocol-deviation run; not preregistered",
+  "recorded_at_utc": "2026-10-08T01:56:05Z",
+  "source_run": "A14, retained under PR #8403, status EXPLORATORY_PROTOCOL_DEVIATION",
+  "runtime_events": {"sha256":"f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a","bytes":457736},
+  "planner_protocol": {"sha256":"97d7c38290dbc0254a1d1fcc139a055a2b1e3afc9be5f8a5f7795c1ceea12a91","bytes":270416},
+  "rule": "Build planner-pending intervals from sent turn/start to matching received turn/completed; cover-active intervals from accepted cover-* to matching terminal; select typed observations whose emit_ns lies within the intersection; compare adjacent observations within each nonempty intersection.",
+  "limits": ["A14 is a protocol deviation and exploratory only.", "Whole-frame RGB hash change is not semantic threat evidence.", "No causal safety, policy appropriateness, recovery, or task-success inference."],
+  "purpose": "Quantify whole-frame hash churn and typed HUD stability only while a cover program and planner turn overlap in the retained A14 trace."
+}

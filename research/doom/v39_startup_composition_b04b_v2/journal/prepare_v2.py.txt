@@ -1,0 +1,20 @@
+import ast,datetime,hashlib,json,pathlib,subprocess
+R=pathlib.Path(__file__).resolve().parent;REPO=R.parent/'reader-close-01a0ff33'/'src';B='bb6bceb7c089112a9fe52c43a48310bf0b96bfac';H='aa0f889066834fe4c408838504b29a4cabb0fa39';receipts=[]
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def git(*a):
+ argv=['git','-C',str(REPO),*a];s=utc();p=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE);b,e=p.communicate(timeout=60);i=len(receipts);(R/f'prepare-v2-{i}.stdout').write_bytes(b);(R/f'prepare-v2-{i}.stderr').write_bytes(e);receipts.append(dict(argv=argv,pid=p.pid,start_utc=s,end_utc=utc(),exit=p.returncode,stdout_sha256=sha(b),stderr_sha256=sha(e)));assert p.returncode==0;return b
+def nodes(b):return {n.name:ast.dump(n,include_attributes=False) for n in ast.parse(b).body if isinstance(n,(ast.FunctionDef,ast.ClassDef))}
+def wait(b):
+ main=next(n for n in ast.parse(b).body if isinstance(n,ast.FunctionDef) and n.name=='main');return next(ast.dump(n,include_attributes=False) for n in ast.walk(main) if isinstance(n,ast.FunctionDef) and n.name=='wait')
+try:
+ current=(R/'current-controller.py.txt').read_bytes();oldbase=(R/'old-base-controller.py.txt').read_bytes();oldhead=(R/'old-head-controller.py.txt').read_bytes();before=b'detail=process.stderr.read().strip()';after=b'detail="stderr not synchronously drained"';assert oldbase.count(before)==oldhead.count(before)==1;assert oldbase.replace(before,after)==current,'current delta is not sole qualified no-drain assignment';candidate=oldhead.replace(before,after);assert nodes(candidate)['_close_failed_startup']==nodes(oldhead)['_close_failed_startup'];assert wait(candidate)==wait(current)
+ (R/'candidate-controller-v2.py.txt').write_bytes(candidate);client=git('show',B+':research/live_control/codex_app_server_client_v2.py');(R/'current-client.py.txt').write_bytes(client)
+ docs=['README.md','ROADMAP.md','docs/CURRENT_GOAL.md','docs/WORKER_QUICKSTART.md','docs/RESEARCH_METHOD.md','docs/ISSUE_FAILURE_CLASSIFICATION.md'];ancestors=['AGENTS.md','research/AGENTS.md','research/doom/AGENTS.md','research/live_control/AGENTS.md'];listing=git('ls-tree','-r','--name-only',B,'--',*ancestors).decode().splitlines();docs+=listing;pins=[]
+ for path in docs:
+  b=git('show',B+':'+path);dest=R/'context'/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b);pins.append(dict(path=path,bytes=len(b),sha256=sha(b)))
+ record=dict(base=B,old_head=H,created_utc=utc(),current_controller=dict(bytes=len(current),sha256=sha(current)),candidate_controller=dict(bytes=len(candidate),sha256=sha(candidate)),client=dict(bytes=len(client),sha256=sha(client)),context=pins,old_startup_helper_ast_equal=True,current_wait_ast_equal=True,all_other_current_controller_delta_is_old_startup_only=True,subject_executions=0,main_send=0,first_stop='prepare_v1 Git merge-file exit1: one overlapping indented wait/startup region, original stdout/receipts retained; no conflict markers admitted',phase='LOCAL_COMPOSITION_NOT_ADOPTION')
+ with (R/'COMPOSITION.v2.json').open('x',encoding='utf-8') as f:json.dump(record,f,indent=2)
+ print(json.dumps(record))
+finally:
+ with (R/'PREPARE_RECEIPTS.v2.json').open('x',encoding='utf-8') as f:json.dump(receipts,f,indent=2)

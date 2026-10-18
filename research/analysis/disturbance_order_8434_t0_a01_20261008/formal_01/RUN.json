@@ -1,0 +1,24 @@
+{
+  "format": "disturbance-order-8434-t0-a01-run-v1",
+  "allocation": "DISTURBANCE-ORDER-8434-T0-A01-20261008",
+  "freeze_commit": "7487c226ed33bd4d5e622cbd2f88751c0e4107d6",
+  "base_main_sha": "6da5dc940fdb97866cfb900ca747edb8c94b2790",
+  "formal_invocations": {
+    "candidate": {"count": 1, "command": "python3 -B candidate.py SOURCE.json formal_01/RAW.json", "exit": 0},
+    "independent_auditor": {"count": 1, "command": "python3 -B audit.py SOURCE.json formal_01/RAW.json formal_01/AUDIT.json", "exit": 0},
+    "retries": 0
+  },
+  "result": "PASS_METHOD_SCOPED",
+  "cases": 96,
+  "python": "3.14.5",
+  "platform": "macOS Darwin 27.0 arm64",
+  "network": "not used by candidate or auditor",
+  "container": {"invocations": 0, "status": "not used; image-listing content-store STOP", "isolation_claim": false},
+  "outputs_sha256": {
+    "SOURCE.json": "21a4f077636f0a8848015c83f6681689e638c53201587b0452743bfe59c55493",
+    "formal_01/RAW.json": "8abdffa4fc22ddb72bac5beec9cb093be762b1bcffdce429eb03af38a2848eab",
+    "formal_01/AUDIT.json": "c364d973a09ef5819edb95042448bbdbfe11769fe5f53086ac711a25de3cfc0d"
+  },
+  "auditor_errors": [],
+  "scope": "finite authored method fixture only; no empirical interface inference"
+}

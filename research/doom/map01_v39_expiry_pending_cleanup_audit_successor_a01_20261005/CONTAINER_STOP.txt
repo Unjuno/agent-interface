@@ -1,0 +1,6 @@
+Command: docker image ls --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+
+Observed: OrbStack daemon failed before listing images: `rpc error: code = Unknown desc = blob sha256:c88bce85f2b7f9fce294b8295440b3fa478990cda8b19b12de40dadbdc0e2c5c expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/c88bce85f2b7f9fce294b8295440b3fa478990cda8b19b12de40dadbdc0e2c5c: open ...: operation not supported`.
+
+This is a read-only infrastructure STOP before any container starts. Do not retry the identical Docker action or infer container validation. The raw-only audit and mutation checks were run on host CPython 3.14.5 and are explicitly not container-equivalent.
+

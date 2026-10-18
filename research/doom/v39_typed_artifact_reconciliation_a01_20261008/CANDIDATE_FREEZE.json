@@ -1,0 +1,19 @@
+{
+  "schema": "issue8566-reconcile-alias-a01-candidate-freeze-v1",
+  "candidate_invocations": 1,
+  "baseline_result_sha256": "c032b799266c1fbb3441af6a483ff2c196d968e1f55cfb19c3224591fad19266",
+  "baseline_audit_sha256": "67ad6ae1eeed27f833e3c3bae7790c3aaedc34da98d618f1217d9c2a35ab9265",
+  "baseline_audit_failure_sha256": "29aa9de0598c4574e46978f989bccfe58cb6de6048da76e9fca20ae2ae7210e5",
+  "candidate_source": "candidate/research/doom/doom_typed_observation_v1.py",
+  "candidate_source_sha256": "fbe3d85b1777a92595faa556a580417ba42a7ce1b8b8b65de98fb2e9bf983441",
+  "candidate_probe_sha256": "d29d83bed17214b0e27be0bb99ef5abc5f91740cc0e7fc267aaa4161f657786a",
+  "candidate_diff": "one recursive exact-JSON comparator; use it only for same_epoch and same_binding",
+  "command": "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --env SOURCE_ROOT=/src --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/candidate_probe.py",
+  "decision_rule": "control_matched=true and accepted_aliases=[] -> PASS_EXACT_IDENTITY; otherwise FAIL/HOLD",
+  "retry_limit": 0,
+  "runtime": "wslc 3.0.1.0; agent-interface/native-suite-wslc-a08:20261004 (image ID 1b4a8bd7c0fe); CPython 3.12.14",
+  "network": "none",
+  "cpu_limit_requested": 1,
+  "memory_limit_requested": "1G",
+  "memory_enforcement_note": "WSL reports swap/cgroup swap-limit unsupported; no swap limit claimed."
+}

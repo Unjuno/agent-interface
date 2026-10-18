@@ -1,0 +1,33 @@
+{
+  "format": "disturbance-order-8434-t0-a01-freeze-v1",
+  "allocation": "DISTURBANCE-ORDER-8434-T0-A01-20261008",
+  "created_utc": "2026-10-08T02:44:38Z",
+  "main_base_sha": "6da5dc940fdb97866cfb900ca747edb8c94b2790",
+  "python": "3.14.5",
+  "execution_mode": "host-only standard-library Python; offline deterministic method fixture; no container/isolation claim",
+  "container_preflight": {
+    "docker_server": "29.4.0",
+    "storage_driver": "overlayfs",
+    "cgroup_version": "2",
+    "image_listing": "STOP: containerd content-store blob open returned operation not supported",
+    "container_invocations": 0
+  },
+  "formal_invocation_budget": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0
+  },
+  "files_sha256": {
+    "SOURCE.json": "21a4f077636f0a8848015c83f6681689e638c53201587b0452743bfe59c55493",
+    "README.md": "3174edcbd5c8ff388b31f5c2075ad9f0ed71aea967a42fc0aca9d1c525843d12",
+    "PROTOCOL.md": "59d4648e62c33397349a51a4e25cd0008cc1974247d5d87a021d9cc4a219d23f",
+    "candidate.py": "0f5cacd39a57a5450024ede7c058ebd0eca86e6b81b4861fc2a424a6115a2f63",
+    "audit.py": "1a80a4c2bf08630c93e52262959fec8e56591bd227179240bd66ca046e4252b4",
+    "test_contract.py": "17c52de7b84de702753ac080e3ca1595aac26edc0ed7276cecaaba43314e75e8"
+  },
+  "formal_commands": [
+    "python3 -B candidate.py SOURCE.json formal_01/RAW.json",
+    "python3 -B audit.py SOURCE.json formal_01/RAW.json formal_01/AUDIT.json"
+  ],
+  "stop_rule": "If source hashes differ, candidate exits nonzero, output is incomplete, or auditor is nonzero, preserve first output and do not retry or modify the freeze."
+}

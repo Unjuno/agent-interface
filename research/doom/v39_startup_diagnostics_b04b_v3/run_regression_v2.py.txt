@@ -1,0 +1,11 @@
+import datetime,hashlib,json,pathlib,subprocess,sys
+R=pathlib.Path(__file__).resolve().parent;F=R/'normalization';F.mkdir(exist_ok=False)
+def pin(p):
+ b=p.read_bytes();return dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+plan=dict(unit='b04b-diagnostic-ordinary-normalization-v2',frozen_utc=utc(),H='Diagnostic str subclass returned by repr must not run its concatenation hook outside the protection.',T='Ordinary repair unit, ten preceding regressions plus one repr-string-subclass regression; compare first unpublished candidate then repaired source.',D='First candidate must fail exactly new case; repaired candidate all11 pass. Retain both first outcomes. Ordinary repair iteration, no formal producer replay.',C='Controlled string subclass and resource doubles, no natural frequency claim.',U='Selected literal startup handler only, no native/full-main/constructor/task/release claim.',pins={p.name:pin(p) for p in [R/'regression_v2.py',R/'controller-v3.py.txt',R/'controller-v3b.py.txt']});(F/'PLAN.v2.json').write_text(json.dumps(plan,indent=2)+'\n',encoding='utf-8')
+for label,name,expected in [('first_candidate','controller-v3.py.txt',1),('normalized_candidate','controller-v3b.py.txt',0)]:
+ d=F/label;d.mkdir();source=R/name;argv=[sys.executable,'-X','utf8',str(R/'regression_v2.py'),str(source),str(d/'RAW.json')];before=dict(argv=argv,utc=utc(),source=pin(source),runner=pin(R/'regression_v2.py'));(d/'BEFORE.json').write_text(json.dumps(before,indent=2)+'\n',encoding='utf-8')
+ with (d/'stdout.bin').open('wb') as out,(d/'stderr.bin').open('wb') as err:
+  p=subprocess.Popen(argv,stdout=out,stderr=err);start=utc();code=p.wait(timeout=45)
+ receipt=dict(pid=p.pid,start_utc=start,end_utc=utc(),exit_code=code,timeout=False,stdout=pin(d/'stdout.bin'),stderr=pin(d/'stderr.bin'),source_unchanged=pin(source)==before['source'],runner_unchanged=pin(R/'regression_v2.py')==before['runner']);(d/'RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8');print(json.dumps(dict(label=label,**receipt)));assert code==expected

@@ -1,0 +1,23 @@
+{
+  "candidate_sha256": "6a0e67d6b692803e8bd6208a9d919a5c0a4a217101e86cd6ff297a1fdd785808",
+  "checks": {
+    "a_and_A_resolve_to_same_nonzero_keycode": true,
+    "alias_batch_refused_as_duplicate_resolved_code": true,
+    "close_delivered_matching_key_release": false,
+    "close_returned_and_owner_stopped": true,
+    "exactly_one_terminal_release_record": true,
+    "focused_key_down_admitted": true,
+    "no_explicit_keyup_record_before_close": true,
+    "refusal_preserved_held_key": true,
+    "server_keymap_empty_after_close": true,
+    "terminal_owner_release_verified_empty": true,
+    "xvfb_exited_zero": true
+  },
+  "decision": "FAIL",
+  "errors": [
+    "close_delivered_matching_key_release"
+  ],
+  "raw_sha256": "b16fb6f5f572f1e1e6a7a98a080e9cb8b0ef619d60fe76c0f02720dca64ba6b8",
+  "schema": "release-batch-alias-owner-cleanup-a01-audit-v1",
+  "scope": "one guarded alias-refusal followed by actual V4/V3/V12 owner-close cleanup on isolated Xvfb; no game, task, physical keyboard, or live allocation"
+}

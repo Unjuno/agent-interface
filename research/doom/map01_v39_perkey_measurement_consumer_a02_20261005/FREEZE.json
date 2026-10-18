@@ -1,0 +1,49 @@
+{
+  "audit_argv": [
+    "python3",
+    "audit.py"
+  ],
+  "base_commit": "109cedcf1fafc150e235c91141eb47bbc7396b43",
+  "candidate_argv": [
+    "python3",
+    "run.py"
+  ],
+  "candidate_invocations_allowed": 1,
+  "decision": "PASS only if source bytes match their SHA and Git blob, one confirmed pair joins all exact identities, nested brackets agree, times and types are ordered, authority/effect remain false, the independent audit matches, and every mutation control rejects. Pin mismatch is STOP; semantic mismatch is FAIL.",
+  "environment": {
+    "container": false,
+    "host": "macOS arm64",
+    "new_gui_or_game": false,
+    "new_model_call": false,
+    "new_os_input": false,
+    "python": "3.14.5"
+  },
+  "hypothesis": "After A01's retained source-pin STOP, a new source-pinned consumer can derive a conservative per-key interval from the same immutable down/up measurement pair without relabeling it as an authority-bearing transition.",
+  "output_path": "research/doom/map01_v39_perkey_measurement_consumer_a02_20261005/results/a02",
+  "predecessor_stop": "research/doom/map01_v39_perkey_measurement_consumer_a01_20261005/results/a01/STOP.json",
+  "run_id": "MAP01-V39-PERKEY-MEASUREMENT-CONSUMER-A02-20261005",
+  "schema": "map01_v39_perkey_measurement_consumer_freeze_v2",
+  "scope": "Offline replay of one retained fake-display pair. It does not measure a live X server, physical/game occupancy, application effect, useful feedback, threat response, recovery, or performance.",
+  "source_input": {
+    "git_blob": "eacb735634d6c6761ba7fa39448e6d7d43e342d5",
+    "path": "research/doom/map01_v39_perkey_bridge_a01/results/construction-a01/candidate-events.jsonl",
+    "sha256": "ad0b1c29da4b6269be27e8716cdabfbb25ac49dcf0abd4dba4bd2f7a9f84e4e"
+  },
+  "source_sha256": {
+    "INPUT_EVENTS.jsonl": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+    "PLAN.md": "2738d1b4ef22b4bb64f82ddb6bc30a5ea0cd9c5f03bb73f6c7ee4e6190cd85fa",
+    "audit.py": "aa9698b18202bbfecb542dd53426bd837a9cb789c2c577986ae1e2e0784cd9e6",
+    "candidate.py": "38ddf859372edc57233ca1ab16da69d0c7142957661d97684ebc90e96f0e8928",
+    "run.py": "a805547f9e180cfe4b24f430d34268335fbb0da19095c146f6e93a625f6c3afd",
+    "test_consumer.py": "58e6e8b387f6c1bdd0190dd6383fd2ba857c33bf6c5a07219e0645bdc5254855"
+  },
+  "test": "Replay the two-row retained A01 fake-display event stream exactly once through the corrected consumer; independently reconstruct from raw bytes; run ten in-memory regression and output-mutation controls.",
+  "tests_argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_consumer.py"
+  ]
+}

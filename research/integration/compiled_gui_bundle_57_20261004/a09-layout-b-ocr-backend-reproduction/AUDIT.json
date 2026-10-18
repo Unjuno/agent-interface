@@ -1,0 +1,120 @@
+{
+  "all_six_frame_exact_counts_by_original_outcome": {
+    "candidate": {
+      "EXECUTION_INCOMPLETE": 3,
+      "TASK_SUCCEEDED": 3
+    },
+    "frozen": {
+      "EXECUTION_INCOMPLETE": 3,
+      "TASK_SUCCEEDED": 1
+    }
+  },
+  "all_six_near_misses_rejected": {
+    "candidate": 6,
+    "frozen": 6
+  },
+  "checks": [
+    {
+      "case": "failure-b1-t5",
+      "crop": "frozen",
+      "crop_sha256": "6dcc7c750b833cc02570589fd1e5337d98791e46fc8b8b5f96766daf776d132b",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "failure-b1-t5",
+      "crop": "candidate",
+      "crop_sha256": "ed0dd718fb689599bdabae99950cbf4b3bf3550254c77b62b7f78cc10e3b6aba",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "failure-b1-t6",
+      "crop": "frozen",
+      "crop_sha256": "6e7791dedaabba49fa28205b23dfdee960977031b2bd7fa0de862900dc43aac9",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "failure-b1-t6",
+      "crop": "candidate",
+      "crop_sha256": "741c2fe6742c1a2bc004b404f7501d5ff23d78266300d18fd0c3cca4bf92803f",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "failure-b2-t6",
+      "crop": "frozen",
+      "crop_sha256": "77283471243761362828f36e7bcb05d10aee3a3fbbdbf9a8cb41fea76d20b15c",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "failure-b2-t6",
+      "crop": "candidate",
+      "crop_sha256": "785dbf2d6c3869a1adbe33783b7a1cc2711d2fe3110b09f0cecae207535eabe1",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "positive-nearmiss-control-b1-t4",
+      "crop": "frozen",
+      "crop_sha256": "78058aae2e731a23bdf4984e9dcd7081b091832fb7656a3589b6bcad12b22efd",
+      "exact_expected": false,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "positive-nearmiss-control-b1-t4",
+      "crop": "candidate",
+      "crop_sha256": "021a9c373b2fbf12dd412c600e442581c680d2737d1a1d3b3ef192f20a356566",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "positive-b2-t4",
+      "crop": "frozen",
+      "crop_sha256": "059ce7ddc376d60deec044356ff9f527abeaa95c5b09f9d405c201aa61cb0400",
+      "exact_expected": false,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "positive-b2-t4",
+      "crop": "candidate",
+      "crop_sha256": "2f8b94148eb083e6f777dd5725354d68e7ca243088911eceb1a1942f70c8760e",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "positive-b2-t5",
+      "crop": "frozen",
+      "crop_sha256": "cbcc94d684a3b9d9f61b7452328886c900b2f03de023d7bc70fd664a6932d978",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    },
+    {
+      "case": "positive-b2-t5",
+      "crop": "candidate",
+      "crop_sha256": "12f7b89fca7bacac93e3c8b16dba7d820adbd681f903be5594fe12bf86407eb8",
+      "exact_expected": true,
+      "near_miss_rejected": true
+    }
+  ],
+  "disposition": "UNCERTAIN_HISTORICAL_FALSE_NEGATIVE_NOT_REPRODUCED",
+  "failure_frame_exact_counts": {
+    "candidate": 3,
+    "frozen": 3,
+    "n": 3
+  },
+  "formal_a05_result_changed": false,
+  "independent_replay": "PASS",
+  "problems": [],
+  "raw_sha256": "f00088019210ec3d8e4192fd4f4e34816cd689a22d67beb6388d71950ee660b6",
+  "schema": "a09_layout_b_ocr_backend_reproduction_audit_v1",
+  "task4_control": {
+    "candidate_exact": true,
+    "candidate_near_miss_rejected": true,
+    "frozen_exact": false,
+    "frozen_near_miss_rejected": true,
+    "near_miss_token": "t991073-5"
+  }
+}

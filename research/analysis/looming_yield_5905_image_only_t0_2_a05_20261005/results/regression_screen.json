@@ -1,0 +1,652 @@
+{
+  "approach_leads": {
+    "approach-1": {
+      "analytic_release_lead_s": 2.4,
+      "regression_yield": true
+    },
+    "approach-2": {
+      "analytic_release_lead_s": 2.6,
+      "regression_yield": true
+    },
+    "approach-3": {
+      "analytic_release_lead_s": 2.8,
+      "regression_yield": true
+    },
+    "approach-4": {
+      "analytic_release_lead_s": 3.0,
+      "regression_yield": true
+    },
+    "approach-5": {
+      "analytic_release_lead_s": 3.1999999999999997,
+      "regression_yield": true
+    },
+    "approach-6": {
+      "analytic_release_lead_s": 3.4,
+      "regression_yield": true
+    }
+  },
+  "candidate_calls": 13,
+  "formal": false,
+  "frontiers": {
+    "growth": {
+      "max_tp_at_fp_0": 6,
+      "points": [
+        {
+          "fp": 0,
+          "threshold": "1.02",
+          "tp": 6
+        },
+        {
+          "fp": 0,
+          "threshold": "1.05",
+          "tp": 6
+        },
+        {
+          "fp": 0,
+          "threshold": "1.1",
+          "tp": 6
+        },
+        {
+          "fp": 0,
+          "threshold": "1.15",
+          "tp": 1
+        },
+        {
+          "fp": 0,
+          "threshold": "1.25",
+          "tp": 0
+        }
+      ]
+    },
+    "pixel": {
+      "max_tp_at_fp_0": 6,
+      "points": [
+        {
+          "fp": 0,
+          "threshold": "0.005",
+          "tp": 6
+        },
+        {
+          "fp": 0,
+          "threshold": "0.01",
+          "tp": 0
+        },
+        {
+          "fp": 0,
+          "threshold": "0.02",
+          "tp": 0
+        },
+        {
+          "fp": 0,
+          "threshold": "0.04",
+          "tp": 0
+        },
+        {
+          "fp": 0,
+          "threshold": "0.08",
+          "tp": 0
+        }
+      ]
+    },
+    "regression": {
+      "max_tp_at_fp_0": 6,
+      "points": [
+        {
+          "fp": 0,
+          "threshold": "1.5",
+          "tp": 0
+        },
+        {
+          "fp": 0,
+          "threshold": "2.0",
+          "tp": 0
+        },
+        {
+          "fp": 0,
+          "threshold": "2.5",
+          "tp": 0
+        },
+        {
+          "fp": 0,
+          "threshold": "2.8",
+          "tp": 0
+        },
+        {
+          "fp": 0,
+          "threshold": "3.0",
+          "tp": 1
+        },
+        {
+          "fp": 0,
+          "threshold": "4.0",
+          "tp": 6
+        }
+      ]
+    },
+    "secant": {
+      "max_tp_at_fp_0": 5,
+      "points": [
+        {
+          "fp": 0,
+          "threshold": "1.5",
+          "tp": 0
+        },
+        {
+          "fp": 0,
+          "threshold": "2.0",
+          "tp": 1
+        },
+        {
+          "fp": 0,
+          "threshold": "2.5",
+          "tp": 3
+        },
+        {
+          "fp": 0,
+          "threshold": "2.8",
+          "tp": 3
+        },
+        {
+          "fp": 0,
+          "threshold": "3.0",
+          "tp": 3
+        },
+        {
+          "fp": 0,
+          "threshold": "4.0",
+          "tp": 5
+        }
+      ]
+    }
+  },
+  "identifiable_controls": [
+    "camera-zoom-1",
+    "lateral-1",
+    "occlusion-1",
+    "static-hazard-1",
+    "timestamp-regression-1",
+    "track-swap-1"
+  ],
+  "independent_audit": false,
+  "per_sequence": {
+    "animation-twin-1": {
+      "growth_grid": {
+        "1.02": true,
+        "1.05": true,
+        "1.1": true,
+        "1.15": true,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": true,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": null,
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": true,
+        "4.0": true
+      },
+      "regression_ttc_s": 2.837924632452387,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "secant_ttc_s": 4.15772472390402,
+      "status": "TRACKABLE"
+    },
+    "approach-1": {
+      "growth_grid": {
+        "1.02": true,
+        "1.05": true,
+        "1.1": true,
+        "1.15": true,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": true,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": null,
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": true,
+        "4.0": true
+      },
+      "regression_ttc_s": 2.837924632452387,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "secant_ttc_s": 4.15772472390402,
+      "status": "TRACKABLE"
+    },
+    "approach-2": {
+      "growth_grid": {
+        "1.02": true,
+        "1.05": true,
+        "1.1": true,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": true,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": null,
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": true
+      },
+      "regression_ttc_s": 3.099218149167404,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": true
+      },
+      "secant_ttc_s": 3.055418169000313,
+      "status": "TRACKABLE"
+    },
+    "approach-3": {
+      "growth_grid": {
+        "1.02": true,
+        "1.05": true,
+        "1.1": true,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": true,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": null,
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": true
+      },
+      "regression_ttc_s": 3.326986130129566,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": true
+      },
+      "secant_ttc_s": 3.005404091988035,
+      "status": "TRACKABLE"
+    },
+    "approach-4": {
+      "growth_grid": {
+        "1.02": true,
+        "1.05": true,
+        "1.1": true,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": true,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": null,
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": true
+      },
+      "regression_ttc_s": 3.5273547723517686,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": true,
+        "2.5": true,
+        "2.8": true,
+        "3.0": true,
+        "4.0": true
+      },
+      "secant_ttc_s": 1.9862088169529486,
+      "status": "TRACKABLE"
+    },
+    "approach-5": {
+      "growth_grid": {
+        "1.02": true,
+        "1.05": true,
+        "1.1": true,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": true,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": null,
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": true
+      },
+      "regression_ttc_s": 3.7109437794114424,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": true,
+        "2.8": true,
+        "3.0": true,
+        "4.0": true
+      },
+      "secant_ttc_s": 2.1351646902987884,
+      "status": "TRACKABLE"
+    },
+    "approach-6": {
+      "growth_grid": {
+        "1.02": true,
+        "1.05": true,
+        "1.1": true,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": true,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": null,
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": true
+      },
+      "regression_ttc_s": 3.7109437794114424,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": true,
+        "2.8": true,
+        "3.0": true,
+        "4.0": true
+      },
+      "secant_ttc_s": 2.1351646902987884,
+      "status": "TRACKABLE"
+    },
+    "camera-zoom-1": {
+      "growth_grid": {
+        "1.02": false,
+        "1.05": false,
+        "1.1": false,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": false,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": "global_scale_changed",
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "regression_ttc_s": null,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "secant_ttc_s": null,
+      "status": "UNKNOWN"
+    },
+    "lateral-1": {
+      "growth_grid": {
+        "1.02": false,
+        "1.05": false,
+        "1.1": false,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": false,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": "lateral_motion",
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "regression_ttc_s": null,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "secant_ttc_s": null,
+      "status": "UNKNOWN"
+    },
+    "occlusion-1": {
+      "growth_grid": {
+        "1.02": false,
+        "1.05": false,
+        "1.1": false,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": false,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": "lateral_motion",
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "regression_ttc_s": null,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "secant_ttc_s": null,
+      "status": "UNKNOWN"
+    },
+    "static-hazard-1": {
+      "growth_grid": {
+        "1.02": false,
+        "1.05": false,
+        "1.1": false,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": false,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": null,
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "regression_ttc_s": null,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "secant_ttc_s": null,
+      "status": "TRACKABLE"
+    },
+    "timestamp-regression-1": {
+      "growth_grid": {
+        "1.02": false,
+        "1.05": false,
+        "1.1": false,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": false,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": "invalid_capture_clock",
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "regression_ttc_s": null,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "secant_ttc_s": null,
+      "status": "UNKNOWN"
+    },
+    "track-swap-1": {
+      "growth_grid": {
+        "1.02": false,
+        "1.05": false,
+        "1.1": false,
+        "1.15": false,
+        "1.25": false
+      },
+      "pixel_grid": {
+        "0.005": false,
+        "0.01": false,
+        "0.02": false,
+        "0.04": false,
+        "0.08": false
+      },
+      "reason": "track_identity_changed",
+      "regression_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "regression_ttc_s": null,
+      "secant_grid": {
+        "1.5": false,
+        "2.0": false,
+        "2.5": false,
+        "2.8": false,
+        "3.0": false,
+        "4.0": false
+      },
+      "secant_ttc_s": null,
+      "status": "UNKNOWN"
+    }
+  },
+  "positive_cases": [
+    "approach-1",
+    "approach-2",
+    "approach-3",
+    "approach-4",
+    "approach-5",
+    "approach-6"
+  ],
+  "retry_count": 0,
+  "schema": "5905-a05-regression-host-screen-v1",
+  "scope": "host-only exploratory estimator screen on finite synthetic fixtures"
+}

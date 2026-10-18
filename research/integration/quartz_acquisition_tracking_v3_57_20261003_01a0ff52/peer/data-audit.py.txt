@@ -1,0 +1,146 @@
+"""Independent literal data reducer. No reviewed module/helper/test import or execution."""
+from pathlib import Path
+import json,hashlib,re,datetime,copy
+O=Path(__file__).resolve().parent;E=O/'export/research/integration'
+A=E/'quartz_release_fault_57_20261003_01a0ff52';N=E/'quartz_release_quarantine_2437_20261003_01a0ff52'
+def need(ok,msg):
+    if not ok:raise ValueError(msg)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def j(p):return json.loads(p.read_bytes())
+freeze=j(O/'ACQUISITION-FREEZE.json');raw=j(O/'ACQUISITION-RAW.json')
+labels=['healthy_key','key_disposal_after_post','pointer_disposal_after_post','key_partial_post_then_raises','key_post_before_effect_control']
+def state(keys,buttons):return {'keys':sorted(keys),'buttons':sorted(buttons)}
+def reduce(data):
+    need(data['head']==freeze['head'] and data['native_calls']==[] and data['constructor_calls']==[],'fixed source and no native/construction')
+    need(data['source_before_after_exact']==freeze['source'],'complete before-after frozen pins')
+    need(data['original_author_peer_native_formal_deck_replays']==0 and data['physical_input_invocations']==0,'no original/native replay')
+    need(all(data['baseline_tracking_methods_AST_identical'].values()) and len(data['baseline_tracking_methods_AST_identical'])==3,'inherited tracking')
+    need([c['label'] for c in data['cells']]==labels,'all five ordered cells')
+    summaries=[]
+    for c in data['cells']:
+        label=c['label'];trace=c['trace']
+        expected_kind='button' if label=='pointer_disposal_after_post' else 'key'
+        firstop={'op':'pointer_button','button':'left','down':True} if expected_kind=='button' else {'op':'key_state','key':'A','down':True}
+        need(c['first_program']['ops']==[firstop,{'op':'release_all'}],'first declared owned acquisition/one terminal')
+        need(c['fresh_program']['ops']==[{'op':'key_state','key':'CTRL','down':True},{'op':'release_all'}] and c['fresh_program']['source']=={'observation_seq':8,'binding_revision':4},'new distinct declared followup')
+        for field in ['first_program','fresh_program']:
+            need(type(c[field]['ops'][0]['down']) is bool,'strict command boolean')
+        need([x['seq'] for x in trace]==list(range(1,len(trace)+1)),'complete contiguous trace order')
+        clocks=[x['monotonic_ns'] for x in trace];need(all(type(x) is int and x>=0 for x in clocks) and clocks==sorted(clocks),'integer nondecreasing clock, no performance use')
+        markers={}
+        for event in ['first_dispatch_start','first_dispatch_end','fresh_dispatch_start','fresh_dispatch_end']:
+            hits=[(i,x) for i,x in enumerate(trace) if x['event']==event];need(len(hits)==1,'one marker '+event);markers[event]=hits[0]
+        need([markers[x][0] for x in ['first_dispatch_start','first_dispatch_end','fresh_dispatch_start','fresh_dispatch_end']]==sorted(markers[x][0] for x in ['first_dispatch_start','first_dispatch_end','fresh_dispatch_start','fresh_dispatch_end']),'request boundaries ordered')
+        need(markers['first_dispatch_start'][1]['program']==c['first_program'] and markers['fresh_dispatch_start'][1]['program']==c['fresh_program'],'literal program joins')
+        need(markers['first_dispatch_end'][1]['row']==c['first_return'] and markers['fresh_dispatch_end'][1]['row']==c['fresh_return'],'literal response joins')
+        need(markers['first_dispatch_end'][1]['tracking']==c['first_owner_tracking'] and markers['first_dispatch_end'][1]['recovery_required']==c['first_recovery_required'],'owner endpoint joins')
+        keys=set();buttons=set();first_state=None;first_effects=[];fresh_effects=[]
+        for i,x in enumerate(trace):
+            if x['event']=='post_effect':
+                need(x['kind'] in ['key','button'] and type(x['target']) is int and type(x['down']) is bool,'typed effect')
+                values=keys if x['kind']=='key' else buttons
+                if x['down']:values.add(x['target'])
+                else:values.discard(x['target'])
+                need(x['state']==state(keys,buttons),'effect-derived state')
+                if i<markers['first_dispatch_end'][0]:first_effects.append((x['kind'],x['target'],x['down']))
+                elif i>markers['fresh_dispatch_start'][0]:fresh_effects.append((x['kind'],x['target'],x['down']))
+                else:need(False,'effect outside declared dispatch')
+            if x['event']=='first_dispatch_end':
+                first_state=state(keys,buttons);need(x['state']==first_state==c['first_virtual_state'],'derived first state')
+            if x['event']=='fresh_dispatch_end':need(x['state']==state(keys,buttons)==c['final_virtual_state'],'derived final state')
+        need(fresh_effects==[('key',59,True),('key',59,False)] and c['followup_post_effects']==2==len(fresh_effects),'literal new followup two effects')
+        need(c['followup_emissions_delta']==2,'returned-emission accounting for fresh program')
+        healthy=label=='healthy_key';before=label=='key_post_before_effect_control'
+        expected_first=[] if before else [(expected_kind,0,True)]+([(expected_kind,0,False)] if healthy else [])
+        need(first_effects==expected_first,'literal first owned effect timing')
+        if not healthy:
+            need(c['first_return']['status']=='execution_failed' and c['first_return']['execution']['failed_op']==0 and c['first_return']['execution']['completed_ops']==[],'first fault no completed prefix/tail')
+            need(c['original_exception_custody']==[{'cause_is_original_fault':True,'failed_op':0,'completed_ops':[]}],'same original error identity/prefix')
+            faultname='post_before_effect_fault' if before else 'post_after_effect_fault' if label=='key_partial_post_then_raises' else 'dispose_after_effect_fault'
+            fault_indices=[i for i,x in enumerate(trace) if x['event']==faultname];need(len(fault_indices)==1 and fault_indices[0]<markers['first_dispatch_end'][0],'one recorded original fault boundary')
+            post_indices=[i for i,x in enumerate(trace) if x['event']=='post_effect' and i<markers['first_dispatch_end'][0]]
+            need(not post_indices if before else post_indices[0]<fault_indices[0],'fault before/after actual first effect')
+        else:
+            need(c['first_return']['status']=='completed' and c['first_return']['execution']['completed_ops']==[0,1] and c['original_exception_custody']==[],'healthy program completes/cleanup')
+        releases=c['first_return']['execution']['releases'];need(len(releases)==1,'one original cleanup')
+        receipt=releases[0];need(type(receipt['verified']) is bool,'literal cleanup bool')
+        need(receipt['keys_down']==[] and receipt['buttons_down']==[] and receipt['keys_unknown']==[] and receipt['buttons_unknown']==[] and receipt['errors']==[],'actual advertised empty cleanup')
+        need(c['first_owner_tracking']=={'keys':{},'buttons':[]},'recorded owner tracking')
+        need(type(c['first_recovery_required']) is bool and c['first_return']['recovery_required'] is c['first_recovery_required'],'literal owner latch')
+        if c['first_recovery_required']:need(c['fresh_return']['status']=='refused' and not fresh_effects,'quarantine cannot emit followup')
+        held=bool(first_state['keys'] or first_state['buttons'])
+        false_neutral=held and receipt['verified'] is True
+        fail=false_neutral and bool(fresh_effects)
+        need(c['false_verified_neutral'] is false_neutral and c['safety_result']==('FAIL' if fail else 'PASS'),'independent safety classification')
+        need(c['fresh_return']['status']=='completed','recorded source admitted fresh program')
+        summaries.append({'label':label,'derived_first_state':first_state,'followup_effects':len(fresh_effects),'original_first_cleanup_verified':receipt['verified'],'derived_safety':'FAIL' if fail else 'PASS'})
+    return summaries
+derived=reduce(raw)
+need([x['derived_safety'] for x in derived]==['PASS','FAIL','FAIL','FAIL','PASS'],'preserve first3 failures/two controls')
+controls=[]
+def control(label,mutate):
+    d=copy.deepcopy(raw);mutate(d)
+    try:reduce(d)
+    except ValueError as e:controls.append({'label':label,'rejected':True,'reason':str(e)});return
+    raise ValueError('ineffective control '+label)
+def trace_event(c,name):return next(x for x in c['trace'] if x['event']==name)
+control('coherent wrong original request',lambda d:(d['cells'][1]['first_program']['ops'][0].update(key='S'),trace_event(d['cells'][1],'first_dispatch_start')['program']['ops'][0].update(key='S')))
+control('false reported first neutral state',lambda d:d['cells'][1].update(first_virtual_state={'keys':[],'buttons':[]}))
+control('reported zero fresh effects despite full trace',lambda d:d['cells'][2].update(followup_post_effects=0,followup_emissions_delta=0))
+control('missing exact first fault boundary',lambda d:d['cells'][1].update(trace=[x for x in d['cells'][1]['trace'] if x['event']!='dispose_after_effect_fault']))
+control('lost original exception identity',lambda d:d['cells'][3]['original_exception_custody'][0].update(cause_is_original_fault=False))
+control('invented completed first operation',lambda d:(d['cells'][1]['first_return']['execution'].update(completed_ops=[0]),trace_event(d['cells'][1],'first_dispatch_end')['row']['execution'].update(completed_ops=[0])))
+control('native call hidden by inert label',lambda d:d.update(native_calls=['graphics library']))
+control('original author fixture imported',lambda d:d['source_before_after_exact'].append({'path':'runtime/backends/quartz_v1/test_release_faults.py','bytes':0,'sha256':'unknown'}))
+control('noninteger clock masquerades as timestamp',lambda d:d['cells'][3]['trace'][-1].update(monotonic_ns='36616203000000'))
+control('changed derived safety label',lambda d:d['cells'][1].update(safety_result='PASS'))
+control('integer1 cleanup masquerades as true',lambda d:(d['cells'][1]['first_return']['execution']['releases'][0].update(verified=1),trace_event(d['cells'][1],'first_dispatch_end')['row']['execution']['releases'][0].update(verified=1)))
+control('first acquiring request secretly replayed as fresh',lambda d:(d['cells'][1]['fresh_program']['ops'][0].update(key='A'),trace_event(d['cells'][1],'fresh_dispatch_start')['program']['ops'][0].update(key='A')))
+pub=j(N/'PUBLICATION_MAP.json');bypublic={x['public_path']:x for x in pub}
+for row in pub:
+    b=(N/row['public_path']).read_bytes();need(len(b)==row['published']['bytes'] and sha(b)==row['published']['sha256'],'full public derivative '+row['public_path'])
+old_sources={sha(p.read_bytes()) for p in (A/'sources').glob('*')}
+history=[]
+def summary(stderr,total,failures,errors):
+    need(re.findall(r'Ran (\d+) tests? in',stderr.decode())==[str(total)],'full unittest method count')
+    footer=stderr.decode().splitlines()[-1]
+    if failures or errors:need(footer.startswith('FAILED') and (f'failures={failures}' in footer if failures else 'failures=' not in footer) and (f'errors={errors}' in footer if errors else 'errors=' not in footer),'original fail/error footer')
+    else:need(footer=='OK','complete success footer')
+for label,total,failed,errors,exitcode in [('baseline',16,2,11,1),('repaired',16,0,0,0),('boundary-first',18,1,1,1),('boundary-repaired',18,0,0,0),('affected',71,0,0,0)]:
+    meta=j(A/'checks'/f'{label}.json');need(meta['exit_code']==exitcode and meta['child_reaped'] is True and meta['timed_out'] is False,'old first process outcome')
+    need(meta['source_sha256_before']==meta['source_sha256_after'] and all(h in old_sources for h in meta['source_sha256_before'].values()),'old exact captured sources')
+    for name in ['stdout','stderr']:
+        b=(A/'checks'/f'{label}-{name}.txt').read_bytes();item=meta['streams'][name];need(len(b)==item['bytes'] and sha(b)==item['sha256'],'old complete original stream')
+    summary((A/'checks'/f'{label}-stderr.txt').read_bytes(),total,failed,errors)
+    history.append({'stage':'old/'+label,'methods':total,'assertion_failures':failed,'errors':errors,'exit':exitcode,'original_stream_source_joins':True})
+for label,total,failed,errors,exitcode in [('baseline',12,15,3,1),('repaired',30,0,0,0),('affected',83,0,0,0),('final-boundaries',85,0,0,0)]:
+    folder=N/'checks'/label;start=j(folder/'START.json');end=j(folder/'END.json')
+    need(all(end[k]==v for k,v in start.items()) and end['exit_code']==exitcode and end['child_reaped'] is True and start['started_utc']<end['ended_utc'],'new start/end custody')
+    for p,pin in end['source_pins'].items():
+        b=(folder/(p.replace('/','__')+'.txt')).read_bytes();need(len(b)==pin['bytes'] and sha(b)==pin['sha256'],'new exact stage source snapshot')
+    for name in ['stdout','stderr']:
+        rel='checks/'+label+'/'+name+'.txt';b=(N/rel).read_bytes();item=end[name+'.txt']
+        if sha(b)!=item['sha256']:
+            need(rel in bypublic and bypublic[rel]['derivative'] is True and bypublic[rel]['original']==item,'explicit original/public stream join')
+        else:need(len(b)==item['bytes'],'new original stream count')
+    summary((folder/'stderr.txt').read_bytes(),total,failed,errors)
+    history.append({'stage':'new/'+label,'methods':total,'assertion_failures':failed,'errors':errors,'exit':exitcode,'original_public_stream_source_joins':True})
+for label,total in [('combined',85),('neighbor',9)]:
+    start=j(N/f'{label}-START.json');end=j(N/f'{label}-END.json')
+    need(all(end[k]==v for k,v in start.items()) and end['exit_code']==0 and end['child_reaped'] is True,'combination first outcome')
+    for name in ['stdout','stderr']:
+        b=(N/f'{label}-{name}.txt').read_bytes();item=end[name];need(len(b)==item['bytes'] and sha(b)==item['sha256'],'combination streams')
+    summary((N/f'{label}-stderr.txt').read_bytes(),total,0,0)
+    history.append({'stage':label,'methods':total,'exit':0,'author_only_combination':True})
+trace=j(N/'trace-six-rows.json');six=[]
+need(len(trace['rows'])==6,'all six prior policy rows')
+for row in trace['rows']:
+    arm=row['arm'];sticky=row['sticky_A'];posts=[x for x in row['followup_api_calls'] if x[0]=='post']
+    need(type(sticky) is bool and row['followup_emissions']==len(posts),'source policy effects')
+    if sticky and arm!='prior_quartz':
+        need(not posts and not row['followup_api_calls'] and row['second']['error']=='INPUT_RECOVERY_REQUIRED' and row['second']['input_dispatched'] is False,'reference/transfer sticky blocks')
+    elif sticky:need(len(posts)==3 and row['first']['status']=='release_unverified' and row['second']['status']=='release_unverified','preserved prior sticky failure')
+    else:need(len(posts)==2 and row['first']['status']==row['second']['status']=='completed','healthy reference policy control')
+    six.append({'arm':arm,'sticky':sticky,'followup_events':len(posts)})
+result={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'own_five_derived':derived,'effective_copied_semantic_controls':controls,'historical_first_outcomes':history,'six_original_saved_policy_rows':six,'public_provenance_rows':len(pub),'private_originals_authenticated':False,'original_trace_reducer_individual_child_PID_exit_receipts':'not captured; remains unproven, not supplied by this reader','source_or_producer_author_helper_imports_or_executions':0,'original_formal_native_auditor_replays':0,'main_writes':0}
+(O/'DATA-RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))

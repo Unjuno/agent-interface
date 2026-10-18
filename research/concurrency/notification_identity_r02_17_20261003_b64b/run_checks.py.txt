@@ -1,0 +1,7 @@
+import pathlib,subprocess,datetime,json,os,sys,hashlib
+p=pathlib.Path(__file__).resolve().parent;arm=sys.argv[1];out=p/(arm+'-run');out.mkdir(exist_ok=False)
+a=[sys.executable,'-B','-m','unittest','discover','-s','.','-p','test_*.py','-v'];start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+with (out/'stdout').open('wb') as stdout,(out/'stderr').open('wb') as stderr:
+ q=subprocess.Popen(a,cwd=p/arm,stdout=stdout,stderr=stderr,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'});code=q.wait(timeout=30)
+r={'arm':arm,'argv':a,'pid':q.pid,'started_utc':start,'finished_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit_code':code,'source_sha256':hashlib.sha256((p/arm/'codex_app_server_client_v2.py').read_bytes()).hexdigest(),'test_sha256':hashlib.sha256((p/arm/'test_notification_identity.py').read_bytes()).hexdigest()}
+(out/'receipt.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r));print((out/'stdout').read_text());print((out/'stderr').read_text()[-700:]);sys.exit(code)

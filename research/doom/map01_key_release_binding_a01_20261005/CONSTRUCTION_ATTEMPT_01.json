@@ -1,0 +1,9 @@
+{
+  "attempt": "A01",
+  "disposition": "HOLD_RUNNER_OUTPUT_MOUNT_MISCONFIGURED",
+  "source_mount": "read-only /src",
+  "failure": "candidate.py attempted to write candidate-output.json beside source under /src; the container correctly rejected the write",
+  "candidate_or_auditor_output": "none",
+  "meaning": "runner/path construction defect only; no contract case was evaluated and no scientific or method verdict was produced",
+  "preserved_frozen_source": true
+}

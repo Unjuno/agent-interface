@@ -1,0 +1,5 @@
+The first redaction-audit construction exited before writing an audit result.
+Root cause: it resolved `events.jsonl` relative to the package root, while the
+published copy is under `raw/`. No candidate, model, or source data was changed.
+The corrected, separately versioned v3 audit resolves each published path from
+its recorded location and also checks the sanitized source-event copy.

@@ -1,0 +1,55 @@
+{
+  "checks": [
+    {
+      "check": "all packaged artifacts match the frozen artifact manifest",
+      "ok": true
+    },
+    {
+      "check": "SHA256SUMS agrees with the artifact manifest",
+      "ok": true
+    },
+    {
+      "check": "all frozen source snapshots match byte counts and SHA-256",
+      "ok": true
+    },
+    {
+      "check": "release-batch implementation requires up_batch",
+      "ok": true
+    },
+    {
+      "check": "archived owner dispatch has no up_batch implementation",
+      "ok": true
+    },
+    {
+      "check": "current owner has the batch implementation",
+      "ok": true
+    },
+    {
+      "check": "run stdout equals retained result",
+      "ok": true
+    },
+    {
+      "check": "probe exit receipt is zero and output names the frozen archived owner",
+      "ok": true
+    },
+    {
+      "check": "actual archived-owner call rejects up_batch as recorded",
+      "ok": true
+    },
+    {
+      "check": "owner/display close and join completed with no XTest call",
+      "ok": true
+    },
+    {
+      "check": "decision gates match observed FAIL_COMPATIBILITY",
+      "ok": true
+    },
+    {
+      "check": "run record pins executed probe",
+      "ok": true
+    }
+  ],
+  "schema": "v15_releasebatch_legacy_owner_compat_a01_audit_v1",
+  "scope": "Inert fake-X owner API compatibility only. No input-down admission, native XTest, live X server, GUI, game, model, physical release, ordering, useful feedback, task effect, recovery, timing, or live threat exposure.",
+  "status": "PASS_COMPATIBILITY_FAILURE_REPRODUCED"
+}

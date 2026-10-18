@@ -1,0 +1,25 @@
+{
+  "model_id": "EPISODIC-MEMORY-SCHEDULE-8406-T0-A01-20261008",
+  "issue": 8406,
+  "parent_issue": 7418,
+  "parent_fixture": "research/analysis/exception_preserving_skill_7418_t0_20261004/fixture.json",
+  "parent_fixture_sha256": "1c8b74dfdd8ec7c5a5950133709ae95e40cc687edb12ac128d66f696c79e54fb",
+  "source_corpus": "The 12 immutable source episodes in the exact merged #7418 fixture; no episode, query, oracle, or parent result is rewritten.",
+  "arms": {
+    "episodic_only": "No derived manifest writes; raw episode ledger remains queryable through the current prefix.",
+    "per_episode": "Write a lossless ID+hash manifest after every source episode.",
+    "batch_4": "Write a lossless ID+hash manifest after episodes 4, 8, and 12.",
+    "terminal": "Write one lossless ID+hash manifest after episode 12 only."
+  },
+  "checkpoints": [3, 6, 9, 12],
+  "query_ids": ["heldout-04", "protected-heldout", "contradictory", "unrepresented"],
+  "retrieval": "At each checkpoint, expose the intersection of the query's independently pinned source episode IDs with the arm's available prefix. The fixture emits source availability only; it does not answer the query.",
+  "expected": {
+    "episodes": 12,
+    "query_visibility_rows_per_arm": 16,
+    "query_visibility_rows_total": 64,
+    "update_counts": {"episodic_only": 0, "per_episode": 12, "batch_4": 3, "terminal": 1},
+    "mutation_controls": ["forged_provenance", "omit_rare_exception", "collapse_conflict_as_safe", "mutate_episode", "misalign_checkpoint"]
+  },
+  "limits": "T0 schedule/provenance method check only. No model, statistical schedule sensitivity, learned memory, GUI, action, task effect, safety, token or runtime claim."
+}

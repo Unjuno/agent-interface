@@ -1,0 +1,158 @@
+{
+  "answer": {
+    "contract": {
+      "actions": [
+        {
+          "expected_effect": [
+            {
+              "predicate": "exact_token_visible",
+              "value": true
+            }
+          ],
+          "name": "enter_authorized_token",
+          "operation": "enter_token",
+          "target_symbol": "value_field"
+        },
+        {
+          "expected_effect": [
+            {
+              "predicate": "exact_saved_title",
+              "value": true
+            }
+          ],
+          "name": "save_value",
+          "operation": "submit_form",
+          "target_symbol": "save_button"
+        }
+      ],
+      "interface_id": "observation_fixture",
+      "method": {
+        "initial_state": "enter_token",
+        "max_runtime_ms": 10000,
+        "max_transitions": 3,
+        "name": "token_save_flow",
+        "states": [
+          {
+            "branches": [
+              {
+                "action": "enter_authorized_token",
+                "next_state": "submit_value",
+                "outcome": "action",
+                "reason": null,
+                "when": [
+                  {
+                    "predicate": "target_valid",
+                    "value": true
+                  }
+                ]
+              }
+            ],
+            "name": "enter_token"
+          },
+          {
+            "branches": [
+              {
+                "action": "save_value",
+                "next_state": "verify_saved",
+                "outcome": "action",
+                "reason": null,
+                "when": [
+                  {
+                    "predicate": "target_valid",
+                    "value": true
+                  },
+                  {
+                    "predicate": "exact_token_visible",
+                    "value": true
+                  }
+                ]
+              }
+            ],
+            "name": "submit_value"
+          },
+          {
+            "branches": [
+              {
+                "action": null,
+                "next_state": null,
+                "outcome": "complete",
+                "reason": null,
+                "when": [
+                  {
+                    "predicate": "exact_saved_title",
+                    "value": true
+                  }
+                ]
+              }
+            ],
+            "name": "verify_saved"
+          }
+        ],
+        "version": "1.0"
+      },
+      "symbols": [
+        {
+          "name": "value_field",
+          "role": "field"
+        },
+        {
+          "name": "save_button",
+          "role": "submit"
+        }
+      ]
+    },
+    "field_point": [
+      700,
+      560
+    ],
+    "submit_point": [
+      689,
+      634
+    ],
+    "value_crop": [
+      500,
+      544,
+      800,
+      574
+    ]
+  },
+  "answer_sha256": "f63ecb0795f68d17c71213ef4f06d1d725e1593f6cb0f474a228130c47f0c83c",
+  "argv_sha256": "1c3f5697696fa9678b1cf5d3bcee1f305d29617ebdbee7afd121c866dc36f65a",
+  "candidate_sha256": "48549d1000a0a307436479fe64ae47fb0322d1e42f2a90a70e613691445526a7",
+  "cli_version": "codex-cli 0.146.1",
+  "elapsed_ns": 22082405375,
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.completed",
+    "turn.completed"
+  ],
+  "exit_code": 0,
+  "image_sha256": "64f862340539dc803d904aaed6ddd7a63c0a1aef2869c06353ee0c0bb0e39309",
+  "prompt_sha256": "d4ca75d16844d4e1e11a5621fe5eed89f5206f9c2f2814d5e5c8d47db0e34c98",
+  "provider_attempts": 1,
+  "requested_effort": "low",
+  "requested_model": "gpt-5.6-luna",
+  "schema_sha256": "1b79d332398ea3e9d816c4982c441a34b4536a79d4fc0be2a9fac7457876d964",
+  "status": "captured",
+  "stderr_sha256": "83760bd842b1fafaee7cbeb77f17d4e20f008b546bd8397b7d0d52cda46427aa",
+  "stdout_sha256": "9f708f4d897b0df68c8b6f0642c41c6e6d52ec3dbdd276467ba438b40fc9cf4c",
+  "task_index": 6,
+  "task_row_sha256": "2fb651fbb61f11e438042b1a493a455f51ba9795514b3d89c670c1bf6045ce7c",
+  "thread_ids": [
+    "01a105cb-b562-7381-8d3a-1c1957e88f95"
+  ],
+  "timed_out": false,
+  "usage_events": [
+    {
+      "type": "turn.completed",
+      "usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 13786,
+        "output_tokens": 657,
+        "reasoning_output_tokens": 344
+      }
+    }
+  ]
+}

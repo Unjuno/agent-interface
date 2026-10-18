@@ -1,0 +1,22 @@
+test_collapsing_second_episode_to_first_actuation_is_rejected (test_repeat_v2.RepeatEpisodeSupplement.test_collapsing_second_episode_to_first_actuation_is_rejected) ... FAIL
+test_incomplete_episode_is_rejected (test_repeat_v2.RepeatEpisodeSupplement.test_incomplete_episode_is_rejected) ... ok
+test_mixed_context_is_rejected (test_repeat_v2.RepeatEpisodeSupplement.test_mixed_context_is_rejected) ... ok
+test_overlapping_same_key_episodes_are_rejected (test_repeat_v2.RepeatEpisodeSupplement.test_overlapping_same_key_episodes_are_rejected) ... ok
+test_valid_repeated_key_pair_matches_independent_audit (test_repeat_v2.RepeatEpisodeSupplement.test_valid_repeated_key_pair_matches_independent_audit) ... ok
+
+======================================================================
+FAIL: test_collapsing_second_episode_to_first_actuation_is_rejected (test_repeat_v2.RepeatEpisodeSupplement.test_collapsing_second_episode_to_first_actuation_is_rejected)
+----------------------------------------------------------------------
+ValueError: exactly two distinct actuation identities required
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\agent-interface-repeat-key-audit\research\doom\map01_v39_perkey_repeat_episode_a01_20261005\test_repeat_v2.py", line 26, in test_collapsing_second_episode_to_first_actuation_is_rejected
+    with self.assertRaisesRegex(ValueError, "exactly two edges"):
+AssertionError: "exactly two edges" does not match "exactly two distinct actuation identities required"
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (failures=1)

@@ -1,0 +1,127 @@
+{
+  "input_sha256": "782cc4f8d85364a6bed2de55ad2b399ba9ecbbf1b43cff9a494ddacd6ab019b5",
+  "rows": [
+    {
+      "case_id": "varying_carbon",
+      "feasible_count": 105,
+      "global_lexicographic": {
+        "a": 0,
+        "b": 2,
+        "c": 3
+      },
+      "same": true,
+      "serial_asap": {
+        "a": 0,
+        "b": 2,
+        "c": 3
+      }
+    },
+    {
+      "case_id": "no_flex",
+      "feasible_count": 1,
+      "global_lexicographic": {
+        "a": 0,
+        "b": 1
+      },
+      "same": true,
+      "serial_asap": {
+        "a": 0,
+        "b": 1
+      }
+    },
+    {
+      "case_id": "flat_carbon",
+      "feasible_count": 12,
+      "global_lexicographic": {
+        "a": 0,
+        "b": 1
+      },
+      "same": true,
+      "serial_asap": {
+        "a": 0,
+        "b": 1
+      }
+    },
+    {
+      "case_id": "inverted_carbon",
+      "feasible_count": 12,
+      "global_lexicographic": {
+        "a": 0,
+        "b": 1
+      },
+      "same": true,
+      "serial_asap": {
+        "a": 0,
+        "b": 1
+      }
+    },
+    {
+      "case_id": "long_job",
+      "feasible_count": 20,
+      "global_lexicographic": {
+        "long": 0,
+        "short": 3
+      },
+      "same": true,
+      "serial_asap": {
+        "long": 0,
+        "short": 3
+      }
+    },
+    {
+      "case_id": "precedence",
+      "feasible_count": 10,
+      "global_lexicographic": {
+        "consume": 1,
+        "prepare": 0
+      },
+      "same": true,
+      "serial_asap": {
+        "consume": 1,
+        "prepare": 0
+      }
+    },
+    {
+      "case_id": "cancellation",
+      "feasible_count": 5,
+      "global_lexicographic": {
+        "live": 0
+      },
+      "same": true,
+      "serial_asap": {
+        "live": 0
+      }
+    },
+    {
+      "case_id": "infeasible_window",
+      "feasible_count": 0,
+      "global_lexicographic": null,
+      "same": true,
+      "serial_asap": null
+    },
+    {
+      "case_id": "mandatory_guard",
+      "feasible_count": 12,
+      "global_lexicographic": {
+        "mandatory": 0,
+        "optional": 1
+      },
+      "same": true,
+      "serial_asap": {
+        "mandatory": 0,
+        "optional": 1
+      }
+    },
+    {
+      "case_id": "priority_deadend_discriminator",
+      "feasible_count": 2,
+      "global_lexicographic": {
+        "A": 1,
+        "B": 0
+      },
+      "same": false,
+      "serial_asap": null
+    }
+  ],
+  "scope": "finite comparator semantics only"
+}

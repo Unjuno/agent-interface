@@ -89,6 +89,28 @@ class Executor(Previous):
                        "matched": matched, "requested_ns": time.perf_counter_ns()})
             return matched
 
+    @staticmethod
+    def _preserve_release_batch_custody(release, worker_publication, cleanup_publication):
+        has_worker_publication = isinstance(worker_publication, dict)
+        if has_worker_publication:
+            release["release_batch_delivery"] = dict(worker_publication)
+        if (isinstance(cleanup_publication, dict)
+                and cleanup_publication != worker_publication):
+            field = ("release_batch_cleanup_delivery" if has_worker_publication
+                     else "release_batch_delivery")
+            release[field] = dict(cleanup_publication)
+
+    @staticmethod
+    def _measurement_publish_error(exc):
+        publication = getattr(exc, "measurement_publish_error", None)
+        if type(publication) is not dict:
+            return None
+        error_type = publication.get("type")
+        message = publication.get("message")
+        if type(error_type) is not str or type(message) is not str:
+            return None
+        return {"type": error_type[:80], "message": message[:200]}
+
     def _run(self, identifier, steps, lease):
         try:
             self._run_with_watcher_cleanup(identifier, steps, lease)
@@ -99,6 +121,22 @@ class Executor(Previous):
 
     def _run_with_watcher_cleanup(self, identifier, steps, lease):
         status = "completed"; error = None; completed = 0; decision_reason = None
+        release_batch_publication = None
+        cancelled_pending_ups = []
+        measurement_publish_error = None
+        process_exception = None; process_traceback = None
+
+        def preserve_exception_custody(exc):
+            nonlocal release_batch_publication, cancelled_pending_ups
+            nonlocal measurement_publish_error
+            publication = getattr(exc, "release_batch_publication", None)
+            if isinstance(publication, dict):
+                release_batch_publication = dict(publication)
+            pending = getattr(exc, "cancelled_pending_ups", None)
+            if isinstance(pending, list):
+                cancelled_pending_ups = [dict(row) for row in pending
+                                         if isinstance(row, dict)]
+            measurement_publish_error = self._measurement_publish_error(exc)
         try:
             for index, step in enumerate(steps):
                 if lease.is_set(): raise Cancelled()
@@ -109,14 +147,21 @@ class Executor(Previous):
                 completed += 1
                 self.emit({"event": "step_completed", "id": identifier, "step": index,
                            "completed_ns": time.perf_counter_ns()})
-        except Expired:
+        except Expired as exc:
+            preserve_exception_custody(exc)
             status = "expired"
         except DecisionRequired as exc:
+            preserve_exception_custody(exc)
             status = "needs_decision"; decision_reason = str(exc) or None
-        except Cancelled:
+        except Cancelled as exc:
+            preserve_exception_custody(exc)
             status = "cancelled"
-        except Exception as exc:
+        except BaseException as exc:
             status = "failed"; error = repr(exc)
+            preserve_exception_custody(exc)
+            if not isinstance(exc, Exception):
+                process_exception = exc
+                process_traceback = exc.__traceback__
         finally:
             # An owner-originated focus/surface event is already available here.
             # For explicit cancellation, allow one owner polling interval before
@@ -126,11 +171,54 @@ class Executor(Previous):
             self._publish_cause_once(identifier, lease)
             try:
                 release = self.backend.release_all()
+                if release_batch_publication is not None:
+                    release = dict(release)
+                    cleanup_publication = release.get("release_batch_delivery")
+                    self._preserve_release_batch_custody(
+                        release, release_batch_publication, cleanup_publication
+                    )
                 if release.get("verified") is not True:
                     status = "failed"; error = "input release not verified"
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
+                cancelled_pending = getattr(exc, "cancelled_pending_ups", None)
+                if isinstance(cancelled_pending, list):
+                    release["cancelled_pending_ups"] = [dict(row)
+                                                         for row in cancelled_pending]
                 status = "failed"
+                publication = getattr(exc, "release_batch_publication", None)
+                self._preserve_release_batch_custody(
+                    release, release_batch_publication, publication
+                )
+            except BaseException as exc:
+                release = {"verified": False, "error": repr(exc)}
+                cancelled_pending = getattr(exc, "cancelled_pending_ups", None)
+                if isinstance(cancelled_pending, list):
+                    release["cancelled_pending_ups"] = [dict(row)
+                                                         for row in cancelled_pending]
+                status = "failed"
+                if error is None:
+                    error = repr(exc)
+                publication = getattr(exc, "release_batch_publication", None)
+                self._preserve_release_batch_custody(
+                    release, release_batch_publication, publication
+                )
+                if process_exception is None:
+                    process_exception = exc
+                    process_traceback = exc.__traceback__
+            if cancelled_pending_ups:
+                release = dict(release)
+                retained = release.get("cancelled_pending_ups")
+                # Worker-exception dispositions precede dispositions attached
+                # by final cleanup. Keep that causal order in the terminal
+                # receipt while avoiding duplicates copied across both errors.
+                combined = [dict(row) for row in cancelled_pending_ups]
+                for row in retained if isinstance(retained, list) else []:
+                    if not isinstance(row, dict):
+                        continue
+                    if row not in combined:
+                        combined.append(dict(row))
+                release["cancelled_pending_ups"] = combined
             if status == "completed":
                 try:
                     if lease.is_set(): raise Cancelled()
@@ -149,16 +237,21 @@ class Executor(Previous):
             # terminal makes program_terminal_pending false.
             self._publish_cause_once(identifier, lease)
             with self.lock:
-                self.emit({"event": "terminal", "id": identifier, "status": status,
+                terminal = {"event": "terminal", "id": identifier, "status": status,
                            "error": error, "steps_completed": completed,
                            "release": release, "interruption": interruption,
                            "decision_reason": decision_reason,
                            "terminal_ns": time.perf_counter_ns(),
-                           "semantic_completion": "program status only; task scoring is separate"})
+                           "semantic_completion": "program status only; task scoring is separate"}
+                if measurement_publish_error is not None:
+                    terminal["measurement_publish_error"] = measurement_publish_error
+                self.emit(terminal)
                 self.active = None
             stop = self.release_watch_stops.get(identifier)
             if stop is not None:
                 stop.set()
+        if process_exception is not None:
+            raise process_exception.with_traceback(process_traceback)
 
     def close(self):
         super().close()

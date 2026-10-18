@@ -1,0 +1,16 @@
+import ast,hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parents[2];work=Path(__file__).resolve().parent;out=root/'outputs/x11-explicit-up-01a0ff2c'
+source=json.loads((out/'SOURCE_INPUTS.json').read_text(encoding='utf8'))
+before=next(r['content'] for r in source['records'] if r['path'].endswith('x11_v1/backend.py'))
+blocks=['        if not down:\n            self.held_buttons.discard(button)\n','        if not down:\n            self.held_keycodes.pop(key, None)\n']
+after=before
+for block in blocks:
+    if after.count(block)!=1:raise ValueError('exact production source site absent')
+    after=after.replace(block,'',1)
+methods=lambda src:{n.name:ast.dump(n,include_attributes=False) for n in ast.walk(ast.parse(src)) if isinstance(n,ast.FunctionDef)}
+a,b=methods(before),methods(after);changed=sorted(k for k in a if a[k]!=b[k])
+if changed!=['key_state','pointer_button']:raise ValueError(changed)
+(work/'candidate_backend.py.txt').write_bytes(after.encode())
+result={'changed_methods':changed,'before_bytes':len(before.encode()),'after_bytes':len(after.encode()),'before_sha256':hashlib.sha256(before.encode()).hexdigest(),'after_sha256':hashlib.sha256(after.encode()).hexdigest(),'release_all_unchanged':a['release_all']==b['release_all'],'scope':'Only explicit UP retirement deleted; complete existing state queries own retirement','initial_fixture_failure_retained':'baselineRED/test_untracked_up expected release_unverified but strict core returned INVALID_PROGRAM before0emissions. Corrected test preserves core refusal and separately tests direct backend ownership; first source/raw untouched.'}
+(out/'REPAIR.json').write_text(json.dumps(result,indent=2),encoding='utf8');print(json.dumps(result))

@@ -1,0 +1,4 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+PASS_METHOD_SCOPED_HOST
+{"channel_true_positives": {"post_effect_audit": 7, "runtime": 4, "verifier": 3, "watcher": 3}, "controls": 6, "false_reports": {"post_effect_audit": [], "runtime": ["N16"], "verifier": [], "watcher": []}, "faults": 12, "missed_by_all": ["F02", "F04", "F08"], "opportunities": 18, "runtime_watcher": {"chapman_estimate": 7.0, "n1": 5, "n2": 3, "naive_estimate": 7.5, "naive_underestimate_fraction": 0.375, "oracle_fault_total": 12, "overlap": 2}, "union_detected_faults": 9, "union_recall": 0.75, "unknown_cells": [["N18", "verifier"]]}
+container transfer gate: HOLD_CONTAINER_TRANSFER (not exercised)

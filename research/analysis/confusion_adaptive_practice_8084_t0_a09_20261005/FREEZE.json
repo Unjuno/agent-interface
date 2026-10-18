@@ -1,0 +1,30 @@
+{
+  "allocation": "CONFUSION-ADAPTIVE-PRACTICE-8084-A09-20261005-01",
+  "frozen_at_local": "2026-10-05",
+  "base_main": "cc2eb4a205bb8f8001b1baed05f482208c0b0935",
+  "branch": "research/8084-diagnostic-overdispersion-a09-20261005",
+  "protocol": "PROTOCOL.md",
+  "host": "Windows x64; CPython 3.12.10",
+  "interpreter": "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "execution": {
+    "network": "none by source design",
+    "container": "none; host-process boundary, weaker isolation disclosed",
+    "candidate_runs": 1,
+    "auditor_launches": 1,
+    "fixture_generator_runs": 1,
+    "replicates_per_profile_sample_size": 5000,
+    "beta_concentration": 40,
+    "seed_base": 8709000,
+    "distinct_prior_seed_bases": [8406000, 8507000, 8608000]
+  },
+  "sha256_lf_normalized": {
+    "PROTOCOL.md": "1C2C9701A6C6D139713DCDFF1567C75D89A8BC057D40381B3FCAC6BD5E608012",
+    "SCORING.json": "70FD9E8FEA9C432724F1B18D157AEC477EA1F638D380798F4C613C483E3C3046",
+    "generate.py": "E1FFDF29B2EDC9DA296E99573BC9A1EF39847C89ED3B1E68F4B7A0377FB49675",
+    "candidate/candidate.py": "449CD0FF100F8D633C1DFD651BA672621AEDF33C26F6EA7483CB369FB3C5891F",
+    "auditor/auditor.py": "0BDE71F26FB1D30B3937E92DD1D606DE03A97BE2B8B3C9C3625BBD16ABF0A6BE",
+    "test_method.py": "D0FFF66BE883F125A11BA7CC30F6690951539E9F65DECC57E2EDD081A7C07398"
+  },
+  "construction_tests": "5/5 normal and 5/5 under -O passed before freeze; earlier assertion mismatches are retained under results/",
+  "prior_allocation_disposition": "A06/A07 STOP and A08 scoped result remain unchanged; no prior observations reused"
+}

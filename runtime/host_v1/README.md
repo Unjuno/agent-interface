@@ -394,7 +394,9 @@ pending image after verified release; one explicit `primary.observe()` on the
 same live connection returned the task-bound completion cue. Save was issued
 once. Review the pending image as incomplete, then review the new image before
 claiming visible completion. Choose an observation budget and stopping rule for
-the task; if its cue is still absent, retain an unresolved outcome rather than
+the task; the optional `maxExplicitObservations` caller setting enforces a hard
+count across convenience and lower-level observation calls. If the cue is still
+absent when the budget is exhausted, retain an unresolved outcome rather than
 repeating input or observing indefinitely. This authored single case establishes
 the continuation mechanics, not a general semantic detector or a wait default.
 

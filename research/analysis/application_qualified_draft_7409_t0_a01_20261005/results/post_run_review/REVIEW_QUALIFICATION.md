@@ -1,0 +1,9 @@
+# Post-run qualification — original PASS not accepted
+
+The formal `audit.json` is retained byte-for-byte with its original `METHOD_PASS_SCOPED` disposition. A review of the frozen source and raw result found that the T0 gate requiring a live-revision check was not actually demonstrated. The overall allocation disposition is therefore **`HOLD_AUDIT_WEAKNESS`**. Candidate/auditor invocation counts remain 1/1, retries 0; this review did not rerun either formal role or alter any raw output.
+
+In `frozen/candidate.py`, the candidate obtains `human_revision` from the fixture, computes field overlaps, and never reads `base_revision` or compares the draft's base revision with the current live revision. It emits `revision_checked: true` as a constant in the conflict, promotion-hold, and promotion records. The promoted C4 row has no observed base/current revision pair or comparison receipt in raw output.
+
+The auditor independently reconstructs field overlaps, but `frozen/auditor.py` also hardcodes `revision_checked: true` in its expected rows. Its `unchecked_revision_change` mutation only flips that boolean and is rejected by full-row equality. That demonstrates output consistency with the auditor's expected record, not that an actual revision comparison occurred or prevented stale promotion.
+
+The source lines and retained raw hash are recorded in [`qualification.json`](qualification.json). The original six case outputs, 6/6 mutation rejection report, source, and runner receipts remain preserved unchanged. The disjoint merges and conflict/refusal outputs remain fixture observations, but the declared overall T0 gate is **not accepted**. A future test would need a new allocation whose candidate emits the exact compared base/current revisions and whose independent auditor checks that a mismatched or omitted comparison cannot promote. The existing A01 must not be rerun.

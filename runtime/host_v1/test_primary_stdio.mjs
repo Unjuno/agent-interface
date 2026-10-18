@@ -4,6 +4,8 @@ import {PassThrough,Writable} from 'node:stream';
 import {mkdtemp,readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import {createPrimaryExchange} from './primary_exchange.mjs';
 import {servePrimaryLines,validatePrimaryConfig,runPrimaryStdio} from './primary_stdio.mjs';
 
@@ -114,4 +116,174 @@ test('malformed command identity stays bounded and does not become a valid corre
   s.input.end(JSON.stringify({id:{not:'number'},method:'x'.repeat(1000)})+'\n');await pending;
   const row=s.rows()[0];assert.equal(row.status,'command_error');
   assert.equal(row.command_id,null);assert.equal(row.command_method,null);assert.equal(row.replay_allowed,false);
+});
+
+function inputReadFailureProbe(duringCommand) {
+  const source=`(async()=>{
+    const {PassThrough}=require('node:stream');
+    const {servePrimaryLines}=await import('./runtime/host_v1/primary_stdio.mjs');
+    const input=new PassThrough(),output=new PassThrough();
+    let finish,calls=0,completed=0,settled=false,bytes='';
+    output.on('data',chunk=>{bytes+=chunk;});
+    const exchange={state:()=>({next_id:calls+1}),execute:async()=>{
+      calls++;await new Promise(resolve=>{finish=resolve;});completed++;return {id:1};
+    }};
+    const pending=servePrimaryLines({exchange,input,output}).then(
+      ()=>{throw Error('read failure unexpectedly resolved');},
+      error=>{settled=true;if(error.message!=='injected input read failure')throw error;}
+    );
+    if(${duringCommand}){
+      input.write('{"id":1}\\n');
+      await new Promise(resolve=>setImmediate(resolve));
+    }
+    input.destroy(Error('injected input read failure'));
+    await new Promise(resolve=>setImmediate(resolve));
+    if(${duringCommand}){
+      if(settled||completed||calls!==1)throw Error('abandoned committed command');
+      finish();
+    }
+    await pending;
+    console.log(JSON.stringify({calls,completed,settled,rows:bytes.trim()?bytes.trim().split('\\n').map(JSON.parse):[]}));
+  })().catch(error=>{console.error(String(error));process.exitCode=3;});`;
+  const child=spawnSync(process.execPath,['--eval',source],{
+    cwd:fileURLToPath(new URL('../../',import.meta.url)),encoding:'utf8',timeout:3000
+  });
+  assert.equal(child.status,0,child.stderr||String(child.error));
+  return JSON.parse(child.stdout.trim());
+}
+
+test('input read failure waits for an accepted command and preserves its result',()=>{
+  const result=inputReadFailureProbe(true);
+  assert.equal(result.calls,1);assert.equal(result.completed,1);assert.equal(result.settled,true);
+  assert.deepEqual(result.rows,[{schema:'agent-interface/primary-stdio-v1',status:'returned',result:{id:1}}]);
+});
+
+test('input read failure before a command rejects through the owned transport path',()=>{
+  assert.deepEqual(inputReadFailureProbe(false),{calls:0,completed:0,settled:true,rows:[]});
+});
+
+function ownerChannelFailureProbe(phase) {
+  const fixture=[
+    "const fs=require('node:fs');",
+    "let bytes=0;process.stdin.on('data',chunk=>{bytes+=chunk.length;});",
+    "process.on('exit',code=>fs.writeFileSync(process.argv[1],JSON.stringify({code,bytes})+'\\n',{flag:'wx'}));",
+    'process.stdin.resume();',
+  ].join('\n');
+  const source=`(async()=>{
+    const {PassThrough,Writable}=require('node:stream');
+    const {mkdtemp,readFile}=require('node:fs/promises');
+    const {tmpdir}=require('node:os');const {join}=require('node:path');
+    const {runPrimaryStdio}=await import('./runtime/host_v1/primary_stdio.mjs');
+    const phase=${JSON.stringify(phase)},fault=Error('original '+phase+' failure');
+    const root=await mkdtemp(join(tmpdir(),'primary-owner-channel-'));
+    const input=new PassThrough();let readyResolve,releaseReady,settled=false;
+    const ready=new Promise(resolve=>{readyResolve=resolve;});const writes=[];
+    const output=new Writable({write(chunk,encoding,callback){
+      const value=JSON.parse(chunk.toString());writes.push(value.status);
+      if(value.status==='ready'){
+        if(phase==='ready_input')releaseReady=callback;
+        else callback(phase==='ready_output'?fault:undefined);
+        readyResolve();
+      }else callback(fault);
+    }});
+    const config={host:{command:process.execPath,args:['-e',${JSON.stringify(fixture)},join(root,'fixture-exit.json')],evidenceDirectory:join(root,'host')},route:'guarded-local',exchangeDirectory:join(root,'exchange')};
+    const owner=runPrimaryStdio(config,{input,output}).then(
+      ()=>{throw Error('channel failure unexpectedly resolved');},
+      error=>{settled=true;if(error!==fault)throw error;}
+    );
+    await ready;
+    if(phase==='ready_input'){
+      input.destroy(fault);await new Promise(resolve=>setImmediate(resolve));
+      if(settled)throw Error('owner settled before ready-write observation');releaseReady();
+    }else if(phase==='terminal_output')input.end();
+    await owner;await new Promise(resolve=>setImmediate(resolve));
+    const exit=JSON.parse(await readFile(join(root,'host/exit.json')));
+    const fixtureExit=JSON.parse(await readFile(join(root,'fixture-exit.json')));
+    console.log(JSON.stringify({settled,writes,exit,fixtureExit,listeners:{input:input.listenerCount('error'),output:output.listenerCount('error')}}));
+  })().catch(error=>{console.error(String(error));process.exitCode=3;});`;
+  const child=spawnSync(process.execPath,['--eval',source],{
+    cwd:fileURLToPath(new URL('../../',import.meta.url)),encoding:'utf8',timeout:5000
+  });
+  assert.equal(child.status,0,child.stderr||String(child.error));
+  return JSON.parse(child.stdout.trim());
+}
+
+for(const phase of ['ready_input','ready_output','terminal_output'])
+test('whole owner retains '+phase+' failure and observes its original relay exit',()=>{
+  const result=ownerChannelFailureProbe(phase);
+  assert.equal(result.settled,true);
+  assert.deepEqual(result.exit,{code:0,signal:null});
+  assert.deepEqual(result.fixtureExit,{code:0,bytes:0});
+  assert.deepEqual(result.writes,phase==='terminal_output'?['ready','terminal']:['ready']);
+  assert.deepEqual(result.listeners,{input:0,output:0});
+});
+
+function startupExchangeProbe(injectFailure) {
+  // A separate process confines the builtin-promise boundary hook to this test.
+  // The real mkdir completes; only then inject the owned input error, while
+  // createPrimaryExchange is still awaiting that same promise. No host mocking.
+  const fixture=[
+    "const fs=require('node:fs');let bytes=0;",
+    "fs.writeFileSync(process.argv[1],JSON.stringify({pid:process.pid,ppid:process.ppid})+'\\n',{flag:'wx'});",
+    "process.stdin.on('data',x=>{bytes+=x.length;});",
+    "process.on('exit',code=>fs.writeFileSync(process.argv[2],JSON.stringify({pid:process.pid,code,bytes})+'\\n',{flag:'wx'}));",
+    'process.stdin.resume();',
+  ].join('\n');
+  const source=`(async()=>{
+    const fs=require('node:fs'),fsp=require('node:fs/promises');
+    const {syncBuiltinESMExports}=require('node:module');
+    const {PassThrough}=require('node:stream');
+    const {tmpdir}=require('node:os');const {join,resolve}=require('node:path');
+    const module=await import('./runtime/host_v1/primary_stdio.mjs');
+    const fault=Error('original exchange-creation input error');
+    const phase=${injectFailure}?'fault':'healthy';
+    const parent=process.env.PRIMARY_STDIO_STARTUP_EVIDENCE;
+    const root=parent?join(parent,phase):await fsp.mkdtemp(join(tmpdir(),'primary-startup-exchange-'));
+    if(parent)await fsp.mkdir(root);
+    const input=new PassThrough(),output=new PassThrough(),rows=[];
+    output.on('data',chunk=>rows.push(JSON.parse(chunk.toString())));
+    const originalMkdir=fsp.mkdir;let hookCalls=0,errorObserved=false;
+    fsp.mkdir=async(...args)=>{
+      const value=await originalMkdir(...args);
+      if(resolve(args[0])===join(root,'exchange')){
+        hookCalls++;
+        if(${injectFailure})input.emit('error',fault);
+        else input.end();
+      }
+      return value;
+    };
+    syncBuiltinESMExports();
+    if((await import('node:fs/promises')).mkdir!==fsp.mkdir)
+      throw Error('startup boundary hook was not bound to the actual named builtin');
+    const fixture=${JSON.stringify(fixture)};
+    const config={host:{command:process.execPath,args:['-e',fixture,join(root,'fixture-start.json'),join(root,'fixture-exit.json')],evidenceDirectory:join(root,'host')},route:'guarded-local',exchangeDirectory:join(root,'exchange')};
+    try {await module.runPrimaryStdio(config,{input,output});}
+    catch(error){if(error!==fault)throw error;errorObserved=true;}
+    finally {fsp.mkdir=originalMkdir;syncBuiltinESMExports();}
+    const hostExit=JSON.parse(await fsp.readFile(join(root,'host/exit.json')));
+    const fixtureStart=JSON.parse(await fsp.readFile(join(root,'fixture-start.json')));
+    const fixtureExit=JSON.parse(await fsp.readFile(join(root,'fixture-exit.json')));
+    let childAbsent=false;try {process.kill(fixtureStart.pid,0);}catch(error){if(error.code==='ESRCH')childAbsent=true;else throw error;}
+    console.log(JSON.stringify({phase,root,hookCalls,errorObserved,statuses:rows.map(x=>x.status),rows,hostExit,fixtureStart,fixtureExit,childAbsent,listeners:{input:input.listenerCount('error'),output:output.listenerCount('error')}}));
+  })().catch(error=>{console.error(String(error));process.exitCode=3;});`;
+  const child=spawnSync(process.execPath,['--eval',source],{
+    cwd:fileURLToPath(new URL('../../',import.meta.url)),encoding:'utf8',timeout:5000
+  });
+  assert.equal(child.status,0,child.stderr||String(child.error));
+  const result=JSON.parse(child.stdout.trim());
+  // Keep the complete first witness in TAP even when an assertion below fails.
+  console.log('STARTUP_EXCHANGE_WITNESS '+JSON.stringify(result));
+  return result;
+}
+
+for(const injectFailure of [false,true])
+test('startup exchange creation '+(injectFailure?'failure never publishes ready':'healthy control publishes ready and terminal'),()=>{
+  const result=startupExchangeProbe(injectFailure);
+  assert.equal(result.hookCalls,1);assert.equal(result.errorObserved,injectFailure);
+  assert.deepEqual(result.hostExit,{code:0,signal:null});
+  assert.equal(result.fixtureExit.code,0);assert.equal(result.fixtureExit.bytes,0);
+  assert.equal(result.fixtureStart.pid,result.fixtureExit.pid);
+  assert.equal(result.childAbsent,true);
+  assert.deepEqual(result.listeners,{input:0,output:0});
+  assert.deepEqual(result.statuses,injectFailure?[]:['ready','terminal']);
 });

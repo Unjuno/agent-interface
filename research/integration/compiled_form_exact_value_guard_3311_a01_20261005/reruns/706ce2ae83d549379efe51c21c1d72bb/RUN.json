@@ -1,0 +1,63 @@
+{
+  "audit_result": {
+    "audit": "PASS_RAW_RECONSTRUCTION",
+    "experiment_id": "compiled-form-guard-differential-3311-20261005-01",
+    "scope": "synthetic runtime branch behavior; no live GUI/model/effect/economy claim",
+    "v1": {
+      "actions": [
+        "enter_exact_token",
+        "activate_submit"
+      ],
+      "outcome": "TASK_SUCCEEDED"
+    },
+    "v2": {
+      "actions": [
+        "enter_exact_token"
+      ],
+      "outcome": "SAFE_YIELD"
+    }
+  },
+  "audit_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "audit_stdout_sha256": "a4fbf503516b30fc5e929e5f802799a464fa7112d59cd1e3cc60d332491e7858",
+  "auditor_command": [
+    "python3.14",
+    "-B",
+    "audit_raw.py"
+  ],
+  "auditor_exit_code": 0,
+  "candidate_command": [
+    "python3.14",
+    "-B",
+    "executed-runner.py"
+  ],
+  "candidate_exit_code": 0,
+  "candidate_experiment_id": "compiled-form-guard-differential-3311-20261005-01",
+  "candidate_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "candidate_stdout_sha256": "dc2218236e432e99958af85762a04a181d3ed956f1f0e6ca72585449e2b6e508",
+  "copied_auditor_sha256": "fbd0eef1e7f79b328cb1a18d328a5d227755524b122acfde0165fdc8a8b91375",
+  "copied_runner_sha256": "b67ad6d89ba055d19f7a27442abcfa3265cda3bc3b0d3d4f905115b20da963aa",
+  "cwd": "fresh-run-directory",
+  "finished_utc": "2026-10-05T02:00:39.478616+00:00",
+  "format": "fresh-synthetic-rerun-provenance-v2",
+  "frozen_auditor_sha256": "fbd0eef1e7f79b328cb1a18d328a5d227755524b122acfde0165fdc8a8b91375",
+  "frozen_runner_sha256": "b67ad6d89ba055d19f7a27442abcfa3265cda3bc3b0d3d4f905115b20da963aa",
+  "model_requests": 0,
+  "native_os_inputs": 0,
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python_executable": "python3.14",
+  "python_version": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "raw_exists": true,
+  "raw_sha256": "4c3c3eeb7c35d99a5f484b4d2845ec9bd7698748a11ecfbeef3248052cb7528f",
+  "run_id": "706ce2ae83d549379efe51c21c1d72bb",
+  "source_git_branch": "main",
+  "source_git_head": "3bf3d49bec2aa26a9aaba38806f9e88296459356",
+  "source_root": "repository-root",
+  "source_sha256": {
+    "research/live_control/integrated_efficiency_compiled_adapter_v1.py": "0856ad8d7a522ee239040e0c878d43472e6211a7360e4dad3195032fac9d713e",
+    "research/live_control/integrated_efficiency_compiled_adapter_v2.py": "f1f3f6b2a1f0487a9c6f65b51936fafc8b6101390b1e4070f8e31f741a28b6ef",
+    "runtime/core_v1/compiled_gui.py": "c4eea422aad65ee5df96434cef646184d6bf8911fcfc0dd9ae009ffdf3aee174"
+  },
+  "started_utc": "2026-10-05T02:00:39.405095+00:00",
+  "tracked_worktree_clean": true,
+  "wrapper_sha256": "a35a965fc6768777eb7bfcff7a99c0045d4f11c5a53a049cd5d76e852819ee88"
+}

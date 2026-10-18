@@ -7,6 +7,7 @@ from runtime.core_v1.sequence import expand_text_gaps
 class TextPlanTests(unittest.TestCase):
     def backend(self):
         backend = object.__new__(X11Backend)
+        backend.held_keycodes = {}
         backend._keycode = mock.Mock(return_value=1)
         backend.key_chord = mock.Mock()
         backend._keyboard_mapping_snapshot = mock.Mock(return_value=('stable-test-map',))

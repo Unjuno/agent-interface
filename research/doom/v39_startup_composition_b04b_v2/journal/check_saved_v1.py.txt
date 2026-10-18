@@ -1,0 +1,44 @@
+"""Separate saved-state oracle; never executes submitted client/helper/collector."""
+import copy,hashlib,json,pathlib
+R=pathlib.Path(__file__).resolve().parent
+def ck(v,m):
+ if not v:raise ValueError(m)
+def canonical(x):return json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=False)
+def validate(d):
+ ck(d['result']=='PASS_SCOPED' and type(d['subject_native_peers']) is int and d['subject_native_peers']==0 and d['callbacks_retired'] is True and d['journals_closed'] is True,'terminal qualifications')
+ ck(len(d['rows'])==5,'count');pairs=[('healthy','first'),('held_lock','first'),('held_lock','after_recovery'),('close_error','first'),('close_error','after_recovery')]
+ for row,(cell,stage) in zip(d['rows'],pairs):
+  ck((row['cell'],row['stage'])==(cell,stage),'fixed order');success=cell=='healthy' or stage=='after_recovery';error=[] if success else ['planner close: '+("TimeoutError('app-server journal close timed out')" if cell=='held_lock' else "OSError('injected journal close error')")]
+  expected=dict(schema='map01-startup-cleanup-v1',session_exit_code=None,reader_joined=True,client_closed=success,input_release_verified=False,errors=error,escalations=[],stderr_complete=True,stderr_bytes=0,stderr_reader_joined=True)
+  ck(canonical(row['receipt'])==canonical(expected),'full typed receipt');ck(row['callback_retained'] is (not success) and row['journal_closed'] is success,'actual custody state');ck(type(row['start_ns']) is int and type(row['end_ns']) is int and row['end_ns']>=row['start_ns'] and row['elapsed_ns']==row['end_ns']-row['start_ns'],'clock endpoints')
+  ev=[dict(op='callback_register')]
+  if cell=='held_lock':ev.append(dict(op='owned_lock_acquire'))
+  ev.append(dict(op='reader_join',timeout=1))
+  if cell!='held_lock':ev.append(dict(op='journal_close',fault=cell=='close_error'))
+  if stage=='after_recovery':
+   if cell=='held_lock':ev.append(dict(op='owned_lock_release'))
+   ev.extend([dict(op='fault_cleared'),dict(op='reader_join',timeout=1),dict(op='journal_close',fault=False)])
+  if success:ev.append(dict(op='callback_unregister'))
+  ck(canonical(row['events'])==canonical(ev),'full ordered operation trace');ck(type(row['journal_close_calls']) is int and row['journal_close_calls']==(2 if cell=='close_error' and stage=='after_recovery' else 0 if cell=='held_lock' and stage=='first' else 1),'actual close attempt count')
+def main():
+ raw=(R/'RESULT.v1.json').read_bytes();d=json.loads(raw);validate(d)
+ for row in d['rows']:ck(canonical(json.loads((R/'cases'/row['cell']/(row['stage']+'.json')).read_bytes()))==canonical(row),'full individual raw equality')
+ mutations=[]
+ for name,op in [
+  ('false_completion',lambda x:x['rows'][1]['receipt'].__setitem__('client_closed',True)),
+  ('callback_lost',lambda x:x['rows'][1].__setitem__('callback_retained',False)),
+  ('closed_failed_journal',lambda x:x['rows'][3].__setitem__('journal_closed',True)),
+  ('missing_error',lambda x:x['rows'][3]['receipt'].__setitem__('errors',[])),
+  ('input_alias',lambda x:x['rows'][0]['receipt'].__setitem__('input_release_verified',0)),
+  ('unordered_cleanup',lambda x:x['rows'][2]['events'].reverse()),
+  ('missing_retry',lambda x:x['rows'].pop()),
+  ('native_peer_alias',lambda x:x.__setitem__('subject_native_peers',False)),
+  ('hidden_close_attempt',lambda x:x['rows'][1].__setitem__('journal_close_calls',1)),
+  ('invalid_elapsed',lambda x:x['rows'][1].__setitem__('elapsed_ns',0)),
+ ]:
+  altered=copy.deepcopy(d);op(altered);ck(canonical(altered)!=canonical(d),'effective corruption')
+  try:validate(altered)
+  except (ValueError,KeyError,TypeError):mutations.append(name)
+  else:raise ValueError('corruption accepted '+name)
+ result=dict(original_sha256=hashlib.sha256(raw).hexdigest(),positive_rows=5,effective_corruptions_refused=mutations,subject_executions=0,result='PASS_SAVED_ORACLE');(R/'SAVED_CHECK.v1.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))
+if __name__=='__main__':main()

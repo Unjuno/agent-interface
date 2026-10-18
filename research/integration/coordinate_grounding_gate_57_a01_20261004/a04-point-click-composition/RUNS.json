@@ -1,0 +1,28 @@
+{
+  "pycompile": {
+    "command": [
+      "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "-m",
+      "py_compile",
+      "candidate.py",
+      "test_point_click_composition.py",
+      "run.py",
+      "audit.py"
+    ],
+    "exit_code": 0,
+    "stderr_path": "pycompile.stderr.txt",
+    "stdout_path": "pycompile.stdout.txt"
+  },
+  "tests": {
+    "command": [
+      "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "-m",
+      "unittest",
+      "-v",
+      "test_point_click_composition.py"
+    ],
+    "exit_code": 0,
+    "stderr_path": "tests.stderr.txt",
+    "stdout_path": "tests.stdout.txt"
+  }
+}

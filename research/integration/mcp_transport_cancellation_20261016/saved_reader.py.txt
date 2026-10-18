@@ -1,0 +1,53 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'mcp-transport-cancellation-final-20261016'
+KEY='runtime.cli_v1.test_mcp_transport_cancellation.ROWS'
+def check(rows):
+    if len(rows)!=5 or {r['boundary'] for r in rows}!={'stable','press_send','press_sync','release_send','release_sync'}:raise ValueError('coverage')
+    for row in rows:
+        boundary=row['boundary'];stable=boundary=='stable';result=row['result']
+        if row['down'] or row['ledger'] or row['closed']['status']!='closed':raise ValueError('custody')
+        if result['status']!=('completed' if stable else 'execution_failed'):raise ValueError('terminal status')
+        if result.get('task_success') is True:raise ValueError('false app success')
+        if row['emissions']!=([[2,1],[2,2],[3,2],[3,1]] if stable else [[2,1],[3,1]]):raise ValueError('suffix/replay')
+        releases=result['result']['execution']['releases']
+        if not releases or any(r['verified'] is not True or r['keys_down'] or r['buttons_down'] for r in releases):raise ValueError('release')
+        files={n:json.loads(bytes.fromhex(v)) for n,v in row['files_hex'].items() if n.endswith('.json')}
+        if not stable:
+            before=row['before_resume'];pending=row['pending']
+            if pending['status']!='pending' or pending['release_confirmed'] or pending['effect_status']!='unknown' or pending['replay_allowed']:raise ValueError('pending')
+            if before['lookup']['status']!='pending' or before['lookup'].get('release_confirmed') is True:raise ValueError('lookup false confirmation')
+            if before['cancel']['status']!='cancel_requested' or before['cancel']['release_confirmed'] or not before['duplicate_cancel']['already_requested']:raise ValueError('cancel is not release')
+            if any(before[k]['status']!='busy' for k in ('busy_input','busy_close','busy_recovery')):raise ValueError('second writer')
+            if before['ledger']!={'CTRL':1} or not before['transport_running'] or not before['worker_threads'] or before['live_worker_handles']!=before['worker_threads']:raise ValueError('blocked handle/ledger')
+            if before['down']!=([] if boundary in ('press_send','release_sync') else [1]):raise ValueError('bitmap')
+            expected=[] if boundary=='press_send' else [[2,1],[3,1]] if boundary=='release_sync' else [[2,1]]
+            if before['emissions']!=expected:raise ValueError('inflight emission')
+            if row['old_cancel']['status']!='not_active' or row['replay']['status']!='refused':raise ValueError('revived authority')
+            timeline=row['timeline'];stamp=lambda name:next(e['host_monotonic_ns'] for e in timeline if e['event']==name)
+            if not (stamp('transport_entered')<=stamp('cancel_requested')<=stamp('cancel_acknowledged')<=stamp('resume_requested')<=stamp('transport_resumed')<=stamp('terminal_received')):raise ValueError('event order')
+            emissions=[e for e in timeline if e['event']=='fake_emission']
+            if boundary=='press_send' and not stamp('cancel_acknowledged')<=emissions[0]['host_monotonic_ns']:raise ValueError('late press witness')
+            if boundary=='release_sync' and not emissions[-1]['host_monotonic_ns']<=stamp('cancel_acknowledged'):raise ValueError('empty before ack witness')
+            raw=next(v for n,v in files.items() if n.endswith(pending['call_id']+'/report.json'))
+            if raw['result']['execution']['releases']!=releases:raise ValueError('raw release join')
+    return len(rows)
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-records.json').read_text())[KEY];count=check(rows)
+    meta=json.loads((OUT/f'{mode}-result.json').read_text())
+    if (meta['methods'],meta['failures'],meta['errors'],meta['skipped'],len(set(meta['selected'])))!=(449,0,0,0,449):raise ValueError('suite')
+    rejected=[]
+    for name in ('cancel_equals_release','hidden_late_press','empty_equals_verified','second_writer','lost_ledger','false_terminal_release'):
+        bad=copy.deepcopy(rows);row=next(r for r in bad if r['boundary']=='press_send')
+        if name=='cancel_equals_release':row['before_resume']['cancel']['release_confirmed']=True
+        elif name=='hidden_late_press':row['emissions']=[]
+        elif name=='empty_equals_verified':next(r for r in bad if r['boundary']=='release_sync')['before_resume']['lookup']['release_confirmed']=True
+        elif name=='second_writer':row['before_resume']['busy_input']['status']='completed'
+        elif name=='lost_ledger':row['before_resume']['ledger']={}
+        else:row['result']['result']['execution']['releases'][-1]['verified']=False
+        try:check(bad)
+        except ValueError as e:rejected.append(dict(name=name,reason=str(e)))
+        else:raise ValueError('mutant accepted')
+    report[mode]=dict(methods=449,new_rows=count,mutations=rejected)
+print(json.dumps(dict(scope='saved-only public MCP transport/custody/event consistency; no candidate import or native timing/app oracle',modes=report),indent=2))
