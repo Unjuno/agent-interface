@@ -1,0 +1,28 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A04-20261009",
+  "auditor_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py > results/audit.json 2> results/auditor.stderr",
+  "auditor_exit_code": 0,
+  "auditor_invocations": 1,
+  "auditor_sha256": "78637d3f29a4a7e4885df2e69decae4fbdd971b9db14890360cb76e02d4007a3",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "candidate_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > results/candidate_raw.json 2> results/candidate.stderr",
+  "candidate_exit_code": 0,
+  "candidate_invocations": 1,
+  "candidate_raw_sha256": "dce6edf4fcc3db671c33acb285372babe6b0772e66c145b7c287733e462f0b9e",
+  "construction_tests": {
+    "formal_invocations": 0,
+    "normal": "python3 -B -m unittest discover -s research/analysis/phase_dependent_controllability_8668_t0_a04_20261009 -p 'test_*.py' -v",
+    "normal_passed": 4,
+    "optimized": "python3 -B -O -m unittest discover -s research/analysis/phase_dependent_controllability_8668_t0_a04_20261009 -p 'test_*.py' -v",
+    "optimized_passed": 4
+  },
+  "container_execution": false,
+  "decision": "SUPPORT_FOR_REQUEST_BOUND_ACK_TRANSITIONS_SCOPED",
+  "freeze_commit": "32c24b9f3620994ed37acf49c8aabd4b26619763",
+  "freeze_sha256": "4a6bff1f8438ac613c6a226016e1e4a62e5c3281f2422ca779d6075b20922e42",
+  "gui_or_effect_dispatch": false,
+  "mutation_controls_rejected": 8,
+  "retries": 0,
+  "schedule_count": 18,
+  "status": "PASS_METHOD_SCOPED"
+}
