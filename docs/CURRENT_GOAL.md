@@ -1,9 +1,9 @@
 # Current objective and working direction
 
-Latest full membership recheck: 2026-10-18 21:59 UTC against main
-`0b452ada10c7c336e0faf89699b17f1507abcd95`; 1,675 open Issues and 504 open
-PRs. The sorted-ID hashes and complete metadata snapshots are in the
-[r41 membership recheck](maintenance/repository-inventory-20261019-r41.md).
+Latest membership recheck: 2026-10-18 22:37 UTC against main
+`76ed0ee86dec7e9f8468863eaf9e682abb51d36b`; 1,675 open Issues and 505 open
+PRs. The [r42 membership delta](maintenance/repository-inventory-20261019-r42.md)
+records the ID hashes and change from the [r41 full metadata snapshot](maintenance/repository-inventory-20261019-r41.md).
 This is membership only, not semantic review; full classification remains
 unfinished. The exact read time and baseline belong to the snapshot, not to an
 ever-changing claim that this page names the current HEAD. See the

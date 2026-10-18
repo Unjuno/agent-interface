@@ -38,6 +38,41 @@ PRは正確なhead/baseと差分、既存mainとの重なり、依存stack、意
 
 整理の合格条件は、現行の未完Issueにそれぞれ研究上の行き先または未分類キューがあり、検証済みの独立成果がmain/保存先から辿れ、PR stackとbranch/worktreeの保全状態が現物確認済みで、次の競合しない有限作業が選べること。open件数が残っていても、この条件を満たすものは「未完了」ではなく意図した研究バックログである。歴史的なraw・条件・第一結果は移動・上書きせず、索引で結ぶ。
 
+## 実行更新 r42 — 現行membership差分と最初の修理対象
+
+2026-10-18 22:37:50 UTCに、全ページを読み直してmain
+`76ed0ee86dec7e9f8468863eaf9e682abb51d36b`に対するopen Issue 1,675件とopen
+PR 505件を確認した。[r42 membership delta](maintenance/repository-inventory-20261019-r42.md)
+では、Issue ID集合は[r41 inventory](maintenance/repository-inventory-20261019-r41.md)
+と同一、PRは#9099の追加のみであることをハッシュ付きで保存した。これは最新の全件意味分類ではない。
+
+今回の追加PR [#9099](https://github.com/Unjuno/agent-interface/pull/9099) は、
+private-Xvfb標準caller実験の新規作業で、`x11-integration` がPython-Xlibの
+`display.info.release`属性参照で失敗している。最初のrunとrawを保全し、報告値を
+サーバー応答から正しく読む修理を行って再検証する。これは実行中の computer-control
+成果として担当と差分を保持し、整理のために閉じたり、整理PRへ混ぜたりしない。
+
+**収束の実行順:**
+
+1. README → CURRENT_GOAL → WORKER_WORK_MAPから、各workerが担当/割当・固定head・
+   独立出力先・衝突範囲を記録して、ひとつの有限作業を選ぶ。
+2. アイデアはIssue番号でなく研究family単位に読む。まず既存の未分類キューから
+   computer-control gateに直結するfamilyを選び、Issue本文/必要コメント、main実装、
+   関連PRの正確なhead、既存PASS/FAIL/STOPとraw、証拠限界を照合する。
+3. 各familyの固有仮説を既存台帳へリンクし、`ready / active / result-retained /
+   deferred / untriaged / transferred / rejected-with-evidence`のいずれかと、次の
+   判別作業を記録する。似た仮説だけを理由に独立した反例・結果をまとめない。
+4. IssueとPRは別々に判定する。Issueは受入条件・根拠ある棄却・保存済み後継への
+   移管が成立したものだけcloseする。PRは差分、stack依存、固有証拠、ローカル検証、
+   作者/保全先を確かめて修理・統合・移管・保留・棄却を決める。
+5. branch、worktree、artifactは、正確なtip、利用者、未追跡/ignored物、PR依存、
+   一意なrawのcustodyと復元先を現物確認してから個別に回収する。
+
+並行可能な作業は別のIssue/PR family、別コード範囲、別の加筆ファイルへ分ける。
+共有indexの反映だけ直列に統合する。未分類の残りを明示的キューに保ち、全件分類を
+実験再開のゲートにしない。成果判定は件数減ではなく、未完アイデアから根拠・限界・
+担当境界・次の有限作業を辿れて、実作業が失われていないこととする。
+
 ## 実行更新 r41 — 現行mainに対するIssue/PR完全一覧を固定
 
 2026-10-18 21:59 UTCに、GitHub CLIで全ページを読み、main
