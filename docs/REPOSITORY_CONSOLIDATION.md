@@ -4,7 +4,7 @@
 
 **目的:** Unjuno/agent-interfaceを、複数ワーカーが同じ現在地と証拠を見つけ、独立した作業を選び、衝突なく統合できる状態へ整理する。IssueやPRをゼロにすることは目的にしない。未検証の案、失敗、反例、raw、担当中の作業は失わず、重複・古い案も出典と状態が追える形で残す。
 
-**現在の全体像 (r11, 2026-10-19 JST):** 2026-10-18 16:18:30 UTCのmain `848b417e56c9b024f0717d8149f8d2be5e49ac40` に対する再取得ではopen Issue 1,675件、open PR 515件。r10とのID比較でIssueの増減はなく、PRは統合済み#9040が1件減った。件数・ID集合の確認は済んだが、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r11 inventory](maintenance/repository-inventory-20261019-r11.md)とSHA付きCSVを最新の読み取り基準点とし、r10以前は履歴として保持する。
+**現在の全体像 (r12, 2026-10-19 JST):** 2026-10-18 16:55:44 UTCのmain `5e30a60c179ce56e73c83d0279b6698862709c8f` に対するページング再取得ではopen Issue 1,675件、open PR 514件。r11とのID比較でIssueの増減はなく、PR #9039がmainへ統合されたため1件減った。これは一覧・メタデータの確認であり、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r12 inventory](maintenance/repository-inventory-20261019-r12.md)とSHA付きCSVを現在の読み取り基準点とし、r11以前は履歴として保持する。
 
 **「クリーン」の完了条件:**
 
@@ -20,7 +20,7 @@
 
 | 段階 | 作業 | 出力・完了条件 |
 |---|---|---|
-| A. 基準点更新 | main SHAを記録し、全open Issue/PR一覧をページング取得。ID集合、件数、取得時刻、CSV hash、前回との差分を残す。 | **r9完了**。次回はmain更新後に同じ方法でrefresh。件数だけの確認と意味仕分けを分離する。 |
+| A. 基準点更新 | main SHAを記録し、全open Issue/PR一覧をページング取得。ID集合、件数、取得時刻、CSV hash、前回との差分を残す。 | **r12完了**。main更新後に再取得する。件数だけの確認と意味仕分けを分離する。 |
 | B. アイデアの地図 | 既存の`IDEAS_AND_OUTCOMES`、idea index、research map、#3/#5/#8、テーマ別agendaを重複と欠落の両面で照合。研究ファミリーごとに独立仮説・結果・残差・次テストを結ぶ。 | canonical idea entryと出典Issueへの相互リンク。アイデアは結果が出るまで残す。 |
 | C. Issue disposition | Bのファミリー単位で本文・必要なコメント・後継・実装・結果を確認し、Issue自身の範囲で状態を選ぶ。 | 理由と証拠を添えた追跡可能な状態。close時は保存先、科学的状態、残る問い、実行先を記録。 |
 | D. PR統合 | PRをファミリー単位でcurrent mainとの差分とhead固定で比較し、依存stackと作業者を確認。ローカルテストと固有証拠を評価する。 | merge/close/保留それぞれの根拠、解消した重複、保全した唯一成果。main統合とIssue closeを混同しない。 |
@@ -28,7 +28,7 @@
 
 **ワーカー分担:** 大きな全件処理を一人に割り当てず、研究ファミリーまたは番号範囲と出力先を小さく区切る。着手前に対象Issue/PR、編集するファイル、読む証拠を記録し、共有indexは一度に一人が統合する。ほかの人の担当・実験・branchは、確認できないときに無主物と扱わない。調整待ちの間も別ファミリーの読取監査・テスト・分類を進める。
 
-**r9で入った項目の初回確認:** [PR #9039](https://github.com/Unjuno/agent-interface/pull/9039)はopen、Draft、mergeable、head `5f35c41f6b1c1afa11326c698dc782cc7830dfbd`、base main `4e36e47a690621a658515b5107cce020dfe6df82`。#17のinput-release familyに属し、9ファイルの差分でowned guarded-MCP processとFake X queued-DOWN反例、XRes observer helperを含む。PR本文の検証報告は選定110件がnormal/optimizedでpass、nested stdioは依存importの都合で除外。live X/Xvfbの実測、標準caller release fence、独立task effect、MAP01は未達。#17自体はopenのまま。**Disposition: active / keep open / no merge decision in this cleanup batch.** 現作業treeに後続Xvfb実験スクリプトが未追跡で存在するため、元author作業として保全し、#9039から独立した整理作業では移動・削除しない。
+**歴史的なr9の#9039確認:** r9時点ではDraft/openだった[PR #9039](https://github.com/Unjuno/agent-interface/pull/9039)は、head `c6e63f483d81db229f1082006c0dfdc2da726165`から2026-10-18 16:46:31 UTCにmerge commit `5e30a60c179ce56e73c83d0279b6698862709c8f`としてmainへ統合された。r12ではopen PR集合から消えたことを確認した。これは#17のinput-release familyに属し、owned guarded-MCP process、Fake X queued-DOWN反例、XRes観測helperを含む。統合はその限定範囲の証拠であり、live X/Xvfbでの一般保証、標準caller release fence、独立task effect、MAP01を完了した意味ではない。後続のXvfb結果・作業treeのcustodyは当該authorの記録と現物を別途確認する。歴史的な`keep open`判断を現在状態として再利用しない。
 
 **2026-10-19 r27 — first semantic disposition batch (#8681 cleanup identity):** The family record [`cleanup-identity-audit`](ideas/cleanup-identity-audit.md) reconciles the issue's original hypothesis and A01 counterexample with merged implementation PR #8771 and the still-open evidence PRs #8687/#8838. #8681 was closed as completed after a bounded issue review and explanatory comment; this does not close live-control Issue #59. Keep #8687 and #8838 open while their distinct A02–A07 packages lack a verified canonical custody destination. Do not merge their overlapping implementation changes or delete their refs. Source review used current main `4e36e47a690621a658515b5107cce020dfe6df82`, #8771 implementation head `8af95598a2517088203be2696b043ef329ba5b5c`, and current evidence-PR heads recorded in the idea entry. No experiment was rerun.
 
@@ -36,7 +36,9 @@
 
 **2026-10-19 r29 — post-merge baseline:** After #9040 merged as `848b417e56c9b024f0717d8149f8d2be5e49ac40`, a fresh paginated read at 2026-10-18 16:18:30 UTC contained 1,675 Issues and 515 PRs. Compared with r10, Issue IDs were unchanged and #9040 was the only removed PR ID. The complete [r11 inventory](maintenance/repository-inventory-20261019-r11.md) is the new point-in-time baseline; it is still metadata, not an all-issue semantic audit.
 
-**次の具体的な整理作業:** r11 Issue一覧と既存アイデア索引を突合し、次の研究ファミリーを一つ選ぶ。元Issue・main上の証拠・現行PRを確認して、仮説・結果・残差・次の実験を揃え、Issue処置が必要な項目だけ個別に行う。全件意味分類が終わるまで実験・統合を止めない。
+**次の具体的な整理作業:** r12 Issue一覧、[研究Issue index](RESEARCH_ISSUE_INDEX.md)、[IDEAS_AND_OUTCOMES](IDEAS_AND_OUTCOMES.md)、既存アイデア索引の間を一つの研究ファミリーずつ照合する。次は#5305を対象に、main上の証拠とIssueコメントの結果・raw custodyを一つの検索可能なfamily entryへ整理する。Issue処置が必要な場合だけ個別に行う。全件意味分類が終わるまで実験・統合を止めない。
+
+**2026-10-19 r30 — live baseline and idea-catalog seam:** A paginated `gh issue list` / `gh pr list` read at 2026-10-18 16:55:44 UTC against main `5e30a60c179ce56e73c83d0279b6698862709c8f` returned 1,675 open Issues and 514 open PRs. Compared with r11, the Issue ID set is unchanged and PR #9039 is the only removal; the merge is confirmed at this main SHA. Metadata does not establish semantic disposition or active ownership. A `docs/ideas` number-only scan is not a complete coverage test: #5305, for example, has a row in the broader research Issue index and its T0 report on main, while its later held-out STOP and transfer refinements are only in the Issue thread. Added [a linked family entry](ideas/conflict-aware-evidence-ledger.md) preserving distinct outcomes, limits and known raw-custody gap. Do not close #5305 or rerun a consumed fixture as a cleanup action.
 
 **2026-10-19 r26 — workspace custody pass:** A read-only scan of the current local `work` area found 190 top-level directories, 341 top-level loose files, and 8 Git-registered worktrees across the workspace. Six of the 190 directories contain `.git` metadata; 184 are non-Git artifact folders with 5,230 files / 303,118,316 bytes. These counts are local to the captured workspace, not repository contents or a deletion proposal. The [workspace custody census](maintenance/workspace-custody-census-20261019.md) records top-level metadata only. No files were moved or deleted. Next, classify artifact folders in bounded batches by provenance and canonical evidence link; preserve raw/unique results, consolidate only verified duplicates, and remove only items whose owner, active use, custody, and recovery path are all established. This layer is independent of GitHub Issue/PR disposition and the repository's eight registered Git worktrees.
 

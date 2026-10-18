@@ -34,7 +34,10 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
-- [Open Issue/PR inventory r8 (2026-10-18)](../maintenance/repository-inventory-20261018-r8.md) — current-main metadata snapshot: 1,676 open Issues and 514 open PRs, no ID-set change from r7. It is a discovery index, not full semantic triage or ownership evidence.
+- [Current open-work inventory r12 (2026-10-19)](../maintenance/repository-inventory-20261019-r12.md) — current-main metadata: 1,675 open Issues and 514 open PRs; #9039 merged since r11. Membership metadata is not semantic triage or ownership proof.
+- [Research and idea Issue index](../RESEARCH_ISSUE_INDEX.md) — broad discovery index with a historical state snapshot and newer addenda; check its freshness note and live Issue/evidence before disposition. This ledger is the compact hypothesis/outcome map, not a complete mirror of every research-index row.
+- [Conflict-aware evidence ledger](conflict-aware-evidence-ledger.md) — reconciles #5305's merged finite T0, held-out STOP, later policy counterexample, raw-custody gap, and unverified provenance refinements without closing the Issue or rerunning T0.
+- [Historical open Issue/PR inventory r8 (2026-10-18)](../maintenance/repository-inventory-20261018-r8.md) — preserved metadata snapshot, not the current baseline; see r12 above.
 - [Historical open Issue/PR inventory r7](../maintenance/repository-inventory-20261018-r7.md) — preserved earlier snapshot against pre-#9029 main.
 
 - [MAP01 live threat-guard evidence family](map01-live-guard-evidence-family.md) — classifies six open #59 PRs by distinct retained allocation packets, exact current heads, audit status, and safe read-only follow-up boundaries; no allocation rerun or bulk disposition.

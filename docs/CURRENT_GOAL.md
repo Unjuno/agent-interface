@@ -1,9 +1,9 @@
 # Current objective and working direction
 
 Updated 2026-10-19 against `main` SHA
-`4e36e47a690621a658515b5107cce020dfe6df82` at the 2026-10-19 JST r9 inventory.
-The cursor-paginated open set contains 1,676 Issues and 515 PRs; full semantic
-classification remains unfinished. See the [r9 inventory](maintenance/repository-inventory-20261019-r9.md)
+`5e30a60c179ce56e73c83d0279b6698862709c8f` at the 2026-10-19 JST r12 inventory.
+The cursor-paginated open set contains 1,675 Issues and 514 PRs; full semantic
+classification remains unfinished. See the [r12 inventory](maintenance/repository-inventory-20261019-r12.md)
 and [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for disposition
 criteria. This is the short entry point, not an experiment ledger.
 
