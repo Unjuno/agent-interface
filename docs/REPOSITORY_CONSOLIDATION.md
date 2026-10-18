@@ -1,5 +1,35 @@
 # リポジトリ全体の整理計画
 
+## 実行計画 r25 — アイデアを保全した全体収束
+
+**目的:** Unjuno/agent-interfaceを、複数ワーカーが同じ現在地と証拠を見つけ、独立した作業を選び、衝突なく統合できる状態へ整理する。IssueやPRをゼロにすることは目的にしない。未検証の案、失敗、反例、raw、担当中の作業は失わず、重複・古い案も出典と状態が追える形で残す。
+
+**現在の全体像 (r9, 2026-10-19 JST):** open Issue 1,676件、open PR 515件。カーソルページングした全件CSVをr8と照合し、Issue ID増減なし、PRは#9039が1件追加、消失なし。取得時のmainは`4e36e47a690621a658515b5107cce020dfe6df82`。件数・ID集合の確認は済んだが、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r9 inventory](maintenance/repository-inventory-20261019-r9.md)とSHA付きCSVを読み取り基準点とし、r8以前は履歴として保持する。
+
+**「クリーン」の完了条件:**
+
+1. 現在の全open IssueとPRのID集合をページング済み一覧で固定し、追加・消失を説明する。各項目に `active / queued / deferred / duplicate-successor / completed / rejected-with-evidence / untriaged` のいずれかを明示する。意味を読んでいないものは `untriaged` と書き、完了扱いにはしない。
+2. 各研究アイデアは、出典Issue、独立した仮説、既存のPASS/FAIL/STOPとraw、証拠の限界、依存、次の判別可能な実験または保留理由を一つの検索可能な入口から辿れる。原Issueの固有問いを削らず、未検証の着想を保管だけの理由で閉じない。
+3. 各open PRは最新head SHA、差分、テスト/実験、固有証拠、実際の作業者・ブランチ利用状況、base/stack依存を確認して処置する。merge、後継への移管、close、保留を区別し、古さ・draft・空のassignee/reviewer欄だけで決めない。
+4. 追跡対象branch/worktreeは所有者と利用中のPR/Issueを照合する。自分が所有し保全済みで不要と確認したrefだけ回収し、所有者不明・変更未保全・他PR依存は残して所在を記録する。
+5. 共有入口とリンク検査を通し、新しいworkerが割当を捏造せず、アイデアから現在の証拠・競合境界・一つの次の仕事を選べる。未解決の研究はクリーンさのために削除せず、明示した状態で残す。
+
+**実行順:**
+
+| 段階 | 作業 | 出力・完了条件 |
+|---|---|---|
+| A. 基準点更新 | main SHAを記録し、全open Issue/PR一覧をページング取得。ID集合、件数、取得時刻、CSV hash、前回との差分を残す。 | **r9完了**。次回はmain更新後に同じ方法でrefresh。件数だけの確認と意味仕分けを分離する。 |
+| B. アイデアの地図 | 既存の`IDEAS_AND_OUTCOMES`、idea index、research map、#3/#5/#8、テーマ別agendaを重複と欠落の両面で照合。研究ファミリーごとに独立仮説・結果・残差・次テストを結ぶ。 | canonical idea entryと出典Issueへの相互リンク。アイデアは結果が出るまで残す。 |
+| C. Issue disposition | Bのファミリー単位で本文・必要なコメント・後継・実装・結果を確認し、Issue自身の範囲で状態を選ぶ。 | 理由と証拠を添えた追跡可能な状態。close時は保存先、科学的状態、残る問い、実行先を記録。 |
+| D. PR統合 | PRをファミリー単位でcurrent mainとの差分とhead固定で比較し、依存stackと作業者を確認。ローカルテストと固有証拠を評価する。 | merge/close/保留それぞれの根拠、解消した重複、保全した唯一成果。main統合とIssue closeを混同しない。 |
+| E. refと導線 | Issue/PR/commit/worktree/rawの参照を照合し、保全receipt後に自分の不要refだけを回収。README/quickstart/current goal/work mapを短い入口に整合させる。 | 競合しない作業選択、復元可能なref記録、リンク・索引検査結果。 |
+
+**ワーカー分担:** 大きな全件処理を一人に割り当てず、研究ファミリーまたは番号範囲と出力先を小さく区切る。着手前に対象Issue/PR、編集するファイル、読む証拠を記録し、共有indexは一度に一人が統合する。ほかの人の担当・実験・branchは、確認できないときに無主物と扱わない。調整待ちの間も別ファミリーの読取監査・テスト・分類を進める。
+
+**r9で入った項目の初回確認:** [PR #9039](https://github.com/Unjuno/agent-interface/pull/9039)はopen、Draft、mergeable、head `5f35c41f6b1c1afa11326c698dc782cc7830dfbd`、base main `4e36e47a690621a658515b5107cce020dfe6df82`。#17のinput-release familyに属し、9ファイルの差分でowned guarded-MCP processとFake X queued-DOWN反例、XRes observer helperを含む。PR本文の検証報告は選定110件がnormal/optimizedでpass、nested stdioは依存importの都合で除外。live X/Xvfbの実測、標準caller release fence、独立task effect、MAP01は未達。#17自体はopenのまま。**Disposition: active / keep open / no merge decision in this cleanup batch.** 現作業treeに後続Xvfb実験スクリプトが未追跡で存在するため、元author作業として保全し、#9039から独立した整理作業では移動・削除しない。
+
+**次の具体的な整理作業:** アイデア索引とr9 Issue一覧を突合し、既に結果がある研究ファミリーを一つ選ぶ。元Issue・main上の証拠・現行PRを確認して、仮説・結果・残差・次の実験を揃え、Issue処置が必要な項目だけ個別に行う。全件意味分類が終わるまで実験・統合を止めない。
+
 **2026-10-18 r18 — current-main count recheck:** At 14:52 UTC, fetched
 `origin/main` was `e5c5448f9ad035657f212135fa4e95d189acda95`. GitHub's paginated
 Issues endpoint returned 2,190 issue-like records, including 514 pull requests;
