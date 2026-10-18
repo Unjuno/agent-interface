@@ -27,6 +27,16 @@ unknown custody means preserve and investigate, not delete.
 | PR, branch and worktree custody | [Current open-PR metadata r13](maintenance/repository-inventory-20261019-r13.md), [convergence status](maintenance/consolidation-status-20261016.md), [MAP01 packet crosswalk](ideas/map01-live-guard-evidence-family.md), [event timing convergence](../research/integration/v39_event_timing_convergence_20261016/README.md) | Start with one family: six #59 live-threat-guard packets have exact heads, retained outcomes and read-only follow-up scopes in their crosswalk. For every candidate head, compare the current diff to main and establish unique evidence and actual owner/custody before merge, transfer, closure or ref removal. | Inventory metadata is not semantic review. Several old heads are hundreds of commits behind; preserve unique raw and owner changes. Do not delete a branch/worktree based only on closed/old/duplicate-looking status. |
 | Local workspace artifacts | [Read-only custody census](maintenance/workspace-custody-census-20261019.md) | Take a small CSV batch and link each folder/file to its worker/session, Issue/PR, canonical evidence, and raw-result role; return reviewed rows with an evidence-backed disposition. | Census is local metadata only, not proof of ownership or staleness. Do not move/delete unreviewed or owner-unknown items; do not treat local artifacts as Git worktrees. |
 
+**2026-10-19 standard-caller release-order composition:** The added [Fake X
+composition](../research/integration/standard_caller_release_order_composition_20261019/README.md)
+passes in normal and optimized Python. Even with mocked XRes disappearance and a
+fresh-cleanup `readback_verified` receipt, the delayed old-connection `KeyPress`
+left the modeled key down; the standard cancel and terminal reports stayed
+UNKNOWN, replay-disabled, and without task success. This supports the existing
+UNKNOWN policy but does not establish the real server ordering or release bound.
+Next discriminator remains a real-server queue fence under an explicitly unused
+eligible allocation.
+
 ## Execute and leave a usable result
 
 1. Read the selected Issue/body/comments and relevant open/closed PRs; pin the
