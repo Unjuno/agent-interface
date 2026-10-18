@@ -1,10 +1,11 @@
 # Worker work map
 
 2026-10-19 update. Cursor-paginated GitHub reads returned 1,675 open Issues and
-514 open PRs against `origin/main` `678b9285fd6c05de9f1b395c0ef157bc5e3b3e14`.
-At 2026-10-18 18:26:54 UTC, both ID sets matched r15; see the [r18 membership
-recheck](maintenance/repository-inventory-20261019-r18.md). The [r15 inventory](maintenance/repository-inventory-20261019-r15.md)
-remains the latest full metadata snapshot. The [consolidation plan](REPOSITORY_CONSOLIDATION.md)
+515 open PRs against `origin/main` `c2eae1a5aac951eb3560f6d6774fe23ce4fc7128`.
+At 2026-10-18 18:59:33 UTC, Issue IDs matched r15 and PR #9057 was the only
+addition; see the [r20 membership recheck](maintenance/repository-inventory-20261019-r20.md).
+The [r15 inventory](maintenance/repository-inventory-20261019-r15.md) remains
+the latest full metadata snapshot. The [consolidation plan](REPOSITORY_CONSOLIDATION.md)
 records the current baseline and semantic work queue. This is not semantic
 review or proof of current ownership. Earlier snapshots are historical. Begin with
 [current goal](CURRENT_GOAL.md), choose one finite item
