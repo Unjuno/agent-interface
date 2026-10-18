@@ -38,6 +38,27 @@ PRは正確なhead/baseと差分、既存mainとの重なり、依存stack、意
 
 整理の合格条件は、現行の未完Issueにそれぞれ研究上の行き先または未分類キューがあり、検証済みの独立成果がmain/保存先から辿れ、PR stackとbranch/worktreeの保全状態が現物確認済みで、次の競合しない有限作業が選べること。open件数が残っていても、この条件を満たすものは「未完了」ではなく意図した研究バックログである。歴史的なraw・条件・第一結果は移動・上書きせず、索引で結ぶ。
 
+## 実行更新 r45 — standard caller結果を統合し、現在のopen-setを再照合
+
+2026-10-18 23:00:51 UTCに再取得した全ページングmembershipでは、main
+`33cb7b9368d612494c1b95ee0099335a3b288950`に1,675 Issue / 504 PRがopenで、
+両ID集合はr41と同一だった。#9099/#9100/#9101を統合し、#6/#56のfamily記録と
+#17のstandard-caller Xvfb結果をmainから辿れる。時点付きhashは[r43](maintenance/repository-inventory-20261019-r43.md)。
+
+PR #9099のhead `8ce4e52a28d393128dc769fc35bcaecd22c94a08`はprivate X.Org
+Xvfb run [39174301979](https://github.com/Unjuno/agent-interface/actions/runs/39174301979)
+を含む必須check全件成功後、merge commit `33cb7b9368d612494c1b95ee0099335a3b288950`
+として統合した。XRes PIDと`/proc` start ticksからのprocess/window generation binding、
+standard-callerのKeyPress/KeyRelease、verified neutral release、独立X property
+`[1]`、独立keymapのup readback、destroy後のstale alias拒否とquery worker退役を
+rawで保全した。七回分のrawとscopeは[結果記録](../research/integration/standard_caller_xvfb_generation_20261019/README.md)。
+
+これは合成アプリと一つのprivate Xvfbに限定したcomposition PASSであり、Issue #17はopen、
+releaseは`UNKNOWN`のまま。初期held inputを伴うowner crash、blocked server I/Oのrelease
+bound、実アプリの独立task effect、MAP01、general recovery、matched economicsは未検証である。
+次の有限な識別作業はstandard caller経由のinitially-held key + owner disconnect + 独立readback。
+Issueを閉じず、上位の意味分類も完了とはしない。
+
 ## 実行更新 r44 — #6/#56の仮説・結果・未統合PRを分離
 
 2026-10-19に、現在OPENの[#6](https://github.com/Unjuno/agent-interface/issues/6)
