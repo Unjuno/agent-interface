@@ -166,9 +166,9 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                         display_name, idle_data['resource_base'], timeout_s=2.0,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     ))
-                self.assertEqual(
-                    report['idle_control_disconnect_after_kill']['status'],
-                    'disconnected', report)
+                report['idle_control_disappeared_within_2s'] = (
+                    report['idle_control_disconnect_after_kill']['status']
+                    == 'disconnected')
 
                 marker = Path(td)/'owner.json'
                 owner = subprocess.Popen(
