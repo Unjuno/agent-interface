@@ -1,6 +1,6 @@
 # リポジトリ全体の整理計画
 
-## 実行計画 r25 — アイデアを保全した全体収束
+## 実行計画 r26 — アイデアを保全した全体収束
 
 **目的:** Unjuno/agent-interfaceを、複数ワーカーが同じ現在地と証拠を見つけ、独立した作業を選び、衝突なく統合できる状態へ整理する。IssueやPRをゼロにすることは目的にしない。未検証の案、失敗、反例、raw、担当中の作業は失わず、重複・古い案も出典と状態が追える形で残す。
 
@@ -13,6 +13,8 @@
 3. 各open PRは最新head SHA、差分、テスト/実験、固有証拠、実際の作業者・ブランチ利用状況、base/stack依存を確認して処置する。merge、後継への移管、close、保留を区別し、古さ・draft・空のassignee/reviewer欄だけで決めない。
 4. 追跡対象branch/worktreeは所有者と利用中のPR/Issueを照合する。自分が所有し保全済みで不要と確認したrefだけ回収し、所有者不明・変更未保全・他PR依存は残して所在を記録する。
 5. 共有入口とリンク検査を通し、新しいworkerが割当を捏造せず、アイデアから現在の証拠・競合境界・一つの次の仕事を選べる。未解決の研究はクリーンさのために削除せず、明示した状態で残す。
+
+6. 実行workspaceもリポジトリ内のbranchとは別の台帳で扱う。未追跡ディレクトリを「不要」と推定せず、owner/session、対応するIssue/PR、唯一のrawや出力、再生成可否、保全先の各欄を `known / unknown / verified` で埋める。`unknown` は保持・隔離対象で、削除対象ではない。
 
 **実行順:**
 
@@ -29,6 +31,10 @@
 **r9で入った項目の初回確認:** [PR #9039](https://github.com/Unjuno/agent-interface/pull/9039)はopen、Draft、mergeable、head `5f35c41f6b1c1afa11326c698dc782cc7830dfbd`、base main `4e36e47a690621a658515b5107cce020dfe6df82`。#17のinput-release familyに属し、9ファイルの差分でowned guarded-MCP processとFake X queued-DOWN反例、XRes observer helperを含む。PR本文の検証報告は選定110件がnormal/optimizedでpass、nested stdioは依存importの都合で除外。live X/Xvfbの実測、標準caller release fence、独立task effect、MAP01は未達。#17自体はopenのまま。**Disposition: active / keep open / no merge decision in this cleanup batch.** 現作業treeに後続Xvfb実験スクリプトが未追跡で存在するため、元author作業として保全し、#9039から独立した整理作業では移動・削除しない。
 
 **次の具体的な整理作業:** アイデア索引とr9 Issue一覧を突合し、既に結果がある研究ファミリーを一つ選ぶ。元Issue・main上の証拠・現行PRを確認して、仮説・結果・残差・次の実験を揃え、Issue処置が必要な項目だけ個別に行う。全件意味分類が終わるまで実験・統合を止めない。
+
+**2026-10-19 r26 — workspace custody pass:** A read-only scan of the current local `work` area found 190 top-level directories, 341 top-level loose files, and 8 Git-registered worktrees across the workspace. Six of the 190 directories contain `.git` metadata; 184 are non-Git artifact folders with 5,230 files / 303,118,316 bytes. These counts are local to the captured workspace, not repository contents or a deletion proposal. The [workspace custody census](maintenance/workspace-custody-census-20261019.md) records top-level metadata only. No files were moved or deleted. Next, classify artifact folders in bounded batches by provenance and canonical evidence link; preserve raw/unique results, consolidate only verified duplicates, and remove only items whose owner, active use, custody, and recovery path are all established. This layer is independent of GitHub Issue/PR disposition and the repository's eight registered Git worktrees.
+
+**Execution rule for cleanup batches:** first connect an item to a research family or active work record, then select `retain-canonical`, `retain-history`, `merge-verified-duplicate`, `quarantine-owner-unknown`, `eligible-for-removal`, or `unreviewed`. Record evidence and a hash before changing location. A batch is done when its inventory rows have a disposition and any move is read-back verified; it is not done merely because the folder count fell. No blanket-close of Issues/PRs and no all-at-once workspace deletion.
 
 **2026-10-18 r18 — current-main count recheck:** At 14:52 UTC, fetched
 `origin/main` was `e5c5448f9ad035657f212135fa4e95d189acda95`. GitHub's paginated

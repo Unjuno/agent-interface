@@ -10,7 +10,9 @@ proof of current ownership. R8 and earlier snapshots are historical. Begin with
 below, and verify its current Issue, source and ownership. This map is navigation;
 it adds no assignment, resource grant, reviewer quota or all-workers waiting gate.
 The full outcome and safe closure criteria are in the [repository consolidation
-execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r25--アイデアを保全した全体収束).
+execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束). The local, read-only
+workspace artifact snapshot is [separate from repository contents](maintenance/workspace-custody-census-20261019.md);
+unknown custody means preserve and investigate, not delete.
 
 ## Choose work
 
@@ -23,6 +25,7 @@ execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r25--アイデアを保
 | Semantic recovery and application effects | [#57](https://github.com/Unjuno/agent-interface/issues/57), [finite role prototype](../research/integration/finite_role_recovery_convergence_20261016/README.md), [presentation failure custody](../research/integration/primary_presentation_convergence_20261016/README.md), [compiled timing receipt](../runtime/core_v1/COMPILED_GUI.md) | The bounded graph now retains observation adapter, accepted execution, effect-observation and verifier timing bounds, joined by action ID. Next connect this path through a supported standard caller with a qualified independent application-effect reader and bounded recovery. | The graph and timings are not exposed as a standard MCP tool; callbacks are trusted synchronous adapters. `TASK_SUCCEEDED` is not an independent task certificate, and timestamps do not qualify native/live latency or unblock synchronous I/O. |
 | Matched efficiency and transfer | [#57](https://github.com/Unjuno/agent-interface/issues/57), [#2789](https://github.com/Unjuno/agent-interface/issues/2789), [Calc saved crosswalk](../research/live_control/calc_saved_convergence_20261016/README.md), [integration gates](INTEGRATION_PLAN.md) | Resolve a named accounting or supported-domain prerequisite, then measure matched tasks, correctness, all attempts, tokens/calls, latency and resources under qualified conditions. | Four saved familiar Calc cases and joint usage are not matched per-arm economics. Do not replay old allocations or transfer old-source PASS. |
 | PR, branch and worktree custody | [Current open-PR metadata r8](maintenance/repository-inventory-20261018-r8.md), [convergence status](maintenance/consolidation-status-20261016.md), [MAP01 packet crosswalk](ideas/map01-live-guard-evidence-family.md), [event timing convergence](../research/integration/v39_event_timing_convergence_20261016/README.md) | Start with one family: six #59 live-threat-guard packets have exact heads, retained outcomes and read-only follow-up scopes in their crosswalk. For every candidate head, compare the current diff to main and establish unique evidence and actual owner/custody before merge, transfer, closure or ref removal. | Inventory metadata is not semantic review. Several old heads are hundreds of commits behind; preserve unique raw and owner changes. Do not delete a branch/worktree based only on closed/old/duplicate-looking status. |
+| Local workspace artifacts | [Read-only custody census](maintenance/workspace-custody-census-20261019.md) | Take a small CSV batch and link each folder/file to its worker/session, Issue/PR, canonical evidence, and raw-result role; return reviewed rows with an evidence-backed disposition. | Census is local metadata only, not proof of ownership or staleness. Do not move/delete unreviewed or owner-unknown items; do not treat local artifacts as Git worktrees. |
 
 ## Execute and leave a usable result
 
