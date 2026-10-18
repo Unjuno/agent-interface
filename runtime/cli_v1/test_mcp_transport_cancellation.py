@@ -23,7 +23,7 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
         fake.backend.d.create_resource_object=lambda kind,xid:SimpleNamespace(id=xid)
         fake.backend.d.get_display_name=lambda:':fake-qualified'
         entered,resume,left=threading.Event(),threading.Event(),threading.Event()
-        gated=[False];stage=[None];timeline=[];worker_threads=[]
+        gated=[False];stage=[None];timeline=[];worker_threads=[];server_queue=[]
         def mark(event,**values):timeline.append(dict(event=event,host_monotonic_ns=time.monotonic_ns(),**values))
         def gate():
             if gated[0]:return
@@ -33,10 +33,23 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
         def emit(connection,kind,code):
             if boundary=='press_send' and kind==X.KeyPress and code==1:gate()
             if boundary=='release_send' and kind==X.KeyRelease and code==1:gate()
+            if boundary=='press_queued_sync':
+                server_queue.append((connection,kind,code))
+                mark('server_queued',writer_is_session=connection is fake.backend.d,kind=kind,code=code)
+                if kind==X.KeyPress and code==1:stage[0]='press'
+                if kind==X.KeyRelease and code==1:stage[0]='release'
+                return
             fake.emit(connection,kind,code);mark('fake_emission',kind=kind,code=code)
             if kind==X.KeyPress and code==1:stage[0]='press'
             if kind==X.KeyRelease and code==1:stage[0]='release'
         def sync():
+            if boundary=='press_queued_sync':
+                if stage[0]=='press' and not gated[0]:gate()
+                queued,server_queue[:]=list(server_queue),[]
+                for connection,kind,code in queued:
+                    fake.emit(connection,kind,code)
+                    mark('server_applied',writer_is_session=connection is fake.backend.d,kind=kind,code=code)
+                return
             if boundary=='press_sync' and stage[0]=='press':gate()
             if boundary=='release_sync' and stage[0]=='release':gate()
         fake.backend.d.sync=sync
@@ -90,13 +103,15 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
                         busy_input=busy_input,busy_close=busy_close,busy_recovery=busy_recovery,
                         down=sorted(fake.down),ledger=copy.deepcopy(fake.backend.held_keycodes),
                         emissions=copy.deepcopy(fake.emissions),transport_running=not left.is_set(),
+                        server_pending=[dict(writer_is_session=connection is fake.backend.d,
+                            kind=kind,code=code) for connection,kind,code in server_queue],
                         worker_threads=worker_threads,
                         live_worker_handles=[t.ident for t in threading.enumerate()
                             if t.ident in worker_threads and t.is_alive()],original_deadline=original_deadline,
                         reader=bridge._observations.snapshot())
                     self.assertEqual(before['live_worker_handles'],worker_threads)
                     self.assertEqual(before['ledger'],{'CTRL':1})
-                    self.assertEqual(before['down'],[] if boundary in ('press_send','release_sync') else [1])
+                    self.assertEqual(before['down'],[] if boundary in ('press_send','release_sync','press_queued_sync') else [1])
                     mark('resume_requested');resume.set()
                     result=await asyncio.wait_for(terminal(pending['call_id']),2)
                     mark('terminal_received')
@@ -131,6 +146,15 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
     async def test_cancel_during_press_sync(self):await self.cell('press_sync')
     async def test_cancel_during_release_send(self):await self.cell('release_send')
     async def test_cancel_during_release_sync(self):await self.cell('release_sync')
+    async def test_cancel_with_press_queued_before_server_processing(self):
+        row=await self.cell('press_queued_sync')
+        self.assertEqual(row['before_resume']['down'],[])
+        self.assertEqual(row['before_resume']['ledger'],{'CTRL':1})
+        self.assertEqual(row['result']['status'],'execution_failed')
+        self.assertEqual(row['before_resume']['server_pending'],[{'writer_is_session':True,'kind':X.KeyPress,'code':1}])
+        self.assertEqual(row['emissions'],[(2,1),(3,1)])
+        self.assertEqual(row['down'],[])
+        self.assertEqual(row['ledger'],{})
     async def test_stable_selected_worker_route(self):await self.cell('stable')
 
 

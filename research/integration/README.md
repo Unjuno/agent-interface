@@ -96,6 +96,8 @@ Historical and superseded integration paths remain in place when their exact nam
 
 ## Current local constructions
 
+- [`fake_x_single_writer_caller_20261018/README.md`](fake_x_single_writer_caller_20261018/README.md) — queued-before-server-processing Fake X schedule composed with the guarded MCP caller; three modules pass 29/29 normal and optimized against main `7265bab`. Full CLI discovery is 434/435 in both modes, with the one WSL Git-metadata error retained. Scoped caller-custody construction only; no WSLc allocation or physical-release guarantee.
+
 - [`public_mcp_geometry_review_2907_construction01_v1/REPORT.md`](public_mcp_geometry_review_2907_construction01_v1/REPORT.md) — three additive Docker constructions for same-root geometry review and stale-binding refusal. Construction03 passes the scoped mechanism audit; overall formal disposition remains HOLD (runner decision mismatch, no independent app-effect oracle, and no mixed-app controller acceptance).
 
 - [`public_mcp_modal_effect_2907_construction01_v1/REPORT.md`](public_mcp_modal_effect_2907_construction01_v1/REPORT.md) — local public-MCP Calc modal-effect construction STOP at main-window readiness (zero MCP/input); preflight failures and successful STOP audit retained. No integrated or product PASS.
