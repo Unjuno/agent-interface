@@ -40,24 +40,25 @@ another formal run.
   elicited task-2-like coordinates. No GUI action, independent application
   effect or 5/5 grounding was measured; the recorded 68,930 input tokens and
   2,688 output tokens are not complete task economics.
-- Open [PR #7616](https://github.com/Unjuno/agent-interface/pull/7616) retains a
-  separate offline compiled-graph/pixel-handle composition package at head
-  `5dcc6d875a58de2f830ae044749977a3eb7b4d32`. Its own description reports
+- Merged [PR #7616](https://github.com/Unjuno/agent-interface/pull/7616) retains a
+  separate offline compiled-graph/pixel-handle composition package. Its own description reports
   `FAIL_SOURCE_BASE_LABEL_MISMATCH`: the candidate labels source
   `41df296...` while `FREEZE.json` pins `9dc383a...`; it also says candidate exit
   code and exact timestamps were not retained. The package is test-double
-  composition, not live GUI, application effect or efficiency evidence. Its
-  passing navigation/replay checks do not resolve that provenance failure. Its
-  unique evidence is not independently re-audited here, so preserve the PR and
-  do not merge or close it from age/title alone.
+  composition, not live GUI, application effect or efficiency evidence. A
+  read-only audit reproduced the recorded failure without rerunning the
+  consumed candidate. Four relevant runtime module blobs match both cited
+  source commits, but that does not repair the frozen label mismatch or restore
+  the missing candidate exit code/timestamps. The package byte manifests were
+  verified after preserving their original line endings. Passing
+  navigation/replay checks do not resolve the provenance failure.
 
 ## Next finite work
 
-Read-only audit #7616's exact current diff, `FREEZE.json`, candidate/audit
-outputs, hashes and referenced source blobs. Decide whether its failed
-provenance result can be retained as a complete, reproducible failure package
-without rerunning the consumed candidate. Record the disposition in this family
-entry and the PR. In parallel, the #6/#56 parent questions remain open. A future
+The #7616 audit is complete and retained as a provenance failure; the candidate
+was not rerun. This separate #57 offline composition result is not evidence
+that #6 or #56 passed their distinct adoption hypotheses. In parallel, the
+#6/#56 parent questions remain open. A future
 adoption test must compare a planner-authored interface with the strongest
 simple existing route over matched cold acquisition, warm reuse and
 invalidation/repair tasks, correct application effects, all attempts, actual
