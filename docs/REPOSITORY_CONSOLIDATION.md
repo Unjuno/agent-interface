@@ -1,5 +1,12 @@
 # リポジトリ全体の整理計画
 
+## 実行更新 r28 — #9065統合後のopen-set再照合
+
+2026-10-18 19:41 UTCのGitHub CLI再取得ではopen Issue 1,675件、open PR 515件。
+r22保存一覧と全ID集合が一致し、追加・除外はなかった。PR [#9065](https://github.com/Unjuno/agent-interface/pull/9065)のmerge状態も確認した。
+この確認は一覧の所属だけを更新する。Issue本文の意味分類、担当・branch/worktreeの利用状況、PR固有証拠の監査は未完了であり、open集合が同じことを整理完了とは扱わない。
+保存済みr22 CSVは変更せず、この再照合時点と結果を記録する。
+
 ## 実行更新 r27 — 最新一覧と次の一族
 
 2026-10-18 19:32 UTCの全ページGitHub CLI readで、基準main `31c338fc8fecf3ef93ad802d2ac7ebee3bb9ff71`に対するopen Issue 1,675件とopen PR 515件を固定した。IssueのID集合はr15と同一で、PRは#9064だけが追加された。全metadataは[r22 inventory](maintenance/consolidation-status-20261019-r27.md)およびリンク先CSVに保存した。これは意味分類や担当確認ではない。
