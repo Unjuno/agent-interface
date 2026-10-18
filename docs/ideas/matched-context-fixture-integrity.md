@@ -1,0 +1,6 @@
+# Matched-context fixture integrity
+
+- **Status:** Corrected A03 fixture-method result passed; model study and proactive-interference claim remain untested.
+- **Source:** Issues [#8313](https://github.com/Unjuno/agent-interface/issues/8313), [#8341](https://github.com/Unjuno/agent-interface/issues/8341), and [#8353](https://github.com/Unjuno/agent-interface/issues/8353), in the #5947 lineage.
+- **Idea:** Ensure matched context arms vary only the declared history slot while validating exact cue positions, serialized context boundaries, current-object identity, source IDs, and row schemas.
+- **Outcome:** A01's auditor-coverage HOLD remains. A02's candidate/auditor receipts are preserved, but a cue-length mismatch left its position-control gate unestablished; a post-formal auditor import was also disclosed, so its recorded PASS is not accepted as protocol-conforming. Corrected A03 caught multiple false accepts during construction before freeze, then its sole candidate/auditor runs produced 50 rows, independently checked 48 matched rows plus two position controls, and passed exact source/position validation. This is fixture integrity only, not evidence of model proactive interference. Merged [PR #8355](https://github.com/Unjuno/agent-interface/pull/8355) preserves A03.

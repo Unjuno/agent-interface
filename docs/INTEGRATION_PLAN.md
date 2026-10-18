@@ -95,6 +95,21 @@ live task and matched comparison.
   after acknowledgement, while empty bitmap at release-sync is still unverified.
   The 449-method selection passes normal/-O, preserving these limits. A qualified
   input/release transport bound remains necessary for finite physical release.
+  The [current-main stdio recheck](../research/integration/guarded_stdio_wait_budget_recheck_20261018/README.md)
+  reran all 19 wait-budget and transport-custody cases normally and under `-O`.
+  The real stdio caller returned `pending` before blocked release sync resumed,
+  kept close busy, and retained the same call through later Fake X cleanup. This
+  confirms bounded response/custody for that schedule, not physical release or
+  a native/server deadline.
+
+- [Current-main target-generation MCP recheck](../research/integration/guarded_generation_mcp_recheck_20261018/README.md)
+  reruns the current standard guarded caller's process-generation and opt-in
+  window-lifecycle composition: 31 methods pass normal/-O. Same-XID process
+  change, destroy/reuse, blocked lifecycle cancellation/expiry, prefix release,
+  stale-alias refusal and explicit startup policy are covered. This qualifies
+  sampled generation evidence through MCP with Fake X only; no live XRes,
+  native lifecycle delivery, atomic check/use, physical release, app effect or
+  recovery quality is established.
 
 - [Compiled semantic callback cancellation](../research/integration/compiled_observation_cancellation_20261016/README.md)
   connects the explicit observation-worker option to the actual v3 caller and

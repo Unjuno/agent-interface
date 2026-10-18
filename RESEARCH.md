@@ -1,3 +1,7 @@
+# Issue #9004 T0 — agreement-conditioned bounded System-1 continuation (2026-10-17)
+
+`PASS_METHOD_SCOPED` on 10 fixed synthetic cases × four arms: the raw-only auditor reconstructed 40/40 rows with zero errors and five normal/optimized mutation tests passed. The result is `NO_INCREMENTAL_AGREEMENT_VALUE` for this fixture family: agreement-lease matched System-1-only, and both it and always-wait had a 1-tick median synthetic inter-action gap; the prospective 20% threshold was not met. `formal_pass=false`. No latency, model, GUI, live-actuation, task-success or product claim follows. The frozen allocation was run once and is consumed. See [the preregistration, raw output, audit and result](research/agreement_continuation_9004_v1/RESULT.md) and [Issue #9004](https://github.com/Unjuno/agent-interface/issues/9004).
+
 # Issue #59 — saved A11/A12 CPU regression convergence (2026-10-16)
 
 PR #8812's original 48 files are preserved with the first A11 harness-count FAIL and A12's historical CPU-fixture PASS unchanged. A separate saved-only reader verifies 46 checksums, 34 source pins and carry-forward claims; 11 reader tests pass normal and optimized with ten coherently rehashed corruption controls. At the convergence base, 11/34 sources have changed, so these historical runs do not qualify current main. No producer, historical suite, GUI/input/model/WSLc allocation was executed. See [custody, applicability, results and next boundary](research/doom/v39_saved_regression_convergence_20261016/README.md).

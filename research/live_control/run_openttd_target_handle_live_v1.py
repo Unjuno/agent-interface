@@ -37,7 +37,8 @@ def source_path(name):
 def main():
     plan = json.loads((OUT / "preregistration.json").read_text(encoding="utf-8"))
     for name, digest in plan["sources"].items():
-        assert sha(source_path(name)) == digest, name
+        if sha(source_path(name)) != digest:
+            raise RuntimeError("source changed after preregistration: " + name)
     root = OUT / "live"
     root.mkdir()
     error_stream = (root / "stderr.txt").open("w", encoding="utf-8", newline="\n")
