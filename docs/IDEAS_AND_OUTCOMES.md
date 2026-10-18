@@ -37,6 +37,24 @@ This index complements, rather than duplicates, the [durable design-theses ledge
 | Isolated Xvfb owner-close release | Determine whether the V12 owner close path releases a held key and records server-observed key-up plus a terminal receipt on isolated Xvfb. | Merged [PR #8847](https://github.com/Unjuno/agent-interface/pull/8847) / open Issue [#59](https://github.com/Unjuno/agent-interface/issues/59) preserves A08/A09/A10/A12 as STOP, A11 as not run, and A13 as `PASS_METHOD_SCOPED`. A13 observed one client KeyPress/KeyRelease, server key-up, a verified terminal `owner_release(reason=close)` with empty keys, stopped owner thread, and Xvfb exit 0. All six packet manifests (67 members) passed SHA-256 verification; the A13 raw-only audit passed. This is one synthetic X server and one key; no physical input, application consumption, release-latency guarantee, task effect, recovery, or MAP01 result follows. Do not rerun A08–A13. [Chain report](../research/doom/map01_v39_xvfb_owner_close_a13_20261012/CHAIN_REPORT.md) · [A13 result](../research/doom/map01_v39_xvfb_owner_close_a13_20261012/RESULT.md). |
 | Evidence and benchmark integrity | Preserve first outcomes and counterexamples; distinguish proxies from measured token/byte/performance claims; avoid tuning on hidden outcomes then calling them preregistered. | Embedded in the research method and evidence ledger. Issue [#6081](https://github.com/Unjuno/agent-interface/issues/6081) has a method-scoped exact-rational result, not live GUI/game evidence. Open [#8905](https://github.com/Unjuno/agent-interface/issues/8905) separately asks whether claims remain interpretable and auditable when their execution substrate is unavailable; one host-only invocation of each selected raw auditor is recorded, but the five-level classification and proposed offline/fallback test remain unverified. |
 
+## Reactive macro and symbolic-interface family
+
+Open [#6](https://github.com/Unjuno/agent-interface/issues/6) is a broad menu
+for bounded local sensorimotor primitives and reactive continuation; open
+[#56](https://github.com/Unjuno/agent-interface/issues/56) isolates the
+planner-authored symbolic GUI representation and cold/warm/repair economics.
+They overlap in local continuation but are not interchangeable. The #56 A05
+candidate failed its full correctness gate (A/B/D 12/12, C 9/12); the distinct
+#7422 R02 contract reached 10/12 exact and 9/12 graph success and was rejected
+on the frozen gates. A12–A14 are construction checks only; A14 accepted five
+schemas, but one blank screenshot elicited task-2-like coordinates. None
+establishes live GUI effect or full-task savings. The linked [family record](ideas/reactive-macro-symbolic-interface.md)
+preserves each outcome and limit. Keep both Issues open. Open [PR #7616](https://github.com/Unjuno/agent-interface/pull/7616)
+contains a separate offline composition package whose own report says
+`FAIL_SOURCE_BASE_LABEL_MISMATCH`; preserve it pending exact source/hash audit,
+without rerunning its consumed candidate or treating passing CI as scientific
+validation.
+
 ## Foundational open ideas
 
 | Issue | Idea | Status / boundary |

@@ -27,6 +27,9 @@ priorities and executed tests. Documentation or Issue closure alone does not
 resolve a research question. Existing finite/running work keeps its safe boundary.
 Repository cleanliness means every active artifact has a traceable disposition,
 not that all Issues are closed; see the dated [consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
+The first current semantic triage keeps broad reactive-control Issue #6 distinct
+from focused symbolic-interface Issue #56; its exact next audit is recorded in
+the [family entry](ideas/reactive-macro-symbolic-interface.md) and [work map](WORKER_WORK_MAP.md).
 
 Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not

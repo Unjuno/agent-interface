@@ -2,7 +2,7 @@
 
 This directory is the compact history of ideas raised in Agent Interface.
 
-The latest complete metadata snapshot is [open Issues r22](../maintenance/open-issues-20261019-r22.csv) and [open PRs r22](../maintenance/open-prs-20261019-r22.csv), captured against main `31c338fc8fecf3ef93ad802d2ac7ebee3bb9ff71` with 1,675 open Issues and 515 open PRs. The [r27 reconciliation](../maintenance/consolidation-status-20261019-r27.md) records the hash and membership delta; r15 remains the comparison baseline and source for the [idea-index coverage audit](../maintenance/idea-index-coverage-20261019-r15.md) and its 491-row [discovery queue](../maintenance/open-issues-missing-research-primary-row-20261019-r15.csv). That frozen queue is not current semantic status. Reviewed dispositions belong in the family entries; remaining rows stay untriaged until their current Issue scope, evidence, limits, and next decision are read.
+The latest full metadata snapshot is [open Issues r41](../maintenance/open-issues-20261019-r41.csv) and [open PRs r41](../maintenance/open-prs-20261019-r41.csv), captured at 2026-10-18 21:59 UTC against main `0b452ada10c7c336e0faf89699b17f1507abcd95` with 1,675 open Issues and 504 open PRs. The [r42 membership delta](../maintenance/repository-inventory-20261019-r42.md) at 2026-10-18 22:37 UTC records 1,675 Issues and 505 PRs; only #9099 was added. These are inventory snapshots, not semantic classification or current ownership. The r15 audit and its 491-row [discovery queue](../maintenance/open-issues-missing-research-primary-row-20261019-r15.csv) remain historical discovery sources; that queue is not current semantic status.
 
 Use this directory to connect ideas to existing evidence, dependencies, priorities and executable experiments. GitHub Issues remain the discussion and execution surface. Preserving an idea here does not remove it from research consideration or justify closing its Issue. Close only for verified completion, evidence-based rejection, or an actual successor that carries the remaining research forward. See the [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md).
 
@@ -35,6 +35,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 ```
 
 ## Index
+
+- [Reactive motor primitives and compiled symbolic GUI interfaces](reactive-macro-symbolic-interface.md) — keeps #6's broad local-continuation menu distinct from #56's model-authored symbolic interface and connects their scoped construction results to the open, provenance-failed composition package #7616.
 
 - [Current open-work inventory r14 (2026-10-19)](../maintenance/repository-inventory-20261019-r14.md) — current-main metadata: 1,675 open Issues and 514 open PRs; Issue/PR ID sets match r13. Membership metadata is not semantic triage or ownership proof.
 - [Research and idea Issue index](../RESEARCH_ISSUE_INDEX.md) — broad discovery index with a historical state snapshot and newer addenda; check its freshness note and live Issue/evidence before disposition. This ledger is the compact hypothesis/outcome map, not a complete mirror of every research-index row.
