@@ -23,6 +23,7 @@ from runtime.guarded_x11_v1.xres_client_fence import (
 
 
 _DELAY_MS = 8000
+_POST_HORIZON_XRES_TIMEOUT_S = 10.0
 _OWNER_START = r"""
 import json, sys, time
 from Xlib import X, XK
@@ -74,6 +75,8 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
             'disconnect_before_delay_horizon':None,
             'disconnect_before_cleanup':None,
             'disconnect_after_delay_horizon':None,
+            'key_down_after_extended_probe':None,
+            'key_down_after_disconnect':None,
             'keycodes':None,
             'key_down_before':None,
             'key_down_before_delay_horizon':None,
@@ -201,17 +204,32 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                     cleanup, keycodes)
                 report['late_input_observed'] = any(
                     report['key_down_after_delay_horizon'].values())
+                report['post_horizon_xres_timeout_s'] = (
+                    _POST_HORIZON_XRES_TIMEOUT_S)
                 report['disconnect_after_delay_horizon'] = (
                     wait_for_client_disconnect_supervised(
-                        display_name, marker_data['resource_base'], timeout_s=1.0,
+                        display_name, marker_data['resource_base'],
+                        timeout_s=_POST_HORIZON_XRES_TIMEOUT_S,
                         poll_interval_s=0.005, terminate_grace_s=0.1,
                     ))
+                report['post_horizon_xres_probe_after_kill_ms'] = (
+                    time.monotonic_ns()-killed_ns)/1_000_000
+                report['key_down_after_extended_probe'] = _keys_down(
+                    cleanup, keycodes)
+                if report['disconnect_after_delay_horizon']['status'] == 'disconnected':
+                    report['key_down_after_disconnect'] = dict(
+                        report['key_down_after_extended_probe'])
+                report['late_input_observed_after_extended_probe'] = any(
+                    report['key_down_after_extended_probe'].values())
                 # This is an observational discriminator: either key state is
                 # a valid measured outcome. The report, not an assumed late
                 # press, carries the result. Fail only if the readback itself
                 # was not produced or does not cover the requested keys.
                 self.assertEqual(
                     set(report['key_down_after_delay_horizon']),
+                    set(keycodes), report)
+                self.assertEqual(
+                    set(report['key_down_after_extended_probe']),
                     set(keycodes), report)
 
                 for code in keycodes.values():
