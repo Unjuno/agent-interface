@@ -124,6 +124,32 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
     async def test_unselected_process_only_still_allows_same_xid_residual(self): await self.exercise('stale', selected=False)
     async def test_reparent_remap(self): await self.exercise('reparent')
     async def test_same_process_destroy_reuse(self): await self.exercise('stale')
+    async def test_destroy_during_initial_capture_refuses_source_through_caller(self):
+        fake = FakeX(self)
+        fake.backend.d.get_display_name = lambda: ':fake-lifecycle'
+        connection = LifecycleConnection()
+        capture = fake.backend.observe_read_only
+        def destroyed_during_capture(*args, **kwargs):
+            result = capture(*args, **kwargs)
+            connection.event(X.DestroyNotify)
+            return result
+        fake.backend.observe_read_only = destroyed_during_capture
+        with tempfile.TemporaryDirectory() as td, \
+                patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection), \
+                patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity', side_effect=fake.read):
+            server = create_server({'app':20}, td, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True, guarded_window_lifecycle=True)
+            try:
+                observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                self.assertEqual(observed['status'], 'refused', observed)
+                self.assertNotIn('source', observed)
+                self.assertFalse(observed['input_dispatched'])
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                    alias='field', source_sequence=1, point=[8,8], region_size=[12,12])))
+                self.assertEqual(minted['status'], 'refused', minted)
+                self.assertEqual(fake.emissions, [])
+            finally:
+                await server.call_tool('interface_close', {})
     async def test_modifier_prefix_released(self): await self.exercise('modifier')
     async def test_cancel_blocked_lifecycle(self): await self.exercise('blocked', 'cancel')
     async def test_expire_blocked_lifecycle(self): await self.exercise('blocked', 'expiry')
