@@ -66,3 +66,9 @@ This is a successful measurement procedure with a negative late-input observatio
 ## Integration status
 
 PR #9057 was squash-merged at `6d91411cf8b90d514ac0d05a68009e6667113d7e` after the observation-only Xvfb test and all reported checks passed. The merge integrates the bounded measurement harness, not a release-fence guarantee. This packet separately retains the earlier test-assertion failure and the later procedure pass; neither observed XRes disappearance or proves post-disconnect ordering.
+
+## Extended post-horizon run 39158398302 — 2026-10-19
+
+PR [#9062](https://github.com/Unjuno/agent-interface/pull/9062) extended the supervised XRes poll after the 8,000 ms delayed-event horizon from 1 s to 10 s. The private-Xvfb job passed at head `d3dd3152206d107166c376ce13eb6d7191b9260e` and the PR merged at `2471afbaf96481fcc29c16328cbc44232c85bbc3`. On the same X.Org release `12101011`, the delayed request owner exited with `-15` about 151.5 ms after flush. XRes still reported `still_connected` after the horizon, with the 10 s post-horizon probe completing 18,511.3 ms after owner termination. The keymap after the extended probe remained `a=false, b=false`; `late_input_observed_after_extended_probe=false`. No client disappearance was observed, so `key_down_after_disconnect` remained null.
+
+The untouched CI artifact is [`raw/run-39158398302.json`](raw/run-39158398302.json), SHA-256 `767c1d48de54d1d9388c156c2898622c7111522d39e0985790fe29351a803323`. This strengthens only the bounded Xvfb observation: the owner remained present in XRes longer than the scheduled delay plus 10 s. It does not establish what happens after XRes disappearance, an input-release fence, standard-caller integration, physical effects, or a general X.Org deadline. Preserve release as `UNKNOWN`; no WSLc allocation was used.
