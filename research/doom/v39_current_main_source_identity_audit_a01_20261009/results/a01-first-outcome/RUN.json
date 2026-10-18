@@ -1,0 +1,11 @@
+{
+  "allocation": "UNJUNO-59-V39-CURRENT-MAIN-SOURCE-IDENTITY-A01-20261009",
+  "command": "python3 -B audit_current_main.py --main-sha 8b04b87394973edee9308dbd62283017479554ee",
+  "invocations": 1,
+  "exit_code": 1,
+  "result": "HOLD_AUDIT_INPUT",
+  "failure": "The script expected ObservableSignalPolicyMonitor to be defined in map01_overlap_controller_v39.py; the class is imported or otherwise external to that AST module, so execution stopped before source identity output.",
+  "retry_count": 0,
+  "frozen_source_changed": false,
+  "raw_sha256": "002e3675871baa73d8f085b64a9b354b699a69586f214e27d07b66219a810462"
+}

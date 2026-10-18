@@ -1,0 +1,38 @@
+{
+  "allocation": "xvfb-audit-v3-a01-20261005",
+  "construction_attempts": [
+    {
+      "id": "construction-01",
+      "command": "python -m py_compile /src/candidate.py /src/independent_audit.py /src/SOURCE/audit_v2.py",
+      "exit_code": 1,
+      "result": "[Errno 30] Read-only file system: '/src/__pycache__'",
+      "formal_roles_invoked": 0,
+      "disposition": "STOP_CONSTRUCTION_READONLY_CACHE_WRITE; preserved; exact command not retried"
+    },
+    {
+      "id": "construction-02",
+      "command": "python -B -c AST-compile candidate, auditor, and audit-v2 source in memory",
+      "exit_code": 0,
+      "result": "AST_COMPILE_OK=3",
+      "formal_roles_invoked": 0,
+      "disposition": "Passed; subsequent source inspection found candidate incorrectly read 'inputs' from upstream A03 freeze; fixed before formal source freeze"
+    },
+    {
+      "id": "construction-03",
+      "command": "python -B -c AST-compile corrected candidate, auditor, and audit-v2 source in memory",
+      "exit_code": 0,
+      "result": "AST_COMPILE_OK=3",
+      "formal_roles_invoked": 0,
+      "disposition": "Passed on final candidate source"
+    }
+  ],
+  "main_advance_stop": {
+    "base_main": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5",
+    "observed_main": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
+    "candidate_runs": 0,
+    "auditor_runs": 0,
+    "retries": 0,
+    "decision": "STOP_MAIN_ADVANCED_BEFORE_PREREG_FROZEN"
+  },
+  "candidate_source_review_note": "The initial pre-freeze candidate draft read the input table from the upstream A03 freeze. Static review caught this before any formal run; final frozen A02 candidate reads the separate A02 freeze. No candidate executed under A01."
+}
