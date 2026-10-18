@@ -1,15 +1,16 @@
 # Worker work map
 
 2026-10-19 update. Cursor-paginated GitHub reads returned 1,675 open Issues and
-514 open PRs against main `6c5e5df2909de10cdf12f442015160199f3d661b`. Against
-[r14](maintenance/repository-inventory-20261019-r14.md), both ID sets are unchanged.
-See [r15 inventory](maintenance/repository-inventory-20261019-r15.md) for timestamp,
-CSV checksums and exact metadata. This is not semantic review or
-proof of current ownership. Earlier snapshots are historical. Begin with
+514 open PRs against `origin/main` `319892fea2ba3396b1c58e95b50cfc6f0c7e444a`.
+At 2026-10-18 18:10:34 UTC, both ID sets and serialized CSV hashes matched r15;
+see the [r15 inventory](maintenance/repository-inventory-20261019-r15.md) for
+the exact metadata and the [consolidation plan](REPOSITORY_CONSOLIDATION.md)
+for the refreshed baseline. This is not semantic review or proof of current
+ownership. Earlier snapshots are historical. Begin with
 [current goal](CURRENT_GOAL.md), choose one finite item
 below, and verify its current Issue, source and ownership. This map is navigation;
 it adds no assignment, resource grant, reviewer quota or all-workers waiting gate.
-The current catalog gap is measured in the [r15 idea-index audit](maintenance/idea-index-coverage-20261019-r15.md); its 491 open Issues missing primary research-index rows remain untriaged. Use that list as a discovery queue, not as a research-only classification. The full outcome and safe closure criteria are in the [repository consolidation
+The current catalog gap is measured in the [r15 idea-index audit](maintenance/idea-index-coverage-20261019-r15.md): 491 open Issues lack primary research-index rows. The queue is a discovery snapshot, not a current semantic ledger. Since that capture, #2 has received a bounded review and remains active in the [safety-control agenda](ideas/safety-control-agenda.md), while #3 is queued in the [visual-interface agenda](ideas/visual-interface-agenda.md). Both still lack historical primary rows, so the navigation count is unchanged. Use the queue as a discovery source, not a research-only classification. The full outcome and safe closure criteria are in the [repository consolidation
 execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束). The local, read-only
 workspace artifact snapshot is [separate from repository contents](maintenance/workspace-custody-census-20261019.md);
 unknown custody means preserve and investigate, not delete.
