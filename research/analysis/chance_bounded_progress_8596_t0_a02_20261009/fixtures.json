@@ -1,0 +1,74 @@
+{
+  "allocation": "UNJUNO-8596-CHANCE-BOUNDED-PROGRESS-T0-A02-20261009",
+  "horizons": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "primary_horizon": 4,
+  "illustrative_threshold": "4/5",
+  "cases": {
+    "geometric_wide": {
+      "kind": "geometric_interval",
+      "p_min": "1/4",
+      "p_max": "1/2"
+    },
+    "geometric_high": {
+      "kind": "geometric_interval",
+      "p_min": "1/2",
+      "p_max": "3/4"
+    },
+    "rare_disturbance_safe_yield": {
+      "kind": "geometric_with_trigger",
+      "p_min": "1/4",
+      "p_max": "1/2",
+      "trigger": "1/32",
+      "trigger_outcomes": [
+        "SAFE_YIELD"
+      ]
+    },
+    "rare_disturbance_unsafe": {
+      "kind": "geometric_with_trigger",
+      "p_min": "1/4",
+      "p_max": "1/2",
+      "trigger": "1/32",
+      "trigger_outcomes": [
+        "SAFE_YIELD",
+        "UNSAFE"
+      ]
+    },
+    "same_mean_delay": {
+      "kind": "delay_support_comparison",
+      "benign": [
+        [
+          2,
+          "1/1"
+        ]
+      ],
+      "rare_tail": [
+        [
+          1,
+          "9/10"
+        ],
+        [
+          11,
+          "1/10"
+        ]
+      ]
+    },
+    "unmodeled_delay": {
+      "kind": "unknown",
+      "probability_model": null
+    }
+  },
+  "policy_visibility": {
+    "marker_visible": false,
+    "inputs": [
+      "fixture_model_identity",
+      "deadline_opportunities",
+      "illustrative_threshold"
+    ]
+  },
+  "scope": "authored exact-rational fixture only; no empirical transition calibration or runtime action"
+}

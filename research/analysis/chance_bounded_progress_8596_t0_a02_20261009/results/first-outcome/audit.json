@@ -1,0 +1,39 @@
+{
+  "allocation": "UNJUNO-8596-CHANCE-BOUNDED-PROGRESS-T0-A02-20261009",
+  "binary_progress_histories_per_endpoint_at_primary_horizon": 16,
+  "candidate_sha256": "3d91579f06465f8ef59698b094d87550cc6229bcd65a610157685ba38103aff7",
+  "disposition": "H_SUPPORTED_SCOPED",
+  "errors": 0,
+  "exact_independent_match": true,
+  "geometric_endpoint_vectors_checked": 32,
+  "high_interval": {
+    "lower": "15/16",
+    "sure_finite_bound": false
+  },
+  "method_gate": "PASS_METHOD_SCOPED",
+  "mutations": {
+    "dropped_rare_tail_atom": true,
+    "false_finite_sure_bound": true,
+    "forged_interval_bound": true,
+    "marker_oracle_leaked": true,
+    "midpoint_substituted_for_lower": true,
+    "unknown_probability_imputed": true,
+    "unsafe_transition_relabelled_safe": true
+  },
+  "primary_horizon": 4,
+  "same_mean_delay": {
+    "benign_by_deadline": "1/1",
+    "benign_mean": "2/1",
+    "rare_tail_by_deadline": "9/10",
+    "rare_tail_mean": "2/1"
+  },
+  "scope": "authored finite exact-rational CPU model only",
+  "threshold_fixture_only": "4/5",
+  "unknown_status": "NOT_IDENTIFIABLE",
+  "unsafe_case_hard_safety": "FAIL",
+  "wide_interval": {
+    "lower": "175/256",
+    "midpoint": "3471/4096",
+    "upper": "15/16"
+  }
+}
