@@ -77,14 +77,14 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
             window.map()
             window.set_input_focus(X.RevertToParent, X.CurrentTime)
             root.warp_pointer(x + 48, y + 48)
-            # The supported observer returns a full-screen root capture. XGetImage
-            # on the root drawable does not composite child-window pixels. Paint
-            # after mapping because this child has an opaque black background.
-            gc = root.create_gc(foreground=0xFFFFFF)
+            # The supported observer returns a full-screen root capture. Root
+            # writes beneath this opaque child did not change the captured pixels,
+            # so texture the mapped child surface that covers the mint location.
+            gc = window.create_gc(foreground=0xFFFFFF)
             for row in range((height + 15) // 16):
                 for column in range((width + 15) // 16):
                     if (row + column) % 2 == 0:
-                        root.fill_rectangle(gc, x + column * 16, y + row * 16,
+                        window.fill_rectangle(gc, column * 16, row * 16,
                             min(16, width - column * 16),
                             min(16, height - row * 16))
             app_display.sync()
