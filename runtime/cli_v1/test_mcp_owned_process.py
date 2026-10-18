@@ -87,6 +87,8 @@ def _queued_fake_owner_factory(targets, directory, display_name, options):
     fake = FakeX(cleanup)
     root = Path(directory)
     fake.backend.d.get_display_name = lambda:'fake-display'
+    fake.backend.d.display = SimpleNamespace(
+        info=SimpleNamespace(resource_id_base=0x1200000))
     child_queue = root/'child-x-queue.json'
 
     def enqueue(_display, kind, code):
@@ -421,6 +423,78 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
                 _apply_queued_child_requests(root)
                 self.assertEqual(_read_json(root/'fake-x-state.json', {})['down'], [1])
+            finally:
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_standard_cancel_keeps_unknown_after_release_readback_then_late_down(self):
+        """A fresh client's empty readback cannot fence a retired client's queued press."""
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            _write_json(root/'fake-x-state.json', {'down':[]})
+            server = create_server(
+                {'app':20}, root, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_queued_fake_owner_factory)
+            try:
+                observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                    alias='field', source_sequence=observed['source']['sequence'],
+                    point=[8,8], region_size=[12,12])))
+                (root/'block-owner-io').write_text('block', encoding='utf-8')
+                pending = metadata(await server.call_tool('interface_guarded_input', dict(
+                    alias='field', offset=minted['offset'], interaction='keyboard',
+                    observe_after=False, wait_for_result_ms=0,
+                    tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                self.assertEqual(pending['status'], 'pending', pending)
+                deadline = time.monotonic() + 3
+                while not (root/'owner-io-entered.json').exists() and time.monotonic() < deadline:
+                    await asyncio.sleep(0.005)
+                entered = _read_json(root/'owner-io-entered.json', {})
+                self.assertEqual(entered['queued'], [{'kind':X.KeyPress, 'code':1}])
+                self.assertEqual(entered['down'], [])
+
+                fence_result = {'status':'disconnected', 'worker_retired':True,
+                                'elapsed_ms':2.5}
+                release_result = {'status':'readback_verified',
+                                   'release':{'verified':True, 'keys_down':[],
+                                              'buttons_down':[], 'monotonic_ns':12}}
+                with (patch('runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised',
+                            return_value=fence_result),
+                      patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner._release_retired_owner_inputs',
+                            return_value=release_result) as release_inputs):
+                    cancelled = metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+
+                self.assertTrue(cancelled['owner_process_retired'], cancelled)
+                self.assertEqual(cancelled['owner_client_disconnect'], fence_result)
+                release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]})
+                self.assertEqual(cancelled['owner_release_attempt'], release_result)
+                self.assertFalse(cancelled['release_confirmed'])
+                self.assertEqual(cancelled['cleanup_status'], 'UNKNOWN')
+                self.assertTrue(cancelled['late_server_request_possible'])
+                self.assertFalse(cancelled['replay_allowed'])
+
+                # The cleanup receipt describes an empty keymap before the
+                # old connection's already-queued request is applied.
+                self.assertEqual(_read_json(root/'fake-x-state.json', {})['down'], [])
+                _apply_queued_child_requests(root)
+                self.assertEqual(_read_json(root/'fake-x-state.json', {})['down'], [1])
+
+                deadline = time.monotonic() + 3
+                terminal = None
+                while time.monotonic() < deadline:
+                    terminal = metadata(await server.call_tool('interface_results',
+                        {'call_id':pending['call_id'], 'include_image':False}))
+                    if terminal['status'] != 'pending':
+                        break
+                    await asyncio.sleep(0.005)
+                self.assertEqual(terminal['status'], 'runtime_failed', terminal)
+                self.assertFalse(terminal['release_confirmed'])
+                self.assertEqual(terminal['cleanup_status'], 'UNKNOWN')
+                self.assertIsNone(terminal['task_success'])
+                self.assertFalse(terminal['replay_allowed'])
             finally:
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
