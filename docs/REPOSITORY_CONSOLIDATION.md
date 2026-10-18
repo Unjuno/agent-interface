@@ -6,6 +6,26 @@
 open Issue 1,676件、open PR 519件。これは最新件数の照合であり、全件ページ取得・内容判定・
 担当判定ではない。過去のCSVは各取得時点の履歴として保ち、現在の完了数には流用しない。
 
+**2026-10-18 r6 現在地:** `2026-10-18 12:10 UTC` にGitHub RESTのopen Issue endpointを22ページ、
+open PR endpointを6ページ取得して再集計した。Issueは1,676件、PRは517件。件数は全件本文の
+意味判定や担当確認の完了を意味しない。
+
+**2026-10-18 r6 統合記録:** mainは`5dc27cff7ffed6fb218719ddc53b95a901e03d0c`。
+整理計画・アイデア台帳・履歴保全を含む[#9012](https://github.com/Unjuno/agent-interface/pull/9012)
+に続き、guarded relayのpackage source pinningと回帰テストを含む
+[#9011](https://github.com/Unjuno/agent-interface/pull/9011)を12:07 UTCにmerge commit
+`5dc27cff7ffed6fb218719ddc53b95a901e03d0c`で統合した。#9011の14 checksはhead
+`62b3d1632e7b2ddd0ec2ecbec957d0a51e16a833`上ですべてsuccess。手元にPython 3.12がなく、
+対象の`research/live_control`全体を展開すると大容量の保存rawまで含まれるため、今回の環境では
+同じローカル再実行を完了できていない。テスト成功の根拠は当該headのGitHub checksであり、
+新しいheadでの再実行やライブGUI/model効果の証拠とは扱わない。
+
+同日、統合済み#9011のsource branchは、merge状態とhead SHAを確認し、open PRのhead/baseに
+使われていないことを確認した後にremoteから削除した。整理PR #9017のリンク欠落指摘は
+sparse-checkoutの未展開パスを現行treeにないと誤認したもの
+だったため取り下げ、実tree上で確認し直した記録を#9012に統合した。誤った指摘は監査結果として
+再利用しない。全件の意味分類・PR処置は継続中である。
+
 整理用PR [#9012](https://github.com/Unjuno/agent-interface/pull/9012) は元head
 `a8cb43d9179fcef27c77170941de3b38b2a2ac41`、base
 `13e0b1c1b622085e0007e3ee52a744d1f2b32977`で、当時mainだった
