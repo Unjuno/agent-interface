@@ -1,6 +1,7 @@
 """Public cancellation cannot unsend blocked transport; Fake X only."""
 import asyncio
 import copy
+from contextlib import nullcontext
 from pathlib import Path
 import tempfile
 import threading
@@ -24,6 +25,9 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
         fake.backend.d.get_display_name=lambda:':fake-qualified'
         entered,resume,left=threading.Event(),threading.Event(),threading.Event()
         gated=[False];stage=[None];timeline=[];worker_threads=[];server_queue=[]
+        clock=[1_000_000]
+        clock_patch=(patch('time.monotonic_ns',side_effect=lambda:clock[0])
+                     if boundary=='press_queued_expiry' else nullcontext())
         def mark(event,**values):timeline.append(dict(event=event,host_monotonic_ns=time.monotonic_ns(),**values))
         def gate():
             if gated[0]:return
@@ -33,7 +37,7 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
         def emit(connection,kind,code):
             if boundary=='press_send' and kind==X.KeyPress and code==1:gate()
             if boundary=='release_send' and kind==X.KeyRelease and code==1:gate()
-            if boundary=='press_queued_sync':
+            if boundary in ('press_queued_sync','press_queued_expiry'):
                 server_queue.append((connection,kind,code))
                 mark('server_queued',writer_is_session=connection is fake.backend.d,kind=kind,code=code)
                 if kind==X.KeyPress and code==1:stage[0]='press'
@@ -43,7 +47,7 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
             if kind==X.KeyPress and code==1:stage[0]='press'
             if kind==X.KeyRelease and code==1:stage[0]='release'
         def sync():
-            if boundary=='press_queued_sync':
+            if boundary in ('press_queued_sync','press_queued_expiry'):
                 if stage[0]=='press' and not gated[0]:gate()
                 queued,server_queue[:]=list(server_queue),[]
                 for connection,kind,code in queued:
@@ -55,7 +59,7 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
         fake.backend.d.sync=sync
         reader=reader_backend(fake,lambda *a:SimpleNamespace(data=fake.raw,depth=24,visual=1))
         reader.d.create_resource_object=lambda kind,xid:SimpleNamespace(id=xid)
-        with tempfile.TemporaryDirectory(prefix='mcp-transport-stop-') as td, \
+        with tempfile.TemporaryDirectory(prefix='mcp-transport-stop-') as td, clock_patch, \
                 patch('runtime.backends.x11_v1.backend.xtest.fake_input',side_effect=emit), \
                 patch('runtime.guarded_x11_v1.observation_worker.open_readonly_backend',return_value=reader), \
                 patch('runtime.guarded_x11_v1.observation_worker.read_linux_x11_process_identity',side_effect=lambda *a:fake.generation), \
@@ -83,12 +87,18 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(pending['status'],'pending',pending)
                     self.assertTrue(await asyncio.to_thread(entered.wait,2))
                     original_deadline=bridge.deadline
-                    mark('cancel_requested')
-                    cancel=metadata(await server.call_tool('interface_guarded_cancel',{'call_id':pending['call_id']}))
-                    duplicate=metadata(await server.call_tool('interface_guarded_cancel',{'call_id':pending['call_id']}))
-                    mark('cancel_acknowledged')
-                    self.assertEqual(cancel['status'],'cancel_requested',cancel)
-                    self.assertFalse(cancel['release_confirmed']);self.assertTrue(duplicate['already_requested'])
+                    if boundary=='press_queued_expiry':
+                        clock[0]=original_deadline+1
+                        mark('lease_expired_while_transport_blocked',deadline=original_deadline,
+                             clock_ns=clock[0])
+                        cancel=duplicate=None
+                    else:
+                        mark('cancel_requested')
+                        cancel=metadata(await server.call_tool('interface_guarded_cancel',{'call_id':pending['call_id']}))
+                        duplicate=metadata(await server.call_tool('interface_guarded_cancel',{'call_id':pending['call_id']}))
+                        mark('cancel_acknowledged')
+                        self.assertEqual(cancel['status'],'cancel_requested',cancel)
+                        self.assertFalse(cancel['release_confirmed']);self.assertTrue(duplicate['already_requested'])
                     outstanding=await lookup(pending['call_id'])
                     busy_input=metadata(await server.call_tool('interface_guarded_input',arguments))
                     busy_close=metadata(await server.call_tool('interface_close',{}))
@@ -105,18 +115,21 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
                         emissions=copy.deepcopy(fake.emissions),transport_running=not left.is_set(),
                         server_pending=[dict(writer_is_session=connection is fake.backend.d,
                             kind=kind,code=code) for connection,kind,code in server_queue],
-                        worker_threads=worker_threads,
+                        worker_threads=worker_threads,clock_ns=clock[0],
                         live_worker_handles=[t.ident for t in threading.enumerate()
                             if t.ident in worker_threads and t.is_alive()],original_deadline=original_deadline,
                         reader=bridge._observations.snapshot())
                     self.assertEqual(before['live_worker_handles'],worker_threads)
                     self.assertEqual(before['ledger'],{'CTRL':1})
-                    self.assertEqual(before['down'],[] if boundary in ('press_send','release_sync','press_queued_sync') else [1])
+                    self.assertEqual(before['down'],[] if boundary in ('press_send','release_sync','press_queued_sync','press_queued_expiry') else [1])
                     mark('resume_requested');resume.set()
                     result=await asyncio.wait_for(terminal(pending['call_id']),2)
                     mark('terminal_received')
                     self.assertEqual(result['status'],'execution_failed',result)
                     self.assertEqual(fake.emissions,[(2,1),(3,1)])
+                    review_required_after_terminal=bridge.review_required
+                    if boundary=='press_queued_expiry':
+                        self.assertTrue(review_required_after_terminal)
                     old_cancel=metadata(await server.call_tool('interface_guarded_cancel',{'call_id':pending['call_id']}))
                     self.assertEqual(old_cancel['status'],'not_active')
                     replay=metadata(await server.call_tool('interface_guarded_input',arguments))
@@ -131,6 +144,7 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
                     if client.thread is not None:
                         await asyncio.to_thread(client.thread.join,2);self.assertFalse(client.thread.is_alive())
                 row=dict(boundary=boundary,pending=pending,before_resume=before,result=result,
+                    review_required_after_terminal=locals().get('review_required_after_terminal'),
                     old_cancel=old_cancel,replay=replay,closed=closed,down=sorted(fake.down),
                     ledger=copy.deepcopy(fake.backend.held_keycodes),emissions=copy.deepcopy(fake.emissions),timeline=timeline,
                     files_hex={p.relative_to(td).as_posix():p.read_bytes().hex() for p in Path(td).rglob('*') if p.is_file()})
@@ -152,6 +166,22 @@ class MCPTransportCancellationTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(row['before_resume']['ledger'],{'CTRL':1})
         self.assertEqual(row['result']['status'],'execution_failed')
         self.assertEqual(row['before_resume']['server_pending'],[{'writer_is_session':True,'kind':X.KeyPress,'code':1}])
+        self.assertEqual(row['emissions'],[(2,1),(3,1)])
+        self.assertEqual(row['down'],[])
+        self.assertEqual(row['ledger'],{})
+    async def test_lease_expiry_with_press_queued_before_server_processing(self):
+        row=await self.cell('press_queued_expiry')
+        before=row['before_resume']
+        self.assertIsNone(before['cancel'])
+        self.assertIsNone(before['duplicate_cancel'])
+        self.assertGreater(before['clock_ns'],before['original_deadline'])
+        self.assertEqual(before['lookup']['status'],'pending')
+        self.assertIsNot(before['lookup'].get('release_confirmed'),True)
+        self.assertEqual(before['server_pending'],[{'writer_is_session':True,'kind':X.KeyPress,'code':1}])
+        self.assertEqual(before['down'],[])
+        self.assertEqual(before['ledger'],{'CTRL':1})
+        self.assertEqual(row['result']['status'],'execution_failed')
+        self.assertTrue(row['review_required_after_terminal'])
         self.assertEqual(row['emissions'],[(2,1),(3,1)])
         self.assertEqual(row['down'],[])
         self.assertEqual(row['ledger'],{})

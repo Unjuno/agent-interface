@@ -1,0 +1,25 @@
+.....F.
+======================================================================
+FAIL: test_lease_expiry_with_press_queued_before_server_processing (runtime.cli_v1.test_mcp_transport_cancellation.MCPTransportCancellationTests.test_lease_expiry_with_press_queued_before_server_processing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/release-expiry-queued-press-mcp-20261018/runtime/cli_v1/test_mcp_transport_cancellation.py", line 177, in test_lease_expiry_with_press_queued_before_server_processing
+    self.assertTrue(before['review_required'])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.490s
+
+FAILED (failures=1)

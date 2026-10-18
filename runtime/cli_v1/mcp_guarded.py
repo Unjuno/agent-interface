@@ -261,6 +261,11 @@ class GuardedSessionOwner(MCPSessionOwner):
                     result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
             else:
                 result = method(arguments['alias'], arguments['offset'], tail=arguments['tail'])
+            if result.get('status') == 'execution_failed':
+                # A terminal failure can follow partial task effects even when
+                # same-owner release was verified. Require fresh visual review
+                # before another input can reuse the still-live source alias.
+                bridge.review_required = True
             row.update(status=result['status'], result=result)
             if cue is not None:
                 row['feedback_status'] = 'cue_not_attempted'
