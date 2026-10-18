@@ -87,6 +87,15 @@ Fake Xで両問い合わせ停止中の取消・原期限切れ・cleanup、遅�
 通信エラーのsticky retirementと、取消済み接続開始後に追加問い合わせを始めない回帰も確認する。
 capture・保存・input transport等は同期のままで、spike全体の採用や物理解放の保証とはしない。
 
+**2026-10-18 A01：** [release-order counterexample](../../research/live_control/fake_x_release_order_a01_20261018/REPORT.md)
+はFake Xの接続別queueで、DOWNが送信前またはserver処理前に止まる二条件を比較した。
+別connectionのUPとempty readbackはいずれも先にverifiedを返すが、writer再開後のlate DOWNで
+key37が残り、ledgerはemptyになった。same-connection cleanupはblocked syncから返らず、
+server-wide stopでもreceiptは返らなかった。通常/-Oとも同じ反例となり、source freeze・raw・
+saved-row auditを保存した。結論はモデル内の順序反例で、実X ordering・physical release・
+deadline保証ではない。次は単一authorityのwriter retirement/fenceとlate-send拒否を実callerで
+結び、backend不応答時は有限成功を偽らずUNKNOWNを保持する必要がある。
+
 ## Issueを閉じる条件
 
 この6件は今回の整理では閉じない。各原文の独自の問いと評価軸は残っている。
