@@ -55,30 +55,43 @@ run 39173486305 still refused it as flat. Its raw is retained at
 [`raw/third-failed-run-39173486305.json`](raw/third-failed-run-39173486305.json)
 (SHA-256 `D3F71AB59D244E0994EC06E37041EDF9BB6ABDE1CE46A1473E6734802EB2D608`).
 The fourth run's diagnostic captured the actual full-screen image. It is entirely
-black; the exact 24×24 mint patch has standard deviation 0.0. The child window
-was painted, but the standard observer reads the root drawable and does not
-composite child-window pixels. Preserve the exact report at
+black; the exact 24×24 mint patch has standard deviation 0.0. Preserve the exact report at
 [`raw/fourth-failed-run-39173880776.json`](raw/fourth-failed-run-39173880776.json)
 (SHA-256 `993C3CF21D4361315217A607F79EF9E67E4E2A0E1736974540049840DBDAEE1B`)
 and screenshot at
 [`raw/fourth-failed-run-39173880776-observation.png`](raw/fourth-failed-run-39173880776-observation.png)
 (SHA-256 `63373382CFA36078355BA24FEB69E5E94474E40EC28F26BB01C8BFD7F4ED18E6`,
-2,367 bytes). The next fixture revision painted the checker pattern on the
-captured root surface in screen coordinates, first before mapping and then after
-mapping the opaque child. The refusal was correct for its observed image; these
-repairs change only fixture rendering, not the guard or frozen conditions. Run
-39174145812 again returned the same all-black image and
-zero-variance mint patch even after the root write was moved after mapping. Its
-JSON report is preserved at
-[`raw/fifth-failed-run-39174145812.json`](raw/fifth-failed-run-39174145812.json)
-(SHA-256 `DA48AC99B32597F2861474991909BBC7181B86C37FCBEE8E727ABDC7CC45FA07`);
-the 2,367-byte observation PNG is
-[`raw/fifth-failed-run-39174145812-observation.png`](raw/fifth-failed-run-39174145812-observation.png)
-(SHA-256 `63373382CFA36078355BA24FEB69E5E94474E40EC28F26BB01C8BFD7F4ED18E6`).
-Root writes beneath the opaque child did not affect the captured image, so the
-fixture now paints the mapped child surface directly. This is a new fixture
-hypothesis, not an observed pass. All five first outcomes remain separate and
-preserved.
+2,367 bytes). Two subsequent root-draw attempts, before and after child mapping,
+also retained the same all-black image. Their exact reports and identical
+2,367-byte screenshots are preserved as
+[`raw/fifth-failed-run-39174045103.json`](raw/fifth-failed-run-39174045103.json)
+(SHA-256 `ADEDFFCEB400CEFA4746ED4B2777AE89562320EF59E16A5286F7545C0E4A8345`),
+[`raw/sixth-failed-run-39174145812.json`](raw/sixth-failed-run-39174145812.json)
+(SHA-256 `DA48AC99B32597F2861474991909BBC7181B86C37FCBEE8E727ABDC7CC45FA07`),
+and the matching screenshots at their paired `-observation.png` paths (SHA-256
+`63373382CFA36078355BA24FEB69E5E94474E40EC28F26BB01C8BFD7F4ED18E6`). These
+results showed that the root drawing attempts did not texture the observed
+screen. The fixture was then changed to paint the mapped child surface directly.
+
+Run 39174301979 passed the scoped assertions through the standard guarded MCP
+caller. It used X.Org Xvfb `2:21.1.12-1ubuntu1.8` (`/usr/bin/Xvfb`, binary
+SHA-256 `6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84`).
+The retained 19,023-byte report is
+[`raw/seventh-pass-run-39174301979.json`](raw/seventh-pass-run-39174301979.json)
+(SHA-256 `C3046098A202481AB0841D9957D0CC47E26B0F26DF13B08013638C7D176C1236`);
+its 2,940-byte observation is
+[`raw/seventh-pass-run-39174301979-observation.png`](raw/seventh-pass-run-39174301979-observation.png)
+(SHA-256 `751E00D5F926A15128A45BAEC1B2310AABEE740B363119BD79DD224986D81F01`).
+The report binds XRes PID and `/proc` start ticks, process/window generations,
+standard-caller input, exact KeyPress/KeyRelease delivery, a verified neutral
+release receipt, independent property value `[1]`, and independent keymap
+readback `keycode_a_down=false`. Destroying the target caused stale input to be
+refused with `input_dispatched=false`, the target-query worker retired, and
+`review_required=true`; close then verified neutral state. Recorded durations
+were 605.0 ms observe, 56.3 ms input through caller return, 0.15 ms independent
+effect read, and 40.0 ms stale refusal. These are one synthetic private-Xvfb
+run, not latency bounds or an efficiency comparison. All six failed first
+outcomes remain separately retained.
 
 The synthetic property is not a product task or independent game/app success
 oracle. This does not qualify native user desktop input, XWayland, a held-input
