@@ -4,7 +4,7 @@
 
 **目的:** Unjuno/agent-interfaceを、複数ワーカーが同じ現在地と証拠を見つけ、独立した作業を選び、衝突なく統合できる状態へ整理する。IssueやPRをゼロにすることは目的にしない。未検証の案、失敗、反例、raw、担当中の作業は失わず、重複・古い案も出典と状態が追える形で残す。
 
-**現在の全体像 (r9, 2026-10-19 JST):** open Issue 1,676件、open PR 515件。カーソルページングした全件CSVをr8と照合し、Issue ID増減なし、PRは#9039が1件追加、消失なし。取得時のmainは`4e36e47a690621a658515b5107cce020dfe6df82`。件数・ID集合の確認は済んだが、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r9 inventory](maintenance/repository-inventory-20261019-r9.md)とSHA付きCSVを読み取り基準点とし、r8以前は履歴として保持する。
+**現在の全体像 (r10, 2026-10-19 JST):** 2026-10-18 16:15:56 UTCに再取得したopen Issueは1,675件、open PRは516件。r9とのID比較でIssueは#8681が1件減り、PRは#9040が1件増えた。取得時のmainは`4e36e47a690621a658515b5107cce020dfe6df82`。件数・ID集合の確認は済んだが、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r10 inventory](maintenance/repository-inventory-20261019-r10.md)とSHA付きCSVを読み取り基準点とし、r9以前は履歴として保持する。
 
 **「クリーン」の完了条件:**
 
@@ -29,6 +29,10 @@
 **ワーカー分担:** 大きな全件処理を一人に割り当てず、研究ファミリーまたは番号範囲と出力先を小さく区切る。着手前に対象Issue/PR、編集するファイル、読む証拠を記録し、共有indexは一度に一人が統合する。ほかの人の担当・実験・branchは、確認できないときに無主物と扱わない。調整待ちの間も別ファミリーの読取監査・テスト・分類を進める。
 
 **r9で入った項目の初回確認:** [PR #9039](https://github.com/Unjuno/agent-interface/pull/9039)はopen、Draft、mergeable、head `5f35c41f6b1c1afa11326c698dc782cc7830dfbd`、base main `4e36e47a690621a658515b5107cce020dfe6df82`。#17のinput-release familyに属し、9ファイルの差分でowned guarded-MCP processとFake X queued-DOWN反例、XRes observer helperを含む。PR本文の検証報告は選定110件がnormal/optimizedでpass、nested stdioは依存importの都合で除外。live X/Xvfbの実測、標準caller release fence、独立task effect、MAP01は未達。#17自体はopenのまま。**Disposition: active / keep open / no merge decision in this cleanup batch.** 現作業treeに後続Xvfb実験スクリプトが未追跡で存在するため、元author作業として保全し、#9039から独立した整理作業では移動・削除しない。
+
+**2026-10-19 r27 — first semantic disposition batch (#8681 cleanup identity):** The family record [`cleanup-identity-audit`](ideas/cleanup-identity-audit.md) reconciles the issue's original hypothesis and A01 counterexample with merged implementation PR #8771 and the still-open evidence PRs #8687/#8838. #8681 was closed as completed after a bounded issue review and explanatory comment; this does not close live-control Issue #59. Keep #8687 and #8838 open while their distinct A02–A07 packages lack a verified canonical custody destination. Do not merge their overlapping implementation changes or delete their refs. Source review used current main `4e36e47a690621a658515b5107cce020dfe6df82`, #8771 implementation head `8af95598a2517088203be2696b043ef329ba5b5c`, and current evidence-PR heads recorded in the idea entry. No experiment was rerun.
+
+**2026-10-19 r28 — refreshed open-set baseline:** After #8681 closed, paginated `gh issue list` / `gh pr list` reads at 2026-10-18 16:15:56 UTC contain 1,675 Issues and 516 PRs. Compared with r9, Issue ID set difference is exactly `removed #8681`; PR ID set difference is exactly `added #9040`. The #9040 entry is this consolidation plan's open Draft PR. Current main remained `4e36e47a690621a658515b5107cce020dfe6df82`. CSV hashes and metadata are in [r10 inventory](maintenance/repository-inventory-20261019-r10.md). This is a fresh membership snapshot, not a semantic review of the remaining inventory.
 
 **次の具体的な整理作業:** アイデア索引とr9 Issue一覧を突合し、既に結果がある研究ファミリーを一つ選ぶ。元Issue・main上の証拠・現行PRを確認して、仮説・結果・残差・次の実験を揃え、Issue処置が必要な項目だけ個別に行う。全件意味分類が終わるまで実験・統合を止めない。
 
