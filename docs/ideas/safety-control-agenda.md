@@ -122,6 +122,15 @@ Open Issue [#8024](https://github.com/Unjuno/agent-interface/issues/8024) asks w
 
 The A01 finite authored fixture reports `METHOD_PASS_SCOPED`: nominal held-out coverage was 9/9 and no hard event was delayed. However, a simple fixed timeout retained the same 9/9 recoverable cases as the calibrated rule, so incremental value was not shown. The result and raw evidence are in open Draft [PR #8036](https://github.com/Unjuno/agent-interface/pull/8036), not main. This establishes no real recovery distribution, GUI safety, or production deadline. Keep the issue open; any later transfer needs separate authorization and a fresh preregistered gate.
 
+**2026-10-18 A01：** [release-order counterexample](../../research/live_control/fake_x_release_order_a01_20261018/REPORT.md)
+はFake Xの接続別queueで、DOWNが送信前またはserver処理前に止まる二条件を比較した。
+別connectionのUPとempty readbackはいずれも先にverifiedを返すが、writer再開後のlate DOWNで
+key37が残り、ledgerはemptyになった。same-connection cleanupはblocked syncから返らず、
+server-wide stopでもreceiptは返らなかった。通常/-Oとも同じ反例となり、source freeze・raw・
+saved-row auditを保存した。結論はモデル内の順序反例で、実X ordering・physical release・
+deadline保証ではない。次は単一authorityのwriter retirement/fenceとlate-send拒否を実callerで
+結び、backend不応答時は有限成功を偽らずUNKNOWNを保持する必要がある。
+
 ## Issueを閉じる条件
 
 この一覧のIssueは今回の整理では閉じない。各原文の独自の問いと評価軸は残っている。

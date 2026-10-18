@@ -1,0 +1,92 @@
+"""Read retained synthetic accounting and method results; no runtime imports."""
+import copy,hashlib,json,sys
+from pathlib import Path
+Q=Path(__file__).resolve().parent
+def need(value,reason):
+    if not value:raise ValueError(reason)
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+def blobs(name):
+    index=json.loads((Q/name/'index.json').read_bytes());return index
+def frozen(entries):
+    result={}
+    for name,pin in entries.items():
+        raw=(Q/pin['path']).read_bytes();need(sha(raw)==pin['sha256'],'frozen '+name);result[name]=raw
+    return result
+def audit_probe(data,mode):
+    need(data['optimize']==mode and len(data['cells'])==4,'probe inventory/mode')
+    expected=[('current','current',9,0,0,10),('current','legacy8772',2,0,6,0),
+              ('candidate8772','current',9,2,0,10),('candidate8772','legacy8772',2,0,0,0)]
+    for cell,ex in zip(data['cells'],expected):
+        need((cell['implementation'],cell['contract'],cell['methods'],len(cell['failures']),len(cell['errors']),len(cell['rows']))==ex,'implementation/contract discriminator')
+        need(cell['skips']==[],'no skipped contracts')
+    current=data['cells'][0]['rows'];candidate=data['cells'][2]['rows']
+    need(len(current)==len(candidate)==10,'row count')
+    def key(r):return (r['status'],r['publication'],r['malformed'],json.dumps(r['reported_usage'],sort_keys=True))
+    need(len({key(r) for r in current})==10 and {key(r) for r in current}=={key(r) for r in candidate},'matched inert inputs')
+    for r in current:
+        result=r['result'];attempt,=result['attempt_ledger']
+        need(result['accounting']['attempted_calls']==1 and result['accounting']['cost'] is None and r['borrowed_close_calls']==0,'attempt accounting/ownership')
+        good=r['status']=='completed' and r['publication'] is None and not r['malformed']
+        if good:
+            need(result['outcome']=='TASK_NOT_VERIFIED' and result['task_effect']=='unavailable' and r['counts']=={'execute':1,'verify':1},'model completion is not task effect')
+            continue
+        need(result['outcome']=='CALLER_FAILED' and result['task_effect'] is None and result['delivery'] is None and result['input_authority']=='none' and r['counts']=={'execute':0,'verify':0},'failure grants no task/input success')
+        need(result['accounting']['completed_calls']==0 and attempt['status']=='failed','failed callback stays attempted')
+        started=r['status']!='start_failure'
+        need(attempt['call_id']==('turn-1' if started else None) and attempt['visible_images_submitted']==(1 if started else None),'returned handle/image admission')
+        usage=r['reported_usage'];last=usage.get('last') if type(usage) is dict else None
+        fields={'inputTokens':'input_tokens','cachedInputTokens':'cached_input_tokens','cacheWriteInputTokens':'cache_write_input_tokens','outputTokens':'output_tokens','reasoningOutputTokens':'reasoning_output_tokens'}
+        valid=type(last) is dict and all(type(last.get(name)) is int and last[name]>=0 for name in fields)
+        expected_usage={target:last[source] for source,target in fields.items()} if valid else None
+        need(attempt['usage']==expected_usage,'known usage/unknown retained')
+        need(result['accounting']['usage_totals']['input_tokens']==(expected_usage['input_tokens'] if valid else None),'unknown not zero')
+        need(type(attempt['wait_ns']) is int and attempt['wait_ns']>=0,'adapter interval')
+    failed_names={r['test'].split(' ')[0] for r in data['cells'][2]['failures']}
+    need(failed_names=={'test_await_timeout_keeps_known_turn_but_not_invented_usage','test_completed_result_publication_refusal_is_not_unbilled_or_successful'},'wholesale old implementation regression scope')
+    current_by={key(r):r for r in current}
+    for r in candidate:
+        if r['status']=='timeout' or r['publication']=='result.json':
+            old_attempt,=r['result']['attempt_ledger'];new_attempt,=current_by[key(r)]['result']['attempt_ledger']
+            need(old_attempt['call_id'] is None and new_attempt['call_id']=='turn-1','adoption counterexample')
+    return True
+def main():
+    source_index=json.loads((Q/'source-index.json').read_bytes());frozen(source_index)
+    proposals=blobs('original-proposals')
+    for entry in proposals.values():frozen(entry['files'])
+    for name in ('research/live_control/integrated_efficiency_app_server_model_v1.py','research/live_control/test_grounding_failure_accounting_6178.py'):
+        need(proposals['7521']['files'][name]['sha256']==proposals['8772']['files'][name]['sha256'],'duplicate original implementation/test')
+    original=blobs('saved-multiverse');saved=frozen(original['files'])
+    for line in saved['results/formal-01/SHA256SUMS.txt'].decode().splitlines():
+        digest,name=line.split('  ',1);path=name if name in saved else 'results/formal-01/'+name
+        need(sha(saved[path])==digest.lower(),'original multiverse checksum '+name)
+    fixture=json.loads(saved['fixtures.json']);raw=json.loads(saved['results/formal-01/candidate-output.json'])
+    namespace={'__name__':'retained_pure_auditor'}
+    exec(compile(saved['audit.py'],'retained-multiverse-audit.py','exec'),namespace)
+    result=namespace['audit'](raw,fixture)
+    need(result==json.loads(saved['results/formal-01/audit-output.json']) and result['status']=='PASS_METHOD_SCOPED' and result['cohorts_matched']==5,'retained method readback')
+    method_mutations=[]
+    for kind in ('drop-cohort','change-allocation','change-registry'):
+        bad=copy.deepcopy(raw)
+        if kind=='drop-cohort':bad['analyses'].pop()
+        elif kind=='change-allocation':bad['allocation']='other'
+        else:bad['registry']={}
+        need(namespace['audit'](bad,fixture)['status']!='PASS_METHOD_SCOPED','method mutant '+kind);method_mutations.append(kind)
+    reports=[]
+    for mode,label in ((0,'normal'),(1,'optimized')):
+        data=json.loads((Q/f'probe-{label}.json').read_bytes());audit_probe(data,mode)
+        for name,pin in data['source_sha256_lf'].items():need(source_index[name]['sha256']==pin,'current source identity')
+        rejected=[]
+        for kind in ('false-candidate-pass','lost-current-turn','zero-unknown-usage','false-task-success','missing-cell'):
+            bad=copy.deepcopy(data)
+            if kind=='false-candidate-pass':bad['cells'][2]['failures']=[]
+            elif kind=='lost-current-turn':next(r for r in bad['cells'][0]['rows'] if r['status']=='timeout')['result']['attempt_ledger'][0]['call_id']=None
+            elif kind=='zero-unknown-usage':next(r for r in bad['cells'][0]['rows'] if r['status']=='timeout')['result']['attempt_ledger'][0]['usage']={}
+            elif kind=='false-task-success':next(r for r in bad['cells'][0]['rows'] if r['status']=='completed' and not r['malformed'] and r['publication'] is None)['result']['outcome']='TASK_COMPLETED'
+            else:bad['cells'].pop()
+            try:audit_probe(bad,mode)
+            except (ValueError,KeyError):rejected.append(kind)
+            else:raise ValueError('accepted probe mutant '+kind)
+        reports.append(dict(mode=mode,cells=4,current_contract_methods_passed=9,legacy_contract_control_methods_passed=2,expected_wholesale_candidate_failures=2,expected_current_legacy_subtest_errors=6,current_and_candidate_rows=20,rejected_mutants=rejected))
+    result=dict(decision='PASS_SAVED_ADOPTION_AND_METHOD_READBACK',probe=reports,multiverse=dict(status='PASS_METHOD_SCOPED',cohorts=5,rejected_mutants=method_mutations),scope='inert protocol accounting and saved synthetic method only; no provider/token price/live route effect or performance qualification')
+    Path(sys.argv[1]).write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))
+if __name__=='__main__':main()

@@ -36,6 +36,10 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Open Issue inventory refresh (2026-10-17)](../maintenance/open-issues-inventory-20261017.md) — refreshes the paginated open-Issue metadata snapshot to 1,677, records its three-ID delta from r3, and states that inventory is not full semantic triage.
 
+- [Model integration, matched economics and evaluation ideas](model-economics-agenda.md) — #57/#3311 execution, #5827 endpoint sensitivity, #6227 requalification cost and #8859 evidence-sufficient effort remain distinct. Includes current/legacy accounting adoption checks and original-result custody gaps; no live performance claim.
+
+- [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, dependencies and executed public-path Fake X blocking characterization. These parent ideas remain open.
+
 - [Research Issue index addendum (2026-10-17)](../RESEARCH_ISSUE_INDEX_20261017_ADDENDUM.md) — captures 146 currently open research-labelled Issues missing from the historical 2026-10-02 selected index, with literal outcome markers and heuristic predecessor refs; it is discovery metadata, not semantic audit.
 
 - [Open issue citation audit (2026-10-17)](open-issue-citation-audit-20261017.md) — restores direct links and concise proposal summaries for 61 open Issues (49 in the original bounded comparison plus 12 found in a follow-up live recheck); source Issues remain authoritative for evidence, status, and execution decisions.

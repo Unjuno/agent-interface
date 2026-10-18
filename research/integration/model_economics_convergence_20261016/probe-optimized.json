@@ -1,0 +1,5137 @@
+{
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "optimize": 1,
+  "cells": [
+    {
+      "implementation": "current",
+      "contract": "current",
+      "methods": 9,
+      "failures": [],
+      "errors": [],
+      "skips": [],
+      "rows": [
+        {
+          "status": "timeout",
+          "reported_usage": null,
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: TimeoutError('owned inert timeout')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: TimeoutError('owned inert timeout')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "98b96a3ff16345c28bb34606e07f3626",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014215522200,
+                "completed_ns": 354014216099300,
+                "call_id": "turn-1",
+                "usage": null,
+                "visible_images_submitted": 1,
+                "wait_ns": 108900,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: TimeoutError('owned inert timeout')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 108900,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014215444600,
+                "ended_ns": 354014215456700,
+                "elapsed_ns": 12100
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014215505700,
+                "ended_ns": 354014215509400,
+                "elapsed_ns": 3700
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014215522200,
+                "ended_ns": 354014216099300,
+                "elapsed_ns": 577100
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: TimeoutError('owned inert timeout')",
+              "cause": "TimeoutError",
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 108900
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014215444600
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014215456700
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014215505700
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014215509400
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "98b96a3ff16345c28bb34606e07f3626",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014215522200,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "98b96a3ff16345c28bb34606e07f3626",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014215522200,
+              "completed_ns": 354014216099300,
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 108900,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: TimeoutError('owned inert timeout')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: TimeoutError('owned inert timeout')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 0,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "completed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": "result.json",
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "e6ef6501af194772bc2faf5b9871f808",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014217414200,
+                "completed_ns": 354014218013000,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 218200,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 218200,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014217389600,
+                "ended_ns": 354014217396900,
+                "elapsed_ns": 7300
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014217401400,
+                "ended_ns": 354014217404200,
+                "elapsed_ns": 2800
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014217414200,
+                "ended_ns": 354014218013000,
+                "elapsed_ns": 598800
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')",
+              "cause": "PermissionError",
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 218200
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014217389600
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014217396900
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014217401400
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014217404200
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "e6ef6501af194772bc2faf5b9871f808",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014217414200,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "e6ef6501af194772bc2faf5b9871f808",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014217414200,
+              "completed_ns": 354014218013000,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 218200,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "failed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "44e2fa30d1bc46feb4bfa36c61baecea",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014219101900,
+                "completed_ns": 354014219858700,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 309300,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 309300,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014219079500,
+                "ended_ns": 354014219086400,
+                "elapsed_ns": 6900
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014219090800,
+                "ended_ns": 354014219093500,
+                "elapsed_ns": 2700
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014219101900,
+                "ended_ns": 354014219858700,
+                "elapsed_ns": 756800
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')",
+              "cause": "RuntimeError",
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 309300
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014219079500
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014219086400
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014219090800
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014219093500
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "44e2fa30d1bc46feb4bfa36c61baecea",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014219101900,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "44e2fa30d1bc46feb4bfa36c61baecea",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014219101900,
+              "completed_ns": 354014219858700,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 309300,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"failed\",\n  \"answer_eligible\": false,\n  \"error\": \"turn status is failed\",\n  \"usage\": {\n    \"input_tokens\": 100,\n    \"cached_input_tokens\": 20,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 20,\n    \"reasoning_output_tokens\": 5\n  },\n  \"runner_ns\": 183900\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "interrupted",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "6f3ebe9bf7f246a68ba8603d20cbfc0f",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014221107300,
+                "completed_ns": 354014221774100,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 229900,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 229900,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014221061400,
+                "ended_ns": 354014221068000,
+                "elapsed_ns": 6600
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014221072400,
+                "ended_ns": 354014221075000,
+                "elapsed_ns": 2600
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014221107300,
+                "ended_ns": 354014221774100,
+                "elapsed_ns": 666800
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')",
+              "cause": "RuntimeError",
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 229900
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014221061400
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014221068000
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014221072400
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014221075000
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "6f3ebe9bf7f246a68ba8603d20cbfc0f",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014221107300,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "6f3ebe9bf7f246a68ba8603d20cbfc0f",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014221107300,
+              "completed_ns": 354014221774100,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 229900,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"interrupted\",\n  \"answer_eligible\": false,\n  \"error\": \"turn status is interrupted\",\n  \"usage\": {\n    \"input_tokens\": 100,\n    \"cached_input_tokens\": 20,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 20,\n    \"reasoning_output_tokens\": 5\n  },\n  \"runner_ns\": 121600\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "failed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": "failure.json",
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "9a949d877af9426bacceb8b0a0506be0",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014223036000,
+                "completed_ns": 354014223595900,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 162300,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 162300,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014223010900,
+                "ended_ns": 354014223018800,
+                "elapsed_ns": 7900
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014223022900,
+                "ended_ns": 354014223025900,
+                "elapsed_ns": 3000
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014223036000,
+                "ended_ns": 354014223595900,
+                "elapsed_ns": 559900
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')",
+              "cause": "PermissionError",
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 162300
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014223010900
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014223018800
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014223022900
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014223025900
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "9a949d877af9426bacceb8b0a0506be0",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014223036000,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "9a949d877af9426bacceb8b0a0506be0",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014223036000,
+              "completed_ns": 354014223595900,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 162300,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: PermissionError('owned inert publication refusal')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "completed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": true,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "959721c6bea04029b2721a4d293540a9",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014224650500,
+                "completed_ns": 354014225299300,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 227600,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 227600,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014224628400,
+                "ended_ns": 354014224635200,
+                "elapsed_ns": 6800
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014224639300,
+                "ended_ns": 354014224642000,
+                "elapsed_ns": 2700
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014224650500,
+                "ended_ns": 354014225299300,
+                "elapsed_ns": 648800
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')",
+              "cause": "RuntimeError",
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 227600
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014224628400
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014224635200
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014224639300
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014224642000
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "959721c6bea04029b2721a4d293540a9",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014224650500,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "959721c6bea04029b2721a4d293540a9",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014224650500,
+              "completed_ns": 354014225299300,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 227600,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"completed\",\n  \"answer_eligible\": false,\n  \"error\": \"answer is missing required fields: format, field, submit, method\",\n  \"usage\": {\n    \"input_tokens\": 100,\n    \"cached_input_tokens\": 20,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 20,\n    \"reasoning_output_tokens\": 5\n  },\n  \"runner_ns\": 127900\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "failed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": -1,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: ValueError('usage values must be nonnegative integers')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: ValueError('usage values must be nonnegative integers')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "30ec8329344d4fe9ab742bd5f079abfd",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014226428400,
+                "completed_ns": 354014226905600,
+                "call_id": "turn-1",
+                "usage": null,
+                "visible_images_submitted": 1,
+                "wait_ns": 117900,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: ValueError('usage values must be nonnegative integers')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 117900,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014226406800,
+                "ended_ns": 354014226413200,
+                "elapsed_ns": 6400
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014226417300,
+                "ended_ns": 354014226419900,
+                "elapsed_ns": 2600
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014226428400,
+                "ended_ns": 354014226905600,
+                "elapsed_ns": 477200
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: ValueError('usage values must be nonnegative integers')",
+              "cause": "ValueError",
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 117900
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014226406800
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014226413200
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014226417300
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014226419900
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "30ec8329344d4fe9ab742bd5f079abfd",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014226428400,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "30ec8329344d4fe9ab742bd5f079abfd",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014226428400,
+              "completed_ns": 354014226905600,
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 117900,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: ValueError('usage values must be nonnegative integers')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: ValueError('usage values must be nonnegative integers')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "start_failure",
+          "reported_usage": null,
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: OSError('owned inert failure before returned turn handle')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: OSError('owned inert failure before returned turn handle')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "1f29fbe2c9f941f7958700891d323b6f",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014227952200,
+                "completed_ns": 354014228395800,
+                "call_id": null,
+                "usage": null,
+                "visible_images_submitted": null,
+                "wait_ns": 89900,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: OSError('owned inert failure before returned turn handle')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": null,
+              "visible_image_coverage": 0,
+              "model_wait_ns": 89900,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014227928700,
+                "ended_ns": 354014227936000,
+                "elapsed_ns": 7300
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014227940700,
+                "ended_ns": 354014227943200,
+                "elapsed_ns": 2500
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014227952200,
+                "ended_ns": 354014228395800,
+                "elapsed_ns": 443600
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: OSError('owned inert failure before returned turn handle')",
+              "cause": "OSError",
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": 89900
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014227928700
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014227936000
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014227940700
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014227943200
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "1f29fbe2c9f941f7958700891d323b6f",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014227952200,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "1f29fbe2c9f941f7958700891d323b6f",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014227952200,
+              "completed_ns": 354014228395800,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": 89900,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: OSError('owned inert failure before returned turn handle')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: OSError('owned inert failure before returned turn handle')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 0,
+          "thread_starts": 1,
+          "model_calls": 0,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "completed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "TASK_NOT_VERIFIED",
+            "reason": "unavailable",
+            "task_effect": "unavailable",
+            "effect_receipt": {
+              "status": "unavailable"
+            },
+            "delivery": "confirmed",
+            "execution_progress": {
+              "status": "completed"
+            },
+            "selected_target": {
+              "field_point": [
+                100,
+                200
+              ],
+              "submit_point": [
+                500,
+                300
+              ],
+              "method": {
+                "first_action": "enter_exact_token",
+                "continue_when": "field_pixels_changed_and_submit_revalidated",
+                "second_action": "activate_submit",
+                "complete_when": "submission_pixels_changed_then_independent_score"
+              }
+            },
+            "cache_update": {
+              "field_point": [
+                100,
+                200
+              ],
+              "submit_point": [
+                500,
+                300
+              ],
+              "method": {
+                "first_action": "enter_exact_token",
+                "continue_when": "field_pixels_changed_and_submit_revalidated",
+                "second_action": "activate_submit",
+                "complete_when": "submission_pixels_changed_then_independent_score"
+              }
+            },
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "completed",
+                "reason": null
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "completed",
+                "reason": null
+              },
+              "execute": {
+                "status": "completed",
+                "reason": null
+              },
+              "verify_effect": {
+                "status": "completed",
+                "reason": null
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "556402b64ca742eaa62fea3cceafc836",
+                "stage": "anchor_model",
+                "status": "completed",
+                "started_ns": 354014229390800,
+                "completed_ns": 354014230077600,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 147700,
+                "error": null
+              }
+            ],
+            "model_call_ledger": [
+              {
+                "attempt_id": "556402b64ca742eaa62fea3cceafc836",
+                "stage": "anchor_model",
+                "call_id": "turn-1",
+                "output": {
+                  "status": "target_reference",
+                  "target": {
+                    "field_point": [
+                      100,
+                      200
+                    ],
+                    "submit_point": [
+                      500,
+                      300
+                    ],
+                    "method": {
+                      "first_action": "enter_exact_token",
+                      "continue_when": "field_pixels_changed_and_submit_revalidated",
+                      "second_action": "activate_submit",
+                      "complete_when": "submission_pixels_changed_then_independent_score"
+                    }
+                  }
+                },
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "requested_model": "inert",
+                "requested_effort": "low",
+                "cost": null,
+                "visible_images_submitted": 1,
+                "wait_ns": 147700
+              }
+            ],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 1,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 147700,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014229368500,
+                "ended_ns": 354014229374800,
+                "elapsed_ns": 6300
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014229379100,
+                "ended_ns": 354014229381900,
+                "elapsed_ns": 2800
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014229390800,
+                "ended_ns": 354014230077600,
+                "elapsed_ns": 686800
+              },
+              {
+                "stage": "final_revalidate",
+                "started_ns": 354014230102900,
+                "ended_ns": 354014230109700,
+                "elapsed_ns": 6800
+              },
+              {
+                "stage": "execute",
+                "started_ns": 354014230115700,
+                "ended_ns": 354014230128400,
+                "elapsed_ns": 12700
+              },
+              {
+                "stage": "verify_effect",
+                "started_ns": 354014230133600,
+                "ended_ns": 354014230136800,
+                "elapsed_ns": 3200
+              }
+            ],
+            "input_authority": "consumed_by_recorded_execute_stage"
+          },
+          "errors": [],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014229368500
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014229374800
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014229379100
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014229381900
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "556402b64ca742eaa62fea3cceafc836",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014229390800,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "556402b64ca742eaa62fea3cceafc836",
+              "stage": "anchor_model",
+              "status": "completed",
+              "started_ns": 354014229390800,
+              "completed_ns": 354014230077600,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 147700,
+              "error": null
+            },
+            {
+              "event": "stage_started",
+              "stage": "final_revalidate",
+              "started_ns": 354014230102900
+            },
+            {
+              "event": "stage_completed",
+              "stage": "final_revalidate",
+              "ended_ns": 354014230109700
+            },
+            {
+              "event": "stage_started",
+              "stage": "execute",
+              "started_ns": 354014230115700
+            },
+            {
+              "event": "stage_completed",
+              "stage": "execute",
+              "ended_ns": 354014230128400
+            },
+            {
+              "event": "stage_started",
+              "stage": "verify_effect",
+              "started_ns": 354014230133600
+            },
+            {
+              "event": "stage_completed",
+              "stage": "verify_effect",
+              "ended_ns": 354014230136800
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "TASK_NOT_VERIFIED",
+              "reason": "unavailable",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [
+            {
+              "raw": {
+                "format": "compiled-form-grounding-v1",
+                "field": {
+                  "point_space": "source_observation_pixels",
+                  "point": {
+                    "x": 100,
+                    "y": 200
+                  },
+                  "motion_model": "surface_origin_translation"
+                },
+                "submit": {
+                  "point_space": "source_observation_pixels",
+                  "point": {
+                    "x": 500,
+                    "y": 300
+                  },
+                  "motion_model": "surface_origin_translation"
+                },
+                "method": {
+                  "first_action": "enter_exact_token",
+                  "continue_when": "field_pixels_changed_and_submit_revalidated",
+                  "second_action": "activate_submit",
+                  "complete_when": "submission_pixels_changed_then_independent_score"
+                }
+              },
+              "grounding": {
+                "field_point": [
+                  100,
+                  200
+                ],
+                "submit_point": [
+                  500,
+                  300
+                ],
+                "method": {
+                  "first_action": "enter_exact_token",
+                  "continue_when": "field_pixels_changed_and_submit_revalidated",
+                  "second_action": "activate_submit",
+                  "complete_when": "submission_pixels_changed_then_independent_score"
+                }
+              },
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "call_id": "turn-1",
+              "thread_id": "thread-1",
+              "turn_id": "turn-1",
+              "turn_status": "completed",
+              "answer_eligible": true,
+              "runner_ns": 147700,
+              "requested_model": "inert",
+              "requested_effort": "low",
+              "cost": null
+            }
+          ],
+          "files": {
+            "prompt.txt": "inert request",
+            "result.json": "{\n  \"raw\": {\n    \"format\": \"compiled-form-grounding-v1\",\n    \"field\": {\n      \"point_space\": \"source_observation_pixels\",\n      \"point\": {\n        \"x\": 100,\n        \"y\": 200\n      },\n      \"motion_model\": \"surface_origin_translation\"\n    },\n    \"submit\": {\n      \"point_space\": \"source_observation_pixels\",\n      \"point\": {\n        \"x\": 500,\n        \"y\": 300\n      },\n      \"motion_model\": \"surface_origin_translation\"\n    },\n    \"method\": {\n      \"first_action\": \"enter_exact_token\",\n      \"continue_when\": \"field_pixels_changed_and_submit_revalidated\",\n      \"second_action\": \"activate_submit\",\n      \"complete_when\": \"submission_pixels_changed_then_independent_score\"\n    }\n  },\n  \"grounding\": {\n    \"field_point\": [\n      100,\n      200\n    ],\n    \"submit_point\": [\n      500,\n      300\n    ],\n    \"method\": {\n      \"first_action\": \"enter_exact_token\",\n      \"continue_when\": \"field_pixels_changed_and_submit_revalidated\",\n      \"second_action\": \"activate_submit\",\n      \"complete_when\": \"submission_pixels_changed_then_independent_score\"\n    }\n  },\n  \"usage\": {\n    \"input_tokens\": 100,\n    \"cached_input_tokens\": 20,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 20,\n    \"reasoning_output_tokens\": 5\n  },\n  \"call_id\": \"turn-1\",\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"turn_status\": \"completed\",\n  \"answer_eligible\": true,\n  \"runner_ns\": 147700,\n  \"requested_model\": \"inert\",\n  \"requested_effort\": \"low\",\n  \"cost\": null\n}\n"
+          },
+          "counts": {
+            "execute": 1,
+            "verify": 1
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "failed",
+          "reported_usage": null,
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "b6012840e0c4435c9a4651bbe702ea53",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014231274300,
+                "completed_ns": 354014231839400,
+                "call_id": "turn-1",
+                "usage": null,
+                "visible_images_submitted": 1,
+                "wait_ns": 205000,
+                "error": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 205000,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014231251200,
+                "ended_ns": 354014231258200,
+                "elapsed_ns": 7000
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014231263000,
+                "ended_ns": 354014231265900,
+                "elapsed_ns": 2900
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014231274300,
+                "ended_ns": 354014231839400,
+                "elapsed_ns": 565100
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "GroundingCallError",
+              "message": "persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')",
+              "cause": "RuntimeError",
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 205000
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014231251200
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014231258200
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014231263000
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014231265900
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "b6012840e0c4435c9a4651bbe702ea53",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014231274300,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "b6012840e0c4435c9a4651bbe702ea53",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014231274300,
+              "completed_ns": 354014231839400,
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 205000,
+              "error": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "GroundingCallError(\"persistent grounding call failed; no retry: RuntimeError('persistent grounding answer ineligible; no retry')\")",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"failed\",\n  \"answer_eligible\": false,\n  \"error\": \"turn status is failed\",\n  \"usage\": null,\n  \"runner_ns\": 115000\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        }
+      ]
+    },
+    {
+      "implementation": "current",
+      "contract": "legacy8772",
+      "methods": 2,
+      "failures": [],
+      "errors": [
+        {
+          "test": "test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': 100, 'cachedInputTokens': 20, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}})",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting_6178.py\", line 19, in test_failed_turn_exception_preserves_known_metadata\nAttributeError: 'GroundingCallError' object has no attribute 'thread_id'\n"
+        },
+        {
+          "test": "test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage=None)",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting_6178.py\", line 19, in test_failed_turn_exception_preserves_known_metadata\nAttributeError: 'GroundingCallError' object has no attribute 'thread_id'\n"
+        },
+        {
+          "test": "test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {}})",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting_6178.py\", line 18, in test_failed_turn_exception_preserves_known_metadata\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\pathlib\\_abc.py\", line 625, in read_bytes\n    with self.open(mode='rb') as f:\n         ~~~~~~~~~^^^^^^^^^^^\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\pathlib\\_local.py\", line 537, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'D:\\\\CodexData\\\\Temp\\\\tmp8s49x07m\\\\call\\\\failure.json'\n"
+        },
+        {
+          "test": "test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': -1, 'cachedInputTokens': 0, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}})",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting_6178.py\", line 18, in test_failed_turn_exception_preserves_known_metadata\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\pathlib\\_abc.py\", line 625, in read_bytes\n    with self.open(mode='rb') as f:\n         ~~~~~~~~~^^^^^^^^^^^\n  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\Lib\\pathlib\\_local.py\", line 537, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'D:\\\\CodexData\\\\Temp\\\\tmpsyddt6la\\\\call\\\\failure.json'\n"
+        },
+        {
+          "test": "test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='PermissionError')",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting_6178.py\", line 38, in test_publication_failure_preserves_terminal_accounting\nAttributeError: 'GroundingCallError' object has no attribute 'thread_id'\n"
+        },
+        {
+          "test": "test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='OSError')",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting_6178.py\", line 38, in test_publication_failure_preserves_terminal_accounting\nAttributeError: 'GroundingCallError' object has no attribute 'thread_id'\n"
+        }
+      ],
+      "skips": [],
+      "rows": []
+    },
+    {
+      "implementation": "candidate8772",
+      "contract": "current",
+      "methods": 9,
+      "failures": [
+        {
+          "test": "test_await_timeout_keeps_known_turn_but_not_invented_usage (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_await_timeout_keeps_known_turn_but_not_invented_usage)",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting.py\", line 143, in test_await_timeout_keeps_known_turn_but_not_invented_usage\n    self.assert_failed(cell('timeout'), known=False)\n    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting.py\", line 109, in assert_failed\n    self.assertEqual(attempt['call_id'], 'turn-1')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None != 'turn-1'\n"
+        },
+        {
+          "test": "test_completed_result_publication_refusal_is_not_unbilled_or_successful (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_completed_result_publication_refusal_is_not_unbilled_or_successful)",
+          "trace": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting.py\", line 137, in test_completed_result_publication_refusal_is_not_unbilled_or_successful\n    self.assert_failed(cell('completed', usage(100, 20), 'result.json'))\n    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\test_grounding_failure_accounting.py\", line 109, in assert_failed\n    self.assertEqual(attempt['call_id'], 'turn-1')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: None != 'turn-1'\n"
+        }
+      ],
+      "errors": [],
+      "skips": [],
+      "rows": [
+        {
+          "status": "timeout",
+          "reported_usage": null,
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "TimeoutError('owned inert timeout')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "TimeoutError('owned inert timeout')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "5bba150823d34cfa8b710471f0675076",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014244734800,
+                "completed_ns": 354014245179000,
+                "call_id": null,
+                "usage": null,
+                "visible_images_submitted": null,
+                "wait_ns": null,
+                "error": "TimeoutError('owned inert timeout')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": null,
+              "visible_image_coverage": 0,
+              "model_wait_ns": null,
+              "model_wait_coverage": 0,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014244708100,
+                "ended_ns": 354014244715700,
+                "elapsed_ns": 7600
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014244720300,
+                "ended_ns": 354014244723100,
+                "elapsed_ns": 2800
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014244734800,
+                "ended_ns": 354014245179000,
+                "elapsed_ns": 444200
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "TimeoutError",
+              "message": "owned inert timeout",
+              "cause": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014244708100
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014244715700
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014244720300
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014244723100
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "5bba150823d34cfa8b710471f0675076",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014244734800,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "5bba150823d34cfa8b710471f0675076",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014244734800,
+              "completed_ns": 354014245179000,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": "TimeoutError('owned inert timeout')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "TimeoutError('owned inert timeout')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 0,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "completed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": "result.json",
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "PermissionError('owned inert publication refusal')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "PermissionError('owned inert publication refusal')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "bec8eea48a8240cfbb165ee92e0656ae",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014246587700,
+                "completed_ns": 354014247139200,
+                "call_id": null,
+                "usage": null,
+                "visible_images_submitted": null,
+                "wait_ns": null,
+                "error": "PermissionError('owned inert publication refusal')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": null,
+              "visible_image_coverage": 0,
+              "model_wait_ns": null,
+              "model_wait_coverage": 0,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014246564700,
+                "ended_ns": 354014246571600,
+                "elapsed_ns": 6900
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014246575900,
+                "ended_ns": 354014246578600,
+                "elapsed_ns": 2700
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014246587700,
+                "ended_ns": 354014247139200,
+                "elapsed_ns": 551500
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "PermissionError",
+              "message": "owned inert publication refusal",
+              "cause": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014246564700
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014246571600
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014246575900
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014246578600
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "bec8eea48a8240cfbb165ee92e0656ae",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014246587700,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "bec8eea48a8240cfbb165ee92e0656ae",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014246587700,
+              "completed_ns": 354014247139200,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": "PermissionError('owned inert publication refusal')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "PermissionError('owned inert publication refusal')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "failed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "057dedbaf7c345f69e82893c49f46303",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014248432800,
+                "completed_ns": 354014249158200,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 127600,
+                "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 127600,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014248408100,
+                "ended_ns": 354014248415700,
+                "elapsed_ns": 7600
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014248420100,
+                "ended_ns": 354014248422800,
+                "elapsed_ns": 2700
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014248432800,
+                "ended_ns": 354014249158200,
+                "elapsed_ns": 725400
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "RuntimeError",
+              "message": "persistent grounding answer ineligible; no retry",
+              "cause": null,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 127600
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014248408100
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014248415700
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014248420100
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014248422800
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "057dedbaf7c345f69e82893c49f46303",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014248432800,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "057dedbaf7c345f69e82893c49f46303",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014248432800,
+              "completed_ns": 354014249158200,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 127600,
+              "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"failed\",\n  \"answer_eligible\": false,\n  \"error\": \"turn status is failed\",\n  \"usage\": {\n    \"input_tokens\": 100,\n    \"cached_input_tokens\": 20,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 20,\n    \"reasoning_output_tokens\": 5\n  },\n  \"usage_error\": null,\n  \"runner_ns\": 127600\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "interrupted",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "c9b3b432dac14042a6c99fc33cf4dd94",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014250398100,
+                "completed_ns": 354014251033700,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 117100,
+                "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 117100,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014250373800,
+                "ended_ns": 354014250381200,
+                "elapsed_ns": 7400
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014250386500,
+                "ended_ns": 354014250389500,
+                "elapsed_ns": 3000
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014250398100,
+                "ended_ns": 354014251033700,
+                "elapsed_ns": 635600
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "RuntimeError",
+              "message": "persistent grounding answer ineligible; no retry",
+              "cause": null,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 117100
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014250373800
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014250381200
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014250386500
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014250389500
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "c9b3b432dac14042a6c99fc33cf4dd94",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014250398100,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "c9b3b432dac14042a6c99fc33cf4dd94",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014250398100,
+              "completed_ns": 354014251033700,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 117100,
+              "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"interrupted\",\n  \"answer_eligible\": false,\n  \"error\": \"turn status is interrupted\",\n  \"usage\": {\n    \"input_tokens\": 100,\n    \"cached_input_tokens\": 20,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 20,\n    \"reasoning_output_tokens\": 5\n  },\n  \"usage_error\": null,\n  \"runner_ns\": 117100\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "failed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": "failure.json",
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "95a6a83b85b1478e96d5cbd27368adf1",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014252199600,
+                "completed_ns": 354014252695300,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 113000,
+                "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 113000,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014252176100,
+                "ended_ns": 354014252183500,
+                "elapsed_ns": 7400
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014252188000,
+                "ended_ns": 354014252190900,
+                "elapsed_ns": 2900
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014252199600,
+                "ended_ns": 354014252695300,
+                "elapsed_ns": 495700
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "RuntimeError",
+              "message": "persistent grounding answer ineligible; no retry",
+              "cause": "PermissionError",
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 113000
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014252176100
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014252183500
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014252188000
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014252190900
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "95a6a83b85b1478e96d5cbd27368adf1",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014252199600,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "95a6a83b85b1478e96d5cbd27368adf1",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014252199600,
+              "completed_ns": 354014252695300,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 113000,
+              "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "completed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": true,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "f3f463f518214968973365aedf1f7b57",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014253884600,
+                "completed_ns": 354014254714000,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 132600,
+                "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 132600,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014253860100,
+                "ended_ns": 354014253867900,
+                "elapsed_ns": 7800
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014253872500,
+                "ended_ns": 354014253875300,
+                "elapsed_ns": 2800
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014253884600,
+                "ended_ns": 354014254714000,
+                "elapsed_ns": 829400
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "RuntimeError",
+              "message": "persistent grounding answer ineligible; no retry",
+              "cause": null,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 132600
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014253860100
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014253867900
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014253872500
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014253875300
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "f3f463f518214968973365aedf1f7b57",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014253884600,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "f3f463f518214968973365aedf1f7b57",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014253884600,
+              "completed_ns": 354014254714000,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 132600,
+              "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"completed\",\n  \"answer_eligible\": false,\n  \"error\": \"answer is missing required fields: format, field, submit, method\",\n  \"usage\": {\n    \"input_tokens\": 100,\n    \"cached_input_tokens\": 20,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 20,\n    \"reasoning_output_tokens\": 5\n  },\n  \"usage_error\": null,\n  \"runner_ns\": 132600\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "failed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": -1,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "10950da1e3234c53bcb06c2d6892a77c",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014255888900,
+                "completed_ns": 354014256683800,
+                "call_id": "turn-1",
+                "usage": null,
+                "visible_images_submitted": 1,
+                "wait_ns": 252400,
+                "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 252400,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014255864100,
+                "ended_ns": 354014255871800,
+                "elapsed_ns": 7700
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014255876700,
+                "ended_ns": 354014255879500,
+                "elapsed_ns": 2800
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014255888900,
+                "ended_ns": 354014256683800,
+                "elapsed_ns": 794900
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "RuntimeError",
+              "message": "persistent grounding answer ineligible; no retry",
+              "cause": null,
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 252400
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014255864100
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014255871800
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014255876700
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014255879500
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "10950da1e3234c53bcb06c2d6892a77c",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014255888900,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "10950da1e3234c53bcb06c2d6892a77c",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014255888900,
+              "completed_ns": 354014256683800,
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 252400,
+              "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"failed\",\n  \"answer_eligible\": false,\n  \"error\": \"turn status is failed\",\n  \"usage\": null,\n  \"usage_error\": \"usage values must be nonnegative integers\",\n  \"runner_ns\": 252400\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "start_failure",
+          "reported_usage": null,
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "OSError('owned inert failure before returned turn handle')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "OSError('owned inert failure before returned turn handle')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "93e811a5d0aa4a4389369c6d096449cd",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014257884800,
+                "completed_ns": 354014258365800,
+                "call_id": null,
+                "usage": null,
+                "visible_images_submitted": null,
+                "wait_ns": null,
+                "error": "OSError('owned inert failure before returned turn handle')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": null,
+              "visible_image_coverage": 0,
+              "model_wait_ns": null,
+              "model_wait_coverage": 0,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014257859700,
+                "ended_ns": 354014257867000,
+                "elapsed_ns": 7300
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014257871700,
+                "ended_ns": 354014257874500,
+                "elapsed_ns": 2800
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014257884800,
+                "ended_ns": 354014258365800,
+                "elapsed_ns": 481000
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "OSError",
+              "message": "owned inert failure before returned turn handle",
+              "cause": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014257859700
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014257867000
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014257871700
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014257874500
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "93e811a5d0aa4a4389369c6d096449cd",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014257884800,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "93e811a5d0aa4a4389369c6d096449cd",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014257884800,
+              "completed_ns": 354014258365800,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": "OSError('owned inert failure before returned turn handle')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "OSError('owned inert failure before returned turn handle')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 0,
+          "thread_starts": 1,
+          "model_calls": 0,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "completed",
+          "reported_usage": {
+            "last": {
+              "inputTokens": 100,
+              "cachedInputTokens": 20,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 20,
+              "reasoningOutputTokens": 5
+            }
+          },
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "TASK_NOT_VERIFIED",
+            "reason": "unavailable",
+            "task_effect": "unavailable",
+            "effect_receipt": {
+              "status": "unavailable"
+            },
+            "delivery": "confirmed",
+            "execution_progress": {
+              "status": "completed"
+            },
+            "selected_target": {
+              "field_point": [
+                100,
+                200
+              ],
+              "submit_point": [
+                500,
+                300
+              ],
+              "method": {
+                "first_action": "enter_exact_token",
+                "continue_when": "field_pixels_changed_and_submit_revalidated",
+                "second_action": "activate_submit",
+                "complete_when": "submission_pixels_changed_then_independent_score"
+              }
+            },
+            "cache_update": {
+              "field_point": [
+                100,
+                200
+              ],
+              "submit_point": [
+                500,
+                300
+              ],
+              "method": {
+                "first_action": "enter_exact_token",
+                "continue_when": "field_pixels_changed_and_submit_revalidated",
+                "second_action": "activate_submit",
+                "complete_when": "submission_pixels_changed_then_independent_score"
+              }
+            },
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "completed",
+                "reason": null
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "completed",
+                "reason": null
+              },
+              "execute": {
+                "status": "completed",
+                "reason": null
+              },
+              "verify_effect": {
+                "status": "completed",
+                "reason": null
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "2d8cbe04545d40089e80784335c36a0a",
+                "stage": "anchor_model",
+                "status": "completed",
+                "started_ns": 354014259346900,
+                "completed_ns": 354014260008800,
+                "call_id": "turn-1",
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "visible_images_submitted": 1,
+                "wait_ns": 162600,
+                "error": null
+              }
+            ],
+            "model_call_ledger": [
+              {
+                "attempt_id": "2d8cbe04545d40089e80784335c36a0a",
+                "stage": "anchor_model",
+                "call_id": "turn-1",
+                "output": {
+                  "status": "target_reference",
+                  "target": {
+                    "field_point": [
+                      100,
+                      200
+                    ],
+                    "submit_point": [
+                      500,
+                      300
+                    ],
+                    "method": {
+                      "first_action": "enter_exact_token",
+                      "continue_when": "field_pixels_changed_and_submit_revalidated",
+                      "second_action": "activate_submit",
+                      "complete_when": "submission_pixels_changed_then_independent_score"
+                    }
+                  }
+                },
+                "usage": {
+                  "input_tokens": 100,
+                  "cached_input_tokens": 20,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 20,
+                  "reasoning_output_tokens": 5
+                },
+                "requested_model": "inert",
+                "requested_effort": "low",
+                "cost": null,
+                "visible_images_submitted": 1,
+                "wait_ns": 162600
+              }
+            ],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 1,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "usage_coverage": {
+                "input_tokens": 1,
+                "cached_input_tokens": 1,
+                "cache_write_input_tokens": 1,
+                "output_tokens": 1,
+                "reasoning_output_tokens": 1
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 162600,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014259317300,
+                "ended_ns": 354014259324400,
+                "elapsed_ns": 7100
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014259328600,
+                "ended_ns": 354014259332000,
+                "elapsed_ns": 3400
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014259346900,
+                "ended_ns": 354014260008800,
+                "elapsed_ns": 661900
+              },
+              {
+                "stage": "final_revalidate",
+                "started_ns": 354014260033000,
+                "ended_ns": 354014260039700,
+                "elapsed_ns": 6700
+              },
+              {
+                "stage": "execute",
+                "started_ns": 354014260044300,
+                "ended_ns": 354014260055700,
+                "elapsed_ns": 11400
+              },
+              {
+                "stage": "verify_effect",
+                "started_ns": 354014260060100,
+                "ended_ns": 354014260063100,
+                "elapsed_ns": 3000
+              }
+            ],
+            "input_authority": "consumed_by_recorded_execute_stage"
+          },
+          "errors": [],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014259317300
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014259324400
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014259328600
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014259332000
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "2d8cbe04545d40089e80784335c36a0a",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014259346900,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "2d8cbe04545d40089e80784335c36a0a",
+              "stage": "anchor_model",
+              "status": "completed",
+              "started_ns": 354014259346900,
+              "completed_ns": 354014260008800,
+              "call_id": "turn-1",
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "visible_images_submitted": 1,
+              "wait_ns": 162600,
+              "error": null
+            },
+            {
+              "event": "stage_started",
+              "stage": "final_revalidate",
+              "started_ns": 354014260033000
+            },
+            {
+              "event": "stage_completed",
+              "stage": "final_revalidate",
+              "ended_ns": 354014260039700
+            },
+            {
+              "event": "stage_started",
+              "stage": "execute",
+              "started_ns": 354014260044300
+            },
+            {
+              "event": "stage_completed",
+              "stage": "execute",
+              "ended_ns": 354014260055700
+            },
+            {
+              "event": "stage_started",
+              "stage": "verify_effect",
+              "started_ns": 354014260060100
+            },
+            {
+              "event": "stage_completed",
+              "stage": "verify_effect",
+              "ended_ns": 354014260063100
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "TASK_NOT_VERIFIED",
+              "reason": "unavailable",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [
+            {
+              "raw": {
+                "format": "compiled-form-grounding-v1",
+                "field": {
+                  "point_space": "source_observation_pixels",
+                  "point": {
+                    "x": 100,
+                    "y": 200
+                  },
+                  "motion_model": "surface_origin_translation"
+                },
+                "submit": {
+                  "point_space": "source_observation_pixels",
+                  "point": {
+                    "x": 500,
+                    "y": 300
+                  },
+                  "motion_model": "surface_origin_translation"
+                },
+                "method": {
+                  "first_action": "enter_exact_token",
+                  "continue_when": "field_pixels_changed_and_submit_revalidated",
+                  "second_action": "activate_submit",
+                  "complete_when": "submission_pixels_changed_then_independent_score"
+                }
+              },
+              "grounding": {
+                "field_point": [
+                  100,
+                  200
+                ],
+                "submit_point": [
+                  500,
+                  300
+                ],
+                "method": {
+                  "first_action": "enter_exact_token",
+                  "continue_when": "field_pixels_changed_and_submit_revalidated",
+                  "second_action": "activate_submit",
+                  "complete_when": "submission_pixels_changed_then_independent_score"
+                }
+              },
+              "usage": {
+                "input_tokens": 100,
+                "cached_input_tokens": 20,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 20,
+                "reasoning_output_tokens": 5
+              },
+              "call_id": "turn-1",
+              "thread_id": "thread-1",
+              "turn_id": "turn-1",
+              "turn_status": "completed",
+              "answer_eligible": true,
+              "runner_ns": 162600,
+              "requested_model": "inert",
+              "requested_effort": "low",
+              "cost": null
+            }
+          ],
+          "files": {
+            "prompt.txt": "inert request",
+            "result.json": "{\n  \"raw\": {\n    \"format\": \"compiled-form-grounding-v1\",\n    \"field\": {\n      \"point_space\": \"source_observation_pixels\",\n      \"point\": {\n        \"x\": 100,\n        \"y\": 200\n      },\n      \"motion_model\": \"surface_origin_translation\"\n    },\n    \"submit\": {\n      \"point_space\": \"source_observation_pixels\",\n      \"point\": {\n        \"x\": 500,\n        \"y\": 300\n      },\n      \"motion_model\": \"surface_origin_translation\"\n    },\n    \"method\": {\n      \"first_action\": \"enter_exact_token\",\n      \"continue_when\": \"field_pixels_changed_and_submit_revalidated\",\n      \"second_action\": \"activate_submit\",\n      \"complete_when\": \"submission_pixels_changed_then_independent_score\"\n    }\n  },\n  \"grounding\": {\n    \"field_point\": [\n      100,\n      200\n    ],\n    \"submit_point\": [\n      500,\n      300\n    ],\n    \"method\": {\n      \"first_action\": \"enter_exact_token\",\n      \"continue_when\": \"field_pixels_changed_and_submit_revalidated\",\n      \"second_action\": \"activate_submit\",\n      \"complete_when\": \"submission_pixels_changed_then_independent_score\"\n    }\n  },\n  \"usage\": {\n    \"input_tokens\": 100,\n    \"cached_input_tokens\": 20,\n    \"cache_write_input_tokens\": 0,\n    \"output_tokens\": 20,\n    \"reasoning_output_tokens\": 5\n  },\n  \"call_id\": \"turn-1\",\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"turn_status\": \"completed\",\n  \"answer_eligible\": true,\n  \"runner_ns\": 162600,\n  \"requested_model\": \"inert\",\n  \"requested_effort\": \"low\",\n  \"cost\": null\n}\n"
+          },
+          "counts": {
+            "execute": 1,
+            "verify": 1
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        },
+        {
+          "status": "failed",
+          "reported_usage": null,
+          "publication": null,
+          "malformed": false,
+          "result": {
+            "outcome": "CALLER_FAILED",
+            "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+            "task_effect": null,
+            "effect_receipt": null,
+            "delivery": null,
+            "execution_progress": null,
+            "selected_target": null,
+            "cache_update": null,
+            "repair_path": null,
+            "route": "cold",
+            "repair_trace": [],
+            "coarse_origin": "caller_provided",
+            "comparison": {
+              "class": "injected_subpath",
+              "omitted_stages": [
+                "coarse_model"
+              ],
+              "comparable_to_full_cold": false
+            },
+            "stages": {
+              "observe_source": {
+                "status": "completed",
+                "reason": null
+              },
+              "coarse_model": {
+                "status": "skipped",
+                "reason": "coarse_caller_provided"
+              },
+              "acquire_anchor": {
+                "status": "completed",
+                "reason": null
+              },
+              "anchor_model": {
+                "status": "failed",
+                "reason": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              },
+              "reuse_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "local_repair": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "acquire_expansion": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "expanded_model": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_observe": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "post_model_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "final_revalidate": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "execute": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              },
+              "verify_effect": {
+                "status": "skipped",
+                "reason": "branch_not_reached"
+              }
+            },
+            "attempt_ledger": [
+              {
+                "attempt_id": "8432cde8462c4ca18dc92b7ed9cfd9b4",
+                "stage": "anchor_model",
+                "status": "failed",
+                "started_ns": 354014261229100,
+                "completed_ns": 354014261794400,
+                "call_id": "turn-1",
+                "usage": null,
+                "visible_images_submitted": 1,
+                "wait_ns": 114400,
+                "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+              }
+            ],
+            "model_call_ledger": [],
+            "accounting": {
+              "attempted_calls": 1,
+              "completed_calls": 0,
+              "duplicate_call_ids": [],
+              "usage_totals": {
+                "input_tokens": null,
+                "cached_input_tokens": null,
+                "cache_write_input_tokens": null,
+                "output_tokens": null,
+                "reasoning_output_tokens": null
+              },
+              "usage_coverage": {
+                "input_tokens": 0,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 0,
+                "reasoning_output_tokens": 0
+              },
+              "visible_images_submitted": 1,
+              "visible_image_coverage": 1,
+              "model_wait_ns": 114400,
+              "model_wait_coverage": 1,
+              "cost": null,
+              "cached_input_semantics": "subset of input_tokens; never added to input total"
+            },
+            "phase_timings": [
+              {
+                "stage": "observe_source",
+                "started_ns": 354014261205500,
+                "ended_ns": 354014261213000,
+                "elapsed_ns": 7500
+              },
+              {
+                "stage": "acquire_anchor",
+                "started_ns": 354014261217400,
+                "ended_ns": 354014261220200,
+                "elapsed_ns": 2800
+              },
+              {
+                "stage": "anchor_model",
+                "started_ns": 354014261229100,
+                "ended_ns": 354014261794400,
+                "elapsed_ns": 565300
+              }
+            ],
+            "input_authority": "none"
+          },
+          "errors": [
+            {
+              "type": "RuntimeError",
+              "message": "persistent grounding answer ineligible; no retry",
+              "cause": null,
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 114400
+            }
+          ],
+          "events": [
+            {
+              "event": "stage_started",
+              "stage": "observe_source",
+              "started_ns": 354014261205500
+            },
+            {
+              "event": "stage_completed",
+              "stage": "observe_source",
+              "ended_ns": 354014261213000
+            },
+            {
+              "event": "stage_started",
+              "stage": "acquire_anchor",
+              "started_ns": 354014261217400
+            },
+            {
+              "event": "stage_completed",
+              "stage": "acquire_anchor",
+              "ended_ns": 354014261220200
+            },
+            {
+              "event": "model_attempt_started",
+              "attempt_id": "8432cde8462c4ca18dc92b7ed9cfd9b4",
+              "stage": "anchor_model",
+              "status": "started",
+              "started_ns": 354014261229100,
+              "completed_ns": null,
+              "call_id": null,
+              "usage": null,
+              "visible_images_submitted": null,
+              "wait_ns": null,
+              "error": null
+            },
+            {
+              "event": "model_attempt_finished",
+              "attempt_id": "8432cde8462c4ca18dc92b7ed9cfd9b4",
+              "stage": "anchor_model",
+              "status": "failed",
+              "started_ns": 354014261229100,
+              "completed_ns": 354014261794400,
+              "call_id": "turn-1",
+              "usage": null,
+              "visible_images_submitted": 1,
+              "wait_ns": 114400,
+              "error": "RuntimeError('persistent grounding answer ineligible; no retry')"
+            },
+            {
+              "event": "adaptive_route_finished",
+              "outcome": "CALLER_FAILED",
+              "reason": "RuntimeError('persistent grounding answer ineligible; no retry')",
+              "repair_path": null,
+              "attempted_calls": 1
+            }
+          ],
+          "completed": [],
+          "files": {
+            "failure.json": "{\n  \"thread_id\": \"thread-1\",\n  \"turn_id\": \"turn-1\",\n  \"status\": \"failed\",\n  \"answer_eligible\": false,\n  \"error\": \"turn status is failed\",\n  \"usage\": null,\n  \"usage_error\": null,\n  \"runner_ns\": 114400\n}\n",
+            "prompt.txt": "inert request"
+          },
+          "counts": {
+            "execute": 0,
+            "verify": 0
+          },
+          "client_turns": 1,
+          "thread_starts": 1,
+          "model_calls": 1,
+          "borrowed_close_calls": 0
+        }
+      ]
+    },
+    {
+      "implementation": "candidate8772",
+      "contract": "legacy8772",
+      "methods": 2,
+      "failures": [],
+      "errors": [],
+      "skips": [],
+      "rows": []
+    }
+  ],
+  "source_sha256_lf": {
+    "research/live_control/codex_app_server_client_v2.py": "49ca80d4fa5acc167458774587ba59845d4dcb54c912120048edb477a800c473",
+    "research/live_control/codex_app_server_command_v1.py": "a1202081bd637201b0ab9f735e842a123d03ae3c1af8ce5bb74610342662d02e",
+    "research/live_control/compiled_form_grounding_v1.py": "40a3f6eb27d117680485d35839a242f501304745cf7e532e2da62340160d444a",
+    "research/live_control/plain_form_points_v1.py": "8cb042960b7a6e3c6c89d1208bf1e653f4b28c77dd1983b08390b549d16a955b",
+    "research/live_control/persistent_planner_adapter_v2.py": "f6937026175d7472f5903b8278d4aacaf1cf0cbd6716d737d1a1f2a35d892700",
+    "research/live_control/integrated_efficiency_app_server_model_v1.py": "bc7d483f518db3cfd9a25e5614c2183c3777cf55f31a60daf4d89b4d16a87cc5",
+    "research/live_control/adaptive_acquisition_caller_v3.py": "18c03c8dc3884cc10329884c9349847f881f299c5299d180d4bfcaa37a108937",
+    "research/live_control/test_integrated_efficiency_app_server_model_v1.py": "56729667f93708dfb1148d8736385f6420aa6d54338770ee6136859a13a6e557",
+    "research/live_control/test_grounding_failure_accounting.py": "ee274efc035e48fda4f904a4840c29081f013ffbd59093d753ef5019fe0bc73b"
+  },
+  "condition": "Only inert borrowed RPC clients, inert synthetic execute/effect callbacks and temporary files. Candidate compiled with original source filename for current schema/instruction lookup. No provider/GUI/WSL/container/model."
+}
