@@ -188,13 +188,21 @@ class X11Backend:
         Releases never invoke this fence.
         """
 
+    def _track_key_press(self, key: str, code: int) -> None:
+        """Record the cleanup obligation immediately before emitting a press."""
+        self.held_keycodes[key] = code
+
+    def _track_button_press(self, button: str) -> None:
+        """Record the cleanup obligation immediately before emitting a press."""
+        self.held_buttons.add(button)
+
     def pointer_button(self, button: str, down: bool) -> None:
         number = BUTTON_MAP[button]
         # A request can reach the server even if sending/synchronizing raises.
         # Own the cleanup obligation before attempting the press.
         if down:
             self._before_input_press()
-            self.held_buttons.add(button)
+            self._track_button_press(button)
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
         self.d.sync()
@@ -226,7 +234,7 @@ class X11Backend:
             code = self._keycode(key)
         if down:
             self._before_input_press()
-            self.held_keycodes[key] = code
+            self._track_key_press(key, code)
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
         self.d.sync()
@@ -454,7 +462,14 @@ class X11Backend:
             self.emissions += 1
         self.d.sync()
         keys = self._physical_keys_down(tracked)
-        buttons = self._physical_buttons_down()
+        buttons = set(self._physical_buttons_down())
+        # Core QueryPointer exposes only buttons 1–5. The XTEST map also
+        # accepts extended buttons 8/9, whose state this readback cannot
+        # establish. Preserve those obligations as UNKNOWN instead of treating
+        # their absence from the core mask as a verified release.
+        observable_buttons = {'left', 'middle', 'right'}
+        buttons.update(self.held_buttons - observable_buttons)
+        buttons = sorted(buttons)
         # Preserve uncertain/down inputs until readback succeeds. A subsequent
         # explicit recovery must still know which releases it owes.
         self.held_keycodes = {name: code for name, code in tracked.items() if name in keys}

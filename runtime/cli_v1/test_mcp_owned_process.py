@@ -1,6 +1,7 @@
 """Standard MCP composition over one explicitly owned guarded-X11 process."""
 import asyncio
-from unittest.mock import patch
+import threading
+from unittest.mock import Mock, patch
 import json
 import os
 import tempfile
@@ -13,6 +14,7 @@ from Xlib import X
 
 from runtime.cli_v1.mcp_server import create_server, main
 from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 from runtime.backends.x11_v1.backend import X11Backend
 from runtime.cli_v1.test_mcp_process_identity import FakeX, metadata
 
@@ -150,6 +152,43 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_unknown_or_present_owner_client_never_starts_release_worker(self):
+        for disconnect_status in ('still_connected', 'unknown'):
+            with self.subTest(disconnect_status=disconnect_status):
+                owner = object.__new__(OwnedGuardedSessionOwner)
+                owner._process = Mock()
+                owner._process.is_alive.return_value = True
+                owner._control = Mock()
+                owner._control.poll.return_value = True
+                owner._control.recv.return_value = {
+                    'ok':True, 'snapshot':{},
+                    'result':{'status':'cancel_requested'},
+                }
+                owner._control_lock = threading.Lock()
+                owner._rpc_lock = threading.Lock()
+                owner._rpc_lock.acquire()
+                owner._apply_snapshot = lambda _snapshot: None
+                owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+                owner._observe_owner_client_disconnect = Mock(return_value={
+                    'status':disconnect_status, 'worker_retired':True,
+                })
+                owner._owner_input_obligations = {'keys':{'CTRL':1}, 'buttons':[]}
+                owner._owner_client_disconnect = None
+                owner._owner_release_attempt = None
+                owner._execution_unknown = False
+                owner.review_required = False
+                owner._release_retired_owner_inputs = Mock()
+
+                with patch('runtime.cli_v1.owned_guarded_session._CANCEL_RETIRE_GRACE_S', 0):
+                    result = owner.cancel_guarded('cancel-token')
+
+                owner._release_retired_owner_inputs.assert_not_called()
+                self.assertEqual(result['owner_release_attempt']['status'],
+                                 'not_attempted')
+                self.assertFalse(result['release_confirmed'])
+                self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+                self.assertFalse(result['replay_allowed'])
+
     def test_owned_process_selection_requires_identity_and_query_worker(self):
         with tempfile.TemporaryDirectory() as td:
             output = Path(td)/'not-created'
@@ -270,9 +309,23 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertTrue((root/'owner-io-entered.json').exists())
                 self.assertEqual(json.loads((root/'owner-io-entered.json').read_text()), [1])
 
-                cancel = metadata(await server.call_tool('interface_guarded_cancel',
-                    {'call_id':pending['call_id']}))
+                fence_result = {'status':'disconnected', 'worker_retired':True,
+                                'elapsed_ms':2.5}
+                release_result = {'status':'readback_verified',
+                                   'release':{'verified':True, 'keys_down':[],
+                                              'buttons_down':[], 'monotonic_ns':12}}
+                with (patch('runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised',
+                            return_value=fence_result),
+                      patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner._release_retired_owner_inputs',
+                            return_value=release_result) as release_inputs):
+                    cancel = metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
                 self.assertTrue(cancel['owner_process_retired'], cancel)
+                self.assertEqual(cancel.get('owner_client_disconnect'), fence_result)
+                self.assertEqual(cancel.get('owner_input_obligations'),
+                                 {'keys':{'CTRL':1}, 'buttons':[]})
+                self.assertEqual(cancel.get('owner_release_attempt'), release_result)
+                release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]})
                 self.assertFalse(cancel['release_confirmed'])
                 self.assertEqual(cancel['cleanup_status'], 'UNKNOWN')
                 self.assertTrue(cancel['late_server_request_possible'])

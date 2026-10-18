@@ -64,6 +64,21 @@ class InterruptCustodyTests(unittest.TestCase):
         return dispatch_in_session(session, p, current_observation_seq=7,
                                    current_binding_revision=3)
 
+    def test_unobservable_extended_button_cannot_be_reported_released(self):
+        b = object.__new__(X11Backend)
+        b.emissions = 0
+        b.held_keycodes = {}
+        b.held_buttons = {'x1'}
+        b.d = Mock()
+        b.root = Mock()
+        b.root.query_pointer.return_value = SimpleNamespace(mask=0)
+        with patch('runtime.backends.x11_v1.backend.xtest.fake_input'):
+            result = X11Backend.release_all(b)
+
+        self.assertFalse(result['verified'])
+        self.assertEqual(result['buttons_down'], ['x1'])
+        self.assertEqual(b.held_buttons, {'x1'})
+
     def test_primary_interrupt_survives_cleanup_and_quarantines(self):
         for exception in (KeyboardInterrupt, SystemExit):
             for cleanup in (None, OSError('cleanup failed'), SystemExit('cleanup interrupted')):
