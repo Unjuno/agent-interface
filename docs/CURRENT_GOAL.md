@@ -1,8 +1,11 @@
 # Current objective and working direction
 
-Updated 2026-10-18 against `origin/main`
-`e5c5448f9ad035657f212135fa4e95d189acda95`. This is the short entry point,
-not an experiment ledger.
+Updated 2026-10-19 against `main` SHA
+`4e36e47a690621a658515b5107cce020dfe6df82` at the 2026-10-19 JST r9 inventory.
+The cursor-paginated open set contains 1,676 Issues and 515 PRs; full semantic
+classification remains unfinished. See the [r9 inventory](maintenance/repository-inventory-20261019-r9.md)
+and [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for disposition
+criteria. This is the short entry point, not an experiment ledger.
 
 ## Objective
 
@@ -18,6 +21,8 @@ deliver it without conflicting instructions, duplicate experiments or lost
 evidence. Organize ideas into hypotheses, existing results, dependencies,
 priorities and executed tests. Documentation or Issue closure alone does not
 resolve a research question. Existing finite/running work keeps its safe boundary.
+Repository cleanliness means every active artifact has a traceable disposition,
+not that all Issues are closed; see the dated [consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r25--アイデアを保全した全体収束).
 
 Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not
