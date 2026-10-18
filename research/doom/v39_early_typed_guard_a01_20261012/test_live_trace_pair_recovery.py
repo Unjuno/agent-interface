@@ -121,6 +121,33 @@ class LiveTracePairRecoveryTests(unittest.TestCase):
             {"health": make_guard("map01-health", health_source, 51),
              "ammo": make_guard("map01-ammo", ammo_source, 1)},
             Reader(), AmmoReader())
+
+        soft_monitor = api["DoomCoverSignalPairMonitor"](
+            {"health": make_guard("map01-health", health_source, 51),
+             "ammo": make_guard("map01-ammo", ammo_source, 1)},
+            Reader(), AmmoReader())
+        typed_soft = dict(typed)
+        typed_soft["signals"] = {name: dict(value)
+                                 for name, value in typed["signals"].items()}
+        typed_soft["signals"]["health"]["value"] = 55
+        self.assertIsNone(soft_monitor.observe(typed_soft))
+        self.assertEqual(soft_monitor.last_pair_sequence, 166,
+                         "soft typed-only evidence must not claim artifact reconciliation")
+        full_soft = dict(full, replay_signals=typed_soft["signals"])
+        waited = []
+
+        def reconcile_soft_pair(_predicate, observation_monitor):
+            waited.append(True)
+            observation_monitor.observe(full_soft)
+
+        recovered, soft_receipt = api["recover_coherent_source_after_observation"](
+            166, None, latest_reader=lambda: full_soft,
+            wait=reconcile_soft_pair, observation_monitor=soft_monitor)
+        self.assertEqual(waited, [True],
+                         "recovery must wait for full-row reconciliation")
+        self.assertEqual(recovered["sequence"], 218)
+        self.assertEqual(soft_receipt["fresh_sequence"], 218)
+
         invalidation = monitor.observe(typed)
         self.assertEqual(invalidation["reason"], "health:below_hard_minimum")
         self.assertEqual(invalidation["sequence"], 218)

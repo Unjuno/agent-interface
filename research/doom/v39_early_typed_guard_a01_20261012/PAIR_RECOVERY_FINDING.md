@@ -13,7 +13,7 @@ The one-line repair advances `last_pair_sequence` on the normal, fully validated
 - Historical report SHA-256: `719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687`.
 - Frozen repaired controller SHA-256: `704c8c8a35f88765f207e4be18b4e32979fdcb6960aaeafcb867dcee4cb8eed0`.
 - Frozen guard SHA-256: `7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0`.
-- `test_live_trace_pair_recovery.py`: exact retained sequence-218 raw rows plus report-derived threshold; synthetic sequence-219 changed-binding/UNKNOWN and sequence-220 valid pairs. It checks hard invalidation, matching artifact reconciliation, stale-source rejection, watermark preservation on UNKNOWN, and recovery only at sequence 220. Neither synthetic pair is presented as live evidence.
+- `test_live_trace_pair_recovery.py`: exact retained sequence-218 raw rows plus report-derived threshold; synthetic sequence-219 changed-binding/UNKNOWN and sequence-220 valid pairs. It checks hard invalidation, matching artifact reconciliation, stale-source rejection, watermark preservation on UNKNOWN, recovery only at sequence 220, and that typed-only soft evidence cannot advance the pair watermark before a matching full artifact row reconciles. Neither synthetic pair is presented as live evidence.
 - New replay: 1/1 passed against pinned source copies.
 - Related V39 tests: 43 passed in one combined run, including pair wait dispatch, duplicate consistency, pending observation drain, stale rejection continuation, and cover/release policy tests.
 - Independent code review of the repair and the added UNKNOWN/recovery regression found no Critical, Important, or Minor issues; reviewer assessment: ready to merge with normal non-author review and integration gates.
