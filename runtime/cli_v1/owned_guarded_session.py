@@ -691,10 +691,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         acquired = self._rpc_lock.acquire(timeout=_CLOSE_TIMEOUT_S)
         if not acquired:
             retirement = self._retire('close timed out waiting for owned operation')
+            client_disconnect, release_attempt = (
+                self._cleanup_after_owner_retirement(retirement))
             row = {'status':'cleanup_failed', 'session_id':self.session_id,
                    'release_attempted':True, 'release_confirmed':False,
                    'cleanup_status':'UNKNOWN', 'task_success':None,
                    'replay_allowed':False, 'connection_close_attempted':False,
+                   'owner_client_disconnect':deepcopy(client_disconnect),
+                   **self._owner_input_obligations_result_fields(),
+                   'owner_release_attempt':deepcopy(release_attempt),
                    'owner_process_retired':retirement['retired'],
                    'owner_process_exitcode':retirement['exitcode'],
                    'late_server_request_possible':True, 'verified':False}
