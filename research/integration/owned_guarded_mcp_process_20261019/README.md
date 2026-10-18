@@ -125,3 +125,40 @@ temporary MCP dependencies. The exact commands were `python <runner>` and
 excluded tests whose IDs contain `stdio`. Full logs were retained in the local
 temporary directory, not committed as raw formal-run artifacts. `git diff
 --check` passed after recording this note.
+
+## 2026-10-19 supervised XRes composition follow-up
+
+The current working branch adds a bounded supervisor process around the
+cooperative XRes client-disconnect query. Only after the owner process retires
+and the exact X resource base is absent does the standard caller start a
+separate fresh-X-client worker with the recorded keycode/button obligations.
+That worker issues releases and independently reads back core key/button
+state. Press obligations are prearmed after the final local press fence and
+serialized with cancellation acceptance; no X I/O occurs while holding that
+short cancellation lock.
+
+The caller still reports `release_confirmed=false`,
+`cleanup_status=UNKNOWN`, `task_success=null`, `replay_allowed=false`, and
+`late_server_request_possible=true`. The nested release attempt may report a
+readback result for its own connection, but it is not promoted to overall
+release confirmation because the retained Fake X queued-DOWN counterexample
+shows that an old connection's request can arrive after an independent UP.
+Extended buttons that core QueryPointer cannot observe also remain UNKNOWN.
+
+Local verification on the current branch ran the same 10 selected modules in
+normal and optimized (`-O`) Python: 146/146 tests passed in each mode. This
+includes the standard-caller cancellation snapshot/release-attempt composition,
+supervised worker timeout/malformed-result handling, the extended-button
+readback limit, the fail-closed no-release check for `still_connected` and
+`unknown`, and the Fake X late-DOWN counterexample. A first optimized run
+could not find sparse-checkout portable distribution inputs; exact tracked
+inputs were materialized and the complete rerun passed. `git diff --check`
+passed. This is local construction/regression evidence only: no live X server,
+WSLc, Docker, application effect, end-to-end cancellation deadline, or physical
+release was tested. XRes absence does not drain or order server requests.
+
+Next, qualify the composed path against a live X server and independently
+verified application effect only if an explicitly unused authorized allocation
+is available. The current local suite does not establish that behavior or a
+physical deadline. Keep #17 open and overall cleanup UNKNOWN until a
+late-send/queue fence and independent task effect are qualified.

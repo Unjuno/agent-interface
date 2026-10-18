@@ -2,6 +2,7 @@
 import copy
 import struct
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -25,6 +26,8 @@ class ProcessBridgeTests(unittest.TestCase):
         self.emissions, self.down = [], set()
         b = self.bridge = object.__new__(NativeHandleBridge)
         b._process_identity_guard = True
+        b._cancel_lock = threading.Lock()
+        b._cancel_ticket = None
         b._active_process_identity = None
         b.target, b.scope = 'app', 'identity:test'
         b.binding_revision, b.sequence = 0, 0
@@ -53,6 +56,7 @@ class ProcessBridgeTests(unittest.TestCase):
             for x in range(32):
                 self.image.putpixel((x, y), ((x * 31) % 256, (y * 29) % 256, (x * y) % 256))
         b.observe = self.observe
+
         for target, effect in [('time.monotonic_ns', lambda: self.now),
                 ('runtime.guarded_x11_v1.bridge.read_linux_x11_process_identity', self.read),
                 ('runtime.backends.x11_v1.backend.xtest.fake_input', self.emit)]:
@@ -60,6 +64,20 @@ class ProcessBridgeTests(unittest.TestCase):
             p.start(); self.addCleanup(p.stop)
         source = self.observe()
         b.store.mint('field', 'window_content', [2, 2, 12, 12], source, self.image, self.now)
+
+    def test_cancel_ack_and_prearmed_input_obligation_are_serialized(self):
+        cancelled = threading.Event()
+        cancelled.set()
+        self.bridge._cancel_ticket = ('cancel-token', cancelled)
+
+        with self.assertRaises(X11BackendError):
+            self.bridge.backend._track_key_press('CTRL', 1)
+        with self.assertRaises(X11BackendError):
+            self.bridge.backend._track_button_press('left')
+
+        self.assertEqual(self.bridge.backend.held_keycodes, {})
+        self.assertEqual(self.bridge.backend.held_buttons, set())
+        self.assertEqual(self.emissions, [])
 
     def read(self, _connection, _xid):
         if self.reader_error:

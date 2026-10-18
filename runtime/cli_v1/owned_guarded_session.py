@@ -13,12 +13,53 @@ import time
 from types import SimpleNamespace
 
 from .mcp_guarded import GuardedSessionOwner
+from ..guarded_x11_v1.xres_client_fence import (
+    supervise_xres_worker, wait_for_client_disconnect_supervised)
 
 
 _STARTUP_TIMEOUT_S = 5.0
 _CLOSE_TIMEOUT_S = 5.0
 _CANCEL_RETIRE_GRACE_S = 1.0
 _JOIN_TIMEOUT_S = 1.0
+_XRES_DISCONNECT_TIMEOUT_S = 0.15
+_XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
+_RETIRED_RELEASE_TIMEOUT_S = 0.25
+_RETIRED_RELEASE_TERMINATE_GRACE_S = 0.1
+
+
+def _release_retired_inputs_worker(send_connection, display_name, keys, buttons):
+    """Release only exact prearmed inputs on a fresh X client."""
+    backend = None
+    try:
+        from runtime.backends.x11_v1.backend import X11Backend
+
+        backend = X11Backend(display_name, {})
+        backend.held_keycodes = dict(keys)
+        backend.held_buttons = set(buttons)
+        release = backend.release_all()
+        backend.close()
+        backend = None
+        send_connection.send({
+            'status':'released' if release.get('verified') is True else 'unknown',
+            'release':release,
+        })
+    except Exception as error:
+        try:
+            send_connection.send({'status':'unknown', 'reason':'release_failed',
+                                  'error_type':type(error).__name__,
+                                  'error':str(error)})
+        except (BrokenPipeError, EOFError, OSError):
+            pass
+    finally:
+        if backend is not None:
+            try:
+                backend.close()
+            except Exception:
+                pass
+        try:
+            send_connection.close()
+        except OSError:
+            pass
 
 
 def _owner_snapshot(owner, pid):
@@ -32,6 +73,10 @@ def _owner_snapshot(owner, pid):
         client_base = None
     row['interrupted_execution'] = deepcopy(
         getattr(backend, 'interrupted_execution', None))
+    row['owner_input_obligations'] = {
+        'keys': deepcopy(getattr(backend, 'held_keycodes', {})),
+        'buttons': sorted(getattr(backend, 'held_buttons', set())),
+    }
     row['owner_process_pid'] = pid
     row['owner_x_client_resource_base'] = client_base
     return row
@@ -172,6 +217,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self._snapshot_cache = super().snapshot()
         self._execution_unknown = False
         self._retirement = None
+        self._owner_client_disconnect = None
+        self._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        self._owner_release_attempt = None
         self.review_required = False
 
     def _apply_snapshot(self, snapshot):
@@ -182,6 +230,16 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         self.state = snapshot.get('state', self.state)
         self.error = snapshot.get('error', self.error)
         self.review_required = snapshot.get('review_required', self.review_required)
+        obligations = snapshot.get('owner_input_obligations')
+        if (isinstance(obligations, dict)
+                and isinstance(obligations.get('keys'), dict)
+                and isinstance(obligations.get('buttons'), list)
+                and all(type(name) is str and type(code) is int
+                        and 0 <= code < 256
+                        for name, code in obligations['keys'].items())
+                and all(type(button) is str
+                        for button in obligations['buttons'])):
+            self._owner_input_obligations = deepcopy(obligations)
         self.session = SimpleNamespace(
             recovery_required=snapshot.get('recovery_required'),
             backend=SimpleNamespace(
@@ -287,9 +345,68 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    targets=deepcopy(self.targets), error=self.error,
                    review_required=self.review_required,
                    owner_process=process,
+                   owner_client_disconnect=deepcopy(self._owner_client_disconnect),
+                   owner_release_attempt=deepcopy(self._owner_release_attempt),
                    cleanup_status='UNKNOWN' if self._execution_unknown else None,
                    authority_granted=False, restart_allowed=False)
         return row
+
+    def _observe_owner_client_disconnect(self):
+        resource_base = self._snapshot_cache.get('owner_x_client_resource_base')
+        if type(resource_base) is not int or not 0 < resource_base < 2**32:
+            return {'status':'unknown', 'reason':'resource_base_unavailable',
+                    'worker_retired':None}
+        try:
+            result = wait_for_client_disconnect_supervised(
+                self.display_name, resource_base,
+                timeout_s=_XRES_DISCONNECT_TIMEOUT_S,
+                terminate_grace_s=_XRES_DISCONNECT_TERMINATE_GRACE_S)
+        except Exception as error:
+            return {'status':'unknown', 'reason':'supervisor_failed',
+                    'error':repr(error), 'worker_retired':None}
+        if (not isinstance(result, dict)
+                or result.get('status') not in ('disconnected', 'still_connected', 'unknown')):
+            return {'status':'unknown', 'reason':'malformed_supervisor_result',
+                    'worker_retired':None}
+        return deepcopy(result)
+
+    def _release_retired_owner_inputs(self, obligations):
+        keys = obligations.get('keys') if isinstance(obligations, dict) else None
+        buttons = obligations.get('buttons') if isinstance(obligations, dict) else None
+        if (not isinstance(keys, dict) or not isinstance(buttons, list)
+                or not keys and not buttons
+                or any(type(name) is not str or type(code) is not int
+                       or not 0 <= code < 256 for name, code in keys.items())
+                or any(type(button) is not str
+                       or button not in ('left', 'middle', 'right', 'x1', 'x2')
+                       for button in buttons)):
+            return {'status':'unknown', 'reason':'invalid_or_empty_obligations',
+                    'worker_retired':None}
+        try:
+            result = supervise_xres_worker(
+                _release_retired_inputs_worker,
+                (self.display_name, keys, buttons),
+                timeout_s=_RETIRED_RELEASE_TIMEOUT_S,
+                terminate_grace_s=_RETIRED_RELEASE_TERMINATE_GRACE_S,
+                accepted_statuses=('released', 'unknown'))
+        except Exception as error:
+            return {'status':'unknown', 'reason':'release_supervisor_failed',
+                    'error':repr(error), 'worker_retired':None}
+        release = result.get('release') if isinstance(result, dict) else None
+        if (result.get('status') == 'released' and isinstance(release, dict)
+                and release.get('verified') is True
+                and release.get('keys_down') == []
+                and release.get('buttons_down') == []):
+            return {'status':'readback_verified',
+                    'worker_retired':result.get('worker_retired'),
+                    'worker_exitcode':result.get('worker_exitcode'),
+                    'elapsed_ms':result.get('elapsed_ms'),
+                    'release':deepcopy(release)}
+        return {'status':'unknown', 'reason':result.get('reason', 'release_unverified'),
+                'worker_retired':result.get('worker_retired'),
+                'worker_exitcode':result.get('worker_exitcode'),
+                'elapsed_ms':result.get('elapsed_ms'),
+                'release':deepcopy(release)}
 
     def invoke_guarded(self, operation, arguments, call_root):
         return self._call('invoke_guarded', operation=operation,
@@ -355,6 +472,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             return {'status':'cancel_unconfirmed', 'input_dispatched':None,
                     'release_confirmed':False, 'cleanup_status':'UNKNOWN',
                     'replay_allowed':False, 'error':response.get('error')}
+        self._apply_snapshot(response.get('snapshot', {}))
         result = response['result']
         if result.get('status') != 'cancel_requested':
             return result
@@ -362,10 +480,24 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             self._rpc_lock.release()
             return result
         retirement = self._retire('cancel retirement grace elapsed')
+        client_disconnect = (self._observe_owner_client_disconnect()
+                             if retirement['retired'] else
+                             {'status':'unknown', 'reason':'owner_not_retired',
+                              'worker_retired':None})
+        self._owner_client_disconnect = client_disconnect
+        release_attempt = (self._release_retired_owner_inputs(
+            self._owner_input_obligations)
+            if retirement['retired'] and client_disconnect.get('status') == 'disconnected'
+            else {'status':'not_attempted',
+                  'reason':'owner_disconnect_not_confirmed'})
+        self._owner_release_attempt = release_attempt
         self._execution_unknown = True
         self.review_required = True
         return dict(result, owner_process_retired=retirement['retired'],
                     owner_process_exitcode=retirement['exitcode'],
+                    owner_client_disconnect=deepcopy(client_disconnect),
+                    owner_input_obligations=deepcopy(self._owner_input_obligations),
+                    owner_release_attempt=deepcopy(release_attempt),
                     release_confirmed=False, cleanup_status='UNKNOWN',
                     task_success=None, replay_allowed=False,
                     late_server_request_possible=True)

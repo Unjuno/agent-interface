@@ -78,6 +78,11 @@ class _GuardedBackend(X11Backend):
             self.owner.check('before_key_press:' + str(key))
         return super().key_state(key, down)
 
+    def _track_key_press(self, key, code):
+        # X11Backend calls this only after its final local press fence and
+        # immediately before XTEST emission.
+        self.owner._prearm_key_press(key, code)
+
     def _wait_update(self, timeout_ms):
         deadline = self.owner.deadline if self.owner.active is not None else None
         if deadline is None:
@@ -113,6 +118,9 @@ class _GuardedBackend(X11Backend):
             if point != self.owner.moved_point or [pointer.root_x, pointer.root_y] != point:
                 raise X11BackendError("guarded point moved after pointer motion")
         return super().pointer_button(button, down)
+
+    def _track_button_press(self, button):
+        self.owner._prearm_button_press(button)
 
 
 class NativeHandleBridge:
@@ -222,6 +230,25 @@ class NativeHandleBridge:
         if lock is None: return False
         with lock:
             return self._cancel_ticket is not None and self._cancel_ticket[1].is_set()
+
+    def _prearm_key_press(self, key, code):
+        # Serialize the cancellation acknowledgement with the cleanup
+        # obligation. The lock is released before any X request or sync.
+        with self._cancel_lock:
+            ticket = self._cancel_ticket
+            if ticket is not None and ticket[1].is_set():
+                self.review_required = True
+                raise X11BackendError('guarded input cancellation requested; review required')
+            self.backend.held_keycodes[key] = code
+
+    def _prearm_button_press(self, button):
+        # As with keys, publish ownership before emitting the native press.
+        with self._cancel_lock:
+            ticket = self._cancel_ticket
+            if ticket is not None and ticket[1].is_set():
+                self.review_required = True
+                raise X11BackendError('guarded input cancellation requested; review required')
+            self.backend.held_buttons.add(button)
 
     def _check_cancelled(self):
         if self._cancel_requested():

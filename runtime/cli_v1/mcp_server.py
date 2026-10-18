@@ -641,7 +641,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     if guarded:
         from .mcp_guarded import register_guarded_tools
         def cancel_guarded(call_id):
-            # No worker slot, filesystem, X call or input emission on this path.
+            # No worker slot, filesystem or input emission on this path. The
+            # owned-process option may supervise an exact-client XRes query.
             with calls_lock:
                 record = calls.get(call_id)
                 active = record is not None and record['operation'] == 'guarded_input' and record['state'] == 'running'

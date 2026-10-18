@@ -1,5 +1,7 @@
 import unittest
 import struct
+import importlib
+import time
 from types import SimpleNamespace
 
 from runtime.guarded_x11_v1.xres_client_fence import (
@@ -26,6 +28,70 @@ class _ReplyConnection:
 
 
 class XResClientFenceTests(unittest.TestCase):
+    @staticmethod
+    def _blocked_worker(_send_connection):
+        time.sleep(5)
+
+    @staticmethod
+    def _completed_worker(send_connection):
+        send_connection.send({'status':'disconnected'})
+
+    @staticmethod
+    def _malformed_result_worker(send_connection):
+        send_connection.send({'status':'released'})
+
+    @staticmethod
+    def _released_worker(send_connection):
+        send_connection.send({'status':'released', 'release':{
+            'verified':True, 'keys_down':[], 'buttons_down':[]}})
+
+    def test_supervisor_terminates_a_query_worker_that_exceeds_its_budget(self):
+        module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+        supervise = getattr(module, 'supervise_xres_worker', None)
+        self.assertTrue(callable(supervise), 'bounded XRes worker supervisor is missing')
+
+        started = time.monotonic()
+        result = supervise(self._blocked_worker, (), timeout_s=0.1,
+                           terminate_grace_s=0.1)
+
+        self.assertEqual(result['status'], 'unknown')
+        self.assertEqual(result['reason'], 'supervision_timeout', result)
+        self.assertTrue(result['worker_retired'], result)
+        self.assertLess(time.monotonic() - started, 1.5)
+
+    def test_supervisor_preserves_a_completed_worker_result(self):
+        module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+        supervise = getattr(module, 'supervise_xres_worker', None)
+        self.assertTrue(callable(supervise), 'bounded XRes worker supervisor is missing')
+
+        result = supervise(self._completed_worker, (), timeout_s=1.0,
+                           terminate_grace_s=0.1)
+
+        self.assertEqual(result['status'], 'disconnected')
+        self.assertTrue(result['worker_retired'], result)
+
+    def test_supervisor_classifies_an_unrecognized_worker_status_as_malformed(self):
+        module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+        result = module.supervise_xres_worker(
+            self._malformed_result_worker, (), timeout_s=1.0,
+            terminate_grace_s=0.1)
+
+        self.assertEqual(result['status'], 'unknown')
+        self.assertEqual(result['reason'], 'malformed_worker_result', result)
+        self.assertTrue(result['worker_retired'], result)
+        self.assertEqual(result['worker_exitcode'], 0)
+
+    def test_supervisor_can_accept_an_independent_release_receipt(self):
+        module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+        result = module.supervise_xres_worker(
+            self._released_worker, (), timeout_s=1.0,
+            terminate_grace_s=0.1, accepted_statuses=('released', 'unknown'))
+
+        self.assertEqual(result['status'], 'released', result)
+        self.assertEqual(result['release'], {
+            'verified':True, 'keys_down':[], 'buttons_down':[]})
+        self.assertTrue(result['worker_retired'], result)
+
     def test_python_xlib_query_clients_reply_shape_identifies_resource_base(self):
         from Xlib.ext import res
 
