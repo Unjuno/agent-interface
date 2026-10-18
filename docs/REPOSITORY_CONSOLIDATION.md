@@ -2,6 +2,16 @@
 
 2026-10-15。対象は `Unjuno/agent-interface` 全体とGitHub Issue/PR。コンピューターコントロールの研究を再び見通せる状態にする。
 
+**2026-10-18 r7 現在地:** `2026-10-18 12:24 UTC` にopen Issue一覧17ページとopen PR一覧6ページを
+GitHub RESTから取得し、Issue 1,676件・PR 515件を保存した。metadata snapshotのSHA-256とr4からの
+ID差分は[refresh note](maintenance/repository-inventory-delta-20261018-r5.md)に記録した。
+これは最新のopen-set inventoryであり、本文の全件意味分類、担当照合、Issueの一括処置を示さない。
+
+同期後のmainは`c95caacce56925a03fb5724b6559506fcdac2050`。#9011/#9018/#9009/#9008を統合し、
+PR #9008の現行V39 pair-watermark回帰と43件のSHA manifestを確認した。PR #9009の保存T0結果は
+mainへ入り、Issue #9004は`NO_INCREMENTAL_AGREEMENT_VALUE`を残すためopenのまま。#59も
+ライブゲーム・入力・効果の証拠がないためopenのままで、いずれもIssue全体の完了とは扱わない。
+
 **2026-10-18 r5 現在地:** `2026-10-18 11:47 UTC` のGitHub Search API `total_count` は
 open Issue 1,676件、open PR 519件。これは最新件数の照合であり、全件ページ取得・内容判定・
 担当判定ではない。過去のCSVは各取得時点の履歴として保ち、現在の完了数には流用しない。
