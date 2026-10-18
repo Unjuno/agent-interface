@@ -102,6 +102,15 @@ live task and matched comparison.
   confirms bounded response/custody for that schedule, not physical release or
   a native/server deadline.
 
+- [Current-main target-generation MCP recheck](../research/integration/guarded_generation_mcp_recheck_20261018/README.md)
+  reruns the current standard guarded caller's process-generation and opt-in
+  window-lifecycle composition: 31 methods pass normal/-O. Same-XID process
+  change, destroy/reuse, blocked lifecycle cancellation/expiry, prefix release,
+  stale-alias refusal and explicit startup policy are covered. This qualifies
+  sampled generation evidence through MCP with Fake X only; no live XRes,
+  native lifecycle delivery, atomic check/use, physical release, app effect or
+  recovery quality is established.
+
 - [Compiled semantic callback cancellation](../research/integration/compiled_observation_cancellation_20261016/README.md)
   connects the explicit observation-worker option to the actual v3 caller and
   native semantic guard. In six Fake X conditions, isolated cancel/expiry returns
