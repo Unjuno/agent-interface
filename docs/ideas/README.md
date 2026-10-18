@@ -34,6 +34,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Model integration, matched economics and evaluation ideas](model-economics-agenda.md) — #57/#3311 execution, #5827 endpoint sensitivity, #6227 requalification cost and #8859 evidence-sufficient effort remain distinct. Includes current/legacy accounting adoption checks and original-result custody gaps; no live performance claim.
+
 - [Safety control, interruption, evidence and recovery](safety-control-agenda.md) — distinct hypotheses in #2/#10/#14/#15/#16/#17, dependencies and executed public-path Fake X blocking characterization. These parent ideas remain open.
 
 - [Visual representation, addressing and feedback](visual-interface.md) — optional grids (#3), visual addresses/feedback contracts (#5), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). Original bodies and provenance are preserved; all three source Issues were reopened after correcting premature consolidation closures.
