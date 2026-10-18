@@ -34,7 +34,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
-- [Open Issue/PR inventory r7 (2026-10-18)](../maintenance/repository-inventory-20261018-r7.md) — fresh paginated metadata snapshot: 1,676 open Issues and 514 open PRs, no membership change from r6. It is a discovery index, not full semantic triage or ownership evidence.
+- [Open Issue/PR inventory r8 (2026-10-18)](../maintenance/repository-inventory-20261018-r8.md) — current-main metadata snapshot: 1,676 open Issues and 514 open PRs, no ID-set change from r7. It is a discovery index, not full semantic triage or ownership evidence.
+- [Historical open Issue/PR inventory r7](../maintenance/repository-inventory-20261018-r7.md) — preserved earlier snapshot against pre-#9029 main.
 
 - [MAP01 live threat-guard evidence family](map01-live-guard-evidence-family.md) — classifies six open #59 PRs by distinct retained allocation packets, exact current heads, audit status, and safe read-only follow-up boundaries; no allocation rerun or bulk disposition.
 
