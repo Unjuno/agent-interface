@@ -1,6 +1,7 @@
 # Worker work map
 
-2026-10-18. Current main is `f4cd5577ef57a01d7b25a389d877c9d1b3ab9d21`.
+2026-10-18. The r7 inventory was captured against main
+`f4cd5577ef57a01d7b25a389d877c9d1b3ab9d21` before PR #9029 was created and merged.
 The latest complete membership snapshot is [open Issues r7](maintenance/open-issues-20261018-r7.csv)
 (1,676) and [open PRs r7](maintenance/open-prs-20261018-r7.csv) (514); membership
 is unchanged from r6. See [r76 consolidation status](maintenance/consolidation-status-20261016.md)
