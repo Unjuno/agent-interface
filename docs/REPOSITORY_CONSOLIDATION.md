@@ -2,6 +2,10 @@
 
 2026-10-15。対象は `Unjuno/agent-interface` 全体とGitHub Issue/PR。コンピューターコントロールの研究を再び見通せる状態にする。
 
+**2026-10-18 r11 — ユーザー確認済みの整理目的:** リポジトリを、大量のワーカーがアイデアを失わず、互いに衝突せず、個別に着手・検証・統合できる状態へ近づける。Issue/PRを一律に閉じたり、件数をゼロにしたりすることは目標にしない。まず研究上の問いごとにアイデア、出典Issue、反対仮説、既存コード/証拠、その限界、依存、次の判別可能な作業を結ぶ。結果が出ていない案は `unverified` 等で実行候補に残し、実際の重複・完了・根拠付き棄却・実在する後継への移管だけを個別の証拠に基づいて処置する。元Issueと歴史的rawは保持し、要約は索引に留める。
+
+今回の収束作業は、(1) main SHAとページング済みIssue/PR一覧を時刻付きで固定、(2) 仮説と証拠で一族を束ねる、(3) 既存担当・PR stack・資源競合を確認して次の仕事を小さく切る、(4) 一族ごとに必要な実験/ローカル検証と統合を進める、(5) 差分・raw・所有者の保全確認後に限り不要refを回収、の順で進める。各バッチは「何件閉じたか」ではなく、保存されたアイデアから現在の根拠と次の独立作業へ迷わず辿れるかで評価する。全件の意味仕分けを、研究を始める前提条件にしない。
+
 **2026-10-18 r10 現在地:** 13:19 UTCのGitHub Search APIはopen Issue 1,676件・open PR 514件を返した。これは件数確認であり、全件本文・コメント・所有者の意味仕分けではない。mainの#9022は#17に関するFake X caller回帰として、選択writer内でDOWNがserver処理前に停止した後のcancel、同一call custody、解除後のcleanup UP、suffix/replay拒否を追加した。関連Issue #17、[safety-control agenda](ideas/safety-control-agenda.md)、[work map](WORKER_WORK_MAP.md)を一つの入口で結ぶ。証拠はFake X caller範囲に限り、物理deadline・writer/server非応答時のrelease・task effect・efficiencyは未達。次の有限な実装判別は、現在のselected callerでsingle-authority writer retirement/fencingとlate-send拒否を接続し、release不確実性をUNKNOWNのまま維持できるかの確認。これは全件整理の完了ではなく、独立したworkerが選べる研究一族一件の更新である。
 
 **2026-10-18 r9 現在地:** 13:05 UTCのGitHub REST全ページ再取得でもopen Issue 1,676件・open PR 514件で、r8の件数から変化なし。これは一覧件数の再確認であり、Issue/PRの全件意味分類や担当確認ではない。入力解放・割込み一族ではmainに統合済みの#9014がFake Xの別connection UPによるfalse-clear反例を、#9015がguarded MCP callerでのblocked release-sync待ち・同一call custodyを記録する。既存の[safety-control agenda](ideas/safety-control-agenda.md)と[ideas/outcomes index](IDEAS_AND_OUTCOMES.md)へ結果と未解決境界を結び直した。物理解放期限・backend非応答時の成功・task effectは未確認で、#17はopenのままとする。
