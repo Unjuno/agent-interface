@@ -1,8 +1,10 @@
 """Standard guarded MCP process/window identity against a private live Xvfb."""
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -12,6 +14,7 @@ import unittest
 
 from Xlib import X, Xatom, XK, display
 from Xlib.ext import res
+from PIL import Image, ImageStat
 
 from runtime.cli_v1.mcp_server import create_server
 
@@ -140,10 +143,35 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
                 guarded_owned_process=True)
 
             report['monotonic_ns']['observe_started'] = time.monotonic_ns()
-            observed = _metadata(await server.call_tool('interface_guarded_observe', {}))
+            observation_response = await server.call_tool('interface_guarded_observe', {})
+            observed = _metadata(observation_response)
             report['monotonic_ns']['observe_returned'] = time.monotonic_ns()
             report['observe'] = observed
             self.assertEqual(observed['status'], 'observed', observed)
+            image_artifact = observed['observation_report']['observation']['artifact']
+            image_path = Path(image_artifact['path'])
+            image_bytes = image_path.read_bytes()
+            image = Image.open(io.BytesIO(image_bytes)).convert('RGB')
+            mint_box = (x + 48 - 12, y + 48 - 12,
+                        x + 48 + 12, y + 48 + 12)
+            patch = image.crop(mint_box)
+            patch_stddev = ImageStat.Stat(patch).stddev
+            report['mint_source_patch'] = {
+                'image_size':list(image.size), 'box':list(mint_box),
+                'patch_size':list(patch.size), 'stddev':patch_stddev,
+                'minimum_required_stddev':8.0,
+                'capture_artifact_sha256':image_artifact['sha256'],
+                'capture_artifact_bytes':image_artifact['bytes']}
+            image_output = os.environ.get('AGENT_INTERFACE_MCP_XVFB_IMAGE_RESULT')
+            if image_output:
+                output_path = Path(image_output)
+                output_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(image_path, output_path)
+                report['mint_source_patch']['retained_image_sha256'] = hashlib.sha256(
+                    output_path.read_bytes()).hexdigest()
+            self.assertEqual(patch.size, (24, 24))
+            self.assertGreaterEqual(max(patch_stddev), 8.0,
+                f"selected screenshot patch is too flat: {report['mint_source_patch']}")
             source = observed['source']
             binding = source['pointer_binding']
             self.assertEqual(binding['process_generation'], expected_process_digest)

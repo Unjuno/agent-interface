@@ -50,11 +50,15 @@ region, leaving the selected source patch flat. Its exact raw is retained at
 [`raw/second-failed-run-39173331320.json`](raw/second-failed-run-39173331320.json)
 (SHA-256 `DA2AE4BEFDF5BC16CC665F9AFE651F9FEFF21A0F1BD9C061F64688F3D8AF9446`).
 The fixture now paints a checkerboard across the full window so the selected
-24×24 source patch is textured in the captured full-screen coordinates. This is
-a fixture correction; the failed refusal remains preserved and is not counted
-as a successful run. The workflow uploads each exact JSON report as
-`standard-mcp-xvfb-generation`; inspect and retain each attempt separately,
-recording its SHA-256 here.
+24×24 source patch should be textured in captured full-screen coordinates, but
+run 39173486305 still refused it as flat. Its raw is retained at
+[`raw/third-failed-run-39173486305.json`](raw/third-failed-run-39173486305.json)
+(SHA-256 `D3F71AB59D244E0994EC06E37041EDF9BB6ABDE1CE46A1473E6734802EB2D608`).
+The report exposes the exact PNG artifact path and hash, but the first workflow
+version did not upload those pixels. The next run records the precise mint
+patch's pixel standard deviation and uploads the actual observed PNG, so the
+coordinate/drawing discrepancy can be diagnosed from raw rather than guessed.
+Each failed run remains preserved and is not counted as success.
 
 The synthetic property is not a product task or independent game/app success
 oracle. This does not qualify native user desktop input, XWayland, a held-input
