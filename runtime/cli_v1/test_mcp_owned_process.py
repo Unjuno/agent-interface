@@ -171,6 +171,42 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_close_timeout_runs_disconnect_gated_retirement_cleanup(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = True
+        owner._rpc_lock = threading.Lock()
+        owner._rpc_lock.acquire()
+        owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+        disconnect = {'status':'disconnected', 'expected_pid':1234}
+        release = {'status':'readback_verified', 'release':{'verified':True}}
+        owner._cleanup_after_owner_retirement = Mock(
+            return_value=(disconnect, release))
+        owner._owner_input_obligations = {'keys':{'CTRL':1}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {'status':'snapshot'}
+        owner.session_id = 'session-close-timeout'
+        owner._execution_unknown = True
+        owner.review_required = True
+
+        with patch('runtime.cli_v1.owned_guarded_session._CLOSE_TIMEOUT_S', 0):
+            result = owner.close()
+
+        owner._retire.assert_called_once_with(
+            'close timed out waiting for owned operation')
+        owner._cleanup_after_owner_retirement.assert_called_once_with(
+            {'retired':True, 'exitcode':-15})
+        self.assertEqual(result['owner_client_disconnect'], disconnect)
+        self.assertEqual(result['owner_release_attempt'], release)
+        self.assertEqual(result['owner_input_obligations'],
+                         {'keys':{'CTRL':1}, 'buttons':[]})
+        self.assertFalse(result['release_confirmed'])
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertIsNone(result['task_success'])
+        self.assertFalse(result['replay_allowed'])
+        self.assertTrue(result['late_server_request_possible'])
+
     def test_x11_backend_publishes_key_obligation_before_sync_can_block(self):
         events = []
         backend = object.__new__(X11Backend)
