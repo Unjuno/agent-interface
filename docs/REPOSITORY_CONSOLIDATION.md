@@ -4,7 +4,7 @@
 
 **目的:** Unjuno/agent-interfaceを、複数ワーカーが同じ現在地と証拠を見つけ、独立した作業を選び、衝突なく統合できる状態へ整理する。IssueやPRをゼロにすることは目的にしない。未検証の案、失敗、反例、raw、担当中の作業は失わず、重複・古い案も出典と状態が追える形で残す。
 
-**現在の全体像 (r10, 2026-10-19 JST):** 2026-10-18 16:15:56 UTCに再取得したopen Issueは1,675件、open PRは516件。r9とのID比較でIssueは#8681が1件減り、PRは#9040が1件増えた。取得時のmainは`4e36e47a690621a658515b5107cce020dfe6df82`。件数・ID集合の確認は済んだが、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r10 inventory](maintenance/repository-inventory-20261019-r10.md)とSHA付きCSVを読み取り基準点とし、r9以前は履歴として保持する。
+**現在の全体像 (r11, 2026-10-19 JST):** 2026-10-18 16:18:30 UTCのmain `848b417e56c9b024f0717d8149f8d2be5e49ac40` に対する再取得ではopen Issue 1,675件、open PR 515件。r10とのID比較でIssueの増減はなく、PRは統合済み#9040が1件減った。件数・ID集合の確認は済んだが、本文の意味分類、実担当、ローカル作業ツリーの完全照合は未完了。[r11 inventory](maintenance/repository-inventory-20261019-r11.md)とSHA付きCSVを最新の読み取り基準点とし、r10以前は履歴として保持する。
 
 **「クリーン」の完了条件:**
 
@@ -34,7 +34,9 @@
 
 **2026-10-19 r28 — refreshed open-set baseline:** After #8681 closed, paginated `gh issue list` / `gh pr list` reads at 2026-10-18 16:15:56 UTC contain 1,675 Issues and 516 PRs. Compared with r9, Issue ID set difference is exactly `removed #8681`; PR ID set difference is exactly `added #9040`. The #9040 entry is this consolidation plan's open Draft PR. Current main remained `4e36e47a690621a658515b5107cce020dfe6df82`. CSV hashes and metadata are in [r10 inventory](maintenance/repository-inventory-20261019-r10.md). This is a fresh membership snapshot, not a semantic review of the remaining inventory.
 
-**次の具体的な整理作業:** アイデア索引とr9 Issue一覧を突合し、既に結果がある研究ファミリーを一つ選ぶ。元Issue・main上の証拠・現行PRを確認して、仮説・結果・残差・次の実験を揃え、Issue処置が必要な項目だけ個別に行う。全件意味分類が終わるまで実験・統合を止めない。
+**2026-10-19 r29 — post-merge baseline:** After #9040 merged as `848b417e56c9b024f0717d8149f8d2be5e49ac40`, a fresh paginated read at 2026-10-18 16:18:30 UTC contained 1,675 Issues and 515 PRs. Compared with r10, Issue IDs were unchanged and #9040 was the only removed PR ID. The complete [r11 inventory](maintenance/repository-inventory-20261019-r11.md) is the new point-in-time baseline; it is still metadata, not an all-issue semantic audit.
+
+**次の具体的な整理作業:** r11 Issue一覧と既存アイデア索引を突合し、次の研究ファミリーを一つ選ぶ。元Issue・main上の証拠・現行PRを確認して、仮説・結果・残差・次の実験を揃え、Issue処置が必要な項目だけ個別に行う。全件意味分類が終わるまで実験・統合を止めない。
 
 **2026-10-19 r26 — workspace custody pass:** A read-only scan of the current local `work` area found 190 top-level directories, 341 top-level loose files, and 8 Git-registered worktrees across the workspace. Six of the 190 directories contain `.git` metadata; 184 are non-Git artifact folders with 5,230 files / 303,118,316 bytes. These counts are local to the captured workspace, not repository contents or a deletion proposal. The [workspace custody census](maintenance/workspace-custody-census-20261019.md) records top-level metadata only. No files were moved or deleted. Next, classify artifact folders in bounded batches by provenance and canonical evidence link; preserve raw/unique results, consolidate only verified duplicates, and remove only items whose owner, active use, custody, and recovery path are all established. This layer is independent of GitHub Issue/PR disposition and the repository's eight registered Git worktrees.
 
