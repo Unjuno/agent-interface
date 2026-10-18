@@ -1,5 +1,11 @@
 # リポジトリ全体の整理計画
 
+## 実行更新 r29 — #17 XResのresource-base再利用をPID付きで判別
+
+PR [#9064](https://github.com/Unjuno/agent-interface/pull/9064)を、XRes 1.2の`LocalClientPID`とobserver自身のPID namespace照合を追加してmergeした。head `ebe65d4f10ced2b14554ff97973a6355b4293d0b`の専用private-Xvfb run [39160684353](https://github.com/Unjuno/agent-interface/actions/runs/39160684353)ではidle controlと対象ownerのresource baseがともに`4194304`となり、owner PID `2750`終了後に同じbaseを再利用したquery helper PID `2752`をrawで確認した。PID付き判定はowner不在と分類し、8秒後まで遅延入力は観測されず、keymapは各readbackでupだった。raw・条件・適用限界は[保存packet](../research/integration/xorg_xres_disconnect_order_20261019/README.md)に固定した。
+
+これは一つのresponsive X.Org/Xvfb topologyでmeasurement identityの曖昧さを解いた結果であり、過去のbase-only `still_connected`をowner存続証明として扱わない。blocked server I/Oの有限release、standard caller、物理/XWayland、task effect、一般的recovery deadlineは未検証。Issue #17はopen、他topologyのreleaseは`UNKNOWN`。WSLc allocationは使っていない。
+
 ## 実行更新 r28 — #9065統合後のopen-set再照合
 
 2026-10-18 19:41 UTCのGitHub CLI再取得ではopen Issue 1,675件、open PR 515件。
