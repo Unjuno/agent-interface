@@ -1,0 +1,21 @@
+{
+  "audit": "PASS_RAW_SEMANTICS_SCOPED",
+  "checks": {
+    "cancel_did_not_confirm_release": true,
+    "cancel_did_not_retire_owner": true,
+    "cancel_release_unknown": true,
+    "cancel_replay_disabled": true,
+    "cancel_response_within_3000ms": true,
+    "cancel_task_success_unknown": true,
+    "close_later_retired_owner": true,
+    "close_observed_client_disconnect": true,
+    "harness_finally_keyup_readback_recorded": true,
+    "no_terminal_result": true,
+    "pre_cancel_held_key_observed": true,
+    "pre_cancel_synthetic_effect_observed": true,
+    "release_worker_timed_out": true,
+    "run_is_failure": true,
+    "runtime_release_readback_not_reached": true
+  },
+  "scope": "read-only reconstruction of one retained GitHub Actions artifact; no rerun or release inference"
+}
