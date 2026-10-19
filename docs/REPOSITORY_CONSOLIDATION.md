@@ -58,7 +58,11 @@ The [B13 receipt](maintenance/issue-discovery-b13-20261019.md) routes rows 301�
 
 ### B14 bounded intake — observations, recovery, and runtime eligibility
 
-The [B14 receipt](maintenance/issue-discovery-b14-20261019.md) routes rows 326–350; all 25 entries already had curated outcome rows. It preserves separate MAP01 chronology auditor STOPs, finite decision-value and scheduling results, duplicate-attempt ownership corrections, and the no-WSLc ownership gate at #7970. The linked Drafts remain explicit; no runtime query or allocation was made. B15 is next.
+The [B14 receipt](maintenance/issue-discovery-b14-20261019.md) routes rows 326–350; all 25 entries already had curated outcome rows. It preserves separate MAP01 chronology auditor STOPs, finite decision-value and scheduling results, duplicate-attempt ownership corrections, and the no-WSLc ownership gate at #7970. The linked Drafts remain explicit; no runtime query or allocation was made.
+
+### B15 bounded intake — retained method outcomes and runtime gaps
+
+The [B15 receipt](maintenance/issue-discovery-b15-20261019.md) routes rows 351–375; all 25 entries already existed in the curated outcome index. It preserves non-conclusive and synthetic-only outcomes separately from live runtime questions, records duplicate-allocation and auditor stops without promoting their payloads, and keeps #8252's remaining text-prefix counterexample visible. Referenced PRs were checked for merged, open-Draft and closed-unmerged distinctions. No Issue, PR, raw packet, allocation, or WSLc status changed. B16 is next.
 
 ## Previous execution checkpoint — organize by research family
 
