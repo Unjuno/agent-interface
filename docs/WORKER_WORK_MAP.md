@@ -72,6 +72,16 @@ construction gap only. It does not recover A03's missing reply trace, observe
 live X server ordering, establish physical release, or prove task success.
 Issue #7924 remains `STOP / HOLD` for WSLc ownership; no allocation was inferred.
 
+**#17 same-PID two-connection relay discriminator:** the additive [r01 record](../research/integration/offline_proxy_reply_framing_20261019/two-connection-r01/README.md)
+sets up separate identity and input relay sockets with colliding sequence 3.
+The pre-press identity reply forwards; only the input `GetPointerControl`
+reply following its own XTEST KeyPress and event receipt is held, then the test
+relay returns `UNKNOWN` by its 150 ms bound. Protocol/relay tests pass 28/28 and
+standard-caller relay composition passes 3/3 in normal and `-O`. The caller
+fixture still stubs target-query protocol traffic; next connect that actual
+query seam to the distinct identity socket. No server, physical-release or task
+success claim; A02/A03 remain consumed and #7924 remains STOP/HOLD.
+
 ## Choose work
 
 | Scope | Existing question / evidence | Next finite deliverable | Collision boundary |
