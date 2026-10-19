@@ -1,6 +1,6 @@
 # Worker work map
 
-2026-10-19 current map. The latest full row-level metadata remains [r70](maintenance/repository-inventory-20261019-r70.md). Membership recheck [r71](maintenance/repository-inventory-20261019-r71.md) at main `f89e176b43b8db35798d51d887757e2d650e9bb1` found 1,673 open Issues and 488 open PRs; #8825 merged and no Issue IDs changed. This is not semantic review or proof of current ownership. Current organization and item disposition rules are in [consolidation r82](REPOSITORY_CONSOLIDATION.md#実行更新-r82--a16回復判定修正をmainへ統合).
+2026-10-19 current map. The latest full row-level metadata remains [r70](maintenance/repository-inventory-20261019-r70.md). Membership recheck [r83](maintenance/repository-inventory-20261019-r83.md) at main `640dba3eff3dbb5568da0504f8a624ac80f73c1a` found 1,673 open Issues and 484 open PRs; five PRs left the open set since r70 and none were added. This is not semantic review or proof of current ownership. Current organization and item disposition rules are in [consolidation r83](REPOSITORY_CONSOLIDATION.md#実行更新-r83--a06記録を統合しmembershipを再確認).
 The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
 records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
