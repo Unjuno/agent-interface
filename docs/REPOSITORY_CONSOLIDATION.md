@@ -6,13 +6,17 @@
 
 Issue/PR数をゼロにするのではなく、研究アイデア・反証・結果・未解決点を失わず、次の担当者が一つの独立した仕事をすぐ選べる状態にする。進行中のコンピューター制御研究ゴールは維持し、そのゴールに関係する証拠・実装・残差は研究系譜から外さない。整理完了時には、各open Issueに「実行する理由と次の判別試験」または「担当・依存・保留解除条件」があり、アイデアだけの項目は正規カタログから元Issueへ戻れる。各open PRには現head/base、固有の差分・証拠、依存、所有状態、ローカル検証、次の処置がある。
 
-最新の完全な固定スナップショットは[r53](maintenance/repository-inventory-20261019-r53.md)（2026-10-19 01:51:04 UTC、open Issue 1,673件、open PR 502件）である。PR #8910の統合とIssue #8909の再open後に取得し、Issue ID setはr52と同一、PRは#8910だけ減った。r52カバレッジ監査は全Issueの索引経路を確認したが、489件は歴史的な研究選定表にprimary rowがなく、意味の分類もPRとの結合監査も未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
+最新の完全な固定スナップショットは[r58](maintenance/repository-inventory-recheck-20261019-r58.md)（2026-10-19 02:42:33 UTC、open Issue 1,673件、open PR 500件）である。現在の正しいrow-level exportは[Issue CSV](maintenance/open-issues-20261019-r58.csv)と[PR CSV](maintenance/open-prs-20261019-r58.csv)。r53の同名CSVは現在のGit blobを検査するとPowerShell配列の`Length/Count`だけを持つ2行ファイルであり、row-level metadataやID集合を含まない。r53/r56の件数/hash記録は履歴として保持し、旧CSVを監査根拠に再利用しない。r52カバレッジ監査は全Issueの索引経路を確認したが、489件は歴史的な研究選定表にprimary rowがなく、意味の分類もPRとの結合監査も未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
 
 **最新membershipの再確認 r54 (2026-10-19 02:02:31 UTC):** main `289a0c19ab85581cb3414b01d92f2f887ae0c60b`で完全ページングを読み、open Issue 1,673件、open PR 502件を確認した。sorted ID set hashesはr53と完全一致するため、CSVの重複生成はせず、[r54再確認記録](maintenance/repository-inventory-recheck-20261019-r54.md)だけを追加した。semantic triage、個別PRのレビュー/検証、担当・worktree custodyは別作業であり未完了。
 
 **最新membershipの再確認 r55 (2026-10-19 02:16:48 UTC):** main `0d022b76b6f940638da86c1ea4f71930c8df1626`でIssue/PR一覧を完全ページングし、open Issue 1,673件・open PR 502件を再確認した。ID集合のSHA-256はr53/r54と一致するため、CSVを重複生成せず、[r55再確認記録](maintenance/repository-inventory-recheck-20261019-r55.md)を追加した。これはmembershipの確認であり、意味分類、PR差分/検証、担当・worktree保全は未完了。
 
 **最新membershipの再確認 r56 (2026-10-19 02:25:07 UTC):** PR #9135統合後のmain `39e7bdfc729b392985295048e89b8003acf77c36`でIssue/PR一覧を完全ページングし、open Issue 1,673件・open PR 502件を再確認した。ID集合はr53/r55と一致するためCSVは再生成せず、[r56再確認記録](maintenance/repository-inventory-recheck-20261019-r56.md)を追加した。membership以外の意味分類・所有・PR評価は未完了。
+
+**最新membershipの再確認 r57 (2026-10-19 02:37:22 UTC):** PR #8854統合後のmain `d25b497cc8a05d45158a81c038ee15e03aabdddc`で完全ページングし、open Issue 1,673件・open PR 501件を確認した。Issue ID hashはr53/r56と一致し、PR countは1減少した。r53 CSVがrow-level exportでない不具合を発見したため、r57では正しい完全row-level exportを新規生成し、履歴snapshotは上書きしない。これはmembership/filer-integrityの再確認であり、意味分類・所有・残りPR評価は未完了。詳細は[recheck r57](maintenance/repository-inventory-recheck-20261019-r57.md)。
+
+**最新membershipの再確認 r58 (2026-10-19 02:42:33 UTC):** PR #8853統合後のmain `91d8859530e9c65e7f24fb4843d4cbeef3a9ece6`で完全ページングし、open Issue 1,673件・open PR 500件を確認した。Issue ID setはr57と同一、PR setはr57から#8853だけを除いた500件だった。新しいID hashと完全row-level CSVは[recheck r58](maintenance/repository-inventory-recheck-20261019-r58.md)に記録した。
 
 ### 整理原則とIssueの処置
 
@@ -59,9 +63,23 @@ branch/worktreeはPRのclose/mergeだけで削除しない。exact tip、mainへ
 
 残り29件のreceipt上の処置候補は、限定証拠の統合候補、著者修正、conflict/stack/lineage確認、custody hold、preserved FAIL/HOLD/STOPに分かれる。#7760と#7087のPR-local複数人条件は一人の作業開始・無関係な統合の必要条件にしない。一方、独立scorer等が実験の測定定義そのものなら、その科学的要件は保持する。次はreceiptのmerge候補をexact-headで再照合し、独立した小さい証拠から個別に統合しながら、489件のうち一つのfamilyを意味分類まで完了する。これは全502件のPR監査や全Issueトリアージ完了を意味しない。
 
-## Current execution checkpoint — r51 discovery queue and disjoint work batches
+## 実行状況 r02 — r57の正規inventoryとPR #8854の限定統合
 
-The latest complete live membership read is [r52](maintenance/repository-inventory-20261019-r52.md), captured 2026-10-19 01:35:59 UTC against main `00640a3143ff426d259dcc85793aec26d974043c`: 1,673 open Issues and 503 open PRs. The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md) finds 1,184 open Issues with primary rows in the historical research selection and 489 without. These are exactly the r51 missing-row queue minus #104 and #1798, now closed; all remaining Issues have routes through the completed B01–B20 receipts. A strict cross-index check found 38 r51 items without a standalone first-column row in `IDEAS_AND_OUTCOMES.md`; 30 already had issue/family/successor cross-links, and eight lacked a URL in either index. A routing-only appendix adds links for those eight without inventing outcomes. The r51 queue and receipts remain immutable historical discovery aids, not semantic classifications or closure instructions. Workers should use current evidence and take disjoint families/output paths in parallel; only edits to the same shared index/map need a single integrator at a time. Preserve ideas and source history, and close only on each Issue's evidence-based disposition.
+2026-10-19 02:37:22 UTCのmain `d25b497cc8a05d45158a81c038ee15e03aabdddc`で完全ページングを再取得し、open Issue 1,673件・open PR 501件を確認した。Issue ID hash `4ca4576b8a328d9f41b862a3c7ad3793edd9ddd085bb127d708796e9b6082dd6`はr53/r56と一致する。PR ID hashは`b989d5a16e7347304e7f60adc5d8a6767e1967976735b1f92fde425aa1feba70`。r57 CSVは各object一行で再生成し、行数とnumeric-ID hashを読み戻し確認した。
+
+この時点で旧r53 CSV pathがPowerShellのarray metadataだけを含むことを発見した。履歴pathは書き換えず、旧CSVを正本として扱わないことを[r57 recheck](maintenance/repository-inventory-recheck-20261019-r57.md)に記録した。既存familyにすでにあるA01–A13 live packetの一つへ混入させず、別の合成/source-level証拠としてPR #8854を整理した。exact head `37c6f27c33c4de6d555aacab1f74225567de4e22`、main base、17/17 SHA manifest、Windows Python 3.11.9 normal 8/8、`-O` 8/8、独立audit 34/34、GitHub replay-gate PASSを確認し、2026-10-19 02:35:29 UTCにsquash mergeした。merge commitは`d25b497cc8a05d45158a81c038ee15e03aabdddc`。#59はopenのまま、Issue stateやallocationは変更していない。
+
+この統合はrepository-wide semantic triageではない。残る501 PR・1,673 Issuesの意味/依存/custody確認、保全されたアイデアの個別disposition、残worktreeの所有確認は未完了。次の有限作業はr57 inventoryから一familyだけ選び、source Issue・family idea・実際の結果/後継を照合したreceiptを残してから、可能なIssue処置へ進むこと。
+
+## 実行状況 r03 — stale-action A14の証拠統合とr58基準線
+
+PR #8853をexact head `6a9a7694942e2a566e7b7f51b2abb9ec1b8ed26d`で再確認し、A14 packetがconflicted PR #8842の差分に含まれないことをtreeで照合した。保存済みWSLc結果は再実行せず、Windows Python 3.11.9のsource tests 2/2（通常・`-O`）、独立audit、22件のSHA manifest、GitHub replay-gateを確認して2026-10-19 02:42:19 UTCにintegrateした。merge commit `91d8859530e9c65e7f24fb4843d4cbeef3a9ece6`。#8854とは別の「新しい観測で古いplanner応答を拒否」predicateとして、[MAP01 family crosswalk](ideas/map01-live-guard-evidence-family.md)と[worker map](WORKER_WORK_MAP.md)へ登録した。
+
+同commit上のr58 complete inventoryはopen Issue 1,673件、open PR 500件。Issue hashは不変、PR ID集合はr57から#8853だけ除外された。残り500 PR/1,673 Issuesの意味分類・依存・所有証拠が必要であり、repository-wide clean完了とは宣言しない。次は既存idea catalog内で独立した一familyを選び、open Issueの現本文/コメントと結果・後継を突合し、アイデアだけの重複または未実行案を個別dispositionする。
+
+## Historical discovery checkpoint — r51/r52 navigation queue and disjoint work batches
+
+At that time, the complete live membership read was [r52](maintenance/repository-inventory-20261019-r52.md), captured 2026-10-19 01:35:59 UTC against main `00640a3143ff426d259dcc85793aec26d974043c`: 1,673 open Issues and 503 open PRs. The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md) finds 1,184 open Issues with primary rows in the historical research selection and 489 without. These are exactly the r51 missing-row queue minus #104 and #1798, now closed; all remaining Issues have routes through the completed B01–B20 receipts. A strict cross-index check found 38 r51 items without a standalone first-column row in `IDEAS_AND_OUTCOMES.md`; 30 already had issue/family/successor cross-links, and eight lacked a URL in either index. A routing-only appendix adds links for those eight without inventing outcomes. The r51 queue and receipts remain immutable historical discovery aids, not semantic classifications or closure instructions. Workers should use current evidence and take disjoint families/output paths in parallel; only edits to the same shared index/map need a single integrator at a time. Preserve ideas and source history, and close only on each Issue's evidence-based disposition.
 
 ### B01 bounded intake — idea routing complete, dispositions remain open
 

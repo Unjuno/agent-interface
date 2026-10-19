@@ -1,9 +1,11 @@
 # Current objective and working direction
 
-Latest complete membership recheck recorded here: 2026-10-19 02:25:07 UTC
-against main `39e7bdfc729b392985295048e89b8003acf77c36`; 1,673 open Issues and
-502 open PRs ([r56 recheck](maintenance/repository-inventory-recheck-20261019-r56.md)).
-This records membership only, not semantic review or current owner status.
+Latest complete membership recheck recorded here: 2026-10-19 02:42:33 UTC
+against main `91d8859530e9c65e7f24fb4843d4cbeef3a9ece6`; 1,673 open Issues and
+500 open PRs ([r58 recheck](maintenance/repository-inventory-recheck-20261019-r58.md)).
+The current full inventories are [Issues](maintenance/open-issues-20261019-r58.csv)
+and [PRs](maintenance/open-prs-20261019-r58.csv). This records membership only,
+not semantic review or current owner status.
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
 See the
 [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
