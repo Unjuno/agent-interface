@@ -1,9 +1,10 @@
 # Worker work map
 
-2026-10-19 current map. The latest complete GitHub CLI membership and metadata read
-was at 2026-10-19 03:35:12 UTC against main
-`9ad2614e8ad329e2aaa90487c28859718f84f647`: 1,673 open Issues and 496 open PRs
-([r63 inventory](maintenance/repository-inventory-20261019-r63.md)). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
+2026-10-19 current map. Latest complete membership recheck was at 04:50:37 UTC
+against main `e60a7829602212442055f9f7e4e3cec594f85880`: 1,673 open Issues and
+489 open PRs ([r69](maintenance/repository-inventory-recheck-20261019-r69.md)).
+The latest full PR-head/base metadata remains the historical r68 snapshot; refresh
+it before changing or integrating any PR. The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
 records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
 #8863, and #8847 have been independently audited and merged as separate scoped
