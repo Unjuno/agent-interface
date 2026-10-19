@@ -22,6 +22,8 @@ from ..guarded_x11_v1.xres_client_fence import (
 _STARTUP_TIMEOUT_S = 5.0
 _CLOSE_TIMEOUT_S = 5.0
 _CANCEL_RETIRE_GRACE_S = 1.0
+_RETIRE_TERMINATE_GRACE_S = 0.25
+_RETIRE_KILL_GRACE_S = 0.25
 _JOIN_TIMEOUT_S = 1.0
 _XRES_DISCONNECT_TIMEOUT_S = 0.15
 _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
@@ -670,12 +672,18 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         process = self._process
         if process is None:
             return {'retired':False, 'exitcode':None, 'reason':reason}
+        kill_escalated = False
         if process.is_alive():
             process.terminate()
-            process.join(_JOIN_TIMEOUT_S)
+            process.join(_RETIRE_TERMINATE_GRACE_S)
+            if process.is_alive() and callable(getattr(process, 'kill', None)):
+                kill_escalated = True
+                process.kill()
+                process.join(_RETIRE_KILL_GRACE_S)
         retired = not process.is_alive()
         self._retirement = {'reason':reason, 'retired':retired,
-                            'exitcode':process.exitcode}
+                            'exitcode':process.exitcode,
+                            'kill_escalated':kill_escalated}
         self.state = 'failed'
         self.error = reason
         self._execution_unknown = True

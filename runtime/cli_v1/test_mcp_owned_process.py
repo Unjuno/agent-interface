@@ -171,6 +171,46 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_retire_kills_owned_process_that_ignores_terminate(self):
+        class StubbornProcess:
+            def __init__(self):
+                self.alive = True
+                self.exitcode = None
+                self.terminate_calls = 0
+                self.kill_calls = 0
+                self.joins = []
+            def is_alive(self):
+                return self.alive
+            def terminate(self):
+                self.terminate_calls += 1
+            def kill(self):
+                self.kill_calls += 1
+                self.alive = False
+                self.exitcode = -9
+            def join(self, timeout=None):
+                self.joins.append(timeout)
+
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        process = StubbornProcess()
+        owner._process = process
+        owner.state = 'open'
+        owner.error = None
+        owner._execution_unknown = False
+        owner.review_required = False
+        owner._retirement = None
+
+        with (patch('runtime.cli_v1.owned_guarded_session._RETIRE_TERMINATE_GRACE_S', 0.01),
+              patch('runtime.cli_v1.owned_guarded_session._RETIRE_KILL_GRACE_S', 0.01)):
+            result = owner._retire('cancel retirement grace elapsed')
+
+        self.assertTrue(result['retired'], result)
+        self.assertEqual(result['exitcode'], -9)
+        self.assertEqual(process.terminate_calls, 1)
+        self.assertEqual(process.kill_calls, 1)
+        self.assertEqual(process.joins, [0.01, 0.01])
+        self.assertTrue(owner._execution_unknown)
+        self.assertTrue(owner.review_required)
+
     def test_close_timeout_runs_disconnect_gated_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None
