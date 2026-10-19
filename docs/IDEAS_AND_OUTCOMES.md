@@ -4,9 +4,9 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-19 10:59 UTC):** main is
-`f08f60fa3be0612632d768689d23cd2d88a45c41`; the latest membership snapshot r86 records 1,673
-open Issues and 480 open PRs in [r86](maintenance/repository-inventory-2026-10-19-r86.md).
+**Current organization check (2026-10-19 11:15 UTC):** main is
+`4d95015b8a6f64e1cef9736ce8f8b984d9eb2cfa`; the latest membership snapshot r87 records 1,673
+open Issues and 479 open PRs in [r87](maintenance/repository-inventory-2026-10-19-r87.md).
 The richer r85 row-level snapshot includes PR check rollups. Counts are not semantic
 dispositions; use the current family records and the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for new work.
 ## Status key
