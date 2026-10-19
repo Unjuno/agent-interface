@@ -28,6 +28,7 @@ from PIL import Image, ImageStat
 
 from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
 from runtime.cli_v1.mcp_server import create_server
+from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 
 
 _DELAY_MS = 8000
@@ -395,15 +396,71 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     report['input_before_cancel']['owner_sync_return_receipt_present'],
                     report)
 
+                cancel_internal_trace = {'retirement_decisions':[], 'retire_calls':[]}
+                original_decision_method = (
+                    OwnedGuardedSessionOwner._cancel_requires_owner_retirement)
+                original_retire = OwnedGuardedSessionOwner._retire
+
+                def traced_retirement_decision(owned, result):
+                    required = original_decision_method(owned, result)
+                    cancel_internal_trace['retirement_decisions'].append({
+                        'required':required,
+                        'result_status':result.get('status'),
+                        'result_owner_process_retired':result.get('owner_process_retired'),
+                        'result_late_server_request_possible':result.get(
+                            'late_server_request_possible'),
+                        'result_obligations':result.get('owner_input_obligations'),
+                        'cached_obligations':getattr(
+                            owned, '_owner_input_obligations', None),
+                        'cached_snapshot_owner_pid':owned._snapshot_cache.get(
+                            'owner_process_pid'),
+                    })
+                    return required
+
+                def traced_retire(owned, reason):
+                    process = getattr(owned, '_process', None)
+                    before_alive = process.is_alive() if process is not None else None
+                    started_ns = time.monotonic_ns()
+                    try:
+                        result = original_retire(owned, reason)
+                    except BaseException as error:
+                        cancel_internal_trace['retire_calls'].append({
+                            'reason':reason,
+                            'elapsed_ms':(time.monotonic_ns()-started_ns)/1_000_000,
+                            'before_alive':before_alive,
+                            'error_type':type(error).__name__,
+                            'error':repr(error),
+                        })
+                        raise
+                    cancel_internal_trace['retire_calls'].append({
+                        'reason':reason,
+                        'elapsed_ms':(time.monotonic_ns()-started_ns)/1_000_000,
+                        'before_alive':before_alive,
+                        'retired':result.get('retired'),
+                        'exitcode':result.get('exitcode'),
+                        'alive_after':process.is_alive() if process is not None else None,
+                    })
+                    return result
+
                 report['timing_ns']['cancel_started'] = time.monotonic_ns()
-                cancel = _metadata(await server.call_tool(
-                    'interface_guarded_cancel', {'call_id':pending['call_id']}))
+                original_retire_method = OwnedGuardedSessionOwner._retire
+                OwnedGuardedSessionOwner._cancel_requires_owner_retirement = (
+                    traced_retirement_decision)
+                OwnedGuardedSessionOwner._retire = traced_retire
+                try:
+                    cancel = _metadata(await server.call_tool(
+                        'interface_guarded_cancel', {'call_id':pending['call_id']}))
+                finally:
+                    OwnedGuardedSessionOwner._cancel_requires_owner_retirement = (
+                        original_decision_method)
+                    OwnedGuardedSessionOwner._retire = original_retire_method
                 report['timing_ns']['cancel_returned'] = time.monotonic_ns()
                 cancel_elapsed_ms = (
                     report['timing_ns']['cancel_returned']
                     - report['timing_ns']['cancel_started'])/1_000_000
                 report['cancel_elapsed_ms'] = cancel_elapsed_ms
                 report['cancel'] = cancel
+                report['cancel_internal_trace'] = cancel_internal_trace
                 cancelled = True
                 self.assertLess(cancel_elapsed_ms, _CANCEL_BOUND_MS, cancel)
                 self.assertTrue(cancel.get('owner_process_retired'), cancel)
