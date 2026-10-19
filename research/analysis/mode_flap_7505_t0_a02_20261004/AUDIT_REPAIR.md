@@ -1,0 +1,5 @@
+# Post-run raw replay v2
+
+The frozen candidate `candidate.py` serialized an `alarms` mapping that contained only the last metric because the mapping was reassigned inside the per-metric loop. The frozen independent `audit.py` caught this with `KeyError` when it required all five metric alarm entries. Preserve that first auditor output and exit unchanged under `formal_a02/`.
+
+`audit_v2.py` is a versioned post-run read-only auditor. It does not alter or regenerate candidate raw. It independently reconstructs all five thresholded alarm times from the raw per-tick score series, records the candidate's incomplete alarm-map defect, then tests the frozen decision criteria using reconstructed alarms. Mutation controls operate on a normalized in-memory view derived by that independent reconstruction; they do not modify the preserved `raw.json`. Any passing replay or reconstructed method result is scoped supplemental evidence and does not erase A02's frozen `HOLD_AUDIT` disposition. The candidate is not rerun.
