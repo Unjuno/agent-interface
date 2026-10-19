@@ -1,0 +1,19 @@
+Candidate (one invocation):
+python research/doom/v39_cleanup_release_duplicate_ids_a05_20261009/candidate.py
+exit=0
+stdout={"allocation_id": "ISSUE8681-CLEANUP-IDENTITY-A05-20261009", "case_count": 7, "source_sha256": "5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c", "status": "CANDIDATE_RETAINED"}
+stderr=(empty)
+
+Independent raw-only auditor (one invocation):
+python research/doom/v39_cleanup_release_duplicate_ids_a05_20261009/audit.py
+exit=0
+stdout={"passed": 40, "status": "PASS_CONSTRUCTION_AUDIT", "total": 40}
+stderr=(empty)
+
+Focused regressions:
+PYTHONPATH=research/doom python -m unittest research/doom/test_controller_failure_cleanup_v39.py -v
+5/5 passed
+
+Existing cleanup suite:
+python -m unittest discover -s research/doom -p 'test_controller_failure_cleanup*.py' -v
+20/20 passed
