@@ -30,7 +30,7 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         raise ValueError('accepted_statuses must be a non-empty tuple of strings')
 
     started = time.monotonic()
-    deadline = started + timeout_s
+    deadline = None
     receive, send = None, None
     process = None
     process_started = False
@@ -42,6 +42,9 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
                                   name='xres-disconnect-observer')
         process.start()
         process_started = True
+        # Process startup is outside the worker's response budget, matching
+        # this supervisor's contract. Keep elapsed_ms inclusive for receipts.
+        deadline = time.monotonic() + timeout_s
         send.close()
         send = None
         if receive.poll(max(0.0, deadline - time.monotonic())):
