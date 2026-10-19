@@ -356,14 +356,14 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
                     if event.get('type') in (X.KeyPress, X.KeyRelease)
                     and event.get('detail') == recovery_keycode]
             self.assertEqual([event['type'] for event in recovery_key_events],
-                             [X.KeyPress, X.KeyRelease], recovery_key_events)
+                             [X.KeyPress], recovery_key_events)
             recovery_effect_event = next(event for event in recovery_key_events
                 if event['type'] == X.KeyPress)
             recovery_effect_latency_ms = (
                 recovery_effect_event['effect_committed_ns']
                 - report['monotonic_ns']['recovery_fault_input_started']) / 1_000_000
             self.assertGreaterEqual(recovery_effect_latency_ms, 0.0, report)
-            report['recovery_app_effect'] = {
+            report['recovery_app_effect_before_release'] = {
                 'observed_key_events':recovery_key_events,
                 'property_value':[2],
                 'reader':'independent synthetic application event loop',
@@ -382,6 +382,17 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(recovered.get('replay_allowed'), recovered)
             self.assertTrue(recovery_release_seen.wait(2.0),
                             'synthetic app did not observe the recovery KeyRelease')
+            with app_lock:
+                recovered_key_events = [event for event in app_events
+                    if event.get('type') in (X.KeyPress, X.KeyRelease)
+                    and event.get('detail') == recovery_keycode]
+            self.assertEqual([event['type'] for event in recovered_key_events],
+                             [X.KeyPress, X.KeyRelease], recovered_key_events)
+            report['recovery_app_effect'] = {
+                'observed_key_events':recovered_key_events,
+                'property_value':[2],
+                'reader':'independent synthetic application event loop',
+                'call_start_to_effect_commit_ms':recovery_effect_latency_ms}
             keymap = observer.query_keymap()
             report['independent_recovery_readback'] = {
                 'keycode_b_down':bool(keymap[recovery_keycode//8]
