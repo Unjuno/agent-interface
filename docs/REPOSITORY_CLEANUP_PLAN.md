@@ -8,6 +8,8 @@ At main commit `1d95e48e67783fd05b96346c975f9875bc483ce1` (2026-10-19), GitHub s
 
 **Current checkpoint after cleanup PR #9186 merged:** main is `bee4b22ebc1166d2055b367aff5d363ee82848c7`. A direct GitHub search read at 2026-10-19 12:19 UTC reports 1,673 open Issues and 480 open PRs. This count-only read does not replace a paginated row-level inventory or confirm semantic status. The new [local worktree custody overlay r01](maintenance/worktree-custody-overlay-r01-20261019.md) records the separate workspace scan and its unresolved ownership boundary.
 
+**Current checkpoint after cleanup PRs #9186/#9187 and scoped recovery PR #9185 merged:** main is `547cce6bb9965d8029e9c4478dce20f9ac35a3fb` (2026-10-19 12:35 UTC). A live GitHub search read at 12:36 UTC reports 1,673 open Issues and 479 open PRs. #9186 repaired the documentation entry points and added this operational plan; #9187 recorded worktree custody; #9185 retained a five-attempt standard-caller Xvfb recovery packet. The #9185 scoped path passed with independent key-up readback after explicit recovery and a synthetic property effect, while runtime `task_success` remained null. Its latest evidence-only-head X11 workflow also recorded one separate blocked-cancellation test race; the safe result kept release UNKNOWN and replay disabled. See [PR #9185](https://github.com/Unjuno/agent-interface/pull/9185) and its [retained packet](../research/integration/standard_caller_guarded_recovery_xvfb_20261019/README.md). These counts remain membership only, not semantic or ownership review. The earlier 24-worktree/188-folder custody scan remains the last complete workspace snapshot; ignored data and process ownership were not checked.
+
 The immediate repository-level defects are narrower and verifiable:
 
 - `REPOSITORY_CONSOLIDATION.md` had grown into a dated append-only log and its execution-plan link was broken; this change restores the link and adds a shorter operational plan.
@@ -72,6 +74,8 @@ The pilot is complete as a semantic review: [safety/control receipt r01](mainten
 
 After the pilot, select the next family from the remaining routing queue using changed research value and unblock potential, not numeric Issue order. Workers can take disjoint family batches while the integrator serializes edits to the shared indexes.
 
+A read-only A07 custody cross-check in [PR #9181](https://github.com/Unjuno/agent-interface/pull/9181) found the independent audit package internally checksummed and its manifest digest cross-referenced, but the private raw bundle needed to reproduce the 2,358-entry claim was unavailable in inspected tracked sources. Keep Issue #59 open and PR #8702 in draft `evidence-custody-hold`; do not rerun consumed A07 or claim MAP01/task success. Revisit only when the unchanged raw bundle or an adequate privacy-approved verification manifest is supplied.
+
 ## Completion criteria
 
 Repository cleanup is complete when:
@@ -83,3 +87,4 @@ Repository cleanup is complete when:
 5. The worker map offers multiple disjoint, finite packets with private outputs, and does not imply ownership or live-resource grants.
 
 Open Issues and PRs may remain as an intentional, well-indexed research backlog. Do not claim a complete repository-wide audit until every live membership row and required semantic/custody decision has actually been checked.
+
