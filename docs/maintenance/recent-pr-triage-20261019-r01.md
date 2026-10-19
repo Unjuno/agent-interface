@@ -29,3 +29,8 @@ At main `3cf520498beb886750b9de8499890dfebb0ea209`, the current tree lacks all 4
 ## Follow-up after r01 capture
 
 Evidence-only [PR #9142](https://github.com/Unjuno/agent-interface/pull/9142) merged at main `9ad2614e8ad329e2aaa90487c28859718f84f647`, preserving all 47 package files and two frozen source/test blobs. All 51 original manifest entries matched before merge. The focused current-main cleanup identity module passed 27/27 in normal and optimized Python; its duplicate-acceptance and terminal-order tests cover the behavior in #8687's two remaining implementation/test changes. PR [#8687](https://github.com/Unjuno/agent-interface/pull/8687) was then closed as superseded, and its original remote branch was deleted after checking author, open-PR use, and registered local worktrees. The next complete inventory r63 records the one-ID PR reduction; #8838 remains distinct and open.
+
+
+## Verified follow-up: #8838 evidence custody
+
+Evidence-only PR [#9144](https://github.com/Unjuno/agent-interface/pull/9144) merged all 32 A06/A07 files byte-for-byte from #8838's exact head; 30 manifest entries and 32 source/main Git blob identities were verified. A07's WSLc pre-test failure and unconstrained native-WSL fallback remain part of the preserved outcome. After verifying main-tree readback, confirming no other open PR head/base dependency and no registered worktree, #8838 was closed as superseded and its remote branch deleted. No packet code or tests were executed. The complete r64 membership snapshot records only #8838 removed from the r63 open set. See the [custody review](pr8838-evidence-custody-20261019.md).

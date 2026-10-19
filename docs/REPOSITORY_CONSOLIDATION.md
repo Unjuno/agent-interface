@@ -921,3 +921,12 @@ PR #8687のコード差分を再適用せず、A02–A05の47ファイルをそ�
 PR [#9142](https://github.com/Unjuno/agent-interface/pull/9142)はmain `9ad2614e8ad329e2aaa90487c28859718f84f647`にmergeされた。A02–A05の47ファイルとsource/test snapshot 2件はmain上にあり、main treeと保存済み検証commitのパス差分は0。元manifest 51項目はmerge前にすべて一致した。#8687の残る2つの実装/テスト変更は、main #8771のより強いduplicate/invalid/mismatched identity拒否と同等以上のfocused test coverageであることを差分・テスト名・27件のnormal/-O実行で確認し、#8687をsupersededとしてcloseした。作者・open-PR依存・登録worktreeを確認した後、保全済みの元branchも削除した。#8838は別のA07証拠としてopenのまま。
 
 PR #8687のclose後に[r63 inventory](maintenance/repository-inventory-20261019-r63.md)を取得した。Issue 1,673件はr62と同じ、PRは497から496へ減り、取り除かれたIDは#8687だけ。これは一つの証拠custody/duplicate-implementation familyの完了であり、残るopen Issue/PRの全件意味分類や全体整理完了を意味しない。
+
+
+## 実行状況 r10 — #8838 evidence custody、r64 inventory
+
+PR [#9144](https://github.com/Unjuno/agent-interface/pull/9144)を2026-10-19 03:44:32 UTCにmainへsquash mergeした。#8838 head `810fdcfe558ad700f779aaa66c111a4cc19eb9e4`のA06/A07資料32ファイルを原パスのまま移し、SHA256 manifest 30項目と32 Git blobすべてを移管前に照合した。merge後も32 blob全てが原headと一致することを読み戻した。候補、runner、auditor、テスト、allocationは再実行していない。
+
+#8838はparent #8681が閉じ、実装#8771が統合済みで、diff全体が上記証拠資料だけだった。作者は認証済みrepository ownerと一致し、他のopen PRのhead/base依存と登録worktreeがないことを確認後、03:45:47 UTCにsupersededとしてcloseし、remote branchも削除した。A06は有限alphabet/length内のparser結果、A07は歴史的sourceへのfocused testsである。A07はWSLc実行前のmount失敗後、resource confinementなしのUbuntu WSLへ移った。いずれも物理release、GUI/game、effect、bounded recovery、live controlを証明しない。詳細は[custody review](maintenance/pr8838-evidence-custody-20261019.md)と[cleanup identity audit](ideas/cleanup-identity-audit.md)。
+
+[r64 inventory](maintenance/repository-inventory-20261019-r64.md)をmain `f5b164f3baccf8e7b0e593c5e90739cb667cdc72`から2026-10-19 03:47:14 UTCに取得した。open Issueは1,673件でr63からID集合不変（SHA-256 `4ca4576b8a328d9f41b862a3c7ad3793edd9ddd085bb127d708796e9b6082dd6`）。open PRは496から495へ1件減少し、除かれた唯一のIDは#8838（SHA-256 `1260dc6655c85bf66a296311df39ea33a970de8bee5badda1c2a168027a0b472`）。これはcleanup-identity evidence custodyの一区切りで、リポジトリ全体のIssue/PR semantic triage、依存・担当・worktree custody完了ではない。次は既存のPR batchとアイデアfamilyごとに、実装重複・独自証拠・未完了の科学的問いを分けて分類する。

@@ -32,3 +32,10 @@ The only other #8687 changes were its cleanup implementation and two constructio
 ## Scope boundary
 
 This is evidence about synthetic cleanup receipt reconstruction and test coverage. It is not physical-release evidence, proof that a live cleanup failure occurred, or permission to run a game/input experiment. Keep one implementation candidate and preserve distinct raw, audit, and source histories when retiring overlapping refs.
+
+
+## A06/A07 custody completion (2026-10-19)
+
+The exact A06/A07 packet from PR [#8838](https://github.com/Unjuno/agent-interface/pull/8838), head `810fdcfe558ad700f779aaa66c111a4cc19eb9e4`, is preserved byte-for-byte at its original research paths by evidence-only [PR #9144](https://github.com/Unjuno/agent-interface/pull/9144), merged as `f5b164f3baccf8e7b0e593c5e90739cb667cdc72`. All 30 manifest entries and all 32 original Git blobs matched before transfer; all 32 main-tree blobs were read back and compared to the source head. The custody review is [here](../maintenance/pr8838-evidence-custody-20261019.md).
+
+PR #8838 was closed as superseded after that readback. Its author matched the authenticated repository owner, no other open PR used its branch as head or base, and no registered worktree used it; the remote branch was then deleted. No A06/A07 runner, candidate, auditor, test, or allocation was executed during transfer. A07's WSLc setup stop and unconstrained native-WSL fallback remain explicit; neither packet upgrades the current #8771 implementation or establishes physical release or live-control success.
