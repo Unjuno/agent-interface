@@ -2,7 +2,7 @@
 
 This directory is the compact history of ideas raised in Agent Interface.
 
-The latest complete paginated metadata snapshot is [open Issues r49](../maintenance/open-issues-20261019-r49.csv) and [open PRs r49](../maintenance/open-prs-20261019-r49.csv), captured at 2026-10-18 23:44:32 UTC against main `67e183337ae29156c0d905ab8a7394592d127890` with 1,675 open Issues and 503 open PRs. These inventories establish membership only, not semantic classification or current ownership. The r15 audit and its 491-row [discovery queue](../maintenance/open-issues-missing-research-primary-row-20261019-r15.csv) remain historical discovery sources; that queue is not current semantic status.
+The latest complete paginated metadata snapshot is [open Issues r50](../maintenance/open-issues-20261019-r50.csv) and [open PRs r50](../maintenance/open-prs-20261019-r50.csv), captured at 2026-10-19 00:11:08 UTC against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5` with 1,675 open Issues and 503 open PRs. These inventories establish membership only, not semantic classification or current ownership. The r15 audit and its 491-row [discovery queue](../maintenance/open-issues-missing-research-primary-row-20261019-r15.csv) remain historical discovery sources; that queue is not current semantic status.
 
 Use this directory to connect ideas to existing evidence, dependencies, priorities and executable experiments. GitHub Issues remain the discussion and execution surface. Preserving an idea here does not remove it from research consideration or justify closing its Issue. Close only for verified completion, evidence-based rejection, or an actual successor that carries the remaining research forward. See the [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md).
 
@@ -38,7 +38,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Reactive motor primitives and compiled symbolic GUI interfaces](reactive-macro-symbolic-interface.md) — keeps #6's broad local-continuation menu distinct from #56's model-authored symbolic interface and connects their scoped construction results to the open, provenance-failed composition package #7616.
 
-- [Current open-work inventory r49 (2026-10-19)](../maintenance/repository-inventory-20261019-r49.md) — complete paginated metadata: 1,675 open Issues and 503 open PRs; counts, ID hashes and metadata hashes match r48. Membership metadata is not semantic triage or ownership proof.
+- [Current open-work inventory r50 (2026-10-19)](../maintenance/repository-inventory-20261019-r50.md) — complete paginated metadata: 1,675 open Issues and 503 open PRs; counts and sorted ID hashes match r49. Membership metadata is not semantic triage or ownership proof.
 - [Research and idea Issue index](../RESEARCH_ISSUE_INDEX.md) — broad discovery index with a historical state snapshot and newer addenda; check its freshness note and live Issue/evidence before disposition. This ledger is the compact hypothesis/outcome map, not a complete mirror of every research-index row.
 - [Conflict-aware evidence ledger](conflict-aware-evidence-ledger.md) — reconciles #5305's merged finite T0, held-out STOP, later policy counterexample, raw-custody gap, and unverified provenance refinements without closing the Issue or rerunning T0.
 - [Evidence-admission family](evidence-admission-family.md) — links #5314 dependency-aware quorum, #5305 conflict representation, and #5339 trust/coverage while preserving each finite result, audit failure, assumption, and unresolved boundary.
