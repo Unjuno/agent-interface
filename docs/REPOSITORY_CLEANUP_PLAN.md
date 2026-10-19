@@ -2,6 +2,9 @@
 
 This plan makes the repository easier to work in with many independent workers while preserving research questions, first outcomes, evidence, ownership, and dependencies. It does not define success as zero open Issues or PRs.
 
+## Current working checkpoint — 2026-10-19
+
+The #17 safety-control family is being used as one semantic cleanup batch, not as a reason to mass-close Issues. PR #9192 carries a bounded cancel-response fix and separately hashed r04 Xvfb evidence; the current-head X11 integration run and all reported PR checks pass. The family index, worker map, idea/outcome index, experiment packet, and consolidation history link the scoped result and its limits. Issue #17 stays open because release certification, task success, bounded recovery, MAP01 and efficiency remain unresolved. The actual current PR state must be refreshed before merging; no global Issue/PR or worktree inventory is implied by this checkpoint.
 ## Verified starting point
 
 At main commit `1d95e48e67783fd05b96346c975f9875bc483ce1` (2026-10-19), GitHub search reported 1,673 open Issues and 479 open PRs. This is a live membership count, not a semantic audit, ownership check, or full PR review. The latest complete row-level inventory is [r87](maintenance/repository-inventory-2026-10-19-r87.md), captured at an earlier main SHA; recheck membership and exact heads before any state change. Existing routing work covered 491 Issues missing a historical research-index primary row, but routing is not semantic classification. See the [r51 routing queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv), [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md), and [consolidation history](REPOSITORY_CONSOLIDATION.md).
