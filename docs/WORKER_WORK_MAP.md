@@ -1,9 +1,9 @@
 # Worker work map
 
 2026-10-19 current map. The latest complete paginated GitHub CLI membership read
-was at 2026-10-19 01:51:04 UTC against main
-`b65dfc88c0cfe8a36e72c7d4906c7be355021b3d`: 1,673 open Issues and 502 open PRs
-([r53 metadata snapshot](maintenance/repository-inventory-20261019-r53.md)). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
+was at 2026-10-19 02:02:31 UTC against main
+`289a0c19ab85581cb3414b01d92f2f887ae0c60b`: 1,673 open Issues and 502 open PRs
+([r54 membership recheck](maintenance/repository-inventory-recheck-20261019-r54.md); the unchanged r53 metadata snapshots are reused). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
 records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
 #8863, and #8847 have been independently audited and merged as separate scoped
@@ -25,6 +25,15 @@ before the held-reply marker; release and task success remain `UNKNOWN`. Do not
 rerun either allocation. Initial source/raw analysis points to a circular gate
 that can block the pre-press process-identity reply; the linked evidence note
 specifies the finite offline proxy-framing check before any new allocation.
+
+That offline discriminator now has a retained [scoped result](../research/integration/offline_proxy_reply_framing_20261019/README.md):
+the A03 broad predicate selects a same-PID pre-press identity reply, while the
+connection-and-sequence-scoped model forwards it and withholds only the exact
+action-bound input-sync reply after its KeyPress receipt. Seven tests pass in
+normal and optimized Python. This is a policy/framing model, not a patch to the
+frozen proxy or evidence about A03's unseen reply sequence. Next audit whether a
+real proxy/caller trace can supply these identities; only then consider a newly
+eligible live candidate. Keep release/task `UNKNOWN`; no WSLc allocation was used.
 
 ## Choose work
 
