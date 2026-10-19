@@ -16,6 +16,7 @@ and release observers use a direct connection.
 | [A03](../standard_caller_blocked_x11_release_a03_20261019/) | `fb137ba1d99ee8f707d07e41379197759ff9daed51491064a504abb005b5cf5d` | `FAIL_FIRST_OUTCOME_RETAINED`; one healthy control passed, then blocked trial 01 timed out waiting for `owner_reply_held.json`. WSLc exit 1. | Healthy standard-caller path works once under this synthetic setup. The blocked-path predicate was not reached/confirmed; this is not evidence of bounded cancellation or release. Do not rerun A03. |
 | [CI Xvfb setup attempt](../standard_mcp_xvfb_blocked_release_r01_20261019/) | PR head `6c69f595c0e1d61b0bad0568fde3d05c5d3e841b`, run [39226642774](https://github.com/Unjuno/agent-interface/actions/runs/39226642774) | `FAIL_TEST_CONFIGURATION`; the standard caller returned an observation with process generation but no window generation because this test omitted `guarded_window_lifecycle=True`. Assertion stopped before input dispatch. | No blocked-I/O, release, task-effect, or recovery result. Preserve the first raw packet unchanged; the corrected configuration is being tested at a new source revision. |
 | [Corrected-configuration Xvfb attempt](../standard_mcp_xvfb_blocked_release_r01_20261019/run-39227740722/) | PR head `a0f69e5157190ed5097b249be7e10f5d5da82845`, run [39227740722](https://github.com/Unjuno/agent-interface/actions/runs/39227740722) | `FAIL_TEST_HARNESS_SIGNATURE`; observation returned process and window generations, then the test wrapper raised `TypeError` because it did not accept the caller's `root=` keyword. The injected press and delayed request were not sent. | This run reaches the expected generation and observation path but does not test blocked I/O or release. Raw JSON and image are retained. The wrapper signature is being corrected at a new source revision. |
+| [Marker-directory Xvfb attempt](../standard_mcp_xvfb_blocked_release_r01_20261019/run-39228136905/) | PR head `7d7360f22cdd33bb15e23aa094e7384d359a9a56`, run [39228136905](https://github.com/Unjuno/agent-interface/actions/runs/39228136905) | `FAIL_MARKER_DIRECTORY_MISMATCH`; the test waited for markers under the temporary root, while the owner factory receives the MCP output directory (`root/mcp`) and writes them there. The caller returned `pending`; cleanup reports a timed-out owner process and release `UNKNOWN`, but the intended markers and independent effect/readback were not captured. | Treat input delivery and blocked-sync entry as unverified. Preserve raw and image; align the waiter with the factory's directory before another fresh-source run. |
 
 A03's retained blocked report shows the synthetic app saw event type 19
 (`MapNotify`), the input call first returned `pending`, and the eventual result
@@ -51,15 +52,18 @@ its unique external directory before raw was copied here.
 
 ## Next finite step
 
-The injection wrapper now accepts the Xlib `root=` keyword and forwards it to
-the original XTEST function. Run this source as a new revision and preserve its
-raw JSON and image or exact failure. Audit whether it reaches the input,
-blocked-sync, cancellation, independent release readback, late-request horizon,
-and bounded terminal-result checkpoints. Treat either delayed-`b` outcome as a
-result, but retain `release_confirmed=false`, cleanup `UNKNOWN`, task success
-`null`, and replay disabled. This is one private-Xvfb synthetic target; it does
-not replace the separate real-X11 proxy framing/order question or qualify
-physical release.
+The injection wrapper now accepts Xlib's `root=` keyword. The remaining
+test-harness defect is that marker waiters use the temporary root while the
+factory writes under `root/mcp`, the output directory passed into
+`create_server` and `OwnedGuardedSessionOwner`. Point both marker waiters at
+that exact directory, assert the observed marker paths, then run a fresh source
+revision and preserve its raw JSON and image or exact failure. Audit input,
+blocked-sync entry, cancellation, independent release readback, late-request
+horizon, and bounded terminal-result checkpoints. Treat either delayed-`b`
+outcome as a result, but retain `release_confirmed=false`, cleanup `UNKNOWN`,
+task success `null`, and replay disabled. This is one private-Xvfb synthetic
+target; it does not replace the separate real-X11 proxy framing/order question
+or qualify physical release.
 
 ## Evidence boundary
 

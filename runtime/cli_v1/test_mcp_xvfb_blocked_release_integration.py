@@ -296,8 +296,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     name='xvfb-blocked-release-app', daemon=True)
                 app_thread.start()
 
+                owner_output_root = root/'mcp'
+                report['owner_marker_directory'] = str(owner_output_root)
                 server = create_server(
-                    {'app':window.id}, root/'mcp', session_mode='guarded-x11',
+                    {'app':window.id}, owner_output_root, session_mode='guarded-x11',
                     guarded_process_identity=True, guarded_query_worker=True,
                     guarded_window_lifecycle=True, guarded_owned_process=True,
                     _guarded_owner_factory=_xvfb_blocking_owner_factory)
@@ -359,11 +361,11 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 pending_call_id = pending['call_id']
 
                 owner_marker = await self._wait_for_file(
-                    root/'xvfb-delayed-request-queued.json')
+                    owner_output_root/'xvfb-delayed-request-queued.json')
                 report['owner_delayed_request'] = owner_marker
                 self.assertEqual(owner_marker['delay_ms'], _DELAY_MS, owner_marker)
                 sync_marker = await self._wait_for_file(
-                    root/'xvfb-owner-sync-entered.json')
+                    owner_output_root/'xvfb-owner-sync-entered.json')
                 report['blocked_owner_sync'] = sync_marker
                 self.assertEqual(sync_marker['owner_pid'], owner_marker['owner_pid'])
                 self.assertEqual(sync_marker['resource_base'], owner_marker['resource_base'])
