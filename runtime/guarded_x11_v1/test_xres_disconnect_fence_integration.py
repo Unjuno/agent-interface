@@ -461,7 +461,7 @@ class XResHeldKeyDisconnectIntegrationTests(unittest.TestCase):
         result_path = os.environ.get('AGENT_INTERFACE_XORG_HELD_KEY_QUEUE_RESULT')
         delay_ms = _DELAY_MS
         report = {
-            'schema':'agent-interface/xvfb-held-key-disconnect-queue-v1',
+            'schema':'agent-interface/xvfb-held-key-disconnect-queue-v2',
             'status':'RUNNING',
             'scope':'private X.Org Xvfb server; direct XTEST owner; no standard MCP caller',
             'server_display':display_name,
@@ -474,7 +474,9 @@ class XResHeldKeyDisconnectIntegrationTests(unittest.TestCase):
             'owner':None,
             'initial_held_readback':None,
             'disconnect_receipt':None,
+            'state_after_disconnect_before_release':None,
             'release_readback_before_delay_horizon':None,
+            'independent_release_effect_observed':None,
             'late_keypress_readback':None,
             'interpretation':None,
             'cleanup_status':'not_attempted',
@@ -565,6 +567,13 @@ class XResHeldKeyDisconnectIntegrationTests(unittest.TestCase):
                 self.assertNotEqual(report['disconnect_receipt'].get('observed_pid'),
                                     owner.pid, report)
 
+                after_disconnect = _keys_down(observer, keycodes)
+                report['state_after_disconnect_before_release'] = {
+                    'keys_down':after_disconnect,
+                    'connection':'independent X client',
+                    'observed_ns':time.monotonic_ns(),
+                }
+
                 cleanup = Display(display_name)
                 xtest.fake_input(cleanup, X.KeyRelease,
                                  detail=keycodes['a'])
@@ -575,6 +584,8 @@ class XResHeldKeyDisconnectIntegrationTests(unittest.TestCase):
                     'connection':'independent X client',
                     'observed_ns':time.monotonic_ns(),
                 }
+                report['independent_release_effect_observed'] = (
+                    after_disconnect['a'] and not released['a'])
                 self.assertFalse(released['a'], report)
 
                 horizon_ns = killed_ns + (delay_ms + 500)*1_000_000
@@ -590,10 +601,15 @@ class XResHeldKeyDisconnectIntegrationTests(unittest.TestCase):
                         time.monotonic_ns()-killed_ns)/1_000_000,
                 }
                 report['late_keypress_observed'] = late['b']
-                report['interpretation'] = (
-                    'late_keypress_after_disconnect_and_release_observed'
-                    if late['b'] else
-                    'no_late_keypress_observed_through_declared_horizon')
+                if late['b']:
+                    report['interpretation'] = (
+                        'late_keypress_after_disconnect_and_release_observed')
+                elif after_disconnect['a']:
+                    report['interpretation'] = (
+                        'independent_release_transition_observed_no_late_keypress')
+                else:
+                    report['interpretation'] = (
+                        'owner_disconnect_key_state_already_up_no_late_keypress')
                 # Either server outcome is data. The test fails only if the
                 # required independent observations are absent or malformed.
                 self.assertFalse(late['a'], report)
