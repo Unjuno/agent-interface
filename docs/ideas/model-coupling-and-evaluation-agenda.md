@@ -1,6 +1,6 @@
 # Model coupling and evaluation validity agenda
 
-Updated 2026-10-17 against `main` `1ece47014d05db898bf73afcd722a14524462e15`.
+Updated 2026-10-19 against `main` `8701e8b059bb603704b1d43c79e6b6a7ec560b26`.
 This is the next idea-family batch named by the [repository consolidation
 status](../maintenance/consolidation-status-20261016.md). The issues below share
 a concern with model behavior or model/interface comparisons, but they are
@@ -414,6 +414,14 @@ separate hypotheses and must keep separate evidence and decisions.
   end-to-end efficiency claim follows without a separate #57-compatible
   evaluation.
 
+## 16. Ephemeral learned local control — #9
+
+- **Status:** Open, unverified research track. The Issue is a proposal, not a runtime promotion request.
+- **Idea:** A small policy trained or supervised from observable planner/oracle actions might perform high-cadence real GUI actions during measured planner absence, while the deterministic runtime retains sole control of authority, scope, lease, freshness, cancellation, and release.
+- **Relation:** This is distinct from [#6](https://github.com/Unjuno/agent-interface/issues/6)'s deterministic reactive macros and [#56](https://github.com/Unjuno/agent-interface/issues/56)'s planner-authored symbolic GUI representation. It is also distinct from [#13](https://github.com/Unjuno/agent-interface/issues/13)'s no-authority speculative preparation: #9 proposes that a learned policy may act, but only within an independently granted hard envelope. The broad project benefit remains under [#57](https://github.com/Unjuno/agent-interface/issues/57).
+- **Evidence / boundary:** The #9 Issue body proposes measured planner-boundary latency, observable supervision, lifecycle stages, matched deterministic/model arms, correctness gates, and full training/inference/recovery cost. Those are design requirements, not measured results. The 2026-10-19 organizational-information-processing comparator is explicitly unverified. No held-out learned-policy benefit, break-even reuse count, real-task effect, or authority promotion is established by this intake.
+- **Next decision:** After #57's integrated path is resolved, do a read-only crosswalk of existing local policies, retained training/evaluation evidence, and model-latency records against #9's proposed stages. If no eligible matched evidence exists, freeze only the smallest shadow comparison that can distinguish a learned residual from deterministic servo/macro; real actions require a separate prospective gate and allocation.
+
 ## Priority and handoff
 
 1. Continue #57's selected integrated path and resolve correctness/measurement
@@ -440,6 +448,7 @@ separate hypotheses and must keep separate evidence and decisions.
 7. #8914 remains an unverified allocation-method proposal. Its held-out
    discovery yield must stay separate from population-rate calibration and
    safety certification.
-8. Return each result to its source Issue and this family map. Preserve all
+8. #9 remains behind #57: first crosswalk existing policy/evidence and measure what is already known. Do not promote a learned policy or spend model budget from the design proposal alone.
+9. Return each result to its source Issue and this family map. Preserve all
    earlier STOP, FAIL, HOLD and PASS records; do not close an idea because its
    summary has been written here.
