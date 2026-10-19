@@ -1,0 +1,29 @@
+{
+  "experiment": "offline-proxy-reply-framing-discriminator",
+  "date": "2026-10-19",
+  "execution_kind": "local deterministic offline model",
+  "allocation": null,
+  "wslc_used": false,
+  "docker_used": false,
+  "network_used_by_harness": false,
+  "live_gui_or_x_server_used": false,
+  "input_dispatched": false,
+  "source_packet": "research/integration/standard_caller_blocked_x11_release_20261019/README.md",
+  "immutable_attempts_replayed": [],
+  "model": {
+    "owner_pid": 24,
+    "connections": ["identity-xconn", "input-xconn"],
+    "same_peer_pid_on_both_connections": true,
+    "reply_sequence_scope": "connection-local",
+    "selected_request_role": "input_sync",
+    "selected_action_id": "action-1"
+  },
+  "expected_discriminator": {
+    "input_started_marker_alone_may_hold_reply": false,
+    "prepress_identity_reply_is_forwarded": true,
+    "exact_action_bound_post_keypress_reply_is_held": true,
+    "unknown_or_other_connection_sequence_is_held": false,
+    "unknown_reply_mapping_fails_open_to_forward": true
+  },
+  "claim_scope": "offline framing/policy model only; no production proxy change, blocked-I/O release result, physical release, task effect, or recovery result"
+}
