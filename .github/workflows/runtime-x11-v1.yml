@@ -100,6 +100,7 @@ jobs:
           export DISPLAY=:88 XAUTHORITY="$AUTH"
           export AGENT_INTERFACE_XORG_FENCE_TEST=1
           export AGENT_INTERFACE_XORG_FENCE_RESULT="$RUNNER_TEMP/x11-disconnect-fence.json"
+          export AGENT_INTERFACE_XORG_HELD_KEY_QUEUE_RESULT="$RUNNER_TEMP/x11-held-key-disconnect-queue.json"
           export AGENT_INTERFACE_XVFB_PID="$XVFB_PID"
           export AGENT_INTERFACE_MCP_XVFB_TEST=1
           export AGENT_INTERFACE_MCP_XVFB_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-generation.json"
@@ -112,6 +113,13 @@ jobs:
           name: x11-disconnect-fence
           path: ${{ runner.temp }}/x11-disconnect-fence.json
           if-no-files-found: ignore
+      - name: Retain held-key disconnect-order receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: x11-held-key-disconnect-queue
+          path: ${{ runner.temp }}/x11-held-key-disconnect-queue.json
+          if-no-files-found: error
       - name: Retain standard-caller Xvfb generation receipt
         if: always()
         uses: actions/upload-artifact@v4
