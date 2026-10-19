@@ -1,0 +1,7 @@
+# Standard caller blocked-Xvfb cancellation trace — r04
+
+This packet preserves GitHub Actions run [39261239773](https://github.com/Unjuno/agent-interface/actions/runs/39261239773), PR #9192 head `8b7efe11979e32bccc1ad76074196829d5dc629e`, from the private `Runtime X11 v1 Integration` workflow. The test used a private Xvfb, a synthetic application and the standard MCP caller. The owner performed the real cancellation request while blocked in Xlib `Display.sync()`, then deliberately withheld its acknowledgement for 1 second.
+
+The parent returned `cancel_unconfirmed` in 669.824 ms, retired the exact owner (exit code -15), and XRes observed the owner client disconnect in 49.259 ms. A separate release attempt reported `readback_verified` in 364.525 ms. Parent and late-horizon readbacks both showed `a=false` and `b=false`. The test marker confirms the owner entered the 1-second acknowledgement hold. This directly exercises the missing-ack response budget path through the standard caller.
+
+The caller correctly retained `release_confirmed=false`, `cleanup_status=UNKNOWN`, `late_server_request_possible=true`, `task_success=null`, and `replay_allowed=false`. This is one controlled private-Xvfb result; it does not prove physical release, server-unavailable behavior, MAP01/product task success, bounded recovery, or efficiency. Keep this outcome separate from r02's retirement failure and r03's acknowledged-cancel diagnostic pass; this pass does not explain their differing outcomes. `SHA256SUMS` covers the unmodified workflow JSON and observation image.
