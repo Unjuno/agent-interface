@@ -36,6 +36,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Context-preserving delegation after successful local execution](context-preserving-delegation.md) — records #6373's scoped synthetic T0 and its unresolved GUI-level discriminator; the completed proxy result does not establish application or human benefit.
+
 - [Reactive motor primitives and compiled symbolic GUI interfaces](reactive-macro-symbolic-interface.md) — keeps #6's broad local-continuation menu distinct from #56's model-authored symbolic interface and connects their scoped construction results to the open, provenance-failed composition package #7616.
 
 - [Current open-work inventory r51 (2026-10-19)](../maintenance/repository-inventory-20261019-r51.md) — complete paginated metadata: 1,675 open Issues and 503 open PRs; sorted ID hashes match r50. Membership metadata is not semantic triage or ownership proof.

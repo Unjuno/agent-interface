@@ -1078,6 +1078,14 @@ PR #9182の更新後private-Xvfb integration run [39246686502](https://github.co
 
 PR #9182は最新head `026bc4a82c9fdb663bc2d43ac8614780cd6e828f`で全報告checkを通過後、2026-10-19 11:49:21 UTCにsquash mergeされ、mainは`ee496780ee6e0097acb7ead1c62c6a3ee5b69878`になった。merge直後のGitHub GraphQL countはopen Issue 1,673件、open PR 479件。取得はcountのみであり、各項目の意味分類や所有確認を示さない。r87は引き続き最後の完全membership ID export、r85は最後の完全row-level/check metadata exportであり、immutableな過去snapshotとして保つ。次のcleanup batchは、既存family catalogと現在のsource Issue/PRを照合し、固有アイデア・結果・rawを移管した場合のみ個別状態を変える。Issue #17は研究親としてopenを維持する。
 
+## 実行更新 r92 — #6373の合成結果を正規idea台帳へ接続
+
+2026-10-19 12:50 UTC時点で`main`は`629d471ccf8dc6cd2afe4ac55134b30d023f4b43`、open Issue 1,673件、open PR 480件。これはGitHub CLIで全件ページングした件数で、意味上の分類や所有確認の完了を示さない。
+
+Issue [#6373](https://github.com/Unjuno/agent-interface/issues/6373)とmerged PR [#6433](https://github.com/Unjuno/agent-interface/pull/6433)、保持されたcandidate/audit packetを照合し、[context-preserving delegation family record](ideas/context-preserving-delegation.md)を追加した。`PASS_METHOD_SCOPED`は既定のsynthetic T0だけに限定し、未検証のGUI-level discriminator、比較指標、停止条件を明示した。既存のidea/outcome indexから到達できるよう接続した。
+
+このIssueはカタログ化だけを理由に閉じず、具体的なGUI-level残差があるため`keep-open/actionable`とする。候補T0は消費済みであり再実行しない。新allocation/ownerは作成しておらず、Issue/PR状態、experiment raw、worktree/branchの削除・移動は行っていない。この1-family処理は全Issueの意味監査やrepository cleanup完了を意味しない。
+
 ## 実行更新 r91 — standard callerへ実XRes target-generation結果を保全
 
 同じprivate-Xvfb CI run `39246686502`のgeneration integration artifactをr02 packetへraw JSONと観測PNGで保存し、SHA-256 manifestへ追加した。独立XRes `QueryClientIds`と`/proc` start-ticksから求めたgenerationがstandard-caller observationのgeneration hashと一致し、synthetic appのindependent property effect `[1]`、KeyPress/KeyRelease、runtime release receipt、別X clientからのkey-up readbackを確認した。対象Window破棄後の入力はdispatch前に拒否された。これは標準caller統合による重要なXvfb結果で、前段のFake X protocol試験とは異なる。
