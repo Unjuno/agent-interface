@@ -1,6 +1,6 @@
 # #8879 assumption-gated policy selection — A01
 
-Status: prospectively frozen finite-method experiment; not yet run.
+Status: first outcome retained as `FAIL_AUDIT_CONSTRUCTION`; candidate exited 0, but the independent auditor exited 1 because the shared reversed history-containment predicate erased the planted violation. See [A01_DISPOSITION.md](A01_DISPOSITION.md) for the bounded diagnosis and preservation record. No scientific result is claimed and the allocation was not retried.
 
 ## H / T / D / C / U
 
@@ -9,6 +9,10 @@ Status: prospectively frozen finite-method experiment; not yet run.
 - **D:** `PASS_METHOD_SCOPED` only if the exact enumerator finds the planted diminishing-returns violation, greedy stops at the empty history, the two-observation fallback uniquely has positive net gain under the frozen cost, and the independent auditor reconstructs all histories, marginals, policy decisions and scores while rejecting all mutations. This is a method-construction result only.
 - **C:** A fixed depth-2 policy or simple checklist may be preferable; property-checking overhead may exceed any policy benefit; the result may depend entirely on the XOR construction.
 - **U:** One authored four-world family cannot establish that real GUI evidence is adaptive-submodular, that the property is cheaply certifiable at scale, or that lookahead improves a live task. No probabilities are calibrated.
+
+## First outcome
+
+The source and allocation below were executed once. The candidate wrote a byte-exact result; the auditor failed before producing an audit JSON. The failure is the authoritative outcome. Do not rerun these files or treat the observed XOR values as a method pass.
 
 ## Freeze
 
