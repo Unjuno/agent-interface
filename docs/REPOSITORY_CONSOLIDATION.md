@@ -28,6 +28,10 @@ The [B05 receipt](maintenance/issue-discovery-b05-20261019.md) routes rows 101�
 
 The [B06 receipt](maintenance/issue-discovery-b06-20261019.md) routes rows 126–150 and adds the seven missing idea summaries. It preserves distinct MAP01, X11, readiness, planner-gap and evidence-custody questions, including explicit reservation/ownership boundaries and consumed or stopped allocations. Of 23 sampled PR citations, 19 are merged and four closed without merge. The batch is not assignment-ready from the empty assignee fields alone: refresh branches, worktrees, owners and raw custody first. No Issue/PR state or experiment disposition changed. B07 is next.
 
+### B07 bounded intake — source custody, timing, and worker policy
+
+The [B07 receipt](maintenance/issue-discovery-b07-20261019.md) routes rows 151–175 and adds four missing outcome summaries. It also checks #2369 against current repository settings: `main` is unprotected and there are no repository rulesets, so the CI-equivalent-before-push text is not an enforced gate. The Quickstart now directs workers to run relevant local checks, record hosted-only gaps, and open PRs without waiting on slow CI; it does not impose a full-suite or reviewer-count requirement. Shared-index edits can conflict, but disjoint worker paths remain parallel. No Issue/PR state or research disposition changed. B08 is next.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
