@@ -1,0 +1,51 @@
+{
+  "experiment_id": "offline-xres-query-client-ids-wire-socket-r02",
+  "purpose": "Advance the documented next discriminator by carrying the real python-xlib QueryClientIds request and a decoded XRes client-ID reply through the existing test-only FakeSocketRelay.",
+  "source_base": "fc8d8b0ac67e8086fa53dabace4bfd3322a1b89a",
+  "execution": "local Windows Python socketpair; synthetic X11 server only",
+  "runtime_test_source": "raw/caller-test-source.py; based on source_base with this packet's additive Fake X test fixture patch",
+  "test_environment": "Python 3.11.9 + python-xlib 0.33 for standalone wire/XRes tests; Python 3.13 + mcp 1.26.0 and a temporary copy of the pure-Python Xlib package for standard-caller composition",
+  "request": "python-xlib 0.33 QueryClientIds for a synthetic window XID and LocalClientPIDMask",
+  "response": "synthetic XRes 1.2 QueryClientIds reply parsed by python-xlib ClientIdValue",
+  "limits": {
+    "live_x_server": false,
+    "wslc": false,
+    "docker": false,
+    "network": false,
+    "gui_or_os_input": false,
+    "allocation": null,
+    "physical_release_claim": false,
+    "task_success_claim": false,
+    "bounded_live_release_claim": false
+  },
+  "commands": [
+    "AGENT_INTERFACE_XRES_WIRE_RAW_DIR=<raw-dir> python -m unittest -v research.integration.offline_proxy_reply_framing_20261019.xres_wire_socket_r02.test_xres_query_socket",
+    "AGENT_INTERFACE_XRES_WIRE_RAW_DIR=<raw-dir> python -O -m unittest -v research.integration.offline_proxy_reply_framing_20261019.xres_wire_socket_r02.test_xres_query_socket",
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=<raw-dir> python -m unittest -v runtime.cli_v1.test_mcp_relay_composition",
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=<raw-dir> python -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition"
+  ],
+  "acceptance": [
+    "The standard caller's separate identity connection transports serialized XRes QueryVersion and QueryClientIds requests through FakeSocketRelay.",
+    "python-xlib parses complete synthetic replies, including canonical owner resource base and PID.",
+    "Normal and optimized caller composition preserve stale-generation refusal and held-reply UNKNOWN; no live allocation is touched."
+  ],
+  "x11_integration_followup": {
+    "github_run": "39246686502",
+    "head": "8b7020365f1da07d3cec0f7e4ffc42ec9a275eb7",
+    "job": "x11-integration",
+    "tests": 77,
+    "result": "passed",
+    "scenario_scope": "private Xvfb; standard MCP caller; synthetic app; test-injected delayed request; independent parent X client readback",
+    "asserted_observations": [
+      "keys a and b up after owner release worker",
+      "keys a and b up at 8501.2 ms after cancel start",
+      "delayed b KeyPress not observed"
+    ],
+    "caller_cleanup_receipt": "UNKNOWN; release_confirmed=false; late_server_request_possible=true; task_success=null; review required; replay disabled",
+    "limits": [
+      "does not certify caller release",
+      "does not establish MAP01 task success",
+      "does not use WSLc or an allocation"
+    ]
+  }
+}

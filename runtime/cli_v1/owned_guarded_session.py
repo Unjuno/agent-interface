@@ -705,9 +705,14 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 kill_escalated = True
                 process.kill()
                 process.join(_RETIRE_KILL_GRACE_S)
+        # A child may exit between the final liveness poll and the exit-code
+        # read. A non-None multiprocessing exitcode is definitive retirement;
+        # keep the receipt fields from describing opposite observations.
         retired = not process.is_alive()
+        exitcode = process.exitcode
+        retired = retired or exitcode is not None
         self._retirement = {'reason':reason, 'retired':retired,
-                            'exitcode':process.exitcode,
+                            'exitcode':exitcode,
                             'kill_escalated':kill_escalated}
         self.state = 'failed'
         self.error = reason

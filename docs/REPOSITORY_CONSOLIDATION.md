@@ -1061,3 +1061,15 @@ main `640dba3eff3dbb5568da0504f8a624ac80f73c1a`でGitHubの完全なopen PR ID�
 Issue #17はopen research parent / keep-open actionableとして整理した。family recordとIssue indexに、merged #9168/#9169の訂正済みR02結果 (XRes disconnect後のheld key、別client release、8.5秒内のlate pressなし) と限界を追加した。これは一つのX.Org Xvfb構成に限る。標準caller blocked-I/O統合、独立application effect、bounded recoveryが残り、release/task outcomeはUNKNOWN。#17をcloseせず、別アイデアを重複familyに吸収していない。
 
 この区切りはfresh baseline、local custody snapshot、および一つのfamily updateであり、全Issue/PR semantic triageやrepository-wide cleanupの完了ではない。次は全open PRを意味・依存・所有・ローカル検証で個別dispositionし、Issueをfamily/provenanceへ結ぶ。worktreeをarchivalする前にclosed/merged PR ancestry、Issue assignments、process/session owner、ignored raw manifestを確認する。
+
+## 実行更新 r88 — #17 standard callerへXRes wire transactionを統合
+
+main `fc8d8b0ac67e8086fa53dabace4bfd3322a1b89a`を基準に、#17の既存Fake X compositionに実際のpython-xlib XRes `QueryVersion` / `QueryClientIds` request/reply framingを接続した。[r02 packet](../research/integration/offline_proxy_reply_framing_20261019/xres_wire_socket_r02/README.md)は最初のfixture長さ誤りと修正後結果を保全し、request/reply bytes、条件、normal/-O output、SHA-256 manifestを含む。実MCP callerの別identity socketを通し、caller suite 3/3、独立wire test 1/1、既存XRes client-fence suite 19/19がnormal/-Oでpass。process generation changeはKeyPress前に拒否され、held-reply cancelは`UNKNOWN`/no task success/replay disabledのまま。
+
+これは合成XRes応答と合成PID/`/proc`によるFake X compositionであり、live server discovery、独立application effect、物理release、bounded live recovery、MAP01 task success、matched efficiencyの証拠ではない。初回X11 integration CI run `39246017054`は既存blocked-release caseで`owner_process_retired=false`とexitcode `-15`が食い違い、disconnect/release attemptがskipされてfailした。`_retire`の最終liveness poll後にprocessが終了するsampling raceをreceiptで再調整し、24/24 normal/-Oのowned-process suiteと3/3 normal/-Oのcaller suite、およびregression testを追加した。A02/A03 allocationを使わず、WSLcも使っていない。Issue #7924のowner/unused-allocation STOP/HOLDを越えて新規live attemptを始めない。Issue #17はopenのまま。
+
+## 実行更新 r89 — retirement修正後のXvfb結果を保全し、cleanup計画の線引きを更新
+
+PR #9182の更新後private-Xvfb integration run [39246686502](https://github.com/Unjuno/agent-interface/actions/runs/39246686502)は77/77 testsでpassし、blocked-release caseも安全側のassertionsを満たした。独立した親X clientはowner release workerのreadback後とcancel開始8.5秒時点でkeys upを観測し、遅延`b` KeyPressを観測しなかった。一方caller receiptは`release_confirmed=false`、`cleanup_status=UNKNOWN`、`late_server_request_possible=true`、`task_success=null`であり、review required・replay disabledを保つ。正確なJSONとobservation PNGをr02 packetへ複製しSHA-256対象にした。これは合成app/注入遅延requestを使うprivate Xvfb testで、bounded release objectiveの合格やtask successを意味しない。
+
+この結果を整理計画上では#17 familyの「標準caller cancellation safety: scoped pass」「release certification/recovery: unresolved」と分類する。Issueをまとめて閉じる代わりに、idea familyごとに仮説・source Issue・固有結果/raw・限界・後継/依存・有限な次の判別作業を紐付ける。その後でIssueを個別に維持、証拠付き完了、重複移管、根拠付き棄却、owner/資源待ちへ振り分け、source/backlinkと再開条件を残す。open PRはhead/base・差分・依存・作者/owner・ローカル検証・CI・保存すべきrawを照合し、一件ずつ統合・修理・移管後close・保留へ処置する。worktreeやIssue/PRの件数だけからcleanup/deletionを推定しない。次の有限な整理単位は既存catalogの一familyと、そのfamilyに直結するopen Issue/PRの小束を選び、結果記録を先に確定してから状態処置する。

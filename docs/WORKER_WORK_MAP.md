@@ -70,14 +70,23 @@ The pre-press identity reply forwards; only the input `GetPointerControl`
 reply following its own XTEST KeyPress and event receipt is held, then the test
 relay returns `UNKNOWN` by its 150 ms bound. Protocol/relay tests pass 28/28 and
 standard-caller relay composition passes 3/3 in normal and `-O`. Its actual
-`TargetQueryWorker` call now crosses a distinct identity FakeSocketRelay for
-three sequential replies before input; a fixture generation change is refused
-before either relay sees a KeyPress. The real generation hash/validation code
-uses shaped synthetic XRes and `/proc` replies, while XRes wire
-encoding/decoding and PID discovery remain stubbed. Next qualify those protocol
-bytes in the Fake X transport, then resume blocked-I/O release work
-only with a verified unused allocation/owner gate. No server, physical-release
-or task-success claim; A02/A03 remain consumed and #7924 remains STOP/HOLD.
+`TargetQueryWorker` call crosses a distinct identity FakeSocketRelay for three
+sequential replies before input; a fixture generation change is refused before
+either relay sees a KeyPress. The additive [r02 wire packet](../research/integration/offline_proxy_reply_framing_20261019/xres_wire_socket_r02/README.md)
+now sends actual python-xlib-serialized XRes QueryVersion and QueryClientIds
+frames over that identity socket and parses full synthetic replies in the real
+caller. The focused wire test passes 1/1, caller composition 3/3, and the
+existing XRes client-fence tests 19/19 in both normal and optimized Python.
+The caller still has synthetic XRes server/PID and `/proc` data. The first PR
+X11 CI run also exposed a retirement receipt race (`owner_process_retired=false`
+alongside exitcode -15) that skipped disconnect/release cleanup. `_retire` now
+reconciles a non-null exitcode with the final liveness sample, covered by a
+deterministic regression; owned-process tests pass 24/24 in normal and -O. The
+full private-Xvfb rerun is pending. Next is a private-Xvfb proof of server
+extension negotiation and an already-held input under the standard caller, with
+independent release readback; only consider it after fresh ownership and
+unused-allocation evidence. No physical-release or task-success claim; A02/A03
+remain consumed and #7924 remains STOP/HOLD.
 
 ## Choose work
 
@@ -163,3 +172,5 @@ After PRs #9057 and #9060 merged, the r21 check at main `baec61784825f2fa841a63b
 **WSLc deviation record — PR #8906 / Issue #8685:** merged [PR #8906](https://github.com/Unjuno/agent-interface/pull/8906) preserves a cached-image one-shot smoke and global container listing run without the explicit shared-lane release. This is evidence of a process deviation and one bounded CLI execution only. It proves no speed, memory-cap enforcement, Docker parity, cleanup custody, or MAP01/task effect, and it does not release the gate. Keep #8685 open; do not repeat WSLc operations until explicit owner reconciliation. The read-only calls in #8913 are separate.
 
 **#17 blocked-I/O standard caller (PR #9171, run 39229071117):** The 8 s delayed-request Xvfb run reached a synthetic application effect before cancel. Cancel returned in 1,003 ms but the owner process was not retired; the later close fallback observed SIGTERM retirement and PID-qualified XRes disconnect, while the separate runtime release worker timed out at its 250 ms supervisor budget. The harness then sent key-up itself during teardown and read the keys up; this is not caller release or recovery. Preserve the `UNKNOWN` runtime release and the failed first result in [the raw packet](../research/integration/standard_caller_xvfb_blocked_release_9171_20261019/README.md). This is a real Xvfb standard-caller failure, not WSLc and not a completed live-control allocation. The local Fake X relay pass does not cover this blocked-Xlib retirement/release boundary; fix and locally verify the bounded release path before claiming recovery.
+
+**#17 XRes wire + retirement follow-up (PR #9182):** XRes QueryVersion/QueryClientIds are now serialized through the standard caller's separate Fake X identity socket. Updated private-Xvfb run [39246686502](https://github.com/Unjuno/agent-interface/actions/runs/39246686502) passes 77/77 tests after a terminal-retirement receipt race fix. The test's separate parent X client reads keys up after the owner worker and at 8.5 s, with no delayed `b` press observed. Caller receipt remains `release_confirmed=false`, `cleanup_status=UNKNOWN`, and `late_server_request_possible=true`; `task_success=null`, review required, replay disabled. Treat this as scoped safety-test pass and unresolved bounded-release/recovery objective. Exact JSON and image are retained in [r02 packet](../research/integration/offline_proxy_reply_framing_20261019/xres_wire_socket_r02/README.md). No WSLc or allocation was used.
