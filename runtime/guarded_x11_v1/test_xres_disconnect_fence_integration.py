@@ -385,6 +385,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 owner_returncode = owner.wait(timeout=1.0)
             if owner is not None and owner.stderr and not owner.stderr.closed:
                 report['owner_stderr'] = owner.stderr.read()
+                owner.stderr.close()
             if (marker_data is not None and killed_ns is not None
                     and cleanup is None):
                 try:
@@ -423,6 +424,245 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                     json.dumps(report, indent=2, sort_keys=True)+'\n',
                     encoding='utf-8',
                 )
+
+
+_HELD_OWNER_START = r"""
+import json, sys, time
+from Xlib import X, XK
+from Xlib.display import Display
+from Xlib.ext import xtest
+
+display_name, marker, delay_ms = sys.argv[1:]
+d = Display(display_name)
+keys = {name:d.keysym_to_keycode(XK.string_to_keysym(name))
+        for name in ('a', 'b')}
+base = d.display.info.resource_id_base
+xtest.fake_input(d, X.KeyPress, detail=keys['a'])
+xtest.fake_input(d, X.KeyPress, detail=keys['b'], time=int(delay_ms))
+d.flush()
+with open(marker, 'w', encoding='utf-8') as f:
+    json.dump({'resource_base':base, 'keycodes':keys,
+               'flushed_ns':time.monotonic_ns()}, f)
+d.sync()
+"""
+
+
+@unittest.skipUnless(
+    sys.platform == 'linux'
+    and os.environ.get('DISPLAY') == ':88'
+    and os.environ.get('AGENT_INTERFACE_XORG_FENCE_TEST') == '1',
+    'requires the explicitly enabled private Xorg/Xvfb display :88',
+)
+class XResHeldKeyDisconnectIntegrationTests(unittest.TestCase):
+    """Measure queued post-disconnect input after releasing an already-held key."""
+
+    def test_later_delayed_keypress_after_disconnect_and_independent_release(self):
+        display_name = os.environ['DISPLAY']
+        result_path = os.environ.get('AGENT_INTERFACE_XORG_HELD_KEY_QUEUE_RESULT')
+        delay_ms = _DELAY_MS
+        report = {
+            'schema':'agent-interface/xvfb-held-key-disconnect-queue-v2',
+            'status':'RUNNING',
+            'scope':'private X.Org Xvfb server; direct XTEST owner; no standard MCP caller',
+            'server_display':display_name,
+            'server_build_provenance':_xvfb_build_provenance(),
+            'delay_ms':delay_ms,
+            'server_vendor':None,
+            'server_release_number':None,
+            'xres_version':None,
+            'xtest_version':None,
+            'owner':None,
+            'initial_held_readback':None,
+            'disconnect_receipt':None,
+            'state_after_disconnect_before_release':None,
+            'release_readback_before_delay_horizon':None,
+            'independent_release_effect_observed':None,
+            'late_keypress_readback':None,
+            'interpretation':None,
+            'cleanup_status':'not_attempted',
+        }
+        observer = owner = cleanup = None
+        marker_data = None
+        owner_returncode = None
+        keycodes = None
+        killed_ns = None
+        try:
+            observer = Display(display_name)
+            info = observer.display.info
+            report['server_vendor'] = str(info.vendor)
+            report['server_release_number'] = info.release_number
+            self.assertIn('X.Org', report['server_vendor'], report)
+            self.assertTrue(observer.has_extension('X-Resource'), report)
+            self.assertTrue(observer.has_extension('XTEST'), report)
+            xres_version = observer.res_query_version()
+            xtest_version = xtest.get_version(observer, 2, 2)
+            report['xres_version'] = [xres_version.server_major,
+                                      xres_version.server_minor]
+            report['xtest_version'] = [xtest_version.major_version,
+                                       xtest_version.minor_version]
+            keycodes = {
+                name:observer.keysym_to_keycode(XK.string_to_keysym(name))
+                for name in ('a', 'b')
+            }
+            self.assertTrue(all(type(code) is int and code > 0
+                                for code in keycodes.values()), report)
+            report['keycodes'] = keycodes
+            for code in keycodes.values():
+                xtest.fake_input(observer, X.KeyRelease, detail=code)
+            observer.sync()
+            self.assertFalse(any(_keys_down(observer, keycodes).values()), report)
+
+            with tempfile.TemporaryDirectory(prefix='xres-held-key-queue-') as td:
+                marker = Path(td)/'owner.json'
+                owner = subprocess.Popen(
+                    [sys.executable, '-c', _HELD_OWNER_START, display_name,
+                     str(marker), str(delay_ms)],
+                    stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                    stderr=subprocess.PIPE, text=True,
+                )
+                deadline = time.monotonic() + 3.0
+                while not marker.exists() and time.monotonic() < deadline:
+                    if owner.poll() is not None:
+                        break
+                    time.sleep(0.005)
+                self.assertTrue(marker.exists(), {
+                    'owner_returncode':owner.poll(),
+                    'stderr':owner.stderr.read() if owner.poll() is not None else None,
+                })
+                marker_data = json.loads(marker.read_text(encoding='utf-8'))
+                report['owner'] = dict(marker_data, pid=owner.pid)
+                self.assertEqual(marker_data['keycodes'], keycodes, report)
+                self.assertTrue(client_is_connected(
+                    observer, marker_data['resource_base'],
+                    expected_pid=owner.pid), report)
+
+                held_deadline = time.monotonic() + 2.0
+                held = _keys_down(observer, keycodes)
+                while not held['a'] and time.monotonic() < held_deadline:
+                    time.sleep(0.01)
+                    held = _keys_down(observer, keycodes)
+                report['initial_held_readback'] = {
+                    'keys_down':held,
+                    'connection':'independent X client',
+                    'observed_ns':time.monotonic_ns(),
+                }
+                self.assertTrue(held['a'], report)
+                self.assertFalse(held['b'], report)
+
+                owner.terminate()
+                killed_ns = time.monotonic_ns()
+                try:
+                    owner_returncode = owner.wait(timeout=1.0)
+                except subprocess.TimeoutExpired:
+                    owner.kill()
+                    owner_returncode = owner.wait(timeout=1.0)
+                report['owner_returncode'] = owner_returncode
+                report['disconnect_receipt'] = wait_for_client_disconnect_supervised(
+                    display_name, marker_data['resource_base'],
+                    expected_pid=owner.pid, timeout_s=2.0,
+                    poll_interval_s=0.005, terminate_grace_s=0.1,
+                )
+                self.assertEqual(report['disconnect_receipt']['status'],
+                                 'disconnected', report)
+                self.assertNotEqual(report['disconnect_receipt'].get('observed_pid'),
+                                    owner.pid, report)
+
+                after_disconnect = _keys_down(observer, keycodes)
+                report['state_after_disconnect_before_release'] = {
+                    'keys_down':after_disconnect,
+                    'connection':'independent X client',
+                    'observed_ns':time.monotonic_ns(),
+                }
+
+                cleanup = Display(display_name)
+                xtest.fake_input(cleanup, X.KeyRelease,
+                                 detail=keycodes['a'])
+                cleanup.sync()
+                released = _keys_down(cleanup, keycodes)
+                report['release_readback_before_delay_horizon'] = {
+                    'keys_down':released,
+                    'connection':'independent X client',
+                    'observed_ns':time.monotonic_ns(),
+                }
+                report['independent_release_effect_observed'] = (
+                    after_disconnect['a'] and not released['a'])
+                self.assertFalse(released['a'], report)
+
+                horizon_ns = killed_ns + (delay_ms + 500)*1_000_000
+                while time.monotonic_ns() < horizon_ns:
+                    time.sleep(min(0.02,
+                        (horizon_ns-time.monotonic_ns())/1_000_000_000))
+                late = _keys_down(cleanup, keycodes)
+                report['late_keypress_readback'] = {
+                    'keys_down':late,
+                    'connection':'independent X client',
+                    'observed_ns':time.monotonic_ns(),
+                    'ms_after_owner_termination':(
+                        time.monotonic_ns()-killed_ns)/1_000_000,
+                }
+                report['late_keypress_observed'] = late['b']
+                if late['b']:
+                    report['interpretation'] = (
+                        'late_keypress_after_disconnect_and_release_observed')
+                elif after_disconnect['a']:
+                    report['interpretation'] = (
+                        'independent_release_transition_observed_no_late_keypress')
+                else:
+                    report['interpretation'] = (
+                        'owner_disconnect_key_state_already_up_no_late_keypress')
+                # Either server outcome is data. The test fails only if the
+                # required independent observations are absent or malformed.
+                self.assertFalse(late['a'], report)
+                self.assertIs(type(late['b']), bool, report)
+
+                for code in keycodes.values():
+                    xtest.fake_input(cleanup, X.KeyRelease, detail=code)
+                cleanup.sync()
+                report['cleanup_status'] = 'key_release_sync_completed'
+                report['final_key_down'] = _keys_down(cleanup, keycodes)
+                self.assertFalse(any(report['final_key_down'].values()), report)
+                report['status'] = 'PASS_SCOPED_XVFB_HELD_KEY_ORDER'
+        except BaseException as error:
+            report.update(status='FAIL', error_type=type(error).__name__,
+                          error=str(error))
+            raise
+        finally:
+            if owner is not None and owner.poll() is None:
+                if killed_ns is None:
+                    killed_ns = time.monotonic_ns()
+                owner.kill()
+                owner_returncode = owner.wait(timeout=1.0)
+            if owner is not None and owner.stderr and not owner.stderr.closed:
+                report['owner_stderr'] = owner.stderr.read()
+                owner.stderr.close()
+            if keycodes is not None and killed_ns is not None:
+                horizon_ns = killed_ns + (delay_ms + 500)*1_000_000
+                while time.monotonic_ns() < horizon_ns:
+                    time.sleep(min(0.02,
+                        (horizon_ns-time.monotonic_ns())/1_000_000_000))
+            if cleanup is None:
+                cleanup = observer
+                observer = None
+            if cleanup is not None and keycodes is not None:
+                try:
+                    for code in keycodes.values():
+                        xtest.fake_input(cleanup, X.KeyRelease, detail=code)
+                    cleanup.sync()
+                    report['final_cleanup_status'] = 'key_release_sync_completed'
+                    report['final_key_down'] = _keys_down(cleanup, keycodes)
+                except Exception as error:
+                    report['final_cleanup_status'] = 'key_release_sync_failed'
+                    report['cleanup_error'] = repr(error)
+            report['owner_returncode'] = owner_returncode
+            if cleanup is not None:
+                cleanup.close()
+            if observer is not None:
+                observer.close()
+            if result_path:
+                output = Path(result_path)
+                output.parent.mkdir(parents=True, exist_ok=True)
+                output.write_text(json.dumps(report, indent=2, sort_keys=True)+'\n',
+                                  encoding='utf-8')
 
 
 if __name__ == '__main__':
