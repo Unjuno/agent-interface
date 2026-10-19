@@ -56,6 +56,10 @@ The [B12 receipt](maintenance/issue-discovery-b12-20261019.md) routes rows 276�
 
 The [B13 receipt](maintenance/issue-discovery-b13-20261019.md) routes rows 301–325 and adds the missing #7889 direct summary while preserving the canonical T0 failure, the later local duplicate attempt, and its incomplete audit. It also keeps #7921's wrong-input STOP and #7924's explicit WSLc ownership hold intact; no runtime command was issued. Merged results remain method-scoped; open Drafts are visible in the receipt. No Issue state or allocation changed. B14 is next.
 
+### B14 bounded intake — observations, recovery, and runtime eligibility
+
+The [B14 receipt](maintenance/issue-discovery-b14-20261019.md) routes rows 326–350; all 25 entries already had curated outcome rows. It preserves separate MAP01 chronology auditor STOPs, finite decision-value and scheduling results, duplicate-attempt ownership corrections, and the no-WSLc ownership gate at #7970. The linked Drafts remain explicit; no runtime query or allocation was made. B15 is next.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
