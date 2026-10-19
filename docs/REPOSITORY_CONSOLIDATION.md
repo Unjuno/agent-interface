@@ -976,3 +976,13 @@ live Issue body/commentsを再読した#6はreactive local-controlの広い研�
 同時に`git worktree list`と各treeの通常`git status --porcelain --untracked-files=all`を読み取り専用で照合し、16件のregistered worktree、11 clean、5 changed（合計152 status entries、うち102 untracked）を[worktree custody recheck r03](maintenance/git-worktree-custody-recheck-20261019-r03.md)へ記録した。r70 open-PR head refsと比較したところ、13件のchecked-out local branch名に完全一致はなく、残る3件はdetached HEADだった。これは未使用・所有者不明・削除可能を示さない。ignoredファイル、process/session、PR base依存、実所有者は調べておらず、refやworktreeは削除していない。次はr03のdirty/unknown行を既存Issue/PR/worker-sessionへ一つずつ結び、cleanなtreeもmainへの固有成果とdependentsを確認してから候補を分類する。
 
 同時点のopen PR再確認では、直前の15-PR triage batchの未終了項目が#9006/#8842/#8756/#8861の4件と判明した。#8849と#8855はmerge済み、#8687/#8678/#8701はそれぞれ#9142/#9146/#9148で証拠を保全してからsupersededとしてclose済み。別件#8838も#9144がA06/A07 packetを正確に保存し、依存worktree確認後にclose済みである。次は残る4 PRを同じ一括処置へ送らず、exact headとローカル検証を一件ずつ確認する。
+
+## 実行更新 r75 — 現行入口と3つの独立worker packet
+
+PR #9155は文書差分のローカル検証後、作成時に記録したmain SHAをfirst parentとする通常のmerge commitで統合され、mainは`5efe7301f6e655a41c4653b3c6baf45138ca72f6`になった。PR checksのreplay-gateとpublic-navigationは成功し、formalはこの文書差分に適用されずskipだった。統合後のGraphQL count readはopen Issue 1,673件・open PR 489件を返す。これはcounts-onlyであり、r70の完全row-level snapshotを更新するmetadata取得ではない。
+
+大量workerが同じ共有索引を競合編集しないよう、#17（解放/安全制御）、#5（target binding/visual feedback）、#59（MAP01/A07 custody）の非重複3件を[dispatch packet r01](maintenance/worker-dispatch-20261019-r01.md)として作成した。各packetは別の出力先、根拠・限界・owner/resource unknownの記録形式、Issue/PR/worktree/実験状態を変えない制約を持つ。これは割当やresource grantではなく着手可能な読み取り仕事である。共有の`WORKER_WORK_MAP`、`IDEAS_AND_OUTCOMES`、family agendaと本計画は一人のintegratorがpacket確認後に直列更新する。
+
+packet選定の現況はread-only監査による。#17ではPR #9153までFake X標準callerのbounded local return/child retirementが構成検証されたが、releaseはUNKNOWN、task successはnullであり、実X server/OS key-upは未検証。A11のXvfb結果は別topologyで、再利用allocationsではない。#5では#9099がprivate-Xvfb上で標準caller、合成targetの独立property effect、release readbackを一つの限定結果として示すため、過去の“Fake X only”記述は更新対象だが、product-app semantics、native desktop/XWayland、atomic check/use、task completionは残る。#59では過去のfamily indexに古い“six open PR packets”記述があり、A07 #8702のraw custodyはtracked #9148 packetとの照合が未完了。各Issueはopenのまま、割当・allocation・close判断を追加しない。
+
+次は3 packetを別workerに独立実行させ、特に#5は限定Xvfb実証の入口文を更新し、#59はA07のhash/custody差分、#17はstandard-caller/held-input境界を既存根拠から照合する。各結果を新規researchやIssue closureへ進めるのは、その結果が状態・所有・必要資源を実際に変えると分かった後とする。r70 metadataは不変の完全snapshotとして保ち、membershipの再読だけを理由に新CSVを増やさない。
