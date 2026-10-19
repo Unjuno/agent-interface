@@ -20,6 +20,10 @@ The [B03 receipt](maintenance/issue-discovery-b03-20261019.md) routes the third 
 
 The [B04 receipt](maintenance/issue-discovery-b04-20261019.md) routes the fourth 25-row batch without pooling unlike outcomes. It adds the missing index rows for #375/#383/#389: #375 remains an unmeasured proposal, #383 retains a scoped post-check wrong-target result, and #389 retains a standard AT-SPI event-transport positive control without a document-selection identity claim. Nineteen explicitly linked PRs were merged and three closed without merge in the live spot-check; this is not a full PR/branch ownership audit. All 25 Issues were open and unassigned at the read, which does not prove no worker owns a branch or local artifact. No Issue/PR state or experiment outcome changed. B05 is the next intake; verify exact ownership before assigning work.
 
+### B05 bounded intake — effect outcomes, AT-SPI identity, and native lifecycle
+
+The [B05 receipt](maintenance/issue-discovery-b05-20261019.md) routes rows 101–125 and adds the missing summaries for #415/#481/#510/#584/#603. It preserves #415's unresolved selection-to-event identity question, #481's process/thread HOLD, #510's unexecuted dependency hold, and the distinct stopped allocations #584/#603. The 18 sampled linked PR references are merged; this is not a full PR or owner audit. The three old exact-head cleanup candidates noted by #672 are already absent from remote refs and open PR head/base lists, while their commit remains in `origin/main`; no ref deletion was needed. No Issue/PR state or experiment disposition changed. B06 is next; recheck owners and source custody before assignment.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
