@@ -76,6 +76,10 @@ The [B17 receipt](maintenance/issue-discovery-b17-20261019.md) routes rows 401�
 
 The [B18 receipt](maintenance/issue-discovery-b18-20261019.md) routes rows 426–450; all 25 entries already had curated outcome rows. It captures PR-state corrections for linked evidence, retains the nonpositive method results and custody limits, and separates WSL3 readiness policy from authorization to use a specific WSLc allocation. No Issue/PR state, experiment allocation, or WSLc state changed during intake. B19 is next.
 
+### B19 bounded intake — recent proposals, literature scope, and preserved failures
+
+The [B19 receipt](maintenance/issue-discovery-b19-20261019.md) routes rows 451–475; all 25 already had curated outcome entries. It keeps comment-free proposals unclassified, narrows novelty claims using the cited literature, preserves #8888's implementation-audit STOP, and distinguishes #8902's transition/occupancy estimand from #8068's recovery-history estimand. No Issue/PR state, experiment, or WSLc allocation changed. B20 is next.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
