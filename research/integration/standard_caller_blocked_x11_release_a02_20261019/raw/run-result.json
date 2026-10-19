@@ -1,0 +1,23 @@
+{
+  "experiment": "standard-caller-blocked-x11-release-a02",
+  "status": "STOP_FAIL_SOURCE_MOUNT_INCOMPLETE",
+  "candidate_started": true,
+  "probe_main_entered": false,
+  "container_name": "agent-interface-standard-caller-x11-a02-20261019-e0109d7d",
+  "container_id": "4cc5f51c7d95d3def10b684b4613d08a0bcd9d13bd1621dd9a9bfdea43d58e36",
+  "wslc_exit_code": 1,
+  "cause": "read-only /repo mount targeted only the experiment packet, omitting the repository runtime/ package; probe import failed before trials",
+  "first_result_immutable": true,
+  "rerun_authorized_by_protocol": false,
+  "raw_files": [
+    "allocation-preflight.json",
+    "container.cid",
+    "dependency-cache-validation.json",
+    "pip-freeze-exit-code.txt",
+    "pip-freeze.txt",
+    "probe-console.log",
+    "probe-exit-code.txt",
+    "run-command.txt",
+    "wslc-exit-code.txt"
+  ]
+}

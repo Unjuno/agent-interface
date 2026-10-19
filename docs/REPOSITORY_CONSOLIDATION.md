@@ -1,12 +1,57 @@
 # リポジトリ全体の整理計画
 
-## Current execution checkpoint — inventory r48 and family triage
+## Current execution checkpoint — refresh baseline, then organize by research family
 
-The latest complete paginated membership snapshot is [r48](maintenance/repository-inventory-20261019-r48.md), bound to main `f7a3783f0fcd45cc8a147e7c0d224ac8003be027`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r46, but the metadata is refreshed. This establishes the current discovery baseline only; semantic triage and ownership verification remain incomplete.
+The latest complete paginated membership snapshot is [r49](maintenance/repository-inventory-20261019-r49.md), captured at `2026-10-18 23:44:32 UTC` against main `67e183337ae29156c0d905ab8a7394592d127890`: 1,675 open Issues and 503 open PRs. Counts, sorted ID hashes, and metadata CSV hashes match r48; the newer snapshot binds the unchanged set to current main. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
 
 This update rechecks visual-interface Issue [#5](https://github.com/Unjuno/agent-interface/issues/5) against live sources. Its broad research menu stays open and is organized in the existing [visual-interface agenda](ideas/visual-interface-agenda.md). Merged PR [#9016](https://github.com/Unjuno/agent-interface/pull/9016) contributes 31 standard guarded-MCP Fake X process-generation/window-lifecycle tests in normal and optimized Python. The result narrows a caller-construction gap; it does not qualify native X lifecycle, physical release, independent task effect, bounded recovery or matched economics. Keep those residuals in their existing family/parent issues and choose the next work only after checking current ownership and the eligible environment. Do not close #5 or create a successor solely to reduce counts.
 
 For parallel orchestration, workers should take distinct issue/PR families and separate additive output paths; the shared work map and idea indexes have one editor at a time. Each family handoff records its live source, question, retained result and limits, owner/collision boundary, and one finite next step. Unclassified items stay in a visible queue. This is the execution plan; the active computer-control goal remains broader than repository cleanup.
+
+## Repository-wide organization plan: preserve ideas, enable parallel work
+
+The user-requested clean state means a repository where a worker can choose one bounded, nonconflicting task and reach its question, source, evidence, owner boundary, and next decision without reconstructing history. It does not mean zero Issues, zero PRs, or deleting old experiments. Organize the research so ideas can be prioritized and executed; close or merge individual GitHub items only after their own evidence-based disposition.
+
+### Workstreams and order
+
+1. **Refresh the map.** Reconcile the current main SHA, complete open/closed Issue and PR membership as needed, active PR heads, and worker/worktree ownership. Keep dated inventory snapshots immutable. Any search cap, sparse checkout, or unavailable host must be recorded as a limit, not treated as absence.
+2. **Group ideas by falsifiable question.** Use the existing family agendas and `IDEAS_AND_OUTCOMES.md` as navigation. For each family, connect source Issues, distinct hypotheses, strongest simple baseline, decision-changing observation, existing code/PRs, experiment packets and raw, known counterexamples, unresolved boundary, dependencies, current owner, and one finite next discriminator. Preserve different hypotheses and outcomes even when they share a family page.
+3. **Separate research disposition from repository state.** Research states describe whether a question is unverified, ready, active, result-retained, blocked with a reason, rejected with evidence, or transferred. Issue states describe whether that specific request is met, still open, or moved to a real successor. PR states describe whether its exact diff should be integrated, repaired, retained elsewhere, rejected with evidence, or left for an owner. Do not infer one state from another.
+4. **Consolidate implementation and evidence navigation.** Keep supported code in canonical runtime modules; point duplicate prototypes and historical snapshots to their family record rather than silently deleting or merging unlike semantics. Keep raw and first outcomes in place and immutable; improve indexes and README links so current evidence is easy to reach. Separate canonical source, executable checks, retained result packets, and generated/temporary work.
+5. **Make parallel assignments safe.** A handoff names one family and question, exact Issue/PR/ref, source SHA, allowed code paths, a unique additive output path, owner/collision boundary, shared-resource needs, and a finite stopping condition. Independent families may proceed concurrently. A shared index or work map has one integrator at a time; this serializes only the shared edit, not independent research.
+6. **Reconcile each item and recover only proven clutter.** For every Issue/PR, record its evidence-backed disposition and destination. For branches, worktrees, local artifacts, and generated files, verify exact tip, active user/owner, PR dependency, unique raw custody, ignored/untracked contents, and recovery path before cleanup. Unknown ownership or unique evidence means retain and label for follow-up.
+
+### A family record that lets a new worker start
+
+Each family record should be concise and answer: **What can the system do today? What precise behavior is still uncertain? What is the strongest simple comparator? What observation would change the design or adoption decision? What result already exists, and what does it fail to prove? Who or what owns overlapping work? What is the next finite check, its prerequisite, and its stop condition?** Link to source Issues/PRs and immutable experiment packets instead of copying long history. If any answer is unknown, mark it unknown and route the item to the unclassified queue.
+
+### Completion gates
+
+- A current, timestamped discovery baseline exists, with its completeness and limits stated.
+- Every known active research family is reachable from the repository entry points; every unfinished family has either a finite next step or an explicit reason it cannot start.
+- Workers can select disjoint family/code/output scopes without editing the same shared index or consuming the same live resource.
+- Every Issue and PR touched has an individual disposition with links to the retained idea and evidence. No item is closed solely to reduce counts.
+- Every retained experiment has conditions, raw/first result, source identity, interpretation, and boundary reachable without altering its historical record.
+- Any removed local/branch/worktree artifact has verified ownership, dependency and recoverable custody. The cleanup log records exact targets and proof.
+
+Until these gates are met, maintain an explicit unclassified queue and work through finite batches. Do not make completion of all 1,675 historical Issues or all PRs a prerequisite for useful research. This organization supports—not replaces—the active computer-control goal.
+
+### Current evidence-routing batch — A02/A03 blocked-X11 caller attempts
+
+The first pair of WSLc attempts has been given a single navigation record at
+[standard-caller blocked-X11 release](../research/integration/standard_caller_blocked_x11_release_20261019/README.md).
+A02 is a runner/source-mount STOP before the probe began. A03's first healthy
+control passed; its first blocked trial timed out before the expected held-reply
+marker, so the registered acceptance gate failed and the run stopped. The exact
+first outcomes, frozen conditions, source hashes, raw, and resource cleanup
+receipts remain in their immutable A02/A03 packet directories. The common note
+states what each attempt proves and what it does not. Read-only source/raw
+diagnosis identifies a likely circular reply gate: a pre-press process-identity
+reply can be blocked by the gate that waits for the KeyPress which that identity
+check precedes. The next finite discriminator is an offline proxy-framing check
+with per-connection sequence evidence.
+This is one completed evidence-routing correction, not a semantic completion of
+the release issue. No issue or PR is closed by this update.
 
 ## 現行の実行方針：アイデアを保ったまま収束する
 

@@ -1,12 +1,11 @@
 # Current objective and working direction
 
-Latest membership recheck: 2026-10-18 23:20 UTC against main
-`237915de7886535a599343c9cd8331787d556c50`; 1,675 open Issues and 503 open
-PRs. The [r46 membership recheck](maintenance/repository-inventory-20261019-r46.md)
-records the ID hashes and confirms both sets match r45 and the [r41 full metadata snapshot](maintenance/repository-inventory-20261019-r41.md).
-This is membership only, not semantic review; full classification remains
-unfinished. The exact read time and baseline belong to the snapshot, not to an
-ever-changing claim that this page names the current HEAD. See the
+Latest complete membership recheck recorded here: 2026-10-18 23:44:32 UTC
+against main `67e183337ae29156c0d905ab8a7394592d127890`; 1,675 open Issues and
+503 open PRs ([r49 snapshot](maintenance/repository-inventory-20261019-r49.md)).
+This records membership only, not semantic review or current owner status.
+Refresh it before using open counts for assignments or changing Issue/PR state.
+See the
 [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
 family-by-family review and disposition criteria. This is the short entry
 point, not an experiment ledger.
@@ -26,10 +25,19 @@ evidence. Organize ideas into hypotheses, existing results, dependencies,
 priorities and executed tests. Documentation or Issue closure alone does not
 resolve a research question. Existing finite/running work keeps its safe boundary.
 Repository cleanliness means every active artifact has a traceable disposition,
-not that all Issues are closed; see the dated [consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
+not that all Issues are closed; see the [current consolidation plan](REPOSITORY_CONSOLIDATION.md#repository-wide-organization-plan-preserve-ideas-enable-parallel-work) and its detailed [family-by-family disposition rules](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
 The first current semantic triage keeps broad reactive-control Issue #6 distinct
 from focused symbolic-interface Issue #56; its exact next audit is recorded in
 the [family entry](ideas/reactive-macro-symbolic-interface.md) and [work map](WORKER_WORK_MAP.md).
+
+The latest input-release attempt is indexed in the [A02/A03 evidence note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md):
+A02 stopped before probe entry due to an incomplete source mount; A03 passed one
+healthy control but its first blocked trial timed out before the held-reply
+predicate. Both first outcomes and raw are retained; neither allocation may be
+replayed. Raw plus frozen probe code indicate the gate likely blocked a
+pre-press process-identity reply. The finite next check is offline proxy framing
+that forwards this read-only reply and withholds only the specific post-KeyPress
+input reply; this diagnosis does not establish blocked-I/O release.
 
 Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not
