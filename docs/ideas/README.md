@@ -48,7 +48,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Historical open Issue/PR inventory r8 (2026-10-18)](../maintenance/repository-inventory-20261018-r8.md) — preserved metadata snapshot, not the current baseline; see r12 above.
 - [Historical open Issue/PR inventory r7](../maintenance/repository-inventory-20261018-r7.md) — preserved earlier snapshot against pre-#9029 main.
 
-- [MAP01 live threat-guard evidence family](map01-live-guard-evidence-family.md) — classifies six distinct #59 allocation packets and their separate result boundaries. Its 2026-10-19 update records #8678 tracked-file custody and closure; five other packets remain open, the ignored raw-output gap remains explicit, and no allocation was rerun.
+- [MAP01 live threat-guard evidence family](map01-live-guard-evidence-family.md) — classifies six distinct #59 allocation packets and their separate result boundaries. Its 2026-10-19 updates record #8678 and #8701 tracked-evidence custody/closure; four other packets remain open, ignored raw-output gaps remain explicit, and no allocation was rerun.
 
 - [Open Issue inventory refresh (2026-10-17)](../maintenance/open-issues-inventory-20261017.md) — refreshes the paginated open-Issue metadata snapshot to 1,677, records its three-ID delta from r3, and states that inventory is not full semantic triage.
 
