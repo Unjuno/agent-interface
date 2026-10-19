@@ -1,9 +1,9 @@
 # Worker work map
 
 2026-10-19 current map. The latest complete paginated GitHub CLI membership read
-was at 2026-10-19 02:16:48 UTC against main
-`0d022b76b6f940638da86c1ea4f71930c8df1626`: 1,673 open Issues and 502 open PRs
-([r55 membership recheck](maintenance/repository-inventory-recheck-20261019-r55.md); the unchanged r53 metadata snapshots are reused). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
+was at 2026-10-19 02:25:07 UTC against main
+`39e7bdfc729b392985295048e89b8003acf77c36`: 1,673 open Issues and 502 open PRs
+([r56 membership recheck](maintenance/repository-inventory-recheck-20261019-r56.md); the unchanged r53 metadata snapshots are reused). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
 records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
 #8863, and #8847 have been independently audited and merged as separate scoped
@@ -35,14 +35,17 @@ from a thread in the same owner PID. Its input connection then sends XTEST
 requests opaquely and gates every type-1 reply by owner PID, so it cannot select
 that one connection/sequence/role. The revised offline model forwards a same-PID
 identity reply even when its numeric sequence collides with the target, and
-selects only the action/keycode-matched `GetPointerControl` reply. Eight tests
-pass in normal and optimized Python. This is still a model; the A03 raw has no
-reply sequence and its first failure remains unchanged. Next: implement and
-offline-test a fresh candidate proxy that records per-connection requests and
-negotiates the XTEST major opcode, then use it only with a verified unused
-allocation. #7924 remains at `STOP / HOLD` for WSLc client ownership and current
-main checkout; no eligible unused allocation is documented. Keep release/task
-`UNKNOWN`; no WSLc allocation was used here.
+selects only the action/keycode-matched `GetPointerControl` reply. The incremental
+[proxy candidate parser](../research/integration/offline_proxy_reply_framing_20261019/proxy_candidate.py)
+also negotiates XTEST's dynamic major opcode, parses fragmented setup/request/
+reply streams, and fails open on sequence ambiguity or missing receipts. All
+19 packet tests pass in normal and optimized Python. It is not connected to a
+relay and proves no bounded release. A03's raw still has no reply sequence; its
+first failure remains unchanged. Next: integrate the parser with a test-only
+socket relay and fake upstream to qualify disconnect, backpressure, and bounded
+owner retirement. Only consider WSLc after a fresh unused allocation is
+verified. #7924 remains at `STOP / HOLD`; no eligible allocation is documented.
+Keep release/task `UNKNOWN`; no WSLc allocation was used here.
 
 ## Choose work
 
