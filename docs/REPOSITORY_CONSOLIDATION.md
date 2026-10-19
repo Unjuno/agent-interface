@@ -998,9 +998,9 @@ PR #9155は文書差分のローカル検証後、作成時に記録したmain S
 
 大量workerが同じ共有索引を競合編集しないよう、#17（解放/安全制御）、#5（target binding/visual feedback）、#59（MAP01/A07 custody）の非重複3件を[dispatch packet r01](maintenance/worker-dispatch-20261019-r01.md)として作成した。各packetは別の出力先、根拠・限界・owner/resource unknownの記録形式、Issue/PR/worktree/実験状態を変えない制約を持つ。これは割当やresource grantではなく着手可能な読み取り仕事である。共有の`WORKER_WORK_MAP`、`IDEAS_AND_OUTCOMES`、family agendaと本計画は一人のintegratorがpacket確認後に直列更新する。
 
-packet選定の現況はread-only監査による。#17ではPR #9153までFake X標準callerのbounded local return/child retirementが構成検証されたが、releaseはUNKNOWN、task successはnullであり、実X server/OS key-upは未検証。A11のXvfb結果は別topologyで、再利用allocationsではない。#5では#9099がprivate-Xvfb上で標準caller、合成targetの独立property effect、release readbackを一つの限定結果として示すため、過去の“Fake X only”記述は更新対象だが、product-app semantics、native desktop/XWayland、atomic check/use、task completionは残る。#59では過去のfamily indexに古い“six open PR packets”記述があり、A07 #8702のraw custodyはtracked #9148 packetとの照合が未完了。各Issueはopenのまま、割当・allocation・close判断を追加しない。
+packet選定の現況はread-only監査による。#17ではPR #9153までFake X標準callerのbounded local return/child retirementが構成検証されたが、releaseはUNKNOWN、task successはnullであり、実X server/OS key-upは未検証。A11のXvfb結果は別topologyで、再利用allocationsではない。#5では#9099がprivate-Xvfb上で標準caller、合成targetの独立property effect、release readbackを一つの限定結果として示すため、過去の“Fake X only”記述は更新対象だが、product-app semantics、native desktop/XWayland、atomic check/use、task completionは残る。#59のPacket Cは[独立A07 custody cross-check](maintenance/issue-59-a07-custody-audit-20261019-r01.md)として完了した。#8702の四つの追跡ファイルchecksumとraw-manifest digestの一致を確認したが、manifest本体・event streamを追跡済みソースから再検証できないためevidence-custody holdを維持し、PR #8702とIssue #59はopenのまま、A07再実行もしない。owner reconciliationはX11 server-side receiptの範囲に限り、physical key stateやgame effectを示さない。
 
-次は3 packetを別workerに独立実行させ、特に#5は限定Xvfb実証の入口文を更新し、#59はA07のhash/custody差分、#17はstandard-caller/held-input境界を既存根拠から照合する。各結果を新規researchやIssue closureへ進めるのは、その結果が状態・所有・必要資源を実際に変えると分かった後とする。r70 metadataは不変の完全snapshotとして保ち、membershipの再読だけを理由に新CSVを増やさない。
+次は#5の限定Xvfb実証をfamily入口に反映し、#17のstandard-caller/held-input境界を既存根拠から照合する。#59はA07のcustody差分を記録済みで、再開条件は未入手raw一式を変更せず読み取り専用で受領し、checksumと監査を再現できること。各結果を新規researchやIssue closureへ進めるのは、その結果が状態・所有・必要資源を実際に変えると分かった後とする。r70 metadataは不変の完全snapshotとして保ち、membershipの再読だけを理由に新CSVを増やさない。
 
 ## 実行更新 r77 — アイデアをファミリーで動かし、IssueとPRを個別に収束する
 
