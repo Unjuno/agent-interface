@@ -30,7 +30,11 @@ The [B06 receipt](maintenance/issue-discovery-b06-20261019.md) routes rows 126�
 
 ### B07 bounded intake — source custody, timing, and worker policy
 
-The [B07 receipt](maintenance/issue-discovery-b07-20261019.md) routes rows 151–175 and adds four missing outcome summaries. It also checks #2369 against current repository settings: `main` is unprotected and there are no repository rulesets, so the CI-equivalent-before-push text is not an enforced gate. The Quickstart now directs workers to run relevant local checks, record hosted-only gaps, and open PRs without waiting on slow CI; it does not impose a full-suite or reviewer-count requirement. Shared-index edits can conflict, but disjoint worker paths remain parallel. No Issue/PR state or research disposition changed. B08 is next.
+The [B07 receipt](maintenance/issue-discovery-b07-20261019.md) routes rows 151–175 and adds four missing outcome summaries. It also checks #2369 against current repository settings: `main` is unprotected and there are no repository rulesets, so the CI-equivalent-before-push text is not an enforced gate. The Quickstart now directs workers to run relevant local checks, record hosted-only gaps, and open PRs without waiting on slow CI; it does not impose a full-suite or reviewer-count requirement. Shared-index edits can conflict, but disjoint worker paths remain parallel. No Issue/PR state or research disposition changed. B08 follows.
+
+### B08 bounded intake — integration, evidence custody, and local-controller ideas
+
+The [B08 receipt](maintenance/issue-discovery-b08-20261019.md) routes rows 176–200 and adds eleven missing direct outcome summaries, plus direct entries for governing #2789 and #3352. It keeps target binding separate from release/effect, preserves unrecovered or comment-only evidence as HOLD, distinguishes construction/synthetic Local System-1 results, and records #3857's static STOP and #3876's outstanding integration boundary. Nine linked PRs are merged and #8246 remains Draft. All 25 Issues were open and unassigned at intake; no Issue/PR state or research disposition changed. B09 is next. Workers may take disjoint Issues and paths concurrently; shared index edits still need serialized integration.
 
 ## Previous execution checkpoint — organize by research family
 
