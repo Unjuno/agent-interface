@@ -1,6 +1,10 @@
 # リポジトリ全体の整理計画
 
-## Current execution checkpoint — refresh baseline, then organize by research family
+## Current execution checkpoint — r51 discovery queue and disjoint work batches
+
+The latest complete live membership read is [r51](maintenance/repository-inventory-20261019-r51.md), captured 2026-10-19 00:20:08 UTC against main `0dafeff35e73316216c95d37f9f7e799bf8a21a8`: 1,675 open Issues and 503 open PRs. The immutable [r51 coverage audit](maintenance/idea-index-coverage-20261019-r51.md) finds 1,184 open Issues with historical primary rows and 491 without. Of the latter, 220 have a literal URL in an individual idea file and 271 do not. The [r51 queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv) partitions the 491 by number into twenty non-overlapping batches of at most 25, so orchestration can assign disjoint discovery scopes. Those batch IDs and citations are routing aids, not semantic classifications. Workers must read live evidence; only one integrator at a time edits shared indexes. Preserve ideas and source history, and close only on each Issue's evidence-based disposition.
+
+## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
 
