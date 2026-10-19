@@ -1,6 +1,6 @@
 # Worker work map
 
-2026-10-19 current map. The latest full row-level metadata is [r87](maintenance/repository-inventory-2026-10-19-r87.md), captured at main `4d95015b8a6f64e1cef9736ce8f8b984d9eb2cfa` with 1,673 open Issues and 479 open PRs. Main has since advanced to `1d95e48e67783fd05b96346c975f9875bc483ce1`; a live GitHub search on that SHA still reports 1,673 open Issues and 479 open PRs, but this count-only read does not refresh the row-level ID set or metadata. Re-fetch the exact Issue/PR before any disposition. Neither snapshot is semantic review or proof of current ownership. Current organization and item disposition rules are in the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md).
+2026-10-19 current map. The latest complete paginated row-level metadata is [r88](maintenance/repository-inventory-20261019-r88.md), captured at main `68a15ed1d50124390e3f88a85829db0f702bd1a8` with 1,673 open Issues and 480 open PRs. It is membership metadata, not semantic review or proof of current ownership. Re-fetch the exact Issue/PR, head, evidence, and owner before any disposition. Current organization and item disposition rules are in the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md).
 The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
 records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
