@@ -1,6 +1,6 @@
 # Worker Quickstart
 
-Updated 2026-10-15. Read this page, [CURRENT_GOAL.md](CURRENT_GOAL.md), and the
+Updated 2026-10-19. Read this page, [CURRENT_GOAL.md](CURRENT_GOAL.md), and the
 selected row in [WORKER_WORK_MAP.md](WORKER_WORK_MAP.md). Expand history only
 when the chosen question requires it.
 
@@ -16,8 +16,13 @@ when the chosen question requires it.
    offline analysis, code or tests; do not wait for unrelated shared resources.
 4. Execute a finite experiment/repair. Separate construction from formal allocation,
    preserve first outcomes and state what result changes the adoption decision.
-5. Run relevant local checks. Deliver reviewable changes and evidence through a PR;
+5. Run relevant local checks and record exact commands/results, plus hosted-only
+   checks that were unavailable locally. Slow CI need not block opening a PR;
    integrate when actual permissions/protection and required checks permit it.
+   Do not turn full CI equivalence before every push into a gate unless the
+   repository actually enforces it or the specific task requires it. A shared
+   index edit may need conflict resolution, but it does not serialize workers
+   on independent files, evidence or issue families.
 6. Update the owning Issue with evidence, limits and next action; release only your
    own resources. Do not require another worker or invented reviewer quota to do
    ordinary authorized work.
