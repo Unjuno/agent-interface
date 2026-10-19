@@ -54,6 +54,11 @@ own_names.extend(["runner-import-failure.json", "runner-import-failure.raw.gz",
                   "runner-import-failure-2.json", "runner-import-failure-2.raw.gz"])
 own = ["research/integration/offline_proxy_reply_framing_20261019/two-connection-r01/"+name
        for name in own_names]
+detail_dir = ROOT / "caller-identity-r01"
+if detail_dir.exists():
+    own.extend("research/integration/offline_proxy_reply_framing_20261019/two-connection-r01/"+
+               path.relative_to(ROOT).as_posix()
+               for path in sorted(detail_dir.rglob("*")) if path.is_file())
 lines = [f"{hashlib.sha256((REPO / name).read_bytes()).hexdigest()}  {name}"
          for name in sources + own]
 (ROOT / "SHA256SUMS").write_text("\n".join(lines)+"\n", encoding="ascii", newline="\n")

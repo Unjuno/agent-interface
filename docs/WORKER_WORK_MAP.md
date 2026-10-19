@@ -77,10 +77,15 @@ sets up separate identity and input relay sockets with colliding sequence 3.
 The pre-press identity reply forwards; only the input `GetPointerControl`
 reply following its own XTEST KeyPress and event receipt is held, then the test
 relay returns `UNKNOWN` by its 150 ms bound. Protocol/relay tests pass 28/28 and
-standard-caller relay composition passes 3/3 in normal and `-O`. The caller
-fixture still stubs target-query protocol traffic; next connect that actual
-query seam to the distinct identity socket. No server, physical-release or task
-success claim; A02/A03 remain consumed and #7924 remains STOP/HOLD.
+standard-caller relay composition passes 3/3 in normal and `-O`. Its actual
+`TargetQueryWorker` call now crosses a distinct identity FakeSocketRelay for
+three sequential replies before input; a fixture generation change is refused
+before either relay sees a KeyPress. The real generation hash/validation code
+uses shaped synthetic XRes and `/proc` replies, while XRes wire
+encoding/decoding and PID discovery remain stubbed. Next qualify those protocol
+bytes in the Fake X transport, then resume blocked-I/O release work
+only with a verified unused allocation/owner gate. No server, physical-release
+or task-success claim; A02/A03 remain consumed and #7924 remains STOP/HOLD.
 
 ## Choose work
 

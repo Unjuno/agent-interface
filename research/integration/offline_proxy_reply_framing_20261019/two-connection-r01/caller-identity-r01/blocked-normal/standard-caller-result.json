@@ -1,0 +1,59 @@
+{
+  "cancel": {
+    "cleanup_status": "UNKNOWN",
+    "late_server_request_possible": true,
+    "owner_client_disconnect": {
+      "elapsed_ms": 1.0,
+      "reason": "fake_x_only_no_server_disconnect_claim",
+      "status": "unknown",
+      "worker_retired": true
+    },
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {
+        "a": 2
+      }
+    },
+    "owner_process_retired": true,
+    "owner_release_attempt": {
+      "reason": "owner_disconnect_not_confirmed",
+      "status": "not_attempted"
+    },
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "task_success": null
+  },
+  "mint": {
+    "status": "minted"
+  },
+  "observation": {
+    "process_generation": "ad4a58886339c9bb9ea57ca0b347b3136574c8f9a1337ec4e50887064d8be43f",
+    "sequence": 1,
+    "status": "observed"
+  },
+  "pending": {
+    "status": "pending"
+  },
+  "synthetic_late_down": {
+    "late_down": null,
+    "queue": {
+      "connection": "retired_owner_connection",
+      "event": "KeyPress",
+      "keycode": 2,
+      "protocol_order_is_modeled_not_observed": true,
+      "state": "accepted_and_held_in_synthetic_queue"
+    },
+    "release_readback": null
+  },
+  "terminal": {
+    "cleanup_status": "UNKNOWN",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "runtime_failed",
+    "task_success": null
+  },
+  "timing": {
+    "cancel_elapsed_ms": 1015.0,
+    "terminal_elapsed_ms": 31.0
+  }
+}

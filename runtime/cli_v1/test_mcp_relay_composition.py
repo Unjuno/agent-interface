@@ -23,6 +23,7 @@ from research.integration.offline_proxy_reply_framing_20261019.proxy_candidate i
 from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_process_identity import FakeX, metadata
+from runtime.guarded_x11_v1.process_identity import read_linux_x11_process_identity
 
 
 ACTION_ID = "standard-mcp-fake-x-action"
@@ -65,6 +66,24 @@ def _setup_tracker(owner_pid):
     return tracker
 
 
+def _setup_identity_tracker(owner_pid):
+    tracker = X11ProxyConnection("standard-mcp-identity", owner_pid,
+                                 owner_pid=owner_pid, action_id=ACTION_ID)
+    tracker.feed_client(b"l\0\x0b\0\0\0\0\0\0\0\0\0\0")
+    tracker.feed_server(b"\x01\0\x0b\0\0\0\0\0")
+    name = b"XTEST"
+    padded = name + b"\0" * ((-len(name)) % 4)
+    tracker.feed_client(b"\x62\0\x04\0\x05\0\0\0" + padded)
+    tracker.feed_server(b"\x01\0\x01\0\0\0\0\0\x01\xc8\0\0" + bytes(20))
+    return tracker
+
+
+class _IdentityProtocolOwnerFactory:
+    def __call__(self, targets, directory, display_name, options):
+        return _socket_owner_factory(targets, directory, display_name,
+                                     dict(options, identity_protocol=True))
+
+
 def _fake_input_request(kind, code):
     event_type = 2 if kind == X.KeyPress else 3
     return bytes((0xC8, 2, 9, 0, event_type, code)) + bytes(30)
@@ -72,6 +91,32 @@ def _fake_input_request(kind, code):
 
 def _pointer_reply(sequence):
     return b"\x01\0" + sequence.to_bytes(2, "little") + bytes(28)
+
+
+class _FakeXResConnection:
+    """Real process-identity reader input with synthetic XRes-shaped replies."""
+    def __init__(self, root):
+        self.root = Path(root)
+
+    def has_extension(self, name):
+        return name == "X-Resource"
+
+    def res_query_version(self):
+        return SimpleNamespace(server_major=1, server_minor=2)
+
+    def res_query_client_ids(self, specs):
+        if specs != [{"client": 20, "mask": 2}]:
+            raise AssertionError(f"unexpected XRes client-id query: {specs!r}")
+        marker = self.root / "fake-process-pid"
+        pid = int(marker.read_text(encoding="ascii")) if marker.exists() else 123
+        return SimpleNamespace(ids=[SimpleNamespace(
+            spec=SimpleNamespace(client=0x1200000, mask=2), value=[pid])])
+
+    def get_input_focus(self):
+        return SimpleNamespace(focus=SimpleNamespace(id=20))
+
+    def close(self):
+        return None
 
 
 def _socket_owner_factory(targets, directory, display_name, options):
@@ -83,6 +128,68 @@ def _socket_owner_factory(targets, directory, display_name, options):
     backend.d.get_display_name = lambda: "fake-display"
     backend.d.display = SimpleNamespace(
         info=SimpleNamespace(resource_id_base=0x1200000))
+
+    owner_options = dict(options)
+    identity_protocol = owner_options.pop("identity_protocol", False)
+    identity_client = identity_upstream = identity_event_sender = None
+    identity_relay_thread = identity_upstream_thread = None
+
+    def write_record(name, value):
+        temporary = root / (name + ".tmp")
+        temporary.write_text(json.dumps(value, sort_keys=True), encoding="utf-8")
+        temporary.replace(root / name)
+
+    if identity_protocol:
+        original_read_text = Path.read_text
+
+        def fake_proc_stat(path, *args, **kwargs):
+            if (path.parent.parent == Path("/proc") and path.name == "stat"
+                    and path.parent.name in {"123", "124"}):
+                pid = path.parent.name
+                fields = ["S"] + ["0"] * 18 + ["1000"]
+                return f"{pid} (fake-x-owner) {' '.join(fields)}"
+            return original_read_text(path, *args, **kwargs)
+
+        proc_patcher = patch.object(Path, "read_text", autospec=True, side_effect=fake_proc_stat)
+        proc_patcher.start()
+        cleanup.addCleanup(proc_patcher.stop)
+        fake.generation = read_linux_x11_process_identity(_FakeXResConnection(root), 20)
+
+    if identity_protocol:
+        identity_client, identity_relay_client = socket.socketpair()
+        identity_relay_upstream, identity_upstream = socket.socketpair()
+        identity_event_sender, identity_relay_events = socket.socketpair()
+        identity_tracker = _setup_identity_tracker(os.getpid())
+        identity_relay = FakeSocketRelay(
+            identity_tracker, identity_relay_client, identity_relay_upstream,
+            identity_relay_events, owner_pid=os.getpid(), action_id=ACTION_ID,
+            keycode=KEYCODE, reply_timeout=REPLY_TIMEOUT_S,
+            max_pending_bytes=4096)
+        identity_relay_thread = threading.Thread(target=identity_relay.run, daemon=True)
+        identity_relay_thread.start()
+        cleanup.addCleanup(identity_relay_thread.join, 1)
+        cleanup.addCleanup(lambda: [sock.close() for sock in
+            (identity_client, identity_upstream, identity_event_sender)])
+
+        identity_replies = {"count": 0}
+
+        def serve_identity_upstream():
+            try:
+                while True:
+                    request = _receive_exact(identity_upstream, 8)
+                    index = identity_replies["count"]
+                    identity_replies["count"] += 1
+                    sequence = 3 + 2 * index
+                    write_record(f"identity-query-request-{index + 1}.json", {
+                        "hex": request.hex(), "reply_sequence": sequence})
+                    identity_upstream.sendall(_pointer_reply(sequence))
+            except (EOFError, OSError) as error:
+                write_record("identity-upstream-terminal.json", {
+                    "error": type(error).__name__, "reply_count": identity_replies["count"]})
+
+        identity_upstream_thread = threading.Thread(target=serve_identity_upstream, daemon=True)
+        identity_upstream_thread.start()
+        cleanup.addCleanup(identity_upstream_thread.join, 1)
 
     class FakeQueries:
         def read(self, operation, _xid):
@@ -96,11 +203,59 @@ def _socket_owner_factory(targets, directory, display_name, options):
         def close(self):
             return None
 
-    query_patcher = patch(
-        "runtime.guarded_x11_v1.target_queries.X11TargetQueries",
-        return_value=FakeQueries())
-    query_patcher.start()
-    cleanup.addCleanup(query_patcher.stop)
+    if identity_protocol:
+        from runtime.guarded_x11_v1 import target_queries
+        real_query_reader = target_queries.X11TargetQueries
+
+        class SocketBackedQueryReader:
+            def __init__(self, query_display_name):
+                self.reader = real_query_reader(query_display_name)
+
+            def read(self, operation, xid):
+                if operation == "process_identity":
+                    identity_index = len(list(root.glob("identity-query-returned-*.json"))) + 1
+                    write_record(f"identity-query-entered-{identity_index}.json", {
+                        "operation": operation, "xid": xid})
+                    identity_client.sendall(b"\x7f\0\x01\0\x6a\0\x01\0")
+                    response = _receive_exact(identity_client, 32)
+                    sequence = int.from_bytes(response[2:4], "little")
+                    expected_sequence = 3 + 2 * (identity_index - 1)
+                    if sequence != expected_sequence:
+                        raise OSError(f"identity reply sequence {sequence} != {expected_sequence}")
+                    write_record(f"identity-query-received-{identity_index}.json", {
+                        "sequence": sequence, "reply_hex": response.hex()})
+                    identity_target = identity_tracker.target
+                    write_record(f"identity-channel-state-{identity_index}.json", {
+                        "connection": "standard-mcp-identity", "owner_pid": os.getpid(),
+                        "target_request": None if identity_target is None else {
+                            "sequence": identity_target.sequence,
+                            "role": identity_target.role,
+                            "action_id": identity_target.action_id,
+                            "keycode": identity_target.keycode}})
+                value = self.reader.read(operation, xid)
+                if operation == "process_identity":
+                    write_record(f"identity-query-returned-{identity_index}.json", {
+                        "length": len(value), "generation": value,
+                        "reader": "real X11TargetQueries.read and process_identity digest logic"})
+                return value
+
+            def close(self):
+                return self.reader.close()
+
+        display_patcher = patch("runtime.guarded_x11_v1.target_queries.display.Display",
+                                side_effect=lambda _name: _FakeXResConnection(root))
+        query_patcher = patch("runtime.guarded_x11_v1.target_queries.X11TargetQueries",
+                              side_effect=SocketBackedQueryReader)
+        display_patcher.start()
+        query_patcher.start()
+        cleanup.addCleanup(query_patcher.stop)
+        cleanup.addCleanup(display_patcher.stop)
+    else:
+        query_patcher = patch(
+            "runtime.guarded_x11_v1.target_queries.X11TargetQueries",
+            return_value=FakeQueries())
+        query_patcher.start()
+        cleanup.addCleanup(query_patcher.stop)
 
     client, relay_client = socket.socketpair()
     relay_upstream, upstream_socket = socket.socketpair()
@@ -112,11 +267,6 @@ def _socket_owner_factory(targets, directory, display_name, options):
         reply_timeout=REPLY_TIMEOUT_S, max_pending_bytes=4096)
     relay_thread = threading.Thread(target=relay.run, daemon=True)
     relay_thread.start()
-
-    def write_record(name, value):
-        temporary = root / (name + ".tmp")
-        temporary.write_text(json.dumps(value, sort_keys=True), encoding="utf-8")
-        temporary.replace(root / name)
 
     def serve_fake_upstream():
         try:
@@ -180,6 +330,18 @@ def _socket_owner_factory(targets, directory, display_name, options):
     monitor_thread.start()
 
     def emit(_display, kind, code, **_kwargs):
+        write_record("fake-x-emit.json", {"kind": int(kind), "code": int(code)})
+        if identity_protocol:
+            identity_target = identity_tracker.target
+            write_record("identity-channel-state.json", {
+                "connection": "standard-mcp-identity",
+                "owner_pid": os.getpid(),
+                "target_request": None if identity_target is None else {
+                    "sequence": identity_target.sequence,
+                    "role": identity_target.role,
+                    "action_id": identity_target.action_id,
+                    "keycode": identity_target.keycode},
+                "identity_reply_count": identity_replies["count"]})
         client.sendall(_fake_input_request(kind, code))
         fake.emissions.append((kind, code))
         if kind == X.KeyPress:
@@ -202,10 +364,12 @@ def _socket_owner_factory(targets, directory, display_name, options):
             raise OSError("Fake X relay retired before the held reply was delivered")
 
     backend.d.sync = sync
-    owner = GuardedSessionOwner(targets, directory, display_name, **options)
+    owner = GuardedSessionOwner(targets, directory, display_name, **owner_options)
     owner._owned_process_test_cleanup = cleanup
     owner._relay_test_handles = (client, upstream_socket)
-    owner._relay_test_threads = (relay_thread, upstream_thread, observer_thread, monitor_thread)
+    owner._relay_test_threads = tuple(thread for thread in (
+        relay_thread, upstream_thread, observer_thread, monitor_thread,
+        identity_relay_thread, identity_upstream_thread) if thread is not None)
     return owner
 
 
@@ -217,7 +381,9 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
         deadline = time.monotonic() + timeout
         while time.monotonic() < deadline and not path.exists():
             await asyncio.sleep(0.005)
-        self.assertTrue(path.exists(), f"timed out waiting for {path.name}")
+        self.assertTrue(path.exists(), f"timed out waiting for {path.name}; files="
+                        f"{sorted(str(p.relative_to(path.parent)) for p in path.parent.rglob('*') if p.is_file())}; "
+                        f"reports={[p.read_text(encoding='utf-8') for p in path.parent.rglob('report.json')]}")
         return json.loads(path.read_text(encoding="utf-8"))
 
     def _preserve_records(self, destination, records):
@@ -233,6 +399,8 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
             source = destination / source_name
             if source.exists():
                 (out / source_name).write_bytes(source.read_bytes())
+        for source in destination.glob("identity-*.json"):
+            (out / source.name).write_bytes(source.read_bytes())
         safe = {
             "observation": {
                 "status": records["observed"].get("status"),
@@ -276,11 +444,12 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                 {"app": 20}, root, session_mode="guarded-x11",
                 guarded_process_identity=True, guarded_query_worker=True,
                 guarded_owned_process=True,
-                _guarded_owner_factory=_socket_owner_factory)
+                _guarded_owner_factory=_IdentityProtocolOwnerFactory())
             try:
                 observed = metadata(await server.call_tool("interface_guarded_observe", {}))
                 self.assertEqual(observed["status"], "observed", observed)
-                self.assertEqual(observed["source"]["pointer_binding"]["process_generation"], "a" * 64)
+                source_generation = observed["source"]["pointer_binding"]["process_generation"]
+                self.assertRegex(source_generation, r"^[0-9a-f]{64}$")
                 minted = metadata(await server.call_tool("interface_guarded_mint", {
                     "alias": "field", "source_sequence": observed["source"]["sequence"],
                     "point": [8, 8], "region_size": [12, 12]}))
@@ -293,7 +462,25 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                     "wait_for_result_ms": 0, "tail": [{"op": "key_chord", "keys": ["a"]}]}))
                 self.assertEqual(pending["status"], "pending", pending)
 
+                identity = await self._wait_for_file(root / "identity-query-received-1.json")
+                self.assertEqual(identity["sequence"], 3)
+
                 accepted = await self._wait_for_file(root / "fake-x-accepted-press.json")
+                later_identity = await self._wait_for_file(root / "identity-query-returned-3.json")
+                self.assertEqual(later_identity["length"], 64)
+                self.assertEqual(later_identity["generation"], source_generation)
+                for index in range(1, 4):
+                    returned = json.loads((root / f"identity-query-returned-{index}.json").read_text(
+                        encoding="utf-8"))
+                    self.assertEqual(returned["generation"], source_generation)
+                for index, sequence in enumerate((3, 5, 7), start=1):
+                    reply = json.loads((root / f"identity-query-received-{index}.json").read_text(
+                        encoding="utf-8"))
+                    self.assertEqual(reply["sequence"], sequence)
+                identity_state = json.loads((root / "identity-channel-state.json").read_text(
+                    encoding="utf-8"))
+                self.assertIsNone(identity_state["target_request"], identity_state)
+                self.assertEqual(identity_state["identity_reply_count"], 3)
                 effect = await self._wait_for_file(root / "synthetic-effect-receipt.json")
                 held = await self._wait_for_file(root / "held-reply.json")
                 self.assertEqual(accepted["classification"], "synthetic_fake_x_only")
@@ -487,13 +674,13 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                 {"app": 20}, root, session_mode="guarded-x11",
                 guarded_process_identity=True, guarded_query_worker=True,
                 guarded_owned_process=True,
-                _guarded_owner_factory=_socket_owner_factory)
+                _guarded_owner_factory=_IdentityProtocolOwnerFactory())
             try:
                 observed = metadata(await server.call_tool("interface_guarded_observe", {}))
                 minted = metadata(await server.call_tool("interface_guarded_mint", {
                     "alias": "field", "source_sequence": observed["source"]["sequence"],
                     "point": [8, 8], "region_size": [12, 12]}))
-                (root / "fake-process-generation").write_text("b" * 64, encoding="utf-8")
+                (root / "fake-process-pid").write_text("124", encoding="ascii")
                 refused = metadata(await server.call_tool("interface_guarded_input", {
                     "alias": "field", "offset": minted["offset"],
                     "interaction": "keyboard", "observe_after": False,
@@ -502,6 +689,15 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(refused["result"]["input_dispatched"])
                 self.assertEqual(refused["result"]["guard_checks"][0]["reason"],
                                  "process_generation_changed_or_missing")
+                identity = await self._wait_for_file(root / "identity-query-received-1.json")
+                self.assertEqual(identity["sequence"], 3)
+                query_result = json.loads((root / "identity-query-returned-1.json").read_text(
+                    encoding="utf-8"))
+                self.assertNotEqual(query_result["generation"],
+                                    observed["source"]["pointer_binding"]["process_generation"])
+                identity_state = json.loads((root / "identity-channel-state-1.json").read_text(
+                    encoding="utf-8"))
+                self.assertIsNone(identity_state["target_request"], identity_state)
                 self.assertIsNone(refused["task_success"])
                 self.assertFalse(refused["replay_allowed"])
                 self.assertFalse((root / "fake-x-accepted-press.json").exists())
@@ -509,11 +705,15 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                 if raw_root:
                     out = Path(raw_root)
                     out.mkdir(parents=True, exist_ok=True)
+                    for source in root.glob("identity-*.json"):
+                        (out / source.name).write_bytes(source.read_bytes())
                     (out / "target-generation-refusal.json").write_text(
                         json.dumps({
                             "source_generation": observed["source"]["pointer_binding"].get(
                                 "process_generation"),
-                            "current_generation": "b" * 64,
+                            "source_pid": 123,
+                            "current_pid": 124,
+                            "current_generation": query_result["generation"],
                             "result": refused["result"],
                             "task_success": refused.get("task_success"),
                             "replay_allowed": refused.get("replay_allowed"),
