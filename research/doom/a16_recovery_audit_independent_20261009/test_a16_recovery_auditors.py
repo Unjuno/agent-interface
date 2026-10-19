@@ -73,6 +73,23 @@ class FrozenAuditorCounterexamples(unittest.TestCase):
         self.assertEqual(classification(strict_analyze(decisions, 10),
                                         "recovered_within_two_decisions"), 1)
 
+    def test_missing_intermediate_followup_fails_closed(self):
+        decisions = [guard(2, 50), {"iteration": 4, "fresh_sequence_at_plan": 49,
+                                     "model_action_discarded": False}]
+        result = strict_analyze(decisions, 10)
+        self.assertEqual(classification(result, "observable_recovery_missed"), 0)
+        self.assertEqual(classification(result, "auditor_input_invalid"), 1)
+        self.assertEqual(result["guards"][0]["missing_followup_decisions"], [3])
+
+    def test_complete_two_decision_horizon_can_classify_missed_recovery(self):
+        decisions = [guard(2, 50),
+                     {"iteration": 3, "fresh_sequence_at_plan": 49,
+                      "model_action_discarded": True},
+                     {"iteration": 4, "fresh_sequence_at_plan": 50,
+                      "model_action_discarded": True}]
+        self.assertEqual(classification(strict_analyze(decisions, 10),
+                                        "observable_recovery_missed"), 1)
+
     def test_episode_ending_before_followup_horizon_is_censored(self):
         self.assertEqual(classification(strict_analyze([exposed_guard(9)], 10),
                                         "right_censored_by_episode_or_decision_cap"), 1)
