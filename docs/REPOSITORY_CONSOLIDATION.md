@@ -80,6 +80,10 @@ The [B18 receipt](maintenance/issue-discovery-b18-20261019.md) routes rows 426�
 
 The [B19 receipt](maintenance/issue-discovery-b19-20261019.md) routes rows 451–475; all 25 already had curated outcome entries. It keeps comment-free proposals unclassified, narrows novelty claims using the cited literature, preserves #8888's implementation-audit STOP, and distinguishes #8902's transition/occupancy estimand from #8068's recovery-history estimand. No Issue/PR state, experiment, or WSLc allocation changed. B20 is next.
 
+### B20 bounded intake — final r51 navigation slice
+
+The [B20 receipt](maintenance/issue-discovery-b20-20261019.md) routes the final 16 rows (476–491); all have existing curated outcome entries. The full immutable r51 queue is now routed: 20 batches cover 491 items, with 25 each in B01–B19 and 16 in B20. This closes the queue-routing task only. It does not semantically resolve the 491 items, refresh the historical 1,675-Issue/503-PR inventory, or authorize closing proposals. #8913's read-only WSLc calls remain a recorded process deviation under an unresolved ownership gate, and #9004's integrated synthetic result remains `NO_INCREMENTAL_AGREEMENT_VALUE`. Next, refresh the live Issue/PR inventory and reconcile current families, open PR dispositions, and worktree owners.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
