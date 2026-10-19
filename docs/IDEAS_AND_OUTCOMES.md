@@ -4,13 +4,11 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-19 05:59 UTC):** main is
-`168200eb43dd0f9144b3ed4aef551387674c7bfd`; a counts-only API read found 1,673
-open Issues and 489 open PRs. The latest complete metadata is still immutable
-r70 plus r74's equality recheck. Counts are not semantic dispositions; use the
-[r77 consolidation workflow](REPOSITORY_CONSOLIDATION.md#実行更新-r77--アイデアをファミリーで動かしissueとprを個別に収束する)
-and the family rows below for new work.
-
+**Current organization check (2026-10-19 09:25 UTC):** main is
+`b1bff75ffa5d06f6d2c7d10bc7a89b1ab2dbdc16`; complete row-level metadata records 1,673
+open Issues and 482 open PRs in [r85](maintenance/repository-inventory-20261019-r85.md).
+Counts are not semantic dispositions; use the current family records and the
+[repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for new work.
 ## Status key
 
 - **Proposed / open:** no result is implied.
@@ -136,6 +134,7 @@ efficiency evidence, or an acceptance result for #6/#56.
 | [#1591](https://github.com/Unjuno/agent-interface/issues/1591) | Collect shadow operation/target rows from XTerm before evaluating candidate grounding. | Successor A2 is source-frozen with construction 8/8 and exact archive readback; the latest record still has formal0. This is not task input, candidate efficacy, or permission to repair the consumed predecessor. |
 | [#1587](https://github.com/Unjuno/agent-interface/issues/1587) | Census repository-evidenced controlled context-compaction primitives before claiming a usable operation. | Open source-first workflow proposal; candidate eligibility and final decision require explicit target binding, completion evidence, boundary identity and a retained demonstration. No external API capability or model-benefit claim is established. |
 | [#1565](https://github.com/Unjuno/agent-interface/issues/1565) | Separate temporal-history value from spatial packing value using matched frames. | Open successor to #1550; #1651/#1671 found no retained matched F/Q/H rows for a cost comparison. Keep model usage, frame identity and correctness separate; no packing benefit is established. |
+| [#1525](https://github.com/Unjuno/agent-interface/issues/1525) | Present time-ordered history as a spatial visual sheet for multimodal reasoning. | The temporal-sheet primitive is already used in retained DOOM runs; this is implementation evidence, not a benefit result. Closed #1550's scoped retained-data audit found 0/4 matched presentation-only pairs and explicitly did not show ineffectiveness. Open #1565 records an assigned model-free construction path; open #2489 describes overlapping matched arms. Custody and successor choice remain unresolved, so do not close #1525 until the canonical return link and a single continuation path are recorded. [Family record](ideas/temporal-visual-encoding.md). |
 | [#1510](https://github.com/Unjuno/agent-interface/issues/1510) | Isolate post-capture scheduling delay behind the #1476 current-evidence validity window. | Source-archive identity is verified, but the latest record remains construction-only with formal0/8 batches. No latency or admission-authority result. |
 | [#1464](https://github.com/Unjuno/agent-interface/issues/1464) | Compare coherent X11 capture against split capture for a readiness/currentness guard. | The first construction stopped before any formal row because the supervisor lacked private XAUTHORITY; a scoped construction repair was recorded with formal0. No candidate efficacy result is established. |
 | [#1460](https://github.com/Unjuno/agent-interface/issues/1460) | Reject stale local-generation ABA after asynchronous frontier handback. | The retained source/freeze and 7 contract tests are available, but the 31,589,431-byte formal raw archive is missing; no formal PASS was independently reproduced. Preserve the consumed allocation and its publication HOLD. |
@@ -639,7 +638,7 @@ The r51 discovery receipts route Issues missing from the historical primary rese
 | [#14](https://github.com/Unjuno/agent-interface/issues/14) — Define interrupt and event-attention scheduling for background controllers | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
 | [#15](https://github.com/Unjuno/agent-interface/issues/15) — Build a causal observation-action-effect trace for debugging, learning and evaluation | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
 | [#16](https://github.com/Unjuno/agent-interface/issues/16) — Explore transactional action groups with verified commit and compensation | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
-| [#17](https://github.com/Unjuno/agent-interface/issues/17) — Separate safety control plane from planner data and telemetry paths | Open research parent. See the [safety-control family](ideas/safety-control-agenda.md). The standard caller/Fake X packet now retains a modeled late old-owner KeyPress after injected separate empty readback; caller/terminal remain UNKNOWN, unreplayable and without task success (normal/-O). It proves no live X ordering or physical release. Next live work remains gated by verified ownership/allocation; preserve distinct failure and custody results. |
+| [#17](https://github.com/Unjuno/agent-interface/issues/17) — Separate safety control plane from planner data and telemetry paths | Open research parent. See the [safety-control family](ideas/safety-control-agenda.md). Corrected R02 in merged PRs [#9168](https://github.com/Unjuno/agent-interface/pull/9168)/[#9169](https://github.com/Unjuno/agent-interface/pull/9169) observed held `a` after PID-qualified Xvfb owner disconnect; an independent X client released it, and no delayed `b` appeared by 8.5 s. This is one scoped X.Org Xvfb ordering result. Standard-caller blocked-I/O integration, independent task effect and bounded recovery remain open; keep release/task `UNKNOWN`, preserve consumed outcomes, and do not infer WSLc eligibility.
 | [#60](https://github.com/Unjuno/agent-interface/issues/60) — O2 intake: reconstruct Generation-1 provenance before any runtime or formal lease | Routing only; see [B02 receipt](maintenance/issue-discovery-b02-20261019.md). |
 | [#61](https://github.com/Unjuno/agent-interface/issues/61) — O1/G1 handoff — startup grants HELD pending O2 coordination | Routing only; see [B02 receipt](maintenance/issue-discovery-b02-20261019.md). |
 

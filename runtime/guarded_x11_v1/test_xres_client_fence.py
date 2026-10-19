@@ -4,6 +4,7 @@ import importlib
 import os
 import time
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from runtime.guarded_x11_v1.xres_client_fence import (
     client_is_connected,
@@ -85,6 +86,42 @@ class XResClientFenceTests(unittest.TestCase):
         self.assertEqual(result['reason'], 'supervision_timeout', result)
         self.assertTrue(result['worker_retired'], result)
         self.assertLess(time.monotonic() - started, 1.5)
+
+    def test_supervisor_budget_starts_after_worker_process_creation(self):
+        module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+        receive = SimpleNamespace(timeout=None)
+        def poll(timeout):
+            receive.timeout = timeout
+            return True
+        receive.poll = poll
+        receive.recv = lambda: {'status':'disconnected'}
+        receive.close = lambda: None
+        send = SimpleNamespace(close=lambda: None)
+
+        class Process:
+            def __init__(self):
+                self.alive = True
+                self.exitcode = None
+            def start(self):
+                time.sleep(0.15)
+            def join(self, timeout=None):
+                self.alive = False
+                self.exitcode = 0
+            def is_alive(self):
+                return self.alive
+
+        process = Process()
+        context = SimpleNamespace(
+            Pipe=lambda duplex=False: (receive, send),
+            Process=lambda target, args, name: process)
+        with patch.object(module.multiprocessing, 'get_context', return_value=context):
+            result = module.supervise_xres_worker(
+                self._completed_worker, (), timeout_s=0.1,
+                terminate_grace_s=0.1)
+
+        self.assertEqual(result['status'], 'disconnected', result)
+        self.assertGreater(receive.timeout, 0.08, receive.timeout)
+        self.assertLess(receive.timeout, 0.101)
 
     def test_supervisor_preserves_a_completed_worker_result(self):
         module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
