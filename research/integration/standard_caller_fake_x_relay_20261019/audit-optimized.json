@@ -1,0 +1,41 @@
+{
+  "audit": "PASS_RAW_CONSISTENCY_SCOPED",
+  "modes": {
+    "normal": {
+      "cancel_elapsed_ms": 1031.0,
+      "held_reply_bytes": 32,
+      "release": "UNKNOWN",
+      "replay_allowed": false,
+      "task_success": null,
+      "terminal_elapsed_ms": 32.0
+    },
+    "optimized": {
+      "cancel_elapsed_ms": 1015.0,
+      "held_reply_bytes": 32,
+      "release": "UNKNOWN",
+      "replay_allowed": false,
+      "task_success": null,
+      "terminal_elapsed_ms": 16.0
+    }
+  },
+  "normal_optimized_semantics_equal": true,
+  "scope": "standard MCP caller on process-local Fake X sockets; no physical release or task effect",
+  "sha256": {
+    "audit_raw.py": "856a03cc84b8eb7421daad8b6d9919874da774e567f5a2dd8012158bacc42ba5",
+    "conditions.json": "80b910e5ada82e2a0492ee2e6324048e8046dcb85bb198cd5789d8b1666b8230",
+    "raw/normal/fake-x-accepted-press.json": "05950da39383c1327e61b237a66b6c2a9c8b70faf9c201955ad3ea33491d9dab",
+    "raw/normal/held-reply.json": "9a658a5b08dd4267d26f70516091f4eae5ed7d804392f91004e2f994fa81729c",
+    "raw/normal/standard-caller-result.json": "b8b6e574e20f20811cc1d217d009673ad60380d81d751017d1d83490a1ec6992",
+    "raw/normal/stdout-stderr.txt": "4430682b9125e8c7000ea77bf4b557f584657263b6a09046fe8abef64954e24a",
+    "raw/normal/sync-wait.json": "ea095a77673d5c707b85c67520b8a8408b0d64e0b7faa9c4f81e61d92b97a7a3",
+    "raw/normal/synthetic-effect-receipt.json": "a4ff413cdefb136d4c918cab7ad337eecd38fa616f70e19aa4690a6324e79c70",
+    "raw/normal/target-generation-refusal.json": "57986f0c7e05fc4b7cb8d2fa3233b6a873e261120d61e26017cdeb8b89bc5359",
+    "raw/optimized/fake-x-accepted-press.json": "05950da39383c1327e61b237a66b6c2a9c8b70faf9c201955ad3ea33491d9dab",
+    "raw/optimized/held-reply.json": "9a658a5b08dd4267d26f70516091f4eae5ed7d804392f91004e2f994fa81729c",
+    "raw/optimized/standard-caller-result.json": "84e08a46b90f54d583a8931f7fd9789ef1ad371a85a671897dc227ddb0a56ba2",
+    "raw/optimized/stdout-stderr.txt": "0875a5045373fd8d6ed8d781cbe55a46fef92b8537e5e9df01bdc72d927a4050",
+    "raw/optimized/sync-wait.json": "ea095a77673d5c707b85c67520b8a8408b0d64e0b7faa9c4f81e61d92b97a7a3",
+    "raw/optimized/synthetic-effect-receipt.json": "a4ff413cdefb136d4c918cab7ad337eecd38fa616f70e19aa4690a6324e79c70",
+    "raw/optimized/target-generation-refusal.json": "57986f0c7e05fc4b7cb8d2fa3233b6a873e261120d61e26017cdeb8b89bc5359"
+  }
+}
