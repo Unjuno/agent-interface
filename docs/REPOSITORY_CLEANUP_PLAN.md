@@ -2,6 +2,23 @@
 
 This plan makes the repository easier to work in with many independent workers while preserving research questions, first outcomes, evidence, ownership, and dependencies. It does not define success as zero open Issues or PRs.
 
+## Execution refresh — 2026-10-20
+
+The live default branch is `main` at `87dfb33d94f3a8bbe12fbf3ab5bc7f0433c8d8c5`. A count-only GraphQL read returned 1,673 open Issues and 479 open PRs, matching the r96 counts. This is not a new paginated inventory, semantic review, PR audit, or owner/custody check; r96 remains the latest full membership snapshot until a new paginated read is captured. No remote Issue or PR state was changed for this refresh.
+
+The user's organizing objective is to make the repository safe for many workers to contribute independently while keeping ideas available for future research. A catalog entry is a way to preserve and connect an idea, not a reason to close its Issue. Close an Issue only after its distinct question, evidence and limits, dependencies, disposition, successor (if any), and reopen condition are recorded. Keep unresolved computer-control goals, active assignments, integration work, and evidence-custody gaps open. Review and integrate PRs as a separate stream; never infer a PR's disposition from its Issue or from an inventory row.
+
+### Ordered work waves
+
+1. **Refresh routing facts.** Capture a paginated Issue/PR inventory at one main SHA. Treat it as membership only, then refresh exact source Issues, PR heads/bases, linked evidence, dependencies, and current ownership as each batch is selected. Do not use counts or stale rows to close or reassign work.
+2. **Synthesize idea families.** Work in small, non-overlapping batches. For each source Issue, map the hypothesis, sibling distinctions, all material outcomes (including failed, invalid, and inconclusive attempts), evidence/raw links, scope limits, dependencies, and one next decision. Link the family page from the idea index and keep the source Issue as the live discussion/intake record.
+3. **Set item-level dispositions.** Keep actionable and blocked goals open with finite exit conditions. Catalog and defer only when the family page preserves the question and a concrete revisit trigger. Mark superseded/completed/out-of-scope only with item-specific evidence and a named successor or rationale. Close individually, after the live Issue receives the source trail; never close a batch to reduce the count.
+4. **Review PRs independently.** Refresh each exact head/base and full diff; check unique code/evidence, dependencies, local tests, and actual required protections. Merge only verified changes that advance the objective. Fix, retarget, preserve, or close the rest with a recorded disposition; account for their branches and evidence separately.
+5. **Offer disjoint worker packets.** Publish several finite options from different families, each with exact source refs, allowed files, a private output path, dependencies/shared-resource needs, collision boundaries, and an exit test. The map is dispatch guidance, not an assignment or allocation. Serialize edits to shared indexes and this plan through one integrator.
+6. **Reconcile physical repository custody last.** Audit branches, registered worktrees, unregistered directories, ignored data, raw evidence, dependent work, and running owners as distinct facts. Remove only items whose exact custody is proven; retain unknown items with a specific unresolved question.
+
+Completion means the open backlog has a traceable classification path, completed family batches are semantically organized, every changed Issue/PR has a defensible disposition, and workers can select independent bounded work. It does not require zero open Issues, zero open PRs, or deletion of old research records.
+
 ## Fresh live baseline r96 — 2026-10-19 15:22 UTC
 
 The default branch was `b0e47dd4f67a57db5c530d19251ad172e29554d7` before and after the paginated read. GitHub CLI returned 1,673 open Issues and 479 open PRs; GraphQL returned the same totals. The full row sets are preserved in [r96 inventory](maintenance/repository-inventory-20261019-r96.md), [open Issues](maintenance/open-issues-20261019-r96.csv), and [open PRs](maintenance/open-prs-20261019-r96.csv). Both ID sets match r95; r96 refreshes PR head/base OIDs and issue/PR metadata against the newer main. Membership is still not semantic triage, review of every PR diff, or proof of current owner/custody. Re-fetch the exact live item before a state change.
