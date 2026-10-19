@@ -24,6 +24,10 @@ The [B04 receipt](maintenance/issue-discovery-b04-20261019.md) routes the fourth
 
 The [B05 receipt](maintenance/issue-discovery-b05-20261019.md) routes rows 101–125 and adds the missing summaries for #415/#481/#510/#584/#603. It preserves #415's unresolved selection-to-event identity question, #481's process/thread HOLD, #510's unexecuted dependency hold, and the distinct stopped allocations #584/#603. The 18 sampled linked PR references are merged; this is not a full PR or owner audit. The three old exact-head cleanup candidates noted by #672 are already absent from remote refs and open PR head/base lists, while their commit remains in `origin/main`; no ref deletion was needed. No Issue/PR state or experiment disposition changed. B06 is next; recheck owners and source custody before assignment.
 
+### B06 bounded intake — observations, reservations, and retained evidence
+
+The [B06 receipt](maintenance/issue-discovery-b06-20261019.md) routes rows 126–150 and adds the seven missing idea summaries. It preserves distinct MAP01, X11, readiness, planner-gap and evidence-custody questions, including explicit reservation/ownership boundaries and consumed or stopped allocations. Of 23 sampled PR citations, 19 are merged and four closed without merge. The batch is not assignment-ready from the empty assignee fields alone: refresh branches, worktrees, owners and raw custody first. No Issue/PR state or experiment disposition changed. B07 is next.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
