@@ -1006,3 +1006,9 @@ PRは一件ごとに正確なhead/base、mainとの差分、stack依存、作者
 今回の最初の実行は#17の限定Fake X seam: [late-down-after-release packet](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md)。standard callerが合成queue上の遅延KeyPress後もUNKNOWN/unconfirmedを保つことをnormal/-Oで確認した。timestamp同値の初回失敗もrawに保存した。これは保全付きの一つの研究結果で、X server ordering、物理key-up、task effect、WSLc allocationを証明しない。#17はこの結果で解決した扱いにせず、既存familyへ取り込んだ上で、次はserver-side queue orderingを観測できる許可済み環境の準備条件を特定する。#5と#59の別familyは各自の現行証拠と所有状況を再確認してからwork packetにする。
 
 Repository cleanの完了条件は、各active familyの問い・根拠・限界・次の決定が一か所から辿れ、各open Issue/PRの処置先が個別に分かれ、未分類分が明示的な残作業キューにあること。open Issue/PRがゼロである必要はない。次回はfamily indexを二重作成せず、現在のMAP01、#57統合比較、標準caller安全境界のうち一つのdistinct familyを進め、共有索引はこの分割に沿って一度だけ更新する。
+
+## 実行更新 r78 — #5 Fake X check/use counterexampleを保存
+
+PR #9158統合後のmain `0bc669bcad494da450dc36a3d9a5122648db3dfb`から、視覚target family #5の次の有限な識別作業を実行した。[packet](../research/integration/fake_x_window_lifecycle_check_use_20261019/README.md)はFake X標準MCP caller内で、最後のローカルpress checkとrelease obligationのprearm後、最初のXTEST press前にDestroyNotifyを入れ、独立lifecycle queryが先にそれを処理してreaderをretireする順序を構成した。通常/-Oの両方でreader retirement後に一つのKeyPressがemittedされ、その後続pressは拒否された。callerは`execution_failed`、review required、replay denied、`task_success=null`で終わり、Fake X上のprefix release/readbackはverified、down集合は空だった。raw、条件、機械可読receiptとSHA-256 manifestを保存した。ライフサイクルcaller moduleは通常/-Oで各16/16成功。
+
+この結果は構成scheduleにおけるcheck/use raceのcounterexampleであり、X serverの実順序、物理release、アプリ効果やtask successを示さない。Issue #5はopenのまま。次は既存lifecycle契約でordered admission fenceを作れるか、blocked Xlib I/Oを待ってreleaseを遅らせない条件を含めsource/design auditする。リポジトリ全体ではr70/r74が最新の完全metadata基準、open Issue 1,673件・open PR 489件は旧main `168200...`時点のcounts-only baselineであり、全件意味整理・PR収束・worktree custodyは未完了である。保存済み研究項目を消さず、familyごとに処置と有限な次作業を積み重ねる。

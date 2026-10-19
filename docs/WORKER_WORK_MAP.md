@@ -32,9 +32,14 @@ state. One integrator updates shared family indexes after reviewing outputs.
 evidence; PR #9099 adds one scoped standard-caller private-Xvfb pass with a
 synthetic property effect and independent key-up readback, after six retained
 failed first attempts. The [family agenda](ideas/visual-interface-agenda.md)
-keeps those scopes separate and identifies a finite Fake X DestroyNotify
-injection between the final generation check and XTEST press. #5 remains open;
-this is not a task-completion, native-desktop, or physical-release result.
+keeps those scopes separate. The completed [r01 Fake X check/use packet](../research/integration/fake_x_window_lifecycle_check_use_20261019/README.md)
+injects and drains DestroyNotify after the final local check and cleanup prearm
+but before XTEST. It reproduces one press after reader retirement, then refuses
+the next press, requires review, denies replay, verifies prefix release in Fake
+X, and leaves task_success null. The full lifecycle module passes 16/16 in
+normal and -O modes. #5 remains open; no live server ordering, physical release,
+or product task effect is established. Next finite step is a source/design audit
+of an ordered admission fence that does not wait on blocked Xlib I/O.
 The current discovery coverage is measured against the [r51 snapshot](maintenance/repository-inventory-20261019-r51.md) in the [r51 idea-index audit](maintenance/idea-index-coverage-20261019-r51.md). Of 1,675 open Issues, 1,184 have primary rows in the historical research index; 491 do not. Among those 491, 220 have a literal Issue URL in an individual `docs/ideas/*.md` file and 271 do not. The [r51 disjoint work queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv) divides them into 20 number-sorted batches of at most 25. These are navigation facts only; no semantic family, priority, owner, or disposition is inferred. The r15 snapshot remains immutable history. Re-read live sources before changing shared family records or Issue status. Issue #4 is now indexed in the visual family but the historical primary-row gap snapshot is unchanged. Use the queue as a discovery source, not a research-only classification. The full outcome and safe closure criteria are in the [repository consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
 
 **Current evidence-routing result:** the [A02/A03 blocked-X11 packet note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md)
