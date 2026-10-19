@@ -6,7 +6,7 @@
 
 Issue/PR数をゼロにするのではなく、研究アイデア・反証・結果・未解決点を失わず、次の担当者が一つの独立した仕事をすぐ選べる状態にする。進行中のコンピューター制御研究ゴールは維持し、そのゴールに関係する証拠・実装・残差は研究系譜から外さない。整理完了時には、各open Issueに「実行する理由と次の判別試験」または「担当・依存・保留解除条件」があり、アイデアだけの項目は正規カタログから元Issueへ戻れる。各open PRには現head/base、固有の差分・証拠、依存、所有状態、ローカル検証、次の処置がある。
 
-最新の完全なrow-level metadata snapshotは[r68](maintenance/repository-inventory-20261019-r68.md)（2026-10-19 04:15:55 UTC、main `20a17d8b99879f7804a679d2dc2927d5e6b4cb3a`、open Issue 1,673件、open PR 491件）である。2026-10-19 04:50:37 UTCにmain `e60a7829602212442055f9f7e4e3cec594f85880`でmembershipだけを再確認した[r69](maintenance/repository-inventory-recheck-20261019-r69.md)は、Issue 1,673件（r68と同じID集合）、PR 489件（#8849/#8855統合分だけ減）を記録する。r69はPR head/baseを更新しないため、変更前に正確なPR状態を再取得する。r52 coverage auditは全Issueの索引経路を確認したが、歴史的な研究選定表にprimary rowがない項目の意味分類とPR・担当・worktreeとの結合監査は未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
+最新の完全なrow-level metadataは[r70](maintenance/repository-inventory-20261019-r70.md)（2026-10-19 05:13:23 UTC、main `e83e52dc0eda4c3ebc5f54f676971ce9e71a6006`、open Issue 1,673件、open PR 489件）である。05:27:38 UTCにmain `95386ee7e10e7ffc7422bd473f4db29991bd28b6`を基準に完全ページングを再実行したところ、ID集合とr70のIssue/PR取得metadataは一致した。詳細は[r74 reconciliation](#実行更新-r74--入口の整合とworktree-custody棚卸し)。新しいmetadata CSVは重複を避けて作らず、r70を最新full snapshotとして維持する。r52 coverage auditは全Issueの索引経路を確認したが、歴史的な研究選定表にprimary rowがない項目の意味分類とPR・担当・worktreeとの結合監査は未完了である。membershipは状態の時点記録であり、状態変更前にはその時点の現状を再確認する。
 
 **最新membershipの再確認 r54 (2026-10-19 02:02:31 UTC):** main `289a0c19ab85581cb3414b01d92f2f887ae0c60b`で完全ページングを読み、open Issue 1,673件、open PR 502件を確認した。sorted ID set hashesはr53と完全一致するため、CSVの重複生成はせず、[r54再確認記録](maintenance/repository-inventory-recheck-20261019-r54.md)だけを追加した。semantic triage、個別PRのレビュー/検証、担当・worktree custodyは別作業であり未完了。
 
@@ -968,3 +968,11 @@ live Issue body/commentsを再読した#6はreactive local-controlの広い研�
 ## 実行更新 r73 — 最新のopen PR head/base metadataを保存
 
 2026-10-19 05:13:23 UTCに全ページを再取得し、main `e83e52dc0eda4c3ebc5f54f676971ce9e71a6006`で1,673 open Issues、489 open PRsを確認した。[r70 inventory](maintenance/repository-inventory-20261019-r70.md)は完全なIssue metadataとPR author/head SHA/base/reviewer metadataを保存し、SHA-256を記録する。Issue membershipはr69と同じで、r15からは#104/#1798がopenでなく、Issue追加はない。PR membershipもr69と同じで、r15からopenでなくなった25件に追加はない。これは最新membership/metadata baselineであって、全件の意味分類・所有確認・PR統合可否ではない。Idea-index gapの測定はr52の489件を維持し、全件意味分類の代わりに使わない。次はr52 batch receiptsから1 familyをcurrent Issue/PR/source/evidenceと照合し、固有の仮説・残差・所有・次の作業を家族記録に反映する。Issue/PRの状態は完了、根拠付き棄却、または実在する後継への移管を確認した個別項目だけ変更する。
+
+## 実行更新 r74 — 入口の整合とworktree custody棚卸し
+
+2026-10-19 05:27:38 UTCの完全なGitHub REST読み取りは、現在main `95386ee7e10e7ffc7422bd473f4db29991bd28b6`でopen Issue 1,673件・open PR 489件を返した。ID集合とr70の全取得metadata（Issue title/update/labels/assignee、PR title/update/head ref/head SHA/base ref/labels/assignee/reviewer request）を比較し、差分は0件だった。時刻書式とBoolean casingは同じ値として正規化した。#9154後にmain SHAは進んだが、PR metadata一覧の変化はなかったためr71 CSVは重複作成しない。この独立再確認は意味分類・現担当・PR差分レビューを置き換えない。
+
+同時に`git worktree list`と各treeの通常`git status --porcelain --untracked-files=all`を読み取り専用で照合し、16件のregistered worktree、11 clean、5 changed（合計152 status entries、うち102 untracked）を[worktree custody recheck r03](maintenance/git-worktree-custody-recheck-20261019-r03.md)へ記録した。r70 open-PR head refsと比較したところ、13件のchecked-out local branch名に完全一致はなく、残る3件はdetached HEADだった。これは未使用・所有者不明・削除可能を示さない。ignoredファイル、process/session、PR base依存、実所有者は調べておらず、refやworktreeは削除していない。次はr03のdirty/unknown行を既存Issue/PR/worker-sessionへ一つずつ結び、cleanなtreeもmainへの固有成果とdependentsを確認してから候補を分類する。
+
+同時点のopen PR再確認では、直前の15-PR triage batchの未終了項目が#9006/#8842/#8756/#8861の4件と判明した。#8849と#8855はmerge済み、#8687/#8678/#8701はそれぞれ#9142/#9146/#9148で証拠を保全してからsupersededとしてclose済み。別件#8838も#9144がA06/A07 packetを正確に保存し、依存worktree確認後にclose済みである。次は残る4 PRを同じ一括処置へ送らず、exact headとローカル検証を一件ずつ確認する。

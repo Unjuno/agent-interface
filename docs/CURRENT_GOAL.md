@@ -1,11 +1,10 @@
 # Current objective and working direction
 
-Latest complete membership recheck: 2026-10-19 04:50:37 UTC against main
-`e60a7829602212442055f9f7e4e3cec594f85880`; 1,673 open Issues and 489 open PRs
-([r69 recheck](maintenance/repository-inventory-recheck-20261019-r69.md)). The
-latest full row-level metadata remains [r68 Issues](maintenance/open-issues-20261019-r68.csv)
-and [r68 PRs](maintenance/open-prs-20261019-r68.csv); r69 records ID membership
-only. It does not refresh PR heads/bases, semantic review, or owner status.
+Latest full row-level metadata is [r70](maintenance/repository-inventory-20261019-r70.md), captured at 2026-10-19 05:13:23 UTC against main
+`e83e52dc0eda4c3ebc5f54f676971ce9e71a6006` with 1,673 open Issues and 489 open PRs. A complete live read at 05:27:38 UTC against main
+`95386ee7e10e7ffc7422bd473f4db29991bd28b6` found the same IDs and the same
+Issue metadata and PR head/base/reviewer fields; see [r74 in the consolidation plan](REPOSITORY_CONSOLIDATION.md#実行更新-r74--入口の整合とworktree-custody棚卸し). No duplicate CSV was needed.
+This does not provide semantic review or owner status.
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
 See the
 [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
