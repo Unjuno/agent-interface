@@ -28,6 +28,13 @@ or resource grant. #17 has since gained the [Fake X post-readback late-request
 counterexample](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md).
 Before reusing the #5 or #59 packet, refresh its live issue/PR/source/owner
 state. One integrator updates shared family indexes after reviewing outputs.
+**#5 target-generation crosswalk:** PR #9016 is Fake X caller-construction
+evidence; PR #9099 adds one scoped standard-caller private-Xvfb pass with a
+synthetic property effect and independent key-up readback, after six retained
+failed first attempts. The [family agenda](ideas/visual-interface-agenda.md)
+keeps those scopes separate and identifies a finite Fake X DestroyNotify
+injection between the final generation check and XTEST press. #5 remains open;
+this is not a task-completion, native-desktop, or physical-release result.
 The current discovery coverage is measured against the [r51 snapshot](maintenance/repository-inventory-20261019-r51.md) in the [r51 idea-index audit](maintenance/idea-index-coverage-20261019-r51.md). Of 1,675 open Issues, 1,184 have primary rows in the historical research index; 491 do not. Among those 491, 220 have a literal Issue URL in an individual `docs/ideas/*.md` file and 271 do not. The [r51 disjoint work queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv) divides them into 20 number-sorted batches of at most 25. These are navigation facts only; no semantic family, priority, owner, or disposition is inferred. The r15 snapshot remains immutable history. Re-read live sources before changing shared family records or Issue status. Issue #4 is now indexed in the visual family but the historical primary-row gap snapshot is unchanged. Use the queue as a discovery source, not a research-only classification. The full outcome and safe closure criteria are in the [repository consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
 
 **Current evidence-routing result:** the [A02/A03 blocked-X11 packet note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md)
