@@ -299,7 +299,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 server = create_server(
                     {'app':window.id}, root/'mcp', session_mode='guarded-x11',
                     guarded_process_identity=True, guarded_query_worker=True,
-                    guarded_owned_process=True,
+                    guarded_window_lifecycle=True, guarded_owned_process=True,
                     _guarded_owner_factory=_xvfb_blocking_owner_factory)
 
                 report['timing_ns']['observe_started'] = time.monotonic_ns()
