@@ -621,6 +621,21 @@ These open Issues were absent from the direct-reference audit across this catalo
 | [#3544](https://github.com/Unjuno/agent-interface/issues/3544) | Compare MCP, direct API, and CLI transport paths using complete model-visible definitions, inputs, images, errors, and outcomes. | Retained image/metadata parity establishes feasibility only; no matched-model transport winner, token-cost reduction, or speed gain is established. See the [integration history](INTEGRATION_HISTORY_20261015.md). |
 | [#3711](https://github.com/Unjuno/agent-interface/issues/3711) | Retain public CLI request and result artifacts before delivering stdout, so a broken output pipe does not erase the action outcome. | The exact-main portable build passed comparison against five historical Calc review responses with stored bytes unchanged. This is local build/compatibility evidence, not a public release or general reliability result; the scoped completion audit remains open. See the [integration history](INTEGRATION_HISTORY_20261015.md). |
 
+## Direct routes for r51 queue items absent from both indexes
+
+The r51 discovery receipts route Issues missing from the historical primary research selection. An exact cross-index audit found eight still-open Issues with neither a direct primary row in `RESEARCH_ISSUE_INDEX.md` nor an issue URL anywhere in this curated page. These rows add navigation only; they make no outcome, priority, ownership, or closure claim. Use the linked batch receipt and live Issue before assigning work.
+
+| Issue | Routing status |
+|---|---|
+| [#2](https://github.com/Unjuno/agent-interface/issues/2) — Track architecture risks before optimizing the shared runtime | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
+| [#13](https://github.com/Unjuno/agent-interface/issues/13) — Explore speculative no-authority futures to hide planner gaps | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
+| [#14](https://github.com/Unjuno/agent-interface/issues/14) — Define interrupt and event-attention scheduling for background controllers | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
+| [#15](https://github.com/Unjuno/agent-interface/issues/15) — Build a causal observation-action-effect trace for debugging, learning and evaluation | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
+| [#16](https://github.com/Unjuno/agent-interface/issues/16) — Explore transactional action groups with verified commit and compensation | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
+| [#17](https://github.com/Unjuno/agent-interface/issues/17) — Separate safety control plane from planner data and telemetry paths | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
+| [#60](https://github.com/Unjuno/agent-interface/issues/60) — O2 intake: reconstruct Generation-1 provenance before any runtime or formal lease | Routing only; see [B02 receipt](maintenance/issue-discovery-b02-20261019.md). |
+| [#61](https://github.com/Unjuno/agent-interface/issues/61) — O1/G1 handoff — startup grants HELD pending O2 coordination | Routing only; see [B02 receipt](maintenance/issue-discovery-b02-20261019.md). |
+
 ## Closed ideas and successor lineage
 
 Closure does not erase evidence. Preserve [#1968](https://github.com/Unjuno/agent-interface/issues/1968)'s `HOLD_NO_FORMAL_CONTAINER`; its separate [later scoped report](../research/analysis/serialized_attention_duplicate_label_successor_1968_v1/REPORT.md) found exact reconstruction and smaller serialized packages on a tiny fixture, but used truth-derived crops and makes no automatic-attention, model, or GUI claim. The later #6353 duplicate disposition and its canonical open lineage are detailed below.
