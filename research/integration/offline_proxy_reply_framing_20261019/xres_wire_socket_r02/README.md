@@ -36,8 +36,21 @@ retirement, keeping the two receipt fields consistent; release remains gated on
 the separate XRes disconnect and obligation snapshot. A deterministic regression
 test reproduces the sampling order. The full owned-process suite passes 24/24
 and the Fake X caller-composition suite 3/3 in normal and optimized Python after
-the fix. The Xvfb integration job has not yet been rerun on the updated head, so
-the blocked physical I/O and release result remain unqualified.
+the fix. Updated private-Xvfb integration run
+[39246686502](https://github.com/Unjuno/agent-interface/actions/runs/39246686502)
+passed all 77 tests, including the blocked-release case. Its exact report and
+retained observation image are copied under `raw/` and covered by
+`SHA256SUMS`.
+
+This is a scoped fail-closed result, not confirmed caller release: the
+independent parent X client read both keys up after the owner release worker's
+readback and again at 8.5 s, and observed no delayed `b` KeyPress. However, the
+caller receipt remains `release_confirmed=false`, `cleanup_status=UNKNOWN`,
+`late_server_request_possible=true`, and `task_success=null`; it required review
+and rejected replay. The fix repairs consistent retirement reporting and
+reaches the bounded cleanup path, while the current contract still refuses to
+certify cleanup when a server request may remain. This passes safety assertions,
+not the bounded-release objective.
 
 The first run failed because the synthetic `ClientIdValue` size field was set
 to `1` (a byte count) instead of `4`; python-xlib consequently parsed an empty
@@ -49,7 +62,8 @@ and both outputs are covered by [`SHA256SUMS`](SHA256SUMS).
 
 ## Scope and next decision
 
-This is one synthetic protocol/relay construction check. It establishes that
+This is one synthetic protocol/relay construction check plus one existing
+private-Xvfb standard-caller cancellation test. It establishes that
 the existing framing relay can transport the real encoded XRes request/reply
 shape without corrupting it and that the pinned python-xlib parser recovers the
 canonical client base and PID value. It does not test malformed XRes payload
@@ -58,7 +72,9 @@ live connection ownership or server ordering, blocked-I/O release, physical
 input release, independent application effect, task success, recovery, or
 efficiency. The standard-caller composition now uses real encoded XRes
 transactions over a Fake X socket, but still supplies synthetic server replies
-and a synthetic `/proc` identity. The next discriminator is a separately
+and a synthetic `/proc` identity. The Xvfb test has a synthetic application,
+test-injected delayed request, and independent keymap readback; it does not
+certify the caller's cleanup receipt. The next discriminator is a separately
 authorized private-Xvfb/live-server composition check with exact server
 extension negotiation and owner-release observation; it remains gated on
 current allocation and environment custody.

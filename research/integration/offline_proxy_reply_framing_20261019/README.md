@@ -132,3 +132,13 @@ Issue #7924 remains `STOP / HOLD`; no WSLc allocation was checked or used, and
 the consumed A02/A03 allocations were not rerun. First fixture parse failure
 and corrected runs are preserved in the r02 packet's raw tree and SHA-256
 manifest.
+
+The follow-up private-Xvfb standard-caller run is also preserved there. Run
+`39246686502` passed 77 tests after fixing a retirement-receipt race; the
+blocked-release receipt records an independent keymap readback with keys up
+after the owner release worker and at 8.5 s, with no delayed `b` press observed.
+The standard caller still reports `release_confirmed=false`,
+`cleanup_status=UNKNOWN`, `late_server_request_possible=true`, and
+`task_success=null`, so the result validates fail-closed safety assertions but
+does not satisfy bounded release or task-effect objectives. WSLc and allocation
+remain unused.

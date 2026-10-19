@@ -28,5 +28,24 @@
     "The standard caller's separate identity connection transports serialized XRes QueryVersion and QueryClientIds requests through FakeSocketRelay.",
     "python-xlib parses complete synthetic replies, including canonical owner resource base and PID.",
     "Normal and optimized caller composition preserve stale-generation refusal and held-reply UNKNOWN; no live allocation is touched."
-  ]
+  ],
+  "x11_integration_followup": {
+    "github_run": "39246686502",
+    "head": "8b7020365f1da07d3cec0f7e4ffc42ec9a275eb7",
+    "job": "x11-integration",
+    "tests": 77,
+    "result": "passed",
+    "scenario_scope": "private Xvfb; standard MCP caller; synthetic app; test-injected delayed request; independent parent X client readback",
+    "asserted_observations": [
+      "keys a and b up after owner release worker",
+      "keys a and b up at 8501.2 ms after cancel start",
+      "delayed b KeyPress not observed"
+    ],
+    "caller_cleanup_receipt": "UNKNOWN; release_confirmed=false; late_server_request_possible=true; task_success=null; review required; replay disabled",
+    "limits": [
+      "does not certify caller release",
+      "does not establish MAP01 task success",
+      "does not use WSLc or an allocation"
+    ]
+  }
 }
