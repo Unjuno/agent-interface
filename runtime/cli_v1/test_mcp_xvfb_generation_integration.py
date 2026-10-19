@@ -1,4 +1,5 @@
 """Standard guarded MCP process/window identity against a private live Xvfb."""
+import asyncio
 import hashlib
 import io
 import json
