@@ -301,7 +301,7 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
                 'interface_guarded_observe', {}))
             recovery_mint = _metadata(await server.call_tool(
                 'interface_guarded_mint', {
-                    'alias':'recovery-b',
+                    'alias':'recovery_b',
                     'source_sequence':recovery_source['source']['sequence'],
                     'point':[x+48,y+48], 'region_size':[24,24]}))
             self.assertEqual(recovery_mint['status'], 'minted', recovery_mint)
@@ -311,7 +311,7 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
             report['monotonic_ns']['recovery_fault_input_started'] = time.monotonic_ns()
             recovery_fault = _metadata(await asyncio.wait_for(server.call_tool(
                 'interface_guarded_input', {
-                    'alias':'recovery-b', 'offset':recovery_mint['offset'],
+                    'alias':'recovery_b', 'offset':recovery_mint['offset'],
                     'interaction':'keyboard', 'observe_after':False,
                     'tail':[{'op':'key_chord','keys':['b']}]}), timeout=5.0))
             report['monotonic_ns']['recovery_fault_input_returned'] = time.monotonic_ns()
@@ -408,7 +408,7 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
                 'source_sequence':reviewed.get('source', {}).get('sequence')}
             stale_after_recovery = _metadata(await server.call_tool(
                 'interface_guarded_input', {
-                    'alias':'recovery-b', 'offset':recovery_mint['offset'],
+                    'alias':'recovery_b', 'offset':recovery_mint['offset'],
                     'interaction':'keyboard', 'observe_after':False,
                     'tail':[{'op':'key_chord','keys':['b']}]}))
             report['stale_alias_after_recovery'] = stale_after_recovery
@@ -418,14 +418,14 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
                 'input_dispatched', True), stale_after_recovery)
 
             fresh_mint = _metadata(await server.call_tool('interface_guarded_mint', {
-                'alias':'post-recovery-c',
+                'alias':'post_recovery_c',
                 'source_sequence':reviewed['source']['sequence'],
                 'point':[x+48,y+48], 'region_size':[24,24]}))
             self.assertEqual(fresh_mint.get('status'), 'minted', fresh_mint)
             report['monotonic_ns']['post_recovery_input_started'] = time.monotonic_ns()
             post_recovery = _metadata(await asyncio.wait_for(server.call_tool(
                 'interface_guarded_input', {
-                    'alias':'post-recovery-c', 'offset':fresh_mint['offset'],
+                    'alias':'post_recovery_c', 'offset':fresh_mint['offset'],
                     'interaction':'keyboard', 'observe_after':False,
                     'tail':[{'op':'key_chord','keys':['c']}]}), timeout=5.0))
             report['monotonic_ns']['post_recovery_input_returned'] = time.monotonic_ns()
