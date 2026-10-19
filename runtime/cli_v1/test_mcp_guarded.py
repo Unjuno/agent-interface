@@ -818,6 +818,8 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                 return {'phase':image.getpixel((0,0))[0], 'present':True}
 
             def verify_effect(request, native, image):
+                if not verified:
+                    time.sleep(0.01)
                 verified.append((request['action'],request['observation']['evidence_ref']))
                 return {'status':'succeeded',
                         'evidence_ref':request['observation']['evidence_ref']}
@@ -839,6 +841,17 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertEqual(len(bridge.inputs),2)
             self.assertEqual(row['feedback']['image_status'],'image')
             self.assertEqual(row['feedback']['image_reference']['observation_id'],'fixture-3')
+            timing=row['owner_timing']
+            self.assertEqual(timing['clock'],'time.monotonic_ns')
+            self.assertLessEqual(timing['started_ns'],
+                                 min(observation['captured_ns']
+                                     for observation in receipt['observations']))
+            self.assertGreaterEqual(timing['completed_ns'],
+                                    max(event['effect_verification_accepted_ns']
+                                        for event in effects))
+            self.assertEqual(timing['elapsed_ns'],
+                             timing['completed_ns']-timing['started_ns'])
+            self.assertGreaterEqual(timing['elapsed_ns'],10_000_000)
             for event in effects:
                 self.assertLessEqual(event['execution_accepted_ns'],
                                      event['effect_observation_captured_ns'])

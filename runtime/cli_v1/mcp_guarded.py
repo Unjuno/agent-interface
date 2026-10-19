@@ -2,6 +2,7 @@
 from contextlib import contextmanager
 from copy import deepcopy
 from pathlib import Path
+import time
 from mcp.types import CallToolResult
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, model_validator
 from typing import Annotated, Literal
@@ -145,6 +146,7 @@ class GuardedSessionOwner(MCPSessionOwner):
         The returned method verdict and delivered feedback remain distinct from
         independently verified task success. This is not an MCP tool endpoint.
         """
+        started_ns = time.monotonic_ns()
         if self.state != 'open' or self.bridge is None or self.session is None:
             raise RuntimeError('compiled method requires this open guarded owner')
         if self.bridge.review_required or self.session.recovery_required:
@@ -188,8 +190,14 @@ class GuardedSessionOwner(MCPSessionOwner):
                 feedback = {'image_status':'needs_review', 'image':None,
                             'error':repr(error), 'replay_allowed':False,
                             'scope':'Method receipt retained; final feedback unavailable. No replay.'}
-        return {'method_receipt':receipt, 'feedback':feedback,
-                'session':self.snapshot(), 'task_success':None, 'replay_allowed':False}
+        session = self.snapshot()
+        completed_ns = time.monotonic_ns()
+        return {'method_receipt':receipt, 'feedback':feedback, 'session':session,
+                'owner_timing':{'clock':'time.monotonic_ns',
+                    'scope':'successful run_compiled method call through feedback and session snapshot',
+                    'started_ns':started_ns, 'completed_ns':completed_ns,
+                    'elapsed_ns':completed_ns-started_ns},
+                'task_success':None, 'replay_allowed':False}
 
     def invoke_guarded(self, operation, arguments, call_root):
         if operation == 'guarded_recover_input':
