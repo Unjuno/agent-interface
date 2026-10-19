@@ -2,6 +2,10 @@
 
 **Status: active research; eight allocation packet groups indexed through A15. Two result PRs remain open (#8759 A10 and #8800 A14); #8678/#8701 are closed after tracked-file preservation, and #8749/#8782/#8790/#8810 result packets are merged. #8818 is the merged A15 custody-manifest follow-up. Issue #59 remains open.**
 
+### A07 independent custody cross-check — 2026-10-19
+
+The exact open draft head of [PR #8702](https://github.com/Unjuno/agent-interface/pull/8702) was checked against the merged tracked packet in [PR #9148](https://github.com/Unjuno/agent-interface/pull/9148). The four-file #8702 package checksums reproduce from its Git blobs, and its raw-manifest digest matches the digest recorded in the tracked A07 V3 audit. This establishes package integrity and a shared manifest identity only; the private raw manifest and event stream are not present in the inspected tracked sources, so the independent audit cannot be reproduced from this checkout. The tracked owner reconciliation accounts for five missing per-key transitions as terminal X11 server-side owner-release receipts; it does not establish physical key state or game effect. Keep #8702 draft/open on evidence-custody hold and Issue #59 open. Do not rerun A07. The exact missing artifacts, hashes, and bounded disposition are recorded in the [A07 custody audit](../maintenance/issue-59-a07-custody-audit-20261019-r01.md).
+
 Issue [#59](https://github.com/Unjuno/agent-interface/issues/59) asks whether
 the current integrated real-time path can react usefully to a threat while a
 model response is pending, survive bounded recovery, and reach an independently
