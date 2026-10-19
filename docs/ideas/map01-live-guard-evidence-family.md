@@ -143,3 +143,9 @@ was absent from this checkout. Thus the public summary is not independently
 reproducible from this packet. This bounded absence does not show global raw
 loss. Keep #8759 draft/unmerged pending owner-attested raw/freeze/audit custody;
 do not rerun the consumed A10 allocation.
+
+## Current-main evidence-custody recheck — A01/A02 (#8678), 2026-10-19
+
+At main `a6741224fad3cfd29de7bd4becac9cc207490242`, all 29 tracked files on #8678 head `7551424026375469f609754140250f89bf09cad4` remain unique to that PR. Its frozen source commit is reachable from main. A01 is a prelaunch STOP; A02 is a retained runtime failure with a failed cleanup terminal, despite empty keymap snapshots. Hard-health guard exposure and task success remain untested. The PR's 976-entry manifest points to an ignored `results-local/...` bundle not found in the current checkout or any of 15 registered worktree roots; only Git-tracked custody can be completed from this host state.
+
+#8701's A03–A07 files are a distinct later allocation series, not duplicate evidence. Keep both experiment records separate, leave Issue #59 open, and do not rerun either consumed allocation. The exact tracked #8678 diff is being transferred byte-for-byte; closure can retire only that diff/branch, not resolve the external raw-output gap. See the [custody review](../maintenance/pr8678-evidence-custody-20261019.md).
