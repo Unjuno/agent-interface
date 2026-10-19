@@ -442,3 +442,5 @@ unmet objectives; update the relevant parent rather than create management-only 
 The previous 828-line plan/evidence chronology is preserved verbatim in
 [INTEGRATION_HISTORY_20261015.md](INTEGRATION_HISTORY_20261015.md).
 Read it for a selected result's provenance, not as a current allocation list.
+
+**#17 blocked server-I/O result (PR #9171, run 39229071117):** The standard guarded MCP caller recorded a pre-cancel synthetic application effect, then failed its bounded blocked-Xlib cancellation path: cancel returned within 3 s but owner retirement was false; the later close fallback retired the owner and confirmed XRes disconnect, while the separate release/readback worker timed out. Harness teardown sent an XTEST key-up and read it back, which does not qualify runtime release or recovery. See the [hash-bound failed packet](../research/integration/standard_caller_xvfb_blocked_release_9171_20261019/README.md). This is the counterexample to promoting the local Fake X relay result to live-X release evidence. Keep release, task success and recovery unqualified until the exact standard-caller schedule passes a bounded runtime release/readback check.
