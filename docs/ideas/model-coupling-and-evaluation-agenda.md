@@ -214,7 +214,7 @@ separate hypotheses and must keep separate evidence and decisions.
   unidentified if their outputs share a common evidence source. Agreement must
   not be presented as accuracy without justified source-independence or
   reference evidence.
-- **Evidence:** Draft [PR #8893](https://github.com/Unjuno/agent-interface/pull/8893)
+- **Evidence:** Merged scoped-evidence [PR #8893](https://github.com/Unjuno/agent-interface/pull/8893)
   records one eight-row counterexample: four checker columns have identical
   `00001111` outputs and 1.0 pairwise agreement in two hidden worlds with the
   same 0.5 truth prevalence, but finite-panel correctness is 1.0 versus 0.5.

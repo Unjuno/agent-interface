@@ -2,7 +2,7 @@
 
 This directory is the compact history of ideas raised in Agent Interface.
 
-The latest complete paginated metadata snapshot is [open Issues r58](../maintenance/open-issues-20261019-r58.csv) and [open PRs r58](../maintenance/open-prs-20261019-r58.csv), captured at 2026-10-19 02:42:33 UTC against main `91d8859530e9c65e7f24fb4843d4cbeef3a9ece6` with 1,673 open Issues and 500 open PRs. These inventories establish membership only, not semantic classification or current ownership. The [r52 coverage audit](../maintenance/idea-index-coverage-20261019-r52.md) shows 489 open Issues without a primary row in the historical research selection; all 489 remain routed through the completed B01–B20 receipts, which are discovery aids rather than semantic classifications. The r15/r50/r51/r52 snapshots remain immutable history. The older r53 CSV paths are not row-level inventories; see the r57 recheck for the file-integrity correction.
+The latest complete paginated metadata snapshot is [open Issues r59](../maintenance/open-issues-20261019-r59.csv) and [open PRs r59](../maintenance/open-prs-20261019-r59.csv), captured at 2026-10-19 02:49:49 UTC against main `5d5b121ca3c0c922c6eff36793fbdffe5104c42d` with 1,673 open Issues and 499 open PRs. These inventories establish membership only, not semantic classification or current ownership. The [r52 coverage audit](../maintenance/idea-index-coverage-20261019-r52.md) shows 489 open Issues without a primary row in the historical research selection; all 489 remain routed through the completed B01–B20 receipts, which are discovery aids rather than semantic classifications. The r15/r50/r51/r52 snapshots remain immutable history. The older r53 CSV paths are not row-level inventories; see the r57 recheck for the file-integrity correction.
 
 Use this directory to connect ideas to existing evidence, dependencies, priorities and executable experiments. GitHub Issues remain the discussion and execution surface. Preserve each distinct hypothesis and its outcomes here before deciding its Issue state. The [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md#2026-10-19-全体整理の実行計画--アイデアを保存して作業面を収束) permits an idea-only Issue to be individually closed as catalogued/deferred after the canonical idea entry and return link are recorded; active experiments, unresolved user goals, evidence/ownership gaps and integration work remain open until resolved or explicitly superseded. Issue closure never means the underlying idea succeeded.
 
@@ -232,7 +232,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Invariant-confluence coordination overlap](invariant-confluence-coordination-overlap.md) — records #8889's substantial overlap with #5547/#5563 and preserves the narrow unresolved comparison without duplicating an allocation.
 
-- [No-gold effect-checker identifiability](no-gold-effect-checker-identifiability.md) — records #8887's unverified method and #8893's narrower agreement/accuracy counterexample without promoting it to full method validation.
+- [No-gold effect-checker identifiability](no-gold-effect-checker-identifiability.md) — records #8887's unverified method and merged #8893's narrower agreement/accuracy counterexample without promoting it to full method validation.
 
 - [Recurrent-disturbance recovery envelope](recurrent-disturbance-recovery-envelope.md) — indexes #8872's unverified disturbance-magnitude × spacing proposal, preserves #5776's failed early-warning result, and requires consolidation if #5372 or #5776 already exposes the same endpoint.
 
