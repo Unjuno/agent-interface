@@ -28,6 +28,7 @@ from PIL import Image, ImageStat
 
 from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
 from runtime.cli_v1.mcp_server import create_server
+from runtime.cli_v1 import owned_guarded_session as owned_session_module
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 
 
@@ -398,7 +399,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
 
                 cancel_internal_trace = {
                     'cancel_entries':[], 'cancel_returns':[],
-                    'retirement_decisions':[], 'retire_calls':[]}
+                    'retirement_decisions':[], 'retire_calls':[],
+                    'owner_process_calls':[]}
                 def describe_owner_process(owned):
                     process = getattr(owned, '_process', None)
                     row = {
@@ -479,24 +481,63 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     process = getattr(owned, '_process', None)
                     before_alive = process.is_alive() if process is not None else None
                     started_ns = time.monotonic_ns()
+                    original_process_methods = {}
+                    if process is not None:
+                        for method_name in ('is_alive', 'terminate', 'join', 'kill'):
+                            original_method = getattr(process, method_name, None)
+                            if not callable(original_method):
+                                continue
+                            original_process_methods[method_name] = original_method
+
+                            def traced_process_method(*args, _name=method_name,
+                                                     _method=original_method, **kwargs):
+                                method_started_ns = time.monotonic_ns()
+                                row = {'method':_name, 'args':list(args),
+                                       'kwargs':dict(kwargs)}
+                                try:
+                                    result = _method(*args, **kwargs)
+                                except BaseException as error:
+                                    row.update(error_type=type(error).__name__,
+                                               error=repr(error))
+                                    raise
+                                else:
+                                    if result is None or type(result) in (bool, int, float, str):
+                                        row['result'] = result
+                                    else:
+                                        row['result_type'] = type(result).__name__
+                                    return result
+                                finally:
+                                    row['elapsed_ms'] = (
+                                        time.monotonic_ns()-method_started_ns)/1_000_000
+                                    cancel_internal_trace['owner_process_calls'].append(row)
+
+                            setattr(process, method_name, traced_process_method)
                     try:
                         result = original_retire(owned, reason)
                     except BaseException as error:
+                        for method_name, original_method in original_process_methods.items():
+                            setattr(process, method_name, original_method)
                         cancel_internal_trace['retire_calls'].append({
                             'reason':reason,
                             'elapsed_ms':(time.monotonic_ns()-started_ns)/1_000_000,
                             'before_alive':before_alive,
-                        'process':describe_owner_process(owned),
+                            'process':describe_owner_process(owned),
                             'error_type':type(error).__name__,
                             'error':repr(error),
                         })
                         raise
+                    for method_name, original_method in original_process_methods.items():
+                        setattr(process, method_name, original_method)
                     cancel_internal_trace['retire_calls'].append({
                         'reason':reason,
                         'elapsed_ms':(time.monotonic_ns()-started_ns)/1_000_000,
                         'before_alive':before_alive,
                         'retired':result.get('retired'),
                         'exitcode':result.get('exitcode'),
+                        'configured_terminate_grace_s':(
+                            owned_session_module._RETIRE_TERMINATE_GRACE_S),
+                        'configured_kill_grace_s':(
+                            owned_session_module._RETIRE_KILL_GRACE_S),
                         'alive_after':process.is_alive() if process is not None else None,
                         'process_after':describe_owner_process(owned),
                     })
