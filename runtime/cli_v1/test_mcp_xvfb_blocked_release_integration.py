@@ -20,6 +20,7 @@ import sys
 import tempfile
 import threading
 import time
+from time import monotonic_ns as _monotonic_ns
 import unittest
 
 from Xlib import X, Xatom, XK, display
@@ -96,7 +97,7 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
                     'delayed_event':'KeyPress',
                     'delayed_keycode':delayed_keycode,
                     'delay_ms':_DELAY_MS,
-                    'flushed_ns':time.monotonic_ns(),
+                    'flushed_ns':_monotonic_ns(),
                     'blocked_boundary':'real python-xlib Display.sync response wait',
                 }
                 temporary = marker.with_suffix('.tmp')
