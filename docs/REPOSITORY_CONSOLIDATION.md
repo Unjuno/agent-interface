@@ -1077,3 +1077,9 @@ PR #9182の更新後private-Xvfb integration run [39246686502](https://github.co
 ## 実行更新 r90 — PR統合後のmembership基準線
 
 PR #9182は最新head `026bc4a82c9fdb663bc2d43ac8614780cd6e828f`で全報告checkを通過後、2026-10-19 11:49:21 UTCにsquash mergeされ、mainは`ee496780ee6e0097acb7ead1c62c6a3ee5b69878`になった。merge直後のGitHub GraphQL countはopen Issue 1,673件、open PR 479件。取得はcountのみであり、各項目の意味分類や所有確認を示さない。r87は引き続き最後の完全membership ID export、r85は最後の完全row-level/check metadata exportであり、immutableな過去snapshotとして保つ。次のcleanup batchは、既存family catalogと現在のsource Issue/PRを照合し、固有アイデア・結果・rawを移管した場合のみ個別状態を変える。Issue #17は研究親としてopenを維持する。
+
+## 実行更新 r91 — standard callerへ実XRes target-generation結果を保全
+
+同じprivate-Xvfb CI run `39246686502`のgeneration integration artifactをr02 packetへraw JSONと観測PNGで保存し、SHA-256 manifestへ追加した。独立XRes `QueryClientIds`と`/proc` start-ticksから求めたgenerationがstandard-caller observationのgeneration hashと一致し、synthetic appのindependent property effect `[1]`、KeyPress/KeyRelease、runtime release receipt、別X clientからのkey-up readbackを確認した。対象Window破棄後の入力はdispatch前に拒否された。これは標準caller統合による重要なXvfb結果で、前段のFake X protocol試験とは異なる。
+
+限界として、対象は同一X.Org Xvfb上のsynthetic appで、`task_success` API fieldはnullのまま。テストoracleのproperty assertionはこの合成task内の成功判定であり、MAP01/game success、native desktop/XWayland、効率性の証拠ではない。#17のblocked-I/O cancellation receiptは依然`UNKNOWN`を保つため、正常完了時のrelease receiptと異なる境界として残す。次は、このgeneration/effect contractを実アプリ/MAP01に渡す条件と、safe recovery後の独立task oracleを既存family証拠から結び、allocation HOLDを越えずに未解決依存を一つずつ狭める。

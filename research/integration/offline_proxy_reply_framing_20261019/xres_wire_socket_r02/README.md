@@ -79,6 +79,27 @@ authorized private-Xvfb/live-server composition check with exact server
 extension negotiation and owner-release observation; it remains gated on
 current allocation and environment custody.
 
+## Existing private-Xvfb target-generation composition
+
+The same X11 integration run also passed
+[`test_process_and_window_generation_flow_through_standard_mcp`](https://github.com/Unjuno/agent-interface/actions/runs/39246686502).
+The raw report and observation PNG are retained under
+[`raw/x11-generation-39246686502/`](raw/x11-generation-39246686502/). An
+independent XRes `QueryClientIds` returned the synthetic app's PID; the test's
+independent `/proc` start-ticks calculation exactly matched the generation
+hash returned by standard-caller observation. The test then invoked input,
+observed app property `[1]` and the matching KeyPress/KeyRelease through
+independent clients, confirmed the runtime release receipt and independent
+key-up readback, destroyed the target window, and verified that the next
+standard-caller input was refused before dispatch with review required.
+
+This is meaningful integrated evidence for target identity, target lifecycle,
+effect ordering, and release in one X.Org Xvfb synthetic-app task. It does not
+establish MAP01/game task success or native desktop/XWayland behavior, and the
+runtime's `task_success` field remains null. The assertion of `[1]` is a
+test-local synthetic-app oracle, not a runtime task-success receipt. The exact
+report and image hashes are included in `SHA256SUMS`.
+
 No WSLc, Docker, network, live X server, GUI, OS input, model, or allocation was
 used. No task-success or physical-release claim is made.
 
