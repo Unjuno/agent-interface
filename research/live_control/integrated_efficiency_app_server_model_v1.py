@@ -62,7 +62,8 @@ def per_turn_usage(value):
 class GroundingCallError(RuntimeError):
     """A failed call with the accounting already observed before its failure."""
 
-    def __init__(self, error, *, call_id, usage, visible_images_submitted, wait_ns):
+    def __init__(self, error, *, call_id, usage, visible_images_submitted, wait_ns,
+                 thread_id=None, usage_error=None, publication_error=None):
         try:
             diagnostic = str.__str__(repr(error))
         except BaseException:
@@ -72,6 +73,9 @@ class GroundingCallError(RuntimeError):
         self.usage = copy.deepcopy(usage)
         self.visible_images_submitted = visible_images_submitted
         self.wait_ns = wait_ns
+        self.thread_id = thread_id
+        self.usage_error = usage_error
+        self.publication_error = publication_error
 
 
 class PersistentGroundingModel:
@@ -116,6 +120,7 @@ class PersistentGroundingModel:
         started = time.perf_counter_ns()
         handle = None
         known_usage = None
+        usage_error = None
         try:
             handle = self.planner.begin_turn(
                 prompt, output_schema=schema,
@@ -123,17 +128,40 @@ class PersistentGroundingModel:
             turn = self.planner.await_turn(handle, timeout=90)
             elapsed = time.perf_counter_ns() - started
             self.calls += 1
-            known_usage = per_turn_usage(turn.usage)
             if not turn.answer_eligible:
+                try:
+                    known_usage = per_turn_usage(turn.usage)
+                except ValueError as error:
+                    known_usage = None
+                    usage_error = str(error)
                 failure = {
                     "thread_id": handle.thread_id, "turn_id": handle.turn_id,
                     "status": turn.status, "answer_eligible": False,
                     "error": turn.error, "usage": known_usage,
+                    "usage_error": usage_error,
                     "runner_ns": elapsed,
                 }
-                (root / "failure.json").write_text(
-                    json.dumps(failure, indent=2) + "\n", encoding="utf-8", newline="\n")
-                raise RuntimeError("persistent grounding answer ineligible; no retry")
+                failure_error = RuntimeError(
+                    "persistent grounding answer ineligible; no retry")
+                failure_error.call_id = handle.turn_id
+                failure_error.thread_id = handle.thread_id
+                failure_error.usage = copy.deepcopy(known_usage)
+                failure_error.usage_error = usage_error
+                failure_error.wait_ns = elapsed
+                failure_error.visible_images_submitted = 1
+                try:
+                    (root / "failure.json").write_text(
+                        json.dumps(failure, indent=2) + "\n",
+                        encoding="utf-8", newline="\n")
+                except Exception as publication_error:
+                    failure_error.publication_error = publication_error
+                    raise failure_error from publication_error
+                raise failure_error
+            try:
+                known_usage = per_turn_usage(turn.usage)
+            except ValueError as error:
+                usage_error = str(error)
+                raise
             raw = turn.answer
             normalized = validator(raw)
             result = {
@@ -150,11 +178,15 @@ class PersistentGroundingModel:
         except Exception as error:
             # Publication/validation failure must not erase a returned turn or
             # its observed usage. No additional RPC, retry or input is issued.
+            cause = getattr(error, "publication_error", error)
             raise GroundingCallError(error,
                 call_id=handle.turn_id if handle is not None else None,
                 usage=known_usage,
                 visible_images_submitted=1 if handle is not None else None,
-                wait_ns=time.perf_counter_ns() - started) from error
+                wait_ns=time.perf_counter_ns() - started,
+                thread_id=handle.thread_id if handle is not None else None,
+                usage_error=getattr(error, "usage_error", usage_error),
+                publication_error=getattr(error, "publication_error", None)) from cause
 
     def close(self):
         if self._owns_client:
