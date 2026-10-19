@@ -1,6 +1,6 @@
 # Issue discovery batch B13 — routing receipt (2026-10-19)
 
-B13 is rows 301–325 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). Live GitHub reads found all 25 Issues OPEN with no assignees. Twenty-four already had curated direct index entries; #7889 has a new direct entry so its original failed study and later duplicate local attempt remain together without pooling. Bodies/latest comments were checked for current evidence and ownership boundaries.
+B13 is rows 301–325 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). Live GitHub reads found all 25 Issues OPEN with no assignees. Correction from an exact table-row audit: 22/25 had standalone curated rows before this intake; #7889's added summary raised this to 23/25. #7722 and #7921 lack standalone rows but are cross-linked from #7748 and #7933 respectively. #7889's original failed study and later duplicate local attempt remain together without pooling. Bodies/latest comments were checked for current evidence and ownership boundaries.
 
 Issues: #7712, #7722, #7728, #7732, #7741, #7748, #7765, #7773, #7790, #7794, #7799, #7802, #7804, #7808, #7817, #7822, #7825, #7827, #7831, #7834, #7857, #7865, #7889, #7921, and #7924.
 

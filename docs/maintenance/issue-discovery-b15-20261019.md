@@ -1,6 +1,6 @@
 # Issue discovery batch B15 — routing receipt (2026-10-19)
 
-B15 is rows 351–375 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). Live GitHub reads found all 25 Issues OPEN and unassigned. All 25 already have a direct curated entry in `IDEAS_AND_OUTCOMES.md`; no duplicate outcome rows were added. Bodies/latest comments and referenced result PR states were checked where material.
+B15 is rows 351–375 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). Live GitHub reads found all 25 Issues OPEN and unassigned. Correction from an exact table-row audit: 22/25 had standalone curated rows; #8152, #8254 and #8446 lack standalone rows but are cross-linked from successor/predecessor entries #8493, #8328 and #8455. Bodies/latest comments and referenced result PR states were checked where material.
 
 Issues: #8150, #8152, #8157, #8166, #8185, #8200, #8244, #8249, #8252, #8254, #8283, #8300, #8313, #8319, #8327, #8328, #8341, #8353, #8397, #8406, #8421, #8432, #8434, #8446, and #8455.
 

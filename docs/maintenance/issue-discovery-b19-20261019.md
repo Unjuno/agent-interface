@@ -1,6 +1,6 @@
 # Issue discovery batch B19 — routing receipt (2026-10-19)
 
-B19 is rows 451–475 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). Live reads found all 25 Issues OPEN and unassigned. All have direct entries in `IDEAS_AND_OUTCOMES.md`; no duplicate rows were added. Latest comments were checked where present; items without current comments remain proposals and were not assigned a guessed result.
+B19 is rows 451–475 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). Live reads found all 25 Issues OPEN and unassigned. Correction from an exact table-row audit: 20/25 had standalone entries in `IDEAS_AND_OUTCOMES.md`; #8869, #8873, #8875, #8877 and #8895 lack standalone rows but are cross-linked through their related/successor entries. Latest comments were checked where present; items without current comments remain proposals and were not assigned a guessed result.
 
 Issues: #8869, #8870, #8872, #8873, #8875, #8877, #8878, #8879, #8880, #8881, #8883, #8885, #8886, #8887, #8888, #8889, #8890, #8894, #8895, #8897, #8898, #8899, #8900, #8901, and #8902.
 

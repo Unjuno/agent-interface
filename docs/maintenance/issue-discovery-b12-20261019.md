@@ -1,6 +1,6 @@
 # Issue discovery batch B12 — routing receipt (2026-10-19)
 
-B12 is rows 276–300 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). Live GitHub reads found all 25 Issues OPEN with no assignees. Bodies and latest comments were read for routing. Twenty-four Issues already had direct curated index entries; the missing direct summary for #7705 has been added. Empty assignee fields do not establish branch, allocation, or artifact ownership.
+B12 is rows 276–300 of the immutable [r51 missing-primary-row queue](open-issues-missing-research-primary-row-20261019-r51.csv). Live GitHub reads found all 25 Issues OPEN with no assignees. Bodies and latest comments were read for routing. Correction from an exact table-row audit: after the #7705 direct summary was added, 24/25 Issues had standalone curated rows; #7418 is cross-linked from its #8406 companion row. Empty assignee fields do not establish branch, allocation, or artifact ownership.
 
 Issues: #7367, #7368, #7369, #7379, #7387, #7409, #7411, #7418, #7424, #7426, #7430, #7436, #7458, #7459, #7462, #7466, #7470, #7475, #7487, #7505, #7650, #7678, #7705, #7707, and #7709.
 
