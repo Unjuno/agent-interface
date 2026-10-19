@@ -6,7 +6,7 @@
 
 Issue/PR数をゼロにするのではなく、研究アイデア・反証・結果・未解決点を失わず、次の担当者が一つの独立した仕事をすぐ選べる状態にする。進行中のコンピューター制御研究ゴールは維持し、そのゴールに関係する証拠・実装・残差は研究系譜から外さない。整理完了時には、各open Issueに「実行する理由と次の判別試験」または「担当・依存・保留解除条件」があり、アイデアだけの項目は正規カタログから元Issueへ戻れる。各open PRには現head/base、固有の差分・証拠、依存、所有状態、ローカル検証、次の処置がある。
 
-最新の完全な固定スナップショットは[r58](maintenance/repository-inventory-recheck-20261019-r58.md)（2026-10-19 02:42:33 UTC、open Issue 1,673件、open PR 500件）である。現在の正しいrow-level exportは[Issue CSV](maintenance/open-issues-20261019-r58.csv)と[PR CSV](maintenance/open-prs-20261019-r58.csv)。r53の同名CSVは現在のGit blobを検査するとPowerShell配列の`Length/Count`だけを持つ2行ファイルであり、row-level metadataやID集合を含まない。r53/r56の件数/hash記録は履歴として保持し、旧CSVを監査根拠に再利用しない。r52カバレッジ監査は全Issueの索引経路を確認したが、489件は歴史的な研究選定表にprimary rowがなく、意味の分類もPRとの結合監査も未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
+最新の完全な固定スナップショットは[r59](maintenance/repository-inventory-recheck-20261019-r59.md)（2026-10-19 02:49:49 UTC、open Issue 1,673件、open PR 499件）である。現在の正しいrow-level exportは[Issue CSV](maintenance/open-issues-20261019-r59.csv)と[PR CSV](maintenance/open-prs-20261019-r59.csv)。r53の同名CSVは現在のGit blobを検査するとPowerShell配列の`Length/Count`だけを持つ2行ファイルであり、row-level metadataやID集合を含まない。r53/r56の件数/hash記録は履歴として保持し、旧CSVを監査根拠に再利用しない。r52カバレッジ監査は全Issueの索引経路を確認したが、489件は歴史的な研究選定表にprimary rowがなく、意味の分類もPRとの結合監査も未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
 
 **最新membershipの再確認 r54 (2026-10-19 02:02:31 UTC):** main `289a0c19ab85581cb3414b01d92f2f887ae0c60b`で完全ページングを読み、open Issue 1,673件、open PR 502件を確認した。sorted ID set hashesはr53と完全一致するため、CSVの重複生成はせず、[r54再確認記録](maintenance/repository-inventory-recheck-20261019-r54.md)だけを追加した。semantic triage、個別PRのレビュー/検証、担当・worktree custodyは別作業であり未完了。
 
@@ -17,6 +17,8 @@ Issue/PR数をゼロにするのではなく、研究アイデア・反証・結
 **最新membershipの再確認 r57 (2026-10-19 02:37:22 UTC):** PR #8854統合後のmain `d25b497cc8a05d45158a81c038ee15e03aabdddc`で完全ページングし、open Issue 1,673件・open PR 501件を確認した。Issue ID hashはr53/r56と一致し、PR countは1減少した。r53 CSVがrow-level exportでない不具合を発見したため、r57では正しい完全row-level exportを新規生成し、履歴snapshotは上書きしない。これはmembership/filer-integrityの再確認であり、意味分類・所有・残りPR評価は未完了。詳細は[recheck r57](maintenance/repository-inventory-recheck-20261019-r57.md)。
 
 **最新membershipの再確認 r58 (2026-10-19 02:42:33 UTC):** PR #8853統合後のmain `91d8859530e9c65e7f24fb4843d4cbeef3a9ece6`で完全ページングし、open Issue 1,673件・open PR 500件を確認した。Issue ID setはr57と同一、PR setはr57から#8853だけを除いた500件だった。新しいID hashと完全row-level CSVは[recheck r58](maintenance/repository-inventory-recheck-20261019-r58.md)に記録した。
+
+**最新membershipの再確認 r59 (2026-10-19 02:49:49 UTC):** PR #8893統合後のmain `5d5b121ca3c0c922c6eff36793fbdffe5104c42d`で完全ページングし、open Issue 1,673件・open PR 499件を確認した。Issue集合はr58から不変、PR集合は#8893だけ減少した。[r59 recheck](maintenance/repository-inventory-recheck-20261019-r59.md)に完全CSVとhashを記録した。
 
 ### 整理原則とIssueの処置
 
