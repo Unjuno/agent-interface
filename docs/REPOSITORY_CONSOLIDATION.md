@@ -64,6 +64,10 @@ The [B14 receipt](maintenance/issue-discovery-b14-20261019.md) routes rows 326�
 
 The [B15 receipt](maintenance/issue-discovery-b15-20261019.md) routes rows 351–375; all 25 entries already existed in the curated outcome index. It preserves non-conclusive and synthetic-only outcomes separately from live runtime questions, records duplicate-allocation and auditor stops without promoting their payloads, and keeps #8252's remaining text-prefix counterexample visible. Referenced PRs were checked for merged, open-Draft and closed-unmerged distinctions. No Issue, PR, raw packet, allocation, or WSLc status changed. B16 is next.
 
+### B16 bounded intake — finite models, audit stops, and runtime limits
+
+The [B16 receipt](maintenance/issue-discovery-b16-20261019.md) routes rows 376–400; all 25 entries already had curated outcome rows. It separates finite-method results from candidate/auditor failures, duplicate allocation, unverified proposals, and live recovery limits. It records WSLc construction replay only as post-result construction evidence and preserves #8562's explicit #7924 ownership hold; no runtime operation was made. Referenced PR state was checked, without changing Issue/PR status or allocation. B17 is next.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
