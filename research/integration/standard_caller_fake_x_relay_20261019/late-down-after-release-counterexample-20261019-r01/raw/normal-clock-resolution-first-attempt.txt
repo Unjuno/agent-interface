@@ -1,0 +1,57 @@
+test_standard_owned_caller_keeps_unknown_after_fake_late_down (runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_keeps_unknown_after_fake_late_down)
+A modeled late old-connection press cannot become verified success. ... ERROR
+
+======================================================================
+ERROR: test_standard_owned_caller_keeps_unknown_after_fake_late_down (runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_keeps_unknown_after_fake_late_down)
+A modeled late old-connection press cannot become verified success.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\work\repo-cleanup-r71-20261019\runtime\cli_v1\test_mcp_relay_composition.py", line 447, in test_standard_owned_caller_keeps_unknown_after_fake_late_down
+    self.assertGreater(late_down["monotonic_ns"], release_receipt["monotonic_ns"])
+AssertionError: 80717625000000 not greater than 80717625000000
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 632, in _rmtree_unsafe
+    os.unlink(fullname)
+PermissionError: [WinError 32] �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B: 'D:\\CodexData\\Temp\\tmpl61w7obe\\042a8a59d5824b079262ab4c64014375\\.report.json.tmp'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 90, in _callTestMethod
+    if self._callMaybeAsync(method) is not None:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\async_case.py", line 112, in _callMaybeAsync
+    return self._asyncioRunner.run(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\work\repo-cleanup-r71-20261019\runtime\cli_v1\test_mcp_relay_composition.py", line 357, in test_standard_owned_caller_keeps_unknown_after_fake_late_down
+    with tempfile.TemporaryDirectory() as td:
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 943, in __exit__
+    self.cleanup()
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 634, in _rmtree_unsafe
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 893, in onerror
+    _os.unlink(path)
+PermissionError: [WinError 32] �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B: 'D:\\CodexData\\Temp\\tmpl61w7obe\\042a8a59d5824b079262ab4c64014375\\.report.json.tmp'
+
+----------------------------------------------------------------------
+Ran 1 test in 1.939s
+
+FAILED (errors=1)

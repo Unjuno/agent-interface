@@ -4,6 +4,13 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
+**Current organization check (2026-10-19 05:59 UTC):** main is
+`168200eb43dd0f9144b3ed4aef551387674c7bfd`; a counts-only API read found 1,673
+open Issues and 489 open PRs. The latest complete metadata is still immutable
+r70 plus r74's equality recheck. Counts are not semantic dispositions; use the
+[r77 consolidation workflow](REPOSITORY_CONSOLIDATION.md#実行更新-r77--アイデアをファミリーで動かしissueとprを個別に収束する)
+and the family rows below for new work.
+
 ## Status key
 
 - **Proposed / open:** no result is implied.
@@ -632,7 +639,7 @@ The r51 discovery receipts route Issues missing from the historical primary rese
 | [#14](https://github.com/Unjuno/agent-interface/issues/14) — Define interrupt and event-attention scheduling for background controllers | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
 | [#15](https://github.com/Unjuno/agent-interface/issues/15) — Build a causal observation-action-effect trace for debugging, learning and evaluation | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
 | [#16](https://github.com/Unjuno/agent-interface/issues/16) — Explore transactional action groups with verified commit and compensation | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
-| [#17](https://github.com/Unjuno/agent-interface/issues/17) — Separate safety control plane from planner data and telemetry paths | Routing only; see [B01 receipt](maintenance/issue-discovery-b01-20261019.md). |
+| [#17](https://github.com/Unjuno/agent-interface/issues/17) — Separate safety control plane from planner data and telemetry paths | Open research parent. See the [safety-control family](ideas/safety-control-agenda.md). The standard caller/Fake X packet now retains a modeled late old-owner KeyPress after injected separate empty readback; caller/terminal remain UNKNOWN, unreplayable and without task success (normal/-O). It proves no live X ordering or physical release. Next live work remains gated by verified ownership/allocation; preserve distinct failure and custody results. |
 | [#60](https://github.com/Unjuno/agent-interface/issues/60) — O2 intake: reconstruct Generation-1 provenance before any runtime or formal lease | Routing only; see [B02 receipt](maintenance/issue-discovery-b02-20261019.md). |
 | [#61](https://github.com/Unjuno/agent-interface/issues/61) — O1/G1 handoff — startup grants HELD pending O2 coordination | Routing only; see [B02 receipt](maintenance/issue-discovery-b02-20261019.md). |
 

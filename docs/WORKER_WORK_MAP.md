@@ -5,6 +5,10 @@ is [r70](maintenance/repository-inventory-20261019-r70.md), against main
 `e83e52dc0eda4c3ebc5f54f676971ce9e71a6006`: 1,673 open Issues and 489 open PRs.
 A live read at 05:27:38 UTC against main `95386ee7e10e7ffc7422bd473f4db29991bd28b6`
 found the same ID sets and metadata; see the [r74 reconciliation](REPOSITORY_CONSOLIDATION.md#実行更新-r74--入口の整合とworktree-custody棚卸し).
+After PR #9156, main is `168200eb43dd0f9144b3ed4aef551387674c7bfd`;
+a counts-only read at 05:59 UTC still found 1,673 open Issues and 489 open PRs.
+This is not a new complete metadata or ownership snapshot. The current
+organization and per-item disposition rules are in [consolidation r77](REPOSITORY_CONSOLIDATION.md#実行更新-r77--アイデアをファミリーで動かしissueとprを個別に収束する).
 The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
 records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
@@ -18,10 +22,12 @@ below, and verify its current Issue, source and ownership. The repository-wide
 [consolidation plan](REPOSITORY_CONSOLIDATION.md#2026-10-19-全体整理の実行計画--アイデアを保存して作業面を収束)
 defines the family record and safe cleanup gates. This map is navigation;
 it adds no assignment, resource grant, reviewer quota or all-workers waiting gate.
-For three current, non-overlapping starter tasks, see the
-[worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md): #17 release
-crosswalk, #5 target-binding crosswalk, and #59 A07 custody audit. Each has a
-separate output path; one integrator updates shared family indexes after review.
+The dated [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md)
+identified #17, #5, and #59 as disjoint families; it is not an active assignment
+or resource grant. #17 has since gained the [Fake X post-readback late-request
+counterexample](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md).
+Before reusing the #5 or #59 packet, refresh its live issue/PR/source/owner
+state. One integrator updates shared family indexes after reviewing outputs.
 The current discovery coverage is measured against the [r51 snapshot](maintenance/repository-inventory-20261019-r51.md) in the [r51 idea-index audit](maintenance/idea-index-coverage-20261019-r51.md). Of 1,675 open Issues, 1,184 have primary rows in the historical research index; 491 do not. Among those 491, 220 have a literal Issue URL in an individual `docs/ideas/*.md` file and 271 do not. The [r51 disjoint work queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv) divides them into 20 number-sorted batches of at most 25. These are navigation facts only; no semantic family, priority, owner, or disposition is inferred. The r15 snapshot remains immutable history. Re-read live sources before changing shared family records or Issue status. Issue #4 is now indexed in the visual family but the historical primary-row gap snapshot is unchanged. Use the queue as a discovery source, not a research-only classification. The full outcome and safe closure criteria are in the [repository consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
 
 **Current evidence-routing result:** the [A02/A03 blocked-X11 packet note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md)
@@ -45,13 +51,14 @@ selects only the action/keycode-matched `GetPointerControl` reply. The increment
 [proxy candidate parser](../research/integration/offline_proxy_reply_framing_20261019/proxy_candidate.py)
 also negotiates XTEST's dynamic major opcode, parses fragmented setup/request/
 reply streams, and fails open on sequence ambiguity or missing receipts. All
-19 packet tests pass in normal and optimized Python. It is not connected to a
-relay and proves no bounded release. A03's raw still has no reply sequence; its
-first failure remains unchanged. Next: integrate the parser with a test-only
-socket relay and fake upstream to qualify disconnect, backpressure, and bounded
-owner retirement. Only consider WSLc after a fresh unused allocation is
-verified. #7924 remains at `STOP / HOLD`; no eligible allocation is documented.
-Keep release/task `UNKNOWN`; no WSLc allocation was used here.
+19 packet tests pass in normal and optimized Python. A03's raw still has no
+reply sequence; its first failure remains unchanged. **Update:** merged PRs #9136 and #9153 connect
+the parser to test-only relay/caller fixtures. The [current Fake X recheck](../research/integration/standard_caller_fake_x_relay_20261019/local-windows-recheck-20261019-r01/README.md)
+and [late-request counterexample](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md)
+pass locally in normal and optimized Python. This closes the parser-to-Fake-X
+construction gap only. It does not recover A03's missing reply trace, observe
+live X server ordering, establish physical release, or prove task success.
+Issue #7924 remains `STOP / HOLD` for WSLc ownership; no allocation was inferred.
 
 ## Choose work
 

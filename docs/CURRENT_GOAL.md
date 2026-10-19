@@ -11,12 +11,16 @@ row-level metadata snapshot or semantic/ownership review.
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
 See the
 [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
-family-by-family review and disposition criteria. This is the short entry
+family-by-family review and disposition criteria, including the latest r77
+organization and work-dispatch rules. The plan's latest counts-only check is
+1,673 open Issues and 489 open PRs against main `168200eb43dd0f9144b3ed4aef551387674c7bfd`;
+full row-level metadata remains the immutable r70/r74 baseline. This is the short entry
 point, not an experiment ledger.
-Three disjoint, evidence-preserving starter packets for #17, #5, and #59 are in
-the [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md). They are
-available independent tasks, not exclusive assignments or resource grants;
-shared indexes remain serially integrated.
+The dated [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md)
+records three disjoint family candidates (#17, #5, #59), not current assignments
+or resource grants. #17's local Fake X packet is now complete; the #5/#59 scopes
+must be refreshed against live sources before reuse. Shared indexes remain
+serially integrated.
 
 ## Objective
 
@@ -41,20 +45,21 @@ The visual-interface family now separately maps the #4 north star, #3 grid, #5
 address/feedback contracts, #7 view-set selection and #8 composite packing; its
 finite #7 crosswalk and evidence limits are in the [family agenda](ideas/visual-interface-agenda.md).
 
-The latest input-release attempt is indexed in the [A02/A03 evidence note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md):
-A02 stopped before probe entry due to an incomplete source mount; A03 passed one
-healthy control but its first blocked trial timed out before the held-reply
-predicate. Both first outcomes and raw are retained; neither allocation may be
-replayed. The offline stream parser now passes 19 tests in normal and optimized
-Python. It negotiates XTEST's dynamic major opcode, parses fragmented X11
-setup/request/reply streams, and selects the action/keycode-bound
-`GetPointerControl` reply for one connection. It is not connected to a socket
-relay and proves no bounded release. A03's missing per-connection reply trace
-remains missing, and the first failure remains unchanged. The next finite step
-is a test-only relay with a fake upstream to qualify disconnect, backpressure
-and bounded owner retirement. Preserve A02/A03 unchanged. WSLc Issue #7924
-remains `STOP / HOLD` for client ownership, so no fresh allocation is available;
-do not run live input until an unused lane is verified.
+The [A02/A03 evidence note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md)
+preserves both consumed first outcomes: A02 stopped before probe entry on an
+incomplete source mount; A03 passed one healthy control but timed out before
+the held-reply predicate. Do not replay them. The offline stream parser has
+since been connected to test-only relay/caller composition in merged PRs #9136
+and #9153. Local Fake X tests now exercise blocked reply, cancellation,
+disconnect, child retirement and a synthetic late queued KeyPress after an
+injected separate empty readback. The caller remains `UNKNOWN` and does not
+claim task success or permit replay; see the [preserved late-down packet](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md).
+The synthetic protocol order is modeled, not live server evidence. A03's
+missing per-connection trace and original failure are unchanged. WSLc Issue
+#7924 remains `STOP / HOLD` for ownership; no new live allocation is verified.
+The next live test can be planned only after fresh ownership and allocation
+evidence; in the meantime use finite Fake X work that changes a caller or
+integration decision, not more copies of the parser result.
 
 Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not

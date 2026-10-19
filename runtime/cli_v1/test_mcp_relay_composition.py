@@ -124,6 +124,11 @@ def _socket_owner_factory(targets, directory, display_name, options):
             write_record("fake-x-accepted-press.json", {
                 "action_id": ACTION_ID, "event": "KeyPress", "keycode": KEYCODE,
                 "request_hex": press.hex(), "classification": "synthetic_fake_x_only"})
+            write_record("fake-x-server-queue.json", {
+                "connection": "retired_owner_connection",
+                "event": "KeyPress", "keycode": KEYCODE,
+                "state": "accepted_and_held_in_synthetic_queue",
+                "protocol_order_is_modeled_not_observed": True})
             sync = _receive_exact(upstream_socket, 4)
             if sync != b"\x6a\0\x01\0":
                 write_record("fake-x-upstream-error.json", {"sync_hex": sync.hex()})
@@ -221,8 +226,10 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
             return
         out = Path(raw_root)
         out.mkdir(parents=True, exist_ok=True)
-        for source_name in ("fake-x-accepted-press.json", "synthetic-effect-receipt.json",
-                            "held-reply.json", "sync-wait.json"):
+        for source_name in ("fake-x-accepted-press.json", "fake-x-server-queue.json",
+                            "fake-x-release-readback.json", "fake-x-late-down.json",
+                            "synthetic-effect-receipt.json", "held-reply.json",
+                            "sync-wait.json"):
             source = destination / source_name
             if source.exists():
                 (out / source_name).write_bytes(source.read_bytes())
@@ -243,6 +250,17 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
             "timing": {
                 "cancel_elapsed_ms": records["cancel_elapsed_ms"],
                 "terminal_elapsed_ms": records["terminal_elapsed_ms"],
+            },
+            "synthetic_late_down": {
+                "queue": json.loads((destination / "fake-x-server-queue.json").read_text(
+                    encoding="utf-8")) if (destination / "fake-x-server-queue.json").exists()
+                    else None,
+                "release_readback": json.loads((destination / "fake-x-release-readback.json").read_text(
+                    encoding="utf-8")) if (destination / "fake-x-release-readback.json").exists()
+                    else None,
+                "late_down": json.loads((destination / "fake-x-late-down.json").read_text(
+                    encoding="utf-8")) if (destination / "fake-x-late-down.json").exists()
+                    else None,
             },
             "terminal": {key: records["terminal"].get(key) for key in (
                 "status", "release_confirmed", "cleanup_status", "task_success",
@@ -309,6 +327,134 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(cancelled["task_success"])
                 self.assertFalse(cancelled["replay_allowed"])
                 self.assertTrue(cancelled["late_server_request_possible"])
+
+                deadline = time.monotonic() + 5.0
+                terminal_started = time.monotonic()
+                terminal = None
+                while time.monotonic() < deadline:
+                    terminal = metadata(await server.call_tool("interface_results", {
+                        "call_id": pending["call_id"], "include_image": False}))
+                    if terminal["status"] != "pending":
+                        break
+                    await asyncio.sleep(0.01)
+                self.assertEqual(terminal["status"], "runtime_failed", terminal)
+                terminal_elapsed_ms = (time.monotonic() - terminal_started) * 1000
+                self.assertLess(terminal_elapsed_ms, 5000, terminal)
+                self.assertFalse(terminal["release_confirmed"])
+                self.assertEqual(terminal["cleanup_status"], "UNKNOWN")
+                self.assertIsNone(terminal["task_success"])
+                self.assertFalse(terminal["replay_allowed"])
+                self._preserve_records(root, {
+                    "observed": observed, "minted": minted, "pending": pending,
+                    "cancelled": cancelled, "terminal": terminal,
+                    "cancel_elapsed_ms": round(cancel_elapsed_ms, 3),
+                    "terminal_elapsed_ms": round(terminal_elapsed_ms, 3)})
+            finally:
+                await server.call_tool("interface_close", {})
+
+    async def test_standard_owned_caller_keeps_unknown_after_fake_late_down(self):
+        """A modeled late old-connection press cannot become verified success."""
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            server = create_server(
+                {"app": 20}, root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_socket_owner_factory)
+            try:
+                observed = metadata(await server.call_tool("interface_guarded_observe", {}))
+                self.assertEqual(observed["status"], "observed", observed)
+                minted = metadata(await server.call_tool("interface_guarded_mint", {
+                    "alias": "field", "source_sequence": observed["source"]["sequence"],
+                    "point": [8, 8], "region_size": [12, 12]}))
+                self.assertEqual(minted["status"], "minted", minted)
+
+                (root / "block-owner-io").write_text("arm", encoding="utf-8")
+                pending = metadata(await server.call_tool("interface_guarded_input", {
+                    "alias": "field", "offset": minted["offset"],
+                    "interaction": "keyboard", "observe_after": False,
+                    "wait_for_result_ms": 0,
+                    "tail": [{"op": "key_chord", "keys": ["a"]}]}))
+                self.assertEqual(pending["status"], "pending", pending)
+                await self._wait_for_file(root / "fake-x-accepted-press.json")
+                effect = await self._wait_for_file(root / "synthetic-effect-receipt.json")
+                held = await self._wait_for_file(root / "held-reply.json")
+                queue = await self._wait_for_file(root / "fake-x-server-queue.json")
+                self.assertIsNone(effect["task_success"])
+                self.assertTrue(held["independently_observed"], held)
+                self.assertEqual(held["held_reply_bytes"], 32)
+                self.assertEqual(queue["state"], "accepted_and_held_in_synthetic_queue")
+
+                fence = {"status": "disconnected", "reason": "injected_fake_transport_eof",
+                         "worker_retired": True, "elapsed_ms": 1.0}
+                release_state = {"down": [KEYCODE]}
+                model_order = []
+                release_result = {
+                    "status": "readback_verified", "worker_retired": True,
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": [], "monotonic_ns": 0},
+                }
+
+                def verified_fake_release(obligations):
+                    self.assertEqual(obligations, {"keys": {"a": KEYCODE}, "buttons": []})
+                    release_state["down"] = []
+                    model_order.append("separate_release_readback")
+                    release_receipt = {
+                        "source": "injected_separate_fake_release_readback",
+                        "keys_down": [], "buttons_down": [],
+                        "event_index": len(model_order),
+                        "monotonic_ns": time.monotonic_ns(),
+                    }
+                    (root / "fake-x-release-readback.json").write_text(
+                        json.dumps(release_receipt, sort_keys=True), encoding="utf-8")
+                    release_result["release"]["monotonic_ns"] = release_receipt["monotonic_ns"]
+                    return release_result
+
+                cancel_started = time.monotonic()
+                with (patch(
+                        "runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised",
+                        return_value=fence),
+                      patch(
+                        "runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner._release_retired_owner_inputs",
+                        side_effect=verified_fake_release) as release_inputs):
+                    cancelled = metadata(await server.call_tool("interface_guarded_cancel", {
+                        "call_id": pending["call_id"]}))
+                cancel_elapsed_ms = (time.monotonic() - cancel_started) * 1000
+                release_inputs.assert_called_once()
+                self.assertLess(cancel_elapsed_ms, 3000, cancelled)
+                self.assertTrue(cancelled["owner_process_retired"], cancelled)
+                self.assertEqual(cancelled["owner_client_disconnect"], fence)
+                self.assertEqual(cancelled["owner_release_attempt"]["status"],
+                                 "readback_verified")
+                self.assertFalse(cancelled["release_confirmed"])
+                self.assertEqual(cancelled["cleanup_status"], "UNKNOWN")
+                self.assertIsNone(cancelled["task_success"])
+                self.assertFalse(cancelled["replay_allowed"])
+                self.assertTrue(cancelled["late_server_request_possible"])
+
+                # This final delivery is deliberately injected into a synthetic
+                # server queue after the separate readback. It is not a claim
+                # about real X11 disconnect ordering.
+                release_receipt = json.loads(
+                    (root / "fake-x-release-readback.json").read_text(encoding="utf-8"))
+                self.assertEqual(release_state["down"], [])
+                model_order.append("late_old_request_delivery")
+                release_state["down"].append(KEYCODE)
+                late_down = {
+                    "source": "synthetic_queued_old_connection_request",
+                    "event": "KeyPress", "keycode": KEYCODE,
+                    "modeled_after_release_readback": True,
+                    "event_index": len(model_order),
+                    "monotonic_ns": time.monotonic_ns(),
+                    "keys_down_after_delivery": sorted(release_state["down"]),
+                    "protocol_order_is_modeled_not_observed": True,
+                }
+                self.assertLess(release_receipt["event_index"], late_down["event_index"])
+                self.assertEqual(model_order, [
+                    "separate_release_readback", "late_old_request_delivery"])
+                (root / "fake-x-late-down.json").write_text(
+                    json.dumps(late_down, sort_keys=True), encoding="utf-8")
+                self.assertEqual(release_state["down"], [KEYCODE])
 
                 deadline = time.monotonic() + 5.0
                 terminal_started = time.monotonic()
