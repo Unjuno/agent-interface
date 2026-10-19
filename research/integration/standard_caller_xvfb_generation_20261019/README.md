@@ -130,3 +130,27 @@ test, not a latency distribution, product task success, blocked-I/O release,
 MAP01, or matched efficiency result. The two successful runs' timings must not
 be promoted into a bound or pooled with other interfaces. All six earlier
 failed attempts and their raw records remain unchanged.
+
+## Descriptive timing comparison of the two successful runs
+
+The exact raw monotonic timestamps give the following per-run durations. Delta
+is run 39174461630 minus run 39174301979; event-to-effect is the synthetic
+KeyPress timestamp through the target's property commit.
+
+| Stage | Run 39174301979 (ms) | Run 39174461630 (ms) | Delta (ms) |
+|---|---:|---:|---:|
+| Observation caller round trip | 605.024 | 596.965 | -8.059 |
+| Alias mint caller round trip | 4.094 | 4.313 | +0.219 |
+| Input caller round trip | 56.268 | 59.479 | +3.211 |
+| Synthetic KeyPress to property commit | 0.179 | 0.280 | +0.101 |
+| Independent property read | 0.148 | 0.139 | -0.009 |
+| Stale-target refusal caller round trip | 3.970 | 4.069 | +0.099 |
+
+These are stage-specific elapsed times from two separate workflow runs, not
+model-in-the-loop task latency. Both runs used the same Xvfb version, bytewise
+identical frozen conditions and identical caller test/runtime source blobs. The
+two-run observed ranges are descriptive only: they do not establish a
+population distribution, confidence interval, upper bound, speedup, or
+reliability estimate. The six earlier fixture/debug failures remain part of
+the execution history and are not combined into a pass-rate estimate for a
+stable frozen candidate.
