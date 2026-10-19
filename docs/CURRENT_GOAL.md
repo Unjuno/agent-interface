@@ -1,6 +1,6 @@
 # Current objective and working direction
 
-Latest full row-level metadata remains the immutable [r70 inventory](maintenance/repository-inventory-20261019-r70.md). The current membership recheck [r71](maintenance/repository-inventory-20261019-r71.md), at main `f89e176b43b8db35798d51d887757e2d650e9bb1`, reports 1,673 open Issues and 488 open PRs; only #8825 left the open PR set, and no Issue IDs changed. This is a membership check, not semantic/ownership classification. Consolidation r82 records the #8825 integration and current next work.
+Latest full row-level metadata remains the immutable [r70 inventory](maintenance/repository-inventory-20261019-r70.md). Membership recheck [r83](maintenance/repository-inventory-20261019-r83.md), at main `640dba3eff3dbb5568da0504f8a624ac80f73c1a`, reports 1,673 open Issues and 484 open PRs; five PRs left the open set since r70 and none were added. This is membership evidence, not semantic or ownership classification. Consolidation r83 records the A06 evidence integration and current next work.
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
 See the
 [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
