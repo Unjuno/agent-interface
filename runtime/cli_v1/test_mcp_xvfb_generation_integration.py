@@ -322,18 +322,18 @@ class StandardCallerXvfbGenerationTests(unittest.IsolatedAsyncioTestCase):
                             recovery_fault)
             self.assertTrue(recovery_fault.get('session', {}).get('review_required'),
                             recovery_fault)
-            interrupted = recovery_fault.get('session', {}).get('interrupted_execution')
-            self.assertIsInstance(interrupted, dict, recovery_fault)
+            failed_execution = recovery_fault.get('result', {}).get('execution')
+            self.assertIsInstance(failed_execution, dict, recovery_fault)
             self.assertIn('injected post-press acknowledgement failure',
-                          interrupted.get('error', ''), recovery_fault)
-            failed_releases = interrupted.get('releases', [])
+                          failed_execution.get('error', ''), recovery_fault)
+            failed_releases = failed_execution.get('releases', [])
             self.assertTrue(failed_releases, recovery_fault)
             self.assertIn('injected one-shot automatic release failure',
                           failed_releases[-1].get('error', ''), recovery_fault)
             self.assertEqual(recovery_fault['session']['owner_input_obligations']['keys'].get('b'),
                              recovery_keycode, recovery_fault)
             report['injected_fault_evidence'] = {
-                'post_press_error':interrupted.get('error'),
+                'post_press_error':failed_execution.get('error'),
                 'automatic_release_error':failed_releases[-1].get('error'),
                 'retained_key_obligation':recovery_fault['session'][
                     'owner_input_obligations']['keys'].get('b')}
