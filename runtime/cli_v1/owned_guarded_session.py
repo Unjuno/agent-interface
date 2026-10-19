@@ -27,7 +27,11 @@ _RETIRE_KILL_GRACE_S = 0.25
 _JOIN_TIMEOUT_S = 1.0
 _XRES_DISCONNECT_TIMEOUT_S = 0.15
 _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
-_RETIRED_RELEASE_TIMEOUT_S = 0.25
+# The spawned fresh client must import, connect, emit exact releases, sync, and
+# read back. Reserve 1.5 seconds for this bounded worker while retaining
+# headroom under the caller's three-second cancellation target; timeout still
+# means UNKNOWN, never release.
+_RETIRED_RELEASE_TIMEOUT_S = 1.5
 _RETIRED_RELEASE_TERMINATE_GRACE_S = 0.1
 _OWNER_INPUT_OBLIGATIONS_SCHEMA = 'agent-interface/owner-input-obligations-v1'
 _OWNER_INPUT_OBLIGATIONS_CAPACITY = 8192

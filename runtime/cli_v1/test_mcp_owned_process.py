@@ -26,6 +26,14 @@ def _blocked_release_worker(_send_connection):
         time.sleep(0.01)
 
 
+def _delayed_release_worker(send_connection):
+    time.sleep(0.35)
+    send_connection.send({
+        'status':'released',
+        'release':{'verified':True, 'keys_down':[], 'buttons_down':[]},
+    })
+
+
 class _Cleanup:
     def __init__(self):
         self.callbacks = []
@@ -171,6 +179,31 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_retired_release_accepts_verified_reply_from_delayed_worker(self):
+        from runtime.guarded_x11_v1.xres_client_fence import supervise_xres_worker
+
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.display_name = 'fake-display'
+
+        def run_delayed_worker(_target, _args, **kwargs):
+            return supervise_xres_worker(
+                _delayed_release_worker, (), timeout_s=kwargs['timeout_s'],
+                terminate_grace_s=kwargs['terminate_grace_s'],
+                accepted_statuses=kwargs['accepted_statuses'])
+
+        with patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
+                   side_effect=run_delayed_worker):
+            result = owner._release_retired_owner_inputs(
+                {'keys':{'a':38}, 'buttons':[]})
+
+        self.assertEqual(result['status'], 'readback_verified', result)
+        self.assertEqual(result['release'], {
+            'verified':True, 'keys_down':[], 'buttons_down':[]})
+        self.assertTrue(result['worker_retired'])
+        self.assertEqual(result['worker_exitcode'], 0)
+        self.assertGreaterEqual(result['elapsed_ms'], 300)
+        self.assertLess(result['elapsed_ms'], 1500)
+
     def test_retire_kills_owned_process_that_ignores_terminate(self):
         class StubbornProcess:
             def __init__(self):
@@ -799,12 +832,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 def supervise_blocked_release(_target, _args, **kwargs):
                     self.assertEqual(_target.__name__, '_release_retired_inputs_worker')
                     self.assertEqual(_args[1:], ({'CTRL':1}, []))
-                    self.assertEqual(kwargs['timeout_s'], 0.25)
+                    self.assertEqual(kwargs['timeout_s'], 1.5)
                     self.assertEqual(kwargs['terminate_grace_s'], 0.1)
                     self.assertEqual(kwargs['accepted_statuses'], ('released', 'unknown'))
                     return supervise_xres_worker(
-                        _blocked_release_worker, (), timeout_s=0.08,
-                        terminate_grace_s=0.08,
+                        _blocked_release_worker, (), timeout_s=kwargs['timeout_s'],
+                        terminate_grace_s=kwargs['terminate_grace_s'],
                         accepted_statuses=kwargs['accepted_statuses'])
 
                 started = time.monotonic()
