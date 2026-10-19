@@ -17,6 +17,10 @@ The broader current cleanup implementation was merged in [PR #8771](https://gith
 
 The Issue disposition and the remaining evidence-PR custody work are separate. Closing #8681 records that its defect/fix scope is complete; it does not authorize deleting branches or losing the additional A02–A07 evidence.
 
+## Current-main custody recheck (2026-10-19)
+
+At main `3cf520498beb886750b9de8499890dfebb0ea209`, live GitHub reads still show #8681 closed, #8771 merged, and #8687 open at the head above. A direct tree comparison of `origin/main` with the exact #8687 head confirms all 47 A02–A05 packet files are absent from current main. They remain on the open PR head; no packet was copied, rerun, or altered in this recheck. Keep #8687 in `evidence-custody-hold` until the four frozen packages and their source/test provenance have a verified canonical destination. The implementation overlap must stay excluded from any evidence-only transfer.
+
 ## Scope boundary
 
 This is evidence about synthetic cleanup receipt reconstruction and test coverage. It is not physical-release evidence, proof that a live cleanup failure occurred, or permission to run a game/input experiment. Keep one implementation candidate and preserve distinct raw, audit, and source histories when retiring overlapping refs.
