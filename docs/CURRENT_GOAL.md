@@ -29,6 +29,9 @@ not that all Issues are closed; see the [current consolidation plan](REPOSITORY_
 The first current semantic triage keeps broad reactive-control Issue #6 distinct
 from focused symbolic-interface Issue #56; its exact next audit is recorded in
 the [family entry](ideas/reactive-macro-symbolic-interface.md) and [work map](WORKER_WORK_MAP.md).
+The visual-interface family now separately maps the #4 north star, #3 grid, #5
+address/feedback contracts, #7 view-set selection and #8 composite packing; its
+finite #7 crosswalk and evidence limits are in the [family agenda](ideas/visual-interface-agenda.md).
 
 The latest input-release attempt is indexed in the [A02/A03 evidence note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md):
 A02 stopped before probe entry due to an incomplete source mount; A03 passed one
