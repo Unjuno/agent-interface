@@ -87,4 +87,3 @@ Repository cleanup is complete when:
 5. The worker map offers multiple disjoint, finite packets with private outputs, and does not imply ownership or live-resource grants.
 
 Open Issues and PRs may remain as an intentional, well-indexed research backlog. Do not claim a complete repository-wide audit until every live membership row and required semantic/custody decision has actually been checked.
-
