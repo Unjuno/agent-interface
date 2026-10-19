@@ -34,8 +34,14 @@ from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 
 _DELAY_MS = 8000
 _CANCEL_BOUND_MS = 3000
-_CANCEL_ACK_WITHHOLD_S = 1.0
+_CANCEL_ACK_WITHHOLD_S = float(os.environ.get(
+    'AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S', '1.0'))
+_TRACE_OWNER_PROCESS_METHODS = (
+    os.environ.get('AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS', '1') == '1')
 _TERMINAL_BOUND_MS = 5000
+
+if not 0 <= _CANCEL_ACK_WITHHOLD_S <= 2:
+    raise ValueError('cancel acknowledgement hold must be between 0 and 2 seconds')
 
 
 def _metadata(response):
@@ -62,7 +68,7 @@ def _xvfb_provenance():
 
 
 def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
-    """Inject blocked X I/O and withhold the child cancel acknowledgement."""
+    """Inject blocked X I/O and optionally delay the child cancel acknowledgement."""
     from Xlib.ext import xtest
 
     owner = GuardedSessionOwner(targets, directory, display_name, **options)
@@ -76,7 +82,7 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
 
     original_cancel = owner.cancel_guarded
 
-    def cancel_with_withheld_ack(token):
+    def cancel_with_delayed_ack(token):
         result = original_cancel(token)
         row = {'owner_pid':os.getpid(), 'status':result.get('status'),
                'withheld_ack_s':_CANCEL_ACK_WITHHOLD_S,
@@ -84,11 +90,12 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
         temporary = cancel_ack_withheld.with_suffix('.tmp')
         temporary.write_text(json.dumps(row, sort_keys=True), encoding='utf-8')
         temporary.replace(cancel_ack_withheld)
-        time.sleep(_CANCEL_ACK_WITHHOLD_S)
+        if _CANCEL_ACK_WITHHOLD_S:
+            time.sleep(_CANCEL_ACK_WITHHOLD_S)
         row['returned_ns'] = time.monotonic_ns()
         return result
 
-    owner.cancel_guarded = cancel_with_withheld_ack
+    owner.cancel_guarded = cancel_with_delayed_ack
 
     def get_with_delayed_request():
         session = original_get()
@@ -209,6 +216,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 'delayed_keypress_ms':_DELAY_MS,
                 'cancel_return_bound_ms':_CANCEL_BOUND_MS,
                 'child_cancel_ack_withheld_s':_CANCEL_ACK_WITHHOLD_S,
+                'owner_process_method_trace':_TRACE_OWNER_PROCESS_METHODS,
                 'terminal_result_bound_ms':_TERMINAL_BOUND_MS,
                 'late_keypress_outcome':'record either result; do not assume queue cancellation',
             },
@@ -501,7 +509,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     before_alive = process.is_alive() if process is not None else None
                     started_ns = time.monotonic_ns()
                     original_process_methods = {}
-                    if process is not None:
+                    if process is not None and _TRACE_OWNER_PROCESS_METHODS:
                         for method_name in ('is_alive', 'terminate', 'join', 'kill'):
                             original_method = getattr(process, method_name, None)
                             if not callable(original_method):
@@ -586,12 +594,23 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['cancel_internal_trace'] = cancel_internal_trace
                 cancelled = True
                 self.assertLess(cancel_elapsed_ms, _CANCEL_BOUND_MS, cancel)
-                self.assertEqual(cancel.get('status'), 'cancel_unconfirmed', cancel)
-                self.assertIsNone(cancel.get('input_dispatched'), cancel)
+                expected_cancel_status = (
+                    'cancel_unconfirmed' if _CANCEL_ACK_WITHHOLD_S
+                    else 'cancel_requested')
+                self.assertEqual(cancel.get('status'), expected_cancel_status, cancel)
+                if _CANCEL_ACK_WITHHOLD_S:
+                    self.assertIsNone(cancel.get('input_dispatched'), cancel)
+                else:
+                    self.assertFalse(cancel.get('input_dispatched'), cancel)
                 ack_marker = owner_output_root/'xvfb-cancel-ack-withheld.json'
                 self.assertTrue(ack_marker.exists(), report)
                 report['cancel_control_ack_withheld'] = json.loads(
                     ack_marker.read_text(encoding='utf-8'))
+                process_calls = cancel_internal_trace['owner_process_calls']
+                if _TRACE_OWNER_PROCESS_METHODS:
+                    self.assertTrue(process_calls, cancel_internal_trace)
+                else:
+                    self.assertEqual(process_calls, [], cancel_internal_trace)
                 self.assertTrue(cancel.get('owner_process_retired'), cancel)
                 self.assertEqual(cancel.get('owner_client_disconnect', {}).get('status'),
                                  'disconnected', cancel)
