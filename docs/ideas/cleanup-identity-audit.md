@@ -21,6 +21,8 @@ The Issue disposition and the remaining evidence-PR custody work are separate. C
 
 At main `3cf520498beb886750b9de8499890dfebb0ea209`, live GitHub reads still show #8681 closed, #8771 merged, and #8687 open at the head above. A direct tree comparison of `origin/main` with the exact #8687 head confirms all 47 A02–A05 packet files are absent from current main. They remain on the open PR head; no packet was copied, rerun, or altered in this recheck. Keep #8687 in `evidence-custody-hold` until the four frozen packages and their source/test provenance have a verified canonical destination. The implementation overlap must stay excluded from any evidence-only transfer.
 
+An evidence-only preservation branch now carries those four packages byte-for-byte under their original research paths plus [a separate frozen source snapshot](../../research/doom/cleanup_identity_source_snapshot_20261009/README.md). The two source/test copies are from the exact #8687 head and have SHA-256 values `5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c` and `03b1fee332f56a2413b6d606129a82ce09e0cd6f371d60741829f0113906b049`; all 51 manifest entries across A02–A05 match. This is a custody-preservation candidate, not yet a canonical main-tree destination. No candidate, auditor, or test was executed. Keep #8687 open until this evidence-only PR is merged and the main tree is rechecked.
+
 ## Scope boundary
 
 This is evidence about synthetic cleanup receipt reconstruction and test coverage. It is not physical-release evidence, proof that a live cleanup failure occurred, or permission to run a game/input experiment. Keep one implementation candidate and preserve distinct raw, audit, and source histories when retiring overlapping refs.
