@@ -16,6 +16,10 @@ The [B02 routing receipt](maintenance/issue-discovery-b02-20261019.md) covers th
 
 The [B03 receipt](maintenance/issue-discovery-b03-20261019.md) routes the third 25-row batch. Most items already have curated outcome rows; new parent summaries cover #137/#186/#197, and #104 now reflects its corrected `HOLD_GRID_TOO_COARSE` outcome. The spot-checked PR chain #147/#169/#179/#181/#192/#206/#207/#220/#231/#267/#277 is merged, while issue-level questions remain open. #197's cooperative validation result has a source/raw custody gap in the author comment and must not be inferred from merged #220. B04 is next; check exact owners before any assignment. No Issue, PR, or evidence state changed.
 
+### B04 bounded intake — publication identity, GUI selection, and accessibility
+
+The [B04 receipt](maintenance/issue-discovery-b04-20261019.md) routes the fourth 25-row batch without pooling unlike outcomes. It adds the missing index rows for #375/#383/#389: #375 remains an unmeasured proposal, #383 retains a scoped post-check wrong-target result, and #389 retains a standard AT-SPI event-transport positive control without a document-selection identity claim. Nineteen explicitly linked PRs were merged and three closed without merge in the live spot-check; this is not a full PR/branch ownership audit. All 25 Issues were open and unassigned at the read, which does not prove no worker owns a branch or local artifact. No Issue/PR state or experiment outcome changed. B05 is the next intake; verify exact ownership before assigning work.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
