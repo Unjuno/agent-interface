@@ -4,9 +4,13 @@ This plan makes the repository easier to work in with many independent workers w
 
 ## Execution refresh — 2026-10-20
 
-The live default branch is `main` at `87dfb33d94f3a8bbe12fbf3ab5bc7f0433c8d8c5`. A count-only GraphQL read returned 1,673 open Issues and 479 open PRs, matching the r96 counts. This is not a new paginated inventory, semantic review, PR audit, or owner/custody check; r96 remains the latest full membership snapshot until a new paginated read is captured. No remote Issue or PR state was changed for this refresh.
+The earlier count-only checkpoint was at `87dfb33d94f3a8bbe12fbf3ab5bc7f0433c8d8c5`; it returned 1,673 open Issues and 479 open PRs but did not refresh the inventory. A full paginated refresh is now preserved as [r97](maintenance/repository-inventory-20261019-r97.md) at main `4ef4169b28952ff9b546cb1ab19aed74bb5efce0`. The count-only checkpoint is superseded by r97. No remote Issue or PR state was changed for inventory capture.
 
 The user's organizing objective is to make the repository safe for many workers to contribute independently while keeping ideas available for future research. A catalog entry is a way to preserve and connect an idea, not a reason to close its Issue. Close an Issue only after its distinct question, evidence and limits, dependencies, disposition, successor (if any), and reopen condition are recorded. Keep unresolved computer-control goals, active assignments, integration work, and evidence-custody gaps open. Review and integrate PRs as a separate stream; never infer a PR's disposition from its Issue or from an inventory row.
+
+## Fresh live baseline r97 — 2026-10-19 16:00 UTC
+
+The full paginated membership read at main `4ef4169b28952ff9b546cb1ab19aed74bb5efce0` returned 1,673 open Issues and 479 open PRs, matching GraphQL. The Issue and PR ID sets match r96; all PR head/base refs and OIDs also match r96. Exact CSV hashes, capture times, and reproduction commands are in the [r97 inventory](maintenance/repository-inventory-20261019-r97.md). This replaces r96 as the current membership baseline only. It is not semantic classification or current owner/custody evidence; refresh affected live records before dispositions.
 
 ### Ordered work waves
 
@@ -19,11 +23,11 @@ The user's organizing objective is to make the repository safe for many workers 
 
 Completion means the open backlog has a traceable classification path, completed family batches are semantically organized, every changed Issue/PR has a defensible disposition, and workers can select independent bounded work. It does not require zero open Issues, zero open PRs, or deletion of old research records.
 
-## Fresh live baseline r96 — 2026-10-19 15:22 UTC
+## Prior full inventory r96 — 2026-10-19 15:22 UTC
 
 The default branch was `b0e47dd4f67a57db5c530d19251ad172e29554d7` before and after the paginated read. GitHub CLI returned 1,673 open Issues and 479 open PRs; GraphQL returned the same totals. The full row sets are preserved in [r96 inventory](maintenance/repository-inventory-20261019-r96.md), [open Issues](maintenance/open-issues-20261019-r96.csv), and [open PRs](maintenance/open-prs-20261019-r96.csv). Both ID sets match r95; r96 refreshes PR head/base OIDs and issue/PR metadata against the newer main. Membership is still not semantic triage, review of every PR diff, or proof of current owner/custody. Re-fetch the exact live item before a state change.
 
-This is the current working baseline for the plan. Keep r95 and earlier records immutable. The 1,673 Issues need family-level meaning and disposition; the 479 PRs need independent exact-head review. First organize each hypothesis with its existing outcomes, limits, dependencies and a finite next decision. Then retain actionable/blocked Issues or close only individually catalogued ideas with a source link and reopen condition. Continue integrating verified PRs separately; never treat a smaller count as research progress.
+At the time, this was the working baseline for the plan. It is superseded for membership by r97 above; keep r96 and earlier records immutable. The 1,673 Issues need family-level meaning and disposition; the 479 PRs need independent exact-head review. First organize each hypothesis with its existing outcomes, limits, dependencies and a finite next decision. Then retain actionable/blocked Issues or close only individually catalogued ideas with a source link and reopen condition. Continue integrating verified PRs separately; never treat a smaller count as research progress.
 
 ## Fresh live baseline r95 — 2026-10-19 14:37 UTC
 
@@ -44,9 +48,9 @@ PR [#9195](https://github.com/Unjuno/agent-interface/pull/9195) then merged the 
 ## First live PR disposition from r95
 
 PR [#9006](https://github.com/Unjuno/agent-interface/pull/9006) was re-read at head `655a5bcdf6026650044e0157343d4e0de268a548`, base `main`. It is a draft test-only change to `runtime/backends/win32_v1/test_integration.py`; the PR description reports 19 focused helper tests passing locally and 8 Windows-only tests skipped on its local run. Its latest published checks include `native-mcp` and `native-win32` failures, with the latter exposing an unresolved `GetAsyncKeyState == 0` release-verification contract. The PR itself says production code is unchanged and keeps the change in draft. **Disposition: `needs-local-fix` / contract review; keep open and unmerged.** Next finite action is to decide and test the zero-state contract against current main, then rerun the focused and affected Windows suites on the exact updated head. This is a one-PR spot review, not a disposition of the other 478 PRs.
-## Verified starting point
+## Verified starting point at r96
 
-The verified baseline is now [r96](maintenance/repository-inventory-20261019-r96.md) at `b0e47dd4f67a57db5c530d19251ad172e29554d7`. Earlier r87/r51/r52/r95 counts and discovery queues remain immutable historical records. Re-fetch the exact Issue, PR, head, evidence, and current owner before any state change. Routing an Issue to a family is only discovery; it does not finish semantic classification. See the [r51 routing queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv), [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md), and [consolidation history](REPOSITORY_CONSOLIDATION.md).
+At this historical checkpoint, the verified baseline was [r96](maintenance/repository-inventory-20261019-r96.md) at `b0e47dd4f67a57db5c530d19251ad172e29554d7`; r97 above is current for membership. Earlier r87/r51/r52/r95 counts and discovery queues remain immutable historical records. Re-fetch the exact Issue, PR, head, evidence, and current owner before any state change. Routing an Issue to a family is only discovery; it does not finish semantic classification. See the [r51 routing queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv), [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md), and [consolidation history](REPOSITORY_CONSOLIDATION.md).
 
 **Current checkpoint after cleanup PR #9186 merged:** main is `bee4b22ebc1166d2055b367aff5d363ee82848c7`. A direct GitHub search read at 2026-10-19 12:19 UTC reports 1,673 open Issues and 480 open PRs. This count-only read does not replace a paginated row-level inventory or confirm semantic status. The new [local worktree custody overlay r01](maintenance/worktree-custody-overlay-r01-20261019.md) records the separate workspace scan and its unresolved ownership boundary.
 
