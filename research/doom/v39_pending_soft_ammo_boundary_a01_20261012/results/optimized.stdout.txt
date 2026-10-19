@@ -1,0 +1,66 @@
+{
+  "cases": [
+    {
+      "cover_admission": "admitted",
+      "cover_guard_hard_ammo_floor": 1,
+      "current_ammo": 4,
+      "monitor_result": null,
+      "next_action_minimum_ammo": 5,
+      "pending_turn_cancel_signal": false,
+      "soft_event_count": 1,
+      "source_ammo": 6
+    },
+    {
+      "cover_admission": "admitted",
+      "cover_guard_hard_ammo_floor": 1,
+      "current_ammo": 0,
+      "monitor_result": "ammo:below_hard_minimum",
+      "next_action_minimum_ammo": 5,
+      "pending_turn_cancel_signal": true,
+      "soft_event_count": 0,
+      "source_ammo": 6
+    }
+  ],
+  "checks": [
+    {
+      "name": "pending_loop_control_flow",
+      "pass": true
+    },
+    {
+      "name": "soft_case_admitted",
+      "pass": true
+    },
+    {
+      "name": "soft_case_below_action_floor",
+      "pass": true
+    },
+    {
+      "name": "cover_hard_floor_is_one",
+      "pass": true
+    },
+    {
+      "name": "soft_change_queued_no_invalidation",
+      "pass": true
+    },
+    {
+      "name": "soft_change_does_not_cancel_pending",
+      "pass": true
+    },
+    {
+      "name": "hard_change_emits_invalidation",
+      "pass": true
+    },
+    {
+      "name": "hard_change_triggers_cancel_condition",
+      "pass": true
+    }
+  ],
+  "controller_sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+  "guard_sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+  "passed": 8,
+  "pending_loop_contract_present": true,
+  "schema": "issue59-pending-soft-boundary-raw-v1",
+  "scope": "exact current-main monitor functions and pending-loop control-flow inspection; synthetic paired HUD only; no live model/game/OS input/physical release",
+  "source_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "total": 8
+}
