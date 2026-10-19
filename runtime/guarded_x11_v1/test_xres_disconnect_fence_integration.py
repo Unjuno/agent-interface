@@ -385,6 +385,7 @@ class XResDisconnectFenceIntegrationTests(unittest.TestCase):
                 owner_returncode = owner.wait(timeout=1.0)
             if owner is not None and owner.stderr and not owner.stderr.closed:
                 report['owner_stderr'] = owner.stderr.read()
+                owner.stderr.close()
             if (marker_data is not None and killed_ns is not None
                     and cleanup is None):
                 try:
@@ -617,6 +618,7 @@ class XResHeldKeyDisconnectIntegrationTests(unittest.TestCase):
                 owner_returncode = owner.wait(timeout=1.0)
             if owner is not None and owner.stderr and not owner.stderr.closed:
                 report['owner_stderr'] = owner.stderr.read()
+                owner.stderr.close()
             if keycodes is not None and killed_ns is not None:
                 horizon_ns = killed_ns + (delay_ms + 500)*1_000_000
                 while time.monotonic_ns() < horizon_ns:
