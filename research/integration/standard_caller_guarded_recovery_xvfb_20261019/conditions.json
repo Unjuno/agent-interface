@@ -1,0 +1,48 @@
+{
+  "schema": "agent-interface/xvfb-recovery-run-conditions-v1",
+  "source_head": "5c4522fff6ceb373d0a6dd6cd3d1e0e37184077a",
+  "test_source_path": "runtime/cli_v1/test_mcp_xvfb_generation_integration.py",
+  "test_source_blob": "31cba573f41fef7b9ca77921a742e00cfea1b3d1",
+  "test_source_sha256": "5c45cc42826cdb2637ad070e63e21d3b3d89b69b4e72151b81a569ad61465bb7",
+  "workflow": "Runtime X11 v1 Integration",
+  "workflow_file": ".github/workflows/runtime-x11-v1.yml",
+  "workflow_run_id": 39251992654,
+  "workflow_job_id": 118057793146,
+  "selected_test": "runtime.cli_v1.test_mcp_xvfb_generation_integration.StandardCallerXvfbGenerationTests.test_process_and_window_generation_flow_through_standard_mcp",
+  "environment": {
+    "runner": "GitHub-hosted Linux",
+    "python": "3.12.15",
+    "xvfb_package": "2:21.1.12-1ubuntu1.8",
+    "xvfb_binary_sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+    "resolution_px": [1024, 768]
+  },
+  "target": {
+    "application": "synthetic X11 app; property increments on KeyPress",
+    "window_geometry_px": [40, 40, 240, 180],
+    "key_sequence": ["a", "b", "c"],
+    "generation_evidence": "XRes PID plus /proc start-ticks digest, recorded in raw JSON"
+  },
+  "injected_faults": [
+    "post-press acknowledgement raises OSError",
+    "one-shot automatic key release raises OSError"
+  ],
+  "independent_observers": [
+    "synthetic application event loop and property reader",
+    "separate X client for keymap readback"
+  ],
+  "observed_final_run": {
+    "selected_test": "PASS_SCOPED_XVFB_STANDARD_CALLER_RECOVERY",
+    "workflow_private_xvfb_step": "failure due to a separate XRes marker-file JSONDecodeError",
+    "runtime_task_success": null,
+    "recovery_elapsed_ms": 4.894443,
+    "independent_key_up_after_recovery": true,
+    "old_alias_refused_after_review": true,
+    "fresh_action_property_value": [3]
+  },
+  "limits": [
+    "Does not test indefinitely blocked X-server/backend I/O",
+    "Does not certify a universal physical-release deadline",
+    "Does not establish MAP01, game, native Windows/XWayland, or efficiency results",
+    "Does not use WSLc"
+  ]
+}
