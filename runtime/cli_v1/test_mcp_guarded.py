@@ -843,6 +843,10 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertEqual(row['feedback']['image_reference']['observation_id'],'fixture-3')
             timing=row['owner_timing']
             self.assertEqual(timing['clock'],'time.monotonic_ns')
+            self.assertEqual(timing['schema'],
+                             'agent-interface/compiled-owner-attempt-timing-v1')
+            self.assertEqual(timing['status'],'returned')
+            self.assertEqual(row['owner_timing_retention'],{'status':'recorded'})
             self.assertLessEqual(timing['started_ns'],
                                  min(observation['captured_ns']
                                      for observation in receipt['observations']))
@@ -851,7 +855,9 @@ class PublicCompiledOwnerTests(unittest.TestCase):
                                         for event in effects))
             self.assertEqual(timing['elapsed_ns'],
                              timing['completed_ns']-timing['started_ns'])
-            self.assertGreaterEqual(timing['elapsed_ns'],10_000_000)
+            self.assertGreaterEqual(timing['elapsed_ns'],10_000_000,timing)
+            retained=json.loads((root/'method'/'owner-attempt-timing.json').read_text())
+            self.assertEqual(retained,timing)
             for event in effects:
                 self.assertLessEqual(event['execution_accepted_ns'],
                                      event['effect_observation_captured_ns'])
@@ -895,15 +901,47 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertIsNone(row['feedback']);self.assertEqual(owner.bridge.sequence,1)
 
     def test_exception_keeps_same_owner_cleanup_duty_and_never_replays(self):
-        with tempfile.TemporaryDirectory() as td:
-            root=Path(td);owner=self.owner(root);bridge=owner.bridge
-            with patch('runtime.guarded_x11_v1.compiled.run',side_effect=RuntimeError('after partial input')) as run:
+        for error in (RuntimeError('after partial input'),
+                      KeyboardInterrupt('after partial input')):
+            with self.subTest(error=type(error).__name__), tempfile.TemporaryDirectory() as td:
+                root=Path(td);owner=self.owner(root);bridge=owner.bridge
+                with patch('runtime.guarded_x11_v1.compiled.run',side_effect=error) as run:
+                    with self.assertRaises(type(error)):
+                        owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
+                self.assertTrue(bridge.review_required);run.assert_called_once()
+                self.assertEqual(owner.owner_timing_retention,{'status':'recorded'})
+                retained=json.loads((root/'method'/'owner-attempt-timing.json').read_text())
+                self.assertEqual(retained['status'],'raised')
+                self.assertEqual(retained['error_type'],type(error).__name__)
+                self.assertEqual(retained['effect_status'],'unknown')
+                self.assertFalse(retained['replay_allowed'])
+                self.assertGreaterEqual(retained['elapsed_ns'],0)
+                close=owner.close();self.assertTrue(close['release']['verified'])
+                bridge.backend.release_all.assert_called_once()
                 with self.assertRaises(RuntimeError):
-                    owner.run_compiled({}, {}, call_root=root/'method', **self.callbacks())
-            self.assertTrue(bridge.review_required);run.assert_called_once()
-            close=owner.close();self.assertTrue(close['release']['verified']);bridge.backend.release_all.assert_called_once()
-            with self.assertRaises(RuntimeError):
-                owner.run_compiled({}, {}, call_root=root/'another', **self.callbacks())
+                    owner.run_compiled({}, {}, call_root=root/'another', **self.callbacks())
+
+    def test_timing_persistence_failure_does_not_mask_result_or_original_error(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root)
+            with (patch('runtime.guarded_x11_v1.compiled.run',
+                        return_value={'outcome':'SAFE_YIELD','observations':[]}),
+                  patch('runtime.cli_v1.attempt._write_json',
+                        side_effect=OSError('timing disk full'))):
+                row=owner.run_compiled({}, {}, call_root=root/'success', **self.callbacks())
+            self.assertEqual(row['owner_timing_retention']['status'],'unavailable')
+            self.assertEqual(row['owner_timing_retention']['error_type'],'OSError')
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);owner=self.owner(root)
+            with (patch('runtime.guarded_x11_v1.compiled.run',
+                        side_effect=RuntimeError('original input failure')),
+                  patch('runtime.cli_v1.attempt._write_json',
+                        side_effect=OSError('timing disk full'))):
+                with self.assertRaisesRegex(RuntimeError,'original input failure'):
+                    owner.run_compiled({}, {}, call_root=root/'failure', **self.callbacks())
+            self.assertTrue(owner.bridge.review_required)
+            self.assertEqual(owner.owner_timing_retention['status'],'unavailable')
+            self.assertEqual(owner.owner_timing_retention['error_type'],'OSError')
 
     def test_presentation_failure_retains_method_result_and_requires_review(self):
         with tempfile.TemporaryDirectory() as td:
