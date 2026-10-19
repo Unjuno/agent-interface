@@ -78,10 +78,10 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
         sync_seen = {'value':False}
 
         def fake_input(display_connection, event_type, detail=0, time=0,
-                       root_window=0, x=0, y=0):
+                       root=0, x=0, y=0):
             result = original_fake_input(
                 display_connection, event_type, detail=detail, time=time,
-                root=root_window, x=x, y=y)
+                root=root, x=x, y=y)
             if event_type == X.KeyPress and not injected['value']:
                 delayed_keycode = backend._keycode('b')
                 original_fake_input(
