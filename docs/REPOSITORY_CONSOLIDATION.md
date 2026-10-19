@@ -6,7 +6,7 @@
 
 Issue/PR数をゼロにするのではなく、研究アイデア・反証・結果・未解決点を失わず、次の担当者が一つの独立した仕事をすぐ選べる状態にする。進行中のコンピューター制御研究ゴールは維持し、そのゴールに関係する証拠・実装・残差は研究系譜から外さない。整理完了時には、各open Issueに「実行する理由と次の判別試験」または「担当・依存・保留解除条件」があり、アイデアだけの項目は正規カタログから元Issueへ戻れる。各open PRには現head/base、固有の差分・証拠、依存、所有状態、ローカル検証、次の処置がある。
 
-最新の完全な固定スナップショットは[r61](maintenance/repository-inventory-recheck-20261019-r61.md)（2026-10-19 03:03:45 UTC、open Issue 1,673件、open PR 497件）である。現在の正しいrow-level exportは[Issue CSV](maintenance/open-issues-20261019-r61.csv)と[PR CSV](maintenance/open-prs-20261019-r61.csv)。r53の同名CSVは現在のGit blobを検査するとPowerShell配列の`Length/Count`だけを持つ2行ファイルであり、row-level metadataやID集合を含まない。r53/r56の件数/hash記録は履歴として保持し、旧CSVを監査根拠に再利用しない。r52カバレッジ監査は全Issueの索引経路を確認したが、489件は歴史的な研究選定表にprimary rowがなく、意味の分類もPRとの結合監査も未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
+最新の完全な固定スナップショットは[r62](maintenance/repository-inventory-20261019-r62.md)（2026-10-19 03:21:18 UTC、main `3cf520498beb886750b9de8499890dfebb0ea209`、open Issue 1,673件、open PR 497件）である。現在の正しいrow-level exportは[Issue CSV](maintenance/open-issues-20261019-r62.csv)と[PR CSV](maintenance/open-prs-20261019-r62.csv)。r61からIssue/PRのID集合は変化していない。r52カバレッジ監査は全Issueの索引経路を確認したが、歴史的な研究選定表にprimary rowがない項目の意味分類とPR・担当・worktreeとの結合監査は未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
 
 **最新membershipの再確認 r54 (2026-10-19 02:02:31 UTC):** main `289a0c19ab85581cb3414b01d92f2f887ae0c60b`で完全ページングを読み、open Issue 1,673件、open PR 502件を確認した。sorted ID set hashesはr53と完全一致するため、CSVの重複生成はせず、[r54再確認記録](maintenance/repository-inventory-recheck-20261019-r54.md)だけを追加した。semantic triage、個別PRのレビュー/検証、担当・worktree custodyは別作業であり未完了。
 
@@ -899,3 +899,13 @@ r60はopen Issue 1,673件、open PR 498件。CSVは1,673/498行、sorted-ID hash
 PR [#8906](https://github.com/Unjuno/agent-interface/pull/8906)は一つのREADMEのみを追加し、明示的なowner releaseなしに実施された一回限りのWSLc CLI smokeとglobal container inventoryをprocess deviationとして開示する。READMEはcached image、exact command、成功marker/exit、cgroup/swap warning、Ubuntu起動失敗、4個の既存停止container、owner-scoped cleanup不在を記録し、performance/memory/parityの主張を避けている。既存replay-gate成功を確認し、追加WSLc操作をせず、2026-10-19 03:03:09 UTCにmergeした（`38f27e2dcaf3bd9f665ff1fa4f91cc17c983ec9f`）。これは既存gate違反の履歴を保全するもので、現在のlane releaseではない。#8685はOPENのまま。read-only callsの#8913とは別の実行であり、#8913もOPEN。
 
 r61はopen Issue 1,673件、open PR 497件。CSVは1,673/497行、sorted-ID hashesは`4ca4576b8a328d9f41b862a3c7ad3793edd9ddd085bb127d708796e9b6082dd6`と`03bd6c9ef402dd4670557cf3217c780fc945d13e7b0fa5030b9f794adc4cbe93`。Issue集合はr60から不変、PR集合は#8906だけ減少した。残るIssue/PRのsemantic triage、dependency、custody、個別dispositionは未完了であり、repository-wide clean完了ではない。
+
+## 実行状況 r07 — current inventory、PR batch、#8687証拠custody
+
+[r62 inventory](maintenance/repository-inventory-20261019-r62.md)を2026-10-19 03:21:18 UTCにmain `3cf520498beb886750b9de8499890dfebb0ea209`で取得した。open Issue 1,673件・PR 497件でr61からID集合の増減はない。PR head/base metadataを再取得したが、これは内容・所有者の意味判定ではない。
+
+[直近PR batch監査](maintenance/recent-pr-triage-20261019-r01.md)の15件をlive stateに照合し、6件がmerge済み、9件がopenと確認した。openのうち#8701はtested-stack/head照合、#8678は有限STOP記録、#9006はnative-win32失敗とfixture修正、#8842/#8756はconflict解消、#8855/#8849/#8861は作者がdraft解除前に範囲と根拠を補う必要がある。#8687は#8771へ重複実装を入れず、証拠PRとして保全判定を続ける。
+
+Issue #8681は閉鎖済みで、その実装PR #8771もmerge済みだが、#8687 head `6195600931fa6de4ecf1a5012cb83b549addb5af`のA02–A05資料47ファイルはmain treeにないことを直接比較で再確認した。これらは同PR headに存在し、複製・変更・再実行はしていない。#8687を閉じる前に、凍結パッケージだけでなく、各freezeが参照するsource/test blobの再構成可能性を含む正規保全先を作る。担当不明のPRを自動でcloseせず、次の整理作業はこの証拠専用移管の固定範囲を策定すること。
+
+Issue/PR全体の意味分類、担当・PR・branch/worktree間のlineage、未追跡証拠のcustodyは未完了。全件closeや全PR mergeを完了条件にせず、familyごとに再開可能なアイデアと証拠をつないで継続する。
