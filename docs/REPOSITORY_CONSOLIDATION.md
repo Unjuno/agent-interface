@@ -1,4 +1,5 @@
 # リポジトリ全体の整理計画
+実行手順は[リポジトリ収束の実行計画](superpowers/plans/2026-10-19-repository-convergence.md)を参照。Issueは意味と仮説を正規カタログに整理し、根拠・後継・再開条件をIssueへ戻してから個別に処遇する。件数を減らすこと自体は完了条件ではない。
 
 ## 2026-10-19 全体整理の実行計画 — アイデアを保存して作業面を収束
 
@@ -7,6 +8,8 @@
 Issue/PR数をゼロにするのではなく、研究アイデア・反証・結果・未解決点を失わず、次の担当者が一つの独立した仕事をすぐ選べる状態にする。進行中のコンピューター制御研究ゴールは維持し、そのゴールに関係する証拠・実装・残差は研究系譜から外さない。整理完了時には、各open Issueに「実行する理由と次の判別試験」または「担当・依存・保留解除条件」があり、アイデアだけの項目は正規カタログから元Issueへ戻れる。各open PRには現head/base、固有の差分・証拠、依存、所有状態、ローカル検証、次の処置がある。
 
 **最新の完全row-level metadata r85 (2026-10-19 09:22–09:25 UTC):** main `b1bff75ffa5d06f6d2c7d10bc7a89b1ab2dbdc16`でopen Issue 1,673件・open PR 482件の完全なrow-level CSV、PR head/base、review/merge state、check rollupを取得した。[r85 inventory](maintenance/repository-inventory-20261019-r85.md)。r70からIssue集合は不変、PRは#9171追加・8件close/merge。詳細のworktree artifact custodyは[surface map](maintenance/repository-surface-map-20261019.md)。
+
+**最新のmembership snapshot r86 (2026-10-19 10:59 UTC):** main `f08f60fa3be0612632d768689d23cd2d88a45c41`でopen Issue 1,673件・open PR 480件を完全ページングし、GraphQL総数と照合した。[r86 inventory](maintenance/repository-inventory-2026-10-19-r86.md)と[Issue CSV](maintenance/open-issues-2026-10-19-r86.csv)、[PR CSV](maintenance/open-prs-2026-10-19-r86.csv)。r86はr85より新しいmembership記録だが、PR check rollup・本文コメント・意味上の処遇は含まない。r85は引き続きchecksを含む最後の詳細スナップショット。各状態変更の直前に対象を再取得する。
 
 過去の完全なrow-level metadataは[r70](maintenance/repository-inventory-20261019-r70.md)（2026-10-19 05:13:23 UTC、main `e83e52dc0eda4c3ebc5f54f676971ce9e71a6006`、open Issue 1,673件、open PR 489件）である。05:27:38 UTCにmain `95386ee7e10e7ffc7422bd473f4db29991bd28b6`を基準に完全ページングを再実行したところ、ID集合とr70のIssue/PR取得metadataは一致した。詳細は[r74 reconciliation](#実行更新-r74--入口の整合とworktree-custody棚卸し)。新しいmetadata CSVは重複を避けて作らず、r70をimmutableなhistorical snapshotとして保持する。r52 coverage auditは全Issueの索引経路を確認したが、歴史的な研究選定表にprimary rowがない項目の意味分類とPR・担当・worktreeとの結合監査は未完了である。membershipは状態の時点記録であり、状態変更前にはその時点の現状を再確認する。
 
