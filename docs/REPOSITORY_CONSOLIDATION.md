@@ -36,6 +36,10 @@ The [B07 receipt](maintenance/issue-discovery-b07-20261019.md) routes rows 151�
 
 The [B08 receipt](maintenance/issue-discovery-b08-20261019.md) routes rows 176–200 and adds eleven missing direct outcome summaries, plus direct entries for governing #2789 and #3352. It keeps target binding separate from release/effect, preserves unrecovered or comment-only evidence as HOLD, distinguishes construction/synthetic Local System-1 results, and records #3857's static STOP and #3876's outstanding integration boundary. Nine linked PRs are merged and #8246 remains Draft. All 25 Issues were open and unassigned at intake; no Issue/PR state or research disposition changed. B09 is next. Workers may take disjoint Issues and paths concurrently; shared index edits still need serialized integration.
 
+### B09 bounded intake — computer-control direction, evidence custody, and runtime integration
+
+The [B09 receipt](maintenance/issue-discovery-b09-20261019.md) routes rows 201–225 and adds five missing direct outcome summaries. It preserves prior allocation HOLDs and source-publication gaps, distinguishes synthetic/scoped results from caller-visible computer-control evidence, and records #5280's direction without treating documentation as task success. Thirteen cited PRs are merged except #8271, which remains Draft. All 25 Issues were open and unassigned at intake, with no status or experiment changes. B10 is next; disjoint worker paths remain available in parallel.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
