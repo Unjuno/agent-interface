@@ -40,6 +40,10 @@ The [B08 receipt](maintenance/issue-discovery-b08-20261019.md) routes rows 176�
 
 The [B09 receipt](maintenance/issue-discovery-b09-20261019.md) routes rows 201–225 and adds five missing direct outcome summaries. It preserves prior allocation HOLDs and source-publication gaps, distinguishes synthetic/scoped results from caller-visible computer-control evidence, and records #5280's direction without treating documentation as task success. Thirteen cited PRs are merged except #8271, which remains Draft. All 25 Issues were open and unassigned at intake, with no status or experiment changes. B10 is next; disjoint worker paths remain available in parallel.
 
+### B10 bounded intake — oversight studies, control interfaces, and operation policy
+
+The [B10 receipt](maintenance/issue-discovery-b10-20261019.md) routes rows 226–250; all 25 Issues already had curated direct index entries, so no duplicate outcome rows were added. It preserves method-scoped results, an open Draft package, and separate source/publication corrections. Fourteen cited PRs are merged except #7940, which remains Draft. The review of #6767 found no worker-exclusive or reviewer-count gate: its body permits parallel authorized work, but “retain recovery responsibility” during external waits lacks an expiry/discharge condition and could impose indefinite personal duty. The repository record recommends bounded ownership, a next check, accepted handoff, and explicit stop/expiry; no Issue or policy was edited in this intake. No status or experiment changed; B11 is next.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
