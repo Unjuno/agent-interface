@@ -1,20 +1,13 @@
 # Current objective and working direction
 
-Latest full row-level metadata is [r70](maintenance/repository-inventory-20261019-r70.md), captured at 2026-10-19 05:13:23 UTC against main
-`e83e52dc0eda4c3ebc5f54f676971ce9e71a6006` with 1,673 open Issues and 489 open PRs. A complete live read at 05:27:38 UTC against main
-`95386ee7e10e7ffc7422bd473f4db29991bd28b6` found the same IDs and the same
-Issue metadata and PR head/base/reviewer fields; see [r74 in the consolidation plan](REPOSITORY_CONSOLIDATION.md#実行更新-r74--入口の整合とworktree-custody棚卸し). No duplicate CSV was needed.
-The entry-point and custody reconciliation then merged as PR #9155 at main
-`5efe7301f6e655a41c4653b3c6baf45138ca72f6`. A current GraphQL count read still
-returns 1,673 open Issues and 489 open PRs; this is a count check, not a new
-row-level metadata snapshot or semantic/ownership review.
+Latest full row-level metadata remains the immutable [r70 inventory](maintenance/repository-inventory-20261019-r70.md). The current membership recheck [r71](maintenance/repository-inventory-20261019-r71.md), at main `f89e176b43b8db35798d51d887757e2d650e9bb1`, reports 1,673 open Issues and 488 open PRs; only #8825 left the open PR set, and no Issue IDs changed. This is a membership check, not semantic/ownership classification. Consolidation r82 records the #8825 integration and current next work.
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
 See the
 [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
-family-by-family review and disposition criteria, including the latest r77
-organization and work-dispatch rules. The plan's latest counts-only check is
-1,673 open Issues and 489 open PRs against main `168200eb43dd0f9144b3ed4aef551387674c7bfd`;
-full row-level metadata remains the immutable r70/r74 baseline. This is the short entry
+family-by-family review and disposition criteria, including the latest r82
+organization and work-dispatch rules. Current membership is 1,673 open Issues
+and 488 open PRs at main `f89e176b43b8db35798d51d887757e2d650e9bb1`; full
+row-level metadata remains the immutable r70 baseline. This is the short entry
 point, not an experiment ledger.
 The dated [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md)
 records three disjoint family candidates (#17, #5, #59), not current assignments
