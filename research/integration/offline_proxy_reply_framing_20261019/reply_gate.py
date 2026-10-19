@@ -16,6 +16,7 @@ class Request:
     sequence: int
     role: str
     action_id: str | None
+    keycode: int | None
 
 
 @dataclass(frozen=True)
@@ -29,6 +30,7 @@ class Reply:
 @dataclass(frozen=True)
 class KeyPressReceipt:
     action_id: str
+    keycode: int
 
 
 def decode_request_frame(frame: bytes, byte_order: str) -> int:
@@ -51,6 +53,22 @@ def decode_request_frame(frame: bytes, byte_order: str) -> int:
     if expected < header_size or expected != len(frame):
         raise FrameError("request frame length mismatch")
     return expected
+
+
+def classify_request_role(frame: bytes, byte_order: str, *,
+                          xtest_major_opcode: int | None = None) -> str:
+    """Classify only the two request forms used by the frozen caller path."""
+    decode_request_frame(frame, byte_order)
+    major_opcode = frame[0]
+    if major_opcode == 106:
+        return "get_pointer_control"
+    if (xtest_major_opcode is not None
+            and major_opcode == xtest_major_opcode
+            and frame[1] == 2
+            and len(frame) >= 8
+            and frame[4] == 2):
+        return "xtest_key_press"
+    return "other"
 
 
 def decode_reply_frame(frame: bytes, byte_order: str) -> tuple[int, int]:
@@ -76,14 +94,35 @@ class RequestLedger:
     def __init__(self) -> None:
         self._next: dict[str, int] = {}
         self._requests: dict[tuple[str, int], Request] = {}
+        self._pending_input: dict[str, tuple[str, int]] = {}
 
     def record(self, connection: str, peer_pid: int, frame: bytes, *,
-               byte_order: str, role: str, action_id: str | None = None) -> Request:
+               byte_order: str, role: str | None = None,
+               action_id: str | None = None,
+               xtest_major_opcode: int | None = None) -> Request:
         decode_request_frame(frame, byte_order)
+        role = role or classify_request_role(
+            frame, byte_order, xtest_major_opcode=xtest_major_opcode)
+        keycode = None
+        if role == "xtest_key_press":
+            if action_id is None:
+                raise FrameError("XTEST key press needs an action identity")
+            keycode = frame[5]
+            self._pending_input[connection] = (action_id, keycode)
+        elif role == "get_pointer_control":
+            pending = self._pending_input.pop(connection, None)
+            if pending is not None:
+                pending_action, pending_keycode = pending
+                if action_id is not None and action_id != pending_action:
+                    raise FrameError("sync action does not match preceding XTEST press")
+                action_id = pending_action
+                keycode = pending_keycode
+        else:
+            self._pending_input.pop(connection, None)
         sequence = self._next.get(connection, 0) + 1
         if sequence > 0xFFFF:
             raise FrameError("sequence wrap requires a separately qualified epoch")
-        request = Request(connection, peer_pid, sequence, role, action_id)
+        request = Request(connection, peer_pid, sequence, role, action_id, keycode)
         key = (connection, sequence)
         if key in self._requests:
             raise FrameError("duplicate connection-scoped request sequence")
@@ -101,13 +140,14 @@ class RequestLedger:
 
 
 class ExactReplyGate:
-    """Withhold only a preselected input-sync reply after its KeyPress receipt."""
+    """Withhold only the action's GetPointerControl reply after its KeyPress."""
 
     def __init__(self, *, owner_pid: int, target_request: Request) -> None:
         if target_request.peer_pid != owner_pid:
             raise ValueError("target request is not owned by the designated process")
-        if target_request.role != "input_sync" or not target_request.action_id:
-            raise ValueError("target must be an action-bound input sync request")
+        if (target_request.role != "get_pointer_control"
+                or not target_request.action_id or target_request.keycode is None):
+            raise ValueError("target must be an action-bound GetPointerControl request")
         self.owner_pid = owner_pid
         self.target = target_request
 
@@ -122,4 +162,5 @@ class ExactReplyGate:
             and reply.sequence == self.target.sequence
             and request == self.target
             and keypress.action_id == self.target.action_id
+            and keypress.keycode == self.target.keycode
         )

@@ -9,19 +9,31 @@
   "live_gui_or_x_server_used": false,
   "input_dispatched": false,
   "source_packet": "research/integration/standard_caller_blocked_x11_release_20261019/README.md",
+  "standard_caller_source": {
+    "guarded_press": "runtime/guarded_x11_v1/bridge.py::_GuardedBackend._before_input_press",
+    "identity_reader": "runtime/guarded_x11_v1/target_queries.py::TargetQueryWorker",
+    "identity_connection": "X11TargetQueries opens a new Xlib display connection on a thread in the owned process",
+    "input_request": "runtime/backends/x11_v1/backend.py::X11Backend.key_state sends XTEST FakeInput KeyPress",
+    "sync_request": "A03 locks python-xlib==0.33; Display.sync calls get_pointer_control, core opcode 106",
+    "frozen_proxy_gap": "client-to-server relay does not parse request frames; reply gate uses owner PID and response type only"
+  },
   "immutable_attempts_replayed": [],
   "model": {
     "owner_pid": 24,
     "connections": ["identity-xconn", "input-xconn"],
     "same_peer_pid_on_both_connections": true,
     "reply_sequence_scope": "connection-local",
-    "selected_request_role": "input_sync",
+    "input_sequence": [
+      "XTEST FakeInput KeyPress (minor opcode 2)",
+      "GetPointerControl sync reply request (core opcode 106)"
+    ],
+    "selected_request_role": "get_pointer_control",
     "selected_action_id": "action-1"
   },
   "expected_discriminator": {
     "input_started_marker_alone_may_hold_reply": false,
     "prepress_identity_reply_is_forwarded": true,
-    "exact_action_bound_post_keypress_reply_is_held": true,
+    "exact_action_and_keycode_bound_post_keypress_get_pointer_control_reply_is_held": true,
     "unknown_or_other_connection_sequence_is_held": false,
     "unknown_reply_mapping_fails_open_to_forward": true
   },
