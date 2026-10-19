@@ -22,7 +22,7 @@ captureと入力は一つのcanonical lifecycle readerを共有する。reader�
 完全原本の公開・読み戻しが残る。コメントのPASSだけで統合済み・終了可能とはしない。
 原217ファイルの保全先を確認して公開する作業を#4008に残し、消費済み実験は再実行しない。
 
-対象：[#3](https://github.com/Unjuno/agent-interface/issues/3)、[#5](https://github.com/Unjuno/agent-interface/issues/5)、[#8](https://github.com/Unjuno/agent-interface/issues/8)。[元の仮説と制約](visual-interface.md)を維持し、既存成果との照合から実験へ進める。3件を保存しただけで研究対象から外さない。
+対象：north-star [#4](https://github.com/Unjuno/agent-interface/issues/4)、grid [#3](https://github.com/Unjuno/agent-interface/issues/3)、address/feedback [#5](https://github.com/Unjuno/agent-interface/issues/5)、multi-view selection [#7](https://github.com/Unjuno/agent-interface/issues/7)、composite packing [#8](https://github.com/Unjuno/agent-interface/issues/8)。[元の仮説と制約](visual-interface.md)を維持し、問いを混ぜず既存成果との照合から進める。#4は広い設計 thesis、他は別々に反証する介入である。保存しただけで研究対象から外さない。
 
 ## 別軸：推定観測channelの頑健な優越証明 — #6678 / #8911
 
@@ -37,7 +37,7 @@ Open successor [#8911](https://github.com/Unjuno/agent-interface/issues/8911)は
 
 1. **既存成果の対応表を埋める。** 下表の実装/資料を入口に、実際の呼出し元、固定ソース、raw、監査、比較条件を確認する。ファイルの存在や単体テストPASSだけでアイデアを検証済みとしない。同じ問いに有効な結果があれば再実験を省き、未検証部分だけを選ぶ。
 2. **入力を伴わない表現・意味の検証を行う。** 座標変換、観測ID、元画像の保持、状態省略とイベント保持、完了レベルの区別を、既存コードの実際のcompositionで確かめる。これらはGUI入力やMAP01の資源を待たずに進められる。
-3. **モデルを含む比較を実行する。** #3のgrid比較と#8のpacking比較は、同じsource画像・タスク・モデル条件を固定して別々の介入として扱う。まず視覚的な対象指定で評価し、その後、入力解放・観測・独立効果判定の条件が整った経路でGUIタスクを行う。
+3. **モデルを含む比較を実行する。** #3のgrid、#7のview-set selection、#8のcomposite packingは別々の介入として扱う。同じsource画像・task semantics・model条件を固定し、#7はview-setの相補性、#8は情報を保つencoding変換を識別する。まず視覚的な対象指定で評価し、その後、入力解放・観測・独立効果判定の条件が整った経路でGUIタスクを行う。
 4. **結果を採否と実装へ戻す。** 有益なら最小の共通経路へ接続し、害やコストが勝れば修正または根拠つきで棄却する。未検証の残りを明示する。
 
 この順序は研究上の暫定優先順位であり、現行担当や共有資源の割当ではない。照合で残差や依存が変われば理由を記録して更新する。全リポジトリの整理完了は着手条件にしない。
@@ -59,6 +59,7 @@ Open successor [#8911](https://github.com/Unjuno/agent-interface/issues/8911)は
 | #5 completionレベル | `runtime/core_v1/compiled_gui.py`、独立効果監査 | input成功・program terminal・task effectの不一致例を既存rawから一つずつ確認し、callerの結果表示/判定へ追跡する | 完了語彙と効果判定の実装修理、追加oracleの必要性 |
 | #5 continuation | `research/live_control/CONTINUATION_ADMISSION.md`、`CHECKPOINT_CONTINUATION.md` | owner/revision変更、expiry、duplicate/late reply、古いtail再開を実際のcompositionで照合する | 既存ticketの再利用か、取消しと経路置換の修理か |
 | #5 自己記述schema | `research/live_control/SCHEMA_PREFLIGHT_V1.md`、公開CLI/MCP仕様 | モデルに提示したschemaと実際に受理する操作・値・エラーを照合し、不一致を最小ケースで実行する | 共通schemaの修理で閉じるか、新機構が必要か |
+| #7 adaptive view-set selection | [#7原文](https://github.com/Unjuno/agent-interface/issues/7)、[#1946 package-integrity result](https://github.com/Unjuno/agent-interface/issues/1946)、[#1968 serialization result](https://github.com/Unjuno/agent-interface/issues/1968)、[#2031 model-facing localization](https://github.com/Unjuno/agent-interface/issues/2031) | raw/auditの再実行はせず、既存rungsと#7の固定budget/set-choice問いをcrosswalkする。#2031のper-arm scoreはschema/scorer mismatchでaccuracyとして使わない。欠けた識別条件だけを新しくpreregisterする | 新しいview-set介入が必要か、どの条件が識別されていないか |
 | #8 composite packing | #8原文、`runtime/USING_CURRENT_INTERFACE.md`、既存presentation比較 | 既存比較を照合後、同じsource/ROI情報をseparate/compositeで提示。overviewのみとtask-selected版は情報量の異なる別対照にする。正答率・panel混同・準備時間・モデル費用を測る | packingを採用するか、タスク限定か、追加費用により棄却するか |
 
 ## 関連する別仮説：image-space Jacobian adaptation（#7765）

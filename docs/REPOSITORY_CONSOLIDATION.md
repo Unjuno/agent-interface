@@ -36,6 +36,25 @@ Each family record should be concise and answer: **What can the system do today?
 
 Until these gates are met, maintain an explicit unclassified queue and work through finite batches. Do not make completion of all 1,675 historical Issues or all PRs a prerequisite for useful research. This organization supports—not replaces—the active computer-control goal.
 
+### Current semantic-family batch — visual-interface Issues #3/#4/#5/#7/#8
+
+The live Issues were rechecked on 2026-10-19: #3, #4, #5, #7 and #8 are all
+open. The [family record](ideas/visual-interface.md) and
+[execution agenda](ideas/visual-interface-agenda.md) now distinguish #4's
+north-star thesis from #3's grid presentation, #5's visual-address/feedback
+contracts, #7's selection of view sets under a fixed cost budget, and #8's
+composite encoding. Existing #1946/#1968 package-integrity findings are reuse
+inputs, not new #7 evidence. The #2031 model-facing localization score is
+quarantined because candidate response schema and scorer disagreed about the
+required abstention field; it does not establish model accuracy. All five
+source Issues stay open; no idea or result was closed to reduce counts.
+
+The next finite discriminator is a read-only crosswalk of #1946/#1968/#2031
+source, raw and audit against #7's set-complementarity question. A new model
+comparison is considered only if that crosswalk identifies a remaining
+decision-changing condition. #7's selection question remains separate from
+#8's encoding comparison and #4's broader thesis.
+
 ### Current evidence-routing batch — A02/A03 blocked-X11 caller attempts
 
 The first pair of WSLc attempts has been given a single navigation record at
