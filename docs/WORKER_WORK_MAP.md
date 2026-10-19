@@ -1,10 +1,10 @@
 # Worker work map
 
 2026-10-19 current map. The latest complete paginated GitHub CLI membership read
-was at 2026-10-19 01:35:59 UTC against main
-`00640a3143ff426d259dcc85793aec26d974043c`: 1,673 open Issues and 503 open PRs
-([r52 metadata snapshot](maintenance/repository-inventory-20261019-r52.md)). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
-records 489 open Issues absent from the historical primary research selection; all are routed by the completed r51 batch receipts. This is discovery membership only; verify
+was at 2026-10-19 01:51:04 UTC against main
+`b65dfc88c0cfe8a36e72c7d4906c7be355021b3d`: 1,673 open Issues and 502 open PRs
+([r53 metadata snapshot](maintenance/repository-inventory-20261019-r53.md)). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
+records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
 #8863, and #8847 have been independently audited and merged as separate scoped
 visual, ammo/cancellation, and isolated-Xvfb owner-close results; parent #59 remains open. The snapshot is
@@ -13,7 +13,7 @@ remain immutable historical metadata snapshots, not the current PR list. This is
 not semantic review or proof of current ownership. Begin with
 [current goal](CURRENT_GOAL.md), choose one finite item
 below, and verify its current Issue, source and ownership. The repository-wide
-[consolidation plan](REPOSITORY_CONSOLIDATION.md#repository-wide-organization-plan-preserve-ideas-enable-parallel-work)
+[consolidation plan](REPOSITORY_CONSOLIDATION.md#2026-10-19-全体整理の実行計画--アイデアを保存して作業面を収束)
 defines the family record and safe cleanup gates. This map is navigation;
 it adds no assignment, resource grant, reviewer quota or all-workers waiting gate.
 The current discovery coverage is measured against the [r51 snapshot](maintenance/repository-inventory-20261019-r51.md) in the [r51 idea-index audit](maintenance/idea-index-coverage-20261019-r51.md). Of 1,675 open Issues, 1,184 have primary rows in the historical research index; 491 do not. Among those 491, 220 have a literal Issue URL in an individual `docs/ideas/*.md` file and 271 do not. The [r51 disjoint work queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv) divides them into 20 number-sorted batches of at most 25. These are navigation facts only; no semantic family, priority, owner, or disposition is inferred. The r15 snapshot remains immutable history. Re-read live sources before changing shared family records or Issue status. Issue #4 is now indexed in the visual family but the historical primary-row gap snapshot is unchanged. Use the queue as a discovery source, not a research-only classification. The full outcome and safe closure criteria are in the [repository consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).

@@ -1,5 +1,58 @@
 # リポジトリ全体の整理計画
 
+## 2026-10-19 全体整理の実行計画 — アイデアを保存して作業面を収束
+
+### 目的とゴール
+
+Issue/PR数をゼロにするのではなく、研究アイデア・反証・結果・未解決点を失わず、次の担当者が一つの独立した仕事をすぐ選べる状態にする。進行中のコンピューター制御研究ゴールは維持し、そのゴールに関係する証拠・実装・残差は研究系譜から外さない。整理完了時には、各open Issueに「実行する理由と次の判別試験」または「担当・依存・保留解除条件」があり、アイデアだけの項目は正規カタログから元Issueへ戻れる。各open PRには現head/base、固有の差分・証拠、依存、所有状態、ローカル検証、次の処置がある。
+
+最新の完全な固定スナップショットは[r53](maintenance/repository-inventory-20261019-r53.md)（2026-10-19 01:51:04 UTC、open Issue 1,673件、open PR 502件）である。PR #8910の統合とIssue #8909の再open後に取得し、Issue ID setはr52と同一、PRは#8910だけ減った。r52カバレッジ監査は全Issueの索引経路を確認したが、489件は歴史的な研究選定表にprimary rowがなく、意味の分類もPRとの結合監査も未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
+
+### 整理原則とIssueの処置
+
+- **まずアイデアを整理し、その後にIssueの状態を決める。** アイデアは仮説単位で正規の研究familyページへまとめる。元Issue番号・URL、異なる仮説、既存の肯定/否定/保留結果、raw/source、最強の単純な比較対象、未解決の反証、次に結果を変える有限の試験を結び付ける。短い索引やfamily agendaを入口にし、実験raw・歴史コメント・先行結果を移動・上書きしない。
+- **Issueの分類は意味で行う。** 各項目を研究案、実行中/割当済み、結果統合待ち、実装課題、証拠/所有保全、共有運用欠陥、完了、重複/後継あり、保留/対象外のいずれか（必要なら複数）として記録する。assignee空欄やopen状態だけで担当不在と判定しない。
+- **アイデアだけのIssueは、アイデアを正規カタログへ移し、元Issueにそのリンクと「カタログ化・未実施」を記録した後なら、保留/研究候補として個別に閉じてよい。** これは研究が成功・解決したという意味にしない。未検証の実験、未達のユーザー目標、現行作業、未解決のデータ/所有問題、必要な統合判断を追うIssueはopenのまま残す。重複は独自の問いと結果をfamily記録へ統合してから後継へ誘導し、結果を消さない。
+- 各Issueの最終処置は `keep-open/actionable`、`keep-open/blocked-with-exit-condition`、`catalogued/deferred`、`superseded`、`completed-scoped`、`out-of-scope` のように理由を明記する。閉じる場合はIssueに根拠・保存先・後継/再開条件を残してから閉じ、単なる件数削減・古さ・コメント欠如を理由にしない。
+
+### PR、branch、worktreeの個別処置
+
+PRはIssueと別々に、最新head/base SHA、全差分、必須保護条件、ローカルで必要な検証、固有のコード/証拠、stack/後継依存、作者と現在のworktree/出力所有を照合する。処置は `merge-ready`、`needs-local-fix`、`stack/retarget`、`evidence-custody-hold`、`duplicate/superseded`、`owner-confirmation-hold`、`close-after-preservation` に分類し、理由を残す。技術的に独立した修正・限定結果・有用な失敗証拠は適用可能なローカル確認と実際の保護条件を満たせば進める。FINAL v5にない一律の非作者レビュー人数や承認投票を追加しない。任意CIが遅いこと自体は待機条件にせず、欠陥・必須check・権限条件は無視しない。
+
+branch/worktreeはPRのclose/mergeだけで削除しない。exact tip、mainへの内容保全、未追跡/ignoredデータ、raw、依存branch、現担当・実行プロセス、復旧可能性を確認する。所有者または保全先が不明なものは残し、照会と判定を記録する。GitHubのmerge/close、ref削除、ローカル作業ツリー削除はそれぞれ別の操作として照合する。
+
+### 並列化の境界
+
+同時に進める作業は、異なる研究familyまたはPR/Issueの非重複集合と専用出力先へ割り当てる。shared index・worker map・この計画への変更は一度に一つの統合担当に集約する。担当者は対象Issue/PR、正確なhead、触るファイル、依存、出力先、次の有限な判定を記録する。レビュー人数や他人の到着待ちを作業開始の条件にしない。共有資源・ライブ環境はコード編集の並列性から推測せず、実験前に所有・未消費枠を別途確認する。
+
+### 実行フェーズと完了条件
+
+1. **基準線を更新する。** 完全ページングでIssue/PRのID集合、PR head/base、main SHAを取得し、前回からの差分だけを履歴化する。既存worktree一覧・研究証拠所在への入口も確認する。検索上限や未取得ページは欠落の証明にしない。
+2. **アイデアをfamily単位で編集する。** B01–B20はnavigation routing完了であり、意味のトリアージ完了ではない。未分類489件と既存family内のopen候補を、独立した問いごとの小バッチに分ける。各バッチは元Issue/PRを読み、既存のコード・結果・反証・raw参照を照合し、family agendaと `IDEAS_AND_OUTCOMES.md` に差分を統合する。新しいIssueは異なる科学的問い・統合判断・実証済みの共有欠陥がある場合だけ作る。
+3. **Issueを一件ずつ処置する。** familyバッチごとに分類、次の作業、所有/依存、閉鎖根拠を表にし、案のカタログ化と実験の解決を明確に分ける。まず作業を妨げるfamilyから処理し、完了・カタログ化できるものはリンクと再開条件を付けて個別に閉じ、残る実証作業は小さく具体化して維持する。
+4. **open PRを一件ずつ収束させる。** live exact-headとstack関係を再確認し、上記PR分類を付ける。独立成果は小さくローカル検証し、stackは依存順を保ち、未保全raw・所有不明・未解決の必須条件があるものはhold理由と解除条件を記録する。merge後はremoteの確定状態を確認し、任意CI未実行と必須条件を区別する。
+5. **重複と構造を最後に整理する。** family記録が定着した後にだけ、重複ページ/索引、古い入口、不要と所有確認済みのbranch/worktreeを整理する。短いナビゲーションと正規ページを優先し、一括移動・改名は避ける。
+6. **再監査して引き継ぐ。** 全open Issue/PRが最新inventoryから一意に追跡され、意味・証拠・所有/依存・次の処置を持つこと、閉じたIssueの案/結果/後継が保全されること、merged/closed PRの固有内容がmainまたは明示した保管先に残ることを照合する。main clean、全PR merge、全Issue close、全研究PASSは完了条件にしない。
+
+各familyバッチは、対象範囲、live参照時刻、既存成果/反証、アイデア索引の変更、Issue/PR処置、ローカル確認、未確定点、次の有限作業を短いreceiptに残す。保存済みFAIL/HOLD/STOPや消費済み実験は書き換えず、正式実験を整理目的で再実行しない。
+
+### 着手順
+
+1. r52からのlive membership差分と、現在のopen PRのexact-head/base/stack状態を更新する。
+2. first batchは、同じ共有resourceを使わず、既存のfamily/成果で確実に片付けられる小さな集合を選び、アイデアの保存先とIssue処置を同時に実証する。
+3. 同じ記録形式を他familyへ適用し、各workerが別familyと専用pathを選べる状態にする。
+4. high-riskの実験・ライブ資源所有問題・一意なraw保全問題は低件数の一般整理キューに混ぜず、元の専用familyに残す。
+
+この計画は作業を開始するためのチェックポイントであり、整理完了の宣言ではない。計画自体に追加の人手承認数や全体停止条件を設けない。上位の権限・FINAL v5・実在のGitHub保護・既存の有効な実験割当は引き続き適用する。
+
+## 実行状況 r01 — r53基準線、30件PRトリアージ、限定証拠の統合
+
+2026-10-19 01:51:04 UTCに[r53](maintenance/repository-inventory-20261019-r53.md)を取得した。open Issue 1,673件（r52と同一ID集合）、open PR 502件（#8910統合によりr52から1件減）である。CSVとID集合のSHA-256はr53スナップショットに記録した。
+
+[open PR triage receipt r01](maintenance/open-pr-triage-receipt-20261019-r01.md)は最近更新された30件をread-onlyで初回分類した。1件（#8910）はcurrent mainとの衝突なし、7 checks成功、保存JSONとのNode再実行一致を確認して有限モデルの**限定証拠**として統合した。merge commitは`b65dfc88c0cfe8a36e72c7d4906c7be355021b3d`。PRの初回ready化後にreplay-gateが再実行中だったが、同一headで先行成功があり、mainに保護/rulesetがないこととローカル再実行を確認して統合した。Issue #8909はGitHub上で同時にcompletedとして閉じられたが、元の研究案はカタログ未登録で、PRもモデル限定と明記していたため再openし、未解決の研究課題として記録した。実際の結果は仮説・runtime/GUI効果・効率主張へ昇格していない。
+
+残り29件のreceipt上の処置候補は、限定証拠の統合候補、著者修正、conflict/stack/lineage確認、custody hold、preserved FAIL/HOLD/STOPに分かれる。#7760と#7087のPR-local複数人条件は一人の作業開始・無関係な統合の必要条件にしない。一方、独立scorer等が実験の測定定義そのものなら、その科学的要件は保持する。次はreceiptのmerge候補をexact-headで再照合し、独立した小さい証拠から個別に統合しながら、489件のうち一つのfamilyを意味分類まで完了する。これは全502件のPR監査や全Issueトリアージ完了を意味しない。
+
 ## Current execution checkpoint — r51 discovery queue and disjoint work batches
 
 The latest complete live membership read is [r52](maintenance/repository-inventory-20261019-r52.md), captured 2026-10-19 01:35:59 UTC against main `00640a3143ff426d259dcc85793aec26d974043c`: 1,673 open Issues and 503 open PRs. The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md) finds 1,184 open Issues with primary rows in the historical research selection and 489 without. These are exactly the r51 missing-row queue minus #104 and #1798, now closed; all remaining Issues have routes through the completed B01–B20 receipts. A strict cross-index check found 38 r51 items without a standalone first-column row in `IDEAS_AND_OUTCOMES.md`; 30 already had issue/family/successor cross-links, and eight lacked a URL in either index. A routing-only appendix adds links for those eight without inventing outcomes. The r51 queue and receipts remain immutable historical discovery aids, not semantic classifications or closure instructions. Workers should use current evidence and take disjoint families/output paths in parallel; only edits to the same shared index/map need a single integrator at a time. Preserve ideas and source history, and close only on each Issue's evidence-based disposition.
