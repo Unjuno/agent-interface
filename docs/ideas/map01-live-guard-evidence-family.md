@@ -1,6 +1,6 @@
 # MAP01 live threat-guard evidence family
 
-**Status: active research; six distinct allocation packets indexed. Four PR packets remain open; #8678 A01/A02 and #8701 A03–A07 tracked evidence are in main and both PRs are closed. Issue #59 remains open.**
+**Status: active research; eight allocation packet groups indexed through A15. Two result PRs remain open (#8759 A10 and #8800 A14); #8678/#8701 are closed after tracked-file preservation, and #8749/#8782/#8790/#8810 result packets are merged. #8818 is the merged A15 custody-manifest follow-up. Issue #59 remains open.**
 
 Issue [#59](https://github.com/Unjuno/agent-interface/issues/59) asks whether
 the current integrated real-time path can react usefully to a threat while a
@@ -16,8 +16,9 @@ checked against GitHub on 2026-10-18 at 14:38 UTC, current main
 `c72c9b186dac29c57ed0d63d92748bfc7ba4d971`. At that snapshot each PR was open
 and had no GitHub assignee. That did not prove author release. The `ahead/behind`
 values compare each exact head with that historical main and do not establish
-mergeability or evidence validity. The 2026-10-19 custody update below supersedes
-only #8678's Git-diff status; other packets remain separate.
+mergeability or evidence validity. Later 2026-10-19 custody/integration updates
+supersede this table's workflow statuses; the table remains an immutable record
+of its 2026-10-18 snapshot.
 
 | PR | Packet and retained result | Draft | Exact head | Base at PR | Current-main comparison | Disposition |
 |---|---|---:|---|---|---|---|
@@ -32,7 +33,7 @@ only #8678's Git-diff status; other packets remain separate.
 
 PR [#8854](https://github.com/Unjuno/agent-interface/pull/8854) was merged at
 `d25b497cc8a05d45158a81c038ee15e03aabdddc`. Its packet is kept separate from
-the six live threat-guard allocation packets above: on frozen source from
+the six live threat-guard allocation packet groups in the historical table above: on frozen source from
 `f185a9059d485a4f8d5a65e9e7f6782897f67eae`, a synthetic soft-ammo change
 6→4 queued a soft event without cancelling a pending turn, while ammo 0
 triggered the hard-floor cancellation path. A follow-up composition probe
@@ -66,14 +67,17 @@ open; this packet neither consumes nor releases a live allocation.
 
 ## What this organization establishes
 
-The six PRs cover unique packet directories and distinct attempt identifiers;
-the open-set metadata alone does not prove two packets duplicate one another.
+The six PRs in the historical table cover unique packet directories and
+distinct attempt identifiers; later A14/#8800 and A15/#8810 add two more
+allocation groups, with #8818 as A15's custody-only follow-up. Open-set
+metadata alone does not prove two packets duplicate one another.
 Several packets share auditor/reconciliation code and every head predates the
 current main by hundreds of commits. The bodies/comments also retain failed
 audits and correction findings. Therefore, an automatic merge, close, rebase,
 or branch deletion would risk dropping unique evidence or hiding unresolved
-audit work. None is performed here. An empty reviewer/assignee field or an old
-update time is not treated as owner release.
+audit work. Later packet-specific integrations preserve each result boundary
+below. An empty reviewer/assignee field or an old update time is not treated as
+owner release.
 
 ## Finite, parallel read-only work
 
@@ -98,7 +102,7 @@ merge approval. If a group has an active owner or a newer head, coordinate with
 that owner and inspect the live state before proceeding. Only the integrator
 edits this shared family index, `docs/ideas/README.md`, and the parent agenda.
 
-## Read-only packet recheck — PR #8790 (2026-10-19)
+## Read-only packet recheck — PR #8790 (pre-integration snapshot, 2026-10-19)
 
 The live PR remains open at head `db6ca09d10abaf3d0e8aaf5ad3f3f9f67555b763`
 against base `a6343bb76e4dc0a4afa32a29c8a485a617faeff8`. Its published result
@@ -120,10 +124,19 @@ full raw or treatment-audit receipt. The exact allocation path was absent from
 this checkout during the recheck, so local raw custody and reproducibility
 remain unverified; this is not evidence of global loss.
 
-Disposition: keep #8790 open and unmerged pending an owner-attested retained
-raw/treatment-audit packet or equivalent hash-bound custody evidence. Do not
-rerun A12 or A13. This read-only recheck changes no Issue state, allocation, or
-result classification.
+At the time of this recheck, disposition was to keep #8790 open pending an
+owner-attested retained raw/treatment-audit packet or equivalent hash-bound
+custody evidence. Do not rerun A12 or A13. This read-only recheck did not
+change the then-current Issue state, allocation, or result classification.
+
+### Later integration status
+
+PR #8790 was subsequently merged at `20a17d8b99879f7804a679d2dc2927d5e6b4cb3a`.
+Its 23 A12/A13 tracked files were matched to the main blobs. That integration
+preserved the sanitized public result and its HOLD/censoring; it did not supply
+the local full raw requests/responses or treatment-audit file, so those remain
+unverified from this checkout. The merge does not upgrade the result or
+authorize a rerun.
 
 ## Read-only packet recheck — PR #8759 (2026-10-19)
 
@@ -167,6 +180,12 @@ PR [#8790](https://github.com/Unjuno/agent-interface/pull/8790) merged at `20a17
 
 The public result is an aggregate summary. Full raw requests/responses and images remain local and were not re-read during integration. The PR's replay-gate passed. In this Windows checkout, 26 of 27 unit tests passed; the remaining exact guest-mount-path test is tied to the original POSIX `/mnt/source/results-local/doom/a13-source` fixture and could not be satisfied here. The allocation was not rerun.
 
+## A14 recovery follow-up and A15 custody repair — current disposition
+
+Open PR [#8800](https://github.com/Unjuno/agent-interface/pull/8800) retains A14's 12-decision live result: no preregistered hard-health guard occurred, no useful scorer event fell inside a model interval, and MAP01 did not exit. The original audit remains **FAIL** and the allocation remains **HOLD**. Its additional post-hoc reconciliation reads a local-only `episode/report.json`, which is absent from the public packet; keep #8800 open pending raw-backed verification and do not rerun A14. This absence is scoped to the available checkout, not a claim of global raw loss.
+
+Merged PR [#8810](https://github.com/Unjuno/agent-interface/pull/8810) retains A15's public HOLD and original audit FAIL. Its merged custody follow-up [#8818](https://github.com/Unjuno/agent-interface/pull/8818) adds a 3,859-entry path/size/hash manifest and hash-bound author-side readback, but does not copy raw prompt, image, or protocol contents to main. The manifest and public-summary digest were independently checked; the full raw-custody pass was not reproduced here. Preserve that limit and do not rerun A15.
+
 ## Current packet disposition — 2026-10-19
 
-The six indexed #59 allocation packets now have distinct workflow states: A01/A02 (#8678) and A03–A07 (#8701) have their tracked files preserved and original PRs closed; A09 (#8749), A11 (#8782) and A13 (#8790) are merged; A10 (#8759) remains draft because exact raw/freeze/first-audit custody is absent from its public packet. These are PR states, not completion of Issue #59. No allocation was rerun during these custody and indexing updates.
+Eight indexed allocation packet groups now have distinct workflow states: A01/A02 (#8678) and A03–A07 (#8701) have their tracked files preserved and original PRs closed; A09 (#8749), A11 (#8782), A13 (#8790), and A15 (#8810) are merged. A15's #8818 follow-up adds its custody manifest and hash-bound author-side readback, but raw prompt/image/protocol contents are not in main and the local raw-custody pass was not independently reproduced here. A10 (#8759) remains draft because its exact raw/freeze/first-audit custody is absent from the public packet. A14 (#8800) remains open because its post-hoc reconciliation depends on a local `episode/report.json` that is not included in the public packet; its original audit remains FAIL and its live result remains HOLD. These are PR states, not completion of Issue #59. No allocation was rerun during these custody and indexing updates.
