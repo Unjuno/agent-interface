@@ -19,11 +19,25 @@
       "runtime.cli_v1.test_mcp_relay_composition"
     ]
   },
+  "standard_caller_identity_query_path": {
+    "caller_component": "TargetQueryWorker process_identity read used by the guarded MCP caller",
+    "reader": "real X11TargetQueries.read and read_linux_x11_process_identity, backed by shaped synthetic XRes client-ID replies and synthetic /proc stat",
+    "transport": "separate FakeSocketRelay carries synthetic NoOperation/GetPointerControl transaction markers; these do not encode the XRes operation",
+    "identity_reply_sequences_before_input": [3, 5, 7],
+    "stale_generation_case": "fixture PID changes from 123 to 124; real generation hash changes and caller refuses before KeyPress",
+    "not_exercised": ["XRes wire encoding/decoding", "server PID discovery", "live X server ordering", "physical release"]
+  },
   "commands": [
     "python -m unittest -v research.integration.offline_proxy_reply_framing_20261019.test_reply_gate research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay research.integration.offline_proxy_reply_framing_20261019.test_two_connection_relay",
     "python -O -m unittest -v research.integration.offline_proxy_reply_framing_20261019.test_reply_gate research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay research.integration.offline_proxy_reply_framing_20261019.test_two_connection_relay",
     "python -m unittest -v runtime.cli_v1.test_mcp_relay_composition",
     "python -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition"
+  ],
+  "caller_identity_discriminator_commands": [
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=... python -m unittest -v runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=... python -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed",
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=... python -m unittest -v runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_generation_change_refuses_before_any_relay_action",
+    "AGENT_INTERFACE_FAKE_X_COMPOSITION_RAW_DIR=... python -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_generation_change_refuses_before_any_relay_action"
   ],
   "python": "invoked from the isolated agent-interface-x11 environment; runtime version recorded in the runner receipt",
   "allocation": null,

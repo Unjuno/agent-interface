@@ -62,17 +62,23 @@ synthetic event receipt is held. The held input stream retires as UNKNOWN. Its
 cases pass in normal and optimized Python; exact outputs and source hashes are
 in the additive packet.
 
-The standard-caller suite still substitutes a FakeQueries response for the
-target-query X11 protocol exchange. Thus the two-connection relay result is
-complementary and does not prove caller→identity-socket→input-socket composition.
-It preserves the existing late-request/UNKNOWN result and does not establish
-physical release, task effect, or a WSLc result.
+The standard-caller suite now routes the caller's `TargetQueryWorker` process-
+identity call through a second FakeSocketRelay, services three sequential
+synthetic query/reply transactions, and verifies a changed fixture generation
+is refused before input. The actual `X11TargetQueries.read` and process-identity
+hash/validation code run against shaped synthetic XRes client-ID replies and a
+fake `/proc` stat file. The socket adapter's NoOperation/GetPointerControl
+frames are correlated test markers, not XRes wire encoding. This composes
+caller→query-worker→identity-socket alongside the input socket and tests stale
+generation refusal, but does not exercise actual XRes request/reply bytes or
+live PID discovery. It preserves the existing late-request/UNKNOWN result and
+does not establish physical release, task effect, or a WSLc result.
 
 ## Next boundary
 
-Next, carry the standard caller's actual target-query call over the distinct
-identity socket in the same composed fixture, preserving connection identity,
-sequence, cancellation, held-input custody, and UNKNOWN late-request behavior.
-Keep physical release and task success `UNKNOWN` until the real backend has
-separate qualifying evidence. Do not attempt a live run unless an unused
-allocation and the explicit WSLc owner gate are independently verified.
+Next, pass actual XRes QueryVersion/QueryClientIds request and reply frames over
+the identity socket and into the Xlib decoder, retaining PID-namespace and
+physical-release limits. Keep physical release and task success `UNKNOWN` until
+the real backend has separate qualifying evidence. Do not attempt a live run
+unless an unused allocation and the explicit WSLc owner gate are independently
+verified.
