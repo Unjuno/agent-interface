@@ -52,7 +52,11 @@ and #9153. Local Fake X tests now exercise blocked reply, cancellation,
 disconnect, child retirement and a synthetic late queued KeyPress after an
 injected separate empty readback. The caller remains `UNKNOWN` and does not
 claim task success or permit replay; see the [preserved late-down packet](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md).
-The synthetic protocol order is modeled, not live server evidence. The
+The synthetic protocol order is modeled, not live server evidence. A later
+[X11 server-ordering source audit](../research/integration/standard_caller_fake_x_relay_20261019/server_disconnect_order_audit_20261019_r01/README.md)
+keeps the injected late-down result intact while marking that ordering
+unverified; it isolates an XTEST delayed-request case for a version-pinned
+Xvfb check. The
 additive [same-PID two-connection relay discriminator](../research/integration/offline_proxy_reply_framing_20261019/two-connection-r01/README.md)
 forwards a colliding-sequence identity reply while holding only the matching
 input reply; parser/relay tests pass 28/28 and standard caller relay composition
