@@ -12,6 +12,10 @@ The [B01 routing receipt](maintenance/issue-discovery-b01-20261019.md) covers th
 
 The [B02 routing receipt](maintenance/issue-discovery-b02-20261019.md) covers the next 25 r51 rows. It adds parent summaries for #30/#31/#33/#34/#35/#37/#40/#44/#45/#46/#47/#48/#49/#53, refreshes the #57 checkpoint to merged #8986's finite synthetic-editor recovery result and the remaining supported-editor adapter seam, and routes #60/#61 as coordination/authority records rather than idea assignments. #30's semantic PASS and #48's readiness composition remain synthetic; no live app, effect, or end-to-end result is claimed. #60's sibling ownership remains UNKNOWN and #61's grants remain HOLD. No Issue/PR state or experiment outcome was changed. B03 is the next intake; recheck exact ownership before assigning it.
 
+### B03 bounded intake — MAP01, lifecycle, and watcher evidence
+
+The [B03 receipt](maintenance/issue-discovery-b03-20261019.md) routes the third 25-row batch. Most items already have curated outcome rows; new parent summaries cover #137/#186/#197, and #104 now reflects its corrected `HOLD_GRID_TOO_COARSE` outcome. The spot-checked PR chain #147/#169/#179/#181/#192/#206/#207/#220/#231/#267/#277 is merged, while issue-level questions remain open. #197's cooperative validation result has a source/raw custody gap in the author comment and must not be inferred from merged #220. B04 is next; check exact owners before any assignment. No Issue, PR, or evidence state changed.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
