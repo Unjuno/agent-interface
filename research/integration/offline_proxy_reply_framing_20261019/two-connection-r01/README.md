@@ -38,7 +38,7 @@ experiment-runner bootstrap failures (`ModuleNotFoundError` before any test
 ran) are retained separately as `runner-import-failure*`; that harness used a
 working directory one level above the checkout. The four commands were then
 run directly from the repository root and their outputs passed the
-count/status checks. Focused normal and `-O` receipts plus identity transaction
+count/status checks. focused normal and `-O` stdout receipts (`test-output.raw.gz`) plus identity transaction
 records for held-input and stale-generation cases are in
 `caller-identity-r01/`; the manifest covers all files there.
 The next finite step is to exercise XRes request/reply encoding and decoded
