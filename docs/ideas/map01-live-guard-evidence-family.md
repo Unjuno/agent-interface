@@ -1,6 +1,6 @@
 # MAP01 live threat-guard evidence family
 
-**Status: active research; six open PR packets indexed, none disposed by this note.**
+**Status: active research; six distinct allocation packets indexed. Five PR packets remain open; #8678's tracked A01/A02 contents are in main and that PR is closed. Issue #59 remains open.**
 
 Issue [#59](https://github.com/Unjuno/agent-interface/issues/59) asks whether
 the current integrated real-time path can react usefully to a threat while a
@@ -11,12 +11,13 @@ threat/feedback condition remains HOLD. This family does not replace #59's
 parent question or authorize another allocation.
 
 The following are distinct preserved packets, not duplicates: they identify
-different live attempts and cover conditions. The table was checked against
-GitHub on 2026-10-18 at 14:38 UTC, current main
-`c72c9b186dac29c57ed0d63d92748bfc7ba4d971`. Each PR remains open and has no
-GitHub assignee. That does not prove the author released the work. The
-`ahead/behind` values compare each exact head with that main; they are
-diagnostic only and do not establish mergeability or evidence validity.
+different live attempts and cover conditions. This table is a historical snapshot
+checked against GitHub on 2026-10-18 at 14:38 UTC, current main
+`c72c9b186dac29c57ed0d63d92748bfc7ba4d971`. At that snapshot each PR was open
+and had no GitHub assignee. That did not prove author release. The `ahead/behind`
+values compare each exact head with that historical main and do not establish
+mergeability or evidence validity. The 2026-10-19 custody update below supersedes
+only #8678's Git-diff status; other packets remain separate.
 
 | PR | Packet and retained result | Draft | Exact head | Base at PR | Current-main comparison | Disposition |
 |---|---|---:|---|---|---|---|
@@ -148,4 +149,6 @@ do not rerun the consumed A10 allocation.
 
 At main `a6741224fad3cfd29de7bd4becac9cc207490242`, all 29 tracked files on #8678 head `7551424026375469f609754140250f89bf09cad4` remain unique to that PR. Its frozen source commit is reachable from main. A01 is a prelaunch STOP; A02 is a retained runtime failure with a failed cleanup terminal, despite empty keymap snapshots. Hard-health guard exposure and task success remain untested. The PR's 976-entry manifest points to an ignored `results-local/...` bundle not found in the current checkout or any of 15 registered worktree roots; only Git-tracked custody can be completed from this host state.
 
-#8701's A03–A07 files are a distinct later allocation series, not duplicate evidence. Keep both experiment records separate, leave Issue #59 open, and do not rerun either consumed allocation. The exact tracked #8678 diff is being transferred byte-for-byte; closure can retire only that diff/branch, not resolve the external raw-output gap. See the [custody review](../maintenance/pr8678-evidence-custody-20261019.md).
+Evidence-only PR [#9146](https://github.com/Unjuno/agent-interface/pull/9146) merged the complete 29-file Git-tracked A01/A02 diff from #8678 byte-for-byte. Main readback verified all 29 blobs against #8678 head `7551424026375469f609754140250f89bf09cad4`; #8678 was then closed and its remote branch deleted after author, dependent-PR, and worktree checks. The 976-entry ignored raw-output bundle remains unlocated on this host, so complete raw-image custody is still unknown and is not claimed. This closes only the tracked PR-diff loop.
+
+#8701's A03–A07 files are a distinct later allocation series, not duplicate evidence: its 41 research paths do not overlap A01/A02, and it also changes `CURRENT_GOAL.md`. Keep those attempts separate, leave Issue #59 open; its bounded outcome/custody update is [comment #6259320132](https://github.com/Unjuno/agent-interface/issues/59#issuecomment-6259320132). Do not rerun any consumed allocation. A02 remains a retained runtime failure with incomplete cleanup; no physical release, hard-guard response, bounded recovery, or task success is established. See the [custody review](../maintenance/pr8678-evidence-custody-20261019.md).

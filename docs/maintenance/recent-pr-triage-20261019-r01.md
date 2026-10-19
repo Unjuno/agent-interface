@@ -34,3 +34,8 @@ Evidence-only [PR #9142](https://github.com/Unjuno/agent-interface/pull/9142) me
 ## Verified follow-up: #8838 evidence custody
 
 Evidence-only PR [#9144](https://github.com/Unjuno/agent-interface/pull/9144) merged all 32 A06/A07 files byte-for-byte from #8838's exact head; 30 manifest entries and 32 source/main Git blob identities were verified. A07's WSLc pre-test failure and unconstrained native-WSL fallback remain part of the preserved outcome. After verifying main-tree readback, confirming no other open PR head/base dependency and no registered worktree, #8838 was closed as superseded and its remote branch deleted. No packet code or tests were executed. The complete r64 membership snapshot records only #8838 removed from the r63 open set. See the [custody review](pr8838-evidence-custody-20261019.md).
+
+
+## Verified follow-up: #8678 A01/A02 tracked evidence
+
+Evidence-only [PR #9146](https://github.com/Unjuno/agent-interface/pull/9146) preserved all 29 Git-tracked files from exact head `7551424026375469f609754140250f89bf09cad4`; main readback matched all 29 blobs. A01 is a prelaunch STOP. A02 retained a cleanup runtime failure; hard guard/task success were not established. The 976-entry ignored raw-output bundle was not found in the current checkout or any of 15 registered worktree roots, so its full raw custody remains unknown. After verifying author, no dependent open PRs, and no worktree, #8678 was closed and its remote branch deleted. #8701's A03–A07 packet remains distinct and open; Issue #59 remains open. See the [custody review](pr8678-evidence-custody-20261019.md) and the [MAP01 family index](../ideas/map01-live-guard-evidence-family.md).
