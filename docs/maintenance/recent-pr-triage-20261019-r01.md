@@ -39,3 +39,8 @@ Evidence-only PR [#9144](https://github.com/Unjuno/agent-interface/pull/9144) me
 ## Verified follow-up: #8678 A01/A02 tracked evidence
 
 Evidence-only [PR #9146](https://github.com/Unjuno/agent-interface/pull/9146) preserved all 29 Git-tracked files from exact head `7551424026375469f609754140250f89bf09cad4`; main readback matched all 29 blobs. A01 is a prelaunch STOP. A02 retained a cleanup runtime failure; hard guard/task success were not established. The 976-entry ignored raw-output bundle was not found in the current checkout or any of 15 registered worktree roots, so its full raw custody remains unknown. After verifying author, no dependent open PRs, and no worktree, #8678 was closed and its remote branch deleted. #8701's A03–A07 packet remains distinct and open; Issue #59 remains open. See the [custody review](pr8678-evidence-custody-20261019.md) and the [MAP01 family index](../ideas/map01-live-guard-evidence-family.md).
+
+
+## Verified follow-up: #8701 A03–A07 tracked evidence
+
+Evidence-only [PR #9148](https://github.com/Unjuno/agent-interface/pull/9148) preserved all 41 tracked A03–A07 research files byte-for-byte; main readback matched all 41 source Git blobs. The A07 result remains HOLD with separate audit v1/v2/v3 outcomes and a scoped custody reconciliation (`formal_pass=false`). The 2,358-entry ignored raw bundle was not found in the current checkout or any of 15 registered worktree roots; full raw custody remains unknown. The unrelated A09 goal-doc hunk was represented as a separate #8749 allocation in the family index. After verifying author, no dependent open PRs, and no worktree, #8701 was closed and its remote branch deleted. Issue #59 remains open. See the [custody review](pr8701-evidence-custody-20261019.md).
