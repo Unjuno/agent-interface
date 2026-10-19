@@ -244,6 +244,50 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(owner._execution_unknown)
         self.assertTrue(owner.review_required)
 
+    def test_retire_settles_brief_exit_race_after_kill(self):
+        class SettlingProcess:
+            def __init__(self):
+                self.alive = True
+                self.exitcode = None
+                self.joins = []
+                self.kill_calls = 0
+                self.sleep_calls = []
+            def is_alive(self):
+                return self.alive
+            def terminate(self):
+                pass
+            def kill(self):
+                self.kill_calls += 1
+            def join(self, timeout=None):
+                self.joins.append(timeout)
+            def settle(self, duration):
+                self.sleep_calls.append(duration)
+                self.alive = False
+                self.exitcode = -9
+
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        process = SettlingProcess()
+        owner._process = process
+        owner.state = 'open'
+        owner.error = None
+        owner._execution_unknown = False
+        owner.review_required = False
+        owner._retirement = None
+
+        with (patch('runtime.cli_v1.owned_guarded_session._RETIRE_TERMINATE_GRACE_S', 0.01),
+              patch('runtime.cli_v1.owned_guarded_session._RETIRE_KILL_GRACE_S', 0.01),
+              patch('runtime.cli_v1.owned_guarded_session._RETIRE_KILL_SETTLE_GRACE_S',
+                    0.01),
+              patch('runtime.cli_v1.owned_guarded_session.time.sleep',
+                    side_effect=process.settle)):
+            result = owner._retire('cancel retirement grace elapsed')
+
+        self.assertTrue(result['retired'], result)
+        self.assertEqual(result['exitcode'], -9)
+        self.assertEqual(process.kill_calls, 1)
+        self.assertEqual(process.joins, [0.01, 0.01])
+        self.assertTrue(process.sleep_calls)
+
     def test_retirement_receipt_reconciles_exit_between_liveness_and_exitcode_reads(self):
         class ExitingProcess:
             def __init__(self):

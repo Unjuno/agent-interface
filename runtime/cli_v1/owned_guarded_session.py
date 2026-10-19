@@ -28,6 +28,10 @@ _CANCEL_CONTROL_RESPONSE_TIMEOUT_S = 0.25
 _CANCEL_RETIRE_GRACE_S = 1.0
 _RETIRE_TERMINATE_GRACE_S = 0.25
 _RETIRE_KILL_GRACE_S = 0.25
+# A final short reap window covers children that exit just after the SIGKILL
+# grace poll reports them alive. Polling is required because Process.join may
+# return immediately while the OS process is still completing termination.
+_RETIRE_KILL_SETTLE_GRACE_S = 0.01
 _JOIN_TIMEOUT_S = 1.0
 _XRES_DISCONNECT_TIMEOUT_S = 0.15
 _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
@@ -709,11 +713,20 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 kill_escalated = True
                 process.kill()
                 process.join(_RETIRE_KILL_GRACE_S)
-        # A child may exit between the final liveness poll and the exit-code
-        # read. A non-None multiprocessing exitcode is definitive retirement;
-        # keep the receipt fields from describing opposite observations.
+        # A child may exit between the kill grace poll and this final check.
+        # Give that already-killed process one short reap window before
+        # reporting it alive; a non-None exitcode is definitive retirement.
         retired = not process.is_alive()
         exitcode = process.exitcode
+        if not retired and exitcode is None and kill_escalated:
+            deadline = time.monotonic() + _RETIRE_KILL_SETTLE_GRACE_S
+            while not retired and exitcode is None:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    break
+                time.sleep(min(0.001, remaining))
+                retired = not process.is_alive()
+                exitcode = process.exitcode
         retired = retired or exitcode is not None
         self._retirement = {'reason':reason, 'retired':retired,
                             'exitcode':exitcode,
