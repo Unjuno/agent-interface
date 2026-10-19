@@ -1,6 +1,12 @@
 # Repository cleanup worker dispatch r01
 
 **Baseline:** main merge `5efe7301f6e655a41c4653b3c6baf45138ca72f6` (2026-10-19).
+**Status update:** This is a dated discovery packet, not a current assignment.
+The #17 Fake X caller slice has since been extended by the
+[late-down-after-release packet](../../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md)
+and the current next boundary is in the [repository consolidation update r77](../REPOSITORY_CONSOLIDATION.md#実行更新-r77--アイデアをファミリーで動かしissueとprを個別に収束する).
+Before using packets B or C, recheck their exact live Issues, PR heads, family
+records, ownership and output paths; r01 does not reserve either task or resource.
 These are three independent, bounded work packets derived from read-only audits
 of Issues #17, #5, and #59. They are available work, not exclusive assignments
 or resource grants. Before starting, a worker must re-read the current Issue,

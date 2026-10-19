@@ -886,6 +886,8 @@ Dockerless local-iteration documentation is also reconciled: successor [#8882](h
 
 **2026-10-19 r76 — offline stream-parser candidate and post-merge membership:** PR #9135 merged the X11 source crosswalk and first connection/sequence/action model; its post-merge full membership read [r56](maintenance/repository-inventory-recheck-20261019-r56.md) matches r53 exactly. The additive [proxy candidate parser](../research/integration/offline_proxy_reply_framing_20261019/proxy_candidate.py) now parses fragmented X11 setup/request/reply streams, negotiates per-connection XTEST opcode, and selects only the action/keycode-bound GetPointerControl after an independent receipt is supplied. Its 19 normal and 19 optimized tests cover same-PID sequence collisions, endianness, fragmentation, mismatched receipt, malformed framing, and fail-open sequence ambiguity. This is a parser candidate only: no socket relay, X server, GUI, OS input, WSLc, or Docker was used. A02/A03 remain immutable; their first outcomes and UNKNOWN release/task are unchanged. #7924 remains STOP/HOLD. Next: connect the parser to an isolated fake-upstream socket relay; bound buffer growth, disconnect, EOF, relay backpressure and owner-retirement behavior before any live allocation. The whole-repository semantic Issue/PR disposition remains incomplete; keep idea families and outcomes distinct.
 
+**Follow-up to r76:** the parser-to-fake-relay/caller step was later merged in PRs #9136 and #9153. See the current r77 update below and the linked Fake X test packet; this supersedes only that historical next-step statement. The original r76 result and boundaries remain unchanged.
+
 
 ## 実行状況 r05 — #8879 A01の失敗証拠を保全してr60基準線へ
 
@@ -986,3 +988,21 @@ PR #9155は文書差分のローカル検証後、作成時に記録したmain S
 packet選定の現況はread-only監査による。#17ではPR #9153までFake X標準callerのbounded local return/child retirementが構成検証されたが、releaseはUNKNOWN、task successはnullであり、実X server/OS key-upは未検証。A11のXvfb結果は別topologyで、再利用allocationsではない。#5では#9099がprivate-Xvfb上で標準caller、合成targetの独立property effect、release readbackを一つの限定結果として示すため、過去の“Fake X only”記述は更新対象だが、product-app semantics、native desktop/XWayland、atomic check/use、task completionは残る。#59では過去のfamily indexに古い“six open PR packets”記述があり、A07 #8702のraw custodyはtracked #9148 packetとの照合が未完了。各Issueはopenのまま、割当・allocation・close判断を追加しない。
 
 次は3 packetを別workerに独立実行させ、特に#5は限定Xvfb実証の入口文を更新し、#59はA07のhash/custody差分、#17はstandard-caller/held-input境界を既存根拠から照合する。各結果を新規researchやIssue closureへ進めるのは、その結果が状態・所有・必要資源を実際に変えると分かった後とする。r70 metadataは不変の完全snapshotとして保ち、membershipの再読だけを理由に新CSVを増やさない。
+
+## 実行更新 r77 — アイデアをファミリーで動かし、IssueとPRを個別に収束する
+
+2026-10-19 05:59 UTCのmainは`168200eb43dd0f9144b3ed4aef551387674c7bfd`
+（PR #9156統合後）。counts-onlyのGraphQL確認はopen Issue 1,673件・open
+PR 489件を返した。これはr70の完全metadata inventoryを置き換えず、意味分類、担当確認、差分レビュー完了の証拠にもならない。r70/r74の行単位記録は不変の基準として使い、今後の更新では変化した範囲のみを再取得する。
+
+整理の対象は件数ではなく、次の研究判断にたどり着けないこと、重複work、古い入口、担当・証拠保存先・依存が見えないこととする。アイデアは反証可能な問いごとに既存の`docs/ideas/` familyへまとめ、同居する別仮説・反例・失敗は統合せず明記する。各familyには出典Issue、実装とPR、保持結果/rawへの参照、結果の限界、依存と競合範囲、状態（未検証/実行可能/進行中/結果保持/理由付き保留/根拠付き棄却/移管済み）、一つの有限な次の識別作業と、それが変える設計判断を持たせる。優先順位は、残差の重大さ・単純な比較対象・実行前提・他作業を unblock する効果から決める。未確認owner/resourceは`unknown`として、openまたはunclassified queueに残す。
+
+Issueは内容別に処置する。未解決の親研究目標・実行中allocation・task/evidence/owner gapはopenを保つ。達成したscoped contractはそのscopeと証拠リンクを明示して閉じ、広い親目標を別に保つ。重複は独自仮説・結果・失敗・rawをcanonical family/後継へ先に移し、source/backlinkと移管理由を書いた後でのみ閉じる。実験前提がなく保留するアイデアも、canonical familyに提案・保留理由・再開条件・sourceを残してから個別に整理する。大量closeを先に行って後でアイデアを拾う手順は取らない。
+
+PRは一件ごとに正確なhead/base、mainとの差分、stack依存、作者、ローカル検証、固有証拠とrawの保全先を見て、merge・修理継続・内容移管後のclose・根拠付きreject・owner確認待ちに分ける。branch/worktreeはPR stateから削除可否を推定しない。tip、dirty/untracked/ignored data、active user/process、dependents、回復可能な保存先を照合してから対象を回収する。
+
+大量worker向けの標準分割は「別research family + 別コード範囲 + 別additive出力先」。一つのpacketには出典と参照SHA、問い、再利用可能な結果と限界、owner/dependency/resource境界、許される変更、有限のacceptance/stop conditionを書く。family index・`IDEAS_AND_OUTCOMES`・work map・本計画の編集はintegrator一人が直列化し、それ以外の独立調査と実験は並列化する。issue discoveryのnumber-batchesは取りこぼし防止の手段であり、優先順位やsemantic familyを意味しない。
+
+今回の最初の実行は#17の限定Fake X seam: [late-down-after-release packet](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md)。standard callerが合成queue上の遅延KeyPress後もUNKNOWN/unconfirmedを保つことをnormal/-Oで確認した。timestamp同値の初回失敗もrawに保存した。これは保全付きの一つの研究結果で、X server ordering、物理key-up、task effect、WSLc allocationを証明しない。#17はこの結果で解決した扱いにせず、既存familyへ取り込んだ上で、次はserver-side queue orderingを観測できる許可済み環境の準備条件を特定する。#5と#59の別familyは各自の現行証拠と所有状況を再確認してからwork packetにする。
+
+Repository cleanの完了条件は、各active familyの問い・根拠・限界・次の決定が一か所から辿れ、各open Issue/PRの処置先が個別に分かれ、未分類分が明示的な残作業キューにあること。open Issue/PRがゼロである必要はない。次回はfamily indexを二重作成せず、現在のMAP01、#57統合比較、標準caller安全境界のうち一つのdistinct familyを進め、共有索引はこの分割に沿って一度だけ更新する。
