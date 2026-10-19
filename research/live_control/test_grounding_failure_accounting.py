@@ -55,7 +55,11 @@ def cell(status='failed', reported_usage=None, publication=None, malformed=False
                 errors.append({'type': type(error).__name__,
                     'message': str(error), 'cause': type(error.__cause__).__name__ if error.__cause__ else None,
                     **{k: copy.deepcopy(getattr(error, k, None)) for k in
-                       ('call_id', 'usage', 'visible_images_submitted', 'wait_ns')}})
+                       ('call_id', 'thread_id', 'usage', 'usage_error',
+                        'visible_images_submitted', 'wait_ns')}})
+                errors[-1]['publication_error'] = (
+                    type(getattr(error, 'publication_error', None)).__name__
+                    if getattr(error, 'publication_error', None) is not None else None)
                 raise
             completed.append(value)
             return {'call_id': value['call_id'], 'output': {'status': 'target_reference',
@@ -117,6 +121,18 @@ class GroundingFailureAccounting(unittest.TestCase):
         self.assertIsNone(r['accounting']['cost'])
         self.assertEqual(r['stages']['anchor_model']['status'], 'failed')
         self.assertIsNotNone(attempt['completed_ns'])
+        if row['errors']:
+            error, = row['errors']
+            self.assertEqual(error['call_id'], attempt['call_id'])
+            self.assertEqual(error['thread_id'], 'thread-1' if row['client_turns'] else None)
+            self.assertEqual(error['usage'], attempt['usage'])
+            self.assertEqual(error['visible_images_submitted'], attempt['visible_images_submitted'])
+            self.assertEqual(error['wait_ns'], attempt['wait_ns'])
+        if row['files'].get('failure.json'):
+            failure = json.loads(row['files']['failure.json'])
+            self.assertEqual(failure['turn_id'], 'turn-1')
+            self.assertEqual(failure['thread_id'], 'thread-1')
+            self.assertEqual(failure['usage'], attempt['usage'])
         json.dumps(r, allow_nan=False)
 
     def test_failed_and_interrupted_turn_keep_known_accounting(self):
@@ -131,6 +147,10 @@ class GroundingFailureAccounting(unittest.TestCase):
         row = cell('failed', usage(100, 20), 'failure.json')
         self.assert_failed(row)
         self.assertEqual(row['errors'][0]['cause'], 'PermissionError')
+        self.assertEqual(row['errors'][0]['publication_error'], 'PermissionError')
+        self.assertEqual(row['errors'][0]['call_id'], 'turn-1')
+        self.assertEqual(row['errors'][0]['thread_id'], 'thread-1')
+        self.assertEqual(row['errors'][0]['usage']['input_tokens'], 100)
         self.assertNotIn('failure.json', row['files'])
 
     def test_completed_result_publication_refusal_is_not_unbilled_or_successful(self):
@@ -143,7 +163,22 @@ class GroundingFailureAccounting(unittest.TestCase):
         self.assert_failed(cell('timeout'), known=False)
 
     def test_invalid_usage_keeps_other_known_metadata(self):
-        self.assert_failed(cell('failed', usage(-1, 0)), known=False)
+        for value in (usage(-1, 0), {'last': {}}):
+            with self.subTest(usage=value):
+                row = cell('failed', value)
+                self.assert_failed(row, known=False)
+                self.assertEqual(row['errors'][0]['call_id'], 'turn-1')
+                self.assertEqual(row['errors'][0]['thread_id'], 'thread-1')
+                self.assertIsNotNone(row['errors'][0]['usage_error'])
+                failure = json.loads(row['files']['failure.json'])
+                self.assertIsNotNone(failure['usage_error'])
+
+    def test_invalid_completed_usage_keeps_turn_metadata(self):
+        row = cell('completed', usage(-1, 0))
+        self.assert_failed(row, known=False)
+        self.assertEqual(row['errors'][0]['call_id'], 'turn-1')
+        self.assertEqual(row['errors'][0]['thread_id'], 'thread-1')
+        self.assertIsNotNone(row['errors'][0]['usage_error'])
 
     def test_start_failure_does_not_invent_turn_or_image_admission(self):
         row = cell('start_failure')
