@@ -4,12 +4,19 @@ Latest full row-level metadata is [r70](maintenance/repository-inventory-2026101
 `e83e52dc0eda4c3ebc5f54f676971ce9e71a6006` with 1,673 open Issues and 489 open PRs. A complete live read at 05:27:38 UTC against main
 `95386ee7e10e7ffc7422bd473f4db29991bd28b6` found the same IDs and the same
 Issue metadata and PR head/base/reviewer fields; see [r74 in the consolidation plan](REPOSITORY_CONSOLIDATION.md#実行更新-r74--入口の整合とworktree-custody棚卸し). No duplicate CSV was needed.
-This does not provide semantic review or owner status.
+The entry-point and custody reconciliation then merged as PR #9155 at main
+`5efe7301f6e655a41c4653b3c6baf45138ca72f6`. A current GraphQL count read still
+returns 1,673 open Issues and 489 open PRs; this is a count check, not a new
+row-level metadata snapshot or semantic/ownership review.
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
 See the
 [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
 family-by-family review and disposition criteria. This is the short entry
 point, not an experiment ledger.
+Three disjoint, evidence-preserving starter packets for #17, #5, and #59 are in
+the [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md). They are
+available independent tasks, not exclusive assignments or resource grants;
+shared indexes remain serially integrated.
 
 ## Objective
 

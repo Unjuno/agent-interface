@@ -18,6 +18,10 @@ below, and verify its current Issue, source and ownership. The repository-wide
 [consolidation plan](REPOSITORY_CONSOLIDATION.md#2026-10-19-全体整理の実行計画--アイデアを保存して作業面を収束)
 defines the family record and safe cleanup gates. This map is navigation;
 it adds no assignment, resource grant, reviewer quota or all-workers waiting gate.
+For three current, non-overlapping starter tasks, see the
+[worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md): #17 release
+crosswalk, #5 target-binding crosswalk, and #59 A07 custody audit. Each has a
+separate output path; one integrator updates shared family indexes after review.
 The current discovery coverage is measured against the [r51 snapshot](maintenance/repository-inventory-20261019-r51.md) in the [r51 idea-index audit](maintenance/idea-index-coverage-20261019-r51.md). Of 1,675 open Issues, 1,184 have primary rows in the historical research index; 491 do not. Among those 491, 220 have a literal Issue URL in an individual `docs/ideas/*.md` file and 271 do not. The [r51 disjoint work queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv) divides them into 20 number-sorted batches of at most 25. These are navigation facts only; no semantic family, priority, owner, or disposition is inferred. The r15 snapshot remains immutable history. Re-read live sources before changing shared family records or Issue status. Issue #4 is now indexed in the visual family but the historical primary-row gap snapshot is unchanged. Use the queue as a discovery source, not a research-only classification. The full outcome and safe closure criteria are in the [repository consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
 
 **Current evidence-routing result:** the [A02/A03 blocked-X11 packet note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md)
