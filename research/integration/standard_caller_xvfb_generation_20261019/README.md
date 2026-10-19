@@ -97,3 +97,36 @@ The synthetic property is not a product task or independent game/app success
 oracle. This does not qualify native user desktop input, XWayland, a held-input
 release under blocked server I/O, MAP01, bounded general recovery, model timing,
 or matched economics. It uses no WSLc allocation, Docker, provider or model.
+
+## Additive successful rerun — workflow run 39174461630
+
+The later `Runtime X11 v1 Integration` workflow run
+[39174461630](https://github.com/Unjuno/agent-interface/actions/runs/39174461630)
+also completed successfully. Its `x11-integration` job
+[117814163206](https://github.com/Unjuno/agent-interface/actions/runs/39174461630/job/117814163206)
+ran at PR head `8ce4e52a28d393128dc769fc35bcaecd22c94a08`; the uploaded
+`standard-mcp-xvfb-generation` artifact was ID `12153533548` with GitHub digest
+`sha256:df979bbbd99c38b871c4472c2f7d2c4772a1cd0b487c0ea55b4e09e310d8f1b1`.
+The extracted 18,972-byte raw report is preserved at
+[`raw/eighth-pass-run-39174461630.json`](raw/eighth-pass-run-39174461630.json)
+(SHA-256 `ECD805691D82E4E41870A5F933F998EC31047D769F538C5B14F50E866E0E01B9`).
+Its observation PNG has the same SHA-256 as the seventh run
+(`751E00D5F926A15128A45BAEC1B2310AABEE740B363119BD79DD224986D81F01`), so the
+byte-identical retained seventh-run image is referenced rather than duplicated.
+
+The run again reports `PASS_SCOPED_XVFB_STANDARD_CALLER` on X.Org Xvfb
+`2:21.1.12-1ubuntu1.8` with the same Xvfb binary SHA, XRes 1.2, embedded
+conditions, and unchanged test/runtime source blobs as the seventh pass. The
+independent application-property read returned `[1]`; caller release and
+independent keymap readback both verified the key was up. Destroyed-target input
+was refused with `input_dispatched=false`, and the lifecycle query worker
+retired. The fresh monotonic sample recorded 596.965 ms observe, 4.313 ms mint,
+59.479 ms input through caller return, 0.280 ms from synthetic KeyPress to
+property commit, 0.139 ms for independent effect read, and 4.069 ms stale-target
+refusal. The exact report also retains event and operation timestamps.
+
+This is a second successful sample of the same scoped synthetic Xvfb caller
+test, not a latency distribution, product task success, blocked-I/O release,
+MAP01, or matched efficiency result. The two successful runs' timings must not
+be promoted into a bound or pooled with other interfaces. All six earlier
+failed attempts and their raw records remain unchanged.
