@@ -27,6 +27,42 @@ diagnostic only and do not establish mergeability or evidence validity.
 | [#8782](https://github.com/Unjuno/agent-interface/pull/8782) | A11: 32 turns, alive, two kills, health 64–100, ammo 32–52; joint hard-health/useful-feedback/recovery condition not exposed. HOLD, no exit. | no | `9efecd6d5bb46d924ccdf79df53e6e8ed3727553` | `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36` | diverged; +2 / −857 | Preserve HOLD and sanitized evidence. Audit source closure and latest custody; no efficacy inference. |
 | [#8790](https://github.com/Unjuno/agent-interface/pull/8790) | A12 startup STOP plus A13: ten turns; a 1.008 s hold did not overlap the sole useful scorer event, which came 49.277 ms after the controller interval. Timing gate HOLD; one recovery was right-censored at the cap. | no | `db6ca09d10abaf3d0e8aaf5ad3f3f9f67555b763` | `a6343bb76e4dc0a4afa32a29c8a485a617faeff8` | diverged; +5 / −855 | Preserve timing HOLD/censoring. Public summary lacks hash-bound full raw/treatment-audit receipt; see the 2026-10-19 recheck. Keep unmerged pending owner-attested custody; do not rerun or reinterpret the delayed event. |
 
+## Separate source-level pending-ammo packet — PR #8854 (merged 2026-10-19)
+
+PR [#8854](https://github.com/Unjuno/agent-interface/pull/8854) was merged at
+`d25b497cc8a05d45158a81c038ee15e03aabdddc`. Its packet is kept separate from
+the six live threat-guard allocation packets above: on frozen source from
+`f185a9059d485a4f8d5a65e9e7f6782897f67eae`, a synthetic soft-ammo change
+6→4 queued a soft event without cancelling a pending turn, while ammo 0
+triggered the hard-floor cancellation path. A follow-up composition probe
+showed the authored cover schema/loop can allow repeated fire pulses below the
+immediate-action floor; it does not show a live model authored that cover or
+that the behavior harmed a task.
+
+The exact packet SHA-256 manifest matched 17/17 files. Local Windows Python
+3.11.9 checks passed 8/8 in normal mode, 8/8 under `-O`, and 34/34 in the
+independent audit; GitHub `replay-gate` passed. This is source-level synthetic
+evidence only: no live game, model, OS input, physical release, task effect,
+or MAP01 outcome. #59 remains open, and this packet does not consume or release
+any live allocation.
+
+## Separate stale-action revalidation packet — PR #8853 (merged 2026-10-19)
+
+PR [#8853](https://github.com/Unjuno/agent-interface/pull/8853) was merged
+at `91d8859530e9c65e7f24fb4843d4cbeef3a9ece6`. Its saved one-run WSLc A14
+construction packet uses a deterministic fake client: after the pending
+planner turn receives a newer ammo observation (6→4), fresh action admission
+rejects the minimum-ammo-5 response; with ammo unchanged, the response reaches
+executor-ready only, without input authority. We independently confirmed this
+packet is not present in the unrelated, conflicted large PR #8842.
+
+No WSLc run was repeated. The retained source test passed 2/2 in normal and
+optimized Python, its independent audit passed, all 22 manifest checksums
+matched, and the exact-head GitHub replay-gate passed. This validates only the
+synthetic stale-action predicate, not model behavior, game progress, OS input,
+physical release, useful task effect, recovery, or MAP01 completion. #59 remains
+open; this packet neither consumes nor releases a live allocation.
+
 ## What this organization establishes
 
 The six PRs cover unique packet directories and distinct attempt identifiers;
