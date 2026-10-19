@@ -1026,3 +1026,10 @@ PR #9160統合後main `08922b7c71fd56c9ec0292e549567407b0a25dbb`で、#17のcomp
 ## 実行更新 r81 — identity queryの実digest readerをcaller compositionへ追加
 
 r80の試験adapterをさらに置き換え、`X11TargetQueries.read`と`read_linux_x11_process_identity`を実行し、shaped XRes version/client-ID値とsynthetic `/proc/<pid>/stat`を渡す。固定PID 123から計算したdigestがsource observationと入力中の三回queryで一致し、別connectionの合成transaction reply sequence 3/5/7はinput press前にforwardされた。PIDを124へ変えると実digestが変わり、標準callerは`process_generation_changed_or_missing`で拒否、input relay pressなし。focused normal/-O runsとevidence recordsはpacketの`caller-identity-r01/`以下に保存、full suiteは28/28 protocolと3/3 callerを通常/-Oでpass。これはidentity readerの意味論とcaller/query-worker合成であり、socket上のframesは依然合成transaction markerでXRes QueryVersion/QueryClientIdsのwire bytesではない。live XRes/server PID discovery、物理release、application effect、bounded physical recovery、WSLc allocation、matched efficiencyを証明しない。次はXRes request/reply bytesをidentity transportへ繋ぐ最小protocol decoder fixtureを追加し、live blocked-I/O laneは新鮮な割当・owner根拠が得られるまで行わない。
+
+
+## 実行更新 r82 — A16回復判定修正をmainへ統合
+
+PR [#8825](https://github.com/Unjuno/agent-interface/pull/8825) は当初、既にmainへ入っていた親#8817のブランチをbaseにしていた。親コミットが現行mainの祖先であること、#8825のmainとのmerge-treeに競合がないこと、変更がstrict recovery auditorとcounterexample testの2ファイルに限られることを確認してbaseをmainへ付け替え、2026-10-19 06:57:21 UTCにsquash統合した。branch protection endpointは未設定、rulesetもなく、PRのレビュー判定は空欄だった。既存replay-gateはhead `9a64c2785bbe10c3330209ab5142fb876f58f2d4`でSUCCESS。対象packageの13 testsはPR headと統合後mainのそれぞれで通常Pythonと`-O`がPASSし、`py_compile`と`git diff --check`もPASSした。テストは欠落した中間decisionを`observable_recovery_missed`ではなく`auditor_input_invalid`として識別する。この結果は保存済みA16データの判定修正であり、live MAP01、入力解放、WSLc、物理回復、task successの証拠ではない。allocationは使用していない。
+
+[最新membership recheck r71](maintenance/repository-inventory-20261019-r71.md)では、main `f89e176b43b8db35798d51d887757e2d650e9bb1`に対するopen Issue 1,673件、open PR 488件を確認した。r70からIssue IDの変更はなく、PRは#8825のみopenでなくなった。open PRの442件はdraft、46件はnon-draftで、そのうち4件が`CLEAN`表示だった。これはPRの状態集計であって意味分類やmain統合可否ではない。次の整理は残るnon-draft PRのbase/dependencyをmainとの比較でほどき、個別の差分・根拠・所有を確認すること。Issueはfamilyごとの未解決仮説と後継を照合し、idea文書化だけでは閉じない。
