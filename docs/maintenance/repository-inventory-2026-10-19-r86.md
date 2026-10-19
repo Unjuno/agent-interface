@@ -1,8 +1,8 @@
 # Repository live inventory r86 — 2026-10-19
 
-Captured: 2026-10-19 10:59:33 UTC  
-Repository: Unjuno/agent-interface  
-Main SHA at capture: f08f60fa3be0612632d768689d23cd2d88a45c41  
+Captured: 2026-10-19 10:59:33 UTC
+Repository: Unjuno/agent-interface
+Main SHA at capture: f08f60fa3be0612632d768689d23cd2d88a45c41
 Source: GitHub REST Issues and Pull Requests endpoints, fully paginated (per_page=100); PR totals cross-checked with GraphQL before and after collection. This is a membership/metadata snapshot, not a semantic disposition or ownership record.
 
 - Open Issues: **1673** rows, all IDs unique; sorted-ID SHA-256: 1EB9FEE7E19076E249C0B094586ED4E7268B791D3B683E2A53D98330D842DC62.
