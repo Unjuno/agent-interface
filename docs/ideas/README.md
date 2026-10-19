@@ -192,6 +192,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 - [Visual representation, addressing and feedback](visual-interface.md) — #4's broad interface thesis, optional grids (#3), visual addresses/feedback contracts (#5), adaptive view-set selection (#7), and composite observations (#8), with [the research execution agenda](visual-interface-agenda.md). The record keeps selection (#7) separate from packing (#8), reuses #1946/#1968 integrity findings, and does not treat #2031's schema-confounded score as valid localization accuracy. It also separates finite-sample observation-channel dominance (#8911) from #6678's known-kernel comparison, and keeps image-space Jacobian adaptation (#7765) distinct from #5's safety/recovery contract. Original bodies and provenance are preserved; read current Issues before disposition.
 
+- [Temporal visual encoding](temporal-visual-encoding.md) — preserves #1525's already-used temporal-sheet primitive, #1550's scoped non-identifiability result, and the unresolved overlap between open #1565 and #2489; distinguishes history value, queryable history and packing value.
+
 - [Assumption-gated evidence acquisition](evidence-acquisition-policy-selection.md) — tests when greedy observation choice is justified and when bounded lookahead is worth its cost (#8879), without granting runtime authority.
 
 - [Counterfactual responsibility for negative queries](negative-query-counterfactual-responsibility.md) — preserves #8624's finite method result and duplicate-allocation boundary while keeping query completeness and live visual applicability separate.
