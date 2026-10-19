@@ -20,6 +20,12 @@ Issue/PR数をゼロにするのではなく、研究アイデア・反証・結
 
 **最新membershipの再確認 r59 (2026-10-19 02:49:49 UTC):** PR #8893統合後のmain `5d5b121ca3c0c922c6eff36793fbdffe5104c42d`で完全ページングし、open Issue 1,673件・open PR 499件を確認した。Issue集合はr58から不変、PR集合は#8893だけ減少した。[r59 recheck](maintenance/repository-inventory-recheck-20261019-r59.md)に完全CSVとhashを記録した。
 
+## 実行更新 r84 — 現行membershipを再照合し最初のidea familyを監査
+
+2026-10-19 07:50 UTCにGitHubの完全ページングをmain `9a91dd2f24193831b6320f24278f5e8d8a1048e2`で確認した。open Issue 1,673件はr70と同じID集合、open PR 484件はr70から#8794、#8798、#8803、#8811、#8825が減り追加なしであり、r83のmembership記録を新しいmain SHAで再確認した。全rowを再保存せず、[r84 recheck](maintenance/repository-inventory-20261019-r84.md)に結果を記録した。
+
+最初の意味監査ではlive #6/#56と[reactive-macro/symbolic-interface family](ideas/reactive-macro-symbolic-interface.md)を照合した。既存ページは広いreactive-control案と絞られたplanner-authored symbolic-interface仮説を区別し、A05/R02/A14/#7616の結果と限界を保ち、実験・統合が未完であることを正しく示す。両Issueをopenで維持し、新規Issueや重複ideaページを作らない。次はwork map上の別familyを一つ選び、質問・証拠・担当/依存・有限な次試験を一緒に分類する。Issue closureはidea保全とsourceへの再開リンクを個別確認した後にだけ行う。これはmembership更新と一familyのread-only意味監査であり、repository-wide triageやcleanupの完了ではない。
+
 ### 整理原則とIssueの処置
 
 - **まずアイデアを整理し、その後にIssueの状態を決める。** アイデアは仮説単位で正規の研究familyページへまとめる。元Issue番号・URL、異なる仮説、既存の肯定/否定/保留結果、raw/source、最強の単純な比較対象、未解決の反証、次に結果を変える有限の試験を結び付ける。短い索引やfamily agendaを入口にし、実験raw・歴史コメント・先行結果を移動・上書きしない。

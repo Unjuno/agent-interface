@@ -1,14 +1,8 @@
 # Current objective and working direction
 
-Latest full row-level metadata remains the immutable [r70 inventory](maintenance/repository-inventory-20261019-r70.md). Membership recheck [r83](maintenance/repository-inventory-20261019-r83.md), at main `640dba3eff3dbb5568da0504f8a624ac80f73c1a`, reports 1,673 open Issues and 484 open PRs; five PRs left the open set since r70 and none were added. This is membership evidence, not semantic or ownership classification. Consolidation r83 records the A06 evidence integration and current next work.
-The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
-See the
-[repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for the
-family-by-family review and disposition criteria, including the latest r82
-organization and work-dispatch rules. Current membership is 1,673 open Issues
-and 488 open PRs at main `f89e176b43b8db35798d51d887757e2d650e9bb1`; full
-row-level metadata remains the immutable r70 baseline. This is the short entry
-point, not an experiment ledger.
+Latest full row-level metadata remains the immutable [r70 inventory](maintenance/repository-inventory-20261019-r70.md). Membership recheck [r84](maintenance/repository-inventory-20261019-r84.md), captured at main `9a91dd2f24193831b6320f24278f5e8d8a1048e2`, confirms 1,673 open Issues and 484 open PRs. The Issue ID set is unchanged from r70; the PR set is r70 minus #8794, #8798, #8803, #8811, and #8825, with no additions. This is membership evidence, not semantic or ownership classification.
+
+The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; it does not classify meaning. See the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for family-by-family review and disposition criteria. The first current semantic audit refreshed #6 and #56 against their live Issue records and found the existing [family entry](ideas/reactive-macro-symbolic-interface.md) accurate; both distinct research questions remain open. This page is the short entry point, not an experiment ledger.
 The dated [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md)
 records three disjoint family candidates (#17, #5, #59), not current assignments
 or resource grants. #17's local Fake X packet is complete. The #5 Fake X
