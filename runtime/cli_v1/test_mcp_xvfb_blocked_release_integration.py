@@ -30,6 +30,9 @@ from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1 import owned_guarded_session as owned_session_module
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
+from runtime.cli_v1.test_synthetic_task_oracle import (
+    score_synthetic_application_task,
+)
 
 
 _DELAY_MS = 8000
@@ -209,7 +212,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
     async def test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb(self):
         result_path = os.environ.get('AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT')
         report = {
-            'schema':'agent-interface/standard-mcp-xvfb-blocked-release-v1',
+            'schema':'agent-interface/standard-mcp-xvfb-blocked-release-v2',
             'status':'RUNNING',
             'scope':'standard MCP caller; private Xvfb; test-injected delayed request; synthetic app',
             'conditions':{
@@ -235,6 +238,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
             'independent_release_readback':None,
             'late_request_horizon_readback':None,
             'synthetic_application_effect':None,
+            'independent_task_oracle':None,
             'terminal':None,
             'final_cleanup':None,
         }
@@ -665,6 +669,25 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 }
                 with app_lock:
                     report['synthetic_application_effect']['app_key_events'] = list(app_events)
+                report['independent_task_oracle'] = {
+                    'scope':'synthetic Xvfb task only; runtime task_success remains null',
+                    'reader':'synthetic app property plus independent parent keymap',
+                    'task_definition':(
+                        'one initial a effect; no delayed b effect; both keys up '
+                        'after release and at the delayed-request horizon'),
+                    'expected_effect':[1],
+                    'measurements':{
+                        'initial_effect':before_cancel_value,
+                        'final_effect':effect_value,
+                        'release_readback':release_readback,
+                        'horizon_readback':late,
+                    },
+                    **score_synthetic_application_task(
+                        initial_effect=before_cancel_value,
+                        final_effect=effect_value,
+                        release_readback=release_readback,
+                        horizon_readback=late),
+                }
                 # Either delayed-b outcome is evidence. Do not convert a live
                 # result into an assumed general queue-drain guarantee.
                 self.assertFalse(late['a'], report)
