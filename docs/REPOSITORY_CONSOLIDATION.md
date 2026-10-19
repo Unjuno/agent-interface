@@ -1061,3 +1061,9 @@ main `640dba3eff3dbb5568da0504f8a624ac80f73c1a`でGitHubの完全なopen PR ID�
 Issue #17はopen research parent / keep-open actionableとして整理した。family recordとIssue indexに、merged #9168/#9169の訂正済みR02結果 (XRes disconnect後のheld key、別client release、8.5秒内のlate pressなし) と限界を追加した。これは一つのX.Org Xvfb構成に限る。標準caller blocked-I/O統合、独立application effect、bounded recoveryが残り、release/task outcomeはUNKNOWN。#17をcloseせず、別アイデアを重複familyに吸収していない。
 
 この区切りはfresh baseline、local custody snapshot、および一つのfamily updateであり、全Issue/PR semantic triageやrepository-wide cleanupの完了ではない。次は全open PRを意味・依存・所有・ローカル検証で個別dispositionし、Issueをfamily/provenanceへ結ぶ。worktreeをarchivalする前にclosed/merged PR ancestry、Issue assignments、process/session owner、ignored raw manifestを確認する。
+
+## 実行更新 r88 — #17 standard callerへXRes wire transactionを統合
+
+main `fc8d8b0ac67e8086fa53dabace4bfd3322a1b89a`を基準に、#17の既存Fake X compositionに実際のpython-xlib XRes `QueryVersion` / `QueryClientIds` request/reply framingを接続した。[r02 packet](../research/integration/offline_proxy_reply_framing_20261019/xres_wire_socket_r02/README.md)は最初のfixture長さ誤りと修正後結果を保全し、request/reply bytes、条件、normal/-O output、SHA-256 manifestを含む。実MCP callerの別identity socketを通し、caller suite 3/3、独立wire test 1/1、既存XRes client-fence suite 19/19がnormal/-Oでpass。process generation changeはKeyPress前に拒否され、held-reply cancelは`UNKNOWN`/no task success/replay disabledのまま。
+
+これは合成XRes応答と合成PID/`/proc`によるFake X compositionであり、live server discovery、独立application effect、物理release、bounded live recovery、MAP01 task success、matched efficiencyの証拠ではない。A02/A03 allocationを使わず、WSLcも使っていない。Issue #7924のowner/unused-allocation STOP/HOLDを越えて新規live attemptを始めない。次のcomputer-control discriminatorは現行caller上のprivate-Xvfb held-input release/readbackだが、実施前に未消費allocationとowner/release evidenceを別途照合する。Issue #17はopenのまま。

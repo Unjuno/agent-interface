@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import socket
+import struct
 import tempfile
 import threading
 import time
@@ -13,6 +14,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from Xlib import X
+from Xlib.ext import res as xres
 
 from research.integration.offline_proxy_reply_framing_20261019.fake_socket_relay import (
     FakeSocketRelay,
@@ -94,19 +96,36 @@ def _pointer_reply(sequence):
 
 
 class _FakeXResConnection:
-    """Real process-identity reader input with synthetic XRes-shaped replies."""
-    def __init__(self, root):
+    """Real process-identity reader with optional wire-backed XRes replies."""
+    def __init__(self, root, exchange=None):
         self.root = Path(root)
+        self.exchange = exchange
 
     def has_extension(self, name):
         return name == "X-Resource"
 
     def res_query_version(self):
+        if self.exchange is not None:
+            request = xres.QueryVersion._request.to_binary(
+                opcode=201, client_major=1, client_minor=2)
+            reply = self.exchange(request, "query_version")
+            parsed, remainder = xres.QueryVersion._reply.parse_binary(reply, None)
+            if remainder:
+                raise OSError("trailing bytes in XRes QueryVersion reply")
+            return parsed
         return SimpleNamespace(server_major=1, server_minor=2)
 
     def res_query_client_ids(self, specs):
         if specs != [{"client": 20, "mask": 2}]:
             raise AssertionError(f"unexpected XRes client-id query: {specs!r}")
+        if self.exchange is not None:
+            request = xres.QueryClientIds._request.to_binary(
+                opcode=201, specs=specs)
+            reply = self.exchange(request, "query_client_ids")
+            parsed, remainder = xres.QueryClientIds._reply.parse_binary(reply, None)
+            if remainder:
+                raise OSError("trailing bytes in XRes QueryClientIds reply")
+            return parsed
         marker = self.root / "fake-process-pid"
         pid = int(marker.read_text(encoding="ascii")) if marker.exists() else 123
         return SimpleNamespace(ids=[SimpleNamespace(
@@ -172,17 +191,47 @@ def _socket_owner_factory(targets, directory, display_name, options):
             (identity_client, identity_upstream, identity_event_sender)])
 
         identity_replies = {"count": 0}
+        identity_server_sequence = {"value": 1}
 
         def serve_identity_upstream():
             try:
                 while True:
-                    request = _receive_exact(identity_upstream, 8)
-                    index = identity_replies["count"]
-                    identity_replies["count"] += 1
-                    sequence = 3 + 2 * index
-                    write_record(f"identity-query-request-{index + 1}.json", {
-                        "hex": request.hex(), "reply_sequence": sequence})
-                    identity_upstream.sendall(_pointer_reply(sequence))
+                    prefix = _receive_exact(identity_upstream, 4)
+                    request_length = int.from_bytes(prefix[2:4], "little") * 4
+                    request = prefix + _receive_exact(
+                        identity_upstream, request_length - len(prefix))
+                    identity_server_sequence["value"] += 1
+                    sequence = identity_server_sequence["value"]
+                    if request[0] != 201:
+                        raise OSError(f"unexpected XRes major opcode {request[0]}")
+                    if request[1] == xres.ResQueryVersion:
+                        response = (struct.pack("<BBHIHH", 1, 0, sequence, 0, 1, 2)
+                                    + bytes(20))
+                        write_record("identity-xres-version-request.json", {
+                            "request_hex": request.hex(), "sequence": sequence,
+                            "reply_hex": response.hex()})
+                    elif request[1] == xres.ResQueryClientIds:
+                        count = int.from_bytes(request[4:8], "little")
+                        if count != 1 or len(request) != 16:
+                            raise OSError("unexpected QueryClientIds spec count or size")
+                        requested_client = int.from_bytes(request[8:12], "little")
+                        mask = int.from_bytes(request[12:16], "little")
+                        if requested_client != 20 or mask != xres.LocalClientPIDMask:
+                            raise OSError("unexpected QueryClientIds client or mask")
+                        marker = root / "fake-process-pid"
+                        pid = int(marker.read_text(encoding="ascii")) if marker.exists() else 123
+                        response = (struct.pack("<BBHII", 1, 0, sequence, 4, 1)
+                                    + bytes(20)
+                                    + struct.pack("<IIII", 0x1200000, mask, 4, pid))
+                        identity_replies["count"] += 1
+                        write_record(
+                            f"identity-query-request-{identity_replies['count']}.json", {
+                                "request_hex": request.hex(), "sequence": sequence,
+                                "window_xid": requested_client, "mask": mask,
+                                "synthetic_pid": pid, "reply_hex": response.hex()})
+                    else:
+                        raise OSError(f"unexpected XRes minor opcode {request[1]}")
+                    identity_upstream.sendall(response)
             except (EOFError, OSError) as error:
                 write_record("identity-upstream-terminal.json", {
                     "error": type(error).__name__, "reply_count": identity_replies["count"]})
@@ -190,6 +239,29 @@ def _socket_owner_factory(targets, directory, display_name, options):
         identity_upstream_thread = threading.Thread(target=serve_identity_upstream, daemon=True)
         identity_upstream_thread.start()
         cleanup.addCleanup(identity_upstream_thread.join, 1)
+
+        def identity_exchange(request, operation):
+            identity_client.sendall(request)
+            response_header = _receive_exact(identity_client, 32)
+            reply_length = int.from_bytes(response_header[4:8], "little") * 4
+            response = response_header + _receive_exact(identity_client, reply_length)
+            sequence = int.from_bytes(response[2:4], "little")
+            if operation == "query_client_ids":
+                parsed, remainder = xres.QueryClientIds._reply.parse_binary(response, None)
+                if remainder or len(parsed.ids) != 1:
+                    raise OSError("invalid decoded QueryClientIds reply")
+                identity_index = identity_replies["count"]
+                value = parsed.ids[0]
+                write_record(f"identity-query-received-{identity_index}.json", {
+                    "sequence": sequence, "request_hex": request.hex(),
+                    "reply_hex": response.hex(),
+                    "client_base": value.spec.client, "mask": value.spec.mask,
+                    "pid": value.value[0]})
+            else:
+                write_record("identity-xres-version-received.json", {
+                    "sequence": sequence, "request_hex": request.hex(),
+                    "reply_hex": response.hex()})
+            return response
 
     class FakeQueries:
         def read(self, operation, _xid):
@@ -216,14 +288,6 @@ def _socket_owner_factory(targets, directory, display_name, options):
                     identity_index = len(list(root.glob("identity-query-returned-*.json"))) + 1
                     write_record(f"identity-query-entered-{identity_index}.json", {
                         "operation": operation, "xid": xid})
-                    identity_client.sendall(b"\x7f\0\x01\0\x6a\0\x01\0")
-                    response = _receive_exact(identity_client, 32)
-                    sequence = int.from_bytes(response[2:4], "little")
-                    expected_sequence = 3 + 2 * (identity_index - 1)
-                    if sequence != expected_sequence:
-                        raise OSError(f"identity reply sequence {sequence} != {expected_sequence}")
-                    write_record(f"identity-query-received-{identity_index}.json", {
-                        "sequence": sequence, "reply_hex": response.hex()})
                     identity_target = identity_tracker.target
                     write_record(f"identity-channel-state-{identity_index}.json", {
                         "connection": "standard-mcp-identity", "owner_pid": os.getpid(),
@@ -243,7 +307,8 @@ def _socket_owner_factory(targets, directory, display_name, options):
                 return self.reader.close()
 
         display_patcher = patch("runtime.guarded_x11_v1.target_queries.display.Display",
-                                side_effect=lambda _name: _FakeXResConnection(root))
+                                side_effect=lambda _name: _FakeXResConnection(
+                                    root, identity_exchange))
         query_patcher = patch("runtime.guarded_x11_v1.target_queries.X11TargetQueries",
                               side_effect=SocketBackedQueryReader)
         display_patcher.start()
@@ -473,10 +538,15 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
                     returned = json.loads((root / f"identity-query-returned-{index}.json").read_text(
                         encoding="utf-8"))
                     self.assertEqual(returned["generation"], source_generation)
-                for index, sequence in enumerate((3, 5, 7), start=1):
+                for index, sequence in enumerate((3, 4, 5), start=1):
                     reply = json.loads((root / f"identity-query-received-{index}.json").read_text(
                         encoding="utf-8"))
                     self.assertEqual(reply["sequence"], sequence)
+                    self.assertEqual(reply["request_hex"][:4], "c904")
+                    self.assertEqual(len(bytes.fromhex(reply["reply_hex"])), 48)
+                    self.assertEqual(reply["client_base"], 0x1200000)
+                    self.assertEqual(reply["mask"], 2)
+                    self.assertIn(reply["pid"], (123, 124))
                 identity_state = json.loads((root / "identity-channel-state.json").read_text(
                     encoding="utf-8"))
                 self.assertIsNone(identity_state["target_request"], identity_state)

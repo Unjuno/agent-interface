@@ -112,3 +112,23 @@ bounded owner retirement and release semantics with a fake upstream before
 considering any WSLc-backed run. A03's raw lacks the needed sequence trace and
 must remain unchanged. Issue #7924 currently holds WSLc at `STOP / HOLD`, so
 this packet does not authorize a live attempt.
+
+## Addendum — XRes wire and standard-caller composition r02 (2026-10-19)
+
+The next construction step is now retained in
+[`xres_wire_socket_r02/`](xres_wire_socket_r02/README.md). The standard
+guarded-MCP caller's separate identity connection now sends serialized XRes
+`QueryVersion` and `QueryClientIds` requests through `FakeSocketRelay`; the
+synthetic server replies are decoded by python-xlib and the resulting PID feeds
+the real process-generation digest path. The focused wire test passes 1/1 and
+the caller composition suite passes 3/3 in normal and optimized Python. The
+caller cases preserve generation-change refusal before KeyPress and `UNKNOWN`,
+no-task-success, replay-disabled behavior after held input.
+
+This closes the previously documented XRes wire-stub gap only for Fake X
+construction. The server extension negotiation, process PID, `/proc`, and X11
+server are synthetic; no live owner-disconnect or physical release was tested.
+Issue #7924 remains `STOP / HOLD`; no WSLc allocation was checked or used, and
+the consumed A02/A03 allocations were not rerun. First fixture parse failure
+and corrected runs are preserved in the r02 packet's raw tree and SHA-256
+manifest.

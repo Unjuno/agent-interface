@@ -1,0 +1,19 @@
+{
+  "outcome": "PASS_OFFLINE_XRES_WIRE_RELAY_SCOPED",
+  "test": "test_query_client_ids_wire_round_trip_through_fake_relay",
+  "final_normal": {"exit": 0, "tests": 1, "result": "passed"},
+  "final_optimized": {"exit": 0, "tests": 1, "result": "passed"},
+  "first_corrected_fixture_pass": {"normal": "passed", "optimized": "passed", "raw": "raw/first-pass/"},
+  "initial_fixture_failure": "The first synthetic reply used byte-length 1 instead of 4 for a 32-bit ClientIdValue; python-xlib left PID bytes unparsed. Preserved under raw/initial-fixture-failure.txt.",
+  "request_hex": "c9040400010000001400000002000000",
+  "reply_hex": "01000200040000000100000000000000000000000000000000000000000000000000200102000000040000007b000000",
+  "decoded": {"window_xid": 20, "canonical_client_base": 18874368, "mask": 2, "synthetic_pid": 123},
+  "relay_terminal": {"retirement_reason": "client_eof", "held_reply_bytes": 0, "release_state": "UNKNOWN", "task_success": null, "replay_enabled": false},
+  "existing_xres_client_fence_suite": {"normal": "19/19 passed", "optimized": "19/19 passed"},
+  "standard_caller_composition": {"normal": "3/3 passed", "optimized": "3/3 passed", "protocol": "real serialized XRes QueryVersion and QueryClientIds over the separate Fake X identity socket"},
+  "caller_scope": {"stale_generation": "refused before KeyPress", "held_reply_cleanup": "UNKNOWN; task_success null; replay disabled"},
+  "server_effect": "synthetic Fake X only",
+  "physical_release": false,
+  "task_success": null,
+  "wslc_or_allocation_used": false
+}

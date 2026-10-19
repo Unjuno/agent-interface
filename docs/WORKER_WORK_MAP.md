@@ -70,14 +70,18 @@ The pre-press identity reply forwards; only the input `GetPointerControl`
 reply following its own XTEST KeyPress and event receipt is held, then the test
 relay returns `UNKNOWN` by its 150 ms bound. Protocol/relay tests pass 28/28 and
 standard-caller relay composition passes 3/3 in normal and `-O`. Its actual
-`TargetQueryWorker` call now crosses a distinct identity FakeSocketRelay for
-three sequential replies before input; a fixture generation change is refused
-before either relay sees a KeyPress. The real generation hash/validation code
-uses shaped synthetic XRes and `/proc` replies, while XRes wire
-encoding/decoding and PID discovery remain stubbed. Next qualify those protocol
-bytes in the Fake X transport, then resume blocked-I/O release work
-only with a verified unused allocation/owner gate. No server, physical-release
-or task-success claim; A02/A03 remain consumed and #7924 remains STOP/HOLD.
+`TargetQueryWorker` call crosses a distinct identity FakeSocketRelay for three
+sequential replies before input; a fixture generation change is refused before
+either relay sees a KeyPress. The additive [r02 wire packet](../research/integration/offline_proxy_reply_framing_20261019/xres_wire_socket_r02/README.md)
+now sends actual python-xlib-serialized XRes QueryVersion and QueryClientIds
+frames over that identity socket and parses full synthetic replies in the real
+caller. The focused wire test passes 1/1, caller composition 3/3, and the
+existing XRes client-fence tests 19/19 in both normal and optimized Python.
+The caller still has synthetic XRes server/PID and `/proc` data. Next is a
+private-Xvfb proof of server extension negotiation and an already-held input
+under the standard caller, with independent release readback; only consider it
+after fresh ownership and unused-allocation evidence. No physical-release or
+task-success claim; A02/A03 remain consumed and #7924 remains STOP/HOLD.
 
 ## Choose work
 
