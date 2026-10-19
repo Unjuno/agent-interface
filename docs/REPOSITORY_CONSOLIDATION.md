@@ -52,6 +52,10 @@ The [B11 receipt](maintenance/issue-discovery-b11-20261019.md) routes rows 251�
 
 The [B12 receipt](maintenance/issue-discovery-b12-20261019.md) routes rows 276–300 and adds one direct entry for #7705; the other 24 ideas already had curated entries. It preserves finite method results, source/build STOPs, open Draft evidence, and the #7430 no-WSLc-owner restriction. Merged package validation remains distinct from user benefit, live GUI transfer, or a fresh resource allocation. B13 is next; no experiment or Issue state changed.
 
+### B13 bounded intake — effect, recovery, and resource-ownership evidence
+
+The [B13 receipt](maintenance/issue-discovery-b13-20261019.md) routes rows 301–325 and adds the missing #7889 direct summary while preserving the canonical T0 failure, the later local duplicate attempt, and its incomplete audit. It also keeps #7921's wrong-input STOP and #7924's explicit WSLc ownership hold intact; no runtime command was issued. Merged results remain method-scoped; open Drafts are visible in the receipt. No Issue state or allocation changed. B14 is next.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
