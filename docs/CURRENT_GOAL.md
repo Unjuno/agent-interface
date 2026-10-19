@@ -1,8 +1,8 @@
 # Current objective and working direction
 
-Latest complete membership recheck recorded here: 2026-10-19 00:20:08 UTC
-against main `0dafeff35e73316216c95d37f9f7e799bf8a21a8`; 1,675 open Issues and
-503 open PRs ([r51 snapshot](maintenance/repository-inventory-20261019-r51.md)).
+Latest complete membership recheck recorded here: 2026-10-19 02:16:48 UTC
+against main `0d022b76b6f940638da86c1ea4f71930c8df1626`; 1,673 open Issues and
+502 open PRs ([r55 recheck](maintenance/repository-inventory-recheck-20261019-r55.md)).
 This records membership only, not semantic review or current owner status.
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
 See the
@@ -37,10 +37,19 @@ The latest input-release attempt is indexed in the [A02/A03 evidence note](../re
 A02 stopped before probe entry due to an incomplete source mount; A03 passed one
 healthy control but its first blocked trial timed out before the held-reply
 predicate. Both first outcomes and raw are retained; neither allocation may be
-replayed. Raw plus frozen probe code indicate the gate likely blocked a
-pre-press process-identity reply. The finite next check is offline proxy framing
-that forwards this read-only reply and withholds only the specific post-KeyPress
-input reply; this diagnosis does not establish blocked-I/O release.
+replayed. The offline framing model now passes eight tests in normal and
+optimized Python and is connected to the standard source path: process identity
+is queried over a separate same-PID X connection before input; the input
+connection sends XTEST KeyPress then Python-Xlib 0.33 waits on
+`GetPointerControl` (core opcode 106). The frozen proxy relays client requests
+opaquely and gates every reply by owner PID, so it cannot select that exact
+input reply. This strengthens the circular-gate diagnosis but does not recover
+A03's missing per-connection reply trace or establish blocked-I/O release. The
+next finite step is a new offline-tested proxy candidate that records each
+connection, negotiates XTEST's major opcode, and targets only the keycode/action
+matched `GetPointerControl` sequence. Preserve A02/A03 unchanged. WSLc Issue
+#7924 remains `STOP / HOLD` for client ownership, so no fresh allocation is
+available; do not run live input until an unused lane is verified.
 
 Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not

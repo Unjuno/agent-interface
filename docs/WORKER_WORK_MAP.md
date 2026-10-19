@@ -1,9 +1,9 @@
 # Worker work map
 
 2026-10-19 current map. The latest complete paginated GitHub CLI membership read
-was at 2026-10-19 02:02:31 UTC against main
-`289a0c19ab85581cb3414b01d92f2f887ae0c60b`: 1,673 open Issues and 502 open PRs
-([r54 membership recheck](maintenance/repository-inventory-recheck-20261019-r54.md); the unchanged r53 metadata snapshots are reused). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
+was at 2026-10-19 02:16:48 UTC against main
+`0d022b76b6f940638da86c1ea4f71930c8df1626`: 1,673 open Issues and 502 open PRs
+([r55 membership recheck](maintenance/repository-inventory-recheck-20261019-r55.md); the unchanged r53 metadata snapshots are reused). The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
 records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
 #8863, and #8847 have been independently audited and merged as separate scoped
@@ -27,13 +27,22 @@ that can block the pre-press process-identity reply; the linked evidence note
 specifies the finite offline proxy-framing check before any new allocation.
 
 That offline discriminator now has a retained [scoped result](../research/integration/offline_proxy_reply_framing_20261019/README.md):
-the A03 broad predicate selects a same-PID pre-press identity reply, while the
-connection-and-sequence-scoped model forwards it and withholds only the exact
-action-bound input-sync reply after its KeyPress receipt. Seven tests pass in
-normal and optimized Python. This is a policy/framing model, not a patch to the
-frozen proxy or evidence about A03's unseen reply sequence. Next audit whether a
-real proxy/caller trace can supply these identities; only then consider a newly
-eligible live candidate. Keep release/task `UNKNOWN`; no WSLc allocation was used.
+and a source crosswalk now pins the specific request order. The guarded caller
+rechecks process identity through `TargetQueryWorker` on a separate X connection
+from a thread in the same owner PID. Its input connection then sends XTEST
+`FakeInput(KeyPress)` and Python-Xlib 0.33 `Display.sync()` waits for a
+`GetPointerControl` reply (core opcode 106). The frozen A03 proxy forwards client
+requests opaquely and gates every type-1 reply by owner PID, so it cannot select
+that one connection/sequence/role. The revised offline model forwards a same-PID
+identity reply even when its numeric sequence collides with the target, and
+selects only the action/keycode-matched `GetPointerControl` reply. Eight tests
+pass in normal and optimized Python. This is still a model; the A03 raw has no
+reply sequence and its first failure remains unchanged. Next: implement and
+offline-test a fresh candidate proxy that records per-connection requests and
+negotiates the XTEST major opcode, then use it only with a verified unused
+allocation. #7924 remains at `STOP / HOLD` for WSLc client ownership and current
+main checkout; no eligible unused allocation is documented. Keep release/task
+`UNKNOWN`; no WSLc allocation was used here.
 
 ## Choose work
 
