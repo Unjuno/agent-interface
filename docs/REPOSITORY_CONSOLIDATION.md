@@ -1,6 +1,8 @@
 # リポジトリ全体の整理計画
 実行手順は[リポジトリ整理の実行計画](REPOSITORY_CLEANUP_PLAN.md)を参照。Issueは意味と仮説を正規カタログに整理し、根拠・後継・再開条件をIssueへ戻してから個別に処遇する。件数を減らすこと自体は完了条件ではない。
 
+**最新membership r96 (2026-10-19 15:22 UTC):** main `b0e47dd4f67a57db5c530d19251ad172e29554d7`でopen Issue 1,673件・open PR 479件。完全ページングCLI結果とGraphQL総数が一致し、r95とID集合は同一。[r96 inventory](maintenance/repository-inventory-20261019-r96.md)。r96は最新membershipとPR head/base metadataであり、全件の意味分類・差分レビュー・owner/custody監査ではない。各状態変更の直前に対象を再取得する。
+
 ## 2026-10-19 全体整理の実行計画 — アイデアを保存して作業面を収束
 
 ### 目的とゴール
