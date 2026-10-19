@@ -21,6 +21,10 @@ from ..guarded_x11_v1.xres_client_fence import (
 
 _STARTUP_TIMEOUT_S = 5.0
 _CLOSE_TIMEOUT_S = 5.0
+# Cancellation must reach the bounded retirement path promptly even when the
+# owner's control thread is waiting on platform I/O. Keep this independent of
+# startup's more permissive readiness budget.
+_CANCEL_CONTROL_RESPONSE_TIMEOUT_S = 0.25
 _CANCEL_RETIRE_GRACE_S = 1.0
 _RETIRE_TERMINATE_GRACE_S = 0.25
 _RETIRE_KILL_GRACE_S = 0.25
@@ -619,7 +623,7 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         with self._control_lock:
             try:
                 self._control.send({'operation':'cancel_guarded', 'token':token})
-                if not self._control.poll(_STARTUP_TIMEOUT_S):
+                if not self._control.poll(_CANCEL_CONTROL_RESPONSE_TIMEOUT_S):
                     self._execution_unknown = True
                     self.review_required = True
                     retirement = self._retire('cancel control response unconfirmed')

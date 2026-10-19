@@ -632,6 +632,32 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
 
+    def test_unconfirmed_cancel_wait_is_capped_by_cancel_response_budget(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._process = Mock()
+        owner._process.is_alive.return_value = True
+        owner._control = Mock()
+        owner._control.poll.return_value = False
+        owner._control_lock = threading.Lock()
+        owner._snapshot_cache = {}
+        owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'parent_initial_state'
+        owner._owner_input_obligations_live_read = {'status':'not_read'}
+        owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+        owner._cleanup_after_owner_retirement = Mock(return_value=(
+            {'status':'disconnected'}, {'status':'readback_verified'}))
+        owner._execution_unknown = False
+        owner.review_required = False
+
+        result = owner.cancel_guarded('cancel-token')
+
+        self.assertLessEqual(owner._control.poll.call_args.args[0], 0.25)
+        self.assertEqual(result['status'], 'cancel_unconfirmed')
+        self.assertFalse(result['release_confirmed'])
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertIsNone(result['task_success'])
+        self.assertFalse(result['replay_allowed'])
+
     def test_unconfirmed_cancel_retires_exact_owner_without_claiming_release(self):
         responses = (
             ('timeout', False, None),
@@ -655,7 +681,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 owner.review_required = False
                 owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
 
-                with patch('runtime.cli_v1.owned_guarded_session._STARTUP_TIMEOUT_S', 0):
+                with patch('runtime.cli_v1.owned_guarded_session._CANCEL_CONTROL_RESPONSE_TIMEOUT_S', 0):
                     result = owner.cancel_guarded('cancel-token')
 
                 owner._retire.assert_called_once_with(
@@ -711,7 +737,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                         events.append(('release', seen)) or {
                             'status':'readback_verified', 'worker_retired':True}))
 
-                    with patch('runtime.cli_v1.owned_guarded_session._STARTUP_TIMEOUT_S', 0):
+                    with patch('runtime.cli_v1.owned_guarded_session._CANCEL_CONTROL_RESPONSE_TIMEOUT_S', 0):
                         result = owner.cancel_guarded('cancel-token')
 
                     owner._retire.assert_called_once_with(
