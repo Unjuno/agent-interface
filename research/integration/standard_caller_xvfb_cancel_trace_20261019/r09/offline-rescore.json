@@ -1,0 +1,149 @@
+{
+  "negative_control_horizon_a_still_down": {
+    "checks": {
+      "final_effect_exact": true,
+      "horizon_readback_all_up": false,
+      "initial_effect_exact": true,
+      "release_readback_all_up": true
+    },
+    "status": "fail",
+    "task_success": false
+  },
+  "rows": [
+    {
+      "cancel_elapsed_ms": 912.121253,
+      "cancel_status": "cancel_unconfirmed",
+      "cleanup_status": "UNKNOWN",
+      "file": "standard-mcp-xvfb-blocked-release.json",
+      "horizon_late_b_press": false,
+      "independent_task_oracle": {
+        "checks": {
+          "final_effect_exact": true,
+          "horizon_readback_all_up": true,
+          "initial_effect_exact": true,
+          "release_readback_all_up": true
+        },
+        "status": "pass",
+        "task_success": true
+      },
+      "owner_disconnect_status": "disconnected",
+      "owner_retired": true,
+      "release_attempt_status": "readback_verified",
+      "release_confirmed": false,
+      "release_elapsed_ms": 582.0736930000123,
+      "replay_allowed": false,
+      "runtime_task_success": null,
+      "sha256": "9943476b37b02a6ebd1d461458017c424e8feee7975f296d45f872eb649bb1c2",
+      "workflow_status": "OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN"
+    },
+    {
+      "cancel_elapsed_ms": 653.306469,
+      "cancel_status": "cancel_requested",
+      "cleanup_status": "UNKNOWN",
+      "file": "standard-mcp-xvfb-cancel-retirement-no-trace-1.json",
+      "horizon_late_b_press": false,
+      "independent_task_oracle": {
+        "checks": {
+          "final_effect_exact": true,
+          "horizon_readback_all_up": true,
+          "initial_effect_exact": true,
+          "release_readback_all_up": true
+        },
+        "status": "pass",
+        "task_success": true
+      },
+      "owner_disconnect_status": "disconnected",
+      "owner_retired": true,
+      "release_attempt_status": "readback_verified",
+      "release_confirmed": false,
+      "release_elapsed_ms": 572.4231209999857,
+      "replay_allowed": false,
+      "runtime_task_success": null,
+      "sha256": "f2197804529830a062ce2c62501216c0ab131468616a9b9ec5183095c0ea5300",
+      "workflow_status": "OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN"
+    },
+    {
+      "cancel_elapsed_ms": 673.38798,
+      "cancel_status": "cancel_requested",
+      "cleanup_status": "UNKNOWN",
+      "file": "standard-mcp-xvfb-cancel-retirement-no-trace-2.json",
+      "horizon_late_b_press": false,
+      "independent_task_oracle": {
+        "checks": {
+          "final_effect_exact": true,
+          "horizon_readback_all_up": true,
+          "initial_effect_exact": true,
+          "release_readback_all_up": true
+        },
+        "status": "pass",
+        "task_success": true
+      },
+      "owner_disconnect_status": "disconnected",
+      "owner_retired": true,
+      "release_attempt_status": "readback_verified",
+      "release_confirmed": false,
+      "release_elapsed_ms": 592.996659999983,
+      "replay_allowed": false,
+      "runtime_task_success": null,
+      "sha256": "60991e4950b25630bbdb46a0aeff07b570009e99fca1fd3d6a7d69a156b1d15d",
+      "workflow_status": "OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN"
+    },
+    {
+      "cancel_elapsed_ms": 666.996083,
+      "cancel_status": "cancel_requested",
+      "cleanup_status": "UNKNOWN",
+      "file": "standard-mcp-xvfb-cancel-retirement-trace-1.json",
+      "horizon_late_b_press": false,
+      "independent_task_oracle": {
+        "checks": {
+          "final_effect_exact": true,
+          "horizon_readback_all_up": true,
+          "initial_effect_exact": true,
+          "release_readback_all_up": true
+        },
+        "status": "pass",
+        "task_success": true
+      },
+      "owner_disconnect_status": "disconnected",
+      "owner_retired": true,
+      "release_attempt_status": "readback_verified",
+      "release_confirmed": false,
+      "release_elapsed_ms": 587.9213080000056,
+      "replay_allowed": false,
+      "runtime_task_success": null,
+      "sha256": "46de8af87c1597e338b67f43ba6d3074c4c682efa5c2f01cb4f38d21195f699c",
+      "workflow_status": "OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN"
+    },
+    {
+      "cancel_elapsed_ms": 689.327801,
+      "cancel_status": "cancel_requested",
+      "cleanup_status": "UNKNOWN",
+      "file": "standard-mcp-xvfb-cancel-retirement-trace-2.json",
+      "horizon_late_b_press": false,
+      "independent_task_oracle": {
+        "checks": {
+          "final_effect_exact": true,
+          "horizon_readback_all_up": true,
+          "initial_effect_exact": true,
+          "release_readback_all_up": true
+        },
+        "status": "pass",
+        "task_success": true
+      },
+      "owner_disconnect_status": "disconnected",
+      "owner_retired": true,
+      "release_attempt_status": "readback_verified",
+      "release_confirmed": false,
+      "release_elapsed_ms": 609.6169060000136,
+      "replay_allowed": false,
+      "runtime_task_success": null,
+      "sha256": "b38a08ddfe440a8527b77badaf7fbcc961aa4f49b847c84eb2f22421a21413b5",
+      "workflow_status": "OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN"
+    }
+  ],
+  "schema": "agent-interface/synthetic-task-oracle-rescore-v1",
+  "scope": "offline independent re-score of preserved standard-caller private-Xvfb receipts; does not change raw runtime results",
+  "scorer": "runtime.cli_v1.test_synthetic_task_oracle.score_synthetic_application_task",
+  "source_head": "f4e02b64f0d324ffa8c3525a9f822691c1e06fa4",
+  "source_run": "https://github.com/Unjuno/agent-interface/actions/runs/39276306835"
+}
