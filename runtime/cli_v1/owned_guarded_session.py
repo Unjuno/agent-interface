@@ -27,7 +27,11 @@ _RETIRE_KILL_GRACE_S = 0.25
 _JOIN_TIMEOUT_S = 1.0
 _XRES_DISCONNECT_TIMEOUT_S = 0.15
 _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
-_RETIRED_RELEASE_TIMEOUT_S = 0.25
+# The spawned fresh client must import, connect, emit exact releases, sync, and
+# read back. Reserve 1.5 seconds for this bounded worker while retaining
+# headroom under the caller's three-second cancellation target; timeout still
+# means UNKNOWN, never release.
+_RETIRED_RELEASE_TIMEOUT_S = 1.5
 _RETIRED_RELEASE_TERMINATE_GRACE_S = 0.1
 _OWNER_INPUT_OBLIGATIONS_SCHEMA = 'agent-interface/owner-input-obligations-v1'
 _OWNER_INPUT_OBLIGATIONS_CAPACITY = 8192
@@ -592,6 +596,22 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._call('observe', target=target, frame=frame, region=region,
                           capture_directory=capture_directory)
 
+    def _cancel_requires_owner_retirement(self, result):
+        if result.get('owner_process_retired') is True:
+            return False
+        if result.get('late_server_request_possible') is True:
+            return True
+        obligations = result.get('owner_input_obligations')
+        if not isinstance(obligations, dict):
+            obligations = getattr(self, '_owner_input_obligations', None)
+        if not isinstance(obligations, dict):
+            return True
+        keys = obligations.get('keys')
+        buttons = obligations.get('buttons')
+        if not isinstance(keys, dict) or not isinstance(buttons, list):
+            return True
+        return bool(keys) or bool(buttons)
+
     def cancel_guarded(self, token):
         if self._process is None or not self._process.is_alive() or self._control is None:
             return {'status':'not_active', 'input_dispatched':False,
@@ -651,10 +671,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         result = response['result']
         if result.get('status') != 'cancel_requested':
             return result
-        if self._rpc_lock.acquire(timeout=_CANCEL_RETIRE_GRACE_S):
+        requires_retirement = self._cancel_requires_owner_retirement(result)
+        if (not requires_retirement
+                and self._rpc_lock.acquire(timeout=_CANCEL_RETIRE_GRACE_S)):
             self._rpc_lock.release()
             return result
-        retirement = self._retire('cancel retirement grace elapsed')
+        retirement_reason = ('cancel left input or server-request obligation'
+                             if requires_retirement else
+                             'cancel retirement grace elapsed')
+        retirement = self._retire(retirement_reason)
         client_disconnect, release_attempt = self._cleanup_after_owner_retirement(
             retirement)
         self._execution_unknown = True
@@ -705,6 +730,36 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'connection_close_attempted':False, 'verified':True}
             self.close_report = row
             return deepcopy(row)
+        retirement = getattr(self, '_retirement', None)
+        client_disconnect = getattr(self, '_owner_client_disconnect', None)
+        previous_release_attempt = getattr(self, '_owner_release_attempt', None)
+        if (retirement is not None
+                and retirement.get('retired') is True
+                and not self._process.is_alive()
+                and client_disconnect is not None
+                and previous_release_attempt is not None):
+            release_attempt = deepcopy(previous_release_attempt)
+            report = {
+                'status':'cleanup_failed', 'session_id':self.session_id,
+                'release_attempted':release_attempt.get('status') != 'not_attempted',
+                'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                'task_success':None, 'replay_allowed':False, 'verified':False,
+                'connection_close_attempted':False,
+                'owner_client_disconnect':deepcopy(client_disconnect),
+                **self._owner_input_obligations_result_fields(),
+                'owner_release_attempt':release_attempt,
+                'owner_process_retired':True,
+                'owner_process_exitcode':self._process.exitcode,
+                'late_server_request_possible':True,
+                'retirement_reason':retirement.get('reason'),
+            }
+            if self.error is not None:
+                report['error'] = self.error
+            self.close_report = deepcopy(report)
+            self._execution_unknown = True
+            self.review_required = True
+            self.state = 'failed'
+            return deepcopy(report)
         retirement_cleanup = None
         cleanup_after_retirement_attempted = False
 

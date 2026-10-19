@@ -26,6 +26,14 @@ def _blocked_release_worker(_send_connection):
         time.sleep(0.01)
 
 
+def _delayed_release_worker(send_connection):
+    time.sleep(0.35)
+    send_connection.send({
+        'status':'released',
+        'release':{'verified':True, 'keys_down':[], 'buttons_down':[]},
+    })
+
+
 class _Cleanup:
     def __init__(self):
         self.callbacks = []
@@ -171,6 +179,31 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_retired_release_accepts_verified_reply_from_delayed_worker(self):
+        from runtime.guarded_x11_v1.xres_client_fence import supervise_xres_worker
+
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.display_name = 'fake-display'
+
+        def run_delayed_worker(_target, _args, **kwargs):
+            return supervise_xres_worker(
+                _delayed_release_worker, (), timeout_s=kwargs['timeout_s'],
+                terminate_grace_s=kwargs['terminate_grace_s'],
+                accepted_statuses=kwargs['accepted_statuses'])
+
+        with patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
+                   side_effect=run_delayed_worker):
+            result = owner._release_retired_owner_inputs(
+                {'keys':{'a':38}, 'buttons':[]})
+
+        self.assertEqual(result['status'], 'readback_verified', result)
+        self.assertEqual(result['release'], {
+            'verified':True, 'keys_down':[], 'buttons_down':[]})
+        self.assertTrue(result['worker_retired'])
+        self.assertEqual(result['worker_exitcode'], 0)
+        self.assertGreaterEqual(result['elapsed_ms'], 300)
+        self.assertLess(result['elapsed_ms'], 1500)
+
     def test_retire_kills_owned_process_that_ignores_terminate(self):
         class StubbornProcess:
             def __init__(self):
@@ -246,6 +279,53 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(result['task_success'])
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
+
+    def test_close_after_cancel_retirement_reuses_existing_cleanup_evidence(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = False
+        owner._process.exitcode = -15
+        owner._process.pid = 1234
+        owner._rpc_lock = threading.Lock()
+        owner._request_locked = Mock(side_effect=RuntimeError(
+            'owned guarded session unavailable: failed'))
+        owner._retirement = {
+            'reason':'cancel left input or server-request obligation',
+            'retired':True,
+            'exitcode':-15,
+        }
+        owner._cleanup_after_owner_retirement = Mock(side_effect=AssertionError(
+            'close must not start a second release worker'))
+        disconnect = {'status':'disconnected', 'expected_pid':1234}
+        release = {'status':'readback_verified',
+                   'release':{'verified':True, 'keys_down':[], 'buttons_down':[]}}
+        owner._owner_client_disconnect = disconnect
+        owner._owner_release_attempt = release
+        owner._owner_input_obligations = {'keys':{'a':38}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {
+            'status':'snapshot', 'obligations':{'keys':{'a':38}, 'buttons':[]}}
+        owner.session_id = 'session-close-after-cancel-retirement'
+        owner.error = 'cancel left input or server-request obligation'
+        owner._execution_unknown = True
+        owner.review_required = True
+
+        first = owner.close()
+        second = owner.close()
+
+        owner._request_locked.assert_not_called()
+        owner._cleanup_after_owner_retirement.assert_not_called()
+        self.assertEqual(first, second)
+        self.assertEqual(first['status'], 'cleanup_failed')
+        self.assertEqual(first['cleanup_status'], 'UNKNOWN')
+        self.assertFalse(first['release_confirmed'])
+        self.assertIsNone(first['task_success'])
+        self.assertFalse(first['replay_allowed'])
+        self.assertTrue(first['owner_process_retired'])
+        self.assertEqual(first['owner_client_disconnect'], disconnect)
+        self.assertEqual(first['owner_release_attempt'], release)
+        self.assertEqual(first['owner_input_obligations'], {'keys':{'a':38}, 'buttons':[]})
 
     def test_close_pipe_failure_runs_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
@@ -453,6 +533,67 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             result = owner._observe_owner_client_disconnect()
 
         self.assertEqual(result, {'status':'disconnected', 'expected_pid':2750})
+
+    def test_cancel_retires_owner_when_response_keeps_input_and_late_request_possible(self):
+        obligations = {'keys':{'a':38}, 'buttons':[]}
+        disconnect = {'status':'disconnected', 'expected_pid':1234,
+                      'worker_retired':True}
+        release = {'status':'readback_verified',
+                   'release':{'verified':True, 'keys_down':[],
+                              'buttons_down':[]}}
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._process = Mock()
+        owner._process.is_alive.return_value = True
+        owner._control = Mock()
+        owner._control.poll.return_value = True
+        owner._control.recv.return_value = {
+            'ok':True,
+            'snapshot':{'owner_input_obligations':obligations},
+            'result':{
+                'status':'cancel_requested',
+                'owner_process_retired':False,
+                'owner_input_obligations':obligations,
+                'release_confirmed':False,
+                'late_server_request_possible':True,
+                'task_success':None,
+                'replay_allowed':False,
+            },
+        }
+        owner._control_lock = threading.Lock()
+        owner._rpc_lock = Mock()
+        owner._snapshot_cache = {}
+        owner._owner_input_obligations = obligations
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._owner_input_obligations_result_fields = Mock(return_value={
+            'owner_input_obligations':obligations,
+            'owner_input_obligations_source':'retired_child_shared_state',
+            'owner_input_obligations_live_read':{
+                'status':'snapshot', 'obligations':obligations,
+            },
+        })
+        owner._apply_snapshot = Mock()
+        owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+        owner._cleanup_after_owner_retirement = Mock(
+            return_value=(disconnect, release))
+        owner._execution_unknown = False
+        owner.review_required = False
+
+        result = owner.cancel_guarded('cancel-token')
+
+        owner._rpc_lock.acquire.assert_not_called()
+        owner._retire.assert_called_once()
+        owner._cleanup_after_owner_retirement.assert_called_once_with(
+            {'retired':True, 'exitcode':-15})
+        self.assertTrue(owner._execution_unknown)
+        self.assertTrue(owner.review_required)
+        self.assertTrue(result['owner_process_retired'])
+        self.assertEqual(result['owner_client_disconnect'], disconnect)
+        self.assertEqual(result['owner_release_attempt'], release)
+        self.assertFalse(result['release_confirmed'])
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertIsNone(result['task_success'])
+        self.assertFalse(result['replay_allowed'])
+        self.assertTrue(result['late_server_request_possible'])
 
     def test_unconfirmed_cancel_retires_exact_owner_without_claiming_release(self):
         responses = (
@@ -799,12 +940,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 def supervise_blocked_release(_target, _args, **kwargs):
                     self.assertEqual(_target.__name__, '_release_retired_inputs_worker')
                     self.assertEqual(_args[1:], ({'CTRL':1}, []))
-                    self.assertEqual(kwargs['timeout_s'], 0.25)
+                    self.assertEqual(kwargs['timeout_s'], 1.5)
                     self.assertEqual(kwargs['terminate_grace_s'], 0.1)
                     self.assertEqual(kwargs['accepted_statuses'], ('released', 'unknown'))
                     return supervise_xres_worker(
-                        _blocked_release_worker, (), timeout_s=0.08,
-                        terminate_grace_s=0.08,
+                        _blocked_release_worker, (), timeout_s=kwargs['timeout_s'],
+                        terminate_grace_s=kwargs['terminate_grace_s'],
                         accepted_statuses=kwargs['accepted_statuses'])
 
                 started = time.monotonic()
