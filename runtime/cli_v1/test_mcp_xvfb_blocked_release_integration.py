@@ -34,6 +34,7 @@ from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 
 _DELAY_MS = 8000
 _CANCEL_BOUND_MS = 3000
+_CANCEL_ACK_WITHHOLD_S = 1.0
 _TERMINAL_BOUND_MS = 5000
 
 
@@ -61,7 +62,7 @@ def _xvfb_provenance():
 
 
 def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
-    """Inject a delayed second XTEST press into the real owned X11 client."""
+    """Inject blocked X I/O and withhold the child cancel acknowledgement."""
     from Xlib.ext import xtest
 
     owner = GuardedSessionOwner(targets, directory, display_name, **options)
@@ -71,6 +72,23 @@ def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
     marker = root/'xvfb-delayed-request-queued.json'
     sync_entered = root/'xvfb-owner-sync-entered.json'
     sync_returned = root/'xvfb-owner-sync-returned.json'
+    cancel_ack_withheld = root/'xvfb-cancel-ack-withheld.json'
+
+    original_cancel = owner.cancel_guarded
+
+    def cancel_with_withheld_ack(token):
+        result = original_cancel(token)
+        row = {'owner_pid':os.getpid(), 'status':result.get('status'),
+               'withheld_ack_s':_CANCEL_ACK_WITHHOLD_S,
+               'entered_ns':time.monotonic_ns()}
+        temporary = cancel_ack_withheld.with_suffix('.tmp')
+        temporary.write_text(json.dumps(row, sort_keys=True), encoding='utf-8')
+        temporary.replace(cancel_ack_withheld)
+        time.sleep(_CANCEL_ACK_WITHHOLD_S)
+        row['returned_ns'] = time.monotonic_ns()
+        return result
+
+    owner.cancel_guarded = cancel_with_withheld_ack
 
     def get_with_delayed_request():
         session = original_get()
@@ -190,6 +208,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
             'conditions':{
                 'delayed_keypress_ms':_DELAY_MS,
                 'cancel_return_bound_ms':_CANCEL_BOUND_MS,
+                'child_cancel_ack_withheld_s':_CANCEL_ACK_WITHHOLD_S,
                 'terminal_result_bound_ms':_TERMINAL_BOUND_MS,
                 'late_keypress_outcome':'record either result; do not assume queue cancellation',
             },
@@ -567,6 +586,12 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['cancel_internal_trace'] = cancel_internal_trace
                 cancelled = True
                 self.assertLess(cancel_elapsed_ms, _CANCEL_BOUND_MS, cancel)
+                self.assertEqual(cancel.get('status'), 'cancel_unconfirmed', cancel)
+                self.assertIsNone(cancel.get('input_dispatched'), cancel)
+                ack_marker = owner_output_root/'xvfb-cancel-ack-withheld.json'
+                self.assertTrue(ack_marker.exists(), report)
+                report['cancel_control_ack_withheld'] = json.loads(
+                    ack_marker.read_text(encoding='utf-8'))
                 self.assertTrue(cancel.get('owner_process_retired'), cancel)
                 self.assertEqual(cancel.get('owner_client_disconnect', {}).get('status'),
                                  'disconnected', cancel)
