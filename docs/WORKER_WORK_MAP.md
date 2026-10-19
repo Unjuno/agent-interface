@@ -77,11 +77,16 @@ now sends actual python-xlib-serialized XRes QueryVersion and QueryClientIds
 frames over that identity socket and parses full synthetic replies in the real
 caller. The focused wire test passes 1/1, caller composition 3/3, and the
 existing XRes client-fence tests 19/19 in both normal and optimized Python.
-The caller still has synthetic XRes server/PID and `/proc` data. Next is a
-private-Xvfb proof of server extension negotiation and an already-held input
-under the standard caller, with independent release readback; only consider it
-after fresh ownership and unused-allocation evidence. No physical-release or
-task-success claim; A02/A03 remain consumed and #7924 remains STOP/HOLD.
+The caller still has synthetic XRes server/PID and `/proc` data. The first PR
+X11 CI run also exposed a retirement receipt race (`owner_process_retired=false`
+alongside exitcode -15) that skipped disconnect/release cleanup. `_retire` now
+reconciles a non-null exitcode with the final liveness sample, covered by a
+deterministic regression; owned-process tests pass 24/24 in normal and -O. The
+full private-Xvfb rerun is pending. Next is a private-Xvfb proof of server
+extension negotiation and an already-held input under the standard caller, with
+independent release readback; only consider it after fresh ownership and
+unused-allocation evidence. No physical-release or task-success claim; A02/A03
+remain consumed and #7924 remains STOP/HOLD.
 
 ## Choose work
 

@@ -21,6 +21,24 @@ composition suite was run with Python 3.13's installed `mcp` and a temporary
 copy of the pure-Python Xlib package from Python 3.11. No repository dependency
 or runtime source was changed to provision that environment.
 
+## CI-discovered owner-retirement receipt race
+
+The first PR X11 integration run [39246017054](https://github.com/Unjuno/agent-interface/actions/runs/39246017054)
+failed in the existing blocked-release Xvfb case: the cancel report said
+`owner_process_retired=false` while the same report had `owner_process_exitcode=-15`.
+The caller therefore skipped XRes disconnect observation and best-effort
+release. The preserved failure receipt is
+[`raw/x11-integration-failure-39246017054.json`](raw/x11-integration-failure-39246017054.json).
+
+This exposed a race between the final `is_alive()` sample and the subsequent
+exit-code read. `_retire` now treats a non-`None` exit code as definitive child
+retirement, keeping the two receipt fields consistent; release remains gated on
+the separate XRes disconnect and obligation snapshot. A deterministic regression
+test reproduces the sampling order. The full owned-process suite passes 24/24
+and the Fake X caller-composition suite 3/3 in normal and optimized Python after
+the fix. The Xvfb integration job has not yet been rerun on the updated head, so
+the blocked physical I/O and release result remain unqualified.
+
 The first run failed because the synthetic `ClientIdValue` size field was set
 to `1` (a byte count) instead of `4`; python-xlib consequently parsed an empty
 value and left the four PID bytes unconsumed. That fixture failure is preserved
