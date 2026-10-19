@@ -18,9 +18,14 @@ full row-level metadata remains the immutable r70/r74 baseline. This is the shor
 point, not an experiment ledger.
 The dated [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md)
 records three disjoint family candidates (#17, #5, #59), not current assignments
-or resource grants. #17's local Fake X packet is now complete; the #5/#59 scopes
-must be refreshed against live sources before reuse. Shared indexes remain
-serially integrated.
+or resource grants. #17's local Fake X packet is complete. The #5 Fake X
+check/use discriminator is now preserved in
+[its packet](../research/integration/fake_x_window_lifecycle_check_use_20261019/README.md):
+one press can occur after the lifecycle reader retires in the constructed
+schedule, followed by refusal and verified Fake X prefix release. This does not
+qualify live X ordering or physical release. #59 and every reused work packet
+still require live source/owner refresh. Shared indexes remain serially
+integrated.
 
 ## Objective
 

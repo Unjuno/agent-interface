@@ -18,6 +18,7 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
         fake.backend.d.get_display_name = lambda: ':fake-lifecycle'
         connection = LifecycleConnection()
         entered, resume, visual_closed = threading.Event(), threading.Event(), threading.Event()
+        query_errors = []
         now = [1_000_000]
         def attributes():
             if fault == 'blocked' and 1 in fake.down:
@@ -29,12 +30,28 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
             original_emit(display, kind, code)
             if fault == 'modifier' and kind == X.KeyPress and code == 1:
                 connection.event(X.DestroyNotify)
+        def track_after_destroy(key, code):
+            original_track(fake.backend, key, code)
+            if fault == 'destroy_gap' and code == 1:
+                connection.event(X.DestroyNotify)
+                # Schedule an independent lifecycle query after the final
+                # press fence and before XTEST emission; it drains DestroyNotify.
+                def query_lifecycle():
+                    try: fake.backend.owner._read_window_identity()
+                    except Exception as error: query_errors.append(type(error).__name__)
+                query = threading.Thread(target=query_lifecycle)
+                query.start(); query.join(2)
+                self.assertFalse(query.is_alive(), 'lifecycle query did not finish')
+                self.assertTrue(connection.closed, 'lifecycle reader did not retire')
+                self.assertEqual(query_errors, ['X11BackendError'])
         # Override FakeX's injection patch with the event-producing transport.
         with tempfile.TemporaryDirectory() as td, \
                 patch('time.monotonic_ns', side_effect=lambda: now[0]), \
                 patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection), \
                 patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity', side_effect=fake.read), \
                 patch('runtime.backends.x11_v1.backend.xtest.fake_input', side_effect=emit):
+            original_track = type(fake.backend)._track_key_press
+            fake.backend._track_key_press = track_after_destroy
             if isolated:
                 from runtime.guarded_x11_v1.test_observation_worker import reader_backend
                 from types import SimpleNamespace
@@ -89,7 +106,24 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
                         cancelled = metadata(await server.call_tool('interface_guarded_cancel', {'call_id':call_id}))
                         self.assertEqual(cancelled['status'], 'cancel_requested')
                 result = metadata(await asyncio.wait_for(task, 3))
-                expected = 'refused' if fault == 'stale' and selected else 'execution_failed' if fault in ('modifier','blocked','qualified') else 'completed'
+                if fault == 'destroy_gap':
+                    self.lifecycle_race_receipt = {
+                        'scenario': 'Fake X DestroyNotify after final local press check and key-release prearm, before first XTEST press',
+                        'caller_status': result['status'],
+                        'task_success': result['task_success'],
+                        'replay_allowed': result['replay_allowed'],
+                        'review_required': result['session']['review_required'],
+                        'connection_closed_before_first_emit': connection.closed,
+                        'emissions': [list(item) for item in fake.emissions],
+                        'keys_down_after_terminal': sorted(fake.down),
+                        'last_release_verified': result['result']['execution']['releases'][-1]['verified'],
+                        'query_error': query_errors[0],
+                        'event_order': ['final local check passed', 'release obligation prearmed',
+                            'Fake X DestroyNotify queued', 'lifecycle query drained event and retired reader',
+                            'first XTEST KeyPress emitted', 'later press denied by retired lifecycle reader',
+                            'prefix release emitted and locally read back'],
+                    }
+                expected = 'refused' if fault == 'stale' and selected else 'execution_failed' if fault in ('modifier','destroy_gap','blocked','qualified') else 'completed'
                 self.assertEqual(result['status'], expected, result)
                 if expected == 'completed': self.assertEqual(fake.emissions, [(2,1),(2,2),(3,2),(3,1)])
                 elif fault == 'stale': self.assertEqual(fake.emissions, [])
@@ -151,6 +185,7 @@ class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool('interface_close', {})
     async def test_modifier_prefix_released(self): await self.exercise('modifier')
+    async def test_destroy_between_final_check_and_xtest_emit(self): await self.exercise('destroy_gap')
     async def test_cancel_blocked_lifecycle(self): await self.exercise('blocked', 'cancel')
     async def test_expire_blocked_lifecycle(self): await self.exercise('blocked', 'expiry')
     async def test_isolated_observation_healthy(self): await self.exercise(isolated=True)
