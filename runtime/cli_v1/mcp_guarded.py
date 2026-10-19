@@ -2,7 +2,7 @@
 from contextlib import contextmanager
 from copy import deepcopy
 from pathlib import Path
-import time
+from time import monotonic_ns
 from mcp.types import CallToolResult
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, model_validator
 from typing import Annotated, Literal
@@ -145,8 +145,10 @@ class GuardedSessionOwner(MCPSessionOwner):
         The existing graph retains its raw evidence in the bridge directory.
         The returned method verdict and delivered feedback remain distinct from
         independently verified task success. This is not an MCP tool endpoint.
+        After call-root creation, returned and raised attempts retain a monotonic
+        timing receipt there; exceptions preserve unknown effect and no replay.
         """
-        started_ns = time.monotonic_ns()
+        started_ns = monotonic_ns()
         if self.state != 'open' or self.bridge is None or self.session is None:
             raise RuntimeError('compiled method requires this open guarded owner')
         if self.bridge.review_required or self.session.recovery_required:
@@ -155,10 +157,31 @@ class GuardedSessionOwner(MCPSessionOwner):
             raise ValueError('explicit callable perception, effect and cancellation required')
         from runtime.guarded_x11_v1 import compiled
         from .review import present_result
+        from .attempt import _write_json
         root = Path(call_root)
         root.mkdir(parents=True, exist_ok=False)
         bridge = self.bridge
         previous_sequence = bridge.sequence
+
+        def retain_timing(status, *, method_outcome=None, error=None):
+            completed_ns = monotonic_ns()
+            timing = {'schema':'agent-interface/compiled-owner-attempt-timing-v1',
+                'clock':'time.monotonic_ns',
+                'scope':'run_compiled method entry through graph, feedback and session snapshot',
+                'status':status, 'started_ns':started_ns,
+                'completed_ns':completed_ns, 'elapsed_ns':completed_ns-started_ns,
+                'method_outcome':method_outcome,
+                'effect_status':'unknown' if error is not None else None,
+                'error_type':type(error).__name__ if error is not None else None,
+                'replay_allowed':False}
+            try:
+                _write_json(root/'owner-attempt-timing.json', timing)
+                return timing, {'status':'recorded'}
+            except BaseException as persist_error:
+                return timing, {'status':'unavailable',
+                    'error_type':type(persist_error).__name__,
+                    'error':repr(persist_error)}
+
         # An exception can follow partial input. Keep cleanup on this same
         # connection even when no terminal receipt reached the caller.
         self.dispatch_attempted = True
@@ -166,9 +189,10 @@ class GuardedSessionOwner(MCPSessionOwner):
             bridge.backend.configure_capture_artifacts(root/'images', retain_rgb=True)
             receipt = compiled.run(bridge, interface, bindings, perceive=perceive,
                                    verify_effect=verify_effect, cancelled=cancelled)
-        except Exception as error:
+        except BaseException as error:
             bridge.review_required = True
             self.error = repr(error)
+            _, self.owner_timing_retention = retain_timing('raised', error=error)
             raise
         feedback = None
         if receipt['observations']:
@@ -191,12 +215,10 @@ class GuardedSessionOwner(MCPSessionOwner):
                             'error':repr(error), 'replay_allowed':False,
                             'scope':'Method receipt retained; final feedback unavailable. No replay.'}
         session = self.snapshot()
-        completed_ns = time.monotonic_ns()
+        timing, timing_retention = retain_timing(
+            'returned', method_outcome=receipt.get('outcome'))
         return {'method_receipt':receipt, 'feedback':feedback, 'session':session,
-                'owner_timing':{'clock':'time.monotonic_ns',
-                    'scope':'successful run_compiled method call through feedback and session snapshot',
-                    'started_ns':started_ns, 'completed_ns':completed_ns,
-                    'elapsed_ns':completed_ns-started_ns},
+                'owner_timing':timing, 'owner_timing_retention':timing_retention,
                 'task_success':None, 'replay_allowed':False}
 
     def invoke_guarded(self, operation, arguments, call_root):
