@@ -1,7 +1,7 @@
 {
   "experiment": "offline-proxy-reply-framing-discriminator",
   "date": "2026-10-19",
-  "execution_kind": "local deterministic offline model",
+  "execution_kind": "local deterministic offline protocol parser and policy model",
   "allocation": null,
   "wslc_used": false,
   "docker_used": false,
@@ -9,6 +9,10 @@
   "live_gui_or_x_server_used": false,
   "input_dispatched": false,
   "source_packet": "research/integration/standard_caller_blocked_x11_release_20261019/README.md",
+  "protocol_references": {
+    "x11": "https://www.x.org/archive/current/doc/xproto/x11protocol.pdf",
+    "xtest": "https://www.x.org/releases/X11R7.7/doc/xextproto/xtest.pdf"
+  },
   "standard_caller_source": {
     "guarded_press": "runtime/guarded_x11_v1/bridge.py::_GuardedBackend._before_input_press",
     "identity_reader": "runtime/guarded_x11_v1/target_queries.py::TargetQueryWorker",
@@ -29,6 +33,24 @@
     ],
     "selected_request_role": "get_pointer_control",
     "selected_action_id": "action-1"
+  },
+  "proxy_candidate": {
+    "module": "proxy_candidate.py",
+    "socket_io_performed": false,
+    "parses_fragmented_setup_and_stream_frames": true,
+    "negotiates_xtest_major_opcode_per_connection": true,
+    "binds_keypress_to_immediately_following_get_pointer_control": true,
+    "same_pid_colliding_sequence_tested": true,
+    "sequence_wrap_policy": "clears stale target at first wire-serial wrap and fails open for all wrapped targets",
+    "oversize_frame_policy": "raises FrameError; future relay must preserve opaque bytes and disable gating on parse failure",
+    "independent_event_reader_integrated": false,
+    "live_relay_integrated": false,
+    "bounded_release_tested": false
+  },
+  "validation": {
+    "normal_test_count": 19,
+    "optimized_test_count": 19,
+    "public_navigation": "26 documents; 2,155 repository-relative links"
   },
   "expected_discriminator": {
     "input_started_marker_alone_may_hold_reply": false,

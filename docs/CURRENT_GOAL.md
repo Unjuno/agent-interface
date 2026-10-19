@@ -1,8 +1,8 @@
 # Current objective and working direction
 
-Latest complete membership recheck recorded here: 2026-10-19 02:16:48 UTC
-against main `0d022b76b6f940638da86c1ea4f71930c8df1626`; 1,673 open Issues and
-502 open PRs ([r55 recheck](maintenance/repository-inventory-recheck-20261019-r55.md)).
+Latest complete membership recheck recorded here: 2026-10-19 02:25:07 UTC
+against main `39e7bdfc729b392985295048e89b8003acf77c36`; 1,673 open Issues and
+502 open PRs ([r56 recheck](maintenance/repository-inventory-recheck-20261019-r56.md)).
 This records membership only, not semantic review or current owner status.
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; this does not classify meaning. Refresh before using counts or changing state.
 See the
@@ -37,19 +37,16 @@ The latest input-release attempt is indexed in the [A02/A03 evidence note](../re
 A02 stopped before probe entry due to an incomplete source mount; A03 passed one
 healthy control but its first blocked trial timed out before the held-reply
 predicate. Both first outcomes and raw are retained; neither allocation may be
-replayed. The offline framing model now passes eight tests in normal and
-optimized Python and is connected to the standard source path: process identity
-is queried over a separate same-PID X connection before input; the input
-connection sends XTEST KeyPress then Python-Xlib 0.33 waits on
-`GetPointerControl` (core opcode 106). The frozen proxy relays client requests
-opaquely and gates every reply by owner PID, so it cannot select that exact
-input reply. This strengthens the circular-gate diagnosis but does not recover
-A03's missing per-connection reply trace or establish blocked-I/O release. The
-next finite step is a new offline-tested proxy candidate that records each
-connection, negotiates XTEST's major opcode, and targets only the keycode/action
-matched `GetPointerControl` sequence. Preserve A02/A03 unchanged. WSLc Issue
-#7924 remains `STOP / HOLD` for client ownership, so no fresh allocation is
-available; do not run live input until an unused lane is verified.
+replayed. The offline stream parser now passes 19 tests in normal and optimized
+Python. It negotiates XTEST's dynamic major opcode, parses fragmented X11
+setup/request/reply streams, and selects the action/keycode-bound
+`GetPointerControl` reply for one connection. It is not connected to a socket
+relay and proves no bounded release. A03's missing per-connection reply trace
+remains missing, and the first failure remains unchanged. The next finite step
+is a test-only relay with a fake upstream to qualify disconnect, backpressure
+and bounded owner retirement. Preserve A02/A03 unchanged. WSLc Issue #7924
+remains `STOP / HOLD` for client ownership, so no fresh allocation is available;
+do not run live input until an unused lane is verified.
 
 Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not
