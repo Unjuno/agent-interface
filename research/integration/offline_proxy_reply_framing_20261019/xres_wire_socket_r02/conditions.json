@@ -47,5 +47,23 @@
       "does not establish MAP01 task success",
       "does not use WSLc or an allocation"
     ]
+  },
+  "x11_generation_integration": {
+    "github_run": "39246686502",
+    "job": "x11-integration",
+    "scenario_scope": "private X.Org Xvfb; standard MCP caller; synthetic app; actual server XRes QueryClientIds",
+    "assertions": [
+      "independent XRes PID and /proc start_ticks digest equals standard-caller process_generation",
+      "independent property effect [1] after KeyPress",
+      "KeyPress then KeyRelease observed by synthetic app",
+      "runtime release receipt verified and independent X client reads key up",
+      "destroyed window refuses standard-caller input before dispatch"
+    ],
+    "limits": [
+      "task_success API remains null",
+      "synthetic task only; no MAP01/game success",
+      "no native desktop or XWayland claim",
+      "no matched efficiency claim"
+    ]
   }
 }

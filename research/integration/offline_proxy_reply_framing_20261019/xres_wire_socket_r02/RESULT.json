@@ -74,5 +74,17 @@
   "physical_release": false,
   "task_success": null,
   "wslc_or_allocation_used": false,
-  "raw_ci_observation_png": "raw/x11-integration-pass-39246686502/standard-mcp-xvfb-blocked-release.observation.png"
+  "raw_ci_observation_png": "raw/x11-integration-pass-39246686502/standard-mcp-xvfb-blocked-release.observation.png",
+  "x11_generation_integration": {
+    "run": "39246686502",
+    "raw": "raw/x11-generation-39246686502/standard-mcp-xvfb-generation.json",
+    "observation_image": "raw/x11-generation-39246686502/standard-mcp-xvfb-observation.png",
+    "status": "PASS_SCOPED_XVFB_STANDARD_CALLER",
+    "identity": "independent XRes PID plus /proc start_ticks digest exactly matched standard-caller observed process_generation",
+    "effect": "independent synthetic-app property [1] with KeyPress and KeyRelease events",
+    "release": "runtime release receipt verified and independent key-up readback true",
+    "stale_target": "destroyed window refused before input dispatch; review required",
+    "task_success_api": null,
+    "scope": "one private X.Org Xvfb synthetic app; not MAP01, native desktop or XWayland"
+  }
 }
