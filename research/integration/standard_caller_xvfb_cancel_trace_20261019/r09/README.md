@@ -19,5 +19,3 @@ This post-hoc PASS is scoped to the synthetic task oracle. The original runtime 
 | no-trace-2 | off | 673.388 | 592.997 | `cancel_requested`, cleanup UNKNOWN | PASS |
 
 Reproduce from the repository root with `python research/integration/standard_caller_xvfb_cancel_trace_20261019/r09/rescore.py`. The only code it imports is the merged test-only scorer. Do not replace these original artifact outcomes with the rescore.
-
-
