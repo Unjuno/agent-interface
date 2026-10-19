@@ -6,6 +6,8 @@ This plan makes the repository easier to work in with many independent workers w
 
 At main commit `1d95e48e67783fd05b96346c975f9875bc483ce1` (2026-10-19), GitHub search reported 1,673 open Issues and 479 open PRs. This is a live membership count, not a semantic audit, ownership check, or full PR review. The latest complete row-level inventory is [r87](maintenance/repository-inventory-2026-10-19-r87.md), captured at an earlier main SHA; recheck membership and exact heads before any state change. Existing routing work covered 491 Issues missing a historical research-index primary row, but routing is not semantic classification. See the [r51 routing queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv), [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md), and [consolidation history](REPOSITORY_CONSOLIDATION.md).
 
+**Current checkpoint after cleanup PR #9186 merged:** main is `bee4b22ebc1166d2055b367aff5d363ee82848c7`. A direct GitHub search read at 2026-10-19 12:19 UTC reports 1,673 open Issues and 480 open PRs. This count-only read does not replace a paginated row-level inventory or confirm semantic status. The new [local worktree custody overlay r01](maintenance/worktree-custody-overlay-r01-20261019.md) records the separate workspace scan and its unresolved ownership boundary.
+
 The immediate repository-level defects are narrower and verifiable:
 
 - `REPOSITORY_CONSOLIDATION.md` had grown into a dated append-only log and its execution-plan link was broken; this change restores the link and adds a shorter operational plan.
@@ -57,6 +59,8 @@ For each PR, re-fetch the exact head/base, changed files, current checks and req
 ### 5. Reconcile branches, worktrees and repository structure
 
 Treat remote branches, local directories, registered Git worktrees, ignored artifacts, and running processes as separate inventories. Before removing any item, verify its exact tip, unique commits, untracked/ignored data, raw evidence, dependent work, current process/owner, and recovery copy. If any owner or custody fact is unknown, retain it and record the specific question. Remove duplicated navigation only after the canonical destination is correct and all inbound links are updated. Do not bulk-delete work directories based on names or age.
+
+The latest worktree scan found 24 registered worktrees (7 with changes) and 188 adjacent immediate work directories not registered as worktrees; see [custody overlay r01](maintenance/worktree-custody-overlay-r01-20261019.md). This is a HOLD inventory. It is not permission to delete, and it does not cover ignored files or process ownership.
 
 ### 6. Make the work queue safe for orchestration
 
