@@ -909,3 +909,9 @@ r61はopen Issue 1,673件、open PR 497件。CSVは1,673/497行、sorted-ID hash
 Issue #8681は閉鎖済みで、その実装PR #8771もmerge済みだが、#8687 head `6195600931fa6de4ecf1a5012cb83b549addb5af`のA02–A05資料47ファイルはmain treeにないことを直接比較で再確認した。これらは同PR headに存在し、複製・変更・再実行はしていない。#8687を閉じる前に、凍結パッケージだけでなく、各freezeが参照するsource/test blobの再構成可能性を含む正規保全先を作る。担当不明のPRを自動でcloseせず、次の整理作業はこの証拠専用移管の固定範囲を策定すること。
 
 Issue/PR全体の意味分類、担当・PR・branch/worktree間のlineage、未追跡証拠のcustodyは未完了。全件closeや全PR mergeを完了条件にせず、familyごとに再開可能なアイデアと証拠をつないで継続する。
+
+## 実行状況 r08 — #8687 A02–A05証拠のbyte-preserving rescue
+
+PR #8687のコード差分を再適用せず、A02–A05の47ファイルをそのまま取得し、原freezeが参照するsource/test blob 2件も別ディレクトリへsnapshotした。各packageのSHA256SUMS 51エントリすべてが一致し、source snapshotは元PR head `6195600931fa6de4ecf1a5012cb83b549addb5af`のblob ID・byte長・SHA-256に束縛される。candidate/auditor/testは実行していない。
+
+これはmainへの統合前の保存候補であり、#8687を閉じる根拠はまだ満たさない。証拠専用PRを検証・統合した後、current mainで47ファイルと2 source snapshotを読み戻し、#8687の重複実装以外に未移管の固有差分がないことを確認してから、closeとremote-ref処置を別々に判断する。#8838、他のPR、Issueの状態は変更しない。
