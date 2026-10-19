@@ -280,6 +280,53 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
 
+    def test_close_after_cancel_retirement_reuses_existing_cleanup_evidence(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = False
+        owner._process.exitcode = -15
+        owner._process.pid = 1234
+        owner._rpc_lock = threading.Lock()
+        owner._request_locked = Mock(side_effect=RuntimeError(
+            'owned guarded session unavailable: failed'))
+        owner._retirement = {
+            'reason':'cancel left input or server-request obligation',
+            'retired':True,
+            'exitcode':-15,
+        }
+        owner._cleanup_after_owner_retirement = Mock(side_effect=AssertionError(
+            'close must not start a second release worker'))
+        disconnect = {'status':'disconnected', 'expected_pid':1234}
+        release = {'status':'readback_verified',
+                   'release':{'verified':True, 'keys_down':[], 'buttons_down':[]}}
+        owner._owner_client_disconnect = disconnect
+        owner._owner_release_attempt = release
+        owner._owner_input_obligations = {'keys':{'a':38}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {
+            'status':'snapshot', 'obligations':{'keys':{'a':38}, 'buttons':[]}}
+        owner.session_id = 'session-close-after-cancel-retirement'
+        owner.error = 'cancel left input or server-request obligation'
+        owner._execution_unknown = True
+        owner.review_required = True
+
+        first = owner.close()
+        second = owner.close()
+
+        owner._request_locked.assert_not_called()
+        owner._cleanup_after_owner_retirement.assert_not_called()
+        self.assertEqual(first, second)
+        self.assertEqual(first['status'], 'cleanup_failed')
+        self.assertEqual(first['cleanup_status'], 'UNKNOWN')
+        self.assertFalse(first['release_confirmed'])
+        self.assertIsNone(first['task_success'])
+        self.assertFalse(first['replay_allowed'])
+        self.assertTrue(first['owner_process_retired'])
+        self.assertEqual(first['owner_client_disconnect'], disconnect)
+        self.assertEqual(first['owner_release_attempt'], release)
+        self.assertEqual(first['owner_input_obligations'], {'keys':{'a':38}, 'buttons':[]})
+
     def test_close_pipe_failure_runs_retirement_cleanup(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None

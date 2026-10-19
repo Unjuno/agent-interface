@@ -211,7 +211,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
         }
         app_display = observer = None
         server = None
-        server_closed = False
+        close_resolved = False
         app_thread = None
         app_stop = threading.Event()
         effect_committed = threading.Event()
@@ -482,7 +482,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(terminal.get('task_success'), terminal)
                 self.assertFalse(terminal.get('replay_allowed'), terminal)
 
-                report['status'] = 'OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL'
+                report['status'] = (
+                    'OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN')
             except BaseException as error:
                 report.update(status='FAIL', error_type=type(error).__name__,
                               error=str(error))
@@ -506,12 +507,29 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     except BaseException as error:
                         report['final_cleanup_terminal_error'] = repr(error)
                         cleanup_errors.append(f'terminal result retrieval failed: {error!r}')
-                if server is not None and not server_closed:
+                if server is not None and not close_resolved:
                     try:
                         close_row = await self._close_after_work(server)
                         report['close'] = close_row
-                        server_closed = close_row.get('status') == 'closed'
-                        if not server_closed:
+                        close_resolved = close_row.get('status') == 'closed'
+                        if (not close_resolved
+                                and close_row.get('status') == 'cleanup_failed'
+                                and close_row.get('cleanup_status') == 'UNKNOWN'
+                                and close_row.get('release_confirmed') is False
+                                and close_row.get('task_success') is None
+                                and close_row.get('replay_allowed') is False
+                                and close_row.get('owner_process_retired') is True
+                                and close_row.get('late_server_request_possible') is True
+                                and close_row.get('owner_client_disconnect', {}).get(
+                                    'status') == 'disconnected'
+                                and close_row.get('owner_release_attempt') ==
+                                    report.get('cancel', {}).get('owner_release_attempt')):
+                            # Retirement intentionally leaves the contract UNKNOWN.
+                            # A repeated close must preserve the already recorded
+                            # cleanup attempt, not issue another release.
+                            report['close_outcome'] = 'fail_closed_after_owner_retirement'
+                            close_resolved = True
+                        if not close_resolved:
                             cleanup_errors.append(f'private MCP server did not close cleanly: {close_row!r}')
                     except BaseException as error:
                         report['close_error'] = repr(error)

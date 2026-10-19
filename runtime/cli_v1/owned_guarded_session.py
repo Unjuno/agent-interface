@@ -730,6 +730,36 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                    'connection_close_attempted':False, 'verified':True}
             self.close_report = row
             return deepcopy(row)
+        retirement = getattr(self, '_retirement', None)
+        client_disconnect = getattr(self, '_owner_client_disconnect', None)
+        previous_release_attempt = getattr(self, '_owner_release_attempt', None)
+        if (retirement is not None
+                and retirement.get('retired') is True
+                and not self._process.is_alive()
+                and client_disconnect is not None
+                and previous_release_attempt is not None):
+            release_attempt = deepcopy(previous_release_attempt)
+            report = {
+                'status':'cleanup_failed', 'session_id':self.session_id,
+                'release_attempted':release_attempt.get('status') != 'not_attempted',
+                'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                'task_success':None, 'replay_allowed':False, 'verified':False,
+                'connection_close_attempted':False,
+                'owner_client_disconnect':deepcopy(client_disconnect),
+                **self._owner_input_obligations_result_fields(),
+                'owner_release_attempt':release_attempt,
+                'owner_process_retired':True,
+                'owner_process_exitcode':self._process.exitcode,
+                'late_server_request_possible':True,
+                'retirement_reason':retirement.get('reason'),
+            }
+            if self.error is not None:
+                report['error'] = self.error
+            self.close_report = deepcopy(report)
+            self._execution_unknown = True
+            self.review_required = True
+            self.state = 'failed'
+            return deepcopy(report)
         retirement_cleanup = None
         cleanup_after_retirement_attempted = False
 
