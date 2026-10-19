@@ -144,6 +144,44 @@
   "schema": "agent-interface/synthetic-task-oracle-rescore-v1",
   "scope": "offline independent re-score of preserved standard-caller private-Xvfb receipts; does not change raw runtime results",
   "scorer": "runtime.cli_v1.test_synthetic_task_oracle.score_synthetic_application_task",
+  "separate_generation_recovery_scenario": {
+    "file": "standard-mcp-xvfb-generation.json",
+    "observation_call_ms": 594.581314,
+    "post_recovery_effect": {
+      "call_start_to_effect_commit_ms": 52.432055,
+      "expected_property_value": [
+        3
+      ],
+      "key_press_then_release": true,
+      "observed_key_events": [
+        {
+          "detail": 54,
+          "effect_committed_ns": 199578212633,
+          "effect_value": 3,
+          "monotonic_ns": 199578037457,
+          "type": 2
+        },
+        {
+          "detail": 54,
+          "monotonic_ns": 199578231438,
+          "type": 3
+        }
+      ],
+      "observed_property_value": [
+        3
+      ],
+      "reader_connection": "independent X client",
+      "runtime_task_success_api": null
+    },
+    "post_recovery_effect_commit_from_call_start_ms": 52.432055,
+    "process_generation": "572b7c5d607359a8ba6153d257d6d364275dd1cacdac59e7692c140af4c60f97",
+    "recovery_fault_effect_commit_from_call_start_ms": 53.952346,
+    "recovery_to_independent_keyup_readback_ms": 5.016271,
+    "runtime_task_success": null,
+    "scenario_status": "PASS_SCOPED_XVFB_STANDARD_CALLER_RECOVERY",
+    "sha256": "c724fedafa18f89dae4b8ec6cf4883954bb60d051243ce10ab7f24c5a1cebc5e",
+    "window_generation": "79226e05daaa4d858ed3b1cc8eeab615cd4956f586116c1bbc13af02a7942b18"
+  },
   "source_head": "f4e02b64f0d324ffa8c3525a9f822691c1e06fa4",
   "source_run": "https://github.com/Unjuno/agent-interface/actions/runs/39276306835"
 }
