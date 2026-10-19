@@ -25,3 +25,7 @@ Six of these 15 PRs are merged and nine remain open. The merged PRs above resolv
 ## Verified follow-up: #8687 custody
 
 At main `3cf520498beb886750b9de8499890dfebb0ea209`, the current tree lacks all 47 A02–A05 package paths on #8687's exact head. The raw and frozen source/test hashes therefore remain recoverable from the open PR head, but are not yet in a canonical main-tree destination. The next finite step is an evidence-only preservation plan that retains each package byte-for-byte and makes every frozen source/test blob reproducible without re-running the candidate or auditor. Only after that destination is verified can #8687's overlapping implementation diff and remote branch be considered for closure/cleanup.
+
+## Follow-up after r01 capture
+
+Evidence-only [PR #9142](https://github.com/Unjuno/agent-interface/pull/9142) merged at main `9ad2614e8ad329e2aaa90487c28859718f84f647`, preserving all 47 package files and two frozen source/test blobs. All 51 original manifest entries matched before merge. The focused current-main cleanup identity module passed 27/27 in normal and optimized Python; its duplicate-acceptance and terminal-order tests cover the behavior in #8687's two remaining implementation/test changes. PR [#8687](https://github.com/Unjuno/agent-interface/pull/8687) was then closed as superseded, and its original remote branch was deleted after checking author, open-PR use, and registered local worktrees. The next complete inventory r63 records the one-ID PR reduction; #8838 remains distinct and open.

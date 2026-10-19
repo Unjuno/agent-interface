@@ -6,7 +6,7 @@
 
 Issue/PR数をゼロにするのではなく、研究アイデア・反証・結果・未解決点を失わず、次の担当者が一つの独立した仕事をすぐ選べる状態にする。進行中のコンピューター制御研究ゴールは維持し、そのゴールに関係する証拠・実装・残差は研究系譜から外さない。整理完了時には、各open Issueに「実行する理由と次の判別試験」または「担当・依存・保留解除条件」があり、アイデアだけの項目は正規カタログから元Issueへ戻れる。各open PRには現head/base、固有の差分・証拠、依存、所有状態、ローカル検証、次の処置がある。
 
-最新の完全な固定スナップショットは[r62](maintenance/repository-inventory-20261019-r62.md)（2026-10-19 03:21:18 UTC、main `3cf520498beb886750b9de8499890dfebb0ea209`、open Issue 1,673件、open PR 497件）である。現在の正しいrow-level exportは[Issue CSV](maintenance/open-issues-20261019-r62.csv)と[PR CSV](maintenance/open-prs-20261019-r62.csv)。r61からIssue/PRのID集合は変化していない。r52カバレッジ監査は全Issueの索引経路を確認したが、歴史的な研究選定表にprimary rowがない項目の意味分類とPR・担当・worktreeとの結合監査は未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
+最新の完全な固定スナップショットは[r63](maintenance/repository-inventory-20261019-r63.md)（2026-10-19 03:35:12 UTC、main `9ad2614e8ad329e2aaa90487c28859718f84f647`、open Issue 1,673件、open PR 496件）である。現在の正しいrow-level exportは[Issue CSV](maintenance/open-issues-20261019-r63.csv)と[PR CSV](maintenance/open-prs-20261019-r63.csv)。r62からIssue集合は不変、PR集合は閉鎖済み#8687が抜けた。r52カバレッジ監査は全Issueの索引経路を確認したが、歴史的な研究選定表にprimary rowがない項目の意味分類とPR・担当・worktreeとの結合監査は未完了である。membershipは状態の時点記録であり、現在状態は変更前に再確認する。
 
 **最新membershipの再確認 r54 (2026-10-19 02:02:31 UTC):** main `289a0c19ab85581cb3414b01d92f2f887ae0c60b`で完全ページングを読み、open Issue 1,673件、open PR 502件を確認した。sorted ID set hashesはr53と完全一致するため、CSVの重複生成はせず、[r54再確認記録](maintenance/repository-inventory-recheck-20261019-r54.md)だけを追加した。semantic triage、個別PRのレビュー/検証、担当・worktree custodyは別作業であり未完了。
 
@@ -915,3 +915,9 @@ Issue/PR全体の意味分類、担当・PR・branch/worktree間のlineage、未
 PR #8687のコード差分を再適用せず、A02–A05の47ファイルをそのまま取得し、原freezeが参照するsource/test blob 2件も別ディレクトリへsnapshotした。各packageのSHA256SUMS 51エントリすべてが一致し、source snapshotは元PR head `6195600931fa6de4ecf1a5012cb83b549addb5af`のblob ID・byte長・SHA-256に束縛される。candidate/auditor/testは実行していない。
 
 これはmainへの統合前の保存候補であり、#8687を閉じる根拠はまだ満たさない。証拠専用PRを検証・統合した後、current mainで47ファイルと2 source snapshotを読み戻し、#8687の重複実装以外に未移管の固有差分がないことを確認してから、closeとremote-ref処置を別々に判断する。#8838、他のPR、Issueの状態は変更しない。
+
+## 実行状況 r09 — #8687 custody complete、current inventory r63
+
+PR [#9142](https://github.com/Unjuno/agent-interface/pull/9142)はmain `9ad2614e8ad329e2aaa90487c28859718f84f647`にmergeされた。A02–A05の47ファイルとsource/test snapshot 2件はmain上にあり、main treeと保存済み検証commitのパス差分は0。元manifest 51項目はmerge前にすべて一致した。#8687の残る2つの実装/テスト変更は、main #8771のより強いduplicate/invalid/mismatched identity拒否と同等以上のfocused test coverageであることを差分・テスト名・27件のnormal/-O実行で確認し、#8687をsupersededとしてcloseした。作者・open-PR依存・登録worktreeを確認した後、保全済みの元branchも削除した。#8838は別のA07証拠としてopenのまま。
+
+PR #8687のclose後に[r63 inventory](maintenance/repository-inventory-20261019-r63.md)を取得した。Issue 1,673件はr62と同じ、PRは497から496へ減り、取り除かれたIDは#8687だけ。これは一つの証拠custody/duplicate-implementation familyの完了であり、残るopen Issue/PRの全件意味分類や全体整理完了を意味しない。
