@@ -723,6 +723,132 @@ class PublicCompiledOwnerTests(unittest.TestCase):
     def callbacks(self):
         return {'perceive':lambda native,rgb:{}, 'verify_effect':lambda req,native,rgb:{}}
 
+    def test_actual_graph_runs_through_owner_and_keeps_action_effect_timing(self):
+        """Compose the real graph, X11 adapter and public Python owner on Fake X."""
+        import hashlib
+        import time
+        from contextlib import contextmanager
+        from PIL import Image
+        from runtime.core_v1.test_compiled_gui import interface
+        from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
+
+        class Bridge:
+            def __init__(self, output):
+                self.scope='private'; self.binding_revision=0; self.sequence=0
+                self.target='app'; self.active=None; self.review_required=False
+                self.session=SimpleNamespace(recovery_required=False)
+                self.backend=SimpleNamespace(
+                    targets={'app':SimpleNamespace(id=7)},
+                    configure_capture_artifacts=self.configure_capture_artifacts)
+                self.history={}; self.saved=[]; self.inputs=[]; self.phase=0
+                self.store=SimpleNamespace(resolve_point=self.resolve_point)
+                self.output=Path(output); self.guard=None
+
+            def configure_capture_artifacts(self, directory, *, retain_rgb=False):
+                self.capture_directory=Path(directory)
+                self.capture_directory.mkdir(parents=True, exist_ok=True)
+
+            def _save(self, name, value):
+                self.saved.append((name, value))
+
+            def resolve_point(self, *args, **kwargs):
+                return {'eligible':True,'status':'VALID',
+                        'valid_until_ns':time.monotonic_ns()+2_000_000_000}
+
+            def _focus_within_target(self):
+                return True
+
+            def observe(self):
+                self.sequence += 1
+                image=Image.new('RGB',(16,16),(self.phase,20,30))
+                path=self.capture_directory/(str(self.sequence)+'.png')
+                image.save(path)
+                payload=path.read_bytes()
+                raw_digest='fixture-'+str(self.sequence)
+                captured=time.monotonic_ns()
+                source={'sequence':self.sequence,'observation_id':'fixture-'+str(self.sequence),
+                    'capture_ns':captured,'capture_started_ns':captured,
+                    'binding_revision':self.binding_revision,
+                    'pointer_binding':{'surface':7},
+                    'native':{'sha256':raw_digest,'capture_started_ns':captured,
+                        'artifact':{'path':str(path),'mime_type':'image/png',
+                            'sha256':hashlib.sha256(payload).hexdigest(),
+                            'source_raw_sha256':raw_digest}}}
+                self.history[self.sequence]=(source,image)
+                return source
+
+            def resolve(self, stage):
+                native,image=self.history[self.sequence]
+                return self.guard(stage,native,image)
+
+            @contextmanager
+            def input_guard(self, alias, offset, *, tail, verify, interaction='keyboard'):
+                self.guard=verify
+                try:
+                    yield
+                finally:
+                    self.guard=None
+
+            def click(self, alias, offset, **kwargs):
+                if self.guard('fixture_before_input', *self.history[self.sequence]) is not True:
+                    return {'status':'refused','input_dispatched':False}
+                self.inputs.append((alias,offset,kwargs))
+                self.phase += 1
+                return {'status':'completed','execution':{'releases':[
+                    {'verified':True,'keys_down':[],'buttons_down':[]}]}}
+
+            keyboard=click
+            move=click
+
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); bridge=Bridge(root/'bridge')
+            owner=GuardedSessionOwner({'app':7},root,':fixture')
+            with patch('runtime.cli_v1.mcp_guarded.open_bridge',return_value=bridge):
+                owner.get()
+            spec=interface(); spec['surface']='x11-window-7'
+            spec['predicates'].append('present')
+            spec['symbols']['field'].update(identity_predicate='present',
+                                             dependencies=['present'])
+            spec['method']['max_runtime_ms']=1000
+            bindings={name:{'interaction':'click','offset':[2,2],'tail':[]}
+                      for name in ('enter','save')}
+            verified=[]
+
+            def perceive(native, image):
+                return {'phase':image.getpixel((0,0))[0], 'present':True}
+
+            def verify_effect(request, native, image):
+                verified.append((request['action'],request['observation']['evidence_ref']))
+                return {'status':'succeeded',
+                        'evidence_ref':request['observation']['evidence_ref']}
+
+            row=owner.run_compiled(spec,bindings,call_root=root/'method',
+                perceive=perceive,verify_effect=verify_effect)
+            receipt=row['method_receipt']
+            transitions=receipt['transitions']
+            effects=[event for event in receipt['critical_events']
+                     if event['event']=='effect_checked']
+            self.assertEqual(receipt['outcome'],'TASK_SUCCEEDED',receipt)
+            self.assertEqual([action for action,_ in verified],['enter','save'])
+            self.assertEqual([action for action,_ in verified],
+                             [transition['action'] for transition in transitions])
+            self.assertEqual([event['action_id'] for event in effects],
+                             [transition['action_id'] for transition in transitions])
+            self.assertEqual(len(receipt['observations']),3)
+            self.assertEqual(bridge.sequence,3)
+            self.assertEqual(len(bridge.inputs),2)
+            self.assertEqual(row['feedback']['image_status'],'image')
+            self.assertEqual(row['feedback']['image_reference']['observation_id'],'fixture-3')
+            for event in effects:
+                self.assertLessEqual(event['execution_accepted_ns'],
+                                     event['effect_observation_captured_ns'])
+                self.assertLessEqual(event['effect_observation_captured_ns'],
+                                     event['effect_verification_started_ns'])
+                self.assertLessEqual(event['effect_verification_started_ns'],
+                                     event['effect_verification_accepted_ns'])
+            self.assertIsNone(row['task_success'])
+            self.assertFalse(row['replay_allowed'])
+
     def test_unopened_owner_is_not_implicitly_allocated(self):
         from runtime.cli_v1.mcp_guarded import GuardedSessionOwner
         with tempfile.TemporaryDirectory() as td:
