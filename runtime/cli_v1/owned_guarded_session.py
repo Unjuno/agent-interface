@@ -596,6 +596,22 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._call('observe', target=target, frame=frame, region=region,
                           capture_directory=capture_directory)
 
+    def _cancel_requires_owner_retirement(self, result):
+        if result.get('owner_process_retired') is True:
+            return False
+        if result.get('late_server_request_possible') is True:
+            return True
+        obligations = result.get('owner_input_obligations')
+        if not isinstance(obligations, dict):
+            obligations = getattr(self, '_owner_input_obligations', None)
+        if not isinstance(obligations, dict):
+            return True
+        keys = obligations.get('keys')
+        buttons = obligations.get('buttons')
+        if not isinstance(keys, dict) or not isinstance(buttons, list):
+            return True
+        return bool(keys) or bool(buttons)
+
     def cancel_guarded(self, token):
         if self._process is None or not self._process.is_alive() or self._control is None:
             return {'status':'not_active', 'input_dispatched':False,
@@ -655,10 +671,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         result = response['result']
         if result.get('status') != 'cancel_requested':
             return result
-        if self._rpc_lock.acquire(timeout=_CANCEL_RETIRE_GRACE_S):
+        requires_retirement = self._cancel_requires_owner_retirement(result)
+        if (not requires_retirement
+                and self._rpc_lock.acquire(timeout=_CANCEL_RETIRE_GRACE_S)):
             self._rpc_lock.release()
             return result
-        retirement = self._retire('cancel retirement grace elapsed')
+        retirement_reason = ('cancel left input or server-request obligation'
+                             if requires_retirement else
+                             'cancel retirement grace elapsed')
+        retirement = self._retire(retirement_reason)
         client_disconnect, release_attempt = self._cleanup_after_owner_retirement(
             retirement)
         self._execution_unknown = True

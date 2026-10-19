@@ -487,6 +487,67 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(result, {'status':'disconnected', 'expected_pid':2750})
 
+    def test_cancel_retires_owner_when_response_keeps_input_and_late_request_possible(self):
+        obligations = {'keys':{'a':38}, 'buttons':[]}
+        disconnect = {'status':'disconnected', 'expected_pid':1234,
+                      'worker_retired':True}
+        release = {'status':'readback_verified',
+                   'release':{'verified':True, 'keys_down':[],
+                              'buttons_down':[]}}
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._process = Mock()
+        owner._process.is_alive.return_value = True
+        owner._control = Mock()
+        owner._control.poll.return_value = True
+        owner._control.recv.return_value = {
+            'ok':True,
+            'snapshot':{'owner_input_obligations':obligations},
+            'result':{
+                'status':'cancel_requested',
+                'owner_process_retired':False,
+                'owner_input_obligations':obligations,
+                'release_confirmed':False,
+                'late_server_request_possible':True,
+                'task_success':None,
+                'replay_allowed':False,
+            },
+        }
+        owner._control_lock = threading.Lock()
+        owner._rpc_lock = Mock()
+        owner._snapshot_cache = {}
+        owner._owner_input_obligations = obligations
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._owner_input_obligations_result_fields = Mock(return_value={
+            'owner_input_obligations':obligations,
+            'owner_input_obligations_source':'retired_child_shared_state',
+            'owner_input_obligations_live_read':{
+                'status':'snapshot', 'obligations':obligations,
+            },
+        })
+        owner._apply_snapshot = Mock()
+        owner._retire = Mock(return_value={'retired':True, 'exitcode':-15})
+        owner._cleanup_after_owner_retirement = Mock(
+            return_value=(disconnect, release))
+        owner._execution_unknown = False
+        owner.review_required = False
+
+        result = owner.cancel_guarded('cancel-token')
+
+        owner._rpc_lock.acquire.assert_not_called()
+        owner._retire.assert_called_once()
+        owner._cleanup_after_owner_retirement.assert_called_once_with(
+            {'retired':True, 'exitcode':-15})
+        self.assertTrue(owner._execution_unknown)
+        self.assertTrue(owner.review_required)
+        self.assertTrue(result['owner_process_retired'])
+        self.assertEqual(result['owner_client_disconnect'], disconnect)
+        self.assertEqual(result['owner_release_attempt'], release)
+        self.assertFalse(result['release_confirmed'])
+        self.assertEqual(result['cleanup_status'], 'UNKNOWN')
+        self.assertIsNone(result['task_success'])
+        self.assertFalse(result['replay_allowed'])
+        self.assertTrue(result['late_server_request_possible'])
+
     def test_unconfirmed_cancel_retires_exact_owner_without_claiming_release(self):
         responses = (
             ('timeout', False, None),
