@@ -59,8 +59,14 @@ and #9153. Local Fake X tests now exercise blocked reply, cancellation,
 disconnect, child retirement and a synthetic late queued KeyPress after an
 injected separate empty readback. The caller remains `UNKNOWN` and does not
 claim task success or permit replay; see the [preserved late-down packet](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md).
-The synthetic protocol order is modeled, not live server evidence. A03's
-missing per-connection trace and original failure are unchanged. WSLc Issue
+The synthetic protocol order is modeled, not live server evidence. The
+additive [same-PID two-connection relay discriminator](../research/integration/offline_proxy_reply_framing_20261019/two-connection-r01/README.md)
+forwards a colliding-sequence identity reply while holding only the matching
+input reply; parser/relay tests pass 28/28 and standard caller relay composition
+passes 3/3 in normal and optimized Python. The standard caller still mocks its
+identity-query protocol, so the next local seam is to connect that actual
+query to the second socket. A03's missing per-connection trace and original
+failure are unchanged. WSLc Issue
 #7924 remains `STOP / HOLD` for ownership; no new live allocation is verified.
 The next live test can be planned only after fresh ownership and allocation
 evidence; in the meantime use finite Fake X work that changes a caller or

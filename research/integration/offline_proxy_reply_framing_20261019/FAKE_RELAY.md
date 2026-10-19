@@ -51,12 +51,28 @@ selected reply is withheld. It did not use WSLc, Docker, network access, a GUI,
 OS input, a model, or a live allocation. A02/A03 and their first outcomes are
 unchanged.
 
+## Additive same-PID two-connection discriminator (2026-10-19)
+
+The [two-connection r01 record](two-connection-r01/README.md) composes two
+separate FakeSocketRelay channels with the same modeled owner PID and colliding
+connection-local sequence 3. The pre-press identity-channel reply is forwarded;
+only the input-channel reply following its own XTEST KeyPress and matching
+synthetic event receipt is held. The held input stream retires as UNKNOWN. Its
+28 parser/policy/socket cases and the standard-caller relay composition's three
+cases pass in normal and optimized Python; exact outputs and source hashes are
+in the additive packet.
+
+The standard-caller suite still substitutes a FakeQueries response for the
+target-query X11 protocol exchange. Thus the two-connection relay result is
+complementary and does not prove caller→identity-socket→input-socket composition.
+It preserves the existing late-request/UNKNOWN result and does not establish
+physical release, task effect, or a WSLc result.
+
 ## Next boundary
 
-Next, test whether this framing and owner-retirement seam can be composed through
-the existing guarded standard caller using only Fake X sockets: include the
-separate process-identity connection, target-generation binding, cancellation,
-held-input obligation custody, and independent synthetic effect receipt. Keep
-physical release and task success `UNKNOWN` until the real backend has separate
-qualifying evidence. Do not attempt a live run unless an unused allocation and
-the explicit WSLc owner gate are independently verified.
+Next, carry the standard caller's actual target-query call over the distinct
+identity socket in the same composed fixture, preserving connection identity,
+sequence, cancellation, held-input custody, and UNKNOWN late-request behavior.
+Keep physical release and task success `UNKNOWN` until the real backend has
+separate qualifying evidence. Do not attempt a live run unless an unused
+allocation and the explicit WSLc owner gate are independently verified.
