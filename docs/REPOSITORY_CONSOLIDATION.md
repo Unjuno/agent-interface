@@ -48,6 +48,10 @@ The [B10 receipt](maintenance/issue-discovery-b10-20261019.md) routes rows 226�
 
 The [B11 receipt](maintenance/issue-discovery-b11-20261019.md) routes rows 251–275; all 25 items were already represented in the curated index. It preserves scoped outcomes and confirms #7359 is merged while #7940 remains Draft. It found issue-local two-human-approval conditions in #6875/#6932 that could prevent a single worker from completing a bounded task, although `main` has no branch protection/rulesets and both associated implementation PRs are closed unmerged. Clarifying comments now allow one worker to complete scoped testing and an independent raw audit, while preserving actual permissions and integration checks. A third comment on #6957 clarifies that its coordination record does not freeze disjoint work. No Issue status, PR, or experiment changed. B12 is next.
 
+### B12 bounded intake — control methods, human-facing proposals, and environment holds
+
+The [B12 receipt](maintenance/issue-discovery-b12-20261019.md) routes rows 276–300 and adds one direct entry for #7705; the other 24 ideas already had curated entries. It preserves finite method results, source/build STOPs, open Draft evidence, and the #7430 no-WSLc-owner restriction. Merged package validation remains distinct from user benefit, live GUI transfer, or a fresh resource allocation. B13 is next; no experiment or Issue state changed.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
