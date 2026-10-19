@@ -68,6 +68,10 @@ The [B15 receipt](maintenance/issue-discovery-b15-20261019.md) routes rows 351�
 
 The [B16 receipt](maintenance/issue-discovery-b16-20261019.md) routes rows 376–400; all 25 entries already had curated outcome rows. It separates finite-method results from candidate/auditor failures, duplicate allocation, unverified proposals, and live recovery limits. It records WSLc construction replay only as post-result construction evidence and preserves #8562's explicit #7924 ownership hold; no runtime operation was made. Referenced PR state was checked, without changing Issue/PR status or allocation. B17 is next.
 
+### B17 bounded intake — evidence custody and independent result limits
+
+The [B17 receipt](maintenance/issue-discovery-b17-20261019.md) routes rows 401–425; all 25 entries already had curated outcome rows. It records review-discovered method-gate and freeze issues even where a PR later merged, and separates integrated evidence custody from a successful candidate result. It preserves the #7924 resource conflict at #8604, the recorded prior WSLc invocation at #8619, and the concurrent-allocation collision at #8624; no WSLc command, allocation, or Issue/PR status change occurred in this intake. B18 is next.
+
 ## Previous execution checkpoint — organize by research family
 
 The latest complete paginated membership snapshot is [r50](maintenance/repository-inventory-20261019-r50.md), captured at `2026-10-19 00:11:08 UTC` against main `ec2ae97094ef2bf8e68e6cd4c21c6dba48521bd5`: 1,675 open Issues and 503 open PRs. Counts and sorted ID hashes match r49; metadata is refreshed at the post-merge main tip. This establishes discovery membership only. Semantic triage and ownership verification remain incomplete.
