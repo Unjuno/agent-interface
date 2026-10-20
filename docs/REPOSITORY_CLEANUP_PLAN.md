@@ -1,6 +1,22 @@
 # Repository cleanup plan
 
-## Current state after PR #9226 — 2026-10-20 06:02 UTC
+## Current state after PR #9228 — 2026-10-20 06:11 UTC
+
+Current main is `a5a45a9375f240ccc19e4b5268947b32fd830e4a`. The latest complete paginated membership read is [r103](maintenance/repository-inventory-20261020-r103.md): 1,672 open Issues and 473 open PRs, with matching GraphQL counts and stable main SHA. Relative to r101, the open Issue set is unchanged and PRs #8807/#8808 left the open set. PR #9228 integrated their identical 23-file A08 package at current main; the formal frozen result was preserved unchanged, and only its nine-test construction suite was rerun locally. The [r103 delta](maintenance/repository-inventory-20261020-r103-delta.json) records the transition. Issue #1998 stays open for its distinct unresolved GUI, model-utility, latency, and product-transfer questions.
+
+This is one verified duplicate-PR disposition, not a repository-wide cleanup. The r103 inventory is metadata, not semantic triage. Custody work remains incomplete; retain unknown branches, worktrees, ignored data, and generated artifacts. Issues #17, #57, and #59 remain open. No WSLc allocation was used or inferred.
+
+### Next organization wave
+
+1. Keep r103 as the latest paginated membership baseline; refresh before any later state-changing batch.
+2. Continue with one disjoint family at a time, preserving distinct hypotheses, first outcomes, raw links, evidence limits, dependencies, and one finite next decision.
+3. Review PRs by exact current head/base and complete diff. Merge useful verified records; for duplicates, verify identical content and preserved evidence before closing only after the canonical result lands.
+4. Reconcile branches/worktrees/artifacts only after owner, process, dependency, and recovery-path checks. Unknown custody remains retained.
+5. Keep navigation indexes concise and collision boundaries explicit so workers can proceed independently; serialize only shared-index edits.
+
+The wave completes when its selected items have evidence-backed dispositions and a worker can start from the map. Repository-wide cleanup remains incomplete until active items, ideas, dependencies, and artifacts all have traceable dispositions.
+
+## Previous state after PR #9226 — 2026-10-20 06:02 UTC
 
 Current main is `000d4aff06e2062e3fc19077e0f88b8334ffa080` after PR #9226. The latest complete row-level read is [recheck r102](maintenance/repository-inventory-20261020-r102.md): 1,672 open Issues and 475 open PRs, bracketed by GraphQL at the same main SHA. The refreshed Issue and PR exports are byte-identical to r101 and its immutable CSVs are reused; PR #9226 opened and merged between captures and is absent from both open snapshots. See the [r102 delta record](maintenance/repository-inventory-20261020-r102-delta.json). Counts are not semantic triage; re-fetch the exact live record before changing state.
 
@@ -8,7 +24,7 @@ PR #9225 added the bounded post-resume release-only retry; PR #9226 added monoto
 
 ### Next organization wave
 
-1. **Done for the current baseline:** r102 rechecked the full paginated Issue/PR metadata and is bracketed by GraphQL at the same main SHA; exports match r101 byte-for-byte. Keep this snapshot immutable and refresh again before a later state-changing batch.
+1. **Done for the previous baseline:** r102 rechecked the full paginated Issue/PR metadata and is bracketed by GraphQL at the same main SHA; exports match r101 byte-for-byte. It is retained as history; r103 is now the latest membership baseline.
 2. Process one disjoint research-family batch at a time. For each Issue, preserve its distinct hypothesis, strongest comparator, actual first result and raw link, scope limits, dependency/owner, and one finite next decision in its canonical family record. Keep unclassified items in a visible queue.
 3. Separately triage PRs by exact live head/base, diff, checks, author/owner, dependencies, and unique evidence custody. Merge validated useful work; repair or transfer unique work before closing duplicates; retain unresolved ownership and unique data.
 4. Reconcile local branches, worktrees, ignored data, and generated artifacts only after exact owner/process/dependency checks and a verified recovery path. Unknown custody remains retained and labeled.
