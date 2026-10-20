@@ -14,7 +14,7 @@ def run_child(*, drain_stderr):
         "import sys; "
         f"sys.stderr.buffer.write(b'E' * {PAYLOAD_BYTES}); "
         "sys.stderr.buffer.flush(); "
-        "sys.stdout.write('READY\\n'); sys.stdout.flush()"
+        "sys.stdout.buffer.write(b'READY\\n'); sys.stdout.buffer.flush()"
     )
     process = subprocess.Popen(
         [sys.executable, "-c", child_code], stdin=subprocess.DEVNULL,
