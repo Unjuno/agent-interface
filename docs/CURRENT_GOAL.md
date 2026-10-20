@@ -67,6 +67,26 @@ unchanged. Two separate native WSL/Xvfb validations are now retained:
 and [standard-caller target generation and recovery](../research/integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-generation-r03/README.md).
 They exercise the Linux caller against private synthetic Xvfb applications;
 they are not WSLc portability, physical desktop, or MAP01 evidence. The
+separate [Windows-host generation/cancellation recheck](../research/integration/standard_caller_windows_generation_cancel_recheck_20261021/README.md)
+passes three Fake X standard-caller tests in normal and optimized Python;
+stale process/window generations are refused and blocked-owner cancellation
+retains UNKNOWN. It does not qualify a live X server, physical input, or task
+effect. The [Windows process-start probe](../research/integration/standard_caller_cancel_process_start_20261021/README.md)
+measures synchronous event-loop stalls during actual helper startup and
+preserves the release gate after unknown disconnect.
+The [event-loop cleanup-delay probe](../research/integration/standard_caller_cancel_eventloop_block_20261021/README.md)
+separates those injected cleanup waits from real process-start delay; the
+[prestarted-supervisor Fake X probe](../research/integration/prestarted_supervisor_fakex_feasibility_20261021/README.md)
+is construction feasibility only and does not validate production supervisor
+behavior.
+Current-source native-WSL/Xvfb reruns now directly cover two remaining caller
+boundaries: [blocked-owner release and delayed-request horizon](../research/integration/standard_caller_xvfb_blocked_release_current_e7_20261021/README.md)
+independently observed XTEST keys up in 448 ms while the public caller retained
+UNKNOWN; [target-generation/recovery/effect](../research/integration/standard_caller_xvfb_generation_current_e7_20261021/README.md)
+refused stale input, recovered in 10 ms, and verified a synthetic application
+effect through an independent X client. Both run current source `e7d79d04`,
+one trial each, on responsive private Xvfb. Neither covers a stopped X server,
+physical desktop, MAP01, reliability population, or matched efficiency.
 separate generation-run r01/r02 prelaunch stops are preserved without test
 retries. WSLc Issue #7924 remains `STOP / HOLD` for shared ownership; no WSLc
 allocation is verified. A future shared WSLc/MAP01 run requires fresh

@@ -1,0 +1,23 @@
+{
+  "classification": "local-Windows-Fake-X-standard-MCP-regression-recheck",
+  "expectation": "all three tests pass in each interpreter mode",
+  "runtime": {
+    "mode": "same source and tests under normal Python and python -O",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "schema": "agent-interface/standard-caller-windows-generation-cancel-recheck-v1",
+  "scope_limit": "Fake X/test-owned MCP path only; no X server, real desktop input, independent application effect oracle, WSL, WSLc, Docker, or provider model",
+  "source_revision": "e7d79d04de46202622873bf116adb909abb0dee2",
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "39e3d63b7eb25510ed5fadfc015f2bbc9614a0f2b32eaabbf07c57d4390a683b",
+    "runtime/cli_v1/owned_guarded_session.py": "acc9c378ddd88d75572071acfd612c76eaf282da9a918d52cb9da829b3890a1a",
+    "runtime/cli_v1/test_mcp_owned_process.py": "29eb26c5d713f9b156f8f116855f50f714ce89fe7f06bb4cb1b92d87ea43f889",
+    "runtime/guarded_x11_v1/xres_client_fence.py": "fb1267892a23d2b68424c7bc8cea927812a24b7ec701352e6a3f102b87c2bbd8"
+  },
+  "tests": [
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_compiled_profile_stops_mid_action_on_process_generation_change",
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_owned_process_refuses_alias_after_target_generation_changes",
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_cancel_retires_exact_blocked_owner_but_keeps_release_unknown"
+  ]
+}
