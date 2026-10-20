@@ -30,6 +30,7 @@ from runtime.cli_v1.test_synthetic_task_oracle import (
 
 _SERVER_STOP_SAFETY_S = 4.0
 _CANCEL_BOUND_S = 3.0
+_POST_RESUME_CLOSE_BOUND_S = 3.0
 
 
 def _private_xvfb_record():
@@ -329,7 +330,49 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(terminal.get('cleanup_status'), 'UNKNOWN', terminal)
                 self.assertIsNone(terminal.get('task_success'), terminal)
                 self.assertFalse(terminal.get('replay_allowed'), terminal)
-                report['status'] = 'BOUNDED_CANCEL_RELEASE_UNKNOWN_DURING_PRIVATE_XVFB_STOP'
+
+                # The first cancellation result remains UNKNOWN. A separate,
+                # explicit close after the server resumes may recheck owner
+                # disconnection and perform one release-only cleanup attempt.
+                close_started_ns = time.monotonic_ns()
+                post_resume_close = _metadata(await server.call_tool(
+                    'interface_close', {}))
+                close_returned_ns = time.monotonic_ns()
+                close_elapsed_s = (close_returned_ns-close_started_ns)/1_000_000_000
+                report['post_resume_close'] = post_resume_close
+                report['post_resume_close_elapsed_s'] = close_elapsed_s
+                report['independent_readback_after_close'] = {
+                    'keys_down':{name:_key_down(observer, code)
+                                 for name, code in keycodes.items()},
+                    'effect':list(observer.create_resource_object(
+                        'window', window.id).get_full_property(
+                            effect_atom, X.AnyPropertyType).value),
+                    'reader':'separate parent X client',
+                    'monotonic_ns':time.monotonic_ns(),
+                }
+                self.assertLess(close_elapsed_s, _POST_RESUME_CLOSE_BOUND_S,
+                                post_resume_close)
+                self.assertTrue(post_resume_close.get('owner_process_retired'),
+                                post_resume_close)
+                self.assertEqual(
+                    post_resume_close.get('owner_release_attempt', {}).get('status'),
+                    'readback_verified', post_resume_close)
+                self.assertFalse(post_resume_close.get('release_confirmed'),
+                                 post_resume_close)
+                self.assertEqual(post_resume_close.get('cleanup_status'),
+                                 'UNKNOWN', post_resume_close)
+                self.assertIsNone(post_resume_close.get('task_success'),
+                                  post_resume_close)
+                self.assertFalse(post_resume_close.get('replay_allowed'),
+                                 post_resume_close)
+                self.assertEqual(report['independent_readback_after_close']['keys_down'],
+                                 {'a':False, 'b':False})
+                self.assertEqual(report['independent_readback_after_close']['effect'],
+                                 [1])
+                self.assertEqual(report['synthetic_task_oracle']['status'], 'fail', report)
+                self.assertFalse(report['synthetic_task_oracle']['task_success'], report)
+                report['status'] = (
+                    'CANCEL_UNKNOWN_DURING_PRIVATE_XVFB_STOP_POST_RESUME_RELEASE_READBACK_VERIFIED')
             except BaseException as error:
                 report.update(status='FAIL', error_type=type(error).__name__,
                               error=str(error))
