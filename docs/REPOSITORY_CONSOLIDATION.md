@@ -247,11 +247,18 @@ quarantined because candidate response schema and scorer disagreed about the
 required abstention field; it does not establish model accuracy. All five
 source Issues stay open; no idea or result was closed to reduce counts.
 
-The next finite discriminator is a read-only crosswalk of #1946/#1968/#2031
-source, raw and audit against #7's set-complementarity question. A new model
-comparison is considered only if that crosswalk identifies a remaining
-decision-changing condition. #7's selection question remains separate from
-#8's encoding comparison and #4's broader thesis.
+The 2026-10-20 read-only crosswalk is recorded in
+[the family disposition receipt](maintenance/issue-family-disposition-visual-multiview-20261020.md)
+and the [visual-interface family record](ideas/visual-interface.md). It found
+that #1981's formal/audit pass is narrower than #1946's full fixture gate, while
+#1983's broader 24-row result is `HOLD_NO_FORMAL_CONTAINER`; therefore #1946
+stays open pending a full eligible container-backed run and independent audit.
+#2031's `1/8` per-arm score is invalid as pure accuracy because of the response
+schema/scorer mismatch; its auditor-cap deviation and 113/114 manifest match
+remain explicit. No old call, audit, or allocation was repeated. Next for #7:
+preregister the fixed-budget held-out set comparison only after fixing its
+independent task oracle and response schema. Keep #7's selection question
+separate from #8's encoding comparison and #4's broader thesis.
 
 ### Current evidence-routing batch — A02/A03 blocked-X11 caller attempts
 
