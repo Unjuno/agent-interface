@@ -1,0 +1,23 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A07-20261009",
+  "schema": "focused-observation-a07-design-v1",
+  "frames": [
+    {"frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-A","pixels":["aaaaaaaa","aaaaaaaa","aaABaaaa","aaCDaaaa","aaaaaaaa","aaaaaaaa","aaaaaaaa","aaaaaaaa"],"regions":{"target":{"bounds":[2,2,4,4]},"other":{"bounds":[5,2,7,4]},"outside":{"bounds":[7,7,9,9]},"empty":{"bounds":[3,3,3,4]}}},
+    {"frame_id":"frame-7-distractor-change","epoch":7,"identity":"window-A","focus_token":"focus-A","pixels":["zzzzzzzz","zzzzzzzz","zzABzzzz","zzCDzzzz","zzzzzzzz","zzzzzzzz","zzzzzzzz","zzzzzzzz"],"regions":{"target":{"bounds":[2,2,4,4]},"other":{"bounds":[5,2,7,4]},"outside":{"bounds":[7,7,9,9]},"empty":{"bounds":[3,3,3,4]}}}
+  ],
+  "requests": [
+    {"case":"full-frame-exact","mode":"FULL_FRAME","frame_id":"frame-7-base","epoch":7,"identity":"window-A","reason":"context"},
+    {"case":"declared-focus-exact","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-A","reason":"uncertain","region_id":"target","candidate_region_ids":["target"]},
+    {"case":"stale-epoch","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":6,"identity":"window-A","focus_token":"focus-A","reason":"uncertain","region_id":"target","candidate_region_ids":["target"]},
+    {"case":"replaced-identity","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":7,"identity":"window-B","focus_token":"focus-A","reason":"uncertain","region_id":"target","candidate_region_ids":["target"]},
+    {"case":"focus-lost","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-old","reason":"uncertain","region_id":"target","candidate_region_ids":["target"]},
+    {"case":"ambiguous-candidates","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-A","reason":"uncertain","region_id":"target","candidate_region_ids":["target","other"]},
+    {"case":"wrong-reason","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-A","reason":"inferred","region_id":"target","candidate_region_ids":["target"]},
+    {"case":"unknown-region","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-A","reason":"uncertain","region_id":"missing","candidate_region_ids":["missing"]},
+    {"case":"out-of-bounds","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-A","reason":"uncertain","region_id":"outside","candidate_region_ids":["outside"],"bounds_override":[7,7,9,9]},
+    {"case":"empty-region","mode":"DECLARED_FOCUS","frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-A","reason":"uncertain","region_id":"empty","candidate_region_ids":["empty"],"bounds_override":[3,3,3,4]},
+    {"case":"wrong-mode","mode":"DECLARED_FOCUS_UNBOUNDED","frame_id":"frame-7-base","epoch":7,"identity":"window-A","focus_token":"focus-A","reason":"uncertain","region_id":"target","candidate_region_ids":["target"]}
+  ],
+  "required_cases": ["full-frame-exact","declared-focus-exact","stale-epoch","replaced-identity","focus-lost","ambiguous-candidates","wrong-reason","unknown-region","out-of-bounds","empty-region","wrong-mode"],
+  "action_authorized": false
+}
