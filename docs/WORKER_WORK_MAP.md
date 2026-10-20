@@ -14,7 +14,8 @@ semantic classification. The r119 [index coverage audit](maintenance/idea-index-
 routes 265 issues without a direct `docs/ideas` link into eleven private-output
 discovery batches. The [D11 disposition receipt](maintenance/idea-family-triage-r119/D11.md)
 reviews 15 candidates, closes only #8654/#8913 with evidence links, and leaves
-13 open with a finite next decision or hold. D01–D10 remain unreviewed; prior
+13 open with a finite next decision or hold. D01 is integrated below; D02–D10
+remain unreviewed. Prior
 B01–B20 reads are linked to prevent duplicate audit. These are candidate
 scopes, not active assignments. The r05 custody census is historical, not
 current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
@@ -22,6 +23,14 @@ WSLc ownership and current-checkout prerequisites. The checkout is sparse:
 eleven research references in the entry-point docs are present in the Git tree
 even though their paths are not materialized locally; check tree membership
 before reporting such links as broken.
+
+The D01 [family-disposition receipt](maintenance/idea-family-triage-r119/D01.md)
+reuses B01–B03, maps all 25 rows to existing catalog entries, and closes only
+#163 (duplicate audit request with retained failure report) and #177 (13/13
+scoped offline binding result). The other 23 D01 Issues remain open with their
+limits and next decisions. A post-close aggregate is 1,668 open Issues / 468
+open PRs; the last complete paginated ID-set hash is still the 12:51 UTC
+checkpoint in the cleanup plan. D02–D10 remain unreviewed.
 
 The local #57 ledger now summarizes optional cached-input, cache-write-input,
 reasoning-output and image-input token fields per attempt, returning unknown

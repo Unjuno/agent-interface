@@ -11,8 +11,10 @@ is exactly r119 minus #8654/#8913; the PR ID set is exactly r119. Sorted ID
 SHA-256: Issues `b1dcc137b671439581faad8dc4eb21599254d28231f313d1e6f31996b6ecf82e`,
 PRs `878a28d681a0ae705654b670693106498874c525afe2ca828aa129b3dccafb3a`. No
 duplicate inventory was added; r119 remains the saved row-metadata baseline.
-Membership is current at this checkpoint, but semantic dispositions, per-item
-readiness, active ownership, and artifact custody remain incomplete. The
+This was the last paginated ID-set checkpoint; the later D01 changes below are
+tracked by exact Issue links and an aggregate count, not by a new census.
+Semantic dispositions, per-item readiness, active ownership, and artifact
+custody remain incomplete. The
 bounded nine-PR receipt below is not a complete readiness audit. Matched
 efficiency, independent live task scoring, provider-log reconciliation,
 outage-time release, and generally bounded recovery remain open; #57 remains
@@ -83,8 +85,22 @@ this cleanup plan.
    referenced directories.
 7. D11 is integrated. Its 15 candidate dispositions close only #8654/#8913
    after preserving scoped results; the other 13 remain open with their recorded
-   results, proposals, or explicit WSLc ownership holds. D01–D10 remain
-   unreviewed.
+   results, proposals, or explicit WSLc ownership holds. D01 is now integrated
+   below; D02–D10 remain unreviewed.
+
+## D01 family disposition — 2026-10-20
+
+The [D01 receipt](maintenance/idea-family-triage-r119/D01.md) reconciles its 25
+candidate Issues against their B01–B03 prior reads and current catalog rows.
+Twenty-three remain open because their research question, evidence, accounting,
+failure, or setup boundary is unresolved. #163 was closed after linking its
+already-retained `FAIL_DIRECT_UPGRADE_RETAIN_SEMANTIC_MISMATCH` report; #177 was
+closed after linking its 13/13 scoped offline binding result. Each closure
+preserves its precise limit and a re-open condition in its Issue comment and
+catalog row. A post-change GraphQL aggregate returned 1,668 open Issues and 468
+open PRs; it was not a paginated membership recheck, so the r119 ID hashes above
+remain the last verified ID-set checkpoint. The other 23 D01 Issues remain
+open/unassigned. D02–D10 remain unreviewed.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
