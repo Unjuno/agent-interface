@@ -1,0 +1,12 @@
+Invocation:
+python -B research/integration/standard_caller_duplicate_cancel_retention_20261021/run_probe.py --output research/integration/standard_caller_duplicate_cancel_retention_20261021/raw/r01.json
+
+Exit status: 1
+Trial entry: none; server construction and Fake X owner startup were not reached.
+
+Traceback (most recent call last):
+  File "research/integration/standard_caller_duplicate_cancel_retention_20261021/run_probe.py", line 12, in <module>
+    from runtime.cli_v1.mcp_server import create_server
+ModuleNotFoundError: No module named 'runtime'
+
+Disposition: immutable prelaunch/setup stop. A corrected launcher uses a fresh run ID r02.

@@ -36,6 +36,13 @@ computer-control gates; do not treat a design document as evidence that
 cancellation is solved. The wider Issue/PR census, idea-family routing, and
 custody work remain separate cleanup batches.
 
+The [standard-caller duplicate-cancel characterization](../research/integration/standard_caller_duplicate_cancel_retention_20261021/README.md)
+is a new one-trial integration row. It does not repeat Issue #814's independent
+safety-owner PASS: one cleanup attempt occurred through the public caller, but
+the duplicate received `not_active`, no cancellation-operation receipt was
+retained, and the action result carried a stale owner-liveness snapshot. The
+production registry/supervisor behavior remains unimplemented.
+
 1. **Reconcile the live queue.** Refresh open Issue/PR membership with complete pagination and stable main SHA before/after. Reuse r120 rows where IDs are unchanged; record only exact additions/removals and refreshed rows needed for a decision. Publish one current queue pointer and label count-only reads as such.
 2. **Preserve and route research ideas.** Continue the existing family queue (the last recorded gap was 223 semantic idea-document routes). For each source Issue, distinguish its hypothesis from siblings; link immutable first outcomes, counterexamples, STOP/HOLD/FAIL results, current code/PR, owner/dependency, and the next discriminating test. Update the canonical family page and idea index in one integration pass. A route or summary alone is not semantic review.
 3. **Integrate PRs one at a time or in proven disjoint batches.** Refresh exact head/base, full diff, checks, dependencies, linked Issue, and unique code/raw custody. Merge useful work once its current-main implementation and necessary local checks are verified and actual repository protections are satisfied. Repair or retarget a bounded successor where appropriate. Close a superseded PR only after byte/content preservation and successor links are verified. Do not wait for an invented reviewer count or merge solely to lower the count.
