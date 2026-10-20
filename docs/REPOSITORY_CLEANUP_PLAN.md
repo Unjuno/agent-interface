@@ -88,7 +88,7 @@ this cleanup plan.
 7. D11 is integrated. Its 15 candidate dispositions close only #8654/#8913
    after preserving scoped results; the other 13 remain open with their recorded
    results, proposals, or explicit WSLc ownership holds. D01 and D02 are
-   integrated; D03–D08 are reconciled below. D09–D10 remain unreviewed.
+   integrated; D03–D09 are reconciled below. D10 remains unreviewed.
 
 ## D01 family disposition — 2026-10-20
 
@@ -188,6 +188,17 @@ allocation, WSLc/Docker operation, or worktree cleanup ran. Aggregate remains
 1,655 open Issues / 468 open PRs (count-only). Across D01–D08, 200 candidates
 are mapped, 15 scoped Issues are closed, and 185 remain open. D09–D10 remain
 unreviewed.
+
+## D09 family disposition — 2026-10-20
+
+The [D09 receipt](maintenance/idea-family-triage-r119/D09.md) reconciles 25
+candidates against B12–B16 and live Issue/comment/PR reads. All remain open and
+unassigned; no status changed. The batch preserves distinct synthetic results,
+raw/integrity holds, STOPs, unrun proposals, and WSLc ownership limits. No
+experiment, allocation, WSLc/Docker operation, or worktree cleanup ran. The
+aggregate remains 1,655 open Issues / 468 open PRs (count-only). Across
+D01–D09, 225 candidates are mapped, 15 scoped Issues are closed, and 210
+remain open. D10 remains unreviewed.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
