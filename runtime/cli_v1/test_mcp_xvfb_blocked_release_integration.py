@@ -703,6 +703,20 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['terminal_elapsed_ms'] = terminal_elapsed_ms
                 report['terminal'] = terminal
                 terminal_returned = True
+                owner_process = terminal.get('owner_process', {})
+                liveness_observed_ns = owner_process.get(
+                    'liveness_observed_monotonic_ns')
+                cancel_returned_ns = report['timing_ns']['cancel_returned']
+                self.assertIsInstance(liveness_observed_ns, int, terminal)
+                report['terminal_owner_liveness_fence'] = {
+                    'liveness_observed_monotonic_ns':liveness_observed_ns,
+                    'cancel_returned_monotonic_ns':cancel_returned_ns,
+                    'snapshot_precedes_cancel_return':(
+                        liveness_observed_ns < cancel_returned_ns),
+                    'alive':owner_process.get('alive'),
+                }
+                if liveness_observed_ns >= cancel_returned_ns:
+                    self.assertFalse(owner_process.get('alive'), terminal)
                 self.assertLess(terminal_elapsed_ms, _TERMINAL_BOUND_MS, terminal)
                 self.assertNotEqual(terminal.get('status'), 'pending', terminal)
                 self.assertFalse(terminal.get('release_confirmed'), terminal)

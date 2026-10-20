@@ -1,5 +1,21 @@
 # Repository cleanup plan
 
+## Current state after PR #9225 — 2026-10-20 05:44 UTC
+
+Current main is `a8013b1bd24e9d55f45318e3b8f7d4dbfb31a1f9` (PR #9225). A live GraphQL count read at this ref returned 1,672 open Issues and 475 open PRs. The refreshed full row-level inventory is [r101](maintenance/repository-inventory-20261020-r101.md), captured at `a8013b1bd24e9d55f45318e3b8f7d4dbfb31a1f9` with 1,672 open Issues and 475 open PRs. Compared with r100, Issue membership is unchanged and PR #9224 merged; all other membership is unchanged. Re-fetch the exact live record before changing state. This count is not semantic triage.
+
+PR #9225 merged the bounded post-resume release-only retry for Issue #17. It does not prove release during blocked X I/O, MAP01 completion, task success, or integrated efficiency; Issues #17, #57, and #59 therefore remain live research questions. The local checkout used for this plan is clean at the current main SHA. The broader branch/worktree/raw-data custody audit remains incomplete; no workspace deletion is authorized by a count or a clean Git status.
+
+### Next organization wave
+
+1. **Done for the current baseline:** r101 is fully paginated and bracketed by GraphQL at the same main SHA; Issue membership matches r100 and PR #9224 is the only removed open ID. Keep this snapshot immutable and refresh again before a later state-changing batch.
+2. Process one disjoint research-family batch at a time. For each Issue, preserve its distinct hypothesis, strongest comparator, actual first result and raw link, scope limits, dependency/owner, and one finite next decision in its canonical family record. Keep unclassified items in a visible queue.
+3. Separately triage PRs by exact live head/base, diff, checks, author/owner, dependencies, and unique evidence custody. Merge validated useful work; repair or transfer unique work before closing duplicates; retain unresolved ownership and unique data.
+4. Reconcile local branches, worktrees, ignored data, and generated artifacts only after exact owner/process/dependency checks and a verified recovery path. Unknown custody remains retained and labeled.
+5. Keep the worker map as a navigation surface with disjoint paths and collision boundaries. Serialize edits to shared indexes; do not serialize independent research families.
+
+The wave is complete when every item in its selected slice has a traceable evidence-backed disposition and a worker can start the next independent task from its map entry. Repository-wide cleanup is complete only when all active items and artifacts have dispositions, unresolved ideas and ownership are visible, and no deletion or closure is being used to make counts look clean.
+
 ## Current execution baseline — 2026-10-20 05:26 UTC
 
 At main `282a05b02d8d48053c88bcdb08ace54694068a6a`, the fresh paginated inventory is [r100](maintenance/repository-inventory-20261020-r100.md): 1,672 open Issues and 476 open PRs. It supersedes r99 for membership. Since r98, #8574 and #8843 left the open sets. Both transitions are reconciled: #8574's scoped T0 question is recorded `NO_INCREMENTAL_VALUE_SCOPED`, preserved by merged [PR #9217](https://github.com/Unjuno/agent-interface/pull/9217), and closed with broader transfer left deferred; #8843 was a stale-base duplicate superseded by merged [PR #9218](https://github.com/Unjuno/agent-interface/pull/9218), which preserves all 19 package blobs, repairs seven manifest entries, and retains the construction-only scope. After r99, #8832 was closed as duplicate of #9217 with its frozen data retained. PR #9224 is the current documentation/inventory refresh. None of these closures resolves the broader live-control Issue #59.
