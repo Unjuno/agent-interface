@@ -88,7 +88,7 @@ this cleanup plan.
 7. D11 is integrated. Its 15 candidate dispositions close only #8654/#8913
    after preserving scoped results; the other 13 remain open with their recorded
    results, proposals, or explicit WSLc ownership holds. D01 and D02 are
-   integrated; D03 and D04 are reconciled below. D05–D10 remain unreviewed.
+   integrated; D03–D05 are reconciled below. D06–D10 remain unreviewed.
 
 ## D01 family disposition — 2026-10-20
 
@@ -114,7 +114,7 @@ and #273 after its merged report retained the 40-case result. The other 23 remai
 with their separate proposals, failures, scope limits, or custody holds. The
 aggregate after both D01 and D02 dispositions is 1,666 open Issues / 468 open
 PRs; this is not a paginated ID-set audit. No experiments or allocations were
-run. D03 and D04 are reconciled below; D05–D10 remain unreviewed.
+run. At the D02 checkpoint, D03–D10 were unreviewed.
 
 ## D03 family disposition — 2026-10-20
 
@@ -127,7 +127,7 @@ other 19 remain open with explicit failure, raw-custody, setup, or release-gate
 boundaries. PR #8701 is now closed, contrary to the stale status in #672's last
 2026-10-15 note; that does not establish branch/worktree custody. GraphQL
 aggregate after D01–D03 is 1,660 open Issues / 468 open PRs, not a paginated
-ID-set audit. No experiment or allocation was run. D05–D10 remain unreviewed.
+ID-set audit. No experiment or allocation was run. At the D03 checkpoint, D04–D10 were unreviewed.
 
 ## D04 family disposition — 2026-10-20
 
@@ -142,6 +142,20 @@ Issues / 468 open PRs; it is count-only, not a paginated membership audit.
 Across D01–D04, 100 candidates are mapped, 13 individually evidenced Issues
 were closed, and 87 remain open. No experiment, allocation, or worktree cleanup
 was run. D05–D10 remain unreviewed.
+
+## D05 family disposition — 2026-10-20
+
+The [D05 receipt](maintenance/idea-family-triage-r119/D05.md) reconciles 25
+candidate Issues against B07–B08 and the current catalog. One completed,
+scoped caller-source audit was closed after verifying merged PR #3420 and
+adding the bounded result and limits to its Issue comment: #3382. The other 24
+remain open with distinct live-integration, raw-custody, calibration,
+ownership, or architecture questions. The 13:17 UTC GraphQL aggregate after
+the #3382 closure and before opening this receipt PR is 1,656 open Issues / 468
+open PRs; this is count-only, not a paginated membership audit. Across D01–D05,
+125 candidates are mapped, 14
+individually evidenced Issues were closed, and 111 remain open. No experiment,
+allocation, or worktree cleanup was run. D06–D10 remain unreviewed.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,

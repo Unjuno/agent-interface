@@ -1,10 +1,10 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 after PR #9274
+## Current entry point — 2026-10-20 D05 review based on PR #9275
 
 The last paginated membership baseline was main
-`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9274
-advanced main to `7f57b44e30fdacbbbaf008f5b0ec7ddc029a9abe`. PR #9267 added the r119
+`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9275
+advanced main to `35b54e4db0b449efe9e8d62fab77dfd0e3744482`. PR #9267 added the r119
 coverage audit and eleven private-output discovery packets; PR #9268 improved
 the local #57 ledger; PR #9269 preserved the newest current-main Xvfb
 stop/recovery result; PR #9270 integrated D11's family dispositions. After
@@ -17,7 +17,7 @@ routes 265 issues without a direct `docs/ideas` link into eleven private-output
 discovery batches. The [D11 disposition receipt](maintenance/idea-family-triage-r119/D11.md)
 reviews 15 candidates, closes only #8654/#8913 with evidence links, and leaves
 13 open with a finite next decision or hold. D01–D03 are integrated below;
-D04 is reconciled in the current update; D05–D10 remain unreviewed. Prior
+D04 is integrated below; D05 is reconciled in the current update; D06–D10 remain unreviewed. Prior
 B01–B20 reads are linked to prevent duplicate audit. These are candidate
 scopes, not active assignments. The r05 custody census is historical, not
 current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
@@ -32,7 +32,7 @@ reuses B01–B03, maps all 25 rows to existing catalog entries, and closes only
 scoped offline binding result). The other 23 D01 Issues remain open with their
 limits and next decisions. A post-close aggregate is 1,668 open Issues / 468
 open PRs; the last complete paginated ID-set hash is still the 12:51 UTC
-checkpoint in the cleanup plan. D03 and D04 are reconciled below; D05–D10 remain
+checkpoint in the cleanup plan. At the D01 checkpoint, D02–D10 remained
 unreviewed.
 
 The D02 [family-disposition receipt](maintenance/idea-family-triage-r119/D02.md)
@@ -40,19 +40,27 @@ reuses B03–B05 and maps its 25 candidate rows to catalog outcomes. It closes
 only #249 and #273 after linking their merged evidence packets; the other 23
 remain open with distinct decisions/holds. Aggregate open state after D01/D02:
 1,666 Issues / 468 PRs; the last exact membership hash is still the 12:51 UTC
-checkpoint. D03 and D04 are reconciled below; D05–D10 remain unreviewed.
+checkpoint. At the D02 checkpoint, D03–D10 remained unreviewed.
 
 The D03 [family-disposition receipt](maintenance/idea-family-triage-r119/D03.md)
 reuses B03–B06. It closes six bounded tests with merged evidence packages;
 19 remain open with separate custody, formal-result, release, and parent-family
-questions. The aggregate after D01–D03 was 1,660 Issues / 468 PRs; D04 is
-reconciled below and D05–D10 remain unreviewed.
+questions. The aggregate after D01–D03 was 1,660 Issues / 468 PRs; D04 and
+D05 are reconciled below and D06–D10 remain unreviewed.
 
 The D04 [family-disposition receipt](maintenance/idea-family-triage-r119/D04.md)
 reuses B06–B08. It closes three bounded Issues (#747, #862, #1438) after
 verifying merged artifacts and scoped comments; 22 remain open. Aggregate is
-1,657 Issues / 468 PRs (count-only, not a new paginated audit). D05–D10 remain
-unreviewed. No experiment or allocation was run.
+1,657 Issues / 468 PRs (count-only, not a new paginated audit). D05 is
+reconciled below; D06–D10 remain unreviewed. No experiment or allocation was
+run.
+
+The D05 [family-disposition receipt](maintenance/idea-family-triage-r119/D05.md)
+reuses B07–B08. It closes only #3382 after verifying merged PR #3420's scoped
+caller-audit result and preserving its limitations in the Issue comment; 24
+remain open. Aggregate after the closure is 1,656 Issues / 468 PRs (count-only,
+not a new paginated audit). D06–D10 remain unreviewed. No experiment,
+allocation, or worktree cleanup was performed.
 
 The local #57 ledger now summarizes optional cached-input, cache-write-input,
 reasoning-output and image-input token fields per attempt, returning unknown
