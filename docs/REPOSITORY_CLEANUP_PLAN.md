@@ -1,5 +1,20 @@
 # Repository cleanup plan
 
+## Current state after PR #9241 — 2026-10-20 07:26 UTC
+
+Main is `41f1dc570a2affddece6ee894ed42d216b21a993`. The [r109 membership recheck](maintenance/repository-inventory-recheck-20261020-r109.md) confirms 1,672 open Issues and 468 open PRs, with both ID sets unchanged from r108. PRs #9240 and #9241 were created and merged between the snapshots; neither remains open. The latest complete row-level metadata remains [r108](maintenance/repository-inventory-20261020-r108.md); r109 refreshes membership only. PR #9241 added the #17 fault-layer evidence crosswalk; #17 remains open and no allocation or Issue state change occurred.
+
+### Next organization wave
+
+1. Use r109 as the latest membership check and r108 as the latest full metadata baseline; refresh exact live records before another remote state-changing batch.
+2. Source-map the uncovered #17 stdout-delivery and image/receipt-serialization paths to the standard caller, then select one composed check that distinguishes them.
+3. Continue one disjoint family at a time, preserving ideas, first outcomes, raw evidence, scope limits, dependencies, and the next finite decision.
+4. Review candidate PRs by exact head/base and complete diff. Integrate verified useful records on current main; close predecessors only after successor content and evidence custody are confirmed.
+5. Retain branches/worktrees/artifacts with unknown ownership until owner, process, dependency, and recovery path are known.
+6. Keep shared maps and indexes current while allowing workers to use separate family/output paths.
+
+Repository-wide cleanup remains incomplete until active ideas and artifacts have traceable dispositions and workers can start independent tasks from the map.
+
 ## Current state after PR #9238 — 2026-10-20 06:54 UTC
 
 Main is `5ce0f2b67d3dafcde70cc84b9832d5f841475210` after PR #9238. The latest complete paginated membership read is [r108](maintenance/repository-inventory-20261020-r108.md): 1,672 open Issues and 468 open PRs at this SHA, bracketed by matching GraphQL counts. Relative to r107, #8861 left the open PR set after its construction package was integrated by #9238; #9238 was created and merged between captures and appears in neither open set. Issue membership is unchanged. The [r108 delta](maintenance/repository-inventory-20261020-r108-delta.json) records this transition.

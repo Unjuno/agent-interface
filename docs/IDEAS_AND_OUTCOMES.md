@@ -4,11 +4,13 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-20 06:55 UTC):** main is
-`5ce0f2b67d3dafcde70cc84b9832d5f841475210`; the latest complete membership snapshot r108 records 1,672
-open Issues and 468 open PRs in [r108](maintenance/repository-inventory-20261020-r108.md).
-Compared with r107, Issue membership is unchanged and #8861 left the open PR set after its construction package was integrated by #9238. #31 and #8636 remain open. Counts are not semantic
-dispositions; use the current family records and the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) for new work.
+**Current organization check (2026-10-20 07:26 UTC):** main is
+`41f1dc570a2affddece6ee894ed42d216b21a993`. The [r109 membership recheck](maintenance/repository-inventory-recheck-20261020-r109.md)
+confirms 1,672 open Issues and 468 open PRs, with ID sets unchanged from the
+complete row-level [r108 metadata snapshot](maintenance/repository-inventory-20261020-r108.md).
+PR #9241 adds an evidence-layer disposition for #17; #17 remains open. #31 and
+#8636 remain open. Counts are not semantic dispositions; use current family
+records and the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) for new work.
 ## Status key
 
 - **Proposed / open:** no result is implied.
