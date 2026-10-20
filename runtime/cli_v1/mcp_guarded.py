@@ -91,9 +91,10 @@ class GuardedSessionOwner(MCPSessionOwner):
         row['query_worker'] = self.query_worker
         row['observation_worker'] = self.observation_worker
         row['window_lifecycle'] = self.window_lifecycle
-        if self.bridge is not None:
+        compiled_scope = getattr(self.bridge, 'scope', None)
+        if isinstance(compiled_scope, str) and compiled_scope:
             from runtime.guarded_x11_v1.compiled import surface
-            row['compiled_scope'] = self.bridge.scope
+            row['compiled_scope'] = compiled_scope
             row['compiled_surface'] = surface(self.bridge)
         observations = getattr(self.bridge,'_observations',None)
         row['observations'] = observations.snapshot() if observations is not None else None
