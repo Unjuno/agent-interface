@@ -1,7 +1,7 @@
 # リポジトリ全体の整理計画
 実行手順は[リポジトリ整理の実行計画](REPOSITORY_CLEANUP_PLAN.md)を参照。Issueは意味と仮説を正規カタログに整理し、根拠・後継・再開条件をIssueへ戻してから個別に処遇する。件数を減らすこと自体は完了条件ではない。
 
-**現行ポインター (2026-10-20):** mainはPR #9284のsquash commit `b7f734f2236fb45361794a7adb384d0b6773c66b`。現行の四レーン、完了条件、次の順序は[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-checkpoint-after-pr-9284--2026-10-20)を参照する。count-only GraphQLは1,655 open Issues / 467 open PRs。r119の完全ページングmetadataは最新の保存済みmembershipだが、現在の集合や状態変更根拠ではない。D01–D11で265件の候補をすべてルーティングし、個別結果に基づき17件を完了処理、残る248件をopenとして保持した。残る仕事は223件のsemantic routes、全open PRのexact-head disposition、branch/worktree/artifact custody、および入口文書と履歴の収束。D01–D11 receiptsは履歴として保持する。件数減少や新規snapshotを目的化せず、IssueやPRのstate変更前に対象を再取得する。
+**現行ポインター (2026-10-20):** mainはPR #9285のsquash commit `2c29aee34e258053670fa7df9108889f35aecef2`。現行の四レーン、完了条件、次の順序は[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-checkpoint-after-pr-9285--2026-10-20)を参照する。#9285後のcount-only GraphQLは1,655 open Issues / 467 open PRs。r119の完全ページングmetadataは最新の保存済みmembershipだが、現在の集合や状態変更根拠ではない。D01–D11で265件の候補をすべてルーティングし、個別結果に基づき17件を完了処理、残る248件をopenとして保持した。残る仕事は223件のsemantic routes、全open PRのexact-head disposition、branch/worktree/artifact custody、および入口文書と履歴の収束。D01–D11 receiptsは履歴として保持する。件数減少や新規snapshotを目的化せず、IssueやPRのstate変更前に対象を再取得する。
 
 **Issue family disposition D05 (2026-10-20):** [D05 receipt](maintenance/idea-family-triage-r119/D05.md) reconciles 25 candidates against B07–B08. One bounded caller-source publication request (#3382) was closed after verifying merged PR #3420 and preserving limits in its Issue comment; 24 remain open. Aggregate after D01–D05 is 1,656 open Issues / 468 open PRs, not a paginated audit. D06–D10 remain unreviewed.
 
