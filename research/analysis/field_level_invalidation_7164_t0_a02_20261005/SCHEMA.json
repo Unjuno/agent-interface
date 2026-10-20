@@ -1,0 +1,26 @@
+{
+  "format": "field-invalidation-schema-v1",
+  "identity_fields": ["object_id", "generation"],
+  "direct_fields": [
+    "object_token", "accessible_name", "surface_id", "surface_role",
+    "surface_origin", "local_position", "ui_mode", "enabled_edit",
+    "enabled_preview", "task_scope", "text_value"
+  ],
+  "derived_order": [
+    "screen_position", "contextual_role", "recovery_anchor", "enabled", "object_caption"
+  ],
+  "dependencies": {
+    "screen_position": ["surface_origin", "local_position"],
+    "contextual_role": ["surface_role", "task_scope"],
+    "recovery_anchor": ["screen_position", "surface_id", "task_scope"],
+    "enabled": ["ui_mode", "enabled_edit", "enabled_preview"],
+    "object_caption": ["accessible_name", "text_value"]
+  },
+  "dynamic_dependencies": {
+    "enabled": {
+      "edit": ["ui_mode", "enabled_edit"],
+      "preview": ["ui_mode", "enabled_preview"]
+    }
+  },
+  "methods": ["whole_record", "independent_field", "dependency_aware"]
+}
