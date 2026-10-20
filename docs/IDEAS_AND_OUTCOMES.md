@@ -4,15 +4,17 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-20 10:39 UTC):** main is
-`270e886685f3814f053824a5110e9226b1b3f5a5`. The complete [r114 membership
-recheck](maintenance/repository-inventory-recheck-20261020-r114.md) confirms
-1,672 open Issues and 468 open PRs; its ID sets match r113, and refreshed
-metadata is retained in the linked JSON rows. Issue #53 was reopened after PR
-#9251's merge unexpectedly closed it through a GitHub closing-reference
-association; its shared-caller accounting gap remains unresolved. Counts are
-not semantic dispositions; use current family records and the
-[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) for new work.
+**Current organization check (2026-10-20 11:13 UTC):** main is
+`475e3733785065bf2993d507f71fafad790916fb`. The complete paginated [r115
+membership recheck](maintenance/repository-inventory-recheck-20261020-r115.md)
+matches r114's 1,672 open Issue and 468 open PR ID sets; GraphQL counts
+bracketed the read. r114 remains the latest full metadata export, so no
+duplicate export was added. PR #9255 adds local async attempt recording and
+synthetic caller composition only; it does not establish real provider-log
+completeness, live task effect, or integrated efficiency. Issues #53, #57 and
+#59 remain open. Counts are not semantic dispositions; use the staged
+[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) and current family records
+to route the next bounded batch.
 ## Status key
 
 - **Proposed / open:** no result is implied.

@@ -1,5 +1,56 @@
 # Repository cleanup plan
 
+## Current organization checkpoint after PR #9255 — 2026-10-20
+
+Main is `475e3733785065bf2993d507f71fafad790916fb`. The fresh paginated
+[r115 membership recheck](maintenance/repository-inventory-recheck-20261020-r115.md)
+matches the complete r114 Issue and PR ID sets exactly: 1,672 open Issues and
+468 open PRs. GraphQL counts bracketed the read and main SHA remained stable.
+The r114 row-level metadata is reused rather than duplicated; it remains the
+latest full PR metadata view. Membership is not semantic triage, current PR
+readiness, assignment, or custody evidence.
+
+PR #9255 merged the local asynchronous provider/MCP attempt recorder and a
+synthetic public-caller composition test. The test keeps independent task
+success null; the change does not connect the external provider/orchestrator or
+reconcile provider logs. Issues #53, #57, and #59 remain open. In particular,
+the integrated efficiency comparison and live task-effect evidence remain
+unresolved, so these ideas stay in the research catalog with actionable next
+questions rather than being closed to lower counts.
+
+The [latest retained worktree census r04](maintenance/git-worktree-census-20261020-r04.md)
+is a 10:52 UTC status snapshot of 37 roots (26 clean, 11 dirty, 0 locked or
+prunable). Preserve all roots until owner/session, running process, branch/PR
+dependencies, ignored data, evidence custody and recovery path are checked.
+No branch, worktree, raw package, Issue, or PR is removed by this checkpoint.
+
+### Execution order for repository-wide organization
+
+| Stage | Record to improve | Output that makes the next stage safe | State-changing rule |
+|---|---|---|---|
+| 1. Stabilize entry points | `CURRENT_GOAL.md`, this plan, `WORKER_WORK_MAP.md` | One current objective, dated membership/custody boundaries, disjoint work candidates, and shared-index owners | Documentation updates only; do not infer assignment from a queue |
+| 2. Curate ideas by family | `docs/ideas/*.md`, `ideas/README.md`, `IDEAS_AND_OUTCOMES.md` | For each distinct hypothesis: strongest comparator, first result and raw link, limits, dependencies, one finite next test, and source-Issue backlink | Preserve siblings and contrary outcomes; do not merge merely similar titles |
+| 3. Dispose Issues individually | The live Issue plus its canonical family record | Explicit `active`, `blocked-with-condition`, `preserved-successor`, or `complete` disposition and a return link | Close only when its own question/work is complete or faithfully transferred and a current successor/backlink is verified |
+| 4. Reconcile PRs | Exact live PR and its canonical evidence record | Current head/base, full diff, local checks, dependencies, evidence custody, and one concrete next action | Merge verified, useful work through allowed protections; close superseded PRs only after successor content is present and linked |
+| 5. Reconcile local artifacts | Branches, worktrees, ignored files, raw outputs | Owner/session, process state, PR/base dependencies, unique data, and tested recovery path | Move/archive/delete only individually verified redundant artifacts with custody released |
+| 6. Enable parallel execution | `WORKER_WORK_MAP.md` and worker quickstart | Finite independent assignments with private output locations; only shared indexes serialize | A clean Git status, closed issue, or branch-name mismatch alone never grants ownership or cleanup authority |
+
+Run these stages as bounded family/PR/custody batches, updating the shared map
+once per batch. Keep historical raw and first outcomes immutable. A family
+record organizes ideas; the Issue carries actionable work; the PR carries a
+change; inventories describe dated membership; and the experiment packet owns
+raw evidence. Repository cleanliness means a worker can find a current owner or
+safe unclaimed next step and recover every retained result. It does not mean
+zero Issues, zero PRs, or deleting every local checkout.
+
+**Next bounded batch:** use the current worker map to select one unowned,
+non-overlapping family; verify its live Issues, related PRs and owner state;
+then reconcile its idea/result/dependency crosswalk without changing Issue
+state until each record has its source and successor links. In parallel
+assignments, each worker gets a separate family and output path; one integrator
+updates shared indexes. Recheck the live source immediately before any close,
+merge, or artifact cleanup.
+
 ## Current organization checkpoint after PR #9253 — 2026-10-20
 
 Main is `3f7eec087f37a02acd38299c5fe1173be4f36977`. A fresh GitHub read at
