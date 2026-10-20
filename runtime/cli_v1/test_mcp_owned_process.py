@@ -438,6 +438,51 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(result['replay_allowed'])
         self.assertTrue(result['late_server_request_possible'])
 
+    def test_close_after_cancel_retirement_retries_unconfirmed_release_once(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.close_report = None
+        owner._process = Mock()
+        owner._process.is_alive.return_value = False
+        owner._process.exitcode = -15
+        owner._process.pid = 1234
+        owner._request_locked = Mock(side_effect=RuntimeError(
+            'owned guarded session unavailable: failed'))
+        owner._retirement = {'reason':'cancel control response unconfirmed',
+                             'retired':True, 'exitcode':-15}
+        prior_disconnect = {'status':'unknown', 'reason':'supervision_timeout'}
+        prior_release = {'status':'not_attempted',
+                         'reason':'owner_disconnect_not_confirmed'}
+        owner._owner_client_disconnect = prior_disconnect
+        owner._owner_release_attempt = prior_release
+        owner._cleanup_after_owner_retirement = Mock(return_value=(
+            {'status':'disconnected', 'expected_pid':1234},
+            {'status':'readback_verified', 'release':{
+                'verified':True, 'keys_down':[], 'buttons_down':[]}}))
+        owner._owner_input_obligations = {'keys':{'a':38}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'retired_child_shared_state'
+        owner._owner_input_obligations_live_read = {
+            'status':'snapshot', 'obligations':{'keys':{'a':38}, 'buttons':[]}}
+        owner.session_id = 'session-close-after-platform-resume'
+        owner.error = 'cancel control response unconfirmed'
+        owner._execution_unknown = True
+        owner.review_required = True
+
+        first = owner.close()
+        second = owner.close()
+
+        owner._request_locked.assert_not_called()
+        owner._cleanup_after_owner_retirement.assert_called_once_with(
+            owner._retirement)
+        self.assertEqual(first, second)
+        self.assertEqual(first['owner_client_disconnect']['status'], 'disconnected')
+        self.assertEqual(first['owner_release_attempt']['status'], 'readback_verified')
+        self.assertTrue(first['release_attempted'])
+        self.assertFalse(first['release_confirmed'])
+        self.assertEqual(first['cleanup_status'], 'UNKNOWN')
+        self.assertIsNone(first['task_success'])
+        self.assertFalse(first['replay_allowed'])
+        self.assertTrue(first['owner_process_retired'])
+
     def test_close_after_cancel_retirement_reuses_existing_cleanup_evidence(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
         owner.close_report = None

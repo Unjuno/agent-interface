@@ -770,7 +770,17 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 and not self._process.is_alive()
                 and client_disconnect is not None
                 and previous_release_attempt is not None):
-            release_attempt = deepcopy(previous_release_attempt)
+            if previous_release_attempt.get('status') == 'readback_verified':
+                release_attempt = deepcopy(previous_release_attempt)
+            else:
+                # An explicit close after retirement may run after the platform
+                # has recovered. Recheck owner disconnect and make one bounded
+                # release-only attempt; never reconnect the retired owner or
+                # replay its task operation.
+                client_disconnect, release_attempt = (
+                    self._cleanup_after_owner_retirement(retirement))
+                self._owner_client_disconnect = deepcopy(client_disconnect)
+                self._owner_release_attempt = deepcopy(release_attempt)
             report = {
                 'status':'cleanup_failed', 'session_id':self.session_id,
                 'release_attempted':release_attempt.get('status') != 'not_attempted',
