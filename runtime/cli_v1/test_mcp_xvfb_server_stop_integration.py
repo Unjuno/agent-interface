@@ -16,6 +16,7 @@ import tempfile
 import threading
 import time
 import unittest
+from types import SimpleNamespace
 
 from Xlib import X, Xatom, XK, display
 from Xlib.ext import xtest
@@ -34,6 +35,30 @@ _SERVER_STOP_SAFETY_S = 4.0
 _CANCEL_BOUND_S = 3.0
 _POST_RESUME_CLOSE_BOUND_S = 3.0
 _RECOVERY_BOUND_S = 5.0
+_CLEANUP_BOUND_S = 2.0
+
+
+async def _resolve_terminal_result(server, initial, deadline):
+    if initial.get('status') != 'pending':
+        return initial
+    call_id = initial.get('call_id')
+    if not call_id:
+        raise ValueError('pending response omitted call_id')
+    while True:
+        remaining_s = deadline-time.monotonic()
+        if remaining_s <= 0:
+            raise TimeoutError('call result remained pending at recovery deadline')
+        terminal = _metadata(await asyncio.wait_for(
+            server.call_tool('interface_results', {
+                'call_id':call_id, 'include_image':False}), timeout=remaining_s))
+        if terminal.get('status') != 'pending':
+            return terminal
+        await asyncio.sleep(min(0.01, max(0.0, deadline-time.monotonic())))
+
+
+async def _bounded_interface_close(server, *, timeout_s):
+    return _metadata(await asyncio.wait_for(
+        server.call_tool('interface_close', {}), timeout=timeout_s))
 
 
 class _DisplayCommandQueue:
@@ -98,6 +123,47 @@ class DisplayCommandQueueTests(unittest.TestCase):
             stop.set()
             thread.join(1.0)
         self.assertFalse(thread.is_alive())
+
+
+class RecoveryBoundaryTests(unittest.IsolatedAsyncioTestCase):
+    async def test_pending_response_is_polled_to_the_terminal_refusal(self):
+        initial = {'status':'pending', 'call_id':'stale-call'}
+        responses = [{'status':'refused', 'result':{'input_dispatched':False}}]
+        calls = []
+
+        class Server:
+            async def call_tool(self, name, arguments):
+                calls.append((name, arguments))
+                payload = json.dumps(responses.pop(0))
+                return SimpleNamespace(content=[SimpleNamespace(text=payload)])
+
+        terminal = await _resolve_terminal_result(
+            Server(), initial, time.monotonic()+1.0)
+        self.assertEqual(terminal['status'], 'refused')
+        self.assertIs(terminal['result']['input_dispatched'], False)
+        self.assertEqual(calls, [(
+            'interface_results',
+            {'call_id':'stale-call', 'include_image':False},
+        )])
+
+    async def test_pending_response_times_out_at_the_recovery_deadline(self):
+        class Server:
+            async def call_tool(self, name, arguments):
+                payload = json.dumps({'status':'pending', 'call_id':'stale-call'})
+                return SimpleNamespace(content=[SimpleNamespace(text=payload)])
+
+        with self.assertRaises(TimeoutError):
+            await _resolve_terminal_result(
+                Server(), {'status':'pending', 'call_id':'stale-call'},
+                time.monotonic()+0.02)
+
+    async def test_close_timeout_does_not_block_test_teardown(self):
+        class Server:
+            async def call_tool(self, name, arguments):
+                await asyncio.sleep(1.0)
+
+        with self.assertRaises(TimeoutError):
+            await _bounded_interface_close(Server(), timeout_s=0.02)
 
 
 def _private_xvfb_record():
@@ -514,8 +580,11 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                         'interaction':'keyboard', 'observe_after':False,
                         'wait_for_result_ms':0,
                         'tail':[{'op':'key_chord', 'keys':['b']}]})
-                self.assertEqual(stale_attempt.get('status'), 'refused', stale_attempt)
-                stale_result = stale_attempt.get('result', stale_attempt)
+                stale_terminal = await _resolve_terminal_result(
+                    recovery_server, stale_attempt, recovery_deadline)
+                self.assertEqual(stale_terminal.get('status'), 'refused',
+                                 stale_terminal)
+                stale_result = stale_terminal.get('result', stale_terminal)
                 self.assertIs(stale_result['input_dispatched'], False, stale_attempt)
                 self.assertEqual(
                     list(observer.create_resource_object(
@@ -537,6 +606,7 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(fresh_minted.get('status'), 'minted', fresh_minted)
                 report['recovery'] = {
                     'stale_alias_attempt':stale_attempt,
+                    'stale_alias_terminal':stale_terminal,
                     'fresh_observation':fresh_observed,
                     'fresh_process_generation':fresh_generation,
                     'fresh_mint':fresh_minted,
@@ -634,15 +704,19 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                               error=str(error))
                 raise
             finally:
+                test_failed = sys.exc_info()[0] is not None
                 if frozen_identity is not None:
                     report['server_resume'] = resume_exact_server()
                     if safety_timer is not None:
                         safety_timer.cancel()
-                if server is not None and call_id is not None:
+                if server is not None:
                     try:
-                        await server.call_tool('interface_close', {})
+                        report['final_close'] = await _bounded_interface_close(
+                            server, timeout_s=_CLEANUP_BOUND_S)
                     except BaseException as error:
                         report['close_error'] = repr(error)
+                        if not test_failed:
+                            raise
                 app_stop.set()
                 if app_thread is not None:
                     app_thread.join(1.0)
