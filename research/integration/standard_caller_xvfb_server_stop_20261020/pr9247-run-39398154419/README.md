@@ -1,1 +1,14 @@
-‣剐⌠㈹㜴瀠楲慶整堭晶⁢敳癲牥猭潴⁰敲潣敶祲爠湵ਊ‭楇䡴扵䄠瑣潩獮爠湵›瑨灴㩳⼯楧桴扵挮浯唯橮湵⽯条湥⵴湩整晲捡⽥捡楴湯⽳畲獮㌯㌹㠹㔱㐴㤱ⴊ删湵愠瑲晩捡㩴栠瑴獰⼺术瑩畨⹢潣⽭湕番潮愯敧瑮椭瑮牥慦散愯瑣潩獮爯湵⽳㤳㤳ㄸ㐵ㄴ⼹牡楴慦瑣⽳㈱㔲㘳㔴㔶‱猨慴摮牡ⵤ捭⵰癸扦猭牥敶⵲瑳灯਩‭敔瑳摥栠慥㩤㔠㐴晡愳㈱㍣户搷愱㙡ㅢㄷ散愷㌹㈰㤸攲㌸愶੢‭捓灯㩥漠湷摥猠慴摮牡⁤䍍⁐慣汬牥※潷歲汦睯漭湷摥瀠楲慶整堠晶⁢瑳灯爯獥浵㭥猠湹桴瑥捩愠灰楬慣楴湯※牦獥⵨慴杲瑥爠捥癯牥⹹ⴊ删獥汵㩴䘠䥁⹌吠敨漠楲楧慮⁬畯慴敧琠獡⁫敲慭湩摥唠䭎低乗※癘扦爠獥浵摥愠摮攠灸楬楣⁴楦慮⁬汣獯⁥癥湥畴污祬瘠牥晩敩⁤敫獹甠Ɒ戠瑵琠敨爠湵楴敭挠敬湡灵猠慴敹⁤乕之坏ⱎ琠獡⁫畳捣獥⁳瑳祡摥渠汵ⱬ愠摮琠敨椠摮灥湥敤瑮漠慲汣⁥慦汩摥ਮ‭敒潣敶祲猭数楣楦⁣慦汩牵㩥椠瑮牥慦散束慵摲摥浟湩⁴敲畦敳⁤污慩⁳攍潣敶敲ⵤ楦汥⁤敢慣獵⁥桴⁥偁⁉数浲瑩⁳慛稭孝ⵡぺ㤭嵟ほ㌬紱‮桔⁥牦獥⁨捡楴湯眠獡琠敨敲潦敲渠瑯愠瑴浥瑰摥‮潆汬睯甭⁰敨摡 扣㔳搵㉥昰户慣摦慡㘹㔵㡢㐸昳㤷挱㄰愵㝡‹档湡敧⁳桴獩愠楬獡琠⁯攍潣敶敲彤楦汥㭤椠⁴敲畱物獥愠渠睥䰠湩硵堯晶⁢畲⹮ⴊ匠灥牡瑡⁥畳瑩⁥慦汩牵㩥ठ獥彴瑳湡慤摲损污敬彲慣据汥彳汢捯敫彤祳据慟摮牟汥慥敳彳湯硟晶⁢扯敳癲摥漠湷牥牟汥慥敳慟瑴浥瑰献慴畴㵳湵湫睯⁮眨牯敫彲楤彤潮彴硥瑩损敬湡祬‬硥瑩ⴠ㔱 慲桴牥琠慨⁮攍摡慢正癟牥晩敩⹤倠敲敳癲⁥桴獩愠⁳湡椠摮灥湥敤瑮甠牮獥汯敶⁤潢湵慤祲※潤渠瑯爠睥楲整椠獴愠獳牥楴湯琠⁯慰獳ਮ‭桔⁥潬慣⁬楗摮睯⁳畲⁮歳灩⁳桴⁥捡畴污堠晶⁢湩整牧瑡潩⹮传⁮敨摡㔠㐴晡愳⸮Ⱞ琠敨愠晦捥整⁤潭畤敬爠湡㔠琠獥獴眠瑩⁨‱癘扦猠楫⁰湩戠瑯⁨潮浲污愠摮瀠瑹潨⁮伭洠摯獥ਮ‭桔⁥畲⁮湩瑩慩汬⁹灡数牡摥椠彮牰杯敲獳椠⁮楇䡴扵猠慴畴⁳桷汩⁥瑩⁳癘扦猠整⁰慨⁤污敲摡⁹慦汩摥愠摮愠瑲晩捡⁴灵潬摡栠摡挠浯汰瑥摥‮⁁慣据汥爠煥敵瑳映湩污穩摥琠敨猠慴敬爠湵猠慴整※桴⁥整瑳爠獥汵⁴瑩敳晬椠⁳牦浯琠敨爠瑥楡敮⁤潬⽧牡楴慦瑣ਮ‭䡓ⵁ㔲‶景琠敨䨠体⁎敢潬㩷␠慨桳ਮ吊楨⁳敲散灩⁴牰獥牥敶⁳⁡慦汩摥爠湵愠摮搠敯⁳潮⁴汣楡⁭桴瑡爠捥癯牥⁹潷歲⹳䤠⁴獩猠湹桴瑥捩攠楶敤据⁥湯祬※瑩猠祡⁳潮桴湩⁧扡畯⁴桰獹捩污椠灮瑵‬䅍ぐⰱ圠䱓Ᵽ氠癩⁥潣瑮潲ⱬ漠⁲晥楦楣湥祣മ�
+# PR #9247 private-Xvfb server-stop recovery run
+
+- GitHub Actions run: https://github.com/Unjuno/agent-interface/actions/runs/39398154419
+- Run artifact: https://github.com/Unjuno/agent-interface/actions/runs/39398154419/artifacts/12253645651 (`standard-mcp-xvfb-server-stop`)
+- Tested head: `544af3a12c37b7d1aa6b171ce7a9302892e836ab`
+- Scope: owned standard MCP caller; workflow-owned private Xvfb stop/resume; synthetic application; fresh-target recovery.
+- Result: `FAIL`. The original outage task remained `UNKNOWN`; Xvfb resumed and explicit final close eventually verified keys up, but runtime cleanup stayed `UNKNOWN`, task success stayed null, and the independent oracle failed.
+- Recovery-specific failure: `interface_guarded_mint` refused alias `recovered-field` because the API permits `[a-z][a-z0-9_]{0,31}`. The fresh action was not attempted. Follow-up head `0cb355de20f7bcafdaa9655b8843f791c015aa79` changes the alias to `recovered_field`; it requires a new Linux/Xvfb run.
+- Separate suite failure: `test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb` observed `owner_release_attempt.status=unknown` (`worker_did_not_exit_cleanly`, exit `-15`) rather than `readback_verified`. Preserve this as an independent unresolved boundary; do not weaken the assertion.
+- On Windows, the affected module ran 5 tests with 1 Xvfb test skipped in both normal and `python -O` modes.
+- GitHub displayed the run as `in_progress` after the Xvfb step had already failed and artifact upload completed. A cancel request finalized the stale run state; the test result is preserved in the log/artifact.
+- SHA-256 of the JSON below: `558813ca7bc9db7e665857e09b7275ece48ae76ff677dbbe61326bef4e0c0ae2`.
+
+This receipt preserves a failed run; it does not claim recovery works. It is synthetic evidence only and says nothing about physical input, MAP01, WSLc, live control, or efficiency.
