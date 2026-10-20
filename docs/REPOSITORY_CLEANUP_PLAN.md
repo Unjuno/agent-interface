@@ -1,5 +1,11 @@
 # Repository cleanup plan
 
+## Post-#9282 disposition update — 2026-10-20
+
+At 2026-10-20 13:44 UTC, PR #9282 merged as `302e8bc0681332329d3a2159668adc2f4dee906a`. It preserves Issue #5311 T0 A01 on current main as `FAIL_COST_GATE_SCOPED`, with unchanged raw evidence and corrected 96-versus-136 inspection accounting; the Issue remains open. The stale-base predecessor #8836 was closed as superseded after the successor merged. The other four PRs from the bounded audit remain separate holds: #8702 raw custody, #8841 construction-only draft, #8844 unique A04 audit, and #8845 shared WSLc ownership. Do not treat their open state as merge authorization.
+
+A count-only GraphQL read after these actions returned 1,655 open Issues and 467 open PRs. This is not a paginated membership or metadata census; r119 remains the latest complete ID-set checkpoint, and its counts/hashes below are retained as a historical baseline.
+
 ## Last paginated membership checkpoint after PR #9270 — 2026-10-20
 
 At this recheck, `main` was `ab554ef5637110b35ec8317db9591fcd5a489bfd`. PR #9270
@@ -45,15 +51,15 @@ lists 37 roots, 10 dirty, and none locked or prunable; it is not current
 ownership or deletion proof.
 
 The [nine-PR disposition receipt](maintenance/pr-audit-disposition-20261020-r01.md)
-has been rechecked against live GitHub state at this baseline. Four sampled
-predecessors (#8832, #8840, #8843, #8848) are closed after scoped evidence was
-preserved in current-main successors #9217, #9236, #9218, and #9234. Five remain
-open: #8702 (raw-custody hold), #8836 (scoped cost failure), #8841
-(construction-only), #8844 (unique A04 audit hold), and #8845 (shared WSLc
-ownership hold). Their presence does not make them merge-ready or justify
-closing their scientific parent Issues. Recheck exact state immediately before
-any remote mutation. No WSLc/Docker operation or resource grant follows from
-this cleanup plan.
+is a dated snapshot. Four sampled predecessors (#8832, #8840, #8843, #8848)
+were closed after scoped evidence was preserved in current-main successors
+#9217, #9236, #9218, and #9234. Of the five remaining PRs, #8836 has since been
+superseded by merged current-main PR #9282; the other four remain open: #8702
+(raw-custody hold), #8841 (construction-only draft), #8844 (unique A04 audit
+hold), and #8845 (shared WSLc ownership hold). Their presence does not make
+them merge-ready or justify closing their scientific parent Issues. Recheck
+exact state immediately before any remote mutation. No WSLc/Docker operation or
+resource grant follows from this cleanup plan.
 
 ### Next cleanup batch
 
@@ -68,11 +74,11 @@ this cleanup plan.
    next decisions. Keep open unresolved questions; close an individual Issue
    only after its own work is complete or a verified successor and return link
    preserve the idea.
-3. Process the five open PRs in the audit receipt by their concrete blocker.
-   Repair #8836's accounting only in a current-main successor without replaying
-   its consumed allocation; keep #8702 and #8844 on custody/audit hold;
-   preserve #8841 as a scoped construction result; leave #8845 untouched until
-   the shared lane's owner and release are verified.
+3. Process the four still-open PRs in the audit receipt by their concrete
+   blocker. #8836's negative cost result is preserved by merged successor
+   #9282; do not replay its consumed allocation. Keep #8702 and #8844 on
+   custody/audit hold; preserve #8841 as a construction-only result; leave
+   #8845 untouched until the shared lane's owner and release are verified.
 4. Reconcile worktrees and branches individually after owner/session, running
    process, PR/base dependency, ignored data, unique evidence, and recovery
    path are known. Keep unknown custody as an explicit hold.

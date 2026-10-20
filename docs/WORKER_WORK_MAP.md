@@ -126,11 +126,13 @@ indexes or Issue state.
 
 The current [PR audit disposition receipt](maintenance/pr-audit-disposition-20261020-r01.md)
 reconciles nine sampled #59/#5311/#8636 PRs against live status and canonical
-evidence. Four closed predecessors have verified current-main successors;
-five remain open with distinct cost, construction-scope, audit, raw-custody,
-or lane-ownership blockers. This is a status/custody map, not blanket
-merge/closure authority. The full organization remains family-by-family; no
-Issue is closed simply to reduce counts.
+evidence. Four closed predecessors have verified current-main successors.
+PR #8836 has since been superseded by merged current-main successor #9282;
+its negative cost result and frozen evidence are preserved. Four sampled PRs
+remain open with distinct construction-scope, audit, raw-custody, and lane-
+ownership blockers. This is a status/custody map, not blanket merge/closure
+authority. The full organization remains family-by-family; no Issue is closed
+simply to reduce counts.
 
 ## Previous map snapshot — 2026-10-20 after PR #9257
 
