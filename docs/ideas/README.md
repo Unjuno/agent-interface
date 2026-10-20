@@ -2,7 +2,7 @@
 
 This directory is the compact history of ideas raised in Agent Interface.
 
-The latest complete paginated membership snapshot is [r96](../maintenance/repository-inventory-20261019-r96.md), with [open Issues](../maintenance/open-issues-20261019-r96.csv) and [open PRs](../maintenance/open-prs-20261019-r96.csv), captured at main `b0e47dd4f67a57db5c530d19251ad172e29554d7` with 1,673 open Issues and 479 open PRs. Earlier r70/r83/r95 and other inventory files remain immutable history. These inventories establish membership and selected PR metadata, not semantic classification or current ownership. The [r52 coverage audit](../maintenance/idea-index-coverage-20261019-r52.md) is an older discovery snapshot; use it to find candidates, not as current classification or closure authority. Preserve each distinct hypothesis and its outcomes here before deciding its Issue state. The [repository cleanup plan](../REPOSITORY_CLEANUP_PLAN.md) defines family-level review and disposition.
+The latest complete paginated membership snapshot is [r98](../maintenance/repository-inventory-20261020-r98.md), with [open Issues](../maintenance/open-issues-20261020-r98.csv) and [open PRs](../maintenance/open-prs-20261020-r98.csv), captured at main `5bdef852869d8a3a1c2de792221fadd0db199586` with 1,673 open Issues and 477 open PRs. Earlier r96 and other inventory files remain immutable history. These inventories establish membership and selected PR metadata, not semantic classification or current ownership. The [r52 coverage audit](../maintenance/idea-index-coverage-20261019-r52.md) is an older discovery snapshot; use it to find candidates, not as current classification or closure authority. Preserve each distinct hypothesis and its outcomes here before deciding its Issue state. The [repository cleanup plan](../REPOSITORY_CLEANUP_PLAN.md) defines family-level review and disposition. The current [parallel worker packets](../maintenance/parallel-worker-packets-20261020-r01.md) provide bounded entry points without authorizing shared-resource use or count-driven Issue closures.
 
 Use this directory to connect ideas to existing evidence, dependencies, priorities and executable experiments. GitHub Issues remain the discussion and execution surface. Preserve each distinct hypothesis and its outcomes here before deciding its Issue state. The [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md#2026-10-19-全体整理の実行計画--アイデアを保存して作業面を収束) permits an idea-only Issue to be individually closed as catalogued/deferred after the canonical idea entry and return link are recorded; active experiments, unresolved user goals, evidence/ownership gaps and integration work remain open until resolved or explicitly superseded. Issue closure never means the underlying idea succeeded.
 
@@ -35,6 +35,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 ```
 
 ## Index
+
+- [Current full membership and parallel worker packets](../maintenance/repository-inventory-20261020-r98.md) · [worker packet map](../maintenance/parallel-worker-packets-20261020-r01.md) — current live metadata and finite review packets; neither is semantic classification, ownership proof, or a state-change instruction.
 
 - [Context-preserving delegation after successful local execution](context-preserving-delegation.md) — records #6373's scoped synthetic T0 and its unresolved GUI-level discriminator; the completed proxy result does not establish application or human benefit.
 
