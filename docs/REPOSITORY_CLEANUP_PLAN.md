@@ -1,8 +1,8 @@
 # Repository cleanup plan
 
-## Current checkpoint after PR #9287 — 2026-10-20
+## Recorded checkpoint at PR #9287 — 2026-10-20
 
-Current `main` is `f8fab073a0ebd1c42a8362fcec7440cfbe7fad82`. PR
+At this checkpoint, `main` was `f8fab073a0ebd1c42a8362fcec7440cfbe7fad82`. PR
 [#9287](https://github.com/Unjuno/agent-interface/pull/9287) preserves the
 unique A09 source-monitor construction packet from #8841 and its exact-blob
 readback; the predecessor was closed as superseded after that readback. The
@@ -891,3 +891,4 @@ Repository cleanup is complete when:
 5. The worker map offers multiple disjoint, finite packets with private outputs, and does not imply ownership or live-resource grants.
 
 Open Issues and PRs may remain as an intentional, well-indexed research backlog. Do not claim a complete repository-wide audit until every live membership row and required semantic/custody decision has actually been checked.
+
