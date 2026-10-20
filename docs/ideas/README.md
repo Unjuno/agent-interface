@@ -36,6 +36,8 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 
 ## Index
 
+- [Perspective-guided review for cross-invariant omissions](perspective-guided-review.md) — retains #8574's T0 `NO_INCREMENTAL_VALUE_SCOPED` result and its limits, separate from #8088's free-form decomposition result.
+
 - [Current full membership and parallel worker packets](../maintenance/repository-inventory-20261020-r98.md) · [worker packet map](../maintenance/parallel-worker-packets-20261020-r01.md) — current live metadata and finite review packets; neither is semantic classification, ownership proof, or a state-change instruction.
 
 - [Context-preserving delegation after successful local execution](context-preserving-delegation.md) — records #6373's scoped synthetic T0 and its unresolved GUI-level discriminator; the completed proxy result does not establish application or human benefit.
