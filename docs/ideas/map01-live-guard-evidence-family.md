@@ -69,6 +69,9 @@ synthetic stale-action predicate, not model behavior, game progress, OS input,
 physical release, useful task effect, recovery, or MAP01 completion. #59 remains
 open; this packet neither consumes nor releases a live allocation.
 
+## Additional WSLc/Xvfb evidence A10–A29 — rescue of PR #8842 (2026-10-20)
+
+The [preserved package index](../../research/doom/README.md#v39-strict-release-and-xvfb-release-recovery-evidence-a10a29-59) links the exact source/raw/audit snapshots separated from conflicting PR #8842. A10/A11/A15 are construction or read-only retained-artifact results; A16/A17/A18 and A19–A23 retain contract, pre-execution, and analyzer-bridge failures. A24/A25 pass only linked receipt/terminal-clear composition on synthetic Xvfb. A26 is a preregistration STOP. A27 observes one X-server key-up 2.229 ms after cancellation, while the held-time analyzer still has an unmatched admission. A28/A29 remain preregistered FAILs. The separate visual-staleness A01 does not invalidate a pending synthetic turn on pixel change alone while typed HUD values stay fixed, but it stops before input authority. These outcomes narrow specific local contract boundaries; none establishes physical keyboard state, production monitor scheduling, game/MAP01 task effect, bounded live recovery, independent task success, or efficiency. No candidate or live allocation was rerun during rescue, and #59 remains open. The evidence-only transfer is tracked in [PR #9207](https://github.com/Unjuno/agent-interface/pull/9207); original #8842's existing backend code edits remain outside that transfer pending separate review.
 ## What this organization establishes
 
 The six PRs in the historical table cover unique packet directories and

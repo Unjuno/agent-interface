@@ -1,0 +1,88 @@
+{
+  "experiment_id": "v39_pr8874_wslc_xvfb_receipt_a20_20261013",
+  "source_sha_checks": [
+    {
+      "path": "research/doom/analyze_map01_direct_retained_input_v2.py",
+      "expected": "f6ee0bfbc6c4b0cadea7eaaf19caed8836b084adf5636b86f8fdd2554b0cb616",
+      "actual": "f6ee0bfbc6c4b0cadea7eaaf19caed8836b084adf5636b86f8fdd2554b0cb616",
+      "ok": true
+    },
+    {
+      "path": "research/doom/experiment_candidate.py",
+      "expected": "585cacfe935cd5b848bfd6a41e4fcffd2f3d92521f21ddb8f3de65481d133182",
+      "actual": "585cacfe935cd5b848bfd6a41e4fcffd2f3d92521f21ddb8f3de65481d133182",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "expected": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+      "actual": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "expected": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+      "actual": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "expected": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+      "actual": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "expected": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+      "actual": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "expected": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+      "actual": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3",
+      "ok": true
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "expected": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+      "actual": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+      "ok": true
+    }
+  ],
+  "raw_sha256": "f9e270ac3db13b574ba886a8bacf865421a892d85659ca793a5c7598805970a7",
+  "external_x11_event_pair_ok": true,
+  "keymap_while_held": true,
+  "keymap_after_up": false,
+  "v4_owner_up_receipt_ok": true,
+  "close_empty_verified": true,
+  "owner_closed_stopped_thread_dead": true,
+  "xvfb_exit": 0,
+  "analyzer_raw": {
+    "ambiguous_admission_count": 0,
+    "decision": "FAIL: admission receipts do not form a complete verified release trace",
+    "hold_count": 0,
+    "holds": [],
+    "invalid_release_count": 1,
+    "malformed_admission_count": 1,
+    "measurement_ready": false,
+    "schema": "map01-direct-retained-input-v2",
+    "unmatched_admission_count": 0
+  },
+  "analyzer_recomputed": {
+    "schema": "map01-direct-retained-input-v2",
+    "measurement_ready": false,
+    "hold_count": 0,
+    "unmatched_admission_count": 0,
+    "malformed_admission_count": 1,
+    "ambiguous_admission_count": 0,
+    "invalid_release_count": 1,
+    "holds": [],
+    "decision": "FAIL: admission receipts do not form a complete verified release trace"
+  },
+  "analyzer_consistent": true,
+  "admission_missing_owner_id": true,
+  "release_owner_transition_verified": null,
+  "container_exit": 0,
+  "decision": "FAIL_ANALYZER_BRIDGE"
+}

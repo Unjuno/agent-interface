@@ -1,0 +1,155 @@
+{
+  "schema": "visual-context-staleness-a01-independent-audit-v1",
+  "decision": "PASS_CONSTRUCTION_VISUAL_FRESHNESS_BOUNDARY",
+  "checks": {
+    "source_bytes_and_sha_match": true,
+    "all_frozen_sources_inputs_match_current_main": true,
+    "image_id_matches_frozen_run": true,
+    "candidate_exit_zero": true,
+    "two_tests_passed": true,
+    "changed_image_hash_differs": true,
+    "hud_values_identical": true,
+    "changed_visual_did_not_invalidate": true,
+    "result_stops_before_input_authority": true,
+    "same_hash_control_matches_admission": true,
+    "container_removed": true
+  },
+  "experiment": {
+    "id": "visual_context_staleness_a01_20261012",
+    "frozen_main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+    "current_main_commit": "964c9197d5083ab55ea7fdc9105427623e89e677",
+    "image_id": "sha256:4fc7258eb9f2430d573bcbd352fc9851eee6ce96a65ff026274dfb317119bb7b",
+    "source_identity_rows": [
+      {
+        "path": "research/live_control/final_action_admission_v1.py",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/doom/map01_overlap_controller_v39.py",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/live_control/action_validity_admission_v1.py",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "db37e92c75d04dcd3f725e8507314f6fb64b6b8c",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/live_control/final_action_admission_v2.py",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "2078194e704d603c6bd864030cc570abc542455c",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/doom/doom_signal_value_domain_v1.py",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/live_control/persistent_planner_adapter_v2.py",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/doom/doom_action_validity_contract_v1.py",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/live_control/observable_signal_guard_v2.py",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/002.png",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "7454f8b7cd2dd910b551b2227909a930f313c211",
+        "current_main_blob_match": true
+      },
+      {
+        "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/003.png",
+        "file_bytes_match": true,
+        "sha256_match": true,
+        "current_main_git_blob": "3acc9f521eacfec42c22eeb55afb0fe0d4fe346f",
+        "current_main_blob_match": true
+      }
+    ],
+    "changed_visual": {
+      "answer_eligible": true,
+      "current_frame_rgb_sha256": "0e06f6960654027e75d6a9f2904890fc12fa2ab773537e0d562d21ebb76d71c8",
+      "current_health_ammo": [
+        97,
+        48
+      ],
+      "current_png_sha256": "3c48f02a43e2fd98e70357c90b39079f3934f67efeca164d74177ec4ba099706",
+      "events": [
+        "turn_started",
+        "new_frame_observed",
+        "monitor_preserved_pending_turn"
+      ],
+      "executor_admission": null,
+      "final_reason": "all_authored_observable_predicates_hold",
+      "final_status": "READY_FOR_FRESH_EXECUTOR_ADMISSION",
+      "input_authority_admitted": false,
+      "monitor_invalidation": null,
+      "soft_events": 0,
+      "source_frame_rgb_sha256": "0ac32bcfe35504f4302754b3f3e0266cfa23c16bf07ad6b2cb412bfcd62745da",
+      "source_health_ammo": [
+        97,
+        48
+      ],
+      "source_png_sha256": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1"
+    },
+    "same_hash_control": {
+      "answer_eligible": true,
+      "current_frame_rgb_sha256": "0ac32bcfe35504f4302754b3f3e0266cfa23c16bf07ad6b2cb412bfcd62745da",
+      "current_health_ammo": [
+        97,
+        48
+      ],
+      "current_png_sha256": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1",
+      "events": [
+        "turn_started",
+        "new_frame_observed",
+        "monitor_preserved_pending_turn"
+      ],
+      "executor_admission": null,
+      "final_reason": "all_authored_observable_predicates_hold",
+      "final_status": "READY_FOR_FRESH_EXECUTOR_ADMISSION",
+      "input_authority_admitted": false,
+      "monitor_invalidation": null,
+      "soft_events": 0,
+      "source_frame_rgb_sha256": "0ac32bcfe35504f4302754b3f3e0266cfa23c16bf07ad6b2cb412bfcd62745da",
+      "source_health_ammo": [
+        97,
+        48
+      ],
+      "source_png_sha256": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1"
+    }
+  },
+  "scope": "Historical adjacent V39 observation bytes; exact tested code/input blobs match current main; synthetic planner; no model, game, OS input, executor grant, threat interpretation, recovery or task outcome. READY_FOR_FRESH_EXECUTOR_ADMISSION is not input authority or task success."
+}

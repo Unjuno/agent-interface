@@ -1,0 +1,127 @@
+{
+  "audit": "PASS",
+  "passed": 24,
+  "total": 24,
+  "checks": [
+    {
+      "name": "sha256:sources/main_controller.py",
+      "ok": true,
+      "detail": "bytes=112524"
+    },
+    {
+      "name": "sha256:sources/strict_controller.py",
+      "ok": true,
+      "detail": "bytes=113094"
+    },
+    {
+      "name": "sha256:sources/observable_signal_guard_v2.py",
+      "ok": true,
+      "detail": "bytes=7404"
+    },
+    {
+      "name": "sha256:sources/persistent_planner_adapter_v2.py",
+      "ok": true,
+      "detail": "bytes=11709"
+    },
+    {
+      "name": "sha256:sources/a10_test_original.py",
+      "ok": true,
+      "detail": "bytes=9461"
+    },
+    {
+      "name": "sha256:test_strict_release_pending_cancel_integration.py",
+      "ok": true,
+      "detail": "bytes=12757"
+    },
+    {
+      "name": "sha256:audit.py",
+      "ok": true,
+      "detail": "bytes=3034"
+    },
+    {
+      "name": "git_blob:main",
+      "ok": true,
+      "detail": "000d206310afe054fcddf66d9c417da46e0b3b2d"
+    },
+    {
+      "name": "git_blob:strict_pr8835",
+      "ok": true,
+      "detail": "9a499364b07a1224ae4201dadb5cd45ec2e03fa0"
+    },
+    {
+      "name": "git_blob:a10_guard",
+      "ok": true,
+      "detail": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543"
+    },
+    {
+      "name": "git_blob:a10_adapter",
+      "ok": true,
+      "detail": "879736562aa5c0637319616c9f01df22af087b15"
+    },
+    {
+      "name": "git_blob:a10_test",
+      "ok": true,
+      "detail": "a71b3d447bd23b2112b40622c214adc2ad151a6d"
+    },
+    {
+      "name": "mutation:12",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mutation:13",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mutation:14",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mutation:15",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "run:normal",
+      "ok": true,
+      "detail": "exit=0"
+    },
+    {
+      "name": "result:normal",
+      "ok": true,
+      "detail": "{\"cancel_commands\": [{\"id\": \"cover-a10\", \"op\": \"cancel\"}], \"case\": \"health_floor_crossing_with_blocked_interrupt_ack\", \"classification\": \"CONSTRUCTION_ONLY_SOURCE_COMPOSITION\", \"invalidation\": \"health:below_hard_minimum\", \"latest_observation_sequence\": 10, \"planner_result\": {\"answer\": null, \"answer_eligible\": false, \"cancellation_requested\": true, \"status\": \"completed\"}, \"terminal_release\": {\"buttons_down\": [], \"key_state_errors\": [], \"keys_down\": [], \"keys_unknown\": [], \"verified\": true}, \"timeline\": [\"executor_cancel_write\", \"executor_flush\", \"planner_interrupt_request\", \"planner_interrupt_ack\"]}"
+    },
+    {
+      "name": "swap_limitation_recorded:normal",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "run:optimized",
+      "ok": true,
+      "detail": "exit=0"
+    },
+    {
+      "name": "result:optimized",
+      "ok": true,
+      "detail": "{\"cancel_commands\": [{\"id\": \"cover-a10\", \"op\": \"cancel\"}], \"case\": \"health_floor_crossing_with_blocked_interrupt_ack\", \"classification\": \"CONSTRUCTION_ONLY_SOURCE_COMPOSITION\", \"invalidation\": \"health:below_hard_minimum\", \"latest_observation_sequence\": 10, \"planner_result\": {\"answer\": null, \"answer_eligible\": false, \"cancellation_requested\": true, \"status\": \"completed\"}, \"terminal_release\": {\"buttons_down\": [], \"key_state_errors\": [], \"keys_down\": [], \"keys_unknown\": [], \"verified\": true}, \"timeline\": [\"executor_cancel_write\", \"executor_flush\", \"planner_interrupt_request\", \"planner_interrupt_ack\"]}"
+    },
+    {
+      "name": "swap_limitation_recorded:optimized",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "containers-empty",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}
