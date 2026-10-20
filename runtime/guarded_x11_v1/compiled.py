@@ -43,6 +43,7 @@ class _Adapter:
                 raise ValueError('explicit guarded tail list required')
         self.bridge = bridge
         self.scope, self.revision, self.surface = bridge.scope, bridge.binding_revision, surface(bridge)
+        self.target_generation = None
         self.perceive, self.verifier, self.cancelled = perceive, verify_effect, cancelled
         self.run_id = 'compiled-' + uuid.uuid4().hex
         self.event_index = 0
@@ -55,8 +56,22 @@ class _Adapter:
         self.bridge._save(name + '.json', copy.deepcopy(value))
         return name
 
-    def associated(self):
-        return (self.bridge.scope == self.scope and self.bridge.binding_revision == self.revision
+    def associated(self, native=None):
+        native = self.native if native is None else native
+        generation_matches = True
+        if native is not None:
+            binding = native.get('pointer_binding')
+            if type(binding) is not dict:
+                generation_matches = False
+            else:
+                generation = {key:binding[key] for key in
+                    ('process_generation','window_generation') if key in binding}
+                if self.target_generation is None:
+                    self.target_generation = generation
+                else:
+                    generation_matches = generation == self.target_generation
+        return (generation_matches and self.bridge.scope == self.scope
+                and self.bridge.binding_revision == self.revision
                 and surface(self.bridge) == self.surface and not self.bridge.review_required)
 
     def observe(self, request):
@@ -81,7 +96,7 @@ class _Adapter:
         native = self.bridge.observe()
         _, image = self.bridge.history[native['sequence']]
         self.native, self.image = copy.deepcopy(native), image.copy()
-        associated = (self.associated() and native['pointer_binding']['surface'] ==
+        associated = (self.associated(native) and native['pointer_binding']['surface'] ==
                       self.bridge.backend.targets[self.bridge.target].id and
                       native['binding_revision'] == self.revision)
         predicates = self.perceive(copy.deepcopy(native), image.copy()) if associated else {}
@@ -158,11 +173,14 @@ class _Adapter:
                     'required_predicates':copy.deepcopy(authorization['required_predicates']),
                     'eligible':False}
                 try:
+                    if not self.associated(native):
+                        row['status'] = 'association_changed'
+                        return False
                     predicates = self.perceive(copy.deepcopy(native),image.copy())
                     if type(predicates) is not dict:
                         raise ValueError('perception must return declared predicate values')
                     row['predicates'] = copy.deepcopy(predicates)
-                    row['eligible'] = (self.associated() and
+                    row['eligible'] = (self.associated(native) and
                         native['binding_revision'] == self.revision and
                         native['pointer_binding']['surface'] == self.bridge.backend.targets[self.bridge.target].id and
                         all(predicates.get(name) is True for name in authorization['required_predicates']))
