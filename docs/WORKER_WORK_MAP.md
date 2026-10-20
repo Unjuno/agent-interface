@@ -1,8 +1,8 @@
 # Worker work map
 
-## Current entry point — 2026-10-20, main after PR #9285
+## Current entry point — 2026-10-20, main after PR #9286
 
-Main is `2c29aee34e258053670fa7df9108889f35aecef2`. PR #9285 integrated the
+Main is `5476ea072cd864bb603c3f801e492ce2163d34dc`. PR #9285 integrated the
 current repository organization plan. Its count-only checkpoint records
 1,655 open Issues / 467 open PRs. PR #9284 adds two scoped
 native Ubuntu WSL/Xvfb standard-caller results for blocked-I/O cleanup and
@@ -14,6 +14,15 @@ membership/metadata snapshot is r119. Its 265 routed candidates have receipts;
 17 were individually closed and 248 remain open. Another 223 semantic idea
 routes, exact-head review of the full PR set, and current custody reconciliation
 remain. Counts and old worktree censuses are not ownership or deletion proof.
+
+The latest complete membership baseline is [r120](maintenance/repository-inventory-recheck-20261020-r120.md)
+(1,655 open Issues / 467 open PRs). The selected family packet is [A09 source-monitor
+construction #8841](ideas/map01-live-guard-evidence-family.md#separate-a09-source-monitor-construction--pr-8841),
+not live-allocation A09 #8749. Its current-main transfer candidate is pending
+integration; do not duplicate the packet or close #8841 before main blob readback.
+PR #8836 is already preserved by merged successor #9282; Issue #5311 remains
+open. This cleanup packet grants no WSLc/Docker allocation and does not close
+Issue #59.
 
 The following dated account records how the membership and family work
 reached this checkpoint:
@@ -140,15 +149,15 @@ reuse it and refresh only changed sources. These are candidate scopes, not
 worker assignments, family classifications, or permission to edit shared
 indexes or Issue state.
 
-The current [PR audit disposition receipt](maintenance/pr-audit-disposition-20261020-r01.md)
-reconciles nine sampled #59/#5311/#8636 PRs against live status and canonical
-evidence. Four closed predecessors have verified current-main successors.
-PR #8836 has since been superseded by merged current-main successor #9282;
-its negative cost result and frozen evidence are preserved. Four sampled PRs
-remain open with distinct construction-scope, audit, raw-custody, and lane-
-ownership blockers. This is a status/custody map, not blanket merge/closure
-authority. The full organization remains family-by-family; no Issue is closed
-simply to reduce counts.
+The [PR audit disposition r02](maintenance/pr-audit-disposition-20261020-r02.md)
+updates #8841's exact packet custody and distinguishes it from live A09 #8749.
+The [r01 audit receipt](maintenance/pr-audit-disposition-20261020-r01.md)
+remains a dated snapshot; its #8836 predecessor is now superseded by merged
+successor #9282, which preserves the negative cost result and frozen evidence.
+Four sampled PRs remain open with distinct construction-scope, audit, raw-
+custody, and lane-ownership blockers. These are status/custody maps, not
+blanket merge/closure authority. The full organization remains family-by-family;
+no Issue is closed simply to reduce counts.
 
 ## Previous map snapshot — 2026-10-20 after PR #9257
 
