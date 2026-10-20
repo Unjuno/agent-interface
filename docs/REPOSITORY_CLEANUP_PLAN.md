@@ -1,12 +1,13 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after PR #9270 — 2026-10-20
+## Last paginated membership checkpoint after PR #9270 — 2026-10-20
 
-Current `main` is `ab554ef5637110b35ec8317db9591fcd5a489bfd`. PR #9270 merged
-the D11 family-disposition receipt and closed only #8654 and #8913 after their
-scoped evidence and return links were preserved. A complete paginated
-membership-only recheck at 2026-10-20 12:51 UTC found 1,670 open Issues and 468
-open PRs, with GraphQL counts and main SHA stable before/after. The Issue ID set
+At this recheck, `main` was `ab554ef5637110b35ec8317db9591fcd5a489bfd`. PR #9270
+had merged the D11 family-disposition receipt and closed only #8654 and #8913
+after their scoped evidence and return links were preserved. A complete
+paginated membership-only recheck at 2026-10-20 12:51 UTC found 1,670 open
+Issues and 468 open PRs, with GraphQL counts and main SHA stable before/after.
+The Issue ID set
 is exactly r119 minus #8654/#8913; the PR ID set is exactly r119. Sorted ID
 SHA-256: Issues `b1dcc137b671439581faad8dc4eb21599254d28231f313d1e6f31996b6ecf82e`,
 PRs `878a28d681a0ae705654b670693106498874c525afe2ca828aa129b3dccafb3a`. No
@@ -14,8 +15,8 @@ duplicate inventory was added; r119 remains the saved row-metadata baseline.
 This was the last paginated ID-set checkpoint; the later D01 changes below are
 tracked by exact Issue links and an aggregate count, not by a new census.
 Semantic dispositions, per-item readiness, active ownership, and artifact
-custody remain incomplete. The
-bounded nine-PR receipt below is not a complete readiness audit. Matched
+custody remain incomplete. The bounded nine-PR receipt below is not a complete
+readiness audit. Matched
 efficiency, independent live task scoring, provider-log reconciliation,
 outage-time release, and generally bounded recovery remain open; #57 remains
 open. Run 39399107944 records an outage-task failure and a distinct synthetic
@@ -33,8 +34,9 @@ them against the Git tree or a checkout that includes `research/` rather than
 The complete Issue/PR membership recheck r119 was captured around 12:22 UTC
 against `666888468e81b3c3c2c1e4103df549afcaf23822`. Its ID sets matched r118;
 row metadata was refreshed at that baseline. The post-#9269/#9270 membership-
-only recheck above differs by the two verified Issue closures and pending PR
-#9270, so saved r119 row-level metadata is reused rather than duplicated. See
+only recheck above reflects the two verified Issue closures and merged PR
+#9270; the Issue set is r119 minus #8654/#8913 and the PR set equals r119, so
+saved r119 row-level metadata is reused rather than duplicated. See
 the [r119 recheck](maintenance/repository-inventory-recheck-20261020-r119.md),
 [Issue metadata](maintenance/open-issues-20261020-r119.json), and [PR metadata](maintenance/open-prs-20261020-r119.json).
 This remains a membership/metadata snapshot, not semantic classification, PR
@@ -86,7 +88,7 @@ this cleanup plan.
 7. D11 is integrated. Its 15 candidate dispositions close only #8654/#8913
    after preserving scoped results; the other 13 remain open with their recorded
    results, proposals, or explicit WSLc ownership holds. D01 is now integrated
-   below; D02–D10 remain unreviewed.
+   below; D02 is now integrated and D03–D10 remain unreviewed.
 
 ## D01 family disposition — 2026-10-20
 
@@ -100,7 +102,18 @@ preserves its precise limit and a re-open condition in its Issue comment and
 catalog row. A post-change GraphQL aggregate returned 1,668 open Issues and 468
 open PRs; it was not a paginated membership recheck, so the r119 ID hashes above
 remain the last verified ID-set checkpoint. The other 23 D01 Issues remain
-open/unassigned. D02–D10 remain unreviewed.
+open/unassigned. D02 below is now integrated; D03–D10 remain unreviewed.
+
+## D02 family disposition — 2026-10-20
+
+The [D02 receipt](maintenance/idea-family-triage-r119/D02.md) reconciles 25
+candidate Issues against B03–B05 and the current catalog. Two completed scoped
+checks were closed: #249 after its merged report retained the 56-case result,
+and #273 after its merged report retained the 40-case result. The other 23 remain open
+with their separate proposals, failures, scope limits, or custody holds. The
+aggregate after both D01 and D02 dispositions is 1,666 open Issues / 468 open
+PRs; this is not a paginated ID-set audit. No experiments or allocations were
+run. D03–D10 remain unreviewed.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
