@@ -79,6 +79,10 @@ separates those injected cleanup waits from real process-start delay; the
 [prestarted-supervisor Fake X probe](../research/integration/prestarted_supervisor_fakex_feasibility_20261021/README.md)
 is construction feasibility only and does not validate production supervisor
 behavior.
+The resulting [prestarted cancellation supervisor proposal](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+records the current-main caller/result seam and a Fake X-only composition gate;
+its response/transaction budgets are provisional targets, not compatibility
+promises or authorization to change runtime behavior.
 Current-source native-WSL/Xvfb reruns now directly cover two remaining caller
 boundaries: [blocked-owner release and delayed-request horizon](../research/integration/standard_caller_xvfb_blocked_release_current_e7_20261021/README.md)
 independently observed XTEST keys up in 448 ms while the public caller retained

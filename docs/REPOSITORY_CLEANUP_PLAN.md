@@ -26,6 +26,16 @@ The repository already has a strong execution framework below. The remaining pro
 
 ### Execution order and exit checks
 
+**Current bounded design packet (2026-10-21):** The computer-control track's
+standard-caller cancel seam is documented in
+[`architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md`](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+and indexed from [`CURRENT_GOAL.md`](CURRENT_GOAL.md). This is a proposal and
+Fake X-only next test, not a production assignment or a new resource grant.
+Keep its open architectural question attached to Issue #17 and the parent
+computer-control gates; do not treat a design document as evidence that
+cancellation is solved. The wider Issue/PR census, idea-family routing, and
+custody work remain separate cleanup batches.
+
 1. **Reconcile the live queue.** Refresh open Issue/PR membership with complete pagination and stable main SHA before/after. Reuse r120 rows where IDs are unchanged; record only exact additions/removals and refreshed rows needed for a decision. Publish one current queue pointer and label count-only reads as such.
 2. **Preserve and route research ideas.** Continue the existing family queue (the last recorded gap was 223 semantic idea-document routes). For each source Issue, distinguish its hypothesis from siblings; link immutable first outcomes, counterexamples, STOP/HOLD/FAIL results, current code/PR, owner/dependency, and the next discriminating test. Update the canonical family page and idea index in one integration pass. A route or summary alone is not semantic review.
 3. **Integrate PRs one at a time or in proven disjoint batches.** Refresh exact head/base, full diff, checks, dependencies, linked Issue, and unique code/raw custody. Merge useful work once its current-main implementation and necessary local checks are verified and actual repository protections are satisfied. Repair or retarget a bounded successor where appropriate. Close a superseded PR only after byte/content preservation and successor links are verified. Do not wait for an invented reviewer count or merge solely to lower the count.
