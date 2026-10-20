@@ -4,17 +4,18 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-20 11:19 UTC):** main is
-`cdd3c7e979dc7799e6733e259934b1738bf01d22`. The complete paginated [r116
-membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md)
-matches r114's 1,672 open Issue and 468 open PR ID sets; GraphQL counts
-bracketed the read. r114 remains the latest full metadata export, so no
-duplicate export was added. PR #9255 and #9257 add local attempt/score
-recording contracts only; they do not establish real provider-log completeness,
-live task effect, or integrated efficiency. Issues #53, #57 and #59 remain
-open. Counts are not semantic dispositions; use the staged [repository cleanup
-plan](REPOSITORY_CLEANUP_PLAN.md) and current family records to route the next
-bounded batch.
+**Current organization check (2026-10-20 12:56 UTC):** main is
+`ab554ef5637110b35ec8317db9591fcd5a489bfd`. After D01 review, #163 and #177
+were closed with scoped evidence and reopen conditions in their comments; the
+latest GraphQL aggregate is 1,668 open Issues / 468 open PRs. This aggregate is
+not a paginated ID-set audit. The last complete paginated recheck at 12:51 UTC
+found 1,670 open Issues / 468 open PRs before those two closures; the exact
+hashes and row-metadata baseline are in the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md).
+The [D01 receipt](maintenance/idea-family-triage-r119/D01.md) maps 25 prior
+discovery candidates to current catalog entries; 23 remain open. Counts and
+catalog links are navigation/status facts, not semantic completion. Issues #53,
+#57 and #59 remain open; #57 still lacks integrated live comparison/effect
+evidence. Keep unresolved ideas and their distinct outcomes in this index.
 
 **Superseding source checkpoint (2026-10-20):** main is now
 `a969266f03f7b10edc3714946ccb36c508dab4bc` after PR #9260. Its two public-MCP
@@ -232,10 +233,10 @@ efficiency evidence, or an acceptance result for #6/#56.
 | [#187](https://github.com/Unjuno/agent-interface/issues/187) | Test lifecycle freshness after dropped or delayed terminal notices. | Preserve the original 12-ID allocation as incomplete (11 complete; one killed before finalization) and the separate repair result. Fresh but semantically false `running` receipts defeat freshness; it prevents reauthorization, not delayed release or current-authority retention. |
 | [#186](https://github.com/Unjuno/agent-interface/issues/186) | Measure short-cue misses under a fixed 10 ms watcher across cue durations and onset phases. | The retained [120-case result](https://github.com/Unjuno/agent-interface/issues/186#issuecomment-5685700670) is `SAMPLING_LIMIT_OBSERVED`: detection was 3/15 at 2 ms, 6/15 at 5 ms, 12/15 at 8 ms, and 15/15 at 10 ms or longer; every miss fell between acquisitions, with release at owner deadline. The Issue comment called [PR #206](https://github.com/Unjuno/agent-interface/pull/206) open, but a live read on 2026-10-19 shows it merged. This finite watcher result is not a universal release deadline or policy adoption. |
 | [#184](https://github.com/Unjuno/agent-interface/issues/184) | Test state-scoped predicate presentation under the frozen Chromium v5 environment. | `SETUP_BLOCKED`: the authoritative Windows/WSL runner could not be reconstructed, so no model call, target input, or formal GUI pair was consumed. Offline development evidence is not live replication. |
-| [#177](https://github.com/Unjuno/agent-interface/issues/177) | Bind `authority_end_id` to the existing runtime intent token. | `RETAIN_INTENT_TOKEN_BINDING`: 13/13 checks passed and fail-closed cases rejected; expose the existing intent token only after a valid authority-ended terminal rather than minting a post-release UUID. Validator-versioning and #168 provenance remain separate. |
+| [#177](https://github.com/Unjuno/agent-interface/issues/177) | Bind `authority_end_id` to the existing runtime intent token. | `RETAIN_INTENT_TOKEN_BINDING`: 13/13 frozen offline checks passed and fail-closed cases rejected; expose the existing intent token only after a valid authority-ended terminal rather than minting a post-release UUID. Closed at this scoped contract boundary; validator-versioning, #168 provenance, and live transport remain separate. [Closure record](https://github.com/Unjuno/agent-interface/issues/177#issuecomment-6291348546). |
 | [#174](https://github.com/Unjuno/agent-interface/issues/174) | Measure the transient-event blind spot of quiet motor windows. | Scoped watcher candidate only: declared-color/ROI X11 fixture, with a successor needed for shorter cues/onset phase. Do not treat quiet motor as permission to disable other sensing or generalize an 80 ms result to arbitrary warnings. |
 | [#173](https://github.com/Unjuno/agent-interface/issues/173) | Test optional lifecycle revocation after MAP01 timeout. | Retain the scoped lifecycle-revocation candidate; timeout `score.json` still falsely reports map exit in six cases and those comparisons remain FAIL. Full raw archive is conversation-only; this is not broad lifecycle/product evidence. |
-| [#163](https://github.com/Unjuno/agent-interface/issues/163) | Audit an expired Inkscape receipt against the authority-ended gate. | Canonical current-main result is `FAIL_DIRECT_UPGRADE_RETAIN_SEMANTIC_MISMATCH`, with six bridge fields missing/ambiguous. The current Issue claim was relinquished as duplicate; no new invocation or source mutation occurred. |
+| [#163](https://github.com/Unjuno/agent-interface/issues/163) | Audit an expired Inkscape receipt against the authority-ended gate. | Canonical current-main result is `FAIL_DIRECT_UPGRADE_RETAIN_SEMANTIC_MISMATCH`, with six bridge fields missing/ambiguous. The duplicate audit request was closed as scoped completion after linking the retained report; the semantic mismatch remains unresolved. [Closure record](https://github.com/Unjuno/agent-interface/issues/163#issuecomment-6291347630). |
 | [#137](https://github.com/Unjuno/agent-interface/issues/137) | Compare MAP01 scorer-refresh cadence without changing policy or authority. | The latest [Issue result](https://github.com/Unjuno/agent-interface/issues/137#issuecomment-5684215258) records `PASS` for versioned acquisition repair: 18 real MAP01/X11 sessions with valid final brackets, 494/494 validated acquisition brackets, strict terminal-score equality, and empty-input checks. The separate 5 Hz optimization gate is `HOLD`: median refresh5/refresh10 was 0.745, above the frozen 0.65 threshold, with no faster terminal result. Merged [PR #147](https://github.com/Unjuno/agent-interface/pull/147) retains the scoped result. This is acquisition/observability evidence, not faster kills or a general policy result. |
 
 ## Engineering and operations follow-ups
