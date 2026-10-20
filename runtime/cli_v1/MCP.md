@@ -488,6 +488,14 @@ python3 runtime.pyz relay -- --targets /absolute/targets.json --output-directory
 
 Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes. Install the same optional `mcp==1.30.0` dependency used by MCP mode. The relay launches `mcp` from that exact archive using the same Python executable; no research checkout, research allocation or native_start tool is involved. Source development also supports `python3 -m runtime.cli_v1.mcp_relay -- ...` from a checkout.
 
+Response writes are serialized on worker threads so a blocked client-facing
+stdout write does not immediately stop the JSON-lines reader. The relay keeps
+at most 16 response writes pending; once that bound is reached, input reading
+pauses until a write completes. This lets a later cancel request reach the MCP
+server only while the pending-response bound has room. It does not establish
+input release, server-side queue drainage, or a hard cancellation bound under
+sustained output blockage.
+
 Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
 
 Each request and response line is UTF-8 JSON, independent of the host locale.
