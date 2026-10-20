@@ -437,6 +437,8 @@ Issue [#57](https://github.com/Unjuno/agent-interface/issues/57) requires a comp
 
 **Next action:** keep the public compiled MCP endpoint as the selected standard caller. Join its all-attempt provider ledger, fresh evidence after model waits, independent application-effect certificate, and finite recovery path around one supported task; then freeze the plain/current baseline and cold/warm/invalidation/repair schedule. Before a live run, verify the exact host owner and unused allocation. Issue #7924's WSLc state is STOP/HOLD; do not launch WSLc/Docker until that gate is explicitly cleared. Local source/schema/accounting work can proceed without replaying parser, timing, or Fake X results.
 
+**2026-10-20 offline accounting prerequisite:** [`standard_mcp_task_ledger_57_v1`](../research/integration/standard_mcp_task_ledger_57_v1/README.md) adds a local-only validator for frozen task conditions, raw references, provider-attempt/token-usage completeness, MCP-call joins, and independent scoring. Its focused tests pass in normal and optimized Python. It does not emit provider receipts, establish completeness against an external provider, or satisfy #53; actual provider-adapter integration and reconciliation remain the next source task. No model call or allocation was made.
+
 ## Completion and history
 
 Health-only MAP01 cover now consumes validated early typed health via the current
