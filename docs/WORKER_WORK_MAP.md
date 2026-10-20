@@ -19,6 +19,11 @@ individual transfer/completion is verified in both directions. Worker packets
 are navigation until a worker explicitly accepts them and current ownership is
 checked; this map itself grants no allocation.
 
+The current [PR audit disposition receipt](maintenance/pr-audit-disposition-20261020-r01.md)
+reconciles nine old #59/#5311/#8636 PRs against live status and their canonical
+evidence records. It is a verified status snapshot, not an ownership transfer
+or blanket merge/close instruction.
+
 ## Previous map snapshot — 2026-10-20 after PR #9257
 
 Main was `cdd3c7e979dc7799e6733e259934b1738bf01d22`. The [r116 membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md) confirmed the complete Issue and PR ID sets matched r114 (1,672 open Issues, 468 open PRs); r114 was the latest full row-level metadata. PRs #9255/#9257 added local attempt/score recording contracts only; provider-log completeness and integrated effect/efficiency remained open. The latest retained local status census [r05](maintenance/git-worktree-census-20261020-r05.md) recorded 37 roots, 10 dirty, none locked or prunable; owner, active-process and ignored-data custody remained unresolved. Membership was not semantic review.
