@@ -29,11 +29,11 @@ not a current custody or deletion determination.
 
 1. Refresh one complete live membership snapshot and exact metadata for the
    candidate Issues/PRs, recording the source main SHA and read interval.
-2. Integrate already completed, read-only PR audits into their canonical
-   evidence/family records. Preserve each result and failure independently;
-   distinguish stale-base candidates, construction-only evidence, negative
-   scoped outcomes, and custody holds. Do not convert an audit into merge or
-   close authority.
+2. Continue from the [2026-10-20 PR audit disposition](maintenance/pr-audit-disposition-20261020-r01.md),
+   which reconciles nine completed read-only audits with live GitHub status.
+   Preserve each result and failure independently; distinguish stale-base
+   candidates, construction-only evidence, negative scoped outcomes, and
+   custody holds. Do not convert an audit into merge or close authority.
 3. Select one unowned idea family using the current worker map, verify each
    Issue's live state and source/evidence links, and add one family crosswalk
    with its distinct hypotheses, first outcomes, limits, dependencies, and
