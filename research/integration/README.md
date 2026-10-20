@@ -111,6 +111,8 @@ Historical and superseded integration paths remain in place when their exact nam
 
 ## Retained runtime failure boundaries
 
+- [Standard caller during private Xvfb server stop — #17, run 39373461786](standard_caller_xvfb_server_stop_20261020/r01/README.md) — cancellation returned within the 3 s fixture bound, but XRes disconnect stayed UNKNOWN, release was not attempted, and an independent 8.5 s horizon still saw key `a` down; the synthetic task oracle failed. Preserve the cancel/terminal owner-liveness discrepancy. This is a scoped failure boundary, not release proof or a general outage guarantee.
+
 - [WSLc memory-cap receipt audit — #3352/#6309](wslc_memory_enforcement_3352_t1_audit_20261002/REPORT.md) — independent WSLc audit confirms the exact local record of both 512M/128M trials retaining 384 MiB and exiting 0 (`PASS_INDEPENDENT_AUDIT_SCOPED`); PR #6309's published files differ from that original packet. Receipt evidence only: no effective cap, peak RSS, representative workload or migration-benefit proof; #3352 remains open.
 
 - [Public MCP pre-worker executor rejection](mcp_executor_rejection_5375_dot_v1/REPORT.md), Issue #5539: `FAIL_PREWORKER_CAPACITY_RELEASE` in one deliberately injected lifecycle fault. A healthy executor and fresh server recover while the affected server remains busy with no invoked operation. Exact original source/receipts and warning are retained; no native/GUI action or production repair is included. [Lossless module-map restoration](mcp_executor_rejection_5375_dot_v1/PACKAGING.md).
