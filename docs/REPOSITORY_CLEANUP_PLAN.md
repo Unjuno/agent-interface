@@ -1,16 +1,19 @@
 # Repository cleanup plan
 
-## Current state after PR #9243 — 2026-10-20
+## Current state after PR #9245 — 2026-10-20 08:20 UTC
 
-Main is `b368447275924d20fbd6a10b1a6de229bc94ee47`. PR #9243 refreshed the
-cleanup census and changed no Issue or PR membership, so r110 remains the
-latest complete membership check: 1,672 open Issues and 468 open PRs, with
-both sorted-ID hashes unchanged from r109. The current host worktree recheck
-is [r02](maintenance/git-worktree-census-20261020-r02.md): 33 registered
-worktrees, 22 clean and 11 dirty in normal Git status, none locked or
-prunable. The new cleanup worktree is one of the dirty roots. The census does
-not establish process ownership, ignored-file custody, or safety to remove;
-all dirty roots remain preserved.
+Main is `083e59c0abe71a0a693e231e08a14d6718df7ade`. The [r111 membership
+recheck](maintenance/repository-inventory-recheck-20261020-r111.md) was
+bracketed by matching GraphQL counts at 08:19:26–08:19:40 UTC and confirms
+1,672 open Issues and 468 open PRs. Both sorted numeric-ID hashes are
+unchanged from r110; PR #9244 and #9245 are merged. The latest complete
+row-level metadata remains [r108](maintenance/repository-inventory-20261020-r108.md).
+
+The [worktree census r03](maintenance/git-worktree-census-20261020-r03.md)
+captured 33 registered roots at 08:20 UTC: 23 clean and 10 dirty under normal
+Git status, none locked or prunable. This does not establish process ownership,
+ignored-file custody, or deletion safety. Preserve dirty roots pending
+individual custody checks.
 
 The live description of [PR #7283](https://github.com/Unjuno/agent-interface/pull/7283)
 withdraws its former fixed requirement for two nonauthor approvals, named
@@ -23,6 +26,13 @@ so this policy correction does not make it merge-ready.
 Repository cleanup remains incomplete. Continue family-by-family semantic
 triage and individual PR/evidence custody work; do not use closure, merge, or
 deletion counts as a cleanliness measure.
+
+## Previous state after PR #9243 — 2026-10-20
+
+Main was `b368447275924d20fbd6a10b1a6de229bc94ee47`. PR #9243 refreshed the
+cleanup census and changed no Issue or PR membership. Its retained worktree
+census is [r01](maintenance/git-worktree-census-20261020-r01.md); its later
+host snapshot is preserved as [r02](maintenance/git-worktree-census-20261020-r02.md).
 
 ## Previous state after PR #9242 — 2026-10-20 07:55 UTC
 
