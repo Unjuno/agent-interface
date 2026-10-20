@@ -88,7 +88,7 @@ this cleanup plan.
 7. D11 is integrated. Its 15 candidate dispositions close only #8654/#8913
    after preserving scoped results; the other 13 remain open with their recorded
    results, proposals, or explicit WSLc ownership holds. D01 and D02 are
-   integrated; D03–D09 are reconciled below. D10 remains unreviewed.
+   integrated; D03–D10 are reconciled below; D11 is recorded above. The r119 265-row queue is fully routed.
 
 ## D01 family disposition — 2026-10-20
 
@@ -199,6 +199,20 @@ experiment, allocation, WSLc/Docker operation, or worktree cleanup ran. The
 aggregate remains 1,655 open Issues / 468 open PRs (count-only). Across
 D01–D09, 225 candidates are mapped, 15 scoped Issues are closed, and 210
 remain open. D10 remains unreviewed.
+
+## D10 family disposition — 2026-10-20
+
+The [D10 receipt](maintenance/idea-family-triage-r119/D10.md) reconciles the
+final 25 queue rows against B16–B17 and live Issue/comment/PR reads. All remain
+open and unassigned; no state changed. It corrects the #8595 catalog entry to
+include its T0 A01 method result and post-freeze literature addendum, and keeps
+#8619's WSLc policy separate from resource/allocation authorization. No
+experiment, allocation, WSLc/Docker operation, or worktree cleanup ran. The
+count-only aggregate is 1,655 open Issues / 468 open PRs. D01–D10 cover 250
+rows (15 scoped closures); D11 covers the final 15 (two scoped closures). All
+265 r119 candidates are routed: 17 closed with bounded evidence, 248 open.
+This closes the discovery queue, not the remaining 223 idea-document semantic
+routes, 468 open PRs, or branch/worktree custody audit.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
