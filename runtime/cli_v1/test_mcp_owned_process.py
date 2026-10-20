@@ -73,6 +73,8 @@ def _fake_owner_factory(targets, directory, display_name, options):
     fake.backend.d.display = SimpleNamespace(
         info=SimpleNamespace(resource_id_base=0x1200000))
     root = Path(directory)
+    if (root/'compiled-profile-mode').exists():
+        (root/'synthetic-application-initial.rgb').write_bytes(fake.raw)
     def sync():
         if (root/'block-owner-io').exists():
             (root/'owner-io-entered.json').write_text(
@@ -88,6 +90,7 @@ def _fake_owner_factory(targets, directory, display_name, options):
             image=Image.frombytes('RGB',(32,32),fake.raw,'raw','BGRX')
             image.putpixel((1,1),(255,0,0))
             fake.raw=image.tobytes('raw','BGRX')
+            (root/'synthetic-application-state.rgb').write_bytes(fake.raw)
             if (root/'compiled-flip-generation-after-input').exists():
                 (root/'fake-process-generation').write_text('b'*64,encoding='utf-8')
     input_patcher=patch('runtime.backends.x11_v1.backend.xtest.fake_input',
