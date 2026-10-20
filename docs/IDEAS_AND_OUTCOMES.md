@@ -4,17 +4,17 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-20 11:13 UTC):** main is
-`475e3733785065bf2993d507f71fafad790916fb`. The complete paginated [r115
-membership recheck](maintenance/repository-inventory-recheck-20261020-r115.md)
+**Current organization check (2026-10-20 11:19 UTC):** main is
+`cdd3c7e979dc7799e6733e259934b1738bf01d22`. The complete paginated [r116
+membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md)
 matches r114's 1,672 open Issue and 468 open PR ID sets; GraphQL counts
 bracketed the read. r114 remains the latest full metadata export, so no
-duplicate export was added. PR #9255 adds local async attempt recording and
-synthetic caller composition only; it does not establish real provider-log
-completeness, live task effect, or integrated efficiency. Issues #53, #57 and
-#59 remain open. Counts are not semantic dispositions; use the staged
-[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) and current family records
-to route the next bounded batch.
+duplicate export was added. PR #9255 and #9257 add local attempt/score
+recording contracts only; they do not establish real provider-log completeness,
+live task effect, or integrated efficiency. Issues #53, #57 and #59 remain
+open. Counts are not semantic dispositions; use the staged [repository cleanup
+plan](REPOSITORY_CLEANUP_PLAN.md) and current family records to route the next
+bounded batch.
 ## Status key
 
 - **Proposed / open:** no result is implied.
