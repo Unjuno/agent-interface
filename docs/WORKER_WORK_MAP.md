@@ -1,15 +1,15 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 after PR #9260
+## Current entry point — 2026-10-20 after PR #9264
 
-Main is `a969266f03f7b10edc3714946ccb36c508dab4bc`. PR #9260 adds two
-synthetic public-MCP/Fake X composition cells, but does not finish the #57
-integrated live comparison. Live reads confirm #17, #57 and #7924 remain open;
-#7924 is STOP/HOLD for WSLc ownership and current-checkout prerequisites. Do
-not use stale membership or worktree counts as current ownership or cleanup
-authority. The complete r116 set and r05 custody census below are historical
-snapshots from their recorded baselines. Re-fetch exact source and custody
-before changing any item.
+Main is `53186c391103d50cb0b7555165a174a15842f586`. PR #9264 adds synthetic
+provider-attempt accounting and a public-MCP/Fake X composition result, but
+does not finish the #57 integrated live comparison. The r117 recheck records
+1,672 open Issues and 468 open PRs with exact ID sets matching r116; r114 is
+still the latest full row-level metadata. The r05 custody census is historical,
+not current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD
+for WSLc ownership and current-checkout prerequisites. Re-fetch exact source
+and custody before changing any item.
 
 The current organization and disposition rules are in the
 [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md). Keep ideas connected to
@@ -20,9 +20,12 @@ are navigation until a worker explicitly accepts them and current ownership is
 checked; this map itself grants no allocation.
 
 The current [PR audit disposition receipt](maintenance/pr-audit-disposition-20261020-r01.md)
-reconciles nine old #59/#5311/#8636 PRs against live status and their canonical
-evidence records. It is a verified status snapshot, not an ownership transfer
-or blanket merge/close instruction.
+reconciles nine sampled #59/#5311/#8636 PRs against live status and canonical
+evidence. Four closed predecessors have verified current-main successors;
+five remain open with distinct cost, construction-scope, audit, raw-custody,
+or lane-ownership blockers. This is a status/custody map, not blanket
+merge/closure authority. The full organization remains family-by-family; no
+Issue is closed simply to reduce counts.
 
 ## Previous map snapshot — 2026-10-20 after PR #9257
 
