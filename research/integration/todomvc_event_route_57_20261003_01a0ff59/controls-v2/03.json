@@ -1,0 +1,1289 @@
+{
+  "schema": "unchanged-stock-source-event-route",
+  "start_utc": "2026-10-03T11:57:17.152Z",
+  "plan_sha256": "c8afbfb1fd015fcfb14a5c04e2b20274f0d25f671b9462702a898e3e1dc32c39",
+  "node": "v24.13.0",
+  "pid": 30320,
+  "sources": [
+    {
+      "path": "unit/stock/examples/javascript-es5/dist/helpers.js",
+      "bytes": 1786,
+      "sha256": "34db108cf9cc1399c83add4c09bd5e51f9978626e7a486d76b98097c59fcc1c8"
+    },
+    {
+      "path": "unit/stock/examples/javascript-es5/dist/store.js",
+      "bytes": 4445,
+      "sha256": "0bc9d37949d094d104a5a0050f68a0b20d2a2b536d5c31fac70c95185ff08303"
+    },
+    {
+      "path": "unit/stock/examples/javascript-es5/dist/model.js",
+      "bytes": 3662,
+      "sha256": "7f3dd8368e8b1aded3c004a8fe86b7594d43495aec2fa4f0a5b3933f98654ff1"
+    },
+    {
+      "path": "unit/stock/examples/javascript-es5/dist/view.js",
+      "bytes": 7259,
+      "sha256": "0d731d4ef1f4af7a570f82418fd698f26aba516d52c40dc0ca2a6a47dd81a977"
+    },
+    {
+      "path": "unit/stock/examples/javascript-es5/dist/controller.js",
+      "bytes": 7965,
+      "sha256": "96ee4d40995a3fb3d1928eb1d25ab3f66dca64036609bc9f44d9c4f973c205f6"
+    }
+  ],
+  "rows": [
+    {
+      "case": "input_blur",
+      "value": "c04-route A <&>",
+      "events": [
+        {
+          "target": "new",
+          "type": "input"
+        },
+        {
+          "target": "new",
+          "type": "blur"
+        }
+      ],
+      "registrations": [
+        {
+          "id": 0,
+          "target": ".new-todo",
+          "type": "change",
+          "capture": false
+        },
+        {
+          "id": 1,
+          "target": ".todo-list",
+          "type": "dblclick",
+          "capture": false
+        },
+        {
+          "id": 2,
+          "target": ".todo-list",
+          "type": "blur",
+          "capture": true
+        },
+        {
+          "id": 3,
+          "target": ".todo-list",
+          "type": "keypress",
+          "capture": false
+        },
+        {
+          "id": 4,
+          "target": ".todo-list",
+          "type": "keyup",
+          "capture": false
+        },
+        {
+          "id": 5,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 6,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 7,
+          "target": ".clear-completed",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 8,
+          "target": ".toggle-all-label",
+          "type": "click",
+          "capture": false
+        }
+      ],
+      "initial_render_count": 6,
+      "trace": [
+        {
+          "event": {
+            "target": "new",
+            "type": "input"
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [],
+          "input_after": "c04-route A <&>"
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "blur"
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [],
+          "input_after": "c04-route A <&>"
+        }
+      ],
+      "renders": [
+        {
+          "command": "updateElementCount",
+          "parameter": 0
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": true
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": false
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": []
+        },
+        {
+          "command": "setFilter",
+          "parameter": ""
+        }
+      ],
+      "items": [],
+      "counts": {
+        "active": 0,
+        "completed": 0,
+        "total": 0
+      },
+      "input_after": "c04-route A <&>"
+    },
+    {
+      "case": "tab_no_change",
+      "value": "c04-route A <&>",
+      "events": [
+        {
+          "target": "new",
+          "type": "keydown",
+          "keyCode": 9
+        },
+        {
+          "target": "new",
+          "type": "keypress",
+          "keyCode": 9
+        },
+        {
+          "target": "new",
+          "type": "keyup",
+          "keyCode": 9
+        },
+        {
+          "target": "new",
+          "type": "blur"
+        }
+      ],
+      "registrations": [
+        {
+          "id": 0,
+          "target": ".new-todo",
+          "type": "change",
+          "capture": false
+        },
+        {
+          "id": 1,
+          "target": ".todo-list",
+          "type": "dblclick",
+          "capture": false
+        },
+        {
+          "id": 2,
+          "target": ".todo-list",
+          "type": "blur",
+          "capture": true
+        },
+        {
+          "id": 3,
+          "target": ".todo-list",
+          "type": "keypress",
+          "capture": false
+        },
+        {
+          "id": 4,
+          "target": ".todo-list",
+          "type": "keyup",
+          "capture": false
+        },
+        {
+          "id": 5,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 6,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 7,
+          "target": ".clear-completed",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 8,
+          "target": ".toggle-all-label",
+          "type": "click",
+          "capture": false
+        }
+      ],
+      "initial_render_count": 6,
+      "trace": [
+        {
+          "event": {
+            "target": "new",
+            "type": "keydown",
+            "keyCode": 9
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [],
+          "input_after": "c04-route A <&>"
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "keypress",
+            "keyCode": 9
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [],
+          "input_after": "c04-route A <&>"
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "keyup",
+            "keyCode": 9
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [],
+          "input_after": "c04-route A <&>"
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "blur"
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [],
+          "input_after": "c04-route A <&>"
+        }
+      ],
+      "renders": [
+        {
+          "command": "updateElementCount",
+          "parameter": 0
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": true
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": false
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": []
+        },
+        {
+          "command": "setFilter",
+          "parameter": ""
+        }
+      ],
+      "items": [],
+      "counts": {
+        "active": 0,
+        "completed": 0,
+        "total": 0
+      },
+      "input_after": "c04-route A <&>"
+    },
+    {
+      "case": "sibling_change",
+      "value": "c04-route A <&>",
+      "events": [
+        {
+          "target": "sibling",
+          "type": "change"
+        }
+      ],
+      "registrations": [
+        {
+          "id": 0,
+          "target": ".new-todo",
+          "type": "change",
+          "capture": false
+        },
+        {
+          "id": 1,
+          "target": ".todo-list",
+          "type": "dblclick",
+          "capture": false
+        },
+        {
+          "id": 2,
+          "target": ".todo-list",
+          "type": "blur",
+          "capture": true
+        },
+        {
+          "id": 3,
+          "target": ".todo-list",
+          "type": "keypress",
+          "capture": false
+        },
+        {
+          "id": 4,
+          "target": ".todo-list",
+          "type": "keyup",
+          "capture": false
+        },
+        {
+          "id": 5,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 6,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 7,
+          "target": ".clear-completed",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 8,
+          "target": ".toggle-all-label",
+          "type": "click",
+          "capture": false
+        }
+      ],
+      "initial_render_count": 6,
+      "trace": [
+        {
+          "event": {
+            "target": "sibling",
+            "type": "change"
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [],
+          "input_after": "c04-route A <&>"
+        }
+      ],
+      "renders": [
+        {
+          "command": "updateElementCount",
+          "parameter": 0
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": true
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": false
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": []
+        },
+        {
+          "command": "setFilter",
+          "parameter": ""
+        }
+      ],
+      "items": [],
+      "counts": {
+        "active": 0,
+        "completed": 0,
+        "total": 0
+      },
+      "input_after": "c04-route A <&>"
+    },
+    {
+      "case": "whitespace_change",
+      "value": " \t\n ",
+      "events": [
+        {
+          "target": "new",
+          "type": "change"
+        }
+      ],
+      "registrations": [
+        {
+          "id": 0,
+          "target": ".new-todo",
+          "type": "change",
+          "capture": false
+        },
+        {
+          "id": 1,
+          "target": ".todo-list",
+          "type": "dblclick",
+          "capture": false
+        },
+        {
+          "id": 2,
+          "target": ".todo-list",
+          "type": "blur",
+          "capture": true
+        },
+        {
+          "id": 3,
+          "target": ".todo-list",
+          "type": "keypress",
+          "capture": false
+        },
+        {
+          "id": 4,
+          "target": ".todo-list",
+          "type": "keyup",
+          "capture": false
+        },
+        {
+          "id": 5,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 6,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 7,
+          "target": ".clear-completed",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 8,
+          "target": ".toggle-all-label",
+          "type": "click",
+          "capture": false
+        }
+      ],
+      "initial_render_count": 6,
+      "trace": [
+        {
+          "event": {
+            "target": "new",
+            "type": "change"
+          },
+          "input_before": " \t\n ",
+          "delivered_handler_ids": [
+            0
+          ],
+          "input_after": " \t\n "
+        }
+      ],
+      "renders": [
+        {
+          "command": "updateElementCount",
+          "parameter": 0
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": true
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": false
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": []
+        },
+        {
+          "command": "setFilter",
+          "parameter": ""
+        }
+      ],
+      "items": [],
+      "counts": {
+        "active": 0,
+        "completed": 0,
+        "total": 0
+      },
+      "input_after": " \t\n "
+    },
+    {
+      "case": "change_only",
+      "value": "c04-route A <&>",
+      "events": [
+        {
+          "target": "new",
+          "type": "change"
+        }
+      ],
+      "registrations": [
+        {
+          "id": 0,
+          "target": ".new-todo",
+          "type": "change",
+          "capture": false
+        },
+        {
+          "id": 1,
+          "target": ".todo-list",
+          "type": "dblclick",
+          "capture": false
+        },
+        {
+          "id": 2,
+          "target": ".todo-list",
+          "type": "blur",
+          "capture": true
+        },
+        {
+          "id": 3,
+          "target": ".todo-list",
+          "type": "keypress",
+          "capture": false
+        },
+        {
+          "id": 4,
+          "target": ".todo-list",
+          "type": "keyup",
+          "capture": false
+        },
+        {
+          "id": 5,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 6,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 7,
+          "target": ".clear-completed",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 8,
+          "target": ".toggle-all-label",
+          "type": "click",
+          "capture": false
+        }
+      ],
+      "initial_render_count": 6,
+      "trace": [
+        {
+          "event": {
+            "target": "new",
+            "type": "change"
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [
+            0
+          ],
+          "input_after": ""
+        }
+      ],
+      "renders": [
+        {
+          "command": "updateElementCount",
+          "parameter": 0
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": true
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": false
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": []
+        },
+        {
+          "command": "setFilter",
+          "parameter": ""
+        },
+        {
+          "command": "clearNewTodo",
+          "parameter": null
+        },
+        {
+          "command": "updateElementCount",
+          "parameter": 1
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": false
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": true
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": [
+            {
+              "title": "c04-route A <&>",
+              "completed": false,
+              "id": 1
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "title": "wrong",
+          "completed": false,
+          "id": 1
+        }
+      ],
+      "counts": {
+        "active": 1,
+        "completed": 0,
+        "total": 1
+      },
+      "input_after": ""
+    },
+    {
+      "case": "input_change_blur",
+      "value": "c04-route A <&>",
+      "events": [
+        {
+          "target": "new",
+          "type": "input"
+        },
+        {
+          "target": "new",
+          "type": "change"
+        },
+        {
+          "target": "new",
+          "type": "blur"
+        }
+      ],
+      "registrations": [
+        {
+          "id": 0,
+          "target": ".new-todo",
+          "type": "change",
+          "capture": false
+        },
+        {
+          "id": 1,
+          "target": ".todo-list",
+          "type": "dblclick",
+          "capture": false
+        },
+        {
+          "id": 2,
+          "target": ".todo-list",
+          "type": "blur",
+          "capture": true
+        },
+        {
+          "id": 3,
+          "target": ".todo-list",
+          "type": "keypress",
+          "capture": false
+        },
+        {
+          "id": 4,
+          "target": ".todo-list",
+          "type": "keyup",
+          "capture": false
+        },
+        {
+          "id": 5,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 6,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 7,
+          "target": ".clear-completed",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 8,
+          "target": ".toggle-all-label",
+          "type": "click",
+          "capture": false
+        }
+      ],
+      "initial_render_count": 6,
+      "trace": [
+        {
+          "event": {
+            "target": "new",
+            "type": "input"
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [],
+          "input_after": "c04-route A <&>"
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "change"
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [
+            0
+          ],
+          "input_after": ""
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "blur"
+          },
+          "input_before": "",
+          "delivered_handler_ids": [],
+          "input_after": ""
+        }
+      ],
+      "renders": [
+        {
+          "command": "updateElementCount",
+          "parameter": 0
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": true
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": false
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": []
+        },
+        {
+          "command": "setFilter",
+          "parameter": ""
+        },
+        {
+          "command": "clearNewTodo",
+          "parameter": null
+        },
+        {
+          "command": "updateElementCount",
+          "parameter": 1
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": false
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": true
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": [
+            {
+              "title": "c04-route A <&>",
+              "completed": false,
+              "id": 1
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "title": "c04-route A <&>",
+          "completed": false,
+          "id": 1
+        }
+      ],
+      "counts": {
+        "active": 1,
+        "completed": 0,
+        "total": 1
+      },
+      "input_after": ""
+    },
+    {
+      "case": "unicode_change",
+      "value": "  c04-route 作業 <&>  ",
+      "events": [
+        {
+          "target": "new",
+          "type": "input"
+        },
+        {
+          "target": "new",
+          "type": "change"
+        },
+        {
+          "target": "new",
+          "type": "blur"
+        }
+      ],
+      "registrations": [
+        {
+          "id": 0,
+          "target": ".new-todo",
+          "type": "change",
+          "capture": false
+        },
+        {
+          "id": 1,
+          "target": ".todo-list",
+          "type": "dblclick",
+          "capture": false
+        },
+        {
+          "id": 2,
+          "target": ".todo-list",
+          "type": "blur",
+          "capture": true
+        },
+        {
+          "id": 3,
+          "target": ".todo-list",
+          "type": "keypress",
+          "capture": false
+        },
+        {
+          "id": 4,
+          "target": ".todo-list",
+          "type": "keyup",
+          "capture": false
+        },
+        {
+          "id": 5,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 6,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 7,
+          "target": ".clear-completed",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 8,
+          "target": ".toggle-all-label",
+          "type": "click",
+          "capture": false
+        }
+      ],
+      "initial_render_count": 6,
+      "trace": [
+        {
+          "event": {
+            "target": "new",
+            "type": "input"
+          },
+          "input_before": "  c04-route 作業 <&>  ",
+          "delivered_handler_ids": [],
+          "input_after": "  c04-route 作業 <&>  "
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "change"
+          },
+          "input_before": "  c04-route 作業 <&>  ",
+          "delivered_handler_ids": [
+            0
+          ],
+          "input_after": ""
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "blur"
+          },
+          "input_before": "",
+          "delivered_handler_ids": [],
+          "input_after": ""
+        }
+      ],
+      "renders": [
+        {
+          "command": "updateElementCount",
+          "parameter": 0
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": true
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": false
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": []
+        },
+        {
+          "command": "setFilter",
+          "parameter": ""
+        },
+        {
+          "command": "clearNewTodo",
+          "parameter": null
+        },
+        {
+          "command": "updateElementCount",
+          "parameter": 1
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": false
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": true
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": [
+            {
+              "title": "c04-route 作業 <&>",
+              "completed": false,
+              "id": 1
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "title": "c04-route 作業 <&>",
+          "completed": false,
+          "id": 1
+        }
+      ],
+      "counts": {
+        "active": 1,
+        "completed": 0,
+        "total": 1
+      },
+      "input_after": ""
+    },
+    {
+      "case": "repeated_change",
+      "value": "c04-route A <&>",
+      "events": [
+        {
+          "target": "new",
+          "type": "change"
+        },
+        {
+          "target": "new",
+          "type": "change"
+        }
+      ],
+      "registrations": [
+        {
+          "id": 0,
+          "target": ".new-todo",
+          "type": "change",
+          "capture": false
+        },
+        {
+          "id": 1,
+          "target": ".todo-list",
+          "type": "dblclick",
+          "capture": false
+        },
+        {
+          "id": 2,
+          "target": ".todo-list",
+          "type": "blur",
+          "capture": true
+        },
+        {
+          "id": 3,
+          "target": ".todo-list",
+          "type": "keypress",
+          "capture": false
+        },
+        {
+          "id": 4,
+          "target": ".todo-list",
+          "type": "keyup",
+          "capture": false
+        },
+        {
+          "id": 5,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 6,
+          "target": ".todo-list",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 7,
+          "target": ".clear-completed",
+          "type": "click",
+          "capture": false
+        },
+        {
+          "id": 8,
+          "target": ".toggle-all-label",
+          "type": "click",
+          "capture": false
+        }
+      ],
+      "initial_render_count": 6,
+      "trace": [
+        {
+          "event": {
+            "target": "new",
+            "type": "change"
+          },
+          "input_before": "c04-route A <&>",
+          "delivered_handler_ids": [
+            0
+          ],
+          "input_after": ""
+        },
+        {
+          "event": {
+            "target": "new",
+            "type": "change"
+          },
+          "input_before": "",
+          "delivered_handler_ids": [
+            0
+          ],
+          "input_after": ""
+        }
+      ],
+      "renders": [
+        {
+          "command": "updateElementCount",
+          "parameter": 0
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": true
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": false
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": []
+        },
+        {
+          "command": "setFilter",
+          "parameter": ""
+        },
+        {
+          "command": "clearNewTodo",
+          "parameter": null
+        },
+        {
+          "command": "updateElementCount",
+          "parameter": 1
+        },
+        {
+          "command": "clearCompletedButton",
+          "parameter": {
+            "completed": 0,
+            "visible": false
+          }
+        },
+        {
+          "command": "toggleAll",
+          "parameter": {
+            "checked": false
+          }
+        },
+        {
+          "command": "contentBlockVisibility",
+          "parameter": {
+            "visible": true
+          }
+        },
+        {
+          "command": "showEntries",
+          "parameter": [
+            {
+              "title": "c04-route A <&>",
+              "completed": false,
+              "id": 1
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "title": "c04-route A <&>",
+          "completed": false,
+          "id": 1
+        }
+      ],
+      "counts": {
+        "active": 1,
+        "completed": 0,
+        "total": 1
+      },
+      "input_after": ""
+    }
+  ],
+  "status": "SOURCE_EVENT_ROUTE_CONFIRMED",
+  "end_utc": "2026-10-03T11:57:17.165Z"
+}

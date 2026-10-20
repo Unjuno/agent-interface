@@ -1,0 +1,21 @@
+import datetime,hashlib,json,pathlib
+root=pathlib.Path(__file__).resolve().parent
+original=(root/'audit_source_route.py').read_bytes()
+text=original.decode('utf-8')
+old="    if x==original:fail('ineffective control: '+name)"
+new="    if json.dumps(x,sort_keys=True,ensure_ascii=True)==json.dumps(original,sort_keys=True,ensure_ascii=True):fail('ineffective control: '+name)"
+assert text.count(old)==1
+text=text.replace(old,new)
+before="    try:verify(x)"
+after="    control_path=root/'controls-v2'/f'{len(controls)+1:02d}.json'\n    with control_path.open('x',encoding='utf-8',newline='\\n') as f:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\\n')\n    try:verify(x)"
+assert text.count(before)==1
+text=text.replace(before,after).replace("root/'AUDIT_SOURCE_ROUTE.json'","root/'AUDIT_SOURCE_ROUTE_V2.json'")
+with (root/'audit_source_route_v2.py').open('xb') as f:f.write(text.encode())
+(root/'controls-v2').mkdir()
+names=['audit_source_route_v2.py','RAW_SOURCE_ROUTE.json','PLAN.json','FREEZE.json','audit_source_route.py','source-route.js']
+record={'schema':'ordinary-saved-only-auditor-v2-repair','prepared_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'original_failure':'First audit18536 exit1 at Boolean-count corruption effectiveness: ordinary Python equality aliases True and1. No final first audit result was emitted.',
+ 'changes':'Type-preserving canonical JSON equality in control-effectiveness check; complete copied inputs retained; distinct output path. Same semantic checker/cases/decision and first raw unchanged.',
+ 'files':{n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in names},'source_or_browser_replays':0}
+with (root/'AUDITOR_V2_PREPARED.json').open('x',encoding='utf-8',newline='\n') as f:json.dump(record,f,indent=2);f.write('\n')
+print(json.dumps({'v2_source_sha256':record['files']['audit_source_route_v2.py'],'raw_unchanged_sha256':record['files']['RAW_SOURCE_ROUTE.json']}))
