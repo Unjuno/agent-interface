@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8636 T0 A04: [relative-view feature audit hold](analysis/relative_view_rotation_features_8636_t0_a04_20261012/A04-RESULT.md) — 360 synthetic trials; independent auditor stopped before summary, `HOLD_UNCERTAIN`. Read-only custody check confirms all archive members; no candidate or auditor rerun.
+
 - Issue #8620 T0 A01: [execution-information frontier](analysis/execution_information_8620_t0_a01_20261009/README.md) — 12 finite histories, formal HOLD because exact runtime was recorded post-run; original FAIL and diagnostic-only audit retained, no candidate rerun or GUI/memory-pressure claim.
 
 - Issue #8641 T0 A01: [uncertainty-source intervention choice](analysis/uncertainty_intervention_8641_t0_a01_20261009/REPORT.md) — scoped synthetic H failure; retain the no-retry deviation and do not claim real-interface transfer.
