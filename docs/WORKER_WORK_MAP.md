@@ -1,12 +1,14 @@
 # Worker work map
 
-## Current entry point — 2026-10-20, main after PR #9284
+## Current entry point — 2026-10-20, main after PR #9285
 
-Main is `b7f734f2236fb45361794a7adb384d0b6773c66b`. PR #9284 adds two scoped
+Main is `2c29aee34e258053670fa7df9108889f35aecef2`. PR #9285 integrated the
+current repository organization plan. Its count-only checkpoint records
+1,655 open Issues / 467 open PRs. PR #9284 adds two scoped
 native Ubuntu WSL/Xvfb standard-caller results for blocked-I/O cleanup and
 target-generation/recovery; it is not WSLc, physical desktop, MAP01, or
 integrated-efficiency evidence. Current repository-wide lanes and completion
-criteria are in the [cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-checkpoint-after-pr-9284--2026-10-20).
+criteria are in the [cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-checkpoint-after-pr-9285--2026-10-20).
 The latest count-only read is 1,655 open Issues / 467 open PRs; the last full
 membership/metadata snapshot is r119. Its 265 routed candidates have receipts;
 17 were individually closed and 248 remain open. Another 223 semantic idea

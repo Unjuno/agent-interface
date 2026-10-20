@@ -1,18 +1,22 @@
 # Repository cleanup plan
 
-## Current checkpoint after PR #9284 — 2026-10-20
+## Current checkpoint after PR #9285 — 2026-10-20
 
-PR [#9284](https://github.com/Unjuno/agent-interface/pull/9284) merged at
-`b7f734f2236fb45361794a7adb384d0b6773c66b` after its three checks passed. It
+PR [#9285](https://github.com/Unjuno/agent-interface/pull/9285), which refreshed
+the repository organization plan, merged at
+`2c29aee34e258053670fa7df9108889f35aecef2` after its public-navigation and
+replay-gate checks passed. Its evidence baseline includes PR
+[#9284](https://github.com/Unjuno/agent-interface/pull/9284), merged at
+`b7f734f2236fb45361794a7adb384d0b6773c66b` after three checks passed. #9284
 preserves two native Ubuntu WSL/Xvfb standard-caller results: bounded cleanup
 after blocked owner I/O, and target-generation refusal plus finite recovery.
 These are Linux/Xvfb caller results, not a WSLc allocation, physical desktop
-control, MAP01 success, or matched efficiency. The merge changed no Issue
+control, MAP01 success, or matched efficiency. Neither merge changed Issue
 state; #17, #57, #59, and #7924 retain their distinct open research/ownership
 questions.
 
-A live count-only GraphQL read at this checkpoint reports 1,655 open Issues
-and 467 open PRs. The latest fully paginated metadata remains r119; its counts
+A count-only GraphQL read after #9285 reports 1,655 open Issues and 467 open
+PRs. The latest fully paginated metadata remains r119; its counts
 and hashes are historical after the 17 individually documented Issue
 dispositions and subsequent PR merges. Reuse its saved rows for discovery,
 then re-fetch each exact Issue/PR before changing state. This count is not a
@@ -63,6 +67,17 @@ completed semantic batch, verified dispositions for every closed Issue and
 merged/closed PR, resolved or explicitly retained custody for every workspace
 artifact, and multiple independent finite worker packets. A smaller count is
 not a completion criterion.
+
+## Evidence checkpoint after PR #9284 — 2026-10-20
+
+PR [#9284](https://github.com/Unjuno/agent-interface/pull/9284) merged at
+`b7f734f2236fb45361794a7adb384d0b6773c66b` after its three checks passed. It
+preserves two native Ubuntu WSL/Xvfb standard-caller results: bounded cleanup
+after blocked owner I/O, and target-generation refusal plus finite recovery.
+These are Linux/Xvfb caller results, not a WSLc allocation, physical desktop
+control, MAP01 success, or matched efficiency. The merge changed no Issue
+state; #17, #57, #59, and #7924 retain their distinct open research/ownership
+questions.
 
 ## Post-#9282 disposition update — 2026-10-20
 
