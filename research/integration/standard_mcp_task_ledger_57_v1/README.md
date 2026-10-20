@@ -83,6 +83,12 @@ synthetic Fake X results only; the fixture has no real provider, production
 application, external scorer, native input, or live task. The saved response is
 the returned MCP text block, not a network-wire capture.
 
+One run of both composition cells, including the exact recorder journals,
+request/response bytes, Fake X owner receipts, and scorer-state bytes, is
+preserved in [`composition-evidence-20261020`](composition-evidence-20261020/README.md)
+with a per-file SHA-256 manifest. It records the tested synthetic outcomes; it
+does not increase their scope.
+
 `test_independent_task_score_is_terminal_and_preserves_state_bytes` verifies
 the journal contract for a caller-supplied score certificate. The composed
 tests additionally run a small pixel oracle against the Fake X side channel;
