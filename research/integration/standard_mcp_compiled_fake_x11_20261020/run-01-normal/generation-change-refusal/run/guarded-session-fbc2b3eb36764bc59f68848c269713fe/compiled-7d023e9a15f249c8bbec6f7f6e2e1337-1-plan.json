@@ -1,0 +1,85 @@
+{
+  "interface": {
+    "format": "compiled-gui-interface-v1",
+    "interface_id": "owned-compiled-profile",
+    "session_scope": "native-x11:de43a7f468c74b9ab5bf7dd7f15753ba",
+    "surface": "x11-window-20",
+    "predicates": [
+      "phase",
+      "present"
+    ],
+    "symbols": {
+      "field": {
+        "kind": "target_reference",
+        "target_reference": "field",
+        "identity_predicate": "present",
+        "dependencies": [
+          "present"
+        ]
+      }
+    },
+    "actions": {
+      "enter": {
+        "target_symbol": "field",
+        "operation": "enter",
+        "expected_effect": {
+          "phase": 1
+        }
+      }
+    },
+    "method": {
+      "name": "one-visible-transition",
+      "version": "1",
+      "initial_state": "before",
+      "max_transitions": 1,
+      "max_runtime_ms": 5000,
+      "states": {
+        "before": {
+          "branches": [
+            {
+              "when": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "action": "enter",
+              "next_state": "done",
+              "reason": null
+            }
+          ]
+        },
+        "done": {
+          "branches": [
+            {
+              "when": {
+                "phase": 1
+              },
+              "outcome": "complete",
+              "action": null,
+              "next_state": null,
+              "reason": null
+            }
+          ]
+        }
+      }
+    }
+  },
+  "bindings": {
+    "enter": {
+      "interaction": "keyboard",
+      "offset": [
+        6,
+        6
+      ],
+      "tail": [
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "a"
+          ]
+        }
+      ]
+    }
+  },
+  "scope": "trusted caller-owned read-only perception/effect callbacks; not independent task scoring"
+}

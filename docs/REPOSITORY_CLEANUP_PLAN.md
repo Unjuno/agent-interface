@@ -6,7 +6,13 @@ This plan makes the repository easier to work in with many independent workers w
 
 The earlier count-only checkpoint was at `87dfb33d94f3a8bbe12fbf3ab5bc7f0433c8d8c5`; it returned 1,673 open Issues and 479 open PRs but did not refresh the inventory. A full paginated refresh is now preserved as [r97](maintenance/repository-inventory-20261019-r97.md) at main `4ef4169b28952ff9b546cb1ab19aed74bb5efce0`. The count-only checkpoint is superseded by r97. No remote Issue or PR state was changed for inventory capture.
 
+A later count-only read at main `e4246c87e5f3e6f63acb7f424ee7f557f2bfb5f1` returned 1,673 open Issues and 477 open PRs. It is not a row-level refresh; r97 remains the last full paginated membership snapshot. Re-fetch exact items and ownership before each disposition.
+
 The user's organizing objective is to make the repository safe for many workers to contribute independently while keeping ideas available for future research. A catalog entry is a way to preserve and connect an idea, not a reason to close its Issue. Close an Issue only after its distinct question, evidence and limits, dependencies, disposition, successor (if any), and reopen condition are recorded. Keep unresolved computer-control goals, active assignments, integration work, and evidence-custody gaps open. Review and integrate PRs as a separate stream; never infer a PR's disposition from its Issue or from an inventory row.
+
+## Computer-control checkpoint — 2026-10-20
+
+The current `main` is `e4246c87e5f3e6f63acb7f424ee7f557f2bfb5f1` after [PR #9211](https://github.com/Unjuno/agent-interface/pull/9211) merged. That change pins process/window generation evidence through the compiled X11 adapter. A live refresh confirms [Issue #17](https://github.com/Unjuno/agent-interface/issues/17) remains open and [Issue #57](https://github.com/Unjuno/agent-interface/issues/57) remains open (last updated 2026-10-19); their independent task-success, bounded physical-release/recovery, and matched-efficiency questions are not closed by #9211. The pending standard-MCP compiled-caller work is a separate integration step, currently backed by local Fake X composition tests only. Preserve this distinction in the idea index and keep both Issues open until their own exit conditions are evidenced. This is a focused status refresh, not a new full backlog inventory or semantic classification of other Issues.
 
 ## Fresh live baseline r97 — 2026-10-19 16:00 UTC
 

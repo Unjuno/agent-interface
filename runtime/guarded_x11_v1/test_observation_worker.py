@@ -129,6 +129,21 @@ class ObservationWorkerTests(unittest.TestCase):
     def test_changed_context_refuses_capture_reply(self): self.exercise('capture','context')
     def test_changed_generation_refuses_capture_reply(self): self.exercise('capture','generation')
 
+    def test_compiled_call_cancel_scope_accepts_idle_cancel_but_input_scope_does_not(self):
+        bridge=object.__new__(NativeHandleBridge)
+        bridge._target_queries=object();bridge._cancel_lock=threading.Lock()
+        bridge._used_cancel_tokens=set();bridge._cancel_ticket=None
+        bridge.active=None;bridge.review_required=False
+        with bridge.cancellation_scope('compiled',cancel_when_idle=True):
+            result=bridge.request_cancel('compiled')
+            self.assertEqual(result['status'],'cancel_requested')
+            self.assertTrue(bridge._cancel_requested())
+            self.assertTrue(bridge.review_required)
+        bridge.review_required=False
+        with bridge.cancellation_scope('input'):
+            result=bridge.request_cancel('input')
+            self.assertEqual(result['status'],'not_active')
+
 
 class ReadOnlyClientTests(unittest.TestCase):
     def test_open_uses_only_separate_read_client_without_xtest_requirement(self):

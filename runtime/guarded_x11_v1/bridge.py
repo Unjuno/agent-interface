@@ -194,13 +194,15 @@ class NativeHandleBridge:
         return worker.close() if worker is not None else None
 
     @contextmanager
-    def cancellation_scope(self, token):
+    def cancellation_scope(self, token, *, cancel_when_idle=False):
         if self._target_queries is None or type(token) is not str or not 1 <= len(token) <= 64:
             raise ValueError('explicit query-worker cancellation token required')
+        if type(cancel_when_idle) is not bool:
+            raise ValueError('cancel_when_idle must be an explicit boolean')
         with self._cancel_lock:
             if self._cancel_ticket is not None or token in self._used_cancel_tokens:
                 raise RuntimeError('cancellation token active or already consumed')
-            ticket = (token,threading.Event())
+            ticket = (token,threading.Event(),cancel_when_idle)
             self._used_cancel_tokens.add(token)
             self._cancel_ticket = ticket
         try:
@@ -212,7 +214,8 @@ class NativeHandleBridge:
     def request_cancel(self, token):
         with self._cancel_lock:
             ticket = self._cancel_ticket
-            if ticket is None or ticket[0] != token or self.active is None:
+            if (ticket is None or ticket[0] != token
+                    or (self.active is None and not ticket[2])):
                 return {'status':'not_active','input_dispatched':False,'release_confirmed':False}
             already = ticket[1].is_set()
             ticket[1].set()
