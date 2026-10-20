@@ -12,7 +12,7 @@ At that earlier checkpoint, a count-only read at main `e4246c87e5f3e6f63acb7f424
 
 The user's organizing objective is to make the repository safe for many workers to contribute independently while keeping ideas available for future research. A catalog entry is a way to preserve and connect an idea, not a reason to close its Issue. Close an Issue only after its distinct question, evidence and limits, dependencies, disposition, successor (if any), and reopen condition are recorded. Keep unresolved computer-control goals, active assignments, integration work, and evidence-custody gaps open. Review and integrate PRs as a separate stream; never infer a PR's disposition from its Issue or from an inventory row.
 
-### Current read and next finite work — 2026-10-20 05:05 UTC
+### Previous read — 2026-10-20 05:05 UTC
 
 The current `main` is `e18f0fc7d1fb075eff074aa5d5ceb3491016e397` (PR #9219). A live GraphQL count-only read returned 1,672 open Issues and 477 open PRs. This is newer than the fully paginated r98 snapshot, but it is **not** a current membership export; do not infer which IDs changed or treat the backlog as semantically classified. Issue #8574 is confirmed closed after its scoped result was preserved through #9217. Issues #17, #57, #59, and #7924 remain open; #17/#57/#59 retain unresolved research goals, and #7924 remains STOP/HOLD pending an owner/release and unused-allocation evidence.
 
@@ -21,6 +21,14 @@ PR #9220 is open against the exact current `main` SHA above. Its previous head `
 The 2026-10-20 review-gate scan remains a text-screen of 39 Draft PR bodies, not a verified set of active policy violations. Current operating entry points (`CURRENT_GOAL.md`, `WORKER_QUICKSTART.md`, and `WORKER_WORK_MAP.md`) already state that no reviewer-count quota is added; actual branch protection and project rules remain the only repository-level enforced gates observed in the latest audit (none were configured). Treat old PR bodies and historical experiment packets as source history: review any matching active PR individually, preserve its real scientific acceptance conditions, and remove an invented fixed seat/count rule from an active instruction only after checking its scope and current evidence.
 
 This refresh changes no GitHub Issue/PR state and does not claim a clean repository. The next cleanup batch remains item-level: preserve each idea and its result first, then decide whether that specific Issue is actionable, blocked, catalogued/deferred, completed in scope, superseded, or out of scope. In parallel, PRs receive exact-head diff/check/custody review. Unknown worktree or raw-data ownership stays on HOLD. A smaller count is never the target; traceable ideas, clear ownership/collision boundaries, and independent bounded worker packets are.
+
+### Post-merge refresh — 2026-10-20 05:13 UTC
+
+Main is now `de852bf3b65ad5b8debac3b7e0138bcf843e7313` after PR #9220; PR #9221 had already merged the cleanup-plan refresh at `3daed8acf60b7cd0eac06fecfefb9ec9778c08c8`. A live GraphQL count-only read reports 1,672 open Issues and 476 open PRs. It is not a fresh paginated membership export; r98 remains the most recent full set, and the count changes do not establish semantic disposition.
+
+PR #9220 merged after its test-only expectation was corrected and rebased onto the current main. On exact head `4262d979a451266dae79e595aa68dc7ef400331c`, all reported checks passed, including private-Xvfb X11 integration run [39373461786](https://github.com/Unjuno/agent-interface/actions/runs/39373461786). The downloaded raw result and hash are now preserved in the [server-stop r01 packet](../research/integration/standard_caller_xvfb_server_stop_20261020/r01/README.md). Cancel returned within 0.409 s, but key `a` remained down at the 8.5 s post-resume horizon; the synthetic task oracle failed, runtime task_success stayed null, release/cleanup stayed UNKNOWN, and replay remained denied. The owner-retirement and terminal-liveness receipts conflict and remain a follow-up question. This is a retained failure/counterexample, not resolution of Issue #17 or proof of general release/recovery.
+
+The 05:05 checkpoint above is historical and its `needs-checks` status for #9220 is superseded by this result. The plan PR and test PR are integrated; repository-wide Issue/PR semantic classification and local worktree custody are still incomplete. Keep actionable/research/blocked items open and continue with disjoint family packets; do not close more items solely to reduce counts.
 
 ## Computer-control checkpoint — 2026-10-20
 
