@@ -1,6 +1,30 @@
 # Repository cleanup plan
 
-## Current state after PR #9242 — 2026-10-20 07:55 UTC
+## Current state after PR #9243 — 2026-10-20
+
+Main is `b368447275924d20fbd6a10b1a6de229bc94ee47`. PR #9243 refreshed the
+cleanup census and changed no Issue or PR membership, so r110 remains the
+latest complete membership check: 1,672 open Issues and 468 open PRs, with
+both sorted-ID hashes unchanged from r109. The current host worktree recheck
+is [r02](maintenance/git-worktree-census-20261020-r02.md): 33 registered
+worktrees, 22 clean and 11 dirty in normal Git status, none locked or
+prunable. The new cleanup worktree is one of the dirty roots. The census does
+not establish process ownership, ignored-file custody, or safety to remove;
+all dirty roots remain preserved.
+
+The live description of [PR #7283](https://github.com/Unjuno/agent-interface/pull/7283)
+withdraws its former fixed requirement for two nonauthor approvals, named
+reviewer seats, and a committee epoch. Work and validation must not wait for a
+reviewer count or recruitment of a named person. Its exact-source, current-main
+composition, and applicable platform/owner/cancellation/sole-sender checks
+remain technical acceptance conditions; PR #7283 remains Draft and stale-base,
+so this policy correction does not make it merge-ready.
+
+Repository cleanup remains incomplete. Continue family-by-family semantic
+triage and individual PR/evidence custody work; do not use closure, merge, or
+deletion counts as a cleanliness measure.
+
+## Previous state after PR #9242 — 2026-10-20 07:55 UTC
 
 Main is `3f8406516747304fe82d03a7d09cfed86ea9cd91`. The [r110 membership
 recheck](maintenance/repository-inventory-recheck-20261020-r110.md) confirms
