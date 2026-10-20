@@ -143,7 +143,12 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 generated_request = json.dumps(
                     payload, sort_keys=True, separators=(",", ":")).encode()
 
+                provider_started = asyncio.Event()
+                provider_release = asyncio.Event()
+
                 async def provider_call():
+                    provider_started.set()
+                    await provider_release.wait()
                     return {
                         "status": "completed",
                         "usage": {"status": "reported", "input_tokens": 42,
@@ -151,11 +156,14 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                         "response_bytes": generated_request,
                     }
 
-                generation = await recorder.invoke_async(
-                    "generation-stale", b"frozen provider request", provider_call)
-                generated_arguments = json.loads(generation["response_bytes"])
+                pending_generation = asyncio.create_task(recorder.invoke_async(
+                    "generation-stale", b"frozen provider request", provider_call))
+                await asyncio.wait_for(provider_started.wait(), timeout=2)
                 (server_root / "fake-process-generation").write_text(
                     "b" * 64, encoding="utf-8")
+                provider_release.set()
+                generation = await asyncio.wait_for(pending_generation, timeout=2)
+                generated_arguments = json.loads(generation["response_bytes"])
 
                 async def compiled_tool_call():
                     response = await server.call_tool(
@@ -189,6 +197,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(result["replay_allowed"])
                 self.assertEqual(len(receipt["events"]), 3)
                 self.assertEqual(receipt["events"][1]["response_status"], "matched")
+                self.assertGreater(receipt["events"][0]["ended_ns"],
+                                   receipt["events"][0]["started_ns"])
+                self.assertGreaterEqual(receipt["events"][1]["started_ns"],
+                                        receipt["events"][0]["ended_ns"])
                 self.assertEqual(receipt["events"][2]["kind"], "task_score")
                 self.assertFalse(receipt["events"][2]["task_success"])
                 self.assertEqual(
