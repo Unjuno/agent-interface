@@ -4,15 +4,18 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-20 12:56 UTC):** main is
-`ab554ef5637110b35ec8317db9591fcd5a489bfd`. After D01 review, #163 and #177
-were closed with scoped evidence and reopen conditions in their comments; the
-latest GraphQL aggregate is 1,668 open Issues / 468 open PRs. This aggregate is
-not a paginated ID-set audit. The last complete paginated recheck at 12:51 UTC
-found 1,670 open Issues / 468 open PRs before those two closures; the exact
+**Current organization check (2026-10-20 13:02 UTC):** the last paginated
+membership baseline is main `ab554ef5637110b35ec8317db9591fcd5a489bfd`;
+docs-only PRs #9271 and #9272 advanced main to
+`3be3fa00eb267c2721ea9aa210af333b2472d6cd`. After D01/D02 review, #163, #177,
+#249, and #273 were closed with scoped evidence and reopen conditions in their
+comments. The latest GraphQL aggregate is 1,666 open Issues / 468 open PRs; it
+is not a paginated ID-set audit. The last complete paginated recheck at 12:51
+UTC found 1,670 open Issues / 468 open PRs before those four closures; exact
 hashes and row-metadata baseline are in the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md).
-The [D01 receipt](maintenance/idea-family-triage-r119/D01.md) maps 25 prior
-discovery candidates to current catalog entries; 23 remain open. Counts and
+The [D01](maintenance/idea-family-triage-r119/D01.md) and
+[D02](maintenance/idea-family-triage-r119/D02.md) receipts map 50 prior
+discovery candidates to current catalog entries; 46 remain open. Counts and
 catalog links are navigation/status facts, not semantic completion. Issues #53,
 #57 and #59 remain open; #57 still lacks integrated live comparison/effect
 evidence. Keep unresolved ideas and their distinct outcomes in this index.
@@ -221,8 +224,8 @@ efficiency evidence, or an acceptance result for #6/#56.
 | [#288](https://github.com/Unjuno/agent-interface/issues/288) | Observe a real Inkscape selection change after final revalidation. | Frozen audit failed its 20/20 gate; a separate retention audit preserved valid16/fail-closed4, stable-correct8, switch-wrong-target8. Compact raw is retained, but full PNGs are local-only; no validity promotion. |
 | [#287](https://github.com/Unjuno/agent-interface/issues/287) | Use Git ref compare-and-swap as the delayed-delivery effect owner. | Scoped real-Git CAS was correct 60/60: naive delivery overwrote intervening C 10/10, while old-OID CAS rejected it and preserved C 10/10. Exact-OID strictness for semantically equivalent commits remained for later rungs. |
 | [#283](https://github.com/Unjuno/agent-interface/issues/283) | Replicate native-predicate watcher stability under nuisance-only load. | Both numerical blocks met gates, but the frozen one-block/no-retry rule was violated by a duplicate formal execution. Preserve `PREREGISTRATION_VIOLATION_DUPLICATE_FORMAL`; do not call it a valid replication or run more #283 cases. |
-| [#273](https://github.com/Unjuno/agent-interface/issues/273) | Compare ordinary XTEST with an app-owned commit-time version check. | `PASS_EFFECT_OWNER_BOUNDARY_SCOPED`: only the cooperative effect owner could bind the expected version through commit; ordinary OS input did not carry that identity. This is a boundary result, not a proposal to require app-specific privileged APIs everywhere. |
-| [#249](https://github.com/Unjuno/agent-interface/issues/249) | Recheck a warning condition's source version at the use boundary. | `PASS_SOURCE_VERSION_RECHECK_SCOPED`; the frozen successor completed independently after the predecessor's partial infrastructure stop. Freshness is not authentication and leaves a check-to-effect race; full raw archive is local-only. |
+| [#273](https://github.com/Unjuno/agent-interface/issues/273) | Compare ordinary XTEST with an app-owned commit-time version check. | `PASS_EFFECT_OWNER_BOUNDARY_SCOPED`: only the cooperative effect owner could bind the expected version through commit; ordinary OS input did not carry that identity. This is a boundary result, not a proposal to require app-specific privileged APIs everywhere. Closed after merged PR #277 preserved the scoped 40-case report; this does not establish a universal API or production behavior. [Closure record](https://github.com/Unjuno/agent-interface/issues/273#issuecomment-6291444549). |
+| [#249](https://github.com/Unjuno/agent-interface/issues/249) | Recheck a warning condition's source version at the use boundary. | `PASS_SOURCE_VERSION_RECHECK_SCOPED`; the frozen successor completed independently after the predecessor's partial infrastructure stop. Freshness is not authentication and leaves a check-to-effect race. Closed after merged PR #267 preserved all 56 frozen first outcomes and report. [Closure record](https://github.com/Unjuno/agent-interface/issues/249#issuecomment-6291443628). |
 | [#236](https://github.com/Unjuno/agent-interface/issues/236) | Compare native XGetImage with Python protocol acquisition at a fixed nominal 2 ms cadence. | The frozen acquisition-ratio gate failed: both miss the <=0.8 threshold. Native gaps improved descriptively, but no robust cue-distortion reduction or maximum-gap guarantee was established; no second live block. |
 | [#227](https://github.com/Unjuno/agent-interface/issues/227) | Separate retained warning history from a fresh post-restart condition view. | `PASS_FRESH_CONDITION_VIEW_SCOPED`: the cooperative current-condition query distinguishes stale history from present condition, but does not close the subsequent read-to-use race. Raw archive is conversation-only; #249 tests the separate version recheck. |
 | [#215](https://github.com/Unjuno/agent-interface/issues/215) | Audit source provenance for the reconciled Inkscape ABI-v2 formal. | The original PR #168 formal remains invalid as source-bound/reconstructible proof. Successor #217 supplies separate 9/9 source-first live evidence; it does not relabel the old run or establish full servo/executor integration. |
