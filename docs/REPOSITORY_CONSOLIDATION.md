@@ -5,6 +5,8 @@
 
 **Open PR disposition audit r01 (2026-10-20):** nine PRs (#8702, #8832, #8836, #8840, #8841, #8843, #8844, #8845, #8848) were audited against main `c2f0cd874ce50af310a071b3df98ca52eba7b057`. None is recorded as merge-ready: the batch contains raw-custody holds, two LF/CRLF manifest defects, one report checksum/index failure, a nonportable test fixture, stale bases, and scoped HOLD/FAIL results. The [audit receipt](maintenance/open-pr-disposition-audit-20261020-r01.md) gives a no-rerun, evidence-preserving next action for each. This is a bounded sample, not all-open-PR triage; it changes no Issue/PR state and does not justify bulk closure.
 
+**Disposition follow-through r02 (2026-10-20):** the #8832 fixture defect was repaired in current-main successor PR #9217, with its exact 15-file research package preserved and catalogued; Issue #8574 was closed only after its scoped result and successor were linked. The separate #8843 A10 construction packet is now preserved under `research/doom/v39_authored_pair_cancel_composition_a10_20261012/`, with its seven CRLF-derived digests corrected against exact retained Git blobs and the saved non-executing audit independently reproduced in a temporary copy. Its 19 original package blobs and saved result remain unchanged; the packet is catalogued separately from live-allocation A10 and strict-release A10. A current-main successor is being prepared. Issue #59 remains open because live release, task effect, recovery, and MAP01 gates remain unresolved. This follow-through covers two sampled records only; r96 remains a historical membership snapshot and the full open-PR/Issue disposition is still outstanding.
+
 ## 2026-10-19 全体整理の実行計画 — アイデアを保存して作業面を収束
 
 ### 目的とゴール

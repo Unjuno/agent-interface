@@ -1,0 +1,8 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_health_crossing_cancels_before_ack_and_rejects_late_answer (test_a10_cancel_composition.ActualGuardCancelCompositionTests.test_health_crossing_cancels_before_ack_and_rejects_late_answer) ... ok
+A10_RESULT={"cancel_commands": [{"id": "cover-a10", "op": "cancel"}], "case": "health_floor_crossing_with_blocked_interrupt_ack", "classification": "CONSTRUCTION_ONLY_SOURCE_COMPOSITION", "invalidation": "health:below_hard_minimum", "latest_observation_sequence": 10, "planner_result": {"answer": null, "answer_eligible": false, "cancellation_requested": true, "status": "completed"}, "terminal_release": {"buttons_down": [], "keys_down": [], "verified": true}, "timeline": ["executor_cancel_write", "executor_flush", "planner_interrupt_request", "planner_interrupt_ack"]}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.030s
+
+OK
