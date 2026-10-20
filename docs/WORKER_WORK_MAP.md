@@ -1,15 +1,15 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 after PR #9264
+## Current entry point — 2026-10-20 after PR #9265
 
-Main is `53186c391103d50cb0b7555165a174a15842f586`. PR #9264 adds synthetic
-provider-attempt accounting and a public-MCP/Fake X composition result, but
-does not finish the #57 integrated live comparison. The r117 recheck records
-1,672 open Issues and 468 open PRs with exact ID sets matching r116; r114 is
-still the latest full row-level metadata. The r05 custody census is historical,
-not current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD
-for WSLc ownership and current-checkout prerequisites. Re-fetch exact source
-and custody before changing any item.
+Main is `6e2d1841646ef4a43ee91b043830c3a7b30eabed`. PR #9265 refreshes cleanup
+entry points only; #9264's synthetic provider-attempt accounting and
+public-MCP/Fake X composition still do not finish the #57 integrated live
+comparison. The r118 recheck has 1,672 open Issues and 468 open PRs, but both
+ID sets differ from r117; use the r118 metadata as discovery data and re-fetch
+each exact item before action. The r05 custody census is historical, not
+current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
+WSLc ownership and current-checkout prerequisites.
 
 The current organization and disposition rules are in the
 [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md). Keep ideas connected to

@@ -1,20 +1,25 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after PR #9264 — 2026-10-20
+## Current organization checkpoint after PR #9265 — 2026-10-20
 
-Current `main` is `53186c391103d50cb0b7555165a174a15842f586`. PR #9264 adds
-synthetic provider-attempt accounting and one public-MCP/Fake X composition
-result. It does not complete matched efficiency, independent live task scoring,
-provider-log reconciliation, physical input release, or bounded recovery; #57
-remains open. Keep scoped component results attached to their own hypotheses.
+Current `main` is `6e2d1841646ef4a43ee91b043830c3a7b30eabed` after the docs-only
+cleanup update PR #9265. The integrated computer-control state includes PR
+#9264's synthetic provider-attempt accounting and one public-MCP/Fake X
+composition result. It does not complete matched efficiency, independent live
+task scoring, provider-log reconciliation, physical input release, or bounded
+recovery; #57 remains open. Keep scoped component results attached to their own
+hypotheses.
 
-The complete Issue/PR membership recheck r117 was captured at 11:58:26–11:58:42
-UTC against this stable main SHA: 1,672 open Issues and 468 open PRs, with both
-sorted-ID sets matching r116. See the [r117 recheck](maintenance/repository-inventory-recheck-20261020-r117.md).
-It is a membership check, not semantic classification, PR readiness, ownership,
-or evidence custody. The latest full row-level metadata is still r114. The
-retained worktree census r05 lists 37 roots, 10 dirty, and none locked or
-prunable; it is not current ownership or deletion proof.
+The complete Issue/PR membership recheck r118 was captured around 12:17 UTC
+against this stable main SHA. GraphQL counts bracketed both complete CLI reads:
+1,672 open Issues and 468 open PRs. The exact ID-set hashes changed from r117
+despite equal counts; membership is therefore not interchangeable with the
+older row-level snapshot. See the [r118 recheck](maintenance/repository-inventory-recheck-20261020-r118.md),
+[Issue metadata](maintenance/open-issues-20261020-r118.json), and [PR metadata](maintenance/open-prs-20261020-r118.json).
+This remains a membership/metadata snapshot, not semantic classification, PR
+readiness, ownership, or evidence custody. The retained worktree census r05
+lists 37 roots, 10 dirty, and none locked or prunable; it is not current
+ownership or deletion proof.
 
 The [nine-PR disposition receipt](maintenance/pr-audit-disposition-20261020-r01.md)
 has been rechecked against live GitHub state at this baseline. Four sampled
@@ -43,7 +48,7 @@ this cleanup plan.
    process, PR/base dependency, ignored data, unique evidence, and recovery
    path are known. Keep unknown custody as an explicit hold.
 4. Refresh the complete membership and exact item metadata before state
-   changes; r117 is not a current authorization to merge, close, or delete.
+   changes; r118 is not a current authorization to merge, close, or delete.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
