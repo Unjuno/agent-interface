@@ -2,7 +2,7 @@
 
 ## Current work-map pointer — 2026-10-21
 
-**Current source:** main `ef768ac74517d70c43c7b673b6ea4319db87d4f4` (PR #9309). The latest complete membership snapshot is [r127](maintenance/repository-inventory-recheck-20261021-r127.md), with 1,655 open Issues / 464 open PRs at a stable before/after main SHA. The Issue set matches r126 and the PR set is r126 plus cleanup-plan PR #9310. This is membership only; use the live cleanup plan and refresh exact records before any state change.
+**Current source:** main `f3cb822ecdc08e5425de55cbe712203e11b1293e` after cleanup-plan PR #9310. The latest complete membership snapshot is [r128](maintenance/repository-inventory-recheck-20261021-r128.md), with 1,655 open Issues / 463 open PRs at a stable before/after main SHA; both ID sets match r126. This is membership only; use the live cleanup plan and refresh exact records before any state change.
 
 The [current cleanup objective and execution order](REPOSITORY_CLEANUP_PLAN.md#live-execution-pointer-after-pr-9309) organizes work into four independent lanes: idea-family semantics, exact-head PR dispositions, workspace/evidence custody, and documentation/navigation. The r119 missing-index queue's D01–D11 receipts route 265 candidates (17 individually closed, 248 retained open); another 223 exact-URL idea routes remain semantically unreviewed. PR #9307–#9309 add indexed caller evidence and a Fake X-only cancellation characterization; neither implies production supervisor completion or releases the separate WSLc/HOLD boundary. The [integration map](../research/integration/README.md) records those evidence limits.
 
