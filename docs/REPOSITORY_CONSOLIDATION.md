@@ -1,5 +1,5 @@
 # リポジトリ全体の整理計画
-実行手順は[リポジトリ整理の実行計画](REPOSITORY_CLEANUP_PLAN.md)を参照。Issueは意味と仮説を正規カタログに整理し、根拠・後継・再開条件をIssueへ戻してから個別に処遇する。件数を減らすこと自体は完了条件ではない。
+現行mainは`ef768ac74517d70c43c7b673b6ea4319db87d4f4`（PR #9309）。全体の実行順・完了条件は[リポジトリ整理の実行計画](REPOSITORY_CLEANUP_PLAN.md#live-execution-pointer-after-pr-9309)を参照。Issueは意味と仮説を正規カタログに整理し、根拠・後継・再開条件をIssueへ戻してから個別に処遇する。件数を減らすこと自体は完了条件ではない。
 
 **最新の完全membershipポインター (r126, 2026-10-21):** main `d3439cb9adee0bd64492d5378c05568357d38d56`を完全ページングし、前後SHA一致でIssue 1,655件/PR 463件を確認した。Issue ID setはr120と同一、PR setはr120から#8716/#8733/#8841/#8844のみ除外。詳しくは[r126 inventory](maintenance/repository-inventory-recheck-20261021-r126.md)。r125のPR差分説明にあった#9303はr120の全PR exportに含まれず、r126で訂正した。最新の全体整理目的・実行順・完了条件は[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-cleanup-objective-2026-10-21)を参照。r119の223 exact-URL semantic routesは未分類のままである。#8641、#8620、#8636 A04はcanonical recordを整えたが、各々の別個の研究上の問いはopenのまま。D01–D11 receiptsは保存済み。意味分類、exact-head PR処遇、branch/worktree/evidence custodyは未完了で、次の整理バッチで有限の範囲を選ぶ。
 
