@@ -1,6 +1,22 @@
 # Repository cleanup plan
 
-## Current state after PR #9230 — 2026-10-20 06:17 UTC
+## Current state after PR #9232 — 2026-10-20 06:23 UTC
+
+Main at the r105 capture is `0a73a19e55c2a51074c7dc602fd729a09c4c4cd6`. The latest complete paginated membership read is [r105](maintenance/repository-inventory-20261020-r105.md): 1,672 open Issues and 471 open PRs, with matching GraphQL counts and stable main SHA. Relative to r104, Issues are unchanged and PR #8789 left the open set. Current-main [PR #9232](https://github.com/Unjuno/agent-interface/pull/9232) integrated the pre-ready stderr pipe comparison and its isolated workflow; the current-main run exposed a Windows-only text newline translation mismatch, fixed by emitting the READY marker as bytes. The dedicated Linux workflow and local Windows normal/-O tests passed. This establishes the pipe construction only, not the production V39 launch path or live computer control. Original #8789 is closed as superseded; parent Issue #59 remains open. The [r105 delta](maintenance/repository-inventory-20261020-r105-delta.json) records the transition.
+
+The prior batches integrated A08 evidence through #9228 and Win32 release-state tests through #9230. Parent Issues #17/#57/#59 remain open. No WSLc allocation was used, and worktree/raw-data custody remains incomplete. Unknown-owned artifacts remain retained.
+
+### Next organization wave
+
+1. Keep r105 as the latest full membership baseline; refresh it before another remote state-changing batch.
+2. Continue one disjoint family at a time, preserving ideas, first outcomes, raw evidence, scope limits, dependencies, and the next finite decision.
+3. Review candidate PRs by exact head/base and complete diff. Integrate verified useful records on current main; close predecessors only after successor content and evidence custody are confirmed.
+4. Retain branches/worktrees/artifacts with unknown ownership until owner, process, dependency, and recovery path are known.
+5. Keep shared maps and indexes current while allowing workers to use separate family/output paths.
+
+Repository-wide cleanup remains incomplete until active ideas and artifacts have traceable dispositions and workers can start independent tasks from the map.
+
+## Previous state after PR #9230 — 2026-10-20 06:17 UTC
 
 Current main is `018d490c547fa379f5034e4cf14d8893ebf58d48`. The latest complete paginated membership read is [r104](maintenance/repository-inventory-20261020-r104.md): 1,672 open Issues and 472 open PRs, with matching GraphQL counts and stable main SHA. Relative to r103, Issues are unchanged and PR #9006 left the open set. Current-main [PR #9230](https://github.com/Unjuno/agent-interface/pull/9230) integrated five test-only Win32 release-state cases; focused Windows tests passed 19/19, and native-mcp, native-win32, builds, CLI, and replay checks passed. It changes no production behavior and does not prove physical input release. Original PR #9006 is closed as superseded; no parent Issue was closed. The [r104 delta](maintenance/repository-inventory-20261020-r104-delta.json) records the transition.
 
