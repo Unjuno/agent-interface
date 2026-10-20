@@ -10,6 +10,7 @@ Use this directory to connect ideas to existing evidence, dependencies, prioriti
 
 - [Execution-information requirements at GUI task cuts](execution-information-task-cuts.md) — #8620's finite T0 evidence, formal HOLD, relationship to #5329, and next evaluation gate.
 - [Held-out cross-domain benchmark and independent oracle contract](held-out-benchmark-oracle-contract.md) — #12's scoped evidence-classification result, separate adaptive-exposure and tail-risk questions, retained STOP, and next decision.
+- [Uncertainty-aware target beliefs and action admission](uncertainty-aware-target-beliefs.md) — #18's separate exact-tie and synthetic-admission passes, #7773's no-consumer HOLD, and the unverified integration seam.
 
 ## What belongs here
 
