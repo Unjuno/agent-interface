@@ -1,5 +1,13 @@
 # Repository cleanup plan
 
+## Current execution baseline — 2026-10-20 05:22 UTC
+
+At main `282a05b02d8d48053c88bcdb08ace54694068a6a`, the fresh paginated inventory is [r99](maintenance/repository-inventory-20261020-r99.md): 1,672 open Issues and 476 open PRs. It supersedes r98 for membership. Since r98, #8574 and #8843 left the open sets. Both transitions are reconciled: #8574's scoped T0 question is recorded `NO_INCREMENTAL_VALUE_SCOPED`, preserved by merged [PR #9217](https://github.com/Unjuno/agent-interface/pull/9217), and closed with broader transfer left deferred; #8843 was a stale-base duplicate superseded by merged [PR #9218](https://github.com/Unjuno/agent-interface/pull/9218), which preserves all 19 package blobs, repairs seven manifest entries, and retains the construction-only scope. Neither closure resolves the wider live-control Issue #59.
+
+The selected nine-PR audit in [r01](maintenance/open-pr-disposition-audit-20261020-r01.md) and the independent packet audits identify concrete repair/custody work, but their recorded heads are historical. The exact current reads confirm #8848 remains Draft/open at `6f95e7dc6d37e1dd97f5d47882796d94902478c7`, #8840 remains open at `7d9aba384b0d799119f330c9c763e60703ecc320`, and #8832 remains open at `631b9dfc16f5f682eab72ad1a88ed6fc9fce25c6`; all have stale bases. Keep saved negative/uncertain results intact. Their finite non-experiment follow-ups remain manifest repair for #8848, checksum/index repair for #8840, and portable fixture/index repair for #8832. Before assigning or integrating any work, refresh full diff, owner, checks, dependencies, and custody.
+
+This is a membership and routing refresh, not proof that the repository is semantically clean. Historical inventories and experiment records remain immutable; do not delete them to reduce noise. Continue family-by-family triage and only close an Issue when its distinct question, material outcomes, evidence limits, dependencies, disposition, successor (if any), and reopen condition are recorded.
+
 This plan makes the repository easier to work in with many independent workers while preserving research questions, first outcomes, evidence, ownership, and dependencies. It does not define success as zero open Issues or PRs.
 
 ## Execution refresh — 2026-10-20

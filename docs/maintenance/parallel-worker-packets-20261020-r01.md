@@ -1,6 +1,6 @@
 # Parallel worker packets r01 — 2026-10-20
 
-Baseline: `main` at `5bdef852869d8a3a1c2de792221fadd0db199586`; live membership is recorded in [inventory r98](repository-inventory-20261020-r98.md). These packets convert cleanup into bounded, independent reviews while retaining source Issues, failed outcomes, and evidence limits. They are not assignments, shared-resource grants, or authorization to run WSLc/Docker experiments. Workers should return private notes/artifacts to one integrator; only the integrator updates shared indexes and this map.
+Baseline: refreshed `main` at `282a05b02d8d48053c88bcdb08ace54694068a6a`; live membership is recorded in [inventory r99](repository-inventory-20261020-r99.md). Compared with r98, #8574 and #8843 are closed with scoped outcomes and merged evidence successors recorded in the cleanup plan; their closure does not resolve the broader research families. These packets convert cleanup into bounded, independent reviews while retaining source Issues, failed outcomes, and evidence limits. They are not assignments, shared-resource grants, or authorization to run WSLc/Docker experiments. Workers should return private notes/artifacts to one integrator; only the integrator updates shared indexes and this map.
 
 ## Worker contract
 
