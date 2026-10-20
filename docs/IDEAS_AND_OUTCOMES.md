@@ -4,21 +4,23 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Organization check (2026-10-20 13:18 UTC):** the last paginated membership
+**Organization check (2026-10-20 13:22 UTC):** the last paginated membership
 baseline is main `ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs
-#9271–#9275 advanced main to `35b54e4db0b449efe9e8d62fab77dfd0e3744482`. The
+#9271–#9276 advanced main to `22bf21ee1b462a35809e9b577331386b44b211d0`. The
 D01–D05 review closed fourteen scoped Issues (#163, #177, #249, #273, #345,
 #376, #451, #460, #488, #505, #747, #862, #1438, #3382) with evidence and
 limits in their comments. After the D05 #3382 closure, the latest GraphQL
-aggregate is 1,656 open Issues / 468 open PRs; this is not a paginated
+aggregate is 1,656 open Issues / 468 open PRs; the D06 review mapped 25 further
+unresolved candidates and closed none. This is not a paginated
 ID-set audit. The last complete paginated recheck found 1,670 open Issues / 468
 open PRs before these closures; exact hashes and row metadata are in the
 [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md). The [D01](maintenance/idea-family-triage-r119/D01.md),
 [D02](maintenance/idea-family-triage-r119/D02.md),
 [D03](maintenance/idea-family-triage-r119/D03.md),
 [D04](maintenance/idea-family-triage-r119/D04.md), and
-[D05](maintenance/idea-family-triage-r119/D05.md) receipts map 125 prior
-discovery candidates to catalog/maintenance routes; 111 remain open. This is
+[D05](maintenance/idea-family-triage-r119/D05.md), and
+[D06](maintenance/idea-family-triage-r119/D06.md) receipts map 150 prior
+discovery candidates to catalog/maintenance routes; 136 remain open. This is
 navigation/status information, not semantic completion. Issues #53, #57 and #59
 remain open; #57 still lacks integrated live comparison/effect evidence. Keep
 unresolved ideas and their distinct outcomes in this index.
@@ -259,9 +261,9 @@ efficiency evidence, or an acceptance result for #6/#56.
 | [#4434](https://github.com/Unjuno/agent-interface/issues/4434) | Preserve the retrospective Base64 memoization study for repeated image presentation. | Local record reports 752/752 paired responses identical and 10,714 audit checks with no errors, but standard adoption remains `HOLD_REAL_HOST_VALUE_AND_TAIL_UNRESOLVED`; GitHub publication was blocked after a source-identity mismatch. Do not rerun the 106 workers or route around that publication block. |
 | [#4428](https://github.com/Unjuno/agent-interface/issues/4428) | Test whether lazy semantic projection produces real predicate-call savings. | Retained local comparison passes the semantic/call boundary but holds the economic decision: the 100%-hit LAZY/DIRECT CPU ratio median was 2.150595, missing the <=0.90 gate. Keep it as a cost-negative result; no production value or GUI benefit. |
 | [#4399](https://github.com/Unjuno/agent-interface/issues/4399) | Preserve intra-call hash-reuse evidence and verify reader CLI compatibility. | Source-only recovery merged as [PR #5688](https://github.com/Unjuno/agent-interface/pull/5688); old 523-case/400-block timing and raw audit were not independently reverified, and the 36-row CLI matrix remains unverified. No timing rerun or result reconstruction. |
-| [#4369](https://github.com/Unjuno/agent-interface/issues/4369) | Return indexed refusals for non-string operation enums instead of leaking `TypeError`. | The three narrow guards and regression coverage merged in [PR #5574](https://github.com/Unjuno/agent-interface/pull/5574); the retained 140-case comparison reports `PASS_PROGRAM_ENUM_TYPE_COMPATIBILITY`. This does not imply native execution, task completion, or model benefit. |
+| [#4369](https://github.com/Unjuno/agent-interface/issues/4369) | Return indexed refusals for non-string operation enums instead of leaking `TypeError`. | The three narrow guards and regression coverage merged in [PR #5574](https://github.com/Unjuno/agent-interface/pull/5574), and applicable CI passed. The Issue says the retained 140-case raw payload is absent, so the reported `PASS_PROGRAM_ENUM_TYPE_COMPATIBILITY` remains independently unverified and the Issue stays open. No formal rerun or native/task/model claim. |
 | [#4348](https://github.com/Unjuno/agent-interface/issues/4348) | Locate the first failing index in sequence expansion without changing admission policy. | Still open for missing source/corpus delivery and its retained 80-case engineering gate. Metadata-only PR #4351 preserved an operation-specific publication STOP; no candidate matrix or engineering PASS is recorded. |
-| [#4342](https://github.com/Unjuno/agent-interface/issues/4342) | Preserve mixed text-gap/key-repeat execution, partial prefixes and source mapping. | Retained local result `PASS_LOCAL_MIXED_SEQUENCE_COMPOSITION`: 8 completed, 12 refused before input and 4 partial stops; raw-only audit had 1,552 checks and 12/12 effective corruptions rejected. Not formal/product PASS or a timing benefit. |
+| [#4342](https://github.com/Unjuno/agent-interface/issues/4342) | Preserve mixed text-gap/key-repeat execution, partial prefixes and source mapping. | Retained local result `PASS_LOCAL_MIXED_SEQUENCE_COMPOSITION`: 8 completed, 12 refused before input and 4 partial stops; raw-only audit had 1,552 checks and 12/12 effective corruptions rejected. This is not formal/product PASS or timing benefit, and exact Git-object readback/fresh restoration of the original capsule remains pending publication. |
 | [#3963](https://github.com/Unjuno/agent-interface/issues/3963) | Record the batched start-claim allocation and publication handoff under #3946. | Historical execution record reports scoped PASS and unsafe-baseline FAIL; recovery PR #4715 retained source/freeze only because raw rows and batch receipts were unavailable for independent readback. No new allocation or scheduler promotion. |
 | [#3961](https://github.com/Unjuno/agent-interface/issues/3961) | Preserve the #3932 supervisor experiment's separate component result and terminal-evidence gap. | Raw component audit passed, but the overall disposition remains `HOLD_SUPERVISOR_OR_EVIDENCE` because the supervisor's terminal `/proc` record was already reaped. Keep the issue for the existing owner's bounded evidence handoff; do not infer the missing exit. |
 | [#2369](https://github.com/Unjuno/agent-interface/issues/2369) | Run the reproducible CI-equivalent checks locally before pushing changes. | Open, nonbinding operational proposal. Current Quickstart calls for relevant local checks and no invented reviewer quota; on the 2026-10-19 read `main` was unprotected and repository rulesets were empty. No blanket full-CI-before-push gate or unified make-check command exists or is required by this record. |

@@ -1,10 +1,10 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 D05 review based on PR #9275
+## Current entry point — 2026-10-20 D06 review based on PR #9276
 
 The last paginated membership baseline was main
-`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9275
-advanced main to `35b54e4db0b449efe9e8d62fab77dfd0e3744482`. PR #9267 added the r119
+`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9276
+advanced main to `22bf21ee1b462a35809e9b577331386b44b211d0`. PR #9267 added the r119
 coverage audit and eleven private-output discovery packets; PR #9268 improved
 the local #57 ledger; PR #9269 preserved the newest current-main Xvfb
 stop/recovery result; PR #9270 integrated D11's family dispositions. After
@@ -16,8 +16,8 @@ semantic classification. The r119 [index coverage audit](maintenance/idea-index-
 routes 265 issues without a direct `docs/ideas` link into eleven private-output
 discovery batches. The [D11 disposition receipt](maintenance/idea-family-triage-r119/D11.md)
 reviews 15 candidates, closes only #8654/#8913 with evidence links, and leaves
-13 open with a finite next decision or hold. D01–D03 are integrated below;
-D04 is integrated below; D05 is reconciled in the current update; D06–D10 remain unreviewed. Prior
+13 open with a finite next decision or hold. D01–D05 are integrated below;
+D06 is reconciled in the current update; D07–D10 remain unreviewed. Prior
 B01–B20 reads are linked to prevent duplicate audit. These are candidate
 scopes, not active assignments. The r05 custody census is historical, not
 current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
@@ -59,8 +59,15 @@ The D05 [family-disposition receipt](maintenance/idea-family-triage-r119/D05.md)
 reuses B07–B08. It closes only #3382 after verifying merged PR #3420's scoped
 caller-audit result and preserving its limitations in the Issue comment; 24
 remain open. Aggregate after the closure is 1,656 Issues / 468 PRs (count-only,
-not a new paginated audit). D06–D10 remain unreviewed. No experiment,
+not a new paginated audit). At the D05 checkpoint, D06–D10 remained unreviewed. No experiment,
 allocation, or worktree cleanup was performed.
+
+The D06 [family-disposition receipt](maintenance/idea-family-triage-r119/D06.md)
+reuses B08–B10. It maps 25 candidates with no state changes; all remain open
+with their distinct publication holds, scoped outcomes, proposals, and next
+decisions. Aggregate is 1,656 Issues / 468 PRs (count-only, not a new paginated
+audit). D07–D10 remain unreviewed. No experiment, allocation, or worktree
+cleanup was performed.
 
 The local #57 ledger now summarizes optional cached-input, cache-write-input,
 reasoning-output and image-input token fields per attempt, returning unknown
