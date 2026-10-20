@@ -4,6 +4,15 @@ Status: local measurement-infrastructure construction only. This does not run a
 model, GUI, WSLc, Docker, or a formal allocation, and does not qualify the
 integrated route.
 
+The earlier retained [r01 packet](composition-evidence-20261020/README.md)
+captures the immediate-response stale-generation case. The follow-up
+[r02 packet](composition-evidence-20261020-r02/README.md) holds the fake
+provider response, changes target generation while it is waiting, then confirms
+the standard public caller refuses before input. Its event journal orders the
+fake provider completion before the tool call. Both are synthetic composition
+evidence only; neither establishes a live model, physical release,
+blocked-I/O recovery, or matched efficiency.
+
 ## Question and use
 
 Issue #57's current public `interface_guarded_compiled` caller lacks one joined
@@ -82,6 +91,12 @@ task score. Both public MCP results keep `task_success=null`. These are
 synthetic Fake X results only; the fixture has no real provider, production
 application, external scorer, native input, or live task. The saved response is
 the returned MCP text block, not a network-wire capture.
+
+One run of both composition cells, including the exact recorder journals,
+request/response bytes, Fake X owner receipts, and scorer-state bytes, is
+preserved in [`composition-evidence-20261020`](composition-evidence-20261020/README.md)
+with a per-file SHA-256 manifest. It records the tested synthetic outcomes; it
+does not increase their scope.
 
 `test_independent_task_score_is_terminal_and_preserves_state_bytes` verifies
 the journal contract for a caller-supplied score certificate. The composed
