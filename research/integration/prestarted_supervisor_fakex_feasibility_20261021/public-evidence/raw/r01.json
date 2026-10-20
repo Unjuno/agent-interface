@@ -1,0 +1,570 @@
+{
+  "audit": {
+    "failures": [],
+    "status": "PASS"
+  },
+  "classification": "construction-feasibility-probe; not a runtime qualification or formal WSLc allocation",
+  "conditions_sha256": "dee1564cb9746955b52bd9c4775cd068f5c52f874eed61f43a4e97f27354d659",
+  "fake_x": {
+    "address": "127.0.0.1:52140",
+    "server_pid": 45600,
+    "transport": "loopback JSON state oracle, not X11 protocol"
+  },
+  "host": {
+    "clock": "time.monotonic_ns",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "schema": "agent-interface/prestarted-supervisor-fakex-result-v1",
+  "trials": [
+    {
+      "arm": "synchronous-delayed-start",
+      "deadline_met": false,
+      "deadline_ns": 206890862000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206891406000000,
+            "reason": "expired_deadline",
+            "request_id": "sync-slow-01"
+          }
+        ],
+        "generation": "current-9b37ac98e42248cdb6fbcb7c3fa7cbbc",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206891406000000,
+        "ok": true
+      },
+      "response_ms": 844.0,
+      "response_ns": 206891406000000,
+      "started_ns": 206890562000000,
+      "trial_id": "sync-slow-01",
+      "worker": {
+        "accepted": false,
+        "observed_ns": 206891406000000,
+        "ok": true,
+        "reason": "expired_deadline",
+        "request_id": "sync-slow-01",
+        "worker_decision": "attempted_after_deadline",
+        "worker_finished_ns": 206891406000000,
+        "worker_started_ns": 206891406000000
+      },
+      "worker_exitcode": 0,
+      "worker_retired": true
+    },
+    {
+      "arm": "synchronous-delayed-start",
+      "deadline_met": false,
+      "deadline_ns": 206891706000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206892234000000,
+            "reason": "expired_deadline",
+            "request_id": "sync-slow-02"
+          }
+        ],
+        "generation": "current-b8f041266d854bdca1ed6f3e58dfb345",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206892250000000,
+        "ok": true
+      },
+      "response_ms": 844.0,
+      "response_ns": 206892250000000,
+      "started_ns": 206891406000000,
+      "trial_id": "sync-slow-02",
+      "worker": {
+        "accepted": false,
+        "observed_ns": 206892234000000,
+        "ok": true,
+        "reason": "expired_deadline",
+        "request_id": "sync-slow-02",
+        "worker_decision": "attempted_after_deadline",
+        "worker_finished_ns": 206892234000000,
+        "worker_started_ns": 206892234000000
+      },
+      "worker_exitcode": 0,
+      "worker_retired": true
+    },
+    {
+      "arm": "synchronous-delayed-start",
+      "deadline_met": false,
+      "deadline_ns": 206892550000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206893062000000,
+            "reason": "expired_deadline",
+            "request_id": "sync-slow-03"
+          }
+        ],
+        "generation": "current-62b593b5f08f481da1e0fd90840192a2",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206893062000000,
+        "ok": true
+      },
+      "response_ms": 812.0,
+      "response_ns": 206893062000000,
+      "started_ns": 206892250000000,
+      "trial_id": "sync-slow-03",
+      "worker": {
+        "accepted": false,
+        "observed_ns": 206893062000000,
+        "ok": true,
+        "reason": "expired_deadline",
+        "request_id": "sync-slow-03",
+        "worker_decision": "attempted_after_deadline",
+        "worker_finished_ns": 206893062000000,
+        "worker_started_ns": 206893062000000
+      },
+      "worker_exitcode": 0,
+      "worker_retired": true
+    },
+    {
+      "arm": "prestarted-supervisor-delayed-start",
+      "caller_deadline_met": false,
+      "caller_response_ms": 313.0,
+      "caller_response_ns": 206893484000000,
+      "caller_status_at_deadline": "unknown_timeout",
+      "deadline_ns": 206893471000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206894000000000,
+            "reason": "expired_deadline",
+            "request_id": "supervised-slow-01"
+          }
+        ],
+        "generation": "current-b57251cf53824cb7837f4702ecaf41b6",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206894000000000,
+        "ok": true
+      },
+      "started_ns": 206893171000000,
+      "supervisor_ready": {
+        "pid": 20552,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-slow-01",
+        "supervisor_completed_ns": 206894000000000,
+        "worker": {
+          "accepted": false,
+          "observed_ns": 206894000000000,
+          "ok": true,
+          "reason": "expired_deadline",
+          "request_id": "supervised-slow-01",
+          "worker_decision": "attempted_after_deadline",
+          "worker_finished_ns": 206894000000000,
+          "worker_started_ns": 206894000000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": true,
+      "trial_id": "supervised-slow-01"
+    },
+    {
+      "arm": "prestarted-supervisor-delayed-start",
+      "caller_deadline_met": true,
+      "caller_response_ms": 296.0,
+      "caller_response_ns": 206894421000000,
+      "caller_status_at_deadline": "unknown_timeout",
+      "deadline_ns": 206894425000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206894937000000,
+            "reason": "expired_deadline",
+            "request_id": "supervised-slow-02"
+          }
+        ],
+        "generation": "current-aa494fcc93e54217ba57ce4ef5c9a2ad",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206894937000000,
+        "ok": true
+      },
+      "started_ns": 206894125000000,
+      "supervisor_ready": {
+        "pid": 24172,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-slow-02",
+        "supervisor_completed_ns": 206894937000000,
+        "worker": {
+          "accepted": false,
+          "observed_ns": 206894937000000,
+          "ok": true,
+          "reason": "expired_deadline",
+          "request_id": "supervised-slow-02",
+          "worker_decision": "attempted_after_deadline",
+          "worker_finished_ns": 206894937000000,
+          "worker_started_ns": 206894937000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": true,
+      "trial_id": "supervised-slow-02"
+    },
+    {
+      "arm": "prestarted-supervisor-delayed-start",
+      "caller_deadline_met": true,
+      "caller_response_ms": 297.0,
+      "caller_response_ns": 206895359000000,
+      "caller_status_at_deadline": "unknown_timeout",
+      "deadline_ns": 206895362000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206895890000000,
+            "reason": "expired_deadline",
+            "request_id": "supervised-slow-03"
+          }
+        ],
+        "generation": "current-e3e2e00fe7794e659541e206d0588155",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206895890000000,
+        "ok": true
+      },
+      "started_ns": 206895062000000,
+      "supervisor_ready": {
+        "pid": 24788,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-slow-03",
+        "supervisor_completed_ns": 206895890000000,
+        "worker": {
+          "accepted": false,
+          "observed_ns": 206895890000000,
+          "ok": true,
+          "reason": "expired_deadline",
+          "request_id": "supervised-slow-03",
+          "worker_decision": "attempted_after_deadline",
+          "worker_finished_ns": 206895890000000,
+          "worker_started_ns": 206895875000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": true,
+      "trial_id": "supervised-slow-03"
+    },
+    {
+      "arm": "prestarted-supervisor-fast-control",
+      "caller_deadline_met": true,
+      "caller_response_ms": 141.0,
+      "caller_response_ns": 206896156000000,
+      "caller_status_at_deadline": "received_worker_result",
+      "deadline_ns": 206898015000000,
+      "independent_fake_x_readback": {
+        "accepted": [
+          {
+            "accepted_ns": 206896156000000,
+            "generation": "current-84e898b57e9d4e2cae6340079661d21a",
+            "key": "a",
+            "kind": "KeyRelease",
+            "request_id": "supervised-fast-01"
+          }
+        ],
+        "decisions": [],
+        "generation": "current-84e898b57e9d4e2cae6340079661d21a",
+        "keys_down": [],
+        "observed_ns": 206896156000000,
+        "ok": true
+      },
+      "started_ns": 206896015000000,
+      "supervisor_ready": {
+        "pid": 50704,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-fast-01",
+        "supervisor_completed_ns": 206896156000000,
+        "worker": {
+          "accepted": true,
+          "accepted_ns": 206896156000000,
+          "generation": "current-84e898b57e9d4e2cae6340079661d21a",
+          "key": "a",
+          "kind": "KeyRelease",
+          "ok": true,
+          "request_id": "supervised-fast-01",
+          "worker_decision": "attempted_before_deadline",
+          "worker_finished_ns": 206896156000000,
+          "worker_started_ns": 206896156000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": false,
+      "trial_id": "supervised-fast-01"
+    },
+    {
+      "arm": "prestarted-supervisor-fast-control",
+      "caller_deadline_met": true,
+      "caller_response_ms": 140.0,
+      "caller_response_ns": 206896421000000,
+      "caller_status_at_deadline": "received_worker_result",
+      "deadline_ns": 206898281000000,
+      "independent_fake_x_readback": {
+        "accepted": [
+          {
+            "accepted_ns": 206896421000000,
+            "generation": "current-3b16590aa29b474283fdb1e76478a09e",
+            "key": "a",
+            "kind": "KeyRelease",
+            "request_id": "supervised-fast-02"
+          }
+        ],
+        "decisions": [],
+        "generation": "current-3b16590aa29b474283fdb1e76478a09e",
+        "keys_down": [],
+        "observed_ns": 206896421000000,
+        "ok": true
+      },
+      "started_ns": 206896281000000,
+      "supervisor_ready": {
+        "pid": 8572,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-fast-02",
+        "supervisor_completed_ns": 206896421000000,
+        "worker": {
+          "accepted": true,
+          "accepted_ns": 206896421000000,
+          "generation": "current-3b16590aa29b474283fdb1e76478a09e",
+          "key": "a",
+          "kind": "KeyRelease",
+          "ok": true,
+          "request_id": "supervised-fast-02",
+          "worker_decision": "attempted_before_deadline",
+          "worker_finished_ns": 206896421000000,
+          "worker_started_ns": 206896421000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": false,
+      "trial_id": "supervised-fast-02"
+    },
+    {
+      "arm": "prestarted-supervisor-fast-control",
+      "caller_deadline_met": true,
+      "caller_response_ms": 157.0,
+      "caller_response_ns": 206896703000000,
+      "caller_status_at_deadline": "received_worker_result",
+      "deadline_ns": 206898546000000,
+      "independent_fake_x_readback": {
+        "accepted": [
+          {
+            "accepted_ns": 206896687000000,
+            "generation": "current-a0367e26644e4603b04ca87f399b0eea",
+            "key": "a",
+            "kind": "KeyRelease",
+            "request_id": "supervised-fast-03"
+          }
+        ],
+        "decisions": [],
+        "generation": "current-a0367e26644e4603b04ca87f399b0eea",
+        "keys_down": [],
+        "observed_ns": 206896703000000,
+        "ok": true
+      },
+      "started_ns": 206896546000000,
+      "supervisor_ready": {
+        "pid": 20472,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-fast-03",
+        "supervisor_completed_ns": 206896703000000,
+        "worker": {
+          "accepted": true,
+          "accepted_ns": 206896687000000,
+          "generation": "current-a0367e26644e4603b04ca87f399b0eea",
+          "key": "a",
+          "kind": "KeyRelease",
+          "ok": true,
+          "request_id": "supervised-fast-03",
+          "worker_decision": "attempted_before_deadline",
+          "worker_finished_ns": 206896687000000,
+          "worker_started_ns": 206896687000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": false,
+      "trial_id": "supervised-fast-03"
+    },
+    {
+      "arm": "prestarted-supervisor-stale-generation",
+      "caller_deadline_met": true,
+      "caller_response_ms": 140.0,
+      "caller_response_ns": 206896968000000,
+      "caller_status_at_deadline": "received_worker_result",
+      "deadline_ns": 206898828000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206896953000000,
+            "reason": "stale_generation",
+            "request_id": "supervised-stale-01"
+          }
+        ],
+        "generation": "current-3b9f8f36870748a09d1e2f680b55c04f",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206896968000000,
+        "ok": true
+      },
+      "started_ns": 206896828000000,
+      "supervisor_ready": {
+        "pid": 34008,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-stale-01",
+        "supervisor_completed_ns": 206896968000000,
+        "worker": {
+          "accepted": false,
+          "observed_ns": 206896953000000,
+          "ok": true,
+          "reason": "stale_generation",
+          "request_id": "supervised-stale-01",
+          "worker_decision": "attempted_before_deadline",
+          "worker_finished_ns": 206896953000000,
+          "worker_started_ns": 206896953000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": false,
+      "trial_id": "supervised-stale-01"
+    },
+    {
+      "arm": "prestarted-supervisor-stale-generation",
+      "caller_deadline_met": true,
+      "caller_response_ms": 141.0,
+      "caller_response_ns": 206897234000000,
+      "caller_status_at_deadline": "received_worker_result",
+      "deadline_ns": 206899093000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206897234000000,
+            "reason": "stale_generation",
+            "request_id": "supervised-stale-02"
+          }
+        ],
+        "generation": "current-6e8df0276af84fd6b84e7cddc564b06d",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206897234000000,
+        "ok": true
+      },
+      "started_ns": 206897093000000,
+      "supervisor_ready": {
+        "pid": 29880,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-stale-02",
+        "supervisor_completed_ns": 206897234000000,
+        "worker": {
+          "accepted": false,
+          "observed_ns": 206897234000000,
+          "ok": true,
+          "reason": "stale_generation",
+          "request_id": "supervised-stale-02",
+          "worker_decision": "attempted_before_deadline",
+          "worker_finished_ns": 206897234000000,
+          "worker_started_ns": 206897218000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": false,
+      "trial_id": "supervised-stale-02"
+    },
+    {
+      "arm": "prestarted-supervisor-stale-generation",
+      "caller_deadline_met": true,
+      "caller_response_ms": 141.0,
+      "caller_response_ns": 206897484000000,
+      "caller_status_at_deadline": "received_worker_result",
+      "deadline_ns": 206899343000000,
+      "independent_fake_x_readback": {
+        "accepted": [],
+        "decisions": [
+          {
+            "accepted": false,
+            "observed_ns": 206897484000000,
+            "reason": "stale_generation",
+            "request_id": "supervised-stale-03"
+          }
+        ],
+        "generation": "current-df3398164b4849148fa5f6f153de1c14",
+        "keys_down": [
+          "a"
+        ],
+        "observed_ns": 206897484000000,
+        "ok": true
+      },
+      "started_ns": 206897343000000,
+      "supervisor_ready": {
+        "pid": 49472,
+        "status": "ready"
+      },
+      "supervisor_result": {
+        "request_id": "supervised-stale-03",
+        "supervisor_completed_ns": 206897484000000,
+        "worker": {
+          "accepted": false,
+          "observed_ns": 206897484000000,
+          "ok": true,
+          "reason": "stale_generation",
+          "request_id": "supervised-stale-03",
+          "worker_decision": "attempted_before_deadline",
+          "worker_finished_ns": 206897484000000,
+          "worker_started_ns": 206897468000000
+        },
+        "worker_exitcode": 0,
+        "worker_retired": true
+      },
+      "supervisor_result_arrived_after_deadline": false,
+      "trial_id": "supervised-stale-03"
+    }
+  ]
+}

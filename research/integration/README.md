@@ -7,6 +7,37 @@ Child directories are retained integration studies. Their existence does not imp
 
 ## Composition path
 
+The [standard-caller process-start cancellation probe](standard_caller_cancel_process_start_20261021/README.md)
+shows that actual Windows helper-process creation is included in synchronous
+cancel latency and pauses the MCP event loop; the current XRes supervision
+gate times out before release and correctly leaves the result UNKNOWN. This is
+local Fake X timing evidence, not live release or MAP01 qualification.
+
+Current-source `e7d79d04` native-WSL/Xvfb reruns now preserve the two most
+relevant standard-caller gates: [release while the owner is blocked in X11
+sync](standard_caller_xvfb_blocked_release_current_e7_20261021/README.md)
+and [target-generation refusal, recovery and independent effect
+readback](standard_caller_xvfb_generation_current_e7_20261021/README.md).
+Both are one-trial synthetic Xvfb evidence; the blocked-release run keeps the
+public caller UNKNOWN, and neither establishes stopped-server or physical
+desktop behavior.
+
+The [Windows generation/cancellation recheck](standard_caller_windows_generation_cancel_recheck_20261021/README.md)
+passes three standard-MCP Fake X caller tests in normal and optimized Python:
+stale process/window generations are refused, and blocked-owner cancellation
+keeps release UNKNOWN. This is a local regression recheck, not X-server or
+physical-input qualification.
+
+Two complementary Windows Fake X probes isolate caller scheduling costs:
+[actual helper-process startup](standard_caller_cancel_process_start_20261021/README.md)
+measures synchronous `Process.start()` delay, while [injected cleanup-boundary
+delays](standard_caller_cancel_eventloop_block_20261021/README.md) show the
+same public async caller blocking unrelated event-loop heartbeats. The
+[prestarted-supervisor feasibility probe](prestarted_supervisor_fakex_feasibility_20261021/README.md)
+is construction-only evidence; it does not validate a production supervisor.
+These probes preserve UNKNOWN/no-replay behavior and do not establish input
+release or real GUI effects.
+
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
 Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.

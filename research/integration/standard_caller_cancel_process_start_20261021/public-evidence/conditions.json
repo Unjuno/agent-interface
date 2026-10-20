@@ -1,0 +1,39 @@
+{
+  "schema": "agent-interface/standard-caller-cancel-process-start-conditions-v1",
+  "classification": "local-standard-mcp-caller-fakex-real-spawn-construction-probe",
+  "question": "Does actual multiprocessing spawn startup, delayed immediately before Process.start(), add its duration to cancellation response and pause the standard MCP event loop?",
+  "source_revision": "e7d79d04de46202622873bf116adb909abb0dee2",
+  "runtime": "Windows host; Python 3.11 multiprocessing spawn; repository Fake X owned-session fixture; helper workers return synthetic disconnect/UNKNOWN receipts; no X server, Xlib server operation, physical input, WSL, WSLc, Docker, or external model",
+  "arms": {
+    "actual-spawn-no-delay": {
+      "trials": 3,
+      "injected_delay_before_each_helper_start_ms": 0,
+      "expectation": "both real helper processes are created and retired; cleanup is UNKNOWN; response and heartbeat gaps include actual Windows spawn cost"
+    },
+    "actual-spawn-with-delay": {
+      "trials": 3,
+      "injected_delay_before_each_helper_start_ms": 700,
+      "helper_starts_per_cancel": 2,
+      "expectation": "both helper starts sleep in the caller process immediately before the real Process.start(); response and heartbeat gaps include at least the two injected delays plus actual spawn cost; cleanup is UNKNOWN"
+    }
+  },
+  "frozen_inputs": {
+    "target": {"name": "app", "native_id": 20},
+    "action": "one CTRL+a chord; Fake X owner blocks in sync until parent retirement",
+    "response_wait_ms": 0,
+    "heartbeat_interval_ms": 10,
+    "disconnect_helper": "real spawned process returns a synthetic disconnected receipt",
+    "release_helper": "real spawned process returns a synthetic unknown receipt and emits no input"
+  },
+  "measurements": [
+    "public interface_guarded_cancel elapsed_ms from call entry through return",
+    "maximum asyncio heartbeat gap spanning cancellation",
+    "per-helper Process.start wrapper delay, clean helper exit code and retirement",
+    "cancel/release/terminal UNKNOWN metadata and replay denial"
+  ],
+  "decision": {
+    "classification": "DESCRIPTIVE_CURRENT_PATH_RESULT; no product PASS",
+    "evidence_rule": "All six trials must show exactly two helper starts, clean worker retirement, release_confirmed=false, cleanup UNKNOWN, task_success=null and replay_allowed=false. Delayed-arm response and event-loop gap must exceed the no-delay arm.",
+    "scope_limit": "The helper receipt is synthetic. This proves only caller/process-start timing composition, not XRes wire behavior, real release, physical input, OS hard bounds, or the proposed supervisor architecture."
+  }
+}
