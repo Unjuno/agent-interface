@@ -1,11 +1,13 @@
 # PR audit disposition r01 — 2026-10-20
 
-Current source: `main` at `81819356e42ef7ec21587ffbc0235fc7d8c1fcf4`.
-The nine PR states and heads below were re-read from GitHub on 2026-10-20.
-Three completed read-only audits were reconciled with the retained family
-records. This is an integration receipt, not approval to merge, close, rerun,
-or remove branches/worktrees. All listed PRs target `main`; their base SHAs are
-historical and differ from current main.
+Audit source: `main` at `81819356e42ef7ec21587ffbc0235fc7d8c1fcf4`.
+The nine PR states and heads below were first reconciled with the retained
+family records on 2026-10-20. A later live recheck against current `main`
+`53186c391103d50cb0b7555165a174a15842f586` confirmed the same states, head
+SHAs, and recorded base SHAs for all nine PRs. The base SHAs are historical and
+differ from current main. Three completed read-only audits are preserved
+below. This is an integration receipt, not approval to merge, close, rerun, or
+remove branches/worktrees.
 
 | PR | Live state (head / recorded base) | Preserved finding | Next disposition |
 |---|---|---|---|
