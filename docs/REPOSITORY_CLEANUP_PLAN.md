@@ -1,26 +1,35 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after PR #9268 — 2026-10-20
+## Current organization checkpoint after PR #9269 — 2026-10-20
 
-Current `main` is `bc64c65ba2a77d152b1eca9fdc5fca4d038abf5f`. PR #9267 added the
-r119 coverage audit and eleven candidate discovery packets; PR #9268 completed
-detailed nullable token-field summaries in the local #57 ledger. The r119 full
-membership/metadata snapshot remains the latest saved complete read, but it
-predates #9267. A current GraphQL count read reports 1,672 open Issues and 468
-open PRs; matching counts do not establish matching IDs or semantic
-dispositions. The five-PR disposition receipt below is a bounded sample, not a
-complete readiness audit. The integrated computer-control state still lacks
-matched efficiency, independent live task scoring, provider-log reconciliation,
-outage-time release, and a generally bounded recovery path; #57 remains open.
-The newest standard-caller Xvfb result records both an outage-task failure and
-a separate synthetic post-resume recovery pass in the [retained r03 packet](../research/integration/standard_caller_xvfb_server_stop_20261020/pr9247-run-39399107944/README.md).
-Keep those outcomes and limits distinct.
+Current `main` is `42ffd82b2c6f7c718fb230b146593244efcd4a23`. PR #9269 reconciles
+the cleanup/integration entry points and preserves current-main Xvfb run
+39399107944. A complete paginated recheck at 2026-10-20 12:42 UTC found 1,672
+open Issues and 468 open PRs, with GraphQL counts and the main SHA stable before
+and after. Both sorted ID sets exactly match r119 (Issue SHA-256
+`073738bd5d54cc178a3f92d9df0d03d054a12968ccf5fd575ed57e8ee72e55d4`; PR
+`878a28d681a0ae705654b670693106498874c525afe2ca828aa129b3dccafb3a`). No
+duplicate inventory was added; r119 remains the saved row-metadata baseline.
+Membership is current, but semantic dispositions, per-item readiness, active
+ownership, and artifact custody remain incomplete. The bounded nine-PR receipt
+below is not a complete readiness audit. Matched efficiency, independent live
+task scoring, provider-log reconciliation, outage-time release, and a generally
+bounded recovery path remain open; #57 remains open. Run 39399107944 records an
+outage-task failure and a distinct synthetic post-resume recovery pass in the
+[retained r03 packet](../research/integration/standard_caller_xvfb_server_stop_20261020/pr9247-run-39399107944/README.md).
+
+A relative-link check of the two repository entry points also found eleven
+links to research files absent from this checkout (three in
+`REPOSITORY_CONSOLIDATION.md`, eight in `WORKER_WORK_MAP.md`). Their historical
+sources and custody are not yet resolved, so do not silently remove or redirect
+them. The next cleanup pass must identify a preserved canonical replacement or
+record the exact missing-evidence boundary for each.
 
 The complete Issue/PR membership recheck r119 was captured around 12:22 UTC
-against `666888468e81b3c3c2c1e4103df549afcaf23822`, before PR #9267. GraphQL
-counts bracketed both complete CLI reads: 1,672 open Issues and 468 open PRs.
-Both ID sets matched r118; row metadata was refreshed at the r119 baseline. A
-fresh complete recheck has not been made after #9267. See the [r119 recheck](maintenance/repository-inventory-recheck-20261020-r119.md),
+against `666888468e81b3c3c2c1e4103df549afcaf23822`. Its ID sets matched r118;
+row metadata was refreshed at that baseline. The post-#9269 membership-only
+recheck above matches the same sets, so the saved r119 row-level metadata is
+reused rather than duplicated. See the [r119 recheck](maintenance/repository-inventory-recheck-20261020-r119.md),
 [Issue metadata](maintenance/open-issues-20261020-r119.json), and [PR metadata](maintenance/open-prs-20261020-r119.json).
 This remains a membership/metadata snapshot, not semantic classification, PR
 readiness, ownership, or evidence custody. The retained worktree census r05
@@ -61,9 +70,14 @@ this cleanup plan.
    path are known. Keep unknown custody as an explicit hold.
 5. Refresh the complete membership and exact item metadata before state
    changes; r119 is a dated baseline, not merge, close, or deletion authority.
-   For the next census, compute the full sorted ID sets and metadata once, bracket
-   the read with GraphQL counts and a stable main SHA, then reuse that snapshot
-   for both Issue and PR routing rather than generating parallel inventories.
+   The 2026-10-20 12:42 UTC membership recheck already confirms r119's sets;
+   reuse its row metadata and re-fetch the exact item immediately before a
+   decision rather than generating another whole-repository inventory.
+6. Resolve the eleven absent local evidence links in the two canonical entry
+   points by tracing their source history and current family records. Update a
+   link only when a byte-preserved packet or faithful canonical successor is
+   verified; otherwise retain the reference and explicitly label custody
+   unresolved.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,

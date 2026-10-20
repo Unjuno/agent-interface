@@ -1,17 +1,20 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 after PR #9267
+## Current entry point — 2026-10-20 after PR #9269
 
-Main is `6ad11c0b87f37eb4c26483dbd37cd6f55c7ff216`. PR #9267 adds the r119
-coverage audit and eleven private-output discovery packets; r119 itself is a
-pre-#9267 metadata baseline. #9264's synthetic provider-attempt accounting and public-MCP/Fake
-X composition still do not finish the #57 integrated live comparison. The
-r119 [index coverage audit](maintenance/idea-index-coverage-20261020-r119.md)
-routes 265 issues without a direct `docs/ideas` link into eleven private-output
-discovery batches; prior B01–B20 reads are linked to prevent duplicate audit.
-These are candidate scopes, not active assignments. The r05 custody census is
-historical, not current ownership proof. #17 and #57 remain open; #7924 remains
-STOP/HOLD for WSLc ownership and current-checkout prerequisites.
+Main is `42ffd82b2c6f7c718fb230b146593244efcd4a23`. PR #9267 added the r119
+coverage audit and eleven private-output discovery packets; PR #9268 improved
+the local #57 ledger; PR #9269 preserved the newest current-main Xvfb
+stop/recovery result. A complete paginated membership recheck after #9269 found
+the same 1,672 open Issue and 468 open PR IDs as r119, so no duplicate full
+inventory was created. The saved r119 row metadata remains a baseline, not
+current ownership or semantic classification. The r119 [index coverage audit]
+(maintenance/idea-index-coverage-20261020-r119.md) routes 265 issues without a
+direct `docs/ideas` link into eleven private-output discovery batches; prior
+B01–B20 reads are linked to prevent duplicate audit. These are candidate
+scopes, not active assignments. The r05 custody census is historical, not
+current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
+WSLc ownership and current-checkout prerequisites.
 
 The local #57 ledger now summarizes optional cached-input, cache-write-input,
 reasoning-output and image-input token fields per attempt, returning unknown
@@ -88,7 +91,7 @@ X, and leaves task_success null. The full lifecycle module passes 16/16 in
 normal and -O modes. #5 remains open; no live server ordering, physical release,
 or product task effect is established. Next finite step is a source/design audit
 of an ordered admission fence that does not wait on blocked Xlib I/O.
-The current discovery coverage is measured against the [r51 snapshot](maintenance/repository-inventory-20261019-r51.md) in the [r51 idea-index audit](maintenance/idea-index-coverage-20261019-r51.md). Of 1,675 open Issues, 1,184 have primary rows in the historical research index; 491 do not. Among those 491, 220 have a literal Issue URL in an individual `docs/ideas/*.md` file and 271 do not. The [r51 disjoint work queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv) divides them into 20 number-sorted batches of at most 25. These are navigation facts only; no semantic family, priority, owner, or disposition is inferred. The r15 snapshot remains immutable history. Re-read live sources before changing shared family records or Issue status. Issue #4 is now indexed in the visual family but the historical primary-row gap snapshot is unchanged. Use the queue as a discovery source, not a research-only classification. The full outcome and safe closure criteria are in the [repository consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
+**Historical discovery coverage (r51/r52):** the 1,675-Issue primary-row gap and 20-batch queue in [r51](maintenance/idea-index-coverage-20261019-r51.md) are retained as history and are no longer the current routing surface. Use the [r119 coverage audit](maintenance/idea-index-coverage-20261020-r119.md) and its 265-row queue split into eleven private-output packets. These are navigation facts and candidate scopes only; no semantic family, priority, owner, or disposition is inferred. Re-read live sources and check ownership before changing a family record or Issue state. The full outcome and safe closure criteria are in the [repository consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
 
 **Current evidence-routing result:** the [A02/A03 blocked-X11 packet note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md)
 preserves both first outcomes. A02 never entered the probe due to an incomplete

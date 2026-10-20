@@ -1,7 +1,7 @@
 # リポジトリ全体の整理計画
 実行手順は[リポジトリ整理の実行計画](REPOSITORY_CLEANUP_PLAN.md)を参照。Issueは意味と仮説を正規カタログに整理し、根拠・後継・再開条件をIssueへ戻してから個別に処遇する。件数を減らすこと自体は完了条件ではない。
 
-**現行ポインター (2026-10-20):** 現行mainと作業順序は[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md)を参照。main `666888468e81b3c3c2c1e4103df549afcaf23822`に対する最新membershipとrow metadataは[r119](maintenance/repository-inventory-recheck-20261020-r119.md)。1,672 open Issues / 468 open PRsで、ID集合はr118と一致。r119の[idea-index coverage](maintenance/idea-index-coverage-20261020-r119.md)は、全Issueへの中央索引経路と、265件のfamily-record候補を区別する。件数やsnapshotは意味分類やPR準備完了を表さない。worktree r05は37件（clean 27、dirty 10、locked/prunable 0）の歴史的な状態記録で、owner/custodyを証明しない。IssueとPRは家族単位でアイデア・証拠・依存を整理し、個別根拠がそろった時だけ状態を変更する。
+**現行ポインター (2026-10-20):** 現行mainと作業順序は[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md)を参照。main `42ffd82b2c6f7c718fb230b146593244efcd4a23`に対する12:42 UTC完全ページングmembership再照合は、1,672 open Issues / 468 open PRsでr119とID集合が一致。重複snapshotは作らず、r119の[保存済みrow metadata](maintenance/repository-inventory-recheck-20261020-r119.md)を再利用する。r119の[idea-index coverage](maintenance/idea-index-coverage-20261020-r119.md)は全Issueへの中央索引経路と、265件のfamily-record候補を区別する。件数やsnapshotは意味分類やPR準備完了を表さない。worktree r05は37件（clean 27、dirty 10、locked/prunable 0）の歴史的な状態記録で、owner/custodyを証明しない。IssueとPRは家族単位でアイデア・証拠・依存を整理し、個別根拠がそろった時だけ状態を変更する。
 
 **Historical full row-level metadata r114 (2026-10-20 10:39 UTC):** main `270e886685f3814f053824a5110e9226b1b3f5a5`でopen Issue 1,672件・open PR 468件。[r114 inventory](maintenance/repository-inventory-recheck-20261020-r114.md)。r119 is the latest full metadata at main `666888468e81b3c3c2c1e4103df549afcaf23822`; both snapshots are membership metadata, not semantic triage, per-PR review, or owner/custody proof. Re-fetch the exact item before a state change.
 
