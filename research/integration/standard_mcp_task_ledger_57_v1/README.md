@@ -67,20 +67,27 @@ The recorder resolves the raw directory at startup and before each write; it
 refuses a path that no longer resolves to the run's direct `raw/` child. The
 caller must still provide a private, exclusively owned run directory.
 
-The local `test_mcp_endpoint_composition.py` test drives an asynchronous fake
-provider result into the actual public `interface_guarded_compiled` FastMCP
-entry point with the existing deterministic Fake X owner. It joins the
-generation-bound profile request to the tool receipt, matches the returned MCP
-text payload to its result object, and counts reported usage. The fixture still
-has no real provider or independent application score: even when the compiled
-method says `TASK_SUCCEEDED`, the ledger keeps `task_success` null and replay
-denied. The saved response is the returned MCP text block, not a network-wire
-capture.
+The local `test_mcp_endpoint_composition.py` tests drive asynchronous fake
+provider results into the actual public `interface_guarded_compiled` FastMCP
+entry point with the existing deterministic Fake X owner. The success cell
+joins the generation-bound profile request to the tool receipt, matches the
+returned MCP text payload to its result object, and counts reported usage. The
+Fake X child writes its initial and final 32x32 BGRX state to a test-only side
+channel. A separate pixel oracle verifies that pixel (1,1) changed from
+non-red to red, then records the final state bytes and score in the task
+ledger. A second cell changes the process generation after the fake provider
+returns its stale request; the standard caller admits zero transitions, the
+state remains unchanged, replay is denied, and the same oracle records a false
+task score. Both public MCP results keep `task_success=null`. These are
+synthetic Fake X results only; the fixture has no real provider, production
+application, external scorer, native input, or live task. The saved response is
+the returned MCP text block, not a network-wire capture.
 
 `test_independent_task_score_is_terminal_and_preserves_state_bytes` verifies
-only the journal contract for a caller-supplied score certificate. No scorer is
-run by that test, and the public MCP composition test still has
-`task_success=null`.
+the journal contract for a caller-supplied score certificate. The composed
+tests additionally run a small pixel oracle against the Fake X side channel;
+the recorder preserves the certificate but cannot establish independence of a
+production scorer or exhaustiveness of an external provider log.
 
 An unfinished call makes strict reconciliation fail. A newly created recorder
 session cannot silently resume it or start later attempts in the same run
@@ -89,7 +96,9 @@ record into zero calls or a successful result. Partial/unavailable usage stays
 unknown, and a runtime result's `task_success` is still not an independent task
 score.
 
-This is `PASS_CONTRACT_SCOPED` for the local recorder/composition contract only.
+This is `PASS_CONTRACT_SCOPED` for the local recorder/composition contract,
+one synthetic Fake X before/after effect predicate, and one stale-generation
+refusal through the provider-to-public-MCP path only.
 The wrapper cannot prove that an external orchestrator routed every model call
 or MCP operation through it. The caller must pass exact captured wire bytes;
 when bytes are unavailable, the receipt says so. No actual provider, GUI, WSLc,
@@ -109,16 +118,17 @@ provider logs before claiming completeness.
   references. Run the validator in normal and optimized Python.
 - **D:** `PASS_CONTRACT_SCOPED` only for these local validation rules. It does
   not establish the ledger's exhaustiveness against provider logs or runtime
-  transport, actual token usage, task effect, release, recovery, latency, or
-  efficiency.
+  transport, actual token usage, any product/live task effect, release,
+  recovery, latency, or efficiency. The one synthetic pixel transition is
+  scoped to its Fake X fixture.
 - **C:** The caller currently operates at an MCP boundary while model usage is
   owned by the outer provider/orchestrator. The validator cannot observe that
   external boundary unless a future adapter emits and reconciles those raw
   receipts.
-- **U:** No provider adapter, model call, current GUI task, resource allocation,
-  physical release, or independent application run is included. Missing usage
-  stays unknown; referenced file existence/digest matching is not verified, and
-  this packet is not a live result.
+- **U:** No production provider adapter, model call, current GUI task, resource
+  allocation, physical release, or independent production-application run is
+  included. Missing usage stays unknown; referenced file existence/digest
+  matching is not verified, and this packet is not a live result.
 
 ## Local check
 
