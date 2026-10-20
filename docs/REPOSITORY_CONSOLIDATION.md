@@ -1103,3 +1103,19 @@ PR #9192のhead `8b7efe11979e32bccc1ad76074196829d5dc629e` に対するprivate-X
 ## 実行更新 r94 — #9192の検証済みcancel応答修正をmainへ統合
 
 PR [#9192](https://github.com/Unjuno/agent-interface/pull/9192) は2026-10-19 13:38:03 UTCにsquash mergeされ、main commit `3bc02f2b9c7362e743db5f81f3b3d2556038c55f`となった。Xvfb blocked-I/O missing-ack run 39261239773を含む全ての報告checkがpassし、mainの`main` branch protectionはなく、repository rulesetも空であることを確認して統合した。r04のraw JSON/PNG blobはmain上でpacket manifestのsourceとbyte hashが一致する。merge後も結果分類は#17のscoped cancel-response progressであり、caller release `UNKNOWN`、late request possible、task success null、replay deniedを維持する。#17を閉じる根拠、物理解放・MAP01・recovery・効率性の証明ではない。
+
+## 実行更新 r95 — 2026-10-20 #8842の証拠救出と整理順序
+
+現時点でリポジトリ全体の完全なIssue/PR再棚卸しは未実施。r96/r85等の過去membership・row metadataは時点スナップショットとして保持し、今日の総数や担当の根拠には使わない。全体クリーンアップは次の順で進める。
+
+1. **入口を整える。** 現在のmain SHAと完全ページングのIssue/PR membershipを一度取得し、最新の全件一覧を重複保存せず既存r-seriesへ追記する。別途、アイデア索引の未分類gapとopen PR head/base/check/ownerを切り分け、件数だけで意味を推定しない。
+2. **Idea family単位で意味を復元する。** 各Issueの現行本文・最新コメント、関連PR、既存idea index/family record、研究raw/auditを照合する。記録する項目は仮説、最も強い比較対象、既存の支持/反証/STOP、未解決残差、依存、実行可能な次試験、再開条件。distinct questionは統合せず、類似Issueも独立仮説を確認する。
+3. **PRを一件ずつ処遇する。** exact head/base、author/assignee/reviewer、merge/conflict、差分・依存、必須/任意CI、適切なローカル検証、固有成果/rawのcustodyを確認する。処遇は検証後merge、修理PRへ移管、重複として証拠移管後close、研究候補として保留、または明確な理由付きclose。競合PRの全体mergeやworktree変更だけを目的にしない。
+4. **Issueを根拠に沿って維持/終了する。** keep-open/actionable (固有の次試験あり)、keep-open/blocked (owner・権限・資源・依存と解除条件あり)、duplicate/moved (canonical Issueと双方向リンクあり)、evidence-complete、evidence-rejectedに分類する。閉じる前にアイデアと結果を正規カタログへ保存し、Issueへ戻り先・後継・終了理由を記す。計画への転記だけでは科学的完了としない。
+5. **workspace/branchを最後に片付ける。** registered/unregistered worktree、PR head/base ancestry、Issue/PR owner、実行中process/session、ignored/raw manifest、未追跡データを照合する。全て復元可能なcustodyを確認してから個別にarchive/deleteを判断する。clean worktreeやclosed PRを未使用の証拠としない。
+
+### 今回の具体的バッチ: PR #8842
+
+PR #8842はopen、non-draft、base `f185a9059d485a4f8d5a65e9e7f6782897f67eae`、head `80b81a53582e877fd9ca51c35999f27aadea7990`、mergeable=false。現行main基点の隔離枝に481個の追加研究ファイルをexact blob一致で複製済み。PR由来の単独回帰テスト1件は、対応する既存backend実装変更を除外しているため、この証拠専用バッチへ入れず、原PRに保持する。#8842の既存ファイル4件の変更のうち、`research/doom/doom_owner_thread_release_batch_backend_v1.py`と`research/doom/test_release_backend_v3_composition.py`のコード変更はこの救出枝へ含めず、統合判断を分離する。既存の`RESEARCH.md`と`research/doom/README.md`にはA10/A11/A15の結果索引のみを追加し、A19–A27のリンクを実在するレポートへ修正した。A26の`REPORT.md`はA25文の重複なので、そのSTOP判定は`POSTHOC_STOP.md`を正として明示した。
+
+このバッチは追加証拠と研究索引の救出であり、原PRをmergeまたはcloseする根拠ではない。A10/A11/A15、A19–A27は元の条件・raw・判定を保つ。特にA19/A20–A23のSTOP/bridge FAIL、A24/A25のscoped pass、A26 procedural STOP、A27の2.229 ms virtual X key-upとanalyzer unmatchedを個別に残し、physical input/MAP01/task successの主張へ拡大しない。A28/A29のpreregistered FAIL、live allocation #7924 HOLDも維持する。次のPR処遇はこのexact-head salvageのローカル検証とPR差分確認後に行い、Issue #59は残る科学ゲートがあるためopenを保つ。

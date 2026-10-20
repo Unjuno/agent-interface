@@ -1,0 +1,123 @@
+{
+  "experiment_id": "v39_pr8874_wslc_xvfb_receipt_a24_20261013",
+  "decision": "PASS_METHOD_SCOPED",
+  "checks": {
+    "same_key_window_keypress_release": true,
+    "server_keymap_down_then_up": true,
+    "owner_bound_down_emitted": true,
+    "linked_exact_backend_admission_payload": true,
+    "link_identity_key_owner_token_deadline": true,
+    "link_admission_ack_release_order": true,
+    "link_marked_valid": true,
+    "batch_and_owner_release_verified": true,
+    "owner_receipt_inside_caller_bracket": true,
+    "analyzer_candidate_matches_recomputation": true,
+    "analyzer_one_complete_hold": true,
+    "owner_empty_and_stopped": true,
+    "xvfb_and_candidate_exit_zero": true,
+    "container_removed": true,
+    "frozen_source_hashes_match": true
+  },
+  "source_checks": [
+    {
+      "path": "research/doom/analyze_map01_direct_retained_input_v2.py",
+      "ok": true,
+      "sha256": "f6ee0bfbc6c4b0cadea7eaaf19caed8836b084adf5636b86f8fdd2554b0cb616"
+    },
+    {
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "ok": true,
+      "sha256": "e02d612f5d944630995dead364f323db98e46f40593820e4bde07a608b269f87"
+    },
+    {
+      "path": "research/doom/experiment_candidate.py",
+      "ok": true,
+      "sha256": "36ae51ce5ff31cd5e47bd38ffdbc7cb5a6723fc61e96aa263d90f8a22a6cbc98"
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "ok": true,
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+    },
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "ok": true,
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "ok": true,
+      "sha256": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "ok": true,
+      "sha256": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "ok": true,
+      "sha256": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "ok": true,
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    }
+  ],
+  "raw_sha256": "d0962f52d5aee479e46c24ff5770b81a9e81767d60ebaa552f5fadb09255ba25",
+  "analyzer_recomputed": {
+    "schema": "map01-direct-retained-input-v2",
+    "measurement_ready": true,
+    "hold_count": 1,
+    "unmatched_admission_count": 0,
+    "malformed_admission_count": 0,
+    "ambiguous_admission_count": 0,
+    "invalid_release_count": 0,
+    "holds": [
+      {
+        "input_kind": "key",
+        "key": "w",
+        "intent_token": "a24-backend-token",
+        "owner_id": "2c365afce64944b4ae76af48ffaabfbc",
+        "admitted_ns": 34355000790,
+        "input_ack_ns": 34355102678,
+        "release_call_started_ns": 34355336261,
+        "release_call_returned_ns": 34355646239,
+        "retained_lower_ms": 0.233583,
+        "retained_upper_ms": 0.645449,
+        "censor_width_ms": 0.411866,
+        "source_events": [
+          "input_admission",
+          "input_release_transition"
+        ]
+      }
+    ],
+    "decision": "PASS: direct receipt-linked release evidence available"
+  },
+  "red_green_controls": {
+    "A22": {
+      "ambiguous_admission_count": 0,
+      "decision": "FAIL: admission receipts do not form a complete verified release trace",
+      "hold_count": 0,
+      "holds": [],
+      "invalid_release_count": 1,
+      "malformed_admission_count": 0,
+      "measurement_ready": false,
+      "schema": "map01-direct-retained-input-v2",
+      "unmatched_admission_count": 1
+    },
+    "A23": {
+      "ambiguous_admission_count": 0,
+      "decision": "FAIL: admission receipts do not form a complete verified release trace",
+      "hold_count": 0,
+      "holds": [],
+      "invalid_release_count": 1,
+      "malformed_admission_count": 0,
+      "measurement_ready": false,
+      "schema": "map01-direct-retained-input-v2",
+      "unmatched_admission_count": 1
+    }
+  },
+  "scope": "One synthetic XTEST key on Xvfb through backend raw/release-batch methods and current-main V4/V12 owner; game-specific parent lifecycle was stubbed; no task-effect claim."
+}

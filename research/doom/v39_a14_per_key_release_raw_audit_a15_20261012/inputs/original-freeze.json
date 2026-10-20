@@ -1,0 +1,18 @@
+{
+  "experiment": "map01-v39-appserver-startup-trace-a14",
+  "status": "FROZEN_BEFORE_DIAGNOSTIC_START",
+  "frozen_at_utc": "2026-10-08T01:32:09Z",
+  "source_main": "9d9c42c80f946762e8742ddb2739d07d33db136d",
+  "runtime_relevant_code_same_as_708ca59a": true,
+  "image": "issue59-v39-live-env@sha256:b473b61c9dda0fab168f4a2118bd1206676dc6913122a3b9193d423426bc0b84",
+  "fixture_sha256": "80fec0649eba43132b9eb0ba90304cb1231d9146be14efa845470f377413a889",
+  "seed": 991044,
+  "diagnostic_adapter": {
+    "file": "research/doom/session_map01_v12.py",
+    "upstream_sha256": "2888e268903975d73d2b40fe31ab312d6a73a5bb32cb98a072386f0ef538442c",
+    "diagnostic_sha256": "f3a3ba259cf9b3caeeb1467422c011e3e77f853d6b765df6f6de8e71f4ca7059",
+    "change": "append nonblocking startup stage labels to startup-markers.txt; no behavior or model changes"
+  },
+  "purpose": "identify startup stage under exact V39 AppServer-initialized, V15 session path; no planner turn or model call",
+  "timeout_seconds": 65
+}
