@@ -390,7 +390,7 @@ Open is workflow state, not “no result”; open Issues may contain scoped resu
 | [#5315](https://github.com/Unjuno/agent-interface/issues/5315) | [Research] Assumption-conditioned conformal risk contracts for verifier abstention | open | PASS, FAIL, UNCERTAIN | — |
 | [#5314](https://github.com/Unjuno/agent-interface/issues/5314) | [Research] Dependency-aware verifier quorums under correlated failures | open | FAIL_CLOSED_UNKNOWN_DEPENDENCY, PASS, FAIL | — |
 | [#5313](https://github.com/Unjuno/agent-interface/issues/5313) | [Research] Boundary blame tracking for compositional agent failures | open | PASS_BOUNDARY_BLAME_SCOPED, FAIL, UNCERTAIN | — |
-| [#5311](https://github.com/Unjuno/agent-interface/issues/5311) | [Research] Proof-carrying action admission for untrusted planners | open | PASS_PROOF_CARRYING_ADMISSION_SCOPED, FAIL, UNCERTAIN | — |
+| [#5311](https://github.com/Unjuno/agent-interface/issues/5311) | [Research] Proof-carrying action admission for untrusted planners | open | FAIL_COST_GATE_SCOPED (T0 A01), PASS_PROOF_CARRYING_ADMISSION_SCOPED (prospective), FAIL, UNCERTAIN | — |
 | [#5309](https://github.com/Unjuno/agent-interface/issues/5309) | [Research] Dual-purpose task actions for safe online interface identification | open | FAIL_CLOSED_UNKNOWN, PASS_DUAL_PURPOSE_ACTION_SCOPED, FAIL | #1978 |
 | [#5306](https://github.com/Unjuno/agent-interface/issues/5306) | [Research] Value-of-information stopping for sequential verification | open | PASS_VOI_STOPPING_SCOPED, FAIL, UNCERTAIN | — |
 | [#5305](https://github.com/Unjuno/agent-interface/issues/5305) | [Research] Conflict-aware evidence ledger for verifier orchestration | open | PASS, FAIL, UNCERTAIN | — |
