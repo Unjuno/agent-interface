@@ -1,6 +1,7 @@
 # Integration plan
 
-Updated 2026-10-15. Promote evidence into one usable computer-control path.
+Updated 2026-10-20 after PR #9260. Promote evidence into one usable
+computer-control path.
 Use [the work map](WORKER_WORK_MAP.md) to choose a finite contribution and
 [the current interface guide](../runtime/USING_CURRENT_INTERFACE.md) to identify
 the actual supported caller. Versioned research clients are not interchangeable.
@@ -21,6 +22,27 @@ all independent work. Do not substitute repeated construction for the eventual
 live task and matched comparison.
 
 ## Current source-bound findings
+
+- **Current public composition status after PR #9260 (main `a969266f0`,
+  2026-10-20):** two synthetic Fake X cells exercise the standard public MCP
+  path. One produces a state-changing synthetic effect; one changes the target
+  generation after the fake provider response and verifies refusal before
+  input. This supports only the captured Fake X composition boundary. It does
+  not provide an independent live task score, real provider/model usage or
+  latency accounting, physical/native release, blocked-I/O bounded recovery,
+  or matched efficiency. Keep #57 open and use the remaining composition/live
+  requirements below; do not treat a successful public tool response as task
+  success.
+
+- **Delayed-provider freshness follow-up:** the test-only Fake X cell in
+  [`composition-evidence-20261020-r02`](../research/integration/standard_mcp_task_ledger_57_v1/composition-evidence-20261020-r02/README.md)
+  now holds the async fake provider response, changes target generation during
+  that wait, then sends the original request through the standard public MCP
+  method. The retained journal orders provider completion before the tool call;
+  the tool refuses before input, and the separate synthetic-state oracle scores
+  false. This narrows the stale-generation composition boundary. It still does
+  not test a live provider, physical release, blocked platform-I/O recovery,
+  or application task effect in a real GUI.
 
 - [Joined V39 recovery and selected backend](../research/integration/v39_selected_backend_recovery_20261016/README.md)
   connects actual monitor/cancel/final functions plus nested wait AST to selected
@@ -436,6 +458,8 @@ Issue [#57](https://github.com/Unjuno/agent-interface/issues/57) requires a comp
 **2026-10-20 current-main public compiled caller:** merged PR #9212 exposes the declarative compiled profile as `interface_guarded_compiled` through the standard owned-process MCP path. The public endpoint prevalidates the finite pixel profile, invokes the existing graph inside the child-side owner, binds the observed target generation and returns/retrieves typed method receipts. The [exact-main recheck](../research/integration/standard_mcp_compiled_current_main_recheck_20261020/README.md) passes five focused tests in both modes: absent endpoint without ownership, invalid-profile pre-admission refusal, owned generation-bound success, mid-method generation-change refusal, and cancellation during blocked Fake X sync. Cancellation retires the owner but leaves release `UNKNOWN`, `task_success=null` and replay denied. This supersedes the older statement that the owner method was not exposed as a public MCP tool. It remains fixed-profile Fake X construction, not model/provider integration, live GUI task scoring, bounded physical release, or efficiency evidence.
 
 **Next action:** keep the public compiled MCP endpoint as the selected standard caller. Join its all-attempt provider ledger, fresh evidence after model waits, independent application-effect certificate, and finite recovery path around one supported task; then freeze the plain/current baseline and cold/warm/invalidation/repair schedule. Before a live run, verify the exact host owner and unused allocation. Issue #7924's WSLc state is STOP/HOLD; do not launch WSLc/Docker until that gate is explicitly cleared. Local source/schema/accounting work can proceed without replaying parser, timing, or Fake X results.
+
+**2026-10-20 offline provider-to-MCP recorder:** [`standard_mcp_task_ledger_57_v1`](../research/integration/standard_mcp_task_ledger_57_v1/README.md) now has a durable generic call recorder: it fsyncs attempt/request starts before injected synchronous or asynchronous provider/MCP callbacks, retains raw request/response digests, joins tool calls to a provider attempt when known, and explicitly supports unlinked MCP calls when provider context is outside the relay. It can append one caller-supplied terminal task-score certificate with raw state evidence after all operations complete, but cannot prove the scorer's independence. It preserves exceptions/cancellation and unknown usage, and refuses incomplete runs, mismatched MCP response/result data, and a raw directory resolving outside its run root. Twenty-nine ledger/recorder/composition tests and 33 owned-process tests pass normally and under `-O`. The two composition cells join fake asynchronous provider attempts to the actual public compiled FastMCP endpoint: one observes a synthetic red-pixel state transition and appends a score; the other changes the target generation after provider response and records refusal with zero completed transitions and a false score. One normal-mode run preserves both event journals and all request/response, owner, image, and score-state raw in the [composition evidence packet](../research/integration/standard_mcp_task_ledger_57_v1/composition-evidence-20261020/README.md) with per-file hashes. Both public MCP results keep `task_success=null` and replay denied. These are scoped Fake X effects, not a production application or external scorer. No production orchestrator/provider adapter, provider-log reconciliation, real model/GUI call, allocation, native release bound, or matched efficiency result is established. #53 and #57 remain open; adapting the actual provider/orchestrator and reconciling all attempts against its logs is still required. #7924 remains STOP/HOLD.
 
 ## Completion and history
 

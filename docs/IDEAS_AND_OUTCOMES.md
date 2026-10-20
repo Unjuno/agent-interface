@@ -4,13 +4,27 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-20 07:26 UTC):** main is
-`41f1dc570a2affddece6ee894ed42d216b21a993`. The [r109 membership recheck](maintenance/repository-inventory-recheck-20261020-r109.md)
-confirms 1,672 open Issues and 468 open PRs, with ID sets unchanged from the
-complete row-level [r108 metadata snapshot](maintenance/repository-inventory-20261020-r108.md).
-PR #9241 adds an evidence-layer disposition for #17; #17 remains open. #31 and
-#8636 remain open. Counts are not semantic dispositions; use current family
-records and the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) for new work.
+**Current organization check (2026-10-20 11:19 UTC):** main is
+`cdd3c7e979dc7799e6733e259934b1738bf01d22`. The complete paginated [r116
+membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md)
+matches r114's 1,672 open Issue and 468 open PR ID sets; GraphQL counts
+bracketed the read. r114 remains the latest full metadata export, so no
+duplicate export was added. PR #9255 and #9257 add local attempt/score
+recording contracts only; they do not establish real provider-log completeness,
+live task effect, or integrated efficiency. Issues #53, #57 and #59 remain
+open. Counts are not semantic dispositions; use the staged [repository cleanup
+plan](REPOSITORY_CLEANUP_PLAN.md) and current family records to route the next
+bounded batch.
+
+**Superseding source checkpoint (2026-10-20):** main is now
+`a969266f03f7b10edc3714946ccb36c508dab4bc` after PR #9260. Its two public-MCP
+composition cells are synthetic Fake X evidence only; see the
+[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) for the current scope and
+limits. Live reads confirm #17, #57 and #7924 are still open; #7924 remains
+STOP/HOLD. The complete r116 membership counts above belong to an earlier
+main and are not a fresh census. Keep unresolved research ideas in this index
+with their own evidence lineage and next question; do not close them just to
+reduce the open count.
 ## Status key
 
 - **Proposed / open:** no result is implied.
@@ -102,7 +116,7 @@ efficiency evidence, or an acceptance result for #6/#56.
 | [#48](https://github.com/Unjuno/agent-interface/issues/48) | Expose evidence-backed environment/target readiness states so loading, empty, black, or failed-startup views are not mistaken for target absence. | Open, unverified for live applications. Successor [#1358](https://github.com/Unjuno/agent-interface/issues/1358) / merged [PR #1361](https://github.com/Unjuno/agent-interface/pull/1361) records `PASS_READINESS_ACTION_ADMISSION_COMPOSITION_SCOPED` on a finite synthetic transition set; no live readiness detector or application task result follows. |
 | [#49](https://github.com/Unjuno/agent-interface/issues/49) | Expose scoped semantic caret and selection state before text-editing actions that could overwrite the wrong range. | Open, unverified as a general editor contract. Merged [PR #6943](https://github.com/Unjuno/agent-interface/pull/6943) preserves one edit-offset boundary result and remote tree/readback; this does not establish complete caret/selection truth across apps, IMEs, or arbitrary text operations. |
 | [#51](https://github.com/Unjuno/agent-interface/issues/51) | Expose evidence-backed pre-action cost and assurance profiles so a planner can compare valid routes. | Open, unverified. This is a route-selection contract, not an estimate of current route latency or a permission to trade correctness for speed. A later refinement asks whether successful routes also expose perturbation tolerance; that remains unverified. |
-| [#53](https://github.com/Unjuno/agent-interface/issues/53) | Make adaptive acquisition accounting branch-complete inside the shared caller, including optional calls and recovery branches. | Open, unverified for full cost comparison. The Issue records successful first-anchor and wrong-anchor-recovery capability checks, but the existing top-level usage summary omits an optional third model call; do not promote the reported totals or rerun merely to fill that gap. |
+| [#53](https://github.com/Unjuno/agent-interface/issues/53) | Make adaptive acquisition accounting branch-complete inside the shared caller, including optional calls and recovery branches. | Open, unverified for full cost comparison. Existing first-anchor and wrong-anchor-recovery capability checks remain useful, but the top-level usage summary omits an optional third model call; the reported totals cannot support full-path comparison. Merged [PR #9251](https://github.com/Unjuno/agent-interface/pull/9251) adds the offline ledger validator; this follow-up adds a durable generic provider/MCP attempt recorder with exception, timeout, raw-byte, unknown-usage and tool-call lineage checks. Both are local contracts only: no actual provider or orchestrator is instrumented, and their event stream is not reconciled against provider logs. PR #9251's merge unexpectedly auto-closed #53 through a GitHub closing-reference association; #53 was reopened and remains active. Next finite step: adapt the current provider/orchestrator and public MCP caller to the recorder, reconcile every attempt against provider logs, then resume the held matched comparison. Do not rerun prior GUI/model allocations just to fill the accounting gap. |
 ## Early research and discovery threads
 
 | Issue | Idea / work | Current result and boundary |

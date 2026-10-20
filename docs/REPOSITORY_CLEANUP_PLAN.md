@@ -1,5 +1,201 @@
 # Repository cleanup plan
 
+## Current organization checkpoint after PR #9260 — 2026-10-20
+
+Current `main` is `a969266f03f7b10edc3714946ccb36c508dab4bc`. PR #9260 adds
+two synthetic Fake X cells to the public MCP composition path: a state-changing
+success case and a stale-generation refusal. The first distinguishes the
+synthetic state effect; the second confirms refusal before input. They do not
+establish an independent live task score, provider/model accounting, physical
+release, finite recovery after a blocked platform call, or matched efficiency.
+Keep these scoped results separate from the larger #57 acceptance milestone.
+
+Live GitHub reads on 2026-10-20 confirm #17 and #57 remain open. #17 retains a
+distinct safety-control-plane question about release reachability when ordinary
+telemetry is blocked. #57 remains the integration/economics milestone. #7924
+remains `STOP / HOLD` for unresolved WSLc ownership and missing exact-current
+checkout; this is an allocation boundary, not a repository-wide stop. No
+WSLc/Docker operation is authorized or implied by this cleanup plan.
+
+The last complete Issue/PR membership snapshot linked below is r116 (1,672
+open Issues / 468 open PRs) at its recorded earlier main. Do not present those
+counts as a fresh census after #9260. Refresh membership and exact PR metadata
+before state changes; reuse row data only if a bracketed fresh read confirms
+the IDs are unchanged. The latest retained local census r05 lists 37 worktree
+roots, 10 dirty, and none locked or prunable. It is a dated status snapshot,
+not a current custody or deletion determination.
+
+### Next cleanup batch
+
+1. Refresh one complete live membership snapshot and exact metadata for the
+   candidate Issues/PRs, recording the source main SHA and read interval.
+2. Continue from the [2026-10-20 PR audit disposition](maintenance/pr-audit-disposition-20261020-r01.md),
+   which reconciles nine completed read-only audits with live GitHub status.
+   Preserve each result and failure independently; distinguish stale-base
+   candidates, construction-only evidence, negative scoped outcomes, and
+   custody holds. Do not convert an audit into merge or close authority.
+3. Select one unowned idea family using the current worker map, verify each
+   Issue's live state and source/evidence links, and add one family crosswalk
+   with its distinct hypotheses, first outcomes, limits, dependencies, and
+   finite next decisions. Keep unresolved questions open. Cataloguing an idea
+   is not evidence that its research is complete.
+4. Reconcile worktrees and PRs item by item only after owner/session, unique
+   evidence, dependencies, and recovery are established. Preserve unknown
+   custody as an explicit hold.
+
+This is the current entry point; the dated sections below remain historical
+checkpoints. The cleanup target is an auditable research backlog and safe,
+disjoint worker packets. Zero open Issues, zero open PRs, and zero worktrees
+are not completion criteria.
+
+## Current organization checkpoint after PR #9257 — 2026-10-20
+
+Main is `cdd3c7e979dc7799e6733e259934b1738bf01d22`. The complete paginated
+[r116 membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md)
+matches r114 exactly: 1,672 open Issue IDs and 468 open PR IDs. GraphQL counts
+bracketed the read; main remained stable. Reuse r114 row-level metadata rather
+than creating another duplicate export. The issue/PR count and ID set do not
+provide current ownership, semantic disposition, or per-PR readiness.
+
+PR #9257 merged a terminal, hash-bound, caller-supplied task-score certificate
+into the local #57 recorder. It cannot prove scorer independence. #57 remains
+open because production provider/orchestrator logging, provider-log
+reconciliation, live task effect, recovery, and matched efficiency are still
+unresolved.
+
+The new [worktree status census r05](maintenance/git-worktree-census-20261020-r05.md)
+found 37 registered roots, 27 clean and 10 dirty in normal Git status, with 0
+locked or prunable. This is one fewer dirty root than r04 after the completed
+local work was integrated; it does not resolve the other ten roots' ownership
+or evidence custody. Do not delete, reset, or archive them from this count.
+
+The existing family-first execution order and per-record disposition rules
+below remain in force. Next work should classify one disjoint family from live
+Issue/PR evidence, attach every hypothesis to its first outcome/raw evidence
+and next discriminating test, and only then consider individual closure. Do
+not turn this membership equality or the two merged PRs into a claim that the
+repository-wide cleanup is complete.
+
+The dated [parallel worker packets r02](maintenance/parallel-worker-packets-20261020-r02.md)
+replaces r01 as the dispatch reference. It records completed PR audits,
+removes already-closed PRs from the open-work queue, and defines disjoint
+read-only family packets. It does not assign owners, grant WSLc/Docker use, or
+authorize bulk Issue/PR/worktree cleanup; check the live source and ownership
+before starting or changing state.
+
+## Current organization checkpoint after PR #9255 — 2026-10-20
+
+Main is `475e3733785065bf2993d507f71fafad790916fb`. The fresh paginated
+[r115 membership recheck](maintenance/repository-inventory-recheck-20261020-r115.md)
+matches the complete r114 Issue and PR ID sets exactly: 1,672 open Issues and
+468 open PRs. GraphQL counts bracketed the read and main SHA remained stable.
+The r114 row-level metadata is reused rather than duplicated; it remains the
+latest full PR metadata view. Membership is not semantic triage, current PR
+readiness, assignment, or custody evidence.
+
+PR #9255 merged the local asynchronous provider/MCP attempt recorder and a
+synthetic public-caller composition test. The test keeps independent task
+success null; the change does not connect the external provider/orchestrator or
+reconcile provider logs. Issues #53, #57, and #59 remain open. In particular,
+the integrated efficiency comparison and live task-effect evidence remain
+unresolved, so these ideas stay in the research catalog with actionable next
+questions rather than being closed to lower counts.
+
+The [latest retained worktree census r04](maintenance/git-worktree-census-20261020-r04.md)
+is a 10:52 UTC status snapshot of 37 roots (26 clean, 11 dirty, 0 locked or
+prunable). Preserve all roots until owner/session, running process, branch/PR
+dependencies, ignored data, evidence custody and recovery path are checked.
+No branch, worktree, raw package, Issue, or PR is removed by this checkpoint.
+
+### Execution order for repository-wide organization
+
+| Stage | Record to improve | Output that makes the next stage safe | State-changing rule |
+|---|---|---|---|
+| 1. Stabilize entry points | `CURRENT_GOAL.md`, this plan, `WORKER_WORK_MAP.md` | One current objective, dated membership/custody boundaries, disjoint work candidates, and shared-index owners | Documentation updates only; do not infer assignment from a queue |
+| 2. Curate ideas by family | `docs/ideas/*.md`, `ideas/README.md`, `IDEAS_AND_OUTCOMES.md` | For each distinct hypothesis: strongest comparator, first result and raw link, limits, dependencies, one finite next test, and source-Issue backlink | Preserve siblings and contrary outcomes; do not merge merely similar titles |
+| 3. Dispose Issues individually | The live Issue plus its canonical family record | Explicit `active`, `blocked-with-condition`, `preserved-successor`, or `complete` disposition and a return link | Close only when its own question/work is complete or faithfully transferred and a current successor/backlink is verified |
+| 4. Reconcile PRs | Exact live PR and its canonical evidence record | Current head/base, full diff, local checks, dependencies, evidence custody, and one concrete next action | Merge verified, useful work through allowed protections; close superseded PRs only after successor content is present and linked |
+| 5. Reconcile local artifacts | Branches, worktrees, ignored files, raw outputs | Owner/session, process state, PR/base dependencies, unique data, and tested recovery path | Move/archive/delete only individually verified redundant artifacts with custody released |
+| 6. Enable parallel execution | `WORKER_WORK_MAP.md` and worker quickstart | Finite independent assignments with private output locations; only shared indexes serialize | A clean Git status, closed issue, or branch-name mismatch alone never grants ownership or cleanup authority |
+
+Run these stages as bounded family/PR/custody batches, updating the shared map
+once per batch. Keep historical raw and first outcomes immutable. A family
+record organizes ideas; the Issue carries actionable work; the PR carries a
+change; inventories describe dated membership; and the experiment packet owns
+raw evidence. Repository cleanliness means a worker can find a current owner or
+safe unclaimed next step and recover every retained result. It does not mean
+zero Issues, zero PRs, or deleting every local checkout.
+
+**Next bounded batch:** use the current worker map to select one unowned,
+non-overlapping family; verify its live Issues, related PRs and owner state;
+then reconcile its idea/result/dependency crosswalk without changing Issue
+state until each record has its source and successor links. In parallel
+assignments, each worker gets a separate family and output path; one integrator
+updates shared indexes. Recheck the live source immediately before any close,
+merge, or artifact cleanup.
+
+## Current organization checkpoint after PR #9253 — 2026-10-20
+
+Main is `3f7eec087f37a02acd38299c5fe1173be4f36977`. A fresh GitHub read at
+2026-10-20 10:52 UTC found 1,672 open Issues and 468 open PRs; the sorted
+numeric-ID hashes exactly match the complete r114 snapshot. GraphQL totals
+matched the CLI counts, and main was unchanged across the read. No duplicate
+inventory export was created. The r114 row metadata remains the latest saved
+complete metadata view; refresh the exact item before any Issue/PR state change.
+
+The local Git worktree census at the same time found 37 registered roots: 26
+clean and 11 dirty under normal `git status`, with 0 locked and 0 prunable.
+The [r04 census](maintenance/git-worktree-census-20261020-r04.md) lists the
+dirty roots and explicitly leaves ownership, active sessions, ignored files,
+dependencies, and recovery unverified. No worktree was changed. Treat all 11
+dirty roots as custody holds until individually reconciled; a clean status is
+not deletion approval either.
+
+### Next cleanup batch
+
+1. Reconcile the 11 dirty worktrees against active worker/session, PR/base,
+   branch, ignored-file, and raw-evidence custody. Retain unknown ownership.
+2. Continue semantic Issue review one bounded idea family at a time, preserving
+   distinct hypotheses and every first result; use the current family routing
+   queue rather than Issue-number order.
+3. Review open PRs individually by exact head/base, complete diff, local checks,
+   dependencies, and unique evidence custody. Draft status and age are filters,
+   not disposition.
+4. Close or archive only individually verified superseded/complete items after
+   the canonical idea/evidence entry and bidirectional successor links exist.
+
+The checkout is not repository-clean yet: current evidence does not establish
+custody for 11 dirty roots or semantic dispositions for all open items. This
+checkpoint records that boundary instead of converting unknown ownership into
+bulk deletion or closure.
+
+## Current organization checkpoint after PR #9252 — 2026-10-20
+
+Main is `270e886685f3814f053824a5110e9226b1b3f5a5`. The complete paginated
+[r114 inventory](maintenance/repository-inventory-recheck-20261020-r114.md)
+was captured at 2026-10-20 10:39:08 UTC. It contains 1,672 open Issues and
+468 open PRs; CLI totals match GraphQL totals before and after, and main stayed
+at the same SHA. Its sorted-ID hashes exactly match [r113](maintenance/repository-inventory-recheck-20261020-r113.md),
+while r114's metadata is the refreshed view at current main. PR #9252 is a
+documentation/inventory update; its computed `closingIssuesReferences` is empty.
+These inventories establish membership, not semantic disposition, ownership,
+evidence custody, or merge/closure eligibility. Refresh exact live records
+before any state change.
+
+PR #9251's local task-ledger validator remains a construction result, not
+provider accounting, live GUI integration, or matched efficiency. Its merge
+unexpectedly auto-closed #53; #53 was reopened and remains open for the
+shared-caller accounting question. The intermediate r112 is retained as
+historical evidence of that accidental transition. No experiment allocation,
+Issue/PR disposition, or worktree deletion was made by PR #9252.
+
+The r114 PR metadata has 436 Draft and 32 non-Draft entries. Draft state is a
+queue filter, not a quality judgment or evidence that the PR author/owner is
+absent. Use the repo-wide sequence below: preserve and cluster ideas first,
+assign a per-item disposition, reconcile PRs independently, and resolve
+custody before physical cleanup. The objective is safe discoverability for
+independent workers, not zero open counts.
+
 ## Current organization checkpoint after PR #9247 — 2026-10-20
 
 The current code baseline is main `0f46feb6be55174bc79fb0df83e0205179f8cbdb`.
@@ -351,6 +547,13 @@ Choose one explicit disposition per Issue: `keep-open/actionable`, `keep-open/bl
 
 For each PR, re-fetch the exact head/base, changed files, current checks and required protections; inspect its full diff, comments, stack, unique result, and linked Issue. Record one next action: `merge-ready`, `needs-local-fix`, `stack/retarget`, `evidence-custody-hold`, `duplicate/superseded`, `owner-confirmation-hold`, or `close-after-preservation`. Run the relevant local checks and satisfy actual repository protections. Do not add an invented reviewer-count gate. After merge/close, verify that code and unique evidence remain reachable from main or a named preserved location.
 
+Before merging, inspect GitHub's computed `closingIssuesReferences` and confirm
+every Issue it will close is intentionally complete and its idea/evidence is
+preserved. Avoid negated close-keyword phrases such as “does not close #N” in a
+PR title/body: PR #9251's merge still auto-closed #53 from such a phrase. If a
+close is unintended, reopen the Issue, refresh the membership snapshot, and
+record the corrected disposition before continuing the batch.
+
 **Review-quorum cleanup (2026-10-20):** A read-only GitHub CLI scan against main `b38e49f8cf5cef3a30f33e945bf71feca838eae0` returned 477 open PRs. Thirty-nine Draft bodies matched explicit markers such as `required_nonauthor_content_votes`, a threshold of two, or a two-nonauthor quorum; the candidate numbers are listed in [review-gate scan r01](maintenance/review-gate-candidate-scan-20261020-r01.md). This is a body-text screen, not a completed review of those 39 PRs or proof that every match is an applicable gate. A live read of `main` branch protection returned “Branch not protected”; the repository rulesets endpoint returned an empty list. Therefore a PR body or Issue-local protocol is not by itself a repository-wide worker/merge quota. Preserve each proposal's actual scientific acceptance tests, required platform/ownership checks, and meaningful independent audit evidence; remove fixed reviewer-seat/count requirements from active operating instructions unless they are an actual GitHub protection or an explicitly current, user-authorized task acceptance condition. Treat the 39 matches as a finite PR triage batch, beginning with the computer-control #59/#57 items, and revise each exact live body only after checking its head, dependency, and retained evidence. Do not change PR state or delete branches as part of this scan.
 
 ### 5. Reconcile branches, worktrees and repository structure
@@ -367,7 +570,22 @@ Every selectable packet must name a family or exact PR set, read-only source ref
 
 The pilot is complete as a semantic review: [safety/control receipt r01](maintenance/repository-cleanup-family-safety-control-r01-20261019.md) revalidated six live Issues (#2/#10/#14/#15/#16/#17), preserved their distinct research questions and scoped results, and recorded one finite next decision per Issue. All six remain open because each has unresolved research or an explicit dependency. The GitHub assignee field was empty, but no ownership conclusion or reassignment was made. No allocation, branch, PR or Issue state was changed. This receipt is not a complete PR/worktree custody audit and does not claim the rest of the repository has been semantically reviewed.
 
-After the pilot, select the next family from the remaining routing queue using changed research value and unblock potential, not numeric Issue order. Workers can take disjoint family batches while the integrator serializes edits to the shared indexes.
+**Completed next family: visual multi-view, 2026-10-20.** The read-only
+[crosswalk](maintenance/issue-family-disposition-visual-multiview-20261020.md)
+separates #7's view-set utility question, #1946's full package-integrity gate,
+#1968's narrower corrected package checks, and #2031's model-facing localization
+result. It preserves the invalid early size claims, scoped #1981/#1983 results,
+and #2031's scorer/provenance/custody limits. #1968 is closed with its distinct
+retained results; #7, #1946, and #2031 remain open with different finite next
+decisions. No candidate, model, auditor, GUI, WSLc, or Docker run was performed.
+This is one family disposition, not repository-wide semantic triage.
+
+**Next family batch:** continue from the uncovered routing queue by research
+value and unblock potential, not Issue number. Select a bounded 3–10 Issue
+family whose questions and dependencies can be reviewed together, write an
+additive family crosswalk, and update the idea index and worker map in one
+integration pass. Workers may review disjoint families in private outputs;
+only one integrator edits shared indexes at a time.
 
 A read-only A07 custody cross-check in [PR #9181](https://github.com/Unjuno/agent-interface/pull/9181) found the independent audit package internally checksummed and its manifest digest cross-referenced, but the private raw bundle needed to reproduce the 2,358-entry claim was unavailable in inspected tracked sources. Keep Issue #59 open and PR #8702 in draft `evidence-custody-hold`; do not rerun consumed A07 or claim MAP01/task success. Revisit only when the unchanged raw bundle or an adequate privacy-approved verification manifest is supplied.
 

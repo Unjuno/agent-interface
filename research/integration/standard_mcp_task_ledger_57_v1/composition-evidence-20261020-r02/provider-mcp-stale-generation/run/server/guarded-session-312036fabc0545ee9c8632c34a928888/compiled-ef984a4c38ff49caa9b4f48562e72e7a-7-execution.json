@@ -1,0 +1,29 @@
+{
+  "request": {
+    "action": "enter",
+    "operation": "enter",
+    "authorization": "4343ca78840042e58a4d1dfbd5f3ec58",
+    "expected_sequence": 2,
+    "valid_until_ns": 188336812000000
+  },
+  "action_id": "action-4afd5a4667514a08938d08e529bd21ae",
+  "result": {
+    "status": "refused",
+    "error": "X11BackendError('native target guard refused: SCOPE_MISMATCH')",
+    "input_dispatched": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 3,
+        "eligible": false,
+        "status": "SCOPE_MISMATCH",
+        "handle": "field",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "process_generation_changed_or_missing",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ],
+    "additional_input_checks": []
+  }
+}

@@ -1,6 +1,32 @@
 # Worker work map
 
-2026-10-20 current map, main `083e59c0abe71a0a693e231e08a14d6718df7ade` after PR #9245. The live membership recheck [r111](maintenance/repository-inventory-recheck-20261020-r111.md) confirms 1,672 open Issues/468 open PRs, matching r110; complete row-level metadata remains r108. Re-fetch exact ownership before selecting or changing an item. Membership is not semantic review. The latest local status census [r03](maintenance/git-worktree-census-20261020-r03.md) records 33 roots, 10 dirty, none locked or prunable; ownership and ignored-data custody remain unresolved. Current organization and item disposition rules are in the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md).
+## Current entry point — 2026-10-20 after PR #9260
+
+Main is `a969266f03f7b10edc3714946ccb36c508dab4bc`. PR #9260 adds two
+synthetic public-MCP/Fake X composition cells, but does not finish the #57
+integrated live comparison. Live reads confirm #17, #57 and #7924 remain open;
+#7924 is STOP/HOLD for WSLc ownership and current-checkout prerequisites. Do
+not use stale membership or worktree counts as current ownership or cleanup
+authority. The complete r116 set and r05 custody census below are historical
+snapshots from their recorded baselines. Re-fetch exact source and custody
+before changing any item.
+
+The current organization and disposition rules are in the
+[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md). Keep ideas connected to
+their source Issues, first outcomes, raw evidence, limitations, dependencies,
+and next finite test. Leave unresolved questions open; close only after an
+individual transfer/completion is verified in both directions. Worker packets
+are navigation until a worker explicitly accepts them and current ownership is
+checked; this map itself grants no allocation.
+
+The current [PR audit disposition receipt](maintenance/pr-audit-disposition-20261020-r01.md)
+reconciles nine old #59/#5311/#8636 PRs against live status and their canonical
+evidence records. It is a verified status snapshot, not an ownership transfer
+or blanket merge/close instruction.
+
+## Previous map snapshot — 2026-10-20 after PR #9257
+
+Main was `cdd3c7e979dc7799e6733e259934b1738bf01d22`. The [r116 membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md) confirmed the complete Issue and PR ID sets matched r114 (1,672 open Issues, 468 open PRs); r114 was the latest full row-level metadata. PRs #9255/#9257 added local attempt/score recording contracts only; provider-log completeness and integrated effect/efficiency remained open. The latest retained local status census [r05](maintenance/git-worktree-census-20261020-r05.md) recorded 37 roots, 10 dirty, none locked or prunable; owner, active-process and ignored-data custody remained unresolved. Membership was not semantic review.
 The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
 records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
 the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,

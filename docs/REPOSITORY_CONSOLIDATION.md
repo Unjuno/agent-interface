@@ -1,7 +1,9 @@
 # リポジトリ全体の整理計画
 実行手順は[リポジトリ整理の実行計画](REPOSITORY_CLEANUP_PLAN.md)を参照。Issueは意味と仮説を正規カタログに整理し、根拠・後継・再開条件をIssueへ戻してから個別に処遇する。件数を減らすこと自体は完了条件ではない。
 
-**最新membership r107 (2026-10-20 06:45 UTC):** main `92fddaffbe43a4a984f54690473511f744784ae3`でopen Issue 1,672件・open PR 469件。完全ページングCLI結果と前後のGraphQL総数が一致。[r107 inventory](maintenance/repository-inventory-20261020-r107.md)と[完全なmetadata](maintenance/repository-inventory-20261020-r107.json)。r107はmembershipの基準であり、全件の意味分類・差分レビュー・owner/custody監査ではない。各状態変更の直前に対象を再取得する。
+**現行main / membership再確認 (2026-10-20 11:19 UTC):** mainは`cdd3c7e979dc7799e6733e259934b1738bf01d22`。完全ページングしたIssue/PR ID集合はr114と一致し、open Issue 1,672件・open PR 468件。GraphQL総数は読み取り前後で一致し、main SHAは安定。重複inventoryは作らず、r114の完全metadataを最新保存分とする。PR #9255/#9257はローカルのattempt/score記録契約のみで、provider-logの網羅性・live task effect・release/recovery・efficiencyは未確認。worktreeはr05時点で37件（clean 27、dirty 10、locked/prunable 0）。owner/session・ignored file・branch/PR依存・raw保全を確認するまでdirty rootを保持する。整理の順番と終了条件は[cleanup plan](REPOSITORY_CLEANUP_PLAN.md)、詳細は[r116 membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md)と[worktree census r05](maintenance/git-worktree-census-20261020-r05.md)。
+
+**最新membership r114 (2026-10-20 10:39 UTC):** main `270e886685f3814f053824a5110e9226b1b3f5a5`でopen Issue 1,672件・open PR 468件。完全ページングCLI一覧と前後のGraphQL総数が一致し、main SHAも読み取り中に不変。[r114 inventory](maintenance/repository-inventory-recheck-20261020-r114.md)、[Issue metadata](maintenance/open-issues-20261020-r114.json)、[PR metadata](maintenance/open-prs-20261020-r114.json)。r114とr113のIssue/PR ID集合は一致した。これはmembership snapshotであり、全件の意味分類・差分レビュー・owner/custody監査ではない。状態変更前に対象の現状を再取得する。整理の実行順序と完了条件は[cleanup plan](REPOSITORY_CLEANUP_PLAN.md)を参照。
 
 **Historical membership r106 (2026-10-20 06:33 UTC):** main `6eaade1b9129d1ab8b8a87ea9ec2763c5d334959`でopen Issue 1,672件・open PR 470件。[r106 inventory](maintenance/repository-inventory-20261020-r106.md)。#8840はr106時点でopenで、r107までにopen setを離れた。
 

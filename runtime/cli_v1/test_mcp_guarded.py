@@ -813,19 +813,23 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             bindings={name:{'interaction':'click','offset':[2,2],'tail':[]}
                       for name in ('enter','save')}
             verified=[]
+            clock=[time.monotonic_ns()]
 
             def perceive(native, image):
                 return {'phase':image.getpixel((0,0))[0], 'present':True}
 
             def verify_effect(request, native, image):
                 if not verified:
-                    time.sleep(0.01)
+                    clock[0]+=10_000_000
                 verified.append((request['action'],request['observation']['evidence_ref']))
                 return {'status':'succeeded',
                         'evidence_ref':request['observation']['evidence_ref']}
 
-            row=owner.run_compiled(spec,bindings,call_root=root/'method',
-                perceive=perceive,verify_effect=verify_effect)
+            with (patch('runtime.cli_v1.mcp_guarded.monotonic_ns',
+                        side_effect=lambda:clock[0]),
+                  patch('time.monotonic_ns',side_effect=lambda:clock[0])):
+                row=owner.run_compiled(spec,bindings,call_root=root/'method',
+                    perceive=perceive,verify_effect=verify_effect)
             receipt=row['method_receipt']
             transitions=receipt['transitions']
             effects=[event for event in receipt['critical_events']
