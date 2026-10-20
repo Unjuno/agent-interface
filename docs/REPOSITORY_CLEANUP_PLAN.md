@@ -88,7 +88,7 @@ this cleanup plan.
 7. D11 is integrated. Its 15 candidate dispositions close only #8654/#8913
    after preserving scoped results; the other 13 remain open with their recorded
    results, proposals, or explicit WSLc ownership holds. D01 and D02 are
-   integrated; D03–D06 are reconciled below. D07–D10 remain unreviewed.
+   integrated; D03–D07 are reconciled below. D08–D10 remain unreviewed.
 
 ## D01 family disposition — 2026-10-20
 
@@ -160,14 +160,23 @@ allocation, or worktree cleanup was run. D06–D10 remain unreviewed.
 ## D06 family disposition — 2026-10-20
 
 The [D06 receipt](maintenance/idea-family-triage-r119/D06.md) reconciles 25
-candidate Issues against B08–B10 and the current catalog. All 25 remain open:
-the batch contains unresolved raw/source publication holds, cost-negative and
-method-scoped results, unrun comparisons, a reopened successor, and distinct
-architecture proposals. No Issue state changed. The GraphQL aggregate is
-1,656 open Issues / 468 open PRs; this is count-only, not a paginated
-membership audit. Across D01–D06, 150 candidates are mapped, 14 individually
-evidenced Issues were closed, and 136 remain open. No experiment, allocation,
-or worktree cleanup was run. D07–D10 remain unreviewed.
+candidate Issues against B08–B10 and the current catalog. All 25 remain open;
+no Issue state changed. The GraphQL aggregate is 1,656 open Issues / 468 open
+PRs; this is count-only, not a paginated membership audit. Across D01–D06, 150
+candidates are mapped, 14 individually evidenced Issues were closed, and 136
+remain open. No experiment, allocation, or worktree cleanup was run.
+
+## D07 family disposition — 2026-10-20
+
+The [D07 receipt](maintenance/idea-family-triage-r119/D07.md) reconciles 25
+candidates against B10–B11. It closes #6990 only for its complete bounded T8
+offline receipt-schema audit, preserving separate T7/T6 STOPs. It also updates
+#6767 to finite recovery checkpoints, removes reviewer-count barriers from
+#6875/#6932 bodies, and limits #6957 coordination to real shared boundaries.
+No experiment, allocation, WSLc/Docker operation, or worktree cleanup ran.
+The count-only aggregate after the closure is 1,655 open Issues / 468 open PRs.
+Across D01–D07, 175 candidates are mapped, 15 scoped Issues are closed, and
+160 remain open. D08–D10 remain unreviewed.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
