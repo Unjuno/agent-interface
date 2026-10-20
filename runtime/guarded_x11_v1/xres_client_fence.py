@@ -35,6 +35,7 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
     process = None
     process_started = False
     result = None
+    worker_result_received_monotonic_ns = None
     try:
         context = multiprocessing.get_context('spawn')
         receive, send = context.Pipe(duplex=False)
@@ -50,6 +51,7 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
         if receive.poll(max(0.0, deadline - time.monotonic())):
             try:
                 result = receive.recv()
+                worker_result_received_monotonic_ns = time.monotonic_ns()
             except (EOFError, OSError):
                 result = None
     except Exception as error:
@@ -78,6 +80,14 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
     else:
         worker_retired = None
         exitcode = None
+    worker_exit_observed_monotonic_ns = (
+        time.monotonic_ns() if process_started else None)
+    worker_shutdown_wait_ms = (
+        (worker_exit_observed_monotonic_ns
+         - worker_result_received_monotonic_ns) / 1_000_000
+        if worker_result_received_monotonic_ns is not None else None)
+    worker_result_status = (
+        result.get('status') if isinstance(result, dict) else None)
 
     elapsed_ms = (time.monotonic() - started) * 1000.0
     if (isinstance(result, dict) and worker_retired and not forced_stop
@@ -98,7 +108,13 @@ def supervise_xres_worker(target, args, *, timeout_s, terminate_grace_s=0.1,
             reason = 'worker_exited_without_result'
         outcome = {'status':'unknown', 'reason':reason,
                    'worker_retired':worker_retired, 'worker_exitcode':exitcode,
-                   'elapsed_ms':elapsed_ms}
+                   'elapsed_ms':elapsed_ms,
+                   'worker_result_status':worker_result_status,
+                   'worker_result_received_monotonic_ns':(
+                       worker_result_received_monotonic_ns),
+                   'worker_exit_observed_monotonic_ns':(
+                       worker_exit_observed_monotonic_ns),
+                   'worker_shutdown_wait_ms':worker_shutdown_wait_ms}
         if error_text is not None:
             outcome['error'] = error_text
     for connection in (send, receive):

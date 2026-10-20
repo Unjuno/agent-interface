@@ -73,6 +73,12 @@ class XResClientFenceTests(unittest.TestCase):
         send_connection.send({'status':'released', 'release':{
             'verified':True, 'keys_down':[], 'buttons_down':[]}})
 
+    @staticmethod
+    def _result_then_delayed_exit_worker(send_connection):
+        send_connection.send({'status':'released', 'release':{
+            'verified':True, 'keys_down':[], 'buttons_down':[]}})
+        time.sleep(0.3)
+
     def test_supervisor_terminates_a_query_worker_that_exceeds_its_budget(self):
         module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
         supervise = getattr(module, 'supervise_xres_worker', None)
@@ -133,6 +139,23 @@ class XResClientFenceTests(unittest.TestCase):
 
         self.assertEqual(result['status'], 'disconnected')
         self.assertTrue(result['worker_retired'], result)
+
+    def test_supervisor_retains_result_status_when_worker_shutdown_exceeds_grace(self):
+        module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
+
+        result = module.supervise_xres_worker(
+            self._result_then_delayed_exit_worker, (), timeout_s=1.0,
+            terminate_grace_s=0.05, accepted_statuses=('released',))
+
+        self.assertEqual(result['status'], 'unknown', result)
+        self.assertEqual(result['reason'], 'worker_did_not_exit_cleanly', result)
+        self.assertEqual(result.get('worker_result_status'), 'released', result)
+        self.assertIsInstance(result.get('worker_result_received_monotonic_ns'), int,
+                              result)
+        self.assertIsInstance(result.get('worker_exit_observed_monotonic_ns'), int,
+                              result)
+        self.assertGreater(result['worker_exit_observed_monotonic_ns'],
+                           result['worker_result_received_monotonic_ns'])
 
     def test_supervisor_classifies_an_unrecognized_worker_status_as_malformed(self):
         module = importlib.import_module('runtime.guarded_x11_v1.xres_client_fence')
