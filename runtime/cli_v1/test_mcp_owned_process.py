@@ -6,11 +6,13 @@ from unittest.mock import Mock, patch
 import json
 import multiprocessing
 import os
+import shutil
 import tempfile
 import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from PIL import Image
 
 from Xlib import X
 
@@ -78,6 +80,19 @@ def _fake_owner_factory(targets, directory, display_name, options):
             while not (root/'resume-owner-io').exists():
                 time.sleep(0.005)
     fake.backend.d.sync = sync
+    original_emit=fake.emit
+    def compiled_emit(display,kind,code):
+        original_emit(display,kind,code)
+        if ((root/'compiled-profile-mode').exists() and kind==X.KeyPress
+                and code==1):
+            image=Image.frombytes('RGB',(32,32),fake.raw,'raw','BGRX')
+            image.putpixel((1,1),(255,0,0))
+            fake.raw=image.tobytes('raw','BGRX')
+            if (root/'compiled-flip-generation-after-input').exists():
+                (root/'fake-process-generation').write_text('b'*64,encoding='utf-8')
+    input_patcher=patch('runtime.backends.x11_v1.backend.xtest.fake_input',
+                        side_effect=compiled_emit)
+    input_patcher.start();cleanup.addCleanup(input_patcher.stop)
     patcher = patch('runtime.guarded_x11_v1.target_queries.X11TargetQueries',
                     return_value=_FakeQueries(root))
     patcher.start()
@@ -104,6 +119,41 @@ def _write_test_obligation_state(shared, state):
     for index, byte in enumerate(record[1:], start=1):
         shared[index] = byte
     shared[0] = record[0]
+
+
+def _compiled_profile_payload(scope,surface,offset):
+    from runtime.core_v1.test_compiled_gui import interface
+    spec=interface();spec.update(interface_id='owned-compiled-profile',
+        session_scope=scope,surface=surface)
+    spec['predicates']=['phase','present']
+    spec['symbols']['field'].update(identity_predicate='present',dependencies=['present'])
+    spec['actions']={'enter':{'target_symbol':'field','operation':'enter',
+        'expected_effect':{'phase':1}}}
+    spec['method']={'name':'one-visible-transition','version':'1',
+        'initial_state':'before','max_transitions':1,'max_runtime_ms':5000,
+        'states':{
+            'before':{'branches':[{'when':{'phase':0},'outcome':'action',
+                'action':'enter','next_state':'done','reason':None}]},
+            'done':{'branches':[{'when':{'phase':1},'outcome':'complete',
+                'action':None,'next_state':None,'reason':None}]}}}
+    return {'interface':spec,
+        'bindings':{'enter':{'interaction':'keyboard','offset':offset,
+            'tail':[{'op':'key_chord','keys':['CTRL','a']}]}},
+        'predicate_rules':{
+            'phase':{'point':[1,1],'states':[
+                {'rgb':[31,29,1],'value':0},{'rgb':[255,0,0],'value':1}]},
+            'present':{'point':[2,2],'states':[{'rgb':[62,58,4],'value':True}]}},
+        'effect_rules':{'enter':{'point':[1,1],'rgb':[255,0,0]}}}
+
+
+def _preserve_fake_x_run(name, root):
+    """Optionally retain exact synthetic call receipts in a fresh evidence folder."""
+    destination=os.environ.get('AGENT_INTERFACE_FAKE_X_EVIDENCE')
+    if destination is None:
+        return
+    target=Path(destination)/name
+    target.mkdir(parents=True,exist_ok=False)
+    shutil.copytree(root,target/'run')
 
 
 def _queued_fake_owner_factory(targets, directory, display_name, options):
@@ -179,6 +229,33 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def test_compiled_profile_tool_is_absent_without_owned_process(self):
+        with tempfile.TemporaryDirectory() as td:
+            server=create_server({'app':20},td,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True)
+            names={tool.name for tool in await server.list_tools()}
+            self.assertNotIn('interface_guarded_compiled',names)
+            await server.call_tool('interface_close',{})
+
+    async def test_invalid_compiled_profile_is_rejected_before_call_admission(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                result=metadata(await server.call_tool('interface_guarded_compiled',{
+                    'interface':{'format':'not-a-compiled-interface'},
+                    'bindings':{},'predicate_rules':{},'effect_rules':{},
+                    'wait_for_result_ms':0}))
+                self.assertEqual(result['status'],'invalid_request',result)
+                self.assertFalse(result['operation_invoked'])
+                self.assertIsNone(result['task_success'])
+                self.assertFalse(result['replay_allowed'])
+                self.assertFalse(list(root.glob('calls/*/request.json')))
+            finally:
+                await server.call_tool('interface_close',{})
+
     def test_retired_release_accepts_verified_reply_from_delayed_worker(self):
         from runtime.guarded_x11_v1.xres_client_fence import supervise_xres_worker
 
@@ -912,6 +989,68 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool('interface_close', {})
 
+    async def test_standard_compiled_profile_uses_generation_bound_owned_caller(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);(root/'compiled-profile-mode').write_text('enabled')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                self.assertEqual(observed['source']['pointer_binding']['process_generation'],'a'*64)
+                self.assertTrue(observed['session']['compiled_scope'])
+                minted=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='field',source_sequence=observed['source']['sequence'],
+                    point=[8,8],region_size=[12,12])))
+                payload=_compiled_profile_payload(observed['session']['compiled_scope'],
+                    observed['session']['compiled_surface'],minted['offset'])
+                payload['wait_for_result_ms']=10000
+                result=metadata(await server.call_tool('interface_guarded_compiled',payload))
+                self.assertEqual(result['method_receipt']['outcome'],'TASK_SUCCEEDED',result)
+                self.assertEqual(result['method_receipt']['completed_transitions'],1)
+                self.assertIsNone(result['task_success'])
+                self.assertFalse(result['replay_allowed'])
+                self.assertEqual(result['session']['owner_process']['pid'],observed['session']['owner_process']['pid'])
+                self.assertTrue((Path(result['call_directory'])/'compiled'/'owner-attempt-timing.json').is_file())
+                lookup=metadata(await server.call_tool('interface_results',{'call_id':result['call_id']}))
+                self.assertEqual(lookup['method_receipt'],result['method_receipt'])
+                self.assertIsNone(lookup['task_success'])
+            finally:
+                await server.call_tool('interface_close',{})
+                _preserve_fake_x_run(
+                    'standard-compiled-success',root)
+
+    async def test_compiled_profile_stops_mid_action_on_process_generation_change(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/'compiled-profile-mode').write_text('enabled')
+            (root/'compiled-flip-generation-after-input').write_text('enabled')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                minted=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='field',source_sequence=observed['source']['sequence'],
+                    point=[8,8],region_size=[12,12])))
+                payload=_compiled_profile_payload(observed['session']['compiled_scope'],
+                    observed['session']['compiled_surface'],minted['offset'])
+                payload['wait_for_result_ms']=10000
+                result=metadata(await server.call_tool('interface_guarded_compiled',payload))
+                self.assertEqual((root/'fake-process-generation').read_text(), 'b'*64)
+                self.assertNotEqual(result['method_receipt']['outcome'],'TASK_SUCCEEDED',result)
+                self.assertEqual(result['method_receipt']['completed_transitions'],0)
+                self.assertIsNone(result['task_success'])
+                self.assertFalse(result['replay_allowed'])
+                retained=metadata(await server.call_tool('interface_results',
+                    {'call_id':result['call_id']}))
+                self.assertNotEqual(retained['method_receipt']['outcome'],'TASK_SUCCEEDED')
+                self.assertIsNone(retained['task_success'])
+            finally:
+                await server.call_tool('interface_close',{})
+                _preserve_fake_x_run(
+                    'generation-change-refusal',root)
+
     async def test_owned_process_refuses_alias_after_target_generation_changes(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
@@ -1012,6 +1151,68 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
+
+    async def test_compiled_call_cancel_retires_owner_during_blocked_platform_sync(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);(root/'compiled-profile-mode').write_text('enabled')
+            server=create_server({'app':20},root,session_mode='guarded-x11',
+                guarded_process_identity=True,guarded_query_worker=True,
+                guarded_owned_process=True,_guarded_owner_factory=_fake_owner_factory)
+            try:
+                observed=metadata(await server.call_tool('interface_guarded_observe',{}))
+                minted=metadata(await server.call_tool('interface_guarded_mint',dict(
+                    alias='field',source_sequence=observed['source']['sequence'],
+                    point=[8,8],region_size=[12,12])))
+                payload=_compiled_profile_payload(observed['session']['compiled_scope'],
+                    observed['session']['compiled_surface'],minted['offset'])
+                payload['wait_for_result_ms']=0
+                (root/'block-owner-io').write_text('block',encoding='utf-8')
+                pending=metadata(await server.call_tool('interface_guarded_compiled',payload))
+                self.assertEqual(pending['status'],'pending',pending)
+                deadline=time.monotonic()+3
+                while not (root/'owner-io-entered.json').exists() and time.monotonic()<deadline:
+                    await asyncio.sleep(.005)
+                self.assertTrue((root/'owner-io-entered.json').exists())
+                self.assertEqual(json.loads((root/'owner-io-entered.json').read_text()),[1])
+                fence_result={'status':'disconnected','worker_retired':True,'elapsed_ms':2.5}
+                release_result={'status':'unknown','reason':'fake_transport_has_no_live_readback',
+                                'worker_retired':True}
+                with (patch('runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised',
+                            return_value=fence_result),
+                      patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner._release_retired_owner_inputs',
+                            return_value=release_result) as release_inputs):
+                    cancel=metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+                release_inputs.assert_called_once_with({'keys':{'CTRL':1},'buttons':[]})
+                self.assertTrue(cancel['owner_process_retired'],cancel)
+                self.assertEqual(cancel.get('owner_client_disconnect'),fence_result)
+                self.assertEqual(cancel.get('owner_input_obligations'),
+                                 {'keys':{'CTRL':1},'buttons':[]})
+                self.assertEqual(cancel.get('owner_release_attempt'),release_result)
+                self.assertFalse(cancel['release_confirmed'])
+                self.assertEqual(cancel['cleanup_status'],'UNKNOWN')
+                self.assertTrue(cancel['late_server_request_possible'])
+                # The cancellation receipt is immediate, while the server call
+                # record becomes terminal only after its worker observes owner
+                # retirement. Let the fake transport unwind, then bound that wait.
+                (root/'resume-owner-io').write_text('resume',encoding='utf-8')
+                deadline=time.monotonic()+2
+                terminal=None
+                while time.monotonic()<deadline:
+                    terminal=metadata(await server.call_tool('interface_results',
+                        {'call_id':pending['call_id'],'include_image':False}))
+                    if terminal['status'] != 'pending':
+                        break
+                    await asyncio.sleep(.01)
+                self.assertIsNotNone(terminal)
+                self.assertNotEqual(terminal['status'],'pending',terminal)
+                self.assertIsNone(terminal['task_success'])
+                self.assertFalse(terminal['replay_allowed'])
+            finally:
+                (root/'resume-owner-io').write_text('resume',encoding='utf-8')
+                await server.call_tool('interface_close',{})
+                _preserve_fake_x_run(
+                    'cancel-blocked-platform-sync',root)
 
     async def test_cancel_returns_unknown_when_separate_release_worker_blocks(self):
         """Bound caller recovery under a synthetic platform-I/O block; infer no release."""

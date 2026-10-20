@@ -1,5 +1,14 @@
 # Bounded compiled methods over the shared X11 bridge
 
+The public MCP composition route is described in the
+[standard MCP guide](../cli_v1/MCP.md#public-compiled-x11-method). It accepts a
+declarative exact-pixel profile rather than executable Python callbacks and is
+only registered on the owned-process guarded caller. That narrows the public
+input surface; it does not make pixel rules an independent oracle or authorize
+the application task result. The MCP composition tests use Fake X and must not
+be reported as live GUI, MAP01, physical release, recovery or efficiency
+evidence.
+
 `runtime.guarded_x11_v1.compiled.run` connects the existing shared
 `runtime.core_v1.compiled_gui` graph to a caller-owned `NativeHandleBridge`.
 This is an opt-in portable Python API for Linux/X11. It imports no research

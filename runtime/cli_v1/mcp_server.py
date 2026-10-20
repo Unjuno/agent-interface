@@ -296,6 +296,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     report = close_owner()
                 elif operation == 'recover_input':
                     report = owner.recover_input(**kwargs, capture_directory=str(call_root / 'images'))
+                elif operation == 'guarded_compiled':
+                    report = owner.run_compiled_profile(
+                        kwargs['interface'], kwargs['bindings'],
+                        kwargs['predicate_rules'], kwargs['effect_rules'],
+                        call_root, call_id)
                 elif operation.startswith('guarded_'):
                     report = owner.invoke_guarded(operation, kwargs, call_root)
                 elif operation in ('inspect_target', 'review_target'):
@@ -439,7 +444,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             admission.finish()
 
     async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False, *, wait_for_result_ms=None):
-        if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input')
+        if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input','guarded_compiled')
                 or type(wait_for_result_ms) is not int or not 0<=wait_for_result_ms<=10000):
             return content({'status':'invalid_request','error':'INVALID_RESPONSE_WAIT',
                             'operation_invoked':False,'replay_allowed':False},error=True)
@@ -645,11 +650,15 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             # owned-process option may supervise an exact-client XRes query.
             with calls_lock:
                 record = calls.get(call_id)
-                active = record is not None and record['operation'] == 'guarded_input' and record['state'] == 'running'
+                active = (record is not None
+                    and record['operation'] in ('guarded_input','guarded_compiled')
+                    and record['state'] == 'running')
             if not active:
                 return content({'status':'not_active','input_dispatched':False,'release_confirmed':False})
             return content(owner.cancel_guarded(call_id))
-        register_guarded_tools(server, submit, cancel=cancel_guarded if guarded_query_worker else None)
+        register_guarded_tools(server, submit,
+            cancel=cancel_guarded if guarded_query_worker else None,
+            compiled_enabled=guarded_owned_process)
     else:
         @server.tool()
         async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],

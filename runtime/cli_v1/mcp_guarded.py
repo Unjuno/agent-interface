@@ -3,7 +3,8 @@ from contextlib import contextmanager
 from copy import deepcopy
 from pathlib import Path
 from time import monotonic_ns
-from mcp.types import CallToolResult
+import json
+from mcp.types import CallToolResult, TextContent
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, model_validator
 from typing import Annotated, Literal
 from .mcp_session import MCPSessionOwner
@@ -90,6 +91,10 @@ class GuardedSessionOwner(MCPSessionOwner):
         row['query_worker'] = self.query_worker
         row['observation_worker'] = self.observation_worker
         row['window_lifecycle'] = self.window_lifecycle
+        if self.bridge is not None:
+            from runtime.guarded_x11_v1.compiled import surface
+            row['compiled_scope'] = self.bridge.scope
+            row['compiled_surface'] = surface(self.bridge)
         observations = getattr(self.bridge,'_observations',None)
         row['observations'] = observations.snapshot() if observations is not None else None
         worker = getattr(self.bridge,'_target_queries',None)
@@ -220,6 +225,24 @@ class GuardedSessionOwner(MCPSessionOwner):
         return {'method_receipt':receipt, 'feedback':feedback, 'session':session,
                 'owner_timing':timing, 'owner_timing_retention':timing_retention,
                 'task_success':None, 'replay_allowed':False}
+
+    def run_compiled_profile(self, interface, bindings, predicate_rules,
+                             effect_rules, call_root, cancel_token):
+        """Run a data-only exact-pixel profile under whole-call cancellation.
+
+        Public MCP enables this only on the owned-process caller. Pixel matches
+        are a local observation contract, never independent task scoring.
+        """
+        if not self.query_worker:
+            raise RuntimeError('compiled public calls require the owned query worker')
+        self.get()
+        from runtime.guarded_x11_v1.pixel_profile import build_callbacks
+        perceive, verify_effect = build_callbacks(interface, predicate_rules, effect_rules)
+        with self.bridge.cancellation_scope(cancel_token, cancel_when_idle=True):
+            return self.run_compiled(interface, bindings,
+                call_root=Path(call_root)/'compiled', perceive=perceive,
+                verify_effect=verify_effect,
+                cancelled=self.bridge._cancel_requested)
 
     def invoke_guarded(self, operation, arguments, call_root):
         if operation == 'guarded_recover_input':
@@ -373,7 +396,7 @@ class GuardedSessionOwner(MCPSessionOwner):
             return dict(row, status='refused', error=repr(error), input_dispatched=False)
 
 
-def register_guarded_tools(server, submit, *, cancel=None):
+def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=False):
     @server.tool()
     async def interface_guarded_recover_input(current_binding_revision: StrictInt,
             wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)] | None=None) -> CallToolResult:
@@ -398,7 +421,7 @@ def register_guarded_tools(server, submit, *, cancel=None):
     if cancel is not None:
         @server.tool()
         async def interface_guarded_cancel(call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')]) -> CallToolResult:
-            """Request cancellation of this running guarded-input call, bypassing the busy slot.
+            """Request cancellation of a running guarded input or compiled method.
 
             Get the call ID from interface_results. This publishes retained local
             state only; no input or cleanup is injected here. Acknowledgement is
@@ -406,6 +429,47 @@ def register_guarded_tools(server, submit, *, cancel=None):
             replay uncertain input. Old/unknown call IDs cannot cancel a new call.
             """
             return cancel(call_id)
+    if compiled_enabled:
+        @server.tool()
+        async def interface_guarded_compiled(interface: dict, bindings: dict,
+                predicate_rules: dict, effect_rules: dict,
+                wait_for_result_ms: Annotated[StrictInt, Field(ge=0,le=10000)]=1000) -> CallToolResult:
+            """Run one bounded compiled X11 method through the owned standard caller.
+
+            This tool is exposed only with guarded owned-process, process-identity
+            and query-worker startup enabled. `interface.session_scope` and
+            `interface.surface` must match the `session.compiled_scope` and
+            `session.compiled_surface` returned by an earlier guarded observation.
+            Bindings name previously minted aliases and exact offsets/tails.
+            `predicate_rules` maps every declared predicate to an exact pixel
+            point and a finite RGB-to-scalar table; unmatched/out-of-frame samples
+            are `unknown`. `effect_rules` maps every declared action to a separate
+            exact-pixel visible cue. These are read-only profiles, not OCR or an
+            independent task scorer. `task_success` remains null, and a graph
+            `TASK_SUCCEEDED` is only a local method verdict.
+
+            The method runtime and transition count are bounded by the interface.
+            The first target process/window generation is pinned; changes or
+            missing generation evidence stop the method. Use a short
+            `wait_for_result_ms` to obtain a call ID while work continues, then
+            `interface_results` to retrieve it. To cancel, call
+            `interface_guarded_cancel` with that call ID. Cancellation may retire
+            the exact owner; release remains unknown unless separately confirmed.
+            Never resubmit a pending or uncertain call.
+            """
+            from runtime.guarded_x11_v1.pixel_profile import build_callbacks
+            try:
+                build_callbacks(interface,predicate_rules,effect_rules)
+            except (TypeError,ValueError,KeyError,RecursionError) as error:
+                row={'status':'invalid_request','error':'COMPILED_PROFILE_INVALID',
+                    'detail':repr(error),'operation_invoked':False,'task_success':None,
+                    'replay_allowed':False}
+                return CallToolResult(content=[TextContent(
+                    type='text',text=json.dumps(row,allow_nan=False))],isError=True)
+            arguments={'interface':interface,'bindings':bindings,
+                'predicate_rules':predicate_rules,'effect_rules':effect_rules}
+            return await submit('guarded_compiled',arguments,False,False,
+                wait_for_result_ms=wait_for_result_ms)
     @server.tool()
     async def interface_guarded_activate_window(window_id: StrictInt, source_sequence: StrictInt,
             current_binding_revision: StrictInt, expires_at_ns: StrictInt,

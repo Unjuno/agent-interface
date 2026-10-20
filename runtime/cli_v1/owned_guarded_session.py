@@ -219,7 +219,7 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
             args=(control_connection, control_stop, owner, pid),
             name='guarded-owner-control', daemon=True)
         control_thread.start()
-        allowed = {'snapshot', 'invoke_guarded', 'recover_input', 'inspect_target',
+        allowed = {'snapshot', 'invoke_guarded', 'run_compiled_profile', 'recover_input', 'inspect_target',
                    'review_target', 'dispatch', 'inspect_after_dispatch', 'observe', 'close'}
         while True:
             request = rpc_connection.recv()
@@ -234,6 +234,8 @@ def _serve_owned_guarded_session(rpc_connection, control_connection, targets,
                         result = owner.snapshot()
                     elif operation == 'invoke_guarded':
                         result = owner.invoke_guarded(**arguments)
+                    elif operation == 'run_compiled_profile':
+                        result = owner.run_compiled_profile(**arguments)
                     elif operation == 'recover_input':
                         result = owner.recover_input(**arguments)
                     elif operation == 'inspect_target':
@@ -569,6 +571,14 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
     def invoke_guarded(self, operation, arguments, call_root):
         return self._call('invoke_guarded', operation=operation,
                           arguments=deepcopy(arguments), call_root=Path(call_root))
+
+    def run_compiled_profile(self, interface, bindings, predicate_rules,
+                             effect_rules, call_root, cancel_token):
+        return self._call('run_compiled_profile', interface=deepcopy(interface),
+                          bindings=deepcopy(bindings),
+                          predicate_rules=deepcopy(predicate_rules),
+                          effect_rules=deepcopy(effect_rules),
+                          call_root=str(call_root), cancel_token=cancel_token)
 
     def recover_input(self, current_binding_revision, target=None, region=None,
                       capture_directory=None):

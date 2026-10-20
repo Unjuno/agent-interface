@@ -656,3 +656,29 @@ and may still execute; ending this wait does not cancel or permit replay. Read
 the original `interface_results(call_id)`. Other input/recovery/close remains busy
 until the writer finishes. This is a cooperative response wait, not a hard
 transport/OS/physical-release bound or a task-success predicate.
+
+## Public compiled X11 method
+
+`interface_guarded_compiled(interface, bindings, predicate_rules, effect_rules,
+wait_for_result_ms=1000)` composes the existing bounded compiled graph with the
+standard owned-process caller. The tool is registered only when
+`--session-mode guarded-x11`, `--guarded-process-identity`,
+`--guarded-query-worker`, and `--guarded-owned-process` are enabled. Use the
+`compiled_scope` and `compiled_surface` returned by an earlier guarded
+observation; bind actions only to aliases already minted by the guarded bridge.
+Predicate and effect rules are finite exact-pixel tables. Unknown pixel values
+remain unknown; this interface accepts no executable callbacks, OCR, generic
+vision, or task-specific scoring code.
+
+The process/window generation observed first is pinned for the invocation when
+present. A changed or missing generation stops continuation before another
+perception/effect verdict or input. A graph `TASK_SUCCEEDED` remains a method
+verdict and the public `task_success` field stays null. The method's transition
+and runtime bounds do not preempt blocking platform I/O. A short response wait
+returns a call ID while the same owner retains custody; retrieve it through
+`interface_results`. `interface_guarded_cancel(call_id)` may retire that owner.
+Retirement does not prove neutral input: report release as verified only when a
+separate native readback says so. Never repeat a pending or uncertain request.
+The local Fake X composition suite is construction evidence only; live GUI use,
+application task effects, MAP01, bounded physical release and matched efficiency
+remain unqualified.
