@@ -90,6 +90,31 @@ or MAP01 result is established. Do not rerun the consumed WSLc construction.
 Issue #59 stays open; this packet is separate from live threat/recovery runs
 and from PR #8843's authored-HUD cancellation construction.
 
+## Separate A09 source-monitor construction — PR #8841
+
+The [preserved packet](../../research/doom/v39_authored_pair_guard_a09_20261012/README.md)
+tests the frozen V39 paired health/ammo guard boundary with synthetic values:
+health 70→64 crosses the hard floor, ammo 6→0 crosses the positive floor,
+an in-envelope same-epoch pair remains a soft event, and mismatched epochs
+fail closed. Its saved WSLc transcript has one four-case test run and its
+retained non-executing audit is `PASS_SCOPED`.
+
+This construction packet is distinct from the live-allocation A09 in [PR
+#8749](https://github.com/Unjuno/agent-interface/pull/8749), which concerns a
+planner response becoming stale during inference. #8841 tests the source
+monitor's paired-signal boundary; it does not run the controller wait/cancel
+loop, model, or game. It establishes no live threat reaction, input release,
+recovery, task effect, or MAP01 outcome.
+
+The original package manifest had two stale hashes against its exact Git blobs
+(`results/audit.json` and `source_hashes.json`). The additive
+[custody repair](../../research/doom/v39_authored_pair_guard_a09_20261012/CUSTODY_REPAIR.md)
+corrects only package custody and protects the frozen bytes. The current-main
+transfer candidate also records a package-local LF rule because this Windows
+checkout uses `core.autocrlf=true`. Keep #8841 open until the full packet and
+crosswalk are present on main; keep parent Issue #59 open for its distinct
+live-control gates.
+
 ## Separate authored-HUD/pending-turn cancel construction — PR #8843 A10
 
 The [preserved package](../../research/doom/v39_authored_pair_cancel_composition_a10_20261012/README.md)

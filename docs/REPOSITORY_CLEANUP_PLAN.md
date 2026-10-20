@@ -1,5 +1,44 @@
 # Repository cleanup plan
 
+## Current checkpoint after PR #9286 — 2026-10-20
+
+Current `main` is `5476ea072cd864bb603c3f801e492ce2163d34dc`. The complete,
+bracketed [r120 membership recheck](maintenance/repository-inventory-recheck-20261020-r120.md)
+records 1,655 open Issues and 467 open PRs, with exact row metadata and ID-set
+hashes. These are the latest membership counts, not semantic dispositions or
+ownership proof.
+
+The selected cleanup packet is the A09 source-monitor construction result in
+[#8841](https://github.com/Unjuno/agent-interface/pull/8841). Its 17-file
+packet is absent from main and is distinct from live-allocation A09 in #8749.
+The transfer candidate preserves its source, test, WSLc transcript and saved
+audit, corrects two package-manifest hashes against exact Git blobs, and records
+the Windows LF-checkout condition. Exact-blob local checks pass 4/4 and
+`PASS_SCOPED`; no WSLc/Docker or formal allocation was run. Keep #8841 open
+until main contains the packet and exact blobs are verified. Issue #59 remains
+open for live threat response, release, recovery, task effect, and MAP01 gates.
+
+PR #8836 is already superseded by merged current-main PR #9282, which preserves
+its `FAIL_COST_GATE_SCOPED` result and frozen evidence; Issue #5311 remains open.
+The r05 worktree census is historical, not current custody evidence. No branch
+or worktree is removed by this checkpoint.
+
+### Next cleanup batch
+
+1. Integrate and verify the current-main #8841 transfer, then close that
+   predecessor only after a fresh live read and bidirectional successor link.
+2. Continue the other sampled open PRs only by their exact blockers: #8702 raw
+   custody, #8844 unique A04 audit, and #8845 shared WSLc ownership.
+3. Reconcile worktrees and branches individually using current owner/session,
+   process, ignored data, dependencies, unique evidence, and recovery; retain
+   unknown custody.
+4. Continue the 223 outstanding semantic idea routes from the current family
+   queue, preserving hypotheses and outcomes before any individual Issue
+   closure.
+
+This checkpoint preserves the #9285 plan and adds one bounded batch. Zero open
+Issues, zero open PRs, and zero worktrees are not completion criteria.
+
 ## Current checkpoint after PR #9285 — 2026-10-20
 
 PR [#9285](https://github.com/Unjuno/agent-interface/pull/9285), which refreshed
