@@ -271,7 +271,10 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIn(cancel.get('owner_client_disconnect', {}).get('status'),
                               ('unknown', 'still_connected'), cancel)
                 self.assertEqual(cancel.get('owner_release_attempt', {}).get('status'),
-                                 'unknown', cancel)
+                                 'not_attempted', cancel)
+                self.assertEqual(
+                    cancel.get('owner_release_attempt', {}).get('reason'),
+                    'owner_disconnect_not_confirmed', cancel)
                 report['server_stop_ms'] = (
                     report['server_resume']['monotonic_ns']
                     - report['server_process']['stopped_ns']) / 1_000_000
