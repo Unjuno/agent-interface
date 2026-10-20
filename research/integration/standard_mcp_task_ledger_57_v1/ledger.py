@@ -94,6 +94,11 @@ def summarize(events):
                 raise LedgerValidationError("tool call needs a method name")
             if not isinstance(row.get("result"), dict):
                 raise LedgerValidationError("tool call needs its retained result object")
+            response_status = row.get("response_status")
+            if response_status is not None and response_status not in (
+                    "matched", "unavailable"):
+                raise LedgerValidationError(
+                    "tool response bytes do not match the retained result")
             attempt_id = row.get("model_attempt_id")
             if attempt_id is not None and attempt_id not in attempt_ids:
                 raise LedgerValidationError("tool call references an unrecorded model attempt")
