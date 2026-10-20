@@ -24,6 +24,7 @@ from runtime.cli_v1.test_mcp_xvfb_blocked_release_integration import (
     _DELAY_MS, _key_down, _metadata, _xvfb_blocking_owner_factory,
 )
 from runtime.cli_v1.test_synthetic_task_oracle import (
+    score_recovered_synthetic_application_task,
     score_synthetic_application_task,
 )
 
@@ -31,6 +32,7 @@ from runtime.cli_v1.test_synthetic_task_oracle import (
 _SERVER_STOP_SAFETY_S = 4.0
 _CANCEL_BOUND_S = 3.0
 _POST_RESUME_CLOSE_BOUND_S = 3.0
+_RECOVERY_BOUND_S = 5.0
 
 
 def _private_xvfb_record():
@@ -86,14 +88,17 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
     async def test_cancel_is_bounded_and_release_stays_unknown_while_server_stops(self):
         result_path = os.environ.get('AGENT_INTERFACE_MCP_XVFB_SERVER_STOP_RESULT')
         report = {
-            'schema':'agent-interface/standard-mcp-xvfb-server-stop-v1',
+            'schema':'agent-interface/standard-mcp-xvfb-server-stop-recovery-v2',
             'status':'RUNNING',
-            'scope':'owned standard MCP caller, private Xvfb process stop, synthetic app',
+            'scope':'owned standard MCP caller, private Xvfb process stop/resume, fresh-target recovery, synthetic app',
             'conditions':{
                 'server_stop_safety_s':_SERVER_STOP_SAFETY_S,
                 'cancel_response_bound_s':_CANCEL_BOUND_S,
+                'recovery_bound_s':_RECOVERY_BOUND_S,
+                'recovery_no_late_press_horizon_ms':_DELAY_MS+500,
                 'delayed_request_time_field_ms':_DELAY_MS,
                 'server_resume_policy':'resume exact workflow-owned Xvfb in finally',
+                'recovery_policy':'retire old caller, read a fresh target, admit a new non-replayed action',
             },
             'timing_ns':{}, 'owner_sync':None, 'server_process':None,
             'cancel':None, 'independent_readback_after_resume':None,
@@ -103,6 +108,7 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
         app_thread = None
         app_stop = threading.Event()
         effect_seen = threading.Event()
+        recovery_effect_seen = threading.Event()
         release_seen = threading.Event()
         app_lock = threading.Lock()
         app_events = []
@@ -192,6 +198,9 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                         elif event.type == X.KeyPress and event.detail == keycodes['b']:
                             window.change_property(effect_atom, Xatom.CARDINAL, 32, [2])
                             app_display.sync()
+                            with app_lock:
+                                app_events[-1]['effect_committed_ns'] = time.monotonic_ns()
+                            recovery_effect_seen.set()
 
                 app_thread = threading.Thread(target=run_app,
                     name='xvfb-server-stop-test-app', daemon=True)
@@ -371,8 +380,180 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                                  [1])
                 self.assertEqual(report['synthetic_task_oracle']['status'], 'fail', report)
                 self.assertFalse(report['synthetic_task_oracle']['task_success'], report)
+
+                # The outage-era action remains failed and UNKNOWN. Recovery
+                # starts a distinct caller against a newly created target; it
+                # must refuse the old alias, observe/mint afresh, then produce
+                # a new independently read application effect.
+                previous_window_id = window.id
+                recovery_effect_seen.clear()
+                window.destroy()
+                app_display.sync()
+                window = screen.root.create_window(
+                    x, y, width, height, 0, X.CopyFromParent, X.InputOutput,
+                    X.CopyFromParent, background_pixel=0,
+                    event_mask=(X.KeyPressMask | X.KeyReleaseMask))
+                window.change_property(effect_atom, Xatom.CARDINAL, 32, [0])
+                window.map()
+                window.set_input_focus(X.RevertToParent, X.CurrentTime)
+                screen.root.warp_pointer(x+48, y+48)
+                recovery_gc = window.create_gc(foreground=0xFFFFFF)
+                for row in range((height+15)//16):
+                    for column in range((width+15)//16):
+                        if (row+column) % 2 == 0:
+                            window.fill_rectangle(recovery_gc, column*16, row*16,
+                                min(16, width-column*16),
+                                min(16, height-row*16))
+                app_display.sync()
+                self.assertNotEqual(window.id, previous_window_id)
+                with app_lock:
+                    recovery_app_event_start = len(app_events)
+                report['recovery_target'] = {
+                    'previous_window_id':previous_window_id,
+                    'fresh_window_id':window.id,
+                    'previous_process_generation':source.get(
+                        'pointer_binding', {}).get('process_generation'),
+                    'initial_effect':[0],
+                }
+
+                recovery_started_ns = time.monotonic_ns()
+                recovery_deadline = time.monotonic()+_RECOVERY_BOUND_S
+                recovery_server = create_server(
+                    {'app':window.id}, root/'recovery-mcp', session_mode='guarded-x11',
+                    guarded_process_identity=True, guarded_query_worker=True,
+                    guarded_window_lifecycle=True, guarded_owned_process=True)
+                server = recovery_server
+
+                async def bounded_recovery_call(tool, arguments):
+                    remaining_s = recovery_deadline-time.monotonic()
+                    if remaining_s <= 0:
+                        raise TimeoutError('bounded recovery deadline expired')
+                    response = await asyncio.wait_for(
+                        recovery_server.call_tool(tool, arguments),
+                        timeout=remaining_s)
+                    return _metadata(response)
+
+                stale_attempt = await bounded_recovery_call(
+                    'interface_guarded_input', {
+                        'alias':'field', 'offset':minted['offset'],
+                        'interaction':'keyboard', 'observe_after':False,
+                        'wait_for_result_ms':0,
+                        'tail':[{'op':'key_chord', 'keys':['b']}]})
+                self.assertEqual(stale_attempt.get('status'), 'refused', stale_attempt)
+                stale_result = stale_attempt.get('result', stale_attempt)
+                self.assertIs(stale_result['input_dispatched'], False, stale_attempt)
+                self.assertEqual(
+                    list(observer.create_resource_object(
+                        'window', window.id).get_full_property(
+                            effect_atom, X.AnyPropertyType).value), [0])
+
+                fresh_observed = await bounded_recovery_call(
+                    'interface_guarded_observe', {})
+                self.assertEqual(fresh_observed.get('status'), 'observed', fresh_observed)
+                fresh_source = fresh_observed['source']
+                fresh_generation = fresh_source.get('pointer_binding', {}).get(
+                    'process_generation')
+                self.assertIsNotNone(fresh_generation, fresh_observed)
+                fresh_minted = await bounded_recovery_call(
+                    'interface_guarded_mint', {
+                        'alias':'recovered-field',
+                        'source_sequence':fresh_source['sequence'],
+                        'point':[x+48,y+48], 'region_size':[24,24]})
+                self.assertEqual(fresh_minted.get('status'), 'minted', fresh_minted)
+                report['recovery'] = {
+                    'stale_alias_attempt':stale_attempt,
+                    'fresh_observation':fresh_observed,
+                    'fresh_process_generation':fresh_generation,
+                    'fresh_mint':fresh_minted,
+                }
+
+                recovery_pending = await bounded_recovery_call(
+                    'interface_guarded_input', {
+                        'alias':'recovered-field', 'offset':fresh_minted['offset'],
+                        'interaction':'keyboard', 'observe_after':False,
+                        'wait_for_result_ms':0,
+                        'tail':[{'op':'key_chord', 'keys':['b']}]})
+                if recovery_pending.get('status') == 'pending':
+                    recovery_call_id = recovery_pending['call_id']
+                    remaining_s = max(0.001, recovery_deadline-time.monotonic())
+                    await asyncio.wait_for(
+                        asyncio.to_thread(recovery_effect_seen.wait, remaining_s),
+                        remaining_s + 0.25)
+                    recovery_terminal = None
+                    while time.monotonic() < recovery_deadline:
+                        recovery_terminal = await bounded_recovery_call(
+                            'interface_results', {'call_id':recovery_call_id,
+                                                  'include_image':False})
+                        if recovery_terminal.get('status') != 'pending':
+                            break
+                        await asyncio.sleep(0.01)
+                else:
+                    recovery_terminal = recovery_pending
+                remaining_s = max(0.001, recovery_deadline-time.monotonic())
+                await asyncio.wait_for(
+                    asyncio.to_thread(recovery_effect_seen.wait, remaining_s),
+                    remaining_s + 0.25)
+                self.assertIsNotNone(recovery_terminal, 'recovery result is missing')
+                self.assertEqual(recovery_terminal.get('status'), 'completed',
+                                 recovery_terminal)
+                self.assertEqual(recovery_terminal.get('result', {}).get('status'),
+                                 'completed', recovery_terminal)
+                recovery_releases = recovery_terminal.get(
+                    'result', {}).get('execution', {}).get('releases', [])
+                self.assertTrue(recovery_releases, recovery_terminal)
+                self.assertTrue(recovery_releases[-1].get('verified'),
+                                recovery_releases[-1])
+                self.assertIsNone(recovery_terminal.get('task_success'),
+                                  recovery_terminal)
+                recovery_elapsed_ms = (
+                    time.monotonic_ns()-recovery_started_ns)/1_000_000
+                self.assertLess(recovery_elapsed_ms,
+                                _RECOVERY_BOUND_S*1000,
+                                recovery_terminal)
+                recovery_release_readback = {
+                    name:_key_down(observer, code)
+                    for name, code in keycodes.items()}
+                await asyncio.sleep((_DELAY_MS+500)/1000)
+                recovery_final_effect_row = observer.create_resource_object(
+                    'window', window.id).get_full_property(
+                        effect_atom, X.AnyPropertyType)
+                recovery_final_effect = (list(recovery_final_effect_row.value)
+                                         if recovery_final_effect_row is not None
+                                         else None)
+                recovery_horizon_readback = {
+                    name:_key_down(observer, code)
+                    for name, code in keycodes.items()}
+                with app_lock:
+                    recovery_events = list(app_events[recovery_app_event_start:])
+                recovery_b_presses = sum(
+                    event.get('type') == X.KeyPress
+                    and event.get('detail') == keycodes['b']
+                    for event in recovery_events)
+                recovery_oracle = score_recovered_synthetic_application_task(
+                    initial_effect=[0], final_effect=recovery_final_effect,
+                    release_readback=recovery_release_readback,
+                    horizon_readback=recovery_horizon_readback,
+                    expected_initial=[0], expected_final=[2])
+                report['recovery'].update({
+                    'input':recovery_pending,
+                    'terminal':recovery_terminal,
+                    'elapsed_ms':recovery_elapsed_ms,
+                    'new_target_b_keypresses':recovery_b_presses,
+                    'independent_readback':{
+                        'effect':recovery_final_effect,
+                        'release_readback':recovery_release_readback,
+                        'horizon_readback':recovery_horizon_readback,
+                        'reader':'separate parent X client',
+                        'monotonic_ns':time.monotonic_ns(),
+                    },
+                    'runtime_task_success':recovery_terminal.get('task_success'),
+                    'independent_task_oracle':recovery_oracle,
+                })
+                self.assertEqual(recovery_oracle.get('status'), 'pass', report)
+                self.assertTrue(recovery_oracle.get('task_success'), report)
+                self.assertEqual(recovery_b_presses, 1, report)
                 report['status'] = (
-                    'CANCEL_UNKNOWN_DURING_PRIVATE_XVFB_STOP_POST_RESUME_RELEASE_READBACK_VERIFIED')
+                    'CANCEL_UNKNOWN_DURING_PRIVATE_XVFB_STOP_THEN_FRESH_TARGET_RECOVERY_TASK_PASS')
             except BaseException as error:
                 report.update(status='FAIL', error_type=type(error).__name__,
                               error=str(error))
