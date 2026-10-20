@@ -38,6 +38,15 @@ is construction-only evidence; it does not validate a production supervisor.
 These probes preserve UNKNOWN/no-replay behavior and do not establish input
 release or real GUI effects.
 
+The [standard-caller duplicate-cancel retention characterization](standard_caller_duplicate_cancel_retention_20261021/README.md)
+is a one-trial Fake X composition result. Issue #814 already passes duplicate
+idempotence for its separate safety owner; the standard caller made one cleanup
+attempt here but returned `not_active` to the duplicate and retained no separate
+cancellation receipt in `interface_results`. Its action result stayed UNKNOWN,
+and its retained owner-liveness snapshot conflicted with the cancel retirement
+receipt. This identifies an integration/record-retention gap, not a live release
+or reliability result.
+
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
 Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.

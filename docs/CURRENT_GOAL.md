@@ -79,6 +79,12 @@ separates those injected cleanup waits from real process-start delay; the
 [prestarted-supervisor Fake X probe](../research/integration/prestarted_supervisor_fakex_feasibility_20261021/README.md)
 is construction feasibility only and does not validate production supervisor
 behavior.
+The [standard-caller duplicate-cancel retention characterization](../research/integration/standard_caller_duplicate_cancel_retention_20261021/README.md)
+compares that production-caller seam with the already-passed independent-owner
+duplicate-cancel result in Issue #814: one cleanup attempt occurred, but the
+duplicate returned `not_active`, no operation ID or retained cancellation
+record was exposed, and the action result remained UNKNOWN. It is one Fake X
+trial, not a release guarantee.
 The resulting [prestarted cancellation supervisor proposal](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
 records the current-main caller/result seam and a Fake X-only composition gate;
 its response/transaction budgets are provisional targets, not compatibility
