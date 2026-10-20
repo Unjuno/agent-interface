@@ -1,17 +1,20 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after PR #9267 — 2026-10-20
+## Current organization checkpoint after PR #9268 — 2026-10-20
 
-Current `main` is `6ad11c0b87f37eb4c26483dbd37cd6f55c7ff216` after cleanup PR
-#9267. PR #9265 refreshed the cleanup entry points; PR #9266 added full Issue/PR
-metadata; PR #9267 added the r119 coverage audit and eleven candidate discovery
-packets. The r119 inventory below is a dated snapshot of its pre-#9267 baseline,
-not a fresh post-merge membership read. The integrated computer-control state includes PR
-#9264's synthetic provider-attempt accounting and one public-MCP/Fake X
-composition result. It does not complete matched efficiency, independent live
-task scoring, provider-log reconciliation, physical input release, or bounded
-recovery; #57 remains open. Keep scoped component results attached to their own
-hypotheses.
+Current `main` is `bc64c65ba2a77d152b1eca9fdc5fca4d038abf5f`. PR #9267 added the
+r119 coverage audit and eleven candidate discovery packets; PR #9268 completed
+detailed nullable token-field summaries in the local #57 ledger. The r119 full
+membership/metadata snapshot remains the latest saved complete read, but it
+predates #9267. A current GraphQL count read reports 1,672 open Issues and 468
+open PRs; matching counts do not establish matching IDs or semantic
+dispositions. The five-PR disposition receipt below is a bounded sample, not a
+complete readiness audit. The integrated computer-control state still lacks
+matched efficiency, independent live task scoring, provider-log reconciliation,
+outage-time release, and a generally bounded recovery path; #57 remains open.
+The newest standard-caller Xvfb result records both an outage-task failure and
+a separate synthetic post-resume recovery pass in the [retained r03 packet](../research/integration/standard_caller_xvfb_server_stop_20261020/pr9247-run-39399107944/README.md).
+Keep those outcomes and limits distinct.
 
 The complete Issue/PR membership recheck r119 was captured around 12:22 UTC
 against `666888468e81b3c3c2c1e4103df549afcaf23822`, before PR #9267. GraphQL
@@ -58,6 +61,9 @@ this cleanup plan.
    path are known. Keep unknown custody as an explicit hold.
 5. Refresh the complete membership and exact item metadata before state
    changes; r119 is a dated baseline, not merge, close, or deletion authority.
+   For the next census, compute the full sorted ID sets and metadata once, bracket
+   the read with GraphQL counts and a stable main SHA, then reuse that snapshot
+   for both Issue and PR routing rather than generating parallel inventories.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,

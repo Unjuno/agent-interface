@@ -1,6 +1,6 @@
 # Integration plan
 
-Updated 2026-10-20 after PR #9260. Promote evidence into one usable
+Updated 2026-10-20 after PR #9268. Promote evidence into one usable
 computer-control path.
 Use [the work map](WORKER_WORK_MAP.md) to choose a finite contribution and
 [the current interface guide](../runtime/USING_CURRENT_INTERFACE.md) to identify
@@ -23,7 +23,7 @@ live task and matched comparison.
 
 ## Current source-bound findings
 
-- **Current public composition status after PR #9260 (main `a969266f0`,
+- **Current public composition status after PR #9264 (main `bc64c65ba2a7`,
   2026-10-20):** two synthetic Fake X cells exercise the standard public MCP
   path. One produces a state-changing synthetic effect; one changes the target
   generation after the fake provider response and verifies refusal before
@@ -33,6 +33,20 @@ live task and matched comparison.
   or matched efficiency. Keep #57 open and use the remaining composition/live
   requirements below; do not treat a successful public tool response as task
   success.
+
+- **Current-main whole-server-stop result (PR #9247, run 39399107944):** the
+  [retained packet](../research/integration/standard_caller_xvfb_server_stop_20261020/pr9247-run-39399107944/README.md)
+  distinguishes the outage task from a later recovery task. During private
+  Xvfb stop, cancellation returned in 0.409 s and retired the owner, but XRes
+  disconnect timed out; release was not attempted, cleanup stayed `UNKNOWN`,
+  and independent horizon readback found key `a` still down. That task scored
+  fail. After server resume, a separate fresh caller/window refused the old
+  alias and produced one independently read-back synthetic effect; the bounded
+  recovery oracle passed in 527.051 ms, while runtime `task_success` remained
+  null. This qualifies one post-resume synthetic recovery path only; it does
+  not establish release during outage, physical input, provider/model
+  integration, MAP01, or matched efficiency. The raw artifact is checksum
+  pinned. Keep #17 open and preserve the failed task separately from recovery.
 
 - **Delayed-provider freshness follow-up:** the test-only Fake X cell in
   [`composition-evidence-20261020-r02`](../research/integration/standard_mcp_task_ledger_57_v1/composition-evidence-20261020-r02/README.md)
