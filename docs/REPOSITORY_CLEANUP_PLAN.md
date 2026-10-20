@@ -1,5 +1,40 @@
 # Repository cleanup plan
 
+## Current organization checkpoint after PR #9253 — 2026-10-20
+
+Main is `3f7eec087f37a02acd38299c5fe1173be4f36977`. A fresh GitHub read at
+2026-10-20 10:52 UTC found 1,672 open Issues and 468 open PRs; the sorted
+numeric-ID hashes exactly match the complete r114 snapshot. GraphQL totals
+matched the CLI counts, and main was unchanged across the read. No duplicate
+inventory export was created. The r114 row metadata remains the latest saved
+complete metadata view; refresh the exact item before any Issue/PR state change.
+
+The local Git worktree census at the same time found 37 registered roots: 26
+clean and 11 dirty under normal `git status`, with 0 locked and 0 prunable.
+The [r04 census](maintenance/git-worktree-census-20261020-r04.md) lists the
+dirty roots and explicitly leaves ownership, active sessions, ignored files,
+dependencies, and recovery unverified. No worktree was changed. Treat all 11
+dirty roots as custody holds until individually reconciled; a clean status is
+not deletion approval either.
+
+### Next cleanup batch
+
+1. Reconcile the 11 dirty worktrees against active worker/session, PR/base,
+   branch, ignored-file, and raw-evidence custody. Retain unknown ownership.
+2. Continue semantic Issue review one bounded idea family at a time, preserving
+   distinct hypotheses and every first result; use the current family routing
+   queue rather than Issue-number order.
+3. Review open PRs individually by exact head/base, complete diff, local checks,
+   dependencies, and unique evidence custody. Draft status and age are filters,
+   not disposition.
+4. Close or archive only individually verified superseded/complete items after
+   the canonical idea/evidence entry and bidirectional successor links exist.
+
+The checkout is not repository-clean yet: current evidence does not establish
+custody for 11 dirty roots or semantic dispositions for all open items. This
+checkpoint records that boundary instead of converting unknown ownership into
+bulk deletion or closure.
+
 ## Current organization checkpoint after PR #9252 — 2026-10-20
 
 Main is `270e886685f3814f053824a5110e9226b1b3f5a5`. The complete paginated
