@@ -1,5 +1,32 @@
 # Repository cleanup plan
 
+## Current organization checkpoint after PR #9251 and Issue #53 correction — 2026-10-20
+
+Main is `7fb73d879b6a913e5692bbddaabf7f1c81739f73`. The bracketed complete
+membership snapshot [r113](maintenance/repository-inventory-recheck-20261020-r113.md)
+contains 1,672 open Issues and 468 open PRs; full metadata rows and sorted-ID
+hashes are retained beside it. The intermediate [r112](maintenance/repository-inventory-recheck-20261020-r112.md)
+recorded 1,671 Issues after #53 was auto-closed by PR #9251; it is retained as a
+historical snapshot and superseded for current membership by r113.
+
+PR #9251 is merged. It adds a local task-ledger schema/summary validator for
+#57, not provider accounting, live GUI integration, or an efficiency result.
+Its GitHub `closingIssuesReferences` unexpectedly includes #53 despite the PR
+description explicitly saying the validator does not close #53/#57. The live
+history confirms #53 was auto-closed at merge. Because the PR does not complete
+#53's shared-caller accounting work, #53 was reopened and remains an unfinished
+idea. The [r113 snapshot](maintenance/repository-inventory-recheck-20261020-r113.md)
+records the corrected open set. No experiment allocation or worktree deletion
+was made by this organization pass.
+
+The PR snapshot has 436 Draft and 32 non-Draft entries; 422 report
+`mergeStateStatus=UNKNOWN`. These are filters for individual exact-record review,
+not quality judgments or evidence that the PR author/owner is absent. Use the
+repo-wide sequence below: preserve and cluster ideas first, assign a per-item
+disposition, reconcile PRs independently, and resolve custody before physical
+cleanup. The objective is safe discoverability for independent workers, not
+zero open counts.
+
 ## Current organization checkpoint after PR #9247 — 2026-10-20
 
 The current code baseline is main `0f46feb6be55174bc79fb0df83e0205179f8cbdb`.
@@ -350,6 +377,13 @@ Choose one explicit disposition per Issue: `keep-open/actionable`, `keep-open/bl
 ### 4. Integrate PRs separately
 
 For each PR, re-fetch the exact head/base, changed files, current checks and required protections; inspect its full diff, comments, stack, unique result, and linked Issue. Record one next action: `merge-ready`, `needs-local-fix`, `stack/retarget`, `evidence-custody-hold`, `duplicate/superseded`, `owner-confirmation-hold`, or `close-after-preservation`. Run the relevant local checks and satisfy actual repository protections. Do not add an invented reviewer-count gate. After merge/close, verify that code and unique evidence remain reachable from main or a named preserved location.
+
+Before merging, inspect GitHub's computed `closingIssuesReferences` and confirm
+every Issue it will close is intentionally complete and its idea/evidence is
+preserved. Avoid negated close-keyword phrases such as “does not close #N” in a
+PR title/body: PR #9251's merge still auto-closed #53 from such a phrase. If a
+close is unintended, reopen the Issue, refresh the membership snapshot, and
+record the corrected disposition before continuing the batch.
 
 **Review-quorum cleanup (2026-10-20):** A read-only GitHub CLI scan against main `b38e49f8cf5cef3a30f33e945bf71feca838eae0` returned 477 open PRs. Thirty-nine Draft bodies matched explicit markers such as `required_nonauthor_content_votes`, a threshold of two, or a two-nonauthor quorum; the candidate numbers are listed in [review-gate scan r01](maintenance/review-gate-candidate-scan-20261020-r01.md). This is a body-text screen, not a completed review of those 39 PRs or proof that every match is an applicable gate. A live read of `main` branch protection returned “Branch not protected”; the repository rulesets endpoint returned an empty list. Therefore a PR body or Issue-local protocol is not by itself a repository-wide worker/merge quota. Preserve each proposal's actual scientific acceptance tests, required platform/ownership checks, and meaningful independent audit evidence; remove fixed reviewer-seat/count requirements from active operating instructions unless they are an actual GitHub protection or an explicitly current, user-authorized task acceptance condition. Treat the 39 matches as a finite PR triage batch, beginning with the computer-control #59/#57 items, and revise each exact live body only after checking its head, dependency, and retained evidence. Do not change PR state or delete branches as part of this scan.
 
