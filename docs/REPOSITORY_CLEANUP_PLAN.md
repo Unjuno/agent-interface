@@ -1,5 +1,33 @@
 # Repository cleanup plan
 
+## Current organization checkpoint after PR #9257 — 2026-10-20
+
+Main is `cdd3c7e979dc7799e6733e259934b1738bf01d22`. The complete paginated
+[r116 membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md)
+matches r114 exactly: 1,672 open Issue IDs and 468 open PR IDs. GraphQL counts
+bracketed the read; main remained stable. Reuse r114 row-level metadata rather
+than creating another duplicate export. The issue/PR count and ID set do not
+provide current ownership, semantic disposition, or per-PR readiness.
+
+PR #9257 merged a terminal, hash-bound, caller-supplied task-score certificate
+into the local #57 recorder. It cannot prove scorer independence. #57 remains
+open because production provider/orchestrator logging, provider-log
+reconciliation, live task effect, recovery, and matched efficiency are still
+unresolved.
+
+The new [worktree status census r05](maintenance/git-worktree-census-20261020-r05.md)
+found 37 registered roots, 27 clean and 10 dirty in normal Git status, with 0
+locked or prunable. This is one fewer dirty root than r04 after the completed
+local work was integrated; it does not resolve the other ten roots' ownership
+or evidence custody. Do not delete, reset, or archive them from this count.
+
+The existing family-first execution order and per-record disposition rules
+below remain in force. Next work should classify one disjoint family from live
+Issue/PR evidence, attach every hypothesis to its first outcome/raw evidence
+and next discriminating test, and only then consider individual closure. Do
+not turn this membership equality or the two merged PRs into a claim that the
+repository-wide cleanup is complete.
+
 ## Current organization checkpoint after PR #9255 — 2026-10-20
 
 Main is `475e3733785065bf2993d507f71fafad790916fb`. The fresh paginated
