@@ -1,3 +1,4 @@
+import asyncio
 import json
 import hashlib
 import tempfile
@@ -305,6 +306,96 @@ class ProviderAttemptRecorderTests(unittest.TestCase):
 
             with self.assertRaises(IncompleteProviderAttemptError):
                 after_restart.begin("attempt-02", b"another request")
+
+
+class AsyncProviderAttemptRecorderTests(unittest.IsolatedAsyncioTestCase):
+    async def test_async_provider_and_mcp_callbacks_are_recorded_before_await(self):
+        with tempfile.TemporaryDirectory() as temp:
+            ticks = iter((10, 20, 21, 22))
+            recorder = ProviderAttemptRecorder(temp, clock_ns=lambda: next(ticks))
+            result = {"status": "completed", "task_success": True}
+            response_bytes = json.dumps(result, sort_keys=True,
+                                        separators=(",", ":")).encode()
+
+            async def provider_call():
+                rows = [json.loads(line) for line in
+                        (Path(temp) / "attempts.jsonl").read_text().splitlines()]
+                self.assertEqual(rows[0]["event"], "model_attempt_started")
+                await asyncio.sleep(0)
+                return {
+                    "status": "completed",
+                    "usage": {"status": "reported", "input_tokens": 9,
+                              "output_tokens": 2},
+                    "response_bytes": b'{"tool":"interface_guarded_compiled"}',
+                }
+
+            await recorder.invoke_async("generation-01", b"provider request",
+                                        provider_call)
+
+            async def tool_call():
+                rows = [json.loads(line) for line in
+                        (Path(temp) / "attempts.jsonl").read_text().splitlines()]
+                self.assertTrue(any(row.get("event") == "tool_call_started"
+                                    for row in rows))
+                await asyncio.sleep(0)
+                return {"result": result, "response_bytes": response_bytes}
+
+            await recorder.invoke_tool_async(
+                "generation-01", "mcp-01", "interface_guarded_compiled",
+                b'{"profile":"frozen"}', tool_call,
+            )
+            receipt = recorder.reconcile()
+            self.assertTrue(receipt["complete"])
+            self.assertEqual([event["kind"] for event in receipt["events"]],
+                             ["model_attempt", "tool_call"])
+            self.assertEqual(receipt["events"][1]["model_attempt_id"],
+                             "generation-01")
+            self.assertEqual(receipt["events"][1]["response_status"], "matched")
+            summary = summarize(receipt["events"])
+            self.assertEqual(summary["model_attempt_count"], 1)
+            self.assertEqual(summary["input_tokens"], 9)
+            self.assertIsNone(summary["task_success"])
+
+    async def test_async_provider_cancellation_is_retained_and_reraised(self):
+        with tempfile.TemporaryDirectory() as temp:
+            ticks = iter((10, 20))
+            recorder = ProviderAttemptRecorder(temp, clock_ns=lambda: next(ticks))
+
+            async def cancelled_provider():
+                raise asyncio.CancelledError()
+
+            with self.assertRaises(asyncio.CancelledError):
+                await recorder.invoke_async(
+                    "generation-01", b"provider request", cancelled_provider)
+            receipt = recorder.reconcile()
+            event = receipt["events"][0]
+            self.assertTrue(receipt["complete"])
+            self.assertEqual(event["status"], "cancelled")
+            self.assertEqual(event["usage"]["status"], "unavailable")
+
+    async def test_async_mcp_call_without_provider_attempt_is_explicitly_unlinked(self):
+        with tempfile.TemporaryDirectory() as temp:
+            ticks = iter((10, 20))
+            recorder = ProviderAttemptRecorder(temp, clock_ns=lambda: next(ticks))
+            result = {"status": "returned", "ok": True}
+            response_bytes = json.dumps(result, sort_keys=True).encode()
+            call_id = "c" * 128
+
+            async def tool_call():
+                return {"result": result, "response_bytes": response_bytes}
+
+            await recorder.invoke_tool_async(
+                None, call_id, "interface_guarded_observe",
+                b"{}", tool_call)
+            receipt = recorder.reconcile()
+            summary = summarize(receipt["events"])
+
+            self.assertTrue(receipt["complete"])
+            self.assertEqual(receipt["events"][0]["model_attempt_id"], None)
+            self.assertEqual(receipt["events"][0]["response_status"], "matched")
+            self.assertEqual(summary["model_attempt_count"], 0)
+            self.assertEqual(summary["tool_call_count"], 1)
+            self.assertIsNone(summary["task_success"])
 
 
 if __name__ == "__main__":

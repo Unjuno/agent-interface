@@ -4,6 +4,7 @@ This module wraps an injected provider callable; it does not select or invoke a
 provider itself. Use one private, exclusively owned directory per task run.
 """
 
+import asyncio
 import hashlib
 import json
 import os
@@ -142,11 +143,25 @@ class ProviderAttemptRecorder:
         try:
             result = provider_call()
         except BaseException as exc:
-            status = "timeout" if isinstance(exc, TimeoutError) else (
-                "cancelled" if isinstance(exc, KeyboardInterrupt) else "failed")
+            status = self._exception_status(exc)
             self.finish(attempt_id, status=status, usage=_UNAVAILABLE_USAGE)
             raise
 
+        return self._record_provider_result(attempt_id, result)
+
+    async def invoke_async(self, attempt_id, request_bytes, provider_call):
+        """Durably wrap an awaited provider call, including task cancellation."""
+        self.begin(attempt_id, request_bytes)
+        try:
+            result = await provider_call()
+        except BaseException as exc:
+            self.finish(attempt_id, status=self._exception_status(exc),
+                        usage=_UNAVAILABLE_USAGE)
+            raise
+
+        return self._record_provider_result(attempt_id, result)
+
+    def _record_provider_result(self, attempt_id, result):
         response_bytes = None
         if isinstance(result, dict) and isinstance(result.get("response_bytes"), bytes):
             response_bytes = result["response_bytes"]
@@ -166,8 +181,21 @@ class ProviderAttemptRecorder:
                     response_bytes=response_bytes)
         return result
 
+    @staticmethod
+    def _exception_status(exc):
+        if isinstance(exc, TimeoutError):
+            return "timeout"
+        if isinstance(exc, (KeyboardInterrupt, asyncio.CancelledError)):
+            return "cancelled"
+        return "failed"
+
     def begin_tool_call(self, attempt_id, call_id, method, request_bytes):
         """Persist one MCP call admission before invoking the transport."""
+        if attempt_id is not None and (
+                not isinstance(attempt_id, str) or
+                not _ATTEMPT_ID.fullmatch(attempt_id)):
+            raise AttemptJournalError(
+                "model attempt id must be a safe path component or null")
         if not isinstance(call_id, str) or not _ATTEMPT_ID.fullmatch(call_id):
             raise AttemptJournalError("MCP call id must be a safe path component")
         if not isinstance(method, str) or not method:
@@ -177,10 +205,12 @@ class ProviderAttemptRecorder:
 
         with self._lock:
             current = self.reconcile(allow_incomplete=True)
-            parent = next((event for event in current["events"]
-                           if event["kind"] == "model_attempt" and
-                           event["attempt_id"] == attempt_id), None)
-            if (parent is None or parent["session_id"] != self.session_id or
+            parent = (next((event for event in current["events"]
+                            if event["kind"] == "model_attempt" and
+                            event["attempt_id"] == attempt_id), None)
+                      if attempt_id is not None else None)
+            if attempt_id is not None and (
+                    parent is None or parent["session_id"] != self.session_id or
                     parent["status"] != "completed"):
                 raise AttemptJournalError(
                     "MCP calls require a completed provider generation in this session")
@@ -188,10 +218,10 @@ class ProviderAttemptRecorder:
                     any(event.get("call_id") == call_id for event in current["events"])):
                 raise AttemptJournalError("MCP call id has already been used")
             started_ns = self._now()
-            if started_ns < parent["ended_ns"]:
+            if parent is not None and started_ns < parent["ended_ns"]:
                 raise AttemptJournalError("MCP call must start after provider completion")
-            request_ref = self._write_raw(attempt_id, f"tool-{call_id}-request",
-                                          request_bytes)
+            raw_id = self._tool_raw_id(attempt_id, call_id)
+            request_ref = self._write_raw(raw_id, "tool-request", request_bytes)
             self._append({
                 "event": "tool_call_started",
                 "attempt_id": attempt_id,
@@ -214,6 +244,35 @@ class ProviderAttemptRecorder:
 
         try:
             adapter_result = tool_call()
+        except BaseException as exc:
+            self.finish_tool_call(
+                attempt_id, call_id,
+                result={"status": "raised", "exception_type": type(exc).__name__},
+            )
+            raise
+
+        if (not isinstance(adapter_result, dict) or
+                not isinstance(adapter_result.get("result"), dict) or
+                (adapter_result.get("response_bytes") is not None and
+                 not isinstance(adapter_result.get("response_bytes"), bytes))):
+            self.finish_tool_call(
+                attempt_id, call_id,
+                result={"status": "malformed", "error_type": "adapter_result"},
+            )
+            raise AttemptJournalError("MCP adapter result is malformed")
+        self.finish_tool_call(
+            attempt_id, call_id,
+            result=adapter_result["result"],
+            response_bytes=adapter_result.get("response_bytes"),
+        )
+        return adapter_result["result"]
+
+    async def invoke_tool_async(self, attempt_id, call_id, method, request_bytes,
+                                tool_call):
+        """Durably wrap an awaited MCP call and preserve cancellation/errors."""
+        self.begin_tool_call(attempt_id, call_id, method, request_bytes)
+        try:
+            adapter_result = await tool_call()
         except BaseException as exc:
             self.finish_tool_call(
                 attempt_id, call_id,
@@ -265,8 +324,8 @@ class ProviderAttemptRecorder:
             if type(ended_ns) is not int or ended_ns < row["started_ns"]:
                 raise AttemptJournalError("MCP call end must follow its start")
             response_ref = (None if response_bytes is None else
-                            self._write_raw(attempt_id, f"tool-{call_id}-response",
-                                            response_bytes))
+                            self._write_raw(self._tool_raw_id(attempt_id, call_id),
+                                            "tool-response", response_bytes))
             self._append({
                 "event": "tool_call_finished",
                 "attempt_id": attempt_id,
@@ -287,8 +346,12 @@ class ProviderAttemptRecorder:
             for row in rows:
                 event = row.get("event")
                 attempt_id = row.get("attempt_id")
-                if not isinstance(attempt_id, str) or not _ATTEMPT_ID.fullmatch(
-                        attempt_id):
+                valid_attempt_id = (isinstance(attempt_id, str) and
+                                    _ATTEMPT_ID.fullmatch(attempt_id))
+                if (event in ("model_attempt_started", "model_attempt_finished")
+                        and not valid_attempt_id) or (
+                        event in ("tool_call_started", "tool_call_finished") and
+                        attempt_id is not None and not valid_attempt_id):
                     raise AttemptJournalError("journal row has an invalid attempt id")
                 if event == "model_attempt_started":
                     if attempt_id in starts:
@@ -330,15 +393,22 @@ class ProviderAttemptRecorder:
                             not _ATTEMPT_ID.fullmatch(call_id) or
                             call_id in tool_starts):
                         raise AttemptJournalError("MCP call id is invalid or duplicated")
-                    parent = finished.get(attempt_id)
-                    if (parent is None or parent["status"] != "completed" or
-                            row.get("session_id") != starts[attempt_id]["session_id"]):
-                        raise AttemptJournalError(
-                            "MCP call is not linked to a completed provider generation")
+                    if attempt_id is None:
+                        if row.get("session_id") != self.session_id:
+                            raise AttemptJournalError(
+                                "unlinked MCP call belongs to another recorder session")
+                        parent = None
+                    else:
+                        parent = finished.get(attempt_id)
+                        if (parent is None or parent["status"] != "completed" or
+                                row.get("session_id") != starts[attempt_id]["session_id"]):
+                            raise AttemptJournalError(
+                                "MCP call is not linked to a completed provider generation")
                     if not isinstance(row.get("method"), str) or not row["method"]:
                         raise AttemptJournalError("MCP call method is missing")
                     started_ns = row.get("started_ns")
-                    if (type(started_ns) is not int or started_ns < parent["ended_ns"] or
+                    if (type(started_ns) is not int or
+                            (parent is not None and started_ns < parent["ended_ns"]) or
                             started_ns < previous_started_ns):
                         raise AttemptJournalError("MCP call start time is invalid")
                     previous_started_ns = started_ns
@@ -461,6 +531,14 @@ class ProviderAttemptRecorder:
         except FileExistsError as exc:
             raise AttemptJournalError("raw attempt file already exists") from exc
         return {"path": relative, "sha256": digest}
+
+    @staticmethod
+    def _tool_raw_id(attempt_id, call_id):
+        """Bound MCP raw filenames independently of user-controlled ID length."""
+        identity = "" if attempt_id is None else attempt_id
+        digest = hashlib.sha256(
+            (identity + "\0" + call_id).encode("utf-8")).hexdigest()
+        return "tool-" + digest
 
     def _assert_raw_root(self):
         try:

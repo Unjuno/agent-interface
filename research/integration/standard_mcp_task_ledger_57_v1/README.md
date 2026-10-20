@@ -44,14 +44,32 @@ one private, exclusively owned output directory per task.
 and fsyncs a `model_attempt_started` row before calling the provider. It then
 stores returned response bytes and usage/status, or writes a failed/timeout/
 cancelled row with unavailable usage before re-raising the original exception.
-`begin_tool_call` / `finish_tool_call` or `invoke_tool` do the same around an MCP
-operation and join it to the completed model generation by `model_attempt_id`.
+`begin_tool_call` / `finish_tool_call`, `invoke_tool`, and
+`invoke_tool_async` do the same around an MCP operation. When known, the
+completed model generation is joined by `model_attempt_id`. Passing
+`attempt_id=None` records an explicitly unlinked MCP operation when provider
+context lives outside the relay; it does not infer a model attempt or token
+usage. Tool raw filenames use a bounded digest-derived component, so maximum-
+length accepted IDs remain portable on Windows.
 All raw files have SHA-256-bound references in the journal; reconciliation re-reads the
 bytes, checks their digests, and exposes missing, mismatched, or unparseable MCP
 response data. The shared ledger rejects an MCP response/result mismatch.
+`invoke_async` and `invoke_tool_async` support awaited provider and MCP
+callbacks. They persist the start receipt before the first await, record
+`asyncio.CancelledError` as a cancelled terminal attempt, and then re-raise it.
 The recorder resolves the raw directory at startup and before each write; it
 refuses a path that no longer resolves to the run's direct `raw/` child. The
 caller must still provide a private, exclusively owned run directory.
+
+The local `test_mcp_endpoint_composition.py` test drives an asynchronous fake
+provider result into the actual public `interface_guarded_compiled` FastMCP
+entry point with the existing deterministic Fake X owner. It joins the
+generation-bound profile request to the tool receipt, matches the returned MCP
+text payload to its result object, and counts reported usage. The fixture still
+has no real provider or independent application score: even when the compiled
+method says `TASK_SUCCEEDED`, the ledger keeps `task_success` null and replay
+denied. The saved response is the returned MCP text block, not a network-wire
+capture.
 
 An unfinished call makes strict reconciliation fail. A newly created recorder
 session cannot silently resume it or start later attempts in the same run
@@ -98,6 +116,8 @@ python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_
 python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_ledger.py
 python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_provider_attempt_recorder.py
 python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_provider_attempt_recorder.py
+python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py
+python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py
 ```
 
 The next integration step is to adapt actual provider request/response receipts
