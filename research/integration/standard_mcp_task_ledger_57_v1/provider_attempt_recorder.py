@@ -14,7 +14,7 @@ import time
 import uuid
 from pathlib import Path, PurePosixPath
 
-from ledger import LedgerValidationError, _ATTEMPT_STATUSES, _validate_usage
+from ledger import LedgerValidationError, _ATTEMPT_STATUSES, _HASH, _validate_usage
 
 
 class AttemptJournalError(ValueError):
@@ -26,6 +26,7 @@ class IncompleteProviderAttemptError(AttemptJournalError):
 
 
 _ATTEMPT_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
+_SCORER_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 _SESSION_ID = re.compile(r"^[0-9a-f]{32}$")
 _UNAVAILABLE_USAGE = {
     "status": "unavailable",
@@ -66,6 +67,8 @@ class ProviderAttemptRecorder:
 
         with self._lock:
             current = self.reconcile(allow_incomplete=True)
+            if any(event["kind"] == "task_score" for event in current["events"]):
+                raise AttemptJournalError("independent task score is terminal")
             if (current["unresolved_attempt_ids"] or
                     current["unresolved_tool_call_ids"]):
                 rows = self._read_rows()
@@ -81,7 +84,7 @@ class ProviderAttemptRecorder:
                     raise IncompleteProviderAttemptError(
                         "an unfinished operation belongs to another recorder session")
             if (attempt_id in current["unresolved_attempt_ids"] or
-                    any(event["attempt_id"] == attempt_id
+                    any(event.get("attempt_id") == attempt_id
                         for event in current["events"])):
                 raise AttemptJournalError("attempt id has already been used")
 
@@ -205,6 +208,8 @@ class ProviderAttemptRecorder:
 
         with self._lock:
             current = self.reconcile(allow_incomplete=True)
+            if any(event["kind"] == "task_score" for event in current["events"]):
+                raise AttemptJournalError("independent task score is terminal")
             parent = (next((event for event in current["events"]
                             if event["kind"] == "model_attempt" and
                             event["attempt_id"] == attempt_id), None)
@@ -336,6 +341,43 @@ class ProviderAttemptRecorder:
                 "response_ref": response_ref,
             })
 
+    def record_task_score(self, scorer_id, task_success, state_bytes):
+        """Append one terminal independent-score certificate and raw state.
+
+        Independence is asserted by the caller, not established by this
+        recorder. ``state_bytes`` must be the scorer's canonical final-state
+        evidence, separate from the runtime method result.
+        """
+        if not isinstance(scorer_id, str) or not _SCORER_ID.fullmatch(scorer_id):
+            raise AttemptJournalError("scorer id is missing or malformed")
+        if type(task_success) not in (bool, type(None)):
+            raise AttemptJournalError("task score must be true, false, or unknown")
+        if not isinstance(state_bytes, bytes) or not state_bytes:
+            raise AttemptJournalError("independent state evidence must be nonempty bytes")
+
+        with self._lock:
+            current = self.reconcile()
+            if any(event["kind"] == "task_score" for event in current["events"]):
+                raise AttemptJournalError("independent task score is already recorded")
+            last_end = max((event["ended_ns"] for event in current["events"]),
+                           default=-1)
+            observed_ns = self._now()
+            if observed_ns < last_end:
+                raise AttemptJournalError(
+                    "independent score must follow all recorded operations")
+            state_ref = self._write_raw("task-score", "state", state_bytes)
+            self._append({
+                "event": "task_score_recorded",
+                "session_id": self.session_id,
+                "scorer_id": scorer_id,
+                "independent": True,
+                "task_success": task_success,
+                "started_ns": observed_ns,
+                "ended_ns": observed_ns,
+                "state_ref": state_ref,
+            })
+            return state_ref
+
     def reconcile(self, *, allow_incomplete=False):
         """Return ledger events and verified raw refs, or fail closed."""
         with self._lock:
@@ -343,15 +385,20 @@ class ProviderAttemptRecorder:
             starts, finished, model_order = {}, {}, []
             tool_starts, tool_finished, tool_order = {}, {}, []
             previous_started_ns = -1
+            latest_ended_ns = -1
+            task_score_row = None
             for row in rows:
                 event = row.get("event")
                 attempt_id = row.get("attempt_id")
+                if task_score_row is not None:
+                    raise AttemptJournalError("task score must be the terminal journal event")
                 valid_attempt_id = (isinstance(attempt_id, str) and
                                     _ATTEMPT_ID.fullmatch(attempt_id))
-                if (event in ("model_attempt_started", "model_attempt_finished")
-                        and not valid_attempt_id) or (
-                        event in ("tool_call_started", "tool_call_finished") and
-                        attempt_id is not None and not valid_attempt_id):
+                if ((event in ("model_attempt_started", "model_attempt_finished")
+                     and not valid_attempt_id) or
+                    (event in ("tool_call_started", "tool_call_finished") and
+                     attempt_id is not None and not valid_attempt_id) or
+                    (event == "task_score_recorded" and attempt_id is not None)):
                     raise AttemptJournalError("journal row has an invalid attempt id")
                 if event == "model_attempt_started":
                     if attempt_id in starts:
@@ -377,6 +424,7 @@ class ProviderAttemptRecorder:
                     if type(ended_ns) is not int or ended_ns < starts[attempt_id][
                             "started_ns"]:
                         raise AttemptJournalError("provider end time is invalid")
+                    latest_ended_ns = max(latest_ended_ns, ended_ns)
                     if row.get("status") not in _ATTEMPT_STATUSES:
                         raise AttemptJournalError("provider terminal status is invalid")
                     try:
@@ -394,9 +442,10 @@ class ProviderAttemptRecorder:
                             call_id in tool_starts):
                         raise AttemptJournalError("MCP call id is invalid or duplicated")
                     if attempt_id is None:
-                        if row.get("session_id") != self.session_id:
+                        if (not isinstance(row.get("session_id"), str) or
+                                not _SESSION_ID.fullmatch(row["session_id"])):
                             raise AttemptJournalError(
-                                "unlinked MCP call belongs to another recorder session")
+                                "unlinked MCP call recorder session is invalid")
                         parent = None
                     else:
                         parent = finished.get(attempt_id)
@@ -426,6 +475,7 @@ class ProviderAttemptRecorder:
                     ended_ns = row.get("ended_ns")
                     if type(ended_ns) is not int or ended_ns < start["started_ns"]:
                         raise AttemptJournalError("MCP call end time is invalid")
+                    latest_ended_ns = max(latest_ended_ns, ended_ns)
                     if not isinstance(row.get("result"), dict):
                         raise AttemptJournalError("MCP call result must be an object")
                     try:
@@ -438,6 +488,28 @@ class ProviderAttemptRecorder:
                     if response_ref is not None:
                         self._verify_raw_ref(response_ref)
                     tool_finished[call_id] = row
+                elif event == "task_score_recorded":
+                    session_id = row.get("session_id")
+                    scorer_id = row.get("scorer_id")
+                    task_success = row.get("task_success")
+                    started_ns = row.get("started_ns")
+                    ended_ns = row.get("ended_ns")
+                    if (not isinstance(session_id, str) or
+                            not _SESSION_ID.fullmatch(session_id) or
+                            not isinstance(scorer_id, str) or
+                            not _SCORER_ID.fullmatch(scorer_id) or
+                            row.get("independent") is not True or
+                            type(task_success) not in (bool, type(None))):
+                        raise AttemptJournalError("independent task score is malformed")
+                    if (type(started_ns) is not int or type(ended_ns) is not int or
+                            started_ns < latest_ended_ns or ended_ns < started_ns or
+                            started_ns < previous_started_ns):
+                        raise AttemptJournalError(
+                            "independent score must follow recorded operations")
+                    state_ref = row.get("state_ref")
+                    self._verify_raw_ref(state_ref)
+                    task_score_row = row
+                    previous_started_ns = started_ns
                 else:
                     raise AttemptJournalError("unknown provider journal event")
 
@@ -445,6 +517,10 @@ class ProviderAttemptRecorder:
                                    if attempt_id not in finished]
             unresolved_tool_calls = [call_id for call_id in tool_order
                                      if call_id not in tool_finished]
+            if task_score_row is not None and (unresolved_attempts or
+                                               unresolved_tool_calls):
+                raise AttemptJournalError(
+                    "independent task score cannot follow unresolved operations")
             if (unresolved_attempts or unresolved_tool_calls) and not allow_incomplete:
                 pending = (["model:" + item for item in unresolved_attempts] +
                            ["tool:" + item for item in unresolved_tool_calls])
@@ -495,6 +571,20 @@ class ProviderAttemptRecorder:
                     "started_ns": start["started_ns"],
                     "ended_ns": terminal["ended_ns"], "result": terminal["result"],
                     "response_status": response_status, "raw_refs": refs,
+                }))
+
+            if task_score_row is not None:
+                state_ref = task_score_row["state_ref"]
+                ordered_events.append((task_score_row["started_ns"], {
+                    "kind": "task_score",
+                    "session_id": task_score_row["session_id"],
+                    "started_ns": task_score_row["started_ns"],
+                    "ended_ns": task_score_row["ended_ns"],
+                    "independent": True,
+                    "scorer_id": task_score_row["scorer_id"],
+                    "task_success": task_score_row["task_success"],
+                    "state_sha256": state_ref["sha256"],
+                    "raw_refs": [state_ref],
                 }))
 
             ordered_events.sort(key=lambda pair: pair[0])

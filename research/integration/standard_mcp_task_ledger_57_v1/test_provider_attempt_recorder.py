@@ -307,6 +307,28 @@ class ProviderAttemptRecorderTests(unittest.TestCase):
             with self.assertRaises(IncompleteProviderAttemptError):
                 after_restart.begin("attempt-02", b"another request")
 
+    def test_independent_task_score_is_terminal_and_preserves_state_bytes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            recorder = ProviderAttemptRecorder(temp, clock_ns=lambda: 10)
+            recorder.record_task_score(
+                "separate-oracle-v1", True, b"canonical observed final state")
+            receipt = recorder.reconcile()
+            score = receipt["events"][0]
+            summary = summarize(receipt["events"])
+
+            self.assertTrue(receipt["complete"])
+            self.assertEqual(score["kind"], "task_score")
+            self.assertTrue(score["independent"])
+            self.assertEqual(score["scorer_id"], "separate-oracle-v1")
+            self.assertTrue(score["task_success"])
+            self.assertEqual(
+                Path(temp, score["raw_refs"][0]["path"]).read_bytes(),
+                b"canonical observed final state")
+            self.assertEqual(summary["independent_score_status"], "recorded")
+            self.assertTrue(summary["task_success"])
+            with self.assertRaises(AttemptJournalError):
+                recorder.begin("late-attempt", b"after score")
+
 
 class AsyncProviderAttemptRecorderTests(unittest.IsolatedAsyncioTestCase):
     async def test_async_provider_and_mcp_callbacks_are_recorded_before_await(self):
@@ -396,6 +418,17 @@ class AsyncProviderAttemptRecorderTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(summary["model_attempt_count"], 0)
             self.assertEqual(summary["tool_call_count"], 1)
             self.assertIsNone(summary["task_success"])
+
+            restarted = ProviderAttemptRecorder(temp, clock_ns=lambda: 30)
+            self.assertEqual(restarted.reconcile()["events"][0]["model_attempt_id"],
+                             None)
+            restarted.begin("generation-02", b"next request")
+            restarted.finish(
+                "generation-02", status="completed",
+                usage={"status": "unavailable", "input_tokens": None,
+                       "output_tokens": None})
+            self.assertEqual(
+                summarize(restarted.reconcile()["events"])["model_attempt_count"], 1)
 
 
 if __name__ == "__main__":

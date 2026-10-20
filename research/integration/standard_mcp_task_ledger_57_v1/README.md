@@ -57,6 +57,12 @@ response data. The shared ledger rejects an MCP response/result mismatch.
 `invoke_async` and `invoke_tool_async` support awaited provider and MCP
 callbacks. They persist the start receipt before the first await, record
 `asyncio.CancelledError` as a cancelled terminal attempt, and then re-raise it.
+`record_task_score` can append one terminal score certificate after every
+provider/MCP operation has finished, retaining the scorer's canonical state
+bytes and digest with its scorer ID and `true` / `false` / `unknown` verdict.
+The recorder validates and preserves this caller-supplied certificate; it
+cannot establish that the scorer was truly independent. Recording a score also
+prevents later attempts from being appended to that run.
 The recorder resolves the raw directory at startup and before each write; it
 refuses a path that no longer resolves to the run's direct `raw/` child. The
 caller must still provide a private, exclusively owned run directory.
@@ -70,6 +76,11 @@ has no real provider or independent application score: even when the compiled
 method says `TASK_SUCCEEDED`, the ledger keeps `task_success` null and replay
 denied. The saved response is the returned MCP text block, not a network-wire
 capture.
+
+`test_independent_task_score_is_terminal_and_preserves_state_bytes` verifies
+only the journal contract for a caller-supplied score certificate. No scorer is
+run by that test, and the public MCP composition test still has
+`task_success=null`.
 
 An unfinished call makes strict reconciliation fail. A newly created recorder
 session cannot silently resume it or start later attempts in the same run
