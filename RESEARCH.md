@@ -2,6 +2,19 @@
 
 `PASS_METHOD_SCOPED` on 10 fixed synthetic cases × four arms: the raw-only auditor reconstructed 40/40 rows with zero errors and five normal/optimized mutation tests passed. The result is `NO_INCREMENTAL_AGREEMENT_VALUE` for this fixture family: agreement-lease matched System-1-only, and both it and always-wait had a 1-tick median synthetic inter-action gap; the prospective 20% threshold was not met. `formal_pass=false`. No latency, model, GUI, live-actuation, task-success or product claim follows. The frozen allocation was run once and is consumed. See [the preregistration, raw output, audit and result](research/agreement_continuation_9004_v1/RESULT.md) and [Issue #9004](https://github.com/Unjuno/agent-interface/issues/9004).
 
+# Issue #8636 T0 A03 — relative-view rotation-feature audit hold (2026-10-12)
+
+The candidate completed 360 synthetic trials (exit 0); the one independent auditor
+stopped before writing a summary because the focal-stress YIELD reason was
+`feature shape changed` while the frozen auditor expected `shape changed`.
+Disposition remains `HOLD_UNCERTAIN`; no feature-method or hypothesis result is
+supported. A read-only integration check matched the 2,231-file, 63,489,719-byte
+first-outcome archive to every path, byte count, and SHA-256 in its internal
+manifest, and the package's 17-member checksum list matches exact Git blobs.
+The only integration repair is the generated analysis-index entry. Do not rerun
+the consumed candidate or auditor. See the [A03 packet](research/analysis/relative_view_rotation_features_8636_t0_a03_20261012/REPORT.md)
+and the [#31/#8636 family crosswalk](docs/ideas/relative-view-rotation-features.md).
+
 # Issue #59 — saved A11/A12 CPU regression convergence (2026-10-16)
 
 PR #8812's original 48 files are preserved with the first A11 harness-count FAIL and A12's historical CPU-fixture PASS unchanged. A separate saved-only reader verifies 46 checksums, 34 source pins and carry-forward claims; 11 reader tests pass normal and optimized with ten coherently rehashed corruption controls. At the convergence base, 11/34 sources have changed, so these historical runs do not qualify current main. No producer, historical suite, GUI/input/model/WSLc allocation was executed. See [custody, applicability, results and next boundary](research/doom/v39_saved_regression_convergence_20261016/README.md).
