@@ -2,6 +2,14 @@
 
 ## Current cleanup objective (2026-10-21)
 
+### Live execution pointer after PR #9309
+
+The current verified checkout is `main` `ef768ac74517d70c43c7b673b6ea4319db87d4f4` (PR #9309). The newest complete paginated membership recheck is [r127](maintenance/repository-inventory-recheck-20261021-r127.md): 1,655 open Issues and 464 open PRs, with stable main SHA before/after. The Issue set matches r126; the PR set is r126 plus this plan PR #9310. r127 is membership metadata only, not semantic disposition, exact-head readiness, ownership, or custody. Reuse r120 row metadata and refresh each touched live record before a state change.
+
+Since r126, current main has added the target-belief family record (#9305), inventory pointer (#9306), audited caller evidence and cleanup-map sync (#9307), the prestarted cancellation supervisor proposal (#9308), and the standard-caller duplicate-cancel characterization (#9309). The new cancellation trial is Fake X-only: one cleanup attempt, but duplicate cancellation returned `not_active`, no retained operation receipt was exposed, and the original action stayed UNKNOWN with stale owner-liveness metadata. It does not show bounded physical release or a production supervisor. These outcomes are indexed below; they do not close the parent research questions.
+
+**Next execution sequence:** (1) refresh the exact live Issue/PR membership delta from r126; (2) continue semantic idea-family review in bounded batches, preserving distinct hypotheses and first outcomes; (3) audit and integrate PRs by exact head, evidence custody, dependency, and real protections; (4) reconcile branches/worktrees/raw outputs only after owner and recoverability checks; (5) repair stale entry points and archive duplicate navigation after inbound-link checks. Publish one result receipt per batch and refresh only the touched rows. Keep unresolved research open. Do not use counts as a closure target, delete unknown-custody work, launch WSLc/Docker from the cleanup plan, or add fixed reviewer quotas.
+
 **Objective:** make the repository safe to navigate and divide among many independent workers by preserving each research idea and result, giving every live Issue and PR a reasoned disposition, and resolving branch/worktree/evidence custody. This cleanup is an enabling workstream; it does not replace the active computer-control research goal or turn repository tidiness into a scientific result.
 
 **Latest full membership baseline (r126):** captured against `main` `d3439cb9adee0bd64492d5378c05568357d38d56`. The complete paginated recheck [r126](maintenance/repository-inventory-recheck-20261021-r126.md) found 1,655 open Issues and 463 open PRs with the same main SHA before and after. The Issue ID set exactly matches full metadata r120; the PR set equals r120 minus #8716, #8733, #8841, and #8844. r126 corrects the r125 prose, which additionally listed #9303 even though it is absent from the full r120 PR export. Reuse r120's full row metadata instead of duplicating it. This proves membership only, not semantic triage, exact-current head/check review, ownership, or custody; fetch each live record and dependencies before a state change.
@@ -52,7 +60,7 @@ production registry/supervisor behavior remains unimplemented.
 
 **Completion test:** every current open Issue/PR is either linked to a reviewed disposition or visibly in an unreviewed queue; each reviewed idea has a canonical home, evidence limits, and next action; every closed/merged item has preserved unique content and exact disposition; every retained workspace artifact has custody status; and multiple independent finite packets are selectable. Zero open Issues, zero open PRs, or zero worktrees is neither required nor evidence of completion.
 
-**Completed baseline:** the stable full membership above was compared against r120; Issue membership is unchanged and PR #8841 is the sole removal. Next select one exact current PR or one small idea family from the verified queue, then refresh the touched live records before any state change. Do not start a WSLc/Docker operation or consume an allocation for administrative cleanup.
+**Last full-membership comparison:** r126 is the latest complete set comparison against r120. Its set difference is recorded above; it does not describe the exact post-r126 open set. Main has since advanced through #9309. The next cleanup batch starts with a stable, fully paginated delta, then selects one exact PR or one small family from the refreshed queue. Re-fetch all touched live records before any state change. Do not start a WSLc/Docker operation or consume an allocation for administrative cleanup.
 
 ## Recorded checkpoint at PR #9287 — 2026-10-20
 
