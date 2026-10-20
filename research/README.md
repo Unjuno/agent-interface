@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8641 T0 A01: [uncertainty-source intervention choice](analysis/uncertainty_intervention_8641_t0_a01_20261009/REPORT.md) — scoped synthetic H failure; retain the no-retry deviation and do not claim real-interface transfer.
+
 - Issue #59 standard MCP caller: [native WSL/Xvfb blocked-I/O release and liveness timestamp](integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-r01/README.md) and [target-generation recovery](integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-generation-r03/README.md) — one test each passed; bounded Xvfb release readback (438.767 ms), cancel (764.307 ms), liveness timestamp ordering, 33.033 ms synthetic recovery, stale-generation refusal, and independent synthetic effect checks. Caller-level task success remains unknown. Native WSL only, not WSLc/MAP01/physical desktop or efficiency evidence. The generation test's two prelaunch STOPs are also preserved.
 
 - Issue #5311 T0 A01: [proof-carrying action admission finite test](analysis/proof_carrying_action_5311_t0_a01_20261009/README.md) — `FAIL_COST_GATE_SCOPED`; corrected work is 96 vs 136 inspections; the retained audit missed the same counter omission. Frozen evidence was not rerun. Synthetic method evidence only; no runtime/security/product claim.
