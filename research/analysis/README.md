@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8620 T0 A01 execution-information frontier](execution_information_8620_t0_a01_20261009/README.md) — 12 finite histories; `HOLD_FORMAL_FREEZE_INCOMPLETE`; original auditor FAIL retained, post-result diagnostic only, no rerun.
+
 - [Issue #8641 T0 A01 uncertainty-source intervention choice](uncertainty_intervention_8641_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED / H_FAIL_NO_ADDED_DECISION_VALUE`; all 4,800 rows were audited, but the decomposition missed its matched-cost gate. No real-interface claim; candidate rerun prohibited.
 
 - [Issue #8636 oracle-boundary construction patch](relative_view_rotation_oracle_boundary_construction_20261012/README.md) — prospective runner/auditor arm-isolation patch; four focused regressions and 13 applicable A04 construction tests pass in normal and optimized Python. No formal candidate/auditor run; A04 remains `HOLD_UNCERTAIN`.

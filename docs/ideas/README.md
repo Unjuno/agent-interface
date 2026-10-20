@@ -8,6 +8,8 @@ The latest complete paginated membership snapshot is [r108](../maintenance/repos
 
 Use this directory to connect ideas to existing evidence, dependencies, priorities and executable experiments. GitHub Issues remain the discussion and execution surface. Preserve each distinct hypothesis and its outcomes here before deciding its Issue state. The [repository consolidation plan](../REPOSITORY_CONSOLIDATION.md#2026-10-19-全体整理の実行計画--アイデアを保存して作業面を収束) permits an idea-only Issue to be individually closed as catalogued/deferred after the canonical idea entry and return link are recorded; active experiments, unresolved user goals, evidence/ownership gaps and integration work remain open until resolved or explicitly superseded. Issue closure never means the underlying idea succeeded.
 
+- [Execution-information requirements at GUI task cuts](execution-information-task-cuts.md) — #8620's finite T0 evidence, formal HOLD, relationship to #5329, and next evaluation gate.
+
 ## What belongs here
 
 For each idea, retain:
