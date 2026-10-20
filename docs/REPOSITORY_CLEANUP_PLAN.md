@@ -28,6 +28,13 @@ and next discriminating test, and only then consider individual closure. Do
 not turn this membership equality or the two merged PRs into a claim that the
 repository-wide cleanup is complete.
 
+The dated [parallel worker packets r02](maintenance/parallel-worker-packets-20261020-r02.md)
+replaces r01 as the dispatch reference. It records completed PR audits,
+removes already-closed PRs from the open-work queue, and defines disjoint
+read-only family packets. It does not assign owners, grant WSLc/Docker use, or
+authorize bulk Issue/PR/worktree cleanup; check the live source and ownership
+before starting or changing state.
+
 ## Current organization checkpoint after PR #9255 — 2026-10-20
 
 Main is `475e3733785065bf2993d507f71fafad790916fb`. The fresh paginated
