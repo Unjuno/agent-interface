@@ -4,7 +4,9 @@ from ledger import LedgerValidationError, summarize, validate_record
 
 
 def attempt(seq, attempt_id, *, status, usage_status, input_tokens=None,
-            output_tokens=None, started_ns=None):
+            output_tokens=None, cached_input_tokens=None,
+            cache_write_input_tokens=None, reasoning_output_tokens=None,
+            image_input_tokens=None, started_ns=None):
     started_ns = seq * 10 if started_ns is None else started_ns
     return {
         "seq": seq,
@@ -17,11 +19,54 @@ def attempt(seq, attempt_id, *, status, usage_status, input_tokens=None,
             "status": usage_status,
             "input_tokens": input_tokens,
             "output_tokens": output_tokens,
+            "cached_input_tokens": cached_input_tokens,
+            "cache_write_input_tokens": cache_write_input_tokens,
+            "reasoning_output_tokens": reasoning_output_tokens,
+            "image_input_tokens": image_input_tokens,
         },
     }
 
 
 class TaskLedgerSummaryTests(unittest.TestCase):
+    def test_detailed_provider_usage_is_aggregated_without_treating_missing_as_zero(self):
+        result = summarize([
+            attempt(1, "m1", status="completed", usage_status="reported",
+                    input_tokens=100, output_tokens=20, cached_input_tokens=70,
+                    cache_write_input_tokens=5, reasoning_output_tokens=8,
+                    image_input_tokens=12),
+            attempt(2, "m2", status="failed", usage_status="reported",
+                    input_tokens=50, output_tokens=0, cached_input_tokens=0,
+                    cache_write_input_tokens=0, reasoning_output_tokens=0,
+                    image_input_tokens=0),
+        ])
+
+        self.assertEqual(result.get("detailed_usage_status"), "complete")
+        self.assertEqual(result.get("cached_input_tokens"), 70)
+        self.assertEqual(result.get("cache_write_input_tokens"), 5)
+        self.assertEqual(result.get("reasoning_output_tokens"), 8)
+        self.assertEqual(result.get("image_input_tokens"), 12)
+
+    def test_missing_detailed_provider_usage_is_unknown_not_zero(self):
+        result = summarize([
+            attempt(1, "m1", status="completed", usage_status="reported",
+                    input_tokens=100, output_tokens=20, cached_input_tokens=70),
+            attempt(2, "m2", status="completed", usage_status="reported",
+                    input_tokens=50, output_tokens=10, cached_input_tokens=0),
+        ])
+
+        self.assertEqual(result.get("detailed_usage_status"), "incomplete")
+        self.assertEqual(result.get("cached_input_tokens"), 70)
+        self.assertIsNone(result.get("reasoning_output_tokens"))
+        self.assertIsNone(result.get("cache_write_input_tokens"))
+        self.assertIsNone(result.get("image_input_tokens"))
+
+    def test_unavailable_usage_cannot_claim_a_detailed_token_count(self):
+        with self.assertRaises(LedgerValidationError):
+            summarize([attempt(
+                1, "m1", status="timeout", usage_status="unavailable",
+                cached_input_tokens=1,
+            )])
+
     def test_failed_attempt_is_counted_in_complete_usage_totals(self):
         result = summarize([
             attempt(1, "m1", status="failed", usage_status="reported",

@@ -1,10 +1,10 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 after PR #9266
+## Current entry point — 2026-10-20 after PR #9267
 
-Main is `666888468e81b3c3c2c1e4103df549afcaf23822`. PR #9266 refreshes current
-Issue/PR metadata; the r119 sets contain 1,672 open Issues and 468 open PRs and
-match r118. #9264's synthetic provider-attempt accounting and public-MCP/Fake
+Main is `6ad11c0b87f37eb4c26483dbd37cd6f55c7ff216`. PR #9267 adds the r119
+coverage audit and eleven private-output discovery packets; r119 itself is a
+pre-#9267 metadata baseline. #9264's synthetic provider-attempt accounting and public-MCP/Fake
 X composition still do not finish the #57 integrated live comparison. The
 r119 [index coverage audit](maintenance/idea-index-coverage-20261020-r119.md)
 routes 265 issues without a direct `docs/ideas` link into eleven private-output
@@ -12,6 +12,12 @@ discovery batches; prior B01–B20 reads are linked to prevent duplicate audit.
 These are candidate scopes, not active assignments. The r05 custody census is
 historical, not current ownership proof. #17 and #57 remain open; #7924 remains
 STOP/HOLD for WSLc ownership and current-checkout prerequisites.
+
+The local #57 ledger now summarizes optional cached-input, cache-write-input,
+reasoning-output and image-input token fields per attempt, returning unknown
+totals when any attempt omits a field. Ledger, recorder and composition suites
+pass in normal and optimized Python. This improves future accounting but does
+not connect the production provider/orchestrator or reconcile its logs.
 
 The current organization and disposition rules are in the
 [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md). Keep ideas connected to

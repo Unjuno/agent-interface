@@ -14,6 +14,12 @@ _ATTEMPT_STATUSES = {
     "completed", "failed", "timeout", "cancelled", "refused", "malformed",
     "abstained",
 }
+_DETAIL_USAGE_FIELDS = (
+    "cached_input_tokens",
+    "cache_write_input_tokens",
+    "reasoning_output_tokens",
+    "image_input_tokens",
+)
 
 
 def _is_int(value):
@@ -37,11 +43,17 @@ def _validate_usage(usage):
                         ("output_tokens", output_tokens)):
         if value is not None and not _is_int(value):
             raise LedgerValidationError(f"{name} must be a nonnegative integer or null")
+    for name in _DETAIL_USAGE_FIELDS:
+        value = usage.get(name)
+        if value is not None and not _is_int(value):
+            raise LedgerValidationError(f"{name} must be a nonnegative integer or null")
     if status == "reported" and (input_tokens is None or output_tokens is None):
         raise LedgerValidationError("reported usage requires both token counts")
     if status == "partial" and input_tokens is None and output_tokens is None:
         raise LedgerValidationError("partial usage requires at least one token count")
-    if status == "unavailable" and (input_tokens is not None or output_tokens is not None):
+    if status == "unavailable" and (
+            input_tokens is not None or output_tokens is not None or
+            any(usage.get(name) is not None for name in _DETAIL_USAGE_FIELDS)):
         raise LedgerValidationError("unavailable usage cannot contain token counts")
     if status not in ("reported", "partial", "unavailable"):
         raise LedgerValidationError("unknown usage status")
@@ -122,6 +134,20 @@ def summarize(events):
             raise LedgerValidationError("unknown ledger event kind")
 
     usage_rows = [_validate_usage(row["usage"]) for row in attempts]
+    detailed_totals = {}
+    for name in _DETAIL_USAGE_FIELDS:
+        values = [row["usage"].get(name) for row in attempts]
+        detailed_totals[name] = (
+            sum(values) if values and all(value is not None for value in values)
+            else (0 if not attempts else None)
+        )
+    detailed_usage_status = (
+        "not_applicable" if not attempts else
+        "complete" if all(value is not None
+                          for row in attempts for value in
+                          (row["usage"].get(name) for name in _DETAIL_USAGE_FIELDS))
+        else "incomplete"
+    )
     if not attempts:
         usage_status, input_total, output_total = "not_applicable", 0, 0
     elif all(status == "reported" for status, _, _ in usage_rows):
@@ -137,6 +163,8 @@ def summarize(events):
         "input_tokens": input_total,
         "output_tokens": output_total,
         "usage_status": usage_status,
+        "detailed_usage_status": detailed_usage_status,
+        **detailed_totals,
         "independent_score_status": (
             "missing" if independent_score is None else "recorded"),
         "task_success": (

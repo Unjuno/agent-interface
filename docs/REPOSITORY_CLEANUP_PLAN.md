@@ -1,10 +1,12 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after PR #9266 — 2026-10-20
+## Current organization checkpoint after PR #9267 — 2026-10-20
 
-Current `main` is `666888468e81b3c3c2c1e4103df549afcaf23822` after cleanup PR
-#9266. PR #9265 refreshed the cleanup entry points; PR #9266 added full current
-Issue/PR metadata. The integrated computer-control state includes PR
+Current `main` is `6ad11c0b87f37eb4c26483dbd37cd6f55c7ff216` after cleanup PR
+#9267. PR #9265 refreshed the cleanup entry points; PR #9266 added full Issue/PR
+metadata; PR #9267 added the r119 coverage audit and eleven candidate discovery
+packets. The r119 inventory below is a dated snapshot of its pre-#9267 baseline,
+not a fresh post-merge membership read. The integrated computer-control state includes PR
 #9264's synthetic provider-attempt accounting and one public-MCP/Fake X
 composition result. It does not complete matched efficiency, independent live
 task scoring, provider-log reconciliation, physical input release, or bounded
@@ -12,9 +14,10 @@ recovery; #57 remains open. Keep scoped component results attached to their own
 hypotheses.
 
 The complete Issue/PR membership recheck r119 was captured around 12:22 UTC
-against this stable main SHA. GraphQL counts bracketed both complete CLI reads:
-1,672 open Issues and 468 open PRs. Both ID sets match r118; row metadata was
-refreshed. See the [r119 recheck](maintenance/repository-inventory-recheck-20261020-r119.md),
+against `666888468e81b3c3c2c1e4103df549afcaf23822`, before PR #9267. GraphQL
+counts bracketed both complete CLI reads: 1,672 open Issues and 468 open PRs.
+Both ID sets matched r118; row metadata was refreshed at the r119 baseline. A
+fresh complete recheck has not been made after #9267. See the [r119 recheck](maintenance/repository-inventory-recheck-20261020-r119.md),
 [Issue metadata](maintenance/open-issues-20261020-r119.json), and [PR metadata](maintenance/open-prs-20261020-r119.json).
 This remains a membership/metadata snapshot, not semantic classification, PR
 readiness, ownership, or evidence custody. The retained worktree census r05

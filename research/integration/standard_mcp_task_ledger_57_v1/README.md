@@ -41,6 +41,14 @@ reported only when the event record explicitly contains none. A `task_success`
 field on a runtime tool result is never treated as independent task success.
 The validator checks raw-reference path and digest syntax, but does not open or
 hash the referenced files and cannot prove the event stream is exhaustive.
+When a provider adapter supplies the optional `cached_input_tokens`,
+`cache_write_input_tokens`, `reasoning_output_tokens`, and `image_input_tokens`
+fields, the summary carries a separate total for each. Each detailed total is
+null unless that field is known for every attempt; `detailed_usage_status` is
+`complete` only when every detailed field is present on every attempt. These
+provider-specific categories are preserved separately from input/output totals
+because their billing/subset semantics can differ. Missing details never
+become zero.
 
 ## Durable provider-to-MCP attempt recorder
 

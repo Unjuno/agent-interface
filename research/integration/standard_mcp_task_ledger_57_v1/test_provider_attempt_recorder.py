@@ -82,6 +82,31 @@ class ProviderAttemptRecorderTests(unittest.TestCase):
             self.assertEqual((Path(temp) / result["raw_refs"][1]["path"]).read_bytes(),
                              b'{"text":"use target"}')
 
+    def test_provider_detail_usage_survives_durable_reconciliation(self):
+        with tempfile.TemporaryDirectory() as temp:
+            ticks = iter((10, 20))
+            recorder = ProviderAttemptRecorder(temp, clock_ns=lambda: next(ticks))
+            usage = {
+                "status": "reported",
+                "input_tokens": 100,
+                "output_tokens": 20,
+                "cached_input_tokens": 70,
+                "cache_write_input_tokens": 5,
+                "reasoning_output_tokens": 8,
+                "image_input_tokens": 12,
+            }
+            recorder.invoke("attempt-01", b"request", lambda: {
+                "status": "completed", "usage": usage,
+                "response_bytes": b"response",
+            })
+
+            receipt = recorder.reconcile()
+            self.assertEqual(receipt["events"][0]["usage"], usage)
+            summary = summarize([{**receipt["events"][0], "seq": 1}])
+            self.assertEqual(summary["detailed_usage_status"], "complete")
+            self.assertEqual(summary["cached_input_tokens"], 70)
+            self.assertEqual(summary["reasoning_output_tokens"], 8)
+
     def test_unfinished_started_attempt_cannot_be_reconciled_as_zero_calls(self):
         with tempfile.TemporaryDirectory() as temp:
             recorder = ProviderAttemptRecorder(temp, clock_ns=lambda: 10)
