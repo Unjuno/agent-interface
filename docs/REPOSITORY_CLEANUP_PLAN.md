@@ -1,14 +1,15 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after PR #9269 — 2026-10-20
+## Current organization checkpoint after D11 disposition — 2026-10-20
 
-Current `main` is `42ffd82b2c6f7c718fb230b146593244efcd4a23`. PR #9269 reconciles
-the cleanup/integration entry points and preserves current-main Xvfb run
-39399107944. A complete paginated recheck at 2026-10-20 12:42 UTC found 1,672
-open Issues and 468 open PRs, with GraphQL counts and the main SHA stable before
-and after. Both sorted ID sets exactly match r119 (Issue SHA-256
-`073738bd5d54cc178a3f92d9df0d03d054a12968ccf5fd575ed57e8ee72e55d4`; PR
-`878a28d681a0ae705654b670693106498874c525afe2ca828aa129b3dccafb3a`). No
+Current `main` is `42ffd82b2c6f7c718fb230b146593244efcd4a23`; cleanup changes
+are pending in PR #9270. A complete paginated recheck at 2026-10-20 12:48 UTC
+found 1,670 open Issues and 469 open PRs, with GraphQL counts and the main SHA
+stable before/after. The open Issue set is exactly r119 minus #8654 and #8913,
+which were closed as completed after their evidence/record was linked; the open
+PR set is exactly r119 plus pending PR #9270. Current sorted ID SHA-256:
+Issues `b1dcc137b671439581faad8dc4eb21599254d28231f313d1e6f31996b6ecf82e`, PRs
+`59aff21951812c77e0373fa1025badd33584cf2cf4c08430b500cb307ff4aa8c`. No
 duplicate inventory was added; r119 remains the saved row-metadata baseline.
 Membership is current, but semantic dispositions, per-item readiness, active
 ownership, and artifact custody remain incomplete. The bounded nine-PR receipt
@@ -27,9 +28,10 @@ record the exact missing-evidence boundary for each.
 
 The complete Issue/PR membership recheck r119 was captured around 12:22 UTC
 against `666888468e81b3c3c2c1e4103df549afcaf23822`. Its ID sets matched r118;
-row metadata was refreshed at that baseline. The post-#9269 membership-only
-recheck above matches the same sets, so the saved r119 row-level metadata is
-reused rather than duplicated. See the [r119 recheck](maintenance/repository-inventory-recheck-20261020-r119.md),
+row metadata was refreshed at that baseline. The post-#9269/#9270 membership-
+only recheck above differs by the two verified Issue closures and pending PR
+#9270, so saved r119 row-level metadata is reused rather than duplicated. See
+the [r119 recheck](maintenance/repository-inventory-recheck-20261020-r119.md),
 [Issue metadata](maintenance/open-issues-20261020-r119.json), and [PR metadata](maintenance/open-prs-20261020-r119.json).
 This remains a membership/metadata snapshot, not semantic classification, PR
 readiness, ownership, or evidence custody. The retained worktree census r05
@@ -70,14 +72,18 @@ this cleanup plan.
    path are known. Keep unknown custody as an explicit hold.
 5. Refresh the complete membership and exact item metadata before state
    changes; r119 is a dated baseline, not merge, close, or deletion authority.
-   The 2026-10-20 12:42 UTC membership recheck already confirms r119's sets;
-   reuse its row metadata and re-fetch the exact item immediately before a
-   decision rather than generating another whole-repository inventory.
+   The 2026-10-20 12:48 UTC membership recheck confirms the two intended Issue
+   closures and pending PR #9270; reuse r119 row metadata and re-fetch each exact
+   item before any further state change rather than generating another census.
 6. Resolve the eleven absent local evidence links in the two canonical entry
    points by tracing their source history and current family records. Update a
    link only when a byte-preserved packet or faithful canonical successor is
    verified; otherwise retain the reference and explicitly label custody
    unresolved.
+7. Integrate [D11's family-disposition receipt](maintenance/idea-family-triage-r119/D11.md).
+   It closes only #8654 and #8913 after preserving their scoped results and
+   return links; route the remaining 13 Issues by the recorded result, proposal,
+   or explicit WSLc ownership hold. D01–D10 remain unreviewed.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
