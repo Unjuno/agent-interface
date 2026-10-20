@@ -4,20 +4,21 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Organization check (2026-10-20 13:10 UTC):** the last paginated membership
+**Organization check (2026-10-20 13:18 UTC):** the last paginated membership
 baseline is main `ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs
-#9271–#9274 advanced main to `7f57b44e30fdacbbbaf008f5b0ec7ddc029a9abe`. The
-D01–D04 review closed thirteen scoped Issues (#163, #177, #249, #273, #345,
-#376, #451, #460, #488, #505, #747, #862, #1438) with evidence and limits in
-their comments. The latest GraphQL aggregate is 1,657 open Issues / 468 open
-PRs; this is not a paginated
+#9271–#9275 advanced main to `35b54e4db0b449efe9e8d62fab77dfd0e3744482`. The
+D01–D05 review closed fourteen scoped Issues (#163, #177, #249, #273, #345,
+#376, #451, #460, #488, #505, #747, #862, #1438, #3382) with evidence and
+limits in their comments. After the D05 #3382 closure, the latest GraphQL
+aggregate is 1,656 open Issues / 468 open PRs; this is not a paginated
 ID-set audit. The last complete paginated recheck found 1,670 open Issues / 468
 open PRs before these closures; exact hashes and row metadata are in the
 [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md). The [D01](maintenance/idea-family-triage-r119/D01.md),
-[D02](maintenance/idea-family-triage-r119/D02.md), and
-[D03](maintenance/idea-family-triage-r119/D03.md), and
-[D04](maintenance/idea-family-triage-r119/D04.md) receipts map 100 prior
-discovery candidates to catalog/maintenance routes; 87 remain open. This is
+[D02](maintenance/idea-family-triage-r119/D02.md),
+[D03](maintenance/idea-family-triage-r119/D03.md),
+[D04](maintenance/idea-family-triage-r119/D04.md), and
+[D05](maintenance/idea-family-triage-r119/D05.md) receipts map 125 prior
+discovery candidates to catalog/maintenance routes; 111 remain open. This is
 navigation/status information, not semantic completion. Issues #53, #57 and #59
 remain open; #57 still lacks integrated live comparison/effect evidence. Keep
 unresolved ideas and their distinct outcomes in this index.
@@ -618,7 +619,7 @@ These open Issues were absent from the direct-reference audit across this catalo
 | [#1907](https://github.com/Unjuno/agent-interface/issues/1907) | Bind v12 physical-edge lineage to v13 plan/step batches. | The finite R0 bridge contract passed within scope. It does not establish live physical integration; owner-thread KeyRelease/XSync telemetry is a stated prerequisite for a separate successor. |
 | [#1839](https://github.com/Unjuno/agent-interface/issues/1839) | Define plan-bound timestamps that join MAP01 input, actuation and independently scored task effects. | The cited 2026-10-03 source audit found no shared actuation_id, source_event_id, or scorer-epoch identity across input-owner and scorer streams. This is a read-only schema-gap observation at its recorded main SHA; revalidate current source before implementing or claiming the gap remains unchanged. No MAP01/model/X11 allocation is granted. [Source audit](https://github.com/Unjuno/agent-interface/issues/1839#issuecomment-5957468898). |
 | [#1998](https://github.com/Unjuno/agent-interface/issues/1998) | Request bounded focused observations for a known uncertain GUI region while preserving exact source-frame recoverability and refusing stale, ambiguous, identity-replaced, or malformed requests. | A04 `PASS_METHOD_SCOPED`: 21 retained 1280×800 frames, 441 requests, 420/420 smaller ROI payloads, 21 full-frame controls, 6/6 mutations rejected; serialized bytes fell 60.98% in that finite matrix. A08 separately passed 27,664 synthetic cases, with 16 valid focused crops and 27,632 fail-closed refusals; total saving was 1,512 canonical JSON bytes. Its frozen package is now on main via [PR #9228](https://github.com/Unjuno/agent-interface/pull/9228) ([package README](../research/analysis/focused_observation_request_1998_t0_a08_20261009/README.md)); exact duplicate PRs #8807/#8808 were closed after integration. A09 `FAIL_NO_CROP_TOKEN`: one retained post-submit frame, 20 fixed-crop OCR attempts, exact token absent; no retry. A10 remains frozen but uninvoked (candidate/auditor 0/0). The historical A09/A10 package-copy record remains in its original PR; A04/A08 source and result records remain linked from their Issues/PRs. No live GUI, model usability, task success, latency benefit, or product claim. [A04 result](https://github.com/Unjuno/agent-interface/issues/1998#issuecomment-6070173948) · [A08 result](https://github.com/Unjuno/agent-interface/issues/1998#issuecomment-6070661098) · [A09 result](https://github.com/Unjuno/agent-interface/issues/1998#issuecomment-6070760345) · [A10 non-invocation record](https://github.com/Unjuno/agent-interface/issues/1998#issuecomment-6071111468). |
-| [#3382](https://github.com/Unjuno/agent-interface/issues/3382) | Re-test two-tier execute dominance from frozen source. | Current-main caller audit merged via PR #3420 and found one final revalidation before one execute call. This is static caller control-flow evidence only, not receipt transport, GUI, model, or latency evidence. |
+| [#3382](https://github.com/Unjuno/agent-interface/issues/3382) | Re-test two-tier execute dominance from frozen source. | Merged PR #3420 and its `PASS_CALLER_TWO_TIER_STAGE_DOMINANCE_SCOPED` audit record one final revalidation and one execute call. Closed as this bounded caller-control-flow publication request; not receipt transport, GUI, model, task-effect, or latency evidence. [Closure record](https://github.com/Unjuno/agent-interface/issues/3382#issuecomment-6291760562). |
 | [#4405](https://github.com/Unjuno/agent-interface/issues/4405) | Preserve the n6k4 key-state request and full-acquisition speed measurement. | The prior scoped state/accounting result stands; the EVENT_SYNC/QUERY full-time median ratio was 1.755, missing the 20% speed gate. Allocation is historical and must not be rerun. |
 | [#4666](https://github.com/Unjuno/agent-interface/issues/4666) | Validate Procedural Control Arena v0 and proposal-coordinate encoding. | The earlier presentation encoding missed its gain gate; a distinct normalized-coordinate successor passed its 12-pair proposal-level gates (Engine hits 2/12 vs 0/12). No GUI input, moving target, realtime, or cross-domain result follows. |
 | [#6655](https://github.com/Unjuno/agent-interface/issues/6655) | Test causal legacy of incidental interface changes across episodes. | Preserve the original Windows allocation's protocol deviation and source-hash mismatch; no rerun or relabeling. The distinct WSLc successor #6686 is synthetic method evidence only. |
