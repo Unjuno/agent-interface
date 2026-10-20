@@ -1,6 +1,20 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 D10 review based on PR #9280
+## Current entry point — 2026-10-20, main after PR #9284
+
+Main is `b7f734f2236fb45361794a7adb384d0b6773c66b`. PR #9284 adds two scoped
+native Ubuntu WSL/Xvfb standard-caller results for blocked-I/O cleanup and
+target-generation/recovery; it is not WSLc, physical desktop, MAP01, or
+integrated-efficiency evidence. Current repository-wide lanes and completion
+criteria are in the [cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-checkpoint-after-pr-9284--2026-10-20).
+The latest count-only read is 1,655 open Issues / 467 open PRs; the last full
+membership/metadata snapshot is r119. Its 265 routed candidates have receipts;
+17 were individually closed and 248 remain open. Another 223 semantic idea
+routes, exact-head review of the full PR set, and current custody reconciliation
+remain. Counts and old worktree censuses are not ownership or deletion proof.
+
+The following dated account records how the membership and family work
+reached this checkpoint:
 
 The last paginated membership baseline was main
 `ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9280

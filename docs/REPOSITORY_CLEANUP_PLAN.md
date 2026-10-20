@@ -1,5 +1,69 @@
 # Repository cleanup plan
 
+## Current checkpoint after PR #9284 — 2026-10-20
+
+PR [#9284](https://github.com/Unjuno/agent-interface/pull/9284) merged at
+`b7f734f2236fb45361794a7adb384d0b6773c66b` after its three checks passed. It
+preserves two native Ubuntu WSL/Xvfb standard-caller results: bounded cleanup
+after blocked owner I/O, and target-generation refusal plus finite recovery.
+These are Linux/Xvfb caller results, not a WSLc allocation, physical desktop
+control, MAP01 success, or matched efficiency. The merge changed no Issue
+state; #17, #57, #59, and #7924 retain their distinct open research/ownership
+questions.
+
+A live count-only GraphQL read at this checkpoint reports 1,655 open Issues
+and 467 open PRs. The latest fully paginated metadata remains r119; its counts
+and hashes are historical after the 17 individually documented Issue
+dispositions and subsequent PR merges. Reuse its saved rows for discovery,
+then re-fetch each exact Issue/PR before changing state. This count is not a
+semantic audit, readiness review, assignment, or custody proof.
+
+### Repository-wide work still to do
+
+The goal is a navigable, evidence-preserving repository that supports
+independent workers. It is not zero Issues/PRs. Work remains in four separate
+lanes, each with its own finite output and exit test:
+
+1. **Ideas and Issues:** all 265 r119 uncovered-index candidates now have
+   routing receipts, and D01–D11 produced a receipt for every candidate.
+   Seventeen Issues were individually closed with scoped evidence; 248 remain
+   open. The separate idea-document coverage still has 223 routes without a
+   semantic family disposition. Continue those routes using the current audit
+   and family records. Preserve each distinct hypothesis, first outcome, evidence,
+   counterexample, scope limit, dependency, and next discriminating test.
+   Keep unresolved and blocked research open; close an individual Issue only
+   when its own scoped question is complete or a verified successor preserves
+   the idea and return path.
+2. **Pull requests:** the nine-PR sample in the audit receipt is not a census
+   of 467 open PRs. Review exact live head/base, diff, checks, dependencies,
+   unique code/evidence, and actual merge protections. Merge validated useful
+   work under the user's delegation; repair or retarget bounded defects;
+   close a superseded PR only after its unique content is preserved and the
+   successor is verified. Do not add an invented reviewer-count rule.
+3. **Branches and workspace custody:** reconcile branches, worktrees,
+   unregistered directories, ignored outputs, and running owners separately.
+   The latest saved census is historical. Verify exact tip, unique commits,
+   owner/process, dependencies, ignored/raw files, and recovery copy before
+   archiving or deleting anything. Unknown custody remains retained with a
+   specific question.
+4. **Documentation and navigation:** keep one current entry point for status
+   and work selection; label inventories and receipts by date/scope; move
+   superseded snapshots to history only after inbound links resolve. Preserve
+   raw experiment packets and negative/STOP results unchanged.
+
+Use `docs/WORKER_WORK_MAP.md` to select disjoint family or exact-PR packets.
+Each packet must name its input refs, private output path, collision boundary,
+resource needs, and finite completion check. Shared indexes are integrated
+serially. A routing receipt is not semantic classification; an empty assignee,
+old timestamp, clean status, or low activity is not proof of ownership release.
+
+Repository completion requires current discoverability of every open item (or
+an explicit unreviewed queue), a question/evidence/next-action trail for every
+completed semantic batch, verified dispositions for every closed Issue and
+merged/closed PR, resolved or explicitly retained custody for every workspace
+artifact, and multiple independent finite worker packets. A smaller count is
+not a completion criterion.
+
 ## Post-#9282 disposition update — 2026-10-20
 
 At 2026-10-20 13:44 UTC, PR #9282 merged as `302e8bc0681332329d3a2159668adc2f4dee906a`. It preserves Issue #5311 T0 A01 on current main as `FAIL_COST_GATE_SCOPED`, with unchanged raw evidence and corrected 96-versus-136 inspection accounting; the Issue remains open. The stale-base predecessor #8836 was closed as superseded after the successor merged. The other four PRs from the bounded audit remain separate holds: #8702 raw custody, #8841 construction-only draft, #8844 unique A04 audit, and #8845 shared WSLc ownership. Do not treat their open state as merge authorization.
