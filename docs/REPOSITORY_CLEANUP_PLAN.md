@@ -1,10 +1,39 @@
 # Repository cleanup plan
 
-## Current state after PR #9241 — 2026-10-20 07:26 UTC
+## Current state after PR #9242 — 2026-10-20 07:55 UTC
+
+Main is `3f8406516747304fe82d03a7d09cfed86ea9cd91`. The [r110 membership
+recheck](maintenance/repository-inventory-recheck-20261020-r110.md) confirms
+1,672 open Issues and 468 open PRs; both sorted-ID hashes match r109 exactly.
+PR #9242 changed documentation pointers only. The latest row-level export
+remains [r108](maintenance/repository-inventory-20261020-r108.md), since the
+IDs are unchanged. The complete cleanup remains unfinished; membership is not
+semantic disposition or ownership proof.
+
+The [local worktree census r01](maintenance/git-worktree-census-20261020-r01.md)
+found 32 registered roots before this temporary documentation worktree was
+created: 22 clean and 10 dirty under normal status, with none locked or
+prunable. The ten dirty roots include ongoing code and research outputs.
+Neither a clean status nor the absence of an open-PR head-name match authorizes
+removal; ignored files, owners, active sessions, and base-branch dependencies
+remain unchecked. Preserve all roots pending those checks.
+
+### Next organization wave
+
+1. Use r110 for membership and r108 for full item metadata; refresh the exact item before changing it.
+2. Source-map the uncovered #17 stdout-delivery and image/receipt-serialization paths to the standard caller, then select one composed check that distinguishes them.
+3. Identify owner/session and PR/base dependencies for each dirty worktree; only individually verified redundant roots can become cleanup candidates.
+4. Continue one disjoint Issue family at a time, preserving ideas, first outcomes, raw evidence, limits, dependencies, and the next finite decision.
+5. Review candidate PRs by exact head/base and complete diff; integrate useful records on current main and close predecessors only after evidence custody is confirmed.
+6. Keep shared maps and indexes current while allowing independent family/output paths.
+
+Repository-wide cleanup remains incomplete until active ideas and artifacts have traceable dispositions and workers can start independent tasks from the map.
+
+## Previous state after PR #9241 — 2026-10-20 07:26 UTC
 
 Main is `41f1dc570a2affddece6ee894ed42d216b21a993`. The [r109 membership recheck](maintenance/repository-inventory-recheck-20261020-r109.md) confirms 1,672 open Issues and 468 open PRs, with both ID sets unchanged from r108. PRs #9240 and #9241 were created and merged between the snapshots; neither remains open. The latest complete row-level metadata remains [r108](maintenance/repository-inventory-20261020-r108.md); r109 refreshes membership only. PR #9241 added the #17 fault-layer evidence crosswalk; #17 remains open and no allocation or Issue state change occurred.
 
-### Next organization wave
+### Next organization wave at the PR #9241 snapshot (superseded by r110)
 
 1. Use r109 as the latest membership check and r108 as the latest full metadata baseline; refresh exact live records before another remote state-changing batch.
 2. Source-map the uncovered #17 stdout-delivery and image/receipt-serialization paths to the standard caller, then select one composed check that distinguishes them.
