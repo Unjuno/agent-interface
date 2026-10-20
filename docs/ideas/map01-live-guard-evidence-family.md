@@ -1,6 +1,6 @@
 # MAP01 live threat-guard evidence family
 
-**Status: active research; eight allocation packet groups indexed through A15. Two result PRs remain open (#8759 A10 and #8800 A14); #8678/#8701 are closed after tracked-file preservation, and #8749/#8782/#8790/#8810 result packets are merged. #8818 is the merged A15 custody-manifest follow-up. Issue #59 remains open.**
+**Status: active research; eight live-allocation packet groups are indexed through A15. Live result PRs #8759 (A10) and #8800 (A14) remain open; the distinct synthetic construction packet from #8843 is indexed separately below. #8678/#8701 are closed after tracked-file preservation, and #8749/#8782/#8790/#8810 result packets are merged. #8818 is the merged A15 custody-manifest follow-up. Issue #59 remains open.**
 
 ### A07 independent custody cross-check — 2026-10-19
 
@@ -68,6 +68,24 @@ matched, and the exact-head GitHub replay-gate passed. This validates only the
 synthetic stale-action predicate, not model behavior, game progress, OS input,
 physical release, useful task effect, recovery, or MAP01 completion. #59 remains
 open; this packet neither consumes nor releases a live allocation.
+
+## Separate authored-HUD/pending-turn cancel construction — PR #8843 A10
+
+The [preserved package](../../research/doom/v39_authored_pair_cancel_composition_a10_20261012/README.md)
+is distinct from the live-allocation A10 under PR #8759 and the A10 strict
+release replay in the later A10–A29 corpus. Its single saved WSLc test used a
+fake planner/executor and synthetic typed health: a below-floor guard wrote
+and flushed executor cancellation before planner interruption; a stale
+completed response remained ineligible, with a synthetic empty terminal
+receipt. The outcome is `CONSTRUCTION_ONLY_SOURCE_COMPOSITION`, not a live
+threat, OS-input, physical-release, task-effect, recovery, or MAP01 result.
+
+The original PR manifest had seven CRLF-derived digests among 19 entries. The
+additive [custody repair](../../research/doom/v39_authored_pair_cancel_composition_a10_20261012/CUSTODY_REPAIR.md)
+recomputes all entries against exact retained Git blobs; a non-executing audit
+in a temporary blob-faithful copy reproduced the saved `PASS_SCOPED` audit
+byte-for-byte. No test or WSLc allocation was repeated. Keep this result
+separate from the live STOP/HOLD packets; Issue #59 remains open.
 
 ## Additional WSLc/Xvfb evidence A10–A29 — rescue of PR #8842 (2026-10-20)
 

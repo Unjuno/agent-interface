@@ -514,6 +514,10 @@ gates remain open; this archive makes no code promotion.
 
 - [Historical V39 health-boundary consolidation](v39_currentmain_health_guard_boundary_a01_20261009/CONSOLIDATION_20261015.md): retained #8801/#8814 raw, mutation follow-up and source revalidation; current-source limits are explicit.
 
+## Authored HUD guard and pending-turn cancellation — separate PR #8843 A10 (#59)
+
+- [A10 authored-pair cancel composition](v39_authored_pair_cancel_composition_a10_20261012/README.md) — one saved synthetic WSLc case records executor cancel write/flush before planner interrupt, stale-answer rejection, and an empty synthetic terminal receipt. It has no live input, physical-release, task-effect, recovery, or MAP01 claim. The additive [custody repair](v39_authored_pair_cancel_composition_a10_20261012/CUSTODY_REPAIR.md) corrects seven CRLF-derived checksums from exact Git blobs and reproduces the saved non-executing audit; no experiment was rerun. Keep distinct from the A10 live STOP and strict-release replay below.
+
 ## V39 strict-release and Xvfb release/recovery evidence A10–A29 (#59)
 
 This dated corpus is preserved as exact evidence snapshots; it does not promote the recorded candidates to production code or physical-input claims. A10/A11 are construction checks, A15 is a read-only audit of A14's X-server receipts, A17–A25 retain their initial STOPs and analyzer failures alongside the later scoped A24/A25 result, A26 is a pre-execution procedural STOP, A27 is a scoped Xvfb cancellation-recovery PASS, and A28/A29 remain preregistered FAILs despite their retained X-server key-up observations. See each linked package below for exact conditions, raw, audit, and scope:
