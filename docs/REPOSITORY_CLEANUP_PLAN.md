@@ -1,6 +1,65 @@
 # Repository cleanup plan
 
-## Current state after PR #9245 — 2026-10-20 08:20 UTC
+## Current organization checkpoint after PR #9247 — 2026-10-20
+
+The current code baseline is main `0f46feb6be55174bc79fb0df83e0205179f8cbdb`.
+The latest complete paginated membership snapshot available at this baseline is
+[r65](maintenance/repository-inventory-recheck-20261020-r65.md), captured at
+09:16:37 UTC: 1,672 open Issues and 468 open PRs. Its exact ID sets and row-level
+metadata are retained in the linked recheck and CSV files. This is a dated
+membership baseline, not a current count after later PR activity, a semantic
+classification, or evidence that an Issue/PR is ownerless or ready to close.
+PR #9248 was opened at 09:22 UTC after this capture, so it is not included in
+the r65 open-PR count. Re-fetch the complete membership and exact record before
+any subsequent GitHub state change.
+
+PR #9247 adds a standard-MCP private-Xvfb server-stop and fresh-target recovery
+integration. Its two outcomes stay distinct: the outage-era task failed to
+release while Xvfb was unavailable and its independent task oracle failed;
+the separate post-resume recovery task passed with a fresh target/generation,
+an independently read `[0] -> [2]` effect, and keys up. Runtime `task_success`
+for the outage task remains null. This narrows one recovery boundary but leaves
+the computer-control parent Issue open; it does not qualify MAP01, a live
+provider/controller, or matched efficiency. Preserve the immutable run packages
+under `research/integration/standard_caller_xvfb_server_stop_20261020/`.
+
+### Next organization wave
+
+1. **Curate ideas before changing Issue state.** Choose one coherent family
+   based on unresolved research value or its ability to unblock other work,
+   not Issue-number order. Distinguish sibling hypotheses and preserve each
+   positive, negative, failed, stopped, and inconclusive result with its raw
+   evidence, limits, dependency, and next discriminating question.
+2. **Give each Issue a useful disposition.** Link it to the canonical family
+   or state why it is outside research; record its present owner/dependency,
+   actionable next step or hold-release condition, and relevant PR/evidence.
+   Close only that individual Issue when its scoped work is complete, its idea
+   is catalogued with a return link, or its distinct contribution is preserved
+   under a verified successor. Never close a family merely to reduce counts.
+3. **Reconcile PRs independently.** Re-read exact head/base, full diff,
+   dependencies, required protections, local checks, and evidence custody.
+   Integrate useful verified work; repair, retarget, supersede, or hold the rest
+   with a concrete reason. Do not make reviewer-seat counts a universal gate.
+4. **Resolve workspace ownership before physical cleanup.** The latest
+   retained census is a status snapshot only. For each branch/worktree/raw
+   bundle, establish its current owner/session, dependencies, unique data,
+   restore path, and ignored files before moving or deleting it. Unknown
+   custody remains an explicit hold.
+5. **Keep worker entry points small and current.** The idea catalog owns
+   hypotheses and result lineage; Issues own work/disposition; PRs own code
+   changes; dated inventories own membership snapshots; original research
+   packets own raw evidence. Assign disjoint families and private output paths,
+   and serialize only edits to shared indexes/maps.
+
+The cleanup exit is traceability and safe independent work, not zero Issues or
+PRs: every live item must lead to a current disposition and a finite next action
+or explicit hold condition; preserved ideas/results must link back to their
+source Issues and evidence; and every physical cleanup candidate must have
+verified custody and a recovery path. The detailed record layout, execution
+sequence, and completion checks below remain the plan; older dated sections are
+history and must not be read as current counts or assignments.
+
+## Previous state after PR #9245 — 2026-10-20 08:20 UTC (superseded by PR #9247)
 
 Main is `083e59c0abe71a0a693e231e08a14d6718df7ade`. The [r111 membership
 recheck](maintenance/repository-inventory-recheck-20261020-r111.md) was
