@@ -1,10 +1,10 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 D08 review based on PR #9278
+## Current entry point — 2026-10-20 D09 review based on PR #9279
 
 The last paginated membership baseline was main
-`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9278
-advanced main to `f6b8bb896cb80a1767e1e0bf4381f9611b0fc667`. PR #9267 added the r119
+`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9279
+advanced main to `a2d6826ff85280926f63ad02897e0ee550155f4a`. PR #9267 added the r119
 coverage audit and eleven private-output discovery packets; PR #9268 improved
 the local #57 ledger; PR #9269 preserved the newest current-main Xvfb
 stop/recovery result; PR #9270 integrated D11's family dispositions. After
@@ -17,7 +17,7 @@ routes 265 issues without a direct `docs/ideas` link into eleven private-output
 discovery batches. The [D11 disposition receipt](maintenance/idea-family-triage-r119/D11.md)
 reviews 15 candidates, closes only #8654/#8913 with evidence links, and leaves
 13 open with a finite next decision or hold. D01–D06 are integrated below;
-D07 is integrated below; D08 is reconciled in the current update; D09–D10 remain unreviewed. Prior
+D07–D08 are integrated below; D09 is reconciled in the current update; D10 remains unreviewed. Prior
 B01–B20 reads are linked to prevent duplicate audit. These are candidate
 scopes, not active assignments. The r05 custody census is historical, not
 current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
@@ -84,6 +84,13 @@ and unassigned; no status changed. Distinct canonical method results, STOPs,
 partial outcomes, and unverified proposals remain separate. Aggregate remains
 1,655 Issues / 468 PRs (count-only); D09–D10 remain unreviewed. No experiment,
 allocation, WSLc/Docker operation, or worktree cleanup was performed.
+
+The D09 [family-disposition receipt](maintenance/idea-family-triage-r119/D09.md)
+reuses B12–B16 and live Issue/comment/PR reads. All 25 candidates remain open
+and unassigned; no status changed. It preserves separate method results,
+STOPs, integrity holds, unrun questions, and WSLc ownership constraints.
+Aggregate remains 1,655 Issues / 468 PRs (count-only); D10 remains unreviewed.
+No experiment, allocation, WSLc/Docker operation, or worktree cleanup ran.
 
 The local #57 ledger now summarizes optional cached-input, cache-write-input,
 reasoning-output and image-input token fields per attempt, returning unknown
