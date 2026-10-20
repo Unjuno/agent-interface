@@ -1,6 +1,6 @@
 # MAP01 live threat-guard evidence family
 
-**Status: active research; eight live-allocation packet groups are indexed through A15. Live result PRs #8759 (A10) and #8800 (A14) remain open; the distinct synthetic construction packets from #8843 and #8848 are indexed separately below. #8678/#8701 are closed after tracked-file preservation, and #8749/#8782/#8790/#8810 result packets are merged. #8818 is the merged A15 custody-manifest follow-up. Issue #59 remains open.**
+**Status: active research; eight live-allocation packet groups are indexed through A15. Live result PRs #8759 (A10) and #8800 (A14) remain open; synthetic construction packet #8843 is merged, and #8848 has current-main successor PR #9234. #8678/#8701 are closed after tracked-file preservation, and #8749/#8782/#8790/#8810 result packets are merged. #8818 is the merged A15 custody-manifest follow-up. Issue #59 remains open.**
 
 ### A07 independent custody cross-check — 2026-10-19
 
@@ -69,9 +69,10 @@ synthetic stale-action predicate, not model behavior, game progress, OS input,
 physical release, useful task effect, recovery, or MAP01 completion. #59 remains
 open; this packet neither consumes nor releases a live allocation.
 
-## Separate soft-ammo feedback-to-next-turn construction — PR #8848 A12
+## Separate soft-ammo feedback-to-next-turn construction — PR #9234 successor to #8848 A12
 
-The preserved [A12 packet](../../research/doom/v39_soft_ammo_feedback_turn_a12_20261012/README.md)
+Current-main successor [PR #9234](https://github.com/Unjuno/agent-interface/pull/9234)
+preserves the original #8848 [A12 packet](../../research/doom/v39_soft_ammo_feedback_turn_a12_20261012/README.md)
 uses the frozen V39 source at `f185a9059d485a4f8d5a65e9e7f6782897f67eae`.
 When synthetic typed ammo changes from 6 to 4 above the cover floor of 1, the
 bounded soft-event summary and current ammo are delivered to the next planner

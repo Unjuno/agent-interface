@@ -8,7 +8,8 @@ PR #8812's original 48 files are preserved with the first A11 harness-count FAIL
 
 # Issue #59 A12 — soft-ammo feedback in the next planner request (2026-10-12)
 
-The frozen V39 source and recording-client construction show that a synthetic
+Current-main successor [PR #9234](https://github.com/Unjuno/agent-interface/pull/9234)
+preserves the frozen V39 source and recording-client construction showing that a synthetic
 ammo change from 6 to 4 above cover floor 1 is summarized into the next planner
 request that already occurs; malformed feedback claiming input authority is
 rejected. The retained WSLc transcript and saved non-executing audit report
