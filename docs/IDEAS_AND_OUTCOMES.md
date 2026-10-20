@@ -4,14 +4,14 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-20 10:18 UTC):** main is
-`7fb73d879b6a913e5692bbddaabf7f1c81739f73`. The bracketed [r113 membership
-recheck](maintenance/repository-inventory-recheck-20261020-r113.md) confirms
-1,672 open Issues and 468 open PRs; complete current metadata is retained in the
-linked JSON rows. Issue #53 was reopened after PR #9251's merge unexpectedly
-closed it through a GitHub closing-reference association; the PR does not resolve
-the shared-caller accounting gap, so the idea remains open. Counts are not
-semantic dispositions; use current family records and the
+**Current organization check (2026-10-20 10:39 UTC):** main is
+`270e886685f3814f053824a5110e9226b1b3f5a5`. The complete [r114 membership
+recheck](maintenance/repository-inventory-recheck-20261020-r114.md) confirms
+1,672 open Issues and 468 open PRs; its ID sets match r113, and refreshed
+metadata is retained in the linked JSON rows. Issue #53 was reopened after PR
+#9251's merge unexpectedly closed it through a GitHub closing-reference
+association; its shared-caller accounting gap remains unresolved. Counts are
+not semantic dispositions; use current family records and the
 [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) for new work.
 ## Status key
 

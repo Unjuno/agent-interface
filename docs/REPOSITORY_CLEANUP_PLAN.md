@@ -1,31 +1,31 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after PR #9251 and Issue #53 correction — 2026-10-20
+## Current organization checkpoint after PR #9252 — 2026-10-20
 
-Main is `7fb73d879b6a913e5692bbddaabf7f1c81739f73`. The bracketed complete
-membership snapshot [r113](maintenance/repository-inventory-recheck-20261020-r113.md)
-contains 1,672 open Issues and 468 open PRs; full metadata rows and sorted-ID
-hashes are retained beside it. The intermediate [r112](maintenance/repository-inventory-recheck-20261020-r112.md)
-recorded 1,671 Issues after #53 was auto-closed by PR #9251; it is retained as a
-historical snapshot and superseded for current membership by r113.
+Main is `270e886685f3814f053824a5110e9226b1b3f5a5`. The complete paginated
+[r114 inventory](maintenance/repository-inventory-recheck-20261020-r114.md)
+was captured at 2026-10-20 10:39:08 UTC. It contains 1,672 open Issues and
+468 open PRs; CLI totals match GraphQL totals before and after, and main stayed
+at the same SHA. Its sorted-ID hashes exactly match [r113](maintenance/repository-inventory-recheck-20261020-r113.md),
+while r114's metadata is the refreshed view at current main. PR #9252 is a
+documentation/inventory update; its computed `closingIssuesReferences` is empty.
+These inventories establish membership, not semantic disposition, ownership,
+evidence custody, or merge/closure eligibility. Refresh exact live records
+before any state change.
 
-PR #9251 is merged. It adds a local task-ledger schema/summary validator for
-#57, not provider accounting, live GUI integration, or an efficiency result.
-Its GitHub `closingIssuesReferences` unexpectedly includes #53 despite the PR
-description explicitly saying the validator does not close #53/#57. The live
-history confirms #53 was auto-closed at merge. Because the PR does not complete
-#53's shared-caller accounting work, #53 was reopened and remains an unfinished
-idea. The [r113 snapshot](maintenance/repository-inventory-recheck-20261020-r113.md)
-records the corrected open set. No experiment allocation or worktree deletion
-was made by this organization pass.
+PR #9251's local task-ledger validator remains a construction result, not
+provider accounting, live GUI integration, or matched efficiency. Its merge
+unexpectedly auto-closed #53; #53 was reopened and remains open for the
+shared-caller accounting question. The intermediate r112 is retained as
+historical evidence of that accidental transition. No experiment allocation,
+Issue/PR disposition, or worktree deletion was made by PR #9252.
 
-The PR snapshot has 436 Draft and 32 non-Draft entries; 422 report
-`mergeStateStatus=UNKNOWN`. These are filters for individual exact-record review,
-not quality judgments or evidence that the PR author/owner is absent. Use the
-repo-wide sequence below: preserve and cluster ideas first, assign a per-item
-disposition, reconcile PRs independently, and resolve custody before physical
-cleanup. The objective is safe discoverability for independent workers, not
-zero open counts.
+The r114 PR metadata has 436 Draft and 32 non-Draft entries. Draft state is a
+queue filter, not a quality judgment or evidence that the PR author/owner is
+absent. Use the repo-wide sequence below: preserve and cluster ideas first,
+assign a per-item disposition, reconcile PRs independently, and resolve
+custody before physical cleanup. The objective is safe discoverability for
+independent workers, not zero open counts.
 
 ## Current organization checkpoint after PR #9247 — 2026-10-20
 
@@ -401,7 +401,22 @@ Every selectable packet must name a family or exact PR set, read-only source ref
 
 The pilot is complete as a semantic review: [safety/control receipt r01](maintenance/repository-cleanup-family-safety-control-r01-20261019.md) revalidated six live Issues (#2/#10/#14/#15/#16/#17), preserved their distinct research questions and scoped results, and recorded one finite next decision per Issue. All six remain open because each has unresolved research or an explicit dependency. The GitHub assignee field was empty, but no ownership conclusion or reassignment was made. No allocation, branch, PR or Issue state was changed. This receipt is not a complete PR/worktree custody audit and does not claim the rest of the repository has been semantically reviewed.
 
-After the pilot, select the next family from the remaining routing queue using changed research value and unblock potential, not numeric Issue order. Workers can take disjoint family batches while the integrator serializes edits to the shared indexes.
+**Completed next family: visual multi-view, 2026-10-20.** The read-only
+[crosswalk](maintenance/issue-family-disposition-visual-multiview-20261020.md)
+separates #7's view-set utility question, #1946's full package-integrity gate,
+#1968's narrower corrected package checks, and #2031's model-facing localization
+result. It preserves the invalid early size claims, scoped #1981/#1983 results,
+and #2031's scorer/provenance/custody limits. #1968 is closed with its distinct
+retained results; #7, #1946, and #2031 remain open with different finite next
+decisions. No candidate, model, auditor, GUI, WSLc, or Docker run was performed.
+This is one family disposition, not repository-wide semantic triage.
+
+**Next family batch:** continue from the uncovered routing queue by research
+value and unblock potential, not Issue number. Select a bounded 3–10 Issue
+family whose questions and dependencies can be reviewed together, write an
+additive family crosswalk, and update the idea index and worker map in one
+integration pass. Workers may review disjoint families in private outputs;
+only one integrator edits shared indexes at a time.
 
 A read-only A07 custody cross-check in [PR #9181](https://github.com/Unjuno/agent-interface/pull/9181) found the independent audit package internally checksummed and its manifest digest cross-referenced, but the private raw bundle needed to reproduce the 2,358-entry claim was unavailable in inspected tracked sources. Keep Issue #59 open and PR #8702 in draft `evidence-custody-hold`; do not rerun consumed A07 or claim MAP01/task success. Revisit only when the unchanged raw bundle or an adequate privacy-approved verification manifest is supplied.
 
