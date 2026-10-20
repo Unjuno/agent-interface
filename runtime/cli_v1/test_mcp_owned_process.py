@@ -229,6 +229,40 @@ def _apply_queued_child_requests(root):
 
 
 class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+    def test_process_liveness_snapshot_records_its_observation_time(self):
+        class LiveProcess:
+            pid = 12345
+            exitcode = None
+            def is_alive(self):
+                return True
+
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._snapshot_cache = {}
+        owner._process = LiveProcess()
+        owner.state = 'open'
+        owner._execution_unknown = False
+        owner._retirement = None
+        owner.session_id = 'test-session'
+        owner.binding_revision = 0
+        owner.targets = {}
+        owner.error = None
+        owner.review_required = False
+        owner._owner_client_disconnect = None
+        owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._owner_input_obligations_live_read = {'status':'not_read'}
+        owner._owner_release_attempt = None
+
+        before = time.monotonic_ns()
+        snapshot = owner.snapshot()
+        after = time.monotonic_ns()
+
+        observed_ns = snapshot['owner_process'].get(
+            'liveness_observed_monotonic_ns')
+        self.assertIsInstance(observed_ns, int, snapshot)
+        self.assertLessEqual(before, observed_ns, snapshot)
+        self.assertLessEqual(observed_ns, after, snapshot)
+
     async def test_compiled_profile_tool_is_absent_without_owned_process(self):
         with tempfile.TemporaryDirectory() as td:
             server=create_server({'app':20},td,session_mode='guarded-x11',

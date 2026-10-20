@@ -428,16 +428,20 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
     def snapshot(self):
         row = deepcopy(self._snapshot_cache)
         if self._process is None:
+            observed_ns = time.monotonic_ns()
             process = {'pid':None, 'alive':False, 'exitcode':None,
-                       'retired':False, 'release_confirmed':None}
+                       'retired':False, 'release_confirmed':None,
+                       'liveness_observed_monotonic_ns':observed_ns}
         else:
             alive = self._process.is_alive()
+            observed_ns = time.monotonic_ns()
             if not alive and self.state == 'open':
                 self._execution_unknown = True
                 self.state = 'failed'
                 self.error = 'owned guarded process exited without an accepted close receipt'
                 self.review_required = True
             process = {'pid':self._process.pid, 'alive':alive,
+                       'liveness_observed_monotonic_ns':observed_ns,
                        'exitcode':self._process.exitcode,
                        'retired':self._retirement is not None,
                        'release_confirmed':False if self._execution_unknown else None,
