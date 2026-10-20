@@ -6,6 +6,19 @@
 
 PR #8812's original 48 files are preserved with the first A11 harness-count FAIL and A12's historical CPU-fixture PASS unchanged. A separate saved-only reader verifies 46 checksums, 34 source pins and carry-forward claims; 11 reader tests pass normal and optimized with ten coherently rehashed corruption controls. At the convergence base, 11/34 sources have changed, so these historical runs do not qualify current main. No producer, historical suite, GUI/input/model/WSLc allocation was executed. See [custody, applicability, results and next boundary](research/doom/v39_saved_regression_convergence_20261016/README.md).
 
+# Issue #59 A12 — soft-ammo feedback in the next planner request (2026-10-12)
+
+Current-main successor [PR #9234](https://github.com/Unjuno/agent-interface/pull/9234)
+preserves the frozen V39 source and recording-client construction showing that a synthetic
+ammo change from 6 to 4 above cover floor 1 is summarized into the next planner
+request that already occurs; malformed feedback claiming input authority is
+rejected. The retained WSLc transcript and saved non-executing audit report
+`PASS_SCOPED`. This is delivery evidence only: no model response/use, live
+game/GUI/input, release, recovery, task effect, or MAP01 result. The consumed
+allocation was not rerun during current-main integration. See the [packet and
+preserved conditions](research/doom/v39_soft_ammo_feedback_turn_a12_20261012/README.md)
+and the [#59 family crosswalk](docs/ideas/map01-live-guard-evidence-family.md).
+
 # Issue #59 A01 — cross-client key holds on a shared XTEST device (2026-10-05)
 
 On a private Xvfb server, two independent X clients injected overlapping presses through the same server-provided `Virtual core XTEST keyboard` (id 5). The legacy device-specific `XTestFakeDeviceKeyEvent` path produced the same observable sequence as core `XTestFakeKeyEvent`: after A-DOWN and B-DOWN, A-UP made the global keymap neutral and delivered KeyRelease while B had not released; B-UP then produced no core event. Disposition: `FAIL_CROSS_CLIENT_ISOLATION` for this one shared-device route. Candidate ran once (exit 0); the raw-only independent auditor ran once (exit 0, 30/30).

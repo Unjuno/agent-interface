@@ -1,0 +1,4 @@
+FROM python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd
+WORKDIR /opt/a12
+COPY . ./
+CMD ["python3", "-m", "unittest", "-v", "test_a12_soft_feedback_turn"]
