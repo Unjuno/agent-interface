@@ -1,7 +1,7 @@
 # リポジトリ全体の整理計画
 実行手順は[リポジトリ整理の実行計画](REPOSITORY_CLEANUP_PLAN.md)を参照。Issueは意味と仮説を正規カタログに整理し、根拠・後継・再開条件をIssueへ戻してから個別に処遇する。件数を減らすこと自体は完了条件ではない。
 
-**最新の完全membershipポインター (r122, 2026-10-21):** `b3a44eb1f33c59b848b6361b95787b8edf991aab`時点のmainを完全ページングし、前後SHA一致でIssue 1,655件/PR 465件を確認した。Issue ID setはr120と同一、PR setはr120から#8841/#8733のみ除外。詳しくは[r122 inventory](maintenance/repository-inventory-recheck-20261021-r122.md)。最新の全体整理目的・実行順・完了条件は[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-cleanup-objective-2026-10-21)を参照。状態変更前に対象と依存を再取得する。過去のsemantic queueでは223 routesのうち222が未分類で、D01–D11 receiptsは保存済み。意味分類、exact-head PR処遇、branch/worktree/evidence custodyは未完了で、次の整理バッチで有限の範囲を選ぶ。
+**最新の完全membershipポインター (r122, 2026-10-21):** `b3a44eb1f33c59b848b6361b95787b8edf991aab`時点のmainを完全ページングし、前後SHA一致でIssue 1,655件/PR 465件を確認した。Issue ID setはr120と同一、PR setはr120から#8841/#8733のみ除外。詳しくは[r122 inventory](maintenance/repository-inventory-recheck-20261021-r122.md)。最新の全体整理目的・実行順・完了条件は[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-cleanup-objective-2026-10-21)を参照。r119の223 exact-URL semantic routesは未分類のままである。#8641は別の265件missing-family queueのD11行で、今回その1件をcanonical recordへ移した。D01–D11 receiptsは保存済み。意味分類、exact-head PR処遇、branch/worktree/evidence custodyは未完了で、次の整理バッチで有限の範囲を選ぶ。
 
 **Bounded family update (2026-10-21):** [Issue #8641's canonical record](ideas/uncertainty-intervention-decomposition.md) preserves its `H_FAIL_NO_ADDED_DECISION_VALUE`, exact evidence, and the out-of-protocol candidate-invocation note. PR #9293 merged the 27 unique evidence blobs byte-exactly, and the original #8733 was closed as superseded after exact readback. Issue #8641 remains open for its unresolved transfer question.
 
