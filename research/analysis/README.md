@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8574 T0 A01 perspective-guided review](perspective_guided_review_8574_t0_a01_20261009/REPORT.md) — `NO_INCREMENTAL_VALUE_SCOPED`: all three arms found the same cross-view identity omission in Q11 (2/2 per arm); no incremental PBR rescue. Synthetic source-contract review only; no human or GUI inference.
+
 - [Issue #1998 A04 Pillow PNG focused-payload economics](pillow_focused_observation_payload_1998_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: main ImageArtifactSink/Pillow 12.3.0 exact-pixel audit on 21 retained GUI frames and 441 requests; 420 crops saved 9,617,403 serialized bytes, 21 full-bounds controls fell back, and 6/6 mutations were rejected. Finite byte accounting only; ROI quality, model, latency, GUI/task effect, and product benefit remain untested.
 
 - [Issue #1998 A05 Inkscape task-marker crop OCR](inkscape_task_marker_crop_1998_t0_a05_20261009/REPORT.md) — `HOLD_RUNNER_ERROR`: frozen candidate exited before Tesseract because of an unbound local variable; auditor was not invoked, retries 0, and no scientific crop result is claimed.
@@ -917,6 +919,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`persistence_gated_throttle_6650_t0_v1/`](persistence_gated_throttle_6650_t0_v1/)
 - [`persistent_counterparty_8135_t0_a01_20261005/`](persistent_counterparty_8135_t0_a01_20261005/)
 - [`persistent_counterparty_8135_t0_a02_20261005/`](persistent_counterparty_8135_t0_a02_20261005/)
+- [`perspective_guided_review_8574_t0_a01_20261009/`](perspective_guided_review_8574_t0_a01_20261009/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
 - [`phase_overlap_resource_footprint_a2_v1/`](phase_overlap_resource_footprint_a2_v1/)
