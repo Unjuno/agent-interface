@@ -1,21 +1,21 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after PR #9265 — 2026-10-20
+## Current organization checkpoint after PR #9266 — 2026-10-20
 
-Current `main` is `6e2d1841646ef4a43ee91b043830c3a7b30eabed` after the docs-only
-cleanup update PR #9265. The integrated computer-control state includes PR
+Current `main` is `666888468e81b3c3c2c1e4103df549afcaf23822` after cleanup PR
+#9266. PR #9265 refreshed the cleanup entry points; PR #9266 added full current
+Issue/PR metadata. The integrated computer-control state includes PR
 #9264's synthetic provider-attempt accounting and one public-MCP/Fake X
 composition result. It does not complete matched efficiency, independent live
 task scoring, provider-log reconciliation, physical input release, or bounded
 recovery; #57 remains open. Keep scoped component results attached to their own
 hypotheses.
 
-The complete Issue/PR membership recheck r118 was captured around 12:17 UTC
+The complete Issue/PR membership recheck r119 was captured around 12:22 UTC
 against this stable main SHA. GraphQL counts bracketed both complete CLI reads:
-1,672 open Issues and 468 open PRs. The exact ID-set hashes changed from r117
-despite equal counts; membership is therefore not interchangeable with the
-older row-level snapshot. See the [r118 recheck](maintenance/repository-inventory-recheck-20261020-r118.md),
-[Issue metadata](maintenance/open-issues-20261020-r118.json), and [PR metadata](maintenance/open-prs-20261020-r118.json).
+1,672 open Issues and 468 open PRs. Both ID sets match r118; row metadata was
+refreshed. See the [r119 recheck](maintenance/repository-inventory-recheck-20261020-r119.md),
+[Issue metadata](maintenance/open-issues-20261020-r119.json), and [PR metadata](maintenance/open-prs-20261020-r119.json).
 This remains a membership/metadata snapshot, not semantic classification, PR
 readiness, ownership, or evidence custody. The retained worktree census r05
 lists 37 roots, 10 dirty, and none locked or prunable; it is not current
@@ -34,21 +34,27 @@ this cleanup plan.
 
 ### Next cleanup batch
 
-1. Process the five open PRs in the receipt by their concrete blocker. Repair
-   #8836's accounting only in a current-main successor without replaying its
-   consumed allocation; keep #8702 and #8844 on custody/audit hold; preserve
-   #8841 as a scoped construction result; leave #8845 untouched until the
-   shared lane's owner and release are verified.
-2. Curate one distinct research family per batch. For every Issue, connect its
-   hypothesis to the first result/raw evidence, counterevidence, limits,
-   dependencies, and next finite decision. Keep open unresolved questions;
-   close an individual Issue only after its own work is complete or a verified
-   successor and return link preserve the idea.
-3. Reconcile worktrees and branches individually after owner/session, running
+1. Use the [r119 idea-index audit](maintenance/idea-index-coverage-20261020-r119.md)
+   and its 265-row [family-disposition queue](maintenance/open-issues-without-family-record-20261020-r119.csv)
+   for eleven read-only, disjoint discovery packets. Reuse the linked B01–B20
+   receipts; refresh only Issues whose source/evidence changed. Each worker
+   writes privately, reports cross-batch family links, and leaves shared
+   indexes and Issue state untouched.
+2. Integrate one family at a time. Preserve distinct hypotheses, first
+   outcomes/raw evidence, counterevidence, limits, dependencies, and finite
+   next decisions. Keep open unresolved questions; close an individual Issue
+   only after its own work is complete or a verified successor and return link
+   preserve the idea.
+3. Process the five open PRs in the audit receipt by their concrete blocker.
+   Repair #8836's accounting only in a current-main successor without replaying
+   its consumed allocation; keep #8702 and #8844 on custody/audit hold;
+   preserve #8841 as a scoped construction result; leave #8845 untouched until
+   the shared lane's owner and release are verified.
+4. Reconcile worktrees and branches individually after owner/session, running
    process, PR/base dependency, ignored data, unique evidence, and recovery
    path are known. Keep unknown custody as an explicit hold.
-4. Refresh the complete membership and exact item metadata before state
-   changes; r118 is not a current authorization to merge, close, or delete.
+5. Refresh the complete membership and exact item metadata before state
+   changes; r119 is a dated baseline, not merge, close, or deletion authority.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
