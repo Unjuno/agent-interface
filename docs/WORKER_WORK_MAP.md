@@ -20,6 +20,18 @@ or resource grant. #17 has since gained the [Fake X post-readback late-request
 counterexample](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md).
 Before reusing the #5 or #59 packet, refresh its live issue/PR/source/owner
 state. One integrator updates shared family indexes after reviewing outputs.
+
+**#57 PR #7283 reviewer-quorum correction (2026-10-20):** The live Draft body
+previously required two nonauthor approvals, named seats, and a committee epoch.
+That fixed count/seat rule has been withdrawn in the current PR description;
+work must not wait for those votes. Its older proposal metadata remains clearly
+marked as historical. The substantive checks—exact source/evidence validation,
+current-main composition, and applicable platform/owner/cancellation/sole-sender
+safety—remain. PR #7283 is still Draft/open and `DIRTY` against an old base; its
+current-main rescue #8368 is separately Draft/open and `DIRTY`. Neither is
+merge-ready from this policy edit. See the [cleanup plan](REPOSITORY_CLEANUP_PLAN.md)
+for exact SHAs and live status.
+
 **#5 target-generation crosswalk:** PR #9016 is Fake X caller-construction
 evidence; PR #9099 adds one scoped standard-caller private-Xvfb pass with a
 synthetic property effect and independent key-up readback, after six retained
