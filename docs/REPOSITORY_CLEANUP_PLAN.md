@@ -30,6 +30,12 @@ PR #9220 merged after its test-only expectation was corrected and rebased onto t
 
 The 05:05 checkpoint above is historical and its `needs-checks` status for #9220 is superseded by this result. The plan PR and test PR are integrated; repository-wide Issue/PR semantic classification and local worktree custody are still incomplete. Keep actionable/research/blocked items open and continue with disjoint family packets; do not close more items solely to reduce counts.
 
+### First confirmed reviewer-quorum disposition — 2026-10-20 05:18 UTC
+
+At main `eca99d0da17938e71707e4530d80e15ed7ca1d35`, the live Draft body of [PR #7283](https://github.com/Unjuno/agent-interface/pull/7283) explicitly required two nonauthor approvals, named reviewer seats, and a committee epoch. Its body now prominently withdraws that fixed-count/seat requirement: workers must not wait for a reviewer count or recruit a named person. The original proposal metadata remains below the notice as historical provenance, not an active gate. The actual technical acceptance conditions remain: validate the exact source/evidence, refresh composition against current `main`, and satisfy the applicable platform/owner/cancellation/sole-sender safety checks.
+
+This wording change did not alter source code, experiments, Issue state, or PR state. #7283 remains Draft/open and is not merge-ready: its head is `92a610b30507e9ac0c159ca18ac8a8502c8d5b1c`, its base `6dee2bff223c7e9643949d2a8ef3acf7e9b007da` is old, and GitHub reports `DIRTY`. The related current-main rescue #8368 is also Draft/open and `DIRTY` against base `ea2af10f1111ba614311e354dfecde1bbf653981`; it needs exact-diff and current-base validation separately. The r01 scan's 39 body matches remain a historical candidate set, not 39 confirmed operative gates; the remaining candidates require individual live review. The count-only baseline at this main is 1,672 open Issues and 476 open PRs; it does not replace the last full membership export or semantic triage.
+
 ## Computer-control checkpoint — 2026-10-20
 
 
