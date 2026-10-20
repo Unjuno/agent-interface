@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #59 A12: [soft-ammo feedback delivery to the next planner request](doom/v39_soft_ammo_feedback_turn_a12_20261012/README.md) — retained frozen-source WSLc construction and `PASS_SCOPED` non-executing audit; seven CRLF-derived checksums corrected against exact Git blobs without changing raw. No model response/use, live game/input, release, recovery, task effect, or MAP01 result; do not rerun the consumed allocation.
+
 - Issue #9004 T0: [agreement-conditioned bounded continuation result](agreement_continuation_9004_v1/RESULT.md) — `PASS_METHOD_SCOPED` on 40 finite synthetic rows; raw-only audit reconstructed all rows and 5/5 tests/mutations passed in normal and optimized Python. `NO_INCREMENTAL_AGREEMENT_VALUE`; no live-control or timing claim.
 
 - Issue #8914 T0 A01/A02: [budgeted failure-discovery audit method failures](analysis/budgeted_failure_discovery_8914_t0_a01_20261016/REPORT.md) — both offline candidate/runner executions completed once, but each independent audit failed at sentinel reconstruction before scientific gates. Outputs are retained as gzip with decompressed SHA-256 receipts; no scientific decision or retry under either allocation.
