@@ -175,8 +175,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     "generation-stale", "mcp-stale", "interface_guarded_compiled",
                     generated_request, compiled_tool_call)
                 method_receipt = result["method_receipt"]
-                self.assertNotEqual(method_receipt["outcome"], "TASK_SUCCEEDED")
+                self.assertEqual(method_receipt["outcome"], "SAFE_YIELD")
+                self.assertEqual(method_receipt["reason"], "execution_refused")
                 self.assertEqual(method_receipt["completed_transitions"], 0)
+                self.assertEqual(method_receipt["transitions"], [])
                 self.assertFalse(
                     (server_root / "synthetic-application-state.rgb").exists())
 

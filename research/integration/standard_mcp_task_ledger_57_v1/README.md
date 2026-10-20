@@ -4,6 +4,15 @@ Status: local measurement-infrastructure construction only. This does not run a
 model, GUI, WSLc, Docker, or a formal allocation, and does not qualify the
 integrated route.
 
+The earlier retained [r01 packet](composition-evidence-20261020/README.md)
+captures the immediate-response stale-generation case. The follow-up
+[r02 packet](composition-evidence-20261020-r02/README.md) holds the fake
+provider response, changes target generation while it is waiting, then confirms
+the standard public caller refuses before input. Its event journal orders the
+fake provider completion before the tool call. Both are synthetic composition
+evidence only; neither establishes a live model, physical release,
+blocked-I/O recovery, or matched efficiency.
+
 ## Question and use
 
 Issue #57's current public `interface_guarded_compiled` caller lacks one joined

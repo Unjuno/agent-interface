@@ -34,6 +34,16 @@ live task and matched comparison.
   requirements below; do not treat a successful public tool response as task
   success.
 
+- **Delayed-provider freshness follow-up:** the test-only Fake X cell in
+  [`composition-evidence-20261020-r02`](../research/integration/standard_mcp_task_ledger_57_v1/composition-evidence-20261020-r02/README.md)
+  now holds the async fake provider response, changes target generation during
+  that wait, then sends the original request through the standard public MCP
+  method. The retained journal orders provider completion before the tool call;
+  the tool refuses before input, and the separate synthetic-state oracle scores
+  false. This narrows the stale-generation composition boundary. It still does
+  not test a live provider, physical release, blocked platform-I/O recovery,
+  or application task effect in a real GUI.
+
 - [Joined V39 recovery and selected backend](../research/integration/v39_selected_backend_recovery_20261016/README.md)
   connects actual monitor/cancel/final functions plus nested wait AST to selected
   capture/backend/InputOwner/Executor13 across child pipes on Fake X. Four cells
