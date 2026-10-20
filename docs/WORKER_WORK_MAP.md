@@ -1,24 +1,27 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 after PR #9269
+## Current entry point — 2026-10-20 after PR #9270
 
-Main is `42ffd82b2c6f7c718fb230b146593244efcd4a23`. PR #9267 added the r119
+Main is `ab554ef5637110b35ec8317db9591fcd5a489bfd`. PR #9267 added the r119
 coverage audit and eleven private-output discovery packets; PR #9268 improved
 the local #57 ledger; PR #9269 preserved the newest current-main Xvfb
-stop/recovery result. After #8654 and #8913 were closed with canonical evidence
-links, a complete paginated recheck found 1,670 open Issues and 469 open PRs;
-the Issue IDs equal r119 minus those two, and the PR IDs equal r119 plus pending
-PR #9270. No duplicate full inventory was created. The saved r119 row metadata
-remains a baseline, not current ownership or semantic classification. The r119
-[index coverage audit](maintenance/idea-index-coverage-20261020-r119.md) routes
-265 issues without a direct `docs/ideas` link into eleven private-output
+stop/recovery result; PR #9270 integrated D11's family dispositions. After
+#8654 and #8913 were closed with canonical evidence links, a complete paginated
+recheck found 1,670 open Issues and 468 open PRs; the Issue IDs equal r119 minus
+those two, and the PR IDs equal r119. No duplicate full inventory was created.
+The saved r119 row metadata remains a baseline, not current ownership or
+semantic classification. The r119 [index coverage audit](maintenance/idea-index-coverage-20261020-r119.md)
+routes 265 issues without a direct `docs/ideas` link into eleven private-output
 discovery batches. The [D11 disposition receipt](maintenance/idea-family-triage-r119/D11.md)
 reviews 15 candidates, closes only #8654/#8913 with evidence links, and leaves
 13 open with a finite next decision or hold. D01–D10 remain unreviewed; prior
 B01–B20 reads are linked to prevent duplicate audit. These are candidate
 scopes, not active assignments. The r05 custody census is historical, not
 current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
-WSLc ownership and current-checkout prerequisites.
+WSLc ownership and current-checkout prerequisites. The checkout is sparse:
+eleven research references in the entry-point docs are present in the Git tree
+even though their paths are not materialized locally; check tree membership
+before reporting such links as broken.
 
 The local #57 ledger now summarizes optional cached-input, cache-write-input,
 reasoning-output and image-input token fields per attempt, returning unknown

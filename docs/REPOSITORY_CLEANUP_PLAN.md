@@ -1,30 +1,32 @@
 # Repository cleanup plan
 
-## Current organization checkpoint after D11 disposition — 2026-10-20
+## Current organization checkpoint after PR #9270 — 2026-10-20
 
-Current `main` is `42ffd82b2c6f7c718fb230b146593244efcd4a23`; cleanup changes
-are pending in PR #9270. A complete paginated recheck at 2026-10-20 12:48 UTC
-found 1,670 open Issues and 469 open PRs, with GraphQL counts and the main SHA
-stable before/after. The open Issue set is exactly r119 minus #8654 and #8913,
-which were closed as completed after their evidence/record was linked; the open
-PR set is exactly r119 plus pending PR #9270. Current sorted ID SHA-256:
-Issues `b1dcc137b671439581faad8dc4eb21599254d28231f313d1e6f31996b6ecf82e`, PRs
-`59aff21951812c77e0373fa1025badd33584cf2cf4c08430b500cb307ff4aa8c`. No
+Current `main` is `ab554ef5637110b35ec8317db9591fcd5a489bfd`. PR #9270 merged
+the D11 family-disposition receipt and closed only #8654 and #8913 after their
+scoped evidence and return links were preserved. A complete paginated
+membership-only recheck at 2026-10-20 12:51 UTC found 1,670 open Issues and 468
+open PRs, with GraphQL counts and main SHA stable before/after. The Issue ID set
+is exactly r119 minus #8654/#8913; the PR ID set is exactly r119. Sorted ID
+SHA-256: Issues `b1dcc137b671439581faad8dc4eb21599254d28231f313d1e6f31996b6ecf82e`,
+PRs `878a28d681a0ae705654b670693106498874c525afe2ca828aa129b3dccafb3a`. No
 duplicate inventory was added; r119 remains the saved row-metadata baseline.
-Membership is current, but semantic dispositions, per-item readiness, active
-ownership, and artifact custody remain incomplete. The bounded nine-PR receipt
-below is not a complete readiness audit. Matched efficiency, independent live
-task scoring, provider-log reconciliation, outage-time release, and a generally
-bounded recovery path remain open; #57 remains open. Run 39399107944 records an
-outage-task failure and a distinct synthetic post-resume recovery pass in the
+Membership is current at this checkpoint, but semantic dispositions, per-item
+readiness, active ownership, and artifact custody remain incomplete. The
+bounded nine-PR receipt below is not a complete readiness audit. Matched
+efficiency, independent live task scoring, provider-log reconciliation,
+outage-time release, and generally bounded recovery remain open; #57 remains
+open. Run 39399107944 records an outage-task failure and a distinct synthetic
+post-resume recovery pass in the
 [retained r03 packet](../research/integration/standard_caller_xvfb_server_stop_20261020/pr9247-run-39399107944/README.md).
 
-A relative-link check of the two repository entry points also found eleven
-links to research files absent from this checkout (three in
-`REPOSITORY_CONSOLIDATION.md`, eight in `WORKER_WORK_MAP.md`). Their historical
-sources and custody are not yet resolved, so do not silently remove or redirect
-them. The next cleanup pass must identify a preserved canonical replacement or
-record the exact missing-evidence boundary for each.
+A local relative-link check reported eleven research links absent from this
+worktree (three in `REPOSITORY_CONSOLIDATION.md`, eight in `WORKER_WORK_MAP.md`).
+The worktree uses sparse checkout, and all eleven exact paths are present in
+the current `HEAD` tree. This is a checkout-coverage artifact, not missing
+repository evidence or an unresolved custody finding. Keep the links; validate
+them against the Git tree or a checkout that includes `research/` rather than
+`Test-Path` in this sparse worktree.
 
 The complete Issue/PR membership recheck r119 was captured around 12:22 UTC
 against `666888468e81b3c3c2c1e4103df549afcaf23822`. Its ID sets matched r118;
@@ -72,18 +74,17 @@ this cleanup plan.
    path are known. Keep unknown custody as an explicit hold.
 5. Refresh the complete membership and exact item metadata before state
    changes; r119 is a dated baseline, not merge, close, or deletion authority.
-   The 2026-10-20 12:48 UTC membership recheck confirms the two intended Issue
-   closures and pending PR #9270; reuse r119 row metadata and re-fetch each exact
-   item before any further state change rather than generating another census.
-6. Resolve the eleven absent local evidence links in the two canonical entry
-   points by tracing their source history and current family records. Update a
-   link only when a byte-preserved packet or faithful canonical successor is
-   verified; otherwise retain the reference and explicitly label custody
-   unresolved.
-7. Integrate [D11's family-disposition receipt](maintenance/idea-family-triage-r119/D11.md).
-   It closes only #8654 and #8913 after preserving their scoped results and
-   return links; route the remaining 13 Issues by the recorded result, proposal,
-   or explicit WSLc ownership hold. D01–D10 remain unreviewed.
+   The 12:51 UTC recheck confirms the two intended Issue closures and PR #9270
+   merge; reuse r119 row metadata and re-fetch each exact item before further
+   state changes rather than generating another census.
+6. Preserve the eleven valid research links. For future relative-link audits,
+   distinguish sparse-checkout omissions from paths absent in the Git tree;
+   validate with `git ls-tree` or a worktree whose sparse patterns include the
+   referenced directories.
+7. D11 is integrated. Its 15 candidate dispositions close only #8654/#8913
+   after preserving scoped results; the other 13 remain open with their recorded
+   results, proposals, or explicit WSLc ownership holds. D01–D10 remain
+   unreviewed.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
