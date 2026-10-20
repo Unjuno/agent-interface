@@ -600,7 +600,7 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNotNone(fresh_generation, fresh_observed)
                 fresh_minted = await bounded_recovery_call(
                     'interface_guarded_mint', {
-                        'alias':'recovered-field',
+                        'alias':'recovered_field',
                         'source_sequence':fresh_source['sequence'],
                         'point':[x+48,y+48], 'region_size':[24,24]})
                 self.assertEqual(fresh_minted.get('status'), 'minted', fresh_minted)
@@ -614,7 +614,7 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
 
                 recovery_pending = await bounded_recovery_call(
                     'interface_guarded_input', {
-                        'alias':'recovered-field', 'offset':fresh_minted['offset'],
+                        'alias':'recovered_field', 'offset':fresh_minted['offset'],
                         'interaction':'keyboard', 'observe_after':False,
                         'wait_for_result_ms':0,
                         'tail':[{'op':'key_chord', 'keys':['b']}]})
