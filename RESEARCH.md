@@ -4,7 +4,7 @@
 
 # Issue #8636 T0 A03 — relative-view rotation-feature audit hold (2026-10-12)
 
-The candidate completed 360 synthetic trials (exit 0); the one independent auditor
+Merged current-main successor [PR #9236](https://github.com/Unjuno/agent-interface/pull/9236) preserves the packet and repairs only the generated analysis index; original [PR #8840](https://github.com/Unjuno/agent-interface/pull/8840) was closed as superseded. The candidate completed 360 synthetic trials (exit 0); the one independent auditor
 stopped before writing a summary because the focal-stress YIELD reason was
 `feature shape changed` while the frozen auditor expected `shape changed`.
 Disposition remains `HOLD_UNCERTAIN`; no feature-method or hypothesis result is
