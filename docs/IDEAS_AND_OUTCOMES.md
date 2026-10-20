@@ -4,21 +4,21 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current organization check (2026-10-20 13:02 UTC):** the last paginated
-membership baseline is main `ab554ef5637110b35ec8317db9591fcd5a489bfd`;
-docs-only PRs #9271 and #9272 advanced main to
-`3be3fa00eb267c2721ea9aa210af333b2472d6cd`. After D01/D02 review, #163, #177,
-#249, and #273 were closed with scoped evidence and reopen conditions in their
-comments. The latest GraphQL aggregate is 1,666 open Issues / 468 open PRs; it
-is not a paginated ID-set audit. The last complete paginated recheck at 12:51
-UTC found 1,670 open Issues / 468 open PRs before those four closures; exact
-hashes and row-metadata baseline are in the [repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md).
-The [D01](maintenance/idea-family-triage-r119/D01.md) and
-[D02](maintenance/idea-family-triage-r119/D02.md) receipts map 50 prior
-discovery candidates to current catalog entries; 46 remain open. Counts and
-catalog links are navigation/status facts, not semantic completion. Issues #53,
-#57 and #59 remain open; #57 still lacks integrated live comparison/effect
-evidence. Keep unresolved ideas and their distinct outcomes in this index.
+**Organization check (2026-10-20 13:04 UTC):** the last paginated membership
+baseline is main `ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs
+#9271–#9273 advanced main to `711aa414f4e9fc399a7e678ae4ace8960b27936a`. The
+D01–D03 review closed ten scoped Issues (#163, #177, #249, #273, #345, #376,
+#451, #460, #488, #505) with evidence and limits in their comments. The latest
+GraphQL aggregate is 1,660 open Issues / 468 open PRs; this is not a paginated
+ID-set audit. The last complete paginated recheck found 1,670 open Issues / 468
+open PRs before these closures; exact hashes and row metadata are in the
+[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md). The [D01](maintenance/idea-family-triage-r119/D01.md),
+[D02](maintenance/idea-family-triage-r119/D02.md), and
+[D03](maintenance/idea-family-triage-r119/D03.md) receipts map 75 prior
+discovery candidates to catalog/maintenance routes; 65 remain open. This is
+navigation/status information, not semantic completion. Issues #53, #57 and #59
+remain open; #57 still lacks integrated live comparison/effect evidence. Keep
+unresolved ideas and their distinct outcomes in this index.
 
 **Superseding source checkpoint (2026-10-20):** main is now
 `a969266f03f7b10edc3714946ccb36c508dab4bc` after PR #9260. Its two public-MCP
