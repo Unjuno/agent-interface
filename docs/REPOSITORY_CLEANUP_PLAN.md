@@ -1,5 +1,53 @@
 # Repository cleanup plan
 
+## Current organization checkpoint after PR #9260 — 2026-10-20
+
+Current `main` is `a969266f03f7b10edc3714946ccb36c508dab4bc`. PR #9260 adds
+two synthetic Fake X cells to the public MCP composition path: a state-changing
+success case and a stale-generation refusal. The first distinguishes the
+synthetic state effect; the second confirms refusal before input. They do not
+establish an independent live task score, provider/model accounting, physical
+release, finite recovery after a blocked platform call, or matched efficiency.
+Keep these scoped results separate from the larger #57 acceptance milestone.
+
+Live GitHub reads on 2026-10-20 confirm #17 and #57 remain open. #17 retains a
+distinct safety-control-plane question about release reachability when ordinary
+telemetry is blocked. #57 remains the integration/economics milestone. #7924
+remains `STOP / HOLD` for unresolved WSLc ownership and missing exact-current
+checkout; this is an allocation boundary, not a repository-wide stop. No
+WSLc/Docker operation is authorized or implied by this cleanup plan.
+
+The last complete Issue/PR membership snapshot linked below is r116 (1,672
+open Issues / 468 open PRs) at its recorded earlier main. Do not present those
+counts as a fresh census after #9260. Refresh membership and exact PR metadata
+before state changes; reuse row data only if a bracketed fresh read confirms
+the IDs are unchanged. The latest retained local census r05 lists 37 worktree
+roots, 10 dirty, and none locked or prunable. It is a dated status snapshot,
+not a current custody or deletion determination.
+
+### Next cleanup batch
+
+1. Refresh one complete live membership snapshot and exact metadata for the
+   candidate Issues/PRs, recording the source main SHA and read interval.
+2. Integrate already completed, read-only PR audits into their canonical
+   evidence/family records. Preserve each result and failure independently;
+   distinguish stale-base candidates, construction-only evidence, negative
+   scoped outcomes, and custody holds. Do not convert an audit into merge or
+   close authority.
+3. Select one unowned idea family using the current worker map, verify each
+   Issue's live state and source/evidence links, and add one family crosswalk
+   with its distinct hypotheses, first outcomes, limits, dependencies, and
+   finite next decisions. Keep unresolved questions open. Cataloguing an idea
+   is not evidence that its research is complete.
+4. Reconcile worktrees and PRs item by item only after owner/session, unique
+   evidence, dependencies, and recovery are established. Preserve unknown
+   custody as an explicit hold.
+
+This is the current entry point; the dated sections below remain historical
+checkpoints. The cleanup target is an auditable research backlog and safe,
+disjoint worker packets. Zero open Issues, zero open PRs, and zero worktrees
+are not completion criteria.
+
 ## Current organization checkpoint after PR #9257 — 2026-10-20
 
 Main is `cdd3c7e979dc7799e6733e259934b1738bf01d22`. The complete paginated
