@@ -1,6 +1,6 @@
 # Current objective and working direction
 
-The current code baseline is main `6ad11c0b87f37eb4c26483dbd37cd6f55c7ff216` after cleanup PR #9267. The dated r119 membership recheck at `666888468e81b3c3c2c1e4103df549afcaf23822` records 1,672 open Issues and 468 open PRs, with full row metadata at that baseline. Its [coverage audit](maintenance/idea-index-coverage-20261020-r119.md) finds 488 Issues without a primary row in `RESEARCH_ISSUE_INDEX.md`; a focused 265-Issue queue has no exact URL in `docs/ideas/*.md` and is split into eleven private-output batches. These are discovery routes, not classifications or closure lists. PR #9264's synthetic provider-attempt accounting and public-MCP/Fake X composition, plus the local detailed-usage aggregation added after #9267, do not establish production provider-log reconciliation, matched efficiency, independent live task success, physical release, or bounded recovery, so #57 remains open. #17 remains a distinct safety-control-plane question and #7924 remains STOP/HOLD for WSLc ownership and exact-current-checkout prerequisites. The retained worktree census r05 is historical, not current ownership proof. Revalidate live source and custody before state changes.
+The current code baseline is main `108b2717289611b4be84b897b2c56ef14a3f6032` after evidence PR #9282 and cleanup-plan PR #9283. The dated r119 membership recheck at `666888468e81b3c3c2c1e4103df549afcaf23822` records 1,672 open Issues and 468 open PRs, with full row metadata at that baseline. Its [coverage audit](maintenance/idea-index-coverage-20261020-r119.md) finds 488 Issues without a primary row in `RESEARCH_ISSUE_INDEX.md`; a focused 265-Issue queue has no exact URL in `docs/ideas/*.md` and is split into eleven private-output batches. These are discovery routes, not classifications or closure lists. PR #9264's synthetic provider-attempt accounting and public-MCP/Fake X composition, plus the local detailed-usage aggregation added after #9267, do not establish production provider-log reconciliation or matched efficiency. Separate native-WSL/Xvfb runs now qualify bounded release and target-generation/recovery paths through the standard caller; their independent task oracles are synthetic, and caller-level task success remains unknown. They do not establish physical desktop input or MAP01. #57 remains open; #17 remains a distinct safety-control-plane question; #7924 remains STOP/HOLD for shared WSLc ownership and a new WSLc allocation. The retained worktree census r05 is historical, not current ownership proof. Revalidate live source and custody before state changes.
 
 The [r51 navigation coverage audit](maintenance/idea-index-coverage-20261019-r51.md) splits 491 missing primary rows into 20 disjoint discovery batches; it does not classify meaning. See the [repository consolidation plan](REPOSITORY_CONSOLIDATION.md) for family-by-family review and disposition criteria. The first current semantic audit refreshed #6 and #56 against their live Issue records and found the existing [family entry](ideas/reactive-macro-symbolic-interface.md) accurate; both distinct research questions remain open. This page is the short entry point, not an experiment ledger.
 The dated [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md)
@@ -62,11 +62,16 @@ three synthetic request/reply transactions across the second relay before
 input. The fixture generation-change case now rejects stale evidence before
 either relay sees a KeyPress. It does not exercise XRes wire encoding or live
 PID discovery. A03's missing per-connection trace and original failure are
-unchanged. WSLc Issue
-#7924 remains `STOP / HOLD` for ownership; no new live allocation is verified.
-The next live test can be planned only after fresh ownership and allocation
-evidence; in the meantime use finite Fake X work that changes a caller or
-integration decision, not more copies of the parser result.
+unchanged. Two separate native WSL/Xvfb validations are now retained:
+[blocked-I/O release and liveness timestamp](../research/integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-r01/README.md)
+and [standard-caller target generation and recovery](../research/integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-generation-r03/README.md).
+They exercise the Linux caller against private synthetic Xvfb applications;
+they are not WSLc portability, physical desktop, or MAP01 evidence. The
+separate generation-run r01/r02 prelaunch stops are preserved without test
+retries. WSLc Issue #7924 remains `STOP / HOLD` for shared ownership; no WSLc
+allocation is verified. A future shared WSLc/MAP01 run requires fresh
+allocation and ownership evidence. Further local tests should target a concrete
+caller/integration decision rather than copy existing parser-only fixtures.
 
 Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not

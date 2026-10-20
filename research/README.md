@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #59 standard MCP caller: [native WSL/Xvfb blocked-I/O release and liveness timestamp](integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-r01/README.md) and [target-generation recovery](integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-generation-r03/README.md) — one test each passed; bounded Xvfb release readback (438.767 ms), cancel (764.307 ms), liveness timestamp ordering, 33.033 ms synthetic recovery, stale-generation refusal, and independent synthetic effect checks. Caller-level task success remains unknown. Native WSL only, not WSLc/MAP01/physical desktop or efficiency evidence. The generation test's two prelaunch STOPs are also preserved.
+
 - Issue #5311 T0 A01: [proof-carrying action admission finite test](analysis/proof_carrying_action_5311_t0_a01_20261009/README.md) — `FAIL_COST_GATE_SCOPED`; corrected work is 96 vs 136 inspections; the retained audit missed the same counter omission. Frozen evidence was not rerun. Synthetic method evidence only; no runtime/security/product claim.
 
 - Issue #59 A12: [soft-ammo feedback delivery to the next planner request](doom/v39_soft_ammo_feedback_turn_a12_20261012/README.md) — retained frozen-source WSLc construction and `PASS_SCOPED` non-executing audit; seven CRLF-derived checksums corrected against exact Git blobs without changing raw. Current-main successor [PR #9234](https://github.com/Unjuno/agent-interface/pull/9234) preserves the package. No model response/use, live game/input, release, recovery, task effect, or MAP01 result; do not rerun the consumed allocation.
