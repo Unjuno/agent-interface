@@ -4,7 +4,7 @@
 
 ### Live execution pointer after PR #9309
 
-The current verified checkout is `main` `ef768ac74517d70c43c7b673b6ea4319db87d4f4` (PR #9309). The latest complete paginated membership is still r126 at `d3439cb9adee0bd64492d5378c05568357d38d56`; it is a historical baseline, not the exact current open set. Refresh membership with complete pagination and stable before/after main SHA before publishing another snapshot or changing Issue/PR state. Reuse r120 row metadata and record only the delta unless a specific decision needs refreshed fields.
+The current verified checkout is `main` `ef768ac74517d70c43c7b673b6ea4319db87d4f4` (PR #9309). The newest complete paginated membership recheck is [r127](maintenance/repository-inventory-recheck-20261021-r127.md): 1,655 open Issues and 464 open PRs, with stable main SHA before/after. The Issue set matches r126; the PR set is r126 plus this plan PR #9310. r127 is membership metadata only, not semantic disposition, exact-head readiness, ownership, or custody. Reuse r120 row metadata and refresh each touched live record before a state change.
 
 Since r126, current main has added the target-belief family record (#9305), inventory pointer (#9306), audited caller evidence and cleanup-map sync (#9307), the prestarted cancellation supervisor proposal (#9308), and the standard-caller duplicate-cancel characterization (#9309). The new cancellation trial is Fake X-only: one cleanup attempt, but duplicate cancellation returned `not_active`, no retained operation receipt was exposed, and the original action stayed UNKNOWN with stale owner-liveness metadata. It does not show bounded physical release or a production supervisor. These outcomes are indexed below; they do not close the parent research questions.
 
