@@ -1,42 +1,38 @@
 # Repository cleanup plan
 
-## Current checkpoint after PR #9286 — 2026-10-20
+## Current checkpoint after PR #9287 — 2026-10-20
 
-Current `main` is `5476ea072cd864bb603c3f801e492ce2163d34dc`. The complete,
-bracketed [r120 membership recheck](maintenance/repository-inventory-recheck-20261020-r120.md)
-records 1,655 open Issues and 467 open PRs, with exact row metadata and ID-set
-hashes. These are the latest membership counts, not semantic dispositions or
-ownership proof.
+Current `main` is `f8fab073a0ebd1c42a8362fcec7440cfbe7fad82`. PR
+[#9287](https://github.com/Unjuno/agent-interface/pull/9287) preserves the
+unique A09 source-monitor construction packet from #8841 and its exact-blob
+readback; the predecessor was closed as superseded after that readback. The
+packet establishes construction-only behavior, not a live allocation or MAP01
+result. Issue #59 remains open for its separate live threat response, release,
+recovery, task-effect, and MAP01 gates.
 
-The selected cleanup packet is the A09 source-monitor construction result in
-[#8841](https://github.com/Unjuno/agent-interface/pull/8841). Its 17-file
-packet is absent from main and is distinct from live-allocation A09 in #8749.
-The transfer candidate preserves its source, test, WSLc transcript and saved
-audit, corrects two package-manifest hashes against exact Git blobs, and records
-the Windows LF-checkout condition. Exact-blob local checks pass 4/4 and
-`PASS_SCOPED`; no WSLc/Docker or formal allocation was run. Keep #8841 open
-until main contains the packet and exact blobs are verified. Issue #59 remains
-open for live threat response, release, recovery, task effect, and MAP01 gates.
-
-PR #8836 is already superseded by merged current-main PR #9282, which preserves
-its `FAIL_COST_GATE_SCOPED` result and frozen evidence; Issue #5311 remains open.
-The r05 worktree census is historical, not current custody evidence. No branch
-or worktree is removed by this checkpoint.
+The latest complete membership snapshot is [r120](maintenance/repository-inventory-recheck-20261020-r120.md),
+at the earlier main `5476ea072cd864bb603c3f801e492ce2163d34dc` (1,655 Issues /
+467 PRs). A later count-only read at current main returned 1,655 Issues / 466
+PRs; this is not a full membership, semantic-disposition, or custody audit.
+PR #8836 remains superseded by merged #9282, preserving its scoped failure;
+Issue #5311 remains open. The r05 worktree census is historical, not current
+custody evidence. No branch or worktree is removed by this checkpoint.
 
 ### Next cleanup batch
 
-1. Integrate and verify the current-main #8841 transfer, then close that
-   predecessor only after a fresh live read and bidirectional successor link.
-2. Continue the other sampled open PRs only by their exact blockers: #8702 raw
+1. Continue the other sampled open PRs only by their exact blockers: #8702 raw
    custody, #8844 unique A04 audit, and #8845 shared WSLc ownership.
-3. Reconcile worktrees and branches individually using current owner/session,
+2. Reconcile worktrees and branches individually using current owner/session,
    process, ignored data, dependencies, unique evidence, and recovery; retain
    unknown custody.
-4. Continue the 223 outstanding semantic idea routes from the current family
+3. Continue the 223 outstanding semantic idea routes from the current family
    queue, preserving hypotheses and outcomes before any individual Issue
    closure.
+4. Keep the main entry points and receipts current after every bounded batch;
+   r120 remains the latest complete membership baseline until a new full
+   recheck is warranted.
 
-This checkpoint preserves the #9285 plan and adds one bounded batch. Zero open
+This checkpoint preserves the #9285 plan and records the #9287 transfer batch. Zero open
 Issues, zero open PRs, and zero worktrees are not completion criteria.
 
 ## Current checkpoint after PR #9285 — 2026-10-20

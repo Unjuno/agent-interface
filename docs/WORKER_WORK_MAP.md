@@ -1,25 +1,29 @@
 # Worker work map
 
-## Current entry point — 2026-10-20, main after PR #9286
+## Current entry point — 2026-10-20, main after PR #9287
 
-Main is `5476ea072cd864bb603c3f801e492ce2163d34dc`. PR #9285 integrated the
-current repository organization plan. Its count-only checkpoint records
-1,655 open Issues / 467 open PRs. PR #9284 adds two scoped
+Main is `f8fab073a0ebd1c42a8362fcec7440cfbe7fad82`. PR #9287 integrated the
+A09 source-monitor construction packet and verified its exact blobs. A
+count-only read at this main records 1,655 open Issues / 466 open PRs. The
+complete [r120 inventory](maintenance/repository-inventory-recheck-20261020-r120.md)
+is a historical baseline at its recorded main, not current membership. PR #9284 adds two scoped
 native Ubuntu WSL/Xvfb standard-caller results for blocked-I/O cleanup and
 target-generation/recovery; it is not WSLc, physical desktop, MAP01, or
 integrated-efficiency evidence. Current repository-wide lanes and completion
-criteria are in the [cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-checkpoint-after-pr-9285--2026-10-20).
-The latest count-only read is 1,655 open Issues / 467 open PRs; the last full
-membership/metadata snapshot is r119. Its 265 routed candidates have receipts;
+criteria are in the [cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-checkpoint-after-pr-9287--2026-10-20).
+The latest count-only read is 1,655 open Issues / 466 open PRs; the last full
+membership/metadata snapshot is r120. The earlier r119 idea-index audit's 265
+routed candidates have receipts;
 17 were individually closed and 248 remain open. Another 223 semantic idea
 routes, exact-head review of the full PR set, and current custody reconciliation
 remain. Counts and old worktree censuses are not ownership or deletion proof.
 
 The latest complete membership baseline is [r120](maintenance/repository-inventory-recheck-20261020-r120.md)
-(1,655 open Issues / 467 open PRs). The selected family packet is [A09 source-monitor
-construction #8841](ideas/map01-live-guard-evidence-family.md#separate-a09-source-monitor-construction--pr-8841),
-not live-allocation A09 #8749. Its current-main transfer candidate is pending
-integration; do not duplicate the packet or close #8841 before main blob readback.
+(1,655 open Issues / 467 open PRs at its captured main). The selected family
+packet is [A09 source-monitor construction](ideas/map01-live-guard-evidence-family.md#separate-a09-source-monitor-construction--pr-8841),
+preserved by merged #9287; predecessor #8841 is closed after exact-blob
+readback. This construction evidence is separate from live-allocation A09
+#8749.
 PR #8836 is already preserved by merged successor #9282; Issue #5311 remains
 open. This cleanup packet grants no WSLc/Docker allocation and does not close
 Issue #59.
