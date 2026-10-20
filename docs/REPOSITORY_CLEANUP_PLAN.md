@@ -88,7 +88,7 @@ this cleanup plan.
 7. D11 is integrated. Its 15 candidate dispositions close only #8654/#8913
    after preserving scoped results; the other 13 remain open with their recorded
    results, proposals, or explicit WSLc ownership holds. D01 and D02 are
-   integrated; D03–D05 are reconciled below. D06–D10 remain unreviewed.
+   integrated; D03–D06 are reconciled below. D07–D10 remain unreviewed.
 
 ## D01 family disposition — 2026-10-20
 
@@ -156,6 +156,18 @@ open PRs; this is count-only, not a paginated membership audit. Across D01–D05
 125 candidates are mapped, 14
 individually evidenced Issues were closed, and 111 remain open. No experiment,
 allocation, or worktree cleanup was run. D06–D10 remain unreviewed.
+
+## D06 family disposition — 2026-10-20
+
+The [D06 receipt](maintenance/idea-family-triage-r119/D06.md) reconciles 25
+candidate Issues against B08–B10 and the current catalog. All 25 remain open:
+the batch contains unresolved raw/source publication holds, cost-negative and
+method-scoped results, unrun comparisons, a reopened successor, and distinct
+architecture proposals. No Issue state changed. The GraphQL aggregate is
+1,656 open Issues / 468 open PRs; this is count-only, not a paginated
+membership audit. Across D01–D06, 150 candidates are mapped, 14 individually
+evidenced Issues were closed, and 136 remain open. No experiment, allocation,
+or worktree cleanup was run. D07–D10 remain unreviewed.
 
 This is the current entry point; the dated sections below remain historical
 checkpoints. The cleanup target is an auditable research backlog and safe,
