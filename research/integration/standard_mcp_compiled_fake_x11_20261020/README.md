@@ -40,6 +40,11 @@ short bounded wait for the MCP call to become terminal after owner retirement.
 The resulting `runtime_failed` receipt and `cleanup_failed` close receipt are
 preserved as uncertainty, not treated as successful release.
 
+The post-merge `native-mcp` failure from this packet's PR and the narrow
+`FakeBridge.scope` compatibility correction are recorded with the downloaded CI
+logs under [`ci-native-failure`](ci-native-failure/README.md). The compiled
+route's original Fake X evidence is retained separately from that regression.
+
 ## Reproduction
 
 From the repository root, with the test dependencies installed:
