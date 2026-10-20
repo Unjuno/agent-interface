@@ -12,6 +12,7 @@ from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_owned_process import (
     _compiled_profile_payload,
     _fake_owner_factory,
+    _preserve_fake_x_run,
     metadata,
 )
 
@@ -110,6 +111,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertTrue(summary["task_success"])
             finally:
                 await server.call_tool("interface_close", {})
+                _preserve_fake_x_run("provider-mcp-success", root)
 
     async def test_provider_generated_request_is_refused_after_target_generation_changes(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -199,6 +201,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(summary["task_success"])
             finally:
                 await server.call_tool("interface_close", {})
+                _preserve_fake_x_run("provider-mcp-stale-generation", root)
 
 
 if __name__ == "__main__":
