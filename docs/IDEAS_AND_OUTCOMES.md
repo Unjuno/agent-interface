@@ -15,6 +15,16 @@ live task effect, or integrated efficiency. Issues #53, #57 and #59 remain
 open. Counts are not semantic dispositions; use the staged [repository cleanup
 plan](REPOSITORY_CLEANUP_PLAN.md) and current family records to route the next
 bounded batch.
+
+**Superseding source checkpoint (2026-10-20):** main is now
+`a969266f03f7b10edc3714946ccb36c508dab4bc` after PR #9260. Its two public-MCP
+composition cells are synthetic Fake X evidence only; see the
+[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md) for the current scope and
+limits. Live reads confirm #17, #57 and #7924 are still open; #7924 remains
+STOP/HOLD. The complete r116 membership counts above belong to an earlier
+main and are not a fresh census. Keep unresolved research ideas in this index
+with their own evidence lineage and next question; do not close them just to
+reduce the open count.
 ## Status key
 
 - **Proposed / open:** no result is implied.

@@ -1,6 +1,7 @@
 # Integration plan
 
-Updated 2026-10-15. Promote evidence into one usable computer-control path.
+Updated 2026-10-20 after PR #9260. Promote evidence into one usable
+computer-control path.
 Use [the work map](WORKER_WORK_MAP.md) to choose a finite contribution and
 [the current interface guide](../runtime/USING_CURRENT_INTERFACE.md) to identify
 the actual supported caller. Versioned research clients are not interchangeable.
@@ -21,6 +22,17 @@ all independent work. Do not substitute repeated construction for the eventual
 live task and matched comparison.
 
 ## Current source-bound findings
+
+- **Current public composition status after PR #9260 (main `a969266f0`,
+  2026-10-20):** two synthetic Fake X cells exercise the standard public MCP
+  path. One produces a state-changing synthetic effect; one changes the target
+  generation after the fake provider response and verifies refusal before
+  input. This supports only the captured Fake X composition boundary. It does
+  not provide an independent live task score, real provider/model usage or
+  latency accounting, physical/native release, blocked-I/O bounded recovery,
+  or matched efficiency. Keep #57 open and use the remaining composition/live
+  requirements below; do not treat a successful public tool response as task
+  success.
 
 - [Joined V39 recovery and selected backend](../research/integration/v39_selected_backend_recovery_20261016/README.md)
   connects actual monitor/cancel/final functions plus nested wait AST to selected
