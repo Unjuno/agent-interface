@@ -1,10 +1,10 @@
 # Worker work map
 
-## Current entry point — 2026-10-20 D06 review based on PR #9276
+## Current entry point — 2026-10-20 D07 review based on PR #9277
 
 The last paginated membership baseline was main
-`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9276
-advanced main to `22bf21ee1b462a35809e9b577331386b44b211d0`. PR #9267 added the r119
+`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9277
+advanced main to `4d1abd0ada1fdf876c152cf07983eab6db13a512`. PR #9267 added the r119
 coverage audit and eleven private-output discovery packets; PR #9268 improved
 the local #57 ledger; PR #9269 preserved the newest current-main Xvfb
 stop/recovery result; PR #9270 integrated D11's family dispositions. After
@@ -16,8 +16,8 @@ semantic classification. The r119 [index coverage audit](maintenance/idea-index-
 routes 265 issues without a direct `docs/ideas` link into eleven private-output
 discovery batches. The [D11 disposition receipt](maintenance/idea-family-triage-r119/D11.md)
 reviews 15 candidates, closes only #8654/#8913 with evidence links, and leaves
-13 open with a finite next decision or hold. D01–D05 are integrated below;
-D06 is reconciled in the current update; D07–D10 remain unreviewed. Prior
+13 open with a finite next decision or hold. D01–D06 are integrated below;
+D07 is reconciled in the current update; D08–D10 remain unreviewed. Prior
 B01–B20 reads are linked to prevent duplicate audit. These are candidate
 scopes, not active assignments. The r05 custody census is historical, not
 current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
@@ -68,6 +68,15 @@ with their distinct publication holds, scoped outcomes, proposals, and next
 decisions. Aggregate is 1,656 Issues / 468 PRs (count-only, not a new paginated
 audit). D07–D10 remain unreviewed. No experiment, allocation, or worktree
 cleanup was performed.
+
+The D07 [family-disposition receipt](maintenance/idea-family-triage-r119/D07.md)
+reuses B10–B11 and maps 25 candidates. It closes only #6990 for the completed
+bounded T8 offline receipt-schema audit; 24 remain open. It also updates #6767
+to finite recovery checkpoints and removes reviewer-count/global coordination
+barriers from #6875, #6932, and #6957 while retaining task checks and actual
+resource/permission boundaries. Aggregate is 1,655 Issues / 468 PRs
+(count-only, not a new paginated audit); D08–D10 remain unreviewed. No
+experiment, allocation, WSLc/Docker operation, or worktree cleanup was run.
 
 The local #57 ledger now summarizes optional cached-input, cache-write-input,
 reasoning-output and image-input token fields per attempt, returning unknown
