@@ -8,6 +8,7 @@ receipt is accepted while the server cannot process or acknowledge X requests.
 import asyncio
 import json
 import os
+import queue
 from pathlib import Path
 import signal
 import sys
@@ -33,6 +34,70 @@ _SERVER_STOP_SAFETY_S = 4.0
 _CANCEL_BOUND_S = 3.0
 _POST_RESUME_CLOSE_BOUND_S = 3.0
 _RECOVERY_BOUND_S = 5.0
+
+
+class _DisplayCommandQueue:
+    """Run test-thread Xlib mutations on the app connection's owner thread."""
+
+    def __init__(self):
+        self._commands = queue.Queue()
+        self._owner_thread_id = None
+
+    def call(self, callback, *, timeout):
+        if threading.get_ident() == self._owner_thread_id:
+            raise RuntimeError('display owner cannot synchronously submit to itself')
+        response = queue.Queue(maxsize=1)
+        self._commands.put((callback, response))
+        try:
+            succeeded, value = response.get(timeout=timeout)
+        except queue.Empty as error:
+            raise TimeoutError('display owner did not process command in time') from error
+        if not succeeded:
+            raise value
+        return value
+
+    def run_pending(self, *, timeout=0):
+        thread_id = threading.get_ident()
+        if self._owner_thread_id is None:
+            self._owner_thread_id = thread_id
+        elif self._owner_thread_id != thread_id:
+            raise RuntimeError('Xlib display commands must have one owner thread')
+        try:
+            callback, response = self._commands.get(timeout=timeout)
+        except queue.Empty:
+            return False
+        try:
+            value = callback()
+        except BaseException as error:
+            response.put((False, error))
+        else:
+            response.put((True, value))
+        return True
+
+
+class DisplayCommandQueueTests(unittest.TestCase):
+    def test_display_commands_run_on_the_event_loop_owner_thread(self):
+        commands = _DisplayCommandQueue()
+        ready = threading.Event()
+        stop = threading.Event()
+        owner = {}
+
+        def run_owner_loop():
+            owner['thread_id'] = threading.get_ident()
+            ready.set()
+            while not stop.is_set():
+                commands.run_pending(timeout=0.01)
+
+        thread = threading.Thread(target=run_owner_loop, daemon=True)
+        thread.start()
+        self.assertTrue(ready.wait(1.0))
+        try:
+            executed_on = commands.call(lambda: threading.get_ident(), timeout=1.0)
+            self.assertEqual(executed_on, owner['thread_id'])
+        finally:
+            stop.set()
+            thread.join(1.0)
+        self.assertFalse(thread.is_alive())
 
 
 def _private_xvfb_record():
@@ -112,6 +177,7 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
         release_seen = threading.Event()
         app_lock = threading.Lock()
         app_events = []
+        app_commands = _DisplayCommandQueue()
         safety_timer = None
         resume_lock = threading.Lock()
         resumed = {'value':False, 'receipt':None, 'error':None}
@@ -178,6 +244,8 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
 
                 def run_app():
                     while not app_stop.is_set():
+                        if app_commands.run_pending(timeout=0):
+                            continue
                         if not app_display.pending_events():
                             time.sleep(0.002)
                             continue
@@ -387,25 +455,32 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 # a new independently read application effect.
                 previous_window_id = window.id
                 recovery_effect_seen.clear()
-                window.destroy()
-                app_display.sync()
-                window = screen.root.create_window(
-                    x, y, width, height, 0, X.CopyFromParent, X.InputOutput,
-                    X.CopyFromParent, background_pixel=0,
-                    event_mask=(X.KeyPressMask | X.KeyReleaseMask))
-                window.change_property(effect_atom, Xatom.CARDINAL, 32, [0])
-                window.map()
-                window.set_input_focus(X.RevertToParent, X.CurrentTime)
-                screen.root.warp_pointer(x+48, y+48)
-                recovery_gc = window.create_gc(foreground=0xFFFFFF)
-                for row in range((height+15)//16):
-                    for column in range((width+15)//16):
-                        if (row+column) % 2 == 0:
-                            window.fill_rectangle(recovery_gc, column*16, row*16,
-                                min(16, width-column*16),
-                                min(16, height-row*16))
-                app_display.sync()
+                def create_recovery_target():
+                    nonlocal window
+                    window.destroy()
+                    app_display.sync()
+                    window = screen.root.create_window(
+                        x, y, width, height, 0, X.CopyFromParent, X.InputOutput,
+                        X.CopyFromParent, background_pixel=0,
+                        event_mask=(X.KeyPressMask | X.KeyReleaseMask))
+                    window.change_property(effect_atom, Xatom.CARDINAL, 32, [0])
+                    window.map()
+                    window.set_input_focus(X.RevertToParent, X.CurrentTime)
+                    screen.root.warp_pointer(x+48, y+48)
+                    recovery_gc = window.create_gc(foreground=0xFFFFFF)
+                    for row in range((height+15)//16):
+                        for column in range((width+15)//16):
+                            if (row+column) % 2 == 0:
+                                window.fill_rectangle(recovery_gc, column*16,
+                                    row*16, min(16, width-column*16),
+                                    min(16, height-row*16))
+                    app_display.sync()
+                    return window.id
+
+                fresh_window_id = app_commands.call(
+                    create_recovery_target, timeout=1.0)
                 self.assertNotEqual(window.id, previous_window_id)
+                self.assertEqual(window.id, fresh_window_id)
                 with app_lock:
                     recovery_app_event_start = len(app_events)
                 report['recovery_target'] = {
