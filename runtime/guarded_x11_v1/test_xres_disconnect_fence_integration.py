@@ -47,13 +47,15 @@ with open(marker, 'w', encoding='utf-8') as f:
 d.sync()  # blocks until the delayed request is processed or the server closes it
 """
 _IDLE_OWNER_START = r"""
-import json, sys, time
+import json, os, sys, time
 from Xlib.display import Display
 
 display_name, marker = sys.argv[1:]
 d = Display(display_name)
-with open(marker, 'w', encoding='utf-8') as f:
+temporary_marker = marker + '.tmp'
+with open(temporary_marker, 'w', encoding='utf-8') as f:
     json.dump({'resource_base':d.display.info.resource_id_base}, f)
+os.replace(temporary_marker, marker)
 while True:
     time.sleep(0.05)
 """
