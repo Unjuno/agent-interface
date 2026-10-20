@@ -109,11 +109,15 @@ recovery, task effect, or MAP01 outcome.
 The original package manifest had two stale hashes against its exact Git blobs
 (`results/audit.json` and `source_hashes.json`). The additive
 [custody repair](../../research/doom/v39_authored_pair_guard_a09_20261012/CUSTODY_REPAIR.md)
-corrects only package custody and protects the frozen bytes. The current-main
-transfer candidate also records a package-local LF rule because this Windows
-checkout uses `core.autocrlf=true`. Keep #8841 open until the full packet and
-crosswalk are present on main; keep parent Issue #59 open for its distinct
-live-control gates.
+corrects only package custody and protects the frozen bytes. PR
+[#9287](https://github.com/Unjuno/agent-interface/pull/9287) merged the packet
+to main at `f8fab073a0ebd1c42a8362fcec7440cfbe7fad82`. Post-merge readback found
+all 17 original paths, with 15 original blobs byte-identical; README and
+SHA256SUMS contain the intended custody updates, and two additive files are
+present. No dependent PR using the predecessor head was found. PR #8841 is
+closed as superseded by #9287; parent Issue #59 remains open for distinct
+live-control gates. This transfer is construction-only and did not run WSLc,
+Docker, a formal allocation, or live control.
 
 ## Separate authored-HUD/pending-turn cancel construction — PR #8843 A10
 
