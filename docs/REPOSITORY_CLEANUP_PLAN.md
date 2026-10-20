@@ -11,10 +11,11 @@ The prior batches integrated A08 evidence through #9228 and Win32 release-state 
 ### Next organization wave
 
 1. Keep r108 as the latest full membership baseline; refresh it before another remote state-changing batch.
-2. Continue one disjoint family at a time, preserving ideas, first outcomes, raw evidence, scope limits, dependencies, and the next finite decision.
-3. Review candidate PRs by exact head/base and complete diff. Integrate verified useful records on current main; close predecessors only after successor content and evidence custody are confirmed.
-4. Retain branches/worktrees/artifacts with unknown ownership until owner, process, dependency, and recovery path are known.
-5. Keep shared maps and indexes current while allowing workers to use separate family/output paths.
+2. **Completed bounded family disposition:** [Issue #17 fault-layer crosswalk r02](maintenance/issue-family-disposition-input-safety-20261020-r02.md) separates journal stalls, owner-blocked Xlib with a responsive server, full-server-stop failure, and post-resume cleanup. It keeps #17 open and retains each positive, negative, and unknown outcome at its actual scope. Next, source-map the uncovered stdout-delivery and image/receipt-serialization paths to the standard caller before selecting a composed check.
+3. Continue one disjoint family at a time, preserving ideas, first outcomes, raw evidence, scope limits, dependencies, and the next finite decision.
+4. Review candidate PRs by exact head/base and complete diff. Integrate verified useful records on current main; close predecessors only after successor content and evidence custody are confirmed.
+5. Retain branches/worktrees/artifacts with unknown ownership until owner, process, dependency, and recovery path are known.
+6. Keep shared maps and indexes current while allowing workers to use separate family/output paths.
 
 Repository-wide cleanup remains incomplete until active ideas and artifacts have traceable dispositions and workers can start independent tasks from the map.
 
