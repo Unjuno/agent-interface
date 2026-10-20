@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8620 T0 A01 execution-information frontier](execution_information_8620_t0_a01_20261009/README.md) — 12 finite histories; `HOLD_FORMAL_FREEZE_INCOMPLETE`; original auditor FAIL retained, post-result diagnostic only, no rerun.
+
 - [Issue #8641 T0 A01 uncertainty-source intervention choice](uncertainty_intervention_8641_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED / H_FAIL_NO_ADDED_DECISION_VALUE`; all 4,800 rows were audited, but the decomposition missed its matched-cost gate. No real-interface claim; candidate rerun prohibited.
 
 - [Issue #8636 oracle-boundary construction patch](relative_view_rotation_oracle_boundary_construction_20261012/README.md) — prospective runner/auditor arm-isolation patch; four focused regressions and 13 applicable A04 construction tests pass in normal and optimized Python. No formal candidate/auditor run; A04 remains `HOLD_UNCERTAIN`.
@@ -651,6 +653,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`evidence_dependent_compute_scheduler_dominance_r0_v1/`](evidence_dependent_compute_scheduler_dominance_r0_v1/)
 - [`exception_envelope_6021_t0_20261002/`](exception_envelope_6021_t0_20261002/)
 - [`exception_preserving_skill_7418_t0_20261004/`](exception_preserving_skill_7418_t0_20261004/)
+- [`execution_information_8620_t0_a01_20261009/`](execution_information_8620_t0_a01_20261009/)
 - [`exogenous_opportunity_5694_first_failed_boundary_a03_20261002/`](exogenous_opportunity_5694_first_failed_boundary_a03_20261002/)
 - [`exogenous_opportunity_5694_matched_phase_a04_20261002/`](exogenous_opportunity_5694_matched_phase_a04_20261002/)
 - [`exogenous_opportunity_5694_t0_20261001/`](exogenous_opportunity_5694_t0_20261001/)
