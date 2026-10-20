@@ -4,7 +4,7 @@ This is an Issue-centered index of ideas proposed in `Unjuno/agent-interface` an
 
 This index complements, rather than duplicates, the [durable design-theses ledger](design-theses.md) and the detailed [research evidence ledger](../RESEARCH.md). The linked Issue, PR, and retained report remain authoritative for full scope and evidence.
 
-**Current repository pointer (2026-10-21):** main is `093be6c88c3f728897f168422ae0c58d4cd86b91`. The latest complete membership recheck is [r121](maintenance/repository-inventory-recheck-20261021-r121.md), which reuses r120's row exports after verifying exact current ID-set equality/delta. Membership is not semantic classification: the earlier queue still has 223 idea-document routes awaiting semantic review. Preserve each hypothesis and its first outcomes, evidence limits, dependencies, and next decision before changing Issue state.
+**Latest full membership baseline (2026-10-21):** r122 was captured against main `b3a44eb1f33c59b848b6361b95787b8edf991aab`; it reuses r120's row exports after verifying exact ID-set equality/delta. See [r122](maintenance/repository-inventory-recheck-20261021-r122.md). Membership is not semantic classification: 222 of the earlier 223 idea-document routes still await semantic review. Preserve each hypothesis and its first outcomes, evidence limits, dependencies, and next decision before changing Issue state.
 
 The #8641 source-decomposition question now has a [canonical family crosswalk](ideas/uncertainty-intervention-decomposition.md); its synthetic cost-gate failure and candidate no-retry deviation are preserved, and its broader transfer question remains open.
 
