@@ -39,41 +39,38 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
                 pass
 
             def call(self, operation, lease=None, key=None):
-                if operation == "up_batch":
-                    return [self.call("up", lease, item) for item in key]
                 if operation == "down":
                     return {"event": "input_admission", "operation": operation, "key": key,
-                            "owner_id": self.owner_id, "intent_token": "lease-1"}
-                if operation == "up":
-                    count = len(self.records)
-                    receipt = {
-                        "event": "owner_explicit_keyup", "operation": "up", "key": key,
-                        "keycode": 25, "owner_id": self.owner_id,
-                        "intent_token": "lease-1", "valid_until_ns": None,
-                        "owner_keyrelease_started_ns": 12,
-                        "owner_sync_returned_ns": 13,
-                        "server_sync_completed": True,
-                        "physical_verification_authoritative": False,
-                    }
-                    self.records.append(receipt)
-                    return {
-                        "event": "input_release_transition",
-                        "operation": operation,
-                        "key": key,
-                        "owner_id": self.owner_id,
-                        "release_call_started_ns": 10,
-                        "release_call_returned_ns": 20,
-                        "owner_cleanup_record_count_before_release": count,
-                        "owner_thread_keyup_verified": True,
-                        "owner_thread_keyup_receipt": receipt,
-                        "ordinary_release_candidate": True,
-                        "intent_token": "lease-1",
-                    }
+                            "owner_id": self.owner_id, "intent_token": "lease-1",
+                            "valid_until_ns": 1000, "admitted_ns": 1, "input_ack_ns": 2}
+                if operation == "up_batch":
+                    transitions = []
+                    for item in key:
+                        receipt = {
+                            "event": "owner_explicit_keyup", "operation": "up", "key": item,
+                            "keycode": 25, "owner_id": self.owner_id,
+                            "intent_token": "lease-1", "valid_until_ns": 1000,
+                            "owner_keyrelease_started_ns": 32,
+                            "owner_sync_returned_ns": 33,
+                            "server_sync_completed": True,
+                            "physical_verification_authoritative": False,
+                        }
+                        self.records.append(receipt)
+                        transitions.append({
+                            "event": "input_release_transition", "operation": "up", "key": item,
+                            "owner_id": self.owner_id, "valid_until_ns": 1000,
+                            "release_call_started_ns": 30, "release_call_returned_ns": 40,
+                            "owner_cleanup_record_count_before_release": len(self.records) - 1,
+                            "owner_thread_keyup_verified": True,
+                            "owner_thread_keyup_receipt": receipt,
+                            "ordinary_release_candidate": True, "intent_token": "lease-1",
+                        })
+                    return transitions
                 if operation == "input_state":
                     return {
                         "owner_id": self.owner_id,
-                        "sample_started_ns": 31,
-                        "sample_finished_ns": 32,
+                        "sample_started_ns": 41,
+                        "sample_finished_ns": 42,
                         "owned_keycodes": [],
                     }
                 raise AssertionError(operation)
@@ -129,6 +126,10 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
             )
             self.assertTrue(release["owner_thread_keyup_verified_after_batch"])
             self.assertTrue(release["owner_transition_verified"])
+            self.assertEqual(release["admission_receipt"]["key"], "w")
+            self.assertEqual(release["admission_receipt"]["owner_id"], release["owner_id"])
+            self.assertEqual(release["admission_receipt"]["operation"], "down")
+            self.assertTrue(release["admission_receipt_valid"])
             self.assertEqual((release["id"], release["step"]), ("program-7", 3))
         finally:
             sys.path.remove(str(HERE))
@@ -214,6 +215,7 @@ class ReleaseBackendCompositionTests(unittest.TestCase):
             release = emitted[0]
             self.assertEqual(release["event"], "input_release_transition")
             self.assertEqual((release["id"], release["step"]), ("program-8", 0))
+            # Preserve the per-key X-server receipt; only the batch-level transition is incomplete.
             self.assertTrue(release["owner_thread_keyup_verified"])
             self.assertFalse(release["owner_transition_verified"])
             self.assertFalse(release["release_batch_complete"])
