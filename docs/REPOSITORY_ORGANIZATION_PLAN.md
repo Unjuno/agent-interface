@@ -91,11 +91,11 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-The latest complete membership recheck is [r132](maintenance/repository-inventory-recheck-20261022-r132.md),
+The latest complete membership recheck is [r133](maintenance/repository-inventory-recheck-20261022-r133.md),
 captured on 2026-10-22 JST against stable main
-`d0f392e55db5f53c17592ae08360cc5e45940b25` after PR #9329. It records
-1,655 open Issues and 463 open PRs, including this work's new PR #9330. r132
-corrects r130's mistaken membership delta through the r131 comparison; see its
+`0017149b7a0611b8a1d98160644a953911a858eb` after PR #9331. It records
+1,655 open Issues and 462 open PRs and matches r131 exactly. r133 corrects
+r130's mistaken membership delta through the r131 comparison; see its
 comparison with full r120. PR #9315 is open
 and Draft at head `76626da8b03df25024d12efb5f1dde2f12c53ed2`. Exact-head
 reconciliation [r01](maintenance/pr9315-current-main-reconciliation-20261022-r01.md)
@@ -121,6 +121,10 @@ preserved a scoped standard-caller Xvfb result, and #9329 added a bounded
 worker-exit grace with a separate retained Xvfb outcome. That run missed the
 strict 300 ms caller-response target by 1.268 ms and correctly kept the runtime
 receipt UNKNOWN; see the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#additive-shutdown-grace-result-2026-10-22).
+PR #9331 added a 25 ms response handoff margin. A separate Xvfb run then
+returned in 276.447 ms, with independent key-up readback and a passing
+synthetic task oracle; runtime status remains UNKNOWN and replay denied. See
+the [updated design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#standard-caller-xvfb-after-handoff-margin-2026-10-22).
 The packet records release/readback and an independent task oracle, while
 runtime task success remains null and replay stays denied. Keep
 #17 and #57 open while recovery, task semantics, efficiency, and safety gates
