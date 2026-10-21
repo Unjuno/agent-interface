@@ -235,6 +235,19 @@ composed Fake X coverage for the chosen owner-disconnection receipt before
 another real-Xvfb release attempt. Either contract remains separate from
 release authority, queue drainage, independent readback, and task success.
 
+**Recommended resolution:** align the prestarted path with the existing
+supervised waiter after exact owner-process retirement and a live obligation
+snapshot. Treat an absent or different XRes PID at the old resource base as
+`owner_pid_absent`, preserving the observed PID and whether the base was
+reused; allow one release attempt for only the captured owner obligations.
+This receipt does not prove queue drainage or release. Keep caller release
+UNKNOWN, replay denied, and late-server-request possible until independent
+readback and the declared delayed-request horizon pass. An expected PID that
+remains present through the deadline, or an uncertain query, stays UNKNOWN and
+does not release. This matches the currently exercised standard-caller path,
+whose scoped Xvfb run independently read keys up after cleanup and again after
+the 8.5-second horizon while the public caller retained UNKNOWN.
+
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS
 does not retire at the deadline is reported `worker_retired=false`; that state
