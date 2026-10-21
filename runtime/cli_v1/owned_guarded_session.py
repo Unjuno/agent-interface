@@ -38,11 +38,12 @@ _JOIN_TIMEOUT_S = 1.0
 _XRES_DISCONNECT_TIMEOUT_S = 0.15
 _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
 # The spawned fresh client must import, connect, emit exact releases, sync, and
-# read back. Reserve 1.5 seconds for this bounded worker while retaining
-# headroom under the caller's three-second cancellation target; timeout still
-# means UNKNOWN, never release.
+# read back. This caps its post-start response wait; process creation remains
+# outside that worker budget. Timeout still means UNKNOWN, never release.
 _RETIRED_RELEASE_TIMEOUT_S = 1.5
-_RETIRED_RELEASE_TERMINATE_GRACE_S = 0.1
+# Give a completed release worker 250 ms to exit cleanly before classifying its
+# result UNKNOWN; an accepted release still requires a retired worker.
+_RETIRED_RELEASE_TERMINATE_GRACE_S = 0.25
 _CANCEL_TRANSACTION_DEADLINE_S = 3.0
 _OWNER_INPUT_OBLIGATIONS_SCHEMA = 'agent-interface/owner-input-obligations-v1'
 _OWNER_INPUT_OBLIGATIONS_CAPACITY = 8192

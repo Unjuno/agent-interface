@@ -80,6 +80,17 @@ scoped positive outcome, not general release qualification or recovery. The r01
 socket preflight and r02 missing `xdpyinfo` runner failure are preserved
 separately. WSLc, efficiency, and reliability remain unqualified.
 
+The [250 ms bounded release-worker shutdown grace run](public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39669924300-release-grace-250ms/README.md)
+passed one standard-caller private-Xvfb blocked-sync schedule with the
+prestarted supervisor disabled. The cleanup worker retired cleanly after a
+verified release, and a separate client observed all keys up at release and
+after the 8-second delayed-request horizon; the independent synthetic task
+oracle passed. The caller response took 301.268 ms against its 300 ms response
+deadline, and its runtime receipt still remained UNKNOWN with replay denied
+because `late_server_request_possible` was true. This is one bounded outcome,
+not a reliability estimate, and the 250 ms grace is not causally isolated by a
+matched live run.
+
 PR #9326 adds a local synthetic-Fake-X composed-caller refusal test for an
 unrelated supervisor XRes PID; it preserves UNKNOWN, no release effect, null
 task success, and replay denial, but does not exercise a live XRes response.
