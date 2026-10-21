@@ -1462,23 +1462,33 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                             return_value=fence_result),
                       patch('runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner._release_retired_owner_inputs',
                             return_value=release_result) as release_inputs):
+                    cancel_started = time.monotonic()
                     cancel = metadata(await server.call_tool('interface_guarded_cancel',
                         {'call_id':pending['call_id']}))
-                self.assertTrue(cancel['owner_process_retired'], cancel)
-                self.assertEqual(cancel.get('owner_client_disconnect'), fence_result)
-                self.assertEqual(cancel.get('owner_input_obligations'),
+                    self.assertLess(time.monotonic() - cancel_started, 0.45, cancel)
+                    if 'owner_process_retired' in cancel:
+                        cleanup = cancel
+                    else:
+                        self.assertEqual(cancel['status'], 'pending', cancel)
+                        self.assertFalse(cancel['release_confirmed'], cancel)
+                        cancellation_terminal = await self._wait_for_cancel_terminal(
+                            server, pending['call_id'])
+                        cleanup = cancellation_terminal['cancellation']['result']
+                self.assertTrue(cleanup['owner_process_retired'], cleanup)
+                self.assertEqual(cleanup.get('owner_client_disconnect'), fence_result)
+                self.assertEqual(cleanup.get('owner_input_obligations'),
                                  {'keys':{'CTRL':1}, 'buttons':[]})
-                self.assertEqual(cancel.get('owner_input_obligations_source'),
+                self.assertEqual(cleanup.get('owner_input_obligations_source'),
                                  'retired_child_shared_state')
-                self.assertEqual(cancel.get('owner_input_obligations_live_read'), {
+                self.assertEqual(cleanup.get('owner_input_obligations_live_read'), {
                     'status':'snapshot',
                     'obligations':{'keys':{'CTRL':1}, 'buttons':[]},
                 })
-                self.assertEqual(cancel.get('owner_release_attempt'), release_result)
+                self.assertEqual(cleanup.get('owner_release_attempt'), release_result)
                 release_inputs.assert_called_once_with({'keys':{'CTRL':1}, 'buttons':[]})
-                self.assertFalse(cancel['release_confirmed'])
-                self.assertEqual(cancel['cleanup_status'], 'UNKNOWN')
-                self.assertTrue(cancel['late_server_request_possible'])
+                self.assertFalse(cleanup['release_confirmed'])
+                self.assertEqual(cleanup['cleanup_status'], 'UNKNOWN')
+                self.assertTrue(cleanup['late_server_request_possible'])
 
                 deadline = time.monotonic() + 3
                 terminal = None
@@ -2025,6 +2035,88 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                                  result['cancellation']['owner_generation']['session_id'])
             finally:
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_blocked_cancellation_receipt_archive_does_not_delay_release_or_caller(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            server, action = await self._start_prestarted_cancel_case(root)
+            from runtime.cli_v1.attempt import _write_json as write_json
+            archive_entered = threading.Event()
+            resume_archive = threading.Event()
+
+            def block_cancellation_archive(path, value):
+                if Path(path).name == 'cancellation.json':
+                    archive_entered.set()
+                    if not resume_archive.wait(5):
+                        raise TimeoutError('test did not release the blocked archive')
+                return write_json(path, value)
+
+            heartbeat_ticks = []
+            async def heartbeat():
+                while True:
+                    heartbeat_ticks.append(time.monotonic())
+                    await asyncio.sleep(0.02)
+
+            beat_task = asyncio.create_task(heartbeat())
+            try:
+                with patch('runtime.cli_v1.mcp_server._write_json',
+                           side_effect=block_cancellation_archive):
+                    started = time.monotonic()
+                    cancel = metadata(await server.call_tool(
+                        'interface_guarded_cancel', {'call_id':action['call_id']}))
+                    response_s = time.monotonic() - started
+                    self.assertLess(response_s, 0.45, cancel)
+                    self.assertEqual(cancel['status'], 'pending', cancel)
+                    self.assertFalse(cancel['release_confirmed'], cancel)
+                    self.assertIsNone(cancel['task_success'], cancel)
+                    self.assertFalse(cancel['replay_allowed'], cancel)
+
+                    archive_started = await asyncio.to_thread(
+                        archive_entered.wait, 2)
+                    self.assertTrue(archive_started, 'terminal receipt write never blocked')
+                    state = _read_json(root/'supervisor-fake-x.json', {})
+                    self.assertEqual(state['down'], [])
+                    self.assertEqual(len(state['effects']), 1)
+                    self.assertFalse((root/action['call_id']/'cancellation.json').exists())
+
+                    poll_started = time.monotonic()
+                    pending = metadata(await server.call_tool('interface_results', {
+                        'call_id':action['call_id'], 'include_image':False}))
+                    self.assertLess(time.monotonic() - poll_started, 0.2, pending)
+                    self.assertEqual(pending['cancellation']['status'], 'pending')
+                    self.assertFalse(pending['cancellation']['replay_allowed'])
+
+                    duplicate = metadata(await server.call_tool(
+                        'interface_guarded_cancel', {'call_id':action['call_id']}))
+                    self.assertEqual(duplicate['operation_id'], cancel['operation_id'])
+                    self.assertEqual(len(_read_json(
+                        root/'supervisor-fake-x.json', {})['effects']), 1)
+                    self.assertGreaterEqual(len(heartbeat_ticks), 5, heartbeat_ticks)
+
+                    resume_archive.set()
+                    terminal = await self._wait_for_cancel_terminal(
+                        server, action['call_id'])
+                cancellation = terminal['cancellation']
+                self.assertEqual(cancellation['operation_id'], cancel['operation_id'])
+                self.assertEqual(cancellation['result']['cleanup_status'], 'UNKNOWN')
+                self.assertFalse(cancellation['result']['release_confirmed'])
+                self.assertIsNone(cancellation['result']['task_success'])
+                self.assertFalse(cancellation['result']['replay_allowed'])
+                self.assertEqual(len(_read_json(
+                    root/'supervisor-fake-x.json', {})['effects']), 1)
+            finally:
+                resume_archive.set()
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                if archive_entered.is_set():
+                    try:
+                        await self._wait_for_cancel_terminal(
+                            server, action['call_id'], timeout_s=5)
+                    except AssertionError:
+                        pass
+                beat_task.cancel()
+                with self.assertRaises(asyncio.CancelledError):
+                    await beat_task
                 await server.call_tool('interface_close', {})
 
     async def test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown(self):
