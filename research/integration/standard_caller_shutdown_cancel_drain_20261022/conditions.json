@@ -1,0 +1,63 @@
+{
+  "schema": "agent-interface/standard-caller-shutdown-cancel-drain-v1",
+  "study": "standard-caller-shutdown-cancel-drain-20261022",
+  "source_commit": "553efc9867632c58cc881b50a7719e7847c22bf8",
+  "date_local": "2026-10-22",
+  "host": "Windows 10.0.26300",
+  "python": "CPython 3.11.9",
+  "entrypoint": "PublicArgumentMCP.call_tool with the actual MCP server lifespan context",
+  "fixture": "repository Fake X owned-process fixture; synthetic owner Display.sync block; patched cancellation callback held on a threading.Event",
+  "hypothesis": "A pending standard-caller cancellation may keep graceful server lifespan shutdown blocked after owner.close returns because the cancellation executor is joined with wait=True.",
+  "measurement": "Start server lifespan shutdown while the cancellation worker is held; observe owner.close return and whether lifespan exit completes before releasing the cancellation gate.",
+  "arms": [
+    {
+      "id": "r01",
+      "outcome": "setup failure before probe entry",
+      "reason": "nested probe invocation did not add checkout root to sys.path",
+      "evidence": "probe-r01-setup-failure.txt"
+    },
+    {
+      "id": "r02",
+      "outcome": "probe completed; exploratory output retained",
+      "exit_code": 0,
+      "cancel_return_ms": 312,
+      "owner_close_returned": true,
+      "shutdown_done_while_cancel_held": false,
+      "shutdown_elapsed_to_observation_ms": 5547,
+      "qualification": "os.kill(pid, 0) reported alive, but immediate Windows Get-Process found no such PID; do not use r02's owner-liveness field"
+    },
+    {
+      "id": "r03",
+      "outcome": "probe completed with Win32 process readback",
+      "exit_code": 0,
+      "cancel_return_ms": 313,
+      "owner_close_returned": true,
+      "shutdown_done_while_cancel_held": false,
+      "shutdown_elapsed_to_observation_ms": 5578,
+      "shutdown_done_after_cancel_release": true,
+      "win32_owner_pid_readback": "exited; GetExitCodeProcess returned 65536"
+    }
+  ],
+  "observed_result": {
+    "action_status": "pending",
+    "fake_owner_input_state_at_sync_block": [1],
+    "cancel_status": "pending",
+    "cancel_operation_id_retained": true,
+    "action_terminal_status_after_shutdown": "runtime_failed",
+    "release_confirmed": false,
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "replay_allowed": false,
+    "retained_session_state": "open",
+    "retained_owner_process_alive": true,
+    "win32_owner_pid_status_after_shutdown": "exited"
+  },
+  "not_used": ["WSL", "WSLc", "Docker", "live X server", "physical input", "model", "provider"],
+  "limitations": [
+    "one deterministic Windows Fake X construction run is not an X-server, physical-release, task-effect, reliability, or MAP01 result",
+    "the cancellation callback was test-gated before owner cancellation; it did not exercise XRes or a real blocked server request",
+    "the lifespan was entered through the in-process MCP server object; no stdio client or remote transport was exercised",
+    "the retained owner/session snapshot is stale relative to the post-shutdown Win32 PID readback",
+    "the observed delay is not a general shutdown deadline or process-termination guarantee"
+  ]
+}
