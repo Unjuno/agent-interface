@@ -51,7 +51,7 @@ def _aggregate_cost(costs, attempted_calls):
     return total
 
 class ModelFailure(RuntimeError):
-    def __init__(self, message, *, call_id=None, usage=None,
+    def __init__(self, message, *, call_id=None, thread_id=None, usage=None,
                  visible_images_submitted=None, wait_ns=None,
                  typed_status="FAILED_UPSTREAM"):
         super().__init__(message)
@@ -59,6 +59,7 @@ class ModelFailure(RuntimeError):
                                 "FAILED_OUTPUT"}:
             raise ValueError("known typed model failure status required")
         self.call_id = call_id
+        self.thread_id = thread_id
         self.usage = usage
         self.visible_images_submitted = visible_images_submitted
         self.wait_ns = wait_ns
@@ -98,9 +99,9 @@ def _optional_count(value, name):
     return value
 
 
-def _optional_call_id(value):
+def _optional_identity(value, name):
     if value is not None and (type(value) is not str or not value):
-        raise ValueError("nonempty failure call id or unavailable required")
+        raise ValueError(f"nonempty {name} or unavailable required")
     return value
 
 
@@ -108,7 +109,7 @@ def _model_result(value):
     required = {"call_id", "output", "usage", "requested_model",
                 "requested_effort", "cost", "visible_images_submitted",
                 "wait_ns"}
-    if type(value) is not dict or set(value) != required:
+    if type(value) is not dict or set(value) not in (required, required | {"thread_id"}):
         raise ValueError("exact v3 model result fields required")
     if type(value["call_id"]) is not str or not value["call_id"]:
         raise ValueError("nonempty model call id required")
@@ -116,6 +117,9 @@ def _model_result(value):
         raise ValueError("requested model identity required")
     if type(value["requested_effort"]) is not str or not value["requested_effort"]:
         raise ValueError("requested effort required")
+    if "thread_id" in value and (type(value["thread_id"]) is not str or
+                                  not value["thread_id"]):
+        raise ValueError("nonempty thread id required when supplied")
     if value["cost"] is not None and not isinstance(value["cost"], (int, float)):
         raise ValueError("cost must be numeric or unavailable")
     result = copy.deepcopy(value)
@@ -347,11 +351,17 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                            "elapsed_ns": ended-started})
             metadata_error = None
             try:
-                for field in ("call_id", "usage", "visible_images_submitted", "wait_ns"):
+                for field in ("call_id", "thread_id", "usage",
+                              "visible_images_submitted", "wait_ns"):
                     try:
                         value = getattr(error, field, None)
-                        attempt[field] = (_optional_call_id(value) if field == "call_id" else
-                                          _usage(value) if field == "usage" else _optional_count(value, field))
+                        if field in ("call_id", "thread_id") and value is not None:
+                            attempt[field] = _optional_identity(value, field)
+                        elif field in ("call_id", "thread_id"):
+                            attempt[field] = None
+                        else:
+                            attempt[field] = (_usage(value) if field == "usage" else
+                                          _optional_count(value, field))
                     except ValueError as invalid_metadata:
                         metadata_error = invalid_metadata
             finally:
@@ -364,6 +374,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                        call_id=result["call_id"], usage=result["usage"],
                        visible_images_submitted=result["visible_images_submitted"],
                        wait_ns=result["wait_ns"])
+        if "thread_id" in result:
+            attempt["thread_id"] = result["thread_id"]
         stages[name] = {"status": "completed", "reason": None}
         model_calls.append({"attempt_id": attempt_id, "stage": name, **result})
         phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
