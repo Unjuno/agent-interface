@@ -1,4 +1,4 @@
-> **Historical proposal — not current implementation guidance.** This 2026-10-22 design recommendation to treat any different positive XRes PID as sufficient owner-disconnect evidence is superseded by the later corrected-source evidence and current rule in [`docs/architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md`](../../architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md): a reused base is accepted only when its PID matches the prestarted supervisor; other positive PIDs remain UNKNOWN and cannot reach release. The original alternatives and rationale are retained below as design history.
+> **Historical proposal from PR #9315 — not current implementation guidance.** Its recommendation to treat any different positive XRes PID as owner-disconnect evidence was superseded. Current main accepts an absent owner base or a base reused by the retained supervisor PID; unrelated PIDs remain UNKNOWN and cannot reach release. See the [current architecture and qualification record](../../architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
 
 # Prestarted Cancellation Supervisor Design
 

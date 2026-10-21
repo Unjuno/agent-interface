@@ -96,7 +96,11 @@ captured on 2026-10-22 JST against stable main
 `7795eda5bed22d1029bbc5dbf0afe2e0a18291fc` after PR #9323. It records
 1,655 open Issues and 462 open PRs. r131 corrects r130's mistaken membership
 delta; see its comparison with full r120. PR #9315 is open
-and Draft at head `76626da8b03df25024d12efb5f1dde2f12c53ed2`. The user
+and Draft at head `76626da8b03df25024d12efb5f1dde2f12c53ed2`. Exact-head
+reconciliation [r01](maintenance/pr9315-current-main-reconciliation-20261022-r01.md)
+identifies a runtime regression in the draft's resource-base reuse predicate;
+do not merge it. Its remaining changed evidence/doc blobs still need custody
+and semantic disposition. The user
 selected the prestarted-supervisor design as the first work item; its current
 implementation and evidence boundary are reconciled in the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
 The standard-caller supervisor Xvfb run now covers one supervisor-owned
