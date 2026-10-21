@@ -51,9 +51,12 @@ The local [public-MCP cancellation-operation integration](public_mcp_cancel_oper
 adds one operation ID, pending/terminal retention separate from the action,
 event-loop responsiveness during a blocked Fake X release helper, and a
 request-cancellation custody check. r04 passes 77/77 focused tests in both
-normal and optimized Python. It does not implement the prestarted cleanup
-process or whole-transaction deadline and is not real-X11, task-success, WSLc,
-MAP01, efficiency, or reliability evidence; see the source-bound [r04 packet](public_mcp_cancel_operation_registry_20261021/r04/README.md).
+normal and optimized Python. The source-bound [r04 packet](public_mcp_cancel_operation_registry_20261021/r04/README.md)
+does not implement the prestarted cleanup process or whole-transaction
+deadline. The new local [public-MCP prestarted supervisor packet](public_mcp_prestarted_cancel_supervisor_20261021/r01/README.md)
+exercises the opt-in construction through the public caller with Fake X,
+including stale-generation refusal and expiry during a blocked helper. Neither
+is real-X11, task-success, WSLc, MAP01, efficiency, or reliability evidence.
 
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 

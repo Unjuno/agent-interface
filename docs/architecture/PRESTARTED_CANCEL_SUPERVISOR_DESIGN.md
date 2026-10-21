@@ -1,6 +1,6 @@
 # Prestarted cancellation supervisor design
 
-Status: design proposal with the first public-MCP integration slice merged as PR #9313; runtime changes and their evidence are described below.
+Status: PR #9313 merged the cancellation registry slice. An opt-in prestarted one-shot supervisor is now wired through the public MCP owned-process caller in the current worktree; its local Fake X result is retained separately and is not yet merged or live-X qualified.
 
 ## Goal and constraints
 
@@ -74,15 +74,45 @@ If the supervisor cannot finish by the transaction deadline, the executor thread
 - Startup must fail closed for the opted-in mode if the cancellation supervisor cannot become ready; do not silently fall back to synchronous cancellation.
 - Bound the number of live supervisors and cancellation records per server using the existing guarded-session capacity. If the current capacity is not explicit, define a finite opt-in limit before enabling the path; exhaustion fails closed and cannot evict pending custody.
 
-## Merged local implementation delta (2026-10-21)
+## Merged registry slice (2026-10-21)
 
 Merged PR #9313 implements the first public-MCP composition slice in [the cancellation-operation packet](../../research/integration/public_mcp_cancel_operation_registry_20261021/README.md): owned-process cancellation runs on a warmed one-worker executor; the call record receives one operation ID and an additive pending/terminal cancellation subrecord; duplicate requests reuse that operation; `interface_results(call_id)` exposes it while the action remains pending and after it finishes; and a terminal cancellation receipt is written to `cancellation.json` after the cleanup call returns. A cancelled MCP request coroutine does not cancel the underlying operation. The focused owned-process/guarded suites pass 77/77 in normal and optimized Python.
 
 This slice validates a 450 ms caller-response threshold, a sub-100 ms event-loop heartbeat gap, one duplicate release attempt, and conservative UNKNOWN handling in the repository Fake X fixtures. It does **not** implement a whole-transaction deadline, deadline-based late-effect rejection, a prestarted cleanup process, or hard cancellation-worker termination. It is not live X11 release, recovery, task-success, WSLc, MAP01, efficiency, or reliability evidence; do not promote the architecture based on these tests.
 
+## Opt-in prestarted supervisor slice (current worktree)
+
+The opt-in `guarded_prestarted_cancel_supervisor` path now starts a one-shot
+supervisor process and receives its readiness receipt during owned-session
+startup, before a guarded input can be admitted. The public cancellation
+operation sends its operation ID, session ID, binding revision, owner PID,
+XRes resource base, key/button obligations, and one absolute `monotonic_ns`
+deadline. The supervisor refuses a mismatched session/generation, runs the XRes
+disconnect check and exact-obligation release in the already-started process,
+checks the deadline before each new release request, and is terminated at the
+transaction deadline if it remains blocked. A timeout, stale generation,
+malformed result, or unretired process remains UNKNOWN with replay denied.
+
+The composed Fake X r01 packet exercises the public MCP caller, one helper
+started before input, successful single release, stale-generation refusal,
+deadline expiry while the helper is blocked, event-loop progress, and retained
+action/cancellation separation. It is a construction and local integration
+result only. The production X11 worker has not been exercised against a real
+X server here. An X server does not validate the generation/deadline on each
+queued XTest request, so a request issued before the deadline may still be
+processed later; global keymap readback also does not establish owner-exclusive
+state. Therefore the worker never sets `release_confirmed=true`, and this slice
+does not prove late queued-effect exclusion, blocked-server release, recovery,
+independent task success, WSLc, MAP01, efficiency, or reliability.
+
+The opt-in flag defaults off. Startup readiness is fail-closed before input,
+but process creation itself is not proven hard-bounded. A helper that the OS
+does not retire at the deadline is reported `worker_retired=false`; that state
+does not authorize another cleanup operation or input replay.
+
 ## Implementation order and promotion gates
 
-Keep the first implementation slice local and Fake X-only, on the public MCP composition. Do not combine it with WSLc or a new allocation. Work in this order so each failure has a narrow owner and the original action receipt remains readable throughout:
+Keep local Fake X work on the public MCP composition and do not combine it with WSLc or a new allocation. The merged #9313 registry slice and current opt-in supervisor path cover the first three construction steps below; preserve them as separate evidence. Continue in this order so each failure has a narrow owner and the original action receipt remains readable throughout:
 
 1. Add a typed cancellation-operation record and bounded per-server registry. Admission is atomic by call ID: the first request creates one operation ID; concurrent or later duplicates read that operation and cannot queue another transaction. Define how terminal records are retained and evicted without dropping a pending operation.
 2. Make `interface_results(call_id)` expose the cancellation subrecord while the original action is pending and after it is terminal. Test that cancellation never mutates the action report, `task_success`, or replay decision.
@@ -91,7 +121,7 @@ Keep the first implementation slice local and Fake X-only, on the public MCP com
 5. Verify event-loop progress and bounded shutdown while the operation is pending. Explicitly prove that caller task cancellation, result polling, close, and server shutdown do not lose transaction custody or create a replacement operation.
 6. Run focused suites in normal and optimized Python. Only after this composed Fake X slice passes should a separately frozen private-Xvfb check test real X-server ordering and independent readback. Keep physical desktop, MAP01, WSLc portability, and matched efficiency as separate gates.
 
-The first implementation PR should be limited to steps 1–3 plus tests; the composed fault matrix is the next bounded slice. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
+The next implementation slice must close the composed fault matrix, especially blocked XRes, blocked sync/readback, post-deadline queued effects, supervisor startup delay/failure, stale binding, shutdown custody, and unreaped-helper behavior. Keep the flag opt-in until these cases are covered and the real X-server ordering boundary is separately qualified. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
 
 ## Validation required before integration
 
