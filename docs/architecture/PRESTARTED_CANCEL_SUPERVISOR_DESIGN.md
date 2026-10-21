@@ -212,10 +212,21 @@ the event-loop heartbeat gap peaked at 5.800 ms, release remained UNKNOWN,
 and the retained a obligation denied replay. The integration test failed
 before cancellation readback, delayed-request-horizon readback, or task oracle.
 Its later harness teardown release is preserved but is not cancellation
-evidence. The report does not identify PID 439's process role, so the next
-discriminator is to distinguish a known supervisor-owned X client from an
-unrelated client at the reused base without treating arbitrary PID mismatch as
-release authority. Do not repeat this exact condition as a replacement result.
+evidence. The no-input discriminator is now preserved in a separate [r03
+packet](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md).
+With no bystander, the helper itself reacquired the retired owner's base
+(owner PID 418, helper PID 417, base 6291456); with a replacement client, that
+process acquired the old base instead (owner 424, replacement 426, helper 421).
+XRes returned the current occupant PID in both conditions, and the worker
+returned `stale_owner_identity` with nested
+`owner_client_disconnect.reason=resource_base_reused` before release. The separate [r01
+preflight](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r01/README.md)
+and [r02 harness stop](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r02/README.md)
+remain preserved. This identifies resource-base recycling as the cause class
+for PID 439, but does not establish whether the observation is sufficient to
+report owner-client disconnection. It authorizes no release claim. After spec
+review, add a composed Fake X case to decide the disconnect receipt semantics
+before another real-Xvfb release attempt.
 
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS

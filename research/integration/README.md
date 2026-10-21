@@ -63,6 +63,15 @@ to the standard stdio CLI; after preserving one Windows timing error, the
 separate R07 rerun passes 107/107 in both modes. It is not real-X11,
 task-success, WSLc, MAP01, efficiency, or reliability evidence.
 
+The corrected-source local [Xvfb caller run](public_mcp_prestarted_cancel_supervisor_20261021/xvfb-local-wsl-20261022-r01/README.md)
+failed closed when XRes found a different PID at the retired owner's resource
+base; release and task effect were not reached. The follow-up [r03 no-input
+diagnostic](public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md)
+reproduces both observer-owned and bystander reuse of that base. Both remain
+`UNKNOWN` and no release is inferred. The r01 socket preflight and r02 missing
+`xdpyinfo` runner failure are preserved separately. These diagnostics do not
+qualify real blocked-I/O release, recovery, task success, WSLc, or efficiency.
+
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
 Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.

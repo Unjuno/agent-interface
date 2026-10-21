@@ -16,13 +16,18 @@ OPEN/Draft at head `a5e72673e0b0ae79a9ba88adbb32a8e2b167fa68` on base
 The prestarted-supervisor written spec is at
 [`2026-10-22-prestarted-cancel-supervisor-design.md`](superpowers/specs/2026-10-22-prestarted-cancel-supervisor-design.md);
 implementation review remains separate from repository organization. The
-latest resource-base discriminator preflight stopped before launching its
-probe because ordinary Ubuntu WSL's shared `/tmp/.X11-unix` was mode `0777`,
-preventing Xvfb from creating its Unix listener. The failure and hashes are in
-[`xres-base-reuse-local-wsl-20261022-r01`](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r01/README.md).
-No input event, XRes query, WSLc operation, or allocation use occurred. Do not
-repair shared `/tmp` permissions or switch to a TCP listener as an implicit
-workaround; resume only with an isolated socket-path solution.
+resource-base diagnostic's successful [r03 packet](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md)
+shows that the observer itself can reuse the retired owner's XRes base, or a
+bystander can acquire it first. Both return `stale_owner_identity` with nested
+`owner_client_disconnect.reason=resource_base_reused`; release stays
+unconfirmed. The earlier [r01 socket preflight](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r01/README.md)
+and [r02 harness stop](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r02/README.md)
+are retained without rewriting outcomes. The diagnostic used a private tmpfs
+inside an unprivileged mount namespace; shared `/tmp` was unchanged. No input
+events, WSLc operations, or allocation use occurred. The remaining design
+question is whether a mismatched PID on a reused base can prove that the old
+owner client disconnected. Resolve that in the reviewed design and composed
+Fake X tests before claiming release.
 
 **Next finite cleanup work:** advance the existing 222-route semantic queue by
 one bounded batch, then audit one exact-head PR with its linked Issue and
@@ -61,7 +66,7 @@ job passed. Its event-loop heartbeat remained responsive, and its isolated
 supervisor job failed. Do not interpret a passing sibling X11 job, a local
 request-validation fix, or a design update as supervisor release/task-effect
 evidence. A corrected-source local Ubuntu WSL/Xvfb attempt is now preserved at
-[run packet r01](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-local-wsl-20261022-r01/README.md). It reached the real sync stall and fixed the missing PID fields, but XRes returned a different PID at the retired owner resource base and rejected the request as resource_base_reused. Cancellation returned in 43.659 ms with a 5.800 ms maximum heartbeat gap; release remained UNKNOWN and the task oracle was not reached. Ubuntu was stopped after capture. No WSLc container/allocation operation occurred and no unused slot is verified. The next discriminator is observer-owned versus unrelated-client resource-base reuse, followed by independent delayed-horizon readback and task-effect validation.
+[run packet r01](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-local-wsl-20261022-r01/README.md). It reached the real sync stall and fixed the missing PID fields, but XRes returned a different PID at the retired owner resource base and rejected the request as resource_base_reused. Cancellation returned in 43.659 ms with a 5.800 ms maximum heartbeat gap; release remained UNKNOWN and the task oracle was not reached. Ubuntu was stopped after capture. The separate no-input [r03 diagnostic](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md) now confirms both observer-owned and bystander reuse. After written-spec review, test whether either observed replacement can support a narrowly scoped owner-client-disconnected receipt; keep release readback, delayed-horizon exclusion, and task effect as distinct requirements. No WSLc container/allocation operation occurred and no unused slot is verified.
 
 This updates the existing convergence plan rather than creating a parallel
 policy. Its completion test remains traceable disposition, preserved unique
