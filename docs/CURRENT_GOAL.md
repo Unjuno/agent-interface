@@ -94,8 +94,12 @@ promises or authorization to change runtime behavior.
 The first isolated real-Xvfb attempt on PR #9315 failed in the test trace wrapper
 before the owner cancellation method ran; its raw receipt, image, conditions,
 and hashes are preserved in the [run 39617200853 packet](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39617200853/README.md).
-It yielded no supervisor release readback or independent task oracle. The
-wrapper is corrected locally; a separate run is required to evaluate the path.
+The corrected wrapper reached the owner path in distinct [run 39618514760](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39618514760/README.md),
+which retired the owner but received `invalid_cleanup_request` from the
+supervisor before XRes/release. Neither run yielded supervisor release readback
+or an independent task oracle. Field-level rejection diagnostics now have
+normal/optimized local test coverage; another live run must identify the exact
+rejected predicate before any release claim.
 The local [public MCP cancellation-operation packet](../research/integration/public_mcp_cancel_operation_registry_20261021/README.md)
 now implements one operation ID per call, a dedicated one-worker cancel path,
 pending/terminal retention alongside (not inside) the action result, and a

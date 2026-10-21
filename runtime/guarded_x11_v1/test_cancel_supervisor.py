@@ -108,6 +108,7 @@ class PrestartedCancellationSupervisorTests(unittest.TestCase):
         result = x11_cancel_worker(request)
         self.assertEqual(result['status'], 'unknown')
         self.assertEqual(result['reason'], 'invalid_cleanup_request')
+        self.assertEqual(result['invalid_fields'], ['owner_generation.session_id'])
         self.assertFalse(result['release_confirmed'])
         self.assertIsNone(result['task_success'])
         self.assertFalse(result['replay_allowed'])

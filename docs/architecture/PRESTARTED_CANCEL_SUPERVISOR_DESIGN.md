@@ -131,8 +131,13 @@ accept the new `operation_id` and absolute-deadline keyword arguments. The raw
 receipt is preserved. It records UNKNOWN/no replay, with no independent release
 readback or task oracle; a later harness cleanup readback is not supervisor
 evidence. The wrapper is now corrected to forward both keywords. This is a
-harness repair only; a separate run is still required to assess the real-Xvfb
-supervisor path.
+harness repair only. The next distinct [run 39618514760](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39618514760/README.md)
+reached the owner method and retired its child, but the supervisor rejected the
+cleanup request as `invalid_cleanup_request` before XRes or release. No
+independent release readback or task oracle was produced. The first raw receipt
+and this second result remain separate. The worker now reports the rejected
+field names, covered by a local stale-generation test; a new Linux/Xvfb run is
+still required to identify the failed predicate in the composed request.
 
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS

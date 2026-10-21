@@ -256,21 +256,36 @@ def x11_cancel_worker(request):
               'worker_started_monotonic_ns':time.monotonic_ns(),
               'release_confirmed': False, 'task_success': None,
               'replay_allowed': False}
-    if (type(deadline_ns) is not int or type(resource_base) is not int
-            or not 0 < resource_base < 2**32 or type(expected_pid) is not int
-            or expected_pid <= 0 or not isinstance(keys, dict)
-            or not isinstance(buttons, list)
-            or any(type(name) is not str or type(code) is not int
-                   or not 0 <= code < 256 for name, code in keys.items())
-            or any(type(button) is not str or button not in
-                   ('left', 'middle', 'right', 'x1', 'x2') for button in buttons)
-            or not isinstance(owner_generation, dict)
-            or owner_generation.get('session_id') != session_id
-            or owner_generation.get('child_pid') != expected_pid
-            or owner_generation.get('x_resource_base') != resource_base
-            or owner_generation.get('binding_revision') != binding_revision):
+    invalid_fields = []
+    if type(deadline_ns) is not int or deadline_ns <= 0:
+        invalid_fields.append('deadline_monotonic_ns')
+    if (type(resource_base) is not int
+            or not 0 < resource_base < 2**32):
+        invalid_fields.append('x_resource_base')
+    if type(expected_pid) is not int or expected_pid <= 0:
+        invalid_fields.append('owner_pid')
+    if not isinstance(keys, dict):
+        invalid_fields.append('keys')
+    elif any(type(name) is not str or type(code) is not int
+             or not 0 <= code < 256 for name, code in keys.items()):
+        invalid_fields.append('keys.entries')
+    if not isinstance(buttons, list):
+        invalid_fields.append('buttons')
+    elif any(type(button) is not str or button not in
+             ('left', 'middle', 'right', 'x1', 'x2') for button in buttons):
+        invalid_fields.append('buttons.entries')
+    if not isinstance(owner_generation, dict):
+        invalid_fields.append('owner_generation')
+    else:
+        for name, expected in (
+                ('session_id', session_id), ('child_pid', expected_pid),
+                ('x_resource_base', resource_base),
+                ('binding_revision', binding_revision)):
+            if owner_generation.get(name) != expected:
+                invalid_fields.append('owner_generation.' + name)
+    if invalid_fields:
         return dict(result, status='unknown', reason='invalid_cleanup_request',
-                    cleanup_status='UNKNOWN')
+                    cleanup_status='UNKNOWN', invalid_fields=invalid_fields)
     if time.monotonic_ns() >= deadline_ns:
         return dict(result, status='unknown', reason='transaction_deadline_before_xres',
                     cleanup_status='UNKNOWN')
