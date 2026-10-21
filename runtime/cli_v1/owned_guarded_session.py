@@ -543,11 +543,21 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                     'worker_exitcode':result.get('worker_exitcode'),
                     'elapsed_ms':result.get('elapsed_ms'),
                     'release':deepcopy(release)}
-        return {'status':'unknown', 'reason':result.get('reason', 'release_unverified'),
-                'worker_retired':result.get('worker_retired'),
-                'worker_exitcode':result.get('worker_exitcode'),
-                'elapsed_ms':result.get('elapsed_ms'),
-                'release':deepcopy(release)}
+        receipt = {'status':'unknown',
+                   'reason':result.get('reason', 'release_unverified'),
+                   'worker_retired':result.get('worker_retired'),
+                   'worker_exitcode':result.get('worker_exitcode'),
+                   'elapsed_ms':result.get('elapsed_ms'),
+                   'release':deepcopy(release)}
+        # Preserve process-shutdown diagnostics without promoting a result
+        # from a worker that did not exit cleanly into a release receipt.
+        for field in ('worker_result_status',
+                      'worker_result_received_monotonic_ns',
+                      'worker_exit_observed_monotonic_ns',
+                      'worker_shutdown_wait_ms'):
+            if field in result:
+                receipt[field] = result[field]
+        return receipt
 
     def _cleanup_after_owner_retirement(self, retirement):
         if getattr(self, '_prestarted_cancel_enabled', False):
