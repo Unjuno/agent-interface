@@ -1,0 +1,16 @@
+{
+  "run_id": "public-mcp-prestarted-cancel-supervisor-20261021-r02",
+  "run_type": "targeted local regression confirmation; not a formal allocation",
+  "source_base_sha": "9bf7ec15ea78eccd752adee1af8d00dc9545eaa0",
+  "host": {"platform":"Windows-10-10.0.26300-SP0","python":"CPython 3.11.9 64-bit","multiprocessing":"spawn"},
+  "backend": "public MCP owned-process composition with injected Fake X worker and independent JSON state/effect oracle",
+  "model_or_provider": null,
+  "resource_allocation": null,
+  "wslc_or_docker_used": false,
+  "single_case": "blocked cleanup supervisor through public MCP; caller returns pending within 450 ms; event loop services heartbeat; worker is retired at the absolute transaction deadline; no Fake X effect is accepted; release remains UNKNOWN, task success null and replay denied",
+  "test_commands": [
+    "python -B -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_prestarted_supervisor_deadline_kills_blocked_worker_and_preserves_unknown",
+    "python -B -O -m unittest runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_prestarted_supervisor_deadline_kills_blocked_worker_and_preserves_unknown"
+  ],
+  "pass_rule": "Both test commands pass; the public-caller cancellation receipt explicitly reports worker_retired=true; the independent Fake X state remains down with zero accepted effects; no release/task-success/replay claim is promoted."
+}
