@@ -19,6 +19,7 @@ import os
 from pathlib import Path
 import platform
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -47,10 +48,14 @@ _TRACE_OWNER_PROCESS_METHODS = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS', '1') == '1')
 _PRESTARTED_CANCEL_SUPERVISOR = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR', '0') == '1')
+_SERVER_PAUSE_MS = int(os.environ.get(
+    'AGENT_INTERFACE_MCP_XVFB_SERVER_PAUSE_MS', '0'))
 _TERMINAL_BOUND_MS = 5000
 
 if not 0 <= _CANCEL_ACK_WITHHOLD_S <= 2:
     raise ValueError('cancel acknowledgement hold must be between 0 and 2 seconds')
+if not 0 <= _SERVER_PAUSE_MS <= 5000:
+    raise ValueError('Xvfb pause must be between 0 and 5000 ms')
 
 
 def _metadata(response):
@@ -74,6 +79,50 @@ def _xvfb_provenance():
             'sha256':digest, 'package_returncode':package.returncode,
             'package_stdout':package.stdout.strip(),
             'package_stderr':package.stderr.strip()}
+
+
+def _pause_owned_xvfb_for_test(duration_ms):
+    """Pause only the exact private :88 Xvfb process and always resume it."""
+    pid_text = os.environ.get('AGENT_INTERFACE_XVFB_PID')
+    if not pid_text or not pid_text.isdigit():
+        raise RuntimeError('private Xvfb PID was not supplied')
+    pid = int(pid_text)
+    executable = Path('/proc', pid_text, 'exe')
+    command_line = Path('/proc', pid_text, 'cmdline')
+    resolved = Path(os.readlink(executable))
+    argv = command_line.read_bytes().replace(b'\0', b' ').decode(
+        errors='replace').split()
+    if resolved.name != 'Xvfb' or ':88' not in argv:
+        raise RuntimeError('refusing to pause a process other than private Xvfb :88')
+    started_ns = time.monotonic_ns()
+    state_path = Path('/proc', pid_text, 'status')
+    os.kill(pid, signal.SIGSTOP)
+    deadline = time.monotonic() + 1.0
+    while time.monotonic() < deadline:
+        state = next((line.split(':', 1)[1].strip().split()[0]
+                      for line in state_path.read_text().splitlines()
+                      if line.startswith('State:')), '')
+        if state in ('T', 't'):
+            break
+        time.sleep(0.005)
+    else:
+        os.kill(pid, signal.SIGCONT)
+        raise RuntimeError('private Xvfb did not enter stopped state')
+    resumed = {'monotonic_ns':None, 'error':None}
+
+    def resume():
+        try:
+            os.kill(pid, signal.SIGCONT)
+            resumed['monotonic_ns'] = time.monotonic_ns()
+        except OSError as error:
+            resumed['error'] = repr(error)
+
+    timer = threading.Timer(duration_ms/1000, resume)
+    timer.daemon = True
+    timer.start()
+    return {'pid':pid, 'executable':str(resolved), 'argv':argv,
+            'requested_pause_ms':duration_ms, 'stopped_monotonic_ns':started_ns,
+            'resumed':resumed}, timer, resume
 
 
 def _xvfb_blocking_owner_factory(targets, directory, display_name, options):
@@ -248,6 +297,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 'fresh_target_is_distinct_window':True,
                 'fresh_task_key':'c',
                 'fresh_task_expected_effect':[3],
+                'xvfb_server_pause_ms':_SERVER_PAUSE_MS,
             },
             'xvfb':_xvfb_provenance(),
             'source_identity':{
@@ -289,6 +339,9 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
         pending_call_id = None
         terminal_returned = False
         cleanup_errors = []
+        xvfb_pause = None
+        xvfb_resume_timer = None
+        resume_xvfb = None
 
         with tempfile.TemporaryDirectory(prefix='mcp-xvfb-blocked-release-') as td:
             root = Path(td)
@@ -675,6 +728,14 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 heartbeat_task = asyncio.create_task(sample_cancel_event_loop())
                 try:
                     try:
+                        if _SERVER_PAUSE_MS:
+                            (xvfb_pause, xvfb_resume_timer,
+                             resume_xvfb) = _pause_owned_xvfb_for_test(
+                                 _SERVER_PAUSE_MS)
+                            report['xvfb_server_pause'] = xvfb_pause
+                            # Let the kernel's stopped state settle before the
+                            # public caller enters its cancellation path.
+                            await asyncio.sleep(0.05)
                         cancel_response = _metadata(await server.call_tool(
                             'interface_guarded_cancel', {'call_id':pending['call_id']}))
                     finally:
@@ -685,6 +746,17 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     cancellation = await self._wait_for_cancellation_terminal(
                         server, pending['call_id'], timeout=_TERMINAL_BOUND_MS/1000)
                 finally:
+                    if xvfb_resume_timer is not None:
+                        if xvfb_resume_timer.is_alive() and resume_xvfb is not None:
+                            resume_xvfb()
+                            xvfb_resume_timer.cancel()
+                        xvfb_resume_timer.join(timeout=1.0)
+                        report['xvfb_server_pause']['resume_receipt'] = (
+                            dict(xvfb_pause['resumed']) if xvfb_pause else None)
+                        if xvfb_pause and xvfb_pause['resumed']['monotonic_ns']:
+                            report['xvfb_server_pause']['observed_pause_ms'] = (
+                                xvfb_pause['resumed']['monotonic_ns']
+                                - xvfb_pause['stopped_monotonic_ns'])/1_000_000
                     OwnedGuardedSessionOwner._cancel_requires_owner_retirement = (
                         original_decision_method)
                     OwnedGuardedSessionOwner._retire = original_retire_method
