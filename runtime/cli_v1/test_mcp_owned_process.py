@@ -453,6 +453,37 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertGreaterEqual(result['elapsed_ms'], 300)
         self.assertLess(result['elapsed_ms'], 1500)
 
+    def test_retired_release_preserves_shutdown_diagnostics_without_accepting_release(self):
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.display_name = 'fake-display'
+        worker = {
+            'status':'unknown',
+            'reason':'worker_did_not_exit_cleanly',
+            'worker_retired':True,
+            'worker_exitcode':-15,
+            'elapsed_ms':669.189222,
+            'worker_result_status':'released',
+            'worker_result_received_monotonic_ns':1200000000,
+            'worker_exit_observed_monotonic_ns':1300000000,
+            'worker_shutdown_wait_ms':100.0,
+        }
+
+        with patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
+                   return_value=worker):
+            result = owner._release_retired_owner_inputs(
+                {'keys':{'a':38}, 'buttons':[]})
+
+        self.assertEqual(result['status'], 'unknown', result)
+        self.assertEqual(result['reason'], 'worker_did_not_exit_cleanly', result)
+        self.assertEqual(result['worker_exitcode'], -15, result)
+        self.assertEqual(result['worker_result_status'], 'released', result)
+        self.assertEqual(result['worker_result_received_monotonic_ns'],
+                         1200000000, result)
+        self.assertEqual(result['worker_exit_observed_monotonic_ns'],
+                         1300000000, result)
+        self.assertEqual(result['worker_shutdown_wait_ms'], 100.0, result)
+        self.assertIsNone(result['release'], result)
+
     def test_retire_kills_owned_process_that_ignores_terminate(self):
         class StubbornProcess:
             def __init__(self):
