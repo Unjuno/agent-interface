@@ -25,9 +25,11 @@ and [r02 harness stop](../research/integration/public_mcp_prestarted_cancel_supe
 are retained without rewriting outcomes. The diagnostic used a private tmpfs
 inside an unprivileged mount namespace; shared `/tmp` was unchanged. No input
 events, WSLc operations, or allocation use occurred. The remaining design
-question is whether a mismatched PID on a reused base can prove that the old
-owner client disconnected. Resolve that in the reviewed design and composed
-Fake X tests before claiming release.
+question is how to align the two current receipt contracts: the existing
+supervised XRes waiter reports the expected PID absent from its base as
+`disconnected`, while the new supervisor reports a different PID as
+`UNKNOWN/stale_owner_identity`. Resolve that in the reviewed design and
+composed Fake X tests before making any release claim.
 
 **Next finite cleanup work:** advance the existing 222-route semantic queue by
 one bounded batch, then audit one exact-head PR with its linked Issue and

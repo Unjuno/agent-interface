@@ -225,8 +225,15 @@ and [r02 harness stop](../../research/integration/public_mcp_prestarted_cancel_s
 remain preserved. This identifies resource-base recycling as the cause class
 for PID 439, but does not establish whether the observation is sufficient to
 report owner-client disconnection. It authorizes no release claim. After spec
-review, add a composed Fake X case to decide the disconnect receipt semantics
-before another real-Xvfb release attempt.
+review, align that rule with the existing
+[`wait_for_client_disconnect_supervised`](../../runtime/guarded_x11_v1/xres_client_fence.py#L175)
+path, which reports `disconnected` when the expected PID no longer occupies the
+base even if another client has reused it. The new
+[`x11_cancel_worker`](../../runtime/guarded_x11_v1/cancel_supervisor.py#L235)
+path instead reports `UNKNOWN/stale_owner_identity` for that observation. Add
+composed Fake X coverage for the chosen owner-disconnection receipt before
+another real-Xvfb release attempt. Either contract remains separate from
+release authority, queue drainage, independent readback, and task success.
 
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS
