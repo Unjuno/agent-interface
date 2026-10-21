@@ -2027,6 +2027,95 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
 
+    async def test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown(self):
+        """A new generation may proceed without rewriting the old cancel receipt."""
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            old_root = root/'old-session'
+            old_root.mkdir()
+            (old_root/'fake-process-generation').write_text('a'*64,
+                                                              encoding='utf-8')
+            old_server, old_action = await self._start_prestarted_cancel_case(old_root)
+            fresh_server = None
+            try:
+                cancel = metadata(await old_server.call_tool('interface_guarded_cancel', {
+                    'call_id':old_action['call_id']}))
+                old_terminal = await self._wait_for_cancel_terminal(
+                    old_server, old_action['call_id'])
+                old_cancel = old_terminal['cancellation']['result']
+                self.assertTrue(old_cancel['late_server_request_possible'], old_cancel)
+                self.assertEqual(old_cancel['cleanup_status'], 'UNKNOWN', old_cancel)
+                self.assertFalse(old_cancel['release_confirmed'], old_cancel)
+                self.assertIsNone(old_cancel['task_success'], old_cancel)
+                self.assertFalse(old_cancel['replay_allowed'], old_cancel)
+                self.assertEqual(cancel['operation_id'],
+                                 old_terminal['cancellation']['operation_id'])
+
+                closed = metadata(await old_server.call_tool('interface_close', {}))
+                self.assertEqual(closed['status'], 'cleanup_failed', closed)
+                self.assertEqual(closed['cleanup_status'], 'UNKNOWN', closed)
+                self.assertTrue(closed['late_server_request_possible'], closed)
+
+                fresh_root = root/'fresh-session'
+                fresh_root.mkdir()
+                (fresh_root/'fake-process-generation').write_text('c'*64,
+                                                                  encoding='utf-8')
+                (fresh_root/'compiled-profile-mode').write_text('enabled',
+                                                                 encoding='utf-8')
+                fresh_server = create_server(
+                    {'app':20}, fresh_root, session_mode='guarded-x11',
+                    guarded_process_identity=True, guarded_query_worker=True,
+                    guarded_owned_process=True,
+                    _guarded_owner_factory=_fake_owner_factory)
+                observed = metadata(await fresh_server.call_tool(
+                    'interface_guarded_observe', {}))
+                self.assertEqual(observed['status'], 'observed', observed)
+                self.assertEqual(
+                    observed['source']['pointer_binding']['process_generation'],
+                    'c'*64, observed)
+                self.assertNotEqual(
+                    observed['session']['session_id'],
+                    old_terminal['session']['session_id'])
+                self.assertNotEqual(
+                    observed['session']['owner_process']['pid'],
+                    old_terminal['session']['owner_process']['pid'])
+
+                minted = metadata(await fresh_server.call_tool(
+                    'interface_guarded_mint', {
+                        'alias':'field',
+                        'source_sequence':observed['source']['sequence'],
+                        'point':[8,8], 'region_size':[12,12]}))
+                self.assertEqual(minted['status'], 'minted', minted)
+                payload = _compiled_profile_payload(
+                    observed['session']['compiled_scope'],
+                    observed['session']['compiled_surface'], minted['offset'])
+                payload['wait_for_result_ms'] = 10000
+                fresh_result = metadata(await fresh_server.call_tool(
+                    'interface_guarded_compiled', payload))
+                self.assertEqual(fresh_result['method_receipt']['outcome'],
+                                 'TASK_SUCCEEDED', fresh_result)
+                self.assertEqual(fresh_result['method_receipt']['completed_transitions'],
+                                 1, fresh_result)
+                self.assertNotEqual(fresh_result['call_id'], old_action['call_id'])
+                self.assertIsNone(fresh_result['task_success'], fresh_result)
+                self.assertFalse(fresh_result['replay_allowed'], fresh_result)
+
+                # A test-side synthetic effect receipt proves the new caller's
+                # committed pixel; it does not resolve or overwrite old custody.
+                fresh_effect = json.loads((fresh_root/'synthetic-effect-receipt.json')
+                                          .read_text(encoding='utf-8'))
+                self.assertEqual(fresh_effect['event'], 'synthetic_app_pixel_commit')
+                self.assertEqual(fresh_effect['rgb'], [255, 0, 0])
+                old_after = metadata(await old_server.call_tool('interface_results', {
+                    'call_id':old_action['call_id'], 'include_image':False}))
+                self.assertEqual(old_after['cancellation']['result'], old_cancel)
+                self.assertTrue(old_after['cancellation']['result'][
+                    'late_server_request_possible'])
+            finally:
+                if fresh_server is not None:
+                    await fresh_server.call_tool('interface_close', {})
+                await old_server.call_tool('interface_close', {})
+
     async def test_prestarted_supervisor_public_path_preserves_bystander_refusal(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
