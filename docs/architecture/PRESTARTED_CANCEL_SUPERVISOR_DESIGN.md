@@ -1,6 +1,14 @@
 # Prestarted cancellation supervisor design
 
-Status: design proposal with the first public-MCP integration slice merged as PR #9313; runtime changes and their evidence are described below.
+Status: the opt-in supervisor and public-MCP integration are merged on `main` by PRs #9320 and #9321. This document records the design and qualification boundary; it does not claim release safety or product qualification.
+
+## Design review checkpoint (2026-10-22)
+
+The user selected this design as the first repository-organization work item. The opt-in runtime integration is merged by [#9320](https://github.com/Unjuno/agent-interface/pull/9320); its retained implementation and experiment packets were transferred by [#9321](https://github.com/Unjuno/agent-interface/pull/9321). Draft PR [#9315](https://github.com/Unjuno/agent-interface/pull/9315) remains open at head `76626da8b03df25024d12efb5f1dde2f12c53ed2` as a documentation reconciliation item, not the current runtime authority. Keep the supervisor default-off and treat it as an experimental path, not a production guarantee.
+
+The architecture must keep these claims separate: (1) the MCP caller returned within its response deadline; (2) the exact retired owner's XRes identity was established; (3) a release was issued and independently read back; (4) a task oracle verified the intended effect; and (5) a fresh target recovered within a finite bound. The merged runtime remains conservative: XRes reports the current PID at a resource base, and the base can be reused by the prestarted supervisor itself or a bystander. A positive PID different from the retired owner's PID therefore does not prove the old owner disconnected. The two-display local Ubuntu/WSL diagnostic reproduced both reuse cases; preserve `UNKNOWN` and do not call the release backend until a generation-safe identity proof exists. Binding a PID to the supervisor alone is insufficient when another client can claim the base first. Even a successful global key-up readback does not establish which client owned that key.
+
+The decision is **retain the merged opt-in supervisor, but hold release authorization at the unresolved XRes identity boundary**. PR #9320's local Fake X suite passed 116/116 in normal and optimized Python. A separate local R32 follow-up restored close reservation after pre-entry rejection and passed the focused close-retry cases in both modes; it is not represented here as merged. These checks establish local composition behavior, not real-server identity or input release. The corrected-source local Ubuntu/WSL Xvfb attempt still observed resource-base reuse and failed closed before release; the separate diagnostic identified both supervisor-owned and bystander reuse. Earlier Xvfb successes in sibling jobs validate only their own integration cases and do not repair this failure. Keep the supervisor default-off. The next discriminating implementation/evidence step is a generation-safe owner-disconnect proof tested through the public caller, or an explicit design finding that the available XRes protocol cannot supply it. Then separately qualify release/readback, delayed-request horizon, task effect, finite target recovery, and matched efficiency. Keep Issues [#17](https://github.com/Unjuno/agent-interface/issues/17) and [#57](https://github.com/Unjuno/agent-interface/issues/57) open while their safety-plane and integrated-efficiency questions remain unresolved. WSLc remains HOLD under Issue [#7924](https://github.com/Unjuno/agent-interface/issues/7924); no WSLc allocation was used for these results.
 
 ## Goal and constraints
 
@@ -80,7 +88,7 @@ Merged PR #9313 implements the first public-MCP composition slice in [the cancel
 
 This slice validates a 450 ms caller-response threshold, a sub-100 ms event-loop heartbeat gap, one duplicate release attempt, and conservative UNKNOWN handling in the repository Fake X fixtures. It does **not** implement a whole-transaction deadline, deadline-based late-effect rejection, a prestarted cleanup process, or hard cancellation-worker termination. It is not live X11 release, recovery, task-success, WSLc, MAP01, efficiency, or reliability evidence; do not promote the architecture based on these tests.
 
-## Implementation order and promotion gates
+## Original implementation order (completed through integration; qualification remains open)
 
 Keep the first implementation slice local and Fake X-only, on the public MCP composition. Do not combine it with WSLc or a new allocation. Work in this order so each failure has a narrow owner and the original action receipt remains readable throughout:
 
@@ -91,14 +99,14 @@ Keep the first implementation slice local and Fake X-only, on the public MCP com
 5. Verify event-loop progress and bounded shutdown while the operation is pending. Explicitly prove that caller task cancellation, result polling, close, and server shutdown do not lose transaction custody or create a replacement operation.
 6. Run focused suites in normal and optimized Python. Only after this composed Fake X slice passes should a separately frozen private-Xvfb check test real X-server ordering and independent readback. Keep physical desktop, MAP01, WSLc portability, and matched efficiency as separate gates.
 
-The first implementation PR should be limited to steps 1–3 plus tests; the composed fault matrix is the next bounded slice. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
+The runtime integration has since merged in PR #9320. The local Fake X and close-retry results are recorded in [R32](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/r32-close-reservation-retry/README.md). That integration does not close the real XRes generation-identity gap described above. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
 
-## Validation required before integration
+## Remaining validation before qualification
 
-The Fake X feasibility result at `research/integration/prestarted_supervisor_fakex_feasibility_20261021/README.md` only supports the construction concept. Implementation and promotion require these composed tests through the public guarded MCP tools and standard owned caller:
+The Fake X feasibility result at `research/integration/prestarted_supervisor_fakex_feasibility_20261021/README.md` supports only the construction concept. The [two-display XRes reuse diagnostic](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md) establishes that a resource base may be reused by either the supervisor or a bystander; current rejection is conservative. Before any release qualification, first add or identify a generation-safe owner-disconnect proof and test it through the public caller. Then the remaining validation requires:
 
 1. Ready supervisor plus injected supervisor-processing delay: MCP returns within the caller-response bound while the cleanup operation remains in custody; if the operation deadline passes before the release boundary, no new Fake X effect appears; caller result stays `UNKNOWN` and replay is denied.
-2. Healthy release: exact current generation, one release request, independent Fake X readback up, worker retired, no duplicate effect.
+2. Healthy release: exact current generation, one release request, independent Fake X readback up, worker retired, no duplicate effect. This case cannot bypass the XRes identity gate.
 3. Stale generation: reject before release; Fake X state remains down; no retry.
 4. Blocked XRes query, blocked release sync, malformed/absent worker receipt, and supervisor/worker exit: bounded caller response, bounded transaction or explicit unreaped-worker classification, no false release claim, session remains unusable.
 5. Duplicate cancel while pending and after terminal: same operation receipt, one admitted transaction and at most one release attempt.
