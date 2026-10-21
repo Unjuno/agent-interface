@@ -91,20 +91,21 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-The latest complete membership recheck is [r134](maintenance/repository-inventory-recheck-20261022-r134.md),
+The latest complete membership recheck is [r135](maintenance/repository-inventory-recheck-20261022-r135.md),
 captured on 2026-10-22 JST against stable main
-`410eb938bfb1f3cd4658e3136dded5d14eabd7c3` after PR #9332. It records
-1,655 open Issues and 462 open PRs; both exact ID sets match r133. The full
-historical correction chain remains in r133 and earlier receipts. PR #9315 is open
-and Draft at head `76626da8b03df25024d12efb5f1dde2f12c53ed2`. Exact-head
-reconciliation [r01](maintenance/pr9315-current-main-reconciliation-20261022-r01.md)
-identifies a runtime regression in the draft's resource-base reuse predicate;
-do not merge it. Its remaining changed evidence/doc blobs still need custody
-and semantic disposition. Exact-tree review [r02](maintenance/pr9315-supersession-receipt-20261022-r02.md)
-found no PR-only paths; all 35 entries in the three XRes diagnostic manifests
-match current main. The old runtime remains unsafe to merge. PR #9315 is now
-closed as superseded, with its branch and historical outcomes retained. The
-user
+`0e289460404b626e3cc26eec4be0b0170bd60ee0` after PR #9334. It records
+1,655 open Issues and 461 open PRs. Issue membership matches r134; the open PR
+set changed after superseded PR #9315 closed. The full historical correction
+chain remains in r134, r133, and earlier receipts. PR #9315 was Draft at exact
+head `76626da8b03df25024d12efb5f1dde2f12c53ed2`; reconciliation
+[r01](maintenance/pr9315-current-main-reconciliation-20261022-r01.md) identified
+the unsafe resource-base reuse predicate. Exact-tree review
+[r02](maintenance/pr9315-supersession-receipt-20261022-r02.md) found no
+PR-only paths; all 35 entries in its three XRes diagnostic manifests match
+current main. PR #9315 is closed as superseded with its branch and historical
+outcomes retained. PR #9333 updated the repository inventory/custody record;
+PR #9334 curated Issue #93's dependency-scoped continuation results. That
+Issue remains open. The user
 selected the prestarted-supervisor design as the first work item; its current
 implementation and evidence boundary are reconciled in the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
 The standard-caller supervisor Xvfb run now covers one supervisor-owned
@@ -131,8 +132,8 @@ the [updated design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#st
 The packet records release/readback and an independent task oracle, while
 runtime task success remains null and replay stays denied. Keep
 #17 and #57 open while recovery, task semantics, efficiency, and safety gates
-remain. After this evidence is indexed, resume idea-family disposition;
-the remaining route count is a discovery queue, not a closure target.
+remain. Continue family disposition from a refreshed current queue; the
+remaining route count is a discovery queue, not a closure target.
 
 ## Completion checks
 
