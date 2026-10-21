@@ -1,0 +1,94 @@
+{
+  "disposition": "PASS_ONE_LIVE_SEMANTIC_SELECTION_EFFECT_SCOPED_HOLD_BROADER_QUALIFICATION",
+  "provider": [
+    {
+      "status": "completed",
+      "usage": {
+        "input_tokens": 12783,
+        "cached_input_tokens": 11008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 122,
+        "reasoning_output_tokens": 58
+      },
+      "call_id": "a2ec56b591bde991370a57df7a3cf7dfebcf0005336f121fbbd3194e02d6fe7b",
+      "model_images": 1,
+      "image_sha256": [
+        "09037f38504fa20d31ba49daf545954e794b3a476f41eea8451e486451f8b3f9"
+      ],
+      "model_wait_ns": 4242946292,
+      "answer": {
+        "format": "plain-form-points-v1",
+        "field": {
+          "point_space": "source_observation_pixels",
+          "point": {
+            "x": 230,
+            "y": 367
+          }
+        },
+        "submit": {
+          "point_space": "source_observation_pixels",
+          "point": {
+            "x": 386,
+            "y": 367
+          }
+        }
+      }
+    }
+  ],
+  "preflight": [
+    {
+      "status": "completed",
+      "usage": {
+        "input_tokens": 11549,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 62,
+        "reasoning_output_tokens": 0
+      },
+      "call_id": "45bc56626406f83c446903abf82ff4be6411d9b301ed7c8bdf9c5ce170bd651e",
+      "model_images": 0,
+      "image_sha256": [],
+      "model_wait_ns": 4274539000,
+      "answer": {
+        "format": "plain-form-points-v1",
+        "field": {
+          "point_space": "source_observation_pixels",
+          "point": {
+            "x": 10,
+            "y": 10
+          }
+        },
+        "submit": {
+          "point_space": "source_observation_pixels",
+          "point": {
+            "x": 20,
+            "y": 20
+          }
+        }
+      }
+    }
+  ],
+  "all_stage_usage": {
+    "input_tokens": 24332,
+    "cached_input_tokens": 11008,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 184,
+    "reasoning_output_tokens": 58
+  },
+  "original_post_count": 1,
+  "original_full_oracle_success": false,
+  "unattempted_tasks": 5,
+  "programs": 7,
+  "eligible_target_checks": 2,
+  "pointer_admissions": 4,
+  "live_image_sha256": "09037f38504fa20d31ba49daf545954e794b3a476f41eea8451e486451f8b3f9",
+  "rejected_effect_copies": [
+    "wrong-token",
+    "duplicate",
+    "wrong-task"
+  ],
+  "natural_exit": 0,
+  "resource_enforcement": "configured; no in-unit effective sample in this protocol",
+  "guest_source_verification": "host source pins and transferred tar retained; no separate pre-run guest byte-readback",
+  "provider_raw_publication": "private local only"
+}
