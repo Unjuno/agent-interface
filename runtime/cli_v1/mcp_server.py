@@ -26,6 +26,10 @@ from .observe import observe, observe_in_session
 from .review import present_result
 from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 
+# Reserve time to resume the loop and encode a response within the caller budget.
+_GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS = 300_000_000
+_GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 25_000_000
+
 
 # Documentation metadata only: the public compiler and core remain the validators.
 # Keep dict forwarding intact, including extensions and malformed-request receipts.
@@ -851,7 +855,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                                 'operation_id':operation_id,
                                 'status':'pending',
                                 'admitted_monotonic_ns':admitted_ns,
-                                'caller_response_deadline_monotonic_ns':admitted_ns + 300_000_000,
+                                'caller_response_deadline_monotonic_ns':(
+                                    admitted_ns + _GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS),
                                 'transaction_deadline_monotonic_ns':admitted_ns + int(
                                     _guarded_cancel_transaction_timeout_s * 1_000_000_000),
                                 'owner_generation':{
@@ -897,7 +902,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             if direct_cancel:
                 return content(owner.cancel_guarded(call_id))
             wrapped = asyncio.wrap_future(future)
-            remaining = max(0, cancellation['caller_response_deadline_monotonic_ns'] - time.monotonic_ns()) / 1_000_000_000
+            # Resume the public caller before its deadline so event-loop scheduling,
+            # receipt lookup, and response encoding fit inside the advertised budget.
+            remaining_ns = (cancellation['caller_response_deadline_monotonic_ns']
+                            - time.monotonic_ns())
+            remaining = max(0, remaining_ns
+                            - _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS) / 1_000_000_000
             done, _ = await asyncio.wait({wrapped}, timeout=remaining)
             with calls_lock:
                 call_record = deepcopy(calls.get(call_id))

@@ -1603,6 +1603,8 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                         accepted_statuses=kwargs['accepted_statuses'])
 
                 started = time.monotonic()
+                # Force a short event-loop stall just before the public deadline.
+                asyncio.get_running_loop().call_later(0.290, time.sleep, 0.020)
                 heartbeats = []
                 async def heartbeat():
                     for _ in range(100):
@@ -1616,7 +1618,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     cancel = metadata(await server.call_tool('interface_guarded_cancel',
                         {'call_id':pending['call_id']}))
                     elapsed = time.monotonic() - started
-                    self.assertLess(elapsed, 0.45, cancel)
+                    self.assertLess(elapsed, 0.30, cancel)
                     self.assertEqual(cancel['status'], 'pending', cancel)
                     self.assertTrue(cancel['operation_id'], cancel)
                     self.assertFalse(cancel['release_confirmed'])
