@@ -102,9 +102,9 @@ identifies a runtime regression in the draft's resource-base reuse predicate;
 do not merge it. Its remaining changed evidence/doc blobs still need custody
 and semantic disposition. Exact-tree review [r02](maintenance/pr9315-supersession-receipt-20261022-r02.md)
 found no PR-only paths; all 35 entries in the three XRes diagnostic manifests
-match current main. The old runtime remains unsafe to merge. Close #9315 as
-superseded after recording this custody reconciliation; preserve its branch
-and historical outcomes. The user
+match current main. The old runtime remains unsafe to merge. PR #9315 is now
+closed as superseded, with its branch and historical outcomes retained. The
+user
 selected the prestarted-supervisor design as the first work item; its current
 implementation and evidence boundary are reconciled in the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
 The standard-caller supervisor Xvfb run now covers one supervisor-owned
