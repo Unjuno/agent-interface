@@ -119,6 +119,11 @@ jobs:
             export AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-cancel-retirement-${name}.json"
             python -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration || suite_status=$?
           done
+          export AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S=0
+          export AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS=1
+          export AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR=1
+          export AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-prestarted-cancel-supervisor.json"
+          python -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration || suite_status=$?
           exit "$suite_status"
       - name: Retain XRes disconnect-fence receipt
         if: always()
@@ -167,4 +172,13 @@ jobs:
           path: |
             ${{ runner.temp }}/standard-mcp-xvfb-cancel-retirement-*.json
             ${{ runner.temp }}/standard-mcp-xvfb-cancel-retirement-*.observation.png
+          if-no-files-found: error
+      - name: Retain prestarted-supervisor live Xvfb receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: standard-mcp-xvfb-prestarted-cancel-supervisor
+          path: |
+            ${{ runner.temp }}/standard-mcp-xvfb-prestarted-cancel-supervisor.json
+            ${{ runner.temp }}/standard-mcp-xvfb-prestarted-cancel-supervisor.observation.png
           if-no-files-found: error

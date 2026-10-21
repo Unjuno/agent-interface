@@ -41,6 +41,8 @@ _CANCEL_ACK_WITHHOLD_S = float(os.environ.get(
     'AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S', '1.0'))
 _TRACE_OWNER_PROCESS_METHODS = (
     os.environ.get('AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS', '1') == '1')
+_PRESTARTED_CANCEL_SUPERVISOR = (
+    os.environ.get('AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR', '0') == '1')
 _TERMINAL_BOUND_MS = 5000
 
 if not 0 <= _CANCEL_ACK_WITHHOLD_S <= 2:
@@ -220,6 +222,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 'cancel_return_bound_ms':_CANCEL_BOUND_MS,
                 'child_cancel_ack_withheld_s':_CANCEL_ACK_WITHHOLD_S,
                 'owner_process_method_trace':_TRACE_OWNER_PROCESS_METHODS,
+                'prestarted_cancel_supervisor':_PRESTARTED_CANCEL_SUPERVISOR,
                 'terminal_result_bound_ms':_TERMINAL_BOUND_MS,
                 'late_keypress_outcome':'record either result; do not assume queue cancellation',
             },
@@ -336,6 +339,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     {'app':window.id}, owner_output_root, session_mode='guarded-x11',
                     guarded_process_identity=True, guarded_query_worker=True,
                     guarded_window_lifecycle=True, guarded_owned_process=True,
+                    guarded_prestarted_cancel_supervisor=(
+                        _PRESTARTED_CANCEL_SUPERVISOR),
                     _guarded_owner_factory=_xvfb_blocking_owner_factory)
 
                 report['timing_ns']['observe_started'] = time.monotonic_ns()
