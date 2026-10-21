@@ -1,6 +1,7 @@
 """Standard MCP composition over one explicitly owned guarded-X11 process."""
 import asyncio
 import hashlib
+import io
 import threading
 from unittest.mock import Mock, patch
 import json
@@ -1126,14 +1127,29 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             targets.write_text('{"app":20}', encoding='utf-8')
             argv = ['server','--targets',str(targets),'--output-directory',str(output),
                     '--session-mode','guarded-x11','--guarded-process-identity',
-                    '--guarded-query-worker','--guarded-owned-process']
+                    '--guarded-query-worker','--guarded-owned-process',
+                    '--guarded-prestarted-cancel-supervisor']
             with patch('sys.argv', argv), patch(
                     'runtime.cli_v1.mcp_server.create_server') as create:
                 main()
             create.assert_called_once_with({'app':20}, output, display_name=None,
                 session_mode='guarded-x11', guarded_process_identity=True,
-                guarded_query_worker=True, guarded_owned_process=True)
+                guarded_query_worker=True, guarded_owned_process=True,
+                guarded_prestarted_cancel_supervisor=True)
             create.return_value.run.assert_called_once_with(transport='stdio')
+
+    def test_cli_prestarted_supervisor_requires_owned_process(self):
+        with tempfile.TemporaryDirectory() as td:
+            targets = Path(td)/'targets.json'
+            output = Path(td)/'out'
+            targets.write_text('{"app":20}', encoding='utf-8')
+            argv = ['server','--targets',str(targets),'--output-directory',str(output),
+                    '--session-mode','guarded-x11','--guarded-prestarted-cancel-supervisor']
+            with patch('sys.argv', argv), patch('sys.stderr', new_callable=io.StringIO), \
+                    self.assertRaises(SystemExit) as raised:
+                main()
+            self.assertEqual(raised.exception.code, 2)
+            self.assertFalse(output.exists())
 
     async def test_standard_guarded_tools_keep_generation_and_input_in_owned_process(self):
         with tempfile.TemporaryDirectory() as td:

@@ -58,7 +58,9 @@ exercises the opt-in construction through the public caller with Fake X,
 including stale-generation refusal, expiry during a blocked helper, terminal
 receipt archival/readback, retention when archival fails, and a check that
 internal archive markers do not leak into public call records. Its r05 focused
-suites pass 106/106 in normal and optimized Python. It is not real-X11,
+suites pass 106/106 in normal and optimized Python. R06/R07 connect its opt-in
+to the standard stdio CLI; after preserving one Windows timing error, the
+separate R07 rerun passes 107/107 in both modes. It is not real-X11,
 task-success, WSLc, MAP01, efficiency, or reliability evidence.
 
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.

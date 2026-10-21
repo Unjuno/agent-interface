@@ -1,0 +1,20 @@
+{
+  "commands": [
+    "python -B -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence",
+    "python -B -O -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence"
+  ],
+  "captured_utc": "2026-10-21T14:10:43Z",
+  "platform": "Windows 10 build 26300; CPython 3.11.9; multiprocessing spawn",
+  "scope": "Repeat the complete focused suite after R06 normal-mode timeout while retaining R06 as an immutable failure; validate CLI reachability of opt-in prestarted supervisor.",
+  "limits": [
+    "No live Xlib/Xvfb execution.",
+    "No delayed-request exclusion, independent task success, task recovery, MAP01, physical desktop, matched efficiency or reliability claim.",
+    "No WSLc or Docker allocation used."
+  ],
+  "baseline_head": "edca09d9ba7a2eda1565a529aeebea54469b8b31",
+  "packet": "public_mcp_prestarted_cancel_supervisor_20261021/r07",
+  "source_sha256": {
+    "runtime/cli_v1/test_mcp_owned_process.py": "7c6272979437b83a0910f62495a0b58749b981f4a838cb5443c6d833f32a110f",
+    "runtime/cli_v1/mcp_server.py": "8e9400c7fa1c885932127a8be7f78996505b54cc2ac3bde74d5b5656558e7089"
+  }
+}

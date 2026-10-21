@@ -117,6 +117,14 @@ also verifies that archive bookkeeping fields stay out of public call records
 while the cancellation subrecord remains retrievable; its focused suites pass
 106/106 in normal and optimized Python.
 
+The standard stdio caller now exposes the same opt-in as
+`--guarded-prestarted-cancel-supervisor`, requiring the owned-process option
+and remaining disabled by default. The [R06/R07 receipts](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/README.md)
+preserve an initial Windows scheduling-related test error and a separate clean
+repeat with 107/107 focused tests in normal and optimized Python. This confirms
+CLI reachability and deterministic Fake X composition only; live X11 behavior
+is still unqualified.
+
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS
 does not retire at the deadline is reported `worker_retired=false`; that state

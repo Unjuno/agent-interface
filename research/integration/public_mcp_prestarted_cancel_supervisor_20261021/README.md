@@ -20,6 +20,12 @@ The [`r05/`](r05/README.md) response-shape check removes internal archive marker
 fields from public call records while preserving the cancellation subrecord.
 The focused suites again pass 106/106 in normal and optimized Python.
 
+R06/R07 expose the opt-in through the standard MCP stdio CLI. R06 records one
+normal-mode test error under concurrent Windows process scheduling and a clean
+107/107 optimized run; the failing existing cancellation test passes alone.
+R07 reruns the full focused suite and passes 107/107 in both modes. The CLI
+still defaults the flag off and rejects it unless owned-process mode is set.
+
 The opt-in public MCP composition started one supervisor during owned-session
 startup, before the test admitted input. In the healthy Fake X arm, cancel
 response took 110 ms, the independent JSON oracle recorded exactly one

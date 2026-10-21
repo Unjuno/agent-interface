@@ -1078,6 +1078,8 @@ def main():
                         help='require direct target lifecycle evidence; requires guarded query worker')
     parser.add_argument('--guarded-owned-process',action='store_true',
                         help='run the complete guarded-X11 session in one spawned owner process; requires process identity and query worker')
+    parser.add_argument('--guarded-prestarted-cancel-supervisor',action='store_true',
+                        help='prestart a one-shot cancellation supervisor; requires --guarded-owned-process')
     args = parser.parse_args()
     if args.guarded_process_identity and args.session_mode != 'guarded-x11':
         parser.error('--guarded-process-identity requires --session-mode guarded-x11')
@@ -1090,11 +1092,15 @@ def main():
     if args.guarded_owned_process and (args.session_mode != 'guarded-x11'
             or not args.guarded_process_identity or not args.guarded_query_worker):
         parser.error('--guarded-owned-process requires guarded-x11, --guarded-process-identity and --guarded-query-worker')
+    if args.guarded_prestarted_cancel_supervisor and not args.guarded_owned_process:
+        parser.error('--guarded-prestarted-cancel-supervisor requires --guarded-owned-process')
     options = {'guarded_process_identity':args.guarded_process_identity}
     if args.guarded_query_worker: options['guarded_query_worker'] = True
     if args.guarded_observation_worker: options['guarded_observation_worker'] = True
     if args.guarded_window_lifecycle: options['guarded_window_lifecycle'] = True
     if args.guarded_owned_process: options['guarded_owned_process'] = True
+    if args.guarded_prestarted_cancel_supervisor:
+        options['guarded_prestarted_cancel_supervisor'] = True
     create_server(json.loads(args.targets.read_text(encoding='utf-8')),
                   args.output_directory, display_name=args.display, session_mode=args.session_mode,
                   **options).run(transport='stdio')
