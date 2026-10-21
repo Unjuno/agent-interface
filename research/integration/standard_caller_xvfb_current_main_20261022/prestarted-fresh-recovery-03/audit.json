@@ -1,0 +1,102 @@
+{
+  "audited_main_at_run": "6b276fcabfa11c060282e0714501a1057e75c0a6",
+  "checks": {
+    "all_five_source_hashes_match": true,
+    "all_raw_hashes_match": true,
+    "caller_response_within_300ms": true,
+    "candidate_unittest_passed": true,
+    "fresh_synthetic_task_oracle_pass": true,
+    "fresh_target_session_generation_distinct": true,
+    "host_verified_source_was_current_main": true,
+    "independent_release_readback_all_up": true,
+    "late_horizon_all_up_and_no_old_press": true,
+    "no_relevant_runtime_diff_since_run_source": true,
+    "no_xvfb_process_remained": true,
+    "old_unknown_fence_remains_denied": true,
+    "run_source_is_current_main_ancestor": true,
+    "wrapper_error_preserved_and_not_misclassified": true,
+    "xvfb_exited_zero": true,
+    "xvfb_ready_in_private_mode_1777_socket_namespace": true
+  },
+  "current_main_at_audit": "6b276fcabfa11c060282e0714501a1057e75c0a6",
+  "fresh_session": {
+    "new_generation": "197cdd5f56fd15a60bd7e9985ff0126be401789061d0562c4e779c75b9d79c98",
+    "new_session_id": "56981c81ab88409486f4a2193106bfc1",
+    "new_target_xid": 2097154,
+    "old_generation": "142263cd90aa0e1d5026239376d7d7848c9ee7e5ef986bc52987046a85aa72e0",
+    "old_session_id": "0bf8a720dd084bc58100c105262b4a7a",
+    "old_target_xid": 2097152,
+    "oracle_status": "pass",
+    "runtime_task_success": null,
+    "synthetic_task_success": true
+  },
+  "host_source_receipt": {
+    "origin_main": "6b276fcabfa11c060282e0714501a1057e75c0a6",
+    "runtime_diff_vs_main": false,
+    "verified_at_local": "2026-10-22T08:33:42.5484135+09:00",
+    "worktree_head": "6b276fcabfa11c060282e0714501a1057e75c0a6"
+  },
+  "limitations": [
+    "second observed trial only; not a reliability estimate",
+    "owner blocked in Display.sync while X server served supervisor",
+    "whole-X-server unavailability not tested",
+    "synthetic task oracle; no physical GUI/MAP01",
+    "no matched efficiency",
+    "no WSLc allocation"
+  ],
+  "old_cancel": {
+    "cleanup_status": "UNKNOWN",
+    "late_server_request_possible": true,
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "task_success": null
+  },
+  "overall": "PASS_SCOPED_REPEAT_WITH_WRAPPER_ERROR",
+  "raw_file_count": 30,
+  "raw_hashes_match": true,
+  "run_id": "AI-XVFB-PRESTARTED-FRESH-RECOVERY-20261022-R03",
+  "run_source": "6b276fcabfa11c060282e0714501a1057e75c0a6",
+  "schema": "agent-interface/r03-xvfb-evidence-audit-v1",
+  "source_hashes": [
+    {
+      "actual_sha256": "67802eb0a052b6b2ddb9a6a03e82e632199ec9d4b2be7b090f22796bae7cd2b7",
+      "expected_sha256": "67802eb0a052b6b2ddb9a6a03e82e632199ec9d4b2be7b090f22796bae7cd2b7",
+      "match": true,
+      "path": "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py"
+    },
+    {
+      "actual_sha256": "71faaeed95ede4e7799ac3ff1fe2f44ea3662c682b77208f60e4764a53668be7",
+      "expected_sha256": "71faaeed95ede4e7799ac3ff1fe2f44ea3662c682b77208f60e4764a53668be7",
+      "match": true,
+      "path": "runtime/cli_v1/mcp_guarded.py"
+    },
+    {
+      "actual_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "expected_sha256": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "match": true,
+      "path": "runtime/cli_v1/owned_guarded_session.py"
+    },
+    {
+      "actual_sha256": "edbd532bd7ddd8d52ae5d6b230e543bc5767b5cc832e4a7245db6bc7a933e80c",
+      "expected_sha256": "edbd532bd7ddd8d52ae5d6b230e543bc5767b5cc832e4a7245db6bc7a933e80c",
+      "match": true,
+      "path": "runtime/cli_v1/mcp_server.py"
+    },
+    {
+      "actual_sha256": "09e23aeffbf61497e28f704df99e6ae7bd9c88ab3f66ceeec14258e381c8e327",
+      "expected_sha256": "09e23aeffbf61497e28f704df99e6ae7bd9c88ab3f66ceeec14258e381c8e327",
+      "match": true,
+      "path": "runtime/cli_v1/test_synthetic_task_oracle.py"
+    }
+  ],
+  "test_exit_code": "0",
+  "timings_ms": {
+    "admission_to_parent_readback": 386.459713,
+    "admission_to_response": 255.100055,
+    "admission_to_supervisor_readback": 323.414747,
+    "admission_to_terminal": 329.723374,
+    "cancel_start_to_horizon": 8505.466331
+  },
+  "wrapper_exit_code": "2",
+  "xvfb_exit_code": "0"
+}
