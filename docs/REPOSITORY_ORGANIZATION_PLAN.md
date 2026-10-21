@@ -180,3 +180,9 @@ This receipt advances report custody and measurement accounting only. It does no
 
 
 A paired current-main Fake X regression packet is retained at [r01](../research/integration/fakex_prestarted_supervisor_local_current_main_20261022_r01/README.md), with raw mode-specific logs, structured receipts and SHA-256 manifest. The public-caller and supervisor suites passed 15/15 normally and under `-O`. A helper-only late-resume probe also resumed 16 ms after expiry in each mode and recorded zero effects, one refusal, and `expired_deadline`. This is synthetic helper/caller evidence only; real X-server blocked-I/O release and MAP01 remain unqualified.
+
+## Current-main R02 source audit (2026-10-22)
+
+The retained [R02 standard-caller Xvfb result](../research/integration/standard_caller_xvfb_current_main_20261022/prestarted-fresh-recovery-02/README.md) ran at `cdc8bd6b65bf976137db645c2be31e20090f7d67`, an ancestor of current main `2f971fe867f7c85a82c90d504b1dce9e29534bd5`. A current-main diff over `runtime/cli_v1`, `runtime/guarded_x11_v1`, and `runtime/backends/x11_v1` is empty, and all five files listed in the packet's `raw/runtime-manifest.sha256` match the current checkout byte-for-byte. R02 therefore remains applicable to current runtime source as of this main SHA; this is a source-currency audit, not a new run or a reliability sample.
+
+The result remains one schedule with the owner blocked in `Display.sync()` while the X server can serve the supervisor; whole-server unavailability, physical desktop/MAP01, owner-exclusive XTest state, matched efficiency, and reliability remain unqualified. Its independent task oracle is synthetic, and the canceled operation still has `task_success=null`, `release_confirmed=false`, and replay denied. No WSLc allocation was used.
