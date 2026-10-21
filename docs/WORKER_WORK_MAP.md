@@ -1,0 +1,394 @@
+# Worker work map
+
+## Current work-map pointer — 2026-10-21
+
+**Current source:** main `f3cb822ecdc08e5425de55cbe712203e11b1293e` after cleanup-plan PR #9310. The latest complete membership snapshot is [r128](maintenance/repository-inventory-recheck-20261021-r128.md), with 1,655 open Issues / 463 open PRs at a stable before/after main SHA; both ID sets match r126. This is membership only; use the live cleanup plan and refresh exact records before any state change.
+
+The [current cleanup objective and execution order](REPOSITORY_CLEANUP_PLAN.md#live-execution-pointer-after-pr-9309) organizes work into four independent lanes: idea-family semantics, exact-head PR dispositions, workspace/evidence custody, and documentation/navigation. The r119 missing-index queue's D01–D11 receipts route 265 candidates (17 individually closed, 248 retained open); another 223 exact-URL idea routes remain semantically unreviewed. PR #9307–#9309 add indexed caller evidence and a Fake X-only cancellation characterization; neither implies production supervisor completion or releases the separate WSLc/HOLD boundary. The [integration map](../research/integration/README.md) records those evidence limits.
+
+Choose a finite item from one lane, record its private output and exact read-only source refs, then recheck the live Issue/PR and ownership before editing. Keep all source hypotheses and first outcomes; close only individually completed/superseded records with a verified catalog trail. The map is not an assignment or resource grant. Shared indexes are integrated serially; no fixed reviewer quota applies.
+
+**Completed semantic packet:** [#8641 family record](ideas/uncertainty-intervention-decomposition.md) captures its scoped synthetic H failure, comparator split, and the candidate no-retry deviation. PR #9293 integrated 27 exact evidence blobs; #8733 was closed as superseded after all 17 manifest entries and source blob IDs matched on main. Issue #8641 was one of the separate D11 missing-family candidates, not one of the 223 exact-URL routes. It remains open. The broader semantic backlog, remaining exact-head PR review, and custody checks continue.
+
+## Historical work-map checkpoint — 2026-10-20, after PR #9287
+
+At this checkpoint, main was `f8fab073a0ebd1c42a8362fcec7440cfbe7fad82`. PR #9287 integrated the
+A09 source-monitor construction packet and verified its exact blobs. A
+count-only read at this main records 1,655 open Issues / 466 open PRs. The
+complete [r120 inventory](maintenance/repository-inventory-recheck-20261020-r120.md)
+is a historical baseline at its recorded main, not current membership. PR #9284 adds two scoped
+native Ubuntu WSL/Xvfb standard-caller results for blocked-I/O cleanup and
+target-generation/recovery; it is not WSLc, physical desktop, MAP01, or
+integrated-efficiency evidence. Current repository-wide lanes and completion
+criteria are in the [cleanup plan](REPOSITORY_CLEANUP_PLAN.md#current-checkpoint-after-pr-9287--2026-10-20).
+The latest count-only read is 1,655 open Issues / 466 open PRs; the last full
+membership/metadata snapshot is r120. The earlier r119 idea-index audit's 265
+routed candidates have receipts;
+17 were individually closed and 248 remain open. Another 223 semantic idea
+routes, exact-head review of the full PR set, and current custody reconciliation
+remain. Counts and old worktree censuses are not ownership or deletion proof.
+
+The latest complete membership baseline is [r120](maintenance/repository-inventory-recheck-20261020-r120.md)
+(1,655 open Issues / 467 open PRs at its captured main). The selected family
+packet is [A09 source-monitor construction](ideas/map01-live-guard-evidence-family.md#separate-a09-source-monitor-construction--pr-8841),
+preserved by merged #9287; predecessor #8841 is closed after exact-blob
+readback. This construction evidence is separate from live-allocation A09
+#8749.
+PR #8836 is already preserved by merged successor #9282; Issue #5311 remains
+open. This cleanup packet grants no WSLc/Docker allocation and does not close
+Issue #59.
+
+The following dated account records how the membership and family work
+reached this checkpoint:
+
+The last paginated membership baseline was main
+`ab554ef5637110b35ec8317db9591fcd5a489bfd`; docs-only PRs #9271–#9280
+advanced main to `938f9f405ecfb20d60105639c3a74cb57a1f9be2`. PR #9267 added the r119
+coverage audit and eleven private-output discovery packets; PR #9268 improved
+the local #57 ledger; PR #9269 preserved the newest current-main Xvfb
+stop/recovery result; PR #9270 integrated D11's family dispositions. After
+#8654 and #8913 were closed with canonical evidence links, a complete paginated
+recheck found 1,670 open Issues and 468 open PRs; the Issue IDs equal r119 minus
+those two, and the PR IDs equal r119. No duplicate full inventory was created.
+The saved r119 row metadata remains a baseline, not current ownership or
+semantic classification. The r119 [index coverage audit](maintenance/idea-index-coverage-20261020-r119.md)
+routes 265 issues without a direct `docs/ideas` link into eleven private-output
+discovery batches. The [D11 disposition receipt](maintenance/idea-family-triage-r119/D11.md)
+reviews 15 candidates, closes only #8654/#8913 with evidence links, and leaves
+13 open with a finite next decision or hold. D01–D06 are integrated below;
+D07–D09 are integrated below; D10 is reconciled in the current update. The r119 265-row candidate queue is now fully routed. Prior
+B01–B20 reads are linked to prevent duplicate audit. These are candidate
+scopes, not active assignments. The r05 custody census is historical, not
+current ownership proof. #17 and #57 remain open; #7924 remains STOP/HOLD for
+WSLc ownership and current-checkout prerequisites. The checkout is sparse:
+eleven research references in the entry-point docs are present in the Git tree
+even though their paths are not materialized locally; check tree membership
+before reporting such links as broken.
+
+The D01 [family-disposition receipt](maintenance/idea-family-triage-r119/D01.md)
+reuses B01–B03, maps all 25 rows to existing catalog entries, and closes only
+#163 (duplicate audit request with retained failure report) and #177 (13/13
+scoped offline binding result). The other 23 D01 Issues remain open with their
+limits and next decisions. A post-close aggregate is 1,668 open Issues / 468
+open PRs; the last complete paginated ID-set hash is still the 12:51 UTC
+checkpoint in the cleanup plan. At the D01 checkpoint, D02–D10 remained
+unreviewed.
+
+The D02 [family-disposition receipt](maintenance/idea-family-triage-r119/D02.md)
+reuses B03–B05 and maps its 25 candidate rows to catalog outcomes. It closes
+only #249 and #273 after linking their merged evidence packets; the other 23
+remain open with distinct decisions/holds. Aggregate open state after D01/D02:
+1,666 Issues / 468 PRs; the last exact membership hash is still the 12:51 UTC
+checkpoint. At the D02 checkpoint, D03–D10 remained unreviewed.
+
+The D03 [family-disposition receipt](maintenance/idea-family-triage-r119/D03.md)
+reuses B03–B06. It closes six bounded tests with merged evidence packages;
+19 remain open with separate custody, formal-result, release, and parent-family
+questions. The aggregate after D01–D03 was 1,660 Issues / 468 PRs; D04 and
+D05 are reconciled below and D06–D10 remain unreviewed.
+
+The D04 [family-disposition receipt](maintenance/idea-family-triage-r119/D04.md)
+reuses B06–B08. It closes three bounded Issues (#747, #862, #1438) after
+verifying merged artifacts and scoped comments; 22 remain open. Aggregate is
+1,657 Issues / 468 PRs (count-only, not a new paginated audit). D05 is
+reconciled below; D06–D10 remain unreviewed. No experiment or allocation was
+run.
+
+The D05 [family-disposition receipt](maintenance/idea-family-triage-r119/D05.md)
+reuses B07–B08. It closes only #3382 after verifying merged PR #3420's scoped
+caller-audit result and preserving its limitations in the Issue comment; 24
+remain open. Aggregate after the closure is 1,656 Issues / 468 PRs (count-only,
+not a new paginated audit). At the D05 checkpoint, D06–D10 remained unreviewed. No experiment,
+allocation, or worktree cleanup was performed.
+
+The D06 [family-disposition receipt](maintenance/idea-family-triage-r119/D06.md)
+reuses B08–B10. It maps 25 candidates with no state changes; all remain open
+with their distinct publication holds, scoped outcomes, proposals, and next
+decisions. Aggregate is 1,656 Issues / 468 PRs (count-only, not a new paginated
+audit). D07–D10 remain unreviewed. No experiment, allocation, or worktree
+cleanup was performed.
+
+The D07 [family-disposition receipt](maintenance/idea-family-triage-r119/D07.md)
+reuses B10–B11 and maps 25 candidates. It closes only #6990 for the completed
+bounded T8 offline receipt-schema audit; 24 remain open. It also updates #6767
+to finite recovery checkpoints and removes reviewer-count/global coordination
+barriers from #6875, #6932, and #6957 while retaining task checks and actual
+resource/permission boundaries. Aggregate is 1,655 Issues / 468 PRs
+(count-only, not a new paginated audit); D08–D10 remain unreviewed. No
+experiment, allocation, WSLc/Docker operation, or worktree cleanup was run.
+
+The D08 [family-disposition receipt](maintenance/idea-family-triage-r119/D08.md)
+reuses B11–B12 and current Issue/comment reads. All 25 candidates remain open
+and unassigned; no status changed. Distinct canonical method results, STOPs,
+partial outcomes, and unverified proposals remain separate. Aggregate remains
+1,655 Issues / 468 PRs (count-only); D09–D10 remain unreviewed. No experiment,
+allocation, WSLc/Docker operation, or worktree cleanup was performed.
+
+The D09 [family-disposition receipt](maintenance/idea-family-triage-r119/D09.md)
+reuses B12–B16 and live Issue/comment/PR reads. All 25 candidates remain open
+and unassigned; no status changed. It preserves separate method results,
+STOPs, integrity holds, unrun questions, and WSLc ownership constraints.
+Aggregate remains 1,655 Issues / 468 PRs (count-only); D10 remains unreviewed.
+No experiment, allocation, WSLc/Docker operation, or worktree cleanup ran.
+
+The D10 [family-disposition receipt](maintenance/idea-family-triage-r119/D10.md)
+reuses B16–B17 and fresh Issue/comment/PR reads. All 25 candidates remain open
+and unassigned; no status changed. It corrects #8595's catalog entry to retain
+the finite A01 result and post-freeze literature update, and keeps #8619's
+Dockerless WSLc policy distinct from per-operation allocation authority.
+D01–D10 now cover 250 rows (15 bounded closures); together with the already
+integrated D11 remainder, all 265 queue rows are routed (17 closures, 248
+open). Remaining cleanup includes 223 idea-document routes, 468 open PRs, and
+branch/worktree custody. No experiment, allocation, WSLc/Docker operation, or
+worktree cleanup was run in this batch.
+
+The local #57 ledger now summarizes optional cached-input, cache-write-input,
+reasoning-output and image-input token fields per attempt, returning unknown
+totals when any attempt omits a field. Ledger, recorder and composition suites
+pass in normal and optimized Python. This improves future accounting but does
+not connect the production provider/orchestrator or reconcile its logs.
+
+The current organization and disposition rules are in the
+[repository cleanup plan](REPOSITORY_CLEANUP_PLAN.md). Keep ideas connected to
+their source Issues, first outcomes, raw evidence, limitations, dependencies,
+and next finite test. Leave unresolved questions open; close only after an
+individual transfer/completion is verified in both directions. Worker packets
+are navigation until a worker explicitly accepts them and current ownership is
+checked; this map itself grants no allocation.
+
+The current [parallel-worker packets r03](maintenance/parallel-worker-packets-20261020-r03.md)
+split 265 open Issues without a literal `docs/ideas` link into eleven
+private-output discovery slices. Each row has a prior B01–B20 read receipt;
+reuse it and refresh only changed sources. These are candidate scopes, not
+worker assignments, family classifications, or permission to edit shared
+indexes or Issue state.
+
+The [PR audit disposition r02](maintenance/pr-audit-disposition-20261020-r02.md)
+updates #8841's exact packet custody and distinguishes it from live A09 #8749.
+The [r01 audit receipt](maintenance/pr-audit-disposition-20261020-r01.md)
+remains a dated snapshot; its #8836 predecessor is now superseded by merged
+successor #9282, which preserves the negative cost result and frozen evidence.
+Four sampled PRs remain open with distinct construction-scope, audit, raw-
+custody, and lane-ownership blockers. These are status/custody maps, not
+blanket merge/closure authority. The full organization remains family-by-family;
+no Issue is closed simply to reduce counts.
+
+## Previous map snapshot — 2026-10-20 after PR #9257
+
+Main was `cdd3c7e979dc7799e6733e259934b1738bf01d22`. The [r116 membership recheck](maintenance/repository-inventory-recheck-20261020-r116.md) confirmed the complete Issue and PR ID sets matched r114 (1,672 open Issues, 468 open PRs); r114 was the latest full row-level metadata. PRs #9255/#9257 added local attempt/score recording contracts only; provider-log completeness and integrated effect/efficiency remained open. The latest retained local status census [r05](maintenance/git-worktree-census-20261020-r05.md) recorded 37 roots, 10 dirty, none locked or prunable; owner, active-process and ignored-data custody remained unresolved. Membership was not semantic review.
+The [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md)
+records 489 open Issues absent from the historical primary research selection; all remain routed by the completed r51 batch receipts. This is discovery membership only; verify
+the specific Issue, PR and owner/worktree before assigning or changing state. PRs #8860,
+#8863, and #8847 have been independently audited and merged as separate scoped
+visual, ammo/cancellation, and isolated-Xvfb owner-close results; parent #59 remains open. The snapshot is
+membership only, not proof of ownership or semantic triage. The r22 CSVs
+remain immutable historical metadata snapshots, not the current PR list. This is
+not semantic review or proof of current ownership. Begin with
+[current goal](CURRENT_GOAL.md), choose one finite item
+below, and verify its current Issue, source and ownership. The repository-wide
+[consolidation plan](REPOSITORY_CONSOLIDATION.md#2026-10-19-全体整理の実行計画--アイデアを保存して作業面を収束)
+defines the family record and safe cleanup gates. This map is navigation;
+it adds no assignment, resource grant, reviewer quota or all-workers waiting gate.
+The dated [worker dispatch r01](maintenance/worker-dispatch-20261019-r01.md)
+identified #17, #5, and #59 as disjoint families; it is not an active assignment
+or resource grant. #17 has since gained the [Fake X post-readback late-request
+counterexample](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md).
+Before reusing the #5 or #59 packet, refresh its live issue/PR/source/owner
+state. One integrator updates shared family indexes after reviewing outputs.
+
+**#57 PR #7283 reviewer-quorum correction (2026-10-20):** The live Draft body
+previously required two nonauthor approvals, named seats, and a committee epoch.
+That fixed count/seat rule has been withdrawn in the current PR description;
+work must not wait for those votes. Its older proposal metadata remains clearly
+marked as historical. The substantive checks—exact source/evidence validation,
+current-main composition, and applicable platform/owner/cancellation/sole-sender
+safety—remain. PR #7283 is still Draft/open and `DIRTY` against an old base; its
+current-main rescue #8368 is separately Draft/open and `DIRTY`. Neither is
+merge-ready from this policy edit. See the [cleanup plan](REPOSITORY_CLEANUP_PLAN.md)
+for exact SHAs and live status.
+
+**#5 target-generation crosswalk:** PR #9016 is Fake X caller-construction
+evidence; PR #9099 adds one scoped standard-caller private-Xvfb pass with a
+synthetic property effect and independent key-up readback, after six retained
+failed first attempts. The [family agenda](ideas/visual-interface-agenda.md)
+keeps those scopes separate. The completed [r01 Fake X check/use packet](../research/integration/fake_x_window_lifecycle_check_use_20261019/README.md)
+injects and drains DestroyNotify after the final local check and cleanup prearm
+but before XTEST. It reproduces one press after reader retirement, then refuses
+the next press, requires review, denies replay, verifies prefix release in Fake
+X, and leaves task_success null. The full lifecycle module passes 16/16 in
+normal and -O modes. #5 remains open; no live server ordering, physical release,
+or product task effect is established. Next finite step is a source/design audit
+of an ordered admission fence that does not wait on blocked Xlib I/O.
+**Historical discovery coverage (r51/r52):** the 1,675-Issue primary-row gap and 20-batch queue in [r51](maintenance/idea-index-coverage-20261019-r51.md) are retained as history and are no longer the current routing surface. Use the [r119 coverage audit](maintenance/idea-index-coverage-20261020-r119.md) and its 265-row queue split into eleven private-output packets. These are navigation facts and candidate scopes only; no semantic family, priority, owner, or disposition is inferred. Re-read live sources and check ownership before changing a family record or Issue state. The full outcome and safe closure criteria are in the [repository consolidation execution plan](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
+
+**Current evidence-routing result:** the [A02/A03 blocked-X11 packet note](../research/integration/standard_caller_blocked_x11_release_20261019/README.md)
+preserves both first outcomes. A02 never entered the probe due to an incomplete
+source mount. A03 passed one healthy control, then failed its first blocked trial
+before the held-reply marker; release and task success remain `UNKNOWN`. Do not
+rerun either allocation. Initial source/raw analysis points to a circular gate
+that can block the pre-press process-identity reply; the linked evidence note
+specifies the finite offline proxy-framing check before any new allocation.
+
+**Current standard-caller blocked-owner Xvfb result:** The [release-supervision packets](../research/integration/standard_caller_xvfb_release_supervision_20261021/r03/README.md) preserve main run [39444638512](https://github.com/Unjuno/agent-interface/actions/runs/39444638512), instrumented run [39446039020](https://github.com/Unjuno/agent-interface/actions/runs/39446039020), rebased-head fixture failure [39447636867](https://github.com/Unjuno/agent-interface/actions/runs/39447636867), and atomic-marker rerun [39448218110](https://github.com/Unjuno/agent-interface/actions/runs/39448218110). r01 retained two `worker_did_not_exit_cleanly` cases among four comparisons, with child status omitted; the receipt change preserves status and monotonic receive/exit times without upgrading forced termination from UNKNOWN. r02 had five blocked-owner trials with independent release readback and synthetic-oracle PASS (release 337–411 ms, cancel 390–654 ms). r04 had five more oracle passes (release-worker 549–570 ms, cancel 628–879 ms). Runtime still reports `release_confirmed=false`, cleanup `UNKNOWN`, `task_success=null`, replay denied. r03's marker-read race was corrected and the Xvfb workflow passed in r04; preserve r03 as a failure. The separate whole-server-stop task oracle still failed. Keep #17 open; the next discriminator is the platform-I/O outage boundary, followed by a live supported-app task effect. No WSLc allocation is authorized by this record.
+
+**Current-main whole-server-stop and separate recovery result:** [run 39399107944](https://github.com/Unjuno/agent-interface/actions/runs/39399107944) is preserved with its unmodified artifact and SHA-256 in the [r03 packet](../research/integration/standard_caller_xvfb_server_stop_20261020/pr9247-run-39399107944/README.md). During server stop, cancellation returned in 0.409 s before resume and retired the owner, but XRes disconnect timed out; release was not attempted, the receipt stayed `UNKNOWN`, and an independent horizon read found `a` down, so the outage task failed. After resume, a separate fresh caller/window refused the stale alias and passed one synthetic recovery task in 527.051 ms with independent effect/key readback; runtime task success remains null. This is a scoped post-resume recovery result, not outage-time release, physical input, MAP01, provider/model use, or efficiency. Preserve both task outcomes and keep #17 open.
+
+That offline discriminator now has a retained [scoped result](../research/integration/offline_proxy_reply_framing_20261019/README.md):
+and a source crosswalk now pins the specific request order. The guarded caller
+rechecks process identity through `TargetQueryWorker` on a separate X connection
+from a thread in the same owner PID. Its input connection then sends XTEST
+`FakeInput(KeyPress)` and Python-Xlib 0.33 `Display.sync()` waits for a
+`GetPointerControl` reply (core opcode 106). The frozen A03 proxy forwards client
+requests opaquely and gates every type-1 reply by owner PID, so it cannot select
+that one connection/sequence/role. The revised offline model forwards a same-PID
+identity reply even when its numeric sequence collides with the target, and
+selects only the action/keycode-matched `GetPointerControl` reply. The incremental
+[proxy candidate parser](../research/integration/offline_proxy_reply_framing_20261019/proxy_candidate.py)
+also negotiates XTEST's dynamic major opcode, parses fragmented setup/request/
+reply streams, and fails open on sequence ambiguity or missing receipts. All
+19 packet tests pass in normal and optimized Python. A03's raw still has no
+reply sequence; its first failure remains unchanged. **Update:** merged PRs #9136 and #9153 connect
+the parser to test-only relay/caller fixtures. The [current Fake X recheck](../research/integration/standard_caller_fake_x_relay_20261019/local-windows-recheck-20261019-r01/README.md)
+and [late-request counterexample](../research/integration/standard_caller_fake_x_relay_20261019/late-down-after-release-counterexample-20261019-r01/README.md)
+pass locally in normal and optimized Python. This closes the parser-to-Fake-X
+construction gap only. It does not recover A03's missing reply trace, observe
+live X server ordering, establish physical release, or prove task success.
+Issue #7924 remains `STOP / HOLD` for WSLc ownership; no allocation was inferred.
+
+**#17 same-PID two-connection relay discriminator:** the additive [r01 record](../research/integration/offline_proxy_reply_framing_20261019/two-connection-r01/README.md)
+sets up separate identity and input relay sockets with colliding sequence 3.
+The pre-press identity reply forwards; only the input `GetPointerControl`
+reply following its own XTEST KeyPress and event receipt is held, then the test
+relay returns `UNKNOWN` by its 150 ms bound. Protocol/relay tests pass 28/28 and
+standard-caller relay composition passes 3/3 in normal and `-O`. Its actual
+`TargetQueryWorker` call crosses a distinct identity FakeSocketRelay for three
+sequential replies before input; a fixture generation change is refused before
+either relay sees a KeyPress. The additive [r02 wire packet](../research/integration/offline_proxy_reply_framing_20261019/xres_wire_socket_r02/README.md)
+now sends actual python-xlib-serialized XRes QueryVersion and QueryClientIds
+frames over that identity socket and parses full synthetic replies in the real
+caller. The focused wire test passes 1/1, caller composition 3/3, and the
+existing XRes client-fence tests 19/19 in both normal and optimized Python.
+The caller still has synthetic XRes server/PID and `/proc` data. The first PR
+X11 CI run also exposed a retirement receipt race (`owner_process_retired=false`
+alongside exitcode -15) that skipped disconnect/release cleanup. `_retire` now
+reconciles a non-null exitcode with the final liveness sample, covered by a
+deterministic regression; owned-process tests pass 24/24 in normal and -O. The
+full private-Xvfb rerun is pending. Next is a private-Xvfb proof of server
+extension negotiation and an already-held input under the standard caller, with
+independent release readback; only consider it after fresh ownership and
+unused-allocation evidence. No physical-release or task-success claim; A02/A03
+remain consumed and #7924 remains STOP/HOLD.
+
+## Choose work
+
+| Scope | Existing question / evidence | Next finite deliverable | Collision boundary |
+|---|---|---|---|
+| Issue and idea catalog | [r52 current membership and metadata](maintenance/repository-inventory-20261019-r52.md), [r52 coverage audit](maintenance/idea-index-coverage-20261019-r52.md), [r51 current-gap coverage audit](maintenance/idea-index-coverage-20261019-r51.md), [20-batch discovery queue](maintenance/open-issues-missing-research-primary-row-20261019-r51.csv), [B01 receipt](maintenance/issue-discovery-b01-20261019.md), [B02 receipt](maintenance/issue-discovery-b02-20261019.md), [B03 receipt](maintenance/issue-discovery-b03-20261019.md), [B04 receipt](maintenance/issue-discovery-b04-20261019.md), [B05 receipt](maintenance/issue-discovery-b05-20261019.md), [B06 receipt](maintenance/issue-discovery-b06-20261019.md), [B07 receipt](maintenance/issue-discovery-b07-20261019.md), [B08 receipt](maintenance/issue-discovery-b08-20261019.md), [B09 receipt](maintenance/issue-discovery-b09-20261019.md), [B10 receipt](maintenance/issue-discovery-b10-20261019.md), [B11 receipt](maintenance/issue-discovery-b11-20261019.md), [B12 receipt](maintenance/issue-discovery-b12-20261019.md), [B13 receipt](maintenance/issue-discovery-b13-20261019.md), [B14 receipt](maintenance/issue-discovery-b14-20261019.md), [B15 receipt](maintenance/issue-discovery-b15-20261019.md), [B16 receipt](maintenance/issue-discovery-b16-20261019.md), [B17 receipt](maintenance/issue-discovery-b17-20261019.md), [B18 receipt](maintenance/issue-discovery-b18-20261019.md), [B19 receipt](maintenance/issue-discovery-b19-20261019.md), [B20 receipt](maintenance/issue-discovery-b20-20261019.md) | r51 recorded 1,675 open Issues/503 open PRs and 491 missing primary rows; B01–B19 route 25 each and B20 routes 16. A fresh r52 read found 1,673 open Issues/503 open PRs and 489 still missing rows in the historical research selection; the two removed IDs are #104 and #1798. Before the new appendix, 38 r51 queue items lacked a standalone first-column row in `IDEAS_AND_OUTCOMES.md`; 30 were already cross-linked there. Eight open IDs were absent from both indexes and now have routing-only receipt links. All 489 current primary-row gaps are in the immutable r51 queue and have batch receipts. This is navigation coverage, not semantic resolution. | r51 is historical; use r52 for current membership. The batches are disjoint navigation partitions, not assignments or semantic families. Verify live PR/worktree ownership before claiming a family. Only edits to the same shared index/map serialize; disjoint issues, families and output paths remain parallel. No queue row or citation justifies closure. |
+| Visual-interface idea family | Open Issues [#4](https://github.com/Unjuno/agent-interface/issues/4), [#3](https://github.com/Unjuno/agent-interface/issues/3), [#5](https://github.com/Unjuno/agent-interface/issues/5), [#7](https://github.com/Unjuno/agent-interface/issues/7), [#8](https://github.com/Unjuno/agent-interface/issues/8); [family record](ideas/visual-interface.md); [execution agenda](ideas/visual-interface-agenda.md); [2026-10-20 crosswalk receipt](maintenance/issue-family-disposition-visual-multiview-20261020.md) | The family record separates #4's broad thesis, #3 grid, #5 address/feedback contracts, #7 view-set selection, and #8 composite packing. The #1946/#1968/#2031 evidence crosswalk is complete. Next finite step for #1946: run the full frozen package fixture gate under its required container plus independent audit, only after verifying an eligible new allocation; #1981 is a narrower formal pass and #1983 remains `HOLD_NO_FORMAL_CONTAINER`. Separately, preregister #7's fixed-budget held-out set comparison with valid response schema and independent task oracle. | #3/#4/#5/#7/#8 remain open; #1946/#2031 remain open for their distinct unresolved gates; #1968 is closed. This map grants no owner or allocation. Do not replay consumed results, conflate byte count with token/model utility, or transfer model utility from construction-only evidence. Keep #7 selection separate from #8 encoding and #4's general thesis. |
+| Relative-view rotation features | [#31](https://github.com/Unjuno/agent-interface/issues/31), [#8636](https://github.com/Unjuno/agent-interface/issues/8636), [family crosswalk](ideas/relative-view-rotation-features.md), [merged A03 successor #9236](https://github.com/Unjuno/agent-interface/pull/9236), [merged A05 construction #9238](https://github.com/Unjuno/agent-interface/pull/9238), [A03 packet](../research/analysis/relative_view_rotation_features_8636_t0_a03_20261012/REPORT.md) | A01–A04 preserve distinct auditor/oracle `HOLD_UNCERTAIN` outcomes; A05 is construction-only. A03 completed 360 synthetic trials, but its auditor stopped on a yield-reason mismatch. Merged #9236 retains the A03 packet and repairs only the generated analysis index; merged #9238 carries the oracle-boundary construction repair from #8861. Originals #8840 and #8861 are closed as superseded. No formal rerun or hypothesis disposition. | Keep #31/#8636 open; do not pool or rerun consumed attempts. The five PR packets are independent evidence; resolve the A01–A04 decision-contract mismatches before any fresh allocation. |
+| Repository and ideas | [Current cleanup plan](REPOSITORY_CLEANUP_PLAN.md), [r105 full membership](maintenance/repository-inventory-20261020-r105.md), [r104 historical inventory](maintenance/repository-inventory-20261020-r104.md), [r52 historical index coverage](maintenance/idea-index-coverage-20261019-r52.md), [idea index](ideas/README.md), [research Issue index](RESEARCH_ISSUE_INDEX.md), [custody overlay r02](maintenance/worktree-custody-overlay-r02-20261019.md), [evidence-admission family](ideas/evidence-admission-family.md) | r105 is the latest full membership snapshot: 1,672 open Issues and 471 open PRs at main `0a73a19e55c2a51074c7dc602fd729a09c4c4cd6`. r104/r103/r101 and r52/r51 are historical navigation only. The 2026-10-20 local custody refresh found 29 registered worktrees (8 dirty) and 212 immediate `work` directories; directory ownership and evidence custody are not inferred from names/counts. | Select one non-overlapping family, exact PR, or custody slice. Keep each worker output in a private packet path; do not edit shared indexes/work map concurrently. Record question, evidence/limits, owner/dependencies, and one finite decision. Do not use age, draft status, empty assignees, or merged PR state alone as deletion/closure evidence. |
+| Parallel cleanup dispatch | [r98 full membership](maintenance/repository-inventory-20261020-r98.md), [r01 worker packets](maintenance/parallel-worker-packets-20261020-r01.md), [current cleanup plan](REPOSITORY_CLEANUP_PLAN.md) | r98 at main `5bdef852869d8a3a1c2de792221fadd0db199586` confirms 1,673 open Issues and 477 open PRs. Three read-only audits produced bounded WSLc issue-family and stale-PR review packets; none is permission to run WSLc/Docker or to change state. Latest local custody audit observed 29 registered worktrees (8 dirty), 133 local branches, and 212 immediate work directories; the canonical checkout is dirty. | Assign each writer an exclusive registered worktree/branch and log path, HEAD, full status, and exact task before work. Preserve raw evidence and unknown custody. Serialize shared-index edits through one integrator. Do not treat r97, the selected historical research index, old checks, or directory names as current ownership/disposition evidence. |
+| Recent PR convergence batch | [r70 inventory](maintenance/repository-inventory-20261019-r70.md), [15-PR triage](maintenance/recent-pr-triage-20261019-r01.md), [cleanup identity custody](ideas/cleanup-identity-audit.md), [#8838 custody review](maintenance/pr8838-evidence-custody-20261019.md) | Of the original 15, eight are merged (#8910/#8906/#8893/#8892/#8853/#8854/#8849/#8855), two remain open (#8842/#8756), and #8861 was superseded by merged #9238. #9006 was superseded by current-main test-only PR #9230; three older PRs remain closed as superseded after evidence transfer (#8687/#8678/#8701). Separately, #8838 was closed as superseded after evidence-only #9144 preserved its A06/A07 packet. Issue #59 stays open for live control. | Read each remaining PR's exact live head/diff and owner/base dependencies before disposition. Do not treat evidence preservation as a live-control PASS or close parent Issues because a packet PR merged/closed. |
+| Input authority and release | [#17](https://github.com/Unjuno/agent-interface/issues/17), [public transport boundary](../research/integration/mcp_transport_cancellation_20261016/README.md), [merged stdout cancellation relay #9245](https://github.com/Unjuno/agent-interface/pull/9245), [Fake X release-order counterexample](../research/live_control/fake_x_release_order_a01_20261018/REPORT.md), [queued-press caller regression](../research/integration/fake_x_single_writer_caller_20261018/README.md), [lease-expiry queued-press regression](../research/integration/press_lease_expiry_queued_server_mcp_20261018/README.md), [cancel-ack review fence](../research/integration/cancel_ack_review_fence_mcp_20261018/README.md), [#7034 requested process fence](../research/concurrency/x11_requested_process_fence_17_4d74_20261003/REPORT.md), [#7041 prearmed-scope transfer result](https://github.com/Unjuno/agent-interface/blob/main/research/concurrency/x11_crash_cleanup_scope_a02_17_5ce3_20261003/REPORT.md), [owned guarded MCP process integration](../research/integration/owned_guarded_mcp_process_20261019/README.md), [#9047 standard-caller composition](../research/integration/standard_caller_release_order_composition_20261019/README.md), [WSLc A11 blocked-owner XRes/release result](../research/integration/xres_blocked_owner_release_a11_20261019/README.md), [PID-qualified XRes results](../research/integration/xorg_xres_disconnect_order_20261019/README.md), [X.Org delayed-XTEST source audit](maintenance/xorg-xtest-disconnect-source-audit-20261019.md) | The standard MCP owner-process path records exact held-input obligations and keeps release UNKNOWN when disconnect/readback ordering is ambiguous. Merged [#9047](https://github.com/Unjuno/agent-interface/pull/9047) rejects release confirmation, success, and replay after a late old-connection DOWN in a composed Fake X regression. [#9068](https://github.com/Unjuno/agent-interface/pull/9068) fixes the missing `expected_pid` argument so PID-qualified XRes identity observation now reaches this standard caller; 10 owned-process tests pass in normal and `-O`. A fresh Windows-local recheck of the owned-process, window-lifecycle, and process-identity suites passed 40/40 in Python 3.11, normal and optimized; these are Fake X construction tests. CI run [39171499003](https://github.com/Unjuno/agent-interface/actions/runs/39171499003) records `/usr/bin/Xvfb`, its SHA-256 and `xvfb=2:21.1.12-1ubuntu1.8`; the source package's version-string rewrite explains vendor release `12101011`, and the audited teardown files match upstream 21.1.11/21.1.12. That private-Xvfb run observed PID-qualified owner disconnect and no delayed keypress through the event horizon, but no initially held input. Next: on a verified fresh allocation qualify an already-held input, owner disconnect, and independent release/readback through the standard caller. A blocked-server-I/O arm remains distinct and still yields bounded UNKNOWN, not physical release. Merged #9245 keeps reading client requests during a blocked stdout write while fewer than 16 response writes are pending; at the bound, reader backpressure still delays later cancel input. Its relay/composition/owner tests and CI passed, but this client-facing transport result proves neither input release nor X-server request drainage. | The Fake X late queued DOWN is an adversarial caller schedule. The new private-Xvfb result narrows only the default-close-mode delayed-request path on that package; retained-resource clients and other transports remain unqualified. It does not establish live held-input release, server-I/O release bounds, physical/XWayland behavior, task effect, MAP01, or general recovery. Merged [#9095](https://github.com/Unjuno/agent-interface/pull/9095) adds disconnect-gated best-effort cleanup after close-lock timeout. Merged [#9097](https://github.com/Unjuno/agent-interface/pull/9097) extends the same once-only cleanup receipt to close-pipe failure and a child that remains alive after its close receipt. The 19 owned-process tests pass normal and optimized locally; these remain Fake X/process evidence, with no physical release claim. Keep release `UNKNOWN` pending integrated task/effect evidence. |
+| Target binding and feedback | [#5](https://github.com/Unjuno/agent-interface/issues/5), [visual agenda](ideas/visual-interface-agenda.md), [native dependency repair](../research/integration/compiled_native_dependency_repair_20261016/README.md), [current-main MCP lifecycle recheck](../research/integration/target_generation_mcp_caller_recheck_20261018/README.md), [capture-destroy caller regression](../research/integration/target_generation_capture_destroy_mcp_caller_20261018/README.md), [guarded-generation composition #9016](../research/integration/guarded_generation_mcp_recheck_20261018/README.md), [standard-caller Xvfb result #9099](../research/integration/standard_caller_xvfb_generation_20261019/README.md) | Main retains 31 standard guarded-MCP process-generation/window-lifecycle composition tests in normal and `-O` modes, including stale alias refusal and held-modifier cleanup; those tests remain Fake X construction evidence. Separately, merged PR #9099 passed the actual guarded caller on private X.Org Xvfb with synthetic key delivery, neutral release, independent property readback, and destroyed-window refusal. The next target-binding boundary is capture-to-press continuity and independent task effect in a supported application; keep physical release, recovery, and application success distinct. | The scoped private-Xvfb result now demonstrates PID-qualified XRes identity in that server/process namespace. It does not generalize to other namespace mappings, atomic check/use under races, native physical input, product-app task effect, or a release deadline. Do not consume a WSLc allocation without a verified unused owner/allocation. |
+| MAP01 response and recovery | [#59](https://github.com/Unjuno/agent-interface/issues/59), [soft-ammo next-turn construction #9234](../research/doom/v39_soft_ammo_feedback_turn_a12_20261012/README.md), [audited visual staleness #8860](../research/doom/experiments/visual-context-staleness-a01/REPORT.md), [audited ammo/cancellation #8863](../research/doom/v39_pending_ammo_executor_release_composition_a01_20261012/REPORT.md), [Xvfb owner-close chain #8847](../research/doom/map01_v39_xvfb_owner_close_a13_20261012/CHAIN_REPORT.md), [live threat-guard PR family](ideas/map01-live-guard-evidence-family.md), [V15/controller selection](../research/integration/owned_service_session_20261016/README.md), [selected Backend/Executor adapter](../research/integration/owned_backend_adapter_20261016/README.md) | Merged #8860, #8863, #8847 and #9234 preserve distinct scoped results; #9234 integrates original #8848 after correcting seven CRLF-derived checksums. Its A12 construction sends synthetic 6→4 ammo feedback above floor 1 to a recording client, not a model response/use, live task/effect, release, recovery or MAP01 success. Six open PRs continue to preserve separate A01–A13 threat-guard packets. Read-only checks of #8790 and #8759 found public summaries but no hash-bound full raw/audit custody in the checkout; the family note records distinct holds and the final correction on #8790. Next independent slice: audit another exact packet/source/raw against its unresolved finding; no allocation rerun. | The three merged experiments are consumed and scoped to construction or synthetic-X-server behavior; preserve their first outcomes. #8790/#8759 custody gaps are bounded to the public PR/current checkout and are not evidence of global loss. Do not merge or close on title/age and do not rerun consumed live attempts. Each packet audit writes a distinct additive note; one integrator edits shared indexes. |
+| Semantic recovery and application effects | [#57](https://github.com/Unjuno/agent-interface/issues/57), [finite role prototype](../research/integration/finite_role_recovery_convergence_20261016/README.md), [presentation failure custody](../research/integration/primary_presentation_convergence_20261016/README.md), [compiled timing receipt](../runtime/core_v1/COMPILED_GUI.md), [owner integration crosswalk](INTEGRATION_PLAN.md#57-preallocation-integration-crosswalk--2026-10-19), [current-main public compiled recheck](../research/integration/standard_mcp_compiled_current_main_recheck_20261020/README.md) | Merged #9212 exposes `interface_guarded_compiled` through the standard owned-process MCP path. Five exact-main Fake X regressions pass in normal/optimized modes for endpoint gating, pre-admission profile rejection, generation-bound owner execution, changed-generation refusal, and cancellation during blocked platform sync. The owner timing receipt remains method-local; existing Calc/Inkscape saved-file scoring applies only to those app-specific profiles. Next join model/provider attempts, post-wait fresh evidence, independent task score, and finite recovery through this endpoint. | Blocked Fake X cancellation retires the owner but leaves release `UNKNOWN`, replay denied, and `task_success=null`. The public profile is declarative exact-pixel logic, not model/provider integration or an independent task scorer. No physical-release bound during server/platform I/O outage, model-driven task effect, MAP01 result, or matched efficiency is established. |
+| MAP01 source-level pending-ammo boundary | [#59](https://github.com/Unjuno/agent-interface/issues/59), [merged PR #8854 packet](../research/doom/v39_pending_soft_ammo_boundary_a01_20261012/README.md), [family crosswalk](ideas/map01-live-guard-evidence-family.md) | PR #8854 is merged at `d25b497`; local Windows Python replay passed 8/8 normal, 8/8 `-O`, independent audit 34/34, and the 17-file checksum manifest matched. Keep this result separate from live threat exposure and the six A01–A13 allocation packets. | Synthetic/source-level only. It does not establish model-authored cover behavior, live game or OS input, physical release, application/task effect, or MAP01 success; #59 stays open. |
+| MAP01 stale-action revalidation A14 | [#59](https://github.com/Unjuno/agent-interface/issues/59), [merged PR #8853 packet](../research/doom/v39_pending_ammo_staleness_a14_20261012/README.md), [family crosswalk](ideas/map01-live-guard-evidence-family.md) | PR #8853 is merged at `91d8859`; its saved WSLc construction run was not repeated. Local tests passed 2/2 normal and 2/2 `-O`, audit passed, and all 22 manifest checksums matched. Fresh ammo 4 rejects the stale minimum-5 action; unchanged ammo only reaches executor-ready status. | Construction-only. No model, live game, OS input, release, task effect, recovery, or MAP01 outcome. Keep separate from #8854's soft/hard monitor boundary and from live A01–A13 packets. |
+| Matched efficiency and transfer | [#57](https://github.com/Unjuno/agent-interface/issues/57), [#2789](https://github.com/Unjuno/agent-interface/issues/2789), [Calc saved crosswalk](../research/live_control/calc_saved_convergence_20261016/README.md), [integration gates](INTEGRATION_PLAN.md) | Resolve a named accounting or supported-domain prerequisite, then measure matched tasks, correctness, all attempts, tokens/calls, latency and resources under qualified conditions. | Four saved familiar Calc cases and joint usage are not matched per-arm economics. Do not replay old allocations or transfer old-source PASS. |
+| PR, branch and worktree custody | [r70 open-PR metadata](maintenance/repository-inventory-20261019-r70.md), [current worktree recheck r03](maintenance/git-worktree-custody-recheck-20261019-r03.md), [MAP01 packet crosswalk](ideas/map01-live-guard-evidence-family.md), [event timing convergence](../research/integration/v39_event_timing_convergence_20261016/README.md) | The r03 read found 16 registered worktrees, 11 clean and five with changed paths. None of the 13 checked-out local branch names exactly matched an open PR head in r70; three worktrees are detached. Map owner/session, task, ignored files, live processes and commit dependencies before selecting any cleanup candidate. | Clean status and absence of an exact open-head match do not prove staleness or eliminate commit-base dependencies. Preserve unknown owner data and branches. Do not remove a ref/worktree before exact-tip, ignored/untracked-file, process, open head/base dependency, owner, and recovery checks. |
+| Local workspace artifacts | [Read-only custody census](maintenance/workspace-custody-census-20261019.md), [Git worktree recheck r01](maintenance/git-worktree-custody-recheck-20261019-r01.md) | Resolve the two untracked Edge profile directories against their worker/session, Issue/PR, canonical evidence, and raw-result role; retain the files until that relation and a recovery path are known. | Census is local metadata only, not proof of ownership or staleness. Do not move/delete unreviewed or owner-unknown items; do not treat local artifacts as Git worktrees. |
+
+**Current #17 XRes measurement result:** merged [PR #9064](https://github.com/Unjuno/agent-interface/pull/9064) adds PID-qualified XRes observation and observer-namespace self-check; [PR #9068](https://github.com/Unjuno/agent-interface/pull/9068) connects the owner PID through the standard MCP caller. Dedicated [private-Xvfb run 39160684353](https://github.com/Unjuno/agent-interface/actions/runs/39160684353) directly observed idle and target owners reusing resource base `4194304`; after owner PID 2750 exited, a query helper on the same base was reported as helper PID 2752, so the owner-specific receipt correctly returned `disconnected`. The standard-caller regression originally fell back to `unknown` because it omitted `expected_pid`; that integration defect is now fixed and covered. Merged [PR #9070](https://github.com/Unjuno/agent-interface/pull/9070) makes the cancellation regression assert the owner PID is passed exactly, while a late queued DOWN still leaves release UNKNOWN. The Xvfb run's 8 s delayed XTEST case had no late keypress and all readbacks were up. See the retained [raw packet](../research/integration/xorg_xres_disconnect_order_20261019/README.md). These changes resolve identity ambiguity and its caller plumbing only; they do not establish a queue-drain fence, physical release, blocked-server-I/O bounds, task effect or general recovery. Issue #17 remains open and release stays `UNKNOWN` without qualified ordering/effect evidence. No unused WSLc allocation is verified on this host, so no new live run was made.
+
+**#17 standard-caller generation result (merged PR #9099, run 39174301979):** The actual guarded MCP caller ran on private X.Org Xvfb and returned a process-generation/window-generation binding from XRes PID plus `/proc` start ticks. A synthetic target received the caller's keypress, changed an X property independently read as `[1]`, and an independent keymap read found the key up after a verified release receipt. Destroying the window caused the old alias to be refused with no input dispatched, the query worker retired, and review required; close verified neutral state. Preserve the [seven-run report and raw chain](../research/integration/standard_caller_xvfb_generation_20261019/README.md). This is scoped composition evidence on synthetic Xvfb, not a product-app task certificate, owner-crash/initially-held-input test, blocked-X-I/O release bound, physical/XWayland result, MAP01, or general recovery. #17 remains open and release remains `UNKNOWN` for those unresolved conditions. Next finite discriminator: qualify an initially held key across owner disconnect and independent readback on the standard caller, with blocked server I/O handled as a separate bounded-UNKNOWN case.
+
+**2026-10-19 standard-caller release-order composition:** The added [Fake X
+composition](../research/integration/standard_caller_release_order_composition_20261019/README.md)
+passes in normal and optimized Python. Even with mocked XRes disappearance and a
+fresh-cleanup `readback_verified` receipt, the delayed old-connection `KeyPress`
+left the modeled key down; the standard cancel and terminal reports stayed
+UNKNOWN, replay-disabled, and without task success. This supports the existing
+UNKNOWN policy but does not establish the real server ordering or release bound.
+Next discriminator remains a real-server queue fence under an explicitly unused
+eligible allocation.
+
+**2026-10-19 cancel-response-loss fallback ([PR #9074](https://github.com/Unjuno/agent-interface/pull/9074)):** The owned MCP caller now runs its PID-qualified disconnect observer after exact-child retirement when the cancel response times out, closes, or is negative, and starts the separate bounded release helper only for `disconnected`. It uses the last parent-cached obligations, which can be stale while the child is blocked. The response and terminal state remain `UNKNOWN`, with no task success or replay and late server requests still possible. The regression failed first on all nine timeout/pipe-close/negative-ACK × disconnect-status cases, then 35 relevant owner/cancellation/recovery tests and 24 MCP server tests passed in both normal and optimized Python. This is local caller-composition evidence only: it does not prove complete input custody for the blocked operation, queue drainage, physical release, task effect, or recovery. No WSLc allocation was used. #17 remains open; next resolve complete custody and server-ordering evidence before any release claim.
+
+**2026-10-19 live input-obligation handoff ([PR #9076](https://github.com/Unjuno/agent-interface/pull/9076)):** The owned child publishes its tracked key/button obligations to a fixed-size shared record before each press request and after successful releases. The parent reads it only after exact child retirement; an incomplete, corrupt, oversized, or unavailable record prevents cleanup from falling back to a stale RPC snapshot. This closes the parent-custody gap in the #9074 cancel-response-loss path at the local standard-caller level. The 62-test owner/cancel/recovery/identity/transport/server suite passed in normal and optimized Python; checksum-tamper and uncommitted-ledger cases also pass in both modes, and 40 focused X11 backend regressions pass across normal/optimized runs. No WSLc allocation or live X-server run was used. This does not prove server queue drainage, XRes disconnect on the target environment, a physical-release deadline, independent task effect, or bounded recovery. Keep release and task outcome `UNKNOWN`; #17 remains open.
+
+**2026-10-19 blocked cleanup worker composition ([PR #9077](https://github.com/Unjuno/agent-interface/pull/9077), merged at `9bfacb2a388f549e64ff0a62b25e0738691bb4bc`):** The standard MCP cancellation test now blocks both the owned Fake X input operation and a separate synthetic release worker under the real process supervisor. The caller returns within its local 3 s assertion with the helper retired, release `UNKNOWN`, task success null, and replay disabled. The 42 relevant owned-process, transport-cancellation, and XRes-supervisor tests pass in normal and optimized Python 3.12.14. This confirms bounded local recovery under the fixture's controlled disconnect receipt; it does not validate live XRes, physical release, a physical deadline or task effect. Issue #17 remains open; preserve release as `UNKNOWN`.
+
+| Reactive macros and symbolic GUI interface | [#6](https://github.com/Unjuno/agent-interface/issues/6), [#56](https://github.com/Unjuno/agent-interface/issues/56), [family record](ideas/reactive-macro-symbolic-interface.md), [merged retained-result PR #7616](https://github.com/Unjuno/agent-interface/pull/7616) | #6 is the broad local-continuation menu; #56 is the narrower planner-authored symbolic interface/cold-warm-repair hypothesis. A05 failed its full gate, R02 was REJECT, and A12–A14 are construction checks only. PR #7616 is now merged as a retained offline result: its frozen source-label mismatch remains FAIL, while the four relevant module blobs match both source commits. Next finite task: use the existing #57 integrated-evaluation plan to decide whether this construction result has any relevance to a matched live comparison; do not rerun its candidate. | Keep both Issues open; preserve merged #7616's exact `FAIL_SOURCE_BASE_LABEL_MISMATCH` and unique package. Do not rerun its consumed candidate, merge from passing CI/title, or collapse #6 and #56 into one acceptance criterion. This remains semantically separate from the merged #9099 Xvfb caller result. |
+
+## Execute and leave a usable result
+
+1. Read the selected Issue/body/comments and relevant open/closed PRs; pin the
+   source and choose the smallest check that changes an adoption decision.
+2. Record narrow scope, branch and additive output through the existing owning
+   surface. A claim comment is coordination, not an atomic resource lock.
+3. Execute authorized local work. For a new live/formal run, confirm only the
+   resources and unused allocation actually required. Do not revive historical
+   reservations as universal blockers or start a consumed experiment again.
+4. Preserve first outcomes, source, conditions, raw, relevant local check results
+   and limits. Integrate subject to actual permissions/protection; optional CI
+   queues and invented reviewer counts are not universal waits.
+5. Return the result and next action to its owning question. Distinguish local
+   construction, saved-result audit, main integration and live task success.
+
+## Find prior evidence
+
+The former map is preserved [verbatim as history](WORKER_WORK_MAP_HISTORY_20261016.md).
+Its detailed links remain useful; its dated next actions are not fresh assignments.
+Use the [r46 membership recheck](maintenance/repository-inventory-20261019-r46.md)
+and [consolidation plan](REPOSITORY_CONSOLIDATION.md) for current cleanup direction;
+the [evidence map](EVIDENCE_MAP.md) is the source for scientific records.
+Sparse checkouts may need exact tracked fixtures materialized with
+`git restore --ignore-skip-worktree-bits --worktree -- <path>`; never regenerate
+missing historical fixtures by rerunning a consumed producer.
+
+**#17 Xvfb observation status (2026-10-19):** PR #9057's observation-only private-Xvfb run 39157580185 passed at head `4ffa711d6bf4a5e60f18109dc779ed753eff4f88`. It recorded an 8 s delayed request, independent cleanup, post-horizon keys up, `late_input_observed=false`, and XRes still present at every probe through ~9.5 s after owner kill. See [the family packet](../research/integration/xorg_xres_disconnect_order_20261019/README.md) and [run receipt](https://github.com/Unjuno/agent-interface/actions/runs/39157580185). This validates the measurement run only; no post-disconnect ordering, standard-caller release, task effect, or physical deadline is established. Keep #17 open / release UNKNOWN and WSLc unused.
+
+**#17 PR integration (2026-10-19):** PR #9057 is now merged at `6d91411cf8b90d514ac0d05a68009e6667113d7e` after its observation-only Xvfb run and all reported checks passed. The measurement harness is available on main; the retained sample still found XRes present through its horizon and keys up. Keep the standard caller, post-disconnect ordering, physical release, independent task effect and bounded recovery as separate unverified gates.
+
+After PRs #9057 and #9060 merged, the r21 check at main `baec61784825f2fa841a63b07df017ab238fc74d` found 1,675 open Issues and 514 open PRs, with both complete ID sets identical to r15. See the [r21 recheck](maintenance/repository-inventory-20261019-r21.md). This confirms membership only; unresolved meaning and owner/worktree custody remain explicit triage work. It is not a reason to close any Issue or remove any branch.
+
+**#17 extended Xvfb readback (2026-10-19):** Merged PR #9062 and retained run [39158398302](https://github.com/Unjuno/agent-interface/actions/runs/39158398302). A 10 s XRes poll after the 8 s event horizon still found the owner listed 18,511.3 ms after termination; the extended keymap stayed up. See the [family raw packet](../research/integration/xorg_xres_disconnect_order_20261019/README.md). No XRes disappearance or post-disconnect state was measured. This gives another bounded private-Xvfb observation; standard-caller release, application effect, physical deadline and recovery remain open.
+
+
+**No-gold checker identifiability — Issue #8887:** the canonical [idea record](ideas/no-gold-effect-checker-identifiability.md) retains merged PR #8893's `PASS_COUNTEREXAMPLE_ONLY` result. The synthetic eight-row construction proves agreement can coexist with different accuracy; it does not validate an estimator or any real checker. Keep #8887 open for the finite method test spanning identifiable/near-nonidentifiable controls, dependence, drift, missingness, abstention, label switching, and explicit `UNIDENTIFIABLE` output. No candidate/auditor rerun is needed for catalog maintenance.
+
+
+**Assumption-gated evidence acquisition — Issue #8879:** merged [PR #8892](https://github.com/Unjuno/agent-interface/pull/8892) preserves the A01 first outcome as `FAIL_AUDIT_CONSTRUCTION`; the auditor failed because candidate and auditor shared a reversed history-containment predicate. The packet has no independent reconstructed audit JSON. Do not rerun or treat it as a method result. Keep #8879 open; any future successor needs a fresh allocation and genuinely independent oracle. See the [canonical idea record](ideas/evidence-acquisition-policy-selection.md).
+
+
+**WSLc deviation record — PR #8906 / Issue #8685:** merged [PR #8906](https://github.com/Unjuno/agent-interface/pull/8906) preserves a cached-image one-shot smoke and global container listing run without the explicit shared-lane release. This is evidence of a process deviation and one bounded CLI execution only. It proves no speed, memory-cap enforcement, Docker parity, cleanup custody, or MAP01/task effect, and it does not release the gate. Keep #8685 open; do not repeat WSLc operations until explicit owner reconciliation. The read-only calls in #8913 are separate.
+
+**#17 blocked-I/O standard caller (PR #9171, run 39229071117):** The 8 s delayed-request Xvfb run reached a synthetic application effect before cancel. Cancel returned in 1,003 ms but the owner process was not retired; the later close fallback observed SIGTERM retirement and PID-qualified XRes disconnect, while the separate runtime release worker timed out at its 250 ms supervisor budget. The harness then sent key-up itself during teardown and read the keys up; this is not caller release or recovery. Preserve the `UNKNOWN` runtime release and the failed first result in [the raw packet](../research/integration/standard_caller_xvfb_blocked_release_9171_20261019/README.md). This is a real Xvfb standard-caller failure, not WSLc and not a completed live-control allocation. The local Fake X relay pass does not cover this blocked-Xlib retirement/release boundary; fix and locally verify the bounded release path before claiming recovery.
+
+**#17 XRes wire + retirement follow-up (PR #9182):** XRes QueryVersion/QueryClientIds are now serialized through the standard caller's separate Fake X identity socket. Updated private-Xvfb run [39246686502](https://github.com/Unjuno/agent-interface/actions/runs/39246686502) passes 77/77 tests after a terminal-retirement receipt race fix. The test's separate parent X client reads keys up after the owner worker and at 8.5 s, with no delayed `b` press observed. Caller receipt remains `release_confirmed=false`, `cleanup_status=UNKNOWN`, and `late_server_request_possible=true`; `task_success=null`, review required, replay disabled. Treat this as scoped safety-test pass and unresolved bounded-release/recovery objective. Exact JSON and image are retained in [r02 packet](../research/integration/offline_proxy_reply_framing_20261019/xres_wire_socket_r02/README.md). No WSLc or allocation was used.
+
+**#17 Xvfb target-generation composition (same run 39246686502):** The standard caller's observed process-generation hash exactly matched the independently computed XRes PID + `/proc` start-ticks digest. A synthetic app committed property `[1]` after KeyPress; the app event stream observed KeyPress then KeyRelease, runtime release receipt verified, and a separate X client read the key up. Destroying the target window caused the next standard-caller input to be refused before dispatch and require review. This is scoped live-Xvfb evidence, not MAP01/game success: runtime `task_success` remains null, and cancellation cleanup remains separately UNKNOWN. Raw JSON/image are retained in the [r02 packet](../research/integration/offline_proxy_reply_framing_20261019/xres_wire_socket_r02/README.md).
+
+**#17 cancel-control response budget (2026-10-19):** Root-cause inspection found `OwnedGuardedSessionOwner.cancel_guarded` used the 5 s startup-readiness timeout while waiting for its separate cancellation-control reply, despite the Xvfb caller integration test's 3 s cancel-return target. A new regression first failed with an observed `poll(5.0)`; a dedicated 0.25 s cancel-response cap now routes a missing acknowledgement to exact-owner retirement, disconnect observation, and bounded best-effort release while preserving release `UNKNOWN`, no replay, and null task success. The owned-process suite passes 25/25 in normal and optimized Python; the full `runtime/cli_v1` suite passes 469 tests in each mode (7 skipped). The Windows host skips the Xvfb integration test, so this does not establish the end-to-end blocked-I/O bound or physical release. Next discriminator: run a withheld cancel-control acknowledgement through the real spawned caller on isolated Xvfb; require total return under 3 s and keep all release claims `UNKNOWN` if independent release/readback cannot finish. No WSLc allocation used.
+
+**#17 PR #9192 Xvfb regression (run 39260096881):** The Linux Xvfb check failed before testing the missing-ack timeout path: cancellation returned `cancel_requested`, retirement was required, but `_retire` took 2.671 ms and reported the owner still alive with no exit code. XRes disconnect and release were not attempted; the key obligation remained and caller release stayed `UNKNOWN`. Preserve this first outcome in the [r02 packet](../research/integration/standard_caller_xvfb_cancel_trace_20261019/r02/README.md). It resembles the earlier 39252995939 failure and conflicts with 39256375123. Later method tracing and the r06 post-SIGKILL settle run are separate outcomes; neither rewrites r02.
+
+**#17 PR #9192 instrumented Xvfb follow-up (run 39260780052):** The added trace captured `terminate()` followed by `join(0.25)`; the owner exited via SIGTERM, XRes observed disconnect, and an independent release worker verified keys/buttons up. Cancellation returned in 664.138 ms. The caller still returned release `UNKNOWN`, late request possible, task success null, and replay denied. Preserve this separate scoped pass in the [r03 packet](../research/integration/standard_caller_xvfb_cancel_trace_20261019/r03/README.md); it does not explain r02. The missing-ack timeout branch was later exercised in r04 and the post-fix r06 packet, with r02's first failure retained.
+
+**#17 bounded cancel-response discriminator:** merged PR [#9192](https://github.com/Unjuno/agent-interface/pull/9192) (commit `3bc02f2b9c7362e743db5f81f3b3d2556038c55f`) adds a 250 ms child-cancel acknowledgement budget, then exact-owner retirement. Its current-head private-Xvfb run [39261239773](https://github.com/Unjuno/agent-interface/actions/runs/39261239773) withheld the child acknowledgement for 1 s while its Xlib call was blocked: caller returned `cancel_unconfirmed` in 669.824 ms, exact owner exited, XRes observed disconnect, and an independent release readback plus parent/horizon keymaps were empty. The caller still reports release `UNKNOWN`, late request possible, `task_success=null`, replay denied. Raw is retained at [r04](../research/integration/standard_caller_xvfb_cancel_trace_20261019/r04/README.md). Keep #17 open; this scoped result does not explain r02's retirement failure or establish physical release, task success, bounded recovery, MAP01, or efficiency.
+
+**#17 post-SIGKILL settle discriminator (PR #9194, run 39266521339):** The [r06 packet](../research/integration/standard_caller_xvfb_cancel_trace_20261019/r06/README.md) retains the updated Xvfb baseline and four ACK-immediate trace-control trials. The withheld-ack baseline returned `cancel_unconfirmed` in 860.150 ms, retired the exact child, observed XRes disconnect and a separate release readback, and read both keys up at the 8.5 s horizon. This differs from pre-fix r05, where the same schedule returned in 255.196 ms with `retired=false` and no release attempt. The 10 ms final reap catches this observed late exit, but whole-operation response remains ~860 ms; 250 ms is only the child-ack wait budget. Release stays `UNKNOWN`, late request possible, task success null, replay denied. The four comparison trials (2/mode) are diagnostic only. X11 CI and the full reported checks pass; the local CLI suite passed 470 tests / 7 skipped in normal and optimized Python. Keep #17 open; no physical-release, MAP01, product-effect, recovery-quality, or efficiency claim follows.
+
+**#17 post-settle Xvfb rerun failure (PR #9194, run 39267303363):** The separately preserved [r07 packet](../research/integration/standard_caller_xvfb_cancel_trace_20261019/r07/README.md) shows trace-2 returning before the SIGKILLed child exits: `join(0.25)` and `join(0.01)` returned in 0.053 ms and 0.041 ms, the final poll still saw it alive, and a later snapshot found exit `-15`. Four other captured cases retired the exact owner but the release worker produced no usable result or horizon sample. The receipt correctly remained UNKNOWN. A bounded 1 ms polling loop now replaces the single settle join, with a unit test that reproduces the early-returning join. Its integration status remains unverified until a new Xvfb run; the prior r06 pass and r07 failure both remain immutable.
+
+**#17 post-SIGKILL bounded-poll Xvfb rerun (PR #9194, run 39268728350):** The [r08 packet](../research/integration/standard_caller_xvfb_cancel_trace_20261019/r08/README.md) records a passing current-head private-Xvfb run after r07's early-returning `join` failure. The withheld-ack baseline returned in 874.924 ms; exact owner retirement, XRes disconnect, independent release-worker readback, parent keymap, and 8.5 s horizon all completed, with `a=false` and `b=false`. The four ACK-immediate A-B-B-A samples also retired and read back successfully; n=2 per trace mode is diagnostic only. API release remains UNKNOWN, late request possible, task success null, replay denied. r07 remains preserved as a distinct failure. This is synthetic Xvfb evidence only; it does not establish physical release, a general X-server outage bound, product/MAP01 success, bounded recovery, or efficiency. Keep #17 open.
+
+**#17 independent synthetic-task rescore (run 39276306835, PR #9198 head):** The [r09 packet](../research/integration/standard_caller_xvfb_cancel_trace_20261019/r09/README.md) preserves five previously unindexed private-Xvfb receipts and applies the merged PR #9200 test-only oracle to their raw app property and independent keymap/horizon readbacks. All five score PASS for the declared synthetic cancellation task; the original runtime reports remain `task_success=null`, release/cleanup UNKNOWN, and replay denied. The same workflow's separate generation/recovery test records recovery-to-independent-key-up in 5.016 ms and a fresh post-recovery task effect in 52.432 ms. This adds scoped timing and one bounded recovery result, but does not establish a combined cancel/recover path, general server-outage bounds, MAP01/product semantics, reliability, or efficiency. The small A-B-B-A timing set is diagnostic only. Keep #17 open.
+
+**#17/#57 standard MCP compiled-caller construction (2026-10-20):** The [Fake X packet](../research/integration/standard_mcp_compiled_fake_x11_20261020/README.md) now preserves normal and optimized test logs, full synthetic MCP call directories, and a SHA-256 manifest. A public exact-pixel profile reaches the owned standard caller; a changed target generation yields `SAFE_YIELD`; cancellation during blocked Fake X sync retires the owner but records release `UNKNOWN`, no replay, and possible late server work. This is not live Xvfb, WSLc, MAP01, an independent task score, physical release, recovery, or efficiency evidence. The idea remains split: #17 owns cancellation/release/recovery, while #57 still requires independent application success and matched efficiency. Keep both Issues open and avoid treating the new endpoint's local `TASK_SUCCEEDED` as task success.
+
+**#17 private-Xvfb stop and post-resume cleanup (PR #9220 run [39373461786](https://github.com/Unjuno/agent-interface/actions/runs/39373461786); PR #9225 head `52448ba`, run [39375915867](https://github.com/Unjuno/agent-interface/actions/runs/39375915867)):** Preserve the distinct [r01](../research/integration/standard_caller_xvfb_server_stop_20261020/r01/README.md) and [r02](../research/integration/standard_caller_xvfb_server_stop_20261020/r02/README.md) packets. r01 showed cancel return inside the 3 s bound but release `UNKNOWN`, followed by a key still down at the horizon and a failed task oracle. r02 repeats that outage-time outcome, then records an explicit post-resume close in 0.647 s that confirms client disconnect and independent key-up readback; the key was still down at the task horizon, so task success remains false. The API keeps release/cleanup `UNKNOWN`, `task_success=null`, and replay denied. The old terminal owner snapshot is a retained report snapshot, not a live status read, and has no capture timestamp. This is one bounded synthetic post-resume recovery sample, not an outage-time release guarantee, physical-input result, MAP01 success, reliability, or efficiency evidence. Keep #17 open; next qualify repeated bounded-recovery outcomes and connect recovery to a fresh target observation and independent task oracle.
+
+**#17 local public-MCP cancellation-operation integration (2026-10-21):** Merged PR #9313 adds an operation ID and separate pending/terminal cancellation receipt, runs owned-process cancellation on one warmed worker thread, and retains the terminal receipt in `cancellation.json` after the cleanup call returns. The [local Fake X packet](../research/integration/public_mcp_cancel_operation_registry_20261021/README.md) passes the public blocked-release case under a 450 ms response threshold with a sub-100 ms event-loop heartbeat gap, one operation ID/one release attempt for duplicate cancellation, and preservation when the requesting coroutine is cancelled. Focused caller/guarded suites pass 77/77 in normal and optimized Python. This does not implement the prestarted cancellation supervisor or a whole-transaction deadline; the fixtures do not establish real X-server behavior, physical release, independent task success, bounded recovery, MAP01, efficiency, or reliability. Issues #17 and #57 remain open. Next is the prestarted-process absolute-deadline and stale/late-effect gate through the public caller, still Fake X-only until it passes.
+

@@ -1,0 +1,90 @@
+{
+  "anchor_search_radius_px": 2,
+  "auditor_sha256": "c9a441a17652dd19554822879519f3ab27e91be0a97eaef2017d791388454727",
+  "base_commit": "5f1761cec6b6b8cb4513aef6dbe0429d35569e97",
+  "brightness_factors": [
+    0.95,
+    1.05
+  ],
+  "candidate_sha256": "f9e212922000cfee62bc61cc78b79afb71824396bc1477549a371df03a36d861",
+  "contrast_factors": [
+    0.95,
+    1.05
+  ],
+  "decision": "PASS_BOUNDED_ANCHOR_SEARCH iff 13/13 baselines match, 104/104 translated reads match, no perturbed read is wrong, and 13/13 blank-ROI controls are unknown.",
+  "evidence_commit": "d75f1d84ede874fc2bc8b3c96944edf6af5908b4",
+  "execution_id": "v39-hud-anchor-search-a01-20261009",
+  "expected_reads": 195,
+  "frame_count": 13,
+  "glyph_size": [
+    26,
+    38
+  ],
+  "health_local_anchor": [
+    102,
+    411
+  ],
+  "jpeg_qualities": [
+    95,
+    75
+  ],
+  "prior_freeze_path": "research/doom/astra_v39_hud_reader_robustness_a01_20261009/FREEZE.json",
+  "prior_freeze_sha256": "a901228ee6740af9bb76e2153d80ebf6cb7625abdb7bc466b9784b56eedcf3ef",
+  "prior_result_path": "research/doom/astra_v39_hud_reader_robustness_a01_20261009/results/a01.json",
+  "prior_result_sha256": "af57af9243b9470bb01fa0e7f4c9ab975b7d06340d114de53a1216910ea25e84",
+  "reader_modules": [
+    "research/doom/doom_hud_signal_v1.py",
+    "research/doom/doom_hud_signal_v2.py",
+    "research/doom/doom_hud_signal_v3.py"
+  ],
+  "runtime_versions": {
+    "numpy": "2.3.5",
+    "pillow": "12.3.0",
+    "python": "3.12.14"
+  },
+  "schema": "v39-hud-anchor-search-freeze-a01-v1",
+  "scope": "Offline CPU construction on 13 exact historical decision frames with synthetic image transforms; no live capture, binding-fault, guard, release, feedback, model, task-effect, recovery, survival, or MAP01 progress claim.",
+  "slots": 3,
+  "source_blobs": {
+    "research/doom/doom_hud_signal_v1.py": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+    "research/doom/doom_hud_signal_v2.py": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+    "research/doom/doom_hud_signal_v3.py": "083338b4565176aaea560d800ce0210f17b6852f"
+  },
+  "source_freeze_path": "research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json",
+  "source_freeze_sha256": "3b4d846d79cf9e284188c04587deff30e83cff02ef80508bd52809914096ead2",
+  "translation_px": [
+    [
+      -2,
+      0
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ]
+  ],
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+}

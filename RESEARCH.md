@@ -1,4 +1,56 @@
+# Issue #9004 T0 — agreement-conditioned bounded System-1 continuation (2026-10-17)
+
+`PASS_METHOD_SCOPED` on 10 fixed synthetic cases × four arms: the raw-only auditor reconstructed 40/40 rows with zero errors and five normal/optimized mutation tests passed. The result is `NO_INCREMENTAL_AGREEMENT_VALUE` for this fixture family: agreement-lease matched System-1-only, and both it and always-wait had a 1-tick median synthetic inter-action gap; the prospective 20% threshold was not met. `formal_pass=false`. No latency, model, GUI, live-actuation, task-success or product claim follows. The frozen allocation was run once and is consumed. See [the preregistration, raw output, audit and result](research/agreement_continuation_9004_v1/RESULT.md) and [Issue #9004](https://github.com/Unjuno/agent-interface/issues/9004).
+
+# Issue #8636 T0 A03 — relative-view rotation-feature audit hold (2026-10-12)
+
+Merged current-main successor [PR #9236](https://github.com/Unjuno/agent-interface/pull/9236) preserves the packet and repairs only the generated analysis index; original [PR #8840](https://github.com/Unjuno/agent-interface/pull/8840) was closed as superseded. The candidate completed 360 synthetic trials (exit 0); the one independent auditor
+stopped before writing a summary because the focal-stress YIELD reason was
+`feature shape changed` while the frozen auditor expected `shape changed`.
+Disposition remains `HOLD_UNCERTAIN`; no feature-method or hypothesis result is
+supported. A read-only integration check matched the 2,231-file, 63,489,719-byte
+first-outcome archive to every path, byte count, and SHA-256 in its internal
+manifest, and the package's 17-member checksum list matches exact Git blobs.
+The only integration repair is the generated analysis-index entry. Do not rerun
+the consumed candidate or auditor. See the [A03 packet](research/analysis/relative_view_rotation_features_8636_t0_a03_20261012/REPORT.md)
+and the [#31/#8636 family crosswalk](docs/ideas/relative-view-rotation-features.md).
+
+# Issue #59 — saved A11/A12 CPU regression convergence (2026-10-16)
+
+PR #8812's original 48 files are preserved with the first A11 harness-count FAIL and A12's historical CPU-fixture PASS unchanged. A separate saved-only reader verifies 46 checksums, 34 source pins and carry-forward claims; 11 reader tests pass normal and optimized with ten coherently rehashed corruption controls. At the convergence base, 11/34 sources have changed, so these historical runs do not qualify current main. No producer, historical suite, GUI/input/model/WSLc allocation was executed. See [custody, applicability, results and next boundary](research/doom/v39_saved_regression_convergence_20261016/README.md).
+
+# Issue #59 A12 — soft-ammo feedback in the next planner request (2026-10-12)
+
+Current-main successor [PR #9234](https://github.com/Unjuno/agent-interface/pull/9234)
+preserves the frozen V39 source and recording-client construction showing that a synthetic
+ammo change from 6 to 4 above cover floor 1 is summarized into the next planner
+request that already occurs; malformed feedback claiming input authority is
+rejected. The retained WSLc transcript and saved non-executing audit report
+`PASS_SCOPED`. This is delivery evidence only: no model response/use, live
+game/GUI/input, release, recovery, task effect, or MAP01 result. The consumed
+allocation was not rerun during current-main integration. See the [packet and
+preserved conditions](research/doom/v39_soft_ammo_feedback_turn_a12_20261012/README.md)
+and the [#59 family crosswalk](docs/ideas/map01-live-guard-evidence-family.md).
+
+# Issue #59 A01 — cross-client key holds on a shared XTEST device (2026-10-05)
+
+On a private Xvfb server, two independent X clients injected overlapping presses through the same server-provided `Virtual core XTEST keyboard` (id 5). The legacy device-specific `XTestFakeDeviceKeyEvent` path produced the same observable sequence as core `XTestFakeKeyEvent`: after A-DOWN and B-DOWN, A-UP made the global keymap neutral and delivered KeyRelease while B had not released; B-UP then produced no core event. Disposition: `FAIL_CROSS_CLIENT_ISOLATION` for this one shared-device route. Candidate ran once (exit 0); the raw-only independent auditor ran once (exit 0, 30/30).
+
+This supports the concern that separate client connections to one virtual XTEST keyboard do not isolate overlapping same-key holds. It does not test separately created devices, the full Agent Interface runtime, a production GUI/game, physical input, model behavior, useful feedback, recovery, or task success. The outer shell's exit 1 occurred after candidate completion when its result-copy destination was missing; unchanged raw bytes were copied afterward and hash-verified, with no candidate rerun. See [the complete plan, frozen package, raw result, audit, and scope limits](research/doom/map01_v39_x11_device_cross_client_a01_20261005/RUN_RESULT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+# Issue #59 T0 A01 — typed-health early-dispatch occupancy comparison (2026-10-12)
+
+`PASS_CONSTRUCTION_SCOPED`: ten paired WSLc CPU runs compared immediate typed-health handling with a fixed 150.031473 ms wait taken from the maximum of 218 retained typed-to-artifact delays. Median fake-X key-down→verified-owner-release was 2.071 ms vs 150.484 ms; every pair favored early handling (median reduction 148.408 ms). All 20 cases hard-invalidated, cancelled before planner interruption, verified empty release, and rejected the pending answer. The wait was injected; this is not the native artifact pipeline, physical input, GUI/game, threat response, useful feedback, recovery, or task-success evidence. See the [frozen protocol, raw results and audit](research/doom/health_typed_release_delay_a01_20261012/REPORT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
+
+# Issue #8318 — duplicate allocation STOP custody (2026-10-07)
+
+`STOP_DUPLICATE_ALLOCATION_ALREADY_CONSUMED`: a later candidate/auditor execution reused #8317's allocation. Its output is archived separately as custody evidence only and does not repair, replace, or pool with #8317's `HOLD_AUDITOR_COVERAGE`. No scientific inference follows. See [archival qualification](research/analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_8318/ARCHIVAL_QUALIFICATION.md), [STOP record](research/analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_8318/DUPLICATE_ALLOCATION_STOP.md), and [Issue #8318](https://github.com/Unjuno/agent-interface/issues/8318).
+
+# Issue #8313 — matched-context integrity T0 A01 (2026-10-07)
+
+`HOLD_AUDITOR_COVERAGE`: the frozen candidate and independent raw-only auditor each ran once with zero retries; the auditor returned raw PASS, and four hash-refreshed corruption controls were rejected. Post-run review found that the auditor does not prove complete baseline-record equality or exact common serialized bytes outside the history slot. Preserve the first result; no repair or rerun. This is not evidence of model behavior or proactive interference. See [report](research/analysis/proactive_interference_5947_t0_a01_20261007/REPORT.md), [post-run review](research/analysis/proactive_interference_5947_t0_a01_20261007/POSTRUN_REVIEW.md), [Issue #8313](https://github.com/Unjuno/agent-interface/issues/8313), and parent [Issue #5947](https://github.com/Unjuno/agent-interface/issues/5947).
 
 `PASS_DPOR_METHOD_SCOPED`: the frozen WSLc candidate and independent exhaustive auditor each ran once, both exited 0. The oracle checked 45,360 full schedules against 217 DPOR representatives, including typed outcomes, reachable-prefix independence diamonds, ordered-pair replay, and the `ACK_BEFORE_EFFECT_RECEIPT` counterexample. The eight-event commuting diagnostic control reduced schedule count by 40,319/40,320; this is not a runtime-speed claim. Five audit-rejection controls passed in the frozen WSLc construction suite (20/20 normal and `python -O`). A01 and A02 pre-code execution STOPs remain unchanged and were not retried. WSLc requested 512 MiB but warned effective cgroup/swap memory limits were unavailable. This is finite authored-model evidence only; no live interface, application, agent, user, safety, or product claim. See [report and checksums](research/analysis/bounded_dpor_8592_t0_a03_20261008/REPORT.md), [frozen protocol](research/analysis/bounded_dpor_8592_t0_a03_20261008/PROTOCOL.md), [raw candidate/audit](research/analysis/bounded_dpor_8592_t0_a03_20261008/results/), and [Issue #8592](https://github.com/Unjuno/agent-interface/issues/8592).
 
@@ -29,6 +81,10 @@ A01's candidate emitted the five planned synthetic labels, but its auditor used 
 # Issue #8157 A04 — prefix-local audit of retained bounded TTC allocation (2026-10-05)
 
 An audit-only successor reconstructed all 2,400 prefixes from the preserved A02 public inputs with zero candidate mismatch; its five corruption controls and source/artifact hash checks passed. The original A02 auditor's 98 mismatches are 49 point and 49 interval mismatches, all in the occlusion profile. Disposition is `PASS_RAW_RECONCILIATION_ONLY`: A02's `FAIL_METHOD` remains unscorable and A03's one-shot auditor runtime STOP remains preserved. No TTC method, vision-transfer, GUI/game, or safety result is claimed. See the [A04 report and frozen evidence](research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A04_AUDIT_ONLY/REPORT.md), [A03 STOP](research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A03_AUDIT_ONLY/STOP.md), and [Issue #8157](https://github.com/Unjuno/agent-interface/issues/8157).
+
+# Issue #8157 A06 — preserved posthoc score-audit STOP (2026-10-07)
+
+The sole frozen scorer invocation exited before reading JSONL: it compared A06's three-key raw-artifact hash map with A04's four-key map, which also includes `first_audit`. No score was produced; A02 remains `FAIL_METHOD` with the comparison unscorable. The four construction preflight checks and 7/7 retained-file checksums pass. This is a harness STOP only; no candidate or previous auditor was rerun, and no TTC-method inference is made. See the [STOP record and rescue qualification](research/vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) and [Issue #8157](https://github.com/Unjuno/agent-interface/issues/8157).
 
 # Issue #6053 T1 — PCAA stage-propagation eligibility (2026-10-04)
 
@@ -106,6 +162,10 @@ Read-only reconstruction of the retained v39 trace found three fire-cover model-
 # Issue #59 — Astra camera-stabilized cue A01 (2026-10-05)
 
 On ten retained video frames, integer translation registration left the manually described 22.7 s wall-indicator warm-pixel transition at 186 newly appearing pixels, above the frozen threshold of 40; raw reconstruction passed. The pre-window 21.9 s muzzle-flash cue also remained at 96. One later row hit the registration search boundary and is not interpreted. This rejects one simple translation-only cue-suppression method, not enemy classification or the current-main live threat-response gate. No game/model/input/live allocation ran. See [frozen report and artifacts](research/doom/astra_camera_stabilized_cue_a01_20261005/README.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+# Issue #59 — Astra guard-observation availability audit A01 (2026-10-07)
+
+`PASS_OBSERVABILITY_GAP_ONLY`: a hash-pinned audit of one retained Astra attempt reconstructed 852 events, 530 observations, and 13 decisions, but found no runtime health/ammo samples or guard-invalidation outcomes. It shows only that this old artifact cannot establish when the current guard would have fired; it does not characterize current-main or live behavior. Fresh live threat exposure remains required. See [result and frozen artifacts](research/doom/map01_astra_guard_observation_audit_a01_20261007/RESULT.md), [rescue lineage](research/doom/map01_astra_guard_observation_audit_a01_20261007/SOURCE_LINEAGE.md), and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
 
 # Issue #59 T0 — v39 release-sink failure custody (2026-10-04)
 
@@ -2447,3 +2507,50 @@ The frozen host-CPython candidate and independent auditor each ran once (exit 0;
 # Issue #8583 T0 A01 — principal-stratum bounds (2026-10-08)
 
 `PASS_METHOD_SCOPED`: one frozen finite compatibility candidate and one independent ordered-completion auditor ran in WSLc; four toy cases reconstructed with zero errors and all 5/5 preregistered mutations rejected. Asymmetric demand margins leave the p0 always-demand contrast bounded [−1,+1] despite observed contrast −1/3; an empty compatible always-demand stratum remains explicitly unidentified. Synthetic finite method evidence only—not empirical causal inference or a real recovery/product claim. See [report, frozen protocol, sources and raw evidence](research/analysis/principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) and [Issue #8583](https://github.com/Unjuno/agent-interface/issues/8583).
+# Issue #8257 — V39 expiry-receipt auditor correction A02 (2026-10-07)
+
+The saved A01 auditor reproducibly accepts three contradictory receipt-metadata mutations. A02 rejects those and seven additional negative controls while accepting the unchanged A01 raw: 11 cases / 22 isolated auditor subprocesses pass under normal and optimized Python; direct raw-only audit passes. The A01 candidate and raw were not rerun or changed. This is offline auditor-correction evidence only, not physical-release, live-control, or game evidence. See the [package and source-lineage qualification](research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/README.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+# Issue #8258 — V39 typed-observation raw-retention boundary A01 (2026-10-07)
+
+The preserved construction result writes two representative typed-health/ammo and full-observation rows through the frozen session event sink; the independent saved-data audit accepts the raw rows and rejects all 5/5 nested-value, omission, ordering, and timestamp mutations. The candidate was not rerun during rescue. Current-main comparison finds only 3/5 frozen implementation sources still byte-identical, so this remains historical frozen-snapshot construction evidence—not current-main integration, live signal capture, monitor behavior, game effect, or recovery evidence. See the [artifact package and source-lineage qualification](research/doom/typed_observation_retention_a01_20261007/README.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+# Issue #8259 — release-batch alias-cleanup evidence rescue (2026-10-07)
+
+An additive rescue preserves nine frozen experiment packages and a separate measurement-publication custody record from the historical-base draft branch. Outcomes include the fake-X A06 executor-cleanup `PASS_METHOD_SCOPED`, private-Xvfb A10 `PASS_METHOD_SCOPED` under read-only audit v2, and J6q8 A03 explicit owner-close `PASS_METHOD_SCOPED_AUDIT_V2`; A04/A05/A07/A08/A09 and J6q8 A01/A02 STOPs and the A03 audit-v1 FAIL remain unchanged. The 239 source additions were byte-preserved; no candidate was rerun. These are construction boundaries only—not physical-keyboard, app/game, task-effect, live threat-response, recovery-benefit, or MAP01 evidence. See the [rescue record and artifact links](research/doom/release_batch_alias_rescue_8259_20261009/README.md), source [draft PR #8259](https://github.com/Unjuno/agent-interface/pull/8259), and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+## Issue #59 — Astra retained-video health timing A01 (2026-10-09)
+
+On then-current main `0455b0079ca29bcfe85153f280e592f5e96528f6` (all seven input and reader blobs remain unchanged on latest main `743ae74ec5be2472ff27fa06fe13d5ecf8534de5`), one host-only offline candidate extracted 85/85 health frames from the retained Astra MP4; an independent scalar pixel/WAD audit reconstructed every row and all three clock anchors and rejected 5/5 mutations. The 90/88 sensitivity-floor sample first falls below at video 28.2 s, while the controller end maps to 28.247 s with ±0.152 s combined fit-residual/frame/anchor allowance; 10 fps sampling and unknown media synchronization leave the order unresolved. No historical authored guard is available, and the report's 11.741 s model duration differs from the 11.845 s controller interval by 103.535 ms. Candidate/audit statuses are `PASS_POSTHOC_EXTRACTION` / `PASS_AUDIT`; run-custody status retains the missing exact invocation-start timestamp. This does not establish current guard behavior, GUI/game control, release, task effect, or MAP01 progress. The contemporaneous one-shot live result in PR #8678 did not cross authored hard-health floors and ended with cancellation failure and incomplete cleanup; it was not retried. Latest main separately records a synthetic duplicate-cleanup-ID `FAIL_METHOD`; production occurrence remains unknown. See the [frozen package and scope](research/doom/astra_v39_video_health_timing_a01_20261009/README.md), [Issue #59](https://github.com/Unjuno/agent-interface/issues/59), and [live result PR #8678](https://github.com/Unjuno/agent-interface/pull/8678).
+
+## Issue #59 V39 strict-release WSLc replay A10 (2026-10-12)
+
+The exact current-main controller snapshot failed at test-module import because it lacks the strict known-empty release predicate. PR #8835 head `33cde2476fee40c3e6b74405435d0a9106fd83ac` passed seven focused receipt, stale-cover composition, and V15 startup-preflight tests in normal and optimized CPython 3.14.8 within WSLc 3.0.1.0. The initial independent-audit script failure remains preserved; the corrected saved-artifact audit passed 16 checks. This is construction evidence only: no producer-authenticity, physical key-up timing, live input, gameplay effect, recovery benefit, threat response, or MAP01 claim. See [the report and raw/source bundle](research/doom/v39_strict_release_wslc_a10_20261012/REPORT.md), [Issue #59](https://github.com/Unjuno/agent-interface/issues/59), and [PR #8835](https://github.com/Unjuno/agent-interface/pull/8835).
+
+## Issue #59 V39 strict-release pending-cancel composition A11 (2026-10-12)
+
+A source-frozen WSLc test composes PR #8835 strict terminal-release acceptance with PR #8843 paired-health invalidation and pending-turn cancellation. Normal and optimized CPython 3.14.8 each passed 2/2 tests; four incomplete/adverse receipt variants were accepted by legacy main but rejected by the strict candidate. The saved-artifact audit passed 24 checks. This is synthetic construction evidence only; physical release, live game response, recovery benefit, and MAP01 completion remain unverified. See [the evidence report](research/doom/v39_strict_release_pending_cancel_a11_20261012/REPORT.md).
+
+## Issue #59 A14 per-key release raw re-audit A15 (2026-10-12)
+
+Read-only WSLc re-analysis of preserved A14 artifacts verified ten identity-bound per-key XTest KeyRelease/XSync receipts with X11 keymap down-before/up-after. The ten admission-to-release intervals were 192.231–533.905 ms (0.495–0.986 ms uncertainty), and five cancel-path key-ups preceded strict known-empty terminal receipts. Normal and optimized replay passed 6/6; the saved-artifact audit passed 34 checks. A14 remains a protocol deviation; these are X-server-state measurements, not physical keyboard observation or task efficacy. No live allocation was retried. See [the A15 report](research/doom/v39_a14_per_key_release_raw_audit_a15_20261012/README.md).
+
+
+## Issue #5311 T0 A01 — proof-carrying action admission (2026-10-09)
+
+The retained finite T0 is `FAIL_COST_GATE_SCOPED`: on eight valid synthetic plans, both gates accepted 8/8 with identical effect labels, and certificate admission rejected 7/7 invalid certificates, but corrected checker work is 96 full-reconstruction inspections versus 136 certificate inspections (41.7% more). Post-run source review found that candidate and auditor both omitted one strict release-boolean check per action from their cost accounting; the saved auditor's cost PASS is therefore qualified. Frozen code and raw outputs were not changed or rerun. The package makes no GUI, model, security, safety, action-effect, latency, or product claim. See [the retained protocol/report/raw package](research/analysis/proof_carrying_action_5311_t0_a01_20261009/README.md), [Issue #5311](https://github.com/Unjuno/agent-interface/issues/5311), and the [idea-family record](docs/ideas/proof-carrying-action-admission.md).
+
+
+## Issue #59 standard-caller native WSL/Xvfb release and recovery checks (2026-10-20)
+
+Two independent one-test Linux/Xvfb runs on the current main source are preserved in [the blocked-I/O release packet](research/integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-r01/README.md) and [the target-generation/recovery packet](research/integration/standard_caller_xvfb_blocked_release_20261020/local-native-wsl-generation-r03/README.md). The first passed the three-second caller cancel bound at 764.307 ms, verified owner disconnect, independent key release/readback at 438.767 ms, all-up state through the 8.5-second delayed-request horizon, and the corrected liveness timestamp fence. The caller correctly retained release `UNKNOWN` and `task_success=null`. The second passed process/window generation checks, release-verified synthetic recovery at 33.033 ms, stale-alias and destroyed-generation refusal before input dispatch, and an independent synthetic effect/key-release oracle; a fresh continuation effect committed in 36.326 ms. The runtime task-success API remains null.
+
+These are native Ubuntu WSL 24.04.3 runs against Xvfb 21.1.12-1ubuntu1.8, not WSLc, physical desktop, MAP01, a stopped-server guarantee, population reliability, or matched efficiency. The two generation-test prelaunch stops are preserved separately; neither launched Xvfb or the test. Shared WSLc Issue #7924 remains STOP/HOLD and no WSLc allocation was used or renewed.
+
+# Issue #8641 T0 A01 — uncertainty-source intervention choice
+
+`PASS_METHOD_SCOPED / H_FAIL_NO_ADDED_DECISION_VALUE`: the frozen candidate and independent auditor reconstructed all 4,800 synthetic rows with zero errors; four label/dependence/epoch/cost mutations were rejected. DECOMPOSED correctness was 88.9%, but its mean cost (0.258) exceeded TOTAL_UNCERTAINTY (0.200) and DECISION_VALUE (0.158), failing the preregistered cost reduction at matched correctness. A later candidate invocation outside the frozen no-retry instruction emitted bytes identical to the retained raw and is recorded as a process deviation, not new evidence. No GUI, model, user, live, or product claim. See the [canonical family record](docs/ideas/uncertainty-intervention-decomposition.md), [retained report, raw output, and audit](research/analysis/uncertainty_intervention_8641_t0_a01_20261009/REPORT.md), and [Issue #8641](https://github.com/Unjuno/agent-interface/issues/8641).
+# Issue #8620 T0 A01 — execution-information frontier (2026-10-09)
+
+The candidate ran once over 12 finite histories and two future contracts; the partition expanded from 3 to 12 classes. Frozen auditor v1's `FAIL` is preserved. Raw-only diagnostic v2 confirmed the fixture predicates and rejected 3/3 injected mutations, but exact CPython 3.14.5 was recorded only after execution, so the formal disposition remains `HOLD_FORMAL_FREEZE_INCOMPLETE`. No candidate rerun occurred. The evidence is synthetic and establishes no GUI, model, live memory-pressure, latency, task-effect, or product result. See the [retained packet](research/analysis/execution_information_8620_t0_a01_20261009/README.md) and [idea crosswalk](docs/ideas/execution-information-task-cuts.md).
+# Issue #8636 T0 A04 — relative-view rotation-feature audit hold (2026-10-12)
+
+The frozen candidate completed 360 synthetic trials once; the independent auditor stopped before summary at the first `feature_loss-30090-viewstate_oracle` event because image detection ran before the privileged ViewState branch. Disposition remains `HOLD_UNCERTAIN`; no hypothesis conclusion or retry. A read-only custody recheck verified all 2,198 archived files against the manifest. The recorded manifest digest is the CRLF representation; the LF Git blob digest differs only by line endings. No GUI, game, model, live effect, or performance claim. See the [A04 packet](research/analysis/relative_view_rotation_features_8636_t0_a04_20261012/A04-RESULT.md), [custody recheck](research/analysis/relative_view_rotation_features_8636_t0_a04_20261012/CUSTODY_RECHECK.md), and [family crosswalk](docs/ideas/relative-view-rotation-features.md).

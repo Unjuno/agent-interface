@@ -1,5 +1,17 @@
 # Public MCP transport
 
+[Worker interruption receipts](../../research/live_control/mcp_interruption_receipts_20261016/README.md)
+preserve a separate `interruption.json` before propagating non-Exception stops.
+Result lookup returns that receipt, or unavailable if it could not be saved;
+it never substitutes a prior completed report or replays the action. Existing
+backend reports remain unchanged. An interrupted worker's terminal state is not
+proof of physical release, task success, or server restart/recovery readiness.
+
+For optional same-process XID continuity checks in guarded-x11 mode, see
+[direct-window lifecycle evidence](../guarded_x11_v1/WINDOW_LIFECYCLE.md).
+`--guarded-window-lifecycle` requires the process-identity and query-worker flags;
+it has Fake X construction evidence, not native/live qualification.
+
 This optional adapter exposes the existing public `observe` and `dispatch` APIs
 to an MCP host. It returns metadata as text and the selected PNG as a separate
 image block, so the host need not parse base64 out of CLI text. It launches no
@@ -253,6 +265,32 @@ image-grounded aliases on one retained connection. It reuses the shared
 rejection, result retrieval and close lifecycle. It selects no actions and
 requires no helper model. The default remains one-shot.
 
+For a qualified trusted local Linux X server in the caller's PID namespace,
+add `--guarded-process-identity` at startup to require the
+[XRes/process-incarnation digest](../guarded_x11_v1/PROCESS_IDENTITY.md).
+The Python constructor equivalent is
+`create_server(..., session_mode='guarded-x11', guarded_process_identity=True)`.
+Other session modes reject this selection. The default is false; it cannot be
+changed by a tool call. `session.process_identity` reports the selected policy,
+not successful identity qualification. A captured source's
+`pointer_binding.process_generation` carries its sampled digest.
+
+Missing evidence refuses the observation/input and requires review; the server
+does not reopen the connection or fall back to the legacy mode. A changed digest
+refuses old aliases and is checked again before each new key/button press;
+cleanup releases remain available. Raw retained reports and delivered source
+metadata retain the same digest. This has Fake X composition coverage through
+the public MCP server, bridge, handle resolution and session/backend. Live MCP
+transport with process identity remains unqualified. Namespace correspondence
+is a caller precondition, not authenticated by this flag. Same-process resource
+reuse, sampling races and synchronous blocked-I/O release remain unresolved.
+
+The experimental `--guarded-query-worker` option additionally separates active
+focus/process queries and exposes call-ID-scoped `interface_guarded_cancel`
+outside the busy slot. It requires `--guarded-process-identity`; see the
+[exact coverage and remaining synchronous boundaries](../guarded_x11_v1/TARGET_QUERIES.md).
+It does not establish a physical release deadline or isolate all observations.
+
 ```sh
 python /absolute/agent-interface-runtime.pyz mcp \
   --targets /absolute/one-target.json \
@@ -450,6 +488,14 @@ python3 runtime.pyz relay -- --targets /absolute/targets.json --output-directory
 
 Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes. Install the same optional `mcp==1.30.0` dependency used by MCP mode. The relay launches `mcp` from that exact archive using the same Python executable; no research checkout, research allocation or native_start tool is involved. Source development also supports `python3 -m runtime.cli_v1.mcp_relay -- ...` from a checkout.
 
+Response writes are serialized on worker threads so a blocked client-facing
+stdout write does not immediately stop the JSON-lines reader. The relay keeps
+at most 16 response writes pending; once that bound is reached, input reading
+pauses until a write completes. This lets a later cancel request reach the MCP
+server only while the pending-response bound has room. It does not establish
+input release, server-side queue drainage, or a hard cancellation bound under
+sustained output blockage.
+
 Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
 
 Each request and response line is UTF-8 JSON, independent of the host locale.
@@ -587,3 +633,60 @@ needed one explicit final observation because the first final frame was stale.
 separate initial partial-presentation STOP. These cases do not qualify generic
 render reliability, wait defaults, speed or token savings, and do not certify
 provider MCP conversion of the Python route.
+
+## Active visual-check worker
+
+Explicit `--guarded-observation-worker` additionally selects
+[active visual-check isolation](../guarded_x11_v1/OBSERVATION_WORKER.md), requiring
+the existing guarded process-identity and query-worker flags. It keeps active
+capture/observation persistence on a separate read-only client and fences late
+replies before source publication. Defaults retain existing behavior. This is
+Fake X qualified construction, not physical release, live recovery or task success.
+
+## Guarded release-only recovery
+
+`interface_guarded_recover_input(current_binding_revision=...)` exposes
+[one explicit recovery attempt](../guarded_x11_v1/RECOVERY.md) on an already open,
+idle guarded owner with unverified cleanup. It does not open/reconnect, observe or
+replay a task. Accepted attempts revoke old grounding and consume the revision
+even on failure. Verified neutrality still requires window review and fresh
+aliases for grounded editing. Pending native I/O remains pending; the busy slot
+prevents concurrent recovery/cleanup writers. Real platform timing and task
+effects remain unqualified.
+
+## Explicit response wait budget
+
+Guarded input and release-only recovery accept optional `wait_for_result_ms`
+(0..10000; default null preserves full await). [Wait semantics](WAIT_BUDGET.md)
+return either the original terminal result or pending with one call ID, unknown
+effects and no release/task confirmation. Queued/running work retains custody
+and may still execute; ending this wait does not cancel or permit replay. Read
+the original `interface_results(call_id)`. Other input/recovery/close remains busy
+until the writer finishes. This is a cooperative response wait, not a hard
+transport/OS/physical-release bound or a task-success predicate.
+
+## Public compiled X11 method
+
+`interface_guarded_compiled(interface, bindings, predicate_rules, effect_rules,
+wait_for_result_ms=1000)` composes the existing bounded compiled graph with the
+standard owned-process caller. The tool is registered only when
+`--session-mode guarded-x11`, `--guarded-process-identity`,
+`--guarded-query-worker`, and `--guarded-owned-process` are enabled. Use the
+`compiled_scope` and `compiled_surface` returned by an earlier guarded
+observation; bind actions only to aliases already minted by the guarded bridge.
+Predicate and effect rules are finite exact-pixel tables. Unknown pixel values
+remain unknown; this interface accepts no executable callbacks, OCR, generic
+vision, or task-specific scoring code.
+
+The process/window generation observed first is pinned for the invocation when
+present. A changed or missing generation stops continuation before another
+perception/effect verdict or input. A graph `TASK_SUCCEEDED` remains a method
+verdict and the public `task_success` field stays null. The method's transition
+and runtime bounds do not preempt blocking platform I/O. A short response wait
+returns a call ID while the same owner retains custody; retrieve it through
+`interface_results`. `interface_guarded_cancel(call_id)` may retire that owner.
+Retirement does not prove neutral input: report release as verified only when a
+separate native readback says so. Never repeat a pending or uncertain request.
+The local Fake X composition suite is construction evidence only; live GUI use,
+application task effects, MAP01, bounded physical release and matched efficiency
+remain unqualified.

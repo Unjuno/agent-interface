@@ -1,0 +1,9 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_matching_ammo_positive_control_reaches_executor_ready_but_not_admitted (test_a13_feedback_action_gate.FeedbackActionGateTests.test_matching_ammo_positive_control_reaches_executor_ready_but_not_admitted) ... ok
+test_soft_ammo_feedback_reaches_prompt_and_fresh_action_gate_rejects_fire (test_a13_feedback_action_gate.FeedbackActionGateTests.test_soft_ammo_feedback_reaches_prompt_and_fresh_action_gate_rejects_fire) ... ok
+A13_RESULT={"classification": "CONSTRUCTION_ONLY_FEEDBACK_TO_FRESH_ADMISSION", "executor_admission": null, "final_admission_reason": "ammo_minimum_failed", "final_admission_status": "REJECTED_ACTION_NOT_CURRENT", "input_authority_admitted": false, "prompt_has_current_ammo_4": true, "prompt_has_exact_summary": true, "soft_event_summary": {"cover_policy_source_iteration": 1, "current_value": 4, "effect": "prior_cover_preserved", "grants_input_authority": false, "hard_minimum": 1, "observed_during_iteration": 2, "sequence": 11, "signal_id": "ammo", "soft_event_count": 1, "source_value": 6}, "synthetic_candidate": {"commands": [{"action": "fire", "extent": "short"}]}}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.029s
+
+OK

@@ -1,0 +1,15 @@
+import datetime,hashlib,json,os,subprocess,sys
+from pathlib import Path
+r=Path(__file__).resolve().parent;phase=sys.argv[1];folder=r/('baseline' if phase=='first-red' else 'candidate');o=r/phase;o.mkdir(exist_ok=False)
+# portable definitions preassembled in isolated candidate
+utc=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat();pin=lambda b:dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+cmd=[sys.executable]+(['-O'] if phase.endswith('optimized') else [])+['-B','-m','unittest','-v','test_adaptive_acquisition_aggregate_cost','test_adaptive_acquisition_cost_coverage','test_adaptive_acquisition_caller_v3']
+env=os.environ.copy();env.pop('ROWS',None);env.pop('TRACE_OUTPUT',None);env.pop('PYTHONPATH',None);env['PYTHONDONTWRITEBYTECODE']='1'
+freeze={p.name:pin(p.read_bytes()) for p in folder.glob('*.py')}
+(o/'PLAN.json').write_text(json.dumps(dict(argv=cmd,cwd=str(folder),freeze=freeze,guard_seconds=10,supervisor_pid=os.getpid()),indent=2)+'\n',encoding='utf-8')
+start=utc();p=subprocess.Popen(cmd,cwd=folder,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE);expired=False
+try:out,err=p.communicate(timeout=10)
+except subprocess.TimeoutExpired:expired=True;p.kill();out,err=p.communicate(timeout=3)
+(o/'stdout.bin').write_bytes(out);(o/'stderr.bin').write_bytes(err)
+result=dict(pid=p.pid,supervisor_pid=os.getpid(),start_utc=start,end_utc=utc(),exit_code=p.returncode,guard_expired=expired,stdout=pin(out),stderr=pin(err),freeze_unchanged=all(pin((folder/n).read_bytes())==v for n,v in freeze.items()))
+(o/'RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result));print(err.decode('utf-8'))

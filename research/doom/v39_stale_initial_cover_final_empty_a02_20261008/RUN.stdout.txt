@@ -1,0 +1,20 @@
+{
+  "schema": "v39-stale-initial-cover-final-empty-comparison-v1",
+  "baseline_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "a9089f0721d40c53ce982bc751d7a9ed02f9dd73",
+  "baseline": {
+    "latest_sequence": 11,
+    "pending_events": false,
+    "late_sequence_still_queued": 12
+  },
+  "candidate": {
+    "initial_cover_recovery_wired": true,
+    "recovered_sequence": 12,
+    "late_hard_crossing_observed": "health:below_hard_minimum",
+    "stale_cover_disposition": "discarded_until_fresh_plan",
+    "queue_empty_after_recovery": true,
+    "stale_cover_resubmitted": false
+  },
+  "decision": "PASS; candidate initial-cover recovery consumes and evaluates final-empty late arrival",
+  "scope": "Exact current-main drain and exact latest-PR recovery helper under deterministic queue scheduling; static caller-wiring check; mock observation monitor. No full controller process, live game, GUI, model, OS input, physical release measurement, or task effect."
+}

@@ -1,0 +1,164 @@
+{
+  "mutation": "remove sticky quarantine assignment from client.call exception path",
+  "methods": 1,
+  "assertion_failures": 3,
+  "errors": 0,
+  "skipped": 0,
+  "rows": [
+    {
+      "case": "partial",
+      "requests": [
+        {
+          "schema": "input-owner-rpc-v2",
+          "service_id": "owned-service-v2",
+          "request_id": 1,
+          "op": "down",
+          "lease": {
+            "deadline_ns": 344821633642500,
+            "intent_token": "rpc-v2-intent",
+            "expected_focus": 41,
+            "expected_surface": 41,
+            "expected_geometry": [
+              0,
+              0,
+              32,
+              32
+            ],
+            "cancel_requested": false,
+            "focus_invalid": false,
+            "target_process_identity": [
+              1,
+              41,
+              "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              344821633642500
+            ],
+            "target_window_identity": null
+          },
+          "key": "a"
+        }
+      ],
+      "local_close": {
+        "verified": false,
+        "service_id": "owned-service-v2",
+        "display": ":fake",
+        "reason": "transport detached; independent owner release evidence required"
+      },
+      "server_receipts": [
+        {
+          "schema": "input-owner-service-close-v2",
+          "display": ":fake",
+          "service_id": "owned-service-v2",
+          "verified": true,
+          "owner_thread_stopped": true,
+          "close_error": null,
+          "protocol_error": null,
+          "release_records": [
+            {
+              "event": "owner_release",
+              "reason": "target_generation_invalidated",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 344811789845500,
+              "valid_until_ns": 344821633642500,
+              "intent_token": "rpc-v2-intent",
+              "key_release_attempts": {
+                "38": {
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "keyrelease_started_ns": 344811789788100,
+                      "sync_returned_ns": 344811789830500,
+                      "keymap_sampled_ns": 344811789832800,
+                      "server_key_down_before": true,
+                      "server_key_down_after": false,
+                      "keymap_before_error": null,
+                      "keymap_after_error": null,
+                      "keyrelease_error": null,
+                      "sync_error": null
+                    }
+                  ],
+                  "verified": true
+                }
+              },
+              "key_release_intervals_ns": [
+                {
+                  "keycode": 38,
+                  "interval_ns": [
+                    344811789788100,
+                    344811789832800
+                  ]
+                }
+              ],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                344821633642500
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            },
+            {
+              "event": "owner_release",
+              "reason": "close",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "keys_unknown": [],
+              "key_state_errors": [],
+              "verified_ns": 344811789996500,
+              "valid_until_ns": null,
+              "intent_token": null,
+              "key_release_attempts": {},
+              "key_release_intervals_ns": [],
+              "key_state_source": "x11_query_keymap",
+              "target_process_identity": [
+                1,
+                41,
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                344821633642500
+              ],
+              "target_process_identity_reader": {
+                "retired": true,
+                "pending": false,
+                "thread_alive": true,
+                "close_error": null
+              },
+              "target_focus_query_failed": false
+            }
+          ],
+          "physical_verification_authoritative": false
+        }
+      ],
+      "edges": [
+        {
+          "event": 2,
+          "code": 38,
+          "down": [
+            38
+          ]
+        },
+        {
+          "event": 3,
+          "code": 38,
+          "down": []
+        }
+      ],
+      "fake_down_at_unknown": [
+        38
+      ],
+      "fake_down_after": [],
+      "post_error_send_count": 0
+    }
+  ],
+  "expected": "three complete-response/lost-response faults reject lost quarantine; retained partial frame independently blocks the fourth second send"
+}

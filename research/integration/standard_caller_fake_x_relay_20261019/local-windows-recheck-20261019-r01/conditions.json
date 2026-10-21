@@ -1,0 +1,47 @@
+{
+  "schema": "agent-interface/local-test-recheck-v1",
+  "source": {
+    "branch": "main",
+    "commit": "168200eb43dd0f9144b3ed4aef551387674c7bfd"
+  },
+  "environment": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9",
+    "packages": {
+      "mcp": "1.30.0",
+      "python-xlib": "0.33",
+      "Pillow": "10.2.0",
+      "numpy": "1.26.4"
+    },
+    "environment_isolation": "venv outside the repository worktree",
+    "checkout_note": "Sparse-checkout omitted research source/test files; exact tracked files needed by the suites were materialized without edits before the successful runs."
+  },
+  "suites": [
+    {
+      "name": "owner-and-fence",
+      "modules": [
+        "runtime.cli_v1.test_mcp_owned_process",
+        "runtime.cli_v1.test_mcp_relay_composition",
+        "runtime.guarded_x11_v1.test_xres_client_fence"
+      ],
+      "normal": {"tests": 39, "result": "PASS", "seconds": 15.900},
+      "optimized": {"tests": 39, "result": "PASS", "seconds": 14.673}
+    },
+    {
+      "name": "parser-and-relay",
+      "modules": [
+        "research.integration.offline_proxy_reply_framing_20261019.test_reply_gate",
+        "research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate",
+        "research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay",
+        "runtime.cli_v1.test_mcp_relay_composition"
+      ],
+      "normal": {"tests": 29, "result": "PASS", "seconds": 3.844},
+      "optimized": {"tests": 29, "result": "PASS", "seconds": 3.755}
+    }
+  ],
+  "limits": [
+    "Fake X, socketpair, and synthetic supervisor/effect fixtures only; no X server or desktop input was used.",
+    "Does not verify X server queue ordering, operating-system key state, a physical release deadline, application task success, or WSLc allocation status.",
+    "These are current-main Windows test rechecks, not new experiment outcomes."
+  ]
+}

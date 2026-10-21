@@ -530,6 +530,10 @@ using observe. This CLI is a line transport, not a new MCP server registration.
 
 Wait for the JSON `ready` line, then send exactly one finite JSON command line:
 
+The line parser rejects duplicate object member names before command admission,
+including escaped spellings that decode to the same key. Text that merely looks
+like JSON inside a JSON string remains ordinary text.
+
 ```json
 {"id":1,"method":"observe","args":[]}
 ```

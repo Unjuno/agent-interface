@@ -51,6 +51,7 @@ For the short worker workflow, see [Worker Quickstart](docs/WORKER_QUICKSTART.md
 | Need | Start with |
 |---|---|
 | Current goal | [Current direction](docs/CURRENT_GOAL.md) and [remaining roadmap gates](ROADMAP.md) |
+| Work for a worker | [Finite work map](docs/WORKER_WORK_MAP.md): narrow scope, acceptance evidence and collision boundaries; [repository cleanup](docs/REPOSITORY_CONSOLIDATION.md) |
 | Evidence and remaining gaps | [Progress](docs/PROGRESS_FROM_BASELINE.md) → [evidence map](docs/EVIDENCE_MAP.md) → the selected [ledger entry](RESEARCH.md), report, raw evidence and audit |
 | Ideas and outcomes | [Issue-centered index](docs/IDEAS_AND_OUTCOMES.md) for concise idea/disposition history; [Issues](https://github.com/Unjuno/agent-interface/issues) remain the intake and discussion source |
 | Ownership and overlap | The selected Issue’s latest explicit owner/allocation, related open/closed [PRs](https://github.com/Unjuno/agent-interface/pulls), and the [resource ownership log #5085](https://github.com/Unjuno/agent-interface/issues/5085); use the [retained research handoff](docs/LOCAL_RESEARCH_HANDOFF.md) for context and follow [parallel coordination rules](docs/ISSUE_FAILURE_CLASSIFICATION.md#parallel-coordination-and-evidence-preservation) |

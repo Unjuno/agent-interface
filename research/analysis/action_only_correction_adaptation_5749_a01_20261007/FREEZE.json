@@ -1,0 +1,38 @@
+{
+  "allocation": "5749-ACTION-ONLY-A01-20261007",
+  "issue": 5749,
+  "base_commit": "75bfe2badd49376ac33cd8a87030e7a6a3396ecf",
+  "branch": "research/5749-action-only-a01-20261007",
+  "package": "research/analysis/action_only_correction_adaptation_5749_a01_20261007",
+  "source_sha256": {
+    "HYPOTHESIS.md": "3ab5780295bc77748e32a4eed7b5ff1b97a6e77a8052945128b1e37d20e08175",
+    "fixture.json": "28b94e564966728dbe052a26aa947eac5161dbd23d79030c81d299254480f86d",
+    "candidate.py": "1ba7280a3f8f6111327206535ddc6e8614b93cefa45b75ff80edb8d7859fee3c",
+    "auditor.py": "eafe999c83bdd6c75a9a2fc9e8b1bf273ee2a434f6a4d40f72a97347357d99f3",
+    "test_construction.py": "b535b712e69a89f4eab36a6d9b68a792d2cb55e0ee166b3f0b58a2b91fecb0a0"
+  },
+  "construction": {
+    "command": "python -B -m unittest -v test_construction.py",
+    "tests_passed": 7,
+    "tests_failed": 0,
+    "result": "PASS_CONSTRUCTION",
+    "completed_before_formal_freeze": true
+  },
+  "formal": {
+    "candidate_invocations": 0,
+    "independent_auditor_invocations": 0,
+    "retries": 0,
+    "candidate_command": "python -B candidate.py fixture.json",
+    "auditor_command": "python -B auditor.py results/formal01/raw.json fixture.json",
+    "output_directory_must_be_empty": "results/formal01"
+  },
+  "runtime": {
+    "host": "macOS 27.0 arm64",
+    "python": "3.12.13",
+    "container": null,
+    "container_isolation_claimed": false,
+    "network_isolation_claimed": false,
+    "reason": "GitHub Issue #8200 comment 6033982148 reports OrbStack image inspect/list still failing in the content store with operation not supported and no other container runtime installed. This is a small stdlib finite method fixture with no external effects; host execution only, no isolation claim."
+  },
+  "boundary": "No model, user, GUI, network, application effect, private-utility inference, or execution authority. Fixture evaluator labels are not visible to the candidate policy. No tuning/retries or replacement allocation."
+}

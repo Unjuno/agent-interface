@@ -1,0 +1,16 @@
+{
+  "controls": 10,
+  "rejected": 10,
+  "rows": [
+    {"errors":["denominator","result:decision"],"name":"drop_row","rejected":true},
+    {"errors":["row90:duplicate","result:decision"],"name":"duplicate_row","rejected":true},
+    {"errors":["row0:seed","denominator","result:decision"],"name":"bool_seed","rejected":true},
+    {"errors":["row35:sample_sha","result:decision"],"name":"sample_value","rejected":true},
+    {"errors":["row40:sample_alarm","result:decision"],"name":"sample_alarm","rejected":true},
+    {"errors":["row30:mode_schedule","row30:mode_alarm","result:decision"],"name":"mode_label","rejected":true},
+    {"errors":["row30:mode_alarm","result:decision"],"name":"mode_alarm","rejected":true},
+    {"errors":["row0:authority","result:decision"],"name":"authority","rejected":true},
+    {"errors":["result:decision"],"name":"result_decision","rejected":true},
+    {"errors":["result:counterexamples"],"name":"counterexample_count","rejected":true}
+  ]
+}

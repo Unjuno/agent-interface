@@ -1,0 +1,11 @@
+import ast,hashlib,json,subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent;repo=root.parent/'agent-interface'
+ref='b4ff90d974c2cd4142eaceee156a74a9aa3109a8'
+pins={}
+for name in ['adaptive_acquisition_caller_v3.py','test_adaptive_acquisition_caller_v3.py']:
+    raw=subprocess.check_output(['git','show',ref+':research/live_control/'+name],cwd=repo)
+    ast.parse(raw);pins[name]={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+    for folder in ['baseline','candidate']:
+        target=root/folder/name;target.parent.mkdir(exist_ok=True);target.write_bytes(raw)
+(root/'SOURCE_PINS.json').write_text(json.dumps({'ref':ref,'images':pins},indent=2)+'\n',encoding='utf-8');print(json.dumps(pins))

@@ -1,0 +1,57 @@
+import copy, gzip, hashlib, json, sys
+from pathlib import Path
+OUT=Path(__file__).parent/'caller-current-main-20261016'
+GROUP='test_adaptive_acquisition_caller_verify_progress_v3.ROWS'
+def check(records):
+    count=0
+    for rows in records.values():
+        for row in rows:
+            r=row.get('result',row.get('caller'))
+            if r is None:continue
+            a=r['accounting'];attempts=r['attempt_ledger'];calls=r['model_call_ledger']
+            if a['attempted_calls']!=len(attempts) or a['completed_calls']!=len(calls):raise ValueError('attempt conservation')
+            ids=[v['call_id'] for v in attempts if v['call_id'] is not None]
+            if a['duplicate_call_ids']!=sorted({v for v in ids if ids.count(v)>1}):raise ValueError('call identity')
+            for field,coverage in a['usage_coverage'].items():
+                found=[v['usage'][field] for v in attempts if v['usage'] is not None and field in v['usage']]
+                expected=sum(found) if len(found)==len(attempts) else None
+                if coverage!=len(found) or a['usage_totals'][field]!=expected:raise ValueError('usage conservation')
+            if r['outcome']=='TASK_SUCCEEDED' and (r['task_effect']!='succeeded' or r['execution_progress']!={'status':'completed'}):raise ValueError('false success')
+            if r['execution_progress'] and r['execution_progress']['status']=='safe_yield' and r['task_effect'] is not None:raise ValueError('yield effect promotion')
+            count+=1
+    rows=records[GROUP]
+    if len(rows)!=4 or {(r['effect'],r['journal_fails']) for r in rows}!={(e,j) for e in ('failed','unavailable') for j in (False,True)}:raise ValueError('progress coverage')
+    for row in rows:
+        r=row['result']
+        if r['execution_progress']!={'status':'completed'} or r['delivery']!='confirmed':raise ValueError('lost completed receipt')
+        if r['task_effect']!=row['effect'] or r['effect_receipt']!={'status':row['effect']}:raise ValueError('effect changed')
+        if r['outcome']!=('CALLER_FAILED' if row['journal_fails'] else 'TASK_NOT_VERIFIED'):raise ValueError('unverified success')
+        if row['calls']!=['execute','verify']:raise ValueError('replay')
+    rows=records['test_adaptive_acquisition_caller_refusal_v3.ROWS']
+    compiled=[v for v in rows if 'compiled' in v]
+    if len(compiled)!=2 or {v['compiled']['completed_transitions'] for v in compiled}!={0,1}:raise ValueError('compiled prefix coverage')
+    for v in compiled:
+        r=v['caller'];n=v['compiled']['completed_transitions']
+        if r['outcome']!='EXECUTION_INCOMPLETE' or r['reason']!='execution_refused' or r['execution_progress']['completed_actions']!=n:raise ValueError('compiled refusal lost')
+        if v['compiled_calls']['execute']!=n+1 or v['compiled_calls']['effect']!=n:raise ValueError('compiled refusal dispatch')
+    return count
+reports={}
+for mode in ('normal','optimized'):
+    result=json.loads((OUT/f'{mode}-result.json').read_text());records=json.loads((OUT/f'{mode}-records.json').read_text())
+    if (result['methods'],result['failures'],result['errors'],result['skipped'],len(set(result['selected'])))!=(76,0,0,0,76):raise ValueError('method result')
+    rows=check(records);mutations=[]
+    for name in ('lost_receipt','false_success','lost_attempt','changed_usage'):
+        bad=copy.deepcopy(records)
+        if name=='lost_receipt':bad[GROUP][0]['result']['execution_progress']=None
+        elif name=='false_success':bad[GROUP][0]['result']['outcome']='TASK_SUCCEEDED'
+        else:
+            r=next(v['result'] for vs in bad.values() for v in vs if v.get('result') and v['result']['attempt_ledger'])
+            if name=='lost_attempt':r['attempt_ledger'].pop()
+            else:r['accounting']['usage_totals']['input_tokens']=123456789
+        try:check(bad)
+        except ValueError as e:mutations.append(dict(name=name,rejected=str(e)))
+        else:raise ValueError('mutation accepted '+name)
+    reports[mode]=dict(methods=76,rows_checked=rows,progress_rows=4,compiled_refusal_rows=2,mutations=mutations)
+report=dict(scope='saved-only arithmetic/receipt consistency; synthetic effect and admission; not independent app scorer or provider usage',modes=reports,normal_optimized_record_bytes_equal=(OUT/'normal-records.json').read_bytes()==(OUT/'optimized-records.json').read_bytes())
+(OUT/'SAVED_AUDIT.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps(report,indent=2))

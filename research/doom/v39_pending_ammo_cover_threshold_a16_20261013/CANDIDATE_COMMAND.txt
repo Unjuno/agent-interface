@@ -1,0 +1,1 @@
+wslc run --rm --name pending-ammo-cover-a16-20261013 --pull never --network none --cpus 1 --memory 512M --volume "<absolute-study-path>/results/a16-01:/out:rw" --workdir /opt/a16 a16-pending-ammo-threshold:20261012 python3 -m unittest -v test_a16_pending_ammo_threshold

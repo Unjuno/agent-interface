@@ -1,0 +1,21 @@
+{
+  "classification": "CURRENT_MAIN_MODEL_FREE_REGRESSION",
+  "commit": "cb3fb7cea16ab57c5474164dc17b88f7ff51daa9",
+  "python": "3.11.9",
+  "commands": [
+    "python -m unittest test_map01_overlap_controller_v39 test_map01_overlap_controller_v39_dual_signal test_map01_overlap_controller_v39_cover_terminal test_map01_v39_pending_observation_drain test_session_map01_v15",
+    "python -O -m unittest test_map01_overlap_controller_v39 test_map01_overlap_controller_v39_dual_signal test_map01_overlap_controller_v39_cover_terminal test_map01_v39_pending_observation_drain test_session_map01_v15"
+  ],
+  "modules": [
+    "test_map01_overlap_controller_v39",
+    "test_map01_overlap_controller_v39_dual_signal",
+    "test_map01_overlap_controller_v39_cover_terminal",
+    "test_map01_v39_pending_observation_drain",
+    "test_session_map01_v15"
+  ],
+  "total_tests_per_mode": 79,
+  "normal_exit": 0,
+  "optimized_exit": 0,
+  "source_pin_count": 45,
+  "scope": "Windows-host, model-free tests for V39 observation/dual-signal/cover-terminal/pending-drain and V15 measurement-session selection; no WSLc, game, model, GUI, or OS input."
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "release-batch-alias-owner-cleanup-runner-stop-v1",
+  "run_id": "j6q8-owner-cleanup-a01-20261007-one-shot",
+  "status": "STOP",
+  "phase": "runner_setup_before_candidate_source_execution",
+  "docker_exit_code": 1,
+  "exact_candidate_arguments": "python3 -B /study/candidate.py --out /out --display :131",
+  "frozen_candidate_command": "python3 -B /study/candidate.py --out /out/RAW.json --display :131",
+  "raw_output_created": false,
+  "candidate_reason": "output exists; refusing to overwrite first outcome",
+  "observed_host_output_mount": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\outputs\\release_batch_alias_owner_cleanup_j6q8_a01_20261007\\A01",
+  "classification": "construction/setup stop caused by command/freeze mismatch and passing an existing mount root where candidate requires a fresh output directory; Xvfb not started",
+  "retry_or_tuning": "none; any later construction is separately versioned"
+}

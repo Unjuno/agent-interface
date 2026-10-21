@@ -1,0 +1,82 @@
+{
+  "a01_freeze_path": "research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json",
+  "a01_freeze_sha256": "3b4d846d79cf9e284188c04587deff30e83cff02ef80508bd52809914096ead2",
+  "auditor_sha256": "e7a34b497e58eca4d7b55441ad3d5bf458caa18b0d7705d205fc3fe4b6d5a8b1",
+  "base_commit": "cb3fb7cea16ab57c5474164dc17b88f7ff51daa9",
+  "brightness_factors": [
+    0.95,
+    1.05
+  ],
+  "candidate_sha256": "e8e9994405d3b0e538d99bed5368778e05eaf9d5e23b81eb43f07f6c94d3bbf9",
+  "contrast_factors": [
+    0.95,
+    1.05
+  ],
+  "decision": "PASS_NO_FALSE_OBSERVED_VALUE iff all 13 baseline frames match and no perturbed input yields an observed value unequal to its frozen manual label. Unknown outputs count as fail-closed and are reported, not as successful recovery.",
+  "execution_id": "v39-hud-reader-perturbation-a01-20261009",
+  "expected_reads": 195,
+  "frame_count": 13,
+  "jpeg_qualities": [
+    95,
+    75
+  ],
+  "positive_control": "13/13 unmodified frames must equal the manual_health labels frozen in A01.",
+  "reader_base_commit": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "reader_modules": [
+    "research/doom/doom_hud_signal_v1.py",
+    "research/doom/doom_hud_signal_v2.py",
+    "research/doom/doom_hud_signal_v3.py"
+  ],
+  "runtime_versions": {
+    "numpy": "2.3.5",
+    "pillow": "12.3.0",
+    "python": "3.12.14"
+  },
+  "schema": "v39-hud-reader-perturbation-freeze-a01-v1",
+  "scope": "Offline CPU image perturbation of 13 sparse retained model-input frames; synthetic transforms only; no live capture, guard integration, latency, input release, task effect, recovery, survival, progress, or MAP01-completion claim.",
+  "source_blobs": {
+    "research/doom/doom_hud_signal_v1.py": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+    "research/doom/doom_hud_signal_v2.py": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+    "research/doom/doom_hud_signal_v3.py": "083338b4565176aaea560d800ce0210f17b6852f"
+  },
+  "source_sha256": {
+    "research/doom/doom_hud_signal_v1.py": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+    "research/doom/doom_hud_signal_v2.py": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff",
+    "research/doom/doom_hud_signal_v3.py": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7"
+  },
+  "translation_px": [
+    [
+      -2,
+      0
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ]
+  ],
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+}

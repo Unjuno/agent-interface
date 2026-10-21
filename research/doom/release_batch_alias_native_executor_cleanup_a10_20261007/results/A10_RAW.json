@@ -1,0 +1,182 @@
+{
+  "alias_codes": [
+    38,
+    38
+  ],
+  "errors": [],
+  "events": [
+    {
+      "accepted_ns": 199023029608527,
+      "event": "accepted",
+      "id": "a10",
+      "intent_token": "add17c9dca5545dea15cc10a1322ac76",
+      "program_sha256": "118c44f8bac1bfd6aa34685d6f7dc703401fd53bd4b30824a84620ebe7b11b84",
+      "steps": 1,
+      "valid_until_ns": 199028029520718
+    },
+    {
+      "event": "step_started",
+      "id": "a10",
+      "issued_ns": 199023029742897,
+      "operation": "key_batch",
+      "step": 0
+    },
+    {
+      "decision_reason": null,
+      "error": "ValueError('distinct resolved keycodes required for up_batch')",
+      "event": "terminal",
+      "id": "a10",
+      "interruption": null,
+      "release": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "add17c9dca5545dea15cc10a1322ac76",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 199023030889587,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 199023030751372,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 199023030825911
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              199023030751372,
+              199023030889587
+            ],
+            "keycode": 38
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "release",
+        "release_call_returned_ns": 199023031171970,
+        "release_call_started_ns": 199023030596143,
+        "valid_until_ns": 199028029520718,
+        "verified": true,
+        "verified_ns": 199023031146306
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "failed",
+      "steps_completed": 0,
+      "terminal_ns": 199023031184454
+    }
+  ],
+  "keymap_after": false,
+  "limits": [
+    "One isolated Xvfb case; candidate-only alias guard; no game/model/physical keyboard/application effect."
+  ],
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 199023030889587,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 199023030751372,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 199023030825911
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            199023030751372,
+            199023030889587
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "release",
+      "valid_until_ns": 199028029520718,
+      "verified": true,
+      "verified_ns": 199023031146306
+    }
+  ],
+  "schema": "a10-native-v15-v13-alias-cleanup-raw-v1",
+  "status": "CANDIDATE_COMPLETE",
+  "terminal": {
+    "decision_reason": null,
+    "error": "ValueError('distinct resolved keycodes required for up_batch')",
+    "event": "terminal",
+    "id": "a10",
+    "interruption": null,
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "add17c9dca5545dea15cc10a1322ac76",
+      "key_release_attempts": {
+        "38": {
+          "attempts": [
+            {
+              "attempt": 1,
+              "keymap_after_error": null,
+              "keymap_before_error": null,
+              "keymap_sampled_ns": 199023030889587,
+              "keyrelease_error": null,
+              "keyrelease_started_ns": 199023030751372,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_error": null,
+              "sync_returned_ns": 199023030825911
+            }
+          ],
+          "verified": true
+        }
+      },
+      "key_release_intervals_ns": [
+        {
+          "interval_ns": [
+            199023030751372,
+            199023030889587
+          ],
+          "keycode": 38
+        }
+      ],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "release",
+      "release_call_returned_ns": 199023031171970,
+      "release_call_started_ns": 199023030596143,
+      "valid_until_ns": 199028029520718,
+      "verified": true,
+      "verified_ns": 199023031146306
+    },
+    "semantic_completion": "program status only; task scoring is separate",
+    "status": "failed",
+    "steps_completed": 0,
+    "terminal_ns": 199023031184454
+  },
+  "xvfb_exit": 0
+}

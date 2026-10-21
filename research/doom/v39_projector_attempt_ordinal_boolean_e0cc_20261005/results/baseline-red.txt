@@ -1,0 +1,15 @@
+test_rejects_boolean_retry_ordinal_even_when_equal_to_one (test_project_v39_release_measurement_v1.StrictProjectionTests.test_rejects_boolean_retry_ordinal_even_when_equal_to_one) ... FAIL
+
+======================================================================
+FAIL: test_rejects_boolean_retry_ordinal_even_when_equal_to_one (test_project_v39_release_measurement_v1.StrictProjectionTests.test_rejects_boolean_retry_ordinal_even_when_equal_to_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-59-ordinal-fix/research/doom/test_project_v39_release_measurement_v1.py", line 79, in test_rejects_boolean_retry_ordinal_even_when_equal_to_one
+    self.assertFalse(result["measurement_ready"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

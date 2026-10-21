@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import threading
+from copy import deepcopy
 
 from doom_typed_release_backend_v2 import Backend as Previous, suite
 from input_transition_owner_v4 import InputOwner
@@ -11,11 +12,48 @@ class Backend(Previous):
     """Opt-in release composition; controller and default backend are unchanged."""
 
     def __init__(self, session, out, emit, signal_readers):
+        self._executor_custody_lock = threading.RLock()
+        self._executor_custody_owner = None
+        self._executor_release_obligation = None
         super().__init__(session, out, emit, signal_readers)
-        self.owner.close()
-        self.owner = InputOwner(session.name)
+        if getattr(self,'_provided_input_owner',None) is None:
+            self.owner.close()
+            self.owner=InputOwner(session.name)
         self._release_batch = threading.local()
         self._last_release_batch_delivery = None
+        self._admission_receipts = {}
+
+    def claim_executor_custody(self, token):
+        with self._executor_custody_lock:
+            if token is None:
+                raise ValueError("executor custody requires a nonempty owner token")
+            if self._executor_release_obligation is not None:
+                raise ValueError("backend input release unverified; no replacement authority")
+            if self._executor_custody_owner is not None:
+                raise ValueError("backend executor custody occupied; close the current executor first")
+            self._executor_custody_owner = token
+
+    def retain_executor_release_obligation(self, token, obligation):
+        with self._executor_custody_lock:
+            if self._executor_custody_owner is None or self._executor_custody_owner is not token:
+                raise ValueError("executor does not own this backend")
+            if self._executor_release_obligation is None:
+                self._executor_release_obligation = deepcopy(obligation)
+
+    def release_executor_custody(self, token):
+        with self._executor_custody_lock:
+            if self._executor_custody_owner is None or self._executor_custody_owner is not token:
+                raise ValueError("executor does not own this backend")
+            if self._executor_release_obligation is not None:
+                raise ValueError("backend input release unverified; no replacement authority")
+            self._executor_custody_owner = None
+
+    def executor_custody_snapshot(self):
+        with self._executor_custody_lock:
+            return {"schema": "map01-backend-executor-custody-v1",
+                    "executor_attached": self._executor_custody_owner is not None,
+                    "release_obligation": deepcopy(self._executor_release_obligation),
+                    "grants_input_authority": False}
 
     def _delivery_ledger(self, context):
         ledger = context.get("delivery_ledger")
@@ -100,7 +138,7 @@ class Backend(Previous):
 
         self._flush_pending_ups(context)
 
-        if context["rows"]:
+        if context["rows"] or context.get("cancelled_pending_ups"):
             self._release_batch.context = context
         else:
             try:
@@ -152,6 +190,12 @@ class Backend(Previous):
                 )
         finally:
             self._attach_delivery_ledger(error, context)
+            cancelled_pending = self._cancelled_pending_up_records(context)
+            if cancelled_pending:
+                try:
+                    error.cancelled_pending_ups = cancelled_pending
+                except (AttributeError, TypeError):
+                    pass
             context["rows"].clear()
             try:
                 del self._release_batch.context
@@ -159,6 +203,12 @@ class Backend(Previous):
                 pass
 
     def release_all(self):
+        try:
+            return self._release_all_with_batch()
+        finally:
+            self._admission_receipts.clear()
+
+    def _release_all_with_batch(self):
         context = getattr(self._release_batch, "context", None)
         if context is not None:
             self._flush_pending_ups(context)
@@ -166,6 +216,12 @@ class Backend(Previous):
             result = super().release_all()
         except BaseException as exc:
             if context is not None:
+                cancelled_pending = self._cancelled_pending_up_records(context)
+                if cancelled_pending:
+                    try:
+                        exc.cancelled_pending_ups = cancelled_pending
+                    except (AttributeError, TypeError):
+                        pass
                 if context["rows"]:
                     self._finish_incomplete_release_batch(
                         context, exc, "release_all_exception"
@@ -200,7 +256,23 @@ class Backend(Previous):
         if isinstance(ledger, dict) and isinstance(result, dict):
             result = dict(result)
             result["release_batch_delivery"] = self._copy_delivery_ledger(ledger)
+        if context is not None and context.get("cancelled_pending_ups") and isinstance(result, dict):
+            result = dict(result)
+            result["cancelled_pending_ups"] = self._cancelled_pending_up_records(context)
         return result
+
+    @staticmethod
+    def _cancelled_pending_up_records(context):
+        return [
+            {
+                "key": item["key"],
+                "identifier": item["input_context"][0],
+                "step": item["input_context"][1],
+                "backend_owned_before_release": item["backend_owned_before_release"],
+                "disposition": "not_attempted_owner_cancel_release",
+            }
+            for item in context.get("cancelled_pending_ups", [])
+        ]
 
     def raw(self, key, down):
         input_context = self._input_event_context
@@ -219,6 +291,8 @@ class Backend(Previous):
                 row["id"], row["step"] = input_context
                 row.setdefault("owner_id", self.owner.owner_id)
                 row.setdefault("intent_token", getattr(self.lease, "intent_token", None))
+                if row.get("event") == "input_admission":
+                    self._admission_receipts.setdefault(key, []).append(dict(row))
                 self.emit(row)
             return None
 
@@ -241,11 +315,27 @@ class Backend(Previous):
         pending = context.get("pending_ups", [])
         if not pending:
             return
+        cancel = getattr(self.lease, "cancel", None)
+        cancel_requested = getattr(cancel, "is_set", None)
+        if callable(cancel_requested) and cancel_requested():
+            # The owner watcher has revoked this lease and performed its own
+            # verified release. These queued step-UPs were never attempted;
+            # do not send them through the ordinary lease-bound up_batch RPC.
+            context["cancelled_pending_ups"] = [dict(item) for item in pending]
+            context["pending_ups"] = []
+            return
         records = getattr(self.owner, "records", None)
         record_count = len(records) if isinstance(records, list) else None
-        transitions = self.owner.call(
-            "up_batch", self.lease, [item["key"] for item in pending]
-        )
+        try:
+            transitions = self.owner.call(
+                "up_batch", self.lease, [item["key"] for item in pending]
+            )
+        except Exception:
+            # If the owner recorded an interruption while this queued UP was
+            # in flight, let the lease surface that cause. The buffered batch
+            # remains unknown and must not be replayed.
+            self.lease.check()
+            raise
         if type(transitions) is not list or len(transitions) != len(pending):
             raise AssertionError("v4 release batch did not return one transition per UP")
         context["pending_ups"] = []
@@ -259,6 +349,26 @@ class Backend(Previous):
             row["release_batch_step"] = context["step"]
             row["id"], row["step"] = item["input_context"]
             row["owner_cleanup_record_count_before_release"] = record_count
+            candidates = self._admission_receipts.pop(item["key"], [])
+            admission = candidates[0] if len(candidates) == 1 else None
+            valid_admission = bool(
+                isinstance(admission, dict)
+                and admission.get("event") == "input_admission"
+                and admission.get("key") == item["key"] == row.get("key")
+                and admission.get("owner_id") == row.get("owner_id")
+                and admission.get("intent_token") == row.get("intent_token")
+                and admission.get("valid_until_ns") == row.get("valid_until_ns")
+                and type(admission.get("admitted_ns")) is int
+                and type(admission.get("input_ack_ns")) is int
+                and type(row.get("release_call_started_ns")) is int
+                and admission["admitted_ns"] <= admission["input_ack_ns"]
+                < row["release_call_started_ns"] < admission["valid_until_ns"]
+            )
+            linked_admission = dict(admission) if valid_admission else None
+            if linked_admission is not None:
+                linked_admission["operation"] = "down"
+            row["admission_receipt"] = linked_admission
+            row["admission_receipt_valid"] = valid_admission
             context["rows"].append(row)
         if not self.held:
             self._publish_release_batch(context)

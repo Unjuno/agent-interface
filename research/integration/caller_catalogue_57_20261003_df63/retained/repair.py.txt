@@ -1,0 +1,13 @@
+import ast,hashlib,json
+from pathlib import Path
+r=Path(__file__).resolve().parent;before=(r/'baseline/runtime/integration_checks/native.py').read_bytes();aggregate=b"SUITES['protocol'].append('test_adaptive_acquisition_aggregate_cost')\n";coverage=b"SUITES['protocol'].append('test_adaptive_acquisition_cost_coverage')\n"
+if before.count(aggregate)!=1 or not before.endswith(aggregate) or before.count(coverage)!=1:raise ValueError('exact original placement')
+after=before[:-len(aggregate)].replace(coverage,coverage+aggregate,1)
+if after.replace(aggregate,b'',1)+aggregate!=before:raise ValueError('whole byte inverse placement')
+a=ast.parse(before);b=ast.parse(after)
+def without_registration(tree):
+    tree.body=[n for n in tree.body if not (isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Attribute) and n.value.func.attr=='append' and len(n.value.args)==1 and isinstance(n.value.args[0],ast.Constant) and n.value.args[0].value=='test_adaptive_acquisition_aggregate_cost')];return ast.dump(tree,include_attributes=False)
+if without_registration(a)!=without_registration(b):raise ValueError('all other AST identical')
+for path in ['runtime/integration_checks/native.py','.github/workflows/native-mcp-v1.yml','research/live_control/adaptive_acquisition_caller_v3.py','research/live_control/test_adaptive_acquisition_aggregate_cost.py']:
+    original=(r/'baseline'/path).read_bytes();p=r/'candidate'/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(after if path=='runtime/integration_checks/native.py' else original)
+pin=lambda d:dict(bytes=len(d),sha256=hashlib.sha256(d).hexdigest());(r/'REPAIR.json').write_text(json.dumps(dict(before=pin(before),after=pin(after),whole_byte_inverse=True,whole_AST_except_one_registration_identical=True,change='Move aggregate registration from after main SystemExit to beside existing cost registration before main. Caller/test/workflow unchanged.'),indent=2)+'\n',encoding='utf-8');print(json.dumps(dict(before=pin(before),after=pin(after))))

@@ -24,6 +24,21 @@ admission still owns its freshness/target checks. These ordering checks do not
 authenticate capture timestamps, establish clock-domain provenance, or certify
 application effects.
 
+The returned receipt keeps local timing bounds with each observation
+(`observation_started_ns`, `observation_accepted_ns`) and each accepted action
+(`execution_started_ns`, `execution_accepted_ns`). Acceptance timestamps are
+sampled only after the adapter result is privately validated/copied, so they
+include validation time and preserve callback-return custody. The `effect_checked`
+event links the action ID to the effect observation's capture and acceptance
+timestamps and, when called, the verifier's start and acceptance timestamps. All
+runtime timestamps come from the caller-supplied `clock`; `captured_ns` comes
+from the observation adapter. Consumers may calculate acceptance-to-capture
+and verifier durations only when those values share a monotonic clock domain.
+These stamps are diagnostics, not an independently authenticated application-
+effect timestamp. A verifier verdict and `TASK_SUCCEEDED` remain adapter/predicate
+evidence, not a separate application truth certificate. A blocked synchronous
+adapter still prevents the runtime from returning or enforcing its deadline.
+
 Expected effects compare the declared scalar type and value. An explicitly
 declared string literal `"unknown"` can match that same observed string, but
 still requires the effect verifier's verdict before continuation. A missing

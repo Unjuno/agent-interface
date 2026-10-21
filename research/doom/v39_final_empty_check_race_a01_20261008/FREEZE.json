@@ -1,0 +1,25 @@
+{
+  "schema": "issue59-current-main-final-empty-race-freeze-v1",
+  "issue": 59,
+  "execution_id": "v39-current-main-final-empty-race-a01-20261008",
+  "base_commit": "99f2521811df790db3c96cdfa9313a6296f247f7",
+  "sources": {
+    "research/doom/map01_overlap_controller_v39.py": {
+      "blob": "fec805219fec1155beb0e2608024663bc8c7e127",
+      "sha256": "e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754"
+    },
+    "research/doom/session_map01_v12.py": {
+      "blob": "e701035302da4802e0db463035c4d653a7e7618b",
+      "sha256": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2"
+    },
+    "research/doom/doom_typed_coast_backend_v1.py": {
+      "blob": "d95d382ee9c234dab652fa8af93b233baa5225a4",
+      "sha256": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079"
+    },
+    "research/live_control/executor_v12.py": {
+      "blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+    }
+  },
+  "decision_gate": "The drain misses a post-empty-return event while Executor rejects stale input before admission; controller makes one rejected submit and does not retry."
+}

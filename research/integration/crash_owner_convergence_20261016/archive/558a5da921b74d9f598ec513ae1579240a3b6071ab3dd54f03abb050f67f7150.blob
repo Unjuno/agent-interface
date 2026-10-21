@@ -1,0 +1,57 @@
+{
+  "schema": "v39-x11-shared-key-source-a35-audit-v1",
+  "allocation_id": "V39-X11-SHARED-KEY-SOURCE-A35-20261012-01",
+  "status": "PASS_METHOD_SCOPED",
+  "candidate_invocations": 1,
+  "retries": 0,
+  "frozen_before_invocation": true,
+  "freeze_hash": "c65d3f4c5b4da0325e965ce80de4408048719923b2ae28d45cbe3249182e6bb5",
+  "freeze_manifest_matches_harness": true,
+  "runner_hash": "9455daeed6e5bb815c19c66e202e466ca0bec07002a57decc352c8c72de7a255",
+  "runner_hash_matches_harness": true,
+  "frozen_source_hashes_match": true,
+  "source_hash_checks": [
+    {
+      "actual": "cb1ebd9208fbedfe6f9f49eaa6bc18daa7ad15d2b46664d6262bc347e72c2739",
+      "match": true,
+      "expected": "cb1ebd9208fbedfe6f9f49eaa6bc18daa7ad15d2b46664d6262bc347e72c2739",
+      "path": "research/doom/v39_v15_xvfb_shared_key_source_a35_20261012/candidate.py"
+    },
+    {
+      "actual": "9f591a1051c96aa4139f6a020ce0a5792ed516b3b9597018fee645450ca2f807",
+      "match": true,
+      "expected": "9f591a1051c96aa4139f6a020ce0a5792ed516b3b9597018fee645450ca2f807",
+      "path": "research/doom/v39_v15_xvfb_shared_key_source_a35_20261012/PLAN.md"
+    },
+    {
+      "actual": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "match": true,
+      "expected": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "path": "research/live_control/input_owner_process_v1.py"
+    },
+    {
+      "actual": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+      "match": true,
+      "expected": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+      "path": "research/live_control/lease_release_v1.py"
+    }
+  ],
+  "raw_sha256": "d9705b9ada06172108a904b31eb96842d6f5a2598737d31de318cf5c5f6850d3",
+  "owner_receipt_sha256": "c5082fbfd687cf03bb003137de6ad32f8fac1bf651531e868f4249fe0b39ce86",
+  "observations": {
+    "owner_service_exit": 0,
+    "xvfb_exit": 0,
+    "owner_receipt_verified_empty": true,
+    "external_keypress_observed": 1,
+    "external_client_test_flag_during_release": true,
+    "owner_down_admitted": true,
+    "keymap_down_after_external_press": true,
+    "owner_keyup_verified": true,
+    "keymap_down_after_owner_admission": true,
+    "initial_keymap_down": false,
+    "keymap_down_after_owner_release": false,
+    "owner_keyrelease_observed": 1
+  },
+  "decision": "PASS_METHOD_SCOPED: core X11/XTest exposed one global keymap transition. After an external-client KeyPress was observed and the owner admitted the same key, the owner verified KeyRelease; the focus-owning connection observed KeyRelease and query_keymap was up while the external-client test-side logical-hold flag remained true.",
+  "scope": "Private TCP-disabled Xvfb, core XTest only. No physical keyboard, game, model, or shared X server. This does not establish physical-device or XI2 source attribution."
+}

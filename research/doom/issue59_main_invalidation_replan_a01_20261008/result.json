@@ -1,0 +1,46 @@
+{
+  "classification": "CONSTRUCTION_ONLY_CURRENT_MAIN_FUNCTION_COMPOSITION",
+  "source_commit": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "typed_hard_invalidation": {
+    "sequence": 11,
+    "health": 60,
+    "hard_minimum": 65,
+    "reason": "health:below_hard_minimum"
+  },
+  "timeline": [
+    "executor_cancel_write",
+    "executor_flush",
+    "planner_interrupt_request",
+    "planner_interrupt_ack"
+  ],
+  "verified_executor_release": {
+    "verified": true,
+    "keys_down": [],
+    "buttons_down": []
+  },
+  "invalidated_planner_result": {
+    "status": "completed",
+    "answer_eligible": false,
+    "cancellation_requested": true,
+    "answer": null
+  },
+  "fresh_observation_used": {
+    "sequence": 11,
+    "health": 60,
+    "ammo": 8,
+    "image_name": "fresh-frame.png"
+  },
+  "source_refresh_status": "already_observed",
+  "next_turn_input": {
+    "turn_id": "turn-2",
+    "image_name": "next-temporal-sheet.png",
+    "temporal_sheet_sha256": "f545cd352db320f423dff38aa6cf301af85cf094b56317e2569905e4ce2f7c8b",
+    "prompt_has_fresh_health": true,
+    "prompt_has_fresh_ammo": true,
+    "latest_frame_pixel": [
+      20,
+      180,
+      20
+    ]
+  }
+}

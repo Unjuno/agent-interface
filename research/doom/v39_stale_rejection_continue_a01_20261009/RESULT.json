@@ -1,0 +1,30 @@
+{
+  "schema": "agent-interface/v39-stale-rejection-outer-continue-result-v1",
+  "status": "PASS_TESTED_CONTROL_FLOW_WITH_EXPECTED_MUTATION_REJECTION",
+  "source_main_commit": "d66ee6cd4f9c09387845bc0765855cbede0c0874",
+  "source_count": 21,
+  "runs": {
+    "pass-normal": {
+      "exit": 0,
+      "tests": 1,
+      "expected": "PASS"
+    },
+    "pass-optimized": {
+      "exit": 0,
+      "tests": 1,
+      "expected": "PASS"
+    },
+    "mutation-normal": {
+      "exit": 1,
+      "tests": 1,
+      "expected": "FAIL_ASSERTION"
+    },
+    "mutation-optimized": {
+      "exit": 1,
+      "tests": 1,
+      "expected": "FAIL_ASSERTION"
+    }
+  },
+  "mutation_assertion_message": "stale rejection must skip normal completion and start a fresh-source iteration",
+  "scope": "AST control-flow regression and mutation only; no controller runtime, model, game, GUI, OS input, physical release or task effect"
+}

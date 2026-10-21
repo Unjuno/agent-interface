@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a05_20261012/candidate.py", line 315, in <module>
+    main()
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a05_20261012/candidate.py", line 102, in main
+    session_child(sys.argv[2], int(sys.argv[3]), Path(sys.argv[4]), Path(sys.argv[5]))
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a05_20261012/candidate.py", line 67, in session_child
+    backend.raw("w", True)
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/doom_owner_thread_release_batch_backend_v1.py", line 243, in raw
+    record = self.owner.call("down", self.lease, key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/live_control/input_owner_process_v1.py", line 441, in call
+    validate_request(request, request_id)
+  File "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/live_control/input_owner_process_v1.py", line 142, in validate_request
+    raise ValueError("key not allowlisted")
+ValueError: key not allowlisted

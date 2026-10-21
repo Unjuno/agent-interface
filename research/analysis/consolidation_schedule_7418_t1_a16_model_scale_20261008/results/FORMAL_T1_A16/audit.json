@@ -1,0 +1,150 @@
+{
+  "accuracies": {
+    "5601/batch_2": 0.8,
+    "5601/episodic_only": 0.8,
+    "5601/per_episode": 0.6666666666666666,
+    "5601/terminal": 0.6333333333333333,
+    "5602/batch_2": 0.8,
+    "5602/episodic_only": 0.8,
+    "5602/per_episode": 0.6666666666666666,
+    "5602/terminal": 0.6333333333333333,
+    "5603/batch_2": 0.7666666666666667,
+    "5603/episodic_only": 0.8,
+    "5603/per_episode": 0.6666666666666666,
+    "5603/terminal": 0.6333333333333333
+  },
+  "consolidation_rows": 30,
+  "consolidation_updates_per_seed_arm": {
+    "5601/batch_2": 3,
+    "5601/episodic_only": 0,
+    "5601/per_episode": 6,
+    "5601/terminal": 1,
+    "5602/batch_2": 3,
+    "5602/episodic_only": 0,
+    "5602/per_episode": 6,
+    "5602/terminal": 1,
+    "5603/batch_2": 3,
+    "5603/episodic_only": 0,
+    "5603/per_episode": 6,
+    "5603/terminal": 1
+  },
+  "decision": "PASS_CADENCE_SENSITIVITY_SCOPED",
+  "errors": [],
+  "max_abs_accuracy_difference": 0.166667,
+  "paired_accuracy_differences": {
+    "5601:batch_2-terminal": 0.166667,
+    "5601:episodic_only-batch_2": 0.0,
+    "5601:episodic_only-per_episode": 0.133333,
+    "5601:episodic_only-terminal": 0.166667,
+    "5601:per_episode-batch_2": -0.133333,
+    "5601:per_episode-terminal": 0.033333,
+    "5602:batch_2-terminal": 0.166667,
+    "5602:episodic_only-batch_2": 0.0,
+    "5602:episodic_only-per_episode": 0.133333,
+    "5602:episodic_only-terminal": 0.166667,
+    "5602:per_episode-batch_2": -0.133333,
+    "5602:per_episode-terminal": 0.033333,
+    "5603:batch_2-terminal": 0.133333,
+    "5603:episodic_only-batch_2": 0.033333,
+    "5603:episodic_only-per_episode": 0.133333,
+    "5603:episodic_only-terminal": 0.166667,
+    "5603:per_episode-batch_2": -0.1,
+    "5603:per_episode-terminal": 0.033333
+  },
+  "per_seed_arm_metrics": {
+    "5601/batch_2": {
+      "calls": 30,
+      "completion_tokens": 748,
+      "duration_ms": 46895,
+      "errors": 0,
+      "prompt_tokens": 8441
+    },
+    "5601/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 766,
+      "duration_ms": 56406,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5601/per_episode": {
+      "calls": 30,
+      "completion_tokens": 850,
+      "duration_ms": 58991,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5601/terminal": {
+      "calls": 30,
+      "completion_tokens": 512,
+      "duration_ms": 31314,
+      "errors": 0,
+      "prompt_tokens": 6611
+    },
+    "5602/batch_2": {
+      "calls": 30,
+      "completion_tokens": 726,
+      "duration_ms": 43974,
+      "errors": 0,
+      "prompt_tokens": 8441
+    },
+    "5602/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 774,
+      "duration_ms": 47474,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5602/per_episode": {
+      "calls": 30,
+      "completion_tokens": 839,
+      "duration_ms": 50504,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5602/terminal": {
+      "calls": 30,
+      "completion_tokens": 512,
+      "duration_ms": 33099,
+      "errors": 0,
+      "prompt_tokens": 6611
+    },
+    "5603/batch_2": {
+      "calls": 30,
+      "completion_tokens": 734,
+      "duration_ms": 42754,
+      "errors": 0,
+      "prompt_tokens": 8441
+    },
+    "5603/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 786,
+      "duration_ms": 48970,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5603/per_episode": {
+      "calls": 30,
+      "completion_tokens": 842,
+      "duration_ms": 53022,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5603/terminal": {
+      "calls": 30,
+      "completion_tokens": 512,
+      "duration_ms": 31936,
+      "errors": 0,
+      "prompt_tokens": 6611
+    }
+  },
+  "qualifying_consistent_contrasts": [
+    "episodic_only vs per_episode: [0.133333, 0.133333, 0.133333]",
+    "episodic_only vs terminal: [0.166667, 0.166667, 0.166667]",
+    "per_episode vs batch_2: [-0.133333, -0.133333, -0.1]",
+    "batch_2 vs terminal: [0.166667, 0.166667, 0.133333]"
+  ],
+  "query_rows": 360,
+  "rows": 390,
+  "scope": "single synthetic ledger, one local model family, three fixed seeds; no GUI/product/action inference",
+  "status": "PASS_METHOD"
+}

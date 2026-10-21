@@ -1,0 +1,64 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A04-20261009",
+  "auditor": {
+    "command": [
+      "CODEX_BUNDLED_PYTHON3",
+      "auditor.py"
+    ],
+    "exit_code": 0,
+    "finished_utc": "2026-10-08T22:17:20Z",
+    "invocations": 1,
+    "outer_command_template": [
+      "/usr/bin/sandbox-exec",
+      "-p",
+      "(version 1) (allow default) (deny network*)",
+      "CODEX_BUNDLED_PYTHON3",
+      "formal_runner.py",
+      "auditor"
+    ],
+    "reported_status": "PASS_METHOD_SCOPED",
+    "runner_error": null,
+    "started_utc": "2026-10-08T22:08:30Z",
+    "stderr_bytes": 0,
+    "stderr_path": "results/auditor.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 1240,
+    "stdout_path": "results/audit.stdout",
+    "stdout_sha256": "adc0d023ecc4a1f7277a8f4a4031df31546ee383b2427579e4ca3c89478f6f64"
+  },
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "candidate": {
+    "command": [
+      "CODEX_BUNDLED_PYTHON3",
+      "candidate.py"
+    ],
+    "exit_code": 0,
+    "finished_utc": "2026-10-08T22:08:20Z",
+    "invocations": 1,
+    "outer_command_template": [
+      "/usr/bin/sandbox-exec",
+      "-p",
+      "(version 1) (allow default) (deny network*)",
+      "CODEX_BUNDLED_PYTHON3",
+      "formal_runner.py",
+      "candidate"
+    ],
+    "output_completeness": "PASS_STRUCTURAL_441_CASES",
+    "runner_error": null,
+    "started_utc": "2026-10-08T22:08:17Z",
+    "stderr_bytes": 0,
+    "stderr_path": "results/candidate.stderr",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 309727,
+    "stdout_path": "results/candidate.stdout",
+    "stdout_sha256": "4afca7ffffd3625b74af4889900fe2e2ef22f118236660653c15bf73f37c243f"
+  },
+  "container_started": false,
+  "formal_disposition": "PASS_METHOD_SCOPED",
+  "freeze_commit": "e0f465046664bab0b6d05c38a6f2172044494ed0",
+  "freeze_sha256": "b6a266965ae0aee8f2485e44dd9b140356727901c500f334b7a0e08fd1b18b57",
+  "network_policy": "sandbox-exec profile: (version 1) (allow default) (deny network*)",
+  "retries": 0,
+  "runtime": "macOS 27.0.1 arm64; Codex bundled Python 3.12.14; Pillow 12.3.0; sandbox-exec deny network; host-only, not container evidence",
+  "source_commit": "f17a20676c8c87a37b11faa409c1707d05c77236"
+}

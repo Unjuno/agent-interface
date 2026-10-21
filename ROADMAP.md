@@ -2,13 +2,13 @@
 
 This roadmap is ordered by research uncertainty, not by feature count.
 
-For active task priority, use the explicit precedence in [CURRENT_GOAL](docs/CURRENT_GOAL.md):
-its experiment-first direction governs the current autonomous research task;
-the integration and human-tempo objectives remain. Its current direction
-and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59) keep unresolved
-real-time control ahead of packaging work after the existing bounded allocation.
-Neither this roadmap nor an unchecked item grants a new allocation or changes
-a retained result.
+For active task priority, use [CURRENT_GOAL](docs/CURRENT_GOAL.md) and the
+[worker work map](docs/WORKER_WORK_MAP.md). The current maintainer priority is
+repository convergence that enables independent research and verified integration;
+computer control and human-tempo operation remain unresolved objectives.
+[Issue #59](https://github.com/Unjuno/agent-interface/issues/59) tracks real-time
+control. Neither this roadmap nor an unchecked item grants a new allocation or
+changes a retained result.
 
 Integration direction recorded 2026-09-19: [integrate one usable desktop path](docs/INTEGRATION_PLAN.md)
 from the existing components, following [the updated goal](docs/CURRENT_GOAL.md)

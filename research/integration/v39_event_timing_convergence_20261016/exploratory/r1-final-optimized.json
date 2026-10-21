@@ -1,0 +1,424 @@
+{
+  "modules": [
+    "test_map01_v39_event_transport_timing",
+    "test_session_map01_v12_emit_timing",
+    "test_map01_v39_pair_wait_dispatch",
+    "test_overlap_controller_v39_wait",
+    "test_controller_retirement_failure",
+    "test_map01_session_retirement_boundary",
+    "test_doom_typed_artifact_reconciliation_v1",
+    "test_doom_typed_observation_epoch_exact",
+    "test_controller_failure_cleanup_v39",
+    "test_controller_failure_cleanup_stage_v1"
+  ],
+  "test_ids": [
+    "test_map01_v39_event_transport_timing.EventTransportTimingTests.test_actual_emitter_through_dispatch_and_saved_summary",
+    "test_map01_v39_event_transport_timing.EventTransportTimingTests.test_control_boundary_failure_precedes_monitor_and_predicate",
+    "test_map01_v39_event_transport_timing.EventTransportTimingTests.test_duplicate_json_is_refused_before_queue",
+    "test_map01_v39_event_transport_timing.EventTransportTimingTests.test_monitor_exception_preserves_primary_and_finish_stamp",
+    "test_map01_v39_event_transport_timing.EventTransportTimingTests.test_reader_and_monitor_retain_ordered_parent_handoff_stages",
+    "test_map01_v39_event_transport_timing.EventTransportTimingTests.test_report_summary_keeps_each_boundary_and_marks_incomplete_rows",
+    "test_map01_v39_event_transport_timing.EventTransportTimingTests.test_strict_summary_rejects_bool_and_reversed_stages",
+    "test_session_map01_v12_emit_timing.EmitTimingTests.test_stdout_handoff_timestamp_follows_both_raw_log_appends",
+    "test_map01_v39_pair_wait_dispatch.PairWaitDispatchTests.test_ack_precedes_active_typed_observation_on_serialized_session_stream",
+    "test_map01_v39_pair_wait_dispatch.PairWaitDispatchTests.test_full_observation_dispatches_zero_ammo_invalidation",
+    "test_overlap_controller_v39_wait.WaitTests.test_bad_stderr_decoding_does_not_replace_session_exit",
+    "test_overlap_controller_v39_wait.WaitTests.test_exited_session_does_not_enter_unbounded_stderr_read",
+    "test_overlap_controller_v39_wait.WaitTests.test_live_session_empty_queue_reaches_existing_timeout",
+    "test_overlap_controller_v39_wait.WaitTests.test_matching_queued_terminal_wins_before_closed_process_poll",
+    "test_overlap_controller_v39_wait.WaitTests.test_observation_updates_latest_before_matching_terminal",
+    "test_overlap_controller_v39_wait.WaitTests.test_policy_invalidation_precedes_matching_predicate",
+    "test_overlap_controller_v39_wait.WaitTests.test_running_invalidation_retains_typed_event_and_result",
+    "test_controller_retirement_failure.ControllerRetirementTests.test_failure_preempts_predicate_and_observation_monitor",
+    "test_controller_retirement_failure.ControllerRetirementTests.test_failure_preempts_score_and_copies_original_obligation",
+    "test_controller_retirement_failure.ControllerRetirementTests.test_incomplete_failure_payload_still_stops",
+    "test_controller_retirement_failure.ControllerRetirementTests.test_ordinary_score_path_unchanged",
+    "test_controller_retirement_failure.ControllerRetirementTests.test_real_stdio_failure_survives_later_score_and_cleanup",
+    "test_controller_retirement_failure.ControllerRetirementTests.test_retained_failure_vetoes_otherwise_complete_cleanup",
+    "test_map01_session_retirement_boundary.RetirementBoundaryTests.test_close_error_prevents_engine_effects",
+    "test_map01_session_retirement_boundary.RetirementBoundaryTests.test_failed_release_blocks_finish_and_fixture_effects",
+    "test_map01_session_retirement_boundary.RetirementBoundaryTests.test_failure_save_and_delivery_errors_cannot_resume_effects",
+    "test_map01_session_retirement_boundary.RetirementBoundaryTests.test_unstarted_ambiguous_admission_is_not_retired",
+    "test_map01_session_retirement_boundary.RetirementBoundaryTests.test_verified_retirement_allows_each_original_effect_path",
+    "test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match",
+    "test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_exact_identity_pair_matches",
+    "test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_nested_boolean_integer_pointer_binding_alias_does_not_match",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_action_snapshot_accepts_in_domain_endpoints",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_action_snapshot_rejects_observed_values_outside_hud_domain",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_boolean_and_float_aliases_in_signal_bindings_are_rejected",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_boolean_and_float_aliases_in_top_level_binding_are_rejected",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_boolean_and_float_epoch_aliases_are_rejected",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_boolean_and_float_top_level_sequence_aliases_are_rejected",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_exact_integer_epoch_builds_snapshot",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_extraction_rejects_nested_binding_aliases_before_reader_calls",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_extraction_rejects_reader_binding_aliases",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_extraction_rejects_reader_epoch_aliases",
+    "test_doom_typed_observation_epoch_exact.TypedObservationEpochExactTests.test_unrequired_signal_must_still_match_event_epoch",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_absent_accepted_token_retains_legacy_id_binding",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_cancelled_admission_rejects_wrong_owner_release_token",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_cancelled_admission_requires_matching_owner_release",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_cancelled_admitted_input_rejects_wrong_release_token",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_cancelled_admitted_input_requires_matching_owner_release_receipt",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_cancelled_admitted_input_without_matching_release_is_not_certified",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_cancelled_without_admission_accepts_empty_terminal_without_lease_token",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_cancelled_without_admission_accepts_null_lease_token",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_accepted_id_cannot_be_collapsed_to_one_terminal",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_accepted_json_member_fails_closed",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_input_release_receipts_fail_closed",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_terminal_id_fails_closed_in_either_row_order",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_duplicate_terminal_release_member_fails_closed",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_escaped_duplicate_json_member_name_fails_closed",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_key_state_errors_prevent_empty_release_certificate",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_malformed_present_accepted_token_fails_closed_without_input",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_matching_release_token_is_retained_as_empty",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_mismatched_release_token_is_not_certified_empty",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_missing_key_state_errors_prevent_empty_release_certificate",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_missing_or_invalid_event_discriminator_fails_closed",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_missing_unknown_key_state_prevents_empty_release_certificate",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_non_object_event_records_fail_closed",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_release_state_mutation_matrix_fails_closed",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_release_without_optional_token_keeps_legacy_id_binding",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_unique_raw_jsonl_still_certifies_empty_release",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_unknown_key_state_prevents_empty_release_certificate",
+    "test_controller_failure_cleanup_v39.ControllerFailureCleanupReleaseIdentityTests.test_unmatched_or_invalid_event_ids_fail_closed",
+    "test_controller_failure_cleanup_stage_v1.FailureStageTests.test_stage_advances_after_source_check_through_report_write"
+  ],
+  "tests": 70,
+  "failures": 0,
+  "errors": 0,
+  "skips": [],
+  "source_sha256_lf": {
+    "research/doom/doom_controller_failure_cleanup_v1.py": "5f6fd4bf642e79b547cbc8b6d1cac7bb7d75e35b7c92766ba8501fdb32c0b079",
+    "research/doom/test_map01_v39_event_transport_timing.py": "0de7f5a03b65305793f01d1fe5fbea26d71e73aa71131bd7f7c0eb655fd4248d",
+    "research/doom/test_session_map01_v12_emit_timing.py": "0b9b393b67d2ee7c5fbacd4a0f2df57774acc4840f0d25c3e9c038d52a4dbdfb",
+    "research/doom/test_map01_v39_pair_wait_dispatch.py": "15353e142d56b8a36c0c92661bb68ec623bc35f9d55970a5d08e18dac7a1732e",
+    "research/doom/test_overlap_controller_v39_wait.py": "d5620a40d5722f99c3b527e518b85aeec8468aacfe15d1ae8f690348e6687148",
+    "research/doom/test_controller_retirement_failure.py": "70dd981a295002ff370a17b1dd81e739bcd3838fa8c653c2bedce9af97b3a0bc",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "d3b721689c0a2d38a90169a06985cc866c0c6116fc31d16ccc73de4af0f39645",
+    "research/live_control/input_owner_v12.py": "6cc1097738aea8a89c2840e5d78e392e1844cf1e73b58a9520ab66a0b95031c9",
+    "runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+    "runtime/guarded_x11_v1/process_identity.py": "7b48c426b389a513b399bc891cb47a7d9dc862e9fbd824d1045a3c3d93914577",
+    "runtime/guarded_x11_v1/target_queries.py": "bdd55f3bd4df561fd448253b3a93d64882cb24dcae08ecb37f2112e2fe6d748a",
+    "research/live_control/target_process_identity_v1.py": "d069fcde3671c3044a07090432b01e9044dc07367c0de20d9845bc6db9e1253e",
+    "research/live_control/lease_cause_v1.py": "1ff3856a60af26e405fd4c216e206c6146644b0c0324f46bb8ce3176a1f4d305",
+    "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "research/live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "research/live_control/executor_v12.py": "c301508fe0ba086c5d6db119352ed283fc3a50b672fd323bb1f42b8483563965",
+    "research/live_control/executor_v13.py": "d12934e7ddfa4888acaef93c37dc54773369c3c3a72a3a2dfcc8fe2714d0688b",
+    "research/observation_gating/exact_gate.py": "6780624513a95039657734e76c0420447a3f9ab49f98e1f3137a19a91bc31944",
+    "research/observation_tiles/tile_transport.py": "206ccc742bc745e0f4ec9e66809b2650c3fe7cf7bf9aa5e26cdf86599936450a",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e",
+    "research/real_apps_v1/real_app_suite_v1.py": "ff8195c0e1712be2f5ed235c21584a9b1be04f045b60ad7e5a604e80f2ef1764",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/live_control/input_owner.py": "a9fa89d3e5d012b68ff262a97528565dd16cbec6f21ffd9cb539e948d95ae7e3",
+    "research/live_control/session_v5.py": "041da34620bfb425e14aa1cafc09ee5481fc378389fe0e716f3d8710b1b0cd12",
+    "research/live_control/input_owner_v2.py": "bfd24356365bba34c550562cbce4f332827ae7d8922eef46be203af23730be22",
+    "research/live_control/session_v6.py": "cbf7b541c60a2698fe8e155a239bd8e786e3313e2cd4d93482476d1380122cc7",
+    "research/live_control/session_v7.py": "68c8b3b7f5fc3cd7907b5bbc6b02fa2be8ac725da2b64ba52e1942515d721e11",
+    "research/live_control/quiet_window.py": "4ba59539886b382da81265e2a2c5b6451a3d705bfb2aca5023a69261c91fc1e0",
+    "research/live_control/session_v8.py": "22d9a336fef0c970bffcfd485cd99360298f788b909f1e70f1959129f078be40",
+    "research/live_control/input_owner_v5.py": "b177a3893214e245333dcda7bc5adc291b9c80aa65561bb16f45dca4bb399347",
+    "research/live_control/session_v9.py": "2f0a1aa2ea9b15cabc8e033f2bdd5e602ab6f656d157b4b49399c836704e5faf",
+    "research/live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+    "research/live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+    "research/live_control/action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+    "research/doom/doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+    "research/doom/doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+    "research/doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "research/live_control/input_owner_v10.py": "fd681ef93c568674c282e47cdacd05a705d8b8ddf3141722f8477b19c55ba049",
+    "research/doom/doom_typed_release_backend_v1.py": "a79bc9eb6303d2e398f333a0e42eb46926b8c20307191c64db5ecffeb8713a4f",
+    "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "research/doom/doom_typed_release_backend_v2.py": "d94cff1fb09f13e551472d5a29bd90eb41344954ead0ed1ab4230d26b45fd021",
+    "research/live_control/input_transition_owner_v3.py": "bf9912633fe16d328de3cdde77b0fe31892daec3c489854c2e37eba91cce5e35",
+    "research/live_control/input_transition_owner_v4.py": "a94b0de139da7a6f423fd466e0f21ce36a9ef83f9721bfc757d7df83a5552a85",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "0f816a3bd7f519a1cb648c08d636cf653f4d0c60d6b908e2e881726617032360",
+    "research/doom/doom_process_identity_backend_v1.py": "44624acda14eafea261621719db926032222bfc3ef40a022ec6e543a1980792e",
+    "research/doom/test_map01_process_identity_backend.py": "7020d2edab704f8115930e7226c808a7118a656f56066ac87db8a22919d26dad",
+    "research/doom/test_map01_session_retirement_boundary.py": "692a40c64c6b53e56dc41c78994da086858d5d0a073db7b66c6fb389642f80f4",
+    "research/doom/test_doom_typed_artifact_reconciliation_v1.py": "2936162c2942a6de7a31c50cf130422d4cb0305e89c1ac08bf51fdcb34d19d00",
+    "research/doom/test_doom_typed_observation_epoch_exact.py": "4119ddfed01e9c17e8a9d4cd9111216956648227a486fb53a9902d9975faa216",
+    "research/doom/test_controller_failure_cleanup_v39.py": "c7987c0990dc07cd736a2f51efda9c16c0d9b9e183d6a14746ba8f60b856286f",
+    "research/doom/test_controller_failure_cleanup_stage_v1.py": "779e40403c82631767e250d450fdf46d31e7d152a4d787d2f320e21203cd4b42",
+    "research/live_control/input_owner_rpc_v2.py": "a6528b95da787dd1a441fcaf4c3e99222eb45dfd555ec97cc351f69d59d70d75",
+    "research/doom/session_map01_v12.py": "e2967a00f5a2968aadb86d07d52e5dd7a3ba79afa9c4cdd93acaf92cd50629ef",
+    "research/doom/map01_overlap_controller_v39.py": "6c364166424cfbee063b9beaa75ab8f5653bb2ca221a6d1fecca4dab5931cfa2"
+  },
+  "optimize": 1,
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "rows": [
+    {
+      "case": "composed-emitter-dispatch",
+      "raw_logs": {
+        "events.jsonl": "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 351798824702900, \"emit_ns\": 351798825001400}\n",
+        "delivered.jsonl": "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 351798824702900, \"emit_ns\": 351798825001400}\n"
+      },
+      "stdout": [
+        "{\"event\": \"typed_observation\", \"sequence\": 13, \"typed_ready_ns\": 351798824702900, \"emit_ns\": 351798825001400, \"stdout_handoff_started_ns\": 351798825504400}"
+      ],
+      "events": [
+        {
+          "event": "typed_observation",
+          "sequence": 13,
+          "typed_ready_ns": 351798824702900,
+          "emit_ns": 351798825001400,
+          "stdout_handoff_started_ns": 351798825504400,
+          "controller_parsed_ns": 351798839903400,
+          "controller_enqueued_ns": 351798839904400,
+          "controller_dequeued_ns": 351798839921100,
+          "controller_monitor_started_ns": 351798839923600,
+          "controller_monitor_finished_ns": 351798839924400
+        }
+      ],
+      "summary": [
+        {
+          "sequence": 13,
+          "typed_ready_ns": 351798824702900,
+          "emit_ns": 351798825001400,
+          "stdout_handoff_started_ns": 351798825504400,
+          "controller_parsed_ns": 351798839903400,
+          "controller_enqueued_ns": 351798839904400,
+          "controller_dequeued_ns": 351798839921100,
+          "controller_monitor_started_ns": 351798839923600,
+          "controller_monitor_finished_ns": 351798839924400,
+          "stage_order_valid": true,
+          "intervals_ms": {
+            "typed_ready_to_emit_call_ms": 0.2985,
+            "producer_pre_handoff_ms": 0.503,
+            "stdout_handoff_to_controller_parse_ms": 14.399,
+            "controller_parse_to_enqueue_ms": 0.001,
+            "controller_queue_wait_ms": 0.0167,
+            "controller_dispatch_to_monitor_ms": 0.0025,
+            "controller_monitor_service_ms": 0.0008
+          }
+        }
+      ]
+    },
+    {
+      "case": "control-failure",
+      "event": {
+        "event": "control_boundary_failed",
+        "task_effect": "unknown",
+        "release_obligation": {
+          "verified": false
+        }
+      },
+      "called": [],
+      "refused": true
+    },
+    {
+      "case": "duplicate-json",
+      "events": [],
+      "errors": [
+        "ValueError: duplicate JSON member: 'event'"
+      ],
+      "queue_empty": true
+    },
+    {
+      "case": "monitor-error",
+      "event": {
+        "event": "typed_observation",
+        "sequence": 11,
+        "controller_parsed_ns": 351798893685900,
+        "controller_enqueued_ns": 351798893687800,
+        "controller_dequeued_ns": 351798893718400,
+        "controller_monitor_started_ns": 351798893722500,
+        "controller_monitor_finished_ns": 351798893724700
+      },
+      "primary_preserved": true,
+      "errors": []
+    },
+    {
+      "case": "dispatch",
+      "event": {
+        "event": "typed_observation",
+        "sequence": 9,
+        "typed_ready_ns": 80,
+        "emit_ns": 100,
+        "stdout_handoff_started_ns": 150,
+        "controller_parsed_ns": 351798908301800,
+        "controller_enqueued_ns": 351798908303300,
+        "controller_dequeued_ns": 351798908320700,
+        "controller_monitor_started_ns": 351798908322900,
+        "controller_monitor_finished_ns": 351798908323900
+      },
+      "summary": [
+        {
+          "sequence": 9,
+          "typed_ready_ns": 80,
+          "emit_ns": 100,
+          "stdout_handoff_started_ns": 150,
+          "controller_parsed_ns": 351798908301800,
+          "controller_enqueued_ns": 351798908303300,
+          "controller_dequeued_ns": 351798908320700,
+          "controller_monitor_started_ns": 351798908322900,
+          "controller_monitor_finished_ns": 351798908323900,
+          "stage_order_valid": true,
+          "intervals_ms": {
+            "typed_ready_to_emit_call_ms": 2e-05,
+            "producer_pre_handoff_ms": 5e-05,
+            "stdout_handoff_to_controller_parse_ms": 351798908.30165,
+            "controller_parse_to_enqueue_ms": 0.0015,
+            "controller_queue_wait_ms": 0.0174,
+            "controller_dispatch_to_monitor_ms": 0.0022,
+            "controller_monitor_service_ms": 0.001
+          }
+        }
+      ]
+    },
+    {
+      "case": "complete-and-missing",
+      "events": [
+        {
+          "event": "observation",
+          "sequence": 8
+        },
+        {
+          "event": "typed_observation",
+          "sequence": 9,
+          "typed_ready_ns": 80,
+          "emit_ns": 100,
+          "stdout_handoff_started_ns": 150,
+          "controller_parsed_ns": 200,
+          "controller_enqueued_ns": 210,
+          "controller_dequeued_ns": 240,
+          "controller_monitor_started_ns": 250,
+          "controller_monitor_finished_ns": 270
+        },
+        {
+          "event": "typed_observation",
+          "sequence": 10,
+          "typed_ready_ns": 280,
+          "emit_ns": 300
+        }
+      ],
+      "summary": [
+        {
+          "sequence": 9,
+          "typed_ready_ns": 80,
+          "emit_ns": 100,
+          "stdout_handoff_started_ns": 150,
+          "controller_parsed_ns": 200,
+          "controller_enqueued_ns": 210,
+          "controller_dequeued_ns": 240,
+          "controller_monitor_started_ns": 250,
+          "controller_monitor_finished_ns": 270,
+          "stage_order_valid": true,
+          "intervals_ms": {
+            "typed_ready_to_emit_call_ms": 2e-05,
+            "producer_pre_handoff_ms": 5e-05,
+            "stdout_handoff_to_controller_parse_ms": 5e-05,
+            "controller_parse_to_enqueue_ms": 1e-05,
+            "controller_queue_wait_ms": 3e-05,
+            "controller_dispatch_to_monitor_ms": 1e-05,
+            "controller_monitor_service_ms": 2e-05
+          }
+        },
+        {
+          "sequence": 10,
+          "typed_ready_ns": 280,
+          "emit_ns": 300,
+          "stdout_handoff_started_ns": null,
+          "controller_parsed_ns": null,
+          "controller_enqueued_ns": null,
+          "controller_dequeued_ns": null,
+          "controller_monitor_started_ns": null,
+          "controller_monitor_finished_ns": null,
+          "stage_order_valid": false,
+          "intervals_ms": {
+            "typed_ready_to_emit_call_ms": 2e-05,
+            "producer_pre_handoff_ms": null,
+            "stdout_handoff_to_controller_parse_ms": null,
+            "controller_parse_to_enqueue_ms": null,
+            "controller_queue_wait_ms": null,
+            "controller_dispatch_to_monitor_ms": null,
+            "controller_monitor_service_ms": null
+          }
+        }
+      ]
+    },
+    {
+      "case": "invalid-stages",
+      "cases": [
+        {
+          "event": {
+            "typed_ready_ns": 10,
+            "emit_ns": true,
+            "stdout_handoff_started_ns": 30,
+            "controller_parsed_ns": 40,
+            "controller_enqueued_ns": 50,
+            "controller_dequeued_ns": 60,
+            "controller_monitor_started_ns": 70,
+            "controller_monitor_finished_ns": 80,
+            "event": "typed_observation",
+            "sequence": 12
+          },
+          "summary": {
+            "sequence": 12,
+            "typed_ready_ns": 10,
+            "emit_ns": true,
+            "stdout_handoff_started_ns": 30,
+            "controller_parsed_ns": 40,
+            "controller_enqueued_ns": 50,
+            "controller_dequeued_ns": 60,
+            "controller_monitor_started_ns": 70,
+            "controller_monitor_finished_ns": 80,
+            "stage_order_valid": false,
+            "intervals_ms": {
+              "typed_ready_to_emit_call_ms": null,
+              "producer_pre_handoff_ms": null,
+              "stdout_handoff_to_controller_parse_ms": 1e-05,
+              "controller_parse_to_enqueue_ms": 1e-05,
+              "controller_queue_wait_ms": 1e-05,
+              "controller_dispatch_to_monitor_ms": 1e-05,
+              "controller_monitor_service_ms": 1e-05
+            }
+          }
+        },
+        {
+          "event": {
+            "typed_ready_ns": 10,
+            "emit_ns": 20,
+            "stdout_handoff_started_ns": 30,
+            "controller_parsed_ns": 0,
+            "controller_enqueued_ns": 50,
+            "controller_dequeued_ns": 60,
+            "controller_monitor_started_ns": 70,
+            "controller_monitor_finished_ns": 80,
+            "event": "typed_observation",
+            "sequence": 12
+          },
+          "summary": {
+            "sequence": 12,
+            "typed_ready_ns": 10,
+            "emit_ns": 20,
+            "stdout_handoff_started_ns": 30,
+            "controller_parsed_ns": 0,
+            "controller_enqueued_ns": 50,
+            "controller_dequeued_ns": 60,
+            "controller_monitor_started_ns": 70,
+            "controller_monitor_finished_ns": 80,
+            "stage_order_valid": false,
+            "intervals_ms": {
+              "typed_ready_to_emit_call_ms": 1e-05,
+              "producer_pre_handoff_ms": 1e-05,
+              "stdout_handoff_to_controller_parse_ms": null,
+              "controller_parse_to_enqueue_ms": 5e-05,
+              "controller_queue_wait_ms": 1e-05,
+              "controller_dispatch_to_monitor_ms": 1e-05,
+              "controller_monitor_service_ms": 1e-05
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "ast_source_pins": [
+    "research/doom/session_map01_v12.py",
+    "research/doom/map01_overlap_controller_v39.py"
+  ]
+}

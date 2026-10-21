@@ -1,0 +1,26 @@
+{
+  "schema": "8604-a03-freeze-v1",
+  "issue": 8604,
+  "allocation": "T0-A03",
+  "successor_of": "T0-A02 PASS_METHOD_SCOPED; A02 remains immutable",
+  "parent_main_sha": "379c8255863244b75fc88d01cf9648546a45dffb",
+  "branch": "research/8604-handoff-choice-a03-wslc-20261008",
+  "question": "Does the exact frozen A02 offline artifact contract reproduce byte-identically in WSLc?",
+  "runtime": {
+    "wslc": "3.0.1.0",
+    "container_image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "local_image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "architecture": "linux/amd64",
+    "network": "none",
+    "cpu_limit_configured": 1,
+    "memory_limit_configured": "512M",
+    "host_warning": "WSL reports kernel does not support swap limit capabilities or cgroup is not mounted; memory limited without swap. Resource flags are not evidence of effective enforcement."
+  },
+  "construction_tests_normal": 6,
+  "construction_tests_optimized": 6,
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "expected_candidate_sha256": "3171b417d38cdc7d3f1cbb9ec10b0b1e52b5c38ed6553ec1c0a4bb8d1cdbb1ac",
+  "expected_audit_sha256": "76cfcc6e71ed86a532bbced1a972d7c9d6c5e6a11f40059717f90a41815ab143",
+  "boundary": "Offline synthetic CPU artifact portability only; no participants, human data, model, GUI, action dispatch, or product claim."
+}

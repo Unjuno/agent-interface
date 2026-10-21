@@ -96,7 +96,7 @@ class InputOwner:
                 admission_key: marker
                 for admission_key, marker in self._admission_records.items()
                 if not any(
-                    isinstance(marker, tuple) and len(marker) == 4
+                    isinstance(marker, tuple) and len(marker) in (4, 5, 6)
                     and type(marker[1]) is int and type(marker[2]) is int
                     and type(marker[3]) is int
                     and marker[1] <= index and marker[2] == deadline
@@ -118,6 +118,26 @@ class InputOwner:
                 if marker[0] is lease:
                     del self._admission_records[admission_key]
 
+    def _admission_receipt_for_release(self, marker, lease, operation, key,
+                                       release_started_ns):
+        receipt = (dict(marker[5]) if isinstance(marker, tuple) and len(marker) == 6
+                   and type(marker[5]) is dict else None)
+        expected_event = "input_admission" if operation == "down" else "pointer_admission"
+        identity_field = "key" if operation == "down" else "payload"
+        valid = (
+            receipt is not None
+            and receipt.get("event") == expected_event
+            and receipt.get("operation") == operation
+            and receipt.get(identity_field) == key
+            and receipt.get("owner_id") == self._inner.owner_id
+            and receipt.get("intent_token") == self._intent_token(lease)
+            and receipt.get("valid_until_ns") == getattr(lease, "deadline", None)
+            and type(receipt.get("admitted_ns")) is int
+            and type(receipt.get("input_ack_ns")) is int
+            and receipt["admitted_ns"] <= receipt["input_ack_ns"] < release_started_ns
+        )
+        return receipt, valid
+
     def _call_up_batch(self, lease, keys):
         if type(keys) is not list or not keys or len(set(keys)) != len(keys):
             raise ValueError("unique key list required for up_batch")
@@ -128,7 +148,92 @@ class InputOwner:
             for key in keys:
                 markers[key] = self._admission_records.pop(
                     self._admission_key(lease, key), None)
-        receipts = self._inner.call("up_batch", lease, keys)
+        try:
+            receipts = self._inner.call("up_batch", lease, keys)
+        except ValueError as error:
+            # Cancellation cleanup can win the owner queue after the backend
+            # recorded its UP but before this batch reaches the owner. Preserve
+            # the strict owner lease gate; classify only a fully verified,
+            # identity-bound cleanup as an already-released cancellation.
+            records_after = self._records_snapshot()
+            cleanup = records_after[-1] if records_after else None
+            cleanup_valid = (
+                str(error) == "up_batch requires the active input lease"
+                and lease is not None
+                and getattr(getattr(lease, "cancel", None), "is_set", lambda: False)()
+                and markers and all(marker is not None for marker in markers.values())
+                and type(cleanup) is dict
+                and cleanup.get("event") == "owner_release"
+                and cleanup.get("reason") == "cancelled"
+                and cleanup.get("verified") is True
+                and cleanup.get("keys_down") == []
+                and cleanup.get("buttons_down") == []
+                and cleanup.get("keys_unknown") == []
+                and cleanup.get("key_state_errors") == []
+                and cleanup.get("valid_until_ns") == getattr(lease, "deadline", None)
+                and type(self._intent_token(lease)) is str
+                and bool(self._intent_token(lease))
+                and cleanup.get("intent_token") == self._intent_token(lease)
+                and type(cleanup.get("verified_ns")) is int
+                and all(
+                    marker[0] is lease
+                    and len(marker) in (5, 6)
+                    and type(marker[1]) is int
+                    and type(marker[2]) is int
+                    and type(marker[3]) is int
+                    and type(marker[4]) is int and marker[4] > 0
+                    and marker[1] <= len(records_after) - 1
+                    and marker[2] == cleanup["valid_until_ns"]
+                    and marker[3] <= cleanup["verified_ns"]
+                    for marker in markers.values()
+                )
+            )
+            if not cleanup_valid:
+                raise
+            released_codes = cleanup.get("key_release_attempts")
+            if not all(
+                type(released_codes) is dict
+                and str(markers[key][4]) in released_codes
+                and type(released_codes.get(str(markers[key][4]))) is dict
+                and released_codes[str(markers[key][4])].get("verified") is True
+                and type(released_codes[str(markers[key][4])].get("attempts")) is list
+                and released_codes[str(markers[key][4])]["attempts"]
+                and released_codes[str(markers[key][4])]["attempts"][-1].get("server_key_down_after") is False
+                for key in keys
+            ):
+                raise
+            returned_ns = time.perf_counter_ns()
+            return [{
+                "event": "input_release_transition",
+                "transition_schema": "input-release-transition-v3",
+                "operation": "up", "key": key,
+                "owner_id": self._inner.owner_id,
+                "intent_token": self._intent_token(lease),
+                "valid_until_ns": getattr(lease, "deadline", None),
+                "release_call_started_ns": started_ns,
+                "release_call_returned_ns": returned_ns,
+                "release_call_bracket_ns": returned_ns - started_ns,
+                "owner_transition_verified": False,
+                "owner_explicit_keyup_failure": None,
+                "owner_thread_keyup_receipt": None,
+                "owner_thread_keyup_verified": False,
+                "owner_cleanup_release_verified": True,
+                "owner_cleanup_record": dict(cleanup),
+                "admission_receipt": self._admission_receipt_for_release(
+                    markers[key], lease, "down", key, started_ns)[0],
+                "admission_receipt_valid": self._admission_receipt_for_release(
+                    markers[key], lease, "down", key, started_ns)[1],
+                "owner_cleanup_intervened": True,
+                "owner_release_history_complete": True,
+                "ordinary_release_candidate": False,
+                "grants_input_authority": False,
+                "cancelled_cleanup_join": True,
+                "measurement_contract": (
+                    "verified owner cancellation cleanup released this key before its "
+                    "queued explicit UP; no explicit-UP receipt is claimed"
+                ),
+                **lease_state,
+            } for key in keys]
         returned_ns = time.perf_counter_ns()
         records_after = self._records_snapshot()
         if type(receipts) is not list or len(receipts) != len(keys):
@@ -139,7 +244,7 @@ class InputOwner:
             history_complete = marker is not None and records_after is not None
             cleanup_intervened = False
             if history_complete:
-                admitted_lease, record_index, admitted_deadline, admitted_ns = marker
+                admitted_lease, record_index, admitted_deadline, admitted_ns = marker[:4]
                 if (admitted_lease is not lease
                         or type(record_index) is not int or record_index < 0
                         or record_index > len(records_after)
@@ -171,6 +276,10 @@ class InputOwner:
                 lease_state["ordinary_release_candidate"] and history_complete
                 and not cleanup_intervened and receipt_valid
             )
+            admission_receipt, admission_receipt_valid = (
+                self._admission_receipt_for_release(
+                    marker, lease, "down", key, started_ns)
+            )
             transitions.append({
                 "event": "input_release_transition",
                 "transition_schema": "input-release-transition-v3",
@@ -182,6 +291,8 @@ class InputOwner:
                 "release_call_returned_ns": returned_ns,
                 "release_call_bracket_ns": returned_ns - started_ns,
                 "owner_transition_verified": receipt_valid,
+                "admission_receipt": admission_receipt,
+                "admission_receipt_valid": admission_receipt_valid,
                 "owner_explicit_keyup_failure": (
                     dict(receipt) if not receipt_valid and type(receipt) is dict else None
                 ),
@@ -234,10 +345,27 @@ class InputOwner:
                 if admission_key is not None and records_before is not None:
                     deadline = getattr(lease, "deadline", None) if lease is not None else None
                     admitted_ns = result.get("admitted_ns")
+                    keycode = result.get("keycode")
                     if type(deadline) is int and type(admitted_ns) is int:
                         with self._admission_records_lock:
                             self._admission_records[admission_key] = (
-                                lease, len(records_before), deadline, admitted_ns)
+                                lease, len(records_before), deadline, admitted_ns,
+                            keycode if type(keycode) is int and keycode > 0 else None,
+                            {
+                                "event": result.get("event"),
+                                "operation": operation,
+                                "key" if operation == "down" else "payload": (
+                                    result.get("key") if operation == "down"
+                                    else result.get("payload")),
+                                "owner_id": result.get("owner_id", self._inner.owner_id),
+                                "intent_token": result.get(
+                                    "intent_token", self._intent_token(lease)),
+                                "valid_until_ns": result.get(
+                                    "valid_until_ns",
+                                    getattr(lease, "deadline", None)),
+                                "admitted_ns": result.get("admitted_ns"),
+                                "input_ack_ns": result.get("input_ack_ns"),
+                            })
             if isinstance(result, dict) and result.get("event") == "owner_release":
                 result.setdefault("release_call_started_ns", started_ns)
                 result.setdefault("release_call_returned_ns", returned_ns)
@@ -278,7 +406,7 @@ class InputOwner:
         )
         owner_cleanup_intervened = False
         if owner_release_history_complete:
-            admitted_lease, record_index, admitted_deadline, admitted_ns = admission_marker
+            admitted_lease, record_index, admitted_deadline, admitted_ns = admission_marker[:4]
             if (admitted_lease is not lease
                     or type(record_index) is not int or record_index < 0
                     or record_index > len(records_after)
@@ -306,6 +434,12 @@ class InputOwner:
             and owner_release_history_complete
             and not owner_cleanup_intervened
         )
+        admission_operation = "down" if operation == "up" else "button_down"
+        admission_receipt, admission_receipt_valid = (
+            self._admission_receipt_for_release(
+                admission_marker, lease, admission_operation, key,
+                release_call_started_ns)
+        )
 
         return {
             "event": "input_release_transition",
@@ -319,6 +453,8 @@ class InputOwner:
             "release_call_returned_ns": release_call_returned_ns,
             "release_call_bracket_ns": release_call_returned_ns - release_call_started_ns,
             "owner_transition_verified": (False if explicit_keyup_failure is not None else None),
+            "admission_receipt": admission_receipt,
+            "admission_receipt_valid": admission_receipt_valid,
             "owner_explicit_keyup_failure": (
                 dict(explicit_keyup_failure) if explicit_keyup_failure is not None else None
             ),

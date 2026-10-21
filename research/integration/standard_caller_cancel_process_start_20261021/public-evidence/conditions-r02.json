@@ -1,0 +1,39 @@
+{
+  "schema": "agent-interface/standard-caller-cancel-process-start-conditions-v2",
+  "classification": "local-standard-mcp-caller-fakex-real-spawn-construction-probe",
+  "question": "Does actual multiprocessing spawn startup, delayed immediately before Process.start(), add its duration to cancellation response and pause the standard MCP event loop, while the existing XRes gate prevents release after an unknown disconnect?",
+  "source_revision": "e7d79d04de46202622873bf116adb909abb0dee2",
+  "runtime": "Windows host; Python 3.11 multiprocessing spawn; repository Fake X owned-session fixture; helper workers return synthetic disconnect/UNKNOWN receipts; no X server, Xlib server operation, physical input, WSL, WSLc, Docker, or external model",
+  "arms": {
+    "actual-spawn-no-delay": {
+      "trials": 3,
+      "injected_delay_before_each_helper_start_ms": 0,
+      "expected": "record how no-delay child startup interacts with the existing 150 ms XRes worker-response budget; if disconnect is UNKNOWN, release must remain not_attempted"
+    },
+    "actual-spawn-with-delay": {
+      "trials": 3,
+      "injected_delay_before_each_helper_start_ms": 700,
+      "expected": "record the exact helper starts reached; cancellation response and heartbeat gaps include each injected start delay; if disconnect is UNKNOWN, release must remain not_attempted"
+    }
+  },
+  "frozen_inputs": {
+    "target": {"name": "app", "native_id": 20},
+    "action": "one CTRL+a chord; Fake X owner blocks in sync until parent retirement",
+    "response_wait_ms": 0,
+    "heartbeat_interval_ms": 10,
+    "disconnect_helper": "real spawned process returns a synthetic disconnected receipt",
+    "release_helper": "if reached, a real spawned process returns a synthetic unknown receipt and emits no input",
+    "delay_injection": "sleep in a parent-side Process proxy immediately before delegating to the real Process.start()"
+  },
+  "measurements": [
+    "public interface_guarded_cancel elapsed_ms from call entry through return",
+    "maximum asyncio heartbeat gap spanning cancellation",
+    "each actual Process.start wrapper delay, worker PID and helper exit code/retirement",
+    "XRes disconnect classification, release attempted/not_attempted and terminal UNKNOWN metadata"
+  ],
+  "decision": {
+    "classification": "DESCRIPTIVE_CURRENT_PATH_RESULT; no product PASS",
+    "evidence_rule": "All six trials must retain complete records and remain release_confirmed=false, cleanup UNKNOWN, task_success=null, replay_allowed=false. The number of helper starts is conditional on whether synthetic disconnect completes within the current 150 ms worker-response budget. Release must never be attempted after UNKNOWN disconnect.",
+    "scope_limit": "The helper receipt is synthetic. This probes actual Windows process creation and caller timing only, not XRes wire behavior, real release, physical input, OS hard bounds, or the proposed supervisor architecture."
+  }
+}

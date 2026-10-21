@@ -1,0 +1,25 @@
+{
+  "fixture_id": "EIR8620-A01-FIXTURE-v1",
+  "histories": [
+    {"id":"h00","current_screenshot":"same","doc_id":"A","saved":0,"modal_owner":"editor","selection":"x","lineage":"L0","freshness":"F0","authority":"owner","viewport":"v0","cursor":"c0","task_summary":"same"},
+    {"id":"h01","current_screenshot":"same","doc_id":"A","saved":1,"modal_owner":"editor","selection":"x","lineage":"L1","freshness":"F0","authority":"owner","viewport":"v0","cursor":"c1","task_summary":"same"},
+    {"id":"h02","current_screenshot":"same","doc_id":"B","saved":0,"modal_owner":"dialog","selection":"y","lineage":"L2","freshness":"F1","authority":"owner","viewport":"v0","cursor":"c0","task_summary":"same"},
+    {"id":"h03","current_screenshot":"same","doc_id":"B","saved":1,"modal_owner":"dialog","selection":"x","lineage":"L3","freshness":"F1","authority":"delegate","viewport":"v1","cursor":"c0","task_summary":"same"},
+    {"id":"h04","current_screenshot":"same","doc_id":"C","saved":0,"modal_owner":"editor","selection":"y","lineage":"L4","freshness":"F2","authority":"owner","viewport":"v1","cursor":"c1","task_summary":"same"},
+    {"id":"h05","current_screenshot":"same","doc_id":"C","saved":1,"modal_owner":"dialog","selection":"z","lineage":"L5","freshness":"F2","authority":"delegate","viewport":"v0","cursor":"c1","task_summary":"same"},
+    {"id":"h06","current_screenshot":"same","doc_id":"A","saved":0,"modal_owner":"dialog","selection":"z","lineage":"L6","freshness":"F0","authority":"owner","viewport":"v1","cursor":"c0","task_summary":"same"},
+    {"id":"h07","current_screenshot":"same","doc_id":"B","saved":1,"modal_owner":"editor","selection":"z","lineage":"L7","freshness":"F1","authority":"delegate","viewport":"v0","cursor":"c1","task_summary":"same"},
+    {"id":"h08","current_screenshot":"same","doc_id":"C","saved":0,"modal_owner":"dialog","selection":"x","lineage":"L8","freshness":"F2","authority":"owner","viewport":"v1","cursor":"c1","task_summary":"same"},
+    {"id":"h09","current_screenshot":"same","doc_id":"A","saved":1,"modal_owner":"editor","selection":"y","lineage":"L9","freshness":"F0","authority":"delegate","viewport":"v0","cursor":"c0","task_summary":"same"},
+    {"id":"h10","current_screenshot":"same","doc_id":"B","saved":0,"modal_owner":"editor","selection":"x","lineage":"L10","freshness":"F1","authority":"owner","viewport":"v1","cursor":"c0","task_summary":"same"},
+    {"id":"h11","current_screenshot":"same","doc_id":"C","saved":1,"modal_owner":"dialog","selection":"y","lineage":"L11","freshness":"F2","authority":"delegate","viewport":"v0","cursor":"c1","task_summary":"same"}
+  ],
+  "field_cost_bits": {"current_screenshot":8,"doc_id":4,"saved":1,"modal_owner":2,"selection":2,"lineage":4,"freshness":2,"authority":2,"viewport":2,"cursor":1,"task_summary":1},
+  "reacquisition": {"doc_id":{"available":true,"cost_units":1},"saved":{"available":false},"modal_owner":{"available":true,"cost_units":1},"selection":{"available":false},"lineage":{"available":false},"freshness":{"available":false},"authority":{"available":false},"viewport":{"available":true,"cost_units":1},"cursor":{"available":true,"cost_units":1}},
+  "contracts": [
+    {"id":"contract_v1","schedules":[{"id":"open_doc","reads":["doc_id"],"weight":0.5},{"id":"apply_selection","reads":["selection"],"weight":0.5}],"proof_fields":[]},
+    {"id":"contract_v2","schedules":[{"id":"save_and_verify","reads":["doc_id","saved"],"weight":0.35},{"id":"route_modal","reads":["modal_owner"],"weight":0.2},{"id":"apply_selection","reads":["selection"],"weight":0.2},{"id":"read_doc","reads":["doc_id"],"weight":0.1},{"id":"audit_lineage","reads":[],"weight":0.15}],"proof_fields":["lineage","freshness","authority"]}
+  ],
+  "policy_definitions": {"FULL_HISTORY":"all fields","FIXED_WINDOW":["viewport","cursor","selection"],"TASK_SUMMARY":["task_summary"]},
+  "units": {"storage":"synthetic encoded bits per retained field per history","reacquisition":"synthetic cost units weighted by declared schedule probability","error":"required field unavailable with no allowed reacquisition"}
+}

@@ -1,0 +1,23 @@
+import hashlib,json
+from pathlib import Path
+r=Path(__file__).resolve().parent;b=(r/'baseline/adaptive_acquisition_caller_v3.py').read_bytes()
+helper=b'''
+def _aggregate_cost(costs, attempted_calls):
+    """Return a total only when all attempts have a representable numeric sum."""
+    if len(costs) != attempted_calls:
+        return None
+    try:
+        total = sum(costs)
+    except OverflowError:
+        return None
+    if isinstance(total, float) and not math.isfinite(total):
+        return None
+    return total
+
+'''
+needle=b'"cost": sum(costs) if len(costs) == len(attempts) else None'
+if b.count(needle)!=1:raise ValueError('one totalexpression')
+new=b.replace(b'import copy\n',b'import copy\nimport math\n',1).replace(b'class ModelFailure(RuntimeError):',helper+b'class ModelFailure(RuntimeError):',1).replace(needle,b'"cost": _aggregate_cost(costs, len(attempts))',1)
+(r/'candidate').mkdir(exist_ok=False);(r/'candidate/adaptive_acquisition_caller_v3.py').write_bytes(new)
+(r/'REPAIR.json').write_text(json.dumps(dict(original_bytes=len(b),original_sha256=hashlib.sha256(b).hexdigest(),candidate_bytes=len(new),candidate_sha256=hashlib.sha256(new).hexdigest(),individual_cost_acceptance_changed=False,behavior='unknown/incomplete costs keep null; OverflowError or nonfinite aggregate null; ordinary representable sums unchanged; no financial policy/price claim'),indent=2)+'\n',encoding='utf-8')
+print(json.dumps(dict(bytes=len(new),sha256=hashlib.sha256(new).hexdigest())))

@@ -136,6 +136,33 @@ class RunningActionGuard:
         self.state = CANCEL if self.active_program is not None else REJECTED
         return self.receipt()
 
+    def record_preacceptance_rejection(self, rejection):
+        """Close a candidate rejected by Executor's stale-sequence fence."""
+        expected = {"event", "id", "reason", "expected_sequence",
+                    "observed_sequence", "controller_received_ns"}
+        if (self.state not in (READY, BETWEEN) or self.active_program is not None or
+                type(rejection) is not dict or set(rejection) != expected or
+                rejection.get("event") != "rejected" or
+                not isinstance(rejection.get("id"), str) or not rejection["id"] or
+                rejection.get("reason") !=
+                "latest observation sequence required before input" or
+                type(rejection.get("expected_sequence")) is not int or
+                rejection["expected_sequence"] != self.last_sequence or
+                type(rejection.get("observed_sequence")) is not int or
+                rejection["observed_sequence"] <= rejection["expected_sequence"] or
+                type(rejection.get("controller_received_ns")) is not int or
+                rejection["controller_received_ns"] < 0):
+            raise ValueError("exact fresh Executor stale-sequence rejection required")
+        self.invalidation = {
+            "kind": "executor_stale_sequence_rejection",
+            "reason": "latest_observation_sequence_required_before_input",
+            "rejection": deepcopy(rejection),
+            "requires_new_decision": True,
+            "grants_input_authority": False,
+        }
+        self.state = REJECTED
+        return self.receipt()
+
     def record_cancel_requested(self, event):
         if (self.state != CANCEL or self.active_program is None or
                 type(event) is not dict or

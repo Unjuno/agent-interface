@@ -1,0 +1,30 @@
+{
+  "experiment_id": "issue59-main-invalidation-replan-a01-20261008",
+  "classification": "construction_only_source_composition_not_live_allocation",
+  "github_main_sha_at_freeze": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "freeze_observed_utc": "2026-10-08T03:46:30Z",
+  "repository": "Unjuno/agent-interface",
+  "source_files": {
+    "map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15",
+    "doom_source_refresh_v1.py": "6b5add0fa29865de64afcfa1da4a272d9a216e8d",
+    "doom_typed_coast_backend_v1.py": "d95d382ee9c234dab652fa8af93b233baa5225a4",
+    "executor_v5.py": "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+    "executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "test_cancel_invalidated_cover_order.main.py": "3bc23d5e2c7f46876c1c176644ff10fa24816e9d"
+  },
+  "runtime_dependencies": {
+    "python": "3.11.9",
+    "Pillow": "10.2.0",
+    "NumPy": "2.4.6 (not used by this test)"
+  },
+  "commands": [
+    "python test_invalidation_replan_composition.py",
+    "python -O test_invalidation_replan_composition.py"
+  ],
+  "retries": 0,
+  "gui_or_input": false,
+  "model_or_app_server": false,
+  "live_doom_process": false,
+  "allocation_id": null
+}

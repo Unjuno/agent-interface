@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\owned_service_session_20261016\read_saved.py", line 119, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\owned_service_session_20261016\read_saved.py", line 94, in main
+    data=json.loads((Q/f'final-{label}.json').read_text(encoding='utf-8'));pids=audit(data,mode,index);all_pids.update(pids);rejected=[]
+                                                                                ~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\integration\owned_service_session_20261016\read_saved.py", line 40, in audit
+    for name,pin in json.loads(files['sources.json']).items():need(index['research/'+name]['raw_sha256']==pin,'legacy raw source pin')
+                                                                   ~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'research/doom\\doom_owner_thread_release_batch_backend_v1.py'

@@ -1,11 +1,13 @@
 """Optional stdio MCP transport; one-shot by default, explicit persistent X11 option."""
 import argparse
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 import contextvars
 from copy import deepcopy
 from contextlib import asynccontextmanager
 import json
 from itertools import islice, dropwhile
+import math
 from pathlib import Path
 import threading
 import time
@@ -23,6 +25,10 @@ from .attempt import _write_json
 from .observe import observe, observe_in_session
 from .review import present_result
 from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
+
+# Reserve time to resume the loop and encode a response within the caller budget.
+_GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS = 300_000_000
+_GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
 
 
 # Documentation metadata only: the public compiler and core remain the validators.
@@ -155,13 +161,45 @@ class _WorkerAdmission:
         self.completed()
 
 
-def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot"):
+def create_server(targets, output_directory, *, display_name=None, session_mode="one-shot",
+                  guarded_process_identity=False, guarded_query_worker=False, guarded_observation_worker=False,
+                  guarded_window_lifecycle=False, guarded_owned_process=False,
+                  guarded_prestarted_cancel_supervisor=False,
+                  _guarded_cancel_supervisor_target=None,
+                  _guarded_cancel_transaction_timeout_s=3.0,
+                  _guarded_owner_factory=None):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11"):
         raise ValueError("unknown session mode")
+    if type(guarded_process_identity) is not bool:
+        raise ValueError('guarded_process_identity must be a boolean')
+    if guarded_process_identity and session_mode != 'guarded-x11':
+        raise ValueError('process identity requires guarded-x11 mode')
+    if (type(guarded_query_worker) is not bool
+            or (guarded_query_worker and (session_mode != 'guarded-x11' or not guarded_process_identity))):
+        raise ValueError('query worker requires guarded-x11 with explicit process identity')
+    if (type(guarded_observation_worker) is not bool
+            or (guarded_observation_worker and not guarded_query_worker)):
+        raise ValueError('observation worker requires explicit guarded query worker')
+    if (type(guarded_window_lifecycle) is not bool
+            or (guarded_window_lifecycle and not guarded_query_worker)):
+        raise ValueError('window lifecycle requires explicit guarded query worker')
     if (not isinstance(targets, dict) or not targets or
             any(not isinstance(k, str) or not k or type(v) is not int or v <= 0
                 for k, v in targets.items())):
         raise ValueError('explicit nonempty target name -> positive native ID mapping required')
+    if type(guarded_owned_process) is not bool:
+        raise ValueError('guarded_owned_process must be a boolean')
+    if (type(guarded_prestarted_cancel_supervisor) is not bool
+            or (guarded_prestarted_cancel_supervisor
+                and not guarded_owned_process)):
+        raise ValueError('prestarted cancellation supervisor requires guarded owned-process mode')
+    if (type(_guarded_cancel_transaction_timeout_s) not in (int, float)
+            or not math.isfinite(_guarded_cancel_transaction_timeout_s)
+            or _guarded_cancel_transaction_timeout_s <= 0):
+        raise ValueError('guarded cancellation transaction timeout must be positive')
+    if guarded_owned_process and (session_mode != 'guarded-x11'
+            or not guarded_process_identity or not guarded_query_worker):
+        raise ValueError('guarded owned process requires guarded-x11, process identity and query worker')
     targets = deepcopy(targets)
     root = Path(output_directory).resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -169,30 +207,95 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     workers = set()
     calls = {}
     calls_lock = threading.Lock()
+    cancellation_executor = (ThreadPoolExecutor(max_workers=1,
+        thread_name_prefix='guarded-cancel') if guarded_owned_process else None)
+    cancellation_futures = {}
+    active_cancellation_operation = None
+    unarchived_cancellation_call_id = None
+
+    async def load_cancellation_record(call_id, call_record):
+        cancellation = call_record.get('cancellation')
+        if isinstance(cancellation, dict):
+            return deepcopy(cancellation)
+        if call_record.get('cancellation_archived') is not True:
+            return None
+        path = root / call_id / 'cancellation.json'
+        try:
+            cancellation = json.loads(await asyncio.to_thread(
+                path.read_text, encoding='utf-8'))
+        except (OSError, ValueError, TypeError):
+            cancellation = None
+        if (not isinstance(cancellation, dict)
+                or cancellation.get('operation_id')
+                    != call_record.get('cancellation_operation_id')):
+            return {
+                'operation_id':call_record.get('cancellation_operation_id'),
+                'status':'unknown',
+                'persistence_failure':'terminal cancellation receipt unavailable',
+                'result':{'status':'cancel_unconfirmed',
+                    'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                    'task_success':None, 'replay_allowed':False}}
+        return cancellation
+    if cancellation_executor is not None:
+        # Pay thread startup before the first safety-sensitive cancellation.
+        cancellation_executor.submit(lambda: None).result(timeout=5)
     owner = MCPSessionOwner(targets, display_name) if session_mode == 'persistent-x11' else None
     guarded = session_mode == 'guarded-x11'
     if guarded:
         from .mcp_guarded import GuardedSessionOwner
-        owner = GuardedSessionOwner(targets, root, display_name)
+        owner_options = dict(process_identity=guarded_process_identity,
+                             query_worker=guarded_query_worker,
+                             observation_worker=guarded_observation_worker,
+                             window_lifecycle=guarded_window_lifecycle)
+        if guarded_owned_process:
+            from .owned_guarded_session import OwnedGuardedSessionOwner
+            owner = OwnedGuardedSessionOwner(targets, root, display_name,
+                **owner_options,
+                prestarted_cancel_supervisor=guarded_prestarted_cancel_supervisor,
+                _cleanup_supervisor_target=_guarded_cancel_supervisor_target,
+                _owner_factory=_guarded_owner_factory)
+        else:
+            owner = GuardedSessionOwner(targets, root, display_name, **owner_options)
     shutting_down = False
+    server_shutdown_started = False
     server_instance_id = uuid.uuid4().hex
 
+    def rollback_unentered_close(operation, revoked):
+        """Release a manual close reservation only if no worker entered it."""
+        nonlocal shutting_down
+        if operation != 'close' or not revoked:
+            return
+        with calls_lock:
+            if (not server_shutdown_started
+                    and (owner is None or owner.state != 'closed')):
+                shutting_down = False
+
     def close_owner():
-        report = owner.close()
-        _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
-        return report
+        try:
+            report = owner.close()
+            _write_json(root / ('session-' + owner.session_id + '-close.json'), report)
+            return report
+        finally:
+            if cancellation_executor is not None:
+                cancellation_executor.shutdown(wait=True, cancel_futures=False)
 
     @asynccontextmanager
     async def lifespan(_server):
-        nonlocal shutting_down
+        nonlocal shutting_down, server_shutdown_started
         try:
             yield {}
         finally:
+            server_shutdown_started = True
             shutting_down = True
             # Finish committed workers before touching their connection. No
             # cancellation-based redispatch or close racing with active input.
             with anyio.CancelScope(shield=True):
-                if workers:
+                if workers and guarded_owned_process:
+                    done, pending = await asyncio.wait(list(workers), timeout=5.0)
+                    if pending:
+                        owner.retire('server shutdown exceeded guarded worker drain bound')
+                        await asyncio.wait(pending, timeout=2.0)
+                elif workers:
                     # Teardown's waiter must not cancel the invocation's own
                     # completion obligation if that waiter is interrupted.
                     await asyncio.gather(*(asyncio.shield(worker) for worker in list(workers)),
@@ -212,22 +315,28 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         'Inspect action, image and cleanup outcomes separately. '
         'Never replay an uncertain action automatically.'))
 
-    def invoke(admission, operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
+    def invoke(admission, operation, kwargs, compact, report_refs, detail="full", observation_refs=False,
+               registered_call_id=None, wait_for_result_ms=None):
         if not admission.enter():
             return None  # A rejected/cancelled queued submission must never invoke.
-        call_id = None
+        call_id = registered_call_id
+        previous_interrupted_execution = getattr(
+            getattr(getattr(owner, 'session', None), 'backend', None), 'interrupted_execution', None)
         try:
-            call_root = root / uuid.uuid4().hex
+            call_root = root / (registered_call_id or uuid.uuid4().hex)
             call_root.mkdir(exist_ok=False)
             call_id = call_root.name
             with calls_lock:
                 calls[call_id] = {"call_id": call_id, "operation": operation,
                                   "state": "running", "arguments": deepcopy(kwargs),
                                   "backend_attempted": False, "persistence_failure": None}
+                if wait_for_result_ms is not None:
+                    calls[call_id]['response_wait_ms'] = wait_for_result_ms
             # Serialize before calling the backend. A persistence failure here sends no input.
             authored_program = deepcopy(kwargs.get('program'))
             request = {'operation': operation, 'arguments': kwargs, 'targets': deepcopy(owner.targets) if owner else targets,
                        'display_name': display_name}
+            if wait_for_result_ms is not None: request['response_wait_ms'] = wait_for_result_ms
             if owner is not None:
                 request['session'] = owner.snapshot()
             if detail != 'full':
@@ -255,6 +364,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                     report = close_owner()
                 elif operation == 'recover_input':
                     report = owner.recover_input(**kwargs, capture_directory=str(call_root / 'images'))
+                elif operation == 'guarded_compiled':
+                    report = owner.run_compiled_profile(
+                        kwargs['interface'], kwargs['bindings'],
+                        kwargs['predicate_rules'], kwargs['effect_rules'],
+                        call_root, call_id)
                 elif operation.startswith('guarded_'):
                     report = owner.invoke_guarded(operation, kwargs, call_root)
                 elif operation in ('inspect_target', 'review_target'):
@@ -268,7 +382,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 elif owner is not None:
                     options.pop('display_name')
                     if operation == 'observe':
-                        report = observe_in_session(owner.get(), **options)
+                        if guarded_owned_process:
+                            report = owner.observe(**options)
+                        else:
+                            report = observe_in_session(owner.get(), **options)
                     else:
                         program = options.pop('program')
                         report = owner.dispatch(program, **options)
@@ -282,6 +399,12 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 report = {'status': 'runtime_failed', 'error': repr(error),
                           'operation': operation, 'operation_invoked': True,
                           'effect_status': 'unknown'}
+                if guarded_owned_process and owner is not None:
+                    session_state = owner.snapshot()
+                    report.update(release_confirmed=False, task_success=None,
+                                  replay_allowed=False, cleanup_status='UNKNOWN',
+                                  owner_process=session_state.get('owner_process'),
+                                  late_server_request_possible=True)
                 if owner is not None and owner.state == 'failed' and owner.session is None:
                     report.update(status='backend_unavailable', failure_phase='session_initialization',
                                   operation_invoked=False, input_dispatched=False, effect_status='none')
@@ -348,18 +471,58 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 (report.get('error') is not None or report.get('status') in ('cleanup_failed','refused','recovery_failed')
                  or (report.get('status') == 'needs_review' and not inspection_ready)
                  or report.get('feedback_status') == 'observation_failed')))
+        except BaseException as error:
+            if not isinstance(error, Exception) and call_id is not None:
+                with calls_lock:
+                    record = calls.get(call_id)
+                    if record is not None:
+                        record['worker_interrupted'] = type(error).__name__
+                        record['interruption_receipt'] = False
+                if record is not None:
+                    try:
+                        interruption = dict(status='runtime_interrupted', error=repr(error),
+                            exception_type=type(error).__name__, operation=operation,
+                            operation_invoked=record['backend_attempted'], effect_status='unknown',
+                            release_confirmed=False, task_success=None, replay_allowed=False,
+                            authority_granted=False,
+                            report_artifact_present=(call_root / 'report.json').is_file())
+                        if owner is not None:
+                            interruption['session'] = owner.snapshot()
+                            execution = getattr(getattr(owner.session, 'backend', None),
+                                                'interrupted_execution', None)
+                            # A prior recovered call's snapshot is not evidence
+                            # for this interruption, including presentation faults.
+                            if isinstance(execution, dict) and execution is not previous_interrupted_execution:
+                                interruption['interrupted_execution'] = deepcopy(execution)
+                        # Keep any completed backend report byte-for-byte. A
+                        # separate receipt records the interrupted call boundary.
+                        _write_json(call_root / 'interruption.json', interruption)
+                        with calls_lock:
+                            record['interruption_receipt'] = True
+                    except BaseException as persistence_error:
+                        # Receipt failures cannot replace the worker's original
+                        # stop or trigger input/recovery/reconnect.
+                        with calls_lock:
+                            record['interruption_persistence_failure'] = repr(persistence_error)
+            raise
         finally:
             if call_id is not None:
                 with calls_lock:
                     calls[call_id]["state"] = "finished"
             admission.finish()
 
-    async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False):
+    async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False, *, wait_for_result_ms=None):
+        nonlocal shutting_down
+        if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input','guarded_compiled')
+                or type(wait_for_result_ms) is not int or not 0<=wait_for_result_ms<=10000):
+            return content({'status':'invalid_request','error':'INVALID_RESPONSE_WAIT',
+                            'operation_invoked':False,'replay_allowed':False},error=True)
         if report_refs and not compact:
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
                 'operation_invoked': False}, error=True)
-        if shutting_down or (owner is not None and owner.state == 'closed' and operation != 'close'):
+        if ((shutting_down and operation != 'close')
+                or (owner is not None and owner.state == 'closed' and operation != 'close')):
             return content({'status': 'session_closed', 'operation_invoked': False,
                             'replay_allowed': False}, error=True)
         # Decide busy before scheduling a worker; thread-pool contention must not queue input.
@@ -374,34 +537,86 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         def completed():
             loop.call_soon_threadsafe(completion.set_result, None)
         admission = _WorkerAdmission(lock, completed)
+        registered_call_id = None
+        def finish_unentered_record(error):
+            if registered_call_id is not None:
+                with calls_lock:
+                    calls[registered_call_id].update(state='finished',worker_error=repr(error))
         try:
             # Submit synchronously so pre-worker rejection is handled here. Keep
             # to_thread's context propagation and shield accepted work below.
             context = contextvars.copy_context()
+            if wait_for_result_ms is not None:
+                candidate = uuid.uuid4().hex
+                with calls_lock:
+                    if candidate in calls: raise RuntimeError('call ID collision')
+                    calls[candidate] = dict(call_id=candidate,operation=operation,state='queued',
+                        arguments=deepcopy(kwargs),backend_attempted=False,persistence_failure=None,
+                        response_wait_ms=wait_for_result_ms)
+                    registered_call_id = candidate
             worker = loop.run_in_executor(
                 None, context.run, invoke, admission, operation, kwargs,
-                compact, report_refs, detail, observation_refs)
+                compact, report_refs, detail, observation_refs,registered_call_id,wait_for_result_ms)
         except BaseException as error:
             revoked = admission.revoke_pending()
+            if revoked:
+                finish_unentered_record(error)
+                rollback_unentered_close(operation, revoked)
             if not isinstance(error, Exception):
                 # Preserve cancellation/fatal exception propagation after
                 # revoking only work that has not entered the callable.
                 raise
-            return content({'status': 'worker_submission_failed',
+            report = {'status': 'worker_submission_failed',
                 'failure_phase': 'worker_submission', 'error': repr(error),
                 'operation_invoked': not revoked,
                 'input_dispatched': False if revoked else None,
                 'effect_status': 'none' if revoked else 'unknown',
-                'replay_allowed': False}, error=True)
+                'replay_allowed': False}
+            if registered_call_id is not None: report['call_id'] = registered_call_id
+            return content(report, error=True)
         def finished(task):
             # A terminal future can fail/cancel before callable entry. Revoke
             # only pending work; a running worker still owns its slot.
-            admission.revoke_pending()
+            revoked = admission.revoke_pending()
+            if revoked:
+                finish_unentered_record('executor handle terminated before invocation')
+                rollback_unentered_close(operation, revoked)
             if not task.cancelled():
                 task.exception()
         worker.add_done_callback(finished)
         # A cancelled transport must not cancel a queued worker and strand its lock.
-        return await asyncio.shield(worker)
+        try:
+            if wait_for_result_ms is not None:
+                # asyncio.wait never cancels accepted work when its timer ends.
+                await asyncio.wait({worker},timeout=wait_for_result_ms/1000)
+                if not worker.done():
+                    with calls_lock: record = deepcopy(calls[registered_call_id])
+                    return content(dict(status='pending',call_id=registered_call_id,call=record,
+                        scope='current_server',result_available=False,release_confirmed=False,
+                        effect_status='unknown',task_success=None,replay_allowed=False,
+                        note='Response wait ended; original worker retains custody and may still execute. '
+                             'Retrieve this call ID. Pending does not cancel input or permit replay.'))
+            return await asyncio.shield(worker)
+        except BaseException as error:
+            # A terminal executor handle can surface its error before its done
+            # callback runs. Revoke unentered work before returning to a caller
+            # that may immediately submit again. A live/queued worker retains
+            # custody when only this transport await was cancelled.
+            if worker.done():
+                revoked = admission.revoke_pending()
+                if revoked:
+                    finish_unentered_record('executor handle terminated before invocation')
+                    rollback_unentered_close(operation, revoked)
+            handle_cancelled = (isinstance(error,asyncio.CancelledError) and worker.cancelled()
+                                and asyncio.current_task().cancelling()==0)
+            if wait_for_result_ms is not None and (isinstance(error,Exception) or handle_cancelled):
+                with calls_lock: record = deepcopy(calls[registered_call_id])
+                return content(dict(status='worker_handle_failed',call_id=registered_call_id,call=record,
+                    error=repr(error),operation_invoked=None,input_dispatched=None,effect_status='unknown',
+                    result_available=False,release_confirmed=False,task_success=None,replay_allowed=False,
+                    note='Executor handle failed; invocation custody is recorded separately. '
+                         'Inspect this call ID. Never replay or assume cleanup from this error.'),error=True)
+            raise
 
     if owner is not None and not guarded:
         @server.tool()
@@ -464,6 +679,19 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             Busy refuses while an operation runs. Retained results remain readable.
             Release/close failures are separate from prior task outcomes.
             """
+            nonlocal shutting_down
+            # Reserve shutdown under the same lock used to admit cancellation.
+            # close_owner shuts down the cancellation executor, so it must not
+            # join an operation whose custody is still active.
+            with calls_lock:
+                if ((shutting_down and owner.state != 'closed')
+                        or active_cancellation_operation is not None
+                        or lock.locked()):
+                    return content({'status':'busy', 'operation_invoked':False,
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False,
+                        'cancellation_operation_id':active_cancellation_operation}, error=True)
+                shutting_down = True
             return await submit('close', {}, False, False)
 
     @server.tool()
@@ -506,7 +734,202 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     if guarded:
         from .mcp_guarded import register_guarded_tools
-        register_guarded_tools(server, submit)
+        def complete_cancellation(call_id, operation_id):
+            nonlocal active_cancellation_operation, unarchived_cancellation_call_id
+            try:
+                with calls_lock:
+                    record = calls.get(call_id)
+                    cancellation = (record.get('cancellation')
+                        if isinstance(record, dict) else None)
+                    transaction_deadline_ns = (cancellation.get(
+                        'transaction_deadline_monotonic_ns')
+                        if isinstance(cancellation, dict) else None)
+                result = owner.cancel_guarded(call_id,
+                    operation_id=operation_id,
+                    deadline_monotonic_ns=transaction_deadline_ns)
+                if not isinstance(result, dict):
+                    raise TypeError('cancellation result must be a mapping')
+                result = deepcopy(result)
+                result.setdefault('release_confirmed', False)
+                result.setdefault('cleanup_status', 'UNKNOWN')
+                result.setdefault('task_success', None)
+                result.setdefault('replay_allowed', False)
+                terminal = {'status':'completed', 'result':deepcopy(result),
+                            'completed_monotonic_ns':time.monotonic_ns()}
+            except BaseException as error:
+                result = {'status':'cancel_unconfirmed', 'error':repr(error),
+                          'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                          'task_success':None, 'replay_allowed':False}
+                terminal = {'status':'unknown', 'result':deepcopy(result),
+                            'error':repr(error),
+                            'completed_monotonic_ns':time.monotonic_ns()}
+            with calls_lock:
+                record = calls.get(call_id)
+                cancellation = record.get('cancellation') if record else None
+                persisted = deepcopy(cancellation) if isinstance(cancellation, dict) else {}
+            persisted.update(deepcopy(terminal))
+            # Persist only after the cleanup call has returned. A slow/failing
+            # evidence write cannot delay release; pending remains conservative.
+            archive_succeeded = False
+            try:
+                _write_json(root / call_id / 'cancellation.json',
+                            persisted)
+                archive_succeeded = True
+            except (OSError, ValueError, TypeError) as error:
+                terminal['persistence_failure'] = repr(error)
+            with calls_lock:
+                record = calls.get(call_id)
+                if record is not None:
+                    cancellation = record.get('cancellation')
+                    if isinstance(cancellation, dict) and cancellation.get('operation_id') == operation_id:
+                        cancellation.update(terminal)
+                        if archive_succeeded:
+                            record['cancellation_operation_id'] = operation_id
+                            record['cancellation_archived'] = True
+                            record.pop('cancellation', None)
+                        else:
+                            unarchived_cancellation_call_id = call_id
+                cancellation_futures.pop(operation_id, None)
+                if active_cancellation_operation == operation_id:
+                    active_cancellation_operation = None
+            return result
+
+        async def cancel_guarded(call_id):
+            nonlocal active_cancellation_operation, unarchived_cancellation_call_id
+            # No worker slot, filesystem or input emission on this path. The
+            # one-worker executor keeps owned-process cancellation off the MCP
+            # event loop while one operation retains custody after response timeout.
+            operation_id = None
+            future = None
+            direct_cancel = False
+            archived_lookup = False
+            with calls_lock:
+                record = calls.get(call_id)
+                valid_call = (record is not None
+                    and record['operation'] in ('guarded_input','guarded_compiled')
+                    and (record['state'] == 'running' or 'cancellation' in record
+                         or (cancellation_executor is not None
+                             and record.get('cancellation_archived') is True)))
+                if valid_call and cancellation_executor is None:
+                    direct_cancel = True
+                elif valid_call:
+                    cancellation = record.get('cancellation')
+                    if cancellation is None and record.get('cancellation_archived') is True:
+                        archived_lookup = True
+                    elif isinstance(cancellation, dict):
+                        operation_id = cancellation['operation_id']
+                        future = cancellation_futures.get(operation_id)
+                        if future is None:
+                            return content(dict(cancellation.get('result') or {
+                                'status':'pending' if cancellation.get('status') == 'pending' else 'cancel_unconfirmed',
+                                'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                                'task_success':None, 'replay_allowed':False},
+                                operation_id=operation_id, cancellation=deepcopy(cancellation),
+                                call_id=call_id))
+                    else:
+                        if record['state'] != 'running':
+                            valid_call = False
+                        elif shutting_down:
+                            return content({'status':'session_closed', 'call_id':call_id,
+                                'operation_invoked':False, 'release_confirmed':False,
+                                'cleanup_status':'UNKNOWN', 'task_success':None,
+                                'replay_allowed':False})
+                        elif active_cancellation_operation is not None:
+                            return content({'status':'cancel_busy', 'call_id':call_id,
+                                'operation_invoked':False, 'release_confirmed':False,
+                                'cleanup_status':'UNKNOWN', 'task_success':None,
+                                'replay_allowed':False})
+                        elif unarchived_cancellation_call_id is not None:
+                            return content({'status':'cancel_capacity_exhausted',
+                                'operation_invoked':False, 'release_confirmed':False,
+                                'cleanup_status':'UNKNOWN', 'task_success':None,
+                                'replay_allowed':False,
+                                'note':'A prior terminal cancellation receipt could not be archived; '
+                                       'the in-memory custody slot is retained.'})
+                        else:
+                            observed = owner.snapshot()
+                            process = observed.get('owner_process') or {}
+                            operation_id = uuid.uuid4().hex
+                            admitted_ns = time.monotonic_ns()
+                            cancellation = {
+                                'operation_id':operation_id,
+                                'status':'pending',
+                                'admitted_monotonic_ns':admitted_ns,
+                                'caller_response_deadline_monotonic_ns':(
+                                    admitted_ns + _GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS),
+                                'transaction_deadline_monotonic_ns':admitted_ns + int(
+                                    _guarded_cancel_transaction_timeout_s * 1_000_000_000),
+                                'owner_generation':{
+                                    'session_id':observed.get('session_id'),
+                                    'child_pid':process.get('pid'),
+                                    'x_resource_base':process.get('x_client_resource_base'),
+                                    'binding_revision':observed.get('binding_revision')},
+                                'release_confirmed':False, 'task_success':None,
+                                'replay_allowed':False}
+                            record['cancellation'] = cancellation
+                            active_cancellation_operation = operation_id
+                            try:
+                                future = cancellation_executor.submit(
+                                    complete_cancellation, call_id, operation_id)
+                            except RuntimeError as error:
+                                cancellation.update(status='unknown', error=repr(error),
+                                    result={'status':'cancel_unconfirmed', 'error':repr(error),
+                                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                                        'task_success':None, 'replay_allowed':False},
+                                    completed_monotonic_ns=time.monotonic_ns())
+                                active_cancellation_operation = None
+                                unarchived_cancellation_call_id = call_id
+                                return content(dict(cancellation['result'], call_id=call_id,
+                                    operation_id=operation_id, cancellation=deepcopy(cancellation)))
+                            cancellation_futures[operation_id] = future
+            if not valid_call:
+                return content({'status':'not_active','input_dispatched':False,'release_confirmed':False})
+            if archived_lookup:
+                with calls_lock:
+                    archived_call = deepcopy(calls.get(call_id))
+                cancellation = (await load_cancellation_record(call_id, archived_call)
+                    if archived_call is not None else None)
+                if cancellation is None:
+                    return content({'status':'cancel_unconfirmed', 'call_id':call_id,
+                        'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+                        'task_success':None, 'replay_allowed':False})
+                return content(dict(cancellation.get('result') or {
+                    'status':'cancel_unconfirmed', 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False}, call_id=call_id,
+                    operation_id=cancellation.get('operation_id'),
+                    cancellation=cancellation))
+            if direct_cancel:
+                return content(owner.cancel_guarded(call_id))
+            wrapped = asyncio.wrap_future(future)
+            # Resume the public caller before its deadline so event-loop scheduling,
+            # receipt lookup, and response encoding fit inside the advertised budget.
+            remaining_ns = (cancellation['caller_response_deadline_monotonic_ns']
+                            - time.monotonic_ns())
+            remaining = max(0, remaining_ns
+                            - _GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS) / 1_000_000_000
+            done, _ = await asyncio.wait({wrapped}, timeout=remaining)
+            with calls_lock:
+                call_record = deepcopy(calls.get(call_id))
+            current = (await load_cancellation_record(call_id, call_record)
+                if call_record is not None else None)
+            if not done:
+                return content({'status':'pending', 'call_id':call_id,
+                    'operation_id':operation_id, 'cancellation':current,
+                    'result_available':True, 'release_confirmed':False,
+                    'cleanup_status':'UNKNOWN', 'task_success':None,
+                    'replay_allowed':False,
+                    'note':'The response wait ended; this cancellation operation retains custody. '
+                           'Retrieve it through interface_results. Pending permits no replay.'})
+            result = deepcopy(current.get('result') or {
+                'status':'cancel_unconfirmed', 'release_confirmed':False,
+                'cleanup_status':'UNKNOWN', 'task_success':None,
+                'replay_allowed':False})
+            return content(dict(result, call_id=call_id, operation_id=operation_id,
+                                cancellation=current))
+        register_guarded_tools(server, submit,
+            cancel=cancel_guarded if guarded_query_worker else None,
+            compiled_enabled=guarded_owned_process)
     else:
         @server.tool()
         async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],
@@ -640,11 +1063,23 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             record = deepcopy(calls.get(call_id))
         if record is None:
             return content({'status': 'unknown_call', 'operation_invoked': False}, error=True)
+        if record.get('cancellation_archived') is True:
+            record['cancellation'] = await load_cancellation_record(call_id, record)
+        public_record = deepcopy(record)
+        public_record.pop('cancellation_archived', None)
+        public_record.pop('cancellation_operation_id', None)
         if record['state'] != 'finished':
-            return content({'status': 'pending', 'call': record, 'operation_invoked': False})
+            return content({'status': 'pending', 'call': public_record,
+                'cancellation':deepcopy(record.get('cancellation')),
+                'operation_invoked': False})
+        if record.get('worker_interrupted') and not record.get('interruption_receipt'):
+            return content({'status': 'receipt_unavailable', 'call': record,
+                'error': 'INTERRUPTION_RECEIPT_UNAVAILABLE', 'operation_invoked': False,
+                'replay_allowed': False}, error=True)
         call_root = root / call_id  # Only IDs minted and held by this server are accepted.
         try:
-            report = json.loads(await asyncio.to_thread((call_root / 'report.json').read_text,
+            receipt = call_root / ('interruption.json' if record.get('interruption_receipt') else 'report.json')
+            report = json.loads(await asyncio.to_thread(receipt.read_text,
                                                        encoding='utf-8'))
         except (OSError, ValueError) as error:
             return content({'status': 'receipt_unavailable', 'call': record,
@@ -654,8 +1089,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs, include_image=include_image))
         if 'post_dispatch_inspection' in report:
             result['post_dispatch_inspection'] = deepcopy(report['post_dispatch_inspection'])
-        result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
+        result.update(call_id=call_id, call_directory=str(call_root), retained_call=public_record,
                       operation_invoked=False)
+        if record.get('cancellation') is not None:
+            result['cancellation'] = deepcopy(record['cancellation'])
         if detail == 'brief' and record['operation'].startswith('guarded_'):
             from .guarded_presentation import brief_guarded_report
             result = brief_guarded_report(result)
@@ -679,9 +1116,42 @@ def main():
     parser.add_argument('--output-directory', type=Path, required=True)
     parser.add_argument('--display')
     parser.add_argument('--session-mode', choices=('one-shot', 'persistent-x11', 'guarded-x11'), default='one-shot')
+    parser.add_argument('--guarded-process-identity', action='store_true',
+                        help='require sampled Linux/XRes process identity in guarded-x11 mode; trusted local PID namespace required')
+    parser.add_argument('--guarded-query-worker',action='store_true',
+                        help='isolate active focus/process queries; requires guarded-x11 and process identity, qualified same local X server')
+    parser.add_argument('--guarded-observation-worker',action='store_true',
+                        help='isolate active visual checks; requires guarded query worker and qualified same local X server')
+    parser.add_argument('--guarded-window-lifecycle',action='store_true',
+                        help='require direct target lifecycle evidence; requires guarded query worker')
+    parser.add_argument('--guarded-owned-process',action='store_true',
+                        help='run the complete guarded-X11 session in one spawned owner process; requires process identity and query worker')
+    parser.add_argument('--guarded-prestarted-cancel-supervisor',action='store_true',
+                        help='prestart a one-shot cancellation supervisor; requires --guarded-owned-process')
     args = parser.parse_args()
+    if args.guarded_process_identity and args.session_mode != 'guarded-x11':
+        parser.error('--guarded-process-identity requires --session-mode guarded-x11')
+    if args.guarded_query_worker and (args.session_mode != 'guarded-x11' or not args.guarded_process_identity):
+        parser.error('--guarded-query-worker requires guarded-x11 and --guarded-process-identity')
+    if args.guarded_observation_worker and not args.guarded_query_worker:
+        parser.error('--guarded-observation-worker requires --guarded-query-worker')
+    if args.guarded_window_lifecycle and not args.guarded_query_worker:
+        parser.error('--guarded-window-lifecycle requires --guarded-query-worker')
+    if args.guarded_owned_process and (args.session_mode != 'guarded-x11'
+            or not args.guarded_process_identity or not args.guarded_query_worker):
+        parser.error('--guarded-owned-process requires guarded-x11, --guarded-process-identity and --guarded-query-worker')
+    if args.guarded_prestarted_cancel_supervisor and not args.guarded_owned_process:
+        parser.error('--guarded-prestarted-cancel-supervisor requires --guarded-owned-process')
+    options = {'guarded_process_identity':args.guarded_process_identity}
+    if args.guarded_query_worker: options['guarded_query_worker'] = True
+    if args.guarded_observation_worker: options['guarded_observation_worker'] = True
+    if args.guarded_window_lifecycle: options['guarded_window_lifecycle'] = True
+    if args.guarded_owned_process: options['guarded_owned_process'] = True
+    if args.guarded_prestarted_cancel_supervisor:
+        options['guarded_prestarted_cancel_supervisor'] = True
     create_server(json.loads(args.targets.read_text(encoding='utf-8')),
-                  args.output_directory, display_name=args.display, session_mode=args.session_mode).run(transport='stdio')
+                  args.output_directory, display_name=args.display, session_mode=args.session_mode,
+                  **options).run(transport='stdio')
 
 
 if __name__ == '__main__':

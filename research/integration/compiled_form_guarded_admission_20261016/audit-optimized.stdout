@@ -1,0 +1,89 @@
+{
+  "scope": "saved-only guarded-adapter/form contract consistency; memory Bridge fixture, not native input or app score",
+  "modes": {
+    "normal": {
+      "methods": 366,
+      "new_rows": 7,
+      "mutations": [
+        {
+          "name": "hidden_input",
+          "rejected": "input/prefix"
+        },
+        {
+          "name": "lost_prefix",
+          "rejected": "input/prefix"
+        },
+        {
+          "name": "wrong_value_success",
+          "rejected": "false completion"
+        },
+        {
+          "name": "false_submit_admission",
+          "rejected": "false submit admission"
+        },
+        {
+          "name": "wrong_reference",
+          "rejected": "input/prefix"
+        },
+        {
+          "name": "false_release",
+          "rejected": "release contradiction"
+        }
+      ],
+      "controls": {
+        "baseline": {
+          "methods": 7,
+          "failures": 4,
+          "errors": 0
+        },
+        "drop_submit_gate": {
+          "methods": 7,
+          "failures": 1,
+          "errors": 0
+        }
+      }
+    },
+    "optimized": {
+      "methods": 366,
+      "new_rows": 7,
+      "mutations": [
+        {
+          "name": "hidden_input",
+          "rejected": "input/prefix"
+        },
+        {
+          "name": "lost_prefix",
+          "rejected": "input/prefix"
+        },
+        {
+          "name": "wrong_value_success",
+          "rejected": "false completion"
+        },
+        {
+          "name": "false_submit_admission",
+          "rejected": "false submit admission"
+        },
+        {
+          "name": "wrong_reference",
+          "rejected": "input/prefix"
+        },
+        {
+          "name": "false_release",
+          "rejected": "release contradiction"
+        }
+      ],
+      "controls": {
+        "baseline": {
+          "methods": 7,
+          "failures": 4,
+          "errors": 0
+        },
+        "drop_submit_gate": {
+          "methods": 7,
+          "failures": 1,
+          "errors": 0
+        }
+      }
+    }
+  }
+}

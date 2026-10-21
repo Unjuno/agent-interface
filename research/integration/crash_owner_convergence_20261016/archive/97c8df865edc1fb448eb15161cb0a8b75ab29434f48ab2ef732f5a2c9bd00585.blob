@@ -1,0 +1,34 @@
+{
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A08-20261012-01",
+  "auditor_invocations_allowed": 1,
+  "base_commit": "33a9af2dd12fb3175f5ae9edadc72fb92415b1ed",
+  "candidate_invocations_allowed": 1,
+  "changed_factor": "independent observer resolves keycode for allowlisted a instead of stale w keycode",
+  "decision_rule": "PASS_METHOD_SCOPED requires backend ready identity, independent KeyPress and keymap-down before session SIGKILL, session return -9, independent KeyRelease and keymap-up after kill, receipt identity match with trigger rpc_eof, recovery_verified and receipt_fsynced true, stopped owner thread, all owner releases verified empty with final reason close, service exit 0 without forced owner termination, and Xvfb controlled exit -15.",
+  "environment": {
+    "game_or_model": false,
+    "host": "WSL2 Ubuntu",
+    "isolation": "unshare user+mount namespace; 64MiB private tmpfs /tmp; private mode-1777 /tmp/.X11-unix",
+    "network_calls": 0,
+    "numpy": "2.5.4 user-cache target",
+    "physical_input": false,
+    "python": "CPython 3.12.3",
+    "python_xlib": "0.33",
+    "xvfb": "Xvfb -displayfd, TCP disabled"
+  },
+  "hypothesis": "The actual opt-in V15 release-batch Backend can route a focus-bound allowlisted a hold through a detached InputOwnerProcess and, after session-only SIGKILL, produce normal verified release, independent X KeyRelease/keymap-up, fsynced matching receipt, and clean owner exit while the supervisor keeps Xvfb alive.",
+  "retries_allowed": 0,
+  "schema": "v39-v15-process-owner-xvfb-a08-freeze-v1",
+  "scope": "Actual process-owner backend constructor/raw keyboard path plus real Xvfb process recovery; not full V15 CLI or outer V39 controller. Pillow and unused gui_suite stubs only.",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": "cdad5849f54c020914dca46db9ff6ff5208c15938cb9b05edb7d05afb8af35f4",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/AUDIT.json": "963331eb134752249afb5657c21555d761299000c96fa8f39895bd930dd75780",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/RUN.json": "6d8451ee4b639c73b2dad45536a7bc1f9b7a74e64e4a87e1e860ab2ef2b53634",
+    "research/doom/v39_v15_process_owner_xvfb_a07_20261012/results/A01/RAW.json": "7a69344fe3846250222e5cd07af67a6dda4b66f43d844a3f4fbba66275330a61",
+    "research/doom/v39_v15_process_owner_xvfb_a08_20261012/PLAN.md": "1789b8bd33c815988e12d09fbd4fd60d74d07c29df1e6c687e9bc367251da85f",
+    "research/doom/v39_v15_process_owner_xvfb_a08_20261012/candidate.py": "3688cc125f267604973619fa755f3e385162106fc81b636f78e29206a497a2c3",
+    "research/doom/v39_v15_process_owner_xvfb_a08_20261012/run_candidate.sh": "49d5492acad47e6d3e9c62901ddfe45d64ae99cf2ff3734a12602bfa437668cc",
+    "research/live_control/input_owner_process_v1.py": "8e66140a01c9a9e49d8f5435dfdaf8cb6df85cf20e435b171397836d6c05ff83"
+  },
+  "successor_of": "V39-V15-PROCESS-OWNER-XVFB-A07-20261012-01"
+}

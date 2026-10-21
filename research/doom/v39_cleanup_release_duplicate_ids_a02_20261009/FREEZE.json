@@ -1,0 +1,27 @@
+{
+  "allocation_id": "ISSUE8681-CLEANUP-IDENTITY-A02-20261009",
+  "audit_command": "python research/doom/v39_cleanup_release_duplicate_ids_a02_20261009/audit.py",
+  "base_main_sha": "0455b0079ca29bcfe85153f280e592f5e96528f6",
+  "candidate_command": "python research/doom/v39_cleanup_release_duplicate_ids_a02_20261009/candidate.py",
+  "files": {
+    "auditor": {
+      "path": "research/doom/v39_cleanup_release_duplicate_ids_a02_20261009/audit.py",
+      "sha256": "16925a5653ac79ed40365e5c21abdfaf9058040e3bb2251bc70975e7ad05541a"
+    },
+    "candidate": {
+      "path": "research/doom/v39_cleanup_release_duplicate_ids_a02_20261009/candidate.py",
+      "sha256": "b3f57ff23c07b06ad0e8409bf4ffd341d7166ec5e35123c1249e95fbfe9596a6"
+    },
+    "production_source": {
+      "path": "research/doom/doom_controller_failure_cleanup_v1.py",
+      "sha256": "5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c"
+    },
+    "regression_tests": {
+      "path": "research/doom/test_controller_failure_cleanup_v39.py",
+      "sha256": "03b1fee332f56a2413b6d606129a82ce09e0cd6f371d60741829f0113906b049"
+    }
+  },
+  "issue": 8681,
+  "protocol": "One synthetic stdlib candidate execution followed by one independent raw-only audit; no retry.",
+  "schema": "issue8681-cleanup-identity-a02-freeze-v1"
+}

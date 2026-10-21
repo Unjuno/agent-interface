@@ -7,6 +7,102 @@ Child directories are retained integration studies. Their existence does not imp
 
 ## Composition path
 
+The [standard-caller process-start cancellation probe](standard_caller_cancel_process_start_20261021/README.md)
+shows that actual Windows helper-process creation is included in synchronous
+cancel latency and pauses the MCP event loop; the current XRes supervision
+gate times out before release and correctly leaves the result UNKNOWN. This is
+local Fake X timing evidence, not live release or MAP01 qualification.
+
+Current-source `e7d79d04` native-WSL/Xvfb reruns now preserve the two most
+relevant standard-caller gates: [release while the owner is blocked in X11
+sync](standard_caller_xvfb_blocked_release_current_e7_20261021/README.md)
+and [target-generation refusal, recovery and independent effect
+readback](standard_caller_xvfb_generation_current_e7_20261021/README.md).
+Both are one-trial synthetic Xvfb evidence; the blocked-release run keeps the
+public caller UNKNOWN, and neither establishes stopped-server or physical
+desktop behavior.
+
+The [Windows generation/cancellation recheck](standard_caller_windows_generation_cancel_recheck_20261021/README.md)
+passes three standard-MCP Fake X caller tests in normal and optimized Python:
+stale process/window generations are refused, and blocked-owner cancellation
+keeps release UNKNOWN. This is a local regression recheck, not X-server or
+physical-input qualification.
+
+Two complementary Windows Fake X probes isolate caller scheduling costs:
+[actual helper-process startup](standard_caller_cancel_process_start_20261021/README.md)
+measures synchronous `Process.start()` delay, while [injected cleanup-boundary
+delays](standard_caller_cancel_eventloop_block_20261021/README.md) show the
+same public async caller blocking unrelated event-loop heartbeats. The
+[prestarted-supervisor feasibility probe](prestarted_supervisor_fakex_feasibility_20261021/README.md)
+is construction-only evidence; it does not validate a production supervisor.
+These probes preserve UNKNOWN/no-replay behavior and do not establish input
+release or real GUI effects.
+
+The [standard-caller duplicate-cancel retention characterization](standard_caller_duplicate_cancel_retention_20261021/README.md)
+is the immutable one-trial Fake X baseline. Issue #814 already passes duplicate
+idempotence for its separate safety owner; the standard caller made one cleanup
+attempt here but returned `not_active` to the duplicate and retained no separate
+cancellation receipt in `interface_results`. Its action result stayed UNKNOWN,
+and its retained owner-liveness snapshot conflicted with the cancel retirement
+receipt. This identifies an integration/record-retention gap, not a live release
+or reliability result.
+
+The local [public-MCP cancellation-operation integration](public_mcp_cancel_operation_registry_20261021/README.md)
+adds one operation ID, pending/terminal retention separate from the action,
+event-loop responsiveness during a blocked Fake X release helper, and a
+request-cancellation custody check. r04 passes 77/77 focused tests in both
+normal and optimized Python. The source-bound [r04 packet](public_mcp_cancel_operation_registry_20261021/r04/README.md)
+does not implement the prestarted cleanup process or whole-transaction
+deadline. The new local [public-MCP prestarted supervisor packet](public_mcp_prestarted_cancel_supervisor_20261021/README.md)
+exercises the opt-in construction through the public caller with Fake X,
+including stale-generation refusal, expiry during a blocked helper, terminal
+receipt archival/readback, retention when archival fails, and a check that
+internal archive markers do not leak into public call records. Its r05 focused
+suites pass 106/106 in normal and optimized Python. R06/R07 connect its opt-in
+to the standard stdio CLI; after preserving one Windows timing error, the
+separate R07 rerun passes 107/107 in both modes. It is not real-X11,
+task-success, WSLc, MAP01, efficiency, or reliability evidence.
+
+The corrected-source local [Xvfb caller run](public_mcp_prestarted_cancel_supervisor_20261021/xvfb-local-wsl-20261022-r01/README.md)
+failed closed when XRes found a different PID at the retired owner's resource
+base; release and task effect were not reached. The follow-up [r03 no-input
+diagnostic](public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md)
+reproduces both supervisor-owned and bystander reuse of that base. The
+supervisor-owned reuse path is accepted only when XRes observes the retained
+supervisor PID; an unrelated PID remains UNKNOWN and is rejected. The
+preserved [PR #9320 standard-caller Xvfb run](public_mcp_prestarted_cancel_supervisor_20261021/pr9320-run-39660663702/README.md)
+then exercised the accepted path with a held key during blocked owner
+`Display.sync()`, one cleanup KeyRelease, independent key-up readback, an
+8-second delayed-request horizon, and a passing independent synthetic task
+oracle. The runtime receipt still remained UNKNOWN, task_success null, and
+replay denied because `late_server_request_possible` was retained. This is a
+scoped positive outcome, not general release qualification or recovery. The r01
+socket preflight and r02 missing `xdpyinfo` runner failure are preserved
+separately. WSLc, efficiency, and reliability remain unqualified.
+
+The [250 ms bounded release-worker shutdown grace run](public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39669924300-release-grace-250ms/README.md)
+passed one standard-caller private-Xvfb blocked-sync schedule with the
+prestarted supervisor disabled. The cleanup worker retired cleanly after a
+verified release, and a separate client observed all keys up at release and
+after the 8-second delayed-request horizon; the independent synthetic task
+oracle passed. The caller response took 301.268 ms against its 300 ms response
+deadline, and its runtime receipt still remained UNKNOWN with replay denied
+because `late_server_request_possible` was true. This is one bounded outcome,
+not a reliability estimate, and the 250 ms grace is not causally isolated by a
+matched live run.
+
+PR #9326 adds a local synthetic-Fake-X composed-caller refusal test for an
+unrelated supervisor XRes PID; it preserves UNKNOWN, no release effect, null
+task success, and replay denial, but does not exercise a live XRes response.
+In the same PR's [X11 workflow run 39666986655](https://github.com/Unjuno/agent-interface/actions/runs/39666986655),
+one invocation of the pre-existing non-prestarted blocked-sync test failed:
+the cleanup worker was retired with exit `-15` and no release readback, while
+later invocations passed. The [captured failure log](public_mcp_prestarted_cancel_supervisor_20261021/x11-fallback-run-39666986655/README.md)
+preserves the observed UNKNOWN outcome and records that the workflow reused
+and overwrote its result-artifact path, so the final JSON artifact is not the
+failed invocation's raw record. This intermittent fallback result does not
+qualify release; the separate opt-in prestarted-Xvfb job passed.
+
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
 Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.
@@ -96,6 +192,8 @@ Historical and superseded integration paths remain in place when their exact nam
 
 ## Current local constructions
 
+- [`fake_x_single_writer_caller_20261018/README.md`](fake_x_single_writer_caller_20261018/README.md) — queued-before-server-processing Fake X schedule composed with the guarded MCP caller; three modules pass 29/29 normal and optimized against main `7265bab`. Full CLI discovery is 434/435 in both modes, with the one WSL Git-metadata error retained. Scoped caller-custody construction only; no WSLc allocation or physical-release guarantee.
+
 - [`public_mcp_geometry_review_2907_construction01_v1/REPORT.md`](public_mcp_geometry_review_2907_construction01_v1/REPORT.md) — three additive Docker constructions for same-root geometry review and stale-binding refusal. Construction03 passes the scoped mechanism audit; overall formal disposition remains HOLD (runner decision mismatch, no independent app-effect oracle, and no mixed-app controller acceptance).
 
 - [`public_mcp_modal_effect_2907_construction01_v1/REPORT.md`](public_mcp_modal_effect_2907_construction01_v1/REPORT.md) — local public-MCP Calc modal-effect construction STOP at main-window readiness (zero MCP/input); preflight failures and successful STOP audit retained. No integrated or product PASS.
@@ -108,6 +206,8 @@ Historical and superseded integration paths remain in place when their exact nam
 - [`issue_2195_modal_selection_pilot_v1/REPORT.md`](issue_2195_modal_selection_pilot_v1/REPORT.md) - retained modal PNG, SVG fixture and six-case specification; one request timed out, zero model responses received or retained, `HOLD_PILOT_INFERENCE_TIMEOUT`.
 
 ## Retained runtime failure boundaries
+
+- [Standard caller during private Xvfb server stop — #17, run 39373461786](standard_caller_xvfb_server_stop_20261020/r01/README.md) — cancellation returned within the 3 s fixture bound, but XRes disconnect stayed UNKNOWN, release was not attempted, and an independent 8.5 s horizon still saw key `a` down; the synthetic task oracle failed. Preserve the cancel/terminal owner-liveness discrepancy. This is a scoped failure boundary, not release proof or a general outage guarantee.
 
 - [WSLc memory-cap receipt audit — #3352/#6309](wslc_memory_enforcement_3352_t1_audit_20261002/REPORT.md) — independent WSLc audit confirms the exact local record of both 512M/128M trials retaining 384 MiB and exiting 0 (`PASS_INDEPENDENT_AUDIT_SCOPED`); PR #6309's published files differ from that original packet. Receipt evidence only: no effective cap, peak RSS, representative workload or migration-benefit proof; #3352 remains open.
 

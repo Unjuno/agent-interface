@@ -1,0 +1,71 @@
+{
+  "schema": "xvfb-audit-v3-freeze-v1",
+  "allocation": "xvfb-audit-v3-a02-20261005",
+  "base_main": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
+  "branch": "research/59-xvfb-audit-v3-a02-20261005",
+  "path": "research/doom/map01_v39_xvfb_select_buffering_a05_20261005/",
+  "H": "A digest-recomputed raw result that contradicts its own claimed candidate status or frozen execution-display/Python-Xlib provenance should not receive an audit-v2 scoped PASS.",
+  "T": "Run unchanged audit_v2.py once on the exact original raw and once each on three digest-recomputed single-field variants: status=FAIL_DIAGNOSTIC_CONTRACT, display=:188 (frozen :189), python_xlib=[0,34] (frozen 0.33). Then run one independent audit over hashes, exact mutation deltas, and the preregistered decision matrix. No original candidate rerun.",
+  "D": "Baseline retains PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING; each inconsistent variant must return FAIL. Any variant accepted by audit-v2 is FAIL_AUDIT_CONSISTENCY. Passing the independent audit establishes only consistency checks for this bounded mutation set.",
+  "C": "The challenged fields may be descriptive rather than necessary to recompute event readiness. The original audit-v2 already checks six event identities, readiness, buffered-queue state, and Xvfb exit.",
+  "U": "Historical one-run synthetic Xvfb/XTEST diagnostic only; not the current controller loop, live gameplay, physical key state, task effect, recovery, latency, safety, or MAP01 outcome.",
+  "roles": {
+    "candidate_runs": 1,
+    "auditor_runs": 1,
+    "retries": 0,
+    "original_candidate_reruns": 0
+  },
+  "runtime": {
+    "engine": "WSLc",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "network": "none",
+    "cpus": 1
+  },
+  "upstream": {
+    "audit_v2_git_blob": "300882784bc6c84de3060a2777863d6995ae60c7",
+    "freeze_git_blob": "2adb933322af9945d5ad0b9d5a3526cbb6a5e632",
+    "probe_git_blob": "47730ee716fae0eab329af6fff3eb44d3d6dee9a",
+    "raw_git_blob": "3e71fb35b2c488ea20ee73da6d2b5378db3fa6a0",
+    "expectations_git_blob": "62863aae12125041ac035c5870e3c6f02be4cb64",
+    "input_raw_sha256": "7a4dab4690f6c0736adb3582bd246dbf11c8572b31f9855e5841327e1a65ea83",
+    "input_probe_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac",
+    "source_main_sha256": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5d"
+  },
+  "preregistered": {
+    "baseline": "PASS_METHOD_SCOPED_WITH_POSTRUN_IDENTITY_BINDING",
+    "status_contradiction": "FAIL",
+    "display_contradiction": "FAIL",
+    "python_xlib_contradiction": "FAIL"
+  },
+  "candidate_sha256": "c76f023d20c91c8ed4d80829eab81c7484e74acf53680d384baeb50b1c0d682b",
+  "independent_auditor_sha256": "131bb1bcf8c961244e3c4a65c94bc0c0a46e264915b923de7e44545897861035",
+  "inputs": {
+    "audit_v2_sha256": "4c8b06aad94b871c13d863bcfb88d1d6c157a79e598120412e9a63d568581b58",
+    "freeze_a03_sha256": "2ef55bc53f06261e30c479bfc80188ca583cc77a7563dedf38040f1ac5601ca9",
+    "probe_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac",
+    "raw_sha256": "7a4dab4690f6c0736adb3582bd246dbf11c8572b31f9855e5841327e1a65ea83",
+    "expectations_sha256": "79ba30664b6cc02ecf4fa84773fa9aaaaa75c761b5363f5bde8a3dfb0c2e0211",
+    "expected_audit_sha256": "272cf44154792e2f59e23441d26373a2856795d84b6f9b5a98ef6db1c08cd72e"
+  },
+  "construction_attempts": [
+    {
+      "id": "a02-construction-01",
+      "command": "python -B -c AST-compile candidate, auditor, and audit-v2 source in memory",
+      "exit_code": 0,
+      "result": "AST_COMPILE_OK=3",
+      "formal_roles_invoked": 0,
+      "disposition": "Passed on exact frozen A02 sources; no output writes"
+    }
+  ],
+  "source_main_sha256": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
+  "prior_allocation_a01": {
+    "base_main": "c1d03aca16ba4d3ffcc6c63b907a6fc11a91be5d",
+    "terminal": "STOP_MAIN_ADVANCED_BEFORE_PREREG_FROZEN",
+    "candidate_runs": 0,
+    "auditor_runs": 0,
+    "retries": 0,
+    "source_identity_changed": false,
+    "main_at_stop": "1fa854d537bfd711b5dfd99f8c04ab6c35bad286",
+    "record_issue_comment": "https://github.com/Unjuno/agent-interface/issues/6957#issuecomment-5990464854"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "candidate_base_commit": "0455b0079ca29bcfe85153f280e592f5e96528f6",
+  "candidate_rerun": false,
+  "commits_after_candidate_base": [
+    "743ae74ec5be2472ff27fa06fe13d5ecf8534de5 research: record duplicate cleanup event-ID ambiguity (A01)"
+  ],
+  "interpretation": "The candidate was run against current main at freeze time. Latest main advanced by one commit after the candidate; every video/report/event/source-frame-freeze and HUD reader source blob used here is unchanged. This is a continuity check, not a candidate rerun or claim that the candidate ran on the later commit.",
+  "latest_main_commit": "743ae74ec5be2472ff27fa06fe13d5ecf8534de5",
+  "recorded_at_utc": "2026-10-08T17:39:29.953707+00:00",
+  "schema": "astra-video-health-timing-a01-current-main-continuity-v1",
+  "transitive_inputs_and_reader_sources": [
+    {
+      "frozen_base_blob": "983e2f43e878b56d0d05cd4d7db5125a55566cc8",
+      "latest_main_blob": "983e2f43e878b56d0d05cd4d7db5125a55566cc8",
+      "path": "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4",
+      "unchanged": true
+    },
+    {
+      "frozen_base_blob": "9165cfbc768ef82a63c2662b6c0d2d7dbbb1090d",
+      "latest_main_blob": "9165cfbc768ef82a63c2662b6c0d2d7dbbb1090d",
+      "path": "research/doom/results/map01-astra-attempt-v1/events.jsonl",
+      "unchanged": true
+    },
+    {
+      "frozen_base_blob": "4c7ee753235f0af3cb618c85223b99ce5bbb1ae0",
+      "latest_main_blob": "4c7ee753235f0af3cb618c85223b99ce5bbb1ae0",
+      "path": "research/doom/results/map01-astra-attempt-v1/report.json",
+      "unchanged": true
+    },
+    {
+      "frozen_base_blob": "bff85321219c4bc54ffa254a7318d16e0e0d34d9",
+      "latest_main_blob": "bff85321219c4bc54ffa254a7318d16e0e0d34d9",
+      "path": "research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json",
+      "unchanged": true
+    },
+    {
+      "frozen_base_blob": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "latest_main_blob": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "path": "research/doom/doom_hud_signal_v1.py",
+      "unchanged": true
+    },
+    {
+      "frozen_base_blob": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "latest_main_blob": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "path": "research/doom/doom_hud_signal_v2.py",
+      "unchanged": true
+    },
+    {
+      "frozen_base_blob": "083338b4565176aaea560d800ce0210f17b6852f",
+      "latest_main_blob": "083338b4565176aaea560d800ce0210f17b6852f",
+      "path": "research/doom/doom_hud_signal_v3.py",
+      "unchanged": true
+    }
+  ],
+  "unchanged": true
+}

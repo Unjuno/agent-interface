@@ -1,0 +1,24 @@
+test_final_selected_target_drives_interface_and_core_admission (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_final_selected_target_drives_interface_and_core_admission) ... FAIL
+
+======================================================================
+FAIL: test_final_selected_target_drives_interface_and_core_admission (test_compiled_caller_handoff_v2.CompiledCallerHandoffTests.test_final_selected_target_drives_interface_and_core_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_compiled_caller_handoff_v2.py", line 164, in test_final_selected_target_drives_interface_and_core_admission
+    self.assertEqual(row['state']['admitted_references'], ['new-field', 'new-submit'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['field', 'submit'] != ['new-field', 'new-submit']
+
+First differing element 0:
+'field'
+'new-field'
+
+- ['field', 'submit']
++ ['new-field', 'new-submit']
+?   ++++         ++++
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

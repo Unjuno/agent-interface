@@ -1,0 +1,125 @@
+{
+  "format": "controller-failure-cleanup-v1",
+  "primary_error_type": "RuntimeError",
+  "failed_stage": "controller_setup",
+  "stages": [
+    {
+      "stage": "child_poll_before",
+      "status": "returned",
+      "result": -9
+    },
+    {
+      "stage": "child_poll_after",
+      "status": "returned",
+      "result": -9
+    },
+    {
+      "stage": "planner_close_worker_start",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "planner_close",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "atexit_unregister",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "score_file_presence",
+      "status": "returned",
+      "result": false
+    },
+    {
+      "stage": "owner_events_presence",
+      "status": "returned",
+      "result": false
+    }
+  ],
+  "input_release_verified": false,
+  "input_releases_verified_empty": false,
+  "scope": "owned child process only; no physical release or scorer certificate",
+  "owner_process_recovery_required": true,
+  "owner_process_recovery_verified": true,
+  "owner_process_emergency_recovery_verified": true,
+  "display_reuse_allowed": true,
+  "child_exit_code": -9,
+  "stdout_reader_retired": false,
+  "stdout_reader_errors": [],
+  "input_terminals_complete": false,
+  "input_release_verified_empty": false,
+  "scorer_terminal_observed": false,
+  "score_file_present": false,
+  "owner_events_present": false,
+  "owner_events_closed": false,
+  "owner_recovery_receipt": {
+    "schema": "input-owner-emergency-recovery-v1",
+    "recovery_mode": "supervisor_xtest_after_owner_process_death",
+    "display": ":0",
+    "service_pid": 3310,
+    "service_start_ticks": 554293,
+    "owner_id": "25aef88f8fd3410e9b2f78be2318b05b",
+    "focus_id": 2097152,
+    "surface_id": 2097152,
+    "surface_geometry": [
+      20,
+      20,
+      300,
+      180
+    ],
+    "ledger_path": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012/research/doom/v39_v15_process_owner_xvfb_a26_20261012/results/A01/input-owner-process/input-owner-state-v1.jsonl",
+    "ledger_sha256": "aa6ae6a9976e1058a6fa3bcb87bd6dda9480e189289c93478b47b320ac350005",
+    "active_keys": {
+      "a": {
+        "keycode": 38,
+        "was_down": true,
+        "release_event_observed": true,
+        "up_verified": true
+      },
+      "d": {
+        "keycode": 40,
+        "was_down": true,
+        "release_event_observed": true,
+        "up_verified": true
+      }
+    },
+    "active_buttons": {
+      "1": {
+        "was_down": true,
+        "release_event_observed": true,
+        "up_verified": true
+      }
+    },
+    "release_started_ns": 5543759065293,
+    "sync_returned_ns": 5543759171230,
+    "recovery_verified": true,
+    "receipt_fsynced": true,
+    "diagnostics": {
+      "before_keys": {
+        "a": true,
+        "d": true
+      },
+      "before_buttons": {
+        "1": true
+      },
+      "release_keycodes_observed": [
+        38,
+        40
+      ],
+      "release_buttons_observed": [
+        1
+      ],
+      "after_keys": {
+        "a": false,
+        "d": false
+      },
+      "after_buttons": {
+        "1": false
+      }
+    }
+  },
+  "cleanup_complete": false
+}

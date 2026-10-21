@@ -1,0 +1,761 @@
+test_await_timeout_keeps_known_turn_but_not_invented_usage (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_await_timeout_keeps_known_turn_but_not_invented_usage) ... ERROR
+test_completed_result_publication_refusal_is_not_unbilled_or_successful (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_completed_result_publication_refusal_is_not_unbilled_or_successful) ... ERROR
+test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) ... 
+  test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) (status='failed') ... ERROR
+  test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) (status='interrupted') ... ERROR
+test_failure_publication_refusal_keeps_known_accounting_and_cause (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failure_publication_refusal_keeps_known_accounting_and_cause) ... ERROR
+test_invalid_completed_answer_keeps_known_usage_without_execution (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_invalid_completed_answer_keeps_known_usage_without_execution) ... ERROR
+test_invalid_usage_keeps_other_known_metadata (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_invalid_usage_keeps_other_known_metadata) ... ERROR
+test_start_failure_does_not_invent_turn_or_image_admission (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_start_failure_does_not_invent_turn_or_image_admission) ... ERROR
+test_successful_model_then_unknown_effect_does_not_claim_task_success (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_successful_model_then_unknown_effect_does_not_claim_task_success) ... ERROR
+test_unknown_usage_stays_unknown_with_known_turn (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_unknown_usage_stays_unknown_with_known_turn) ... ERROR
+
+======================================================================
+ERROR: test_await_timeout_keeps_known_turn_but_not_invented_usage (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_await_timeout_keeps_known_turn_but_not_invented_usage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 143, in test_await_timeout_keeps_known_turn_but_not_invented_usage
+    self.assert_failed(cell('timeout'), known=False)
+                       ~~~~^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_completed_result_publication_refusal_is_not_unbilled_or_successful (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_completed_result_publication_refusal_is_not_unbilled_or_successful)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 137, in test_completed_result_publication_refusal_is_not_unbilled_or_successful
+    self.assert_failed(cell('completed', usage(100, 20), 'result.json'))
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) (status='failed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 125, in test_failed_and_interrupted_turn_keep_known_accounting
+    self.assert_failed(cell(status, usage(100, 20)))
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) (status='interrupted')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 125, in test_failed_and_interrupted_turn_keep_known_accounting
+    self.assert_failed(cell(status, usage(100, 20)))
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failure_publication_refusal_keeps_known_accounting_and_cause (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failure_publication_refusal_keeps_known_accounting_and_cause)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 131, in test_failure_publication_refusal_keeps_known_accounting_and_cause
+    row = cell('failed', usage(100, 20), 'failure.json')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_invalid_completed_answer_keeps_known_usage_without_execution (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_invalid_completed_answer_keeps_known_usage_without_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 140, in test_invalid_completed_answer_keeps_known_usage_without_execution
+    self.assert_failed(cell('completed', usage(100, 20), malformed=True))
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_invalid_usage_keeps_other_known_metadata (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_invalid_usage_keeps_other_known_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 146, in test_invalid_usage_keeps_other_known_metadata
+    self.assert_failed(cell('failed', usage(-1, 0)), known=False)
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_start_failure_does_not_invent_turn_or_image_admission (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_start_failure_does_not_invent_turn_or_image_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 149, in test_start_failure_does_not_invent_turn_or_image_admission
+    row = cell('start_failure')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_successful_model_then_unknown_effect_does_not_claim_task_success (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_successful_model_then_unknown_effect_does_not_claim_task_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 162, in test_successful_model_then_unknown_effect_does_not_claim_task_success
+    row = cell('completed', usage(100, 20))
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_unknown_usage_stays_unknown_with_known_turn (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_unknown_usage_stays_unknown_with_known_turn)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 128, in test_unknown_usage_stays_unknown_with_known_turn
+    self.assert_failed(cell('failed'), known=False)
+                       ~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.015s
+
+FAILED (errors=10)
+test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) ... 
+  test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': 100, 'cachedInputTokens': 20, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}}) ... ERROR
+  test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage=None) ... ERROR
+  test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {}}) ... ERROR
+  test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': -1, 'cachedInputTokens': 0, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}}) ... ERROR
+test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) ... 
+  test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='PermissionError') ... ERROR
+  test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='OSError') ... ERROR
+
+======================================================================
+ERROR: test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': 100, 'cachedInputTokens': 20, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 16, in test_failed_turn_exception_preserves_known_metadata
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 16, in test_failed_turn_exception_preserves_known_metadata
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 16, in test_failed_turn_exception_preserves_known_metadata
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': -1, 'cachedInputTokens': 0, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 16, in test_failed_turn_exception_preserves_known_metadata
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='PermissionError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 31, in test_publication_failure_preserves_terminal_accounting
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 31, in test_publication_failure_preserves_terminal_accounting
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 102, in __init__
+    base_instructions=Path(instructions).read_text(encoding="utf-8"))
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.007s
+
+FAILED (errors=6)
+test_await_timeout_keeps_known_turn_but_not_invented_usage (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_await_timeout_keeps_known_turn_but_not_invented_usage) ... ERROR
+test_completed_result_publication_refusal_is_not_unbilled_or_successful (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_completed_result_publication_refusal_is_not_unbilled_or_successful) ... ERROR
+test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) ... 
+  test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) (status='failed') ... ERROR
+  test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) (status='interrupted') ... ERROR
+test_failure_publication_refusal_keeps_known_accounting_and_cause (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failure_publication_refusal_keeps_known_accounting_and_cause) ... ERROR
+test_invalid_completed_answer_keeps_known_usage_without_execution (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_invalid_completed_answer_keeps_known_usage_without_execution) ... ERROR
+test_invalid_usage_keeps_other_known_metadata (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_invalid_usage_keeps_other_known_metadata) ... ERROR
+test_start_failure_does_not_invent_turn_or_image_admission (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_start_failure_does_not_invent_turn_or_image_admission) ... ERROR
+test_successful_model_then_unknown_effect_does_not_claim_task_success (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_successful_model_then_unknown_effect_does_not_claim_task_success) ... ERROR
+test_unknown_usage_stays_unknown_with_known_turn (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_unknown_usage_stays_unknown_with_known_turn) ... ERROR
+
+======================================================================
+ERROR: test_await_timeout_keeps_known_turn_but_not_invented_usage (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_await_timeout_keeps_known_turn_but_not_invented_usage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 143, in test_await_timeout_keeps_known_turn_but_not_invented_usage
+    self.assert_failed(cell('timeout'), known=False)
+                       ~~~~^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_completed_result_publication_refusal_is_not_unbilled_or_successful (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_completed_result_publication_refusal_is_not_unbilled_or_successful)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 137, in test_completed_result_publication_refusal_is_not_unbilled_or_successful
+    self.assert_failed(cell('completed', usage(100, 20), 'result.json'))
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) (status='failed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 125, in test_failed_and_interrupted_turn_keep_known_accounting
+    self.assert_failed(cell(status, usage(100, 20)))
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_and_interrupted_turn_keep_known_accounting (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failed_and_interrupted_turn_keep_known_accounting) (status='interrupted')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 125, in test_failed_and_interrupted_turn_keep_known_accounting
+    self.assert_failed(cell(status, usage(100, 20)))
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failure_publication_refusal_keeps_known_accounting_and_cause (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_failure_publication_refusal_keeps_known_accounting_and_cause)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 131, in test_failure_publication_refusal_keeps_known_accounting_and_cause
+    row = cell('failed', usage(100, 20), 'failure.json')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_invalid_completed_answer_keeps_known_usage_without_execution (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_invalid_completed_answer_keeps_known_usage_without_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 140, in test_invalid_completed_answer_keeps_known_usage_without_execution
+    self.assert_failed(cell('completed', usage(100, 20), malformed=True))
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_invalid_usage_keeps_other_known_metadata (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_invalid_usage_keeps_other_known_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 146, in test_invalid_usage_keeps_other_known_metadata
+    self.assert_failed(cell('failed', usage(-1, 0)), known=False)
+                       ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_start_failure_does_not_invent_turn_or_image_admission (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_start_failure_does_not_invent_turn_or_image_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 149, in test_start_failure_does_not_invent_turn_or_image_admission
+    row = cell('start_failure')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_successful_model_then_unknown_effect_does_not_claim_task_success (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_successful_model_then_unknown_effect_does_not_claim_task_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 162, in test_successful_model_then_unknown_effect_does_not_claim_task_success
+    row = cell('completed', usage(100, 20))
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_unknown_usage_stays_unknown_with_known_turn (research.live_control.test_grounding_failure_accounting.GroundingFailureAccounting.test_unknown_usage_stays_unknown_with_known_turn)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 128, in test_unknown_usage_stays_unknown_with_known_turn
+    self.assert_failed(cell('failed'), known=False)
+                       ~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting.py", line 48, in cell
+    model = PersistentGroundingModel(root/'session', workspace, node='unused',
+        cli='unused', client=client, path_converter=str, model='inert', effort='low')
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.013s
+
+FAILED (errors=10)
+test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) ... 
+  test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': 100, 'cachedInputTokens': 20, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}}) ... ERROR
+  test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage=None) ... ERROR
+  test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {}}) ... ERROR
+  test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': -1, 'cachedInputTokens': 0, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}}) ... ERROR
+test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) ... 
+  test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='PermissionError') ... ERROR
+  test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='OSError') ... ERROR
+
+======================================================================
+ERROR: test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': 100, 'cachedInputTokens': 20, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 16, in test_failed_turn_exception_preserves_known_metadata
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 16, in test_failed_turn_exception_preserves_known_metadata
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 16, in test_failed_turn_exception_preserves_known_metadata
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_failed_turn_exception_preserves_known_metadata (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_failed_turn_exception_preserves_known_metadata) (usage={'last': {'inputTokens': -1, 'cachedInputTokens': 0, 'cacheWriteInputTokens': 0, 'outputTokens': 20, 'reasoningOutputTokens': 5}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 16, in test_failed_turn_exception_preserves_known_metadata
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='PermissionError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 31, in test_publication_failure_preserves_terminal_accounting
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+======================================================================
+ERROR: test_publication_failure_preserves_terminal_accounting (research.live_control.saved_8772_tests.GroundingFailureAccounting.test_publication_failure_preserves_terminal_accounting) (failure='OSError')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_grounding_failure_accounting_6178.py", line 31, in test_publication_failure_preserves_terminal_accounting
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\integrated_efficiency_app_server_model_v1.py", line 86, in __init__
+    self.workspace = Path(workspace).resolve()
+                          ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\user\\Documents\\Codex\\2026-10-15\\work\\repository-consolidation\\research\\live_control\\compiled_form_grounding_responder_v1.txt'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.007s
+
+FAILED (errors=6)
+adoption discriminator not established

@@ -1,0 +1,29 @@
+test_new_wrapper_cannot_bypass_backend_pending_custody (runtime.backends.win32_v1.test_unknown_release_custody.UnknownReleaseTests.test_new_wrapper_cannot_bypass_backend_pending_custody) ... FAIL
+
+======================================================================
+FAIL: test_new_wrapper_cannot_bypass_backend_pending_custody (runtime.backends.win32_v1.test_unknown_release_custody.UnknownReleaseTests.test_new_wrapper_cannot_bypass_backend_pending_custody)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_unknown_release_custody.py", line 107, in test_new_wrapper_cannot_bypass_backend_pending_custody
+    reply=second.dispatch(program,current_observation_seq=7,current_binding_revision=3,now_ns=1)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\session.py", line 88, in dispatch
+    result = self.backend.execute(program)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\backend.py", line 556, in execute
+    self.key_state(op["key"], op["down"])
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\backend.py", line 307, in key_state
+    self._send_key(vk, down)
+    ~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\backend.py", line 282, in _send_key
+    self._send(item)
+    ~~~~~~~~~~^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\backend.py", line 274, in _send
+    sent = self.user32.SendInput(1, array, ctypes.sizeof(INPUT))
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\backends\win32_v1\test_release_ledger.py", line 33, in SendInput
+    raise AssertionError("only single UP emissions allowed")
+AssertionError: only single UP emissions allowed
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

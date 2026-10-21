@@ -1,0 +1,176 @@
+{
+  "accuracies": {
+    "5601/batch_2": 0.6333333333333333,
+    "5601/episodic_only": 0.26666666666666666,
+    "5601/per_episode": 0.5333333333333333,
+    "5601/terminal": 0.6666666666666666,
+    "5602/batch_2": 0.6333333333333333,
+    "5602/episodic_only": 0.26666666666666666,
+    "5602/per_episode": 0.5333333333333333,
+    "5602/terminal": 0.6666666666666666,
+    "5603/batch_2": 0.6333333333333333,
+    "5603/episodic_only": 0.26666666666666666,
+    "5603/per_episode": 0.5333333333333333,
+    "5603/terminal": 0.6666666666666666
+  },
+  "consolidation_rows": 30,
+  "consolidation_updates_per_seed_arm": {
+    "5601/batch_2": 3,
+    "5601/episodic_only": 0,
+    "5601/per_episode": 6,
+    "5601/terminal": 1,
+    "5602/batch_2": 3,
+    "5602/episodic_only": 0,
+    "5602/per_episode": 6,
+    "5602/terminal": 1,
+    "5603/batch_2": 3,
+    "5603/episodic_only": 0,
+    "5603/per_episode": 6,
+    "5603/terminal": 1
+  },
+  "decision": "FAIL_METHOD",
+  "errors": [
+    "unfaithful transition claim (5601, 'per_episode', 3)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5601, 'per_episode', 4)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5601, 'per_episode', 5)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5601, 'per_episode', 6)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "transition coverage mismatch (5601, 'batch_2', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (5601, 'batch_2', 4)",
+    "explicit conflict claim mismatch (5601, 'batch_2', 6)",
+    "unfaithful transition claim (5601, 'terminal', 6)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5602, 'per_episode', 3)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5602, 'per_episode', 4)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5602, 'per_episode', 5)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5602, 'per_episode', 6)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "transition coverage mismatch (5602, 'batch_2', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (5602, 'batch_2', 4)",
+    "explicit conflict claim mismatch (5602, 'batch_2', 6)",
+    "unfaithful transition claim (5602, 'terminal', 6)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5603, 'per_episode', 3)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5603, 'per_episode', 4)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5603, 'per_episode', 5)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "unfaithful transition claim (5603, 'per_episode', 6)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')",
+    "transition coverage mismatch (5603, 'batch_2', 4): ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04'] != ['ep01', 'ep02', 'ep03', 'ep04']",
+    "premature conflict claim (5603, 'batch_2', 4)",
+    "explicit conflict claim mismatch (5603, 'batch_2', 6)",
+    "unfaithful transition claim (5603, 'terminal', 6)/ep03: ('forbidden_effect_exception', 'effects', 'effect=draft_saved; forbidden=publish') != ('forbidden_effect_exception', 'effects', 'effect=no_external_effect; forbidden=publish')"
+  ],
+  "max_abs_accuracy_difference": 0.4,
+  "paired_accuracy_differences": {
+    "5601:batch_2-terminal": -0.033333,
+    "5601:episodic_only-batch_2": -0.366667,
+    "5601:episodic_only-per_episode": -0.266667,
+    "5601:episodic_only-terminal": -0.4,
+    "5601:per_episode-batch_2": -0.1,
+    "5601:per_episode-terminal": -0.133333,
+    "5602:batch_2-terminal": -0.033333,
+    "5602:episodic_only-batch_2": -0.366667,
+    "5602:episodic_only-per_episode": -0.266667,
+    "5602:episodic_only-terminal": -0.4,
+    "5602:per_episode-batch_2": -0.1,
+    "5602:per_episode-terminal": -0.133333,
+    "5603:batch_2-terminal": -0.033333,
+    "5603:episodic_only-batch_2": -0.366667,
+    "5603:episodic_only-per_episode": -0.266667,
+    "5603:episodic_only-terminal": -0.4,
+    "5603:per_episode-batch_2": -0.1,
+    "5603:per_episode-terminal": -0.133333
+  },
+  "per_seed_arm_metrics": {
+    "5601/batch_2": {
+      "calls": 30,
+      "completion_tokens": 630,
+      "duration_ms": 30224,
+      "errors": 0,
+      "prompt_tokens": 8756
+    },
+    "5601/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 669,
+      "duration_ms": 44800,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5601/per_episode": {
+      "calls": 30,
+      "completion_tokens": 629,
+      "duration_ms": 33134,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5601/terminal": {
+      "calls": 30,
+      "completion_tokens": 462,
+      "duration_ms": 23135,
+      "errors": 0,
+      "prompt_tokens": 6611
+    },
+    "5602/batch_2": {
+      "calls": 30,
+      "completion_tokens": 630,
+      "duration_ms": 28671,
+      "errors": 0,
+      "prompt_tokens": 8756
+    },
+    "5602/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 669,
+      "duration_ms": 29130,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5602/per_episode": {
+      "calls": 30,
+      "completion_tokens": 629,
+      "duration_ms": 30506,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5602/terminal": {
+      "calls": 30,
+      "completion_tokens": 462,
+      "duration_ms": 23571,
+      "errors": 0,
+      "prompt_tokens": 6611
+    },
+    "5603/batch_2": {
+      "calls": 30,
+      "completion_tokens": 630,
+      "duration_ms": 28849,
+      "errors": 0,
+      "prompt_tokens": 8756
+    },
+    "5603/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 668,
+      "duration_ms": 28796,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5603/per_episode": {
+      "calls": 30,
+      "completion_tokens": 629,
+      "duration_ms": 28128,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5603/terminal": {
+      "calls": 30,
+      "completion_tokens": 462,
+      "duration_ms": 21569,
+      "errors": 0,
+      "prompt_tokens": 6611
+    }
+  },
+  "qualifying_consistent_contrasts": [
+    "episodic_only vs per_episode: [-0.266667, -0.266667, -0.266667]",
+    "episodic_only vs batch_2: [-0.366667, -0.366667, -0.366667]",
+    "episodic_only vs terminal: [-0.4, -0.4, -0.4]",
+    "per_episode vs batch_2: [-0.1, -0.1, -0.1]",
+    "per_episode vs terminal: [-0.133333, -0.133333, -0.133333]"
+  ],
+  "query_rows": 360,
+  "rows": 390,
+  "scope": "single synthetic ledger, one local model family, three fixed seeds; no GUI/product/action inference",
+  "status": "FAIL_METHOD"
+}

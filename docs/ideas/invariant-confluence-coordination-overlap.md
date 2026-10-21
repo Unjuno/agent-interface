@@ -1,0 +1,8 @@
+# Invariant-confluence coordination proposal — #8889
+
+- **Status:** Open proposal with substantial documented overlap; no separate allocation should be inferred.
+- **Source:** Open [Issue #8889](https://github.com/Unjuno/agent-interface/issues/8889), including its novelty correction on [#5547 and #5563](https://github.com/Unjuno/agent-interface/issues/8889).
+- **Idea:** Test whether invariant-confluence checks can admit safe concurrent operations that a conservative conflict gate would serialize, while preserving hard invariants and treating unknown effects as conflicts.
+- **Overlap and existing evidence:** Open #5547 already transfers I-confluence to interface operations with finite state checking, fail-closed unknowns, and serialized comparison. Merged [PR #5563](https://github.com/Unjuno/agent-interface/pull/5563) formal-02 reports 100 finite pairs, 36 classified monotone-safe, zero invariant violations among those, conflict witnesses, and five corruption controls rejected. It explicitly limits this to a hand-specified synthetic model, with no general classifier or coordination-cost result. Earlier #5558/#5567 STOP outcomes remain distinct and must not be retried.
+- **Disposition:** Do not create a duplicate experiment or treat #8889 as an independent owner of the broad question. Its only possible residual is whether noncommuting yet invariant-preserving pairs add value beyond #5318's conservative footprint gate; first check whether #5563's 36 pairs already include that case and coordinate the scope under #5547.
+- **Limits:** Existing finite evidence does not establish general GUI safety, real coordination savings, or permission for parallel live actions. Modeled invariant completeness remains a hard assumption.

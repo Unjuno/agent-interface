@@ -1,0 +1,40 @@
+{
+  "allocation": "EPISTEMIC-ACTION-8629-T0-A01-20261008",
+  "auditor_command": [
+    "<sys.executable>",
+    "auditor.py",
+    "--fixture",
+    "fixture.json",
+    "--oracle",
+    "oracle.json",
+    "<raw_candidate.json on stdin>"
+  ],
+  "auditor_elapsed_ns": 140796100,
+  "auditor_exit_code": 1,
+  "auditor_invocations": 1,
+  "auditor_output_valid": false,
+  "auditor_stderr_bytes": 1309,
+  "auditor_stderr_sha256": "4c8548a9ddee7a63932b1e8a632c985bbb565a06938ea1b974b13750bbd3e12a",
+  "auditor_stdout_bytes": 0,
+  "auditor_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "candidate_command": [
+    "<sys.executable>",
+    "candidate.py",
+    "fixture.json"
+  ],
+  "candidate_elapsed_ns": 108886400,
+  "candidate_exit_code": 1,
+  "candidate_invocations": 1,
+  "candidate_stderr_bytes": 1125,
+  "candidate_stderr_sha256": "df35649d555c2dbabba5ffe9cf2669cd594c9c6dd75efb21850c3ee57c9d3938",
+  "candidate_stdout_bytes": 0,
+  "candidate_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "formal_disposition": "HOLD",
+  "hypothesis_disposition": "HOLD",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "retries": 0,
+  "schema": "epistemic-action-run-v1",
+  "source_hashes_verified": true,
+  "started_utc": "2026-10-08T13:37:06.546641+00:00"
+}

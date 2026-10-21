@@ -1,0 +1,8 @@
+# A01 frozen plan — duplicate cleanup event identities
+
+Issue: #8681 (successor to closed #7706; do not alter its A01/A02 records).
+H: The current-main cleanup reconstruction may collapse repeated accepted/terminal event IDs with last-row-wins dictionaries. A repeated ID could hide an earlier accepted intent without a matching terminal, or make empty-release evidence depend on row ordering.
+T: Run one seven-case synthetic CPU-only candidate against the exact current-main cleanup module, then one independent raw-only auditor. Controls: matching token, tokenless legacy terminal, mismatched token, missing terminal. Probes: duplicate accepts where only the final token terminates; duplicate terminal rows in both orders.
+D: Current-main commit 0455b0079ca29bcfe85153f280e592f5e96528f6; source research/doom/doom_controller_failure_cleanup_v1.py; Git blob 50c63fa83969ed518a91e39c08d1ee52064eb636; SHA-256 bc8d3550e6c2d057c7b615b38e424de3497418547e835490429f526853e1fe28.
+C: Candidate must be invoked exactly once. Freeze all sources first. Preserve and commit raw output before running the independent auditor exactly once. No retries after candidate execution; a failure is a result. Branch updates use expected-SHA leases. No WSLc/Docker/runtime RPC, live process, GUI, game, model, physical release, or product claim. No GPU, memory-heavy action, checkout, or local file write.
+U: Evidence can establish only synthetic receipt-reconstruction behavior at the pinned source revision. It cannot establish production occurrence, live threat exposure, or #59 gate satisfaction. Duplicate IDs are malformed/ambiguous-input probes, not a frequency claim.

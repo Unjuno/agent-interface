@@ -1,0 +1,29 @@
+{
+  "schema": "v39-pr8643-current-affected-suite-freeze-v1",
+  "execution_id": "v39-pr8643-current-affected-suite-a09-20261009",
+  "dependency_base_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "cae208b3ab11417ebcebb9d7097cade9b6aea295",
+  "suites": [
+    {
+      "path": "research/doom/test_map01_overlap_controller_v39.py",
+      "tests": 15,
+      "key": "controller"
+    },
+    {
+      "path": "research/doom/test_map01_v39_pending_observation_drain.py",
+      "tests": 20,
+      "key": "pending_drain"
+    },
+    {
+      "path": "research/live_control/test_final_action_admission_v2.py",
+      "tests": 9,
+      "key": "final_action_admission"
+    },
+    {
+      "path": "research/live_control/test_running_action_guard_v3.py",
+      "tests": 7,
+      "key": "running_action_guard"
+    }
+  ],
+  "live_execution": false
+}

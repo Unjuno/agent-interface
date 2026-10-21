@@ -1,0 +1,10 @@
+Bounded review by existing process_identity_review.
+At e3105d, channel-close failure could skip remaining cleanup/join; red reproduction retained.
+At52b2169, gated source/deadline/token mutation could apply old cause to changed lease;
+Thread.start interruption could discard a possibly-started non-daemon watcher.
+Both reproduced with retained red/source and repaired.
+Final96a774e64ad9cdf20e435b606055d047a6496c95: all findings resolved, no additional material findings.
+Both focused regression methods passed normal and optimized during review.
+Review used immutable code/inert local checks; no child/native operations.
+CPython Thread._started is an explicit implementation dependency.
+Review does not establish production adapter or real input/task-effect qualification.

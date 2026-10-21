@@ -1,0 +1,4 @@
+command: cd /mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_visual_active_hold_xvfb_a01_20261012/SOURCE && PYTHONDONTWRITEBYTECODE=1 /tmp/v39-visual-hold-venv/bin/python -B candidate.py --out ../results/A01 --display :132
+exit_code: 1
+stdout: {"arms": ["visual_changed", "same_frame_control"], "cleanup": {"xvfb_exit": 0}, "errors": [], "status": "STOP"}
+classification: STOP; candidate status condition rejects any nonempty cleanup dictionary, including expected {"xvfb_exit": 0}. Raw preserved; no rerun.

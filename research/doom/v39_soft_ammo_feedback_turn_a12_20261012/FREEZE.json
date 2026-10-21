@@ -1,0 +1,17 @@
+{
+  "experiment_id":"v39_soft_ammo_feedback_turn_a12_20261012",
+  "repository":"Unjuno/agent-interface",
+  "main_commit":"f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "classification":"CONSTRUCTION_ONLY_FEEDBACK_PROPAGATION",
+  "sources":{
+    "map01_overlap_controller_v39.py":{"path":"research/doom/map01_overlap_controller_v39.py","git_blob":"000d206310afe054fcddf66d9c417da46e0b3b2d","sha256":"51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607","bytes":112524},
+    "observable_signal_guard_v2.py":{"path":"research/live_control/observable_signal_guard_v2.py","git_blob":"c0955f976e3a0af6ce926f22cee4a5ddf70ef543","sha256":"7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0","bytes":7404},
+    "persistent_planner_adapter_v2.py":{"path":"research/live_control/persistent_planner_adapter_v2.py","git_blob":"879736562aa5c0637319616c9f01df22af087b15","sha256":"9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674","bytes":11709}
+  },
+  "test_sha256":"38ca74d9fd13ffbc393b293654ae8519e5c300b956932bcc038cb8ed67b889a6",
+  "containerfile_sha256":"afde13719256a1992f5c5cb9968ecaf870544f4183833b2db207712026f8b2bb",
+  "base_image":"python@sha256:b9767f56a1cc620aa72d38cc3557d26412e38a4597c92953476136b78894ccbd",
+  "requested_container_constraints":{"network":"none","cpus":"1","memory":"512m"},
+  "local_final_test_preflight_invocations":1,
+  "wslc_test_invocations":1
+}

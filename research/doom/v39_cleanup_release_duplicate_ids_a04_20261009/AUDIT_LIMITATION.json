@@ -1,0 +1,12 @@
+{
+  "schema": "issue8681-cleanup-identity-audit-limitation-v1",
+  "allocation_id": "ISSUE8681-CLEANUP-IDENTITY-A04-20261009",
+  "classification": "RETAINED_AUDIT_INSUFFICIENT_RAW_SEMANTIC_RECOMPUTATION",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "candidate_cases": 7,
+  "original_audit": "PASS_CONSTRUCTION_AUDIT 30/30",
+  "limitation": "The auditor hardcoded control outcomes by case name and did not recompute the valid control and release-token outcomes from each raw event sequence. The result is retained but is not relied on as an independent PASS.",
+  "superseded_by": "ISSUE8681-CLEANUP-IDENTITY-A05-20261009",
+  "retry_of_allocation": false
+}

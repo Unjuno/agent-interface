@@ -1,0 +1,5 @@
+# A06 allowlisted-key successor
+
+A05 is preserved as `STOP_CANDIDATE_SETUP_KEY_NOT_ALLOWLISTED`: the file event channel worked, but the requested `w` key was rejected before input admission. A06 retains the private Xvfb, owner, lease and event-log controls, and changes the probe key to `a`, which is explicitly allowed by the versioned process RPC protocol. The output leaf is unique and must not exist before candidate invocation.
+
+One candidate invocation; no retries. The scoped recovery decision gates remain unchanged: independent key press/keymap-down, session-only SIGKILL, independent release/keymap-up, identity-matched fsynced verified receipt, owner thread stopped, service exit 0 without force kill, controlled Xvfb SIGTERM. Any failure is preserved as STOP or scoped FAIL according to the frozen decision rule; no product-level claim.

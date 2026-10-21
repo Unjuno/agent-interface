@@ -1,0 +1,36 @@
+{
+  "allocation": "8654-C02",
+  "audit_result": null,
+  "audit_sha256": null,
+  "auditor_invocations": 0,
+  "auditor_step_outcome": "skipped",
+  "base_main_sha_at_preregistration": "9f67de666b640997ed7cb27cbe278ef19677be5d",
+  "branch": "research/8654-c02-raw-custody-20261009",
+  "candidate_invocations": 1,
+  "candidate_receipt": null,
+  "candidate_step_outcome": "failure",
+  "disposition": "STOP_CANDIDATE_FAILED",
+  "notes": [
+    "The workflow attempts to upload raw candidate output and receipt before audit; the recorded step outcome determines whether audit was permitted.",
+    "On successful audit and publication, raw, receipt, audit, execution record, and report are committed under this allocation's additive results/ path.",
+    "No candidate or auditor retry is permitted; this is a new successor allocation, not a rerun of C01."
+  ],
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "pre_audit_raw_artifact_upload_outcome": "failure",
+  "python": "3.12.10 (main, Apr  8 2025, 22:38:13) [GCC 13.3.0]",
+  "raw_bytes": null,
+  "raw_sha256": null,
+  "runner_image": "ubuntu24",
+  "runner_os": "Linux",
+  "source_commit": "fc4f7d8e8facfea91a5eadc0dcb79ecf5ade2b27",
+  "source_sha256": {
+    "PREREG.md": "6267e93a1fe6b54c1bd1c96bbf721b9be62d2701817622d7a28d581a0dd9012e",
+    "audit.py": "341527bf674f9b85b3038eb8577d681807438dd042248bb0088809ac0c3d0f95",
+    "candidate.py": "b49c378a2d91622d61233350b550d30acddd066cbd97d2bf8b08d9ab73c67076",
+    "finalize.py": "929b2a6014dd48276ee03b58ae86ce27e6564e68439699a4ab3f830d3d108e6c",
+    "workflow.yml": "805bac94e810ad7fcdc08776aae58ec20f84c485a6b5418c89eb48b5ff874546"
+  },
+  "workflow_run_attempt": "1",
+  "workflow_run_id": "37808378273",
+  "workflow_run_url": "https://github.com/Unjuno/agent-interface/actions/runs/37808378273"
+}

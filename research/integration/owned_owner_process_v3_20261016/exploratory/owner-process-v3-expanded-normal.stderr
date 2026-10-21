@@ -1,0 +1,46 @@
+test_actual_client_process_abrupt_exit_leaves_service_to_release (__main__.OwnedOwnerProcessTests.test_actual_client_process_abrupt_exit_leaves_service_to_release) ... ok
+test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade (__main__.OwnedOwnerProcessTests.test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade) ... ok
+test_context_exit_failure_cannot_promote_initial_verified_owner_close (__main__.OwnedOwnerProcessTests.test_context_exit_failure_cannot_promote_initial_verified_owner_close) ... Process owned-input-owner-c3cd14e5:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 76, in _child_entry
+    with factory(display=display,out=out,service_id=service_id) as owner:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 60, in fake_owner_exit_error
+    raise RuntimeError('injected context exit failure')
+RuntimeError: injected context exit failure
+ok
+test_module_available (__main__.OwnedOwnerProcessTests.test_module_available) ... ok
+test_normal_close_binds_saved_receipts_and_owned_process_exit (__main__.OwnedOwnerProcessTests.test_normal_close_binds_saved_receipts_and_owned_process_exit) ... ok
+test_owner_process_death_has_no_acceptable_release_receipt (__main__.OwnedOwnerProcessTests.test_owner_process_death_has_no_acceptable_release_receipt) ... ok
+test_startup_failure_returns_owned_handle_and_unverified_saved_failure (__main__.OwnedOwnerProcessTests.test_startup_failure_returns_owned_handle_and_unverified_saved_failure) ... Process owned-input-owner-14f8d186:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 76, in _child_entry
+    with factory(display=display,out=out,service_id=service_id) as owner:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 65, in fake_owner_start_error
+    raise RuntimeError('injected context startup failure')
+RuntimeError: injected context startup failure
+ok
+test_wrong_generation_and_overwrite_are_refused (__main__.OwnedOwnerProcessTests.test_wrong_generation_and_overwrite_are_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 10.223s
+
+OK

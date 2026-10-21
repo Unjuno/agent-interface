@@ -1,0 +1,1439 @@
+{
+  "schema_version": 1,
+  "allocation_id": "5947-MULTI-UPDATE-PROVENANCE-T0-A01-20261007",
+  "fixture_sha256": "b2638b5c3f3ebc83b84b94aaa8ce9a3ba9b5766d46e64148ae823a8036e58333",
+  "rows": [
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 0,
+      "arm": "CURRENT_ONLY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [],
+        "padding": "",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 347,
+      "body_sha256": "648082d8e69340658fa6c912c502322f2a47ca56e4138fb0d640489542b1ffd2",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 0,
+      "arm": "FULL_CONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [],
+        "padding": "",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 347,
+      "body_sha256": "648082d8e69340658fa6c912c502322f2a47ca56e4138fb0d640489542b1ffd2",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 0,
+      "arm": "NONCONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [],
+        "padding": "",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 347,
+      "body_sha256": "648082d8e69340658fa6c912c502322f2a47ca56e4138fb0d640489542b1ffd2",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 0,
+      "arm": "SOURCE_LINKED_DELTA",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [],
+        "padding": "",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 347,
+      "body_sha256": "648082d8e69340658fa6c912c502322f2a47ca56e4138fb0d640489542b1ffd2",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 1,
+      "arm": "CURRENT_ONLY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [],
+        "padding": "                                                                                                                              ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 473,
+      "body_sha256": "e5e4309366c3dd30034e6f9501a5694c67801b2ac3bf96ac2556868c1a2b4c23",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 1,
+      "arm": "FULL_CONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [
+          {
+            "id": "OLD_1",
+            "value": "TARGET_OLD_1",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                   ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 473,
+      "body_sha256": "eaa48c2643e25cac60a5cf6c2e7da3052d04bcf2a52e9fb1009e44e55622f021",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 1,
+      "arm": "NONCONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [
+          {
+            "id": "PAD_1",
+            "value": "UNRELATED_1",
+            "status": "OBSERVED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                      ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 473,
+      "body_sha256": "57c07284f22a1094ea762926193c5acb5ff6475272fcd00e1838f1201182ad6d",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 1,
+      "arm": "SOURCE_LINKED_DELTA",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [
+          {
+            "source_id": "OLD_1",
+            "prior_value": "TARGET_OLD_1",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "padding": "                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 473,
+      "body_sha256": "d6cbf421921d7f1117ecd98aa891080361bddfc564dfa8d88f71b622b5c515a8",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 4,
+      "arm": "CURRENT_ONLY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 857,
+      "body_sha256": "ceb8d559c2ca8fa52fa5cf45ff35be6a893ba79995342559c77300c283412f6a",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 4,
+      "arm": "FULL_CONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [
+          {
+            "id": "OLD_1",
+            "value": "TARGET_OLD_1",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_2",
+            "value": "TARGET_OLD_2",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_3",
+            "value": "TARGET_OLD_3",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_4",
+            "value": "TARGET_OLD_4",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 857,
+      "body_sha256": "c3d7d58d5fd7c7c1c0d86336c431583a9bf5004a812089782aefe490db2016ea",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 4,
+      "arm": "NONCONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [
+          {
+            "id": "PAD_1",
+            "value": "UNRELATED_1",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_2",
+            "value": "UNRELATED_2",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_3",
+            "value": "UNRELATED_3",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_4",
+            "value": "UNRELATED_4",
+            "status": "OBSERVED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                           ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 857,
+      "body_sha256": "e6a9b935dabc6700eedcc8b665d038848418b5a46950ee8a46426dc710b98fd2",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 4,
+      "arm": "SOURCE_LINKED_DELTA",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [
+          {
+            "source_id": "OLD_1",
+            "prior_value": "TARGET_OLD_1",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_2",
+            "prior_value": "TARGET_OLD_2",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_3",
+            "prior_value": "TARGET_OLD_3",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_4",
+            "prior_value": "TARGET_OLD_4",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "padding": "                                                                                                                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 857,
+      "body_sha256": "570d0f99716b8f67193d0b4a6168c34c9774ea6aaa99e790fa7580234024c4b5",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 8,
+      "arm": "CURRENT_ONLY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 1369,
+      "body_sha256": "686fe932eeca12822c136277497b39fdfdae7b91d817a306fa9bb6d477a5c78a",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 8,
+      "arm": "FULL_CONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [
+          {
+            "id": "OLD_1",
+            "value": "TARGET_OLD_1",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_2",
+            "value": "TARGET_OLD_2",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_3",
+            "value": "TARGET_OLD_3",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_4",
+            "value": "TARGET_OLD_4",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_5",
+            "value": "TARGET_OLD_5",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_6",
+            "value": "TARGET_OLD_6",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_7",
+            "value": "TARGET_OLD_7",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_8",
+            "value": "TARGET_OLD_8",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 1369,
+      "body_sha256": "b3975725b386342d928da0e9027a8853c3608622fc5806e57b7e71a85fad3efd",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 8,
+      "arm": "NONCONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [
+          {
+            "id": "PAD_1",
+            "value": "UNRELATED_1",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_2",
+            "value": "UNRELATED_2",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_3",
+            "value": "UNRELATED_3",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_4",
+            "value": "UNRELATED_4",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_5",
+            "value": "UNRELATED_5",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_6",
+            "value": "UNRELATED_6",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_7",
+            "value": "UNRELATED_7",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_8",
+            "value": "UNRELATED_8",
+            "status": "OBSERVED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 1369,
+      "body_sha256": "1afb655b846124e2b5341d5d4c10ce089a07f9dfb561965e59cff5acd416f7c9",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CURRENT_VALID",
+      "kind": "current_only",
+      "depth": 8,
+      "arm": "SOURCE_LINKED_DELTA",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What is the current selected object?",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": null,
+        "episodes": [],
+        "ledger": [
+          {
+            "source_id": "OLD_1",
+            "prior_value": "TARGET_OLD_1",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_2",
+            "prior_value": "TARGET_OLD_2",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_3",
+            "prior_value": "TARGET_OLD_3",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_4",
+            "prior_value": "TARGET_OLD_4",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_5",
+            "prior_value": "TARGET_OLD_5",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_6",
+            "prior_value": "TARGET_OLD_6",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_7",
+            "prior_value": "TARGET_OLD_7",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_8",
+            "prior_value": "TARGET_OLD_8",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "padding": "                                                                                                                                                                                                                                                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 91,
+      "utf8_bytes": 1369,
+      "body_sha256": "6005eb41a23bdcdd71fb7125822a99f3096b4fe7e89f4cf26a4a9210ddfbe1bf",
+      "expected": "TARGET_Z",
+      "expected_information": "current_only"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 0,
+      "arm": "CURRENT_ONLY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [],
+        "padding": "",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 507,
+      "body_sha256": "a56e045b6bcf04885c1ec5f9b18b4238e8f31aca896c9610119509cf5ca0cfc7",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 0,
+      "arm": "FULL_CONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [],
+        "padding": "",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 507,
+      "body_sha256": "a56e045b6bcf04885c1ec5f9b18b4238e8f31aca896c9610119509cf5ca0cfc7",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 0,
+      "arm": "NONCONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [],
+        "padding": "",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 507,
+      "body_sha256": "a56e045b6bcf04885c1ec5f9b18b4238e8f31aca896c9610119509cf5ca0cfc7",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 0,
+      "arm": "SOURCE_LINKED_DELTA",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [],
+        "padding": "",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 507,
+      "body_sha256": "a56e045b6bcf04885c1ec5f9b18b4238e8f31aca896c9610119509cf5ca0cfc7",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 1,
+      "arm": "CURRENT_ONLY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [],
+        "padding": "                                                                                                                              ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 633,
+      "body_sha256": "c018dba7c060bcf3e5bcc225aa57b4e06944295a9b7c2c826ae494dd035b34bf",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 1,
+      "arm": "FULL_CONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [
+          {
+            "id": "OLD_1",
+            "value": "TARGET_OLD_1",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                   ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 633,
+      "body_sha256": "8e285d250975be0c039d419a03af7e3c624fd86df26bf4d5687f516431d7c7b3",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 1,
+      "arm": "NONCONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [
+          {
+            "id": "PAD_1",
+            "value": "UNRELATED_1",
+            "status": "OBSERVED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                      ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 633,
+      "body_sha256": "a5d9beac94c863c088937d85448b37d8581957918704115e43829902ffbe4e44",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 1,
+      "arm": "SOURCE_LINKED_DELTA",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [
+          {
+            "source_id": "OLD_1",
+            "prior_value": "TARGET_OLD_1",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "padding": "                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 633,
+      "body_sha256": "87cb2e9848b3c98b020a13ee4547a75b648780c8c944f9d3f240f0483e1321aa",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 4,
+      "arm": "CURRENT_ONLY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 1017,
+      "body_sha256": "0a6fedc78355869cfedde7ba084214a0e9ff1dcc05190bbeff911b73c0182ea9",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 4,
+      "arm": "FULL_CONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [
+          {
+            "id": "OLD_1",
+            "value": "TARGET_OLD_1",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_2",
+            "value": "TARGET_OLD_2",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_3",
+            "value": "TARGET_OLD_3",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_4",
+            "value": "TARGET_OLD_4",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 1017,
+      "body_sha256": "f2101ae6c43e9fddd5f47e2c08c3bb227e325555cc22b8cac0497d021734e855",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 4,
+      "arm": "NONCONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [
+          {
+            "id": "PAD_1",
+            "value": "UNRELATED_1",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_2",
+            "value": "UNRELATED_2",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_3",
+            "value": "UNRELATED_3",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_4",
+            "value": "UNRELATED_4",
+            "status": "OBSERVED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                           ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 1017,
+      "body_sha256": "4951043869ba361e6883ec1f1f3e6b630e4616f53dac31e43fed91c255d52b9c",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 4,
+      "arm": "SOURCE_LINKED_DELTA",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [
+          {
+            "source_id": "OLD_1",
+            "prior_value": "TARGET_OLD_1",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_2",
+            "prior_value": "TARGET_OLD_2",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_3",
+            "prior_value": "TARGET_OLD_3",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_4",
+            "prior_value": "TARGET_OLD_4",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "padding": "                                                                                                                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 1017,
+      "body_sha256": "d4fa2e9f2adb8d25130567a9ff56be1be376dbffb2f17d7d0412ec3be39ab615",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 8,
+      "arm": "CURRENT_ONLY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 1529,
+      "body_sha256": "ad1c2972314dfb45f7a29b47497dc2733721bc9a0dec8d27bcd03732c0c95011",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 8,
+      "arm": "FULL_CONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [
+          {
+            "id": "OLD_1",
+            "value": "TARGET_OLD_1",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_2",
+            "value": "TARGET_OLD_2",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_3",
+            "value": "TARGET_OLD_3",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_4",
+            "value": "TARGET_OLD_4",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_5",
+            "value": "TARGET_OLD_5",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_6",
+            "value": "TARGET_OLD_6",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_7",
+            "value": "TARGET_OLD_7",
+            "status": "SUPERSEDED"
+          },
+          {
+            "id": "OLD_8",
+            "value": "TARGET_OLD_8",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 1529,
+      "body_sha256": "46071ff5fe988d29cddb5a303db403a7f48a17aebce7e1e4bad164e5dd4c0cd3",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 8,
+      "arm": "NONCONFLICTING_HISTORY",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [
+          {
+            "id": "PAD_1",
+            "value": "UNRELATED_1",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_2",
+            "value": "UNRELATED_2",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_3",
+            "value": "UNRELATED_3",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_4",
+            "value": "UNRELATED_4",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_5",
+            "value": "UNRELATED_5",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_6",
+            "value": "UNRELATED_6",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_7",
+            "value": "UNRELATED_7",
+            "status": "OBSERVED"
+          },
+          {
+            "id": "PAD_8",
+            "value": "UNRELATED_8",
+            "status": "OBSERVED"
+          }
+        ],
+        "ledger": [],
+        "padding": "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 1529,
+      "body_sha256": "d952e8d6f5150188d774c645d52bc773feaf690b98e2b58c3d2bac7b02c3774c",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    },
+    {
+      "condition_id": "Q_CHANGE_HISTORY_REQUIRED",
+      "kind": "history_required",
+      "depth": 8,
+      "arm": "SOURCE_LINKED_DELTA",
+      "body": {
+        "task": "Identify the current object; answer the requested current value or baseline-to-current change.",
+        "query": "What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.",
+        "authority": {
+          "model_calls": 0,
+          "gui_actions": 0,
+          "execution_authority": false
+        },
+        "baseline": {
+          "id": "BASELINE",
+          "value": "TARGET_A",
+          "status": "OBSERVED"
+        },
+        "episodes": [],
+        "ledger": [
+          {
+            "source_id": "OLD_1",
+            "prior_value": "TARGET_OLD_1",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_2",
+            "prior_value": "TARGET_OLD_2",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_3",
+            "prior_value": "TARGET_OLD_3",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_4",
+            "prior_value": "TARGET_OLD_4",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_5",
+            "prior_value": "TARGET_OLD_5",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_6",
+            "prior_value": "TARGET_OLD_6",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_7",
+            "prior_value": "TARGET_OLD_7",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          },
+          {
+            "source_id": "OLD_8",
+            "prior_value": "TARGET_OLD_8",
+            "current_id": "CURRENT",
+            "status": "SUPERSEDED"
+          }
+        ],
+        "padding": "                                                                                                                                                                                                                                                               ",
+        "current": {
+          "id": "CURRENT",
+          "value": "TARGET_Z",
+          "status": "OBSERVED"
+        }
+      },
+      "current_cue_byte_offset": 143,
+      "utf8_bytes": 1529,
+      "body_sha256": "f3b1a0b752e7b5c1a0ecb1b9f3c7a51a49d330176c1645a91c9750290734ef5a",
+      "expected": "TARGET_A_TO_TARGET_Z",
+      "expected_information": "baseline_and_current"
+    }
+  ],
+  "position_control": {
+    "id": "POSITION_POSITIVE_CONTROL",
+    "before_sha256": "6c3b963fab584ab07532b9438f3c4b1711763ed340e0b0d8287b470e0c9ec075",
+    "after_sha256": "e992b5281c329c3cf96fae10e1fb293720b95a8a32796af69d08bb13b56691cc",
+    "offset_differs": true
+  }
+}

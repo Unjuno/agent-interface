@@ -1,0 +1,4 @@
+command: cd /mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_active_invalidation_key_release_xvfb_a01_20261012/SOURCE && PYTHONDONTWRITEBYTECODE=1 python3 -B candidate.py --out ../results/A01 --display :133
+exit_code: 1
+stdout: {"arms": ["health_drop_invalidates", "health_unchanged_control"], "cleanup": {"xvfb_exit": 0}, "errors": ["RuntimeError: unchanged control did not preserve policy and normal cleanup"], "status": "STOP"}
+classification: STOP. The invalidation/cancel/keyup/stale-answer arm satisfied its checks. The control reached READY_FOR_ACTION_VALIDITY, while the preregistered condition required READY_FOR_FRESH_EXECUTOR_ADMISSION. This is preserved as a failed formal gate; no rerun.

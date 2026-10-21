@@ -1,0 +1,17 @@
+{
+  "schema": "global-queue-sync-8494-a01-v1",
+  "tick_unit": "abstract service slot",
+  "sessions": ["s0", "s1", "s2", "s3"],
+  "horizon": 96,
+  "service_slots_per_tick": 1,
+  "queue_threshold": 4,
+  "feedback_delay_ticks": 2,
+  "expiry_ticks": 8,
+  "scenarios": [
+    {"id": "shared_sustained_common_delay", "bottleneck": "shared", "arrival_period": 2, "arrival_phases": [0, 0, 0, 0], "feedback_delay_ticks": 2},
+    {"id": "shared_bursty_common_delay", "bottleneck": "shared", "arrival_period": 4, "arrival_phases": [0, 0, 0, 0], "burst_extra_at": [16, 40, 64], "feedback_delay_ticks": 2},
+    {"id": "shared_heterogeneous_common_delay", "bottleneck": "shared", "arrival_periods": [2, 3, 4, 5], "arrival_phases": [0, 1, 0, 2], "feedback_delay_ticks": 3},
+    {"id": "shared_underload_immediate_feedback", "bottleneck": "shared", "arrival_period": 8, "arrival_phases": [0, 2, 4, 6], "feedback_delay_ticks": 0},
+    {"id": "independent_bottlenecks", "bottleneck": "per_session", "arrival_period": 2, "arrival_phases": [0, 0, 0, 0], "feedback_delay_ticks": 2}
+  ]
+}

@@ -1,5 +1,14 @@
 # Bounded compiled methods over the shared X11 bridge
 
+The public MCP composition route is described in the
+[standard MCP guide](../cli_v1/MCP.md#public-compiled-x11-method). It accepts a
+declarative exact-pixel profile rather than executable Python callbacks and is
+only registered on the owned-process guarded caller. That narrows the public
+input surface; it does not make pixel rules an independent oracle or authorize
+the application task result. The MCP composition tests use Fake X and must not
+be reported as live GUI, MAP01, physical release, recovery or efficiency
+evidence.
+
 `runtime.guarded_x11_v1.compiled.run` connects the existing shared
 `runtime.core_v1.compiled_gui` graph to a caller-owned `NativeHandleBridge`.
 This is an opt-in portable Python API for Linux/X11. It imports no research
@@ -60,6 +69,15 @@ perception exceptions are retained, then returned by the graph as
 completed/uncertain input before choosing a new action. Failures outside the
 observation boundary propagate after retention. There is no automatic retry or
 release claim when an execution supplies no actual release evidence.
+
+When the first graph observation carries `process_generation` or
+`window_generation`, the adapter pins those values for the invocation. A later
+change or missing value yields `SAFE_YIELD / association_changed`; the adapter
+does not pass that capture to perception, effect verification or another input.
+This closes a case where the same XID could be reused after an action and the
+new process's pixels could otherwise be mistaken for that action's effect.
+If a session does not supply generation fields, this pin adds no generation
+qualification; the caller must not describe that run as generation-verified.
 
 `TASK_SUCCEEDED` is a local graph verdict. Independently score application task
 and collateral effects after the controller is terminal. Method deadline
@@ -154,6 +172,16 @@ exercised the actual capture binding change and returned this typed receipt.
 After explicit primary modal review/new grounding/confirmation, the independently
 read saved workbook matched317/529. The preceding startup failure is retained.
 This qualifies the boundary and one saved task, not a speed or token improvement.
+
+## Callback receipt failures
+
+Current callback receipt behavior is documented in the
+[source-bound #7954 convergence](../../research/integration/compiled_callback_convergence_20261016/README.md).
+Ordinary verifier exceptions retain a scoped adapter witness and return a typed
+core failure with known prefix/release. Post-input journal failure stops later
+input and retains in-memory failure evidence, including paired terminal sink
+failure. Pre-input journal exceptions still propagate. These receipts do not
+establish durable publication, independent application effects or recovery.
 
 ## Failed Inkscape keyboard transfer
 

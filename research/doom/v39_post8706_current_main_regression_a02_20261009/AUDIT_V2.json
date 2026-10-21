@@ -1,0 +1,23 @@
+{
+  "schema": "v39-post8706-current-main-regression-a02-audit-v2",
+  "status": "PASS_SOURCE_AND_LOG_RECONCILIATION",
+  "tested_commit": "b4046798ed8902745a36e8fda091204233bb06d3",
+  "static_import_closure_files": 73,
+  "changed_paths_since_baseline": [
+    "research/live_control/test_input_owner_v12_explicit_up_cancel.py"
+  ],
+  "production_source_changes_since_baseline": 0,
+  "test_logs": {
+    "normal": {
+      "tests": 107,
+      "status": "PASS",
+      "sha256": "dbda879bc786c57819ab5a1b7d5e65c67eced0619c55c843ca2481eea536323f"
+    },
+    "optimized": {
+      "tests": 107,
+      "status": "PASS",
+      "sha256": "be6229c0678f6e4229a1aa297881a5407127499a7a70487ea8fd6ff18d88b5fb"
+    }
+  },
+  "scope": "Verifies recorded test logs and Git blob identities; does not independently prove live control behavior"
+}

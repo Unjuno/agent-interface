@@ -1,0 +1,64 @@
+{
+  "normal": {
+    "tests": 44,
+    "rows": 10,
+    "contradictions": [
+      {
+        "name": "admit_old",
+        "reason": "lost invalidation"
+      },
+      {
+        "name": "restore_monitor",
+        "reason": "old monitor reactivated"
+      },
+      {
+        "name": "stale_source",
+        "reason": "fresh full source"
+      },
+      {
+        "name": "lost_abort",
+        "reason": "failure quarantine"
+      },
+      {
+        "name": "authority",
+        "reason": "authority"
+      },
+      {
+        "name": "reorder_cancel",
+        "reason": "cancel order"
+      }
+    ],
+    "control_assertion_failures": 9
+  },
+  "optimized": {
+    "tests": 44,
+    "rows": 10,
+    "contradictions": [
+      {
+        "name": "admit_old",
+        "reason": "lost invalidation"
+      },
+      {
+        "name": "restore_monitor",
+        "reason": "old monitor reactivated"
+      },
+      {
+        "name": "stale_source",
+        "reason": "fresh full source"
+      },
+      {
+        "name": "lost_abort",
+        "reason": "failure quarantine"
+      },
+      {
+        "name": "authority",
+        "reason": "authority"
+      },
+      {
+        "name": "reorder_cancel",
+        "reason": "cancel order"
+      }
+    ],
+    "control_assertion_failures": 9
+  }
+}

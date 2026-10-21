@@ -1,0 +1,80 @@
+{
+  "atom_count": 22,
+  "candidate_duplicate_certifications": 0,
+  "candidate_mismatches": 0,
+  "candidate_order_sensitive_profiles": 0,
+  "current_main_false_negative": 0,
+  "current_main_false_positive": 92690,
+  "elapsed_seconds": 1.233,
+  "first_current_false_positive": {
+    "candidate": [
+      false,
+      false
+    ],
+    "events": [
+      {
+        "event": "terminal",
+        "id": "cmd-a"
+      },
+      {
+        "event": "terminal",
+        "id": "cmd-a"
+      }
+    ],
+    "main": [
+      true,
+      true
+    ],
+    "oracle": [
+      false,
+      false
+    ]
+  },
+  "first_current_order_sensitive_profile": {
+    "atom_indexes": [
+      0,
+      1,
+      9
+    ],
+    "events": [
+      {
+        "event": "accepted",
+        "id": "cmd-a"
+      },
+      {
+        "event": "accepted",
+        "id": "cmd-a",
+        "intent_token": "lease-a"
+      },
+      {
+        "event": "terminal",
+        "id": "cmd-a",
+        "release": {
+          "buttons_down": [],
+          "intent_token": "lease-a",
+          "keys_down": [],
+          "verified": true
+        }
+      }
+    ],
+    "outputs": [
+      [
+        true,
+        false
+      ],
+      [
+        true,
+        true
+      ]
+    ]
+  },
+  "main_order_sensitive_profiles": 1118,
+  "sequence_count": 245411,
+  "source": {
+    "candidate_blob": "576d481a3503e8be4d8ceded8a6371b3fe8850fc",
+    "candidate_commit": "6195600931fa6de4ecf1a5012cb83b549addb5af",
+    "current_main_blob": "50c63fa83969ed518a91e39c08d1ee52064eb636",
+    "current_main_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae"
+  },
+  "status": "PASS_SCOPED"
+}

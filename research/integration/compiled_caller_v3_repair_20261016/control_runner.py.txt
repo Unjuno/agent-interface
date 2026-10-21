@@ -1,0 +1,44 @@
+import importlib,json,os,subprocess,sys,types,unittest
+from datetime import datetime,timezone
+from pathlib import Path
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT=Path(__file__).parent/'compiled-v3-handoff-final-v2-20261016'
+EXPR='if name == "execute" and isinstance(error, ExecutionReceiptError):'
+if len(sys.argv)>1:
+    control=sys.argv[1]
+    if control=='no_capture':
+        name='research.live_control.adaptive_acquisition_caller_v3';original=importlib.import_module(name)
+        source=Path(original.__file__).read_text();assert source.count(EXPR)==1
+        source=source.replace(EXPR,'if False:')
+        module=types.ModuleType(name);module.__file__=original.__file__;module.__package__='research.live_control'
+        sys.modules[name]=module;setattr(importlib.import_module('research.live_control'),'adaptive_acquisition_caller_v3',module)
+        exec(compile(source,module.__file__,'exec'),module.__dict__)
+    elif control=='stale_builder':
+        name='research.live_control.integrated_efficiency_compiled_execution_v2';original=importlib.import_module(name)
+        source=Path(original.__file__).read_text();expr='interface_for_target(copy.deepcopy(_payload))';assert source.count(expr)==1
+        source=source.replace(expr,"interface_for_target(dict(target=copy.deepcopy(spec['cached_target']), check=copy.deepcopy(_payload['check'])))")
+        module=types.ModuleType(name);module.__file__=original.__file__;module.__package__='research.live_control'
+        sys.modules[name]=module;setattr(importlib.import_module('research.live_control'),'integrated_efficiency_compiled_execution_v2',module)
+        exec(compile(source,module.__file__,'exec'),module.__dict__)
+    elif control=='legacy':os.environ['COMPILED_CALLER_MODULE']='research.live_control.integrated_efficiency_compiled_execution_v1'
+    else:raise ValueError(control)
+    tests=importlib.import_module('test_compiled_caller_handoff_v2')
+    suite=unittest.defaultTestLoader.loadTestsFromName('CompiledCallerHandoffTests.test_final_selected_target_drives_interface_and_core_admission',tests) if control=='stale_builder' else unittest.defaultTestLoader.loadTestsFromModule(tests)
+    result=unittest.TextTestRunner(verbosity=2).run(suite)
+    mode='optimized' if sys.flags.optimize else 'normal'
+    (OUT/f'{control}-{mode}-records.json').write_text(json.dumps(tests.ROWS,indent=2)+'\n')
+    row=dict(control=control,methods=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),pid=os.getpid(),optimize=sys.flags.optimize)
+    (OUT/f'{control}-{mode}-result.json').write_text(json.dumps(row,indent=2)+'\n')
+    sys.exit(not result.wasSuccessful())
+env=dict(os.environ,PYTHONPATH=os.pathsep.join([str(ROOT),str(ROOT/'research/live_control')]),PYTHONDONTWRITEBYTECODE='1');env.pop('COMPILED_CALLER_MODULE',None);env.pop('DISPLAY',None)
+receipts=[]
+for control in ('legacy','no_capture','stale_builder'):
+    for mode,flags in [('normal',[]),('optimized',['-O'])]:
+        cmd=[sys.executable,*flags,str(Path(__file__)),control];start=datetime.now(timezone.utc).isoformat();run=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True)
+        for stream,data in [('stdout',run.stdout),('stderr',run.stderr)]: (OUT/f'{control}-{mode}.{stream}').write_bytes(data)
+        row=json.loads((OUT/f'{control}-{mode}-result.json').read_text())
+        if row['methods']!=(1 if control=='stale_builder' else 14) or row['errors'] or row['skipped'] or not row['failures'] or run.returncode!=1:raise ValueError(row)
+        receipts.append(dict(mode=mode,control=control,command=cmd,started_utc=start,ended_utc=datetime.now(timezone.utc).isoformat(),returncode=run.returncode,result=row))
+(OUT/'CONTROL_PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2)+'\n')
+print(json.dumps([r['result'] for r in receipts],indent=2))
+

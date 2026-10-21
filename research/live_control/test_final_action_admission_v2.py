@@ -11,7 +11,7 @@ from action_validity_admission_v1 import (
 from final_action_admission_v2 import (
     decide_final_admission, record_action_validity,
     record_controller_no_input, record_executor_admission,
-    record_post_admission_revocation)
+    record_post_admission_revocation, record_executor_stale_rejection)
 
 
 ACTION = [{"action": "fire", "extent": "pulse"}]
@@ -47,6 +47,49 @@ def validity(valid=True, observed=12):
 
 
 class FinalActionAdmissionV2Tests(unittest.TestCase):
+    def test_stale_executor_rejection_records_no_admission_and_requires_new_decision(self):
+        initial = decide_final_admission(turn(), None, 11)
+        ready = record_action_validity(initial, ACTION, validity())
+        rejected = record_executor_stale_rejection(ready, {
+            "event": "rejected", "id": "plan-0",
+            "reason": "latest observation sequence required before input",
+            "expected_sequence": 2, "observed_sequence": 3,
+            "controller_received_ns": 20})
+        self.assertEqual(rejected["status"], "REJECTED_EXECUTOR_STALE_SEQUENCE")
+        self.assertFalse(rejected["input_authority_admitted"])
+        self.assertIsNone(rejected["executor_admission"])
+        self.assertTrue(rejected["requires_new_decision"])
+        self.assertEqual(rejected["executor_rejection"]["observed_sequence"], 3)
+
+    def test_stale_rejection_receipt_rejects_wrong_sequence_or_reason(self):
+        for changes in ({"reason": "unsupported operation"},
+                        {"observed_sequence": 2},
+                        {"expected_sequence": 1}):
+            ready = record_action_validity(
+                decide_final_admission(turn(), None, 11), ACTION, validity())
+            event = {"event": "rejected", "id": "plan-0",
+                     "reason": "latest observation sequence required before input",
+                     "expected_sequence": 2, "observed_sequence": 3,
+                     "controller_received_ns": 20}
+            event.update(changes)
+            with self.assertRaises(ValueError):
+                record_executor_stale_rejection(ready, event)
+
+    def test_stale_rejection_after_prior_segment_preserves_historical_acceptance(self):
+        ready = record_action_validity(
+            decide_final_admission(turn(), None, 11), ACTION, validity())
+        admitted = record_executor_admission(
+            ready, {"event": "accepted", "id": "primary-0", "accepted_ns": 13})
+        rejected = record_executor_stale_rejection(admitted, {
+            "event": "rejected", "id": "primary-1",
+            "reason": "latest observation sequence required before input",
+            "expected_sequence": 3, "observed_sequence": 4,
+            "controller_received_ns": 20})
+        self.assertEqual(rejected["status"], "REVOKED_EXECUTOR_STALE_SEQUENCE")
+        self.assertEqual(rejected["executor_admission"], admitted["executor_admission"])
+        self.assertFalse(rejected["input_authority_admitted"])
+        self.assertTrue(rejected["requires_new_decision"])
+
     def test_clean_path_requires_validity_then_acceptance(self):
         initial = decide_final_admission(turn(), None, 11)
         self.assertEqual(initial["status"], "READY_FOR_ACTION_VALIDITY")

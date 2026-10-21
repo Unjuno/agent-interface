@@ -1,0 +1,39 @@
+{
+  "schema": "v39-current-main-cancel-executor-handoff-a02-result-v1",
+  "current_main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+  "disposition": "PASS_CURRENT_MAIN_SOURCE_ALIGNED_SOFTWARE_REPLAY",
+  "source_alignment": {
+    "matched": 13,
+    "total": 13
+  },
+  "commands": {
+    "replay": 0,
+    "unit": 0,
+    "audit": 0
+  },
+  "event_order": [
+    "accepted",
+    "step_started",
+    "controller_cancel_write",
+    "cancel_requested",
+    "controller_cancel_flush",
+    "appserver_interrupt_request_written",
+    "input_released",
+    "terminal",
+    "appserver_interrupt_response_injected"
+  ],
+  "verified_empty_release": {
+    "verified": true,
+    "keys_down": [],
+    "buttons_down": []
+  },
+  "checks": {
+    "current_main_helper_cancel_before_interrupt_request": true,
+    "executor_input_released_before_interrupt_response": true,
+    "verified_empty_terminal_before_interrupt_response": true,
+    "planner_interrupt_response_eventually_injected": true,
+    "exact_executor_v13_stack_hashes_checked": 9,
+    "release_receipt_verified_empty": true
+  },
+  "scope": "source-aligned software composition only; simulated backend/owner; no OS input, live game, threat exposure, or task effect"
+}

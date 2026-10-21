@@ -1,0 +1,65 @@
+{
+  "captured_at_utc": "2026-10-19T03:15:43.545915+00:00",
+  "base_commit": "3cf520498beb886750b9de8499890dfebb0ea209",
+  "runtime": {
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26300-SP0"
+  },
+  "transport": "three process-local socket.socketpair channels; no external network endpoints",
+  "configuration": {
+    "owner_pid": 77,
+    "action_id": "action-1",
+    "keycode": 38,
+    "reply_timeout_seconds": 0.15,
+    "per_buffer_limit_bytes": 1024
+  },
+  "faults": [
+    "matching independent event receipt gates the selected reply",
+    "later valid server frames remain ordered behind held reply",
+    "server parser error after held reply remains behind the hold",
+    "fake upstream EOF while reply held",
+    "downstream non-reader reaches bounded queue retirement",
+    "large valid 64 KiB stream is delivered intact with active client reader",
+    "malformed client frame is byte-preserved after parser disables"
+  ],
+  "not_used": [
+    "WSLc",
+    "Docker",
+    "external network",
+    "X server",
+    "GUI",
+    "OS input",
+    "MCP server",
+    "model",
+    "live allocation"
+  ],
+  "runs": [
+    {
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate",
+        "research.integration.offline_proxy_reply_framing_20261019.test_reply_gate",
+        "research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay"
+      ],
+      "stdout_stderr": "research/integration/offline_proxy_reply_framing_20261019/raw/fake-relay-test-normal.txt",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate",
+        "research.integration.offline_proxy_reply_framing_20261019.test_reply_gate",
+        "research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay"
+      ],
+      "stdout_stderr": "research/integration/offline_proxy_reply_framing_20261019/raw/fake-relay-test-optimized.txt",
+      "exit_code": 0
+    }
+  ]
+}

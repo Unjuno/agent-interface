@@ -15,7 +15,11 @@ from mcp.client.stdio import stdio_client
 PUBLIC_TOOLS = ('list_tools', 'interface_clock', 'interface_validate', 'interface_observe', 'interface_dispatch',
                 'interface_results', 'interface_inspect_target', 'interface_review_target',
                 'interface_close', 'interface_recover_input', 'interface_guarded_observe', 'interface_guarded_mint',
-                'interface_guarded_input', 'interface_guarded_review_window', 'interface_guarded_mint_many', 'interface_guarded_activate_window')
+                'interface_guarded_input', 'interface_guarded_review_window', 'interface_guarded_mint_many',
+                'interface_guarded_activate_window', 'interface_guarded_recover_input',
+                'interface_guarded_cancel', 'interface_guarded_compiled')
+
+MAX_PENDING_STDOUT_RESPONSES = 16
 
 
 def _finite_float(value):
@@ -98,6 +102,30 @@ async def serve(server_args):
         async with ClientSession(reader, writer) as client:
             await client.initialize()
             relay = Relay(client)
+            output_lock = asyncio.Lock()
+            pending_writes = set()
+
+            async def write_response(response):
+                encoded = await asyncio.to_thread(json.dumps, response, allow_nan=False)
+                encoded += '\n'
+
+                def emit():
+                    output = getattr(sys.stdout, 'buffer', None)
+                    if output is not None:
+                        wire = encoded.encode('utf-8')
+                        written = output.write(wire)
+                        sys.stdout.flush()
+                        expected = len(wire)
+                    else:
+                        written = sys.stdout.write(encoded)
+                        sys.stdout.flush()
+                        expected = len(encoded)
+                    if written != expected:
+                        raise OSError('INCOMPLETE_RELAY_STDOUT_WRITE')
+
+                async with output_lock:
+                    await asyncio.to_thread(emit)
+
             while True:
                 # JSON-lines pipes are UTF-8 bytes regardless of the locale text wrapper.
                 stream = getattr(sys.stdin, 'buffer', sys.stdin)
@@ -105,19 +133,14 @@ async def serve(server_args):
                 if not line:
                     break
                 response = await relay.request(line)
-                encoded = json.dumps(response, allow_nan=False) + '\n'
-                output = getattr(sys.stdout, 'buffer', None)
-                if output is not None:
-                    wire = encoded.encode('utf-8')
-                    written = output.write(wire)
-                    sys.stdout.flush()
-                    expected = len(wire)
-                else:
-                    written = sys.stdout.write(encoded)
-                    sys.stdout.flush()
-                    expected = len(encoded)
-                if written != expected:
-                    raise OSError('INCOMPLETE_RELAY_STDOUT_WRITE')
+                pending_writes.add(asyncio.create_task(write_response(response)))
+                if len(pending_writes) >= MAX_PENDING_STDOUT_RESPONSES:
+                    done, pending_writes = await asyncio.wait(
+                        pending_writes, return_when=asyncio.FIRST_COMPLETED)
+                    for task in done:
+                        await task
+            if pending_writes:
+                await asyncio.gather(*pending_writes)
 
 
 def main():

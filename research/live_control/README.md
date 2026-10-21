@@ -4,6 +4,9 @@
 
 ## Navigate
 
+Retained [Issue #59 journal-wire custody packet](appserver_journal_wire_custody_59_20261003_93c2_A01/README.md): exact saved nested-data proof and qualified rescue records, with observer/authentication and outer-auditor limits preserved; no source replay or runtime adoption.
+
+
 Retained [ExecutorV13 release-custody BaseException boundary experiment](baseexception_release_custody_59_20261005/README.md): synthetic worker-step result with custody-preserving terminal behavior, independent source audit, and scoped limits; the implementation is historical evidence, not a runtime adoption.
 
 Retained [ExecutorV13 `release_all()` BaseException custody-boundary experiment](executor_v13_release_cleanup_baseexception_59_20261005/README.md): the frozen parent regressions demonstrate the no-terminal failure; the synthetic candidate/AST audit passes, and the later integrated #7635 repair supersedes the candidate implementation. Historical evidence only; no live-control or task-effect claim.
@@ -674,3 +677,5 @@ or human-tempo claim.
 - [Reader retirement and late-frame custody repair](appserver_reader_retirement_57_20261003_01a0ff2d/README.md): close reports a live reader before closing the journal; preserves earlier mutex/None semantics and all first failures.
 - [Boolean reply-ID correlation regression](appserver_reply_id_5156_20261003/REPORT.md): Boolean IDs cannot correlate to numeric requests; numeric float replies and server errors retained, no genuine-provider or general protocol-conformance claim.
 - [Send before response deadline: original comparison and audit qualification](appserver_send_boundary_59_20261003_01a0ff52/README.md): six historical Mac cells, response-only timeout and finite uncertain writer; original9/12 control refusals and later12/12 correction, no transport adoption or hard deadline claim.
+
+Current finite role recovery package and scope: [PR7264/8370 convergence](../integration/finite_role_recovery_convergence_20261016/README.md). Local file-backed checks do not qualify GUI/application recovery.

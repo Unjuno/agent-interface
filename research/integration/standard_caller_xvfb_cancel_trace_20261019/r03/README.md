@@ -1,0 +1,9 @@
+# Standard caller blocked-Xvfb cancellation trace — r03
+
+This packet preserves [GitHub Actions run 39260780052](https://github.com/Unjuno/agent-interface/actions/runs/39260780052), PR #9192 head `b48808d731ea087627057027462868c9fa8a86fc`, from the private `Runtime X11 v1 Integration` workflow. The scenario uses an isolated Xvfb, a real standard MCP caller/owned process, an XTEST delayed-request fixture, and a synthetic app. The raw JSON and PNG are byte-for-byte copies of the workflow artifact; `SHA256SUMS` verifies them.
+
+The owner control response arrived as `cancel_requested`, and the caller required retirement because key `a` remained an input obligation. The added diagnostic captured `Process.terminate()` followed by `Process.join(0.25)`, which elapsed 5.186 ms; the exact owner exited with SIGTERM (`-15`). XRes observed disconnect in 71.101 ms, an independent release worker verified empty key/button state in 586.521 ms, and separate parent reads found `a=false`, `b=false` both after release and at the delay horizon. Total cancellation returned in 664.138 ms.
+
+Despite those scoped readbacks, the caller correctly reported `release_confirmed=false`, `cleanup_status=UNKNOWN`, `late_server_request_possible=true`, `task_success=null`, and replay disabled. This is one private-Xvfb method-scoped pass; it does not guarantee release when the X server itself remains unavailable, establish product-app task success, or qualify MAP01/recovery/efficiency. The changed missing-cancel-ack timeout branch was not exercised because the control response arrived.
+
+This pass does not explain the earlier failed run 39260096881 in [r02](../r02/README.md), where `_retire` returned in 2.671 ms while the owner remained alive and no exit code was available. Keep both outcomes. The next finite discriminator should exercise the missing-ack branch through the standard caller while preserving UNKNOWN whenever disconnect/release cannot be independently confirmed.

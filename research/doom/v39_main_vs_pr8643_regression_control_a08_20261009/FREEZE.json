@@ -1,0 +1,27 @@
+{
+  "schema": "v39-main-vs-pr8643-regression-control-freeze-v1",
+  "execution_id": "v39-main-vs-pr8643-regression-control-a08-20261009",
+  "dependency_base_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "main_commit": "5cfe661826c5742eb26da2ba9a9304ae0cb480d4",
+  "candidate_commit": "8c0aad30ba99381871a88c811a9ec55507936ee4",
+  "controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "test_path": "research/doom/test_map01_overlap_controller_v39.py",
+  "test_count": 15,
+  "expected_main_regressions": [
+    "test_stale_partial_action_does_not_reuse_discarded_remaining_cover",
+    "test_initial_cover_invalidation_cancels_before_planner_and_requires_empty_release",
+    "test_cover_invalidation_receipt_distinguishes_preacceptance_from_cancel"
+  ],
+  "new_followup_cases": [
+    "test_stale_initial_cover_caller_recovers_fresh_planner_source_without_cancel",
+    "test_production_initial_cover_rejection_branch_uses_caller_reset",
+    "test_observations_consumed_during_executor_ack_are_replayed_after_admission",
+    "test_soft_ack_observation_is_replayed_without_false_invalidation",
+    "test_production_action_ack_replay_follows_guard_admission_before_terminal_wait"
+  ],
+  "main_outcomes": {
+    "normal": {"failures": 1, "errors": 7},
+    "optimized": {"failures": 1, "errors": 7}
+  },
+  "live_execution": false
+}

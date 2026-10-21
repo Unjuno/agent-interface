@@ -82,7 +82,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     async mint(...values) {
       const [alias, sourceSequence, point, regionSize] = values;
       const pair = value => Array.isArray(value) && value.length === 2 &&
-        value.every(Number.isSafeInteger);
+        Array.from(value).every(Number.isSafeInteger);
       if (route !== 'guarded-local' || values.length !== 4 ||
           typeof alias !== 'string' || !alias.trim() ||
           !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
@@ -194,7 +194,8 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
             meta.outcome_summary.input_release_verified === true && meta.outcome_summary.recovery_required === false &&
             meta.outcome_summary.error === null : meta.status === 'completed';
           if (!completed || meta.image_status !== 'image' || !releases?.length ||
-              releases.some(r => r.verified !== true || r.keys_down?.length !== 0 || r.buttons_down?.length !== 0)) {
+              releases.some(r => r.verified !== true || !Array.isArray(r.keys_down) ||
+                r.keys_down.length !== 0 || !Array.isArray(r.buttons_down) || r.buttons_down.length !== 0)) {
             stop('incomplete input or unverified neutral release');
           }
           if (tool === 'interface_guarded_input' && args?.feedback !== undefined) {

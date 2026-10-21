@@ -1,0 +1,30 @@
+{
+  "caller_status": "execution_failed",
+  "connection_closed_before_first_emit": true,
+  "emissions": [
+    [
+      2,
+      1
+    ],
+    [
+      3,
+      1
+    ]
+  ],
+  "event_order": [
+    "final local check passed",
+    "release obligation prearmed",
+    "Fake X DestroyNotify queued",
+    "lifecycle query drained event and retired reader",
+    "first XTEST KeyPress emitted",
+    "later press denied by retired lifecycle reader",
+    "prefix release emitted and locally read back"
+  ],
+  "keys_down_after_terminal": [],
+  "last_release_verified": true,
+  "query_error": "X11BackendError",
+  "replay_allowed": false,
+  "review_required": true,
+  "scenario": "Fake X DestroyNotify after final local press check and key-release prearm, before first XTEST press",
+  "task_success": null
+}
