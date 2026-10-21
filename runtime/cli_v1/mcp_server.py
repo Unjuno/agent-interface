@@ -28,7 +28,7 @@ from .validate_program import SCHEMA as VALIDATION_SCHEMA, inspect_program
 
 # Reserve time to resume the loop and encode a response within the caller budget.
 _GUARDED_CANCEL_CALLER_RESPONSE_BUDGET_NS = 300_000_000
-_GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 25_000_000
+_GUARDED_CANCEL_RESPONSE_HANDOFF_MARGIN_NS = 50_000_000
 
 
 # Documentation metadata only: the public compiler and core remain the validators.
