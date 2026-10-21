@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #57 P01 (one sample per arm): [native three-arm live usage comparison](audits/native_three_arm_57_p01_5884_20261004/REPORT.md) — persistent input+output was 39,329 tokens versus plain 109,373 and ephemeral 111,226; task-4 repair was bounded with zero stale-pointer admissions. Disposition remains HOLD: fixed order, one fixture/sample, weaker coordinate/plain baseline, and no broad correctness or speed claim. A later one-shot keyboard-only reference used zero model calls ([PR #7224](https://github.com/Unjuno/agent-interface/pull/7224)); P01 does not establish superiority over that reference.
+
 - Issue #8636 T0 A04: [relative-view feature audit hold](analysis/relative_view_rotation_features_8636_t0_a04_20261012/A04-RESULT.md) — 360 synthetic trials; independent auditor stopped before summary, `HOLD_UNCERTAIN`. Read-only custody check confirms all archive members; no candidate or auditor rerun.
 
 - Issue #8620 T0 A01: [execution-information frontier](analysis/execution_information_8620_t0_a01_20261009/README.md) — 12 finite histories, formal HOLD because exact runtime was recorded post-run; original FAIL and diagnostic-only audit retained, no candidate rerun or GUI/memory-pressure claim.
