@@ -10,6 +10,13 @@ also tests the actual model/planner/caller boundary with an inert RPC client:
 known failed-call accounting survives before the caller skips input/effect stages.
 This does not qualify live provider usage or independent application effects.
 
+The added [JSONL transport composition regression](test_grounding_appserver_usage_transport.py)
+uses the real `CodexAppServerClient` against a deterministic local protocol peer.
+It verifies that a failed completed turn's thread ID, turn/call ID and token usage
+survive into the adaptive caller's all-attempt ledger and match the retained
+protocol journal. The peer is synthetic: this checks transport-to-ledger
+plumbing, not provider billing, provider-log reconciliation, or task effects.
+
 The [explicit compiled v3 connection](COMPILED_CALLER_V3.md) builds from the final
 selected target and retains a returned core receipt across auxiliary sink
 failure. Trusted execute adapters can use `ExecutionReceiptError` with a
@@ -49,8 +56,9 @@ The result retains the ordered statuses from reuse, local repair, model
 reacquisition and post-model revalidation so a later success cannot erase why
 the fallback was entered.
 
-The attempt ledger records provider usage, visible images submitted and
-model wait for completed and failed attempts when available. Coverage is
+The attempt ledger records provider thread and turn/call identity, provider
+usage, visible images submitted and model wait for completed and failed attempts
+when available. Older adapters may omit thread identity. Coverage is
 reported independently; missing values remain unavailable rather than becoming
 zero. A typed upstream capacity refusal becomes `TASK_DEFERRED` rather than a
 generic caller failure, while failed upstream and malformed output remain
