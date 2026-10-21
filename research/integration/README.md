@@ -80,6 +80,18 @@ scoped positive outcome, not general release qualification or recovery. The r01
 socket preflight and r02 missing `xdpyinfo` runner failure are preserved
 separately. WSLc, efficiency, and reliability remain unqualified.
 
+PR #9326 adds a local synthetic-Fake-X composed-caller refusal test for an
+unrelated supervisor XRes PID; it preserves UNKNOWN, no release effect, null
+task success, and replay denial, but does not exercise a live XRes response.
+In the same PR's [X11 workflow run 39666986655](https://github.com/Unjuno/agent-interface/actions/runs/39666986655),
+one invocation of the pre-existing non-prestarted blocked-sync test failed:
+the cleanup worker was retired with exit `-15` and no release readback, while
+later invocations passed. The [captured failure log](public_mcp_prestarted_cancel_supervisor_20261021/x11-fallback-run-39666986655/README.md)
+preserves the observed UNKNOWN outcome and records that the workflow reused
+and overwrote its result-artifact path, so the final JSON artifact is not the
+failed invocation's raw record. This intermittent fallback result does not
+qualify release; the separate opt-in prestarted-Xvfb job passed.
+
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
 Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.
