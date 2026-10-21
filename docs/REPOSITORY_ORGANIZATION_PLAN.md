@@ -91,11 +91,12 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-The latest complete membership recheck is [r131](maintenance/repository-inventory-recheck-20261022-r131.md),
+The latest complete membership recheck is [r132](maintenance/repository-inventory-recheck-20261022-r132.md),
 captured on 2026-10-22 JST against stable main
-`7795eda5bed22d1029bbc5dbf0afe2e0a18291fc` after PR #9323. It records
-1,655 open Issues and 462 open PRs. r131 corrects r130's mistaken membership
-delta; see its comparison with full r120. PR #9315 is open
+`d0f392e55db5f53c17592ae08360cc5e45940b25` after PR #9329. It records
+1,655 open Issues and 463 open PRs, including this work's new PR #9330. r132
+corrects r130's mistaken membership delta through the r131 comparison; see its
+comparison with full r120. PR #9315 is open
 and Draft at head `76626da8b03df25024d12efb5f1dde2f12c53ed2`. Exact-head
 reconciliation [r01](maintenance/pr9315-current-main-reconciliation-20261022-r01.md)
 identifies a runtime regression in the draft's resource-base reuse predicate;
@@ -115,10 +116,13 @@ not share edited indexes, branches, or evidence with those items.
 The computer-control work remains the research objective. Cleanup must not
 launch or consume WSLc/Docker allocations; Issue #7924 remains STOP/HOLD for
 shared WSLc ownership. PR #9320 integrated the opt-in supervisor, #9321
-preserved its initial evidence, #9322 reconciled the design, and #9323
-preserved a scoped standard-caller Xvfb result. The packet records
-release/readback and an independent task
-oracle, while runtime task success remains null and replay stays denied. Keep
+preserved its initial evidence, #9322 reconciled the design, #9323
+preserved a scoped standard-caller Xvfb result, and #9329 added a bounded
+worker-exit grace with a separate retained Xvfb outcome. That run missed the
+strict 300 ms caller-response target by 1.268 ms and correctly kept the runtime
+receipt UNKNOWN; see the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#additive-shutdown-grace-result-2026-10-22).
+The packet records release/readback and an independent task oracle, while
+runtime task success remains null and replay stays denied. Keep
 #17 and #57 open while recovery, task semantics, efficiency, and safety gates
 remain. After this evidence is indexed, resume idea-family disposition;
 the remaining route count is a discovery queue, not a closure target.
