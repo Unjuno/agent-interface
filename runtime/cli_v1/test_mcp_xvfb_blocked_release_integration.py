@@ -772,15 +772,27 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 liveness_observed_ns = owner_process.get(
                     'liveness_observed_monotonic_ns')
                 cancel_returned_ns = report['timing_ns']['cancel_returned']
+                cancellation = terminal.get('cancellation', {})
+                cancel_completed_ns = cancellation.get('completed_monotonic_ns')
+                cancellation_result = cancellation.get('result', {})
                 self.assertIsInstance(liveness_observed_ns, int, terminal)
+                self.assertIsInstance(cancel_completed_ns, int, terminal)
+                self.assertTrue(cancellation_result.get('owner_process_retired'), terminal)
+                self.assertIsInstance(cancellation_result.get('owner_process_exitcode'),
+                                      int, terminal)
                 report['terminal_owner_liveness_fence'] = {
                     'liveness_observed_monotonic_ns':liveness_observed_ns,
                     'cancel_returned_monotonic_ns':cancel_returned_ns,
-                    'snapshot_precedes_cancel_return':(
-                        liveness_observed_ns < cancel_returned_ns),
+                    'cancellation_completed_monotonic_ns':cancel_completed_ns,
+                    'snapshot_precedes_cancel_terminal':(
+                        liveness_observed_ns < cancel_completed_ns),
                     'alive':owner_process.get('alive'),
                 }
-                if liveness_observed_ns >= cancel_returned_ns:
+                # The caller may return pending well before cleanup finishes.
+                # A process snapshot taken after that response can still truthfully
+                # report alive while the same cancellation retains custody. Only
+                # compare the snapshot with the terminal cancellation timestamp.
+                if liveness_observed_ns >= cancel_completed_ns:
                     self.assertFalse(owner_process.get('alive'), terminal)
                 self.assertLess(terminal_elapsed_ms, _TERMINAL_BOUND_MS, terminal)
                 self.assertNotEqual(terminal.get('status'), 'pending', terminal)
