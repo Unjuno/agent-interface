@@ -1339,15 +1339,59 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                         accepted_statuses=kwargs['accepted_statuses'])
 
                 started = time.monotonic()
+                heartbeats = []
+                async def heartbeat():
+                    for _ in range(100):
+                        heartbeats.append(time.monotonic_ns())
+                        await asyncio.sleep(0.01)
+                heartbeat_task = asyncio.create_task(heartbeat())
                 with (patch('runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised',
                             return_value=fence),
                       patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
-                            side_effect=supervise_blocked_release)):
+                            side_effect=supervise_blocked_release) as release_supervisor):
                     cancel = metadata(await server.call_tool('interface_guarded_cancel',
                         {'call_id':pending['call_id']}))
-                elapsed = time.monotonic() - started
+                    elapsed = time.monotonic() - started
+                    self.assertLess(elapsed, 0.45, cancel)
+                    self.assertEqual(cancel['status'], 'pending', cancel)
+                    self.assertTrue(cancel['operation_id'], cancel)
+                    self.assertFalse(cancel['release_confirmed'])
+                    self.assertIsNone(cancel['task_success'])
+                    self.assertFalse(cancel['replay_allowed'])
+                    pending_result = metadata(await server.call_tool('interface_results',
+                        {'call_id':pending['call_id'], 'include_image':False}))
+                    self.assertEqual(pending_result['status'], 'runtime_failed', pending_result)
+                    self.assertEqual(pending_result['cancellation']['operation_id'],
+                                     cancel['operation_id'])
+                    self.assertEqual(pending_result['cancellation']['status'], 'pending')
+                    self.assertIsNone(pending_result['task_success'])
+                    self.assertFalse(pending_result['replay_allowed'])
+                    duplicate = metadata(await server.call_tool('interface_guarded_cancel',
+                        {'call_id':pending['call_id']}))
+                    self.assertEqual(duplicate['operation_id'], cancel['operation_id'])
+                    self.assertEqual(duplicate['status'], 'pending')
 
-                self.assertLess(elapsed, 3.0, cancel)
+                    deadline = time.monotonic() + 3
+                    while time.monotonic() < deadline:
+                        pending_result = metadata(await server.call_tool('interface_results',
+                            {'call_id':pending['call_id'], 'include_image':False}))
+                        if pending_result['cancellation']['status'] != 'pending':
+                            break
+                        await asyncio.sleep(0.01)
+                    self.assertEqual(pending_result['status'], 'runtime_failed', pending_result)
+                    self.assertEqual(pending_result['cancellation']['status'], 'completed', pending_result)
+                    self.assertNotIn('persistence_failure', pending_result['cancellation'], pending_result)
+                    cancel = pending_result['cancellation']['result']
+                    release_supervisor.assert_called_once()
+                    await heartbeat_task
+                    self.assertGreaterEqual(len(heartbeats), 50)
+                    heartbeat_gaps_ms = [(right-left)/1_000_000
+                        for left, right in zip(heartbeats, heartbeats[1:])]
+                    self.assertLess(max(heartbeat_gaps_ms), 100.0)
+                    retained_cancel = json.loads((root/pending['call_id']/'cancellation.json').read_text())
+                    self.assertEqual(retained_cancel['status'], 'completed')
+                    self.assertEqual(retained_cancel['result'], cancel)
+
                 self.assertTrue(cancel['owner_process_retired'], cancel)
                 self.assertEqual(cancel['owner_client_disconnect'], fence)
                 self.assertEqual(cancel['owner_input_obligations'], {
@@ -1362,21 +1406,103 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(cancel['replay_allowed'])
                 self.assertTrue(cancel['late_server_request_possible'])
 
-                deadline = time.monotonic() + 3
-                terminal = None
-                while time.monotonic() < deadline:
-                    terminal = metadata(await server.call_tool('interface_results',
-                        {'call_id':pending['call_id'], 'include_image':False}))
-                    if terminal['status'] != 'pending':
-                        break
-                    await asyncio.sleep(0.005)
-                self.assertEqual(terminal['status'], 'runtime_failed', terminal)
-                self.assertFalse(terminal['release_confirmed'])
-                self.assertEqual(terminal['cleanup_status'], 'UNKNOWN')
-                self.assertIsNone(terminal['task_success'])
-                self.assertFalse(terminal['replay_allowed'])
+                self.assertEqual(pending_result['cancellation']['operation_id'],
+                                 duplicate['operation_id'])
             finally:
+                if 'heartbeat_task' in locals() and not heartbeat_task.done():
+                    heartbeat_task.cancel()
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_cancel_request_cancellation_does_not_drop_owned_operation(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            server = create_server(
+                {'app':20}, root, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory)
+            entered = threading.Event()
+            finish = threading.Event()
+            try:
+                observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                    alias='field', source_sequence=observed['source']['sequence'],
+                    point=[8,8], region_size=[12,12])))
+                (root/'block-owner-io').write_text('block', encoding='utf-8')
+                action = metadata(await server.call_tool('interface_guarded_input', dict(
+                    alias='field', offset=minted['offset'], interaction='keyboard',
+                    observe_after=False, wait_for_result_ms=0,
+                    tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                self.assertEqual(action['status'], 'pending', action)
+                deadline = time.monotonic() + 3
+                while not (root/'owner-io-entered.json').exists() and time.monotonic() < deadline:
+                    await asyncio.sleep(0.005)
+                self.assertTrue((root/'owner-io-entered.json').exists())
+
+                def blocked_cancel(_call_id):
+                    entered.set()
+                    if not finish.wait(3):
+                        raise TimeoutError('test cancellation gate expired')
+                    raise KeyboardInterrupt('synthetic cancellation worker interruption')
+
+                with patch.object(OwnedGuardedSessionOwner, 'cancel_guarded',
+                                  side_effect=blocked_cancel) as cancel_method:
+                    request = asyncio.create_task(server.call_tool(
+                        'interface_guarded_cancel', {'call_id':action['call_id']}))
+                    deadline = time.monotonic() + 2
+                    while not entered.is_set() and time.monotonic() < deadline:
+                        await asyncio.sleep(0.005)
+                    self.assertTrue(entered.is_set())
+                    request.cancel()
+                    with self.assertRaises(asyncio.CancelledError):
+                        await request
+
+                    pending = metadata(await server.call_tool('interface_results', {
+                        'call_id':action['call_id'], 'include_image':False}))
+                    operation_id = pending['cancellation']['operation_id']
+                    self.assertEqual(pending['cancellation']['status'], 'pending')
+                    self.assertFalse(pending['cancellation']['replay_allowed'])
+                    self.assertIsNone(pending['cancellation']['task_success'])
+
+                    finish.set()
+                    deadline = time.monotonic() + 2
+                    while time.monotonic() < deadline:
+                        terminal = metadata(await server.call_tool('interface_results', {
+                            'call_id':action['call_id'], 'include_image':False}))
+                        if terminal['cancellation']['status'] != 'pending':
+                            break
+                        await asyncio.sleep(0.005)
+                    self.assertEqual(terminal['cancellation']['status'], 'unknown', terminal)
+                    self.assertEqual(terminal['cancellation']['operation_id'], operation_id)
+                    self.assertEqual(terminal['cancellation']['result']['status'],
+                                     'cancel_unconfirmed')
+                    self.assertFalse(terminal['cancellation']['release_confirmed'])
+                    self.assertIsNone(terminal['cancellation']['task_success'])
+                    self.assertFalse(terminal['cancellation']['replay_allowed'])
+
+                    duplicate = metadata(await server.call_tool('interface_guarded_cancel', {
+                        'call_id':action['call_id']}))
+                    self.assertEqual(duplicate['operation_id'], operation_id)
+                    self.assertEqual(duplicate['status'], 'cancel_unconfirmed')
+                    cancel_method.assert_called_once()
+                    retained = json.loads((root/action['call_id']/'cancellation.json').read_text())
+                    self.assertEqual(retained['status'], 'unknown')
+                    self.assertEqual(retained['operation_id'], operation_id)
+                    self.assertEqual(retained['owner_generation'],
+                                     terminal['cancellation']['owner_generation'])
+                    self.assertEqual(retained['result']['status'], 'cancel_unconfirmed')
+            finally:
+                finish.set()
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                if 'action' in locals():
+                    deadline = time.monotonic() + 3
+                    while time.monotonic() < deadline:
+                        report = metadata(await server.call_tool('interface_results', {
+                            'call_id':action['call_id'], 'include_image':False}))
+                        if report.get('status') != 'pending':
+                            break
+                        await asyncio.sleep(0.01)
                 await server.call_tool('interface_close', {})
 
     async def test_prearmed_cleanup_can_precede_retired_owners_queued_down(self):

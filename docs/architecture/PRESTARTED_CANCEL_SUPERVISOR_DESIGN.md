@@ -1,6 +1,7 @@
 # Prestarted cancellation supervisor design
 
-Status: proposed for review; no runtime behavior is changed by this document.
+Status: design proposal with a first, unmerged public-MCP integration slice in
+the current worktree; runtime changes and their evidence are described below.
 
 ## Goal and constraints
 
@@ -8,7 +9,7 @@ Make `interface_guarded_cancel` return within a monotonic caller-response bound 
 
 This design applies to the opt-in `guarded-x11` owned-process path. It preserves FINAL v5 and current execution assignments, keeps `task_success` null absent an independent task oracle, and uses no new WSLc allocation. It does not claim a universal release guarantee when X11 or the OS cannot service input or readback.
 
-## Current source behavior
+## Pre-change current-main behavior
 
 The public async tool registered in `runtime/cli_v1/mcp_guarded.py` invokes the synchronous closure in `runtime/cli_v1/mcp_server.py`. That closure directly calls `OwnedGuardedSessionOwner.cancel_guarded`, so its waits and process lifecycle work occupy the MCP event-loop thread.
 
@@ -37,7 +38,7 @@ The fetched `main` tip for this audit is `3104de8508f2676242a42847a626db9a4ac829
 
 The [standard-caller duplicate-cancel retention characterization](../../research/integration/standard_caller_duplicate_cancel_retention_20261021/README.md) is the current baseline: one release-helper call, but the second request returns `not_active`, no cancellation operation ID is returned, and `interface_results` has no cancellation subrecord. The independent-owner duplicate-cancel PASS in #814 is a separate semantic result and is not repeated here. The next discriminating Fake X validation must exercise a prototype registry/supervisor through the public MCP caller: retrieve the original action while cancellation is pending and after terminal completion, verify separate action/cancellation records, show duplicate requests share one operation ID and one release attempt, and retain `UNKNOWN`/no replay on timeout or stale generation.
 
-The proposed 300 ms caller deadline and 3 s transaction deadline remain unconfirmed tuning values. The feasibility probe supports a construction-level response target only, not a transaction bound or user-visible compatibility guarantee.
+The proposed 300 ms caller deadline, 450 ms outer response ceiling (including 150 ms scheduling/serialization slack), and 3 s transaction deadline are provisional local test targets, not user-visible compatibility guarantees. The feasibility probe supports only the construction-level 300 ms pending transition under its injected schedule; it does not qualify the outer ceiling or a production transaction bound. Keep these values centralized and configurable for the opt-in mode. Before any promotion, compare them with the current source constants, run under local load, and preserve measured admission-to-response and admission-to-terminal durations separately. A passing timing target cannot promote a release or task-success claim.
 
 ## Proposed architecture
 
@@ -72,6 +73,26 @@ If the supervisor cannot finish by the transaction deadline, the executor thread
 - Existing non-owned and non-X11 modes keep their current cancellation path.
 - Existing terminal call receipts and raw attempt evidence remain immutable. New cancellation evidence is additive and names its operation ID, deadlines, stage timestamps, owner generation, worker PIDs/exit codes, readback source, and uncertainty reasons.
 - Startup must fail closed for the opted-in mode if the cancellation supervisor cannot become ready; do not silently fall back to synchronous cancellation.
+- Bound the number of live supervisors and cancellation records per server using the existing guarded-session capacity. If the current capacity is not explicit, define a finite opt-in limit before enabling the path; exhaustion fails closed and cannot evict pending custody.
+
+## Current local implementation delta (2026-10-21)
+
+The unmerged current worktree now implements the first public-MCP composition slice in [the cancellation-operation packet](../../research/integration/public_mcp_cancel_operation_registry_20261021/README.md): owned-process cancellation runs on a warmed one-worker executor; the call record receives one operation ID and an additive pending/terminal cancellation subrecord; duplicate requests reuse that operation; `interface_results(call_id)` exposes it while the action remains pending and after it finishes; and a terminal cancellation receipt is written to `cancellation.json` after the cleanup call returns. A cancelled MCP request coroutine does not cancel the underlying operation. The focused owned-process/guarded suites pass 77/77 in normal and optimized Python.
+
+This slice validates a 450 ms caller-response threshold, a sub-100 ms event-loop heartbeat gap, one duplicate release attempt, and conservative UNKNOWN handling in the repository Fake X fixtures. It does **not** implement a whole-transaction deadline, deadline-based late-effect rejection, a prestarted cleanup process, or hard cancellation-worker termination. It is not live X11 release, recovery, task-success, WSLc, MAP01, efficiency, or reliability evidence; do not promote the architecture based on these tests.
+
+## Implementation order and promotion gates
+
+Keep the first implementation slice local and Fake X-only, on the public MCP composition. Do not combine it with WSLc or a new allocation. Work in this order so each failure has a narrow owner and the original action receipt remains readable throughout:
+
+1. Add a typed cancellation-operation record and bounded per-server registry. Admission is atomic by call ID: the first request creates one operation ID; concurrent or later duplicates read that operation and cannot queue another transaction. Define how terminal records are retained and evicted without dropping a pending operation.
+2. Make `interface_results(call_id)` expose the cancellation subrecord while the original action is pending and after it is terminal. Test that cancellation never mutates the action report, `task_success`, or replay decision.
+3. Add opt-in supervisor startup/readiness and process custody. Fail closed before admitting guarded input if startup is not proven. The supervisor owns one typed transaction and an absolute monotonic deadline; the caller executor has one worker and cannot launch a second cleanup after a timeout.
+4. Connect the owner cancellation path to the supervisor and exercise healthy, delayed, expired, stale-generation, duplicate, blocked-receipt, blocked-XRes, blocked-release, malformed-receipt, and process-exit cases through the public MCP tools. Assert both the returned receipt and the independent Fake X effect log/state.
+5. Verify event-loop progress and bounded shutdown while the operation is pending. Explicitly prove that caller task cancellation, result polling, close, and server shutdown do not lose transaction custody or create a replacement operation.
+6. Run focused suites in normal and optimized Python. Only after this composed Fake X slice passes should a separately frozen private-Xvfb check test real X-server ordering and independent readback. Keep physical desktop, MAP01, WSLc portability, and matched efficiency as separate gates.
+
+The first implementation PR should be limited to steps 1–3 plus tests; the composed fault matrix is the next bounded slice. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
 
 ## Validation required before integration
 
@@ -95,4 +116,4 @@ The prestarted supervisor removes per-cancel child creation from the response pa
 
 This also implements only one possible shape of the separate safety/data-plane split requested by Issue #17. The safety control path must not wait on the existing receipt write path, while compact post-action status may degrade to `DATA_PLANE_BLOCKED`. A two-owner race, planner-controlled release, telemetry lock on cancellation, or false `RELEASE_CONFIRMED` would reject the design even if response timing passed.
 
-Before implementation, confirm whether the proposed 300 ms response / 3 s transaction budgets are acceptable for this opt-in path. The source audit supports `interface_results(call_id)` with a separate additive `cancellation` subrecord; a second public tool is not needed unless a composed Fake X test proves that this existing result path cannot preserve pending and terminal cancellation state independently.
+The source audit supports `interface_results(call_id)` with a separate additive `cancellation` subrecord; a second public tool is not needed unless the composed Fake X test proves that this existing result path cannot preserve pending and terminal cancellation state independently. Treat the response/transaction values above as provisional test targets and resolve them from focused local measurements and existing source constants before promotion; no policy decision or user-visible guarantee is implied by this design note.
