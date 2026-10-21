@@ -1,0 +1,69 @@
+{
+  "claim_limits": [
+    "test helper only; no supervisor process termination path exercised",
+    "no X server, GUI, WSLc, Docker, model, or physical input"
+  ],
+  "fake_x_state": {
+    "down": [
+      1
+    ],
+    "effects": [],
+    "refused": [
+      {
+        "operation_id": "late-resume-r01",
+        "owner_client_disconnect": {
+          "reason": "expired_deadline",
+          "status": "unknown"
+        },
+        "owner_release_attempt": {
+          "reason": "expired_deadline",
+          "status": "not_attempted"
+        },
+        "reason": "expired_deadline",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "session_id": "session-late-r01",
+        "status": "unknown",
+        "task_success": null
+      }
+    ]
+  },
+  "observations": {
+    "deadline_elapsed_before_resume": true,
+    "helper_entered": true,
+    "resume_delay_after_deadline_ns": 16000000,
+    "resume_monotonic_ns": 316340125000000,
+    "return_monotonic_ns": 316340140000000
+  },
+  "request": {
+    "binding_revision": "binding-1",
+    "buttons": [],
+    "deadline_monotonic_ns": 316340109000000,
+    "keys": {
+      "CTRL": 1
+    },
+    "operation_id": "late-resume-r01",
+    "owner_data_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\work\\goal-currentmain-recovery-20261022\\research\\integration\\fakex_prestarted_supervisor_local_current_main_20261022_r01\\late_resume_after_expiry\\normal",
+    "owner_pid": 456,
+    "session_id": "session-late-r01",
+    "x_resource_base": 123
+  },
+  "result": {
+    "operation_id": "late-resume-r01",
+    "owner_client_disconnect": {
+      "reason": "expired_deadline",
+      "status": "unknown"
+    },
+    "owner_release_attempt": {
+      "reason": "expired_deadline",
+      "status": "not_attempted"
+    },
+    "reason": "expired_deadline",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "session_id": "session-late-r01",
+    "status": "unknown",
+    "task_success": null
+  },
+  "schema": "local-fakex-late-resume-after-deadline-v1"
+}
