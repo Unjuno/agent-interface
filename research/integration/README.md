@@ -67,10 +67,18 @@ The corrected-source local [Xvfb caller run](public_mcp_prestarted_cancel_superv
 failed closed when XRes found a different PID at the retired owner's resource
 base; release and task effect were not reached. The follow-up [r03 no-input
 diagnostic](public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md)
-reproduces both observer-owned and bystander reuse of that base. Both remain
-`UNKNOWN` and no release is inferred. The r01 socket preflight and r02 missing
-`xdpyinfo` runner failure are preserved separately. These diagnostics do not
-qualify real blocked-I/O release, recovery, task success, WSLc, or efficiency.
+reproduces both supervisor-owned and bystander reuse of that base. The
+supervisor-owned reuse path is accepted only when XRes observes the retained
+supervisor PID; an unrelated PID remains UNKNOWN and is rejected. The
+preserved [PR #9320 standard-caller Xvfb run](public_mcp_prestarted_cancel_supervisor_20261021/pr9320-run-39660663702/README.md)
+then exercised the accepted path with a held key during blocked owner
+`Display.sync()`, one cleanup KeyRelease, independent key-up readback, an
+8-second delayed-request horizon, and a passing independent synthetic task
+oracle. The runtime receipt still remained UNKNOWN, task_success null, and
+replay denied because `late_server_request_possible` was retained. This is a
+scoped positive outcome, not general release qualification or recovery. The r01
+socket preflight and r02 missing `xdpyinfo` runner failure are preserved
+separately. WSLc, efficiency, and reliability remain unqualified.
 
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
