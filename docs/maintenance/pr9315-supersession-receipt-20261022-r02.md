@@ -43,10 +43,11 @@ new copy.
 
 ## Disposition
 
-Close PR #9315 as superseded by #9320/#9321 and reconciled by #9322/#9323,
+PR #9315 was closed as superseded by #9320/#9321 and reconciled by #9322/#9323,
 #9326, #9331 and #9332. Do not merge its stale runtime or restore its older
-entry-point snapshots. Preserve its branch and immutable historical packet.
-Issues #17 and #57 remain open for the unresolved computer-control research.
+entry-point snapshots. Its branch and immutable historical packet remain
+preserved. Issues #17 and #57 remain open for the unresolved computer-control
+research.
 
 The next cleanup batch is one bounded idea-family disposition from the current
 semantic-route queue, with its live Issue, related PRs, canonical record and
