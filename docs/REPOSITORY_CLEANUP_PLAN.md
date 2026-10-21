@@ -2,6 +2,35 @@
 
 ## Current cleanup objective (2026-10-22)
 
+<a id="current-checkpoint-2026-10-22"></a>
+
+### Checkpoint — 2026-10-22
+
+The current cleanup plan is active; this checkpoint changes neither the
+research goal nor any Issue/PR state. The latest complete paginated membership
+snapshot remains r129 (1,655 open Issues / 461 open PRs). Exact live records
+refreshed for this work remain #17 OPEN, #57 OPEN, #7924 OPEN, and PR #9315
+OPEN/Draft at head `a5e72673e0b0ae79a9ba88adbb32a8e2b167fa68` on base
+`9bf7ec15ea78eccd752adee1af8d00dc9545eaa0`. This is not a merge decision.
+
+The prestarted-supervisor written spec is at
+[`2026-10-22-prestarted-cancel-supervisor-design.md`](superpowers/specs/2026-10-22-prestarted-cancel-supervisor-design.md);
+implementation review remains separate from repository organization. The
+latest resource-base discriminator preflight stopped before launching its
+probe because ordinary Ubuntu WSL's shared `/tmp/.X11-unix` was mode `0777`,
+preventing Xvfb from creating its Unix listener. The failure and hashes are in
+[`xres-base-reuse-local-wsl-20261022-r01`](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r01/README.md).
+No input event, XRes query, WSLc operation, or allocation use occurred. Do not
+repair shared `/tmp` permissions or switch to a TCP listener as an implicit
+workaround; resume only with an isolated socket-path solution.
+
+**Next finite cleanup work:** advance the existing 222-route semantic queue by
+one bounded batch, then audit one exact-head PR with its linked Issue and
+evidence custody. Independently, refresh branch/worktree ownership only for
+artifacts needed by those batches. Keep this as the single current pointer;
+dated inventories remain immutable snapshots. Do not create another plan or
+census until a specific batch needs one.
+
 <a id="live-execution-pointer-after-pr-9309"></a>
 
 ### Live execution pointer after PR #9314
