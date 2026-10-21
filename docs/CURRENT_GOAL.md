@@ -103,6 +103,14 @@ those fields. The broad X11 job on that run also exposed two tests that assumed
 terminal cancel responses; commit `422f7ea6` separates bounded `pending`
 responses from terminal `interface_results` receipts. Another live run must
 identify the exact rejected predicate before any release claim.
+The sibling standard-caller Xvfb job on run 39620085797 passed its blocked-owner
+scenario: independent release readback and a synthetic task oracle passed
+through the 8.5 s delayed-request horizon, while the runtime stayed UNKNOWN and
+denied replay. Its pending response took 940.909 ms, above the provisional
+300 ms target but below the test's 3 s ceiling. In the separate full-server
+stop case, the original task oracle failed at the first post-resume readback;
+fresh-target recovery later passed its own independent oracle. These outcomes
+are preserved and separated in the [standard-caller packet](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39620085797/standard-caller/README.md).
 The local [public MCP cancellation-operation packet](../research/integration/public_mcp_cancel_operation_registry_20261021/README.md)
 now implements one operation ID per call, a dedicated one-worker cancel path,
 pending/terminal retention alongside (not inside) the action result, and a

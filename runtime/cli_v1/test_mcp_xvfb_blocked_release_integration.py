@@ -601,13 +601,32 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['timing_ns']['cancel_started'] = time.monotonic_ns()
                 original_retire_method = OwnedGuardedSessionOwner._retire
                 original_cancel_method = OwnedGuardedSessionOwner.cancel_guarded
+                cancel_heartbeat_stop = asyncio.Event()
+                cancel_heartbeat = {'max_gap_ns':0, 'samples':0}
+
+                async def sample_cancel_event_loop():
+                    previous_ns = time.monotonic_ns()
+                    while not cancel_heartbeat_stop.is_set():
+                        await asyncio.sleep(0.001)
+                        current_ns = time.monotonic_ns()
+                        cancel_heartbeat['max_gap_ns'] = max(
+                            cancel_heartbeat['max_gap_ns'], current_ns-previous_ns)
+                        cancel_heartbeat['samples'] += 1
+                        previous_ns = current_ns
+
                 OwnedGuardedSessionOwner._cancel_requires_owner_retirement = (
                     traced_retirement_decision)
                 OwnedGuardedSessionOwner._retire = traced_retire
                 OwnedGuardedSessionOwner.cancel_guarded = traced_cancel
+                heartbeat_task = asyncio.create_task(sample_cancel_event_loop())
                 try:
-                    cancel_response = _metadata(await server.call_tool(
-                        'interface_guarded_cancel', {'call_id':pending['call_id']}))
+                    try:
+                        cancel_response = _metadata(await server.call_tool(
+                            'interface_guarded_cancel', {'call_id':pending['call_id']}))
+                    finally:
+                        report['timing_ns']['cancel_returned'] = time.monotonic_ns()
+                        cancel_heartbeat_stop.set()
+                        await heartbeat_task
                     cancelled = True
                     cancellation = await self._wait_for_cancellation_terminal(
                         server, pending['call_id'], timeout=_TERMINAL_BOUND_MS/1000)
@@ -616,12 +635,16 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         original_decision_method)
                     OwnedGuardedSessionOwner._retire = original_retire_method
                     OwnedGuardedSessionOwner.cancel_guarded = original_cancel_method
-                report['timing_ns']['cancel_returned'] = time.monotonic_ns()
                 cancel_elapsed_ms = (
                     report['timing_ns']['cancel_returned']
                     - report['timing_ns']['cancel_started'])/1_000_000
                 report['cancel_elapsed_ms'] = cancel_elapsed_ms
                 report['cancel_response'] = cancel_response
+                report['cancel_event_loop_timing'] = {
+                    'heartbeat_period_ms':1,
+                    'max_gap_ms':cancel_heartbeat['max_gap_ns']/1_000_000,
+                    'samples':cancel_heartbeat['samples'],
+                }
                 report['cancel_internal_trace'] = cancel_internal_trace
                 report['cancellation_terminal'] = cancellation
                 self.assertLess(cancel_elapsed_ms, _CANCEL_BOUND_MS, cancel_response)

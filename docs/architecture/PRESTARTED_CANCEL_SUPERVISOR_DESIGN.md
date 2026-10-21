@@ -141,6 +141,24 @@ initially dropped that diagnostic before it reached the caller. Receipt
 propagation now has a focused normal/optimized unit test. A new Linux/Xvfb run
 is still required to identify the failed predicate in the composed request.
 
+The same run's separate default-standard-caller Xvfb job passed 77 integration
+tests and 5 server-stop/recovery tests. Its [blocked-owner I/O receipt](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39620085797/standard-caller/README.md)
+shows the ordinary caller retiring the blocked owner, independently reading
+the held key up, and passing a synthetic application oracle through the delayed
+request horizon. The cancellation response arrived in 940.909 ms, missing the
+provisional 300 ms target while staying inside that test's 3 s bound; terminal
+classification correctly remained UNKNOWN/no replay. This trial ran without
+the opt-in prestarted supervisor and does not validate that path.
+The next Xvfb attempt records a 1 ms event-loop heartbeat during the initial
+cancel response to distinguish event-loop delay from an internal wait.
+
+In the separate whole-server-stop trial, the response returned pending in
+301.817 ms before the exact Xvfb resumed. The original task oracle failed
+because the first post-resume readback still had the key down. A later fresh
+target/session recovery and independent synthetic task oracle passed; keep that
+recovery result separate from the failed original task and from release during
+the outage.
+
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS
 does not retire at the deadline is reported `worker_retired=false`; that state
