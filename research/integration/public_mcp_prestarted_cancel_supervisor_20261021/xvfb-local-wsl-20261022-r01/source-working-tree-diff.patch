@@ -1,0 +1,60 @@
+diff --git a/runtime/cli_v1/owned_guarded_session.py b/runtime/cli_v1/owned_guarded_session.py
+index 81a5dc333..a9258bec6 100644
+--- a/runtime/cli_v1/owned_guarded_session.py
++++ b/runtime/cli_v1/owned_guarded_session.py
+@@ -568,18 +568,19 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
+                         _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
+                 if (live_read.get('status') == 'snapshot'
+                         and supervisor is not None):
+-                    owner_process = self._snapshot_cache.get('owner_process') or {}
++                    owner_pid = (getattr(self._process, 'pid', None)
++                                 if self._process is not None else None)
+                     request = {
+                         'operation_id':self._active_cancel_operation_id or str(self.session_id),
+                         'session_id':self.session_id,
+                         'binding_revision':self.binding_revision,
+                         'display_name':self.display_name,
+-                        'owner_pid':self._snapshot_cache.get('owner_process_pid'),
++                        'owner_pid':owner_pid,
+                         'x_resource_base':self._snapshot_cache.get(
+                             'owner_x_client_resource_base'),
+                         'owner_generation':{
+                             'session_id':self.session_id,
+-                            'child_pid':owner_process.get('pid'),
++                            'child_pid':owner_pid,
+                             'x_resource_base':self._snapshot_cache.get(
+                                 'owner_x_client_resource_base'),
+                             'binding_revision':self.binding_revision},
+diff --git a/runtime/cli_v1/test_mcp_owned_process.py b/runtime/cli_v1/test_mcp_owned_process.py
+index 8b66ee826..c014ef4cf 100644
+--- a/runtime/cli_v1/test_mcp_owned_process.py
++++ b/runtime/cli_v1/test_mcp_owned_process.py
+@@ -845,13 +845,17 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+             'status':'unknown', 'reason':'invalid_cleanup_request',
+             'invalid_fields':['owner_pid'], 'worker_retired':True,
+         }
++        owner._process = Mock()
++        owner._process.pid = 1234
+         owner._active_cancel_deadline_ns = time.monotonic_ns() + 1_000_000_000
+         owner._active_cancel_operation_id = 'operation-1'
+         owner.session_id = 'session-1'
+         owner.binding_revision = 0
+         owner.display_name = ':88'
+         owner._snapshot_cache = {
+-            'owner_process':{'pid':1234}, 'owner_process_pid':1234,
++            # The refreshed child snapshot may omit the parent-owned process
++            # record. Do not build owner-generation PID from that cache.
++            'owner_process_pid':9999,
+             'owner_x_client_resource_base':6291456,
+         }
+         owner._owner_root = Path(tempfile.gettempdir())
+@@ -862,6 +866,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
+         self.assertEqual(client['invalid_fields'], ['owner_pid'])
+         self.assertEqual(release['invalid_fields'], ['owner_pid'])
+         self.assertFalse(client.get('release_confirmed', False))
++        request = owner._cleanup_supervisor.run.call_args.args[0]
++        self.assertEqual(request['owner_pid'], 1234)
++        self.assertEqual(request['owner_generation']['child_pid'], 1234)
+
+     def test_retired_owner_rejects_torn_live_ledger_checksum(self):
+         shared = multiprocessing.get_context('spawn').RawArray('B', 8192)

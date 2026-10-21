@@ -1,6 +1,6 @@
 # Repository cleanup plan
 
-## Current cleanup objective (2026-10-21)
+## Current cleanup objective (2026-10-22)
 
 <a id="live-execution-pointer-after-pr-9309"></a>
 
@@ -10,9 +10,37 @@ The latest verified remote `main` is `9bf7ec15ea78eccd752adee1af8d00dc9545eaa0` 
 
 Since r126, current main has added the target-belief family record (#9305), inventory pointer (#9306), audited caller evidence and cleanup-map sync (#9307), the prestarted cancellation supervisor proposal (#9308), the standard-caller duplicate-cancel characterization (#9309), and the cancellation registry slice (#9313/#9314). The prior public cancellation trial was Fake X-only: one cleanup attempt, but duplicate cancellation returned `not_active`, no operation receipt was retained, and the action stayed UNKNOWN with stale owner-liveness metadata. Those outcomes are indexed below; they do not close the parent research questions. Merged PR #9313 adds a dedicated one-worker public-MCP cancel path and stable per-call operation/result retention; its [r04 packet](../research/integration/public_mcp_cancel_operation_registry_20261021/r04/README.md) passes focused normal/optimized checks. Draft PR #9315 adds an opt-in prestarted supervisor and public-MCP Fake X composition; its [r05 packet](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/r05/README.md) passes 106/106 focused tests in normal and optimized Python, archives terminal cancellation payloads, and keeps internal archive markers out of the public result. Neither result proves late queued-effect exclusion or release under blocked real platform I/O.
 
-**Next execution sequence:** (1) continue semantic idea-family review from the 223 exact-URL routes in small batches, preserving distinct hypotheses and first outcomes; (2) audit open PRs by exact head, linked Issue, evidence custody, dependencies, and actual protections; (3) reconcile branches/worktrees/raw outputs only after owner and recoverability checks; (4) repair stale entry points and consolidate duplicate navigation after inbound-link checks; (5) refresh membership when a bounded state-change batch requires it. Publish one result receipt per batch and refresh only touched records. Keep unresolved research open. Do not use counts as a closure target, delete unknown-custody work, launch WSLc/Docker from the cleanup plan, or add fixed reviewer quotas.
+**Next execution sequence:** (1) continue semantic idea-family review from the 222 remaining exact-URL routes in small batches, preserving distinct hypotheses and first outcomes; (2) audit open PRs by exact head, linked Issue, evidence custody, dependencies, and actual protections; (3) reconcile branches/worktrees/raw outputs only after owner and recoverability checks; (4) repair stale entry points and consolidate duplicate navigation after inbound-link checks; (5) refresh membership when a bounded state-change batch requires it. Publish one result receipt per batch and refresh only touched records. Keep unresolved research open. Do not use counts as a closure target, delete unknown-custody work, launch WSLc/Docker from the cleanup plan, or add fixed reviewer quotas.
 
 **Objective:** make the repository safe to navigate and divide among many independent workers by preserving each research idea and result, giving every live Issue and PR a reasoned disposition, and resolving branch/worktree/evidence custody. This cleanup is an enabling workstream; it does not replace the active computer-control research goal or turn repository tidiness into a scientific result.
+
+**Computer-control design update (2026-10-21):** Draft PR #9315 is currently at
+`a5e72673e0b0ae79a9ba88adbb32a8e2b167fa68` and remains open. The latest
+completed isolated prestarted-supervisor attempt, run 39620589667 at
+`a44f940105c94f2efb8b59decfa8d8ca442ab4cb`, failed before XRes/release because
+the request omitted `owner_generation.child_pid`; its raw and sibling-job
+artifacts are now preserved in the linked
+[run packet](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39620589667/README.md).
+The current local patch derives both PID fields from the parent-owned process
+object. The four focused Fake X modules, including the local PID-source
+regression, pass 108/108 in both normal and optimized Python; raw output,
+conditions, and source fingerprints are in [R08](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/r08/README.md).
+Run 39620978807 is separately preserved at
+[`xvfb-run-39620978807`](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39620978807/README.md):
+it reproduced the same field rejection on `a5e72673`, while its sibling X11
+job passed. Its event-loop heartbeat remained responsive, and its isolated
+supervisor job failed. Do not interpret a passing sibling X11 job, a local
+request-validation fix, or a design update as supervisor release/task-effect
+evidence. A corrected-source local Ubuntu WSL/Xvfb attempt is now preserved at
+[run packet r01](../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-local-wsl-20261022-r01/README.md). It reached the real sync stall and fixed the missing PID fields, but XRes returned a different PID at the retired owner resource base and rejected the request as resource_base_reused. Cancellation returned in 43.659 ms with a 5.800 ms maximum heartbeat gap; release remained UNKNOWN and the task oracle was not reached. Ubuntu was stopped after capture. No WSLc container/allocation operation occurred and no unused slot is verified. The next discriminator is observer-owned versus unrelated-client resource-base reuse, followed by independent delayed-horizon readback and task-effect validation.
+
+This updates the existing convergence plan rather than creating a parallel
+policy. Its completion test remains traceable disposition, preserved unique
+ideas/evidence, verified custody, and selectable independent work; Issue/PR
+counts are not targets. One worker may perform the required local checks and
+integration when repository protections allow it. Invented reviewer quotas
+are excluded; evidence, safety, ownership, and actual enforced protections
+remain technical requirements.
 
 **Latest full membership baseline (r126):** captured against `main` `d3439cb9adee0bd64492d5378c05568357d38d56`. The complete paginated recheck [r126](maintenance/repository-inventory-recheck-20261021-r126.md) found 1,655 open Issues and 463 open PRs with the same main SHA before and after. The Issue ID set exactly matches full metadata r120; the PR set equals r120 minus #8716, #8733, #8841, and #8844. r126 corrects the r125 prose, which additionally listed #9303 even though it is absent from the full r120 PR export. Reuse r120's full row metadata instead of duplicating it. This proves membership only, not semantic triage, exact-current head/check review, ownership, or custody; fetch each live record and dependencies before a state change.
 

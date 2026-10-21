@@ -16,6 +16,10 @@ Baseline: complete open Issue set r119 at main `666888468e81b3c3c2c1e4103df549af
 
 The [family-disposition queue](open-issues-without-family-record-20261020-r119.csv) contains 265 live candidates in eleven disjoint number-sorted batches D01–D11 (25 Issues per batch except the final remainder). Every candidate appeared in a previous r51 discovery batch; the CSV links that receipt so workers can reuse prior reading and check only changes since its `updatedAt`. The three r51 entries no longer in the current missing-primary set are #104, #1798, #8574: #104 and #1798 are no longer open, and #8574 now has a primary row.
 
+
+
+**2026-10-22 follow-through:** Issue #15 was rechecked live (OPEN, no assignee) and reconciled with the existing safety-control family receipt. Its route-only catalog row is now a canonical open-family summary; the original B01 discovery route remains as historical provenance. This disposition does not close #15 or merge it with simulator-only #8915. Of the 223 exact-URL routes captured by r119, one is now individually dispositioned; 222 remain. See [the #15 catalog entry](../IDEAS_AND_OUTCOMES.md#foundational-open-ideas) and [family receipt](repository-cleanup-family-safety-control-r01-20261019.md).
+
 ## Interpretation and limits
 
 These counts describe navigation only. A literal link may be a citation, audit, successor, or agenda reference rather than an idea-family disposition. The 223 exact URL matches across 132 idea documents therefore still require semantic review where no canonical family link is clear. The 265 candidates are not “bad Issues”; each may be a distinct experiment, failure, result, dependency, or idea that should be preserved. The queue is sorted and split only for nonoverlapping discovery outputs; related issues can cross batch boundaries. A worker must report such joins but cannot edit shared indexes or change Issue/PR state.

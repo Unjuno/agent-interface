@@ -1,12 +1,14 @@
 # Prestarted Cancellation Supervisor Design
 
-**Status:** Design for review; implementation decisions remain subject to this review.
+**Status:** Design for review; updated after local corrected-source Xvfb attempt r01. Implementation decisions remain subject to review.
 
 ## Problem
 
 The public `interface_guarded_cancel` caller can wait on owner retirement, XRes, and release work in sequence. The current path can block the MCP event loop, and its phase timers do not form one end-to-end deadline. A caller timeout does not prove that input was released or that the original task succeeded. A delayed or stale cleanup must not create a new input effect after cancellation authority expires.
 
-The latest two isolated Xvfb supervisor attempts (39620589667 and 39620978807) failed before XRes and release because the cleanup adapter omitted `owner_generation.child_pid` after owner retirement. This is a construction failure, not a release result. The local PID-source correction passes the four focused Fake X modules in normal and optimized Python, but corrected-source Xvfb composition has not yet been run.
+The latest two isolated Xvfb supervisor attempts (39620589667 and 39620978807) failed before XRes and release because the cleanup adapter omitted `owner_generation.child_pid` after owner retirement. This is a construction failure, not a release result. The local PID-source correction passes the four focused Fake X modules in normal and optimized Python.
+
+The first corrected-source local Ubuntu WSL/Xvfb attempt is now preserved in [run packet r01](../../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-local-wsl-20261022-r01/README.md). It reached the real blocked Display.sync and built both owner PID fields correctly, then failed closed when XRes returned PID 439 at the retired owner resource base 6291456. The public caller retained UNKNOWN, no XTest release was attempted, and the a obligation remained. Caller response was 43.659 ms and maximum event-loop gap was 5.800 ms; delayed-request-horizon readback and the task oracle were not reached. This local Ubuntu WSL run is not WSLc. Preserve the first outcome; the next discriminator must separate a known supervisor-owned X client at a reused base from an unrelated replacement without granting authority from an arbitrary PID mismatch.
 
 ## Goals and non-goals
 
@@ -59,7 +61,7 @@ The operation deadline bounds admission of new effects, not the time the OS take
 2. Fault-injection tests cover healthy release; stale and expired authority; delayed supervisor processing; blocked XRes; blocked release sync/readback; malformed or absent receipts; supervisor exit; blocked persistence/stdout; caller cancellation; shutdown; and an unreaped helper.
 3. Every case checks both the returned receipt and the independent Fake X effect/state log. A response bound alone is insufficient.
 4. Normal and optimized focused suites pass. Preserve the first failing outcome and raw artifacts; do not rerun a consumed formal allocation.
-5. Only after the composed Fake X matrix passes, run a new isolated corrected-source Xvfb composition. It must separately establish exact release attempt, independent readback, worker retirement, and a synthetic independent task effect. Keep the two prior pre-release failures intact.
+5. Only after the composed Fake X matrix passes, run a new isolated corrected-source Xvfb composition. The first local attempt r01 failed at resource-base reuse before release; preserve it and first distinguish the observer-owned client from an unrelated replacement. A follow-up must separately establish exact release attempt, independent readback after the delayed-request horizon, worker retirement, and a synthetic independent task effect. Keep all three first outcomes intact.
 6. Keep the feature opt-in until these gates pass. Physical desktop, MAP01, WSLc, cross-platform transfer, reliability population, provider accounting, and matched efficiency remain separate qualifications.
 
 ## Scope and source of truth

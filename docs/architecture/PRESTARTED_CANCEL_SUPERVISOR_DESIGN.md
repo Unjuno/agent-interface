@@ -159,6 +159,64 @@ target/session recovery and independent synthetic task oracle passed; keep that
 recovery result separate from the failed original task and from release during
 the outage.
 
+The next isolated attempt, [run 39620589667](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39620589667/README.md),
+exposed the rejected predicate as `owner_generation.child_pid`. The frozen
+request identifies session `ae8582431a4e4f8ea7935e9215bc150c`, child PID
+2680, X resource base 6291456, and binding revision 0; after owner retirement,
+the cleanup adapter built `owner_generation.child_pid` from a refreshed child
+snapshot that no longer contained the parent-owned process record. The helper
+was therefore rejected before XRes or release. Its cancellation transaction
+completed in 20.255 ms as UNKNOWN, the owner exited with -15, `a` remained an
+input obligation, independent release readback and task oracle were absent,
+`task_success` stayed null, and replay stayed denied. The sibling broad X11
+job passed its scoped tests; those results do not change the isolated
+supervisor failure. This raw and its sibling job outputs are preserved without
+rewriting prior attempts.
+
+The local correction now derives both request PID fields from the parent-owned
+`Process.pid`, so `owner_pid` and the generation PID cannot diverge when a
+post-retirement snapshot omits `owner_process`. A focused regression uses a
+stale cached PID and a missing process map. This is a source-level repair
+hypothesis until the local normal/optimized test and a new isolated Xvfb
+composition confirm it. The new Xvfb attempt must separately establish
+supervisor admission, XRes disconnect, one exact release, independent readback,
+and task effect; passing the request validator alone is not a release result.
+
+The next pushed attempt, [run 39620978807](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39620978807/README.md),
+used PR head `a5e72673e0b0ae79a9ba88adbb32a8e2b167fa68`, before the local PID
+source correction, and reproduced the same rejected field. The owner PID was
+2481; cancellation returned UNKNOWN in 15.046108 ms, the child exited with
+-15, and the key obligation remained in the receipt. There was no independent
+release readback or task oracle. A 1 ms heartbeat sampled nine times had a
+maximum observed gap of 1.565791 ms, so event-loop starvation did not explain
+this trial's failure. The sibling X11 job passed, but the isolated supervisor
+job failed. All run artifacts and hashes are preserved in the packet. The
+local regression and four focused Fake X modules pass 108/108 in each mode;
+raw output, conditions, and source fingerprints are preserved in [R08](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/r08/README.md).
+These are local source checks only. The commands were `python -B -m unittest
+runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded
+runtime.guarded_x11_v1.test_cancel_supervisor
+runtime.guarded_x11_v1.test_xres_client_fence`, repeated with `python -B -O`.
+At the point of this earlier note, a corrected-source Xvfb composition was
+still required. Its first local attempt and remaining failure are recorded
+next.
+
+That corrected-source composition has now been attempted once in local Ubuntu
+WSL/Xvfb; see the preserved
+[packet](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-local-wsl-20261022-r01/README.md).
+The real owner reached the delayed-request Display.sync() stall, and the
+cleanup request carried PID 436 in both owner fields. After owner retirement,
+XRes returned PID 439 at the same resource base. x11_cancel_worker rejected
+this as resource_base_reused; the public cancellation returned in 43.659 ms,
+the event-loop heartbeat gap peaked at 5.800 ms, release remained UNKNOWN,
+and the retained a obligation denied replay. The integration test failed
+before cancellation readback, delayed-request-horizon readback, or task oracle.
+Its later harness teardown release is preserved but is not cancellation
+evidence. The report does not identify PID 439's process role, so the next
+discriminator is to distinguish a known supervisor-owned X client from an
+unrelated client at the reused base without treating arbitrary PID mismatch as
+release authority. Do not repeat this exact condition as a replacement result.
+
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS
 does not retire at the deadline is reported `worker_retired=false`; that state
@@ -175,7 +233,7 @@ Keep local Fake X work on the public MCP composition and do not combine it with 
 5. Verify event-loop progress and bounded shutdown while the operation is pending. Explicitly prove that caller task cancellation, result polling, close, and server shutdown do not lose transaction custody or create a replacement operation.
 6. Run focused suites in normal and optimized Python. Only after this composed Fake X slice passes should a separately frozen private-Xvfb check test real X-server ordering and independent readback. Keep physical desktop, MAP01, WSLc portability, and matched efficiency as separate gates.
 
-The next implementation slice must close the composed fault matrix, especially blocked XRes, blocked sync/readback, post-deadline queued effects, supervisor startup delay/failure, stale binding, shutdown custody, and unreaped-helper behavior. R04 covers live in-memory cancellation custody; total disk retention still has no finite policy and remains an operational limitation of per-call artifacts. Keep the flag opt-in until these cases are covered and the real X-server ordering boundary is separately qualified. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
+The next implementation slice must close the composed fault matrix, especially XRes resource-base reuse/observer identity, blocked XRes, blocked sync/readback, post-deadline queued effects, supervisor startup delay/failure, stale binding, shutdown custody, and unreaped-helper behavior. R04 covers live in-memory cancellation custody; total disk retention still has no finite policy and remains an operational limitation of per-call artifacts. Keep the flag opt-in until these cases are covered and the real X-server ordering boundary is separately qualified. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
 
 ## Validation required before integration
 

@@ -26,6 +26,21 @@ normal-mode test error under concurrent Windows process scheduling and a clean
 R07 reruns the full focused suite and passes 107/107 in both modes. The CLI
 still defaults the flag off and rejects it unless owned-process mode is set.
 
+R08 reruns the four focused deterministic Fake X modules on the local
+parent-owned PID-source correction. It passes 108/108 in normal and optimized
+Python; conditions, all four test-module and relevant implementation hashes,
+raw stdout/stderr, and exit codes are retained in [`r08/`](r08/README.md).
+The Fake X result alone did not qualify the corrected source against live Xvfb.
+
+The corrected-source [local Ubuntu WSL/Xvfb attempt](xvfb-local-wsl-20261022-r01/README.md)
+reached the real blocked Display.sync and constructed the corrected owner PID
+fields, but then failed closed when XRes saw PID 439 at the retired owner's
+resource base. Cancellation returned in 43.659 ms and the heartbeat's maximum
+gap was 5.800 ms; release remained UNKNOWN, the a obligation remained, and no
+post-horizon readback or task oracle ran. The final harness cleanup is not
+cancellation-release evidence. The full first outcome, raw report, conditions,
+source hashes, and local runner are preserved separately.
+
 The opt-in public MCP composition started one supervisor during owned-session
 startup, before the test admitted input. In the healthy Fake X arm, cancel
 response took 110 ms, the independent JSON oracle recorded exactly one
