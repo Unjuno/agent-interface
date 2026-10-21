@@ -92,21 +92,30 @@ when local evidence is sufficient and repository protections allow progress.
 ## Current execution checkpoint (2026-10-22)
 
 The latest complete membership recheck is [r130](maintenance/repository-inventory-recheck-20261022-r130.md),
-captured on 2026-10-22 JST against stable main
+captured on 2026-10-22 JST against main
 `976d36443548e02d169b0b44fab6877224464be4` after PR #9316 merged. It records
 1,655 open Issues and 462 open PRs; only #9316 left the open set since r129.
-This is a membership-only pointer. The next step is to refresh the worker map
-and select one unowned, bounded idea-family batch from the recorded
-semantic-route gaps. Do not start a broad close/merge campaign from counts
-alone. A disjoint exact-head PR audit or custody slice can proceed only when it
-does not share edited indexes, branches, or evidence with that family batch.
+This is a historical membership-only pointer. Current main has since advanced
+through PRs #9320 and #9321 to `6a2ab56bb7ba307b65c375537ec4ba26f567eb65`; a
+new complete membership snapshot has not yet been recorded. PR #9315 is open
+and Draft at head `76626da8b03df25024d12efb5f1dde2f12c53ed2`. The user
+selected the prestarted-supervisor design as the first work item; its current
+implementation and evidence boundary are reconciled in the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
+The next technical discriminator is generation-safe XRes owner-disconnect
+proof; keep release authority held and the supervisor default-off until that
+boundary is resolved. Then resume the semantic-route queue with one bounded
+family batch. Do not start a broad close/merge campaign from counts alone. A
+disjoint exact-head PR audit or custody slice can proceed only when it does
+not share edited indexes, branches, or evidence with those items.
 
 The computer-control work remains the research objective. Cleanup must not
-launch or consume WSLc/Docker allocations; those require their own verified
-authorization and lane ownership. The prestarted cancellation supervisor design
-review is a separate technical gate: repository organization can proceed while
-it is pending, but implementation must follow the applicable design-review
-decision and current source evidence.
+launch or consume WSLc/Docker allocations; Issue #7924 remains STOP/HOLD for
+shared WSLc ownership. PR #9320 integrated the opt-in supervisor, and #9321
+preserved its evidence. The design update distinguishes bounded caller
+response, XRes owner identity, actual release/readback, task effect, and
+recovery. Keep #17 and #57 open while these technical gates remain. After this
+design packet is reconciled with current main, resume idea-family disposition;
+the remaining route count is a discovery queue, not a closure target.
 
 ## Completion checks
 
