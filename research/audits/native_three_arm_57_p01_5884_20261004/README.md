@@ -4,6 +4,4 @@ This is preserved study evidence, not a runtime installation. REPORT.md records 
 
 Private provider protocol/session identifiers and command.private.json are excluded. Public usage rows and correlated audit outcomes remain. Full original private provider logs are held locally; remote reviewers must not assume they have those originals.
 
-Verify every file against MANIFEST.json before reading the archive. Extraction should use a fresh isolated directory. Historical source images are inert and must not be imported into a production runtime. This package does not change PR #7093 or carry its votes. A new fixed content proposal and actual non-author agreement are required for any new integration.
-
-The remote branch and PR are preservation proposals only; publication and review state are recorded outside this fixed source tree. No merge is claimed. Scientific disposition remains HOLD_INTEGRATION_QUALIFICATION_WITH_MEASURED_SCOPED_BENEFIT.
+Verify every file against MANIFEST.json before reading the archive. Extraction should use a fresh isolated directory. Historical source images are inert and must not be imported into a production runtime. This package does not change PR #7093 or carry its votes. Its preserved evidence supports only the scoped findings and HOLD disposition in REPORT.md; adding the record to current main does not imply runtime adoption or broader qualification.
