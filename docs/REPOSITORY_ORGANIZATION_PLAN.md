@@ -91,17 +91,20 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-The latest complete membership recheck is [r133](maintenance/repository-inventory-recheck-20261022-r133.md),
+The latest complete membership recheck is [r134](maintenance/repository-inventory-recheck-20261022-r134.md),
 captured on 2026-10-22 JST against stable main
-`0017149b7a0611b8a1d98160644a953911a858eb` after PR #9331. It records
-1,655 open Issues and 462 open PRs and matches r131 exactly. r133 corrects
-r130's mistaken membership delta through the r131 comparison; see its
-comparison with full r120. PR #9315 is open
+`410eb938bfb1f3cd4658e3136dded5d14eabd7c3` after PR #9332. It records
+1,655 open Issues and 462 open PRs; both exact ID sets match r133. The full
+historical correction chain remains in r133 and earlier receipts. PR #9315 is open
 and Draft at head `76626da8b03df25024d12efb5f1dde2f12c53ed2`. Exact-head
 reconciliation [r01](maintenance/pr9315-current-main-reconciliation-20261022-r01.md)
 identifies a runtime regression in the draft's resource-base reuse predicate;
 do not merge it. Its remaining changed evidence/doc blobs still need custody
-and semantic disposition. The user
+and semantic disposition. Exact-tree review [r02](maintenance/pr9315-supersession-receipt-20261022-r02.md)
+found no PR-only paths; all 35 entries in the three XRes diagnostic manifests
+match current main. The old runtime remains unsafe to merge. Close #9315 as
+superseded after recording this custody reconciliation; preserve its branch
+and historical outcomes. The user
 selected the prestarted-supervisor design as the first work item; its current
 implementation and evidence boundary are reconciled in the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
 The standard-caller supervisor Xvfb run now covers one supervisor-owned
