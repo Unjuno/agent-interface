@@ -1,6 +1,7 @@
 """Standard MCP composition over one explicitly owned guarded-X11 process."""
 import asyncio
 import hashlib
+import io
 import threading
 from unittest.mock import Mock, patch
 import json
@@ -34,6 +35,107 @@ def _delayed_release_worker(send_connection):
         'status':'released',
         'release':{'verified':True, 'keys_down':[], 'buttons_down':[]},
     })
+
+
+def _fake_prestarted_cancel_worker(request):
+    """Independent Fake X effect log for the public supervisor composition."""
+    root = Path(request['owner_data_directory'])
+    _write_json(root/'cleanup-supervisor-entered.json', {
+        'operation_id':request['operation_id'],
+        'session_id':request['session_id'],
+        'deadline_monotonic_ns':request['deadline_monotonic_ns']})
+    if (root/'block-cleanup-supervisor').exists():
+        while not (root/'continue-cleanup-supervisor').exists():
+            time.sleep(0.01)
+    state_path = root/'supervisor-fake-x.json'
+    state = _read_json(state_path, {'down':[1], 'effects':[]})
+    stale = (root/'stale-cleanup-supervisor-generation').exists()
+    expired = time.monotonic_ns() >= request['deadline_monotonic_ns']
+    if stale or expired:
+        reason = 'stale_generation' if stale else 'expired_deadline'
+        receipt = {'status':'unknown', 'reason':reason,
+                   'operation_id':request['operation_id'],
+                   'session_id':request['session_id'],
+                   'release_confirmed':False, 'task_success':None,
+                   'replay_allowed':False,
+                   'owner_client_disconnect':{'status':'unknown','reason':reason},
+                   'owner_release_attempt':{'status':'not_attempted','reason':reason}}
+        state.setdefault('refused', []).append(receipt)
+        _write_json(state_path, state)
+        return receipt
+    state['down'] = [code for code in state.get('down', [])
+                     if code not in request.get('keys', {}).values()]
+    effect = {'kind':'KeyRelease', 'operation_id':request['operation_id'],
+              'session_id':request['session_id'],
+              'binding_revision':request['binding_revision'],
+              'accepted_monotonic_ns':time.monotonic_ns()}
+    state.setdefault('effects', []).append(effect)
+    _write_json(state_path, state)
+    return {'status':'completed', 'operation_id':request['operation_id'],
+            'session_id':request['session_id'],
+            'binding_revision':request['binding_revision'],
+            'release_confirmed':False, 'task_success':None,
+            'replay_allowed':False,
+            'owner_client_disconnect':{'status':'disconnected',
+                'resource_base':request['x_resource_base'],
+                'expected_pid':request['owner_pid']},
+            'owner_release_attempt':{'status':'readback_verified',
+                'release':{'verified':True, 'keys_down':[],
+                           'buttons_down':[],
+                           'independent_fake_x_readback':True}}}
+
+
+def _retain_prestarted_trial(name, terminal, state, *, response_seconds=None,
+                              heartbeat_count=None,
+                              duplicate_operation_reused=None):
+    destination = os.environ.get('AGENT_INTERFACE_SUPERVISOR_EVIDENCE_DIR')
+    if not destination:
+        return
+    cancellation = terminal.get('cancellation', {})
+    result = cancellation.get('result', {})
+    disconnect = result.get('owner_client_disconnect', {})
+    release_attempt = result.get('owner_release_attempt', {})
+    release = release_attempt.get('release', {})
+    record = {
+        'schema':'agent-interface/public-mcp-prestarted-supervisor-trial-v1',
+        'trial':name,
+        'cancel_response_seconds':response_seconds,
+        'heartbeat_count':heartbeat_count,
+        'duplicate_operation_reused':duplicate_operation_reused,
+        'cancellation':{
+            'status':cancellation.get('status'),
+            'operation_id_present':bool(cancellation.get('operation_id')),
+            'transaction_deadline_monotonic_ns':cancellation.get(
+                'transaction_deadline_monotonic_ns'),
+            'owner_generation_fields':sorted((cancellation.get(
+                'owner_generation') or {}).keys()),
+            'result_status':result.get('status'),
+            'cleanup_status':result.get('cleanup_status'),
+            'release_confirmed':result.get('release_confirmed'),
+            'task_success':result.get('task_success'),
+            'replay_allowed':result.get('replay_allowed'),
+            'owner_process_retired':result.get('owner_process_retired'),
+            'owner_client_disconnect_status':disconnect.get('status'),
+            'owner_client_disconnect_reason':disconnect.get('reason'),
+            'owner_release_attempt_status':release_attempt.get('status'),
+            'release_readback_verified':release.get('verified'),
+            'release_keys_down':release.get('keys_down'),
+            'release_buttons_down':release.get('buttons_down'),
+            'supervisor_worker_retired':result.get('worker_retired'),
+            'supervisor_reason':result.get('reason'),
+            'completed_monotonic_ns':cancellation.get(
+                'completed_monotonic_ns')},
+        'independent_fake_x':{
+            'keys_down':state.get('down'),
+            'accepted_effect_count':len(state.get('effects', [])),
+            'accepted_effect_kinds':sorted({effect.get('kind')
+                for effect in state.get('effects', [])}),
+            'refused_effect_count':len(state.get('refused', [])),
+            'refused_reasons':sorted({row.get('reason')
+                for row in state.get('refused', [])})}}
+    target = Path(destination) / (name + '.json')
+    target.write_text(json.dumps(record, sort_keys=True, indent=2) + '\n',
+                      encoding='utf-8')
 
 
 class _Cleanup:
@@ -73,6 +175,9 @@ def _fake_owner_factory(targets, directory, display_name, options):
     fake.backend.d.display = SimpleNamespace(
         info=SimpleNamespace(resource_id_base=0x1200000))
     root = Path(directory)
+    generation_path = root/'fake-process-generation'
+    if generation_path.exists():
+        fake.generation = generation_path.read_text(encoding='utf-8')
     if (root/'compiled-profile-mode').exists():
         (root/'synthetic-application-initial.rgb').write_bytes(fake.raw)
     def sync():
@@ -91,6 +196,10 @@ def _fake_owner_factory(targets, directory, display_name, options):
             image.putpixel((1,1),(255,0,0))
             fake.raw=image.tobytes('raw','BGRX')
             (root/'synthetic-application-state.rgb').write_bytes(fake.raw)
+            _write_json(root/'synthetic-effect-receipt.json',{
+                'event':'synthetic_app_pixel_commit',
+                'monotonic_ns':time.monotonic_ns(),
+                'pixel':[1,1], 'rgb':[255,0,0], 'key_code':code})
             if (root/'compiled-flip-generation-after-input').exists():
                 (root/'fake-process-generation').write_text('b'*64,encoding='utf-8')
     input_patcher=patch('runtime.backends.x11_v1.backend.xtest.fake_input',
@@ -726,6 +835,51 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(release['status'], 'not_attempted')
         self.assertEqual(release['reason'], 'owner_input_obligations_unavailable')
 
+    def test_prestarted_cleanup_retains_worker_request_validation_fields(self):
+        shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
+        _write_test_obligation_state(shared, {
+            'schema':'agent-interface/owner-input-obligations-v1',
+            'keys':{'a':38}, 'buttons':[],
+        })
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._prestarted_cancel_enabled = True
+        owner._prestarted_cleanup_result = None
+        owner._owner_input_obligations_state = shared
+        owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._cleanup_supervisor = Mock()
+        owner._cleanup_supervisor.run.return_value = {
+            'status':'unknown', 'reason':'invalid_cleanup_request',
+            'invalid_fields':['owner_pid'], 'worker_retired':True,
+        }
+        owner._process = Mock()
+        owner._process.pid = 1234
+        owner._active_cancel_deadline_ns = time.monotonic_ns() + 1_000_000_000
+        owner._active_cancel_operation_id = 'operation-1'
+        owner.session_id = 'session-1'
+        owner.binding_revision = 0
+        owner.display_name = ':88'
+        owner._snapshot_cache = {
+            # The refreshed child snapshot may omit the parent-owned process
+            # record. Do not build owner-generation PID from that cache.
+            'owner_process_pid':9999,
+            'owner_x_client_resource_base':6291456,
+        }
+        owner._owner_root = Path(tempfile.gettempdir())
+
+        client, release = owner._cleanup_after_owner_retirement(
+            {'retired':True, 'exitcode':-15})
+
+        self.assertEqual(client['reason'], 'invalid_cleanup_request')
+        self.assertEqual(client['invalid_fields'], ['owner_pid'])
+        self.assertEqual(release['invalid_fields'], ['owner_pid'])
+        self.assertFalse(client.get('release_confirmed', False))
+        request = owner._cleanup_supervisor.run.call_args.args[0]
+        self.assertTrue(request['owner_process_retired'])
+        self.assertEqual(request['owner_process_exitcode'], -15)
+        self.assertEqual(request['owner_pid'], 1234)
+        self.assertEqual(request['owner_generation']['child_pid'], 1234)
+
     def test_retired_owner_rejects_torn_live_ledger_checksum(self):
         shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
         _write_test_obligation_state(shared, {
@@ -1025,14 +1179,29 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             targets.write_text('{"app":20}', encoding='utf-8')
             argv = ['server','--targets',str(targets),'--output-directory',str(output),
                     '--session-mode','guarded-x11','--guarded-process-identity',
-                    '--guarded-query-worker','--guarded-owned-process']
+                    '--guarded-query-worker','--guarded-owned-process',
+                    '--guarded-prestarted-cancel-supervisor']
             with patch('sys.argv', argv), patch(
                     'runtime.cli_v1.mcp_server.create_server') as create:
                 main()
             create.assert_called_once_with({'app':20}, output, display_name=None,
                 session_mode='guarded-x11', guarded_process_identity=True,
-                guarded_query_worker=True, guarded_owned_process=True)
+                guarded_query_worker=True, guarded_owned_process=True,
+                guarded_prestarted_cancel_supervisor=True)
             create.return_value.run.assert_called_once_with(transport='stdio')
+
+    def test_cli_prestarted_supervisor_requires_owned_process(self):
+        with tempfile.TemporaryDirectory() as td:
+            targets = Path(td)/'targets.json'
+            output = Path(td)/'out'
+            targets.write_text('{"app":20}', encoding='utf-8')
+            argv = ['server','--targets',str(targets),'--output-directory',str(output),
+                    '--session-mode','guarded-x11','--guarded-prestarted-cancel-supervisor']
+            with patch('sys.argv', argv), patch('sys.stderr', new_callable=io.StringIO), \
+                    self.assertRaises(SystemExit) as raised:
+                main()
+            self.assertEqual(raised.exception.code, 2)
+            self.assertFalse(output.exists())
 
     async def test_standard_guarded_tools_keep_generation_and_input_in_owned_process(self):
         with tempfile.TemporaryDirectory() as td:
@@ -1063,7 +1232,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(action['task_success'])
 
                 closed = metadata(await server.call_tool('interface_close', {}))
-                self.assertTrue(closed['verified'], closed)
+                if closed.get('status') == 'busy':
+                    # The worker slot can be released just after its result is
+                    # delivered. Busy is a no-op; retry close explicitly.
+                    await asyncio.sleep(0.01)
+                    closed = metadata(await server.call_tool('interface_close', {}))
+                self.assertTrue(closed.get('verified'), closed)
                 self.assertEqual(closed['status'], 'closed', closed)
                 self.assertFalse(closed['session']['owner_process']['alive'], closed)
                 self.assertEqual(closed['session']['state'], 'closed')
@@ -1440,7 +1614,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     await asyncio.sleep(0.005)
                 self.assertTrue((root/'owner-io-entered.json').exists())
 
-                def blocked_cancel(_call_id):
+                def blocked_cancel(_call_id, **_kwargs):
                     entered.set()
                     if not finish.wait(3):
                         raise TimeoutError('test cancellation gate expired')
@@ -1662,6 +1836,308 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(terminal['cleanup_status'], 'UNKNOWN')
                 self.assertIsNone(terminal['task_success'])
                 self.assertFalse(terminal['replay_allowed'])
+            finally:
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def _start_prestarted_cancel_case(self, root):
+        _write_json(root/'supervisor-fake-x.json', {'down':[1], 'effects':[], 'refused':[]})
+        server = create_server(
+            {'app':20}, root, session_mode='guarded-x11',
+            guarded_process_identity=True, guarded_query_worker=True,
+            guarded_owned_process=True,
+            guarded_prestarted_cancel_supervisor=True,
+            _guarded_cancel_supervisor_target=_fake_prestarted_cancel_worker,
+            _guarded_owner_factory=_fake_owner_factory)
+        observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+        minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+            alias='field', source_sequence=observed['source']['sequence'],
+            point=[8,8], region_size=[12,12])))
+        (root/'block-owner-io').write_text('block', encoding='utf-8')
+        action = metadata(await server.call_tool('interface_guarded_input', dict(
+            alias='field', offset=minted['offset'], interaction='keyboard',
+            observe_after=False, wait_for_result_ms=0,
+            tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+        self.assertEqual(action['status'], 'pending', action)
+        deadline = time.monotonic() + 3
+        while not (root/'owner-io-entered.json').exists() and time.monotonic() < deadline:
+            await asyncio.sleep(0.005)
+        self.assertTrue((root/'owner-io-entered.json').exists())
+        return server, action
+
+    async def _wait_for_cancel_terminal(self, server, call_id, timeout_s=4):
+        deadline = time.monotonic() + timeout_s
+        while time.monotonic() < deadline:
+            result = metadata(await server.call_tool('interface_results', {
+                'call_id':call_id, 'include_image':False}))
+            cancellation = result.get('cancellation')
+            if cancellation and cancellation.get('status') != 'pending':
+                return result
+            await asyncio.sleep(0.01)
+        self.fail('cancellation did not reach a terminal receipt before the test deadline')
+
+    async def test_prestarted_supervisor_public_path_releases_once_but_keeps_runtime_unknown(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            server, action = await self._start_prestarted_cancel_case(root)
+            try:
+                started = time.monotonic()
+                cancel = metadata(await server.call_tool('interface_guarded_cancel', {
+                    'call_id':action['call_id']}))
+                self.assertLess(time.monotonic() - started, 0.45, cancel)
+                # Scheduling can consume the caller-response window. The
+                # public contract then returns pending while the same operation
+                # retains custody; retirement is asserted from its terminal
+                # receipt below.
+                self.assertIn(cancel['status'],
+                              ('pending', 'cancel_unconfirmed', 'cancel_requested'),
+                              cancel)
+                duplicate = metadata(await server.call_tool(
+                    'interface_guarded_cancel', {'call_id':action['call_id']}))
+                self.assertEqual(duplicate['operation_id'], cancel['operation_id'])
+                self.assertEqual(duplicate['cancellation']['operation_id'],
+                                 cancel['operation_id'])
+                self.assertFalse(cancel['release_confirmed'])
+                self.assertIsNone(cancel['task_success'])
+                self.assertFalse(cancel['replay_allowed'])
+                result = await self._wait_for_cancel_terminal(
+                    server, action['call_id'])
+                public_call = result.get('retained_call', result.get('call', {}))
+                self.assertNotIn('cancellation_archived', public_call)
+                self.assertNotIn('cancellation_operation_id', public_call)
+                cleanup = result['cancellation']['result']
+                self.assertTrue(cleanup['owner_process_retired'], cleanup)
+                terminal_duplicate = metadata(await server.call_tool(
+                    'interface_guarded_cancel', {'call_id':action['call_id']}))
+                self.assertEqual(terminal_duplicate['operation_id'],
+                                 cancel['operation_id'])
+                self.assertEqual(terminal_duplicate['cancellation']['operation_id'],
+                                 cancel['operation_id'])
+                self.assertEqual(terminal_duplicate['status'],
+                                 result['cancellation']['result']['status'])
+                self.assertEqual(cleanup['owner_release_attempt']['status'],
+                                 'readback_verified', cleanup)
+                self.assertFalse(cleanup['release_confirmed'])
+                self.assertIsNone(cleanup['task_success'])
+                self.assertFalse(cleanup['replay_allowed'])
+                state = _read_json(root/'supervisor-fake-x.json', {})
+                self.assertEqual(state['down'], [])
+                self.assertEqual(len(state['effects']), 1)
+                _retain_prestarted_trial('healthy-release', result, state,
+                    response_seconds=time.monotonic() - started,
+                    duplicate_operation_reused=(
+                        duplicate['operation_id'] == cancel['operation_id']))
+                operation = _read_json(root/'cleanup-supervisor-entered.json', {})
+                self.assertEqual(operation['operation_id'], cancel['operation_id'])
+                self.assertEqual(operation['session_id'],
+                                 result['cancellation']['owner_generation']['session_id'])
+            finally:
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_prestarted_supervisor_rejects_stale_generation_without_effect(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root/'stale-cleanup-supervisor-generation').write_text('stale', encoding='utf-8')
+            server, action = await self._start_prestarted_cancel_case(root)
+            try:
+                cancel = metadata(await server.call_tool('interface_guarded_cancel', {
+                    'call_id':action['call_id']}))
+                result = await self._wait_for_cancel_terminal(
+                    server, action['call_id'])
+                cleanup = result['cancellation']['result']
+                state = _read_json(root/'supervisor-fake-x.json', {})
+                self.assertEqual(cleanup['owner_client_disconnect']['reason'],
+                                 'stale_generation')
+                self.assertEqual(cleanup['owner_release_attempt']['status'],
+                                 'not_attempted')
+                self.assertEqual(state['down'], [1])
+                self.assertEqual(state['effects'], [])
+                self.assertEqual(len(state['refused']), 1)
+                self.assertFalse(cancel['release_confirmed'])
+                self.assertIsNone(cancel['task_success'])
+                self.assertFalse(cancel['replay_allowed'])
+                _retain_prestarted_trial('stale-generation', result, state)
+            finally:
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_prestarted_supervisor_deadline_kills_blocked_worker_and_preserves_unknown(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root/'block-cleanup-supervisor').write_text('block', encoding='utf-8')
+            server, action = await self._start_prestarted_cancel_case(root)
+            try:
+                beats = []
+                async def heartbeat():
+                    while True:
+                        beats.append(time.monotonic())
+                        await asyncio.sleep(0.02)
+                beat_task = asyncio.create_task(heartbeat())
+                started = time.monotonic()
+                cancel = metadata(await server.call_tool('interface_guarded_cancel', {
+                    'call_id':action['call_id']}))
+                response_s = time.monotonic() - started
+                await asyncio.sleep(0.08)
+                beat_task.cancel()
+                with self.assertRaises(asyncio.CancelledError):
+                    await beat_task
+                self.assertLess(response_s, 0.45, cancel)
+                self.assertGreaterEqual(len(beats), 4, beats)
+                pending = metadata(await server.call_tool('interface_results', {
+                    'call_id':action['call_id'], 'include_image':False}))
+                self.assertEqual(pending['cancellation']['status'], 'pending')
+                self.assertFalse(pending['cancellation']['replay_allowed'])
+                result = await self._wait_for_cancel_terminal(
+                    server, action['call_id'])
+                cleanup = result['cancellation']['result']
+                self.assertEqual(cleanup['owner_release_attempt']['status'],
+                                 'unknown')
+                self.assertTrue(cleanup['owner_client_disconnect']['worker_retired'],
+                                cleanup)
+                self.assertFalse(cleanup['release_confirmed'])
+                self.assertIsNone(cleanup['task_success'])
+                self.assertFalse(cleanup['replay_allowed'])
+                state = _read_json(root/'supervisor-fake-x.json', {})
+                self.assertEqual(state['down'], [1])
+                self.assertEqual(state['effects'], [])
+                self.assertEqual(state['refused'], [])
+                _retain_prestarted_trial('blocked-helper-deadline', result, state,
+                    response_seconds=response_s, heartbeat_count=len(beats))
+            finally:
+                (root/'continue-cleanup-supervisor').write_text('continue', encoding='utf-8')
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_interface_close_during_pending_cancel_preserves_single_transaction(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root/'block-cleanup-supervisor').write_text('block', encoding='utf-8')
+            server, action = await self._start_prestarted_cancel_case(root)
+            try:
+                cancel = metadata(await server.call_tool('interface_guarded_cancel', {
+                    'call_id':action['call_id']}))
+                self.assertIn(cancel['status'], ('pending', 'cancel_unconfirmed'), cancel)
+                self.assertFalse(cancel['release_confirmed'])
+                self.assertIsNone(cancel['task_success'])
+                self.assertFalse(cancel['replay_allowed'])
+
+                close_started = time.monotonic()
+                close = metadata(await server.call_tool('interface_close', {}))
+                close_elapsed = time.monotonic() - close_started
+                self.assertLess(close_elapsed, 0.5, close)
+                self.assertEqual(close['status'], 'busy', close)
+                self.assertEqual(close['cancellation_operation_id'],
+                                 cancel['operation_id'])
+                self.assertEqual(close['cleanup_status'], 'UNKNOWN', close)
+                self.assertFalse(close['release_confirmed'], close)
+                self.assertFalse(close['replay_allowed'], close)
+
+                (root/'continue-cleanup-supervisor').write_text('continue', encoding='utf-8')
+                result = await self._wait_for_cancel_terminal(server, action['call_id'])
+                cleanup = result['cancellation']['result']
+                self.assertEqual(result['cancellation']['operation_id'],
+                                 cancel['operation_id'])
+                self.assertFalse(cleanup['release_confirmed'])
+                self.assertIsNone(cleanup['task_success'])
+                self.assertFalse(cleanup['replay_allowed'])
+                state = _read_json(root/'supervisor-fake-x.json', {})
+                self.assertEqual(len(state['effects']), 1, state)
+                self.assertEqual(state['effects'][0]['kind'], 'KeyRelease', state)
+                self.assertEqual(state['effects'][0]['operation_id'],
+                                 cancel['operation_id'], state)
+                self.assertEqual(len(state['refused']), 0)
+                operation = _read_json(root/'cleanup-supervisor-entered.json', {})
+                self.assertEqual(operation['operation_id'], cancel['operation_id'])
+                self.assertEqual(cleanup['owner_release_attempt']['status'],
+                                 'readback_verified', cleanup)
+                self.assertFalse(cleanup['release_confirmed'], cleanup)
+            finally:
+                (root/'continue-cleanup-supervisor').write_text('continue', encoding='utf-8')
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_server_lifespan_shutdown_keeps_pending_cancel_custody(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            _write_json(root/'supervisor-fake-x.json',
+                        {'down':[1], 'effects':[], 'refused':[]})
+            server = create_server(
+                {'app':20}, root, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                guarded_prestarted_cancel_supervisor=True,
+                _guarded_cancel_supervisor_target=_fake_prestarted_cancel_worker,
+                _guarded_owner_factory=_fake_owner_factory)
+            async with server.settings.lifespan(server):
+                observed = metadata(await server.call_tool(
+                    'interface_guarded_observe', {}))
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                    alias='field', source_sequence=observed['source']['sequence'],
+                    point=[8,8], region_size=[12,12])))
+                (root/'block-owner-io').write_text('block', encoding='utf-8')
+                action = metadata(await server.call_tool('interface_guarded_input', dict(
+                    alias='field', offset=minted['offset'], interaction='keyboard',
+                    observe_after=False, wait_for_result_ms=0,
+                    tail=[{'op':'key_chord','keys':['CTRL','a']}])) )
+                self.assertEqual(action['status'], 'pending', action)
+                deadline = time.monotonic() + 3
+                while not (root/'owner-io-entered.json').exists() and time.monotonic() < deadline:
+                    await asyncio.sleep(0.005)
+                self.assertTrue((root/'owner-io-entered.json').exists())
+                (root/'block-cleanup-supervisor').write_text('block', encoding='utf-8')
+                cancel = metadata(await server.call_tool('interface_guarded_cancel', {
+                    'call_id':action['call_id']}))
+                self.assertIn(cancel['status'], ('pending', 'cancel_unconfirmed'), cancel)
+                operation_id = cancel['operation_id']
+                self.assertFalse(cancel['release_confirmed'])
+                self.assertFalse(cancel['replay_allowed'])
+                started = time.monotonic()
+            shutdown_elapsed = time.monotonic() - started
+            self.assertLess(shutdown_elapsed, 9.0, shutdown_elapsed)
+            result = metadata(await server.call_tool('interface_results', {
+                'call_id':action['call_id'], 'include_image':False}))
+            cancellation = result['cancellation']
+            self.assertEqual(cancellation['operation_id'], operation_id)
+            self.assertNotEqual(cancellation['status'], 'pending', cancellation)
+            terminal = cancellation.get('result') or {}
+            self.assertFalse(terminal.get('release_confirmed', False), terminal)
+            self.assertIsNone(terminal.get('task_success'), terminal)
+            self.assertFalse(terminal.get('replay_allowed', False), terminal)
+            self.assertEqual(_read_json(root/'supervisor-fake-x.json', {})['effects'], [])
+
+    async def test_prestarted_supervisor_keeps_unarchived_terminal_custody_on_write_failure(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            server, action = await self._start_prestarted_cancel_case(root)
+            from runtime.cli_v1.attempt import _write_json as write_json
+
+            def fail_cancellation_receipt(path, value):
+                if Path(path).name == 'cancellation.json':
+                    raise OSError('injected cancellation archive failure')
+                return write_json(path, value)
+
+            try:
+                with patch('runtime.cli_v1.mcp_server._write_json',
+                           side_effect=fail_cancellation_receipt):
+                    cancel = metadata(await server.call_tool(
+                        'interface_guarded_cancel', {'call_id':action['call_id']}))
+                    result = await self._wait_for_cancel_terminal(
+                        server, action['call_id'])
+                cancellation = result['cancellation']
+                self.assertEqual(cancellation['operation_id'], cancel['operation_id'])
+                self.assertIn('persistence_failure', cancellation)
+                self.assertFalse((root/action['call_id']/'cancellation.json').exists())
+                self.assertFalse(cancellation['result']['release_confirmed'])
+                self.assertIsNone(cancellation['result']['task_success'])
+                self.assertFalse(cancellation['result']['replay_allowed'])
+                duplicate = metadata(await server.call_tool(
+                    'interface_guarded_cancel', {'call_id':action['call_id']}))
+                self.assertEqual(duplicate['operation_id'], cancel['operation_id'])
+                self.assertEqual(duplicate['cancellation']['operation_id'],
+                                 cancel['operation_id'])
+                self.assertEqual(len(_read_json(
+                    root/'supervisor-fake-x.json', {})['effects']), 1)
             finally:
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})

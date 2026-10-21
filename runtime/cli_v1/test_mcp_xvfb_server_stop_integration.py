@@ -36,6 +36,8 @@ _CANCEL_BOUND_S = 3.0
 _POST_RESUME_CLOSE_BOUND_S = 3.0
 _RECOVERY_BOUND_S = 5.0
 _CLEANUP_BOUND_S = 2.0
+_PRESTARTED_CANCEL_SUPERVISOR = (
+    os.environ.get('AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR', '0') == '1')
 
 
 async def _resolve_terminal_result(server, initial, deadline):
@@ -219,11 +221,12 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
     async def test_cancel_is_bounded_and_release_stays_unknown_while_server_stops(self):
         result_path = os.environ.get('AGENT_INTERFACE_MCP_XVFB_SERVER_STOP_RESULT')
         report = {
-            'schema':'agent-interface/standard-mcp-xvfb-server-stop-recovery-v2',
+            'schema':'agent-interface/standard-mcp-xvfb-server-stop-recovery-v3',
             'status':'RUNNING',
             'scope':'owned standard MCP caller, private Xvfb process stop/resume, fresh-target recovery, synthetic app',
             'conditions':{
                 'server_stop_safety_s':_SERVER_STOP_SAFETY_S,
+                'prestarted_cancel_supervisor':_PRESTARTED_CANCEL_SUPERVISOR,
                 'cancel_response_bound_s':_CANCEL_BOUND_S,
                 'recovery_bound_s':_RECOVERY_BOUND_S,
                 'recovery_no_late_press_horizon_ms':_DELAY_MS+500,
@@ -344,6 +347,8 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                     {'app':window.id}, output_root, session_mode='guarded-x11',
                     guarded_process_identity=True, guarded_query_worker=True,
                     guarded_window_lifecycle=True, guarded_owned_process=True,
+                    guarded_prestarted_cancel_supervisor=(
+                        _PRESTARTED_CANCEL_SUPERVISOR),
                     _guarded_owner_factory=_xvfb_blocking_owner_factory)
 
                 observed = _metadata(await server.call_tool(
@@ -406,19 +411,24 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(report['server_resume'].get('status'), 'resumed',
                                  report['server_resume'])
                 self.assertLess(elapsed_s, _CANCEL_BOUND_S, cancel)
-                self.assertTrue(cancel.get('owner_process_retired'), cancel)
                 self.assertFalse(cancel.get('release_confirmed'), cancel)
                 self.assertEqual(cancel.get('cleanup_status'), 'UNKNOWN', cancel)
                 self.assertIsNone(cancel.get('task_success'), cancel)
                 self.assertFalse(cancel.get('replay_allowed'), cancel)
-                self.assertTrue(cancel.get('late_server_request_possible'), cancel)
-                self.assertIn(cancel.get('owner_client_disconnect', {}).get('status'),
-                              ('unknown', 'still_connected'), cancel)
-                self.assertEqual(cancel.get('owner_release_attempt', {}).get('status'),
-                                 'not_attempted', cancel)
-                self.assertEqual(
-                    cancel.get('owner_release_attempt', {}).get('reason'),
-                    'owner_disconnect_not_confirmed', cancel)
+                if cancel.get('status') == 'pending':
+                    self.assertTrue(cancel.get('operation_id'), cancel)
+                    self.assertIn(cancel.get('cancellation', {}).get('status'),
+                                  ('pending', 'completed', 'unknown'), cancel)
+                else:
+                    self.assertTrue(cancel.get('owner_process_retired'), cancel)
+                    self.assertTrue(cancel.get('late_server_request_possible'), cancel)
+                    self.assertIn(cancel.get('owner_client_disconnect', {}).get('status'),
+                                  ('unknown', 'still_connected'), cancel)
+                    self.assertEqual(cancel.get('owner_release_attempt', {}).get('status'),
+                                     'not_attempted', cancel)
+                    self.assertEqual(
+                        cancel.get('owner_release_attempt', {}).get('reason'),
+                        'owner_disconnect_not_confirmed', cancel)
                 report['server_stop_ms'] = (
                     report['server_resume']['monotonic_ns']
                     - report['server_process']['stopped_ns']) / 1_000_000
@@ -469,6 +479,18 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                     'call_id':call_id, 'include_image':False}))
                 report['terminal'] = terminal
                 self.assertNotEqual(terminal.get('status'), 'pending', terminal)
+                cancellation = terminal.get('cancellation')
+                report['cancellation_terminal'] = cancellation
+                self.assertIsInstance(cancellation, dict, terminal)
+                self.assertIn(cancellation.get('status'), ('completed', 'unknown'),
+                              cancellation)
+                cancellation_result = cancellation.get('result') or {}
+                self.assertFalse(cancellation_result.get('release_confirmed'),
+                                 cancellation)
+                self.assertEqual(cancellation_result.get('cleanup_status'), 'UNKNOWN',
+                                 cancellation)
+                self.assertIsNone(cancellation_result.get('task_success'), cancellation)
+                self.assertFalse(cancellation_result.get('replay_allowed'), cancellation)
                 self.assertFalse(terminal.get('release_confirmed'), terminal)
                 self.assertEqual(terminal.get('cleanup_status'), 'UNKNOWN', terminal)
                 self.assertIsNone(terminal.get('task_success'), terminal)
@@ -512,8 +534,16 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                                  {'a':False, 'b':False})
                 self.assertEqual(report['independent_readback_after_close']['effect'],
                                  [1])
-                self.assertEqual(report['synthetic_task_oracle']['status'], 'fail', report)
-                self.assertFalse(report['synthetic_task_oracle']['task_success'], report)
+                if _PRESTARTED_CANCEL_SUPERVISOR:
+                    self.assertEqual(
+                        report['synthetic_task_oracle']['status'], 'pass', report)
+                    self.assertTrue(
+                        report['synthetic_task_oracle']['task_success'], report)
+                else:
+                    self.assertEqual(
+                        report['synthetic_task_oracle']['status'], 'fail', report)
+                    self.assertFalse(
+                        report['synthetic_task_oracle']['task_success'], report)
 
                 # The outage-era action remains failed and UNKNOWN. Recovery
                 # starts a distinct caller against a newly created target; it
@@ -562,7 +592,9 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 recovery_server = create_server(
                     {'app':window.id}, root/'recovery-mcp', session_mode='guarded-x11',
                     guarded_process_identity=True, guarded_query_worker=True,
-                    guarded_window_lifecycle=True, guarded_owned_process=True)
+                    guarded_window_lifecycle=True, guarded_owned_process=True,
+                    guarded_prestarted_cancel_supervisor=(
+                        _PRESTARTED_CANCEL_SUPERVISOR))
                 server = recovery_server
 
                 async def bounded_recovery_call(tool, arguments):
@@ -612,12 +644,14 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                     'fresh_mint':fresh_minted,
                 }
 
+                recovery_input_started_ns = time.monotonic_ns()
                 recovery_pending = await bounded_recovery_call(
                     'interface_guarded_input', {
                         'alias':'recovered_field', 'offset':fresh_minted['offset'],
                         'interaction':'keyboard', 'observe_after':False,
                         'wait_for_result_ms':0,
                         'tail':[{'op':'key_chord', 'keys':['b']}]})
+                recovery_input_returned_ns = time.monotonic_ns()
                 if recovery_pending.get('status') == 'pending':
                     recovery_call_id = recovery_pending['call_id']
                     remaining_s = max(0.001, recovery_deadline-time.monotonic())
@@ -674,6 +708,41 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                     event.get('type') == X.KeyPress
                     and event.get('detail') == keycodes['b']
                     for event in recovery_events)
+                recovery_b_events = [
+                    event for event in recovery_events
+                    if event.get('type') == X.KeyPress
+                    and event.get('detail') == keycodes['b']]
+                self.assertEqual(len(recovery_b_events), 1, recovery_events)
+                recovery_effect_event = recovery_b_events[0]
+                effect_committed_ns = recovery_effect_event.get(
+                    'effect_committed_ns')
+                self.assertIsInstance(effect_committed_ns, int,
+                                      recovery_effect_event)
+                observation_returned_ns = fresh_source.get(
+                    'timing_ns', {}).get('public_returned')
+                self.assertIsInstance(observation_returned_ns, int, fresh_source)
+                self.assertGreaterEqual(effect_committed_ns,
+                                        recovery_input_started_ns)
+                self.assertGreaterEqual(effect_committed_ns,
+                                        observation_returned_ns)
+                effect_timing = {
+                    'clock':'time.monotonic_ns on one local host',
+                    'observation_public_returned_ns':observation_returned_ns,
+                    'input_tool_started_ns':recovery_input_started_ns,
+                    'input_tool_returned_ns':recovery_input_returned_ns,
+                    'app_keypress_received_ns':recovery_effect_event.get(
+                        'monotonic_ns'),
+                    'app_effect_committed_ns':effect_committed_ns,
+                    'observation_to_effect_commit_ms':(
+                        effect_committed_ns-observation_returned_ns)/1_000_000,
+                    'input_start_to_effect_commit_ms':(
+                        effect_committed_ns-recovery_input_started_ns)/1_000_000,
+                    'input_return_to_effect_commit_ms':(
+                        effect_committed_ns-recovery_input_returned_ns)/1_000_000,
+                    'effect_event_count':len(recovery_b_events),
+                    'independent_readback_monotonic_ns':time.monotonic_ns(),
+                    'effect_kind':'synthetic Xvfb application property commit',
+                }
                 recovery_oracle = score_recovered_synthetic_application_task(
                     initial_effect=[0], final_effect=recovery_final_effect,
                     release_readback=recovery_release_readback,
@@ -684,6 +753,8 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                     'terminal':recovery_terminal,
                     'elapsed_ms':recovery_elapsed_ms,
                     'new_target_b_keypresses':recovery_b_presses,
+                    'effect_timing':effect_timing,
+                    'app_keypress_events':recovery_b_events,
                     'independent_readback':{
                         'effect':recovery_final_effect,
                         'release_readback':recovery_release_readback,
