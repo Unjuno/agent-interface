@@ -4,9 +4,9 @@
 
 ### Live execution pointer after PR #9309
 
-The current verified checkout is `main` `f3cb822ecdc08e5425de55cbe712203e11b1293e` after cleanup-plan PR #9310. The newest complete paginated membership recheck is [r128](maintenance/repository-inventory-recheck-20261021-r128.md): 1,655 open Issues and 463 open PRs, with stable main SHA before/after. Both ID sets match r126; r127 preserves the transient pre-merge state. Membership metadata is not semantic disposition, exact-head readiness, ownership, or custody. Reuse r120 row metadata and refresh each touched live record before a state change.
+The latest verified remote `main` is `19fd445eec25ec9e2a2bfc7a39de2e236adc8eb5` (2026-10-20 23:05:54 UTC), after cleanup-plan PR #9310 and the subsequent host-validation fix. The newest complete paginated membership recheck is [r128](maintenance/repository-inventory-recheck-20261021-r128.md): 1,655 open Issues and 463 open PRs, with stable main SHA before/after its pagination. Both ID sets match r126; r127 preserves the transient pre-merge state. Membership metadata is not semantic disposition, exact-head readiness, ownership, or custody. Reuse r120 row metadata and refresh each touched live record before a state change.
 
-Since r126, current main has added the target-belief family record (#9305), inventory pointer (#9306), audited caller evidence and cleanup-map sync (#9307), the prestarted cancellation supervisor proposal (#9308), and the standard-caller duplicate-cancel characterization (#9309). The new cancellation trial is Fake X-only: one cleanup attempt, but duplicate cancellation returned `not_active`, no retained operation receipt was exposed, and the original action stayed UNKNOWN with stale owner-liveness metadata. It does not show bounded physical release or a production supervisor. These outcomes are indexed below; they do not close the parent research questions.
+Since r126, current main has added the target-belief family record (#9305), inventory pointer (#9306), audited caller evidence and cleanup-map sync (#9307), the prestarted cancellation supervisor proposal (#9308), and the standard-caller duplicate-cancel characterization (#9309). PRs #9307–#9309 are merged. The prior public cancellation trial was Fake X-only: one cleanup attempt, but duplicate cancellation returned `not_active`, no operation receipt was retained, and the action stayed UNKNOWN with stale owner-liveness metadata. Those outcomes are indexed below; they do not close the parent research questions. The current unmerged worktree adds a dedicated one-worker public-MCP cancel path and stable per-call operation/result retention; its [r04 packet](../research/integration/public_mcp_cancel_operation_registry_20261021/r04/README.md) passes focused normal/optimized checks. This is an integration step, not the prestarted supervisor or proof of release under blocked real platform I/O.
 
 **Next execution sequence:** (1) refresh the exact live Issue/PR membership delta from r126; (2) continue semantic idea-family review in bounded batches, preserving distinct hypotheses and first outcomes; (3) audit and integrate PRs by exact head, evidence custody, dependency, and real protections; (4) reconcile branches/worktrees/raw outputs only after owner and recoverability checks; (5) repair stale entry points and archive duplicate navigation after inbound-link checks. Publish one result receipt per batch and refresh only the touched rows. Keep unresolved research open. Do not use counts as a closure target, delete unknown-custody work, launch WSLc/Docker from the cleanup plan, or add fixed reviewer quotas.
 
@@ -34,7 +34,7 @@ The repository already has a strong execution framework below. The remaining pro
 
 ### Execution order and exit checks
 
-**Current bounded design packet (2026-10-21):** The computer-control track's
+**Current bounded design packet and local integration (2026-10-21):** The computer-control track's
 standard-caller cancel seam is documented in
 [`architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md`](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
 and indexed from [`CURRENT_GOAL.md`](CURRENT_GOAL.md). This is a proposal and
@@ -45,11 +45,13 @@ cancellation is solved. The wider Issue/PR census, idea-family routing, and
 custody work remain separate cleanup batches.
 
 The [standard-caller duplicate-cancel characterization](../research/integration/standard_caller_duplicate_cancel_retention_20261021/README.md)
-is a new one-trial integration row. It does not repeat Issue #814's independent
-safety-owner PASS: one cleanup attempt occurred through the public caller, but
-the duplicate received `not_active`, no cancellation-operation receipt was
-retained, and the action result carried a stale owner-liveness snapshot. The
-production registry/supervisor behavior remains unimplemented.
+is a one-trial baseline and does not repeat Issue #814's independent safety-owner
+PASS. Its duplicate received `not_active` and had no operation receipt. The
+local [r04 public-MCP integration result](../research/integration/public_mcp_cancel_operation_registry_20261021/r04/README.md)
+now preserves operation identity and terminal receipt separately from the
+action record. The prestarted cleanup supervisor, full transaction deadline,
+late/stale effect fencing, real-X outage result, and task-effect integration
+remain unimplemented; keep #17/#57 open and do not infer release from this work.
 
 1. **Reconcile the live queue.** Refresh open Issue/PR membership with complete pagination and stable main SHA before/after. Reuse r120 rows where IDs are unchanged; record only exact additions/removals and refreshed rows needed for a decision. Publish one current queue pointer and label count-only reads as such.
 2. **Preserve and route research ideas.** Continue the existing family queue (the last recorded gap was 223 semantic idea-document routes). For each source Issue, distinguish its hypothesis from siblings; link immutable first outcomes, counterexamples, STOP/HOLD/FAIL results, current code/PR, owner/dependency, and the next discriminating test. Update the canonical family page and idea index in one integration pass. A route or summary alone is not semantic review.

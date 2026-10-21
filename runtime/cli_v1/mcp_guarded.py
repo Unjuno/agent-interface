@@ -1,6 +1,7 @@
 """Explicit scoped-X11 owner for the existing retained public MCP transport."""
 from contextlib import contextmanager
 from copy import deepcopy
+import inspect
 from pathlib import Path
 from time import monotonic_ns
 import json
@@ -429,7 +430,8 @@ def register_guarded_tools(server, submit, *, cancel=None, compiled_enabled=Fals
             not release confirmation. Inspect the original result/cleanup; never
             replay uncertain input. Old/unknown call IDs cannot cancel a new call.
             """
-            return cancel(call_id)
+            result = cancel(call_id)
+            return await result if inspect.isawaitable(result) else result
     if compiled_enabled:
         @server.tool()
         async def interface_guarded_compiled(interface: dict, bindings: dict,

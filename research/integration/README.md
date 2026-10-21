@@ -39,13 +39,21 @@ These probes preserve UNKNOWN/no-replay behavior and do not establish input
 release or real GUI effects.
 
 The [standard-caller duplicate-cancel retention characterization](standard_caller_duplicate_cancel_retention_20261021/README.md)
-is a one-trial Fake X composition result. Issue #814 already passes duplicate
+is the immutable one-trial Fake X baseline. Issue #814 already passes duplicate
 idempotence for its separate safety owner; the standard caller made one cleanup
 attempt here but returned `not_active` to the duplicate and retained no separate
 cancellation receipt in `interface_results`. Its action result stayed UNKNOWN,
 and its retained owner-liveness snapshot conflicted with the cancel retirement
 receipt. This identifies an integration/record-retention gap, not a live release
 or reliability result.
+
+The local [public-MCP cancellation-operation integration](public_mcp_cancel_operation_registry_20261021/README.md)
+adds one operation ID, pending/terminal retention separate from the action,
+event-loop responsiveness during a blocked Fake X release helper, and a
+request-cancellation custody check. r04 passes 77/77 focused tests in both
+normal and optimized Python. It does not implement the prestarted cleanup
+process or whole-transaction deadline and is not real-X11, task-success, WSLc,
+MAP01, efficiency, or reliability evidence; see the source-bound [r04 packet](public_mcp_cancel_operation_registry_20261021/r04/README.md).
 
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
