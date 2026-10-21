@@ -91,15 +91,15 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-The latest complete membership recheck is [r129](maintenance/repository-inventory-recheck-20261022-r129.md),
-captured on 2026-10-22 JST against stable main `9bf7ec15ea78eccd752adee1af8d00dc9545eaa0`.
-Issue membership matches r120; the PR set changed from r128 by adding #9315 and
-#9316 and removing #8354 and #7188. This is only a current membership pointer.
-The next step is to refresh the worker map and select one unowned, bounded
-idea-family batch from the recorded semantic-route gaps. Do not start a broad
-close/merge campaign from counts alone. A disjoint exact-head PR audit or
-custody slice can proceed only when it does not share edited indexes, branches,
-or evidence with that family batch.
+The latest complete membership recheck is [r130](maintenance/repository-inventory-recheck-20261022-r130.md),
+captured on 2026-10-22 JST against stable main
+`976d36443548e02d169b0b44fab6877224464be4` after PR #9316 merged. It records
+1,655 open Issues and 462 open PRs; only #9316 left the open set since r129.
+This is a membership-only pointer. The next step is to refresh the worker map
+and select one unowned, bounded idea-family batch from the recorded
+semantic-route gaps. Do not start a broad close/merge campaign from counts
+alone. A disjoint exact-head PR audit or custody slice can proceed only when it
+does not share edited indexes, branches, or evidence with that family batch.
 
 The computer-control work remains the research objective. Cleanup must not
 launch or consume WSLc/Docker allocations; those require their own verified
