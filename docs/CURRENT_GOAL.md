@@ -30,6 +30,9 @@ deliver it without conflicting instructions, duplicate experiments or lost
 evidence. Organize ideas into hypotheses, existing results, dependencies,
 priorities and executed tests. Documentation or Issue closure alone does not
 resolve a research question. Existing finite/running work keeps its safe boundary.
+Use the concise [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md)
+for the current work order; the cleanup ledger and consolidation record remain
+the detailed historical receipts.
 Repository cleanliness means every active artifact has a traceable disposition,
 not that all Issues are closed; see the [current consolidation plan](REPOSITORY_CONSOLIDATION.md#repository-wide-organization-plan-preserve-ideas-enable-parallel-work) and its detailed [family-by-family disposition rules](REPOSITORY_CONSOLIDATION.md#実行計画-r26--アイデアを保全した全体収束).
 The first current semantic triage keeps broad reactive-control Issue #6 distinct
