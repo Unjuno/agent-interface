@@ -115,10 +115,13 @@ not share edited indexes, branches, or evidence with those items.
 The computer-control work remains the research objective. Cleanup must not
 launch or consume WSLc/Docker allocations; Issue #7924 remains STOP/HOLD for
 shared WSLc ownership. PR #9320 integrated the opt-in supervisor, #9321
-preserved its initial evidence, #9322 reconciled the design, and #9323
-preserved a scoped standard-caller Xvfb result. The packet records
-release/readback and an independent task
-oracle, while runtime task success remains null and replay stays denied. Keep
+preserved its initial evidence, #9322 reconciled the design, #9323
+preserved a scoped standard-caller Xvfb result, and #9329 added a bounded
+worker-exit grace with a separate retained Xvfb outcome. That run missed the
+strict 300 ms caller-response target by 1.268 ms and correctly kept the runtime
+receipt UNKNOWN; see the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#additive-shutdown-grace-result-2026-10-22).
+The packet records release/readback and an independent task oracle, while
+runtime task success remains null and replay stays denied. Keep
 #17 and #57 open while recovery, task semantics, efficiency, and safety gates
 remain. After this evidence is indexed, resume idea-family disposition;
 the remaining route count is a discovery queue, not a closure target.
