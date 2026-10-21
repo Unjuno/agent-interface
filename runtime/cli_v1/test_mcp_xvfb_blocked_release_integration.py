@@ -901,6 +901,22 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 fresh_effect_after_action = (list(fresh_effect_after_action.value)
                     if fresh_effect_after_action is not None else None)
                 fresh_effect_readback_completed_ns = time.monotonic_ns()
+                fresh_effect_timing_ms = {
+                    'input_invocation_to_keypress_observed':(
+                        fresh_event_seen_ns-fresh_input_started_ns)/1_000_000,
+                    'keypress_observed_to_effect_readback_completed':(
+                        fresh_effect_readback_completed_ns-fresh_event_seen_ns
+                        )/1_000_000,
+                    'input_invocation_to_effect_readback_completed':(
+                        fresh_effect_readback_completed_ns-fresh_input_started_ns
+                        )/1_000_000,
+                    'input_return_to_effect_readback_completed':(
+                        fresh_effect_readback_completed_ns-fresh_input_returned_ns
+                        )/1_000_000,
+                    'effect_readback_duration':(
+                        fresh_effect_readback_completed_ns
+                        -fresh_effect_readback_started_ns)/1_000_000,
+                }
                 fresh_release_readback = {
                     name:_key_down(observer, keycodes[name])
                     for name in ('a','b','c')}
@@ -927,6 +943,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         fresh_effect_readback_started_ns),
                     'effect_readback_completed_monotonic_ns':(
                         fresh_effect_readback_completed_ns),
+                    'effect_timing_ms':fresh_effect_timing_ms,
                     'release_readback_after_input':fresh_release_readback,
                     'session_start_monotonic_ns':fresh_session_started_ns,
                     'start_monotonic_ns':fresh_start_ns,
