@@ -354,15 +354,18 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                             continue
                         event = app_display.next_event()
                         now = time.monotonic_ns()
+                        event_window = getattr(event, 'window', None)
+                        event_window_id = getattr(event_window, 'id',
+                                                  event_window)
                         with app_lock:
                             row = {'type':event.type,
                                    'detail':getattr(event, 'detail', None),
-                                   'window':getattr(event, 'window', None),
+                                   'window':event_window_id,
                                    'monotonic_ns':now}
                             app_events.append(row)
                         if (event.type == X.KeyPress
                                 and event.detail == keycodes['a']
-                                and getattr(event, 'window', None) == window.id):
+                                and event_window_id == window.id):
                             window.change_property(effect_atom, Xatom.CARDINAL,
                                                    32, [1])
                             app_display.sync()
@@ -374,11 +377,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         elif (event.type == X.KeyPress
                                 and event.detail == keycodes['b']):
                             if (fresh_task_started.is_set()
-                                    and getattr(event, 'window', None)
-                                        == fresh_window.id):
+                                    and event_window_id == fresh_window.id):
                                 fresh_window.change_property(fresh_effect_atom,
                                     Xatom.CARDINAL, 32, [2])
-                            elif getattr(event, 'window', None) == window.id:
+                            elif event_window_id == window.id:
                                 window.change_property(effect_atom,
                                     Xatom.CARDINAL, 32, [2])
                             app_display.sync()
@@ -387,8 +389,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                                 app_events[-1]['effect_committed_ns'] = time.monotonic_ns()
                         elif (event.type == X.KeyPress
                                 and event.detail == keycodes['c']
-                                and getattr(event, 'window', None)
-                                    == fresh_window.id):
+                                and event_window_id == fresh_window.id):
                             fresh_window.change_property(fresh_effect_atom,
                                 Xatom.CARDINAL, 32, [3])
                             app_display.sync()
@@ -1088,6 +1089,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 if result_path:
                     output = Path(result_path)
                     output.parent.mkdir(parents=True, exist_ok=True)
+                    if report.get('status') == 'FAIL':
+                        with app_lock:
+                            report['partial_application_event_trace'] = list(
+                                app_events)
                     if cleanup_errors:
                         report['cleanup_errors'] = cleanup_errors
                         if report.get('status') != 'FAIL':
