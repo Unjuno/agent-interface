@@ -91,11 +91,12 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-The latest complete membership recheck is [r131](maintenance/repository-inventory-recheck-20261022-r131.md),
+The latest complete membership recheck is [r132](maintenance/repository-inventory-recheck-20261022-r132.md),
 captured on 2026-10-22 JST against stable main
-`7795eda5bed22d1029bbc5dbf0afe2e0a18291fc` after PR #9323. It records
-1,655 open Issues and 462 open PRs. r131 corrects r130's mistaken membership
-delta; see its comparison with full r120. PR #9315 is open
+`d0f392e55db5f53c17592ae08360cc5e45940b25` after PR #9329. It records
+1,655 open Issues and 463 open PRs, including this work's new PR #9330. r132
+corrects r130's mistaken membership delta through the r131 comparison; see its
+comparison with full r120. PR #9315 is open
 and Draft at head `76626da8b03df25024d12efb5f1dde2f12c53ed2`. Exact-head
 reconciliation [r01](maintenance/pr9315-current-main-reconciliation-20261022-r01.md)
 identifies a runtime regression in the draft's resource-base reuse predicate;
