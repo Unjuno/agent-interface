@@ -489,7 +489,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 }
                 self.assertEqual(before_cancel_value, [1], report)
                 down_before = {
-                    name:_key_down(observer, code) for name, code in keycodes.items()}
+                    name:_key_down(observer, keycodes[name])
+                    for name in ('a','b')}
                 report['input_before_cancel'] = {
                     'keys_down':down_before,
                     'synthetic_effect_committed':True,
