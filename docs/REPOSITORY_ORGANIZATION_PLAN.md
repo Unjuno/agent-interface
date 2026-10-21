@@ -189,3 +189,9 @@ The result remains one schedule with the owner blocked in `Display.sync()` while
 
 
 The independent [R02 raw/source audit](../research/audits/standard_caller_xvfb_r02_raw_audit_20261022_r01/README.md) verified all 17 raw hashes and five runtime source hashes, then reconstructed the 252.924 ms caller response, 324.791 ms supervisor readback, 379.339 ms parent-client readback, and 8.501 s delayed-request horizon from the raw JSON. It also checked distinct target/session/process-generation values and the fresh synthetic task oracle. This confirms the retained one-run outcome and does not add a second sample.
+
+## Current-main R03 Xvfb repeat (2026-10-22)
+
+One independently frozen repeat ran the same standard-caller blocked-`Display.sync()` and fresh-session scenario against main `6b276fcabfa11c060282e0714501a1057e75c0a6` in Ubuntu WSL2 with private Xvfb. The unittest passed 1/1 and Xvfb exited 0. Caller response was 255.100 ms; supervisor readback 323.415 ms; terminal cancellation receipt 329.723 ms; separate parent-client keymap readback 386.460 ms; and the 8.505 s delayed-request horizon found all keys up with no old delayed press. Distinct target/session/process-generation values passed the synthetic fresh-task oracle at input and horizon. The old operation remains UNKNOWN, task success null, and replay denied.
+
+The shell wrapper exited 2 after writing both successful test/Xvfb exit codes because its CRLF-terminated final `exit 0` was parsed incorrectly. This wrapper defect and three preflight-script parsing failures are preserved in [R03](../research/integration/standard_caller_xvfb_current_main_20261022/prestarted-fresh-recovery-03/README.md); none altered the candidate result, and R03 was not retried. The paired R02/R03 outcomes are two observed passes under this one schedule, not a reliability estimate. Whole-server unavailability, physical GUI/MAP01, matched efficiency, and WSLc remain unqualified; no WSLc allocation was used.
