@@ -1,0 +1,42 @@
+{
+  "dependency_cache": "/home/user/.cache/agent-interface-codex-deps-20261022-r02",
+  "candidate_commit": "a85868f5deb36616db972b83edb591593db6986f",
+  "candidate_branch": "codex/xvfb-server-pause-boundary-r01-20261022",
+  "frozen": {
+    "delayed_keypress_ms": 8000,
+    "resume_signal": "SIGCONT",
+    "pause_ms": 1500,
+    "outer_timeout_s": 45,
+    "retries": 0,
+    "caller_response_target_ms": 300,
+    "owner_ack_withheld_s": 1.0,
+    "pause_signal": "SIGSTOP"
+  },
+  "allocation": {
+    "wslc": "not used",
+    "network_downloads": 0,
+    "installs": 0,
+    "docker": "not used"
+  },
+  "baseline_main": "b3fdbee40cce6e9040c9a3a9360ea35cc692995e",
+  "dependencies": {
+    "mcp": "1.30.0",
+    "numpy": "1.26.4",
+    "Pillow": "10.2.0",
+    "python_xlib": "0.33"
+  },
+  "environment": {
+    "display": ":88",
+    "xvfb": "2:21.1.12-1ubuntu1.8",
+    "python": "3.12.3",
+    "distro": "Ubuntu 24.04",
+    "socket_dir": "private mount namespace tmpfs mode 1777",
+    "tcp_disabled": true,
+    "kernel": "WSL2"
+  },
+  "schema": "agent-interface/xvfb-server-pause-conditions-v1",
+  "source_changed_paths": [
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py"
+  ],
+  "run_id": "AI-XVFB-SERVER-PAUSE-BOUNDARY-20261022-R01"
+}
