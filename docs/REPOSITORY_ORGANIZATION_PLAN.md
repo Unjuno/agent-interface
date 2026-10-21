@@ -91,31 +91,43 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-The latest complete membership recheck is [r135](maintenance/repository-inventory-recheck-20261022-r135.md),
-captured on 2026-10-22 JST against stable main
-`0e289460404b626e3cc26eec4be0b0170bd60ee0` after PR #9334. It records
-1,655 open Issues and 461 open PRs. Issue membership matches r134; the open PR
-set changed after superseded PR #9315 closed. The full historical correction
-chain remains in r134, r133, and earlier receipts. PR #9315 was Draft at exact
-head `76626da8b03df25024d12efb5f1dde2f12c53ed2`; reconciliation
-[r01](maintenance/pr9315-current-main-reconciliation-20261022-r01.md) identified
-the unsafe resource-base reuse predicate. Exact-tree review
-[r02](maintenance/pr9315-supersession-receipt-20261022-r02.md) found no
-PR-only paths; all 35 entries in its three XRes diagnostic manifests match
-current main. PR #9315 is closed as superseded with its branch and historical
-outcomes retained. PR #9333 updated the repository inventory/custody record;
-PR #9334 curated Issue #93's dependency-scoped continuation results. That
-Issue remains open. The user
-selected the prestarted-supervisor design as the first work item; its current
-implementation and evidence boundary are reconciled in the [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
-The standard-caller supervisor Xvfb run now covers one supervisor-owned
-resource-base reuse, release/readback, delayed-request horizon, and independent
-synthetic task oracle. Its runtime receipt remains UNKNOWN and replay denied;
-fresh-target recovery and the bystander negative path through the public caller
-remain open. Keep the supervisor default-off. Then resume the semantic-route
-queue with one bounded family batch. Do not start a broad close/merge campaign from counts alone. A
-disjoint exact-head PR audit or custody slice can proceed only when it does
-not share edited indexes, branches, or evidence with those items.
+This plan is present on current main `cdc8bd6b65bf976137db645c2be31e20090f7d67`
+after PR #9345. The latest complete paginated membership receipt is still
+[r135](maintenance/repository-inventory-recheck-20261022-r135.md), captured
+before #9345 at `0e289460404b626e3cc26eec4be0b0170bd60ee0`; its 1,655 open Issues
+and 461 open PRs are a historical membership baseline, not a current count or
+semantic disposition. Refresh a complete set only when the next change requires
+it, and refresh every touched record before state changes.
+
+The prestarted-supervisor design remains the selected integration thread. Its
+standard-caller Xvfb evidence and limits are recorded in the
+[design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
+The new [R02 trial](../research/integration/standard_caller_xvfb_current_main_20261022/prestarted-fresh-recovery-02/README.md)
+passed once on current main: the cancellation response returned pending in
+252.924 ms; the supervisor release readback completed in 324.791 ms; independent
+key-up readback was observed in 379.339 ms; and a distinct fresh session passed
+its synthetic task oracle through an 8.501 s horizon. The old runtime result
+remains UNKNOWN, `task_success` null, and replay denied. This qualifies one
+same-Xvfb fresh-session recovery schedule, not reliability. The public-caller
+Fake X bystander-reuse refusal passes in normal and optimized mode; see its
+[separate packet](../research/integration/local_fakex_public_bystander_refusal_20261022_r01/README.md).
+The live-Xvfb bystander negative path and whole-server-unavailable release
+remain unqualified. Keep the supervisor default-off. The next
+science/integration batch must target an explicit remaining gap; do not repeat a
+consumed run or turn cleanup into a WSLc/Docker allocation.
+
+Repository-wide execution stays on the six work orders above: establish a live
+queue when needed; preserve and route one bounded idea family; resolve exact
+PRs against current source; disposition Issues individually from evidence;
+reconcile custody only after owner/recoverability checks; then repair entry
+points and issue non-overlapping work packets. Start from the
+[cleanup ledger](REPOSITORY_CLEANUP_PLAN.md) and
+[consolidation history](REPOSITORY_CONSOLIDATION.md), using them as receipts,
+not as proof that old counts or assignments remain current. The next cleanup
+batch is one refreshed family or exact-head PR slice with a named writable
+surface and a short disposition receipt. No bulk close/merge by age, label,
+count, or inactivity; no fixed reviewer quota. A disjoint audit may proceed
+only when it does not edit the same shared index, branch, or evidence.
 
 The computer-control work remains the research objective. Cleanup must not
 launch or consume WSLc/Docker allocations; Issue #7924 remains STOP/HOLD for
