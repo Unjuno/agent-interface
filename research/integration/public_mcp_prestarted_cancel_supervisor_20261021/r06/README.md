@@ -18,6 +18,3 @@ This is Windows CPython 3.11.9 with deterministic Fake X. It does not validate
 live Xlib/Xvfb behavior, release under blocked live platform I/O, late request
 exclusion, independent product task success, MAP01, physical desktop control,
 efficiency or reliability. No WSLc or Docker allocation was used.
-
-
-
