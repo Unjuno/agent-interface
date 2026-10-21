@@ -16,6 +16,10 @@ a second cleanup. The focused suites pass 106/106 in normal and optimized
 Python. This bounds live in-memory cancellation custody; terminal files remain
 under the existing per-call artifact retention.
 
+The [`r05/`](r05/README.md) response-shape check removes internal archive marker
+fields from public call records while preserving the cancellation subrecord.
+The focused suites again pass 106/106 in normal and optimized Python.
+
 The opt-in public MCP composition started one supervisor during owned-session
 startup, before the test admitted input. In the healthy Fake X arm, cancel
 response took 110 ms, the independent JSON oracle recorded exactly one

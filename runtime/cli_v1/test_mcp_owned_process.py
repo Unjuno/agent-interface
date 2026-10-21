@@ -1823,6 +1823,9 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(cancel['replay_allowed'])
                 result = await self._wait_for_cancel_terminal(
                     server, action['call_id'])
+                public_call = result.get('retained_call', result.get('call', {}))
+                self.assertNotIn('cancellation_archived', public_call)
+                self.assertNotIn('cancellation_operation_id', public_call)
                 terminal_duplicate = metadata(await server.call_tool(
                     'interface_guarded_cancel', {'call_id':action['call_id']}))
                 self.assertEqual(terminal_duplicate['operation_id'],

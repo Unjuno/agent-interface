@@ -1,0 +1,21 @@
+{
+  "packet": "public_mcp_prestarted_cancel_supervisor_20261021/r05",
+  "captured_utc": "2026-10-21T14:03:58Z",
+  "platform": "Windows 10 build 26300; CPython 3.11.9; multiprocessing spawn",
+  "baseline_main": "9bf7ec15ea78eccd752adee1af8d00dc9545eaa0",
+  "scope": "R04 terminal cancellation archive path with public response-shape check for internal archive metadata.",
+  "acceptance": [
+    "Archived cancellation receipts remain retrievable through interface_results and duplicate cancel.",
+    "Internal cancellation_archived and cancellation_operation_id storage markers are absent from the public call/retained_call record.",
+    "Action result and cancellation result remain separate; release_confirmed=false, task_success=null, cleanup UNKNOWN, and replay denial remain conservative."
+  ],
+  "commands": [
+    "python -B -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence",
+    "python -B -O -m unittest runtime.cli_v1.test_mcp_owned_process runtime.cli_v1.test_mcp_guarded runtime.guarded_x11_v1.test_cancel_supervisor runtime.guarded_x11_v1.test_xres_client_fence"
+  ],
+  "limits": [
+    "This is deterministic Fake X on Windows and does not exercise production X11 against Xlib or Xvfb.",
+    "This does not prove late queued-effect exclusion, physical input release, independent task success, recovery, MAP01, efficiency, or reliability.",
+    "No WSLc or Docker allocation was used."
+  ]
+}

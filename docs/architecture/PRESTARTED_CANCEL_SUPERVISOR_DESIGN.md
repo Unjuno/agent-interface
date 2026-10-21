@@ -112,6 +112,11 @@ a duplicate cleanup. The four focused suites pass 106/106 in normal and
 optimized Python. This bounds live in-memory cancellation custody; it does not
 set a terminal-file retention limit.
 
+The [r05 packet](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/r05/README.md)
+also verifies that archive bookkeeping fields stay out of public call records
+while the cancellation subrecord remains retrievable; its focused suites pass
+106/106 in normal and optimized Python.
+
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS
 does not retire at the deadline is reported `worker_retired=false`; that state

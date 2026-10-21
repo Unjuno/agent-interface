@@ -1017,8 +1017,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'unknown_call', 'operation_invoked': False}, error=True)
         if record.get('cancellation_archived') is True:
             record['cancellation'] = await load_cancellation_record(call_id, record)
+        public_record = deepcopy(record)
+        public_record.pop('cancellation_archived', None)
+        public_record.pop('cancellation_operation_id', None)
         if record['state'] != 'finished':
-            return content({'status': 'pending', 'call': record,
+            return content({'status': 'pending', 'call': public_record,
                 'cancellation':deepcopy(record.get('cancellation')),
                 'operation_invoked': False})
         if record.get('worker_interrupted') and not record.get('interruption_receipt'):
@@ -1038,7 +1041,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   await asyncio.to_thread(present_result, report, call_root, compact=compact, report_refs=report_refs, include_image=include_image))
         if 'post_dispatch_inspection' in report:
             result['post_dispatch_inspection'] = deepcopy(report['post_dispatch_inspection'])
-        result.update(call_id=call_id, call_directory=str(call_root), retained_call=record,
+        result.update(call_id=call_id, call_directory=str(call_root), retained_call=public_record,
                       operation_invoked=False)
         if record.get('cancellation') is not None:
             result['cancellation'] = deepcopy(record['cancellation'])

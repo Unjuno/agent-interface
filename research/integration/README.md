@@ -56,7 +56,8 @@ does not implement the prestarted cleanup process or whole-transaction
 deadline. The new local [public-MCP prestarted supervisor packet](public_mcp_prestarted_cancel_supervisor_20261021/README.md)
 exercises the opt-in construction through the public caller with Fake X,
 including stale-generation refusal, expiry during a blocked helper, terminal
-receipt archival/readback and retention when archival fails. Its r04 focused
+receipt archival/readback, retention when archival fails, and a check that
+internal archive markers do not leak into public call records. Its r05 focused
 suites pass 106/106 in normal and optimized Python. It is not real-X11,
 task-success, WSLc, MAP01, efficiency, or reliability evidence.
 
