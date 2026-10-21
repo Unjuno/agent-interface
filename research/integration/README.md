@@ -51,17 +51,26 @@ The local [public-MCP cancellation-operation integration](public_mcp_cancel_oper
 adds one operation ID, pending/terminal retention separate from the action,
 event-loop responsiveness during a blocked Fake X release helper, and a
 request-cancellation custody check. r04 passes 77/77 focused tests in both
-normal and optimized Python. It does not implement the prestarted cleanup
-process or whole-transaction deadline and is not real-X11, task-success, WSLc,
-MAP01, efficiency, or reliability evidence; see the source-bound [r04 packet](public_mcp_cancel_operation_registry_20261021/r04/README.md).
+normal and optimized Python. The source-bound [r04 packet](public_mcp_cancel_operation_registry_20261021/r04/README.md)
+does not implement the prestarted cleanup process or whole-transaction
+deadline. The new local [public-MCP prestarted supervisor packet](public_mcp_prestarted_cancel_supervisor_20261021/README.md)
+exercises the opt-in construction through the public caller with Fake X,
+including stale-generation refusal, expiry during a blocked helper, terminal
+receipt archival/readback, retention when archival fails, and a check that
+internal archive markers do not leak into public call records. Its r05 focused
+suites pass 106/106 in normal and optimized Python. R06/R07 connect its opt-in
+to the standard stdio CLI; after preserving one Windows timing error, the
+separate R07 rerun passes 107/107 in both modes. It is not real-X11,
+task-success, WSLc, MAP01, efficiency, or reliability evidence.
 
-The [server-shutdown/cancel-drain probe](standard_caller_shutdown_cancel_drain_20261022/README.md)
-exercises the current public MCP lifespan with the cancellation worker held.
-The caller returns `pending`, but graceful shutdown remains incomplete after
-`owner.close()` returns until that worker is released; the final retained
-owner/session liveness is stale against a Win32 process readback. This is a
-single Windows Fake X construction result, not a release, task-effect, or
-general shutdown-bound proof.
+The corrected-source local [Xvfb caller run](public_mcp_prestarted_cancel_supervisor_20261021/xvfb-local-wsl-20261022-r01/README.md)
+failed closed when XRes found a different PID at the retired owner's resource
+base; release and task effect were not reached. The follow-up [r03 no-input
+diagnostic](public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md)
+reproduces both observer-owned and bystander reuse of that base. Both remain
+`UNKNOWN` and no release is inferred. The r01 socket preflight and r02 missing
+`xdpyinfo` runner failure are preserved separately. These diagnostics do not
+qualify real blocked-I/O release, recovery, task success, WSLc, or efficiency.
 
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 
