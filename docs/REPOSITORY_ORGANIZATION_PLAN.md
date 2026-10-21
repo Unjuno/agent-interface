@@ -169,3 +169,11 @@ custody or an explicit investigation item; canonical entry points are current;
 and workers can claim independent packets without conflicting instructions or
 shared-file edits. Report remaining unreviewed records and research gaps
 explicitly. “Clean” never means deleting ideas or hiding unresolved science.
+
+## PR convergence receipt (2026-10-22)
+
+After the earlier checkpoint, PR [#8371](https://github.com/Unjuno/agent-interface/pull/8371) merged through GitHub at `999c811a6e516f79db357d9a48ed03b1aca50f2c`. Its six-path result preserves bounded report publication/retention and truthful all-attempt model metrics. The exact composed tree was checked against the locally validated candidate; focused custody and metrics tests passed 12/12 in normal and optimized Windows CPython 3.11.9 with Pillow 10.2. Workspace-index, navigation-link, and whitespace checks passed. The broader native runner was attempted locally but did not pass on this Windows checkout: its protocol run recorded 2 failures, 106 errors, and 17 skips, with platform/sparse-checkout incompatibilities; do not describe that suite as green.
+
+PR [#7290](https://github.com/Unjuno/agent-interface/pull/7290) was closed as superseded by #8371 after comparing all six changed paths. Its five report/caller paths match the merged result, and the protocol/harness suite registrations in its branch are already present in current main. The close preserves the source branch, discussion, and historical evidence; no unique code or registration was discarded.
+
+This receipt advances report custody and measurement accounting only. It does not qualify live GUI control, bounded release under blocked platform I/O, MAP01, task-success semantics, matched efficiency/reliability, or WSLc. Issue #7924 remains STOP/HOLD because shared WSLc ownership is unknown; no WSLc allocation or container operation was used. The supervisor design remains opt-in, and its remaining qualification gates stay in the [canonical design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
