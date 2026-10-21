@@ -1,7 +1,6 @@
 # Prestarted cancellation supervisor design
 
-Status: design proposal with a first, unmerged public-MCP integration slice in
-the current worktree; runtime changes and their evidence are described below.
+Status: design proposal with the first public-MCP integration slice merged as PR #9313; runtime changes and their evidence are described below.
 
 ## Goal and constraints
 
@@ -75,9 +74,9 @@ If the supervisor cannot finish by the transaction deadline, the executor thread
 - Startup must fail closed for the opted-in mode if the cancellation supervisor cannot become ready; do not silently fall back to synchronous cancellation.
 - Bound the number of live supervisors and cancellation records per server using the existing guarded-session capacity. If the current capacity is not explicit, define a finite opt-in limit before enabling the path; exhaustion fails closed and cannot evict pending custody.
 
-## Current local implementation delta (2026-10-21)
+## Merged local implementation delta (2026-10-21)
 
-The unmerged current worktree now implements the first public-MCP composition slice in [the cancellation-operation packet](../../research/integration/public_mcp_cancel_operation_registry_20261021/README.md): owned-process cancellation runs on a warmed one-worker executor; the call record receives one operation ID and an additive pending/terminal cancellation subrecord; duplicate requests reuse that operation; `interface_results(call_id)` exposes it while the action remains pending and after it finishes; and a terminal cancellation receipt is written to `cancellation.json` after the cleanup call returns. A cancelled MCP request coroutine does not cancel the underlying operation. The focused owned-process/guarded suites pass 77/77 in normal and optimized Python.
+Merged PR #9313 implements the first public-MCP composition slice in [the cancellation-operation packet](../../research/integration/public_mcp_cancel_operation_registry_20261021/README.md): owned-process cancellation runs on a warmed one-worker executor; the call record receives one operation ID and an additive pending/terminal cancellation subrecord; duplicate requests reuse that operation; `interface_results(call_id)` exposes it while the action remains pending and after it finishes; and a terminal cancellation receipt is written to `cancellation.json` after the cleanup call returns. A cancelled MCP request coroutine does not cancel the underlying operation. The focused owned-process/guarded suites pass 77/77 in normal and optimized Python.
 
 This slice validates a 450 ms caller-response threshold, a sub-100 ms event-loop heartbeat gap, one duplicate release attempt, and conservative UNKNOWN handling in the repository Fake X fixtures. It does **not** implement a whole-transaction deadline, deadline-based late-effect rejection, a prestarted cleanup process, or hard cancellation-worker termination. It is not live X11 release, recovery, task-success, WSLc, MAP01, efficiency, or reliability evidence; do not promote the architecture based on these tests.
 
