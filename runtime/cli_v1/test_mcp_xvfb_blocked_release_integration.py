@@ -1,10 +1,13 @@
-"""Standard guarded MCP cancellation with real Xvfb input and XRes cleanup.
+"""Standard guarded MCP cancellation and fresh-session recovery on private Xvfb.
 
 The owner test factory injects one delayed XTEST request after the public
 caller emits KeyPress(a). The first press reaches the private Xvfb and a
 synthetic app before the owner blocks in the real Display.sync() response
 wait. Cancellation then exercises the normal owned-process, XRes disconnect,
-and fresh-client release path. No arbitrary developer DISPLAY is used.
+and fresh-client release path. Before the delayed-request horizon ends, a new
+MCP server targets a distinct synthetic window on the same X server. The
+independent oracle records whether a late old-session request contaminates its
+task. No arbitrary developer DISPLAY is used.
 """
 
 import asyncio
@@ -241,6 +244,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 'prestarted_cancel_supervisor':_PRESTARTED_CANCEL_SUPERVISOR,
                 'terminal_result_bound_ms':_TERMINAL_BOUND_MS,
                 'late_keypress_outcome':'record either result; do not assume queue cancellation',
+                'fresh_session_same_x_server':True,
+                'fresh_target_is_distinct_window':True,
+                'fresh_task_key':'c',
+                'fresh_task_expected_effect':[3],
             },
             'xvfb':_xvfb_provenance(),
             'source_identity':{
@@ -265,10 +272,15 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
         server = None
         close_resolved = False
         app_thread = None
+        fresh_window = None
         app_stop = threading.Event()
         effect_committed = threading.Event()
         a_release_seen = threading.Event()
         b_press_seen = threading.Event()
+        c_press_seen = threading.Event()
+        fresh_task_started = threading.Event()
+        fresh_effect_atom = None
+        fresh_server = None
         app_events = []
         app_lock = threading.Lock()
         owner_marker = None
@@ -290,6 +302,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     event_mask=(X.KeyPressMask | X.KeyReleaseMask |
                                 X.StructureNotifyMask))
                 effect_atom = app_display.intern_atom('AI_BLOCKED_RELEASE_EFFECT')
+                fresh_effect_atom = app_display.intern_atom(
+                    'AI_BLOCKED_RELEASE_FRESH_SESSION_EFFECT')
                 window.change_property(effect_atom, Xatom.CARDINAL, 32, [0])
                 window.map()
                 window.set_input_focus(X.RevertToParent, X.CurrentTime)
@@ -301,12 +315,28 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                             window.fill_rectangle(gc, column*16, row*16,
                                 min(16, width-column*16),
                                 min(16, height-row*16))
+                fresh_window = screen.root.create_window(
+                    x+300, y, width, height, 0, X.CopyFromParent,
+                    X.InputOutput, X.CopyFromParent, background_pixel=0,
+                    event_mask=(X.KeyPressMask | X.KeyReleaseMask |
+                                X.StructureNotifyMask))
+                fresh_window.change_property(fresh_effect_atom,
+                                             Xatom.CARDINAL, 32, [0])
+                fresh_window.map()
+                fresh_gc = fresh_window.create_gc(foreground=0xFFFFFF)
+                for row in range((height+15)//16):
+                    for column in range((width+15)//16):
+                        if (row+column) % 2 == 0:
+                            fresh_window.fill_rectangle(fresh_gc,
+                                column*16, row*16,
+                                min(16, width-column*16),
+                                min(16, height-row*16))
                 app_display.sync()
 
                 observer = display.Display()
                 keycodes = {
                     name:observer.keysym_to_keycode(XK.string_to_keysym(name))
-                    for name in ('a', 'b')
+                    for name in ('a', 'b', 'c')
                 }
                 self.assertTrue(all(code > 0 for code in keycodes.values()), keycodes)
                 for code in keycodes.values():
@@ -327,9 +357,12 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         with app_lock:
                             row = {'type':event.type,
                                    'detail':getattr(event, 'detail', None),
+                                   'window':getattr(event, 'window', None),
                                    'monotonic_ns':now}
                             app_events.append(row)
-                        if event.type == X.KeyPress and event.detail == keycodes['a']:
+                        if (event.type == X.KeyPress
+                                and event.detail == keycodes['a']
+                                and getattr(event, 'window', None) == window.id):
                             window.change_property(effect_atom, Xatom.CARDINAL,
                                                    32, [1])
                             app_display.sync()
@@ -338,11 +371,30 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                             effect_committed.set()
                         elif event.type == X.KeyRelease and event.detail == keycodes['a']:
                             a_release_seen.set()
-                        elif event.type == X.KeyPress and event.detail == keycodes['b']:
-                            window.change_property(effect_atom, Xatom.CARDINAL,
-                                                   32, [2])
+                        elif (event.type == X.KeyPress
+                                and event.detail == keycodes['b']):
+                            if (fresh_task_started.is_set()
+                                    and getattr(event, 'window', None)
+                                        == fresh_window.id):
+                                fresh_window.change_property(fresh_effect_atom,
+                                    Xatom.CARDINAL, 32, [2])
+                            elif getattr(event, 'window', None) == window.id:
+                                window.change_property(effect_atom,
+                                    Xatom.CARDINAL, 32, [2])
                             app_display.sync()
                             b_press_seen.set()
+                            with app_lock:
+                                app_events[-1]['effect_committed_ns'] = time.monotonic_ns()
+                        elif (event.type == X.KeyPress
+                                and event.detail == keycodes['c']
+                                and getattr(event, 'window', None)
+                                    == fresh_window.id):
+                            fresh_window.change_property(fresh_effect_atom,
+                                Xatom.CARDINAL, 32, [3])
+                            app_display.sync()
+                            with app_lock:
+                                app_events[-1]['effect_committed_ns'] = time.monotonic_ns()
+                            c_press_seen.set()
 
                 app_thread = threading.Thread(
                     target=run_synthetic_application,
@@ -694,7 +746,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
 
                 await self._wait_for_event(a_release_seen)
                 release_readback = {
-                    name:_key_down(observer, code) for name, code in keycodes.items()}
+                    name:_key_down(observer, keycodes[name]) for name in ('a','b')}
                 report['independent_release_readback'] = {
                     'keys_down':release_readback,
                     'owner_release_attempt':cancel['owner_release_attempt'],
@@ -702,6 +754,85 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'observed_ns':time.monotonic_ns(),
                 }
                 self.assertEqual(release_readback, {'a':False,'b':False}, report)
+
+                # Probe recovery on the same X server while the old call still
+                # truthfully carries late_server_request_possible=true.  The
+                # delayed old KeyPress is intentionally allowed to produce
+                # either result; the independent fresh-task oracle records
+                # whether it contaminated the new task after its own effect.
+                fresh_output_root = owner_output_root.parent/'fresh-session-mcp'
+                fresh_session_started_ns = time.monotonic_ns()
+                fresh_task_started.set()
+                fresh_window.set_input_focus(X.RevertToParent, X.CurrentTime)
+                screen.root.warp_pointer(x+300+48, y+48)
+                app_display.sync()
+                fresh_server = create_server(
+                    {'app':fresh_window.id}, fresh_output_root,
+                    session_mode='guarded-x11', guarded_process_identity=True,
+                    guarded_query_worker=True, guarded_window_lifecycle=True,
+                    guarded_owned_process=True)
+                fresh_observed = _metadata(await fresh_server.call_tool(
+                    'interface_guarded_observe', {}))
+                fresh_minted = _metadata(await fresh_server.call_tool(
+                    'interface_guarded_mint', {
+                        'alias':'fresh_field',
+                        'source_sequence':fresh_observed['source']['sequence'],
+                        'point':[x+300+48,y+48], 'region_size':[24,24]}))
+                self.assertEqual(fresh_observed['status'], 'observed', fresh_observed)
+                self.assertEqual(fresh_minted['status'], 'minted', fresh_minted)
+                self.assertNotEqual(fresh_observed['session']['session_id'],
+                                    cancellation.get('owner_generation', {}).get(
+                                        'session_id'), fresh_observed)
+                self.assertNotEqual(fresh_observed['source']['pointer_binding'][
+                    'surface'], window.id, fresh_observed)
+                self.assertNotEqual(
+                    fresh_observed['source']['pointer_binding'].get(
+                        'window_generation'),
+                    report['observation']['pointer_binding'].get(
+                        'window_generation'), fresh_observed)
+                fresh_effect_before_input = observer.create_resource_object(
+                    'window', fresh_window.id).get_full_property(
+                        fresh_effect_atom, X.AnyPropertyType)
+                fresh_effect_before_input = (
+                    list(fresh_effect_before_input.value)
+                    if fresh_effect_before_input is not None else None)
+                fresh_start_ns = time.monotonic_ns()
+                fresh_input = _metadata(await fresh_server.call_tool(
+                    'interface_guarded_input', {
+                        'alias':'fresh_field', 'offset':fresh_minted['offset'],
+                        'interaction':'keyboard', 'observe_after':False,
+                        'wait_for_result_ms':10000,
+                        'tail':[{'op':'key_chord','keys':['c']}]}))
+                await self._wait_for_event(c_press_seen)
+                fresh_effect_after_action = observer.create_resource_object(
+                    'window', fresh_window.id).get_full_property(
+                        fresh_effect_atom, X.AnyPropertyType)
+                fresh_effect_after_action = (list(fresh_effect_after_action.value)
+                    if fresh_effect_after_action is not None else None)
+                fresh_release_readback = {
+                    name:_key_down(observer, keycodes[name])
+                    for name in ('a','b','c')}
+                report['fresh_session_recovery'] = {
+                    'old_cancellation_fence':{
+                        'cleanup_status':cancel.get('cleanup_status'),
+                        'late_server_request_possible':cancel.get(
+                            'late_server_request_possible'),
+                        'release_confirmed':cancel.get('release_confirmed'),
+                        'replay_allowed':cancel.get('replay_allowed'),
+                    },
+                    'new_session_id':fresh_observed['session']['session_id'],
+                    'new_target_xid':fresh_window.id,
+                    'new_process_generation':fresh_observed.get('source', {}).get(
+                        'pointer_binding', {}).get('process_generation'),
+                    'input_status':fresh_input.get('status'),
+                    'input_call_id':fresh_input.get('call_id'),
+                    'effect_before_input':fresh_effect_before_input,
+                    'effect_after_input':fresh_effect_after_action,
+                    'release_readback_after_input':fresh_release_readback,
+                    'session_start_monotonic_ns':fresh_session_started_ns,
+                    'start_monotonic_ns':fresh_start_ns,
+                }
+                self.assertEqual(fresh_input.get('status'), 'completed', fresh_input)
 
                 horizon_ns = (report['timing_ns']['cancel_started']
                               + (_DELAY_MS+500)*1_000_000)
@@ -751,8 +882,68 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         initial_effect=before_cancel_value,
                         final_effect=effect_value,
                         release_readback=release_readback,
-                        horizon_readback=late),
+                        horizon_readback={'a':late['a'], 'b':late['b']}),
                 }
+                final_fresh_effect = observer.create_resource_object(
+                    'window', fresh_window.id).get_full_property(
+                        fresh_effect_atom, X.AnyPropertyType)
+                final_fresh_effect = (list(final_fresh_effect.value)
+                    if final_fresh_effect is not None else None)
+                with app_lock:
+                    late_b_after_fresh_start = any(
+                        row.get('type') == X.KeyPress
+                        and row.get('detail') == keycodes['b']
+                        and row.get('monotonic_ns', 0) >= fresh_start_ns
+                        for row in app_events)
+                fresh_horizon_readback = {
+                    name:_key_down(observer, keycodes[name])
+                    for name in ('a','b','c')}
+                old_after_fresh = _metadata(await server.call_tool(
+                    'interface_results', {
+                        'call_id':pending['call_id'], 'include_image':False}))
+                old_after_fresh_cancel = old_after_fresh.get(
+                    'cancellation', {}).get('result', {})
+                old_fence = report['fresh_session_recovery'][
+                    'old_cancellation_fence']
+                fresh_checks = {
+                    'old_unknown_fence_preserved':(
+                        old_fence['cleanup_status'] == 'UNKNOWN'
+                        and old_fence['late_server_request_possible'] is True
+                        and old_fence['release_confirmed'] is False
+                        and old_fence['replay_allowed'] is False),
+                    'old_fence_unchanged_after_fresh_task':(
+                        old_after_fresh_cancel.get('cleanup_status') == 'UNKNOWN'
+                        and old_after_fresh_cancel.get(
+                            'late_server_request_possible') is True
+                        and old_after_fresh_cancel.get('release_confirmed') is False
+                        and old_after_fresh_cancel.get('task_success') is None
+                        and old_after_fresh_cancel.get('replay_allowed') is False),
+                    'new_task_effect_after_input':
+                        fresh_effect_after_action == [3],
+                    'new_task_precondition_exact':
+                        fresh_effect_before_input == [0],
+                    'new_task_effect_at_horizon':final_fresh_effect == [3],
+                    'no_old_delayed_press_after_new_session':
+                        not late_b_after_fresh_start,
+                    'new_task_keys_up_after_input':not any(
+                        fresh_release_readback.values()),
+                    'all_keys_up_at_horizon':not any(
+                        fresh_horizon_readback.values()),
+                }
+                report['fresh_session_recovery'].update({
+                    'effect_at_horizon':final_fresh_effect,
+                    'late_old_keypress_after_new_session':late_b_after_fresh_start,
+                    'horizon_readback':fresh_horizon_readback,
+                    'old_cancellation_after_fresh_task':old_after_fresh_cancel,
+                    'task_oracle':{
+                        'scope':'same-Xvfb fresh session while old cancel fence remains UNKNOWN',
+                        'expected_effect':[3],
+                        'checks':fresh_checks,
+                        'status':'pass' if all(fresh_checks.values()) else 'fail',
+                        'task_success':all(fresh_checks.values()),
+                        'runtime_task_success':None,
+                    },
+                })
                 # Either delayed-b outcome is evidence. Do not convert a live
                 # result into an assumed general queue-drain guarantee.
                 self.assertFalse(late['a'], report)
@@ -853,6 +1044,13 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     except BaseException as error:
                         report['close_error'] = repr(error)
                         cleanup_errors.append(f'private MCP close failed: {error!r}')
+                if fresh_server is not None:
+                    try:
+                        report['fresh_session_close'] = await self._close_after_work(
+                            fresh_server)
+                    except BaseException as error:
+                        report['fresh_session_close_error'] = repr(error)
+                        cleanup_errors.append(f'fresh private MCP close failed: {error!r}')
                 app_stop.set()
                 if app_thread is not None:
                     app_thread.join(1.0)
