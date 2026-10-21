@@ -53,10 +53,12 @@ event-loop responsiveness during a blocked Fake X release helper, and a
 request-cancellation custody check. r04 passes 77/77 focused tests in both
 normal and optimized Python. The source-bound [r04 packet](public_mcp_cancel_operation_registry_20261021/r04/README.md)
 does not implement the prestarted cleanup process or whole-transaction
-deadline. The new local [public-MCP prestarted supervisor packet](public_mcp_prestarted_cancel_supervisor_20261021/r01/README.md)
+deadline. The new local [public-MCP prestarted supervisor packet](public_mcp_prestarted_cancel_supervisor_20261021/README.md)
 exercises the opt-in construction through the public caller with Fake X,
-including stale-generation refusal and expiry during a blocked helper. Neither
-is real-X11, task-success, WSLc, MAP01, efficiency, or reliability evidence.
+including stale-generation refusal, expiry during a blocked helper, terminal
+receipt archival/readback and retention when archival fails. Its r04 focused
+suites pass 106/106 in normal and optimized Python. It is not real-X11,
+task-success, WSLc, MAP01, efficiency, or reliability evidence.
 
 Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
 

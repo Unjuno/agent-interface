@@ -105,6 +105,13 @@ state. Therefore the worker never sets `release_confirmed=true`, and this slice
 does not prove late queued-effect exclusion, blocked-server release, recovery,
 independent task success, WSLc, MAP01, efficiency, or reliability.
 
+The follow-up [r04 packet](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/r04/README.md)
+adds disk-backed terminal cancellation receipt lookup and proves that an
+injected archive-write failure retains the in-memory result and does not start
+a duplicate cleanup. The four focused suites pass 106/106 in normal and
+optimized Python. This bounds live in-memory cancellation custody; it does not
+set a terminal-file retention limit.
+
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS
 does not retire at the deadline is reported `worker_retired=false`; that state
@@ -114,14 +121,14 @@ does not authorize another cleanup operation or input replay.
 
 Keep local Fake X work on the public MCP composition and do not combine it with WSLc or a new allocation. The merged #9313 registry slice and current opt-in supervisor path partially cover the first three construction steps below; preserve them as separate evidence. Continue in this order so each failure has a narrow owner and the original action receipt remains readable throughout:
 
-1. Complete the typed cancellation-operation record and bound the per-server registry. #9313 supplies operation identity, atomic duplicate reuse and pending/terminal results, but `calls` and retained terminal cancellation records have no explicit finite capacity or eviction rule. Define a cap and lifecycle that never evicts pending custody, and fail closed on exhaustion rather than admitting another cleanup.
+1. Complete the typed cancellation-operation record and bound live per-server custody. #9313 supplies operation identity, atomic duplicate reuse and pending/terminal results. The current worktree archives terminal receipts in the existing per-call `cancellation.json` artifact and drops their full in-memory payload after a successful write. One operation may be live at a time; if archiving fails, its payload remains in memory and new cancellation admission fails closed. This bounds live in-memory custody, not total disk retention, which still follows the existing per-call artifact lifecycle.
 2. Preserve `interface_results(call_id)` access to the cancellation subrecord while the original action is pending and after it is terminal. #9313 covers this composition path in Fake X tests; keep proving that cancellation does not mutate the action report, `task_success`, or replay decision as later lifecycle handling is added.
 3. Add opt-in supervisor startup/readiness and process custody. The current local path starts one supervisor before input and fails closed if readiness is missing; process creation itself is not hard-bounded. The supervisor owns one typed transaction and absolute monotonic deadline. Verify the caller cannot start a second cleanup after timeout, shutdown or unreaped termination.
 4. Connect the owner cancellation path to the supervisor and exercise healthy, delayed, expired, stale-generation, duplicate, blocked-receipt, blocked-XRes, blocked-release, malformed-receipt, and process-exit cases through the public MCP tools. Assert both the returned receipt and the independent Fake X effect log/state.
 5. Verify event-loop progress and bounded shutdown while the operation is pending. Explicitly prove that caller task cancellation, result polling, close, and server shutdown do not lose transaction custody or create a replacement operation.
 6. Run focused suites in normal and optimized Python. Only after this composed Fake X slice passes should a separately frozen private-Xvfb check test real X-server ordering and independent readback. Keep physical desktop, MAP01, WSLc portability, and matched efficiency as separate gates.
 
-The next implementation slice must close the composed fault matrix and define finite registry capacity, especially blocked XRes, blocked sync/readback, post-deadline queued effects, supervisor startup delay/failure, stale binding, shutdown custody, and unreaped-helper behavior. Keep the flag opt-in until these cases are covered and the real X-server ordering boundary is separately qualified. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
+The next implementation slice must close the composed fault matrix, especially blocked XRes, blocked sync/readback, post-deadline queued effects, supervisor startup delay/failure, stale binding, shutdown custody, and unreaped-helper behavior. R04 covers live in-memory cancellation custody; total disk retention still has no finite policy and remains an operational limitation of per-call artifacts. Keep the flag opt-in until these cases are covered and the real X-server ordering boundary is separately qualified. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
 
 ## Validation required before integration
 

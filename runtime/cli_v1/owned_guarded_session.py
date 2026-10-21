@@ -15,6 +15,8 @@ import time
 from types import SimpleNamespace
 
 from .mcp_guarded import GuardedSessionOwner
+from ..guarded_x11_v1.cancel_supervisor import (
+    PrestartedCancellationSupervisor, x11_cancel_worker)
 from ..guarded_x11_v1.xres_client_fence import (
     supervise_xres_worker, wait_for_client_disconnect_supervised)
 
@@ -41,6 +43,7 @@ _XRES_DISCONNECT_TERMINATE_GRACE_S = 0.1
 # means UNKNOWN, never release.
 _RETIRED_RELEASE_TIMEOUT_S = 1.5
 _RETIRED_RELEASE_TERMINATE_GRACE_S = 0.1
+_CANCEL_TRANSACTION_DEADLINE_S = 3.0
 _OWNER_INPUT_OBLIGATIONS_SCHEMA = 'agent-interface/owner-input-obligations-v1'
 _OWNER_INPUT_OBLIGATIONS_CAPACITY = 8192
 _OWNER_INPUT_OBLIGATIONS_MAGIC = b'AIOL'
@@ -296,6 +299,8 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
     def __init__(self, targets, directory, display_name=None, *,
                  process_identity=False, query_worker=False,
                  observation_worker=False, window_lifecycle=False,
+                 prestarted_cancel_supervisor=False,
+                 _cleanup_supervisor_target=None,
                  _owner_factory=None):
         super().__init__(targets, directory, display_name,
                          process_identity=process_identity,
@@ -304,6 +309,17 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                          window_lifecycle=window_lifecycle)
         self._owner_root = Path(directory)
         self._owner_factory = _owner_factory
+        if type(prestarted_cancel_supervisor) is not bool:
+            raise ValueError('prestarted_cancel_supervisor must be a boolean')
+        if _cleanup_supervisor_target is not None and not callable(_cleanup_supervisor_target):
+            raise TypeError('_cleanup_supervisor_target must be callable')
+        self._prestarted_cancel_enabled = prestarted_cancel_supervisor
+        self._cleanup_supervisor_target = (_cleanup_supervisor_target
+            or x11_cancel_worker)
+        self._cleanup_supervisor = None
+        self._prestarted_cleanup_result = None
+        self._active_cancel_operation_id = None
+        self._active_cancel_deadline_ns = None
         self._rpc = None
         self._control = None
         self._process = None
@@ -390,8 +406,18 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 process.join(_JOIN_TIMEOUT_S)
                 raise RuntimeError(self.error)
             self._apply_snapshot(response['snapshot'])
+            if self._prestarted_cancel_enabled:
+                self._cleanup_supervisor = PrestartedCancellationSupervisor(
+                    self._cleanup_supervisor_target,
+                    expected_session_id=self.session_id)
             self.state = 'open'
         except BaseException:
+            try:
+                process_alive = process.pid is not None and process.is_alive()
+            except (AssertionError, ValueError):
+                process_alive = False
+            if process_alive:
+                self._retire('owned or cancellation supervisor readiness failed')
             if self.state == 'opening':
                 self.state = 'failed'
             for connection in (rpc_parent, control_parent, rpc_child, control_child):
@@ -524,6 +550,78 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                 'release':deepcopy(release)}
 
     def _cleanup_after_owner_retirement(self, retirement):
+        if getattr(self, '_prestarted_cancel_enabled', False):
+            if self._prestarted_cleanup_result is not None:
+                client_disconnect, release_attempt = self._prestarted_cleanup_result
+                return deepcopy(client_disconnect), deepcopy(release_attempt)
+            if retirement.get('retired') is True:
+                live_read = _read_owner_input_obligations(
+                    getattr(self, '_owner_input_obligations_state', None))
+                self._owner_input_obligations_live_read = live_read
+                if live_read.get('status') == 'snapshot':
+                    self._owner_input_obligations = deepcopy(live_read['obligations'])
+                    self._owner_input_obligations_source = 'retired_child_shared_state'
+                supervisor = self._cleanup_supervisor
+                deadline_ns = self._active_cancel_deadline_ns
+                if type(deadline_ns) is not int:
+                    deadline_ns = time.monotonic_ns() + int(
+                        _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
+                if (live_read.get('status') == 'snapshot'
+                        and supervisor is not None):
+                    owner_process = self._snapshot_cache.get('owner_process') or {}
+                    request = {
+                        'operation_id':self._active_cancel_operation_id or str(self.session_id),
+                        'session_id':self.session_id,
+                        'binding_revision':self.binding_revision,
+                        'display_name':self.display_name,
+                        'owner_pid':self._snapshot_cache.get('owner_process_pid'),
+                        'x_resource_base':self._snapshot_cache.get(
+                            'owner_x_client_resource_base'),
+                        'owner_generation':{
+                            'session_id':self.session_id,
+                            'child_pid':owner_process.get('pid'),
+                            'x_resource_base':self._snapshot_cache.get(
+                                'owner_x_client_resource_base'),
+                            'binding_revision':self.binding_revision},
+                        'keys':deepcopy(self._owner_input_obligations.get('keys', {})),
+                        'buttons':list(self._owner_input_obligations.get('buttons', [])),
+                        'owner_data_directory':str(self._owner_root),
+                    }
+                    result = supervisor.run(request,
+                        deadline_monotonic_ns=deadline_ns)
+                    client_disconnect = result.get('owner_client_disconnect', {
+                        'status':'unknown', 'reason':result.get('reason',
+                            'supervisor_receipt_unavailable'),
+                        'worker_retired':result.get('worker_retired')})
+                    release_attempt = result.get('owner_release_attempt', {
+                        'status':'unknown', 'reason':result.get('reason',
+                            'supervisor_receipt_unavailable'),
+                        'worker_retired':result.get('worker_retired'),
+                        'worker_exitcode':result.get('worker_exitcode')})
+                    if result.get('status') != 'completed':
+                        client_disconnect = dict(client_disconnect,
+                            supervisor_status=result.get('status'),
+                            supervisor_reason=result.get('reason'))
+                else:
+                    client_disconnect = {'status':'unknown',
+                        'reason':('owner_input_obligations_unavailable'
+                            if live_read.get('status') != 'snapshot'
+                            else 'prestarted_supervisor_unavailable'),
+                        'worker_retired':None}
+                    release_attempt = {'status':'not_attempted',
+                        'reason':client_disconnect['reason']}
+            else:
+                self._owner_input_obligations_live_read = {
+                    'status':'not_read', 'reason':'owner_not_retired'}
+                client_disconnect = {'status':'unknown', 'reason':'owner_not_retired',
+                                     'worker_retired':None}
+                release_attempt = {'status':'not_attempted',
+                                   'reason':'owner_not_retired'}
+            self._owner_client_disconnect = deepcopy(client_disconnect)
+            self._owner_release_attempt = deepcopy(release_attempt)
+            self._prestarted_cleanup_result = (deepcopy(client_disconnect),
+                                               deepcopy(release_attempt))
+            return client_disconnect, release_attempt
         if retirement.get('retired') is True:
             live_read = _read_owner_input_obligations(
                 getattr(self, '_owner_input_obligations_state', None))
@@ -634,7 +732,15 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
             return True
         return bool(keys) or bool(buttons)
 
-    def cancel_guarded(self, token):
+    def cancel_guarded(self, token, *, operation_id=None,
+                       deadline_monotonic_ns=None):
+        if deadline_monotonic_ns is None:
+            deadline_monotonic_ns = time.monotonic_ns() + int(
+                _CANCEL_TRANSACTION_DEADLINE_S * 1_000_000_000)
+        if type(deadline_monotonic_ns) is not int:
+            raise ValueError('deadline_monotonic_ns must be an integer')
+        self._active_cancel_deadline_ns = deadline_monotonic_ns
+        self._active_cancel_operation_id = operation_id or str(token)
         if self._process is None or not self._process.is_alive() or self._control is None:
             return {'status':'not_active', 'input_dispatched':False,
                     'release_confirmed':False}
@@ -756,6 +862,9 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
         return self._retire(reason)
 
     def close(self):
+        cleanup_supervisor = getattr(self, '_cleanup_supervisor', None)
+        if cleanup_supervisor is not None:
+            cleanup_supervisor.close()
         if self.close_report is not None:
             return deepcopy(self.close_report)
         if self._process is None:
