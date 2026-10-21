@@ -49,6 +49,32 @@ def _fake_prestarted_cancel_worker(request):
             time.sleep(0.01)
     state_path = root/'supervisor-fake-x.json'
     state = _read_json(state_path, {'down':[1], 'effects':[]})
+    if (root/'bystander-reuse').exists():
+        # Synthetic XRes identity for composed-caller refusal coverage; the
+        # real XRes predicate is covered separately by test_cancel_supervisor.
+        observed_pid = request['owner_pid'] + 100000
+        disconnect = {
+            'status':'unknown',
+            'reason':'resource_base_reused_by_unrelated_client',
+            'expected_pid':request['owner_pid'],
+            'observed_pid':observed_pid,
+            'observer_pid':os.getpid(),
+            'resource_base':request['x_resource_base'],
+        }
+        release = {'status':'not_attempted',
+                   'reason':'stale_owner_identity'}
+        receipt = {
+            'status':'unknown', 'reason':'stale_owner_identity',
+            'operation_id':request['operation_id'],
+            'session_id':request['session_id'],
+            'owner_client_disconnect':disconnect,
+            'owner_release_attempt':release,
+            'release_confirmed':False, 'cleanup_status':'UNKNOWN',
+            'task_success':None, 'replay_allowed':False,
+        }
+        state.setdefault('refused', []).append(receipt)
+        _write_json(state_path, state)
+        return receipt
     stale = (root/'stale-cleanup-supervisor-generation').exists()
     expired = time.monotonic_ns() >= request['deadline_monotonic_ns']
     if stale or expired:
@@ -1931,6 +1957,43 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(operation['operation_id'], cancel['operation_id'])
                 self.assertEqual(operation['session_id'],
                                  result['cancellation']['owner_generation']['session_id'])
+            finally:
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                await server.call_tool('interface_close', {})
+
+    async def test_prestarted_supervisor_public_path_preserves_bystander_refusal(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            server, action = await self._start_prestarted_cancel_case(root)
+            (root/'bystander-reuse').write_text('inject unrelated XRes PID',
+                                                  encoding='utf-8')
+            try:
+                cancel = metadata(await server.call_tool('interface_guarded_cancel', {
+                    'call_id':action['call_id']}))
+                self.assertIn(cancel['status'],
+                              ('pending', 'cancel_unconfirmed', 'cancel_requested'),
+                              cancel)
+                terminal = await self._wait_for_cancel_terminal(
+                    server, action['call_id'])
+                cleanup = terminal['cancellation']['result']
+                self.assertTrue(cleanup['owner_process_retired'], cleanup)
+                self.assertEqual(cleanup['owner_client_disconnect']['status'],
+                                 'unknown', cleanup)
+                self.assertEqual(cleanup['owner_client_disconnect']['reason'],
+                                 'resource_base_reused_by_unrelated_client', cleanup)
+                self.assertEqual(cleanup['owner_release_attempt']['status'],
+                                 'not_attempted', cleanup)
+                self.assertFalse(cleanup['release_confirmed'], cleanup)
+                self.assertEqual(cleanup['cleanup_status'], 'UNKNOWN', cleanup)
+                self.assertIsNone(cleanup['task_success'], cleanup)
+                self.assertFalse(cleanup['replay_allowed'], cleanup)
+                state = _read_json(root/'supervisor-fake-x.json', {})
+                self.assertEqual(state['down'], [1], state)
+                self.assertEqual(state['effects'], [], state)
+                self.assertEqual(len(state['refused']), 1, state)
+                self.assertEqual(state['refused'][0]['owner_client_disconnect']
+                                 ['observed_pid'], cleanup['owner_client_disconnect']
+                                 ['observed_pid'])
             finally:
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
