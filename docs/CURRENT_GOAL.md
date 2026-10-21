@@ -101,6 +101,11 @@ pending/terminal retention alongside (not inside) the action result, and a
 pass 77/77 each. It still has no whole-transaction deadline or prestarted
 cleanup process and does not qualify real X11 release, task effect, recovery,
 or WSLc.
+The [current-main shutdown/cancel-drain probe](../research/integration/standard_caller_shutdown_cancel_drain_20261022/README.md)
+found that server lifespan exit stays pending after owner close returns while a
+cancellation callback remains blocked; the retained owner-liveness snapshot was
+stale against a Win32 PID readback. This is a test-gated Windows Fake X result,
+not real X11 release or a general shutdown-time guarantee.
 Current-source native-WSL/Xvfb reruns now directly cover two remaining caller
 boundaries: [blocked-owner release and delayed-request horizon](../research/integration/standard_caller_xvfb_blocked_release_current_e7_20261021/README.md)
 independently observed XTEST keys up in 448 ms while the public caller retained
