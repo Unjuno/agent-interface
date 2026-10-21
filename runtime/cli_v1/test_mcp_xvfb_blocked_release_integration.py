@@ -8,6 +8,7 @@ and fresh-client release path. No arbitrary developer DISPLAY is used.
 """
 
 import asyncio
+from copy import deepcopy
 import hashlib
 import io
 import json
@@ -200,6 +201,21 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 return row
             if time.monotonic() >= deadline:
                 return row
+            await asyncio.sleep(0.05)
+
+    async def _wait_for_cancellation_terminal(self, server, call_id, timeout=5.0):
+        deadline = time.monotonic() + timeout
+        latest = None
+        while True:
+            row = _metadata(await asyncio.wait_for(server.call_tool(
+                'interface_results', {'call_id':call_id, 'include_image':False}),
+                timeout=2.0))
+            latest = row.get('cancellation')
+            if (isinstance(latest, dict)
+                    and latest.get('status') in ('completed', 'unknown')):
+                return latest
+            if time.monotonic() >= deadline:
+                return latest
             await asyncio.sleep(0.05)
 
     async def _close_after_work(self, server, timeout=6.0):
@@ -590,8 +606,11 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 OwnedGuardedSessionOwner._retire = traced_retire
                 OwnedGuardedSessionOwner.cancel_guarded = traced_cancel
                 try:
-                    cancel = _metadata(await server.call_tool(
+                    cancel_response = _metadata(await server.call_tool(
                         'interface_guarded_cancel', {'call_id':pending['call_id']}))
+                    cancelled = True
+                    cancellation = await self._wait_for_cancellation_terminal(
+                        server, pending['call_id'], timeout=_TERMINAL_BOUND_MS/1000)
                 finally:
                     OwnedGuardedSessionOwner._cancel_requires_owner_retirement = (
                         original_decision_method)
@@ -602,10 +621,25 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     report['timing_ns']['cancel_returned']
                     - report['timing_ns']['cancel_started'])/1_000_000
                 report['cancel_elapsed_ms'] = cancel_elapsed_ms
-                report['cancel'] = cancel
+                report['cancel_response'] = cancel_response
                 report['cancel_internal_trace'] = cancel_internal_trace
-                cancelled = True
-                self.assertLess(cancel_elapsed_ms, _CANCEL_BOUND_MS, cancel)
+                report['cancellation_terminal'] = cancellation
+                self.assertLess(cancel_elapsed_ms, _CANCEL_BOUND_MS, cancel_response)
+                if cancel_response.get('status') == 'pending':
+                    self.assertTrue(cancel_response.get('operation_id'), cancel_response)
+                    self.assertFalse(cancel_response.get('release_confirmed'), cancel_response)
+                    self.assertEqual(cancel_response.get('cleanup_status'), 'UNKNOWN',
+                                     cancel_response)
+                    self.assertIsNone(cancel_response.get('task_success'), cancel_response)
+                    self.assertFalse(cancel_response.get('replay_allowed'), cancel_response)
+                self.assertIsInstance(cancellation, dict, cancel_response)
+                self.assertIn(cancellation.get('status'), ('completed', 'unknown'),
+                              cancellation)
+                cancel = deepcopy(cancellation.get('result') or cancel_response)
+                cancel['operation_id'] = cancellation.get(
+                    'operation_id', cancel_response.get('operation_id'))
+                cancel['cancellation'] = deepcopy(cancellation)
+                report['cancel'] = cancel
                 expected_cancel_status = (
                     'cancel_unconfirmed' if _CANCEL_ACK_WITHHOLD_S
                     else 'cancel_requested')

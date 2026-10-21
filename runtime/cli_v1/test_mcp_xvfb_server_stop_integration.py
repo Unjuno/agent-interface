@@ -406,19 +406,24 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(report['server_resume'].get('status'), 'resumed',
                                  report['server_resume'])
                 self.assertLess(elapsed_s, _CANCEL_BOUND_S, cancel)
-                self.assertTrue(cancel.get('owner_process_retired'), cancel)
                 self.assertFalse(cancel.get('release_confirmed'), cancel)
                 self.assertEqual(cancel.get('cleanup_status'), 'UNKNOWN', cancel)
                 self.assertIsNone(cancel.get('task_success'), cancel)
                 self.assertFalse(cancel.get('replay_allowed'), cancel)
-                self.assertTrue(cancel.get('late_server_request_possible'), cancel)
-                self.assertIn(cancel.get('owner_client_disconnect', {}).get('status'),
-                              ('unknown', 'still_connected'), cancel)
-                self.assertEqual(cancel.get('owner_release_attempt', {}).get('status'),
-                                 'not_attempted', cancel)
-                self.assertEqual(
-                    cancel.get('owner_release_attempt', {}).get('reason'),
-                    'owner_disconnect_not_confirmed', cancel)
+                if cancel.get('status') == 'pending':
+                    self.assertTrue(cancel.get('operation_id'), cancel)
+                    self.assertIn(cancel.get('cancellation', {}).get('status'),
+                                  ('pending', 'completed', 'unknown'), cancel)
+                else:
+                    self.assertTrue(cancel.get('owner_process_retired'), cancel)
+                    self.assertTrue(cancel.get('late_server_request_possible'), cancel)
+                    self.assertIn(cancel.get('owner_client_disconnect', {}).get('status'),
+                                  ('unknown', 'still_connected'), cancel)
+                    self.assertEqual(cancel.get('owner_release_attempt', {}).get('status'),
+                                     'not_attempted', cancel)
+                    self.assertEqual(
+                        cancel.get('owner_release_attempt', {}).get('reason'),
+                        'owner_disconnect_not_confirmed', cancel)
                 report['server_stop_ms'] = (
                     report['server_resume']['monotonic_ns']
                     - report['server_process']['stopped_ns']) / 1_000_000
@@ -469,6 +474,18 @@ class StandardCallerServerStopTests(unittest.IsolatedAsyncioTestCase):
                     'call_id':call_id, 'include_image':False}))
                 report['terminal'] = terminal
                 self.assertNotEqual(terminal.get('status'), 'pending', terminal)
+                cancellation = terminal.get('cancellation')
+                report['cancellation_terminal'] = cancellation
+                self.assertIsInstance(cancellation, dict, terminal)
+                self.assertIn(cancellation.get('status'), ('completed', 'unknown'),
+                              cancellation)
+                cancellation_result = cancellation.get('result') or {}
+                self.assertFalse(cancellation_result.get('release_confirmed'),
+                                 cancellation)
+                self.assertEqual(cancellation_result.get('cleanup_status'), 'UNKNOWN',
+                                 cancellation)
+                self.assertIsNone(cancellation_result.get('task_success'), cancellation)
+                self.assertFalse(cancellation_result.get('replay_allowed'), cancellation)
                 self.assertFalse(terminal.get('release_confirmed'), terminal)
                 self.assertEqual(terminal.get('cleanup_status'), 'UNKNOWN', terminal)
                 self.assertIsNone(terminal.get('task_success'), terminal)
