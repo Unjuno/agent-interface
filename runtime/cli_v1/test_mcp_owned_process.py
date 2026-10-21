@@ -828,6 +828,41 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(release['status'], 'not_attempted')
         self.assertEqual(release['reason'], 'owner_input_obligations_unavailable')
 
+    def test_prestarted_cleanup_retains_worker_request_validation_fields(self):
+        shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
+        _write_test_obligation_state(shared, {
+            'schema':'agent-interface/owner-input-obligations-v1',
+            'keys':{'a':38}, 'buttons':[],
+        })
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner._prestarted_cancel_enabled = True
+        owner._prestarted_cleanup_result = None
+        owner._owner_input_obligations_state = shared
+        owner._owner_input_obligations = {'keys':{}, 'buttons':[]}
+        owner._owner_input_obligations_source = 'child_rpc_snapshot'
+        owner._cleanup_supervisor = Mock()
+        owner._cleanup_supervisor.run.return_value = {
+            'status':'unknown', 'reason':'invalid_cleanup_request',
+            'invalid_fields':['owner_pid'], 'worker_retired':True,
+        }
+        owner._active_cancel_deadline_ns = time.monotonic_ns() + 1_000_000_000
+        owner._active_cancel_operation_id = 'operation-1'
+        owner.session_id = 'session-1'
+        owner.binding_revision = 0
+        owner.display_name = ':88'
+        owner._snapshot_cache = {
+            'owner_process':{'pid':1234}, 'owner_process_pid':1234,
+            'owner_x_client_resource_base':6291456,
+        }
+        owner._owner_root = Path(tempfile.gettempdir())
+
+        client, release = owner._cleanup_after_owner_retirement({'retired':True})
+
+        self.assertEqual(client['reason'], 'invalid_cleanup_request')
+        self.assertEqual(client['invalid_fields'], ['owner_pid'])
+        self.assertEqual(release['invalid_fields'], ['owner_pid'])
+        self.assertFalse(client.get('release_confirmed', False))
+
     def test_retired_owner_rejects_torn_live_ledger_checksum(self):
         shared = multiprocessing.get_context('spawn').RawArray('B', 8192)
         _write_test_obligation_state(shared, {

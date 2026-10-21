@@ -602,6 +602,11 @@ class OwnedGuardedSessionOwner(GuardedSessionOwner):
                         client_disconnect = dict(client_disconnect,
                             supervisor_status=result.get('status'),
                             supervisor_reason=result.get('reason'))
+                        invalid_fields = result.get('invalid_fields')
+                        if (isinstance(invalid_fields, list)
+                                and all(type(field) is str for field in invalid_fields)):
+                            client_disconnect['invalid_fields'] = list(invalid_fields)
+                            release_attempt['invalid_fields'] = list(invalid_fields)
                 else:
                     client_disconnect = {'status':'unknown',
                         'reason':('owner_input_obligations_unavailable'

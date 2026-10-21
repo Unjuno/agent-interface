@@ -98,8 +98,11 @@ The corrected wrapper reached the owner path in distinct [run 39618514760](../re
 which retired the owner but received `invalid_cleanup_request` from the
 supervisor before XRes/release. Neither run yielded supervisor release readback
 or an independent task oracle. Field-level rejection diagnostics now have
-normal/optimized local test coverage; another live run must identify the exact
-rejected predicate before any release claim.
+normal/optimized local test coverage, and the public owner adapter now retains
+those fields. The broad X11 job on that run also exposed two tests that assumed
+terminal cancel responses; commit `422f7ea6` separates bounded `pending`
+responses from terminal `interface_results` receipts. Another live run must
+identify the exact rejected predicate before any release claim.
 The local [public MCP cancellation-operation packet](../research/integration/public_mcp_cancel_operation_registry_20261021/README.md)
 now implements one operation ID per call, a dedicated one-worker cancel path,
 pending/terminal retention alongside (not inside) the action result, and a
