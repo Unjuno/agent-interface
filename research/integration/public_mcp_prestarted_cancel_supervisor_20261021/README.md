@@ -41,6 +41,17 @@ post-horizon readback or task oracle ran. The final harness cleanup is not
 cancellation-release evidence. The full first outcome, raw report, conditions,
 source hashes, and local runner are preserved separately.
 
+The later non-prestarted public-caller [Xvfb run 39672589543](xvfb-run-39672589543-response-handoff-25ms/README.md)
+returned in 276.447 ms against its 300 ms response deadline while the owner was
+blocked in `Display.sync()` and the child cancellation acknowledgement was
+withheld. A separate release worker verified keys up after 386.005 ms, an
+independent X client observed both keys up immediately and at the 8.5 s
+delayed-request horizon, and the synthetic task oracle passed. Runtime
+`cleanup_status` nevertheless remained UNKNOWN, `release_confirmed=false`,
+`task_success=null`, replay denied, and `late_server_request_possible=true`.
+This is a separate scoped Xvfb outcome, not a reliability estimate or a
+replacement for the earlier 301.268 ms deadline miss.
+
 The opt-in public MCP composition started one supervisor during owned-session
 startup, before the test admitted input. In the healthy Fake X arm, cancel
 response took 110 ms, the independent JSON oracle recorded exactly one
