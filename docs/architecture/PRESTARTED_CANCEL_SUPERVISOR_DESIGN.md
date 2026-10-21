@@ -125,6 +125,15 @@ repeat with 107/107 focused tests in normal and optimized Python. This confirms
 CLI reachability and deterministic Fake X composition only; live X11 behavior
 is still unqualified.
 
+The first isolated real-Xvfb attempt on PR #9315, [run 39617200853](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xvfb-run-39617200853/README.md),
+failed before entering the owner cancellation method: the trace wrapper did not
+accept the new `operation_id` and absolute-deadline keyword arguments. The raw
+receipt is preserved. It records UNKNOWN/no replay, with no independent release
+readback or task oracle; a later harness cleanup readback is not supervisor
+evidence. The wrapper is now corrected to forward both keywords. This is a
+harness repair only; a separate run is still required to assess the real-Xvfb
+supervisor path.
+
 The opt-in flag defaults off. Startup readiness is fail-closed before input,
 but process creation itself is not proven hard-bounded. A helper that the OS
 does not retire at the deadline is reported `worker_retired=false`; that state

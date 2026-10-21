@@ -471,12 +471,15 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 original_retire = OwnedGuardedSessionOwner._retire
                 original_cancel = OwnedGuardedSessionOwner.cancel_guarded
 
-                def traced_cancel(owned, token):
+                def traced_cancel(owned, token, *, operation_id=None,
+                                  deadline_monotonic_ns=None):
                     entry = describe_owner_process(owned)
                     cancel_internal_trace['cancel_entries'].append(entry)
                     started_ns = time.monotonic_ns()
                     try:
-                        result = original_cancel(owned, token)
+                        result = original_cancel(owned, token,
+                            operation_id=operation_id,
+                            deadline_monotonic_ns=deadline_monotonic_ns)
                     except BaseException as error:
                         cancel_internal_trace['cancel_returns'].append({
                             'elapsed_ms':(time.monotonic_ns()-started_ns)/1_000_000,
