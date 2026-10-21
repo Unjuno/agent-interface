@@ -56,6 +56,7 @@ def cell(status='failed', reported_usage=None, publication=None, malformed=False
                     'message': str(error), 'cause': type(error.__cause__).__name__ if error.__cause__ else None,
                     **{k: copy.deepcopy(getattr(error, k, None)) for k in
                        ('call_id', 'thread_id', 'usage', 'usage_error',
+                        'requested_model', 'requested_effort',
                         'visible_images_submitted', 'wait_ns')}})
                 errors[-1]['publication_error'] = (
                     type(getattr(error, 'publication_error', None)).__name__
@@ -112,6 +113,8 @@ class GroundingFailureAccounting(unittest.TestCase):
         self.assertEqual(attempt['status'], 'failed')
         self.assertEqual(attempt['call_id'], 'turn-1')
         self.assertEqual(attempt['visible_images_submitted'], 1)
+        self.assertEqual(attempt['requested_model'], 'inert')
+        self.assertEqual(attempt['requested_effort'], 'low')
         self.assertIs(type(attempt['wait_ns']), int)
         self.assertGreaterEqual(attempt['wait_ns'], 0)
         self.assertEqual(attempt['usage'], {'input_tokens': 100, 'cached_input_tokens': 20,
@@ -125,6 +128,8 @@ class GroundingFailureAccounting(unittest.TestCase):
             error, = row['errors']
             self.assertEqual(error['call_id'], attempt['call_id'])
             self.assertEqual(error['thread_id'], 'thread-1' if row['client_turns'] else None)
+            self.assertEqual(error['requested_model'], 'inert')
+            self.assertEqual(error['requested_effort'], 'low')
             self.assertEqual(error['usage'], attempt['usage'])
             self.assertEqual(error['visible_images_submitted'], attempt['visible_images_submitted'])
             self.assertEqual(error['wait_ns'], attempt['wait_ns'])
@@ -187,6 +192,9 @@ class GroundingFailureAccounting(unittest.TestCase):
         self.assertEqual(row['counts'], {'execute': 0, 'verify': 0})
         self.assertEqual(r['outcome'], 'CALLER_FAILED')
         self.assertIsNone(attempt['call_id'])
+        self.assertIsNone(attempt['thread_id'])
+        self.assertEqual(attempt['requested_model'], 'inert')
+        self.assertEqual(attempt['requested_effort'], 'low')
         self.assertIsNone(attempt['visible_images_submitted'])
         self.assertIsNone(attempt['usage'])
         self.assertEqual(r['accounting']['attempted_calls'], 1)

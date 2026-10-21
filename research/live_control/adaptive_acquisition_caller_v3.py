@@ -52,6 +52,7 @@ def _aggregate_cost(costs, attempted_calls):
 
 class ModelFailure(RuntimeError):
     def __init__(self, message, *, call_id=None, thread_id=None, usage=None,
+                 requested_model=None, requested_effort=None,
                  visible_images_submitted=None, wait_ns=None,
                  typed_status="FAILED_UPSTREAM"):
         super().__init__(message)
@@ -60,6 +61,8 @@ class ModelFailure(RuntimeError):
             raise ValueError("known typed model failure status required")
         self.call_id = call_id
         self.thread_id = thread_id
+        self.requested_model = requested_model
+        self.requested_effort = requested_effort
         self.usage = usage
         self.visible_images_submitted = visible_images_submitted
         self.wait_ns = wait_ns
@@ -335,7 +338,9 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         attempt_id, started = id_factory(), clock()
         attempt = {"attempt_id": attempt_id, "stage": name, "status": "started",
                    "started_ns": started, "completed_ns": None, "call_id": None,
-                   "usage": None, "visible_images_submitted": None,
+                   "thread_id": None, "requested_model": None,
+                   "requested_effort": None, "usage": None,
+                   "visible_images_submitted": None,
                    "wait_ns": None, "error": None}
         attempts.append(attempt); stages[name] = {"status": "started", "reason": None}
         emit({"event": "model_attempt_started", **copy.deepcopy(attempt)})
@@ -351,13 +356,16 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                            "elapsed_ns": ended-started})
             metadata_error = None
             try:
-                for field in ("call_id", "thread_id", "usage",
+                for field in ("call_id", "thread_id", "requested_model",
+                              "requested_effort", "usage",
                               "visible_images_submitted", "wait_ns"):
                     try:
                         value = getattr(error, field, None)
-                        if field in ("call_id", "thread_id") and value is not None:
+                        if field in ("call_id", "thread_id", "requested_model",
+                                     "requested_effort") and value is not None:
                             attempt[field] = _optional_identity(value, field)
-                        elif field in ("call_id", "thread_id"):
+                        elif field in ("call_id", "thread_id", "requested_model",
+                                       "requested_effort"):
                             attempt[field] = None
                         else:
                             attempt[field] = (_usage(value) if field == "usage" else
@@ -372,6 +380,8 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         ended = clock()
         attempt.update(status="completed", completed_ns=ended,
                        call_id=result["call_id"], usage=result["usage"],
+                       requested_model=result["requested_model"],
+                       requested_effort=result["requested_effort"],
                        visible_images_submitted=result["visible_images_submitted"],
                        wait_ns=result["wait_ns"])
         if "thread_id" in result:

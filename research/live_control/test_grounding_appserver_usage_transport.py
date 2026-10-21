@@ -65,7 +65,8 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                 client.initialize()
                 model = PersistentGroundingModel(
                     root / "session", workspace, node="unused", cli="unused",
-                    client=client, path_converter=str)
+                    client=client, path_converter=str,
+                    model="synthetic-model", effort="medium")
                 events = []
                 execute_calls = []
 
@@ -103,10 +104,18 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                 self.assertEqual(result["accounting"]["completed_calls"], 0)
                 self.assertEqual(attempt["call_id"], "turn-ledger-1")
                 self.assertEqual(attempt["thread_id"], "thread-ledger-1")
+                self.assertEqual(attempt["requested_model"], "synthetic-model")
+                self.assertEqual(attempt["requested_effort"], "medium")
                 self.assertEqual(attempt["usage"], {
                     "input_tokens": 1234, "cached_input_tokens": 234,
                     "cache_write_input_tokens": 0, "output_tokens": 56,
                     "reasoning_output_tokens": 12})
+                failure_receipt = json.loads(
+                    (root / "call" / "failure.json").read_text(encoding="utf-8"))
+                self.assertEqual(failure_receipt["requested_model"],
+                                 attempt["requested_model"])
+                self.assertEqual(failure_receipt["requested_effort"],
+                                 attempt["requested_effort"])
                 self.assertEqual(result["accounting"]["usage_totals"]["input_tokens"], 1234)
                 self.assertEqual(execute_calls, [])
                 self.assertIsNone(result["task_effect"])
@@ -119,6 +128,14 @@ class GroundingAppServerUsageTransportTest(unittest.TestCase):
                 self.assertEqual(len(usage_events), 1)
                 self.assertEqual(usage_events[0]["params"]["threadId"], attempt["thread_id"])
                 self.assertEqual(usage_events[0]["params"]["turnId"], attempt["call_id"])
+                sent = [row["message"] for row in protocol
+                        if row["direction"] == "sent"]
+                thread_start, = [row for row in sent if row["method"] == "thread/start"]
+                turn_start, = [row for row in sent if row["method"] == "turn/start"]
+                self.assertEqual(thread_start["params"]["model"],
+                                 attempt["requested_model"])
+                self.assertEqual(turn_start["params"]["effort"],
+                                 attempt["requested_effort"])
                 self.assertTrue(any(event.get("event") == "model_attempt_finished" and
                                     event.get("thread_id") == attempt["thread_id"]
                                     for event in events))

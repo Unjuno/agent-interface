@@ -63,7 +63,8 @@ class GroundingCallError(RuntimeError):
     """A failed call with the accounting already observed before its failure."""
 
     def __init__(self, error, *, call_id, usage, visible_images_submitted, wait_ns,
-                 thread_id=None, usage_error=None, publication_error=None):
+                 thread_id=None, requested_model=None, requested_effort=None,
+                 usage_error=None, publication_error=None):
         try:
             diagnostic = str.__str__(repr(error))
         except BaseException:
@@ -74,6 +75,8 @@ class GroundingCallError(RuntimeError):
         self.visible_images_submitted = visible_images_submitted
         self.wait_ns = wait_ns
         self.thread_id = thread_id
+        self.requested_model = requested_model
+        self.requested_effort = requested_effort
         self.usage_error = usage_error
         self.publication_error = publication_error
 
@@ -137,6 +140,8 @@ class PersistentGroundingModel:
                 failure = {
                     "thread_id": handle.thread_id, "turn_id": handle.turn_id,
                     "status": turn.status, "answer_eligible": False,
+                    "requested_model": self.model,
+                    "requested_effort": self.effort,
                     "error": turn.error, "usage": known_usage,
                     "usage_error": usage_error,
                     "runner_ns": elapsed,
@@ -185,6 +190,8 @@ class PersistentGroundingModel:
                 visible_images_submitted=1 if handle is not None else None,
                 wait_ns=time.perf_counter_ns() - started,
                 thread_id=handle.thread_id if handle is not None else None,
+                requested_model=self.model,
+                requested_effort=self.effort,
                 usage_error=getattr(error, "usage_error", usage_error),
                 publication_error=getattr(error, "publication_error", None)) from cause
 

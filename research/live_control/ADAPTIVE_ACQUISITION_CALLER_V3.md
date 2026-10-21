@@ -14,8 +14,11 @@ The added [JSONL transport composition regression](test_grounding_appserver_usag
 uses the real `CodexAppServerClient` against a deterministic local protocol peer.
 It verifies that a failed completed turn's thread ID, turn/call ID and token usage
 survive into the adaptive caller's all-attempt ledger and match the retained
-protocol journal. The peer is synthetic: this checks transport-to-ledger
-plumbing, not provider billing, provider-log reconciliation, or task effects.
+protocol journal; requested model and effort also match the sent thread/turn
+requests. Failed-call receipts and attempts retain that requested configuration
+even when turn start fails before a call ID or image admission is known. The peer
+is synthetic: this checks transport-to-ledger plumbing, not provider billing,
+provider-log reconciliation, or task effects.
 
 The [explicit compiled v3 connection](COMPILED_CALLER_V3.md) builds from the final
 selected target and retains a returned core receipt across auxiliary sink
@@ -56,9 +59,10 @@ The result retains the ordered statuses from reuse, local repair, model
 reacquisition and post-model revalidation so a later success cannot erase why
 the fallback was entered.
 
-The attempt ledger records provider thread and turn/call identity, provider
-usage, visible images submitted and model wait for completed and failed attempts
-when available. Older adapters may omit thread identity. Coverage is
+The attempt ledger records provider thread and turn/call identity, requested
+model/effort, provider usage, visible images submitted and model wait for
+completed and failed attempts when available. Older adapters may omit thread
+identity. Coverage is
 reported independently; missing values remain unavailable rather than becoming
 zero. A typed upstream capacity refusal becomes `TASK_DEFERRED` rather than a
 generic caller failure, while failed upstream and malformed output remain
