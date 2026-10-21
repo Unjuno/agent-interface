@@ -91,14 +91,15 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-The latest recorded complete membership comparison is cleanup-ledger snapshot
-r128, captured on 2026-10-21. Treat it as a historical baseline, not today's
-queue. The next repository-wide action is a fresh complete paginated delta with
-stable main SHA before/after. Then select one unowned, bounded idea-family batch
-from the already recorded semantic-route gaps; do not start a broad close/merge
-campaign from counts alone. In parallel only, a disjoint exact-head PR audit or
-custody slice may proceed if it does not share edited indexes, branches, or
-evidence with that family batch.
+The latest complete membership recheck is [r129](maintenance/repository-inventory-recheck-20261022-r129.md),
+captured on 2026-10-22 JST against stable main `9bf7ec15ea78eccd752adee1af8d00dc9545eaa0`.
+Issue membership matches r120; the PR set changed from r128 by adding #9315 and
+#9316 and removing #8354 and #7188. This is only a current membership pointer.
+The next step is to refresh the worker map and select one unowned, bounded
+idea-family batch from the recorded semantic-route gaps. Do not start a broad
+close/merge campaign from counts alone. A disjoint exact-head PR audit or
+custody slice can proceed only when it does not share edited indexes, branches,
+or evidence with that family batch.
 
 The computer-control work remains the research objective. Cleanup must not
 launch or consume WSLc/Docker allocations; those require their own verified
