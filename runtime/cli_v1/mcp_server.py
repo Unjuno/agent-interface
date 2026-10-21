@@ -253,7 +253,18 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         else:
             owner = GuardedSessionOwner(targets, root, display_name, **owner_options)
     shutting_down = False
+    server_shutdown_started = False
     server_instance_id = uuid.uuid4().hex
+
+    def rollback_unentered_close(operation, revoked):
+        """Release a manual close reservation only if no worker entered it."""
+        nonlocal shutting_down
+        if operation != 'close' or not revoked:
+            return
+        with calls_lock:
+            if (not server_shutdown_started
+                    and (owner is None or owner.state != 'closed')):
+                shutting_down = False
 
     def close_owner():
         try:
@@ -266,10 +277,11 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
 
     @asynccontextmanager
     async def lifespan(_server):
-        nonlocal shutting_down
+        nonlocal shutting_down, server_shutdown_started
         try:
             yield {}
         finally:
+            server_shutdown_started = True
             shutting_down = True
             # Finish committed workers before touching their connection. No
             # cancellation-based redispatch or close racing with active input.
@@ -496,6 +508,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             admission.finish()
 
     async def submit(operation, kwargs, compact, report_refs, detail="full", observation_refs=False, *, wait_for_result_ms=None):
+        nonlocal shutting_down
         if wait_for_result_ms is not None and (operation not in ('guarded_input','guarded_recover_input','guarded_compiled')
                 or type(wait_for_result_ms) is not int or not 0<=wait_for_result_ms<=10000):
             return content({'status':'invalid_request','error':'INVALID_RESPONSE_WAIT',
@@ -542,7 +555,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 compact, report_refs, detail, observation_refs,registered_call_id,wait_for_result_ms)
         except BaseException as error:
             revoked = admission.revoke_pending()
-            if revoked: finish_unentered_record(error)
+            if revoked:
+                finish_unentered_record(error)
+                rollback_unentered_close(operation, revoked)
             if not isinstance(error, Exception):
                 # Preserve cancellation/fatal exception propagation after
                 # revoking only work that has not entered the callable.
@@ -559,7 +574,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             # A terminal future can fail/cancel before callable entry. Revoke
             # only pending work; a running worker still owns its slot.
             revoked = admission.revoke_pending()
-            if revoked: finish_unentered_record('executor handle terminated before invocation')
+            if revoked:
+                finish_unentered_record('executor handle terminated before invocation')
+                rollback_unentered_close(operation, revoked)
             if not task.cancelled():
                 task.exception()
         worker.add_done_callback(finished)
@@ -583,7 +600,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             # custody when only this transport await was cancelled.
             if worker.done():
                 revoked = admission.revoke_pending()
-                if revoked: finish_unentered_record('executor handle terminated before invocation')
+                if revoked:
+                    finish_unentered_record('executor handle terminated before invocation')
+                    rollback_unentered_close(operation, revoked)
             handle_cancelled = (isinstance(error,asyncio.CancelledError) and worker.cancelled()
                                 and asyncio.current_task().cancelling()==0)
             if wait_for_result_ms is not None and (isinstance(error,Exception) or handle_cancelled):
@@ -661,7 +680,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             # close_owner shuts down the cancellation executor, so it must not
             # join an operation whose custody is still active.
             with calls_lock:
-                if (shutting_down or active_cancellation_operation is not None
+                if ((shutting_down and owner.state != 'closed')
+                        or active_cancellation_operation is not None
                         or lock.locked()):
                     return content({'status':'busy', 'operation_invoked':False,
                         'release_confirmed':False, 'cleanup_status':'UNKNOWN',
