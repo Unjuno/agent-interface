@@ -37,6 +37,14 @@ def _delayed_release_worker(send_connection):
     })
 
 
+def _release_then_delayed_shutdown_worker(send_connection):
+    send_connection.send({
+        'status':'released',
+        'release':{'verified':True, 'keys_down':[], 'buttons_down':[]},
+    })
+    time.sleep(0.15)
+
+
 def _fake_prestarted_cancel_worker(request):
     """Independent Fake X effect log for the public supervisor composition."""
     root = Path(request['owner_data_directory'])
@@ -452,6 +460,31 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result['worker_exitcode'], 0)
         self.assertGreaterEqual(result['elapsed_ms'], 300)
         self.assertLess(result['elapsed_ms'], 1500)
+
+    def test_retired_release_waits_boundedly_for_clean_worker_shutdown(self):
+        from runtime.guarded_x11_v1.xres_client_fence import supervise_xres_worker
+
+        owner = object.__new__(OwnedGuardedSessionOwner)
+        owner.display_name = 'fake-display'
+
+        def run_worker(_target, _args, **kwargs):
+            return supervise_xres_worker(
+                _release_then_delayed_shutdown_worker, (),
+                timeout_s=kwargs['timeout_s'],
+                terminate_grace_s=kwargs['terminate_grace_s'],
+                accepted_statuses=kwargs['accepted_statuses'])
+
+        with patch('runtime.cli_v1.owned_guarded_session.supervise_xres_worker',
+                   side_effect=run_worker) as supervisor:
+            result = owner._release_retired_owner_inputs(
+                {'keys':{'a':38}, 'buttons':[]})
+
+        self.assertEqual(result['status'], 'readback_verified', result)
+        self.assertEqual(result['release'], {
+            'verified':True, 'keys_down':[], 'buttons_down':[]})
+        self.assertTrue(result['worker_retired'], result)
+        self.assertEqual(result['worker_exitcode'], 0)
+        self.assertEqual(supervisor.call_args.kwargs['terminate_grace_s'], 0.25)
 
     def test_retired_release_preserves_shutdown_diagnostics_without_accepting_release(self):
         owner = object.__new__(OwnedGuardedSessionOwner)
@@ -1562,7 +1595,7 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(_target.__name__, '_release_retired_inputs_worker')
                     self.assertEqual(_args[1:], ({'CTRL':1}, []))
                     self.assertEqual(kwargs['timeout_s'], 1.5)
-                    self.assertEqual(kwargs['terminate_grace_s'], 0.1)
+                    self.assertEqual(kwargs['terminate_grace_s'], 0.25)
                     self.assertEqual(kwargs['accepted_statuses'], ('released', 'unknown'))
                     return supervise_xres_worker(
                         _blocked_release_worker, (), timeout_s=kwargs['timeout_s'],
