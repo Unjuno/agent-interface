@@ -1,0 +1,753 @@
+{
+  "baseline_main": "cc5ef16c560cc985ee0951d3d53d659e892f5167",
+  "checks": {
+    "all_composites": true,
+    "control_3_of_3": true,
+    "main_identity": true,
+    "paused_3_of_3": true,
+    "raw_hashes": true,
+    "runner_hash": true,
+    "series_cleanup": true,
+    "six_trials": true,
+    "source_hashes": true
+  },
+  "external_caller_response": {
+    "reason": "no timestamp immediately before server.call_tool; cancel_started precedes the pause-settling sleep and setup",
+    "status": "UNQUALIFIED"
+  },
+  "fresh_effect_timing": {
+    "reason": "independent effect checked, but no monotonic timestamp attached to that readback",
+    "status": "UNQUALIFIED"
+  },
+  "interpretation": "Three matched pairs pass the frozen admission-based composite in both arms. This small pilot is not broad reliability evidence. The cancel_started-to-return interval includes test setup and the 50 ms pre-call Xvfb-stop settling sleep, so it is not caller invocation-to-return latency. Fresh effects pass the independent oracle, but exact effect-readback timestamps are absent. No token/model efficiency was measured.",
+  "limitations": [
+    "three pairs only",
+    "private Xvfb process pause, not host-wide I/O or physical GUI",
+    "release follows X server resume; no release while stopped is claimed",
+    "actual call invocation-to-return time unmeasured",
+    "fresh effect timestamp unmeasured",
+    "synthetic task oracle; old runtime task_success remains null",
+    "no matched efficiency, MAP01 or WSLc portability"
+  ],
+  "overall": "PASS_SCOPED_ADMISSION_ONLY_E2E_UNMEASURED",
+  "paired_deltas": [
+    {
+      "control": "C01",
+      "delta_paused_minus_control_ms": {
+        "admission_response": -2.154595999999998,
+        "parent_readback": 1183.135904,
+        "pre_call_setup_response": 52.144187000000045
+      },
+      "paused": "P01"
+    },
+    {
+      "control": "C02",
+      "delta_paused_minus_control_ms": {
+        "admission_response": -2.65954899999997,
+        "parent_readback": 1161.532898,
+        "pre_call_setup_response": 51.653858000000014
+      },
+      "paused": "P02"
+    },
+    {
+      "control": "C03",
+      "delta_paused_minus_control_ms": {
+        "admission_response": 0.05969400000000746,
+        "parent_readback": 1176.325601,
+        "pre_call_setup_response": 51.61295899999999
+      },
+      "paused": "P03"
+    }
+  ],
+  "per_trial": [
+    {
+      "admission_to_parent_readback_ms": 391.461366,
+      "admission_to_release_ms": 327.23055,
+      "admission_to_response_ms": 255.417678,
+      "admission_to_terminal_ms": 333.562426,
+      "arm": "control",
+      "checks": {
+        "fresh_oracle": true,
+        "horizon": true,
+        "old_unknown": true,
+        "pause_config": true,
+        "pending_fence": true,
+        "release_readback": true,
+        "response_300ms": true,
+        "terminal_5s": true,
+        "test": true,
+        "wrapper": true,
+        "xvfb": true
+      },
+      "composite_pass": true,
+      "pause_ms": 0,
+      "pre_call_setup_start_to_response_ms": 257.339187,
+      "resume_to_parent_readback_ms": null,
+      "trial": "C01"
+    },
+    {
+      "admission_to_parent_readback_ms": 1574.59727,
+      "admission_to_release_ms": 1501.559968,
+      "admission_to_response_ms": 253.263082,
+      "admission_to_terminal_ms": 1508.220724,
+      "arm": "paused",
+      "checks": {
+        "fresh_oracle": true,
+        "horizon": true,
+        "old_unknown": true,
+        "pause_config": true,
+        "pending_fence": true,
+        "release_after_resume": true,
+        "release_readback": true,
+        "response_300ms": true,
+        "returned_before_resume": true,
+        "terminal_5s": true,
+        "test": true,
+        "wrapper": true,
+        "xvfb": true
+      },
+      "composite_pass": true,
+      "pause_ms": 1500.343393,
+      "pre_call_setup_start_to_response_ms": 309.483374,
+      "resume_to_parent_readback_ms": 127.833958,
+      "trial": "P01"
+    },
+    {
+      "admission_to_parent_readback_ms": 1548.593979,
+      "admission_to_release_ms": 1506.180376,
+      "admission_to_response_ms": 253.738246,
+      "admission_to_terminal_ms": 1512.671346,
+      "arm": "paused",
+      "checks": {
+        "fresh_oracle": true,
+        "horizon": true,
+        "old_unknown": true,
+        "pause_config": true,
+        "pending_fence": true,
+        "release_after_resume": true,
+        "release_readback": true,
+        "response_300ms": true,
+        "returned_before_resume": true,
+        "terminal_5s": true,
+        "test": true,
+        "wrapper": true,
+        "xvfb": true
+      },
+      "composite_pass": true,
+      "pause_ms": 1500.32332,
+      "pre_call_setup_start_to_response_ms": 309.810271,
+      "resume_to_parent_readback_ms": 101.874013,
+      "trial": "P02"
+    },
+    {
+      "admission_to_parent_readback_ms": 387.061081,
+      "admission_to_release_ms": 324.188336,
+      "admission_to_response_ms": 256.397795,
+      "admission_to_terminal_ms": 331.13696,
+      "arm": "control",
+      "checks": {
+        "fresh_oracle": true,
+        "horizon": true,
+        "old_unknown": true,
+        "pause_config": true,
+        "pending_fence": true,
+        "release_readback": true,
+        "response_300ms": true,
+        "terminal_5s": true,
+        "test": true,
+        "wrapper": true,
+        "xvfb": true
+      },
+      "composite_pass": true,
+      "pause_ms": 0,
+      "pre_call_setup_start_to_response_ms": 258.156413,
+      "resume_to_parent_readback_ms": null,
+      "trial": "C02"
+    },
+    {
+      "admission_to_parent_readback_ms": 389.179976,
+      "admission_to_release_ms": 326.901565,
+      "admission_to_response_ms": 254.895285,
+      "admission_to_terminal_ms": 333.70512,
+      "arm": "control",
+      "checks": {
+        "fresh_oracle": true,
+        "horizon": true,
+        "old_unknown": true,
+        "pause_config": true,
+        "pending_fence": true,
+        "release_readback": true,
+        "response_300ms": true,
+        "terminal_5s": true,
+        "test": true,
+        "wrapper": true,
+        "xvfb": true
+      },
+      "composite_pass": true,
+      "pause_ms": 0,
+      "pre_call_setup_start_to_response_ms": 256.920347,
+      "resume_to_parent_readback_ms": null,
+      "trial": "C03"
+    },
+    {
+      "admission_to_parent_readback_ms": 1565.505577,
+      "admission_to_release_ms": 1508.170406,
+      "admission_to_response_ms": 254.954979,
+      "admission_to_terminal_ms": 1514.479325,
+      "arm": "paused",
+      "checks": {
+        "fresh_oracle": true,
+        "horizon": true,
+        "old_unknown": true,
+        "pause_config": true,
+        "pending_fence": true,
+        "release_after_resume": true,
+        "release_readback": true,
+        "response_300ms": true,
+        "returned_before_resume": true,
+        "terminal_5s": true,
+        "test": true,
+        "wrapper": true,
+        "xvfb": true
+      },
+      "composite_pass": true,
+      "pause_ms": 1500.303027,
+      "pre_call_setup_start_to_response_ms": 308.533306,
+      "resume_to_parent_readback_ms": 117.029845,
+      "trial": "P03"
+    }
+  ],
+  "raw_file_count": 82,
+  "raw_hashes": [
+    {
+      "actual": "f1826aae2b3d1ecaaf482451cd6a0501d30b7d81d97b7ad714ecc424df30cb6c",
+      "expected": "f1826aae2b3d1ecaaf482451cd6a0501d30b7d81d97b7ad714ecc424df30cb6c",
+      "match": true,
+      "path": "C01/command.txt"
+    },
+    {
+      "actual": "b57d6f4c9c1fdeb1c9b204f00c26fd2359f20132116e5e5251be401f27605f7d",
+      "expected": "b57d6f4c9c1fdeb1c9b204f00c26fd2359f20132116e5e5251be401f27605f7d",
+      "match": true,
+      "path": "C01/result.json"
+    },
+    {
+      "actual": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "expected": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "match": true,
+      "path": "C01/result.observation.png"
+    },
+    {
+      "actual": "eca740e64f11ee1fb88d527b7de748c865b91b7ea8f269dff2aec62920cd3428",
+      "expected": "eca740e64f11ee1fb88d527b7de748c865b91b7ea8f269dff2aec62920cd3428",
+      "match": true,
+      "path": "C01/stderr.txt"
+    },
+    {
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true,
+      "path": "C01/stdout.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C01/test-exit-code.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C01/wrapper-exit-code.txt"
+    },
+    {
+      "actual": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "expected": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "match": true,
+      "path": "C01/xvfb-executable.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C01/xvfb-exit-code.txt"
+    },
+    {
+      "actual": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "expected": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "match": true,
+      "path": "C01/xvfb.log"
+    },
+    {
+      "actual": "2f4ea65eb6f22ac0800b3e24ce68dc6b1a63648493fae5673a67b3f872fcef4b",
+      "expected": "2f4ea65eb6f22ac0800b3e24ce68dc6b1a63648493fae5673a67b3f872fcef4b",
+      "match": true,
+      "path": "C01/xvfb.pid"
+    },
+    {
+      "actual": "fe606f501a8b6a24f60d9a14f5320d470604b347207d73b1d8b7217ef5b42c33",
+      "expected": "fe606f501a8b6a24f60d9a14f5320d470604b347207d73b1d8b7217ef5b42c33",
+      "match": true,
+      "path": "C02/command.txt"
+    },
+    {
+      "actual": "5815c7d820c304f9433dca60ac3d42acce916000dc6a2c59aed5171e990fac81",
+      "expected": "5815c7d820c304f9433dca60ac3d42acce916000dc6a2c59aed5171e990fac81",
+      "match": true,
+      "path": "C02/result.json"
+    },
+    {
+      "actual": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "expected": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "match": true,
+      "path": "C02/result.observation.png"
+    },
+    {
+      "actual": "6a6267222cd920ad57e1a5c7fea84ca504f562545c2db7a5059ea7a3e34467c3",
+      "expected": "6a6267222cd920ad57e1a5c7fea84ca504f562545c2db7a5059ea7a3e34467c3",
+      "match": true,
+      "path": "C02/stderr.txt"
+    },
+    {
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true,
+      "path": "C02/stdout.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C02/test-exit-code.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C02/wrapper-exit-code.txt"
+    },
+    {
+      "actual": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "expected": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "match": true,
+      "path": "C02/xvfb-executable.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C02/xvfb-exit-code.txt"
+    },
+    {
+      "actual": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "expected": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "match": true,
+      "path": "C02/xvfb.log"
+    },
+    {
+      "actual": "bfdba9adccec0b22b41a8cafd2b6abcff2e032ba8d5255f179bfc21c779941ef",
+      "expected": "bfdba9adccec0b22b41a8cafd2b6abcff2e032ba8d5255f179bfc21c779941ef",
+      "match": true,
+      "path": "C02/xvfb.pid"
+    },
+    {
+      "actual": "1bb0fadf0165409250150ead42e55eca2035e4f601b83203639dfb49b067805b",
+      "expected": "1bb0fadf0165409250150ead42e55eca2035e4f601b83203639dfb49b067805b",
+      "match": true,
+      "path": "C03/command.txt"
+    },
+    {
+      "actual": "937188211e72d0139fe195a264d870eeb788afe57d11d85285fbb526ce646e4b",
+      "expected": "937188211e72d0139fe195a264d870eeb788afe57d11d85285fbb526ce646e4b",
+      "match": true,
+      "path": "C03/result.json"
+    },
+    {
+      "actual": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "expected": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "match": true,
+      "path": "C03/result.observation.png"
+    },
+    {
+      "actual": "0bab1f717d9ffc89a356d5ede89a75486e6fab1e4b88b7a9416e9b364d126f4d",
+      "expected": "0bab1f717d9ffc89a356d5ede89a75486e6fab1e4b88b7a9416e9b364d126f4d",
+      "match": true,
+      "path": "C03/stderr.txt"
+    },
+    {
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true,
+      "path": "C03/stdout.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C03/test-exit-code.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C03/wrapper-exit-code.txt"
+    },
+    {
+      "actual": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "expected": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "match": true,
+      "path": "C03/xvfb-executable.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "C03/xvfb-exit-code.txt"
+    },
+    {
+      "actual": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "expected": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "match": true,
+      "path": "C03/xvfb.log"
+    },
+    {
+      "actual": "dcf714b2ca422f1bffe3e1dee5ca3fc2416a7a9aa3abfc58e7aa74692a96f441",
+      "expected": "dcf714b2ca422f1bffe3e1dee5ca3fc2416a7a9aa3abfc58e7aa74692a96f441",
+      "match": true,
+      "path": "C03/xvfb.pid"
+    },
+    {
+      "actual": "ccd07ec973c7acb47633e8cba74937494e16814c4e8d18525ecde862934aa9d5",
+      "expected": "ccd07ec973c7acb47633e8cba74937494e16814c4e8d18525ecde862934aa9d5",
+      "match": true,
+      "path": "candidate-runtime-manifest.sha256"
+    },
+    {
+      "actual": "6e91b7b10fdfc45e51b06f98875109e3fd3d77fe9e5c55e00194a82ddf1db44d",
+      "expected": "6e91b7b10fdfc45e51b06f98875109e3fd3d77fe9e5c55e00194a82ddf1db44d",
+      "match": true,
+      "path": "dependency-versions.txt"
+    },
+    {
+      "actual": "3c225a520cb217c030d31f2e65f143d962e055433849826f19d34928246b3fcf",
+      "expected": "3c225a520cb217c030d31f2e65f143d962e055433849826f19d34928246b3fcf",
+      "match": true,
+      "path": "host-runner.log"
+    },
+    {
+      "actual": "2b3ba1dbd384f5485f4a1092d446ea3344a7a29f5d810d30cffb0fa85d25c9e8",
+      "expected": "2b3ba1dbd384f5485f4a1092d446ea3344a7a29f5d810d30cffb0fa85d25c9e8",
+      "match": true,
+      "path": "P01/command.txt"
+    },
+    {
+      "actual": "fa4b809ef1fc3cd5d583275b18daf7ecf9889a6c71e7015d8659a13181d1137c",
+      "expected": "fa4b809ef1fc3cd5d583275b18daf7ecf9889a6c71e7015d8659a13181d1137c",
+      "match": true,
+      "path": "P01/result.json"
+    },
+    {
+      "actual": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "expected": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "match": true,
+      "path": "P01/result.observation.png"
+    },
+    {
+      "actual": "1c491892807f2c66cd1ac0ce011e897a770dfbe1f325f7db0091229279e23f91",
+      "expected": "1c491892807f2c66cd1ac0ce011e897a770dfbe1f325f7db0091229279e23f91",
+      "match": true,
+      "path": "P01/stderr.txt"
+    },
+    {
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true,
+      "path": "P01/stdout.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P01/test-exit-code.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P01/wrapper-exit-code.txt"
+    },
+    {
+      "actual": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "expected": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "match": true,
+      "path": "P01/xvfb-executable.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P01/xvfb-exit-code.txt"
+    },
+    {
+      "actual": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "expected": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "match": true,
+      "path": "P01/xvfb.log"
+    },
+    {
+      "actual": "b7c168626fe053af4281c556b8b80043664eedef3bc99f8766c81d8cc1623651",
+      "expected": "b7c168626fe053af4281c556b8b80043664eedef3bc99f8766c81d8cc1623651",
+      "match": true,
+      "path": "P01/xvfb.pid"
+    },
+    {
+      "actual": "0c8973e1fde35aa4adf8fc71e711331f721e8538f91b468266101f6f4e748700",
+      "expected": "0c8973e1fde35aa4adf8fc71e711331f721e8538f91b468266101f6f4e748700",
+      "match": true,
+      "path": "P02/command.txt"
+    },
+    {
+      "actual": "39cdfa7492a8cf0466d856cd998cce8c60350cea2b46709f022c4fb108fdd76e",
+      "expected": "39cdfa7492a8cf0466d856cd998cce8c60350cea2b46709f022c4fb108fdd76e",
+      "match": true,
+      "path": "P02/result.json"
+    },
+    {
+      "actual": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "expected": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "match": true,
+      "path": "P02/result.observation.png"
+    },
+    {
+      "actual": "dac2b87de65091e2d6889a398696db5e37014f454d270586642d1832ac7eeb4b",
+      "expected": "dac2b87de65091e2d6889a398696db5e37014f454d270586642d1832ac7eeb4b",
+      "match": true,
+      "path": "P02/stderr.txt"
+    },
+    {
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true,
+      "path": "P02/stdout.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P02/test-exit-code.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P02/wrapper-exit-code.txt"
+    },
+    {
+      "actual": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "expected": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "match": true,
+      "path": "P02/xvfb-executable.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P02/xvfb-exit-code.txt"
+    },
+    {
+      "actual": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "expected": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "match": true,
+      "path": "P02/xvfb.log"
+    },
+    {
+      "actual": "ab16147fdae6b952e586cd7634a0c82517751faca08c9a6bd38a2831fd04511a",
+      "expected": "ab16147fdae6b952e586cd7634a0c82517751faca08c9a6bd38a2831fd04511a",
+      "match": true,
+      "path": "P02/xvfb.pid"
+    },
+    {
+      "actual": "a6b9d2de1937ad0bec255396d7bad1e015cebefdab043472d838ec3f1d6de733",
+      "expected": "a6b9d2de1937ad0bec255396d7bad1e015cebefdab043472d838ec3f1d6de733",
+      "match": true,
+      "path": "P03/command.txt"
+    },
+    {
+      "actual": "849c451ab4f2414d00487733b5378de5096dfefd250b2af7a50241bbbcd41a73",
+      "expected": "849c451ab4f2414d00487733b5378de5096dfefd250b2af7a50241bbbcd41a73",
+      "match": true,
+      "path": "P03/result.json"
+    },
+    {
+      "actual": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "expected": "f43c64e5c9b85707a5e8838e8f2f1b97e452ad0da32f77be81936243ffcea9ef",
+      "match": true,
+      "path": "P03/result.observation.png"
+    },
+    {
+      "actual": "0402bd79cce3d6e8b801b539dba7ee181e6c367a1af80928fda87299e8ca29ed",
+      "expected": "0402bd79cce3d6e8b801b539dba7ee181e6c367a1af80928fda87299e8ca29ed",
+      "match": true,
+      "path": "P03/stderr.txt"
+    },
+    {
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true,
+      "path": "P03/stdout.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P03/test-exit-code.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P03/wrapper-exit-code.txt"
+    },
+    {
+      "actual": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "expected": "bcdebd59760e5d264c9f5d3cb93cc9daa9db62b70b7f1e7d46b88b0e8faaeff8",
+      "match": true,
+      "path": "P03/xvfb-executable.txt"
+    },
+    {
+      "actual": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "expected": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "match": true,
+      "path": "P03/xvfb-exit-code.txt"
+    },
+    {
+      "actual": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "expected": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+      "match": true,
+      "path": "P03/xvfb.log"
+    },
+    {
+      "actual": "8c1a3d56a97fd9f3ef270801524156f122d0eadbc424d8804756ebdacdb9e5e2",
+      "expected": "8c1a3d56a97fd9f3ef270801524156f122d0eadbc424d8804756ebdacdb9e5e2",
+      "match": true,
+      "path": "P03/xvfb.pid"
+    },
+    {
+      "actual": "2b5aa04b6ebe0e8446205eb80c7e3298819da80969960e6ad4b2cee8fe0c47be",
+      "expected": "2b5aa04b6ebe0e8446205eb80c7e3298819da80969960e6ad4b2cee8fe0c47be",
+      "match": true,
+      "path": "post-series-process-check.txt"
+    },
+    {
+      "actual": "0edd36af0d39cb8aa483299fa11e7b4cd681e540efd0535f3155b0c6f3858ead",
+      "expected": "0edd36af0d39cb8aa483299fa11e7b4cd681e540efd0535f3155b0c6f3858ead",
+      "match": true,
+      "path": "preflight-status.txt"
+    },
+    {
+      "actual": "eeacb44d6ba8d0cc2aa159fe33b1241c0fba1f4f60dede96d85865e040152182",
+      "expected": "eeacb44d6ba8d0cc2aa159fe33b1241c0fba1f4f60dede96d85865e040152182",
+      "match": true,
+      "path": "preflight.log"
+    },
+    {
+      "actual": "fb8e6ddcfb69f78428f12c87ebcdc42b7878fc1c28bedb1cf810031628b79a39",
+      "expected": "fb8e6ddcfb69f78428f12c87ebcdc42b7878fc1c28bedb1cf810031628b79a39",
+      "match": true,
+      "path": "preflight.sh"
+    },
+    {
+      "actual": "755b3ae9f0089e73a3bec34d36bf42429209699620c370e4bb140dd1058251b4",
+      "expected": "755b3ae9f0089e73a3bec34d36bf42429209699620c370e4bb140dd1058251b4",
+      "match": true,
+      "path": "private-mount-probe.txt"
+    },
+    {
+      "actual": "755b3ae9f0089e73a3bec34d36bf42429209699620c370e4bb140dd1058251b4",
+      "expected": "755b3ae9f0089e73a3bec34d36bf42429209699620c370e4bb140dd1058251b4",
+      "match": true,
+      "path": "private-mount-run.txt"
+    },
+    {
+      "actual": "4b1bff8bb31f75e6ef99f2c6406c38531fc18a0dd875de6f59748d7138acd379",
+      "expected": "4b1bff8bb31f75e6ef99f2c6406c38531fc18a0dd875de6f59748d7138acd379",
+      "match": true,
+      "path": "run-series.sh"
+    },
+    {
+      "actual": "f55244c26b192585967b049c4f11a8f12bb4ce69aba1793a86404c6c52d58397",
+      "expected": "f55244c26b192585967b049c4f11a8f12bb4ce69aba1793a86404c6c52d58397",
+      "match": true,
+      "path": "runner-script.sha256"
+    },
+    {
+      "actual": "17a8a292ca59cc55d2343f284742a3b13c829e02cc1de515956e90d6efee2d69",
+      "expected": "17a8a292ca59cc55d2343f284742a3b13c829e02cc1de515956e90d6efee2d69",
+      "match": true,
+      "path": "series-wrapper-status.txt"
+    },
+    {
+      "actual": "447a6caf6a411b889257401ee3c4b1e412f2a15471168d960c69b408ae8e52c0",
+      "expected": "447a6caf6a411b889257401ee3c4b1e412f2a15471168d960c69b408ae8e52c0",
+      "match": true,
+      "path": "source-identity.json"
+    },
+    {
+      "actual": "d624b165f5720f2db7966e2992b53a657de26541c0bc7617d2eab8b81243cb25",
+      "expected": "d624b165f5720f2db7966e2992b53a657de26541c0bc7617d2eab8b81243cb25",
+      "match": true,
+      "path": "source-identity.py"
+    },
+    {
+      "actual": "ff27a4aeefddb7da1a6911de1838e1ef42c47501e3c926c9a9e195fc9ea9f61e",
+      "expected": "ff27a4aeefddb7da1a6911de1838e1ef42c47501e3c926c9a9e195fc9ea9f61e",
+      "match": true,
+      "path": "timeout-executable.txt"
+    },
+    {
+      "actual": "ac0b863ad5b848414fae9ee6554f36979b3a8d36eff0c598634fc0f5f9edffc9",
+      "expected": "ac0b863ad5b848414fae9ee6554f36979b3a8d36eff0c598634fc0f5f9edffc9",
+      "match": true,
+      "path": "xvfb-binary.sha256"
+    }
+  ],
+  "run_id": "AI-XVFB-PAUSED-SERVER-MATCHED-PILOT-20261022-01",
+  "schema": "agent-interface/paused-server-matched-pilot-audit-v1",
+  "source_hashes": [
+    {
+      "actual": "13835bdf8cdaac9313c006f984b01a1c8b4be21ca5b71ed244c759f7343c868a",
+      "expected": "13835bdf8cdaac9313c006f984b01a1c8b4be21ca5b71ed244c759f7343c868a",
+      "match": true,
+      "path": "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py"
+    },
+    {
+      "actual": "71faaeed95ede4e7799ac3ff1fe2f44ea3662c682b77208f60e4764a53668be7",
+      "expected": "71faaeed95ede4e7799ac3ff1fe2f44ea3662c682b77208f60e4764a53668be7",
+      "match": true,
+      "path": "runtime/cli_v1/mcp_guarded.py"
+    },
+    {
+      "actual": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "expected": "1e20967b2fb6f203248fc27181db232084e9f7966286b4871c80e5f280e1a786",
+      "match": true,
+      "path": "runtime/cli_v1/owned_guarded_session.py"
+    },
+    {
+      "actual": "edbd532bd7ddd8d52ae5d6b230e543bc5767b5cc832e4a7245db6bc7a933e80c",
+      "expected": "edbd532bd7ddd8d52ae5d6b230e543bc5767b5cc832e4a7245db6bc7a933e80c",
+      "match": true,
+      "path": "runtime/cli_v1/mcp_server.py"
+    },
+    {
+      "actual": "09e23aeffbf61497e28f704df99e6ae7bd9c88ab3f66ceeec14258e381c8e327",
+      "expected": "09e23aeffbf61497e28f704df99e6ae7bd9c88ab3f66ceeec14258e381c8e327",
+      "match": true,
+      "path": "runtime/cli_v1/test_synthetic_task_oracle.py"
+    }
+  ],
+  "success_counts": {
+    "control": "3/3",
+    "paused": "3/3"
+  }
+}
