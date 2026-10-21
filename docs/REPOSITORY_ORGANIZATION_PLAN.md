@@ -91,15 +91,16 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-This plan is present on current main `4fd2fe76b516844c89efc2e3fb044dff6ceec5bc`
-after PR #9346. The retained R02 Xvfb trial ran against source
+This checkpoint records main `3e46261966957f0852703ededb4b6fb2f3a594bf`,
+after PR #9346 and the current-pointer refresh. The retained R02 Xvfb trial ran against source
 `cdc8bd6b65bf976137db645c2be31e20090f7d67`; its results are historical and
-remain tied to that exact source. The latest complete paginated membership receipt is still
-[r135](maintenance/repository-inventory-recheck-20261022-r135.md), captured
-before #9345 at `0e289460404b626e3cc26eec4be0b0170bd60ee0`; its 1,655 open Issues
-and 461 open PRs are a historical membership baseline, not a current count or
-semantic disposition. Refresh a complete set only when the next change requires
-it, and refresh every touched record before state changes.
+remain tied to that exact source. The latest complete paginated membership receipt is
+[r136](maintenance/repository-inventory-recheck-20261022-r136.md), captured at
+this main SHA: 1,655 open Issues and 460 open PRs. Its Issue set matches r135;
+its PR set differs by the merge of #7181, with #9346 opened and merged between
+captures. Counts establish membership only, not semantic disposition. Refresh a
+complete set when the next change requires it, and refresh every touched record
+before state changes.
 
 The prestarted-supervisor design remains the selected integration thread. Its
 standard-caller Xvfb evidence and limits are recorded in the
@@ -117,6 +118,17 @@ The live-Xvfb bystander negative path and whole-server-unavailable release
 remain unqualified. Keep the supervisor default-off. The next
 science/integration batch must target an explicit remaining gap; do not repeat a
 consumed run or turn cleanup into a WSLc/Docker allocation.
+
+PR [#7181](https://github.com/Unjuno/agent-interface/pull/7181) is now merged
+and preserves a native P01 three-arm comparison for #57. Its report records
+persistent input+output of 39,329 tokens versus 109,373 plain and 111,226
+ephemeral, plus ready-to-independent-oracle times of 27.712, 36.631 and 46.550
+seconds. Eighteen effects were independently checked, with one bounded repair.
+The disposition remains HOLD: each arm has one sample, one fixed-order six-task
+fixture/domain, and model/cache/host-load confounding. It is a useful measured
+input, not the matched current-caller/second-domain integrated qualification or
+a reliability estimate. Keep #57 open and carry these limits into the next
+matched integration decision.
 
 Repository-wide execution stays on the six work orders above: establish a live
 queue when needed; preserve and route one bounded idea family; resolve exact
