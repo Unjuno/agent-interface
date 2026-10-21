@@ -91,8 +91,10 @@ when local evidence is sufficient and repository protections allow progress.
 
 ## Current execution checkpoint (2026-10-22)
 
-This plan is present on current main `cdc8bd6b65bf976137db645c2be31e20090f7d67`
-after PR #9345. The latest complete paginated membership receipt is still
+This plan is present on current main `4fd2fe76b516844c89efc2e3fb044dff6ceec5bc`
+after PR #9346. The retained R02 Xvfb trial ran against source
+`cdc8bd6b65bf976137db645c2be31e20090f7d67`; its results are historical and
+remain tied to that exact source. The latest complete paginated membership receipt is still
 [r135](maintenance/repository-inventory-recheck-20261022-r135.md), captured
 before #9345 at `0e289460404b626e3cc26eec4be0b0170bd60ee0`; its 1,655 open Issues
 and 461 open PRs are a historical membership baseline, not a current count or
@@ -103,7 +105,7 @@ The prestarted-supervisor design remains the selected integration thread. Its
 standard-caller Xvfb evidence and limits are recorded in the
 [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
 The new [R02 trial](../research/integration/standard_caller_xvfb_current_main_20261022/prestarted-fresh-recovery-02/README.md)
-passed once on current main: the cancellation response returned pending in
+passed once against its frozen source: the cancellation response returned pending in
 252.924 ms; the supervisor release readback completed in 324.791 ms; independent
 key-up readback was observed in 379.339 ms; and a distinct fresh session passed
 its synthetic task oracle through an 8.501 s horizon. The old runtime result
