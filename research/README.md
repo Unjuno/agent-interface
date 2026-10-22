@@ -217,6 +217,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 ### Live control and integration
 
 - [`live_control/`](live_control/) — shared/live GUI-control mechanisms and integration studies.
+- [#59/#7504 per-key cancellation release bounds](live_control/cancel_batch_key_release_xvfb_7504/PORT_VALIDATION.md) — current-main V13 port and isolated fake-Xlib regression; original three STOPs and one nonformal Xvfb smoke remain preserved. [2026-10-05 current-main rerun](live_control/cancel_batch_key_release_xvfb_7504/CURRENT_MAIN_VERIFICATION.md) passes focused tests on merged source; no physical/application claim.
 - [`doom/`](doom/) — real-time/continuous-control studies and MAP01 evidence.
 - [`integration/`](integration/) — integration-focused experiments.
 - [Issue #57 A01 compiled graph × pixel-handle composition](integration/compiled_handle_graph_composition_57_a01_20261004/README.md) — offline scenario counts meet the behavioral thresholds, but frozen disposition is `FAIL_SOURCE_BASE_LABEL_MISMATCH`; live GUI semantics and integrated efficiency remain HOLD, with custody limits documented.
