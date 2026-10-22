@@ -69,6 +69,18 @@ retirement never admits another producer; old operation IDs cannot authorize
 effects; and every uncertain branch returns UNKNOWN with replay denied. Run
 focused tests normally and under `python -O`. Label all outputs synthetic.
 
+An additional candidate packet now tests a prestarted-helper variant. Recovery
+and observer helpers start and report ready before producer admission; cancel
+reuses those processes and waits for a distinct completion receipt from the
+helper's target function. Its focused suite passes 14/14 in normal and
+optimized CPython 3.11.9. The packet is in
+[`win32_prestarted_helper_experiment_20261022_r01`](../../research/integration/win32_prestarted_helper_experiment_20261022_r01/README.md).
+This narrows only the fake cancel-path process-start gap: initialization can
+still block while starting helpers, producer startup in `begin()` remains
+synchronous, and termination, scheduling, IPC delivery, OS input release,
+task effect, and native boundedness are unqualified. Treat this as a candidate
+model, not a replacement for the frozen baseline or evidence of release.
+
 ### Phase 2: current-main composition
 
 Only after Phase 1 passes, connect the opt-in owner to the standard guarded
@@ -119,10 +131,12 @@ with UNKNOWN is useful containment, but it does not satisfy bounded release.
 
 ## First deliverable
 
-Phase 1's tests and local receipts are retained in the [R01 prototype
+Phase 1's baseline tests and local receipts are retained in the [R01 prototype
 packet](../../research/integration/win32_operation_owner_prototype_20261022_r01/README.md).
 The r01 attempt records one test expectation failure; r02 passes 12/12 in
-normal and optimized CPython 3.11.9. This is synthetic process ordering only.
+normal and optimized CPython 3.11.9. The separate prestarted-helper candidate
+passes 14/14 in both modes; its raw output and conditions are retained in its
+packet. These are synthetic process-ordering results only.
 The current fake Win32 packets remain immutable and are the baseline
 counterexamples. Phase 2 composition, native qualification, matched
 efficiency, and reliability remain open.
