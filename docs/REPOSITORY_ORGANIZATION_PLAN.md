@@ -128,31 +128,35 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #8833 (2026-10-22)
+## Current execution checkpoint after PR #9363 (2026-10-22)
 
-Current main is `2b29ebe0ca6fe8214985a7e50c46a72f5f3af17f`, the fast-forward
-integration of PR #8833. The complete [r139 membership recheck](maintenance/repository-inventory-recheck-20261022-r139.md)
-confirms 1,655 open Issues and 456 open PRs, with main unchanged across the
-paginated reads. The Issue set matches r138. PR membership added #9363 and
-removed #7120 and #8833: #7120 was closed as superseded, #8833 merged, and
-#9363 opened. The exact sets and sorted-ID hashes are retained in the r139 CSVs.
-These counts and check states are discovery aids, not semantic disposition or
-merge readiness.
+Current main is `930980a8daacf03f6e8a764105cd4d346308236c` (PR #9363).
+The complete [r140 membership recheck](maintenance/repository-inventory-recheck-20261022-r140.md)
+confirms 1,655 open Issues and 455 open PRs, with main unchanged across
+pagination. The Issue set matches r139; the only PR membership change is #9363
+leaving the open set after merge. Exact IDs and sorted-ID hashes are preserved
+in the r140 CSVs. Counts are discovery aids, not semantic disposition or
+readiness.
 
-Live reads at capture time show #17, #57, and #7924 OPEN. PR #9363 is an
-open, non-draft Win32 operation-owner recovery design that edits the canonical
-prestarted-supervisor design and adds two inert-fake schedule packets. Its base
-is the pre-#8833 main, while current main is its direct successor; both reported
-checks pass and GitHub reports it mergeable. The next bounded batch is an exact
-head/base and evidence audit of #9363 against current main, including its
-raw-manifest/custody and design-boundary cross-links. Keep the runtime proposal
-opt-in and do not merge solely on check status; the audit must establish that
-the uniquely useful evidence and current-main applicability are preserved.
+PR #9363 integrated a Win32 operation-owner recovery design and two inert-fake
+counterexamples. It documents why both blocked-before-acceptance and
+accepted-before-return schedules require fencing the old producer before any
+compensating UP can establish neutral state. Local audits pass against the
+immutable raw inputs in normal and optimized Python. The Windows checkout
+initially converted line endings and made those audits fail; exact Git blobs
+matched the recorded manifests, and `.gitattributes` now preserves byte-exact
+checkout for both packets. No raw outcome changed. These schedules are not
+native Windows behavior, physical release, target-effect, or reliability
+evidence; the Win32 design remains a proposal and the runtime supervisor stays
+opt-in.
 
-The canonical [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
-already exists and remains the selected integration thread. Its design and
-qualification gates are separate from this membership snapshot. This update
-does not consume WSLc/Docker or change any Issue/PR state.
+Issue #17, #57, and #7924 remain OPEN. The canonical
+[prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+is now extended with the Win32 route and its missing standard-MCP and
+target-generation gates. The next bounded candidate is open PR #8824, an
+audit-only evidence packet for Issue #8553. Its exact head, old-base transfer,
+raw manifest, and issue-family relationship must be refreshed before any
+disposition. No WSLc/Docker allocation was used.
 
 ## Historical execution checkpoint after PR #9356 (2026-10-22)
 
