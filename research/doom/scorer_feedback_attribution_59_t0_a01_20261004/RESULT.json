@@ -1,0 +1,129 @@
+{
+  "case_count": 6,
+  "cases": [
+    {
+      "case": "one_intent_full_coverage",
+      "expected": "TEMPORALLY_UNIQUE",
+      "observed": {
+        "causal_attribution": "NOT_ESTABLISHED",
+        "detection_interval_ns": [
+          100,
+          200
+        ],
+        "event_sequence": 1,
+        "intent_token": "A",
+        "kind": "KILL_COUNT_INCREASE",
+        "possible_intent_tokens": [
+          "A"
+        ],
+        "reason": "one_verified_intent_covers_full_detection_interval",
+        "status": "TEMPORALLY_UNIQUE"
+      }
+    },
+    {
+      "case": "one_intent_partial_coverage",
+      "expected": "UNRESOLVED",
+      "observed": {
+        "causal_attribution": "NOT_ESTABLISHED",
+        "detection_interval_ns": [
+          100,
+          200
+        ],
+        "event_sequence": 1,
+        "intent_token": null,
+        "kind": "KILL_COUNT_INCREASE",
+        "possible_intent_tokens": [
+          "A"
+        ],
+        "reason": "no_complete_verified_intent_coverage",
+        "status": "UNRESOLVED"
+      }
+    },
+    {
+      "case": "two_intents_overlap",
+      "expected": "AMBIGUOUS",
+      "observed": {
+        "causal_attribution": "NOT_ESTABLISHED",
+        "detection_interval_ns": [
+          100,
+          200
+        ],
+        "event_sequence": 1,
+        "intent_token": null,
+        "kind": "KILL_COUNT_INCREASE",
+        "possible_intent_tokens": [
+          "A",
+          "B"
+        ],
+        "reason": "multiple_intents_intersect_detection_interval",
+        "status": "AMBIGUOUS"
+      }
+    },
+    {
+      "case": "missing_coverage",
+      "expected": "UNRESOLVED",
+      "observed": {
+        "causal_attribution": "NOT_ESTABLISHED",
+        "detection_interval_ns": [
+          100,
+          200
+        ],
+        "event_sequence": 1,
+        "intent_token": null,
+        "kind": "KILL_COUNT_INCREASE",
+        "possible_intent_tokens": [],
+        "reason": "no_complete_verified_intent_coverage",
+        "status": "UNRESOLVED"
+      }
+    },
+    {
+      "case": "unverified_other_intent_may_persist",
+      "expected": "AMBIGUOUS",
+      "observed": {
+        "causal_attribution": "NOT_ESTABLISHED",
+        "detection_interval_ns": [
+          100,
+          200
+        ],
+        "event_sequence": 1,
+        "intent_token": null,
+        "kind": "KILL_COUNT_INCREASE",
+        "possible_intent_tokens": [
+          "A",
+          "B"
+        ],
+        "reason": "multiple_intents_intersect_detection_interval",
+        "status": "AMBIGUOUS"
+      }
+    },
+    {
+      "case": "same_intent_gap",
+      "expected": "UNRESOLVED",
+      "observed": {
+        "causal_attribution": "NOT_ESTABLISHED",
+        "detection_interval_ns": [
+          100,
+          200
+        ],
+        "event_sequence": 1,
+        "intent_token": null,
+        "kind": "KILL_COUNT_INCREASE",
+        "possible_intent_tokens": [
+          "A"
+        ],
+        "reason": "no_complete_verified_intent_coverage",
+        "status": "UNRESOLVED"
+      }
+    }
+  ],
+  "causation_claim": "NOT_ESTABLISHED",
+  "schema": "scorer-feedback-attribution-t0-v1",
+  "scope": "synthetic CPU construction only; no retained live outcomes, game, model, GUI, input, or controller integration",
+  "source_hashes": {
+    "audit.py": "8cad01f127fc204f888137577dff12cd9eacbf0e1fb6300e7e71c7186a180e34",
+    "run_t0.py": "557d3abdccc7136882aea7b0cfdb646bcb5a1e211418f8e63fad033262391466",
+    "scorer_feedback_attribution_v1.py": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b",
+    "test_attribution.py": "065f0ef3862952cb8f92f6cf5e9f5e8ea9fd56d78f074d421c03c255694e7dcd"
+  },
+  "status": "PASS_SCOPED"
+}
