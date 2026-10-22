@@ -1,6 +1,7 @@
 """Compose the standard guarded MCP owner with the offline Fake-X relay."""
 
 import asyncio
+import io
 import json
 import os
 from pathlib import Path
@@ -501,6 +502,175 @@ class StandardMCPRelayCompositionTests(unittest.IsolatedAsyncioTestCase):
         }
         (out / "standard-caller-result.json").write_text(
             json.dumps(safe, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+    async def test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller(self):
+        from runtime.cli_v1 import mcp_relay as relay_module
+
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            server = create_server(
+                {"app": 20}, root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True, _guarded_owner_factory=_socket_owner_factory)
+            try:
+                observed = metadata(await server.call_tool("interface_guarded_observe", {}))
+                minted = metadata(await server.call_tool("interface_guarded_mint", {
+                    "alias": "field", "source_sequence": observed["source"]["sequence"],
+                    "point": [8, 8], "region_size": [12, 12]}))
+                (root / "block-owner-io").write_text("arm", encoding="utf-8")
+                pending = metadata(await server.call_tool("interface_guarded_input", {
+                    "alias": "field", "offset": minted["offset"],
+                    "interaction": "keyboard", "observe_after": False,
+                    "wait_for_result_ms": 0,
+                    "tail": [{"op": "key_chord", "keys": ["a"]}]}))
+                self.assertEqual(pending["status"], "pending", pending)
+                await self._wait_for_file(root / "fake-x-accepted-press.json")
+                await self._wait_for_file(root / "held-reply.json")
+
+                ordinary = [json.dumps({
+                    "id": index, "tool": "interface_clock", "arguments": {}}).encode()+b"\n"
+                    for index in range(1, relay_module.MAX_PENDING_STDOUT_RESPONSES + 1)]
+                cancel_line = json.dumps({
+                    "id": len(ordinary) + 1, "tool": "interface_guarded_cancel",
+                    "arguments": {"call_id": pending["call_id"]}}).encode()+b"\n"
+
+                class TrackingInput:
+                    def __init__(self):
+                        self.stream = io.BytesIO(b"".join(ordinary) + cancel_line)
+                    def readline(self): return self.stream.readline()
+                    @property
+                    def buffer(self): return self
+
+                output_entered = threading.Event()
+                release_output = threading.Event()
+                class BlockingOutput:
+                    def __init__(self):
+                        self.rows = []
+                        self.first_write_started_ns = None
+                        self.first_write_resumed_ns = None
+                        self.cancel_row_written_ns = None
+                    @property
+                    def buffer(self): return self
+                    def write(self, row):
+                        if not self.rows:
+                            self.first_write_started_ns = time.monotonic_ns()
+                            output_entered.set()
+                            if not release_output.wait(3):
+                                raise TimeoutError("test did not release blocked stdout")
+                            self.first_write_resumed_ns = time.monotonic_ns()
+                        if json.loads(row).get("tool") == "interface_guarded_cancel":
+                            self.cancel_row_written_ns = time.monotonic_ns()
+                        self.rows.append(row)
+                        return len(row)
+                    def flush(self): pass
+
+                class AsyncContext:
+                    def __init__(self, value): self.value = value
+                    async def __aenter__(self): return self.value
+                    async def __aexit__(self, *_args): return False
+
+                cancel_finished = threading.Event()
+                cancel_result = []
+                call_times = {}
+                class Client:
+                    async def initialize(self): pass
+                    async def call_tool(self, name, arguments):
+                        if name == "interface_guarded_cancel":
+                            call_times["cancel_admission_ns"] = time.monotonic_ns()
+                        result = await server.call_tool(name, arguments)
+                        if name == "interface_guarded_cancel":
+                            cancel_result.append(metadata(result))
+                            call_times["cancel_return_ns"] = time.monotonic_ns()
+                            cancel_finished.set()
+                        return result
+
+                stdin = TrackingInput()
+                stdout = BlockingOutput()
+                client = Client()
+                transport = AsyncContext((object(), object()))
+                client_context = AsyncContext(client)
+                fence = {"status": "disconnected", "reason": "injected_fake_transport_eof",
+                         "worker_retired": True, "elapsed_ms": 1.0}
+                release_state = {"down": [KEYCODE]}
+                release_receipt = {"status": "readback_verified", "worker_retired": True,
+                                   "release": {"verified": True, "keys_down": [],
+                                               "buttons_down": [],
+                                               "monotonic_ns": time.monotonic_ns()}}
+
+                def verified_fake_release(obligations):
+                    self.assertEqual(obligations, {"keys": {"a": KEYCODE}, "buttons": []})
+                    call_times["release_readback_ns"] = time.monotonic_ns()
+                    self.assertFalse(release_output.is_set(),
+                                     "Fake X release happened after stdout resumed")
+                    release_state["down"] = []
+                    return release_receipt
+
+                with (patch.object(relay_module, "stdio_client", return_value=transport),
+                      patch.object(relay_module, "ClientSession", return_value=client_context),
+                      patch.object(relay_module.sys, "stdin", stdin),
+                      patch.object(relay_module.sys, "stdout", stdout),
+                      patch("runtime.cli_v1.owned_guarded_session.wait_for_client_disconnect_supervised",
+                            return_value=fence),
+                      patch("runtime.cli_v1.owned_guarded_session.OwnedGuardedSessionOwner._release_retired_owner_inputs",
+                            side_effect=verified_fake_release) as release_inputs):
+                    relay_task = asyncio.create_task(relay_module.serve(["--fake-x-composition"]))
+                    try:
+                        self.assertTrue(await asyncio.to_thread(output_entered.wait, 2),
+                                        "no earlier response reached blocked stdout")
+                        self.assertTrue(await asyncio.to_thread(cancel_finished.wait, 2),
+                                        "saturated relay did not dispatch cancellation to the MCP caller")
+                        self.assertEqual(release_state["down"], [],
+                                         "independent Fake X release did not run before stdout recovered")
+                        self.assertEqual(len(cancel_result), 1)
+                        self.assertEqual(cancel_result[0]["owner_release_attempt"]["status"],
+                                         "readback_verified")
+                        self.assertEqual(cancel_result[0]["cleanup_status"], "UNKNOWN")
+                        self.assertFalse(cancel_result[0]["release_confirmed"])
+                        self.assertIsNone(cancel_result[0]["task_success"])
+                        self.assertFalse(cancel_result[0]["replay_allowed"])
+                        self.assertTrue(cancel_result[0]["late_server_request_possible"])
+                        release_inputs.assert_called_once()
+                        self.assertLess(call_times["cancel_return_ns"] -
+                                        call_times["cancel_admission_ns"], 2_000_000_000)
+                        self.assertLess(call_times["release_readback_ns"] -
+                                        call_times["cancel_admission_ns"], 2_000_000_000)
+                    finally:
+                        release_output.set()
+                        await asyncio.wait_for(relay_task, timeout=3)
+                self.assertEqual(len(stdout.rows), relay_module.MAX_PENDING_STDOUT_RESPONSES + 1)
+                self.assertLess(stdout.first_write_started_ns, stdout.first_write_resumed_ns)
+                self.assertGreaterEqual(stdout.cancel_row_written_ns, stdout.first_write_resumed_ns)
+
+                raw_root = os.environ.get("AGENT_INTERFACE_RELAY_CANCEL_COMPOSITION_RAW_DIR")
+                if raw_root:
+                    raw = Path(raw_root)
+                    raw.mkdir(parents=True, exist_ok=True)
+                    receipt = {
+                        "disposition": "PASS_FAKE_X_RELAY_COMPOSITION_ONLY",
+                        "source": "standard_mcp_caller_and_public_relay_with_synthetic_fake_x",
+                        "ordinary_requests_before_cancel": relay_module.MAX_PENDING_STDOUT_RESPONSES,
+                        "cancel_dispatched_while_stdout_blocked": True,
+                        "cancel_response_written_after_stdout_resumed": True,
+                        "fake_key_down_before_release": ["a"],
+                        "fake_key_down_after_release": release_state["down"],
+                        "owner_release_attempt": cancel_result[0]["owner_release_attempt"],
+                        "cleanup_status": cancel_result[0]["cleanup_status"],
+                        "release_confirmed": cancel_result[0]["release_confirmed"],
+                        "task_success": cancel_result[0]["task_success"],
+                        "replay_allowed": cancel_result[0]["replay_allowed"],
+                        "late_server_request_possible": cancel_result[0][
+                            "late_server_request_possible"],
+                        "timestamps_monotonic_ns": {
+                            **call_times,
+                            "first_stdout_write_started_ns": stdout.first_write_started_ns,
+                            "first_stdout_write_resumed_ns": stdout.first_write_resumed_ns,
+                            "cancel_response_write_ns": stdout.cancel_row_written_ns,
+                        },
+                    }
+                    (raw / "result.json").write_text(
+                        json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            finally:
+                await server.call_tool("interface_close", {})
 
     async def test_standard_owned_caller_holds_fake_x_reply_and_cancels_fail_closed(self):
         with tempfile.TemporaryDirectory() as td:
