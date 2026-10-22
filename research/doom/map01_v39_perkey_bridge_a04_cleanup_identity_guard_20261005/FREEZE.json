@@ -1,0 +1,35 @@
+{
+  "C": "Finite in-memory malformed-source boundary; no InputOwner behavior or incidence claim.",
+  "D": "PASS only if A03 contextually forwards mismatches, A04 keeps each mismatch unscoped and preserves F8 state, while a matching control forwards once.",
+  "H": "A cleanup row sharing an actuation ID but disagreeing on owner, intent or key must remain unscoped and must not retire another active actuation.",
+  "T": "Seed an admitted F8 actuation and deliver owner/key/intent/bracket mismatched cleanup rows to frozen A03 and guarded A04 bridge methods.",
+  "U": "No real owner, OS input, GUI, game, model, application effect, recovery, threat response or MAP01 progress.",
+  "baseline_invocations": 5,
+  "container": {
+    "cpus": 1,
+    "memory_mib": 512,
+    "network": "none",
+    "pids": 64,
+    "root_read_only": true
+  },
+  "image": "python:3.12.11-slim",
+  "image_id": "sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "input_sha256": "5e55814f950545bfde679632f638dbed80bb994a18c6f4e54f60ef09487edc83",
+  "platform": "linux/arm64",
+  "python_version": "3.12.11",
+  "run_id": "v39-perkey-bridge-a04-cleanup-identity-guard-20261005",
+  "schema": "map01_v39_perkey_bridge_a04_identity_guard_freeze_v1",
+  "scope": "in-memory malformed-cleanup identity boundary; no OS or GUI input",
+  "source_sha256": {
+    ".gitattributes": "9ab00f4fb9728a029bff7559525caa26ecf42c48462e5498b90d0118090a49db",
+    "README.md": "aacbaf4baf3ab2f92833c6c7729b94ddd312e32a2a5da1f24352a94518bd17c7",
+    "SOURCE/A03/bridge_a03.py": "a5395c000b7dcffb6379f738c78627fadbfd43eae4a8b45ade3ddc5be59488d3",
+    "audit_a04.py": "172d79efea17c97f2f2abe31883dea8cbb241b473be94d92f9f9f51a28d422ef",
+    "bridge_a04.py": "fc1706e5950925adbf1ff47f7d75b34d01287af28158b5afe394026e03fed6d4",
+    "build_freeze.py": "271ef07da24cc6fa5ec5f8ed69bd5724cebfe8d61a92efb238667f4325c4269d",
+    "probe_a04.py": "deac411ccd9f81ba06b26a8b97d6cc84e85ad38068693162d5cf6bf4e1b2aed1",
+    "scenario.json": "5e55814f950545bfde679632f638dbed80bb994a18c6f4e54f60ef09487edc83",
+    "test_a04.py": "e919e8eb16626a28c7ca2c2255b87373a523ae4fc4c3fd4c7d6a8b1ec5b8e01b"
+  },
+  "successor_invocations": 5
+}

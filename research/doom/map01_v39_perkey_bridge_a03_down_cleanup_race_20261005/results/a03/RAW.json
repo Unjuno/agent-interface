@@ -1,0 +1,420 @@
+{
+  "baseline": {
+    "application_effect_observed": false,
+    "authority_granted": false,
+    "events": [
+      {
+        "event": "input_cleanup_unscoped",
+        "grants_input_authority": false,
+        "measurement": {
+          "actuation_id": "owner-a03:g1:F8",
+          "application_consumption_observed": false,
+          "bracket": {
+            "application_consumption_observed": false,
+            "grants_input_authority": false,
+            "intent_token": "intent-a03-race",
+            "key": "F8",
+            "owner_id": "owner-a03",
+            "physical_up_interval": [
+              100,
+              110
+            ],
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "edge": "up",
+          "grants_input_authority": false,
+          "identity_status": "RETIRED",
+          "intent_token": "intent-a03-race",
+          "key": "F8",
+          "owner_id": "owner-a03",
+          "post_sample": {
+            "available": true,
+            "down": false,
+            "error": null,
+            "finished_ns": 110,
+            "started_ns": 108
+          },
+          "pre_sample": {
+            "available": true,
+            "down": true,
+            "error": null,
+            "finished_ns": 100,
+            "started_ns": 95
+          },
+          "release_attempted": true,
+          "release_request_ns": 102,
+          "sync_return_ns": 108
+        },
+        "owner_cleanup_record": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "actuation_id": "owner-a03:g1:F8",
+              "application_consumption_observed": false,
+              "bracket": {
+                "application_consumption_observed": false,
+                "grants_input_authority": false,
+                "intent_token": "intent-a03-race",
+                "key": "F8",
+                "owner_id": "owner-a03",
+                "physical_up_interval": [
+                  100,
+                  110
+                ],
+                "status": "CONFIRMED_PHYSICAL_UP"
+              },
+              "classification": "CONFIRMED_PHYSICAL_UP",
+              "edge": "up",
+              "grants_input_authority": false,
+              "identity_status": "RETIRED",
+              "intent_token": "intent-a03-race",
+              "key": "F8",
+              "owner_id": "owner-a03",
+              "post_sample": {
+                "available": true,
+                "down": false,
+                "error": null,
+                "finished_ns": 110,
+                "started_ns": 108
+              },
+              "pre_sample": {
+                "available": true,
+                "down": true,
+                "error": null,
+                "finished_ns": 100,
+                "started_ns": 95
+              },
+              "release_attempted": true,
+              "release_request_ns": 102,
+              "sync_return_ns": 108
+            }
+          ],
+          "reason": "cancelled",
+          "verified": true
+        }
+      },
+      {
+        "event": "input_admission",
+        "id": "cleanup-race-run",
+        "intent_token": "intent-a03-race",
+        "key": "F8",
+        "owner_id": "owner-a03",
+        "physical_key_measurement": {
+          "actuation_id": "owner-a03:g1:F8",
+          "adapter_edge": {
+            "actuation_id": "owner-a03:g1:F8",
+            "edge": "down",
+            "grants_input_authority": false,
+            "intent_token": "intent-a03-race",
+            "interval": [
+              80,
+              90
+            ],
+            "key": "F8",
+            "owner_id": "owner-a03",
+            "status": "CONFIRMED_PHYSICAL_DOWN"
+          },
+          "classification": "CONFIRMED_PHYSICAL_DOWN",
+          "identity_status": "MINTED"
+        },
+        "step": 5
+      },
+      {
+        "application_consumption_observed": false,
+        "event": "input_release_measurement",
+        "grants_input_authority": false,
+        "id": "cleanup-race-run",
+        "intent_token": "intent-a03-race",
+        "key": "F8",
+        "owner_id": "owner-a03",
+        "physical_key_measurement": {
+          "actuation_id": null,
+          "adapter_edge": null,
+          "classification": "NOOP_ALREADY_UP"
+        },
+        "step": 5
+      }
+    ],
+    "game": false,
+    "gui": false,
+    "held_keys": [],
+    "model_calls": 0,
+    "os_input": false,
+    "owner_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "per_key_release_measurements": [
+          {
+            "actuation_id": "owner-a03:g1:F8",
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-a03-race",
+              "key": "F8",
+              "owner_id": "owner-a03",
+              "physical_up_interval": [
+                100,
+                110
+              ],
+              "status": "CONFIRMED_PHYSICAL_UP"
+            },
+            "classification": "CONFIRMED_PHYSICAL_UP",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "RETIRED",
+            "intent_token": "intent-a03-race",
+            "key": "F8",
+            "owner_id": "owner-a03",
+            "post_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 110,
+              "started_ns": 108
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 100,
+              "started_ns": 95
+            },
+            "release_attempted": true,
+            "release_request_ns": 102,
+            "sync_return_ns": 108
+          }
+        ],
+        "reason": "cancelled",
+        "verified": true
+      }
+    ],
+    "physical_keys": []
+  },
+  "run_id": "v39-perkey-bridge-a03-down-cleanup-race-20261005",
+  "scenario": {
+    "actuation_id": "owner-a03:g1:F8",
+    "cleanup_interval": [
+      100,
+      110
+    ],
+    "down_interval": [
+      80,
+      90
+    ],
+    "intent_token": "intent-a03-race",
+    "key": "F8",
+    "owner_id": "owner-a03",
+    "program_id": "cleanup-race-run",
+    "run_id": "v39-perkey-bridge-a03-down-cleanup-race-20261005",
+    "schema": "map01_v39_perkey_bridge_down_cleanup_race_scenario_v1",
+    "scope": "in-memory owner-call ordering stub; no OS or GUI input",
+    "step": 5
+  },
+  "successor": {
+    "application_effect_observed": false,
+    "authority_granted": false,
+    "events": [
+      {
+        "event": "input_admission",
+        "id": "cleanup-race-run",
+        "intent_token": "intent-a03-race",
+        "key": "F8",
+        "owner_id": "owner-a03",
+        "physical_key_measurement": {
+          "actuation_id": "owner-a03:g1:F8",
+          "adapter_edge": {
+            "actuation_id": "owner-a03:g1:F8",
+            "edge": "down",
+            "grants_input_authority": false,
+            "intent_token": "intent-a03-race",
+            "interval": [
+              80,
+              90
+            ],
+            "key": "F8",
+            "owner_id": "owner-a03",
+            "status": "CONFIRMED_PHYSICAL_DOWN"
+          },
+          "classification": "CONFIRMED_PHYSICAL_DOWN",
+          "identity_status": "MINTED"
+        },
+        "step": 5
+      },
+      {
+        "application_consumption_observed": false,
+        "event": "input_release_measurement",
+        "grants_input_authority": false,
+        "id": "cleanup-race-run",
+        "intent_token": "intent-a03-race",
+        "key": "F8",
+        "owner_cleanup_record": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "actuation_id": "owner-a03:g1:F8",
+              "application_consumption_observed": false,
+              "bracket": {
+                "application_consumption_observed": false,
+                "grants_input_authority": false,
+                "intent_token": "intent-a03-race",
+                "key": "F8",
+                "owner_id": "owner-a03",
+                "physical_up_interval": [
+                  100,
+                  110
+                ],
+                "status": "CONFIRMED_PHYSICAL_UP"
+              },
+              "classification": "CONFIRMED_PHYSICAL_UP",
+              "edge": "up",
+              "grants_input_authority": false,
+              "identity_status": "RETIRED",
+              "intent_token": "intent-a03-race",
+              "key": "F8",
+              "owner_id": "owner-a03",
+              "post_sample": {
+                "available": true,
+                "down": false,
+                "error": null,
+                "finished_ns": 110,
+                "started_ns": 108
+              },
+              "pre_sample": {
+                "available": true,
+                "down": true,
+                "error": null,
+                "finished_ns": 100,
+                "started_ns": 95
+              },
+              "release_attempted": true,
+              "release_request_ns": 102,
+              "sync_return_ns": 108
+            }
+          ],
+          "reason": "cancelled",
+          "verified": true
+        },
+        "owner_id": "owner-a03",
+        "physical_key_measurement": {
+          "actuation_id": "owner-a03:g1:F8",
+          "adapter_edge": {
+            "actuation_id": "owner-a03:g1:F8",
+            "edge": "up",
+            "grants_input_authority": false,
+            "intent_token": "intent-a03-race",
+            "interval": [
+              100,
+              110
+            ],
+            "key": "F8",
+            "owner_id": "owner-a03",
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "application_consumption_observed": false,
+          "bracket": {
+            "application_consumption_observed": false,
+            "grants_input_authority": false,
+            "intent_token": "intent-a03-race",
+            "key": "F8",
+            "owner_id": "owner-a03",
+            "physical_up_interval": [
+              100,
+              110
+            ],
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "edge": "up",
+          "grants_input_authority": false,
+          "identity_status": "RETIRED",
+          "intent_token": "intent-a03-race",
+          "key": "F8",
+          "owner_id": "owner-a03",
+          "post_sample": {
+            "available": true,
+            "down": false,
+            "error": null,
+            "finished_ns": 110,
+            "started_ns": 108
+          },
+          "pre_sample": {
+            "available": true,
+            "down": true,
+            "error": null,
+            "finished_ns": 100,
+            "started_ns": 95
+          },
+          "release_attempted": true,
+          "release_request_ns": 102,
+          "sync_return_ns": 108
+        },
+        "step": 5
+      }
+    ],
+    "game": false,
+    "gui": false,
+    "held_keys": [],
+    "model_calls": 0,
+    "os_input": false,
+    "owner_records": [
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "per_key_release_measurements": [
+          {
+            "actuation_id": "owner-a03:g1:F8",
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-a03-race",
+              "key": "F8",
+              "owner_id": "owner-a03",
+              "physical_up_interval": [
+                100,
+                110
+              ],
+              "status": "CONFIRMED_PHYSICAL_UP"
+            },
+            "classification": "CONFIRMED_PHYSICAL_UP",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "RETIRED",
+            "intent_token": "intent-a03-race",
+            "key": "F8",
+            "owner_id": "owner-a03",
+            "post_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 110,
+              "started_ns": 108
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 100,
+              "started_ns": 95
+            },
+            "release_attempted": true,
+            "release_request_ns": 102,
+            "sync_return_ns": 108
+          }
+        ],
+        "reason": "cancelled",
+        "verified": true
+      }
+    ],
+    "physical_keys": []
+  }
+}
