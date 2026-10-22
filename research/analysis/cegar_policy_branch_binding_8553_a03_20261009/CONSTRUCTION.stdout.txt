@@ -1,0 +1,29 @@
+$ python3.12 -B -m unittest discover -s research/analysis/cegar_policy_branch_binding_8553_a03_20261009 -p test_*.py -v
+test_swapped_observation_routes_are_rejected (test_construction.PolicyBranchBindingTests.test_swapped_observation_routes_are_rejected) ... ok
+test_unchanged_candidate_replays_every_recoverable_policy (test_construction.PolicyBranchBindingTests.test_unchanged_candidate_replays_every_recoverable_policy) ... ok
+test_unsupported_observation_values_are_rejected (test_construction.PolicyBranchBindingTests.test_unsupported_observation_values_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
+
+exit=0
+
+$ python3.14 -B -m unittest discover -s research/analysis/cegar_policy_branch_binding_8553_a03_20261009 -p test_*.py -v
+test_swapped_observation_routes_are_rejected (test_construction.PolicyBranchBindingTests.test_swapped_observation_routes_are_rejected) ... ok
+test_unchanged_candidate_replays_every_recoverable_policy (test_construction.PolicyBranchBindingTests.test_unchanged_candidate_replays_every_recoverable_policy) ... ok
+test_unsupported_observation_values_are_rejected (test_construction.PolicyBranchBindingTests.test_unsupported_observation_values_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
+
+exit=0
+
+$ legacy_probe.py (construction-only, temporary output)
+legacy-gap-reproduced
+{"baseline_matches_saved_audit": true, "exit": 0, "legacy_accepted": ["unchanged", "swapped_observation_routes", "unsupported_observation_values"]}
+
+A02 same-host Docker image-list failure is retained in the Issue #8553 A02 comment; not retried. This file-only stdlib replay has no container-specific dependency.
