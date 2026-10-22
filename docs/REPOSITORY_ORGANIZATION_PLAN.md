@@ -128,12 +128,16 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9378 (2026-10-22)
+## Current execution checkpoint after PR #9379 (2026-10-22)
 
-Current source main is `b481ce7e5950352ac39cde1612f9ef691d541c4c` (PR #9378).
+The last code-bearing main change is PR #9377 at
+`e698167ede85085b61446ad85dc6330fa1ba283d`. PRs #9378 and #9379 only refreshed
+repository documentation and the membership receipt.
 The complete [r147 membership recheck](maintenance/repository-inventory-recheck-20261022-r147.md)
-records 1,654 open Issues and 453 open PRs at a stable before/after main SHA;
-both exact ID sets match r145. PR #9377 adds a research bridge
+captured main `b481ce7e5950352ac39cde1612f9ef691d541c4c` and records 1,654 open
+Issues and 453 open PRs at a stable before/after SHA; both exact ID sets match
+r145. Treat r147 as the last complete queue snapshot and refresh before later
+dispositions. PR #9377 adds a research bridge
 from the existing model-call boundary to the durable attempt ledger and
 standard public MCP caller. Its 36 local ledger/provider-recorder/public-MCP
 tests pass in normal and optimized Windows CPython 3.11; the regression uses an
