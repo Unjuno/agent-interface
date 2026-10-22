@@ -2044,10 +2044,12 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
             from runtime.cli_v1.attempt import _write_json as write_json
             archive_entered = threading.Event()
             resume_archive = threading.Event()
+            archive_payloads = []
 
             def block_cancellation_archive(path, value):
                 if Path(path).name == 'cancellation.json':
                     archive_entered.set()
+                    archive_payloads.append(json.loads(json.dumps(value)))
                     if not resume_archive.wait(5):
                         raise TimeoutError('test did not release the blocked archive')
                 return write_json(path, value)
@@ -2103,6 +2105,15 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertFalse(cancellation['result']['release_confirmed'])
                 self.assertIsNone(cancellation['result']['task_success'])
                 self.assertFalse(cancellation['result']['replay_allowed'])
+                archived = _read_json(
+                    root/action['call_id']/'cancellation.json', {})
+                self.assertEqual(len(archive_payloads), 1)
+                self.assertEqual(archived, archive_payloads[0])
+                self.assertEqual(archived['operation_id'], cancel['operation_id'])
+                self.assertEqual(archived['status'], cancellation['status'])
+                self.assertEqual(archived['result'], cancellation['result'])
+                self.assertEqual(archived['completed_monotonic_ns'],
+                                 cancellation['completed_monotonic_ns'])
                 self.assertEqual(len(_read_json(
                     root/'supervisor-fake-x.json', {})['effects']), 1)
             finally:
