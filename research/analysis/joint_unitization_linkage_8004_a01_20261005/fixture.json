@@ -1,0 +1,30 @@
+{
+  "schema": "joint-unitization-linkage-fixture-v1",
+  "threshold": 0.5,
+  "truth": {
+    "opportunity_id": "fault-17",
+    "same_underlying_opportunity": true,
+    "channel_a_raw_span": [0, 4],
+    "channel_b_raw_span": [1, 2],
+    "channel_b_identity": "fault-17"
+  },
+  "segmentations": {
+    "S0_boundary_left": {"channel_a_unit_span": [2, 4]},
+    "S1_boundary_right": {"channel_a_unit_span": [0, 2]}
+  },
+  "linkages": {
+    "L0_false_candidate": {"channel_a_link_key": "candidate-9"},
+    "L1_oracle_candidate": {"channel_a_link_key": "fault-17"}
+  },
+  "clean_control": {
+    "channel_a_span": [0, 4],
+    "channel_b_span": [1, 2],
+    "channel_a_link_key": "control-1",
+    "channel_b_link_key": "control-1"
+  },
+  "missing_channel_control": {
+    "opportunity_id": "fault-18",
+    "truth_present": true,
+    "detected_by": []
+  }
+}

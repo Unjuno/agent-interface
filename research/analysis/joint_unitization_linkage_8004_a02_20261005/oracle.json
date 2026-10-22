@@ -1,0 +1,25 @@
+{
+  "schema": "sealed-oracle-a02",
+  "opportunities": [
+    {"opportunity_id": "F1", "expected_channels": ["runtime", "watcher"], "observable_channels": ["runtime", "watcher", "verifier"], "availability": "observed"},
+    {"opportunity_id": "F2", "expected_channels": ["runtime", "verifier"], "observable_channels": ["runtime", "watcher", "verifier"], "availability": "observed"},
+    {"opportunity_id": "F3", "expected_channels": [], "observable_channels": ["runtime", "watcher", "verifier"], "availability": "observed_common_blind_spot"},
+    {"opportunity_id": "F4", "expected_channels": ["watcher"], "observable_channels": ["runtime", "watcher", "verifier"], "availability": "observed_heterogeneous"},
+    {"opportunity_id": "F5", "expected_channels": [], "latent_fault_channels": ["verifier"], "observable_channels": ["runtime", "watcher"], "availability": "right_censored_before_opportunity"},
+    {"opportunity_id": "F6", "expected_channels": [], "latent_fault_channels": ["watcher"], "observable_channels": ["runtime", "verifier"], "availability": "missing_interval"}
+  ],
+  "record_truth": {
+    "r-01": "F1",
+    "r-02": "F2",
+    "w-01": "F1",
+    "w-02": "F4",
+    "v-01": "F2"
+  },
+  "records": {
+    "r-01": {"channel": "runtime"},
+    "r-02": {"channel": "runtime"},
+    "w-01": {"channel": "watcher"},
+    "w-02": {"channel": "watcher"},
+    "v-01": {"channel": "verifier"}
+  }
+}
