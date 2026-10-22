@@ -2,6 +2,8 @@
 
 Status: the opt-in supervisor and public-MCP integration are merged on `main` by PRs #9320 and #9321. This document records the design and qualification boundary; it does not claim release safety or product qualification.
 
+Architecture status: the design below is implemented as an opt-in path. Treat the sections titled “Proposed architecture” and “Original implementation order” as the design rationale and historical build sequence, not as a statement that implementation is still pending. Current qualification gaps are listed in “Qualification boundary (current)”.
+
 ## Design review checkpoint (2026-10-22)
 
 The user selected this design as the first repository-organization work item. The opt-in runtime integration is merged by [#9320](https://github.com/Unjuno/agent-interface/pull/9320); its retained implementation and experiment packets were transferred by [#9321](https://github.com/Unjuno/agent-interface/pull/9321). Draft PR [#9315](https://github.com/Unjuno/agent-interface/pull/9315) was closed as superseded after exact-tree review found no PR-only paths and verified all 35 diagnostic-manifest entries against current main; its branch and historical outcomes remain preserved. Keep the supervisor default-off and treat it as an experimental path, not a production guarantee.
@@ -135,21 +137,20 @@ Keep the first implementation slice local and Fake X-only, on the public MCP com
 
 The runtime integration has since merged in PR #9320. The local Fake X and close-retry results are recorded in [R32](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/r32-close-reservation-retry/README.md). That integration does not close the real XRes generation-identity gap described above. Do not make #17 or #57 depend on a fixed reviewer count or a new worker quota. Review and merge gates come from the repository's actual protections and the specific technical evidence, not a prescribed number of people.
 
-## Remaining validation before qualification
+## Qualification boundary (current)
 
-The Fake X feasibility result at `research/integration/prestarted_supervisor_fakex_feasibility_20261021/README.md` supports only the construction concept. The [two-display XRes reuse diagnostic](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/xres-base-reuse-local-wsl-20261022-r03/README.md) establishes that a resource base may be reused by either the supervisor or a bystander. The runtime's acceptance of supervisor-owned reuse and rejection of unrelated reuse are covered in [`test_cancel_supervisor.py`](../../runtime/guarded_x11_v1/test_cancel_supervisor.py), and the public caller's own-base branch is exercised in [run 39660663702](../../research/integration/public_mcp_prestarted_cancel_supervisor_20261021/pr9320-run-39660663702/README.md). The remaining validation requires:
+The merged caller path, XRes supervisor-owned-base acceptance, bystander refusal, blocked-owner cancellation, independent release readback, delayed-request horizon, and fresh-session recovery have composed Fake X and private-Xvfb evidence. In the retained Xvfb packets, runtime cancellation can correctly remain `UNKNOWN` even when an independent observer sees all keys up and a separate synthetic application oracle passes. These observations do not promote the old action to success or permit replay. See the run-specific packets linked above and in [`CURRENT_GOAL.md`](../CURRENT_GOAL.md); each packet remains the authority for its source, conditions, raw output, and exact timing.
 
-1. Ready supervisor plus injected supervisor-processing delay: MCP returns within the caller-response bound while the cleanup operation remains in custody; if the operation deadline passes before the release boundary, no new Fake X effect appears; caller result stays `UNKNOWN` and replay is denied.
-2. Healthy release: exact current generation, one release request, independent Fake X readback up, worker retired, no duplicate effect. This case cannot bypass the XRes identity gate.
-3. Stale generation: reject before release; Fake X state remains down; no retry.
-4. Blocked XRes query, blocked release sync, malformed/absent worker receipt, and supervisor/worker exit: bounded caller response, bounded transaction or explicit unreaped-worker classification, no false release claim, session remains unusable.
-5. Duplicate cancel while pending and after terminal: same operation receipt, one admitted transaction and at most one release attempt.
-6. Event-loop responsiveness while cancellation is pending: an independent MCP observation/result call is serviced without waiting for the cleanup worker.
-7. Block receipt write, flush, serialization and stdout delivery independently while cancellation/expiry occurs during held input. Show that safety admission and the release attempt do not wait on those data-plane stalls; retain a compact `DATA_PLANE_BLOCKED` classification and reconstruct order after unblocking.
-8. Retain distinct `RELEASE_REQUESTED`, `RELEASE_INJECTED`, `RELEASE_CONFIRMED`, `RELEASE_UNCONFIRMED`, `DATA_PLANE_BLOCKED` and `AUTHORITY_REVOKED` outcomes with cross-plane operation IDs and monotonic timestamps. A timer or receipt write alone cannot produce `RELEASE_CONFIRMED`.
-9. Run focused suites in normal and optimized Python. Add a private Xvfb integration only after the Fake X composition is sound; physical desktop, MAP01, WSLc and efficiency remain separate qualifications.
+The following are still distinct, unresolved gates:
 
-Retain raw receipts, frozen conditions, source revision, process-custody checks and all failed first outcomes. Do not reuse or infer a WSLc allocation from this local design or Fake X result.
+1. **Deadline-to-effect refusal:** a composed negative test must show that once the operation deadline expires, a delayed supervisor cannot emit a new release effect. Keep the public result `UNKNOWN`, retain custody uncertainty, and deny replay. A bounded caller response alone does not establish this property.
+2. **Live bystander-reuse refusal:** Fake X rejects an unrelated client that takes the resource base before cleanup. The live-Xvfb negative path remains untested; a live result must verify that no release is sent and preserve independent key state.
+3. **Input ownership and lifecycle race:** global XTest key-up readback does not prove owner-exclusive release. A separate local target-lifecycle check/use schedule shows a possible press after the last local check; the runtime must retain its conservative failure/review boundary until an ordering or fencing mechanism is demonstrated without blocking cleanup.
+4. **Effect timing:** the current harness now distinguishes app event receipt, app effect commit, test-thread wait return, and independent readback. The corrected instrumentation has passed static compilation and diff checks but has not yet produced a new Xvfb measurement; do not cite those intervals as measured results until a frozen run is executed and retained.
+5. **Platform and task scope:** the retained Xvfb application oracle is synthetic. Physical desktop control, MAP01, WSLc portability, and additional application domains remain unqualified. WSLc remains governed by its live STOP/HOLD and must not be used without a fresh verified unused allocation and ownership release.
+6. **Comparative performance and reliability:** no integrated matched-efficiency claim follows from the supervisor timings. Compare matched tasks, model/settings, correctness, all attempts, token/model accounting, latency, resources, failures, and an independently checked effect; broaden reliability only with separately frozen conditions.
+
+The following are implemented/local regression properties, not open architecture steps: a single admitted cancellation operation per call, duplicate-cancel reuse, an additive pending/terminal result record, stale-generation refusal, bounded caller-response handling, and preservation of UNKNOWN/replay-denied on uncertain cleanup. Keep their focused normal and optimized test receipts as regression evidence. Preserve every first outcome and raw packet; do not rerun consumed formal allocations or infer WSLc authorization from local Fake X/WSL2 work.
 
 ## Main risks and unresolved design choices
 
