@@ -1,22 +1,9 @@
-# Architecture proposals
+# Architecture proposals and implementation status
 
-This directory holds reviewed or reviewable architecture proposals. A proposal
-does not change runtime behavior or grant experiment resources. Keep its status,
-source revision, evidence links, unresolved decisions, and validation boundary
-explicit; move a proposal into implementation only after those decisions are
-resolved.
+This directory holds architecture proposals and design records. Each entry states whether the design is implemented, what evidence supports it, its qualification boundary, and the next discriminating check. A design document does not grant runtime or experiment resources.
 
 ## Prestarted cancellation supervisor
 
-[`PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md`](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
-proposes a bounded, prestarted Fake X cleanup supervisor for the opt-in owned
-`guarded-x11` caller. It is based on the current-main source audit and existing
-Fake X / Xvfb evidence. It does not establish a live-X guarantee, task success,
-MAP01, physical desktop control, WSLc allocation, or integrated efficiency.
+[`PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md`](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md) records the opt-in owned `guarded-x11` supervisor design and its current evidence. The implementation and public-MCP composition are merged, but the path remains default-off. A retained standard-caller Xvfb run observed one release and independent key-up readback through an injected delayed-request horizon; the runtime receipt correctly remains `UNKNOWN`, `release_confirmed=false`, `task_success=null`, and replay denied while `late_server_request_possible=true`.
 
-The next validation boundary is a public-MCP Fake X composition test: preserve
-the original action result separately from the cancellation-operation receipt,
-keep cancel requests idempotent, and refuse late/stale-generation effects. The
-300 ms response and 3 s transaction values in the proposal are provisional test
-targets, not approved compatibility promises. The proposal is not a runtime
-implementation assignment.
+The next useful checks are fresh-target recovery and evidence-based resolution of the delayed-request/late-effect boundary. The design does not qualify general release safety, physical desktop control, MAP01, WSLc, integrated efficiency, or reliability. Keep Issues #17 and #57 open for their remaining questions; WSLc stays on HOLD under #7924.
