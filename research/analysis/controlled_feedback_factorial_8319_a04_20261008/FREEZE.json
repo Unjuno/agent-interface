@@ -1,0 +1,60 @@
+{
+  "allocation": "8072-FACTORIAL-ANALYSIS-8319-A04-20261008",
+  "base_commit": "9d9c42c80f946762e8742ddb2739d07d33db136d",
+  "branch": "research/8072-factorial-analysis-8319-a04-20261008",
+  "type": "saved-data analysis only; no candidate simulation",
+  "input": {
+    "path": "research/analysis/controlled_feedback_factorial_8319_a04_20261008/inputs/a01_candidate.json",
+    "sha256": "ecffd8121a289d3533c94373c8f7aba50d9c349ffd5db534e46db16522897e9d",
+    "source": "A01 raw exact-byte copy; A01 disposition HOLD_AUDITOR_GATE_FAILURE"
+  },
+  "predecessors": {
+    "a01": "HOLD_AUDITOR_GATE_FAILURE; unchanged",
+    "a02": "PASS_AUDIT_ONLY; 400/400 rows, 6/6 mutations; unchanged",
+    "a03": "STOP_ANALYSIS_INPUT_OR_CONTRACT before analysis due absent output parent; unchanged"
+  },
+  "hypothesis_limit": "finite authored 100-seed fixture only; no population inference, p-value, or general researcher feedback claim",
+  "metrics": [
+    "four cell summaries for development accuracy, fresh accuracy, optimism",
+    "seed-paired FULL minus CONTROLLED within updater",
+    "seed-paired CASE_PATCH minus STRATUM_PATCH within feedback",
+    "seed-paired difference-in-differences: CASE_PATCH feedback effect minus STRATUM_PATCH feedback effect",
+    "each finite vector: exact rational mean, median, min, max, positive, zero, negative"
+  ],
+  "output_contract": {
+    "directory": "research/analysis/controlled_feedback_factorial_8319_a04_20261008/results/",
+    "directory_must_exist_before_freeze": true,
+    "analysis_output_must_not_exist": true,
+    "audit_output_must_not_exist": true,
+    "implicit_directory_creation": false,
+    "overwrite": false
+  },
+  "formal_commands": {
+    "analysis": "python3 -B research/analysis/controlled_feedback_factorial_8319_a04_20261008/analyze.py research/analysis/controlled_feedback_factorial_8319_a04_20261008/inputs/a01_candidate.json research/analysis/controlled_feedback_factorial_8319_a04_20261008/results/analysis.json",
+    "audit": "python3 -B research/analysis/controlled_feedback_factorial_8319_a04_20261008/audit.py research/analysis/controlled_feedback_factorial_8319_a04_20261008/inputs/a01_candidate.json research/analysis/controlled_feedback_factorial_8319_a04_20261008/results/analysis.json research/analysis/controlled_feedback_factorial_8319_a04_20261008/results/audit.json"
+  },
+  "construction_tests": {
+    "command": "python3 -B -m unittest discover -s research/analysis/controlled_feedback_factorial_8319_a04_20261008 -v",
+    "result": "PASS 5/5",
+    "runtime": "CPython 3.14.5 macOS 27.0.1 arm64; standard library only"
+  },
+  "formal_counts_at_freeze": {
+    "a01_candidate_reruns": 0,
+    "a02_auditor_reruns": 0,
+    "a03_analysis_reruns": 0,
+    "a03_auditor_reruns": 0,
+    "a04_analysis": 1,
+    "a04_auditor": 1,
+    "retries": 0
+  },
+  "source_sha256": {
+    "README.md": "34037a5bd97fb1c5a1e3ce2c7df3938fc5f048be92409b65e0d6d24b219b06cf",
+    "analyze.py": "d7d516e1cd3720c8c8b9c4f9e1febd3ad935633a8c8b8d2f2a4ba3425fefdbad",
+    "audit.py": "53a04cb98fe7685ef668ffc556614bce6fa270ff63232cd947ccddbc0aa737b0",
+    "test_analysis.py": "e66d7a87aa484230406ebb1fe08a01e8326193a7b546ef94eaea79c13532677b",
+    "inputs/a01_candidate.json": "ecffd8121a289d3533c94373c8f7aba50d9c349ffd5db534e46db16522897e9d"
+  },
+  "runtime": "macOS 27.0.1 arm64; CPython 3.14.5; standard library; CPU-only; no isolation claim",
+  "timestamp_utc": "2026-10-08T02:15:00Z",
+  "post_run_record": "RUN_RECORD.json; formal executions occurred once after freeze commit fc4f6f019a2375a321d77497ab9738c09dff6e3c; see REPORT.md"
+}
