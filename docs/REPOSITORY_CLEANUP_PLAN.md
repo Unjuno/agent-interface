@@ -15,6 +15,17 @@ evidence. Issue #17 remains OPEN with the result and limits recorded.
 Draft PR #9363 contains a design proposal only; do not count its candidate
 process boundary as qualified or merge it as implementation approval.
 
+Another existing result changes the provider-integration map: [golden desktop
+v3](../runtime/GOLDEN_DESKTOP_DEMO_V3.md) has one real Codex app-server
+grounding thread, six exact-once fixture tasks, and 57 verified neutral
+terminal programs. Its 232-file raw retention manifest verifies against Git
+blobs, but the one-arm result is not a matched public-MCP efficiency or
+reliability comparison. Its live source auditor is pinned to older source
+hashes and does not pass against current-main source. Preserve this as a
+separate successful model-backed route; do not summarize the repo as having no
+real model integration, and do not treat it as closing the public MCP recorder
+or current bounded-release gates.
+
 Next: preserve the #9363 design review gate, then select an independently
 verified bounded implementation or experiment. Keep target-generation caller
 composition, production provider accounting, matched efficiency, task effect,
