@@ -23,6 +23,29 @@ This is still injected-provider contract evidence. It establishes neither a
 production provider adapter nor external usage reconciliation, live GUI
 effect, shared-desktop release, WSLc, matched efficiency, or reliability.
 
+## Persistent App Server composition adapter (offline, 2026-10-22)
+
+[`app_server_provider_to_public_mcp_v1.py`](app_server_provider_to_public_mcp_v1.py)
+adapts one already-started persistent Codex App Server planner turn to the
+existing `build_model_provider_call` → attempt recorder → standard public-MCP
+caller path. It copies the exact bytes appended to that turn's protocol
+journal into the per-attempt `model/events.jsonl` artifact, retains normalized
+turn usage and requested model/effort metadata, and parses exactly one matching
+completed `turn/completed` agent message as the tool request. Failed or
+ineligible turns remain failed attempts and do not reach the relay. The adapter
+does not launch a model, retry a turn, capture upstream provider wire logs, or
+prove independent usage reconciliation.
+
+The adapter unit tests and end-to-end in-process composition tests pass in
+normal and optimized Windows CPython 3.11.9. Fake App Server turns pass through
+the recorder, public Relay and compiled Fake X endpoint, then separate
+synthetic pixel oracles. The success case verifies the intended effect while
+the runtime tool result leaves `task_success` unset. The stale-generation case
+changes generation after provider completion and confirms zero transitions,
+`SAFE_YIELD`, unknown task success and replay denial. This is offline synthetic
+evidence. It is not a live provider run, production routing change, external
+usage reconciliation or completion of Issue #57's matched efficiency gate.
+
 ## Question and use
 
 Issue #57's current public `interface_guarded_compiled` caller lacks one joined
