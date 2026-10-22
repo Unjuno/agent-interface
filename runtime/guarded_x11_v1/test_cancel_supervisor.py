@@ -286,6 +286,37 @@ class PrestartedCancellationSupervisorTests(unittest.TestCase):
         self.assertEqual(result['owner_release_attempt']['status'], 'not_attempted')
         backend_factory.assert_not_called()
 
+    def test_x11_worker_does_not_start_release_if_deadline_expires_after_xres(self):
+        request = self._x11_request(deadline_monotonic_ns=10)
+        xres_display = Mock()
+        backend = Mock()
+        # Worker start, pre-XRes check, disconnect start, loop check,
+        # disconnect observation, then the final pre-release check.
+        with patch('sys.platform', 'linux'), \
+             patch('Xlib.display.Display', return_value=xres_display), \
+             patch('runtime.guarded_x11_v1.xres_client_fence.client_pid_at_base',
+                   return_value=False), \
+             patch('runtime.guarded_x11_v1.cancel_supervisor.time.monotonic_ns',
+                   side_effect=[1, 2, 3, 4, 5, 10]), \
+             patch('runtime.backends.x11_v1.backend.X11Backend',
+                   return_value=backend) as backend_factory, \
+             patch('Xlib.ext.xtest.fake_input') as fake_input:
+            result = x11_cancel_worker(request)
+
+        self.assertEqual(result['status'], 'unknown', result)
+        self.assertEqual(result['reason'], 'transaction_deadline_before_release',
+                         result)
+        self.assertEqual(result['owner_client_disconnect']['status'],
+                         'disconnected', result)
+        self.assertEqual(result['owner_release_attempt'], {
+            'status': 'not_attempted', 'reason': 'transaction_deadline'})
+        self.assertFalse(result['release_confirmed'])
+        self.assertIsNone(result['task_success'])
+        self.assertFalse(result['replay_allowed'])
+        xres_display.close.assert_called_once_with()
+        backend_factory.assert_not_called()
+        fake_input.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main()
