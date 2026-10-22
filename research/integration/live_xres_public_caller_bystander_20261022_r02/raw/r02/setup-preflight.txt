@@ -1,0 +1,10 @@
+setup checks before freezing R02:
+  bash -n run_r02.sh: PASS
+  CPython AST parse and CONDITIONS JSON parse: PASS
+  harness import using /home/user/.venvs/agent-interface-pipe-probe-v1/bin/python: PASS
+  tuple-safe python-xlib version banner: PASS; output python_xlib=(0, 33)
+  display :179 lock/socket absent: PASS at 2026-10-22T08:19 UTC
+  exact Xvfb :179 process absent: PASS at 2026-10-22T08:19 UTC
+  local WSL2 Ubuntu only; WSLc and Docker untouched
+
+R01 preflight-only failure is separately retained under live_xres_public_caller_bystander_20261022_r01.
