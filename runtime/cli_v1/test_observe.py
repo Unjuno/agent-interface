@@ -103,6 +103,89 @@ class ObserveTests(unittest.TestCase):
 
 
 
+    def test_snapshot_failure_preserves_primary_error_and_session_ownership(self):
+        for owned in (False, True):
+            for close_fails in (False, True):
+                with self.subTest(owned=owned, close_fails=close_fails):
+                    fault = OSError("snapshot unavailable")
+                    backend = SimpleNamespace(
+                        observe_read_only=mock.Mock(return_value={"value": [1]}),
+                        close=mock.Mock(side_effect=OSError("close") if close_fails else None))
+                    session = SimpleNamespace(backend=backend, recovery_required=True)
+                    with mock.patch("runtime.cli_v1.observe.open_session", return_value=session) as opened, \
+                            mock.patch("runtime.cli_v1.observe.copy.deepcopy", side_effect=fault):
+                        row = (self.call() if owned else observe_in_session(
+                            session, target="fixture", frame="window_client", region=[0, 0, 400, 180]))
+                    self.assertEqual(row["status"], "observation_failed")
+                    self.assertEqual(row["error"], "OSError('snapshot unavailable')")
+                    self.assertNotIn("observation", row)
+                    self.assertFalse(row["side_effect_authority"])
+                    self.assertFalse(row["input_dispatched"])
+                    self.assertTrue(session.recovery_required)
+                    backend.observe_read_only.assert_called_once_with("fixture", "window_client", [0, 0, 400, 180])
+                    if owned:
+                        opened.assert_called_once()
+                        backend.close.assert_called_once()
+                    else:
+                        opened.assert_not_called()
+                        backend.close.assert_not_called()
+                    if owned and close_fails:
+                        self.assertEqual(row["cleanup_error"], "OSError('close')")
+                    else:
+                        self.assertNotIn("cleanup_error", row)
+
+    def test_owned_cleanup_cannot_rewrite_returned_observation(self):
+        for fails in (False, True):
+            with self.subTest(cleanup_failure=fails):
+                payload = {"sequence": 1, "native": {"title": "first", "region": [0, 0, 400, 180]}}
+                expected = {"sequence": 1, "native": {"title": "first", "region": [0, 0, 400, 180]}}
+                def close():
+                    payload["sequence"] = 99
+                    payload["native"]["title"] = "closed"
+                    payload["native"]["region"][0] = 99
+                    if fails:
+                        raise OSError("close")
+                backend = SimpleNamespace(observe_read_only=mock.Mock(return_value=payload), close=mock.Mock(side_effect=close))
+                with mock.patch("runtime.cli_v1.observe.open_session", return_value=SimpleNamespace(backend=backend)):
+                    row = self.call()
+                self.assertEqual(row["observation"], expected)
+                self.assertEqual(row["status"], "observation_failed" if fails else "returned")
+                self.assertFalse(row["side_effect_authority"])
+                self.assertFalse(row["input_dispatched"])
+                backend.observe_read_only.assert_called_once()
+                backend.close.assert_called_once()
+                if fails:
+                    self.assertEqual(row["cleanup_error"], "OSError('close')")
+
+    def test_caller_owned_next_capture_cannot_rewrite_prior_observation(self):
+        payload = {"sequence": 0, "native": {"title": "initial", "region": [0, 0, 400, 180]}}
+        def read(*_):
+            payload["sequence"] += 1
+            payload["native"]["title"] = "capture-" + str(payload["sequence"])
+            payload["native"]["region"][0] = payload["sequence"]
+            return payload
+        backend = SimpleNamespace(observe_read_only=mock.Mock(side_effect=read), close=mock.Mock())
+        session = SimpleNamespace(backend=backend, recovery_required=True)
+        first = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 400, 180])
+        second = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 400, 180])
+        self.assertEqual(first["observation"], {"sequence": 1, "native": {"title": "capture-1", "region": [1, 0, 400, 180]}})
+        self.assertEqual(second["observation"], {"sequence": 2, "native": {"title": "capture-2", "region": [2, 0, 400, 180]}})
+        self.assertNotEqual(first["observation_id"], second["observation_id"])
+        self.assertEqual(backend.observe_read_only.call_count, 2)
+        backend.close.assert_not_called()
+        self.assertTrue(session.recovery_required)
+
+    def test_returned_snapshot_mutation_cannot_rewrite_backend_cache(self):
+        payload = {"sequence": 1, "native": {"title": "first", "region": [0, 0, 400, 180]}}
+        backend = SimpleNamespace(observe_read_only=mock.Mock(return_value=payload), close=mock.Mock())
+        session = SimpleNamespace(backend=backend, recovery_required=True)
+        row = observe_in_session(session, target="fixture", frame="window_client", region=[0, 0, 400, 180])
+        row["observation"]["native"]["region"][0] = 99
+        self.assertEqual(payload["native"]["region"], [0, 0, 400, 180])
+        self.assertTrue(session.recovery_required)
+        backend.close.assert_not_called()
+
+
 class Win32ReadOnlyObserveTests(unittest.TestCase):
     def backend_session(self):
         from runtime.backends.win32_v1.backend import Win32Backend
