@@ -13,6 +13,16 @@ fake provider completion before the tool call. Both are synthetic composition
 evidence only; neither establishes a live model, physical release,
 blocked-I/O recovery, or matched efficiency.
 
+The [current-main R03 local recheck](current-main-20261022-r03-local-recheck/README.md)
+revalidates the supervisor/owned-caller/server-stop suite (63 tests, one
+skipped) and this ledger/provider-recorder/public-MCP suite (33 tests) in
+normal and optimized Python at commit `1263068a`. It includes the fake-provider
+target-generation refusal through the public compiled endpoint. The packet
+retains exact commands, raw output, exits, conditions and source blob IDs.
+This is still injected-provider contract evidence. It establishes neither a
+production provider adapter nor external usage reconciliation, live GUI
+effect, shared-desktop release, WSLc, matched efficiency, or reliability.
+
 ## Question and use
 
 Issue #57's current public `interface_guarded_compiled` caller lacks one joined
