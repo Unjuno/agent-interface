@@ -30,6 +30,18 @@ expectation failure is retained. The prototype confirms only its own process
 ordering. It makes no Windows `SendInput`, physical-release, standard-caller,
 or task-success claim; native work remains gated, and #7924 remains STOP.
 
+PR #9404 is merged at `a8f504597ef6a8e097e93dd1cf64611030eea9f7` and retains
+the Phase 1 Win32 process-owner model, including the r01 failure and r02
+12/12 synthetic pass in normal and optimized mode. A subsequent Phase 2
+prerequisite adds a digest of owner PID plus process creation time to the
+private Win32 move-reference binding and refuses when identity is missing or
+changes before input; related Win32 suites pass locally in both modes. This
+still does not connect the owner to the public standard MCP caller:
+`mcp_server` has no guarded-Win32 route, and the private MoveBridge remains
+synchronous. Bounded release under blocked native I/O, public caller
+composition, independent task effect, matched efficiency and reliability
+remain open. No native input or WSLc allocation was used; #7924 is OPEN/STOP.
+
 **Current verified functional baseline (2026-10-22):** PR #9397 merged at `b0e8c6c9b4cfb7917932f52e7a69d8267348aa89`, #9398 at `b57e140848087ab814db874f7dfe410926afd387`, and #9399 at current main `08064035460187ba5c8c5cbb2f4e9732ca622ada`. The fresh r151 membership recheck at that SHA has 1,654 open Issues and 452 open PRs, exactly matching r150. PR #9397 adds a public-caller test for terminal receipt archival blocked after cancellation; its scope and limits are in the [supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). Latest runtime behavior remains the bounded MCP-relay cancellation read-ahead from PR #9389, with one deferred ordinary request, one reserved response and fail-closed later dispatch; its relay/Fake X composition suites passed 26/26 in normal and optimized Windows CPython 3.11. PR #9395 adds offline App Server usage reconciliation checks (44/44 related tests in both modes on its exact main source). These are synthetic/local evidence; production provider routing, external usage reconciliation, native/physical release, live MAP01 effect, matched efficiency and broad reliability remain open. PR #8800 remains on an A14 raw-custody hold: its public aggregate is preserved, but the original private report/protocol/images and their owner were not recoverable in the accessible workspace; no rerun was made. The linked-worktree review found 48 worktrees, 14 with changes, including two with thousands of changed entries and unresolved ownership; see the [custody report](maintenance/worktree-custody-recheck-20261022-r01.md). WSLc Issue #7924 remains OPEN/STOP. See [r151](maintenance/repository-inventory-recheck-20261022-r151.md) and the [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md); cleanup and consolidation records retain historical receipts.
 
 ## Historical evidence summaries

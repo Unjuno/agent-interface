@@ -6,12 +6,30 @@ from runtime.guarded_win32_v1.bridge import MoveBridge
 
 class Cases(unittest.TestCase):
  def fixture(self):
-  b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8})
+  b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.process_identity=Mock(return_value={'pid':51,'creation_time_100ns':700});b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8})
   raw=bytes(v for y in range(8) for x in range(8) for v in (x*20,y*20,255,0));b._capture_hdc=Mock(return_value=raw);events=[]
   b.pointer_move=lambda t,f,x,y:events.append(['move',t,x,y])
   def release():events.append(['release']);return {'verified':True,'keys_down':[],'buttons_down':[]}
   b.release_all=release;o=FreshWin32Reference(b,'fixture','images/'+self._testMethodName);o.observe([0,0,8,8]);o.mint('button',1,[2,2,4,4]);s=MoveBridge(o,lambda intent:{'lease_id':'inert-explicit-lease','expires_at_ns':time.monotonic_ns()+1000000000},lambda:False)
   return b,o,s,raw,events
+
+ def test_target_process_generation_change_after_prepare_refuses_input(self):
+  b,o,s,raw,e=self.fixture();b.process_identity=Mock(return_value={'pid':51,'creation_time_100ns':700})
+  # Recreate the observation after installing the new process-identity adapter.
+  o=FreshWin32Reference(b,'fixture','images/'+self._testMethodName);o.observe([0,0,8,8]);o.mint('button',1,[2,2,4,4])
+  s=MoveBridge(o,lambda intent:{'lease_id':'inert-explicit-lease','expires_at_ns':time.monotonic_ns()+1000000000},lambda:False)
+  permit=s.prepare('button',[1,1])
+  b.process_identity.return_value={'pid':52,'creation_time_100ns':900}
+  result=s.execute(permit['authorization'])
+  self.assertEqual(result['status'],'refused')
+  self.assertEqual(e,[])
+  self.assertTrue(o.review_required)
+
+ def test_missing_target_process_generation_refuses_observation(self):
+  b,o,s,raw,e=self.fixture();b.process_identity=Mock(side_effect=RuntimeError('process identity unavailable'))
+  with self.assertRaisesRegex(RuntimeError,'process identity unavailable'):
+   FreshWin32Reference(b,'fixture','images/'+self._testMethodName).observe([0,0,8,8])
+  self.assertEqual(e,[])
  def refused_once(self,s,p,events):
   r=s.execute(p['authorization']);self.assertEqual(r['status'],'refused');self.assertEqual(events,[]);self.assertEqual(s.execute(p['authorization'])['error'],'AUTHORIZATION_CONSUMED_OR_UNKNOWN');return r
  def test_held_key_after_prepare_requires_recovery(self):

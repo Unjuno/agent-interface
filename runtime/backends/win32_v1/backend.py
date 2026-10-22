@@ -114,6 +114,11 @@ class RECT(ctypes.Structure):
                 ("right", wintypes.LONG), ("bottom", wintypes.LONG)]
 
 
+class FILETIME(ctypes.Structure):
+    _fields_ = [("dwLowDateTime", wintypes.DWORD),
+                ("dwHighDateTime", wintypes.DWORD)]
+
+
 class BITMAPINFOHEADER(ctypes.Structure):
     _fields_ = [("biSize", wintypes.DWORD), ("biWidth", wintypes.LONG),
                 ("biHeight", wintypes.LONG), ("biPlanes", wintypes.WORD),
@@ -176,6 +181,9 @@ class Win32Backend:
     def _configure_api(self) -> None:
         self.user32.IsWindow.argtypes = [wintypes.HWND]
         self.user32.IsWindow.restype = wintypes.BOOL
+        self.user32.GetWindowThreadProcessId.argtypes = [
+            wintypes.HWND, ctypes.POINTER(wintypes.DWORD)]
+        self.user32.GetWindowThreadProcessId.restype = wintypes.DWORD
         self.user32.GetClientRect.argtypes = [wintypes.HWND, ctypes.POINTER(RECT)]
         self.user32.GetClientRect.restype = wintypes.BOOL
         self.user32.ClientToScreen.argtypes = [wintypes.HWND, ctypes.POINTER(POINT)]
@@ -216,6 +224,15 @@ class Win32Backend:
                                       ctypes.c_int, ctypes.c_int, wintypes.HDC,
                                       ctypes.c_int, ctypes.c_int, wintypes.DWORD]
         self.gdi32.BitBlt.restype = wintypes.BOOL
+        self.kernel32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL,
+                                              wintypes.DWORD]
+        self.kernel32.OpenProcess.restype = wintypes.HANDLE
+        self.kernel32.GetProcessTimes.argtypes = [
+            wintypes.HANDLE, ctypes.POINTER(FILETIME), ctypes.POINTER(FILETIME),
+            ctypes.POINTER(FILETIME), ctypes.POINTER(FILETIME)]
+        self.kernel32.GetProcessTimes.restype = wintypes.BOOL
+        self.kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+        self.kernel32.CloseHandle.restype = wintypes.BOOL
 
     def manifest(self) -> dict[str, Any]:
         row = capability_manifest(
@@ -236,6 +253,41 @@ class Win32Backend:
         if hwnd is None or not self.user32.IsWindow(hwnd):
             raise Win32BackendError(f"unknown or stale target {name}")
         return hwnd
+
+    def process_identity(self, target: str) -> dict[str, int]:
+        """Return the HWND owner's PID and process creation time, fail closed.
+
+        The process handle is opened only for PROCESS_QUERY_LIMITED_INFORMATION.
+        The HWND-to-PID association is sampled again after GetProcessTimes to
+        reject an observed owner change during the query. This is a generation
+        discriminator, not an atomic guarantee against a later HWND change.
+        """
+        hwnd = self._target(target)
+        pid = wintypes.DWORD()
+        if not self.user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid)) or not pid.value:
+            raise Win32BackendError("GetWindowThreadProcessId failed")
+        owner = self.kernel32.OpenProcess(0x1000, False, pid.value)
+        if not owner:
+            raise Win32BackendError("OpenProcess for target identity failed")
+        try:
+            creation, exited, kernel, user = FILETIME(), FILETIME(), FILETIME(), FILETIME()
+            if not self.kernel32.GetProcessTimes(
+                    owner, ctypes.byref(creation), ctypes.byref(exited),
+                    ctypes.byref(kernel), ctypes.byref(user)):
+                raise Win32BackendError("GetProcessTimes for target identity failed")
+            confirmed_pid = wintypes.DWORD()
+            if (not self.user32.GetWindowThreadProcessId(
+                    hwnd, ctypes.byref(confirmed_pid))
+                    or confirmed_pid.value != pid.value):
+                raise Win32BackendError("target owner changed during identity query")
+            created_100ns = ((int(creation.dwHighDateTime) << 32)
+                             | int(creation.dwLowDateTime))
+            if created_100ns <= 0:
+                raise Win32BackendError("invalid target process creation time")
+            return {"pid": int(pid.value),
+                    "creation_time_100ns": created_100ns}
+        finally:
+            self.kernel32.CloseHandle(owner)
 
     def geometry(self, target: str) -> dict[str, int]:
         hwnd = self._target(target)

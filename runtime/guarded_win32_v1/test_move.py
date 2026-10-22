@@ -9,7 +9,7 @@ class MoveCases(unittest.TestCase):
  def test_move_paths(self):
   rows=[]
   for mode in ['valid','pixels','focus','cancel','recovery','authority_missing']:
-   b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8})
+   b=object.__new__(Win32Backend);b.targets={'fixture':42};b.emissions=0;b.held_keys={};b.held_buttons=set();b.user32=Mock();b.user32.IsWindow.return_value=True;b.user32.GetForegroundWindow.return_value=42;b.process_identity=Mock(return_value={'pid':51,'creation_time_100ns':700});b.geometry=Mock(return_value={'x':0,'y':0,'width':8,'height':8})
    raw=bytes(v for y in range(8) for x in range(8) for v in (x*20,y*20,255,0));b._capture_hdc=Mock(return_value=raw);events=[];cancel=[False]
    b.pointer_move=lambda t,f,x,y:events.append(['move',t,x,y])
    def release():events.append(['release']);return {'verified':True,'keys_down':[],'buttons_down':[]}
