@@ -206,6 +206,8 @@ python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_
 python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_provider_attempt_recorder.py
 python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py
 python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py
+python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_recorded_model_call_usage.py
+python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_recorded_model_call_usage.py
 ```
 
 The next integration step is independent reconciliation of the wrapper-level

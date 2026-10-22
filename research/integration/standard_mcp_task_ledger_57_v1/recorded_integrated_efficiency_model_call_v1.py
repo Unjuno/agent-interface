@@ -24,12 +24,21 @@ def _usage(result):
         source = {}
     counts = {name: source.get(name) for name in
               ("input_tokens", "output_tokens")}
+    details = {name: source[name] for name in (
+        "cached_input_tokens", "cache_write_input_tokens",
+        "reasoning_output_tokens", "image_input_tokens")
+        if name in source}
     for name, value in counts.items():
         if type(value) is not int or value < 0:
             counts[name] = None
+    for name, value in details.items():
+        if value is not None and (type(value) is not int or value < 0):
+            details[name] = None
     known = sum(value is not None for value in counts.values())
+    known_details = any(value is not None for value in details.values())
     return {"status": "reported" if known == 2 else
-            "partial" if known else "unavailable", **counts}
+            "partial" if known or known_details else "unavailable",
+            **counts, **details}
 
 
 def build_model_provider_call(*, model_call, root, prompt, image, contract,
