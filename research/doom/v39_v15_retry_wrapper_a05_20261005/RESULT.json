@@ -1,0 +1,18 @@
+{
+  "schema": "v39-v15-retry-wrapper-a05-result-v1",
+  "status": "STOP_IMAGE_UNAVAILABLE",
+  "candidate_started": false,
+  "auditor_started": false,
+  "freeze_hashes_valid": true,
+  "required_image": "python@sha256:8fb099199b9f2d70342674bd9dbccd3ed03a258f26bbd1d556822c6dfc60c317",
+  "required_platform": "linux/arm64",
+  "substitute_present": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 (amd64, Python version not used)",
+  "reason": "Exact frozen image absent from local WSLc inventory. Protocol forbids pulling or substituting before candidate start.",
+  "scope": "Preflight STOP only; no composition or runtime result.",
+  "artifacts": {
+    "protocol": "PROTOCOL.md",
+    "image_inventory": "IMAGE_INVENTORY.txt",
+    "freeze": "FREEZE.json",
+    "audit": "AUDIT.json"
+  }
+}
