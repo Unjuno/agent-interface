@@ -2448,6 +2448,23 @@ class OwnedProcessMCPTests(unittest.IsolatedAsyncioTestCase):
                                  cancel['operation_id'])
                 self.assertEqual(len(_read_json(
                     root/'supervisor-fake-x.json', {})['effects']), 1)
+                # The cancellation receipt can be terminal while the original
+                # action worker is still unwinding from its held Fake X sync.
+                # Do not let TemporaryDirectory race the worker's final
+                # report.json write on Windows.
+                (root/'resume-owner-io').write_text('resume', encoding='utf-8')
+                deadline = time.monotonic() + 5
+                action_result = None
+                while time.monotonic() < deadline:
+                    action_result = metadata(await server.call_tool(
+                        'interface_results', {'call_id':action['call_id'],
+                                              'include_image':False}))
+                    if action_result['status'] != 'pending':
+                        break
+                    await asyncio.sleep(0.01)
+                self.assertIsNotNone(action_result)
+                self.assertEqual(action_result['status'], 'runtime_failed',
+                                 action_result)
             finally:
                 (root/'resume-owner-io').write_text('resume', encoding='utf-8')
                 await server.call_tool('interface_close', {})
