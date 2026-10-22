@@ -276,3 +276,9 @@ The preferred prototype is rejected if the platform can deliver an old DOWN afte
 4. Integrate through the standard caller only after the ownership protocol passes. Then perform matched baseline/recovery experiments for response latency, release-confirmation coverage, late-input count and task correctness; reliability requires independent repetitions under a predeclared policy, not one successful trace.
 
 The current result remains `UNKNOWN`. This checkpoint narrows the design choice but does not complete bounded release, target-generation composition, observation/effect timing, task success, efficiency, or reliability.
+
+## Win32 early-UP / late-DOWN synthetic counterexample (2026-10-22)
+
+The [R01 packet](../../research/integration/win32_late_down_after_early_up_20261022_r01/README.md) tests the complementary not-yet-accepted schedule with the actual `Win32RuntimeSession.dispatch()` and `Win32Backend` around an inert fake API. The old producer blocks before accepting CTRL-down; a counterfactual second sender submits UP; the old producer then accepts DOWN and blocks before returning. Normal and optimized CPython 3.13.14 both retain `UP → old DOWN` with CTRL down before the old call returns, followed by the original program's terminal UP and a neutral final fake state. The independent packet auditor confirms timestamps, source blobs and mode parity.
+
+The early UP deliberately bypasses current `session.recover_input()`, which would refuse while `recovery_required` is false. This is a counterexample to treating an independently submitted UP as a producer fence, not evidence of Windows API ordering or physical input behavior. The original accepted-before-return R01 outcome remains unchanged. No WSLc/Docker allocation, native input, or task-effect run was used; the outcome remains `UNKNOWN` until producer fencing, independent platform readback and fresh-target effect are qualified.
