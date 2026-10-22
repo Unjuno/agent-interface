@@ -1,0 +1,34 @@
+{
+  "audit_verdict": "FAIL_A04_CANDIDATE_PARTIAL_RAW_AND_ISOLATION_DEVIATION",
+  "candidate_exit": 1,
+  "candidate_source_commit": "20a3958cfd46becb45e861bba744861f01058679",
+  "candidate_stdout_bytes": 0,
+  "checks": {
+    "external_plugin_fetch_retained": true,
+    "one_shot_identity_and_exit_match": true,
+    "raw_candidate_stdout_empty": true,
+    "supplemental_rollout_hash_matches_metadata": true,
+    "supplemental_rollout_scope_limited": true,
+    "teardown_lock_error_retained": true,
+    "temporary_process_and_lock_check_recorded": true
+  },
+  "delivery_class": "PARTIAL_OR_UNVERIFIABLE",
+  "external_network_contact": {
+    "commit": "5fd93af4cd0c623e020d0cc7e9ce178b4ac1f70f",
+    "host": "github.com",
+    "path": "/openai/plugins",
+    "separate_from_loopback_responses_mock": true
+  },
+  "frozen_base_commit": "2f2c83c3da36566bac410b13b2ed5202c9641f1a",
+  "integrity_errors": [],
+  "one_candidate_run": true,
+  "retry_count": 0,
+  "scope": "failure audit only; no HTTP delivery classification, model inference, or computer-control effect",
+  "supplemental_rollout": {
+    "bytes": 49244,
+    "does_not_classify_http_coalescing": true,
+    "local_only": true,
+    "same_turn_observation_items": true,
+    "sha256": "c2720e13767141974da21ebe67735a6267a760e6af5133aa106ada73514fe74c"
+  }
+}
