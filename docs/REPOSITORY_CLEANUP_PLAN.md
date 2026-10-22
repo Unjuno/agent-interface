@@ -1,5 +1,38 @@
 # Repository cleanup plan
 
+## Current execution pointer after PR #9362 — 2026-10-22
+
+Current `origin/main` is `df2b41e4a4e0ff03a3a7a139416003bd5599b16` (PR #9362).
+The latest complete membership receipt is still r138, captured before this
+merge at `5a32f1e486b40103a1f24a6059ae78c8cb884e0f`; its 1,655 Issue / 457 PR
+counts are not verified at current main. No new membership census is implied.
+
+PR #9362 added the inert [Win32 blocked-SendInput R01 packet](../research/integration/win32_blocked_sendinput_recovery_20261022_r01/README.md)
+and updated the [supervisor design record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
+The modeled accepted-before-return schedule makes current recovery refuse
+without UP while the fake key remains down. It is not native Win32 release
+evidence. Issue #17 remains OPEN with the result and limits recorded.
+Open PR #9363 contains a design proposal only; do not count its candidate
+process boundary as qualified or merge it as implementation approval.
+
+Another existing result changes the provider-integration map: [golden desktop
+v3](../runtime/GOLDEN_DESKTOP_DEMO_V3.md) has one real Codex app-server
+grounding thread, six exact-once fixture tasks, and 57 verified neutral
+terminal programs. Its 232-file raw retention manifest verifies against Git
+blobs, but the one-arm result is not a matched public-MCP efficiency or
+reliability comparison. Its live source auditor is pinned to older source
+hashes and does not pass against current-main source. Preserve this as a
+separate successful model-backed route; do not summarize the repo as having no
+real model integration, and do not treat it as closing the public MCP recorder
+or current bounded-release gates.
+
+Next: preserve the #9363 design review gate, then select an independently
+verified bounded implementation or experiment. Keep target-generation caller
+composition, production provider accounting, matched efficiency, task effect,
+and reliability as separate open gates. #7924 remains STOP/HOLD; no WSLc
+allocation is verified. Do not infer current membership, ownership, or
+disposable custody from historical inventory receipts.
+
 ## Current execution pointer after PR #9356 — 2026-10-22
 
 Current `origin/main` is `5a32f1e486b40103a1f24a6059ae78c8cb884e0f` (PR #9356).
