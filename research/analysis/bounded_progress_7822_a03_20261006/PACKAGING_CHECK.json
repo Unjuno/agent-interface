@@ -1,0 +1,29 @@
+{
+  "restored_files": 31,
+  "source_pins": 21,
+  "audit_byte_identical": true,
+  "unit_tests": 10,
+  "candidate_reruns": 0,
+  "controls": [
+    {
+      "name": "changed_part",
+      "rejected": true,
+      "reason": "part identity"
+    },
+    {
+      "name": "reordered_parts",
+      "rejected": true,
+      "reason": "archive identity"
+    },
+    {
+      "name": "wrong_member_count",
+      "rejected": true,
+      "reason": "archive member count"
+    },
+    {
+      "name": "existing_destination",
+      "rejected": true,
+      "reason": "destination already exists"
+    }
+  ]
+}
