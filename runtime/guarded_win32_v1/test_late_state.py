@@ -1,8 +1,17 @@
-import pathlib,time,unittest,json
+import pathlib,time,unittest,json,tempfile
 from unittest.mock import Mock,patch
 from runtime.backends.win32_v1.backend import Win32Backend
 from runtime.guarded_win32_v1.fresh import FreshWin32Reference
 from runtime.guarded_win32_v1.bridge import MoveBridge
+
+_fixture_output_dirs = []
+
+def _cleanup_fixture_output_dirs():
+ for output_dir in _fixture_output_dirs:
+  output_dir.cleanup()
+ _fixture_output_dirs.clear()
+
+unittest.addModuleCleanup(_cleanup_fixture_output_dirs)
 
 class Cases(unittest.TestCase):
  def fixture(self):
@@ -10,13 +19,13 @@ class Cases(unittest.TestCase):
   raw=bytes(v for y in range(8) for x in range(8) for v in (x*20,y*20,255,0));b._capture_hdc=Mock(return_value=raw);events=[]
   b.pointer_move=lambda t,f,x,y:events.append(['move',t,x,y])
   def release():events.append(['release']);return {'verified':True,'keys_down':[],'buttons_down':[]}
-  b.release_all=release;o=FreshWin32Reference(b,'fixture','images/'+self._testMethodName);o.observe([0,0,8,8]);o.mint('button',1,[2,2,4,4]);s=MoveBridge(o,lambda intent:{'lease_id':'inert-explicit-lease','expires_at_ns':time.monotonic_ns()+1000000000},lambda:False)
+  b.release_all=release;image_dir=tempfile.TemporaryDirectory();_fixture_output_dirs.append(image_dir);o=FreshWin32Reference(b,'fixture',image_dir.name);o.observe([0,0,8,8]);o.mint('button',1,[2,2,4,4]);s=MoveBridge(o,lambda intent:{'lease_id':'inert-explicit-lease','expires_at_ns':time.monotonic_ns()+1000000000},lambda:False)
   return b,o,s,raw,events
 
  def test_target_process_generation_change_after_prepare_refuses_input(self):
   b,o,s,raw,e=self.fixture();b.process_identity=Mock(return_value={'pid':51,'creation_time_100ns':700})
   # Recreate the observation after installing the new process-identity adapter.
-  o=FreshWin32Reference(b,'fixture','images/'+self._testMethodName);o.observe([0,0,8,8]);o.mint('button',1,[2,2,4,4])
+  o=FreshWin32Reference(b,'fixture',s.observer.out);o.observe([0,0,8,8]);o.mint('button',1,[2,2,4,4])
   s=MoveBridge(o,lambda intent:{'lease_id':'inert-explicit-lease','expires_at_ns':time.monotonic_ns()+1000000000},lambda:False)
   permit=s.prepare('button',[1,1])
   b.process_identity.return_value={'pid':52,'creation_time_100ns':900}
@@ -29,6 +38,23 @@ class Cases(unittest.TestCase):
   b,o,s,raw,e=self.fixture();b.process_identity=Mock(side_effect=RuntimeError('process identity unavailable'))
   with self.assertRaisesRegex(RuntimeError,'process identity unavailable'):
    FreshWin32Reference(b,'fixture','images/'+self._testMethodName).observe([0,0,8,8])
+  self.assertEqual(e,[])
+
+ def test_prepare_observed_preserves_compiled_caller_sequence_without_recapture(self):
+  b,o,s,raw,e=self.fixture();capture_count=b._capture_hdc.call_count
+  permit=s.prepare_observed('button',[1,1],source_sequence=1)
+  self.assertEqual(permit['sequence'],1)
+  self.assertEqual(b._capture_hdc.call_count,capture_count)
+  result=s.execute(permit['authorization'])
+  self.assertEqual(result['status'],'completed')
+  self.assertEqual(e,[['move','fixture',3,3],['release']])
+
+ def test_prepare_observed_refuses_changed_generation_before_authorization(self):
+  b,o,s,raw,e=self.fixture()
+  b.process_identity.return_value={'pid':52,'creation_time_100ns':900}
+  with self.assertRaisesRegex(ValueError,'association changed'):
+   s.prepare_observed('button',[1,1],source_sequence=1)
+  self.assertFalse(s.permits)
   self.assertEqual(e,[])
  def refused_once(self,s,p,events):
   r=s.execute(p['authorization']);self.assertEqual(r['status'],'refused');self.assertEqual(events,[]);self.assertEqual(s.execute(p['authorization'])['error'],'AUTHORIZATION_CONSUMED_OR_UNKNOWN');return r

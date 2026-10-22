@@ -72,22 +72,89 @@ class MoveBridge:
             if not resolution['eligible']:
                 raise ValueError('reference refused: ' + resolution['status'])
             row, _ = self.observer.get(resolution['sequence'])
-            intent = {'scope': self.observer.scope, 'target': self.observer.target, 'operation': 'pointer_move', 'alias': alias, 'offset': list(offset), 'point': list(resolution['point'])}
-            lease = self.authorize(copy.deepcopy(intent))
-            if type(lease) is not dict or set(lease) != {'lease_id', 'expires_at_ns'} or type(lease['lease_id']) is not str or (not lease['lease_id']) or (type(lease['expires_at_ns']) is not int):
-                raise ValueError('caller authority unavailable')
-            deadline = min(lease['expires_at_ns'], resolution['valid_until_ns'])
-            if time.monotonic_ns() >= deadline:
-                raise ValueError('authority expired')
-            program = {'schema': SCHEMA_PROGRAM, 'program_id': 'move-' + uuid.uuid4().hex, 'source': {'observation_seq': row['sequence'], 'binding_revision': row['binding_revision']}, 'authority': {'lease_id': lease['lease_id'], 'expires_at_ns': deadline}, 'terminal': {'release_all_required': True}, 'ops': [{'op': 'pointer_move', 'frame': 'window_client', 'x': resolution['point'][0], 'y': resolution['point'][1]}, {'op': 'release_all'}]}
-            admission = admit_program(program, self.backend.manifest(), now_ns=time.monotonic_ns(), current_observation_seq=row['sequence'], current_binding_revision=row['binding_revision'])
-            if not admission.accepted:
-                raise ValueError('ordinary admission refused: ' + str(admission.error))
-            token = uuid.uuid4().hex
-            self.permits[token] = {'program': program, 'row': row, 'scope': self.observer.scope, 'deadline': deadline}
-            return {'authorization': token, 'sequence': row['sequence'], 'valid_until_ns': deadline, 'point': list(resolution['point'])}
+            return self._prepare_resolved(alias, offset, resolution, row)
         finally:
             self.lock.release()
+
+    def prepare_observed(self, alias, offset, *, source_sequence):
+        """Admit against the exact frame already consumed by a compiled caller.
+
+        Unlike ``prepare``, this does not capture another image. It revalidates
+        the exact retained reference and current HWND/process/focus binding;
+        execution still performs its own live guard and pixel capture before
+        every native operation.
+        """
+        if not self.lock.acquire(blocking=False):
+            raise ValueError('operation active')
+        try:
+            self.permits.clear()
+            if not self.verifier_idle():
+                raise ValueError('verifier still active')
+            if self.cancelled() is not False or self.session.recovery_required:
+                raise ValueError('cancelled or recovery required')
+            if not self.neutral():
+                raise ValueError('input neutrality unavailable')
+            if type(source_sequence) is not int or source_sequence < 1:
+                raise ValueError('positive source observation sequence required')
+            reference_row, _ = self.observer.context(source_sequence)
+            row, _ = self.observer.get(source_sequence)
+            expected = reference_row.get('pointer_binding')
+            if not isinstance(expected, dict):
+                raise ValueError('source pointer binding unavailable')
+            current = self.observer._binding()
+            geometry = expected.get('geometry')
+            foreground = int(self.backend.user32.GetForegroundWindow() or 0)
+            current_geometry = current.get('geometry')
+            if (current.get('surface') != expected.get('surface')
+                    or current.get('process_generation')
+                        != expected.get('process_generation')
+                    or not isinstance(geometry, list) or len(geometry) != 4
+                    or current_geometry != dict(zip(('x', 'y', 'width', 'height'),
+                                                      geometry))
+                    or foreground != expected.get('surface')
+                    or foreground != expected.get('focus')):
+                self.observer.review_required = True
+                raise ValueError('association changed since caller observation')
+            resolution = self.observer.resolve(
+                alias, offset, source_sequence, scope=self.observer.scope)
+            if not resolution['eligible']:
+                raise ValueError('reference refused: ' + resolution['status'])
+            return self._prepare_resolved(alias, offset, resolution, row)
+        finally:
+            self.lock.release()
+
+    def _prepare_resolved(self, alias, offset, resolution, row):
+        intent = {'scope': self.observer.scope, 'target': self.observer.target,
+            'operation': 'pointer_move', 'alias': alias, 'offset': list(offset),
+            'point': list(resolution['point'])}
+        lease = self.authorize(copy.deepcopy(intent))
+        if (type(lease) is not dict or set(lease) != {'lease_id', 'expires_at_ns'}
+                or type(lease['lease_id']) is not str or not lease['lease_id']
+                or type(lease['expires_at_ns']) is not int):
+            raise ValueError('caller authority unavailable')
+        deadline = min(lease['expires_at_ns'], resolution['valid_until_ns'])
+        if time.monotonic_ns() >= deadline:
+            raise ValueError('authority expired')
+        program = {'schema': SCHEMA_PROGRAM,
+            'program_id': 'move-' + uuid.uuid4().hex,
+            'source': {'observation_seq': row['sequence'],
+                       'binding_revision': row['binding_revision']},
+            'authority': {'lease_id': lease['lease_id'],
+                          'expires_at_ns': deadline},
+            'terminal': {'release_all_required': True},
+            'ops': [{'op': 'pointer_move', 'frame': 'window_client',
+                     'x': resolution['point'][0], 'y': resolution['point'][1]},
+                    {'op': 'release_all'}]}
+        admission = admit_program(program, self.backend.manifest(),
+            now_ns=time.monotonic_ns(), current_observation_seq=row['sequence'],
+            current_binding_revision=row['binding_revision'])
+        if not admission.accepted:
+            raise ValueError('ordinary admission refused: ' + str(admission.error))
+        token = uuid.uuid4().hex
+        self.permits[token] = {'program': program, 'row': row,
+            'scope': self.observer.scope, 'deadline': deadline}
+        return {'authorization': token, 'sequence': row['sequence'],
+            'valid_until_ns': deadline, 'point': list(resolution['point'])}
 
     def verifier_idle(self):
         p = self.pending_verifier
