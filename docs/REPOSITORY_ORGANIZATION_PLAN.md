@@ -74,6 +74,45 @@ resume.
    Resolve conflicting guidance at its canonical source rather than adding
    another policy layer.
 
+## Repository-wide convergence sequence
+
+The six work orders above are performed as finite waves, with the evidence and
+ownership needed by a later wave established before state changes:
+
+1. **Freeze the map, not the work.** Refresh complete Issue/PR membership and
+   note active allocations, owners, exact branches and unique evidence. Ongoing
+   experiments keep their declared boundary; independent audits can continue.
+2. **Build a hypothesis catalog.** Route source Issues into canonical families.
+   Keep distinct questions distinct even when they share code. Preserve the
+   original Issue URL, first outcomes, counterexamples, raw/source identity,
+   unresolved question and next discriminating test. Mark idea-only records as
+   deferred only after the canonical page and source Issue cross-link each
+   other.
+3. **Converge PRs on current main.** Classify each open PR as merge-ready,
+   bounded repair/retarget, superseded with verified transfer, or evidence/
+   dependency hold. Verify exact head/base, changed files, source applicability,
+   local checks, unique artifacts and actual repository protections before any
+   merge or close. Integrate useful work as soon as these checks pass; do not
+   wait for an invented reviewer quota or close a PR just to lower counts.
+4. **Set Issue state from the catalog and implementation.** Close scoped work
+   only when the recorded result satisfies that Issue's question. Close a
+   duplicate only after its unique evidence is represented by the canonical
+   family and the source Issue links there. Keep unfinished research and real
+   blockers open with one finite next action and a verifiable release
+   condition.
+5. **Resolve custody and navigation.** Reconcile live branches, worktrees,
+   ignored outputs, sessions and experiment packets against merged/current
+   content. Preserve uncertain ownership. Then update the entry points and
+   publish disjoint worker packets.
+
+Workers may audit separate families or PRs in parallel when their write paths
+and evidence are disjoint. One integrator serializes edits to shared indexes;
+this is file ownership, not a head-count or approval gate. A repository is
+orchestration-ready when every current queue item has an evidence-backed
+disposition, every retained artifact has recoverable custody or an explicit
+investigation, and independent workers can identify non-overlapping scopes.
+Open Issues and PRs may remain when their research or evidence is still live.
+
 ## Batch protocol
 
 Each batch selects one family, PR, or custody slice and leaves a compact receipt
@@ -89,7 +128,51 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint (2026-10-22)
+## Current execution checkpoint after PR #9356 (2026-10-22)
+
+Current main is `5a32f1e486b40103a1f24a6059ae78c8cb884e0f` (PR #9356).
+Membership recheck [r138](maintenance/repository-inventory-recheck-20261022-r138.md)
+confirms 1,655 open Issues and 457 open PRs. The Issue set is unchanged from
+r137; #8827 was closed as superseded after its C02 result was transferred
+byte-for-byte through #9356. PR #9356 opened and merged during the interval and
+has no net membership effect. These counts are only a queue baseline, not
+semantic triage or readiness. The authoritative exact IDs and hashes are in
+r138.
+
+Fresh live reads show #17 and #57 OPEN; #7924 is OPEN with its migration STOP
+still requiring a current ownership/release receipt. PR #8371 and #9355 are
+MERGED; #7290 and #8827 are CLOSED as superseded; #9356 is MERGED at the
+current main SHA. PR state changes still require refreshed exact records and
+evidence review.
+
+The first PR convergence batch after r137 transferred Issue #8648's C02 finite
+synthetic-model result from old-base PR #8827 to current-main PR #9356. No
+candidate/auditor was rerun. Fourteen manifest entries match Git blobs; all 15
+packet files are blob-identical to the source PR, while the shared analysis
+index retains the C02 route along with newer entries. Current-main successor
+validation passed with Python 3.13 strict analysis-index and workspace-index
+checks and `git diff --check`. The remote checks were queued, but main had no
+branch protection or rulesets and the relevant local checks passed. PR #8827
+was closed only after merge and transfer verification. Issue #8648 remains
+open because the finite model does not answer real route/task feedback.
+
+The separate `work/agent-interface` checkout is on
+`integration/x11-fake-socket-relay-r01` at `994f18dcd479eca0885e979749db30073a98f3a2`,
+with modified and untracked files across idea indexes, current-goal and
+consolidation documents, maintenance receipts, and integration evidence. Its
+owner and resume status are not verified. Preserve it and establish custody
+before any reset or archive. This makes that worktree a concrete next custody
+batch; repository-wide branch deletion is not justified.
+
+**Next bounded batch:** select a small exact-head PR slice from r138, refresh
+live metadata/diff/checks and linked Issue, and integrate the first item whose
+current-main applicability and local checks pass. The previously refreshed
+candidate set includes the evidence-only #8845 and #8833; their WSLc/model/task
+limits and unique evidence must be checked before disposition. In parallel only
+where paths are disjoint, audit one idea family from the existing semantic-route
+queue. Do not start with mass Issue closure or worktree deletion.
+
+## Historical execution checkpoint (2026-10-22; superseded by r137)
 
 This checkpoint records main `3e46261966957f0852703ededb4b6fb2f3a594bf`,
 after PR #9346 and the current-pointer refresh. The retained R02 Xvfb trial ran against source

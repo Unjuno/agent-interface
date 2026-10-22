@@ -1,5 +1,38 @@
 # Repository cleanup plan
 
+## Current execution pointer after PR #9356 — 2026-10-22
+
+Current `origin/main` is `5a32f1e486b40103a1f24a6059ae78c8cb884e0f` (PR #9356).
+The complete membership refresh [r138](maintenance/repository-inventory-recheck-20261022-r138.md)
+contains 1,655 open Issues and 457 open PRs; the Issue set matches r137, while
+the PR set removes #8827 after its C02 packet was transferred and #9356 merged.
+The r138 CSVs and ID hashes define membership only, not semantic triage or
+merge readiness.
+
+Live reads show #17 and #57 OPEN. #7924 remains OPEN with a migration STOP;
+do not infer allocation or ownership from the Issue's existence. PR #8371 is
+MERGED, #7290 and #8827 are CLOSED as superseded, and #9355 and #9356 are
+MERGED at current main.
+The exact records were refreshed for this pointer; future state changes still
+require fresh record-level review.
+
+The six-step plan in [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md)
+is now the execution order: membership, idea-family routing, exact-head PR
+convergence, evidence-based Issue disposition, custody reconciliation, and
+navigation/work-packet repair. The first bounded PR batch moved Issue #8648's
+C02 packet from old-base #8827 onto current-main PR #9356, verified its
+14-entry manifest and all 15 packet file blobs, then closed #8827 as
+superseded. No candidate/auditor was rerun; Issue #8648 remains open. Next,
+review a small exact-head PR slice and one disjoint family or custody audit.
+Do not make bulk changes.
+The separate `work/agent-interface` checkout at
+`994f18dcd479eca0885e979749db30073a98f3a2` has modified and untracked files;
+owner and recoverability remain unverified, so preserve it pending a custody
+receipt. No unknown worktree, evidence packet, or research Issue is disposable
+by default.
+
+The historical pointers below remain receipts and are not current membership.
+
 ## Current cleanup objective (2026-10-22)
 
 ### Live execution pointer after PR #9354
