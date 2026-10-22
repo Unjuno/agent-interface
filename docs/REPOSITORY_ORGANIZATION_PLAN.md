@@ -128,57 +128,47 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9369 (2026-10-22)
+## Current execution checkpoint after PR #9370 (2026-10-22)
 
-Current main is `1a21bef00c431af02fa7f280c7589b48d03402af` (PR #9369). The
+Current main is `dcc9e9ed4688b8b9dda71156e50b054b2a88297b` (PR #9370). The
 complete [r145 membership recheck](maintenance/repository-inventory-recheck-20261022-r145.md)
-confirms 1,654 open Issues and 453 open PRs, with main unchanged across the
-complete reads. Compared with r144, the Issue and PR sets are unchanged; #9369
-opened and merged without net membership effect. Exact IDs and sorted-ID
-hashes are preserved in r145. Counts are discovery aids, not semantic
-disposition or readiness.
+records 1,654 open Issues and 453 open PRs with matching before/after main
+SHA. The Issue and PR ID sets match r144; #9370 added the targeted high-risk
+worktree custody receipt without changing membership. Counts are discovery
+metadata, not semantic disposition, ownership, or readiness.
 
-PR #8819 integrated Issue #8493's frozen finite-model temporal-regime result:
-pooled confirmation accepted both planted harmful shifts, block-conditional
-confirmation rejected both, stable controls passed, and sparse/ambiguous
-cases returned UNKNOWN. Independent audit reconstructed 6,424 rows and
-rejected 6/6 corruptions. Issue #8493 was closed after this met its authored
-T0 `PASS_METHOD_SCOPED` criterion and the result and limitations were
-preserved in the [canonical idea record](ideas/trace-reduction-regime-drift.md).
-The result remains synthetic; closure does not establish real-system drift,
-runtime safety, or transfer beyond the model.
+The user's selected first work item is the existing
+[prestarted cancellation supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md),
+which is already the canonical design/evidence page; do not create a second
+spec or treat the merged opt-in path as qualified. Retained WSL2/private-Xvfb
+evidence now includes two same-Xvfb fresh-session recovery runs, one paused
+Xvfb run, a three-pair pause pilot, and one caller/effect timing run. These
+show bounded caller responses in their declared schedules and independent
+synthetic task-oracle results. They do not promote the canceled runtime result
+from `UNKNOWN`, establish release while X11 is unavailable, prove shared
+desktop input authority, or qualify physical GUI/MAP01, matched efficiency,
+or reliability. Keep the supervisor default-off and keep #17/#57 open.
 
-The [prestarted cancellation supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
-is the selected integration thread. Its runtime remains opt-in, and its
-qualification boundary still includes whole-server unavailability, live
-bystander behavior, fresh-target/task-effect interpretation, and matched
-efficiency/reliability. Keep #17, #57, and #7924 open while their specific
-evidence gaps remain. WSLc remains subject to its current STOP/HOLD; this
-organization batch used no WSLc allocation or Docker operation.
+The design page identifies the immediate technical boundary: global XTest
+release lacks a proven exclusive-input capability; deadline expiry must also
+prevent a delayed supervisor from emitting a new effect. Fake-X bystander
+refusal exists, but the live-Xvfb bystander negative path is still open. The
+next computer-control batch is one isolated public-caller Xvfb test of that
+negative path, with an independent key-state readback and raw conditions; it
+must preserve `UNKNOWN`/no-replay and show that no release is emitted when an
+unrelated client owns the reused XRes base. If an isolated Xvfb target cannot
+be verified locally, do source/test design work only and retain the gate.
+WSLc remains STOP/HOLD under #7924; this batch does not use WSLc or Docker.
 
-PRs #9367 and #9368 update the catalog and organization checkpoint; #9368 also
-records closure of #8493 from its scoped synthetic T0 result. PR #9369 records
-the worktree custody census and the current decision to preserve unresolved
-worktrees.
-A read-only local custody census found 45 worktrees: 31 clean and 14 with
-uncommitted status entries. None of the 14 dirty branch names exactly matched
-an open PR head. Two worktrees contain more than 5,000 status entries each;
-see the [census receipt](maintenance/worktree-custody-census-20261022-r01.md)
-and [targeted follow-up](maintenance/worktree-custody-census-20261022-r02.md).
-The largest two were traced to an unpublished local-only cancellation branch
-with 18,365 untracked files and the closed PR #9315 head with 5,135 untracked
-files plus modified CLI code that differs from current main. These findings
-do not establish owner or recoverability. Preserve both worktrees and all
-other dirty worktrees pending custody verification.
-
-**Next bounded batch:** map an owner/task and recovery path to each of the two
-largest dirty worktrees. For the closed #9315 worktree, first resolve the
-uncommitted CLI delta and 5,135 untracked paths against the transferred PR
-evidence. For the unpublished local-only branch, identify the source task and
-validate each frozen packet before deciding whether to transfer or retain it.
-Then route the remaining 12 dirty worktrees. Do not reset, archive, or delete
-anything with unknown custody. Preserve the supervisor default-off and direct
-computer-control work toward the remaining integrated release/effect gaps.
+PR #9367–#9370 updated the catalog, checkpoint, worktree census, and
+high-risk custody follow-up. The census found 45 local worktrees, including
+14 dirty ones; branch-name comparison alone found no dirty branch exactly
+matching an open PR head. The largest unpublished supervisor prototype and
+closed #9315 worktree still lack verified owner/recovery records. Preserve
+them and the other dirty worktrees until custody is established; do not reset,
+archive, or delete them. Continue repository convergence in separate bounded
+family/PR/custody batches so those cleanup records do not displace the selected
+scientific discriminator.
 
 ## Historical membership checkpoint after PR #8819 (2026-10-22)
 
