@@ -1,0 +1,155 @@
+{
+  "study_id": "map01-v39-cleanup-admission-race-a02-20261005",
+  "candidate_invocations": 1,
+  "pr7805_head": "84148054938965dc245602e37220586e07c6f28e",
+  "down_receipt": {
+    "event": "input_admission",
+    "key": "F8",
+    "admitted_ns": 161742715357791,
+    "input_ack_ns": 161742715363208,
+    "valid_until_ns": 161752715316208,
+    "physical_key_measurement": {
+      "edge": "down",
+      "classification": "CONFIRMED_PHYSICAL_DOWN",
+      "bracket": {
+        "status": "CONFIRMED_PHYSICAL_DOWN",
+        "physical_down_interval": [
+          161742715360666,
+          161742715365416
+        ],
+        "press_id": "4fef50f07b9f430b9052d7c6e1bb856d:r1:down:74",
+        "owner_id": "4fef50f07b9f430b9052d7c6e1bb856d",
+        "intent_token": "intent-cancel-fix",
+        "key": "F8",
+        "grants_input_authority": false,
+        "application_consumption_observed": false
+      },
+      "actuation_id": "4fef50f07b9f430b9052d7c6e1bb856d:g1:F8",
+      "identity_status": "MINTED",
+      "pre_sample": {
+        "available": true,
+        "down": false,
+        "started_ns": 161742715358166,
+        "finished_ns": 161742715360666,
+        "error": null
+      },
+      "post_sample": {
+        "available": true,
+        "down": true,
+        "started_ns": 161742715363541,
+        "finished_ns": 161742715365416,
+        "error": null
+      },
+      "press_request_ns": 161742715361750,
+      "sync_return_ns": 161742715363208,
+      "adapter_edge": {
+        "edge": "down",
+        "status": "CONFIRMED_PHYSICAL_DOWN",
+        "actuation_id": "4fef50f07b9f430b9052d7c6e1bb856d:g1:F8",
+        "owner_id": "4fef50f07b9f430b9052d7c6e1bb856d",
+        "intent_token": "intent-cancel-fix",
+        "key": "F8",
+        "interval": [
+          161742715360666,
+          161742715365416
+        ],
+        "grants_input_authority": false
+      },
+      "grants_input_authority": false,
+      "application_consumption_observed": false
+    },
+    "id": "race-a01",
+    "step": 7,
+    "owner_id": "4fef50f07b9f430b9052d7c6e1bb856d",
+    "intent_token": "intent-cancel-fix"
+  },
+  "release_receipts": [
+    {
+      "event": "input_release_measurement",
+      "key": "F8",
+      "id": "race-a01",
+      "step": 7,
+      "owner_id": "4fef50f07b9f430b9052d7c6e1bb856d",
+      "intent_token": "intent-cancel-fix",
+      "reason": "cancelled",
+      "physical_key_measurement": {
+        "edge": "up",
+        "classification": "CONFIRMED_PHYSICAL_UP",
+        "bracket": {
+          "status": "CONFIRMED_PHYSICAL_UP",
+          "physical_up_interval": [
+            161742715415375,
+            161742715418125
+          ],
+          "release_id": "4fef50f07b9f430b9052d7c6e1bb856d:r2:cleanup-up:74",
+          "owner_id": "4fef50f07b9f430b9052d7c6e1bb856d",
+          "intent_token": "intent-cancel-fix",
+          "key": "F8",
+          "grants_input_authority": false,
+          "application_consumption_observed": false
+        },
+        "actuation_id": "4fef50f07b9f430b9052d7c6e1bb856d:g1:F8",
+        "identity_status": "RETIRED",
+        "pre_sample": {
+          "available": true,
+          "down": true,
+          "started_ns": 161742715413791,
+          "finished_ns": 161742715415375,
+          "error": null
+        },
+        "post_sample": {
+          "available": true,
+          "down": false,
+          "started_ns": 161742715417708,
+          "finished_ns": 161742715418125,
+          "error": null
+        },
+        "release_attempted": true,
+        "release_request_ns": 161742715415791,
+        "sync_return_ns": 161742715417583,
+        "adapter_edge": {
+          "edge": "up",
+          "status": "CONFIRMED_PHYSICAL_UP",
+          "actuation_id": "4fef50f07b9f430b9052d7c6e1bb856d:g1:F8",
+          "owner_id": "4fef50f07b9f430b9052d7c6e1bb856d",
+          "intent_token": "intent-cancel-fix",
+          "key": "F8",
+          "interval": [
+            161742715415375,
+            161742715418125
+          ],
+          "grants_input_authority": false
+        },
+        "grants_input_authority": false,
+        "application_consumption_observed": false
+      },
+      "grants_input_authority": false
+    }
+  ],
+  "events": [
+    "input_admission",
+    "input_release_measurement"
+  ],
+  "cleanup_completed_before_down_return": true,
+  "owner_state_at_injected_boundary": {
+    "owner_id": "4fef50f07b9f430b9052d7c6e1bb856d",
+    "revision": 1,
+    "sample_started_ns": 161742715403041,
+    "sample_finished_ns": 161742715405875,
+    "owned_buttons": [],
+    "owned_keycodes": [
+      74
+    ],
+    "physical_pointer_mask": 0,
+    "pointer": [
+      0,
+      0
+    ],
+    "focus": 42,
+    "active_lease_deadline_ns": 161752715316208,
+    "active_lease_time_valid": true,
+    "cancel_requested": true
+  },
+  "fake_physical_keys_after_execute": [],
+  "bridge_held_after_execute": []
+}
