@@ -1,4 +1,5 @@
 import asyncio
+import base64
 import json
 import tempfile
 import unittest
@@ -8,6 +9,7 @@ from PIL import Image
 
 from ledger import summarize
 from provider_attempt_recorder import ProviderAttemptRecorder
+from runtime.cli_v1.mcp_relay import Relay
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_owned_process import (
     _compiled_profile_payload,
@@ -18,6 +20,143 @@ from runtime.cli_v1.test_mcp_owned_process import (
 
 
 class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+    async def test_fake_provider_image_and_stale_generation_roundtrip_public_relay(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            server_root = root / "server"
+            server_root.mkdir()
+            (server_root / "compiled-profile-mode").write_text("enabled")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            server = create_server(
+                {"app": 20}, server_root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+            )
+
+            class ServerClient:
+                async def call_tool(self, name, arguments):
+                    return await server.call_tool(name, arguments)
+
+            relay = Relay(ServerClient())
+
+            async def call_relay(attempt_id, call_id, tool, arguments):
+                request = {"id": relay.next_id, "tool": tool,
+                           "arguments": arguments}
+                request_bytes = json.dumps(
+                    request, allow_nan=False, separators=(",", ":"),
+                    sort_keys=True).encode("utf-8")
+
+                async def transport():
+                    response = await relay.request(request_bytes)
+                    response_bytes = json.dumps(
+                        response, allow_nan=False, separators=(",", ":"),
+                        sort_keys=True).encode("utf-8")
+                    return {"result": response,
+                            "response_bytes": response_bytes}
+
+                return await recorder.invoke_tool_async(
+                    attempt_id, call_id, tool, request_bytes, transport)
+
+            try:
+                observation = await call_relay(
+                    None, "observe-01", "interface_guarded_observe", {})
+                content = observation["result"]["content"]
+                images = [item for item in content if item.get("type") == "image"]
+                self.assertEqual(len(images), 1, observation)
+                image_data = base64.b64decode(images[0]["data"], validate=True)
+                self.assertTrue(image_data.startswith(b"\x89PNG\r\n\x1a\n"))
+
+                observed = json.loads(content[0]["text"])
+                minted_call = await call_relay(
+                    None, "mint-01", "interface_guarded_mint", {
+                        "alias": "field",
+                        "source_sequence": observed["source"]["sequence"],
+                        "point": [8, 8],
+                        "region_size": [12, 12],
+                    })
+                minted = json.loads(minted_call["result"]["content"][0]["text"])
+                payload = _compiled_profile_payload(
+                    observed["session"]["compiled_scope"],
+                    observed["session"]["compiled_surface"], minted["offset"])
+                payload["wait_for_result_ms"] = 10000
+                generated_request = json.dumps(
+                    payload, sort_keys=True, separators=(",", ":"),
+                    allow_nan=False).encode("utf-8")
+                provider_request = json.dumps({
+                    "prompt": "apply the highlighted synthetic target",
+                    "image": {"mimeType": images[0]["mimeType"],
+                              "data": images[0]["data"]},
+                }, sort_keys=True, separators=(",", ":"),
+                    allow_nan=False).encode("utf-8")
+
+                async def fake_provider():
+                    request = json.loads(provider_request)
+                    self.assertEqual(base64.b64decode(
+                        request["image"]["data"], validate=True), image_data)
+                    return {"status": "completed",
+                            "usage": {"status": "reported", "input_tokens": 42,
+                                      "output_tokens": 12},
+                            "response_bytes": generated_request}
+
+                generation = await recorder.invoke_async(
+                    "generation-stale-relay", provider_request, fake_provider)
+                self.assertEqual(generation["response_bytes"], generated_request)
+
+                # Invalidate the exact process generation after model wait and
+                # before the standard relay admits the generated action.
+                (server_root / "fake-process-generation").write_text(
+                    "b" * 64, encoding="utf-8")
+                response = await call_relay(
+                    "generation-stale-relay", "compiled-stale-relay",
+                    "interface_guarded_compiled", json.loads(generated_request))
+                result = json.loads(response["result"]["content"][0]["text"])
+                self.assertEqual(response["status"], "returned")
+                self.assertEqual(result["method_receipt"]["outcome"], "SAFE_YIELD")
+                self.assertEqual(result["method_receipt"]["reason"],
+                                 "execution_refused")
+                self.assertEqual(result["method_receipt"]["completed_transitions"], 0)
+                self.assertIsNone(result["task_success"])
+                self.assertFalse(result["replay_allowed"])
+                self.assertFalse(
+                    (server_root / "synthetic-application-state.rgb").exists())
+
+                initial_state = (
+                    server_root / "synthetic-application-initial.rgb").read_bytes()
+                task_success = Image.frombytes(
+                    "RGB", (32, 32), initial_state, "raw", "BGRX"
+                ).getpixel((1, 1)) == (255, 0, 0)
+                self.assertFalse(task_success)
+                recorder.record_task_score(
+                    "separate-fake-app-pixel-oracle-v1", task_success, initial_state)
+                receipt = recorder.reconcile()
+                summary = summarize(receipt["events"])
+                self.assertTrue(receipt["complete"])
+                self.assertEqual(summary["model_attempt_count"], 1)
+                self.assertEqual(summary["tool_call_count"], 3)
+                self.assertEqual(summary["input_tokens"], 42)
+                self.assertEqual(summary["output_tokens"], 12)
+                self.assertFalse(summary["task_success"])
+                self.assertEqual(
+                    [event["response_status"] for event in receipt["events"]
+                     if event["kind"] == "tool_call"],
+                    ["matched", "matched", "matched"])
+                generation_raw = next(
+                    recorder.root / ref["path"]
+                    for event in receipt["events"] if event["kind"] == "model_attempt"
+                    for ref in event["raw_refs"]
+                    if ref["path"].endswith("generation-stale-relay.request.bin"))
+                self.assertEqual(
+                    json.loads(generation_raw.read_bytes())["image"]["data"],
+                    images[0]["data"])
+                task_score = next(event for event in receipt["events"]
+                                  if event["kind"] == "task_score")
+                score_raw = recorder.root / task_score["raw_refs"][0]["path"]
+                self.assertEqual(score_raw.read_bytes(), initial_state)
+            finally:
+                await server.call_tool("interface_close", {})
+                _preserve_fake_x_run("provider-public-relay-stale-generation", root)
+
     async def test_async_attempt_joins_generation_bound_public_compiled_tool(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
