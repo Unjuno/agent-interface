@@ -1,0 +1,11 @@
+{
+  "cases": {
+    "hard_invalidation": "PASS: one finite interrupt; no rejected-cover cancel/terminal; old empty release retained",
+    "soft_completion": "PASS: previous terminal retained; rejected renewal untracked; no cancel/interrupt",
+    "unexpected_rejection": "PASS: fails closed without cancellation of rejected renewal",
+    "unknown_invalidation": "PASS: one finite interrupt; no rejected-cover cancel/terminal; old empty release retained"
+  },
+  "claim_limit": "deterministic extracted-main ordering only; no live executor or model claim",
+  "probe": "PASS",
+  "source_sha256": "e3b0659710ee8fe6a06209acae7ca558d35a5bb1f595ec021af83bac909c7645"
+}
