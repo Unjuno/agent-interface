@@ -1,0 +1,1 @@
+A03 raw output labeled the candidate and auditor allocation as A01 while the freeze stated A03. A03 is not accepted as a valid A03 result. The original raw outputs and freeze remain unchanged; see A03 RESULT.json and raw files. No A03 rerun.
