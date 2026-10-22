@@ -1,0 +1,1049 @@
+{
+  "design": {
+    "error_probability": {
+      "A": "1/4",
+      "B": "3/4"
+    },
+    "independent_resolution_given_stratum": true,
+    "strata": [
+      "A",
+      "A",
+      "B",
+      "B"
+    ],
+    "true_expected_risk": "1/2"
+  },
+  "ipcw_cases": [
+    {
+      "case_id": "state_00",
+      "latent_errors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_01",
+      "latent_errors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_02",
+      "latent_errors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_03",
+      "latent_errors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_04",
+      "latent_errors": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_05",
+      "latent_errors": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_06",
+      "latent_errors": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_07",
+      "latent_errors": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_08",
+      "latent_errors": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_09",
+      "latent_errors": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_10",
+      "latent_errors": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_11",
+      "latent_errors": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_12",
+      "latent_errors": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "probability_weight": "81/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_13",
+      "latent_errors": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "probability_weight": "81/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_14",
+      "latent_errors": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "probability_weight": "81/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_15",
+      "latent_errors": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "probability_weight": "81/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_16",
+      "latent_errors": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_17",
+      "latent_errors": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_18",
+      "latent_errors": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_19",
+      "latent_errors": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_20",
+      "latent_errors": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_21",
+      "latent_errors": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_22",
+      "latent_errors": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_23",
+      "latent_errors": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_24",
+      "latent_errors": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_25",
+      "latent_errors": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_26",
+      "latent_errors": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_27",
+      "latent_errors": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_28",
+      "latent_errors": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_29",
+      "latent_errors": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_30",
+      "latent_errors": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_31",
+      "latent_errors": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_32",
+      "latent_errors": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_33",
+      "latent_errors": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_34",
+      "latent_errors": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_35",
+      "latent_errors": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_36",
+      "latent_errors": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_37",
+      "latent_errors": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_38",
+      "latent_errors": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_39",
+      "latent_errors": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_40",
+      "latent_errors": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_41",
+      "latent_errors": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_42",
+      "latent_errors": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_43",
+      "latent_errors": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_44",
+      "latent_errors": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_45",
+      "latent_errors": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_46",
+      "latent_errors": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_47",
+      "latent_errors": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "probability_weight": "27/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_48",
+      "latent_errors": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "probability_weight": "1/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_49",
+      "latent_errors": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "probability_weight": "1/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_50",
+      "latent_errors": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "probability_weight": "1/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_51",
+      "latent_errors": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "probability_weight": "1/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_52",
+      "latent_errors": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_53",
+      "latent_errors": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_54",
+      "latent_errors": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_55",
+      "latent_errors": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_56",
+      "latent_errors": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_57",
+      "latent_errors": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_58",
+      "latent_errors": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_59",
+      "latent_errors": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "probability_weight": "3/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_60",
+      "latent_errors": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_61",
+      "latent_errors": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_62",
+      "latent_errors": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "case_id": "state_63",
+      "latent_errors": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "probability_weight": "9/1024",
+      "resolved": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "schema": "unjuno.issue7993.ipcw_audit_truth.v1",
+  "zero_support_truth": {
+    "latent_errors": [
+      1,
+      0
+    ]
+  }
+}
