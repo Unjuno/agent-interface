@@ -1,0 +1,932 @@
+{
+  "cases": [
+    {
+      "complete": true,
+      "declared_mutable_universe": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok"
+      ],
+      "endpoint": "final_match_v1",
+      "epoch": 7,
+      "fact_universe": [
+        "candidate",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "visible"
+      ],
+      "facts": {
+        "candidate": true,
+        "covered": true,
+        "enabled": true,
+        "scope_ok": true,
+        "visible": true
+      },
+      "id": "monotone_positive_control",
+      "mutable": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "candidate",
+              true
+            ],
+            [
+              "visible",
+              true
+            ],
+            [
+              "covered",
+              true
+            ],
+            [
+              "enabled",
+              true
+            ],
+            [
+              "scope_ok",
+              true
+            ]
+          ],
+          "head": "eligible",
+          "name": "eligible",
+          "stratum": 0
+        },
+        {
+          "body": [
+            [
+              "eligible",
+              true
+            ]
+          ],
+          "head": "primary",
+          "name": "primary_match",
+          "stratum": 1
+        }
+      ],
+      "scope": "dialog/main"
+    },
+    {
+      "complete": true,
+      "declared_mutable_universe": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "endpoint": "final_match_v1",
+      "epoch": 8,
+      "fact_universe": [
+        "candidate",
+        "covered",
+        "enabled",
+        "modal",
+        "scope_ok",
+        "visible"
+      ],
+      "facts": {
+        "candidate": false,
+        "covered": true,
+        "enabled": true,
+        "modal": false,
+        "scope_ok": true,
+        "visible": true
+      },
+      "id": "absent_prerequisite",
+      "mutable": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "candidate",
+              true
+            ],
+            [
+              "visible",
+              true
+            ],
+            [
+              "covered",
+              true
+            ],
+            [
+              "enabled",
+              true
+            ],
+            [
+              "scope_ok",
+              true
+            ]
+          ],
+          "head": "eligible",
+          "name": "eligible",
+          "stratum": 0
+        },
+        {
+          "body": [
+            [
+              "eligible",
+              true
+            ],
+            [
+              "modal",
+              false
+            ]
+          ],
+          "head": "primary",
+          "name": "primary_match",
+          "stratum": 1
+        }
+      ],
+      "scope": "dialog/main"
+    },
+    {
+      "complete": true,
+      "declared_mutable_universe": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "endpoint": "final_match_v1",
+      "epoch": 9,
+      "fact_universe": [
+        "candidate",
+        "covered",
+        "enabled",
+        "modal",
+        "scope_ok",
+        "visible"
+      ],
+      "facts": {
+        "candidate": true,
+        "covered": true,
+        "enabled": true,
+        "modal": true,
+        "scope_ok": true,
+        "visible": true
+      },
+      "id": "present_exception",
+      "mutable": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "candidate",
+              true
+            ],
+            [
+              "visible",
+              true
+            ],
+            [
+              "covered",
+              true
+            ],
+            [
+              "enabled",
+              true
+            ],
+            [
+              "scope_ok",
+              true
+            ]
+          ],
+          "head": "eligible",
+          "name": "eligible",
+          "stratum": 0
+        },
+        {
+          "body": [
+            [
+              "eligible",
+              true
+            ],
+            [
+              "modal",
+              false
+            ]
+          ],
+          "head": "primary",
+          "name": "primary_match",
+          "stratum": 1
+        }
+      ],
+      "scope": "dialog/main"
+    },
+    {
+      "complete": true,
+      "declared_mutable_universe": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "prereq_a",
+        "prereq_b",
+        "exception",
+        "quick_path"
+      ],
+      "designated_fact": "exception",
+      "endpoint": "final_match_v1",
+      "epoch": 10,
+      "fact_universe": [
+        "candidate",
+        "covered",
+        "enabled",
+        "exception",
+        "prereq_a",
+        "prereq_b",
+        "quick_path",
+        "scope_ok",
+        "visible"
+      ],
+      "facts": {
+        "candidate": true,
+        "covered": true,
+        "enabled": true,
+        "exception": true,
+        "prereq_a": false,
+        "prereq_b": false,
+        "quick_path": false,
+        "scope_ok": true,
+        "visible": true
+      },
+      "id": "contingency_only_exception",
+      "mutable": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "prereq_a",
+        "prereq_b",
+        "exception",
+        "quick_path"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ],
+          [
+            [
+              "quick",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "candidate",
+              true
+            ],
+            [
+              "visible",
+              true
+            ],
+            [
+              "covered",
+              true
+            ],
+            [
+              "enabled",
+              true
+            ],
+            [
+              "scope_ok",
+              true
+            ]
+          ],
+          "head": "eligible",
+          "name": "eligible",
+          "stratum": 0
+        },
+        {
+          "body": [
+            [
+              "eligible",
+              true
+            ],
+            [
+              "prereq_a",
+              true
+            ],
+            [
+              "prereq_b",
+              true
+            ],
+            [
+              "exception",
+              false
+            ]
+          ],
+          "head": "primary",
+          "name": "primary_match",
+          "stratum": 1
+        },
+        {
+          "body": [
+            [
+              "quick_path",
+              true
+            ]
+          ],
+          "head": "quick",
+          "name": "quick_match",
+          "stratum": 1
+        }
+      ],
+      "scope": "dialog/main"
+    },
+    {
+      "complete": true,
+      "declared_mutable_universe": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "endpoint": "final_match_v1",
+      "epoch": 11,
+      "fact_universe": [
+        "candidate",
+        "covered",
+        "enabled",
+        "modal",
+        "scope_ok",
+        "visible"
+      ],
+      "facts": {
+        "candidate": true,
+        "covered": true,
+        "enabled": true,
+        "modal": false,
+        "scope_ok": true,
+        "visible": true
+      },
+      "id": "same_positive_support_no_exception",
+      "mutable": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "candidate",
+              true
+            ],
+            [
+              "visible",
+              true
+            ],
+            [
+              "covered",
+              true
+            ],
+            [
+              "enabled",
+              true
+            ],
+            [
+              "scope_ok",
+              true
+            ]
+          ],
+          "head": "eligible",
+          "name": "eligible",
+          "stratum": 0
+        },
+        {
+          "body": [
+            [
+              "eligible",
+              true
+            ],
+            [
+              "modal",
+              false
+            ]
+          ],
+          "head": "primary",
+          "name": "primary_match",
+          "stratum": 1
+        }
+      ],
+      "scope": "dialog/main"
+    },
+    {
+      "complete": true,
+      "declared_mutable_universe": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "endpoint": "final_match_v1",
+      "epoch": 12,
+      "fact_universe": [
+        "candidate",
+        "covered",
+        "enabled",
+        "modal",
+        "scope_ok",
+        "visible"
+      ],
+      "facts": {
+        "candidate": true,
+        "covered": true,
+        "enabled": true,
+        "modal": true,
+        "scope_ok": true,
+        "visible": true
+      },
+      "id": "same_positive_support_with_exception",
+      "mutable": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "candidate",
+              true
+            ],
+            [
+              "visible",
+              true
+            ],
+            [
+              "covered",
+              true
+            ],
+            [
+              "enabled",
+              true
+            ],
+            [
+              "scope_ok",
+              true
+            ]
+          ],
+          "head": "eligible",
+          "name": "eligible",
+          "stratum": 0
+        },
+        {
+          "body": [
+            [
+              "eligible",
+              true
+            ],
+            [
+              "modal",
+              false
+            ]
+          ],
+          "head": "primary",
+          "name": "primary_match",
+          "stratum": 1
+        }
+      ],
+      "scope": "dialog/main"
+    },
+    {
+      "complete": true,
+      "declared_mutable_universe": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "prereq_a",
+        "prereq_b",
+        "exception",
+        "quick_path"
+      ],
+      "designated_fact": "exception",
+      "endpoint": "final_match_v1",
+      "epoch": 13,
+      "fact_universe": [
+        "candidate",
+        "covered",
+        "enabled",
+        "exception",
+        "prereq_a",
+        "prereq_b",
+        "quick_path",
+        "scope_ok",
+        "visible"
+      ],
+      "facts": {
+        "candidate": true,
+        "covered": true,
+        "enabled": true,
+        "exception": true,
+        "prereq_a": false,
+        "prereq_b": false,
+        "quick_path": false,
+        "scope_ok": true,
+        "visible": true
+      },
+      "id": "robustness_vs_contingency",
+      "mutable": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "prereq_a",
+        "prereq_b",
+        "exception",
+        "quick_path"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ],
+          [
+            [
+              "quick",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "candidate",
+              true
+            ],
+            [
+              "visible",
+              true
+            ],
+            [
+              "covered",
+              true
+            ],
+            [
+              "enabled",
+              true
+            ],
+            [
+              "scope_ok",
+              true
+            ]
+          ],
+          "head": "eligible",
+          "name": "eligible",
+          "stratum": 0
+        },
+        {
+          "body": [
+            [
+              "eligible",
+              true
+            ],
+            [
+              "prereq_a",
+              true
+            ],
+            [
+              "prereq_b",
+              true
+            ],
+            [
+              "exception",
+              false
+            ]
+          ],
+          "head": "primary",
+          "name": "primary_match",
+          "stratum": 1
+        },
+        {
+          "body": [
+            [
+              "quick_path",
+              true
+            ]
+          ],
+          "head": "quick",
+          "name": "quick_match",
+          "stratum": 1
+        }
+      ],
+      "scope": "dialog/main"
+    },
+    {
+      "complete": true,
+      "declared_mutable_universe": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j"
+      ],
+      "endpoint": "final_match_v1",
+      "epoch": 14,
+      "fact_universe": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j"
+      ],
+      "facts": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "d": true,
+        "e": true,
+        "f": true,
+        "g": true,
+        "h": true,
+        "i": false,
+        "j": true
+      },
+      "id": "dense_budget_control",
+      "mutable": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "a",
+              true
+            ],
+            [
+              "b",
+              true
+            ],
+            [
+              "c",
+              true
+            ],
+            [
+              "d",
+              true
+            ],
+            [
+              "e",
+              true
+            ],
+            [
+              "f",
+              true
+            ],
+            [
+              "g",
+              true
+            ],
+            [
+              "h",
+              true
+            ],
+            [
+              "i",
+              true
+            ],
+            [
+              "j",
+              true
+            ]
+          ],
+          "head": "primary",
+          "name": "dense_match",
+          "stratum": 0
+        }
+      ],
+      "scope": "dialog/main"
+    },
+    {
+      "complete": false,
+      "declared_mutable_universe": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "endpoint": "final_match_v1",
+      "epoch": 15,
+      "fact_universe": [
+        "candidate",
+        "covered",
+        "enabled",
+        "modal",
+        "scope_ok",
+        "visible"
+      ],
+      "facts": {
+        "candidate": false,
+        "covered": false,
+        "enabled": true,
+        "modal": false,
+        "scope_ok": true,
+        "visible": true
+      },
+      "id": "incomplete_scope_control",
+      "mutable": [
+        "candidate",
+        "visible",
+        "covered",
+        "enabled",
+        "scope_ok",
+        "modal"
+      ],
+      "query": {
+        "or": [
+          [
+            [
+              "primary",
+              true
+            ]
+          ]
+        ]
+      },
+      "rules": [
+        {
+          "body": [
+            [
+              "candidate",
+              true
+            ],
+            [
+              "visible",
+              true
+            ],
+            [
+              "covered",
+              true
+            ],
+            [
+              "enabled",
+              true
+            ],
+            [
+              "scope_ok",
+              true
+            ]
+          ],
+          "head": "eligible",
+          "name": "eligible",
+          "stratum": 0
+        },
+        {
+          "body": [
+            [
+              "eligible",
+              true
+            ],
+            [
+              "modal",
+              false
+            ]
+          ],
+          "head": "primary",
+          "name": "primary_match",
+          "stratum": 1
+        }
+      ],
+      "scope": "dialog/partial"
+    }
+  ],
+  "max_worlds": 512,
+  "schema": "negative-query-responsibility-input-v1"
+}

@@ -1,0 +1,43 @@
+{
+  "allocation_id": "NEGATIVE-QUERY-RESPONSIBILITY-8624-T0-A01-20261009",
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "branch": "research/8624-counterfactual-responsibility-a01-20261009",
+  "case_ids": [
+    "monotone_positive_control",
+    "absent_prerequisite",
+    "present_exception",
+    "contingency_only_exception",
+    "same_positive_support_no_exception",
+    "same_positive_support_with_exception",
+    "robustness_vs_contingency",
+    "dense_budget_control",
+    "incomplete_scope_control"
+  ],
+  "commands": {
+    "auditor": "python3 -B auditor.py input.json candidate_raw.json audit.json",
+    "candidate": "python3 -B candidate.py input.json candidate_raw.json",
+    "construction_normal": "python3 -B test_construction.py",
+    "construction_optimized": "python3 -B -O test_construction.py"
+  },
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "runtime": "local CPU only; no container, GUI, model/API, network, or shared runtime"
+  },
+  "frozen_at_utc": "2026-10-08T20:39:39.809123+00:00",
+  "inputs_sha256": {
+    "PREREGISTRATION.md": "545943162977616bf2a23f3fbea08d86eb936ba4a346b78ac9d01da8584a73da",
+    "auditor.py": "254b8be35d78bfe88d71eb757d1b047009af652978f49b4aa3c9f79094b1c70e",
+    "candidate.py": "4da80efbcb5766c2157a9f5296001c21ea8cf6337da8d009475816bee92e6ce8",
+    "input.json": "7265fc0df6acb7e0b2217b55eaaf900cbe8bad8545e30873402281b4f5bf283c",
+    "test_construction.py": "e62e6c761f6b31c40dfc6aef0eee5dbf0feb6677ddfe0e36279bfdea821646a2"
+  },
+  "invocation_limits": {
+    "auditor": 1,
+    "auditor_only_after_candidate_exit_0": true,
+    "candidate": 1
+  },
+  "issue": 8624,
+  "schema": "negative-query-responsibility-freeze-v1",
+  "scope": "finite stratified Boolean query fixtures only; no runtime or action authority"
+}
