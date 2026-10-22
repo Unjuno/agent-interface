@@ -130,15 +130,27 @@ blocked observer, recovery identity mismatch, missing recovery IPC receipt and
 wrong-operation receipt; the focused spawned-process suite passes 9/9 in normal
 and optimized mode. The owner suite passes 7/7 in both.
 
-This validates only Python process ordering with inert shared test state. The
-recovery/observer factories, native input adapter, public MCP caller, task
-oracle and real Windows `SendInput` behavior are not integrated or qualified.
-Child termination does not retract an already accepted OS input event and
-neither helper scheduling nor native effect is a hard real-time bound.
-Remaining 2a work is before/after-accept fake input ordering, replay and
-overlapping-dispatch composition, and any adversarial receipt shape not already
-covered by these tests. Complete that crosswalk before caller composition; do
-not count these tests as evidence of bounded input release.
+The 2a inert process/custody crosswalk now covers before/after fake acceptance,
+replay refusal, overlap refusal, cancellation during producer startup, blocked
+recovery and observer, retirement failure, identity mismatch, missing IPC and
+wrong-operation receipt. This validates only Python process ordering with
+inert shared test state. It does not integrate the native input adapter, public
+MCP caller, task oracle or real Windows `SendInput` behavior. Child termination
+does not retract an already accepted OS input event and neither helper
+scheduling nor native effect is a hard real-time bound. Do not count these
+tests as evidence of bounded input release.
+
+The current 2b adapter slice in `runtime/cli_v1/owned_win32_session.py` keeps
+the original action record and cancellation transaction separate, reuses one
+cancellation ID on duplicate requests, and exposes pending/terminal owner state
+through its local `interface_result` seam. A callback-level regression passes
+the adapter to `register_guarded_tools` and confirms that confirmed neutral
+readback does not promote the action result or task success. This is not yet
+wired to `mcp_server.create_server()` or its `interface_results` endpoint; that
+public route/retrieval composition remains a required follow-up. The adapter
+imports no Win32 backend and emits no input. Its focused suite passes 5/5 in
+normal and optimized CPython; the existing MCP server/owned-process suites pass
+76/76 in normal mode from the repository root.
 
 Do not solve a blocked native call by calling `release_all()` from a second
 thread/process while the original producer may still emit input. The owner must
