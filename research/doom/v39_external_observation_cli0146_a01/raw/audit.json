@@ -1,0 +1,69 @@
+{
+  "audit_kind": "offline-local-mock-protocol-audit",
+  "frame_sha256_expected": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+  "frame_hash_ok": true,
+  "manifest_ok": true,
+  "manifest_entries": 6,
+  "cases": [
+    {
+      "file": "during-turn.json",
+      "checks": {
+        "cli_version_0146_1": true,
+        "loopback_and_temp_home": true,
+        "external_turn_accepted": true,
+        "distinct_turn_ids": true,
+        "request_count": true,
+        "observation_not_in_responses_input": true,
+        "image_not_in_responses_input": true,
+        "no_input_image_items": true,
+        "independent_request_hash": true,
+        "runner_request_types_match": true,
+        "server_error_free": true,
+        "completion_shape": true,
+        "precondition_timing": true,
+        "one_request_and_external_still_incomplete": true,
+        "external_ack_precedes_initial_response_release": true
+      },
+      "pass": true,
+      "mock_request_count": 1,
+      "request_sha256": [
+        "60f5c73cb7776ef3826b79ddd0310e5796b5d4d3240b34514914df26a3ca564e"
+      ],
+      "all_mock_input_sha256": "145740ca394de2f6cdcb000b94b5f93fcb6f11cffe95a6b86b0ed1d8ae36e156",
+      "initial_turn_id": "01a10a48-cb47-70a1-b0e2-320268b88ff3",
+      "external_turn_id": "01a10a48-cb6d-76e3-9a46-4fcabd889840",
+      "server_errors": []
+    },
+    {
+      "file": "after-turn.json",
+      "checks": {
+        "cli_version_0146_1": true,
+        "loopback_and_temp_home": true,
+        "external_turn_accepted": true,
+        "distinct_turn_ids": true,
+        "request_count": true,
+        "observation_not_in_responses_input": true,
+        "image_not_in_responses_input": true,
+        "no_input_image_items": true,
+        "independent_request_hash": true,
+        "runner_request_types_match": true,
+        "server_error_free": true,
+        "completion_shape": true,
+        "precondition_timing": true,
+        "separate_followup_request": true,
+        "initial_response_released_before_external_message": true
+      },
+      "pass": true,
+      "mock_request_count": 2,
+      "request_sha256": [
+        "f380768e77abac73eda7f1b2c1db9a8d4b739214e0eef1b5be2c3e81437983de",
+        "28cd29455cff9cdb779755a41d2216d203868eb35c243160d532157fd85b8d1e"
+      ],
+      "all_mock_input_sha256": "ccc94038cbc50ef2a794bb3d419278c7f4437f8580252a7d88c606bdd95faf63",
+      "initial_turn_id": "01a10a49-253e-7f10-9865-545aa555924d",
+      "external_turn_id": "01a10a49-256e-7b31-b476-11fbe9718024",
+      "server_errors": []
+    }
+  ],
+  "pass": true
+}
