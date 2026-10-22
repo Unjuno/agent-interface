@@ -1,0 +1,107 @@
+--- a/research/live_control/input_owner_v10.py
++++ b/research/live_control/input_owner_v10.py
+@@ -62,0 +63,6 @@
++
++    def call_release_with_receipt(self, operation, lease=None, key=None):
++        variants = {"up": "up_with_receipt", "button_up": "button_up_with_receipt"}
++        if operation not in variants:
++            raise ValueError("release receipt is available only for up operations")
++        return self.call(variants[operation], lease, key)
+@@ -247 +253 @@
+-                    if op in ('move','button_down','button_up','wheel','down','up'):revision += 1
++                    if op in ('move','button_down','button_up','button_up_with_receipt','wheel','down','up','up_with_receipt'):revision += 1
+@@ -262 +268 @@
+-                    elif op in ('move', 'button_down', 'button_up', 'wheel'):
++                    elif op in ('move', 'button_down', 'button_up', 'button_up_with_receipt', 'wheel'):
+@@ -264 +270 @@
+-                        if op == 'button_up':
++                        if op in ('button_up', 'button_up_with_receipt'):
+@@ -269 +275,2 @@
+-                            if key in buttons:
++                            release_applied = key in buttons
++                            if release_applied:
+@@ -273 +280,7 @@
+-                            result = None
++                            if op == 'button_up_with_receipt':
++                                result = dict(event='input_release_result', operation='button_up',
++                                              button=key, release_applied=release_applied,
++                                              x11_release_request_issued=release_applied,
++                                              x11_sync_completed=release_applied)
++                            else:
++                                result = None
+@@ -310 +323 @@
+-                    elif op in ('down', 'up'):
++                    elif op in ('down', 'up', 'up_with_receipt'):
+@@ -332 +345 @@
+-                            result = dict(event='input_admission', key=key, admitted_ns=admitted,
++                            result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
+@@ -338 +351,2 @@
+-                            if code in held:
++                            release_applied = code in held
++                            if release_applied:
+@@ -342 +356,7 @@
+-                            result = None
++                            if op == 'up_with_receipt':
++                                result = dict(event='input_release_result', operation='up',
++                                              keycode=code, release_applied=release_applied,
++                                              x11_release_request_issued=release_applied,
++                                              x11_sync_completed=release_applied)
++                            else:
++                                result = None
+--- a/research/live_control/input_owner_v11.py
++++ b/research/live_control/input_owner_v11.py
+@@ -1 +1 @@
+-"""Telemetry-only wrapper for InputOwner v10 ordinary release RPCs.
++"""Telemetry wrapper for InputOwner v10 ordinary release RPCs.
+@@ -3,8 +3,8 @@
+-The v10 owner performs X11 KeyRelease/ButtonRelease followed by ``d.sync()`` for
+-ordinary ``up`` / ``button_up`` operations, but returns ``None``.  This version
+-keeps v10's owner thread and authority semantics unchanged and brackets those
+-existing calls on the caller's ``perf_counter_ns`` clock.
+-
+-The resulting receipt proves only that the v10 owner call containing X11 release
+-and sync completed somewhere inside ``[call_started_ns, call_returned_ns]``.  It
+-is not a hardware-state timestamp and does not prove application consumption.
++Legacy v10 ``up`` and ``button_up`` calls return ``None`` and can be no-ops
++when the owner has no matching held input. This version uses the additive
++receipt call path so the owner thread reports resolved key identity and
++whether it issued a release request followed by ``d.sync()``. The caller still
++brackets that call with ``perf_counter_ns``. Applied releases carry a censored
++transition interval; no-op receipts carry only the caller interval and do not
++claim a transition. Neither form proves hardware state or application
++consumption.
+@@ -31 +31 @@
+-        result = super().call(operation, lease, key)
++        result = super().call_release_with_receipt(operation, lease, key)
+@@ -33,2 +33,12 @@
+-        if result is not None:
+-            raise RuntimeError("v10 ordinary release unexpectedly returned a payload")
++        if (type(result) is not dict or result.get("event") != "input_release_result"
++                or result.get("operation") != operation
++                or type(result.get("release_applied")) is not bool
++                or type(result.get("x11_release_request_issued")) is not bool
++                or type(result.get("x11_sync_completed")) is not bool
++                or result["release_applied"] != result["x11_release_request_issued"]
++                or result["release_applied"] != result["x11_sync_completed"]):
++            raise RuntimeError("v10 ordinary release result was malformed")
++        if operation == "up" and type(result.get("keycode")) is not int:
++            raise RuntimeError("v10 key release omitted resolved keycode")
++        if operation == "button_up" and result.get("button") != key:
++            raise RuntimeError("v10 button release identity mismatch")
+@@ -46,2 +56,6 @@
+-            "release_transition_interval_ns": [call_started_ns, call_returned_ns],
+-            "interval_width_ns": call_returned_ns - call_started_ns,
++            "call_interval_ns": [call_started_ns, call_returned_ns],
++            "call_interval_width_ns": call_returned_ns - call_started_ns,
++            "release_transition_interval_ns": ([call_started_ns, call_returned_ns]
++                                             if result["release_applied"] else None),
++            "interval_width_ns": (call_returned_ns - call_started_ns
++                                  if result["release_applied"] else None),
+@@ -49 +63,6 @@
+-            "x11_release_and_sync_completed_before_return": True,
++            "release_applied": result["release_applied"],
++            "keycode": result.get("keycode"),
++            "button": result.get("button"),
++            "x11_release_request_issued": result["x11_release_request_issued"],
++            "x11_sync_completed_before_return": result["x11_sync_completed"],
++            "x11_release_and_sync_completed_before_return": result["release_applied"],

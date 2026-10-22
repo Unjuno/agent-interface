@@ -1,0 +1,386 @@
+"""Offline construction oracle for per-key release bounds and useful feedback.
+
+This deliberately consumes only synthetic receipts. It defines a conservative
+measurement contract; it does not infer missing physical key-up events from
+program completion or image change.
+"""
+from __future__ import annotations
+
+from collections import defaultdict
+from independent_progress_clock_v1 import ProgressClock, ProgressSample
+
+
+SCORE_FIELDS = ("map_exit", "episode_finished", "player_dead", "death_count",
+                "kill_count")
+
+
+def reconcile_key_intervals(events):
+    """Join ordinary release brackets and batch cleanup intervals by identity.
+
+    Release-event steps identify the operation's program step and need not
+    match the earlier admission step. An applied ordinary up closes all open
+    admissions for the same intent, program, owner, and resolved keycode. The
+    release transition is interval-censored between caller start/return; it is
+    never treated as an exact physical key-up timestamp. No-op receipts carry
+    call metadata only and do not close an admission. Cancellation intervals
+    use resolved X keycodes and collapse aliases into one physical key group.
+    Missing identity falls back only to the broad verified-owner censoring bound.
+    """
+    opens = defaultdict(list)
+    admissions = defaultdict(list)
+    intervals = []
+    errors = []
+    uncertain_release_keys = set()
+    for row in events:
+        kind = row.get("event")
+        if kind == "input_admission":
+            token = row.get("intent_token")
+            # Program ID is distinct from the lease token. Keep it in the join
+            # so repeated step/key values from separate programs cannot steal
+            # each other's release receipt.
+            key = (token, row.get("id"), row.get("step"), row.get("key"))
+            admitted, ack = row.get("admitted_ns"), row.get("input_ack_ns")
+            if (not isinstance(token, str) or not token or type(row.get("step")) is not int
+                    or not isinstance(row.get("id"), str) or not row.get("id")
+                    or not isinstance(row.get("key"), str) or not row.get("key")
+                    or not isinstance(row.get("owner_id"), str) or not row.get("owner_id")
+                    or (row.get("keycode") is not None and
+                        (type(row.get("keycode")) is not int or row["keycode"] <= 0))
+                    or type(admitted) is not int or type(ack) is not int
+                    or admitted > ack):
+                errors.append("invalid_admission")
+            else:
+                admission = {"owner_id": row["owner_id"],
+                             "id": row["id"], "step": row["step"],
+                             "key": row["key"],
+                             "keycode": row.get("keycode"),
+                             "admitted_ns": admitted, "ack_ns": ack}
+                opens[key].append(admission)
+                admissions[key].append(admission)
+        elif kind == "input_release_rpc_error":
+            token = row.get("intent_token")
+            call_interval = row.get("call_interval_ns")
+            if (row.get("operation") != "up" or
+                    not isinstance(token, str) or not token or
+                    type(row.get("id")) is not str or not row["id"] or
+                    type(row.get("step")) is not int or row["step"] < 0 or
+                    type(row.get("payload")) is not str or not row["payload"] or
+                    type(row.get("owner_id")) is not str or not row["owner_id"] or
+                    type(row.get("outcome_uncertain")) is not bool or
+                    not row["outcome_uncertain"] or
+                    type(call_interval) is not list or len(call_interval) != 2 or
+                    any(type(value) is not int for value in call_interval) or
+                    call_interval[0] > call_interval[1] or
+                    row.get("call_started_ns") != call_interval[0] or
+                    row.get("call_returned_ns") != call_interval[1] or
+                    row.get("grants_input_authority") is not False or
+                    row.get("continuous_physical_state_sampled") is not False or
+                    row.get("application_consumption_observed") is not False):
+                errors.append("invalid_release_rpc_error")
+            else:
+                uncertain_release_keys.add((token, row["id"], row["owner_id"], row["payload"]))
+                matched_codes = {
+                    admission.get("keycode")
+                    for admission_key, rows in admissions.items()
+                    if admission_key[0] == token and admission_key[1] == row["id"]
+                    for admission in rows
+                    if admission["owner_id"] == row["owner_id"] and
+                    admission["key"] == row["payload"] and
+                    type(admission.get("keycode")) is int
+                }
+                for admission_key, rows in admissions.items():
+                    if admission_key[0] != token or admission_key[1] != row["id"]:
+                        continue
+                    for admission in rows:
+                        if (admission["owner_id"] == row["owner_id"] and
+                                admission.get("keycode") in matched_codes):
+                            uncertain_release_keys.add((token, row["id"], row["owner_id"],
+                                                        admission["key"]))
+        elif kind == "input_release_rpc":
+            token = row.get("intent_token")
+            key = (token, row.get("id"), row.get("step"), row.get("payload"))
+            interval = row.get("release_transition_interval_ns")
+            call_interval = row.get("call_interval_ns", interval)
+            opened = opens.get(key, [])
+            operation = row.get("operation")
+            release_applied = row.get("release_applied")
+            if (operation not in ("up", "button_up") or
+                    not isinstance(token, str) or not token or
+                    type(row.get("id")) is not str or not row["id"] or
+                    type(row.get("step")) is not int or row["step"] < 0 or
+                    (operation == "up" and
+                     (type(row.get("payload")) is not str or not row["payload"])) or
+                    type(row.get("owner_id")) is not str or not row["owner_id"] or
+                    type(call_interval) is not list or len(call_interval) != 2 or
+                    any(type(value) is not int for value in call_interval) or
+                    call_interval[0] > call_interval[1] or
+                    row.get("call_started_ns") != call_interval[0] or
+                    row.get("call_returned_ns") != call_interval[1] or
+                    row.get("call_interval_width_ns", call_interval[1]-call_interval[0]) !=
+                    call_interval[1]-call_interval[0] or
+                    row.get("grants_input_authority") is not False or
+                    row.get("continuous_physical_state_sampled") is not False or
+                    row.get("application_consumption_observed") is not False):
+                errors.append("invalid_or_unmatched_release_rpc")
+            else:
+                start, end = call_interval
+                if operation == "button_up":
+                    # This key occupancy oracle does not infer button intervals.
+                    # Retain valid button no-op RPCs without treating them as key evidence.
+                    if (row.get("payload") != row.get("button") or
+                            type(release_applied) is not bool or
+                            type(row.get("x11_release_request_issued")) is not bool or
+                            type(row.get("x11_sync_completed_before_return")) is not bool or
+                            row.get("x11_release_and_sync_completed_before_return") is not release_applied or
+                            row.get("x11_release_request_issued") is not release_applied or
+                            row.get("x11_sync_completed_before_return") is not release_applied or
+                            (not release_applied and
+                             (row.get("release_transition_interval_ns") is not None or
+                              row.get("interval_width_ns") is not None))):
+                        errors.append("invalid_or_unmatched_release_rpc")
+                    elif release_applied:
+                        errors.append("button_release_out_of_scope")
+                elif (type(release_applied) is not bool or
+                      type(row.get("x11_release_request_issued")) is not bool or
+                      type(row.get("x11_sync_completed_before_return")) is not bool or
+                      row.get("x11_release_and_sync_completed_before_return") is not release_applied or
+                      row.get("x11_release_request_issued") is not release_applied or
+                      row.get("x11_sync_completed_before_return") is not release_applied):
+                    errors.append("invalid_or_unmatched_release_rpc")
+                else:
+                    symbol_history = [item for admission_key, rows in admissions.items()
+                                      if admission_key[0] == token and
+                                      admission_key[1] == row.get("id") and
+                                      admission_key[3] == row.get("payload")
+                                      for item in rows]
+                    if (type(row.get("keycode")) is not int or row["keycode"] <= 0 or
+                            (symbol_history and
+                             (row["keycode"] != symbol_history[-1].get("keycode") or
+                              row.get("owner_id") != symbol_history[-1]["owner_id"]))):
+                        errors.append("invalid_or_unmatched_release_rpc")
+                    elif (release_applied and
+                          (interval != call_interval or row.get("interval_width_ns") != end-start)):
+                        errors.append("invalid_or_unmatched_release_rpc")
+                    elif (release_applied and
+                          (token, row["id"], row["owner_id"], row["payload"])
+                          in uncertain_release_keys):
+                        # An earlier request may have changed key state even
+                        # though its synchronization failed. A later successful
+                        # retry brackets request+sync, not necessarily the edge.
+                        # Keep the admission open for verified cleanup censoring.
+                        pass
+                    elif not release_applied:
+                        # A no-op is a valid RPC result, not evidence of a
+                        # physical transition. The admission must be closed by
+                        # an applied release or verified owner cleanup.
+                        if (interval is not None or row.get("interval_width_ns") is not None or
+                                (opened and
+                                 (row["keycode"] != opened[0].get("keycode") or
+                                  row.get("owner_id") != opened[0]["owner_id"]))):
+                            errors.append("invalid_or_unmatched_release_rpc")
+                    else:
+                        opened_rows = []
+                        for pending_key in list(opens):
+                            if pending_key[0] == key[0] and pending_key[1] == key[1]:
+                                retained = []
+                                for pending_row in opens[pending_key]:
+                                    if (pending_row["owner_id"] == row.get("owner_id") and
+                                            pending_row["keycode"] == row["keycode"]):
+                                        opened_rows.append((pending_key, pending_row))
+                                    else:
+                                        retained.append(pending_row)
+                                if retained:
+                                    opens[pending_key] = retained
+                                else:
+                                    del opens[pending_key]
+                        if not opened_rows:
+                            errors.append("invalid_or_unmatched_release_rpc")
+                        elif start < min(item["ack_ns"] for _, item in opened_rows):
+                            errors.append("release_rpc_precedes_key_ack")
+                        else:
+                            opened_rows.sort(key=lambda pair: (pair[1]["ack_ns"], pair[0][3]))
+                            first_key, first_row = opened_rows[0]
+                            names = sorted({item["key"] for _, item in opened_rows})
+                            if len(opened_rows) == 1:
+                                intervals.append({"intent_token": key[0], "id": key[1],
+                                                  "step": first_key[2], "key": first_row["key"],
+                                                  "ack_ns": first_row["ack_ns"],
+                                                  "release_transition_interval_ns": interval,
+                                                  "occupancy_lower_ns": start-first_row["ack_ns"],
+                                                  "occupancy_upper_ns": end-first_row["ack_ns"],
+                                                  "exact_key_up_time": None, "censored": False})
+                            else:
+                                first_ack = min(item["ack_ns"] for _, item in opened_rows)
+                                steps = {pending_key[2] for pending_key, _ in opened_rows}
+                                intervals.append({"intent_token": key[0], "owner_id": row["owner_id"],
+                                                  "id": key[1],
+                                                  "step": next(iter(steps)) if len(steps) == 1 else None,
+                                                  "key": None,
+                                                  "keys": names, "keycode": row["keycode"],
+                                                  "admission_count": len(opened_rows), "ack_ns": first_ack,
+                                                  "release_transition_interval_ns": interval,
+                                                  "occupancy_lower_ns": start-first_ack,
+                                                  "occupancy_upper_ns": end-first_ack,
+                                                  "exact_key_up_time": None, "censored": False})
+        elif kind in ("input_released", "input_release_unverified", "owner_release"):
+            # Executor V13 publishes the owner receipt nested in its release
+            # event; the intent token is on the outer event, not that receipt.
+            receipt = row.get("owner_release")
+            if (kind != "input_released" or row.get("grants_input_authority") is not False
+                    or type(receipt) is not dict
+                    or receipt.get("verified") is not True
+                    or receipt.get("keys_down") != []
+                    or receipt.get("buttons_down") != []
+                    or type(receipt.get("verified_ns")) is not int):
+                errors.append("unverified_owner_release")
+                continue
+            lease_id = row.get("intent_token")
+            if not isinstance(lease_id, str) or not lease_id:
+                errors.append("missing_release_intent")
+                continue
+            receipt_ns = receipt["verified_ns"]
+            raw_key_intervals = receipt.get("key_release_intervals_ns", [])
+            if type(raw_key_intervals) is not list:
+                errors.append("invalid_keycode_release_intervals")
+                continue
+            by_keycode = {}
+            for item in raw_key_intervals:
+                if type(item) is not dict:
+                    errors.append("invalid_keycode_release_intervals")
+                    continue
+                code, bracket = item.get("keycode"), item.get("interval_ns")
+                if (type(code) is not int or code <= 0 or code in by_keycode
+                        or type(bracket) is not list or len(bracket) != 2
+                        or any(type(value) is not int for value in bracket)
+                        or bracket[0] > bracket[1] or bracket[1] > receipt_ns):
+                    errors.append("invalid_keycode_release_intervals")
+                    continue
+                by_keycode[code] = bracket
+
+            pending = []
+            for key in list(opens):
+                if key[0] != lease_id:
+                    continue
+                pending.extend((key, opened) for opened in opens[key])
+                del opens[key]
+
+            grouped = defaultdict(list)
+            censored = []
+            for key, opened in pending:
+                code = opened["keycode"]
+                if (type(code) is int and code in by_keycode and
+                        (lease_id, opened["id"], opened["owner_id"], opened["key"])
+                        not in uncertain_release_keys):
+                    grouped[code].append((key, opened))
+                else:
+                    censored.append((key, opened))
+
+            for code, members in grouped.items():
+                bracket = by_keycode[code]
+                first_ack = min(opened["ack_ns"] for _, opened in members)
+                if bracket[0] < first_ack:
+                    errors.append("release_rpc_precedes_key_ack")
+                    continue
+                names = sorted({opened["key"] for _, opened in members})
+                ids = {opened["id"] for _, opened in members}
+                steps = {opened["step"] for _, opened in members}
+                intervals.append({
+                    "intent_token": lease_id,
+                    "owner_id": members[0][1]["owner_id"],
+                    "id": next(iter(ids)) if len(ids) == 1 else None,
+                    "step": next(iter(steps)) if len(steps) == 1 else None,
+                    "key": names[0] if len(names) == 1 else None,
+                    "keys": names,
+                    "keycode": code,
+                    "admission_count": len(members),
+                    "ack_ns": first_ack,
+                    "release_transition_interval_ns": bracket,
+                    "occupancy_lower_ns": bracket[0] - first_ack,
+                    "occupancy_upper_ns": bracket[1] - first_ack,
+                    "exact_key_up_time": None,
+                    "censored": False,
+                })
+
+            for key, opened in censored:
+                if receipt_ns < opened["ack_ns"]:
+                    errors.append("release_precedes_key_ack")
+                else:
+                    intervals.append({"intent_token": key[0], "owner_id": opened["owner_id"],
+                                      "id": key[1], "step": key[2], "key": key[3],
+                                      "ack_ns": opened["ack_ns"],
+                                      "release_transition_interval_ns": None,
+                                      "occupancy_lower_ns": None,
+                                      "occupancy_upper_ns": receipt_ns-opened["ack_ns"],
+                                      "exact_key_up_time": None, "censored": True})
+    if any(opens.values()):
+        errors.append("open_key_interval")
+    if errors:
+        raise ValueError(",".join(sorted(set(errors))))
+    return intervals
+
+
+def _paired_sample(sample, observation):
+    """Accept a scorer row only when it names the exact observation epoch."""
+    if (type(sample) is not dict or type(observation) is not dict or
+            observation.get("event") != "observation" or
+            observation.get("exact") is not True or
+            type(observation.get("id")) is not str or not observation["id"] or
+            type(observation.get("sequence")) is not int or observation["sequence"] < 0 or
+            type(observation.get("capture_ns")) is not int or observation["capture_ns"] < 0 or
+            type(observation.get("pointer_binding")) is not dict or
+            not observation["pointer_binding"] or
+            sample.get("independent") is not True or
+            sample.get("controller_visible") is not False or
+            sample.get("observation_id") != observation["id"] or
+            sample.get("observation_sequence") != observation["sequence"] or
+            sample.get("observation_capture_ns") != observation["capture_ns"] or
+            type(sample.get("sample_ns")) is not int or
+            sample["sample_ns"] < observation["capture_ns"] or
+            any(type(sample.get(field)) is not bool if field in
+                ("map_exit", "episode_finished", "player_dead") else
+                type(sample.get(field)) is not int
+                for field in SCORE_FIELDS)):
+        return None
+    return sample
+
+
+def classify_useful_feedback(before, after, *, before_observation,
+                              after_observation):
+    """Use scorer samples joined by identity to exact observations."""
+    before = _paired_sample(before, before_observation)
+    after = _paired_sample(after, after_observation)
+    if before is None or after is None:
+        return "unknown"
+    if (after_observation["sequence"] <= before_observation["sequence"] or
+            after_observation["capture_ns"] <= before_observation["capture_ns"] or
+            after_observation["pointer_binding"] != before_observation["pointer_binding"] or
+            before["sample_ns"] >= after_observation["capture_ns"]):
+        return "unknown"
+    try:
+        clock = ProgressClock()
+        previous = {field: before[field] for field in SCORE_FIELDS}
+        current = {field: after[field] for field in SCORE_FIELDS}
+        clock.ingest(ProgressSample(sample_ns=before["sample_ns"], **previous))
+        events = clock.ingest(ProgressSample(sample_ns=after["sample_ns"], **current))
+    except (TypeError, ValueError):
+        return "unknown"
+    if not events:
+        return "no_scored_progress"
+    adverse = any(event["polarity"] == "negative" for event in events)
+    useful = any(event["useful"] is True for event in events)
+    if adverse and useful:
+        return "mixed_progress_and_adverse"
+    if adverse:
+        return "adverse_progress"
+    if any(event["kind"] == "MAP_EXIT" for event in events):
+        return "useful_terminal_progress"
+    if useful:
+        return "useful_progress"
+    return "no_scored_progress"
+
+
+def recovery_window(start_ns, deadline_ns, score_ns):
+    """Validate a single independently scored recovery observation window."""
+    if any(type(value) is not int for value in (start_ns, deadline_ns, score_ns)):
+        return False
+    return start_ns <= score_ns <= deadline_ns
