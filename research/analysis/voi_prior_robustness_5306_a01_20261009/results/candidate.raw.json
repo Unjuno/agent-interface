@@ -1,0 +1,215 @@
+{
+  "results": [
+    {
+      "case_id": "point-near-reversal",
+      "check_feasible_by_deadline": true,
+      "mandatory_checks_complete": true,
+      "point_plus_margin": {
+        "decision": "STOP",
+        "gross_value": "1",
+        "margin": "1/5",
+        "net_value": "0"
+      },
+      "point_voi": {
+        "decision": "STOP",
+        "gross_value": "1",
+        "net_value": "0"
+      },
+      "prior_evaluations": [
+        {
+          "decision": "CONTINUE",
+          "gross_value": "6/5",
+          "net_value": "1/5",
+          "prior_good": "22/25"
+        },
+        {
+          "decision": "STOP",
+          "gross_value": "1",
+          "net_value": "0",
+          "prior_good": "9/10"
+        },
+        {
+          "decision": "STOP",
+          "gross_value": "3/5",
+          "net_value": "-2/5",
+          "prior_good": "47/50"
+        }
+      ],
+      "prior_set_decision": "PRIOR_SENSITIVE"
+    },
+    {
+      "case_id": "robust-stop",
+      "check_feasible_by_deadline": true,
+      "mandatory_checks_complete": true,
+      "point_plus_margin": {
+        "decision": "STOP",
+        "gross_value": "2/5",
+        "margin": "1/5",
+        "net_value": "-3/5"
+      },
+      "point_voi": {
+        "decision": "STOP",
+        "gross_value": "2/5",
+        "net_value": "-3/5"
+      },
+      "prior_evaluations": [
+        {
+          "decision": "STOP",
+          "gross_value": "3/5",
+          "net_value": "-2/5",
+          "prior_good": "47/50"
+        },
+        {
+          "decision": "STOP",
+          "gross_value": "2/5",
+          "net_value": "-3/5",
+          "prior_good": "24/25"
+        },
+        {
+          "decision": "STOP",
+          "gross_value": "1/5",
+          "net_value": "-4/5",
+          "prior_good": "49/50"
+        }
+      ],
+      "prior_set_decision": "ROBUST_STOP"
+    },
+    {
+      "case_id": "robust-continue",
+      "check_feasible_by_deadline": true,
+      "mandatory_checks_complete": true,
+      "point_plus_margin": {
+        "decision": "CONTINUE",
+        "gross_value": "4",
+        "margin": "1/5",
+        "net_value": "3"
+      },
+      "point_voi": {
+        "decision": "CONTINUE",
+        "gross_value": "4",
+        "net_value": "3"
+      },
+      "prior_evaluations": [
+        {
+          "decision": "CONTINUE",
+          "gross_value": "5",
+          "net_value": "4",
+          "prior_good": "1/2"
+        },
+        {
+          "decision": "CONTINUE",
+          "gross_value": "4",
+          "net_value": "3",
+          "prior_good": "3/5"
+        },
+        {
+          "decision": "CONTINUE",
+          "gross_value": "2",
+          "net_value": "1",
+          "prior_good": "4/5"
+        }
+      ],
+      "prior_set_decision": "ROBUST_CONTINUE"
+    },
+    {
+      "case_id": "correlated-duplicate",
+      "check_feasible_by_deadline": true,
+      "mandatory_checks_complete": true,
+      "point_plus_margin": {
+        "decision": "STOP",
+        "gross_value": "0",
+        "margin": "1/5",
+        "net_value": "-1"
+      },
+      "point_voi": {
+        "decision": "STOP",
+        "gross_value": "0",
+        "net_value": "-1"
+      },
+      "prior_evaluations": [
+        {
+          "decision": "STOP",
+          "gross_value": "0",
+          "net_value": "-1",
+          "prior_good": "1/2"
+        },
+        {
+          "decision": "STOP",
+          "gross_value": "0",
+          "net_value": "-1",
+          "prior_good": "3/4"
+        },
+        {
+          "decision": "STOP",
+          "gross_value": "0",
+          "net_value": "-1",
+          "prior_good": "99/100"
+        }
+      ],
+      "prior_set_decision": "ROBUST_STOP"
+    },
+    {
+      "case_id": "deadline-infeasible",
+      "check_feasible_by_deadline": false,
+      "mandatory_checks_complete": true,
+      "point_plus_margin": {
+        "decision": "YIELD_CHECK_INFEASIBLE",
+        "gross_value": "5",
+        "margin": "1/5",
+        "net_value": "49/10"
+      },
+      "point_voi": {
+        "decision": "YIELD_CHECK_INFEASIBLE",
+        "gross_value": "5",
+        "net_value": "49/10"
+      },
+      "prior_evaluations": [
+        {
+          "decision": "CONTINUE",
+          "gross_value": "5",
+          "net_value": "49/10",
+          "prior_good": "1/2"
+        },
+        {
+          "decision": "CONTINUE",
+          "gross_value": "5/2",
+          "net_value": "12/5",
+          "prior_good": "3/4"
+        }
+      ],
+      "prior_set_decision": "YIELD_CHECK_INFEASIBLE"
+    },
+    {
+      "case_id": "mandatory-gate-incomplete",
+      "check_feasible_by_deadline": true,
+      "mandatory_checks_complete": false,
+      "point_plus_margin": {
+        "decision": "YIELD_MANDATORY_INCOMPLETE",
+        "gross_value": "1/10",
+        "margin": "1/5",
+        "net_value": "9/100"
+      },
+      "point_voi": {
+        "decision": "YIELD_MANDATORY_INCOMPLETE",
+        "gross_value": "1/10",
+        "net_value": "9/100"
+      },
+      "prior_evaluations": [
+        {
+          "decision": "CONTINUE",
+          "gross_value": "1/5",
+          "net_value": "19/100",
+          "prior_good": "49/50"
+        },
+        {
+          "decision": "CONTINUE",
+          "gross_value": "1/10",
+          "net_value": "9/100",
+          "prior_good": "99/100"
+        }
+      ],
+      "prior_set_decision": "YIELD_MANDATORY_INCOMPLETE"
+    }
+  ],
+  "schema": "voi-prior-set-robustness-candidate-v1"
+}

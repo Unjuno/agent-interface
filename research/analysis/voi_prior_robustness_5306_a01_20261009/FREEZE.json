@@ -1,0 +1,52 @@
+{
+  "schema": "voi-prior-set-robustness-freeze-v1",
+  "allocation_id": "VOI-PRIORSET-5306-HOST-A01-20261009",
+  "issue": 5306,
+  "issue_addendum": "https://github.com/Unjuno/agent-interface/issues/5306#issuecomment-5937646683",
+  "status_at_freeze": "PRE_CANDIDATE",
+  "frozen_at_utc": "2026-10-08T19:40:57Z",
+  "source_main_commit": "0621713407d42c5a3922572b2fe57222f175e9a2",
+  "source_worktree_commit_at_freeze": "0621713407d42c5a3922572b2fe57222f175e9a2",
+  "main_updates_reviewed": [
+    "0621713407 rescue(#7386/#7414): retain v39 candidate failure records on current main (#8710)",
+    "6d786f3eca rescue(#6576): qualify unverifiable A04 runtime result (#8709)"
+  ],
+  "branch": "research/5306-prior-set-robustness-a01-20261009",
+  "evidence_path": "research/analysis/voi_prior_robustness_5306_a01_20261009/",
+  "results_path": "research/analysis/voi_prior_robustness_5306_a01_20261009/results/",
+  "results_path_absent_at_freeze": true,
+  "environment": {
+    "execution_mode": "host-only exact-rational CPU enumeration",
+    "os": "macOS 27.0 arm64",
+    "python": "3.14.5",
+    "dependencies": "Python standard library only",
+    "model": null,
+    "gui_or_live_application": false,
+    "container_or_shared_daemon": false
+  },
+  "frozen_inputs_and_code_sha256": {
+    "candidate.py": "29d01b68321f898a94ada3d57bcf1d35a91336c35e0748be0b116d5f0a267cc3",
+    "auditor.py": "459242609c5b7408154e8a60d4f329e0caa15114b6798420991303ededa8b04a",
+    "cases.json": "5bc551b8636de12db250826356d4eb3f095c0debd67c787d25245c24969ef68f",
+    "test_prior_set.py": "863d255404dc52eb94f1ddc1d5fbed732f0013a4a9e9c9d28acc097a9208c804",
+    "PREREGISTRATION.md": "94a824a278ee696aa2cafeae6c0426cb93bbb8c40a0e8ee87f18f8df1e756d26",
+    "construction/python3.14-normal.stdout.txt": "f0693d15be3adc1821305f823fcdfec7f4d1fe930cf713b1447ae82f83c2c130",
+    "construction/python3.14-optimized.stdout.txt": "f0693d15be3adc1821305f823fcdfec7f4d1fe930cf713b1447ae82f83c2c130"
+  },
+  "formal_run": {
+    "candidate_invocations": 1,
+    "independent_auditor_invocations": 1,
+    "retries": 0,
+    "candidate_command": "python3 -B candidate.py",
+    "auditor_command": "python3 -B auditor.py",
+    "stopping_rule": "Run the auditor once only after candidate exit 0. Preserve any failure; no rerun."
+  },
+  "decision_rule": {
+    "tie": "STOP",
+    "robust_stop": "All enumerated priors prefer STOP after mandatory gates.",
+    "robust_continue": "All enumerated priors prefer CONTINUE and the check is feasible by deadline.",
+    "prior_sensitive": "Admissible decisions reverse within the frozen prior set.",
+    "hard_gates": "Incomplete mandatory checks yield; an infeasible valued continuation yields.",
+    "issue_level_limit": "Hand-authored P is not empirically supported; the broader #5306 robustness claim cannot PASS from this allocation."
+  }
+}
