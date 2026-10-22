@@ -1,0 +1,7 @@
+{
+  "status": "HOLD_AUDIT_MISMATCH",
+  "exit_code": 1,
+  "scope": "auditor only; WSLc test had already passed 2/2",
+  "cause": "Initial transcript checker required stdout to end with OK, but the test intentionally printed machine-readable A11_RESULT lines after the unittest summary.",
+  "disposition": "Preserved. Corrected audit checks the unittest OK line and both parsed receipts without rerunning tests."
+}
