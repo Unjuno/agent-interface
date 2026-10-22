@@ -52,6 +52,25 @@ class AcknowledgedScorerTests(unittest.TestCase):
             self.assertEqual(payload['producer']['tic_after'], 11)
             self.assertEqual(rows[0]['sample'], payload)
 
+    def test_sampler_rejects_malformed_episode_tics_without_sample(self):
+        for initial, delta in ((10.5, 1), (True, 1), (-1, 1), (10, 0.5)):
+            game = Game(delta=delta)
+            game.tic = initial
+            sampler, rows = self.sampler()
+            with self.subTest(initial=initial, delta=delta), self.assertRaises((ValueError, RuntimeError)):
+                sampler(game, None, 10)
+            self.assertEqual(rows[-1]['status'], 'UPDATE_UNAVAILABLE')
+            self.assertNotIn('sample', rows[-1])
+
+    def test_observed_proxy_rejects_malformed_external_tics(self):
+        for initial, delta in ((10.5, 1), (True, 1), (-1, 1), (10, 0.5)):
+            game = Game(delta=delta)
+            game.tic = initial
+            sampler, _rows = self.sampler()
+            proxy = session.ObservedGameProxy(game, lambda: None, sampler)
+            with self.subTest(initial=initial, delta=delta), self.assertRaises(ValueError):
+                proxy.advance_action(1, True)
+
     def test_noop_never_returns_a_sample(self):
         sampler, rows = self.sampler()
         with self.assertRaisesRegex(RuntimeError, 'did not advance'):

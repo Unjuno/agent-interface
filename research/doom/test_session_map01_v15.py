@@ -96,6 +96,28 @@ class SessionSelectionTests(unittest.TestCase):
                     sys.modules["independent_progress_clock_v2"] = old_clock
 
 
+class ExactEpisodeTicTests(unittest.TestCase):
+    class Game:
+        def __init__(self, ticks): self.ticks = iter(ticks)
+        def get_episode_time(self): return next(self.ticks)
+        def is_episode_finished(self): return False
+        def is_player_dead(self): return False
+        def get_game_variable(self, variable): return 0
+        def get_ticrate(self): return 35
+        def is_episode_timeout_reached(self): return False
+
+    def test_coherent_sample_rejects_non_integer_or_negative_tics(self):
+        variables = types.SimpleNamespace(KILLCOUNT=1, DEATHCOUNT=2)
+        for values in ((10.5,), (True,), (-1,), (10, 10.5, 10, 10.5, 10, 10.5), (10, -1, 10, -1, 10, -1)):
+            with self.subTest(values=values), self.assertRaises(ValueError):
+                candidate._coherent_progress_sample(self.Game(values), variables, 600)
+
+    def test_coherent_sample_accepts_exact_nonnegative_integer_tics(self):
+        variables = types.SimpleNamespace(KILLCOUNT=1, DEATHCOUNT=2)
+        result = candidate._coherent_progress_sample(self.Game((10, 10)), variables, 600)
+        self.assertEqual(result.kill_count, 0)
+
+
 class GameProxyLifecycleTests(unittest.TestCase):
     class InnerGame:
         def __init__(self, events, close_error=None):
