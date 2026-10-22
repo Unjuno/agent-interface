@@ -128,18 +128,21 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Additive integration checkpoint after PR #9393 (2026-10-22)
+## Additive integration checkpoint after PR #9395 (2026-10-22)
 
-PR #9393 merged to main at `c0f2f6a1e7e0694b22c59bba45fd323d261fff24`.
-It adds an offline adapter from one persistent Codex App Server turn to the
-existing provider-attempt recorder and public-MCP caller, plus composed Fake X
-success and stale-generation refusal cases. On this exact merge commit, the
-related ledger/recorder/provider/public-caller suite passes 42/42 in normal and
-optimized Windows CPython 3.11.9; the deterministic replay-gate passes.
-Issue #57 was updated with the measured scope and remains OPEN. The work proves
-neither production provider routing nor upstream usage reconciliation, live
-desktop/MAP01 effect, blocked-platform-I/O release, matched efficiency, or
-reliability.
+PR #9393 merged the offline adapter from one persistent Codex App Server turn
+to the existing provider-attempt recorder and public-MCP caller, with Fake X
+success and stale-generation composition cases. PR #9394 refreshed this plan.
+PR #9395 then added internal consistency checks between reported turn usage
+and the matching raw App Server usage event, plus preservation of valid partial
+usage on ineligible turns. The current main commit is
+`4c97e6fc635a103fb333dd271a479f2452d6df6f`. On this exact source, the related
+ledger/recorder/provider/public-caller suite passes 44/44 in normal and
+optimized Windows CPython 3.11.9; the deterministic replay-gate passes. Issue
+#57 was updated at [comment 6334338432](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-6334338432)
+and remains OPEN. These offline checks prove neither production provider
+routing nor independent provider-log reconciliation, live desktop/MAP01
+effect, blocked-platform-I/O release, matched efficiency, or reliability.
 
 This is a code/evidence checkpoint, not a new complete Issue/PR membership
 census or semantic disposition. [r148](maintenance/repository-inventory-recheck-20261022-r148.md)
