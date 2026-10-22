@@ -1,0 +1,24 @@
+{
+  "schema": "v15-release-batch-mixed-schema-t5-result-v1",
+  "disposition": "PASS_MIXED_SCHEMA_FAIL_CLOSED_SCOPED",
+  "pre_fix": {
+    "trace_integrity": "SOURCE_ROWS_JOINED",
+    "attribution": "TEMPORALLY_UNIQUE"
+  },
+  "post_fix": {
+    "trace_integrity": "HOLD_INCOMPLETE_RELEASE_BATCH",
+    "attribution": "UNRESOLVED"
+  },
+  "tests": {
+    "normal": {
+      "count": 28,
+      "exit": 0
+    },
+    "optimized": {
+      "count": 28,
+      "exit": 0
+    }
+  },
+  "independent_audit": "PASS_MIXED_SCHEMA_FAIL_CLOSED_SCOPED",
+  "scope": "Synthetic producer-shaped rows and adapter construction only. No current-main runtime execution, GUI, OS input, game, model, live lane, application effect, causal attribution, safety, recovery, latency or task completion claim."
+}
