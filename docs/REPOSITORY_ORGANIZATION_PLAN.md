@@ -128,14 +128,14 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9368 (2026-10-22)
+## Current execution checkpoint after PR #9369 (2026-10-22)
 
-Current main is `178983ac3cb884f19536810ce56b53d79122090a` (PR #9368). The
-complete [r144 membership recheck](maintenance/repository-inventory-recheck-20261022-r144.md)
+Current main is `1a21bef00c431af02fa7f280c7589b48d03402af` (PR #9369). The
+complete [r145 membership recheck](maintenance/repository-inventory-recheck-20261022-r145.md)
 confirms 1,654 open Issues and 453 open PRs, with main unchanged across the
-complete reads. Compared with r143, the Issue and PR sets are unchanged; #9368
+complete reads. Compared with r144, the Issue and PR sets are unchanged; #9369
 opened and merged without net membership effect. Exact IDs and sorted-ID
-hashes are preserved in r144. Counts are discovery aids, not semantic
+hashes are preserved in r145. Counts are discovery aids, not semantic
 disposition or readiness.
 
 PR #8819 integrated Issue #8493's frozen finite-model temporal-regime result:
@@ -156,22 +156,29 @@ efficiency/reliability. Keep #17, #57, and #7924 open while their specific
 evidence gaps remain. WSLc remains subject to its current STOP/HOLD; this
 organization batch used no WSLc allocation or Docker operation.
 
-PR #9367 and follow-up #9368 update the catalog and organization checkpoint;
-#9368 also records closure of #8493 from its scoped synthetic T0 result.
+PRs #9367 and #9368 update the catalog and organization checkpoint; #9368 also
+records closure of #8493 from its scoped synthetic T0 result. PR #9369 records
+the worktree custody census and the current decision to preserve unresolved
+worktrees.
 A read-only local custody census found 45 worktrees: 31 clean and 14 with
 uncommitted status entries. None of the 14 dirty branch names exactly matched
 an open PR head. Two worktrees contain more than 5,000 status entries each;
-see the [census receipt](maintenance/worktree-custody-census-20261022-r01.md).
-These counts do not identify owners or make a worktree safe to discard.
-Preserve the changes pending custody checks.
+see the [census receipt](maintenance/worktree-custody-census-20261022-r01.md)
+and [targeted follow-up](maintenance/worktree-custody-census-20261022-r02.md).
+The largest two were traced to an unpublished local-only cancellation branch
+with 18,365 untracked files and the closed PR #9315 head with 5,135 untracked
+files plus modified CLI code that differs from current main. These findings
+do not establish owner or recoverability. Preserve both worktrees and all
+other dirty worktrees pending custody verification.
 
-**Next bounded batch:** establish task/owner and recovery evidence for the two
-largest dirty worktrees, `work/repository-cleanup-plan-r01-20261020` and
-`worktrees/primary-mint-sparse`, then route the remaining 12 dirty worktrees.
-Compare live task/worktree attachments, Issue/PR lineage, branch-only commits,
-and unique file content before any reset, archive, or cleanup. Preserve the
-supervisor default-off and direct computer-control work toward the remaining
-integrated release/effect gaps.
+**Next bounded batch:** map an owner/task and recovery path to each of the two
+largest dirty worktrees. For the closed #9315 worktree, first resolve the
+uncommitted CLI delta and 5,135 untracked paths against the transferred PR
+evidence. For the unpublished local-only branch, identify the source task and
+validate each frozen packet before deciding whether to transfer or retain it.
+Then route the remaining 12 dirty worktrees. Do not reset, archive, or delete
+anything with unknown custody. Preserve the supervisor default-off and direct
+computer-control work toward the remaining integrated release/effect gaps.
 
 ## Historical membership checkpoint after PR #8819 (2026-10-22)
 
