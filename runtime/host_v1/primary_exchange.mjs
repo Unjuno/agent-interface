@@ -1,3 +1,4 @@
+import { snapshotAttribution } from './relay_host.mjs';
 /** Explicit sequential primary commands with original file presentation.
  * No action policy, queue, retry, implicit review, transport startup or cleanup.
  */
@@ -37,17 +38,24 @@ export async function createPrimaryExchange({host,directory,route,expectations=[
         sha256:createHash('sha256').update(copy).digest('hex')});
     }
   };
-  const primary=createPrimaryCaller(host,route,sinks,expectations,options);
+  // Existing caller methods remain unchanged; metadata belongs to this one command.
+  const attributedHost=Object.create(host);
+  attributedHost.sendPresented=(tool,args,callbacks)=>
+    current && Object.hasOwn(current,'attribution')
+      ? host.sendPresented(tool,args,callbacks,current.attribution)
+      : host.sendPresented(tool,args,callbacks);
+  const primary=createPrimaryCaller(attributedHost,route,sinks,expectations,options);
   return {
     state:()=>({next_id:nextId,busy,stopped,caller_state:primary.state()}),
     async execute(command) {
       if(busy)throw Error('command outstanding; wait, do not queue or resend');
       const request=snapshot(command);
       if(!request||typeof request!=='object'||Array.isArray(request)||
-        Object.keys(request).sort().join(',')!=='args,id,method'||
+        !['args,id,method','args,attribution,id,method'].includes(Object.keys(request).sort().join(','))||
         !Number.isSafeInteger(request.id)||request.id!==nextId)
         throw TypeError(`next command id must be ${nextId}; exact id/method/args envelope required`);
       if(!methods.has(request.method)||!Array.isArray(request.args))throw TypeError('known method and positional args required');
+      const attribution=Object.hasOwn(request,'attribution') ? snapshotAttribution(request.attribution) : undefined;
       const closing=request.method==='call'&&request.args.length===2&&
         request.args[0]==='interface_close'&&request.args[1]&&
         typeof request.args[1]==='object'&&!Array.isArray(request.args[1])&&
@@ -55,6 +63,7 @@ export async function createPrimaryExchange({host,directory,route,expectations=[
       if(stopped&&!closing)throw Error('exchange stopped: '+stopped);
       busy=true;nextId++;
       current={id:request.id,method:request.method,presented_text:[],images:[]};
+      if(attribution!==undefined)current.attribution=attribution;
       try {
         // Consume once before persistence/dispatch, even on ambiguous failure.
         await writeFile(join(path,`request-${request.id}.json`),JSON.stringify(request)+'\n',{flag:'wx'});
