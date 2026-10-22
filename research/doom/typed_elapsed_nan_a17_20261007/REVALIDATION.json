@@ -1,0 +1,41 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "prepare.py"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "candidate bytes verified\n"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "audit.py",
+        "results/raw.json",
+        "--controls"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"controls\": {\n    \"authority\": true,\n    \"missing_row\": true,\n    \"nan_accept\": true,\n    \"source\": true,\n    \"stale_upgrade\": true,\n    \"wire_change\": true\n  },\n  \"errors\": [],\n  \"rows\": 48,\n  \"status\": \"PASS_TYPED_ELAPSED_VALIDATION_SCOPED\"\n}\n"
+    },
+    {
+      "argv": [
+        "/opt/pyvenv/bin/python",
+        "-B",
+        "test_elapsed.py"
+      ],
+      "returncode": 0,
+      "stderr": "test_integer_age_gate_still_rejects_stale (__main__.ElapsedTests.test_integer_age_gate_still_rejects_stale) ... ok\ntest_preserves_finite_tolerance_and_nonmutation (__main__.ElapsedTests.test_preserves_finite_tolerance_and_nonmutation) ... ok\ntest_rejects_infinite_elapsed (__main__.ElapsedTests.test_rejects_infinite_elapsed) ... ok\ntest_rejects_mismatch_and_wrong_type (__main__.ElapsedTests.test_rejects_mismatch_and_wrong_type) ... ok\ntest_rejects_nan_from_default_json (__main__.ElapsedTests.test_rejects_nan_from_default_json) ... ok\ntest_rejects_reversed_bracket_and_epoch (__main__.ElapsedTests.test_rejects_reversed_bracket_and_epoch) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.002s\n\nOK\n",
+      "stdout": ""
+    }
+  ],
+  "new_matrix_invocations": 0,
+  "raw_sha256": "ab5a5e5a01d5401c943e4957c1620b424a355f7a752667e7999d1b7ae71902cb",
+  "restored_files": 15,
+  "same_author_review": true,
+  "status": "PASS_SAVED_DATA_REVALIDATION"
+}
