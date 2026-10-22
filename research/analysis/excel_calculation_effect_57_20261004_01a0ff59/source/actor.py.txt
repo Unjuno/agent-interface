@@ -1,0 +1,48 @@
+import gc,json,time,sys
+from pathlib import Path
+import win32com.client,win32process,win32api,win32event,win32con
+P=Path(__file__).resolve().parent
+def write(n,v):(P/n).write_text(json.dumps(v,ensure_ascii=False,indent=2),encoding='utf-8')
+prior=set(win32process.EnumProcesses());app=book=sheet=handle=None;owned=False;rows=[];error=None;start=time.perf_counter_ns()
+try:
+ app=win32com.client.DispatchEx('Excel.Application');_,pid=win32process.GetWindowThreadProcessId(app.Hwnd)
+ assert pid not in prior and app.Workbooks.Count==0,'unowned process/workbooks'
+ owned=True;handle=win32api.OpenProcess(win32con.SYNCHRONIZE|win32con.PROCESS_QUERY_INFORMATION,False,pid)
+ write('RESOURCE.json',dict(pid=pid,pid_absent_before=True,initial_workbooks=0,version=app.Version,build=str(app.Build)))
+ app.Visible=False;app.DisplayAlerts=False
+ for arm in ['manual_save','calculate_before_save']:
+  book=app.Workbooks.Add();sheet=book.Worksheets(1);sheet.Name='Orders'
+  book.BuiltinDocumentProperties('Author').Value='SYNTHETIC_RESEARCH'
+  book.BuiltinDocumentProperties('Last Author').Value='SYNTHETIC_RESEARCH'
+  sheet.Range('A1:E4').Value=(('OrderID','Item','Quantity','UnitPrice','Subtotal'),('A','Paper',2,10,None),('B','Cable',3,20,None),('C','Pencil',4,5,None))
+  for r in [2,3,4]:sheet.Cells(r,5).Formula=f'=C{r}*D{r}'
+  sheet.Range('H1').Formula='=SUM(E2:E4)';app.CalculateFull()
+  app.Calculation=-4135;app.CalculateBeforeSave=(arm=='calculate_before_save')
+  before=dict(values=sheet.Range('A1:E4').Value,total=sheet.Range('H1').Value)
+  assert before['total']==100 and before['values'][2][4]==60
+  intent=dict(arm=arm,target_id='B',address='C3',quantity=7,expected_subtotal=140,expected_total=180,calculation=int(app.Calculation),calculate_before_save=bool(app.CalculateBeforeSave),edit_calls=1,save_calls=1)
+  write(arm+'.INTENT.json',intent)
+  sheet.Range('C3').Value=7
+  pre_save=dict(values=sheet.Range('A1:E4').Value,total=sheet.Range('H1').Value,calculation_state=int(app.CalculationState))
+  path=P/(arm+'.xlsx');assert not path.exists(),'output collision'
+  t=time.perf_counter_ns();book.SaveAs(str(path),51);returned=time.perf_counter_ns()
+  after=dict(values=sheet.Range('A1:E4').Value,total=sheet.Range('H1').Value,calculation_state=int(app.CalculationState),saved=bool(book.Saved))
+  row=dict(arm=arm,intent=intent,before=before,pre_save=pre_save,after=after,formulas=[sheet.Cells(r,5).Formula for r in [2,3,4]],total_formula=sheet.Range('H1').Formula,save_start_ns=t,save_return_ns=returned,input_only_accept=after['values'][2][2]==7,derived_effect_accept=after['values'][2][4]==140 and after['total']==180)
+  rows.append(row);write('ROWS.json',rows)
+  book.Close(False);sheet=book=None;gc.collect()
+except BaseException as e:error=dict(type=type(e).__name__,message=str(e))
+finally:
+ cleanup=[]
+ if owned:
+  if book is not None:
+   try:book.Close(False)
+   except Exception as e:cleanup.append(dict(stage='close',error=repr(e)))
+  try:app.Quit()
+  except Exception as e:cleanup.append(dict(stage='quit',error=repr(e)))
+ sheet=book=app=None;gc.collect();gc.collect()
+ retired=handle is not None and win32event.WaitForSingleObject(handle,5000)==win32event.WAIT_OBJECT_0
+ if handle is not None:handle.Close()
+ result=dict(rows=rows,error=error,cleanup_errors=cleanup,owned=owned,excel_retired=retired,start_ns=start,end_ns=time.perf_counter_ns(),model_calls=0,physical_input=False)
+ write('RESULT.json',result)
+print(json.dumps(dict(rows=len(rows),error=error,retired=retired)))
+if error is not None:sys.exit(1)
