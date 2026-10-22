@@ -1,0 +1,1 @@
+Inert executed terminal-journal custody boundary, parent#57/7097. REPORT.md gives first FAIL and private ordinary repair scope. evidence.txt contains full data-only XZ/base64 members; documentary .py.txt sources must not replay the original producer. SHA256SUMS covers every other leaf file. No initializer/runtime/catalogue/workflow/default change.
