@@ -128,25 +128,34 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #8819 (2026-10-22)
+## Current execution checkpoint after PR #9367 (2026-10-22)
 
-Current main is `7ee142d642de45c1129a138e01f3519ed4a1449c` (PR #8819). The
-complete [r142 membership recheck](maintenance/repository-inventory-recheck-20261022-r142.md)
-confirms 1,655 open Issues and 453 open PRs, with main unchanged across the
-complete reads. The Issue ID set matches r141; #8819 is the only PR removed.
-Exact ID sets and sorted-ID hashes are preserved in the r142 CSVs. These counts
+Current main is `8f43c02c013aa77c74d495bd48cc72a7627bf081` (PR #9367). The
+complete [r143 membership recheck](maintenance/repository-inventory-recheck-20261022-r143.md)
+confirms 1,654 open Issues and 453 open PRs, with main unchanged across the
+complete reads. Compared with r142, only Issue #8493 left the open set; the PR
+set is unchanged. Exact IDs and sorted-ID hashes are preserved in r143. Counts
 are discovery aids, not semantic disposition or readiness.
 
 PR #8819 integrated Issue #8493's frozen finite-model temporal-regime result:
 pooled confirmation accepted both planted harmful shifts, block-conditional
-confirmation rejected both, stable controls passed, and sparse/ambiguous cases
-returned UNKNOWN. Independent audit reconstructed 6,424 rows and rejected 6/6
-corruptions. This satisfies the Issue's authored T0 `METHOD_PASS_SCOPED`
-criterion. The result is synthetic and does not establish real-system drift,
-runtime safety, or transfer beyond the model. After this disposition is
-published, close Issue #8493 as scoped complete with its remaining limits and
-the [canonical idea record](ideas/trace-reduction-regime-drift.md); any
-transfer study requires a separately justified question.
+confirmation rejected both, stable controls passed, and sparse/ambiguous
+cases returned UNKNOWN. Independent audit reconstructed 6,424 rows and
+rejected 6/6 corruptions. Issue #8493 was closed after this met its authored
+T0 `PASS_METHOD_SCOPED` criterion and the result and limitations were
+preserved in the [canonical idea record](ideas/trace-reduction-regime-drift.md).
+The result remains synthetic; closure does not establish real-system drift,
+runtime safety, or transfer beyond the model.
+
+PR #9367 refreshes the catalog and organization checkpoint and retains the
+complete r142 membership snapshot. The [prestarted cancellation supervisor
+design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md) remains the
+selected integration thread and runtime stays opt-in. Qualification still
+includes whole-server unavailability, live bystander behavior, fresh-target/
+task-effect interpretation, and matched efficiency/reliability. Keep #17,
+#57, and #7924 open while their specific evidence gaps remain. WSLc remains
+subject to its current STOP/HOLD; this organization batch used no WSLc
+allocation or Docker operation.
 
 The [prestarted cancellation supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
 is the selected integration thread. Its runtime remains opt-in, and its
@@ -161,6 +170,14 @@ change, then select one exact-head PR or idea-family slice and record its
 evidence-backed disposition. Do not infer cleanup from queue counts. Preserve
 the supervisor default-off and direct the highest-priority research toward the
 remaining integrated control/effect gaps.
+
+## Historical membership checkpoint after PR #8819 (2026-10-22)
+
+The complete [r142 membership recheck](maintenance/repository-inventory-recheck-20261022-r142.md)
+captured main `7ee142d642de45c1129a138e01f3519ed4a1449c`, with 1,655 open
+Issues and 453 open PRs. The Issue set matched r141; #8819 was the only PR
+removed. The later r143 baseline records the scoped closure of #8493 and PR
+#9367's documentation integration.
 
 ## Historical execution checkpoint after PR #8824 (2026-10-22)
 
