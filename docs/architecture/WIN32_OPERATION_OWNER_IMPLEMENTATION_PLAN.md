@@ -1,7 +1,9 @@
 # Win32 operation-owner implementation plan
 
 Status: Phase 1's inert prototype is implemented and passes its scoped local
-suite; Phase 2 onward is not implemented or qualified. This plan follows the
+suite. Phase 2 has a partial target-generation prerequisite in the private
+Win32 move bridge; public standard-caller/supervisor composition is not
+implemented or qualified. This plan follows the
 design decision in [the supervisor design record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
 It authorizes only local inert-fake work in Phase 1; it does not authorize
 native input or a WSLc allocation.
@@ -70,12 +72,19 @@ focused tests normally and under `python -O`. Label all outputs synthetic.
 ### Phase 2: current-main composition
 
 Only after Phase 1 passes, connect the opt-in owner to the standard guarded
-caller through an explicit Win32 adapter. Test target-generation change after
-model wait, cancellation while the child is blocked, bounded caller response,
-separate effect scoring, exact attempt accounting, and preservation of the
-completed prefix. Keep X11 worker selection unchanged and fail closed if the
-selected backend and recovery adapter disagree. Do not change the default
-backend or report a live release result from these tests.
+caller through an explicit Win32 adapter. The private `MoveBridge` now pins a
+digest of the HWND owner's PID and process creation time in its observation
+binding and refuses if that generation cannot be queried or changes before
+bound input. This is only a target-generation prerequisite: `mcp_server`
+still has no guarded-Win32 route, `MoveBridge` still executes synchronously,
+and neither is connected to the inert operation owner. The remaining Phase 2
+gate is an explicit opt-in standard-caller adapter with executable composed
+tests for target-generation change after model wait, cancellation while a
+child is blocked, bounded caller response, separate effect scoring, exact
+attempt accounting, and preservation of the completed prefix. Keep X11 worker
+selection unchanged and fail closed if the selected backend and recovery
+adapter disagree. Do not change the default backend or report a live release
+result from these tests.
 
 ### Phase 3: isolated native discriminator
 

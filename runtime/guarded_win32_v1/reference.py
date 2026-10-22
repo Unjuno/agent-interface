@@ -22,7 +22,10 @@ class ReferencedWin32Observation(RetainedWin32Observation):
         if row['region'] != [0, 0, g['width'], g['height']]:
             raise ValueError('reference requires full client observation')
         result = copy.deepcopy(row)
-        result['pointer_binding'] = {'focus': b['focus'], 'surface': b['surface'], 'geometry': [g['x'], g['y'], g['width'], g['height']]}
+        result['pointer_binding'] = {
+            'focus': b['focus'], 'surface': b['surface'],
+            'process_generation': b['process_generation'],
+            'geometry': [g['x'], g['y'], g['width'], g['height']]}
         return (result, image)
 
     def mint(self, alias, sequence, box, now_ns=None):
