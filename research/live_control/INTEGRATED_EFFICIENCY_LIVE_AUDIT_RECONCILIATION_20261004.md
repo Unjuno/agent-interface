@@ -26,6 +26,14 @@ The first reconciliation checked current main and the two retained comparison-so
 
 The separate `integrated-efficiency-live-01-summary.json` still disagrees with the detailed report, reconciled trace, and audit on input-token totals; its provenance remains unresolved. The historical allocation RETAIN remains unchanged. The replay closes the missing-source-bytes gap but does not establish the original runtime checkout identity, a population success rate, general GUI speedup, human-tempo gain, or second-domain transfer.
 
+## Additive result-file lineage check (2026-10-22)
+
+Git history narrows the summary mismatch without changing either artifact. The detailed `results/integrated-efficiency-live-01/report.json` was first added by `981281fb` on 2026-09-14. The standalone `results/integrated-efficiency-live-01-summary.json` was added six days later by `493c042` (“Record formal Docker integrated efficiency result”); it names source main `9c9d7cf2bea50e47638c63effa72a5059fdb4e58` and image `mixed-app-identity-2782-local:latest`. The commit for that source main is also dated 2026-09-20 and is titled “research: record formal route source-fetch stop”.
+
+This establishes two separately committed result records with the same study label and seed, not one raw-reconciled allocation. The Docker summary contains only arm aggregates and no call IDs or per-attempt event joins, so it cannot be joined to the later detailed report's 17 calls. Classify it as a distinct aggregate-only Docker result whose allocation-level provenance remains unresolved; do not pool it with the detailed report or count it as an independent reliability replicate. Preserve its historical values unchanged. The raw-backed 63,128 / 63,779 / 26,563 input-token totals remain the reproducible detail for the report/trace/audit record only, not a resolution of the Docker summary's usage.
+
+No model, GUI, Docker or WSLc operation was performed for this lineage check. The finite report's historical RETAIN remains as recorded; this clarification does not establish cross-domain transfer, reliability, or provider-internal retry/billing reconciliation.
+
 ## Reproduction
 
 From the repository root, run:
