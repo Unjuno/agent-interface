@@ -32,9 +32,13 @@ caller path. It copies the exact bytes appended to that turn's protocol
 journal into the per-attempt `model/events.jsonl` artifact, retains normalized
 turn usage and requested model/effort metadata, and parses exactly one matching
 completed `turn/completed` agent message as the tool request. Failed or
-ineligible turns remain failed attempts and do not reach the relay. The adapter
-does not launch a model, retry a turn, capture upstream provider wire logs, or
-prove independent usage reconciliation.
+ineligible turns remain failed attempts and do not reach the relay. For a
+completed turn, its returned usage must match the newest matching
+`thread/tokenUsage/updated` record in the retained journal slice; a mismatch
+fails closed before public-MCP dispatch. This is an internal consistency check
+on the same App Server source, not independent provider-log reconciliation.
+The adapter does not launch a model, retry a turn, or capture upstream provider
+wire logs.
 
 The adapter unit tests and end-to-end in-process composition tests pass in
 normal and optimized Windows CPython 3.11.9. Fake App Server turns pass through

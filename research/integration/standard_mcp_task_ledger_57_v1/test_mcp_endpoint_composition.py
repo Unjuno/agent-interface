@@ -89,6 +89,16 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                                turn_id="turn-appserver")
 
                     def await_turn(self, handle, timeout):
+                        usage = {"last": {
+                            "inputTokens": 42, "outputTokens": 12,
+                            "cachedInputTokens": 30, "cacheWriteInputTokens": 2,
+                            "reasoningOutputTokens": 3}}
+                        usage_row = {"direction": "received", "observed_ns": 19,
+                                     "message": {
+                                         "method": "thread/tokenUsage/updated",
+                                         "params": {"threadId": handle.thread_id,
+                                                    "turnId": handle.turn_id,
+                                                    "tokenUsage": usage}}}
                         row = {"direction": "received", "observed_ns": 20,
                                "message": {"method": "turn/completed", "params": {
                                    "threadId": handle.thread_id, "turn": {
@@ -96,15 +106,12 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                        "items": [{"type": "agentMessage",
                                                   "text": completed_text}]}}}}
                         with journal.open("ab") as stream:
-                            stream.write(json.dumps(
-                                row, separators=(",", ":")).encode() + b"\n")
+                            for event in (usage_row, row):
+                                stream.write(json.dumps(
+                                    event, separators=(",", ":")).encode() + b"\n")
                         return SimpleNamespace(
                             status="completed", answer_eligible=True,
-                            answer=payload, usage={"last": {
-                                "inputTokens": 42, "outputTokens": 12,
-                                "cachedInputTokens": 30,
-                                "cacheWriteInputTokens": 2,
-                                "reasoningOutputTokens": 3}})
+                            answer=payload, usage=usage)
 
                 planner = FakePlanner()
                 model = AppServerPublicMcpModelCall(
@@ -209,6 +216,16 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                                turn_id="turn-stale-appserver")
 
                     def await_turn(self, handle, timeout):
+                        usage = {"last": {
+                            "inputTokens": 40, "outputTokens": 9,
+                            "cachedInputTokens": 20, "cacheWriteInputTokens": 1,
+                            "reasoningOutputTokens": 2}}
+                        usage_row = {"direction": "received", "observed_ns": 29,
+                                     "message": {
+                                         "method": "thread/tokenUsage/updated",
+                                         "params": {"threadId": handle.thread_id,
+                                                    "turnId": handle.turn_id,
+                                                    "tokenUsage": usage}}}
                         row = {"direction": "received", "observed_ns": 30,
                                "message": {"method": "turn/completed", "params": {
                                    "threadId": handle.thread_id, "turn": {
@@ -216,15 +233,12 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                        "items": [{"type": "agentMessage",
                                                   "text": completed_text}]}}}}
                         with journal.open("ab") as stream:
-                            stream.write(json.dumps(
-                                row, separators=(",", ":")).encode() + b"\n")
+                            for event in (usage_row, row):
+                                stream.write(json.dumps(
+                                    event, separators=(",", ":")).encode() + b"\n")
                         return SimpleNamespace(
                             status="completed", answer_eligible=True,
-                            answer=payload, usage={"last": {
-                                "inputTokens": 40, "outputTokens": 9,
-                                "cachedInputTokens": 20,
-                                "cacheWriteInputTokens": 1,
-                                "reasoningOutputTokens": 2}})
+                            answer=payload, usage=usage)
 
                 model = AppServerPublicMcpModelCall(
                     FakePlanner(), journal, workspace=workspace,

@@ -39,6 +39,24 @@ def _turn_usage(value):
     return result
 
 
+def _journal_turn_usage(response_bytes, *, thread_id, turn_id):
+    """Return the newest usage update in the retained turn slice, if any."""
+    updates = []
+    for line in response_bytes.splitlines():
+        if not line:
+            continue
+        row = json.loads(line)
+        message = row.get("message") if isinstance(row, dict) else None
+        if (row.get("direction") != "received" or not isinstance(message, dict) or
+                message.get("method") != "thread/tokenUsage/updated"):
+            continue
+        params = message.get("params", {})
+        if (isinstance(params, dict) and params.get("threadId") == thread_id and
+                params.get("turnId") == turn_id):
+            updates.append(params.get("tokenUsage"))
+    return None if not updates else updates[-1]
+
+
 def parse_app_server_tool_request(response_bytes, *, thread_id, turn_id):
     """Read the one completed structured answer from a retained protocol slice."""
     if not isinstance(response_bytes, bytes):
@@ -148,6 +166,11 @@ class AppServerPublicMcpModelCall:
             raise error
 
         usage = _turn_usage(getattr(turn, "usage", None))
+        journal_usage = _turn_usage(_journal_turn_usage(
+            protocol_bytes, thread_id=handle.thread_id, turn_id=handle.turn_id))
+        if usage != journal_usage:
+            raise ValueError(
+                "app-server turn usage differs from its retained protocol journal")
         result = {
             "raw": turn.answer,
             "usage": usage,
