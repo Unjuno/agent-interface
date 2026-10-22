@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "case": "baseline",
+      "exit_code": 0,
+      "expected_reject": false,
+      "rejected": false
+    },
+    {
+      "case": "candidate_cancel_claim",
+      "exit_code": 1,
+      "expected_reject": true,
+      "rejected": true
+    },
+    {
+      "case": "candidate_expiry_order",
+      "exit_code": 1,
+      "expected_reject": true,
+      "rejected": true
+    },
+    {
+      "case": "parent_false_positive",
+      "exit_code": 1,
+      "expected_reject": true,
+      "rejected": true
+    },
+    {
+      "case": "xlib_event_count",
+      "exit_code": 1,
+      "expected_reject": true,
+      "rejected": true
+    }
+  ],
+  "command": "python -B mutation_test.py",
+  "parent_evidence": "research/doom/results/map01-v39-release-cleanup-owner-queue-composition-v1",
+  "pass": true,
+  "schema": "map01-v39-owner-queue-audit-mutation-a01-v1",
+  "scope": "auditor mutation validation only; fake Xlib saved evidence; no live input or allocation",
+  "source_commit": "779ca4afc998d0f77f45fcf110475b8a818fbadb"
+}
