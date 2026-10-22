@@ -1,0 +1,132 @@
+{
+  "bindings": {
+    "enter_token": {
+      "interaction": "click",
+      "offset": [
+        2,
+        2
+      ],
+      "tail": [
+        {
+          "gap_ms": 20,
+          "op": "text",
+          "text": "uictrl-20261021-9f3c"
+        }
+      ]
+    },
+    "submit_form": {
+      "interaction": "click",
+      "offset": [
+        16,
+        16
+      ],
+      "tail": []
+    }
+  },
+  "effect_rules": {
+    "enter_token": {
+      "point": [
+        552,
+        327
+      ],
+      "rgb": [
+        0,
+        200,
+        100
+      ]
+    },
+    "submit_form": {
+      "point": [
+        812,
+        327
+      ],
+      "rgb": [
+        0,
+        200,
+        100
+      ]
+    }
+  },
+  "predicate_rules": {
+    "field_pixels_changed": {
+      "point": [
+        552,
+        327
+      ],
+      "states": [
+        {
+          "rgb": [
+            244,
+            0,
+            255
+          ],
+          "value": false
+        },
+        {
+          "rgb": [
+            0,
+            200,
+            100
+          ],
+          "value": true
+        }
+      ]
+    },
+    "field_target_present": {
+      "point": [
+        340,
+        307
+      ],
+      "states": [
+        {
+          "rgb": [
+            224,
+            232,
+            255
+          ],
+          "value": true
+        }
+      ]
+    },
+    "submission_pixels_changed": {
+      "point": [
+        812,
+        327
+      ],
+      "states": [
+        {
+          "rgb": [
+            255,
+            255,
+            255
+          ],
+          "value": false
+        },
+        {
+          "rgb": [
+            0,
+            200,
+            100
+          ],
+          "value": true
+        }
+      ]
+    },
+    "submit_target_present": {
+      "point": [
+        684,
+        341
+      ],
+      "states": [
+        {
+          "rgb": [
+            53,
+            89,
+            213
+          ],
+          "value": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "preflight_id": "private-wsl2-chromium-x11-visible-capture-20261021-r02",
+  "purpose": "No-input Chromium/Xvfb window discovery and X11 screenshot preflight for standard-caller feasibility",
+  "environment": "Ubuntu native WSL2; private Xvfb display :93; 1024x768x24; TCP disabled",
+  "interpreter": "/usr/bin/python3.12",
+  "existing_dependency_path": "/home/user/.cache/agent-interface-xvfb-current-e7-r02/lib/python3.12/site-packages",
+  "dependency_versions": {
+    "Pillow": "10.2.0",
+    "python-xlib": "existing cached package; exact version not asserted"
+  },
+  "no_model": true,
+  "no_gui_input": true,
+  "no_form_submission": true,
+  "no_WSLc_or_Docker": true,
+  "permitted_effects": [
+    "start and terminate private Xvfb process",
+    "start and terminate private Chromium app window on local static HTML",
+    "save screenshot and preflight receipts in raw/preflight/r02"
+  ]
+}
