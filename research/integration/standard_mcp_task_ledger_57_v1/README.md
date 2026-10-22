@@ -110,6 +110,18 @@ synthetic Fake X results only; the fixture has no real provider, production
 application, external scorer, native input, or live task. The saved response is
 the returned MCP text block, not a network-wire capture.
 
+The added `test_fake_provider_image_and_stale_generation_roundtrip_public_relay`
+also sends the observation and compiled action through `Relay.request` before
+the actual FastMCP server. It preserves the returned `ImageContent` base64
+payload byte-for-byte in the fake provider request, records the complete relay
+request/response envelopes, then changes process generation while the fake
+provider is complete but before the compiled tool call. The public caller
+returns `SAFE_YIELD` with zero transitions; the independent Fake X pixel
+oracle records false, and ledger reconciliation matches all three relay
+responses while retaining usage and request bytes. This is an in-process Relay
+composition test, not a stdio subprocess, real provider, external usage-log
+reconciliation, live application, or task qualification.
+
 One run of both composition cells, including the exact recorder journals,
 request/response bytes, Fake X owner receipts, and scorer-state bytes, is
 preserved in [`composition-evidence-20261020`](composition-evidence-20261020/README.md)
@@ -131,7 +143,8 @@ score.
 
 This is `PASS_CONTRACT_SCOPED` for the local recorder/composition contract,
 one synthetic Fake X before/after effect predicate, and one stale-generation
-refusal through the provider-to-public-MCP path only.
+refusal through both the direct public-MCP test seam and the in-process
+JSON-lines Relay request path. It remains a Fake X contract result.
 The wrapper cannot prove that an external orchestrator routed every model call
 or MCP operation through it. The caller must pass exact captured wire bytes;
 when bytes are unavailable, the receipt says so. No actual provider, GUI, WSLc,
