@@ -129,6 +129,12 @@ retries. WSLc Issue #7924 remains `STOP / HOLD` for shared ownership; no WSLc
 allocation is verified. A future shared WSLc/MAP01 run requires fresh
 allocation and ownership evidence. Further local tests should target a concrete
 caller/integration decision rather than copy existing parser-only fixtures.
+The additive [standard-caller target-generation regression packet](../research/integration/standard_caller_target_generation_regression_20261022_r01/README.md)
+records five Fake X caller/lifecycle cases passing in normal and optimized
+Windows CPython 3.11.9 at source `c5fd95f38d1e4a780ea0c934da7103dafc3b5e8a`.
+It preserves an adversarial destroy-gap schedule where a key prefix can be
+emitted after the last local check, then released and locally verified; this
+does not make capture-to-press atomic or establish live target generation.
 
 Start with [Worker Quickstart](WORKER_QUICKSTART.md), then select a bounded item
 from the [worker work map](WORKER_WORK_MAP.md). The map suggests work; it does not

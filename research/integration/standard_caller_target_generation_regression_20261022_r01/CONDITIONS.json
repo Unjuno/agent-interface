@@ -1,0 +1,32 @@
+{
+  "run_id": "AI-TARGET-GENERATION-REGRESSION-20261022-R01",
+  "classification": "local Fake X regression; not a formal live experiment",
+  "source_commit": "c5fd95f38d1e4a780ea0c934da7103dafc3b5e8a",
+  "base_main": "72ef0303f9ea19406e88b4a00ad1678addf04e05",
+  "python": "Python 3.11.9",
+  "host": "DESKTOP-DRP9HRE",
+  "test_ids": [
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_owned_process_refuses_alias_after_target_generation_changes",
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_compiled_profile_stops_mid_action_on_process_generation_change",
+    "runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_same_process_destroy_reuse",
+    "runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_destroy_during_initial_capture_refuses_source_through_caller",
+    "runtime.cli_v1.test_mcp_window_lifecycle.LifecycleMCPTests.test_destroy_between_final_check_and_xtest_emit"
+  ],
+  "order": [
+    "normal",
+    "optimized"
+  ],
+  "normal_exit_code": 0,
+  "optimized_exit_code": 0,
+  "result": "10/10 assertions passed across both modes",
+  "external_runtime_or_allocation": "none; no WSLc, Docker, or live X server",
+  "claims_excluded": [
+    "physical input",
+    "live target generation",
+    "MAP01",
+    "task success",
+    "bounded live release",
+    "efficiency",
+    "reliability"
+  ]
+}
