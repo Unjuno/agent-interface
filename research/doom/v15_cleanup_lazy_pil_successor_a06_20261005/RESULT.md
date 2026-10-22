@@ -1,0 +1,5 @@
+# V15 lazy-Pillow import successor A06 — hypothesis FAIL
+
+The frozen no-PIL blocker activated before unittest in both processes. Each mode discovered all 47 tests, with 8 wrapper-composition setup errors. All eight traces reach `research/live_control/session_v9.py` and fail at its remaining top-level `from PIL import ImageGrab`. Therefore the single import relocation in `doom_typed_coast_backend_v1.py` is insufficient to remove the selected wrapper chain's import-time PIL dependency. The D criterion is FAIL_SINGLE_IMPORT_RELOCATION_INSUFFICIENT. The installed Pillow package was not removed; PIL imports were rejected by the committed per-process finder.
+
+This is a scoped negative synthetic regression result. A04 independently passed the same suite with Pillow present. All source identities, one-file overlay, blocker code, and four original mode streams are retained for independent audit. No retries, source repair, live game, model, native X11, or input execution followed. It does not close the Issue #59 live threat-response gate.

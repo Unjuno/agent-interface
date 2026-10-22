@@ -1,0 +1,48 @@
+{
+  "schema": "v15-cleanup-lazy-pil-successor-a02-run-plan-v1",
+  "predecessor": "v15_cleanup_lazy_pil_successor_a01_20261005",
+  "predecessor_disposition": "STOP_INCOMPLETE_PYTHON_SOURCE_CLOSURE",
+  "delta": "add the exact research.observation_tiles.tile_transport and research.observation_gating.exact_gate package modules to the materialized source closure; candidate edit, test list, runtime, and decision rule remain unchanged",
+  "main": "b5be19963454ce5edafc945b78b100012952dd15",
+  "pr": 8094,
+  "pr_head": "d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
+  "merge_base": "21fecd58b9de30073c97234124e73b78c67d4b0c",
+  "virtual_merge_tree": "78b8636f08bef691944da8bb536437586f0d116a",
+  "candidate_change": {
+    "path": "research/doom/doom_typed_coast_backend_v1.py",
+    "operation": "move top-level `from PIL import ImageGrab` into Backend.snapshot immediately before the existing ImageGrab.grab call",
+    "other_changes": "none"
+  },
+  "materialized_paths": [
+    "all immediate-child *.py under research/live_control",
+    "all immediate-child *.py under research/doom",
+    "research/observation_tiles/tile_transport.py",
+    "research/observation_gating/exact_gate.py"
+  ],
+  "python_search_path": ["C:\\s15a", "C:\\s15a\\research\\live_control", "C:\\s15a\\research\\doom"],
+  "modules": [
+    "test_input_owner_v12_cleanup_measurement.CleanupMeasurementTests",
+    "test_input_owner_v12_key_measurement",
+    "test_input_owner_v12_batch_sample_custody",
+    "test_batch_key_measurement_composition",
+    "test_input_owner_v12_explicit_up_cancel",
+    "test_input_owner_v12_wheel_cleanup",
+    "test_input_transition_owner_v4"
+  ],
+  "expected_tests": 47,
+  "modes": [
+    {"name":"normal","args":["-B","-m","unittest","-v"]},
+    {"name":"optimized","args":["-O","-B","-m","unittest","-v"]}
+  ],
+  "runtime": {
+    "python":"C:\\Users\\junny\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "version":"3.12.14",
+    "platform":"Windows AMD64",
+    "pillow":"12.3.0",
+    "numpy":"2.3.5",
+    "xlib":"absent; must remain unused",
+    "dependency_install":"forbidden",
+    "network":"unused"
+  },
+  "candidate_disposition_if_missing_dependency_or_any_test_error":"retain STOP/FAIL; no retries"
+}
