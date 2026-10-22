@@ -1,0 +1,13 @@
+Test command (one invocation):
+  timeout --signal=TERM --kill-after=10s 210s /tmp/ai-xvfb-caller-effect-timing-r01-venv/bin/python -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration
+
+Working directory: repository root mounted in Ubuntu WSL2 at /mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/goal-currentmain-recovery-20261022
+DISPLAY=:88
+Xvfb: Xvfb :88 -screen 0 1024x768x24 -ac -nolisten tcp
+AGENT_INTERFACE_XVFB_PID=<live private Xvfb PID>
+AGENT_INTERFACE_MCP_XVFB_TEST=1
+AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S=0
+AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS=1
+AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR=1
+AGENT_INTERFACE_MCP_XVFB_SERVER_PAUSE_MS=0
+AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT=<packet>/result.json

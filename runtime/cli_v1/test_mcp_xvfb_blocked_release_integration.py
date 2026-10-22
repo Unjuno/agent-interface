@@ -736,6 +736,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                             # Let the kernel's stopped state settle before the
                             # public caller enters its cancellation path.
                             await asyncio.sleep(0.05)
+                        report['timing_ns']['cancel_tool_invoked'] = (
+                            time.monotonic_ns())
                         cancel_response = _metadata(await server.call_tool(
                             'interface_guarded_cancel', {'call_id':pending['call_id']}))
                     finally:
@@ -765,6 +767,11 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     report['timing_ns']['cancel_returned']
                     - report['timing_ns']['cancel_started'])/1_000_000
                 report['cancel_elapsed_ms'] = cancel_elapsed_ms
+                cancel_invocation_elapsed_ms = (
+                    report['timing_ns']['cancel_returned']
+                    - report['timing_ns']['cancel_tool_invoked'])/1_000_000
+                report['cancel_invocation_elapsed_ms'] = (
+                    cancel_invocation_elapsed_ms)
                 report['cancel_response'] = cancel_response
                 report['cancel_event_loop_timing'] = {
                     'heartbeat_period_ms':1,
@@ -774,6 +781,12 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['cancel_internal_trace'] = cancel_internal_trace
                 report['cancellation_terminal'] = cancellation
                 self.assertLess(cancel_elapsed_ms, _CANCEL_BOUND_MS, cancel_response)
+                self.assertLessEqual(cancel_invocation_elapsed_ms, 300,
+                    {'elapsed_ms':cancel_invocation_elapsed_ms,
+                     'admission_to_response_ms':(
+                         report['timing_ns']['cancel_returned']
+                         - cancel_response['cancellation'][
+                             'admitted_monotonic_ns'])/1_000_000})
                 if cancel_response.get('status') == 'pending':
                     self.assertTrue(cancel_response.get('operation_id'), cancel_response)
                     self.assertFalse(cancel_response.get('release_confirmed'), cancel_response)
@@ -871,18 +884,57 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     list(fresh_effect_before_input.value)
                     if fresh_effect_before_input is not None else None)
                 fresh_start_ns = time.monotonic_ns()
+                fresh_input_started_ns = time.monotonic_ns()
                 fresh_input = _metadata(await fresh_server.call_tool(
                     'interface_guarded_input', {
                         'alias':'fresh_field', 'offset':fresh_minted['offset'],
                         'interaction':'keyboard', 'observe_after':False,
                         'wait_for_result_ms':10000,
                         'tail':[{'op':'key_chord','keys':['c']}]}))
+                fresh_input_returned_ns = time.monotonic_ns()
                 await self._wait_for_event(c_press_seen)
+                fresh_event_signal_returned_ns = time.monotonic_ns()
+                with app_lock:
+                    fresh_effect_events = [dict(row) for row in app_events
+                        if row.get('type') == X.KeyPress
+                        and row.get('detail') == keycodes['c']
+                        and row.get('window') == fresh_window.id
+                        and type(row.get('effect_committed_ns')) is int]
+                self.assertEqual(len(fresh_effect_events), 1, app_events)
+                fresh_app_event = fresh_effect_events[0]
+                fresh_event_seen_ns = fresh_app_event['monotonic_ns']
+                fresh_effect_committed_ns = fresh_app_event['effect_committed_ns']
+                fresh_effect_readback_started_ns = time.monotonic_ns()
                 fresh_effect_after_action = observer.create_resource_object(
                     'window', fresh_window.id).get_full_property(
                         fresh_effect_atom, X.AnyPropertyType)
                 fresh_effect_after_action = (list(fresh_effect_after_action.value)
                     if fresh_effect_after_action is not None else None)
+                fresh_effect_readback_completed_ns = time.monotonic_ns()
+                fresh_effect_timing_ms = {
+                    'input_invocation_to_keypress_observed':(
+                        fresh_event_seen_ns-fresh_input_started_ns)/1_000_000,
+                    'keypress_observed_to_application_effect_commit':(
+                        fresh_effect_committed_ns-fresh_event_seen_ns)/1_000_000,
+                    'input_invocation_to_application_effect_commit':(
+                        fresh_effect_committed_ns-fresh_input_started_ns
+                        )/1_000_000,
+                    'application_effect_commit_to_independent_readback_completed':(
+                        fresh_effect_readback_completed_ns-fresh_effect_committed_ns
+                        )/1_000_000,
+                    'parent_event_signal_return_to_independent_readback_completed':(
+                        fresh_effect_readback_completed_ns
+                        -fresh_event_signal_returned_ns)/1_000_000,
+                    'input_invocation_to_effect_readback_completed':(
+                        fresh_effect_readback_completed_ns-fresh_input_started_ns
+                        )/1_000_000,
+                    'input_return_to_effect_readback_completed':(
+                        fresh_effect_readback_completed_ns-fresh_input_returned_ns
+                        )/1_000_000,
+                    'effect_readback_duration':(
+                        fresh_effect_readback_completed_ns
+                        -fresh_effect_readback_started_ns)/1_000_000,
+                }
                 fresh_release_readback = {
                     name:_key_down(observer, keycodes[name])
                     for name in ('a','b','c')}
@@ -902,6 +954,18 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'input_call_id':fresh_input.get('call_id'),
                     'effect_before_input':fresh_effect_before_input,
                     'effect_after_input':fresh_effect_after_action,
+                    'input_started_monotonic_ns':fresh_input_started_ns,
+                    'input_returned_monotonic_ns':fresh_input_returned_ns,
+                    'keypress_event_observed_monotonic_ns':fresh_event_seen_ns,
+                    'application_effect_committed_monotonic_ns':(
+                        fresh_effect_committed_ns),
+                    'parent_event_signal_returned_monotonic_ns':(
+                        fresh_event_signal_returned_ns),
+                    'effect_readback_started_monotonic_ns':(
+                        fresh_effect_readback_started_ns),
+                    'effect_readback_completed_monotonic_ns':(
+                        fresh_effect_readback_completed_ns),
+                    'effect_timing_ms':fresh_effect_timing_ms,
                     'release_readback_after_input':fresh_release_readback,
                     'session_start_monotonic_ns':fresh_session_started_ns,
                     'start_monotonic_ns':fresh_start_ns,

@@ -1,0 +1,7 @@
+Post-run cleanup readback (Ubuntu WSL2):
+- `/tmp/.X11-unix/X88`: absent
+- `pgrep -a Xvfb`: no process
+- packet XAUTHORITY file: empty (0 bytes)
+- `/tmp/.X11-unix` directory mode after Xvfb startup: `drwxrwxrwx` (1777)
+
+The test-owned Xvfb process was gone after its trap completed. The WSL shell wrapper itself reported exit 1 despite the inner test recording exit 0; see launch-wrapper.json and the no-op wrapper diagnostic.

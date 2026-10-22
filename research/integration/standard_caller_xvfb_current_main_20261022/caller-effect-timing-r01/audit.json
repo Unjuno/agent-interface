@@ -1,0 +1,41 @@
+{
+  "audit": "independent PowerShell reconstruction from preserved result.json",
+  "raw_test_status": "OBSERVED_SCOPED_XVFB_STANDARD_CALLER_CANCEL_CLEANUP_UNKNOWN",
+  "raw_reconstruction_pass": true,
+  "checks": {
+    "exactly_one_fresh_c_keypress_with_commit": true,
+    "prior_task_effect_exact": true,
+    "fresh_task_effect_exact": true,
+    "independent_release_readback_all_up": true,
+    "fresh_action_and_horizon_all_up": true,
+    "delayed_request_horizon_all_up": true,
+    "no_old_delayed_press_after_new_session": true,
+    "cancellation_unknown_replay_denied": true,
+    "cancellation_call_under_300ms": true,
+    "timestamps_recompute_reported_intervals": true,
+    "all_recomputed_intervals_finite_and_nonnegative": true
+  },
+  "derived_intervals_ms": {
+    "cancel_invocation_to_return_ms": 95.283085,
+    "cancel_admission_to_response_ms": 95.065676,
+    "release_operation_start_to_supervisor_readback_ms": 0.192713,
+    "key_release_request_to_supervisor_readback_ms": 0.176384,
+    "cancel_admission_to_key_release_request_ms": 79.632524,
+    "cancel_admission_to_supervisor_readback_ms": 79.808908,
+    "input_invocation_to_app_event_ms": 37.700534,
+    "app_event_to_effect_commit_ms": 0.097205,
+    "effect_commit_to_independent_readback_ms": 4.937276,
+    "input_invocation_to_independent_readback_ms": 42.735015,
+    "input_return_to_independent_readback_ms": 1.925352
+  },
+  "report_crosscheck_ms": {
+    "cancel_invocation_to_return_ms": 95.283085,
+    "cancel_admission_to_response_ms": 95.065676,
+    "input_invocation_to_app_event_ms": 37.700534,
+    "app_event_to_effect_commit_ms": 0.097205,
+    "effect_commit_to_independent_readback_ms": 4.937276,
+    "input_invocation_to_independent_readback_ms": 42.735015,
+    "input_return_to_independent_readback_ms": 1.925352
+  },
+  "fresh_c_keypress_count": 1
+}
