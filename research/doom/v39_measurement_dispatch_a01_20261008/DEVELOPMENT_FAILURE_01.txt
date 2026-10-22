@@ -1,0 +1,6 @@
+2026-10-08 construction-runner verification failure
+
+Command: python -B research/doom/v39_measurement_dispatch_a01_20261008/run_modes.py
+First outcome: exit 1, "candidate output differs from retained normal raw".
+
+Diagnosis: run_modes.py compared UTF-8 stdout normalized to LF against a retained stdout file written on Windows with CRLF. A direct text comparison after universal-newline decoding showed equal 1,115-character content. The retained normal.stdout and optimized.stdout were not changed. The comparator was corrected to compare decoded text; this was a runner-format defect, not a changed candidate result.
