@@ -1,0 +1,70 @@
+{
+  "case_errors": [
+    "exact Entry KeyPress sequence",
+    "Entry KeyRelease count"
+  ],
+  "cases": {
+    "C01": {
+      "arm": "current",
+      "probe_exit": 0,
+      "record_sha256": "899f1fa5883c0563f458aae42da7f56ab3157c4c5699d71c9ea06c91a84289e3",
+      "supervisor_sha256": "d552e169e3266bce34f1b208fae9fa617a824b8547c28a9d78e082bf43a0309f",
+      "xvfb_exit": 0
+    }
+  },
+  "completed_ns": 23279362474154,
+  "freeze_sha256": "48969b57f1be88ab8a9d8bcd039271978cd0488cc17384b724dce38b34406eb7",
+  "schedule": [
+    {
+      "arm": "current",
+      "block": 1,
+      "case_id": "C01"
+    },
+    {
+      "arm": "guard-stable",
+      "block": 1,
+      "case_id": "G01"
+    },
+    {
+      "arm": "guard-interposed",
+      "block": 1,
+      "case_id": "I01"
+    },
+    {
+      "arm": "current",
+      "block": 2,
+      "case_id": "C02"
+    },
+    {
+      "arm": "guard-stable",
+      "block": 2,
+      "case_id": "G02"
+    },
+    {
+      "arm": "guard-interposed",
+      "block": 2,
+      "case_id": "I02"
+    },
+    {
+      "arm": "current",
+      "block": 3,
+      "case_id": "C03"
+    },
+    {
+      "arm": "guard-stable",
+      "block": 3,
+      "case_id": "G03"
+    },
+    {
+      "arm": "guard-interposed",
+      "block": 3,
+      "case_id": "I03"
+    }
+  ],
+  "schema": "caps-text-query-xtest-formal-index-v1",
+  "source_freeze_commit": "d5732e6628a48481dd6cfc93297626811bdf528f",
+  "source_manifest_sha256": "d771a66b972953f59b4efb73db591f2b517123997f885c705d6cca31f7b8056a",
+  "status": "STOP_AFTER_FIRST_UNEXPECTED_CASE",
+  "stopped_at": "C01",
+  "study_id": "caps-text-query-xtest-a01-20261007"
+}
