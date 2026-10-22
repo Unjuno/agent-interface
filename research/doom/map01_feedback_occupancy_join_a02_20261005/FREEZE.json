@@ -1,0 +1,17 @@
+{
+  "allocation_id": "MAP01-FEEDBACK-OCCUPANCY-JOIN-A02-20261005",
+  "base_commit": "8ff7afed76c1d81eabac9d0c37d4191b352045a4",
+  "run_type": "deterministic_local_cpu_posthoc",
+  "hypothesis": "For each of the three retained v39 plans with independently reconstructed first health/ammo feedback, the matching frame is the exact observation event captured inside the same primary hold step and at or before the v7 confirmed-any-key-held boundary; two may be the exact endpoint sample.",
+  "test": "Decode the hash-pinned #503 full artifact, bind run report/events hashes to v7 occupancy and telemetry-gap audit raw stream, then join exact plan/step/sequence/capture_ns/frame_rgb_sha256 identities and compare with hold event interval.",
+  "decision": "PASS_EXACT_IN_HOLD_FEEDBACK_EVENT_IDENTITY_SCOPED only if all three first feedback rows each match one typed and one visual observation with identical frame hash, belong to a hold step, lie in [first_key_ack_ns, confirmed_any_key_held_until_ns], and the independent raw auditor agrees with zero errors.",
+  "competing_explanation": "The coincident feedback may be environmental or harmful; multiple keys are held and no key-specific physical transition or action causality is identified.",
+  "uncertainty": "One retained stochastic v39 trajectory only; any-key software observation interval, not per-key physical occupancy; prior HUD/WAD audit is represented by hash-pinned retained outputs and audit member, not rerun locally.",
+  "source_manifest": "SOURCE_SHA256SUMS.txt",
+  "candidate_command": "python research/doom/map01_feedback_occupancy_join_a02_20261005/analyze.py",
+  "independent_audit_command": "python research/doom/map01_feedback_occupancy_join_a02_20261005/audit.py",
+  "candidate_runs": 1,
+  "retry": false,
+  "live_game_model_gui_input_calls": 0,
+  "docker_wslc_calls": 0
+}

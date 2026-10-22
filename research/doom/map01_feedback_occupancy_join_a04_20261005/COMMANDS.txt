@@ -1,0 +1,5 @@
+Freeze captured before candidate execution.
+python research/doom/map01_feedback_occupancy_join_a04_20261005/analyze.py
+python research/doom/map01_feedback_occupancy_join_a04_20261005/audit.py
+python -m py_compile research/doom/map01_feedback_occupancy_join_a04_20261005/analyze.py research/doom/map01_feedback_occupancy_join_a04_20261005/audit.py
+git diff --check

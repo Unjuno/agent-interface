@@ -1,0 +1,138 @@
+{
+  "schema": "map01-feedback-occupancy-join-a01",
+  "status": "PASS_SAME_RUN_CLOCK_JOIN_SCOPED",
+  "run": "map01-v39-coast-liveness-live-01",
+  "source_hashes": {
+    "occupancy_sha256": "1cd61f82a2ff832131be4a448bc90663f01c4acaab278807a969d2ef24a3b889",
+    "artifact_zip_sha256": "74f38f7a9e9c567fa9a41f5ded5c169cbc1e3ca7960da467e41bd79b5e408cbd",
+    "result_json_sha256": "931f93977a6e3cf32d0529af6113b135660defb46f38c9c3185d3638a0b9369e",
+    "events_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "report_sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687"
+  },
+  "plans": [
+    {
+      "id": "plan-0-primary-0-1",
+      "accepted_ns": 55510720526282,
+      "feedback_capture_ns": 55510954415259,
+      "feedback_after_acceptance_ms": 233.888977,
+      "feedback": [
+        "ammo"
+      ],
+      "from": {
+        "ammo": 48,
+        "health": 97
+      },
+      "to": {
+        "ammo": 47,
+        "health": 97
+      },
+      "hold_relations": [
+        {
+          "step": 0,
+          "keys": [
+            "Up",
+            "Shift_L",
+            "space"
+          ],
+          "admission_ns": 55510744310481,
+          "ack_ns": 55510744604148,
+          "earliest_release_ns": 55511103328377,
+          "latest_release_ns": 55511195717380,
+          "feedback_relation": "WITHIN_GUARANTEED_ANY_KEY_OCCUPANCY"
+        },
+        {
+          "step": 1,
+          "keys": [
+            "a"
+          ],
+          "admission_ns": 55511304484301,
+          "ack_ns": 55511304658887,
+          "earliest_release_ns": 55511610296899,
+          "latest_release_ns": 55511697940770,
+          "feedback_relation": "BEFORE_INPUT_ADMISSION"
+        }
+      ]
+    },
+    {
+      "id": "plan-3-primary-0-1",
+      "accepted_ns": 55531896125154,
+      "feedback_capture_ns": 55532110564498,
+      "feedback_after_acceptance_ms": 214.439344,
+      "feedback": [
+        "health",
+        "ammo"
+      ],
+      "from": {
+        "ammo": 44,
+        "health": 68
+      },
+      "to": {
+        "ammo": 43,
+        "health": 65
+      },
+      "hold_relations": [
+        {
+          "step": 0,
+          "keys": [
+            "Down",
+            "space"
+          ],
+          "admission_ns": 55531922546329,
+          "ack_ns": 55531922893265,
+          "earliest_release_ns": 55532110564498,
+          "latest_release_ns": 55532149408597,
+          "feedback_relation": "WITHIN_GUARANTEED_ANY_KEY_OCCUPANCY"
+        }
+      ]
+    },
+    {
+      "id": "plan-4-primary-0-1",
+      "accepted_ns": 55539907458727,
+      "feedback_capture_ns": 55540099435883,
+      "feedback_after_acceptance_ms": 191.977156,
+      "feedback": [
+        "ammo"
+      ],
+      "from": {
+        "ammo": 41,
+        "health": 61
+      },
+      "to": {
+        "ammo": 40,
+        "health": 61
+      },
+      "hold_relations": [
+        {
+          "step": 0,
+          "keys": [
+            "space"
+          ],
+          "admission_ns": 55539928641261,
+          "ack_ns": 55539928785334,
+          "earliest_release_ns": 55540099435883,
+          "latest_release_ns": 55540200077717,
+          "feedback_relation": "WITHIN_GUARANTEED_ANY_KEY_OCCUPANCY"
+        },
+        {
+          "step": 1,
+          "keys": [
+            "d"
+          ],
+          "admission_ns": 55540333159709,
+          "ack_ns": 55540333385852,
+          "earliest_release_ns": 55540651455744,
+          "latest_release_ns": 55540748339900,
+          "feedback_relation": "BEFORE_INPUT_ADMISSION"
+        }
+      ]
+    }
+  ],
+  "interpretation": "First independently reconstructed health/ammo observations were joined to conservative per-hold release-time intervals using the same monotonic event clock and run identity.",
+  "limits": [
+    "association only; no action-to-feedback causality",
+    "health/ammo changes may be harmful or environmental",
+    "occupancy endpoints are intervals, not exact physical key-up times",
+    "three admitted plans from one retained stochastic run only",
+    "no live allocation, game, model, GUI, or input was run"
+  ]
+}
