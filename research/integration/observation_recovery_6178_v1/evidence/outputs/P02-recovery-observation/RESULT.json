@@ -1,0 +1,394 @@
+{
+  "pid": 31516,
+  "start": "2026-10-03T19:50:38.830134+00:00",
+  "end": "2026-10-03T19:50:39.545973+00:00",
+  "tree": "47ad65aa3559e5680ec688971e490b3218ddfb61",
+  "pins": [
+    {
+      "path": "runtime/core_v1/__init__.py",
+      "bytes": 823,
+      "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+    },
+    {
+      "path": "runtime/core_v1/contract.py",
+      "bytes": 15230,
+      "sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1"
+    },
+    {
+      "path": "runtime/core_v1/platform_probe.py",
+      "bytes": 1898,
+      "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+    },
+    {
+      "path": "runtime/backends/win32_v1/__init__.py",
+      "bytes": 215,
+      "sha256": "0a21627e9fd4e50a9418335422d45d9ae89f598678ca0ddccc1edc7a4ef5a12b"
+    },
+    {
+      "path": "runtime/backends/win32_v1/backend.py",
+      "bytes": 21165,
+      "sha256": "5ca149b0d1e026fb2fd50ade83219b0acd686d2d7291aa391c77ce5b2bced1f7"
+    },
+    {
+      "path": "runtime/backends/win32_v1/session.py",
+      "bytes": 4559,
+      "sha256": "6984e33c4b0a79406a0a9f7206e005a3bbc574d41aa20a64337d48a128b930f2"
+    }
+  ],
+  "loaded": [
+    {
+      "module": "runtime.core_v1",
+      "file": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\outputs\\P02-recovery-observation\\source\\runtime\\core_v1\\__init__.py"
+    },
+    {
+      "module": "runtime.core_v1.contract",
+      "file": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\outputs\\P02-recovery-observation\\source\\runtime\\core_v1\\contract.py"
+    },
+    {
+      "module": "runtime.core_v1.platform_probe",
+      "file": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\outputs\\P02-recovery-observation\\source\\runtime\\core_v1\\platform_probe.py"
+    },
+    {
+      "module": "runtime.backends.win32_v1",
+      "file": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\outputs\\P02-recovery-observation\\source\\runtime\\backends\\win32_v1\\__init__.py"
+    },
+    {
+      "module": "runtime.backends.win32_v1.backend",
+      "file": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\outputs\\P02-recovery-observation\\source\\runtime\\backends\\win32_v1\\backend.py"
+    },
+    {
+      "module": "runtime.backends.win32_v1.session",
+      "file": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\outputs\\P02-recovery-observation\\source\\runtime\\backends\\win32_v1\\session.py"
+    }
+  ],
+  "rows": [
+    {
+      "mode": "live_target",
+      "first": {
+        "status": "release_unverified",
+        "admission": "accepted",
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "execution": {
+          "started_ns": 1,
+          "ended_ns": 1,
+          "emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [
+                "Q"
+              ],
+              "buttons_down": [],
+              "verified": false,
+              "monotonic_ns": 1
+            }
+          ]
+        },
+        "recovery_required": true
+      },
+      "observation": {
+        "bytes": 4,
+        "sha256": "inert-pixels"
+      },
+      "observe_error": null,
+      "captures": [
+        [
+          "owned",
+          "screen_physical_px",
+          0,
+          0,
+          1,
+          1
+        ]
+      ],
+      "refused": {
+        "status": "refused",
+        "error": "INPUT_RECOVERY_REQUIRED",
+        "recovery_required": true,
+        "input_dispatched": false,
+        "required_capabilities": [],
+        "backend_emissions": 2
+      },
+      "failed_recovery": {
+        "status": "recovery_failed",
+        "release_attempted": true,
+        "release": {
+          "keys_down": [
+            "Q"
+          ],
+          "buttons_down": [],
+          "verified": false,
+          "monotonic_ns": 1
+        },
+        "recovery_required": true,
+        "task_success": null,
+        "replay_allowed": false
+      },
+      "successful_recovery": {
+        "status": "input_recovered",
+        "release_attempted": true,
+        "release": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 1
+        },
+        "recovery_required": false,
+        "task_success": null,
+        "replay_allowed": false
+      },
+      "events": [
+        [
+          "SendInput",
+          81,
+          true
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ],
+        [
+          "IsWindow",
+          17
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ]
+      ]
+    },
+    {
+      "mode": "stale_target",
+      "first": {
+        "status": "release_unverified",
+        "admission": "accepted",
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "execution": {
+          "started_ns": 1,
+          "ended_ns": 1,
+          "emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [
+                "Q"
+              ],
+              "buttons_down": [],
+              "verified": false,
+              "monotonic_ns": 1
+            }
+          ]
+        },
+        "recovery_required": true
+      },
+      "observation": null,
+      "observe_error": "unknown or stale target owned",
+      "captures": [],
+      "refused": {
+        "status": "refused",
+        "error": "INPUT_RECOVERY_REQUIRED",
+        "recovery_required": true,
+        "input_dispatched": false,
+        "required_capabilities": [],
+        "backend_emissions": 2
+      },
+      "failed_recovery": {
+        "status": "recovery_failed",
+        "release_attempted": true,
+        "release": {
+          "keys_down": [
+            "Q"
+          ],
+          "buttons_down": [],
+          "verified": false,
+          "monotonic_ns": 1
+        },
+        "recovery_required": true,
+        "task_success": null,
+        "replay_allowed": false
+      },
+      "successful_recovery": {
+        "status": "input_recovered",
+        "release_attempted": true,
+        "release": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 1
+        },
+        "recovery_required": false,
+        "task_success": null,
+        "replay_allowed": false
+      },
+      "events": [
+        [
+          "SendInput",
+          81,
+          true
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ],
+        [
+          "IsWindow",
+          17
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ]
+      ]
+    },
+    {
+      "mode": "missing_target",
+      "first": {
+        "status": "release_unverified",
+        "admission": "accepted",
+        "required_capabilities": [
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "execution": {
+          "started_ns": 1,
+          "ended_ns": 1,
+          "emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [
+                "Q"
+              ],
+              "buttons_down": [],
+              "verified": false,
+              "monotonic_ns": 1
+            }
+          ]
+        },
+        "recovery_required": true
+      },
+      "observation": null,
+      "observe_error": "unknown or stale target missing",
+      "captures": [],
+      "refused": {
+        "status": "refused",
+        "error": "INPUT_RECOVERY_REQUIRED",
+        "recovery_required": true,
+        "input_dispatched": false,
+        "required_capabilities": [],
+        "backend_emissions": 2
+      },
+      "failed_recovery": {
+        "status": "recovery_failed",
+        "release_attempted": true,
+        "release": {
+          "keys_down": [
+            "Q"
+          ],
+          "buttons_down": [],
+          "verified": false,
+          "monotonic_ns": 1
+        },
+        "recovery_required": true,
+        "task_success": null,
+        "replay_allowed": false
+      },
+      "successful_recovery": {
+        "status": "input_recovered",
+        "release_attempted": true,
+        "release": {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 1
+        },
+        "recovery_required": false,
+        "task_success": null,
+        "replay_allowed": false
+      },
+      "events": [
+        [
+          "SendInput",
+          81,
+          true
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ],
+        [
+          "SendInput",
+          81,
+          false
+        ],
+        [
+          "GetAsyncKeyState",
+          81
+        ]
+      ]
+    }
+  ],
+  "decision": "PASS_INERT_OBSERVATION_DOES_NOT_CLEAR_RECOVERY",
+  "scope": "New combined dependency behavior. Full runtime modules; constructor/DLL forbidden; SendInput/state/IsWindow/capture/time endpoints inert. Not GDI pixels, physical release, native cancellation, concurrency, general caller authority, performance or formal replay.",
+  "native_executions": 0,
+  "formal_replays": 0,
+  "main_requests": 0
+}
