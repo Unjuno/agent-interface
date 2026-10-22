@@ -1,0 +1,114 @@
+# Win32 operation-owner implementation plan
+
+Status: planned, not implemented or qualified. This plan follows the design
+decision in [the supervisor design record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
+It authorizes only local inert-fake work in the first phase; it does not
+authorize native input or a WSLc allocation.
+
+## Problem and scope
+
+The current `Win32RuntimeSession.dispatch()` and `Win32Backend.execute()` call
+`SendInput` synchronously. Existing fault-injection packets show that the
+session can have no recorded release obligation while a fake `SendInput` has
+already accepted DOWN and has not returned. A second schedule shows that
+issuing UP from another sender before the original producer retires permits a
+late DOWN. These are fake schedules, not observations of Windows behavior.
+
+The current owned-process/supervisor path is X11-specific: it requires
+`guarded-x11`, publishes X11 key/button obligations, and defaults to
+`x11_cancel_worker`. Do not route Win32 through that worker. This plan evaluates
+a separate Win32 operation owner while preserving the existing public caller's
+target-generation checks, bounded cancellation response, UNKNOWN result,
+no-replay rule, and opt-in default.
+
+## Required state and ordering
+
+One parent-side supervisor owns the operation ID, target generation, deadline,
+admission fence, process handles, and cancellation result. A disposable child
+per input program performs the admitted operation. The supervisor must:
+
+1. Reject stale operation IDs, stale target generations, expired deadlines,
+   duplicate admission, and any new operation while the prior producer's
+   retirement is unresolved.
+2. On cancel/expiry, close admission first, request child retirement, and wait
+   only to a fixed bound. A timeout or lost IPC receipt is `UNKNOWN`; it is not
+   proof of producer retirement and never permits a second input sender.
+3. Attempt compensating UP only after the exact operation child is confirmed
+   retired, using a separately bounded recovery process and only the frozen
+   obligations for that operation.
+4. Read key/button state through an independent, bounded observer. A missed
+   readback, failed recovery, or ambiguous process retirement remains
+   `UNKNOWN`, denies replay, and keeps input fenced.
+5. Record task effect separately. A fresh target must pass an independent task
+   oracle before the new task can be called successful.
+
+Confirmed child exit is only a producer boundary. It does not prove that an
+already accepted Windows input event was removed from an OS queue or cannot
+take effect later. The late-DOWN horizon test below is therefore a mandatory
+native gate; no code path may promote the synthetic model result to release
+confirmation.
+
+## Work sequence
+
+### Phase 1: inert process/API model
+
+Implement a spawn-safe, dependency-injected process-owner prototype and tests.
+Use shared test state only; do not instantiate `Win32Backend`, call `user32`,
+or emit desktop input. Force the producer to block both before fake acceptance
+and after accepting DOWN but before returning. Exercise cancel, deadline,
+retirement timeout, IPC loss, recovery-process failure, observer timeout,
+stale operation ID/generation, repeated cancel, and attempted overlapping
+dispatch.
+
+The fake acceptance criteria are: caller response respects the declared bound;
+no recovery UP is emitted before confirmed producer retirement; unresolved
+retirement never admits another producer; old operation IDs cannot authorize
+effects; and every uncertain branch returns UNKNOWN with replay denied. Run
+focused tests normally and under `python -O`. Label all outputs synthetic.
+
+### Phase 2: current-main composition
+
+Only after Phase 1 passes, connect the opt-in owner to the standard guarded
+caller through an explicit Win32 adapter. Test target-generation change after
+model wait, cancellation while the child is blocked, bounded caller response,
+separate effect scoring, exact attempt accounting, and preservation of the
+completed prefix. Keep X11 worker selection unchanged and fail closed if the
+selected backend and recovery adapter disagree. Do not change the default
+backend or report a live release result from these tests.
+
+### Phase 3: isolated native discriminator
+
+Before native input, require an identified disposable Windows target, a
+separate output location, a reviewed stop/cleanup procedure, independent
+platform-state observation, and a verified exclusive allocation. Run the
+before-acceptance and after-acceptance schedules; after confirmed child exit
+and recovery UP, observe through a declared horizon for any late DOWN. Then
+verify a fresh target's independent task effect. Preserve all first outcomes.
+If the target, ownership, observer, or stop path is unavailable, do not run;
+keep the result UNKNOWN. This plan grants no WSLc access and does not override
+Issue #7924 STOP.
+
+### Phase 4: standard-caller qualification
+
+Only if both native schedules establish the producer fence, bounded neutral
+state, and late-DOWN absence should the adapter enter a matched comparison.
+Freeze baseline, task order, model/settings, all-attempt usage accounting,
+latency endpoints, repair policy, repetition count, and stopping rule before
+seeing results. Report task correctness, collateral effects, release
+confirmation coverage, late inputs, uncertainty, model usage, and full time to
+independent task effect. A negative or inconclusive result completes this
+qualification attempt and does not authorize automatic adoption.
+
+## Rejection conditions
+
+Reject or keep disabled if an old DOWN can occur after retirement and recovery,
+if process retirement/readback is unbounded, if any unresolved producer
+overlaps a recovery sender, if target-generation checks can be bypassed, or if
+the task effect cannot be independently verified. A bounded caller response
+with UNKNOWN is useful containment, but it does not satisfy bounded release.
+
+## First deliverable
+
+Phase 1's tests and local receipts. The current fake packets remain immutable
+and are the baseline counterexamples. No Phase 1 pass, native qualification,
+matched efficiency, or reliability claim exists until its evidence is added.
