@@ -1,6 +1,12 @@
 # Current objective and working direction
 
-**Repository checkpoint (2026-10-22):** PR #9401 is merged at
+**Latest main checkpoint (2026-10-22, `d9e8faa6673c2d295c82553efa8638afb2f074ab`):** PR #9408 merged the inert prestarted-helper candidate. Its normal and optimized process-model suites passed 14/14; initialization and producer start remain synchronous. PR #9409 added a regression proving the X11 cleanup worker does not start release when its transaction deadline expires after XRes observation; the combined supervisor and public owned-process suites passed 59/59 in normal and optimized Windows CPython 3.11.9. Neither PR changes runtime behavior or qualifies physical release.
+
+The X11 supervisor remains opt-in. Win32 owner composition through the public MCP caller, live-Xvfb bystander-reuse refusal, physical desktop/MAP01, matched efficiency and reliability remain open. WSLc #7924 is still STOP/HOLD; no WSLc or Docker allocation was used. Continue from the [supervisor design and qualification record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md), preserving its scoped limits.
+
+**Prior checkpoint before PR #9408:**
+
+**Repository checkpoint (2026-10-22, historical):** PR #9401 is merged at
 `b688ecd3fdb4726b59201f10753ca65d82942b2b`; it preserves the scoped r09
 Chromium/App Server polling packet with an explicit source-currency limit. PR
 #9402 at `4606c917d22b0da0bd42cdbe7b95fbe606053f5e` records that no complete
