@@ -1,0 +1,3 @@
+# Preserved local preflight failures
+
+The first and second commands were both `python -m unittest -v test_a14_pending_ammo_staleness` before the same fixture correction. Each had 1 passing stale-ammo case and 1 failing positive control because the fake client did not advance the unchanged case to fresh observation sequence 11. The second invocation was inadvertently repeated after a text replacement failed to modify the file. The final corrected local preflight and the separately frozen WSLc run are retained as distinct later outcomes; no failed outcome was overwritten or treated as a live allocation.

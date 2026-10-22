@@ -1,0 +1,142 @@
+"""Current functions + exact nested wait AST; inert observations/process/planner."""
+import ast
+import copy
+import inspect
+import json
+from pathlib import Path
+import queue
+import sys
+import time
+from types import SimpleNamespace
+import unittest
+
+HERE=Path(__file__).resolve().parent
+sys.path[:0]=[str(HERE),str(HERE.parent/'live_control')]
+import map01_overlap_controller_v39 as controller
+
+ROWS=[]
+BINDING={'focus':7,'surface':9,'geometry':[0,0,640,480]}
+AUTHORED={'signal_id':'health','critical_health_minimum':35,
+          'maximum_health_loss':12,'max_source_age_ms':30000}
+
+def observation(sequence,health,ammo,event='observation'):
+    capture=1_000_000_000+sequence*100_000_000
+    return dict(event=event,sequence=sequence,capture_ns=capture,
+        pointer_binding=copy.deepcopy(BINDING),frame_rgb_sha256=format(sequence,'064x'),
+        signals={name:dict(status='observed',signal_id=name,value=value,
+            sequence=sequence,capture_ns=capture,binding=copy.deepcopy(BINDING))
+            for name,value in [('health',health),('ammo',ammo)]})
+
+class Reader:
+    def __init__(self,name):self.name=name
+    def read(self,row):return row['signals'][self.name]
+
+class Process:
+    def __init__(self,events,fail_write=False):
+        self.events=events;self.fail_write=fail_write;self.stdin=self
+    def poll(self):return None
+    def write(self,text):
+        self.events.append({'op':'cancel','command':json.loads(text)})
+        if self.fail_write:raise OSError('synthetic cancel write unknown')
+    def flush(self):self.events.append({'op':'flush'})
+
+class Planner:
+    def __init__(self,events):self.events=events
+    def invalidate_turn(self,handle):
+        self.events.append({'op':'invalidate','turn':handle.turn_id})
+        return {'status':'invalidated','answer_eligible':False}
+    def interrupt(self,handle):
+        self.events.append({'op':'interrupt','turn':handle.turn_id})
+        return {'status':'interrupt_requested'}
+    def abort_pending_turn(self):self.events.append({'op':'abort'})
+
+def current_wait(incoming,process):
+    tree=ast.parse(inspect.getsource(controller))
+    waits=[n for n in ast.walk(tree) if isinstance(n,ast.FunctionDef) and n.name=='wait']
+    if len(waits)!=1:raise ValueError('one production nested wait required')
+    factory=ast.parse('def factory(incoming,process):\n latest=None\n').body[0]
+    factory.body.append(waits[0])
+    factory.body.extend(ast.parse('return wait, lambda: latest\n').body)
+    namespace={'queue':queue,'time':time,
+               'reject_control_boundary_failure':controller.reject_control_boundary_failure}
+    exec(compile(ast.fix_missing_locations(ast.Module(body=[factory],type_ignores=[])),
+                 '<current-v39-wait>', 'exec'),namespace)
+    return namespace['factory'](incoming,process)
+
+class CancelRecoveryCompositionTests(unittest.TestCase):
+    def monitor(self,source):
+        return controller.build_cover_monitor(Reader('health'),source,AUTHORED,0,
+            ammo_reader=Reader('ammo'),requires_ammo=True)
+
+    def drive(self,signal='health',terminal_status='cancelled',fault=None):
+        source=observation(10,100,4);monitor,initial=self.monitor(source)
+        low=observation(11,80 if signal=='health' else 100,0 if signal=='ammo' else 4,'typed_observation')
+        invalidation=monitor.observe(low)
+        recovered=observation(12,96,4)
+        incoming=queue.Queue()
+        incoming.put(observation(12,96,4,'typed_observation'));incoming.put(recovered)
+        terminal=dict(event='terminal',id='cover-0',status=terminal_status,
+                      release=dict(event='owner_release',verified=fault!='unverified',keys_down=['CTRL'] if fault=='held' else [],buttons_down=[],keys_unknown=[],key_state_errors=[]))
+        incoming.put(terminal);events=[];process=Process(events,fault=='cancel-write');planner=Planner(events)
+        handle=SimpleNamespace(turn_id='still-eligible-old-turn')
+        wait,latest=current_wait(incoming,process);error=None;returned=None
+        try:returned=controller.cancel_invalidated_cover(planner,handle,process,wait,'cover-0')
+        except Exception as exc:error=dict(type=type(exc).__name__,receipt=getattr(exc,'cover_cancellation_receipt',None))
+        # Deliberately answer-eligible old result: final gate must use original invalidation.
+        answer=SimpleNamespace(handle=handle,status='completed',answer_eligible=True)
+        terminal_ns=time.perf_counter_ns()
+        final=controller.final_admission_from_planner_result(answer,terminal_ns,invalidation,time.perf_counter_ns())
+        fresh_monitor,fresh=self.monitor(latest())
+        row=dict(signal=signal,terminal_status=terminal_status,fault=fault,initial=initial,
+            invalidation=invalidation,recovered=recovered,latest=latest(),events=events,
+            returned=returned,error=error,final=final,fresh=fresh,
+            fresh_source=fresh_monitor.guards['health'].spec,
+            old_monitor_soft_count=monitor.soft_event_count)
+        ROWS.append(copy.deepcopy(row))
+        return row
+
+    def test_recovery_during_cancel_preserves_old_refusal_and_new_full_source(self):
+        for signal in ('health','ammo'):
+            for status in ('cancelled','completed','expired'):
+                with self.subTest(signal=signal,status=status):
+                    r=self.drive(signal,status)
+                    self.assertIsNone(r['error'])
+                    self.assertEqual([e['op'] for e in r['events']],['invalidate','cancel','flush','interrupt'])
+                    self.assertEqual(r['events'][1]['command'],{'op':'cancel','id':'cover-0'})
+                    self.assertEqual(r['latest'],r['recovered'])
+                    self.assertEqual(r['old_monitor_soft_count'],0)
+                    self.assertEqual(r['fresh']['status'],'admitted')
+                    self.assertEqual(r['fresh_source']['source_sequence'],12)
+                    self.assertEqual(r['fresh_source']['source_value'],96)
+                    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+                    self.assertIs(r['final']['input_authority_admitted'],False)
+                    self.assertIs(r['final']['grants_input_authority'],False)
+                    self.assertIsNone(r['final']['executor_admission'])
+                    self.assertIsNone(r['final']['action_validity'])
+                    self.assertEqual(r['final']['policy_invalidation'],r['invalidation'])
+
+    def test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence(self):
+        for fault in ('unverified','held','cancel-write'):
+            with self.subTest(fault=fault):
+                r=self.drive(fault=fault)
+                self.assertIsNotNone(r['error'])
+                receipt=r['error']['receipt']
+                self.assertEqual(receipt['terminal']['id'],'cover-0')
+                self.assertEqual(receipt['physical_input_state'],'unverified')
+                self.assertIs(receipt['input_recovery_required'],True)
+                self.assertIs(receipt['grants_input_authority'],False)
+                self.assertEqual(r['events'][-1]['op'],'abort')
+                if fault!='cancel-write':self.assertNotIn('interrupt',[e['op'] for e in r['events']])
+                self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+                self.assertIs(r['final']['input_authority_admitted'],False)
+
+    def test_clean_new_planner_result_only_reaches_action_validation(self):
+        result=SimpleNamespace(handle=SimpleNamespace(turn_id='fresh-turn'),status='completed',answer_eligible=True)
+        observed=time.perf_counter_ns()
+        receipt=controller.final_admission_from_planner_result(result,observed,None,time.perf_counter_ns())
+        ROWS.append(dict(control='clean-no-invalidation',final=copy.deepcopy(receipt)))
+        self.assertEqual(receipt['status'],'READY_FOR_ACTION_VALIDITY')
+        self.assertIs(receipt['input_authority_admitted'],False)
+        self.assertIsNone(receipt['executor_admission'])
+
+if __name__=='__main__':unittest.main()

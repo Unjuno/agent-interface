@@ -1,0 +1,23 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a19-freeze-v1",
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A19-20261012-01",
+  "successor_of": "V39-V15-PROCESS-OWNER-XVFB-A18-20261012-01",
+  "base_commit": "47e2a914ef7d81d07b69205d333f79f4151bc338",
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1,
+  "retries_allowed": 0,
+  "source_sha256": {
+    "research/live_control/input_owner_process_v1.py": "0a8b42ccc926ad5763bad4558603e4f5bdd258a6b7a153409fbd6e0f30c0c726",
+    "research/doom/doom_controller_failure_cleanup_v1.py": "743f815986eb261c5784449332e2bb6edf063feef01fc17187e30bfae117bff7",
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": "51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+    "research/doom/v39_v15_process_owner_xvfb_a19_20261012/PLAN.md": "62f69a7b89fc1e311e5dfc40359097cbc871a27ef4c85b9ce147859ee9cab279",
+    "research/doom/v39_v15_process_owner_xvfb_a19_20261012/candidate.py": "3c3331792ff9f55e01c9dbf917c85e3f40ff26ddaf8977d35d7d4ea1d40113ec",
+    "research/doom/v39_v15_process_owner_xvfb_a19_20261012/run_candidate.sh": "65fcefd8d96945e6fb83e15965a2e040e0ca7a525278b357119dba2dc895ccf1"
+  },
+  "environment": {"host":"WSL2 Ubuntu", "python":"CPython 3.12.3", "xvfb":"TCP disabled", "physical_input":false, "game_or_model":false, "network_calls":0},
+  "hypothesis": "After owner service SIGKILL with two keys and Button1 held, the outer recovery path releases only ledgered inputs and persists verified or diagnostic evidence for independent audit.",
+  "scope": "Private isolated Xvfb recovery primitive and cleanup boundary only.",
+  "decision_rule": "PASS only with independently observed key/button release events and up states plus durable receipt bound to ledger. If release event or state verification fails, diagnostic receipt must persist the exact before/after states and observed events, and the candidate records the precise STOP/FAIL. No retry.",
+  "command": "unshare --user --map-root-user --mount --fork bash research/doom/v39_v15_process_owner_xvfb_a19_20261012/run_candidate.sh",
+  "output": "research/doom/v39_v15_process_owner_xvfb_a19_20261012/results/A01"
+}

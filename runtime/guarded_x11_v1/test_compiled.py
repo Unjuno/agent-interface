@@ -1,5 +1,6 @@
 """Shared X11 adapter boundaries; fake captures/input, no display or model."""
 import copy
+from contextlib import contextmanager
 import hashlib
 import time
 from types import SimpleNamespace
@@ -18,6 +19,20 @@ class Bridge:
         self.target='app'; self.history={}; self.saved=[]; self.inputs=[]
         self.store=SimpleNamespace(resolve_point=Mock(side_effect=self.resolve))
         self.phase=0; self.release=True
+        self.process_generation='a'*64
+        self.window_generation='c'*64
+        self.change_generation_after_first_input=False
+        self.generation_field_to_change='process_generation'
+        self.generation_change_mode='changed'
+        self.change_generation_before_input=False
+        self.guard=None
+    @contextmanager
+    def input_guard(self,alias,offset,*,tail,verify,interaction='keyboard'):
+        # Memory-only fixture: native fresh capture/fences are exercised by
+        # test_compiled_native_dependencies with the actual NativeHandleBridge.
+        self.guard=verify
+        try:yield
+        finally:self.guard=None
     def _save(self,name,value): self.saved.append((name,copy.deepcopy(value)))
     def _focus_within_target(self): return True
     def resolve(self,*args,**kwargs):
@@ -25,13 +40,29 @@ class Bridge:
     def observe(self):
         self.sequence+=1
         image=Image.new('RGB',(32,32),(self.phase,20,30))
+        binding={'surface':20}
+        for key in ('process_generation','window_generation'):
+            value=getattr(self,key)
+            if value is not None: binding[key]=value
         observation={'sequence':self.sequence,'capture_ns':time.monotonic_ns(),
-            'binding_revision':0,'pointer_binding':{'surface':20},
+            'binding_revision':0,'pointer_binding':binding,
             'native':{'artifact':{'sha256':hashlib.sha256(image.tobytes()).hexdigest()}}}
         self.history[self.sequence]=(observation,image)
         return observation
     def click(self,alias,offset,**kwargs):
+        if self.change_generation_before_input:
+            setattr(self,self.generation_field_to_change,
+                    None if self.generation_change_mode == 'missing' else 'b'*64)
+            self.change_generation_before_input=False
+            self.observe()  # Model the bridge's fresh pre-input binding capture.
+        if self.guard is not None:
+            native,image=self.history[self.sequence]
+            if self.guard('fixture_before_input',copy.deepcopy(native),image.copy()) is not True:
+                return {'status':'refused','input_dispatched':False}
         self.inputs.append((alias,offset,copy.deepcopy(kwargs))); self.phase+=1
+        if self.phase == 1 and self.change_generation_after_first_input:
+            setattr(self,self.generation_field_to_change,
+                    None if self.generation_change_mode == 'missing' else 'b'*64)
         return {'status':'completed','execution':{'releases':[{'verified':self.release,'keys_down':[],'buttons_down':[]}]}}
     keyboard=click; move=click
 
@@ -183,6 +214,43 @@ class CompiledX11Tests(unittest.TestCase):
         self.assertEqual(len(b.inputs),2)
         self.assertTrue(all(before < c[2]['expires_at_ns'] <= r['started_ns']+1_000_000_000 for c in b.inputs))
         self.assertTrue(any('receipt' in name for name,row in b.saved))
+
+    def test_target_generation_change_or_loss_after_action_cannot_verify_its_effect(self):
+        for field in ('process_generation','window_generation'):
+            for mode in ('changed','missing'):
+                with self.subTest(field=field,mode=mode):
+                    b=Bridge(); b.change_generation_after_first_input=True
+                    b.generation_field_to_change=field
+                    b.generation_change_mode=mode
+                    verifier=Mock(side_effect=verify)
+                    perceptions=[]
+                    def record_perception(native,image):
+                        perceptions.append(native['pointer_binding'].copy())
+                        return perceive(native,image)
+                    receipt=run(b,spec(),bindings(),perceive=record_perception,
+                                verify_effect=verifier)
+                    self.assertEqual((receipt['outcome'],receipt['reason']),
+                                     ('SAFE_YIELD','association_changed'))
+                    self.assertEqual(receipt['completed_transitions'],1)
+                    self.assertEqual(len(b.inputs),1)
+                    self.assertTrue(perceptions)
+                    baseline='a'*64 if field == 'process_generation' else 'c'*64
+                    self.assertTrue(all(row.get(field)==baseline
+                                        for row in perceptions))
+                    verifier.assert_not_called()
+
+    def test_generation_change_in_fresh_input_capture_is_not_perceived(self):
+        b=Bridge(); b.change_generation_before_input=True
+        perceptions=[]; verifier=Mock(side_effect=verify)
+        def record_perception(native,image):
+            perceptions.append(native['pointer_binding'].copy())
+            return perceive(native,image)
+        receipt=run(b,spec(),bindings(),perceive=record_perception,
+                    verify_effect=verifier)
+        self.assertEqual(b.inputs,[])
+        self.assertEqual(len(perceptions),1)
+        self.assertEqual(receipt['completed_transitions'],0)
+        verifier.assert_not_called()
     def test_unknown_pixels_never_send_input(self):
         b=Bridge(); r=run(b,spec(),bindings(),perceive=lambda n,i:{},verify_effect=verify)
         self.assertEqual(r['reason'],'unknown_state'); self.assertEqual(b.inputs,[])

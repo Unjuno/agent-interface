@@ -1,0 +1,21 @@
+{
+  "workflow_run": "https://github.com/Unjuno/agent-interface/actions/runs/39246017054",
+  "head_sha": "5c249f797ae24b71c44cdf86a946fd2950c65941",
+  "job": "x11-integration / Run private Xvfb integration",
+  "tests": {"run": 77, "failures": 1},
+  "failing_case": "runtime.cli_v1.test_mcp_xvfb_blocked_release_integration.StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb",
+  "assertion": "owner_process_retired was expected true",
+  "observed_cancel_fields": {
+    "owner_process_retired": false,
+    "owner_process_exitcode": -15,
+    "owner_client_disconnect": {"status": "unknown", "reason": "owner_not_retired", "worker_retired": null},
+    "owner_input_obligations": {"keys": {"a": 38}, "buttons": []},
+    "owner_release_attempt": {"status": "not_attempted", "reason": "owner_not_retired"},
+    "cleanup_status": "UNKNOWN",
+    "task_success": null,
+    "replay_allowed": false,
+    "late_server_request_possible": true
+  },
+  "raw_interpretation": "The report contains an inconsistent liveness/exit-code snapshot. No release was attempted and no successful cleanup is claimed.",
+  "subsequent_work": "A deterministic sampling-race regression was added; full Xvfb rerun is required to establish whether the test now reaches the disconnect/readback branch."
+}

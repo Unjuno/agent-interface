@@ -1,0 +1,13 @@
+# A09 exact execution commands (PowerShell)
+
+# Source/image build (network used only to install Xvfb and Python-Xlib at build time)
+wslc.exe build --file D:\codex-research\worktrees\v39-owner-close-currentmain-a09-20261012\research\doom\v39_owner_close_currentmain_a09_20261012\BUILD_CONTEXT\Dockerfile --tag a09-owner-close-xvfb:20261012 D:\codex-research\worktrees\v39-owner-close-currentmain-a09-20261012\research\doom\v39_owner_close_currentmain_a09_20261012\BUILD_CONTEXT
+
+# Candidate: one invocation; frozen image; no run network; source package read-only; distinct writable results
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 1G --volume D:\codex-research\worktrees\v39-owner-close-currentmain-a09-20261012\research\doom\v39_owner_close_currentmain_a09_20261012:/study:ro --volume D:\codex-research\worktrees\v39-owner-close-currentmain-a09-20261012\research\doom\v39_owner_close_currentmain_a09_20261012\results:/out --workdir /study/SOURCE a09-owner-close-xvfb:20261012 python candidate.py --out /out/A09 --display :131
+
+# Independent raw-only audit: one invocation after RAW.json existed
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 1G --volume D:\codex-research\worktrees\v39-owner-close-currentmain-a09-20261012\research\doom\v39_owner_close_currentmain_a09_20261012:/study:ro --volume D:\codex-research\worktrees\v39-owner-close-currentmain-a09-20261012\research\doom\v39_owner_close_currentmain_a09_20261012\results:/out --workdir /study/SOURCE a09-owner-close-xvfb:20261012 python audit.py --raw /out/A09/RAW.json --freeze /study/FREEZE.json --source-dir /study/SOURCE --candidate /study/SOURCE/candidate.py --out /out/A09/AUDIT.json
+
+# Focused current-main regression tests (11 tests)
+wslc.exe run --rm --pull never --network none --cpus 1 --memory 1G --volume D:\codex-research\worktrees\v39-owner-close-currentmain-a09-20261012:/src:ro --volume D:\codex-research\worktrees\v39-owner-close-currentmain-a09-20261012\research\doom\v39_owner_close_currentmain_a09_20261012\RUNNER:/runner --workdir /src a09-owner-close-xvfb:20261012 python -B -m unittest research.live_control.test_input_owner_v12_explicit_up_cancel research.live_control.test_input_owner_v12_cleanup_after_explicit_up research.live_control.test_input_owner_v12_terminal_presample_release research.live_control.test_input_transition_owner_v4 -v

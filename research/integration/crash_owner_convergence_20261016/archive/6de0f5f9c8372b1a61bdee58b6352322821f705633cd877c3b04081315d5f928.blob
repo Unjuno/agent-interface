@@ -1,0 +1,35 @@
+{
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A13-20261012-01",
+  "auditor_invocations_allowed": 1,
+  "base_commit": "3ccaef7d0",
+  "candidate_invocations_allowed": 1,
+  "changed_factor": "SIGKILL target is detached owner service, not session; no clean close or verified receipt expected from killed owner",
+  "decision_rule": "PASS_XSERVER_DISCONNECT_RELEASE requires owner service return -9; independent observer confirms both key releases and ButtonRelease plus all keymap/pointer-mask bits up; session remains alive through observation; no recovery receipt is claimed; Xvfb termination requested and clean exit 0/-15. Record receipt absence explicitly and do not call this process-owner recovery PASS.",
+  "environment": {
+    "game_or_model": false,
+    "host": "WSL2 Ubuntu",
+    "isolation": "unshare user+mount namespace; private tmpfs /tmp and mode-1777 X socket",
+    "network_calls": 0,
+    "numpy": "2.5.4 user-cache target",
+    "physical_input": false,
+    "python": "CPython 3.12.3",
+    "python_xlib": "0.33",
+    "xvfb": "Xvfb -displayfd, TCP disabled"
+  },
+  "hypothesis": "When only the detached InputOwnerProcess is SIGKILLed while session and Xvfb remain alive, X11 drops key and button state associated with the disconnected XTest client and independent observers see releases; this does not imply a verified recovery receipt.",
+  "retries_allowed": 0,
+  "schema": "v39-v15-process-owner-xvfb-a13-freeze-v1",
+  "scope": "Owner-service hard death and X11 disconnect release for two keys plus Button1; no cleanup receipt, full V15 CLI, outer V39, game/model, or task result.",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": "cdad5849f54c020914dca46db9ff6ff5208c15938cb9b05edb7d05afb8af35f4",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/AUDIT.json": "379e02dcb793e8db1b923698f43cc61ff3145c66665b465c17fad59025ff5afe",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/RUN.json": "583447a2de599fdc56b2727ad17aef8f7a07e41cc5d58f8f4a6c844c3fd41e01",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/results/A01/RAW.json": "9ffc82d4db4300f8d7781ed74f0307aa78c4baa5d0064ff283cff8ac5297e8e9",
+    "research/doom/v39_v15_process_owner_xvfb_a12_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json": "6a745898e2d554ff610f9643e18c169b21ee48e875fa358944dae1d2623e4924",
+    "research/doom/v39_v15_process_owner_xvfb_a13_20261012/PLAN.md": "eff7dc04fae08d8b716511c52408336563e3e67ce13670181bf7f4a7f0e2b32b",
+    "research/doom/v39_v15_process_owner_xvfb_a13_20261012/candidate.py": "382ce75fa43385b38c8e2e16f509480dba93978a17f211a5a0629d81f5b5fd7e",
+    "research/doom/v39_v15_process_owner_xvfb_a13_20261012/run_candidate.sh": "d32ae019779c9825f7b933a1f090b61f2877d21f3c5a36b246982dd4694d03e7",
+    "research/live_control/input_owner_process_v1.py": "8e66140a01c9a9e49d8f5435dfdaf8cb6df85cf20e435b171397836d6c05ff83"
+  },
+  "successor_of": "V39-V15-PROCESS-OWNER-XVFB-A12-20261012-01"
+}

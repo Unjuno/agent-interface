@@ -1,0 +1,55 @@
+"""Own alternate saved-only C05 metadata/whole-map checker, no producer/backend imports."""
+import ast,copy,hashlib,json,pathlib
+p=pathlib.Path(__file__).resolve().parent;src=p.parent/'x11-gil-ready-arm-c05-70ab';freeze=json.loads((src/'FREEZE.json').read_bytes());raw=json.loads((src/'RAW.json').read_bytes());sha=lambda b:hashlib.sha256(b).hexdigest()
+for n,h in freeze['hashes'].items():assert sha((src/n).read_bytes())==h
+assert raw['freeze_sha256']==sha((src/'FREEZE.json').read_bytes())
+def pressed(q):
+ assert type(q['rc']) is int and q['rc']==1 and type(q['before_ns']) is int and q['before_ns']>0 and q['after_ns']>=q['before_ns'];b=bytes.fromhex(q['hex']);assert len(b)==32;return {k for k in range(256) if b[k//8] & 2**(k%8)}
+def check(j):
+ assert j['allocation']==freeze['allocation'] and j['status']=='COMPLETE_FIRST_SIX' and len(j['rows'])==6
+ owned=j['keys']['owned'];other=j['keys']['bystander'];assert owned!=other and owned in range(256) and other in range(256);out=[]
+ for i,r in enumerate(j['rows']):
+  mode=freeze['modes'][i];assert r['mode']==mode and r['case']==i and 'error' not in r
+  assert len(r['arm'])==len(r['cleanup'])==2
+  for calls,held in [(r['arm'],True),(r['cleanup'],False)]:
+   assert [v['key'] for v in calls]==[owned,other] and all(v['held'] is held and type(v['rc']) is int and v['rc']==1 and v['before_ns']<=v['after_sync_ns'] for v in calls);assert calls[0]['after_sync_ns']<=calls[1]['before_ns']
+  assert not pressed(r['initial']) and not pressed(r['prearm_neutral']) and not pressed(r['final']);assert pressed(r['armed'])==pressed(r['before_cancel'])=={owned,other} and pressed(r['post'])=={other}
+  assert r['all_ready_ns']<=r['worker_arm_ack']['armed_ns']<=r['all_armed_ns']<=r['prearm_neutral']['before_ns']<=r['prearm_neutral']['after_ns']<=r['arm'][0]['before_ns'];assert r['arm'][1]['after_sync_ns']<=r['armed']['before_ns']
+  w=r['worker'];wp=w['pid'];assert w['rc']==0 and w['thread_joined'] is True and r['worker_ready']=={'ready':True,'pid':wp};assert r['worker_arm_ack']['armed'] is True and r['worker_arm_ack']['pid']==wp
+  a,b=w['bounds'];assert b-a>=freeze['wait_usec']*1000 and 0<a<=r['before_cancel']['before_ns']<=r['before_cancel']['after_ns']<=r['send_before_ns']<=r['send_after_ns']<b<=w['after_ns']
+  if mode=='process_pydll':
+   s=r['watchdog'];ids={wp,s['pid']};assert len(ids)==2 and w['safety']==[];assert r['watchdog_ready']=={'ready':True,'pid':s['pid']};ack=r['watchdog_arm_ack'];assert ack['armed'] is True and ack['pid']==s['pid'] and r['all_ready_ns']<=ack['armed_ns']<=r['all_armed_ns']
+  else:assert len(w['safety'])==1;s=w['safety'][0];ids={wp};assert s['pid']==wp
+  assert r['children']==r['retired'] and len(r['retired'])==len(ids) and {c['pid'] for c in r['retired']}==ids and all(c['exit']==0 and c['alive'] is False for c in r['retired'])
+  e=s['release'];assert e['key']==owned and e['held'] is False and e['rc']==1;assert r['send_before_ns']<=s['received_ns']<=e['before_ns']<=e['after_sync_ns']<=s['confirmed']['before_ns'];assert pressed(s['confirmed'])=={other}
+  previous=r['send_after_ns'];seen=False;first=None
+  for q in r['observations']:
+   assert q['before_ns']>=previous;state=pressed(q);assert state in [{owned,other},{other}]
+   if state=={other}:seen=True;first=first or q
+   elif seen:raise AssertionError('repress')
+   previous=q['after_ns']
+  assert first and pressed(r['post'])=={other};assert r['cleanup'][0]['before_ns']>=r['post']['after_ns'];assert r['cleanup'][1]['after_sync_ns']<=r['final']['before_ns']
+  contrast=(e['before_ns']>=b and first['before_ns']>=b) if mode=='thread_pydll' else (s['confirmed']['after_ns']<b and first['after_ns']<b)
+  assert contrast;out.append({'case':i,'mode':mode,'cancel_after_to_first_owned_up_observation_ns':first['after_ns']-r['send_after_ns'],'native_duration_ns':b-a,'first_case_fd_count':[r['fds_before'],r['fds_after']]})
+ assert j['server']['exit']==0 and j['cgroup']=={'cpu.max':'25000 100000','memory.max':'134217728','memory.swap.max':'0','pids.max':'32'}
+ return out
+rows=check(raw);t=ast.parse((src/'audit.py').read_bytes());f=next(x for x in t.body if isinstance(x,ast.FunctionDef) and x.name=='verify');ns={};exec(compile(ast.Module(body=[f],type_ignores=[]),'own-frozen-C05-saved-verify','exec'),ns)
+mutations=[]
+for name in ['wrong_press_key','press_marked_release','missing_press_call','wrong_cleanup_key','cleanup_marked_press','wrong_safety_pid','lost_arm_ack','invented_child_exit']:
+ c=copy.deepcopy(raw);r=c['rows'][0]
+ if name=='wrong_press_key':r['arm'][0]['key']=raw['keys']['bystander']
+ if name=='press_marked_release':r['arm'][0]['held']=False
+ if name=='missing_press_call':r['arm'].pop()
+ if name=='wrong_cleanup_key':r['cleanup'][0]['key']=raw['keys']['bystander']
+ if name=='cleanup_marked_press':r['cleanup'][0]['held']=True
+ if name=='wrong_safety_pid':r['worker']['safety'][0]['pid']=-1
+ if name=='lost_arm_ack':r['worker_arm_ack']['armed']=False
+ if name=='invented_child_exit':r['retired'][0]['exit']=1
+ old_accepted=False
+ try:ns['verify'](c,freeze);old_accepted=True
+ except (AssertionError,KeyError,ValueError):pass
+ try:check(c)
+ except (AssertionError,KeyError,ValueError):pass
+ else:raise AssertionError('new checker accepted '+name)
+ mutations.append({'copy':name,'frozen_checker_accepted':old_accepted,'new_checker_rejected':True});(p/(name+'.json')).write_text(json.dumps(c,indent=2)+'\n')
+result={'result':'PASS_SAVED_C05_ALTERNATE_METADATA_AND_CONTRAST','original_raw_sha256':sha((src/'RAW.json').read_bytes()),'original_raw_changed':False,'rows':rows,'copied_full_inputs':mutations,'old_frozen_checker_gap':'press/cleanup call key/held/count metadata unchecked; first five copied contradictions accepted by frozen checker, not corruption found in original raw','formal_replays':0,'producer_backend_imports':0,'own_saved_verify_function_executed':True,'scientific_first_result_changed':False,'FD_leak_freedom':'unproven, first7->10 then10->10 retained','scope':'alternate checker only; source/freeze/producer first six untouched; no physical/model/harddeadline/reliability/production/fleet fencing claim'};(p/'RESULT.json').open('x').write(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

@@ -1,0 +1,239 @@
+{
+  "arm": "blocked",
+  "error": "timed out waiting for owner_reply_held.json",
+  "error_type": "TimeoutError",
+  "events": [
+    {
+      "detail": null,
+      "monotonic_ns": 27484984127,
+      "type": 19
+    }
+  ],
+  "finally_cancel": {
+    "input_dispatched": false,
+    "release_confirmed": false,
+    "status": "not_active"
+  },
+  "input_initial": {
+    "call": {
+      "arguments": {
+        "alias": "a03",
+        "interaction": "keyboard",
+        "observe_after": false,
+        "offset": [
+          12,
+          12
+        ],
+        "tail": [
+          {
+            "keys": [
+              "a"
+            ],
+            "op": "key_chord"
+          }
+        ]
+      },
+      "backend_attempted": false,
+      "call_id": "4b2cc321b12b4af7a6611062adb3e263",
+      "operation": "guarded_input",
+      "persistence_failure": null,
+      "response_wait_ms": 0,
+      "state": "queued"
+    },
+    "call_id": "4b2cc321b12b4af7a6611062adb3e263",
+    "effect_status": "unknown",
+    "note": "Response wait ended; original worker retains custody and may still execute. Retrieve this call ID. Pending does not cancel input or permit replay.",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "result_available": false,
+    "scope": "current_server",
+    "status": "pending",
+    "task_success": null
+  },
+  "mint": {
+    "alias": "a03",
+    "call_directory": "/out/blocked-01/mcp/a7d147dd821d481389e5aa9ecdb2923d",
+    "call_id": "a7d147dd821d481389e5aa9ecdb2923d",
+    "input_dispatched": false,
+    "lifetime": {
+      "authority_granted": false,
+      "capture_freshness_ms": 1500,
+      "clock": "time.monotonic_ns",
+      "expires_ns": 329199856488,
+      "minted_ns": 29199856488,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    },
+    "offset": [
+      12,
+      12
+    ],
+    "operation": "guarded_mint",
+    "replay_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 1,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": true,
+        "exitcode": null,
+        "pid": 24,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 6291456
+      },
+      "owner_process_pid": 24,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 6291456,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "review_required": false,
+      "session_id": "6d422c253916417b9d2ac5ffd3506700",
+      "state": "open",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": false,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 2097152
+      },
+      "window_lifecycle": true
+    },
+    "source_sequence": 1,
+    "status": "minted",
+    "task_success": null
+  },
+  "mint_patch": {
+    "image_bytes": 3403,
+    "image_sha256": "b03a1c5b5e40708112640f82210949f43332b1aca57a3638899c854bef9dc52d",
+    "point": [
+      400,
+      300
+    ],
+    "stddev": [
+      127.30308868558095,
+      127.30308868558095,
+      127.30308868558095
+    ]
+  },
+  "mint_status": "minted",
+  "observation_source": {
+    "binding_revision": 0,
+    "capture_ns": 29139043070,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 3403,
+        "height": 600,
+        "mime_type": "image/png",
+        "path": "/out/blocked-01/mcp/831f8f0b72e4422e9302a2993bf23edd/images/63e0134005af44dcab3bd3755dafaafb.png",
+        "sha256": "b03a1c5b5e40708112640f82210949f43332b1aca57a3638899c854bef9dc52d",
+        "source_raw_sha256": "47549001b9553083f097c4f74cf3fcc59f68f0189922d5d076c2f29e31ae9f0b",
+        "timing_ns": {
+          "converted": 29144851677,
+          "encoded": 29171169232,
+          "hashed": 29173416693,
+          "started": 29143596189,
+          "written": 29172616428
+        },
+        "width": 800
+      },
+      "bytes": 1920000,
+      "capture_ended_ns": 29142790981,
+      "capture_started_ns": 29139043070,
+      "frame": "screen_physical_px",
+      "height": 600,
+      "native_window_id": 2097152,
+      "region": [
+        0,
+        0,
+        800,
+        600
+      ],
+      "sha256": "47549001b9553083f097c4f74cf3fcc59f68f0189922d5d076c2f29e31ae9f0b",
+      "target": "app",
+      "width": 800
+    },
+    "observation_id": "be20c8368b284345bae1af8c0fe7d3e0",
+    "pointer_binding": {
+      "focus": 2097152,
+      "geometry": [
+        10,
+        10,
+        780,
+        580
+      ],
+      "process_generation": "29b185c806e59e8d0357c3080d2eaf1ab8911be43aec41068eb370a1a9f0796a",
+      "surface": 2097152,
+      "window_generation": "c29cf015cab2783e7777c9097441b729c733fa0aa020a309a125de6883e1dbc3"
+    },
+    "sequence": 1,
+    "timing_ns": {
+      "artifact_verified": 29179801550,
+      "binding_checked": 29178943825,
+      "decoded": 29179806775,
+      "public_returned": 29173441269,
+      "started": 29134506148
+    }
+  },
+  "observe_status": "observed",
+  "schema": "agent-interface/standard-caller-blocked-x11-a03-v1",
+  "server": {
+    "keycode_a": 38,
+    "release": 12101016,
+    "target_pid": 8,
+    "vendor": "The X.Org Foundation",
+    "window_id": 2097152,
+    "xres_version": [
+      1,
+      2
+    ],
+    "xvfb_pid": 20
+  },
+  "status": "FAIL",
+  "timing": {
+    "failed_ns": 37213009069,
+    "input_returned_ns": 29208103313,
+    "input_started_ns": 29205481718,
+    "observe_returned_ns": 29191113216,
+    "observe_started_ns": 27499956901
+  },
+  "traceback": "Traceback (most recent call last):\n  File \"/repo/research/integration/standard_caller_blocked_x11_release_a03_20261019/probe.py\", line 439, in _run_trial\n    held = _wait_for(marker_dir / 'owner_reply_held.json', seconds=8.0)\n  File \"/repo/research/integration/standard_caller_blocked_x11_release_a03_20261019/probe.py\", line 263, in _wait_for\n    raise TimeoutError(f'timed out waiting for {path.name}')\nTimeoutError: timed out waiting for owner_reply_held.json\n",
+  "trial_id": "blocked-01",
+  "xvfb": {
+    "argv": [
+      "/usr/bin/Xvfb",
+      ":104",
+      "-screen",
+      "0",
+      "800x600x24",
+      "-nolisten",
+      "tcp",
+      "-ac",
+      "-noreset"
+    ],
+    "display": ":104",
+    "log": "/out/blocked-01/xvfb-104.log",
+    "pid": 20
+  },
+  "xvfb_exitcode": 0
+}

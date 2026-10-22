@@ -78,7 +78,7 @@ jobs:
           python-version: '3.12'
       - name: Install X11 test dependency
         run: |
-          python -m pip install --disable-pip-version-check python-xlib==0.33 Pillow==10.2.0 numpy==1.26.4
+          python -m pip install --disable-pip-version-check python-xlib==0.33 Pillow==10.2.0 numpy==1.26.4 mcp==1.30.0
           sudo apt-get update -qq
           sudo apt-get install -y -qq xvfb x11-xkb-utils
       - name: Compile runtime core and X11 backend
@@ -97,4 +97,121 @@ jobs:
           XVFB_PID=$!
           trap 'kill "$XVFB_PID" 2>/dev/null || true' EXIT
           sleep 0.5
-          DISPLAY=:88 XAUTHORITY="$AUTH" python -m unittest -v runtime.backends.x11_v1.test_integration runtime.backends.x11_v1.test_mapping_boundary runtime.backends.x11_v1.test_key_chord_held_modifier runtime.backends.x11_v1.test_held_preflight runtime.backends.x11_v1.test_text_plan runtime.backends.x11_v1.test_partial_execution runtime.backends.x11_v1.test_capture_artifacts runtime.cli_v1.test_native_golden_boundary
+          export DISPLAY=:88 XAUTHORITY="$AUTH"
+          export AGENT_INTERFACE_XORG_FENCE_TEST=1
+          export AGENT_INTERFACE_XORG_FENCE_RESULT="$RUNNER_TEMP/x11-disconnect-fence.json"
+          export AGENT_INTERFACE_XORG_HELD_KEY_QUEUE_RESULT="$RUNNER_TEMP/x11-held-key-disconnect-queue.json"
+          export AGENT_INTERFACE_XVFB_PID="$XVFB_PID"
+          export AGENT_INTERFACE_MCP_XVFB_TEST=1
+          export AGENT_INTERFACE_MCP_XVFB_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-generation.json"
+          export AGENT_INTERFACE_MCP_XVFB_IMAGE_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-observation.png"
+          export AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-blocked-release.json"
+          suite_status=0
+          python -m unittest -v runtime.backends.x11_v1.test_integration runtime.backends.x11_v1.test_mapping_boundary runtime.backends.x11_v1.test_key_chord_held_modifier runtime.backends.x11_v1.test_held_preflight runtime.backends.x11_v1.test_text_plan runtime.backends.x11_v1.test_partial_execution runtime.backends.x11_v1.test_capture_artifacts runtime.cli_v1.test_native_golden_boundary runtime.guarded_x11_v1.test_xres_disconnect_fence_integration runtime.cli_v1.test_mcp_xvfb_generation_integration runtime.cli_v1.test_mcp_xvfb_blocked_release_integration || suite_status=$?
+          export AGENT_INTERFACE_MCP_XVFB_SERVER_STOP_TEST=1
+          export AGENT_INTERFACE_MCP_XVFB_SERVER_STOP_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-server-stop.json"
+          python -m unittest -v runtime.cli_v1.test_mcp_xvfb_server_stop_integration || suite_status=$?
+          for trial in no-trace-1:0 trace-1:1 trace-2:1 no-trace-2:0; do
+            name="${trial%%:*}"
+            trace="${trial##*:}"
+            export AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S=0
+            export AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS="$trace"
+            export AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT="$RUNNER_TEMP/standard-mcp-xvfb-cancel-retirement-${name}.json"
+            python -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration || suite_status=$?
+          done
+          exit "$suite_status"
+      - name: Retain XRes disconnect-fence receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: x11-disconnect-fence
+          path: ${{ runner.temp }}/x11-disconnect-fence.json
+          if-no-files-found: ignore
+      - name: Retain held-key disconnect-order receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: x11-held-key-disconnect-queue
+          path: ${{ runner.temp }}/x11-held-key-disconnect-queue.json
+          if-no-files-found: error
+      - name: Retain standard-caller Xvfb generation receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: standard-mcp-xvfb-generation
+          path: |
+            ${{ runner.temp }}/standard-mcp-xvfb-generation.json
+            ${{ runner.temp }}/standard-mcp-xvfb-observation.png
+          if-no-files-found: ignore
+      - name: Retain blocked-owner release receipt and observation image
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: standard-mcp-xvfb-blocked-release
+          path: |
+            ${{ runner.temp }}/standard-mcp-xvfb-blocked-release.json
+            ${{ runner.temp }}/standard-mcp-xvfb-blocked-release.observation.png
+          if-no-files-found: error
+      - name: Retain private Xvfb server-stop cancellation receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: standard-mcp-xvfb-server-stop
+          path: ${{ runner.temp }}/standard-mcp-xvfb-server-stop.json
+          if-no-files-found: error
+      - name: Retain acknowledged-cancel trace comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: standard-mcp-xvfb-cancel-retirement-trace-comparison
+          path: |
+            ${{ runner.temp }}/standard-mcp-xvfb-cancel-retirement-*.json
+            ${{ runner.temp }}/standard-mcp-xvfb-cancel-retirement-*.observation.png
+          if-no-files-found: error
+
+  prestarted-cancel-xvfb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install X11 test dependencies
+        run: |
+          python -m pip install --disable-pip-version-check python-xlib==0.33 Pillow==10.2.0 numpy==1.26.4 mcp==1.30.0
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb x11-xkb-utils
+      - name: Run isolated prestarted-supervisor Xvfb scenario
+        shell: bash
+        run: |
+          set -euo pipefail
+          AUTH="$RUNNER_TEMP/prestarted-xvfb.auth"
+          : > "$AUTH"
+          Xvfb :88 -screen 0 1024x768x24 -ac >"$RUNNER_TEMP/prestarted-xvfb.log" 2>&1 &
+          XVFB_PID=$!
+          trap 'kill "$XVFB_PID" 2>/dev/null || true' EXIT
+          sleep 0.5
+          export DISPLAY=:88 XAUTHORITY="$AUTH"
+          export AGENT_INTERFACE_XVFB_PID="$XVFB_PID"
+          export AGENT_INTERFACE_MCP_XVFB_TEST=1
+          export AGENT_INTERFACE_MCP_XVFB_CANCEL_ACK_WITHHOLD_S=0
+          export AGENT_INTERFACE_MCP_XVFB_TRACE_OWNER_PROCESS_METHODS=1
+          export AGENT_INTERFACE_MCP_XVFB_PRESTARTED_CANCEL_SUPERVISOR=1
+          export AGENT_INTERFACE_MCP_XVFB_BLOCKED_RELEASE_RESULT="$RUNNER_TEMP/prestarted-cancel-xvfb.json"
+          timeout --signal=TERM --kill-after=10s 210s python -m unittest -v runtime.cli_v1.test_mcp_xvfb_blocked_release_integration
+      - name: Retain isolated prestarted-supervisor Xvfb receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prestarted-cancel-xvfb
+          path: |
+            ${{ runner.temp }}/prestarted-cancel-xvfb.json
+            ${{ runner.temp }}/prestarted-cancel-xvfb.observation.png
+            ${{ runner.temp }}/prestarted-xvfb.log
+          if-no-files-found: error

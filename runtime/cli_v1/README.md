@@ -75,6 +75,14 @@ python -m runtime.cli_v1 dispatch \
 
 The CLI does not discover targets, rewrite leases/freshness, retry automatically, or grant authority. `doctor` is diagnostic only. `dispatch` delegates to `selector_v1`, then the promoted backend session, then `runtime/core_v1` admission.
 
+For guarded-X11 deployments that already satisfy the owned-process prerequisites,
+`--guarded-prestarted-cancel-supervisor` opts the stdio server into the
+experimental prestarted cancellation worker. It requires
+`--session-mode guarded-x11`, `--guarded-process-identity`,
+`--guarded-query-worker`, and `--guarded-owned-process`. The option defaults
+off; it does not change release, replay, or task-success claims. See the
+[supervisor design and evidence limits](../architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
+
 ### Retain a CLI attempt before delivering stdout
 
 For `observe` or `dispatch`, optionally specify `--run-directory /absolute/new-run`.

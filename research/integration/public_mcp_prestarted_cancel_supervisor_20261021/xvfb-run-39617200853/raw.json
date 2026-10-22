@@ -1,0 +1,338 @@
+{
+  "blocked_owner_sync": {
+    "call": "python-xlib Display.sync",
+    "entered_ns": 107077443524,
+    "owner_pid": 2750,
+    "resource_base": 6291456
+  },
+  "cancel": {
+    "call_id": "3864e3a32f9147c6a06ae0bc8a0a4d2c",
+    "cancellation": {
+      "admitted_monotonic_ns": 107082630701,
+      "caller_response_deadline_monotonic_ns": 107382630701,
+      "completed_monotonic_ns": 107082791661,
+      "error": "TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument 'operation_id'\")",
+      "operation_id": "3b464a8ed3a44554b527c519db17afd9",
+      "owner_generation": {
+        "binding_revision": 0,
+        "child_pid": 2750,
+        "session_id": "6656494577384d12b459dc6ffb6cdc33",
+        "x_resource_base": 6291456
+      },
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result": {
+        "cleanup_status": "UNKNOWN",
+        "error": "TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument 'operation_id'\")",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "cancel_unconfirmed",
+        "task_success": null
+      },
+      "status": "unknown",
+      "task_success": null,
+      "transaction_deadline_monotonic_ns": 110082630701
+    },
+    "cleanup_status": "UNKNOWN",
+    "error": "TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument 'operation_id'\")",
+    "operation_id": "3b464a8ed3a44554b527c519db17afd9",
+    "release_confirmed": false,
+    "replay_allowed": false,
+    "status": "cancel_unconfirmed",
+    "task_success": null
+  },
+  "cancel_elapsed_ms": 3.206363,
+  "cancel_internal_trace": {
+    "cancel_entries": [],
+    "cancel_returns": [],
+    "owner_process_calls": [],
+    "retire_calls": [],
+    "retirement_decisions": []
+  },
+  "cleanup_errors": [
+    "guarded input call remained pending after cleanup wait",
+    "private MCP server did not close cleanly: {'status': 'busy', 'operation_invoked': False}"
+  ],
+  "close": {
+    "operation_invoked": false,
+    "status": "busy"
+  },
+  "conditions": {
+    "cancel_return_bound_ms": 3000,
+    "child_cancel_ack_withheld_s": 0.0,
+    "delayed_keypress_ms": 8000,
+    "late_keypress_outcome": "record either result; do not assume queue cancellation",
+    "owner_process_method_trace": true,
+    "prestarted_cancel_supervisor": true,
+    "terminal_result_bound_ms": 5000
+  },
+  "effect_before_cancel": {
+    "observed_ns": 107081913513,
+    "property_value": [
+      1
+    ],
+    "reader": "separate parent X client"
+  },
+  "error": "'cancel_unconfirmed' != 'cancel_requested'\n- cancel_unconfirmed\n+ cancel_requested\n : {'status': 'cancel_unconfirmed', 'error': 'TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument \\'operation_id\\'\")', 'release_confirmed': False, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'replay_allowed': False, 'call_id': '3864e3a32f9147c6a06ae0bc8a0a4d2c', 'operation_id': '3b464a8ed3a44554b527c519db17afd9', 'cancellation': {'operation_id': '3b464a8ed3a44554b527c519db17afd9', 'status': 'unknown', 'admitted_monotonic_ns': 107082630701, 'caller_response_deadline_monotonic_ns': 107382630701, 'transaction_deadline_monotonic_ns': 110082630701, 'owner_generation': {'session_id': '6656494577384d12b459dc6ffb6cdc33', 'child_pid': 2750, 'x_resource_base': 6291456, 'binding_revision': 0}, 'release_confirmed': False, 'task_success': None, 'replay_allowed': False, 'result': {'status': 'cancel_unconfirmed', 'error': 'TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument \\'operation_id\\'\")', 'release_confirmed': False, 'cleanup_status': 'UNKNOWN', 'task_success': None, 'replay_allowed': False}, 'error': 'TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument \\'operation_id\\'\")', 'completed_monotonic_ns': 107082791661}}",
+  "error_type": "AssertionError",
+  "final_cleanup": {
+    "keys_down": {
+      "a": false,
+      "b": false
+    },
+    "status": "key_release_sync_completed"
+  },
+  "final_cleanup_terminal": {
+    "call": {
+      "arguments": {
+        "alias": "field",
+        "interaction": "keyboard",
+        "observe_after": false,
+        "offset": [
+          12,
+          12
+        ],
+        "tail": [
+          {
+            "keys": [
+              "a"
+            ],
+            "op": "key_chord"
+          }
+        ]
+      },
+      "backend_attempted": true,
+      "call_id": "3864e3a32f9147c6a06ae0bc8a0a4d2c",
+      "cancellation": {
+        "admitted_monotonic_ns": 107082630701,
+        "caller_response_deadline_monotonic_ns": 107382630701,
+        "completed_monotonic_ns": 107082791661,
+        "error": "TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument 'operation_id'\")",
+        "operation_id": "3b464a8ed3a44554b527c519db17afd9",
+        "owner_generation": {
+          "binding_revision": 0,
+          "child_pid": 2750,
+          "session_id": "6656494577384d12b459dc6ffb6cdc33",
+          "x_resource_base": 6291456
+        },
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "result": {
+          "cleanup_status": "UNKNOWN",
+          "error": "TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument 'operation_id'\")",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "cancel_unconfirmed",
+          "task_success": null
+        },
+        "status": "unknown",
+        "task_success": null,
+        "transaction_deadline_monotonic_ns": 110082630701
+      },
+      "operation": "guarded_input",
+      "persistence_failure": null,
+      "response_wait_ms": 0,
+      "state": "running"
+    },
+    "cancellation": {
+      "admitted_monotonic_ns": 107082630701,
+      "caller_response_deadline_monotonic_ns": 107382630701,
+      "completed_monotonic_ns": 107082791661,
+      "error": "TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument 'operation_id'\")",
+      "operation_id": "3b464a8ed3a44554b527c519db17afd9",
+      "owner_generation": {
+        "binding_revision": 0,
+        "child_pid": 2750,
+        "session_id": "6656494577384d12b459dc6ffb6cdc33",
+        "x_resource_base": 6291456
+      },
+      "release_confirmed": false,
+      "replay_allowed": false,
+      "result": {
+        "cleanup_status": "UNKNOWN",
+        "error": "TypeError(\"StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb.<locals>.traced_cancel() got an unexpected keyword argument 'operation_id'\")",
+        "release_confirmed": false,
+        "replay_allowed": false,
+        "status": "cancel_unconfirmed",
+        "task_success": null
+      },
+      "status": "unknown",
+      "task_success": null,
+      "transaction_deadline_monotonic_ns": 110082630701
+    },
+    "operation_invoked": false,
+    "status": "pending"
+  },
+  "independent_release_readback": null,
+  "independent_task_oracle": null,
+  "initial_keymap": {
+    "a": false,
+    "b": false
+  },
+  "input_before_cancel": {
+    "keys_down": {
+      "a": true,
+      "b": false
+    },
+    "observed_ns": 107082164922,
+    "owner_sync_return_receipt_present": false,
+    "synthetic_effect_committed": true
+  },
+  "late_request_horizon_readback": null,
+  "mint": {
+    "alias": "field",
+    "call_directory": "/tmp/mcp-xvfb-blocked-release-cyoqmfcc/mcp/65a44361d9024757812e58f70517fe29",
+    "call_id": "65a44361d9024757812e58f70517fe29",
+    "input_dispatched": false,
+    "lifetime": {
+      "authority_granted": false,
+      "capture_freshness_ms": 1500,
+      "clock": "time.monotonic_ns",
+      "expires_ns": 407023138408,
+      "minted_ns": 107023138408,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    },
+    "offset": [
+      12,
+      12
+    ],
+    "operation": "guarded_mint",
+    "replay_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 0,
+      "cleanup_status": null,
+      "compiled_scope": "native-x11:56bd05d0346b4eae8f4dd869a9a4d0db",
+      "compiled_surface": "x11-window-2097152",
+      "error": null,
+      "interrupted_execution": null,
+      "mode": "guarded-x11-owned-process",
+      "observation_sequence": 1,
+      "observation_worker": false,
+      "observations": null,
+      "owner_client_disconnect": null,
+      "owner_input_obligations": {
+        "buttons": [],
+        "keys": {}
+      },
+      "owner_input_obligations_live_read": {
+        "status": "not_read"
+      },
+      "owner_input_obligations_source": "child_rpc_snapshot",
+      "owner_process": {
+        "alive": true,
+        "exitcode": null,
+        "liveness_observed_monotonic_ns": 107023983763,
+        "pid": 2750,
+        "release_confirmed": null,
+        "retired": false,
+        "x_client_resource_base": 6291456
+      },
+      "owner_process_pid": 2750,
+      "owner_release_attempt": null,
+      "owner_x_client_resource_base": 6291456,
+      "process_identity": true,
+      "query_worker": true,
+      "recovery_required": false,
+      "restart_allowed": false,
+      "review_required": false,
+      "session_id": "6656494577384d12b459dc6ffb6cdc33",
+      "state": "open",
+      "target": "app",
+      "target_queries": {
+        "close_error": null,
+        "pending": false,
+        "retired": false,
+        "thread_alive": true
+      },
+      "targets": {
+        "app": 2097152
+      },
+      "window_lifecycle": true
+    },
+    "source_sequence": 1,
+    "status": "minted",
+    "task_success": null
+  },
+  "mint_source_patch": {
+    "box": [
+      76,
+      76,
+      100,
+      100
+    ],
+    "capture_bytes": 2940,
+    "capture_sha256": "751e00d5f926a15128a45baec1b2310aabee740b363119bd79dd224986d81f01",
+    "retained_image": "/home/runner/work/_temp/prestarted-cancel-xvfb.observation.png",
+    "retained_image_sha256": "751e00d5f926a15128a45baec1b2310aabee740b363119bd79dd224986d81f01",
+    "stddev": [
+      127.5,
+      127.5,
+      127.5
+    ]
+  },
+  "observation": {
+    "pointer_binding": {
+      "focus": 2097152,
+      "geometry": [
+        40,
+        40,
+        240,
+        180
+      ],
+      "process_generation": "f0f4c8b45cac0b44c0ace89c5337c601d85aef9a967254abf7950727ae9b2dd6",
+      "surface": 2097152,
+      "window_generation": "186d909c9b768d46b392aef51372dbae8bbf3bb33c23a5eec1a9ff52fc37e405"
+    },
+    "process_generation": "f0f4c8b45cac0b44c0ace89c5337c601d85aef9a967254abf7950727ae9b2dd6",
+    "sequence": 1,
+    "status": "observed",
+    "xvfb": "The X.Org Foundation"
+  },
+  "owner_delayed_request": {
+    "blocked_boundary": "real python-xlib Display.sync response wait",
+    "delay_ms": 8000,
+    "delayed_event": "KeyPress",
+    "delayed_keycode": 56,
+    "flushed_ns": 107077157280,
+    "immediate_event": "KeyPress",
+    "immediate_keycode": 38,
+    "owner_pid": 2750,
+    "resource_base": 6291456
+  },
+  "owner_marker_directory": "/tmp/mcp-xvfb-blocked-release-cyoqmfcc/mcp",
+  "owner_release_attempt": null,
+  "pending": {
+    "call_id": "3864e3a32f9147c6a06ae0bc8a0a4d2c",
+    "status": "pending"
+  },
+  "schema": "agent-interface/standard-mcp-xvfb-blocked-release-v2",
+  "scope": "standard MCP caller; private Xvfb; test-injected delayed request; synthetic app",
+  "source_identity": {
+    "github_job": "prestarted-cancel-xvfb",
+    "github_run_id": "39617200853",
+    "github_sha": "08af29b16194b5c1310aceb25c2182290febe764",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.43",
+    "python": "3.12.15 (main, Oct  1 2026, 02:36:28) [GCC 15.2.0]"
+  },
+  "status": "FAIL",
+  "synthetic_application_effect": null,
+  "terminal": null,
+  "timing_ns": {
+    "cancel_returned": 107085419916,
+    "cancel_started": 107082213553,
+    "input_started": 107024663612,
+    "observe_returned": 107005941546,
+    "observe_started": 106309775963,
+    "pending_returned": 107026315755
+  },
+  "xvfb": {
+    "package_returncode": 0,
+    "package_stderr": "",
+    "package_stdout": "xvfb=2:21.1.22-1ubuntu1.3",
+    "path": "/usr/bin/Xvfb",
+    "pid": 2738,
+    "sha256": "97623d8c3972051fa29db5a91f64439b418a1ebc63ce449193556fc33900048e",
+    "status": "captured"
+  }
+}

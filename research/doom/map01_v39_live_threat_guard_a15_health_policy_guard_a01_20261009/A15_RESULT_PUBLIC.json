@@ -1,0 +1,48 @@
+{
+  "schema": "map01-v39-live-threat-guard-a15-health-policy-guard-public-v1",
+  "allocation": "map01-v39-live-threat-guard-a15-health-policy-guard-20261009",
+  "issue": 59,
+  "status": "HOLD",
+  "source_main_sha": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "experiment_tree_commit": "a588e11bc5bdd4ffad138bc3787b9dd13e5818ce",
+  "fixture_seed": 990625,
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "runtime": {
+    "vm": "issue59-live-v39-a01-20261009",
+    "decisions_cap": 18,
+    "decisions_started": 18,
+    "decisions_completed": 18,
+    "guest_exit": 0,
+    "app_server_exit": 0,
+    "elapsed_seconds": 102.4738032919995,
+    "retry_count": 0
+  },
+  "episode": {
+    "hard_health_guards": 0,
+    "distinct_action_health_predicate_rejections": 1,
+    "health_min": 75,
+    "health_max": 100,
+    "ammo_min": 40,
+    "ammo_max": 50,
+    "useful_events_during_model_wait": 0,
+    "kills": 2,
+    "deaths": 0,
+    "map_exit": false,
+    "episode_finished": false
+  },
+  "input_custody": {
+    "independent_audit_pass": true,
+    "unaccounted_cancellations": 0,
+    "per_key_release_transitions": 68,
+    "verified_empty_terminals": 37,
+    "physical_key_state_claim": false
+  },
+  "recovery": {
+    "recovered_within_two_decisions": 0,
+    "observable_recovery_missed": 0,
+    "right_censored_by_episode_or_decision_cap": 0,
+    "insufficient_guard_receipt": 0
+  },
+  "scope": "One descriptive live boundary-exposure episode. PASS is limited to a fresh recovery within two decisions after a qualifying authored-cover hard-health policy guard with no observed miss. No guard means HOLD/unexposed; it does not establish monitor failure, useful feedback, causal benefit, MAP01 completion, hardware key state, or game consumption."
+}

@@ -1,0 +1,11 @@
+{
+  "base": "b0ffed8920706265adc0d44987556aaf41c78ee2",
+  "path": "runtime/core_v1/compiled_gui.py",
+  "baseline_git_byte_sha256": "7c9f984cb2ceedd3308b8043ca7f05bbd82df48dec2001e27f82f08f74d1fc1c",
+  "miss_terminal_failure": {
+    "expression": "        emit(final_event)\n        if journal_failure_type is not None:",
+    "replacement": "        journal_failed_before_terminal = journal_failure_type is not None\n        emit(final_event)\n        if journal_failure_type is not None and (journal_failed_before_terminal or outcome != \"RUNTIME_FAILED\"):",
+    "compiled_utf8_sha256": "3717c4a283b06ba23ba5690d332d2c4102b2a9567ffefd518ee5a61aa0a50f11"
+  },
+  "scope": "complete core module substitution only; guarded witness repair and final test sources stay constant"
+}

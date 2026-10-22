@@ -1,0 +1,28 @@
+import importlib, importlib.util, json, os, subprocess, sys, types, unittest
+from datetime import datetime,timezone
+from pathlib import Path
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT=Path(__file__).parent/'grounding-accounting-final-20261016'
+BASE='7322c0314c82ce598fcf4c3f3c120644b9a32f1c'
+if len(sys.argv)>1:
+    name='research.live_control.integrated_efficiency_app_server_model_v1'
+    importlib.import_module(name)
+    source=subprocess.check_output(['git','show',BASE+':research/live_control/integrated_efficiency_app_server_model_v1.py'],cwd=ROOT)
+    module=types.ModuleType(name);module.__file__=str(ROOT/'research/live_control/integrated_efficiency_app_server_model_v1.py');module.__package__='research.live_control'
+    sys.modules[name]=module;exec(compile(source,module.__file__,'exec'),module.__dict__)
+    tests=importlib.import_module('test_grounding_failure_accounting')
+    result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(tests))
+    mode='optimized' if sys.flags.optimize else 'normal'
+    (OUT/f'baseline-{mode}-records.json').write_text(json.dumps(tests.ROWS,indent=2)+'\n')
+    (OUT/f'baseline-{mode}-result.json').write_text(json.dumps(dict(base=BASE,methods=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),pid=os.getpid(),optimize=sys.flags.optimize),indent=2)+'\n')
+    sys.exit(not result.wasSuccessful())
+env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=os.pathsep.join([str(ROOT),str(ROOT/'research/live_control')]))
+receipts=[]
+for mode,flags in [('normal',[]),('optimized',['-O'])]:
+    cmd=[sys.executable,*flags,str(Path(__file__)),'child'];start=datetime.now(timezone.utc).isoformat();run=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True)
+    for stream,data in [('stdout',run.stdout),('stderr',run.stderr)]: (OUT/f'baseline-{mode}.{stream}').write_bytes(data)
+    row=json.loads((OUT/f'baseline-{mode}-result.json').read_text())
+    if (row['methods'],row['failures'],row['errors'],row['skipped'],run.returncode)!=(9,8,0,0,1):raise ValueError(row)
+    receipts.append(dict(mode=mode,command=cmd,started_utc=start,ended_utc=datetime.now(timezone.utc).isoformat(),returncode=run.returncode,result=row))
+(OUT/'BASELINE_PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2)+'\n')
+print(json.dumps([r['result'] for r in receipts],indent=2))

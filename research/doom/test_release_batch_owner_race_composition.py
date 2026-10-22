@@ -220,6 +220,17 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             rows = [row for row in emitted if row.get("event") == "input_release_transition"]
             self.assertEqual(len(rows), 1)
             row = rows[0]
+            admissions = [event for event in emitted
+                          if event.get("event") == "input_admission"]
+            self.assertEqual(len(admissions), 1)
+            self.assertEqual(admissions[0]["key"], "W")
+            self.assertEqual(row["admission_receipt"]["event"], "input_admission")
+            self.assertEqual(row["admission_receipt"]["key"], admissions[0]["key"])
+            self.assertEqual(row["admission_receipt"]["owner_id"],
+                             admissions[0]["owner_id"])
+            self.assertEqual(row["admission_receipt"]["intent_token"],
+                             admissions[0]["intent_token"])
+            self.assertTrue(row["admission_receipt_valid"])
             self.assertTrue(row["owner_cleanup_release_verified"])
             self.assertTrue(row["owner_cleanup_intervened"])
             self.assertFalse(row["owner_thread_keyup_verified"])

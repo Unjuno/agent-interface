@@ -1,0 +1,21 @@
+## Salvage of #57 grounding-failure accounting repair
+
+Clean-main successor to stale Draft #7521, source branch `rescue/grounding-failure-accounting-currentmain-20261004` at `82656ac75d9fed59ec1a349b89ccf6d29cb2a3c9`.
+
+Base: current main `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36`. Retains the exact implementation and focused regression-test blobs from the source branch. The source branch's old `runtime/integration_checks/native.py` also removed ten test registrations that exist in today's main. This PR deliberately does not import those removals: it starts from current main's runner and appends only `test_grounding_failure_accounting_6178`. The diff is limited to the implementation, its new test, and that additive runner registration. Source #7521 and its branch remain unchanged.
+
+## Local verification
+
+On a temporary focused checkout combining the exact candidate implementation/test with current-main dependencies, the new suite passed 2/2 normally and 2/2 under Python `-O`. It covers known usage metadata on ineligible failed turns, malformed usage retention, and report-publication errors; no retry or result publication. No app-server, provider, GUI, or live experiment was run.
+
+The historical #7521 record includes a full macOS runner FAIL (protocol 4 failures/6 errors; harness 31 errors from Linux-only assumptions); this PR does not relabel that as PASS. Current full hosted checks and independent review are pending.
+
+## Scope / gate
+
+This is local fake-client accounting behavior only. It does not establish billing, task effect, input authority or provider behavior. Current acceptance follows actual repository permissions/protection and necessary current-source local checks; this draft adds no reviewer quota. The interface differences below remain unresolved.
+
+## 2026-10-16 consolidation status
+
+The original body/source is preserved in the model/economics convergence record. Main already has the broader GroundingCallError caller-accounting repair. Current implementation/current contract passes 9 methods; substituting this entire old module fails 2 current cases (await timeout and result publication). The old implementation still passes its 2 legacy methods, while current implementation has 6 legacy subtest errors. These are intentionally distinguished API and timing contracts, not evidence that the old PR itself was tested with its original dependencies or that its patch cannot be salvaged.
+
+Keep this proposal draft/open for a bounded salvage decision: whether thread_id and terminal usage-error/publication diagnostics should be retained through the current exception/caller protocol, and how terminal-return versus full failed-adapter elapsed time should be separately named. Preserve current known-accounting behavior; do not replace the full module, discard unknown attempts, or equate model return with task effect. #57 owns actual provider accounting, matched task/effect qualification and economics. No provider/model/GUI/WSL/container run occurred in the comparison.

@@ -14,7 +14,8 @@ class UnicodeNeutralCase(unittest.TestCase):
         self.assertEqual(backend._capture_hdc.call_count,count)
         self.assertEqual(events,[])
         self.assertTrue(bridge.session.recovery_required)
-        backend.user32.GetAsyncKeyState.return_value=0
+        # Successful nonzero up witness; zero now retains unknown custody.
+        backend.user32.GetAsyncKeyState.return_value=1
         sends=[];failed=[True]
         def unicode_up(unit,down):
             sends.append(['unicode',unit,down])

@@ -1,5 +1,7 @@
 # V39 current-main cancel race boundary test — 2026-10-08
 
+This is a historical package: “current main” below refers to the named source at execution time, not today's main. Allocation/ownership statements are historical as well. They do not authorize a new launch.
+
 Source commit: `f59b2494f403b33349cbf202b49d76caef3d6d82`.
 Source file is an exact Git blob export from `research/doom/map01_overlap_controller_v39.py`; isolated AST extraction executes only `cancel_invalidated_cover()` to avoid importing model/game/runtime dependencies. No controller or test source in the working tree was modified.
 
@@ -37,4 +39,10 @@ Optimized execution: the same six suites were also run with `python -O`; 42 test
 ## Planner-to-release boundary suites
 
 On exact current main `4c203d797cd3e33168bd9177fea8e0d6ef605c6b`, the existing `persistent_planner_adapter_v2`, `final_action_admission_v2`, and `executor_v13` suites passed 30/30 normally and 30/30 under `python -O`. Raw outputs and exit codes are retained as `planner-release-{normal,optimized}.txt/.exit`. They cover interrupt/completion races, stale answer refusal, action admission and executor release-terminal custody. No live inputs or game were used.
+
+## Recovered historical receipts for 708ca (published 2026-10-15)
+
+Previously unpublished local outputs pin source `708ca59a8128f07fdb7e13a36704c6b2f79c9fb6`. The same six controller/typed-observation/admission suites above report 42 tests passing normally and under `-O`; the same three planner/release suites report 30 tests passing in each mode. Four raw output files, four zero exit files, two source-pin files and their original checksum list are now retained under `current-main-708ca-*`. All ten listed hashes match; raw bytes are preserved without line-ending conversion. [The publication receipt](PUBLICATION_708CA_20261015.json) records their identities and custody limits.
+
+This is publication of saved component-test evidence, not a fresh execution, live allocation or proof that the historical executing worktree was pristine beyond its retained source declaration. It does not establish physical release, useful feedback, recovery or MAP01 completion. The current controller/planner/release suites were separately run on main `4062116ea4d70f1904cdea9669c8c2226acd7b9d` on 2026-10-15: 98 tests passed normally and under `-O`. That fresh result has the same component-level scope.
 

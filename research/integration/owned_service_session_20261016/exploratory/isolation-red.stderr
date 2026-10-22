@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_v15_selects_wrapper_strips_flag_and_pins_sources (research.doom.test_owned_service_session_selection.OwnedSessionTests.test_v15_selects_wrapper_strips_flag_and_pins_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_owned_service_session_selection.py", line 66, in test_v15_selects_wrapper_strips_flag_and_pins_sources
+    self.assertIs(seen[0][0],helper().Backend)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <class 'session_owned_owner_backend.Backend'> is not <class 'session_owned_owner_backend.Backend'>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+FAILED (failures=1)

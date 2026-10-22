@@ -1,5 +1,10 @@
 # Scoped X11 Python API
 
+Optional [direct-window lifecycle evidence](WINDOW_LIFECYCLE.md) adds a separate
+same-process XID continuity check to the process/query-worker policy. It is
+qualified with Fake X through the standard MCP caller; native behavior and the
+final check/use race remain unqualified.
+
 The portable runtime includes the same scoped target handles and guarded input
 implementation used by the native research callers. This is an explicit Linux/X11
 API requiring Pillow and python-xlib. It does not open a connection on import and
@@ -34,6 +39,13 @@ references refuse input; they never trigger automatic grounding or replay.
 fails; successful review does not infer semantic equivalence of windows.
 Call `close()` in a finally block. It closes this connection, not the application.
 The object is synchronous and intended for one caller; it is not a concurrent queue.
+
+An explicit Python `process_identity=True` option adds
+[Linux/XRes process-incarnation checks](PROCESS_IDENTITY.md) to observations,
+aliases and new presses. It assumes a trusted local server with matching PID
+namespace; it is not window-incarnation proof or a bounded-I/O release mechanism.
+Standard guarded MCP selects it at startup with `--guarded-process-identity`.
+The default and ordinary one-shot CLI policy are unchanged.
 
 Observations and raw input receipts are retained in the fresh output directory.
 History is session-local. At most two decoded full-screen images are retained
@@ -106,9 +118,21 @@ After loss of target focus, Python callers may explicitly request
 `bridge.activate_window(window_id=..., source_sequence=...,
 current_binding_revision=..., expires_at_ns=..., timeout_ms=...)`; MCP callers
 use `interface_guarded_activate_window` with the same required fields. Only the
-currently registered window and latest delivered source/current revision are
-accepted. The caller supplies its expiry on `interface_clock`'s execution-host
-clock. The existing core lease/capability checks still apply.
+currently registered window and latest retained bridge source/current revision
+are accepted. The retained source must match its sequence, revision, target
+surface and execution-host capture clock. Recovery-cleared history cannot be
+relabelled with the new revision: explicitly observe again first. Retention does
+not establish model receipt or current pixels. The caller supplies its expiry
+on `interface_clock`'s execution-host clock. The existing core lease/capability
+checks still apply.
+
+Immediately before sending the WM request, after request preparation, the bridge
+rechecks the pinned source, scope, revision, target and original caller expiry.
+When process identity is selected, it also rechecks the source's process
+generation. Focus may differ because this operation explicitly restores focus.
+This adds no observation-age TTL and never extends the caller's expiry. These
+are local request fences, not atomic server acceptance or a physical timing
+guarantee; a process can still change after the final check.
 
 Activation sends an EWMH request, not text/clicks. Successful or uncertain
 activation blocks guarded editing until explicit window review. Review that
@@ -145,6 +169,10 @@ The existing five-second guarded lease includes admission captures, pointer
 checks, typing and explicit waits. Every new key press now checks that deadline;
 key release remains permitted afterward. A fixed wait ends at the earlier of
 its requested end or the original lease deadline, without renewing the lease.
+Key and button presses also recheck the original deadline immediately before
+the XTest press request, after focus, key-mapping and pointer queries return.
+A successful but slow query does not renew authority or permit a late press.
+This final fence performs no server query; releases bypass it even after expiry.
 At expiry, execution fails, retains the completed prefix and interrupted wait,
 attempts release and does not start the remaining input. The public guarded
 MCP default still returns one post-result observation, including after this
@@ -184,3 +212,12 @@ caller-owned predicates, revalidates each alias and forwards the shorter method
 budget into ordinary guarded input. The [primary live trial](../results/compiled-x11-live-01/README.md)
 retains one correct Save and a changed-control stop with no Save. This does not
 promote a generic text verifier or establish efficiency gains.
+
+Compiled execution now connects the symbol's identity/dependencies to fresh
+native input checks using a frozen `input_guard`. Its explicit `interaction`
+supports keyboard/click/move; omitted interaction preserves keyboard behavior.
+False, unknown or callback failure refuses later task input, while releases
+bypass the callback. The [local repair evidence](../../research/integration/compiled_native_dependency_repair_20261016/README.md)
+uses Fake X transport and synthetic semantics. Trusted callback accuracy,
+capture-to-press changes, native I/O bounds and independent task effects remain
+separate qualifications.

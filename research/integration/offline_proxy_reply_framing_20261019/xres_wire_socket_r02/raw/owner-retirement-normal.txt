@@ -1,0 +1,68 @@
+test_cancel_retires_exact_blocked_owner_but_keeps_release_unknown (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_cancel_retires_exact_blocked_owner_but_keeps_release_unknown) ... ok
+test_cancel_retires_owner_when_response_keeps_input_and_late_request_possible (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_cancel_retires_owner_when_response_keeps_input_and_late_request_possible) ... ok
+test_cancel_returns_unknown_when_separate_release_worker_blocks (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_cancel_returns_unknown_when_separate_release_worker_blocks)
+Bound caller recovery under a synthetic platform-I/O block; infer no release. ... [10/19/26 20:40:53] WARNING  Executing <Task pending        base_events.py:2055
+                             name='Task-11'                                    
+                             coro=<OwnedProcessMCPTests.tes                    
+                             t_cancel_returns_unknown_when_                    
+                             separate_release_worker_blocks                    
+                             () running at                                     
+                             C:\Users\user\Documents\Codex\                    
+                             2026-10-03\new-chat-2\work\rep                    
+                             o-orchestration-cleanup-status                    
+                             -r01\runtime\cli_v1\test_mcp_o                    
+                             wned_process.py:1027>                             
+                             wait_for=<Future pending                          
+                             cb=[shield.<locals>._outer_don                    
+                             e_callback() at C:\Program                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\tasks.py:977,                             
+                             Task.task_wakeup()] created at                    
+                             C:\Program                                        
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\base_events.py:459>                       
+                             cb=[_run_until_complete_cb()                      
+                             at C:\Program                                     
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\base_events.py:181]                       
+                             created at C:\Program                             
+                             Files\WindowsApps\PythonSoftwa                    
+                             reFoundation.Python.3.13_3.13.                    
+                             3824.0_x64__qbz5n2kfra8p0\Lib\                    
+                             asyncio\runners.py:101> took                      
+                             1.535 seconds                                     
+ok
+test_cli_forwards_owned_process_selection (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_cli_forwards_owned_process_selection) ... ok
+test_close_after_cancel_retirement_reuses_existing_cleanup_evidence (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_close_after_cancel_retirement_reuses_existing_cleanup_evidence) ... ok
+test_close_forced_retirement_after_receipt_runs_cleanup (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_close_forced_retirement_after_receipt_runs_cleanup) ... ok
+test_close_pipe_failure_runs_retirement_cleanup (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_close_pipe_failure_runs_retirement_cleanup) ... ok
+test_close_timeout_runs_disconnect_gated_retirement_cleanup (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_close_timeout_runs_disconnect_gated_retirement_cleanup) ... ok
+test_disconnect_observer_binds_xres_query_to_owned_process_pid (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_disconnect_observer_binds_xres_query_to_owned_process_pid) ... ok
+test_owned_process_refuses_alias_after_target_generation_changes (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_owned_process_refuses_alias_after_target_generation_changes) ... ok
+test_owned_process_selection_requires_identity_and_query_worker (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_owned_process_selection_requires_identity_and_query_worker) ... ok
+test_prearmed_cleanup_can_precede_retired_owners_queued_down (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_prearmed_cleanup_can_precede_retired_owners_queued_down)
+A separate cleanup receipt is false if the old connection queue can arrive later. ... ok
+test_retire_kills_owned_process_that_ignores_terminate (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_retire_kills_owned_process_that_ignores_terminate) ... ok
+test_retired_owner_rejects_torn_live_ledger_checksum (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_retired_owner_rejects_torn_live_ledger_checksum) ... ok
+test_retired_owner_with_invalid_live_ledger_does_not_release_stale_cache (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_retired_owner_with_invalid_live_ledger_does_not_release_stale_cache) ... ok
+test_retired_release_accepts_verified_reply_from_delayed_worker (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_retired_release_accepts_verified_reply_from_delayed_worker) ... ok
+test_retirement_receipt_reconciles_exit_between_liveness_and_exitcode_reads (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_retirement_receipt_reconciles_exit_between_liveness_and_exitcode_reads) ... ok
+test_standard_cancel_keeps_unknown_after_release_readback_then_late_down (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_cancel_keeps_unknown_after_release_readback_then_late_down)
+A fresh client's empty readback cannot fence a retired client's queued press. ... ok
+test_standard_guarded_tools_keep_generation_and_input_in_owned_process (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_guarded_tools_keep_generation_and_input_in_owned_process) ... ok
+test_unconfirmed_cancel_attempts_only_disconnect_gated_best_effort_cleanup (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_unconfirmed_cancel_attempts_only_disconnect_gated_best_effort_cleanup) ... ok
+test_unconfirmed_cancel_retires_exact_owner_without_claiming_release (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_unconfirmed_cancel_retires_exact_owner_without_claiming_release) ... ok
+test_unknown_or_present_owner_client_never_starts_release_worker (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_unknown_or_present_owner_client_never_starts_release_worker) ... ok
+test_x11_backend_publishes_button_obligation_before_sync_can_block (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_x11_backend_publishes_button_obligation_before_sync_can_block) ... ok
+test_x11_backend_publishes_key_obligation_before_sync_can_block (runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_x11_backend_publishes_key_obligation_before_sync_can_block) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 8.403s
+
+OK

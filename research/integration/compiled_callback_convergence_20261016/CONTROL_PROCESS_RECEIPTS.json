@@ -1,0 +1,88 @@
+[
+  {
+    "control": "baseline",
+    "mode": "normal",
+    "command": [
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\control_compiled_callback_convergence.py",
+      "baseline"
+    ],
+    "started_utc": "2026-10-15T23:08:27.500227+00:00",
+    "ended_utc": "2026-10-15T23:08:28.262296+00:00",
+    "returncode": 1,
+    "result": {
+      "control": "baseline",
+      "methods": 14,
+      "failures": 8,
+      "errors": 3,
+      "skips": 0,
+      "pid": 46308,
+      "optimize": 0
+    }
+  },
+  {
+    "control": "baseline",
+    "mode": "optimized",
+    "command": [
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+      "-O",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\control_compiled_callback_convergence.py",
+      "baseline"
+    ],
+    "started_utc": "2026-10-15T23:08:28.262332+00:00",
+    "ended_utc": "2026-10-15T23:08:29.018945+00:00",
+    "returncode": 1,
+    "result": {
+      "control": "baseline",
+      "methods": 14,
+      "failures": 8,
+      "errors": 3,
+      "skips": 0,
+      "pid": 49968,
+      "optimize": 1
+    }
+  },
+  {
+    "control": "miss_terminal_failure",
+    "mode": "normal",
+    "command": [
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\control_compiled_callback_convergence.py",
+      "miss_terminal_failure"
+    ],
+    "started_utc": "2026-10-15T23:08:29.018974+00:00",
+    "ended_utc": "2026-10-15T23:08:29.724410+00:00",
+    "returncode": 1,
+    "result": {
+      "control": "miss_terminal_failure",
+      "methods": 14,
+      "failures": 2,
+      "errors": 0,
+      "skips": 0,
+      "pid": 48616,
+      "optimize": 0
+    }
+  },
+  {
+    "control": "miss_terminal_failure",
+    "mode": "optimized",
+    "command": [
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe",
+      "-O",
+      "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\control_compiled_callback_convergence.py",
+      "miss_terminal_failure"
+    ],
+    "started_utc": "2026-10-15T23:08:29.724443+00:00",
+    "ended_utc": "2026-10-15T23:08:30.445244+00:00",
+    "returncode": 1,
+    "result": {
+      "control": "miss_terminal_failure",
+      "methods": 14,
+      "failures": 2,
+      "errors": 0,
+      "skips": 0,
+      "pid": 788,
+      "optimize": 1
+    }
+  }
+]

@@ -1,0 +1,153 @@
+test_actual_executor_receives_release_before_worker_resume (test_input_owner_cancel_v4.CancelRelayTests.test_actual_executor_receives_release_before_worker_resume) ... ok
+test_blocked_release_first_control_result_never_upgrades (test_input_owner_cancel_v4.CancelRelayTests.test_blocked_release_first_control_result_never_upgrades) ... ok
+test_cancel_before_down_cannot_be_undone_by_later_request (test_input_owner_cancel_v4.CancelRelayTests.test_cancel_before_down_cannot_be_undone_by_later_request) ... ok
+test_cause_validation_rejects_unbound_or_false_release (test_input_owner_cancel_v4.CancelRelayTests.test_cause_validation_rejects_unbound_or_false_release) ... ok
+test_control_is_serviced_while_ordinary_rpc_inflight (test_input_owner_cancel_v4.CancelRelayTests.test_control_is_serviced_while_ordinary_rpc_inflight) ... ok
+test_control_loss_cancels_known_lease_and_retires_admission (test_input_owner_cancel_v4.CancelRelayTests.test_control_loss_cancels_known_lease_and_retires_admission) ... Process owned-input-owner-16d7f949:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 127, in _child_entry
+    if service_error is not None:raise RuntimeError(service_error)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: EOFError: RPC peer closed
+ok
+test_gated_reply_cannot_apply_cause_to_mutated_original_lease (test_input_owner_cancel_v4.CancelRelayTests.test_gated_reply_cannot_apply_cause_to_mutated_original_lease) ... ok
+test_pending_cancel_is_sticky_and_changed_source_rejected (test_input_owner_cancel_v4.CancelRelayTests.test_pending_cancel_is_sticky_and_changed_source_rejected) ... ok
+test_relay_module_available (test_input_owner_cancel_v4.CancelRelayTests.test_relay_module_available) ... ok
+test_secondary_channel_cleanup_cannot_skip_primary_channel (test_input_owner_cancel_v4.CancelRelayTests.test_secondary_channel_cleanup_cannot_skip_primary_channel) ... ok
+test_started_then_interrupted_watcher_remains_owned_and_joined (test_input_owner_cancel_v4.CancelRelayTests.test_started_then_interrupted_watcher_remains_owned_and_joined) ... ok
+test_wrong_generation_retires_service_control_authority (test_input_owner_cancel_v4.CancelRelayTests.test_wrong_generation_retires_service_control_authority) ... Process owned-input-owner-03f65481:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 127, in _child_entry
+    if service_error is not None:raise RuntimeError(service_error)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ValueError: cancellation identity/schema invalid
+ok
+test_local_owner_cancel_releases_while_worker_paused (test_owned_owner_executor_boundary.ExecutorBoundaryTests.test_local_owner_cancel_releases_while_worker_paused) ... ok
+test_rpc_metadata_shim_cancel_waits_for_worker_to_send_again (test_owned_owner_executor_boundary.ExecutorBoundaryTests.test_rpc_metadata_shim_cancel_waits_for_worker_to_send_again) ... ok
+test_rpc_metadata_shim_normal_actual_executor_completes (test_owned_owner_executor_boundary.ExecutorBoundaryTests.test_rpc_metadata_shim_normal_actual_executor_completes) ... ok
+test_actual_client_process_abrupt_exit_leaves_service_to_release (test_input_owner_process_v3.OwnedOwnerProcessTests.test_actual_client_process_abrupt_exit_leaves_service_to_release) ... ok
+test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade (test_input_owner_process_v3.OwnedOwnerProcessTests.test_blocked_release_preserves_live_custody_and_late_settlement_is_not_upgrade) ... ok
+test_blocked_release_publication_failure_retains_service_until_settlement (test_input_owner_process_v3.OwnedOwnerProcessTests.test_blocked_release_publication_failure_retains_service_until_settlement) ... Process owned-input-owner-234e654d:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 107, in _child_entry
+    recovery_hash=publish_json_exclusive(out/'recovery.json',recovery)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 77, in publish
+    raise OSError('injected recovery publication')
+OSError: injected recovery publication
+ok
+test_context_exit_failure_cannot_promote_initial_verified_owner_close (test_input_owner_process_v3.OwnedOwnerProcessTests.test_context_exit_failure_cannot_promote_initial_verified_owner_close) ... Process owned-input-owner-72ce6c68:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 76, in _child_entry
+    with factory(display=display,out=out,service_id=service_id) as owner:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 148, in __exit__
+    next(self.gen)
+    ~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 61, in fake_owner_exit_error
+    raise RuntimeError('injected context exit failure')
+RuntimeError: injected context exit failure
+ok
+test_export_hash_is_bound_to_one_observation_of_each_saved_file (test_input_owner_process_v3.OwnedOwnerProcessTests.test_export_hash_is_bound_to_one_observation_of_each_saved_file) ... ok
+test_file_verified_receipt_does_not_replace_owned_process_exit (test_input_owner_process_v3.OwnedOwnerProcessTests.test_file_verified_receipt_does_not_replace_owned_process_exit) ... ok
+test_module_available (test_input_owner_process_v3.OwnedOwnerProcessTests.test_module_available) ... ok
+test_normal_close_binds_saved_receipts_and_owned_process_exit (test_input_owner_process_v3.OwnedOwnerProcessTests.test_normal_close_binds_saved_receipts_and_owned_process_exit) ... ok
+test_owner_process_death_has_no_acceptable_release_receipt (test_input_owner_process_v3.OwnedOwnerProcessTests.test_owner_process_death_has_no_acceptable_release_receipt) ... ok
+test_partial_startup_allocation_closes_every_acquired_descriptor (test_input_owner_process_v3.OwnedOwnerProcessTests.test_partial_startup_allocation_closes_every_acquired_descriptor) ... ok
+test_recovery_publication_error_waits_for_same_unresolved_owner (test_input_owner_process_v3.OwnedOwnerProcessTests.test_recovery_publication_error_waits_for_same_unresolved_owner) ... ok
+test_startup_failure_returns_owned_handle_and_unverified_saved_failure (test_input_owner_process_v3.OwnedOwnerProcessTests.test_startup_failure_returns_owned_handle_and_unverified_saved_failure) ... Process owned-input-owner-0b610821:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 76, in _child_entry
+    with factory(display=display,out=out,service_id=service_id) as owner:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 66, in fake_owner_start_error
+    raise RuntimeError('injected context startup failure')
+RuntimeError: injected context startup failure
+ok
+test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody (test_input_owner_process_v3.OwnedOwnerProcessTests.test_startup_interrupt_cleanup_pair_and_unstarted_handle_preserve_custody) ... ok
+test_wrong_generation_and_overwrite_are_refused (test_input_owner_process_v3.OwnedOwnerProcessTests.test_wrong_generation_and_overwrite_are_refused) ... ok
+test_actual_strict_owner_roundtrip_and_eof_releases (test_input_owner_rpc_v2.OwnerRpcTests.test_actual_strict_owner_roundtrip_and_eof_releases) ... ok
+test_blocked_release_keeps_transport_close_and_owner_stop_unverified (test_input_owner_rpc_v2.OwnerRpcTests.test_blocked_release_keeps_transport_close_and_owner_stop_unverified) ... ok
+test_buffered_unsolicited_reply_quarantines_before_a_second_send (test_input_owner_rpc_v2.OwnerRpcTests.test_buffered_unsolicited_reply_quarantines_before_a_second_send) ... ok
+test_changed_generation_is_refused_by_remote_current_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_changed_generation_is_refused_by_remote_current_owner) ... ok
+test_codec_roundtrip_preserves_immutable_source_and_sticky_cancel (test_input_owner_rpc_v2.OwnerRpcTests.test_codec_roundtrip_preserves_immutable_source_and_sticky_cancel) ... ok
+test_duplicate_id_and_lease_rebinding_close_before_second_input (test_input_owner_rpc_v2.OwnerRpcTests.test_duplicate_id_and_lease_rebinding_close_before_second_input) ... ok
+test_expired_or_malformed_local_source_does_not_consume_request_identity (test_input_owner_rpc_v2.OwnerRpcTests.test_expired_or_malformed_local_source_does_not_consume_request_identity) ... ok
+test_inconsistent_close_receipt_is_not_a_release_certificate (test_input_owner_rpc_v2.OwnerRpcTests.test_inconsistent_close_receipt_is_not_a_release_certificate) ... ok
+test_interrupted_close_keeps_an_unverified_repeatable_local_result (test_input_owner_rpc_v2.OwnerRpcTests.test_interrupted_close_keeps_an_unverified_repeatable_local_result) ... ok
+test_module_available (test_input_owner_rpc_v2.OwnerRpcTests.test_module_available) ... ok
+test_primary_and_detach_failure_are_both_preserved (test_input_owner_rpc_v2.OwnerRpcTests.test_primary_and_detach_failure_are_both_preserved) ... ok
+test_readiness_is_bound_to_exact_service_before_any_input (test_input_owner_rpc_v2.OwnerRpcTests.test_readiness_is_bound_to_exact_service_before_any_input) ... ok
+test_service_owner_reacts_while_rpc_idle_and_explicit_cancel_is_transferred (test_input_owner_rpc_v2.OwnerRpcTests.test_service_owner_reacts_while_rpc_idle_and_explicit_cancel_is_transferred) ... ok
+test_successful_raw_close_call_retires_the_same_client (test_input_owner_rpc_v2.OwnerRpcTests.test_successful_raw_close_call_retires_the_same_client) ... ok
+test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner (test_input_owner_rpc_v2.OwnerRpcTests.test_unknown_reply_permanently_refuses_second_send_then_eof_closes_owner) ... ok
+test_window_source_rejected_before_send_without_canonical_service_contract (test_input_owner_rpc_v2.OwnerRpcTests.test_window_source_rejected_before_send_without_canonical_service_contract) ... ok
+test_accepted_callback_cannot_rebind_existing_lease_to_new_observation (test_map01_process_identity_backend.ProcessBackendTests.test_accepted_callback_cannot_rebind_existing_lease_to_new_observation) ... ok
+test_actual_capture_and_executor_admission_reach_selected_owner (test_map01_process_identity_backend.ProcessBackendTests.test_actual_capture_and_executor_admission_reach_selected_owner) ... ok
+test_actual_executor_cancel_releases_while_selected_focus_reader_stalls (test_map01_process_identity_backend.ProcessBackendTests.test_actual_executor_cancel_releases_while_selected_focus_reader_stalls) ... ok
+test_capture_generation_change_publishes_no_source (test_map01_process_identity_backend.ProcessBackendTests.test_capture_generation_change_publishes_no_source) ... ok
+test_changed_identity_refuses_before_new_keypress (test_map01_process_identity_backend.ProcessBackendTests.test_changed_identity_refuses_before_new_keypress) ... ok
+test_missing_capture_refuses_before_accepted_publication (test_map01_process_identity_backend.ProcessBackendTests.test_missing_capture_refuses_before_accepted_publication) ... ok
+test_blocked_focus_original_expiry_releases_before_resume (test_input_owner_v12_process_identity.OwnerIdentityTests.test_blocked_focus_original_expiry_releases_before_resume) ... ok
+test_blocked_focus_read_does_not_prevent_cancel_cleanup (test_input_owner_v12_process_identity.OwnerIdentityTests.test_blocked_focus_read_does_not_prevent_cancel_cleanup) ... ok
+test_blocked_held_identity_does_not_prevent_cancel_cleanup (test_input_owner_v12_process_identity.OwnerIdentityTests.test_blocked_held_identity_does_not_prevent_cancel_cleanup) ... ok
+test_blocked_identity_original_expiry_releases_before_reader_resumes (test_input_owner_v12_process_identity.OwnerIdentityTests.test_blocked_identity_original_expiry_releases_before_reader_resumes) ... ok
+test_changed_unbound_or_deadline_relabelled_source_refuses (test_input_owner_v12_process_identity.OwnerIdentityTests.test_changed_unbound_or_deadline_relabelled_source_refuses) ... ok
+test_close_while_identity_is_blocked_stops_input_owner (test_input_owner_v12_process_identity.OwnerIdentityTests.test_close_while_identity_is_blocked_stops_input_owner) ... ok
+test_final_focus_read_cannot_change_cancel_or_source_before_press (test_input_owner_v12_process_identity.OwnerIdentityTests.test_final_focus_read_cannot_change_cancel_or_source_before_press) ... ok
+test_first_focus_wait_cancel_discards_late_reply_without_press (test_input_owner_v12_process_identity.OwnerIdentityTests.test_first_focus_wait_cancel_discards_late_reply_without_press) ... ok
+test_fresh_source_admits_and_release_does_not_query_identity (test_input_owner_v12_process_identity.OwnerIdentityTests.test_fresh_source_admits_and_release_does_not_query_identity) ... ok
+test_held_focus_failure_is_distinct_from_observed_change (test_input_owner_v12_process_identity.OwnerIdentityTests.test_held_focus_failure_is_distinct_from_observed_change) ... ok
+test_held_generation_change_wakes_lease_and_releases_prefix (test_input_owner_v12_process_identity.OwnerIdentityTests.test_held_generation_change_wakes_lease_and_releases_prefix) ... ok
+test_cancel_during_keyup_sync_is_not_marked_ordinary (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_cancel_during_keyup_sync_is_not_marked_ordinary) ... ok
+test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap) ... ok
+test_ordered_up_batch_has_no_keymap_query_between_original_ups (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_ordered_up_batch_has_no_keymap_query_between_original_ups) ... ok
+test_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts) ... ok
+test_single_keymap_sample_failure_is_captured_and_terminal_fails_closed (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_single_keymap_sample_failure_is_captured_and_terminal_fails_closed) ... ok
+test_v15_batch_survives_pre_and_post_sample_failures_fail_closed (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_v15_batch_survives_pre_and_post_sample_failures_fail_closed) ... ok
+test_v15_successful_two_key_batch_retries_after_ordered_original_ups (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_v15_successful_two_key_batch_retries_after_ordered_original_ups) ... ok
+test_owner_rpc_failure_reaches_terminal_as_unverified (test_executor_v12_owner_release_rpc_failure.OwnerReleaseRpcFailureTests.test_owner_rpc_failure_reaches_terminal_as_unverified) ... ok
+
+----------------------------------------------------------------------
+Ran 70 tests in 30.881s
+
+OK

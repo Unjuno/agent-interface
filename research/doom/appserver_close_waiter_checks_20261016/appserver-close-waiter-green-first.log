@@ -1,0 +1,11 @@
+test_explicit_close_refuses_retained_notification_without_consuming_it (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_explicit_close_refuses_retained_notification_without_consuming_it) ... ok
+{"case": "owned-python-peer-planner", "peer_exited": true, "closing": true, "closed": false, "reader_alive": true, "waiter_alive": false, "journal_held": true, "errors": ["AppServerError"], "answer_invalidated": true}
+test_real_pipe_planner_wait_stops_while_receive_journal_is_held (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_real_pipe_planner_wait_stops_while_receive_journal_is_held) ... ok
+{"case": "request", "closing": true, "closed": false, "waiter_alive": false, "reader_alive": true, "journal_held": true, "errors": ["AppServerError"]}
+{"case": "notification", "closing": true, "closed": false, "waiter_alive": false, "reader_alive": true, "journal_held": true, "errors": ["AppServerError"]}
+test_request_and_notification_wait_stop_before_blocked_reader_retires (research.live_control.test_appserver_close_waiter_stop.CloseWaiterTests.test_request_and_notification_wait_stop_before_blocked_reader_retires) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.212s
+
+OK

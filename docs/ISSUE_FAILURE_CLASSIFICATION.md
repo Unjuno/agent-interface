@@ -7,6 +7,11 @@ User direction: 2026-09-22. Companion to [research method](RESEARCH_METHOD.md),
 **One Issue should own one scientific question or integration decision.
 A new allocation ID is not automatically a new successor Issue.**
 
+Issue context: open [#6767](https://github.com/Unjuno/agent-interface/issues/6767)
+sets the owner-led recovery expectation for local environment failures. This
+document is the routing guide; its classification does not add resource or
+shared-environment authority.
+
 ## Classify before assigning work
 
 | Evidence actually available | Record and next action | Do not infer |

@@ -8,6 +8,7 @@ import {pathToFileURL} from 'node:url';
 import {TextDecoder} from 'node:util';
 import {setImmediate as tick} from 'node:timers/promises';
 import {createContext,SourceTextModule,SyntheticModule} from 'node:vm';
+import {parseUniqueJson} from './json_unique.mjs';
 
 // Load the production source unchanged. Only application factories are replaced:
 // no relay process, command execution, provider, GUI, or network is involved.
@@ -18,6 +19,7 @@ async function inertOwner(counters) {
   const exports={
     'node:readline':{createInterface},'node:fs/promises':{readFile},
     'node:url':{pathToFileURL},'node:util':{TextDecoder},
+    './json_unique.mjs':{parseUniqueJson},
     './relay_host.mjs':{createInstrumentedRelayClient:async()=>{
       counters.starts++;
       return {async close(){counters.closes++;return {code:0,signal:null};}};

@@ -1,0 +1,60 @@
+{
+  "schema": "compiled-handle-graph-composition-runs-v1",
+  "freeze": "FREEZE.json",
+  "candidate": {
+    "command": "uv run --python 3.12 --with pillow python research/integration/compiled_handle_graph_composition_57_a01_20261004/run.py > research/integration/compiled_handle_graph_composition_57_a01_20261004/out/candidate.json",
+    "raw": "out/candidate.json",
+    "complete_json_retained": true,
+    "process_exit_code": "not captured",
+    "start_end_timestamps": "not instrumented",
+    "retry": false,
+    "integrity_note": "The pre-run SHA256SUMS command was launched from the repository root although paths are package-relative, so it reported files unreadable; the shell continued to the candidate command. Afterward, the same checksum manifest was verified from the package directory and all 12 entries passed. The frozen source/input hashes therefore match the retained pre-run bytes, but pre-run verification ordering and the candidate process exit code were not captured. No candidate rerun was made."
+  },
+  "auditor": {
+    "command": "python3.12 audit.py out/candidate.json",
+    "raw": "out/audit.json",
+    "process_exit_code": 0,
+    "result": "PASS",
+    "scope": "independent raw-record reconstruction using a separately implemented auditor; it does not rerun the candidate or validate real GUI semantics",
+    "audit_v1_limitation": "A post-audit corruption probe changed the duplicated top-level row outcome while leaving the nested runtime receipt intact; V1 correctly derived its verdict from the receipt but did not reject the inconsistent duplicate summary. The original V1 audit result is preserved."
+  },
+  "auditor_v2": {
+    "command": "python3.12 audit_v2.py out/candidate.json",
+    "raw": "out/audit_v2.json",
+    "process_exit_code": 0,
+    "result": "PASS",
+    "corruption_controls": [
+      "rejected row summary outcome differing from nested runtime receipt",
+      "rejected field-race receipt reporting a completed transition",
+      "rejected submit-race dispatch of activate_submit"
+    ],
+    "scope": "read-only audit successor; same retained candidate raw, no candidate rerun"
+  },
+  "auditor_v3": {
+    "command": "python3.12 audit_v3.py out/candidate.json",
+    "raw": "out/audit_v3.json",
+    "process_exit_code": 1,
+    "result": "AUDITOR_FAILED",
+    "finding": "initial v3 auditor resolved the repository root one parent too high and git rev-parse failed; its empty stdout file is preserved",
+    "stderr_excerpt": "fatal: not a git repository; rev-parse 9dc383a89043deb6199c847196498d867ba6bb75:runtime/core_v1/compiled_gui.py failed",
+    "execution_repeated": false
+  },
+  "auditor_v4": {
+    "command": "python3.12 audit_v4.py out/candidate.json",
+    "raw": "out/audit_v4.json",
+    "process_exit_code": 0,
+    "result": "FAIL_SOURCE_BASE_LABEL_MISMATCH",
+    "finding": "candidate JSON source_main is 41df296f3ce4d03c801c998d38f6e537e64a83ab; FREEZE integration_base is 9dc383a89043deb6199c847196498d867ba6bb75",
+    "module_identity_check": "the four compiled-GUI/handle git blobs at both commit labels match the four frozen blob IDs; this does not excuse the stale source_main field under the preregistered any-mismatch-fails rule",
+    "execution_repeated": false,
+    "scope": "read-only provenance audit of existing source/input/raw records"
+  },
+  "container_preflight": {
+    "status": "STOP",
+    "command": "docker ps",
+    "reported_error": "daemon error reading unsupported content blob sha256:c1f24dda54ba0d4f3cabe7900b203ea25766c2403dc752895a8e54e3f6167cb8: operation not supported",
+    "raw_transcript_retained_here": false,
+    "disposition": "no retry or daemon mutation; native macOS construction only"
+  },
+  "outcome": "behavioral counts meet the three scenario thresholds in retained candidate and v2 audit, but the frozen overall disposition is FAIL_SOURCE_BASE_LABEL_MISMATCH under the any-mismatch-fails rule; candidate exit status and exact start/end timestamps are also unrecorded"
+}

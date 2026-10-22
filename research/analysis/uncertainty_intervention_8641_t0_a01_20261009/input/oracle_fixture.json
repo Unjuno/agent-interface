@@ -1,0 +1,101 @@
+{
+  "protocol_id": "UIA-8641-v1",
+  "truth": [
+    {
+      "case_id": "resampled_noise",
+      "true_cause": "ALEATORIC",
+      "correct_probability": {
+        "REPEAT": 0.95,
+        "ALTERNATE": 0.82,
+        "WAIT": 0.72,
+        "UNKNOWN": 0.84
+      },
+      "decision_change_probability": {
+        "REPEAT": 0.78,
+        "ALTERNATE": 0.42,
+        "WAIT": 0.1,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "ontology_uncertainty",
+      "true_cause": "EPISTEMIC",
+      "correct_probability": {
+        "REPEAT": 0.61,
+        "ALTERNATE": 0.92,
+        "WAIT": 0.63,
+        "UNKNOWN": 0.78
+      },
+      "decision_change_probability": {
+        "REPEAT": 0.18,
+        "ALTERNATE": 0.82,
+        "WAIT": 0.06,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "stale_epoch",
+      "true_cause": "DYNAMIC",
+      "correct_probability": {
+        "REPEAT": 0.55,
+        "ALTERNATE": 0.66,
+        "WAIT": 0.95,
+        "UNKNOWN": 0.72
+      },
+      "decision_change_probability": {
+        "REPEAT": 0.12,
+        "ALTERNATE": 0.3,
+        "WAIT": 0.8,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "irreducible_intent",
+      "true_cause": "INTENT",
+      "correct_probability": {
+        "REPEAT": 0.51,
+        "ALTERNATE": 0.5,
+        "WAIT": 0.51,
+        "UNKNOWN": 0.95
+      },
+      "decision_change_probability": {
+        "REPEAT": 0.08,
+        "ALTERNATE": 0.1,
+        "WAIT": 0.02,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "correlated_duplicate",
+      "true_cause": "ALEATORIC",
+      "correct_probability": {
+        "REPEAT": 0.66,
+        "ALTERNATE": 0.9,
+        "WAIT": 0.76,
+        "UNKNOWN": 0.78
+      },
+      "decision_change_probability": {
+        "REPEAT": 0.28,
+        "ALTERNATE": 0.63,
+        "WAIT": 0.19,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "misspecified_decomposition",
+      "true_cause": "EPISTEMIC",
+      "correct_probability": {
+        "REPEAT": 0.55,
+        "ALTERNATE": 0.65,
+        "WAIT": 0.9,
+        "UNKNOWN": 0.8
+      },
+      "decision_change_probability": {
+        "REPEAT": 0.12,
+        "ALTERNATE": 0.25,
+        "WAIT": 0.72,
+        "UNKNOWN": 0.0
+      }
+    }
+  ]
+}

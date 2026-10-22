@@ -1,0 +1,21 @@
+{
+  "base": "955f85ef0238c44b05a4477f607578b026390568",
+  "cases": [
+    "healthy",
+    "failed_effect",
+    "unavailable_effect",
+    "sink_failure",
+    "unknown_release_first",
+    "unknown_release_second"
+  ],
+  "scope": "ordinary local construction/characterization; no formal allocation",
+  "before_execution_utc": "2026-10-15T21:50:14.350130+00:00",
+  "versions": "existing helper caller v2 versus directed imported-run_caller swap to v3; v3 spec only adds local_repair_on=[]",
+  "runner_sha256": "62c73ffa936dde174b54110f7feced5496dcacf01040844635b0fcac71096db0",
+  "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+  "requirements": [
+    "outer effect unknown must not erase completed input",
+    "publication failure must retain known execution status",
+    "failed release must retain completed prefix plus unknown current input"
+  ]
+}

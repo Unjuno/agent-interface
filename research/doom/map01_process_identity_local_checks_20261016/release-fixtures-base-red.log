@@ -1,0 +1,1192 @@
+{"module": "research.doom.test_doom_typed_release_backend_v2", "command": ["C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe", "-m", "unittest", "research.doom.test_doom_typed_release_backend_v2"], "start_unix": 1792082968.0866168, "end_unix": 1792082968.5938673, "exit": 0}
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK
+
+{"module": "research.doom.test_doom_typed_release_backend_v3", "command": ["C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe", "-m", "unittest", "research.doom.test_doom_typed_release_backend_v3"], "start_unix": 1792082968.594052, "end_unix": 1792082969.0881536, "exit": 0}
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+
+{"module": "research.doom.test_release_backend_v3_composition", "command": ["C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe", "-m", "unittest", "research.doom.test_release_backend_v3_composition"], "start_unix": 1792082969.0882986, "end_unix": 1792082969.260643, "exit": 1}
+FE
+======================================================================
+ERROR: test_release_batch_preserves_backend_v2_program_step_provenance (research.doom.test_release_backend_v3_composition.ReleaseBackendCompositionTests.test_release_batch_preserves_backend_v2_program_step_provenance)
+Owner-thread receipts stay joinable to the v2 input-admission stream.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_composition.py", line 77, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_composition.py", line 120, in test_release_batch_preserves_backend_v2_program_step_provenance
+    backend.execute({"key": "w", "down": False}, None, "program-7", 3)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_composition.py", line 100, in execute
+    result = self.raw(step["key"], step["down"])
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+FAIL: test_partial_release_batch_is_discarded_on_step_exception (research.doom.test_release_backend_v3_composition.ReleaseBackendCompositionTests.test_partial_release_batch_is_discarded_on_step_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_composition.py", line 210, in test_partial_release_batch_is_discarded_on_step_exception
+    self.assertTrue(release["owner_thread_keyup_verified"])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.015s
+
+FAILED (failures=1, errors=1)
+
+{"module": "research.doom.test_release_backend_v3_actual_composition", "command": ["C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\outputs\\repository-consolidation-20261015\\test-env\\Scripts\\python.exe", "-m", "unittest", "research.doom.test_release_backend_v3_actual_composition"], "start_unix": 1792082969.260756, "end_unix": 1792082969.4471328, "exit": 1}
+EEEEEEEEEEE.FFFFFFFFEEEEEEEEEEE
+======================================================================
+ERROR: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=0, sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        failure_position=failure_position)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=0, sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        failure_position=failure_position)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=1, sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        failure_position=failure_position)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=1, sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        failure_position=failure_position)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=2, sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        failure_position=failure_position)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_accept_then_raise_does_not_duplicate_release_batch_rows (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_accept_then_raise_does_not_duplicate_release_batch_rows) (failure_position=2, sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 339, in test_accept_then_raise_does_not_duplicate_release_batch_rows
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        failure_position=failure_position)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_cancel_during_keyup_sync_fails_closed_through_batch_composition (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_cancel_during_keyup_sync_fails_closed_through_batch_composition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 310, in test_cancel_during_keyup_sync_fails_closed_through_batch_composition
+    _, releases = self._run(cancel_after_sync=True)
+                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 218, in _run
+    candidate.raw(key, False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+ERROR: test_cleanup_exception_publishes_partial_receipt_before_propagating (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_cleanup_exception_publishes_partial_receipt_before_propagating)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 327, in test_cleanup_exception_publishes_partial_receipt_before_propagating
+    _, releases = self._run(cleanup_exception=True)
+                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 198, in _run
+    candidate.release_all()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 170, in release_all
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+ERROR: test_current_v4_wrapper_joins_each_key_admission_to_its_release (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_current_v4_wrapper_joins_each_key_admission_to_its_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 276, in test_current_v4_wrapper_joins_each_key_admission_to_its_release
+    admissions, releases = self._run()
+                           ~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 218, in _run
+    candidate.raw(key, False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+ERROR: test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 320, in test_current_v4_wrapper_retains_partial_receipt_on_later_step_exception
+    self.assertEqual(releases[0]["owner_thread_keyup_receipt"]["key"], "a")
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+ERROR: test_executor_terminal_retains_actual_backend_delivery_positions (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_executor_terminal_retains_actual_backend_delivery_positions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 381, in test_executor_terminal_retains_actual_backend_delivery_positions
+    error, _, _ = self._run(
+                  ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=False, failure_position=1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_release_all_publication_failure_retains_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_release_all_publication_failure_retains_delivery_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 467, in test_release_all_publication_failure_retains_delivery_ledger
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        release_all_publication_failure=True, failure_position=0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 211, in _run
+    candidate.release_all()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 170, in release_all
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+ERROR: test_release_all_without_current_batch_does_not_return_prior_program_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_release_all_without_current_batch_does_not_return_prior_program_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 235, in test_release_all_without_current_batch_does_not_return_prior_program_ledger
+    _, releases, backend = self._run(
+                           ~~~~~~~~~^
+        emit_accept_then_raise=True, failure_position=None, return_backend=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+ERROR: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted, failure_position=position,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        mutate_release_row_before_raise=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted, failure_position=position,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        mutate_release_row_before_raise=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted, failure_position=position,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        mutate_release_row_before_raise=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted, failure_position=position,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        mutate_release_row_before_raise=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted, failure_position=position,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        mutate_release_row_before_raise=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 485, in test_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    error, _, _ = self._run(
+                  ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted, failure_position=position,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        mutate_release_row_before_raise=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 147, in execute
+    self.raw("c", False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+incomplete release telemetry publication failed: RuntimeError
+
+======================================================================
+ERROR: test_text_batches_preserve_confirmed_prefix_when_later_sink_fails (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_text_batches_preserve_confirmed_prefix_when_later_sink_fails) (sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 248, in test_text_batches_preserve_confirmed_prefix_when_later_sink_fails
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        text="ab", failure_key="b", failure_position=0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 138, in execute
+    self.raw(key, False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+ERROR: test_text_batches_preserve_confirmed_prefix_when_later_sink_fails (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_text_batches_preserve_confirmed_prefix_when_later_sink_fails) (sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 248, in test_text_batches_preserve_confirmed_prefix_when_later_sink_fails
+    error, attempts, emitted = self._run(
+                               ~~~~~~~~~^
+        emit_accept_then_raise=True, capture_publication_error=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        text="ab", failure_key="b", failure_position=0,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        sink_accept_before_raise=accepted)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 201, in _run
+    candidate.execute({}, None, "program-1", 0)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 90, in execute
+    result = super().execute(step, cancel, identifier, index)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 138, in execute
+    self.raw(key, False)
+    ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+ERROR: test_wrong_key_receipt_fails_closed_through_batch_composition (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_wrong_key_receipt_fails_closed_through_batch_composition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 284, in _flush_pending_ups
+    transitions = self.owner.call(
+        "up_batch", self.lease, [item["key"] for item in pending]
+    )
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\live_control\input_transition_owner_v4.py", line 17, in call
+    transitions = super().call(operation, lease, key)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 121, in call
+    return self._inner.call(operation, lease, key)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 89, in call
+    raise AssertionError(operation)
+AssertionError: up_batch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 304, in test_wrong_key_receipt_fails_closed_through_batch_composition
+    _, releases = self._run(wrong_key=True)
+                  ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 218, in _run
+    candidate.raw(key, False)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 265, in raw
+    self._flush_pending_ups(context)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 291, in _flush_pending_ups
+    self.lease.check()
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'check'
+
+======================================================================
+FAIL: test_incomplete_publication_middle_failure_preserves_positions_on_original_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_publication_middle_failure_preserves_positions_on_original_exception) (sink_accept_before_raise=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 453, in test_incomplete_publication_middle_failure_preserves_positions_on_original_exception
+    self.assertEqual(error.release_batch_publication, {
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "schema": "release-batch-delivery-v1",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        ],
+        ^^
+    })
+    ^^
+AssertionError: {'sch[76 chars]ze': 4, 'positions': [{'position': 0, 'step': [236 chars]d'}]} != {'sch[76 chars]ze': 3, 'positions': [{'position': 0, 'step': [170 chars]d'}]}
+Diff is 771 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_incomplete_publication_middle_failure_preserves_positions_on_original_exception (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_publication_middle_failure_preserves_positions_on_original_exception) (sink_accept_before_raise=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 453, in test_incomplete_publication_middle_failure_preserves_positions_on_original_exception
+    self.assertEqual(error.release_batch_publication, {
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "schema": "release-batch-delivery-v1",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        ],
+        ^^
+    })
+    ^^
+AssertionError: {'sch[76 chars]ze': 4, 'positions': [{'position': 0, 'step': [236 chars]d'}]} != {'sch[76 chars]ze': 3, 'positions': [{'position': 0, 'step': [170 chars]d'}]}
+Diff is 771 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        error.release_batch_publication["positions"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        ],
+        ^^
+    )
+    ^
+AssertionError: Lists differ: [{'po[181 chars]ted'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[181 chars]ted'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'unknown', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'not_attempted', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0},
+?                                                                  ^
+
++  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+?                                                                  ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=0, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        error.release_batch_publication["positions"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        ],
+        ^^
+    )
+    ^
+AssertionError: Lists differ: [{'po[181 chars]ted'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[181 chars]ted'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'unknown', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'not_attempted', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0},
+?                                                                  ^
+
++  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+?                                                                  ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        error.release_batch_publication["positions"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        ],
+        ^^
+    )
+    ^
+AssertionError: Lists differ: [{'po[188 chars]ted'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[188 chars]ted'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'unknown', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0},
+?                                                                  ^
+
++  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+?                                                                  ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=1, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        error.release_batch_publication["positions"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        ],
+        ^^
+    )
+    ^
+AssertionError: Lists differ: [{'po[188 chars]ted'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[188 chars]ted'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'unknown', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0},
+?                                                                  ^
+
++  {'key': 'c', 'position': 2, 'state': 'not_attempted', 'step': 0}]
+?                                                                  ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        error.release_batch_publication["positions"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        ],
+        ^^
+    )
+    ^
+AssertionError: Lists differ: [{'po[195 chars]own'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[195 chars]own'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'confirmed_incomplete', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'unknown', 'step': 0},
+?                                                            ^
+
++  {'key': 'c', 'position': 2, 'state': 'unknown', 'step': 0}]
+?                                                            ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+======================================================================
+FAIL: test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger (research.doom.test_release_backend_v3_actual_composition.ActualReleaseCompositionTests.test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger) (position=2, accepted=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\map01-identity-base-source\research\doom\test_release_backend_v3_actual_composition.py", line 513, in test_incomplete_sink_mutation_cannot_erase_failed_position_from_delivery_ledger
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        error.release_batch_publication["positions"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        ],
+        ^^
+    )
+    ^
+AssertionError: Lists differ: [{'po[195 chars]own'}, {'position': 3, 'step': 0, 'key': 'a', [21 chars]ed'}] != [{'po[195 chars]own'}]
+
+First list contains 1 additional elements.
+First extra element 3:
+{'position': 3, 'step': 0, 'key': 'a', 'state': 'not_attempted'}
+
+  [{'key': 'a', 'position': 0, 'state': 'confirmed_incomplete', 'step': 0},
+   {'key': 'b', 'position': 1, 'state': 'confirmed_incomplete', 'step': 0},
+-  {'key': 'c', 'position': 2, 'state': 'unknown', 'step': 0},
+?                                                            ^
+
++  {'key': 'c', 'position': 2, 'state': 'unknown', 'step': 0}]
+?                                                            ^
+
+-  {'key': 'a', 'position': 3, 'state': 'not_attempted', 'step': 0}]
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.067s
+
+FAILED (failures=8, errors=22)
+

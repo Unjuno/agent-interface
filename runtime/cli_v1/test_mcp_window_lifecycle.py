@@ -1,0 +1,276 @@
+"""Actual public caller with direct-subscription Fake X and real worker/session."""
+import asyncio
+import json
+from pathlib import Path
+import tempfile
+import threading
+import unittest
+from unittest.mock import Mock, patch
+from Xlib import X
+from .mcp_server import create_server
+from .test_mcp_process_identity import FakeX, metadata
+from runtime.guarded_x11_v1.test_window_lifecycle import LifecycleConnection
+
+
+class LifecycleMCPTests(unittest.IsolatedAsyncioTestCase):
+    async def exercise(self, fault=None, trigger=None, isolated=False, selected=True):
+        fake = FakeX(self)
+        fake.backend.d.get_display_name = lambda: ':fake-lifecycle'
+        connection = LifecycleConnection()
+        entered, resume, visual_closed = threading.Event(), threading.Event(), threading.Event()
+        query_errors = []
+        now = [1_000_000]
+        def attributes():
+            if fault == 'blocked' and 1 in fake.down:
+                entered.set()
+                if not resume.wait(5): raise TimeoutError('test did not resume')
+        connection.on_attributes = attributes
+        original_emit = fake.emit
+        def emit(display, kind, code):
+            original_emit(display, kind, code)
+            if fault == 'modifier' and kind == X.KeyPress and code == 1:
+                connection.event(X.DestroyNotify)
+        def track_after_destroy(key, code):
+            original_track(fake.backend, key, code)
+            if fault == 'destroy_gap' and code == 1:
+                connection.event(X.DestroyNotify)
+                # Schedule an independent lifecycle query after the final
+                # press fence and before XTEST emission; it drains DestroyNotify.
+                def query_lifecycle():
+                    try: fake.backend.owner._read_window_identity()
+                    except Exception as error: query_errors.append(type(error).__name__)
+                query = threading.Thread(target=query_lifecycle)
+                query.start(); query.join(2)
+                self.assertFalse(query.is_alive(), 'lifecycle query did not finish')
+                self.assertTrue(connection.closed, 'lifecycle reader did not retire')
+                self.assertEqual(query_errors, ['X11BackendError'])
+        # Override FakeX's injection patch with the event-producing transport.
+        with tempfile.TemporaryDirectory() as td, \
+                patch('time.monotonic_ns', side_effect=lambda: now[0]), \
+                patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection), \
+                patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity', side_effect=fake.read), \
+                patch('runtime.backends.x11_v1.backend.xtest.fake_input', side_effect=emit):
+            original_track = type(fake.backend)._track_key_press
+            fake.backend._track_key_press = track_after_destroy
+            if isolated:
+                from runtime.guarded_x11_v1.test_observation_worker import reader_backend
+                from types import SimpleNamespace
+                backend = reader_backend(fake, lambda *args: SimpleNamespace(data=fake.raw, depth=24, visual=1))
+                backend.d.create_resource_object = lambda kind, xid: SimpleNamespace(id=xid)
+                backend.d.close = visual_closed.set
+                if fault == 'qualified':
+                    from runtime.guarded_x11_v1.observation_worker import X11ObservationReader
+                    save = X11ObservationReader._save
+                    def held_save(reader, name, value):
+                        if name.startswith('qualified-observation-') and 1 in fake.down:
+                            entered.set()
+                            if not resume.wait(5): raise TimeoutError('test did not resume qualified save')
+                        return save(reader, name, value)
+                    item = patch.object(X11ObservationReader, '_save', held_save)
+                    item.start(); self.addCleanup(item.stop)
+                for target, kwargs in [
+                    ('runtime.guarded_x11_v1.observation_worker.open_readonly_backend', dict(return_value=backend)),
+                    ('runtime.guarded_x11_v1.observation_worker.read_linux_x11_process_identity', dict(side_effect=fake.read))]:
+                    item = patch(target, **kwargs); item.start(); self.addCleanup(item.stop)
+            server = create_server({'app':20}, td, session_mode='guarded-x11', guarded_process_identity=True,
+                guarded_query_worker=True, guarded_observation_worker=isolated, guarded_window_lifecycle=selected)
+            try:
+                observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                self.assertEqual(observed['status'], 'observed', observed)
+                token = observed['source']['pointer_binding'].get('window_generation')
+                if selected: self.assertRegex(token, r'^[0-9a-f]{64}$')
+                else: self.assertIsNone(token)
+                self.assertEqual(json.loads((Path(observed['call_directory'])/'report.json').read_text())['source'], observed['source'])
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(alias='field',
+                    source_sequence=observed['source']['sequence'], point=[8,8], region_size=[12,12])))
+                if fault == 'stale': connection.event(X.DestroyNotify)
+                if fault == 'reparent':
+                    for kind in (X.UnmapNotify, X.ReparentNotify, X.MapNotify): connection.event(kind)
+                args = dict(alias='field', offset=minted['offset'], interaction='keyboard', observe_after=False,
+                    tail=[{'op':'key_chord','keys':['CTRL','a']}])
+                if fault == 'qualified':
+                    # The trusted additional-input path recaptures before the
+                    # second chord key, while the first modifier is still held.
+                    guard = fake.backend.owner.input_guard('field', minted['offset'],
+                        tail=args['tail'], verify=lambda *arguments: True)
+                    guard.__enter__()
+                    self.addCleanup(guard.__exit__, None, None, None)
+                task = asyncio.create_task(server.call_tool('interface_guarded_input', args))
+                if fault in ('blocked','qualified'):
+                    self.assertTrue(await asyncio.to_thread(entered.wait, 2))
+                    self.assertEqual(fake.down, {1})
+                    if trigger == 'expiry': now[0] = fake.backend.owner.deadline
+                    else:
+                        listing = metadata(await server.call_tool('interface_results', {}))
+                        call_id = next(row['call_id'] for row in listing['calls'] if row['operation'] == 'guarded_input')
+                        cancelled = metadata(await server.call_tool('interface_guarded_cancel', {'call_id':call_id}))
+                        self.assertEqual(cancelled['status'], 'cancel_requested')
+                result = metadata(await asyncio.wait_for(task, 3))
+                if fault == 'destroy_gap':
+                    self.lifecycle_race_receipt = {
+                        'scenario': 'Fake X DestroyNotify after final local press check and key-release prearm, before first XTEST press',
+                        'caller_status': result['status'],
+                        'task_success': result['task_success'],
+                        'replay_allowed': result['replay_allowed'],
+                        'review_required': result['session']['review_required'],
+                        'connection_closed_before_first_emit': connection.closed,
+                        'emissions': [list(item) for item in fake.emissions],
+                        'keys_down_after_terminal': sorted(fake.down),
+                        'last_release_verified': result['result']['execution']['releases'][-1]['verified'],
+                        'query_error': query_errors[0],
+                        'event_order': ['final local check passed', 'release obligation prearmed',
+                            'Fake X DestroyNotify queued', 'lifecycle query drained event and retired reader',
+                            'first XTEST KeyPress emitted', 'later press denied by retired lifecycle reader',
+                            'prefix release emitted and locally read back'],
+                    }
+                expected = 'refused' if fault == 'stale' and selected else 'execution_failed' if fault in ('modifier','destroy_gap','blocked','qualified') else 'completed'
+                self.assertEqual(result['status'], expected, result)
+                if expected == 'completed': self.assertEqual(fake.emissions, [(2,1),(2,2),(3,2),(3,1)])
+                elif fault == 'stale': self.assertEqual(fake.emissions, [])
+                else:
+                    self.assertEqual(fake.emissions, [(2,1),(3,1)])
+                    self.assertTrue(result['result']['execution']['releases'][-1]['verified'])
+                self.assertEqual(fake.down, set())
+                if fault in ('blocked','qualified'):
+                    self.assertFalse(resume.is_set())
+                    sequence = fake.backend.owner.sequence
+                    resume.set()
+                    for _ in range(100):
+                        done = connection.closed if fault=='blocked' else visual_closed.is_set()
+                        if done: break
+                        await asyncio.sleep(.005)
+                    self.assertTrue(connection.closed if fault=='blocked' else visual_closed.is_set())
+                    self.assertEqual(fake.backend.owner.sequence, sequence)
+                    retried = metadata(await server.call_tool('interface_guarded_input', args))
+                    self.assertEqual(retried['status'], 'refused')
+                if isolated and expected == 'completed':
+                    records = list(Path(td).rglob('qualified-observation-*.json'))
+                    self.assertTrue(records)
+                    self.assertTrue(all(json.loads(p.read_text())['pointer_binding']['window_generation']==token for p in records))
+                before = list(fake.emissions)
+                await server.call_tool('interface_results', {'call_id':result['call_id']})
+                self.assertEqual(fake.emissions, before)
+            finally:
+                resume.set()
+                await server.call_tool('interface_close', {})
+
+    async def test_healthy(self): await self.exercise()
+    async def test_unselected_process_only_still_allows_same_xid_residual(self): await self.exercise('stale', selected=False)
+    async def test_reparent_remap(self): await self.exercise('reparent')
+    async def test_same_process_destroy_reuse(self): await self.exercise('stale')
+    async def test_destroy_during_initial_capture_refuses_source_through_caller(self):
+        fake = FakeX(self)
+        fake.backend.d.get_display_name = lambda: ':fake-lifecycle'
+        connection = LifecycleConnection()
+        capture = fake.backend.observe_read_only
+        def destroyed_during_capture(*args, **kwargs):
+            result = capture(*args, **kwargs)
+            connection.event(X.DestroyNotify)
+            return result
+        fake.backend.observe_read_only = destroyed_during_capture
+        with tempfile.TemporaryDirectory() as td, \
+                patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection), \
+                patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity', side_effect=fake.read):
+            server = create_server({'app':20}, td, session_mode='guarded-x11',
+                guarded_process_identity=True, guarded_query_worker=True, guarded_window_lifecycle=True)
+            try:
+                observed = metadata(await server.call_tool('interface_guarded_observe', {}))
+                self.assertEqual(observed['status'], 'refused', observed)
+                self.assertNotIn('source', observed)
+                self.assertFalse(observed['input_dispatched'])
+                minted = metadata(await server.call_tool('interface_guarded_mint', dict(
+                    alias='field', source_sequence=1, point=[8,8], region_size=[12,12])))
+                self.assertEqual(minted['status'], 'refused', minted)
+                self.assertEqual(fake.emissions, [])
+            finally:
+                await server.call_tool('interface_close', {})
+    async def test_modifier_prefix_released(self): await self.exercise('modifier')
+    async def test_destroy_between_final_check_and_xtest_emit(self): await self.exercise('destroy_gap')
+    async def test_cancel_blocked_lifecycle(self): await self.exercise('blocked', 'cancel')
+    async def test_expire_blocked_lifecycle(self): await self.exercise('blocked', 'expiry')
+    async def test_isolated_observation_healthy(self): await self.exercise(isolated=True)
+    async def test_isolated_observation_modifier_released(self): await self.exercise('modifier', isolated=True)
+    async def test_cancel_blocked_qualified_persistence(self): await self.exercise('qualified', 'cancel', isolated=True)
+    async def test_expire_blocked_qualified_persistence(self): await self.exercise('qualified', 'expiry', isolated=True)
+
+
+class LifecycleBoundaries(unittest.TestCase):
+    def test_capture_destroy_cannot_publish_sequence_or_history(self):
+        fake = FakeX(self)
+        fake.backend.d.get_display_name = lambda: ':fake-lifecycle'
+        connection = LifecycleConnection()
+        capture = fake.backend.observe_read_only
+        def changed(*args, **kwargs):
+            result = capture(*args, **kwargs)
+            connection.event(X.DestroyNotify)
+            return result
+        fake.backend.observe_read_only = changed
+        from runtime.guarded_x11_v1.bridge import NativeHandleBridge
+        with tempfile.TemporaryDirectory() as td, \
+                patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection):
+            bridge = NativeHandleBridge(None, {'app':20}, 'app', td+'/bridge',
+                process_identity=True, query_worker=True, window_lifecycle=True)
+            try:
+                with self.assertRaises(RuntimeError): bridge.observe()
+                self.assertEqual(bridge.sequence, 0)
+                self.assertEqual(len(bridge.history), 0)
+                self.assertTrue(bridge.review_required)
+                self.assertEqual(fake.emissions, [])
+            finally: bridge.close()
+
+    def test_activation_pins_source_and_rejects_destroy_before_native_request(self):
+        from runtime.guarded_x11_v1.bridge import NativeHandleBridge
+        for destroy in (False, True):
+            with self.subTest(destroy=destroy):
+                fake = FakeX(self); backend = fake.backend
+                backend.d.get_display_name = lambda: ':fake-lifecycle'
+                backend._activation_supported = lambda: True
+                backend._window_property = lambda name: [20]
+                backend._focus_within = lambda xid: True
+                backend.d.intern_atom = lambda name: 7
+                backend.d.flush = Mock(); backend.root.send_event = Mock()
+                connection = LifecycleConnection()
+                with tempfile.TemporaryDirectory() as td, \
+                        patch('runtime.guarded_x11_v1.target_queries.display.Display', return_value=connection), \
+                        patch('runtime.guarded_x11_v1.target_queries.read_linux_x11_process_identity', side_effect=fake.read), \
+                        patch('time.monotonic_ns', return_value=1_000_000):
+                    bridge = NativeHandleBridge(None, {'app':20}, 'app', td+'/bridge',
+                        process_identity=True, query_worker=True, window_lifecycle=True)
+                    try:
+                        source = bridge.observe()
+                        target = backend._activation_target
+                        def replaced(name):
+                            value = target(name)
+                            if destroy: connection.event(X.DestroyNotify)
+                            return value
+                        backend._activation_target = replaced
+                        result = bridge.activate_window(window_id=20, source_sequence=source['sequence'],
+                            current_binding_revision=0, expires_at_ns=2_000_000, timeout_ms=100)
+                        self.assertEqual(result['status'], 'execution_failed' if destroy else 'completed', result)
+                        self.assertEqual(backend.root.send_event.call_count, 0 if destroy else 1)
+                        self.assertTrue(result['execution']['releases'][-1]['verified'])
+                        self.assertEqual(fake.emissions, [])
+                    finally: bridge.close()
+
+    def test_selection_dependencies_and_cli_forwarding(self):
+        from .mcp_server import main
+        import io
+        with tempfile.TemporaryDirectory() as td:
+            for options in [dict(guarded_window_lifecycle=True),
+                            dict(guarded_window_lifecycle=1),
+                            dict(guarded_window_lifecycle=True, guarded_process_identity=True)]:
+                with self.assertRaises(ValueError):
+                    create_server({'app':20}, Path(td)/'absent', session_mode='guarded-x11', **options)
+                self.assertFalse((Path(td)/'absent').exists())
+            targets = Path(td)/'targets.json'; targets.write_text('{"app":20}')
+            argv = ['server','--targets',str(targets),'--output-directory',str(Path(td)/'out'),
+                '--session-mode','guarded-x11','--guarded-process-identity','--guarded-query-worker',
+                '--guarded-window-lifecycle']
+            with patch('sys.argv', argv), patch('runtime.cli_v1.mcp_server.create_server') as create:
+                main()
+                self.assertIs(create.call_args.kwargs['guarded_window_lifecycle'], True)
+            with patch('sys.argv', [x for x in argv if x!='--guarded-query-worker']), patch('sys.stderr', new_callable=io.StringIO):
+                with self.assertRaises(SystemExit): main()
+
+
+if __name__ == '__main__': unittest.main()

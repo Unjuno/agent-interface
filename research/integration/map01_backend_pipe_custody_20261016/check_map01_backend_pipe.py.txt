@@ -1,0 +1,53 @@
+import hashlib,importlib,json,os,subprocess,sys,unittest
+from pathlib import Path
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT=Path(__file__).parent/'map01-backend-pipe-final-r2-20261016'
+TESTS=['test_map01_backend_pipe_custody','test_map01_process_identity_backend','test_map01_backend_executor_custody','test_map01_v39_executor_pipe_recovery']
+if len(sys.argv)>1 and sys.argv[1]=='child':
+ folder=Path(sys.argv[2]);sys.path[:0]=[str(ROOT),str(ROOT/'research/doom'),str(ROOT/'research/live_control')]
+ modules=[importlib.import_module(name) for name in TESTS]
+ suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromModule(m) for m in modules)
+ def ids(s):
+  for t in s:
+   if isinstance(t,unittest.TestSuite):yield from ids(t)
+   else:yield t.id()
+ method_ids=list(ids(suite));result=unittest.TextTestRunner(verbosity=2).run(suite)
+ pins=[]
+ for m in tuple(sys.modules.values()):
+  path=getattr(m,'__file__',None)
+  if not path or not path.endswith('.py'):continue
+  path=Path(path).resolve()
+  try:name=path.relative_to(ROOT).as_posix()
+  except ValueError:continue
+  pins.append(dict(path=name,sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
+ data=dict(rows=modules[0].ROWS,prior_rows=modules[-1].ROWS,tests=result.testsRun,
+  failures=len(result.failures),errors=len(result.errors),skips=len(result.skipped),method_ids=method_ids,
+  optimize=sys.flags.optimize,pid=os.getpid(),source_pins=sorted(pins,key=lambda r:r['path']))
+ (folder/'RAW.json').write_text(json.dumps(data,indent=2))
+ sys.exit(0 if result.wasSuccessful() else 1)
+OUT.mkdir(exist_ok=False);receipts=[];joins={}
+for mode,flags in [('normal',[]),('optimized',['-O'])]:
+ folder=OUT/mode;folder.mkdir();command=[sys.executable,'-I',*flags,str(Path(__file__)),'child',str(folder)]
+ with (folder/'stdout').open('wb') as stdout,(folder/'stderr').open('wb') as stderr:
+  process=subprocess.Popen(command,cwd=ROOT,stdout=stdout,stderr=stderr);code=process.wait(timeout=60)
+ row=dict(pid=process.pid,command=command,exit_code=code);receipts.append(row)
+ (folder/'PROCESS.json').write_text(json.dumps(row,indent=2));raw=json.loads((folder/'RAW.json').read_text())
+ assert code==0 and raw['failures']==raw['errors']==raw['skips']==0 and len(raw['rows'])==3
+ for pin in raw['source_pins']:joins[pin['path']]=pin['sha256']
+ for cell in raw['rows']+raw['prior_rows']:
+  ready=next(r for r in cell['wire'] if r['event']=='fixture_ready')
+  assert (ready['pid']==cell['pid'] or ready['parent_pid']==cell['pid']) and ready['optimize']==raw['optimize']
+  assert cell['exit_code']==0 and not cell['forced_cleanup'] and not cell['reader_alive'] and not cell.get('cancel_thread_alive',False)
+  for pin in ready['source_pins']:
+   if pin['path'] in joins:assert joins[pin['path']]==pin['sha256']
+   joins[pin['path']]=pin['sha256']
+ print(json.dumps(dict(mode=mode,tests=raw['tests'],pipe_cells=3,child_pids=[r['pid'] for r in raw['rows']+raw['prior_rows']])) )
+source_rows=[]
+for path,digest in sorted(joins.items()):
+ b=subprocess.check_output(['git','show','HEAD:'+path],cwd=ROOT);w=(ROOT/path).read_bytes()
+ assert hashlib.sha256(w).hexdigest()==digest and b.replace(b'\r\n',b'\n')==w.replace(b'\r\n',b'\n')
+ source_rows.append(dict(path=path,sha256=digest,git_sha256=hashlib.sha256(b).hexdigest(),lf_equal=True))
+(OUT/'CONDITIONS.json').write_text(json.dumps(dict(tested_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+ python=sys.version,executable=sys.executable,sources=source_rows,
+ scope='actual owned Python pipes and Executor workers; test protocol shim and synthetic backend, not real session/native'),indent=2))
+(OUT/'PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2))

@@ -26,6 +26,8 @@ class _Adapter:
             raise ValueError('interface must name this bridge scope and X11 surface')
         if not all(callable(fn) for fn in (perceive, verify_effect, cancelled)):
             raise ValueError('explicit perception, effect verifier and cancellation callbacks required')
+        if not callable(getattr(bridge,'input_guard',None)):
+            raise ValueError('bridge input guard capability required')
         if type(bindings) is not dict or set(bindings) != set(self.interface['actions']):
             raise ValueError('one exact binding per declared action required')
         self.bindings = copy.deepcopy(bindings)
@@ -41,6 +43,7 @@ class _Adapter:
                 raise ValueError('explicit guarded tail list required')
         self.bridge = bridge
         self.scope, self.revision, self.surface = bridge.scope, bridge.binding_revision, surface(bridge)
+        self.target_generation = None
         self.perceive, self.verifier, self.cancelled = perceive, verify_effect, cancelled
         self.run_id = 'compiled-' + uuid.uuid4().hex
         self.event_index = 0
@@ -53,8 +56,22 @@ class _Adapter:
         self.bridge._save(name + '.json', copy.deepcopy(value))
         return name
 
-    def associated(self):
-        return (self.bridge.scope == self.scope and self.bridge.binding_revision == self.revision
+    def associated(self, native=None):
+        native = self.native if native is None else native
+        generation_matches = True
+        if native is not None:
+            binding = native.get('pointer_binding')
+            if type(binding) is not dict:
+                generation_matches = False
+            else:
+                generation = {key:binding[key] for key in
+                    ('process_generation','window_generation') if key in binding}
+                if self.target_generation is None:
+                    self.target_generation = generation
+                else:
+                    generation_matches = generation == self.target_generation
+        return (generation_matches and self.bridge.scope == self.scope
+                and self.bridge.binding_revision == self.revision
                 and surface(self.bridge) == self.surface and not self.bridge.review_required)
 
     def observe(self, request):
@@ -79,7 +96,7 @@ class _Adapter:
         native = self.bridge.observe()
         _, image = self.bridge.history[native['sequence']]
         self.native, self.image = copy.deepcopy(native), image.copy()
-        associated = (self.associated() and native['pointer_binding']['surface'] ==
+        associated = (self.associated(native) and native['pointer_binding']['surface'] ==
                       self.bridge.backend.targets[self.bridge.target].id and
                       native['binding_revision'] == self.revision)
         predicates = self.perceive(copy.deepcopy(native), image.copy()) if associated else {}
@@ -128,7 +145,8 @@ class _Adapter:
                     outcome.update(eligible=True,status='revalidated',authorization=authorization,valid_until_ns=deadline)
                     self.authorizations[authorization] = {'action':request['action'],'operation':request['operation'],
                         'expected_sequence':self.latest['sequence'],'valid_until_ns':deadline,
-                        'target_reference':symbol['target_reference']}
+                        'target_reference':symbol['target_reference'],
+                        'required_predicates':copy.deepcopy(needed)}
                 else:
                     outcome['status'] = {'STALE':'stale','MISSING':'missing','SCOPE_MISMATCH':'association_changed'}.get(resolution['status'],'authority_unavailable')
         self.retain('admission', {'request':request,'result':outcome})
@@ -148,8 +166,34 @@ class _Adapter:
             raw = {'status':'refused','error':'COMPILED_AUTHORIZATION_INVALID','input_dispatched':False}
         else:
             binding = self.bindings[request['action']]
-            raw = getattr(self.bridge,binding['interaction'])(authorization['target_reference'],binding['offset'],
-                tail=copy.deepcopy(binding['tail']), expires_at_ns=request['valid_until_ns'])
+            def verify_input(stage, native, image):
+                row = {'stage':stage,'action':request['action'],
+                    'observation_sequence':native['sequence'],
+                    'evidence_digest':native['native']['artifact']['sha256'],
+                    'required_predicates':copy.deepcopy(authorization['required_predicates']),
+                    'eligible':False}
+                try:
+                    if not self.associated(native):
+                        row['status'] = 'association_changed'
+                        return False
+                    predicates = self.perceive(copy.deepcopy(native),image.copy())
+                    if type(predicates) is not dict:
+                        raise ValueError('perception must return declared predicate values')
+                    row['predicates'] = copy.deepcopy(predicates)
+                    row['eligible'] = (self.associated(native) and
+                        native['binding_revision'] == self.revision and
+                        native['pointer_binding']['surface'] == self.bridge.backend.targets[self.bridge.target].id and
+                        all(predicates.get(name) is True for name in authorization['required_predicates']))
+                    return row['eligible']
+                except Exception as error:
+                    row['error_type'],row['error'] = type(error).__name__,repr(error)
+                    raise
+                finally:
+                    self.retain('input_dependency',row)
+            with self.bridge.input_guard(authorization['target_reference'],binding['offset'],
+                    tail=copy.deepcopy(binding['tail']),interaction=binding['interaction'],verify=verify_input):
+                raw = getattr(self.bridge,binding['interaction'])(authorization['target_reference'],binding['offset'],
+                    tail=copy.deepcopy(binding['tail']), expires_at_ns=request['valid_until_ns'])
         effect_ref = self.retain('execution', {'request':request,'action_id':action_id,'result':raw})
         releases = list(raw.get('execution',{}).get('releases',[]))
         # Pre-execution backend constraints return the actual cleanup receipt
@@ -184,7 +228,19 @@ class _Adapter:
                 self.bridge.sequence != self.latest['sequence']):
             result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
         else:
-            result = self.verifier(copy.deepcopy(request),copy.deepcopy(self.native),self.image.copy())
+            try:
+                result = self.verifier(copy.deepcopy(request),copy.deepcopy(self.native),self.image.copy())
+            except Exception as error:
+                # The graph consumes ordinary callback failure into a typed
+                # partial receipt; retain the originating adapter witness first.
+                try:
+                    self.retain('exception', {'stage':'effect_verification',
+                        'error_type':type(error).__name__,'error':repr(error),
+                        'replay_allowed':False,
+                        'effect_status':'unknown; inspect retained bridge receipts before any new action'})
+                except Exception:
+                    pass
+                raise
             if not self.associated() or self.bridge.sequence != self.latest['sequence']:
                 result = {'status':'unavailable','evidence_ref':request['observation']['evidence_ref']}
         self.retain('effect', {'request':request,'result':result})

@@ -1,0 +1,194 @@
+{
+  "audit_source_sha256": "b6f05afcbfa4dbbcfee1bdff6fc620050b8f385317f576909573c90bd06519c8",
+  "disposition": "PASS_SCOPED_WAKE_PIPE_SATURATION",
+  "end_utc": "2026-10-03T12:03:30.535336+00:00",
+  "exit_code": 0,
+  "first_sha256": "1d69a35be425e7f996c3f5a0ab6e8aaad3d242410c0fd40c45741c4d7a02e9f8",
+  "inputs_sha256": "49507144a2429706b4796d459222e031450eea20b46b244f82202456e6c8db24",
+  "qualified_rows": [
+    {
+      "cancelled": true,
+      "case_id": "wake-01",
+      "consumed": {
+        "C": 1,
+        "N": 0
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-02",
+      "consumed": {
+        "C": 1,
+        "N": 4096
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-03",
+      "consumed": {
+        "C": 1,
+        "N": 0
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": false,
+      "case_id": "wake-04",
+      "consumed": {
+        "C": 0,
+        "N": 4096
+      },
+      "pending": 0,
+      "primary_target_state": "OPEN"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-05",
+      "consumed": {
+        "C": 0,
+        "N": 0
+      },
+      "pending": 1,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-06",
+      "consumed": {
+        "C": 0,
+        "N": 0
+      },
+      "pending": 4096,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-07",
+      "consumed": {
+        "C": 0,
+        "N": 0
+      },
+      "pending": 4096,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-08",
+      "consumed": {
+        "C": 0,
+        "N": 0
+      },
+      "pending": 1,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": false,
+      "case_id": "wake-09",
+      "consumed": {
+        "C": 0,
+        "N": 4096
+      },
+      "pending": 0,
+      "primary_target_state": "OPEN"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-10",
+      "consumed": {
+        "C": 1,
+        "N": 0
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-11",
+      "consumed": {
+        "C": 1,
+        "N": 4096
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-12",
+      "consumed": {
+        "C": 1,
+        "N": 0
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-13",
+      "consumed": {
+        "C": 1,
+        "N": 0
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-14",
+      "consumed": {
+        "C": 1,
+        "N": 4096
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-15",
+      "consumed": {
+        "C": 1,
+        "N": 0
+      },
+      "pending": 0,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": false,
+      "case_id": "wake-16",
+      "consumed": {
+        "C": 0,
+        "N": 4096
+      },
+      "pending": 0,
+      "primary_target_state": "OPEN"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-17",
+      "consumed": {
+        "C": 0,
+        "N": 0
+      },
+      "pending": 1,
+      "primary_target_state": "EBADF"
+    },
+    {
+      "cancelled": true,
+      "case_id": "wake-18",
+      "consumed": {
+        "C": 0,
+        "N": 0
+      },
+      "pending": 4096,
+      "primary_target_state": "EBADF"
+    }
+  ],
+  "reasons": [],
+  "schema": "cancel-wake-audit-v1",
+  "scope": "Saved-only finite evidence consistency; not native authenticity, committee vote, general safety or deadline proof.",
+  "start_utc": "2026-10-03T12:03:30.441191+00:00"
+}

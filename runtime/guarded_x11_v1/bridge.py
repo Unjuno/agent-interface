@@ -7,26 +7,23 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from copy import deepcopy
-import hashlib
-import io
 import json
 from pathlib import Path
 import time
+import threading
 import uuid
 
 from PIL import Image
 from .handles import TargetHandleStore
 from .history import ObservationHistory
+from .process_identity import read_linux_x11_process_identity
+from .target_queries import TargetQueryWorker, focus_within_target
+from .observation_worker import CaptureBindingChanged, acquire_observation
 from runtime.backends.x11_v1.backend import X11Backend, X11BackendError
 from runtime.backends.x11_v1.session import X11RuntimeSession
 from runtime.core_v1.contract import SCHEMA_PROGRAM
-from runtime.core_v1.compiled_gui import ObservationAssociationChanged
 from runtime.cli_v1.api import dispatch_in_session
 from runtime.cli_v1.observe import observe_in_session
-
-
-class CaptureBindingChanged(X11BackendError, ObservationAssociationChanged):
-    """Exact before/after binding mismatch; retains the existing X11 error type."""
 
 
 def read_window_title(connection, window):
@@ -39,6 +36,32 @@ def read_window_title(connection, window):
     return window.get_wm_name()
 
 class _GuardedBackend(X11Backend):
+    def _before_activation_request(self,target,window_id):
+        self.owner._check_activation_context(target,window_id)
+        self._before_input_press()
+        self.owner._check_activation_context(target,window_id)
+        self.owner._check_cancelled()
+        if self.owner.deadline is None or time.monotonic_ns()>=self.owner.deadline:
+            raise X11BackendError('native activation lease expired before request')
+
+    def _before_input_press(self):
+        check_cancelled = getattr(self.owner, '_check_cancelled', None)
+        if check_cancelled is not None:
+            check_cancelled()
+        # Focus, pointer and key mapping queries can consume the original
+        # deadline. The opt-in identity read has its own final local fence.
+        if (self.owner.active is not None and self.owner.deadline is not None
+                and time.monotonic_ns() >= self.owner.deadline):
+            raise X11BackendError('native target guard lease expired before input press')
+        if getattr(self.owner, '_process_identity_guard', False):
+            self.owner._verify_process_identity_for_press()
+            # The identity query itself may consume the original deadline.
+            if (self.owner.deadline is None
+                    or time.monotonic_ns() >= self.owner.deadline):
+                raise X11BackendError('native target guard lease expired during process identity check')
+        if check_cancelled is not None:
+            check_cancelled()
+
     def key_state(self, key, down):
         # Text expands to key chords, so check each new press, including a
         # modifier's following key. Releases must remain possible after expiry.
@@ -54,6 +77,11 @@ class _GuardedBackend(X11Backend):
                 and self.owner.active[0] == self.owner._input_guard['alias']):
             self.owner.check('before_key_press:' + str(key))
         return super().key_state(key, down)
+
+    def _track_key_press(self, key, code):
+        # X11Backend calls this only after its final local press fence and
+        # immediately before XTEST emission.
+        self.owner._prearm_key_press(key, code)
 
     def _wait_update(self, timeout_ms):
         deadline = self.owner.deadline if self.owner.active is not None else None
@@ -91,9 +119,30 @@ class _GuardedBackend(X11Backend):
                 raise X11BackendError("guarded point moved after pointer motion")
         return super().pointer_button(button, down)
 
+    def _track_button_press(self, button):
+        self.owner._prearm_button_press(button)
+
 
 class NativeHandleBridge:
-    def __init__(self, display_name, targets, target, out):
+    def __init__(self, display_name, targets, target, out, *, process_identity=False, query_worker=False, observation_worker=False, window_lifecycle=False):
+        if type(process_identity) is not bool:
+            raise ValueError('process_identity must be a boolean')
+        if type(query_worker) is not bool or (query_worker and not process_identity):
+            raise ValueError('query_worker requires explicit process_identity=True')
+        if type(observation_worker) is not bool or (observation_worker and not query_worker):
+            raise ValueError('observation_worker requires explicit query_worker=True')
+        if type(window_lifecycle) is not bool or (window_lifecycle and not query_worker):
+            raise ValueError('window_lifecycle requires explicit query_worker=True')
+        self._window_lifecycle_guard = window_lifecycle
+        self._active_window_identity = None
+        self._target_queries = None
+        self._observations = None
+        self._closed = False
+        self._cancel_lock = threading.Lock()
+        self._cancel_ticket = None
+        self._used_cancel_tokens = set()
+        self._process_identity_guard = process_identity
+        self._active_process_identity = None
         self.out = Path(out)
         self.out.mkdir(parents=True, exist_ok=False)
         self.target = target
@@ -115,89 +164,222 @@ class NativeHandleBridge:
         try:
             self.backend.configure_capture_artifacts(self.out / "images", retain_rgb=True)
             self.session = X11RuntimeSession(self.backend)
+            if query_worker:
+                from . import target_queries
+                resolved_display = self.backend.d.get_display_name()
+                self._target_queries = TargetQueryWorker(lambda:target_queries.X11TargetQueries(resolved_display))
+                if observation_worker:
+                    from . import observation_worker as observations
+                    pinned_targets = dict(targets)
+                    self._observations = TargetQueryWorker(lambda:observations.X11ObservationReader(
+                        resolved_display,pinned_targets,target,self.out/'isolated-observations'))
         except Exception:
             self.backend.close()
             raise
 
     def close(self):
-        self.backend.close()
+        if self._consume_close(): self.backend.close()
+
+    def _consume_close(self):
+        if getattr(self,'_closed',False): return False
+        # Closure/failed closure cannot be reused as an open input owner.
+        self._closed = True
+        self.stop_target_queries()
+        return True
+
+    def stop_target_queries(self):
+        observations = getattr(self,'_observations',None)
+        if observations is not None: observations.close()
+        worker = getattr(self,'_target_queries',None)
+        return worker.close() if worker is not None else None
+
+    @contextmanager
+    def cancellation_scope(self, token, *, cancel_when_idle=False):
+        if self._target_queries is None or type(token) is not str or not 1 <= len(token) <= 64:
+            raise ValueError('explicit query-worker cancellation token required')
+        if type(cancel_when_idle) is not bool:
+            raise ValueError('cancel_when_idle must be an explicit boolean')
+        with self._cancel_lock:
+            if self._cancel_ticket is not None or token in self._used_cancel_tokens:
+                raise RuntimeError('cancellation token active or already consumed')
+            ticket = (token,threading.Event(),cancel_when_idle)
+            self._used_cancel_tokens.add(token)
+            self._cancel_ticket = ticket
+        try:
+            yield
+        finally:
+            with self._cancel_lock:
+                self._cancel_ticket = None
+
+    def request_cancel(self, token):
+        with self._cancel_lock:
+            ticket = self._cancel_ticket
+            if (ticket is None or ticket[0] != token
+                    or (self.active is None and not ticket[2])):
+                return {'status':'not_active','input_dispatched':False,'release_confirmed':False}
+            already = ticket[1].is_set()
+            ticket[1].set()
+            # Revoke reuse eligibility at acknowledgement time. The writer may
+            # be blocked inside transport and can finish without reaching its
+            # next cooperative cancellation check; callers must still review
+            # fresh state before issuing another input on this bridge.
+            self.review_required = True
+            return {'status':'cancel_requested','already_requested':already,
+                    'input_dispatched':False,'release_confirmed':False,
+                    'review_required':True,'replay_allowed':False}
+
+    def _cancel_requested(self):
+        lock = getattr(self,'_cancel_lock',None)
+        if lock is None: return False
+        with lock:
+            return self._cancel_ticket is not None and self._cancel_ticket[1].is_set()
+
+    def _prearm_key_press(self, key, code):
+        # Serialize the cancellation acknowledgement with the cleanup
+        # obligation. The lock is released before any X request or sync.
+        with self._cancel_lock:
+            ticket = self._cancel_ticket
+            if ticket is not None and ticket[1].is_set():
+                self.review_required = True
+                raise X11BackendError('guarded input cancellation requested; review required')
+            self.backend.held_keycodes[key] = code
+
+    def _prearm_button_press(self, button):
+        # As with keys, publish ownership before emitting the native press.
+        with self._cancel_lock:
+            ticket = self._cancel_ticket
+            if ticket is not None and ticket[1].is_set():
+                self.review_required = True
+                raise X11BackendError('guarded input cancellation requested; review required')
+            self.backend.held_buttons.add(button)
+
+    def _check_cancelled(self):
+        if self._cancel_requested():
+            self.review_required = True
+            raise X11BackendError('guarded input cancellation requested; review required')
+
+    def _target_query(self, operation, xid, *, idle_deadline_ns=None):
+        context = (self.scope,self.binding_revision,self.backend.targets[self.target].id)
+        try:
+            deadline = self.deadline if self.active is not None else idle_deadline_ns
+            value = self._target_queries.read(operation,xid,deadline_ns=deadline,cancelled=self._cancel_requested)
+            if context != (self.scope,self.binding_revision,self.backend.targets[self.target].id):
+                self._target_queries.close()
+                raise RuntimeError('target query context changed')
+            return value
+        except Exception as error:
+            self.review_required = True
+            raise X11BackendError('target query unavailable; close this session and review a fresh source') from error
 
     def _save(self, name, value):
         (self.out / name).write_text(json.dumps(value, indent=2) + "\n")
 
     def _binding(self):
-        focus = self.backend.d.get_input_focus().focus
-        geometry = self.backend.geometry(self.target)
-        return {"focus": getattr(focus, "id", focus),
+        if self._isolated_observation_active():
+            binding = self._observation_query('binding',None)
+        else:
+            focus = self.backend.d.get_input_focus().focus
+            geometry = self.backend.geometry(self.target)
+            binding = {"focus": getattr(focus, "id", focus),
                 "surface": self.backend.targets[self.target].id,
                 "geometry": [geometry[k] for k in ("x", "y", "width", "height")]}
+            if getattr(self, '_process_identity_guard', False):
+                binding['process_generation'] = self._read_process_identity()
+        if getattr(self, '_window_lifecycle_guard', False):
+            binding['window_generation'] = self._read_window_identity()
+        return binding
+
+    def _read_window_identity(self):
+        value = self._target_query('window_incarnation',self.backend.targets[self.target].id,
+                                  idle_deadline_ns=time.monotonic_ns()+1_000_000_000)
+        if type(value) is not str or len(value)!=64 or any(c not in '0123456789abcdef' for c in value):
+            self.review_required = True
+            self._target_queries.close()
+            raise X11BackendError('window lifecycle token unavailable')
+        return value
+
+    def _isolated_observation_active(self):
+        return (getattr(self,'_observations',None) is not None
+                and self.active is not None and self.deadline is not None)
+
+    def _observation_query(self,operation,request):
+        context = (self.scope,self.binding_revision,self.backend.targets[self.target].id,
+                   self.sequence,deepcopy(self.active),self.deadline)
+        try:
+            value = self._observations.read(operation,dict(window_id=context[2],payload=request),
+                deadline_ns=self.deadline,cancelled=self._cancel_requested)
+            if context!=(self.scope,self.binding_revision,self.backend.targets[self.target].id,
+                         self.sequence,self.active,self.deadline):
+                raise RuntimeError('observation context changed')
+            self._check_cancelled()
+            if time.monotonic_ns()>=self.deadline: raise RuntimeError('late observation discarded')
+            return value
+        except Exception as error:
+            self._observations.close()
+            self.review_required = True
+            if isinstance(error.__cause__,CaptureBindingChanged):
+                raise error.__cause__
+            raise X11BackendError('isolated visual check unavailable; close session and review fresh source') from error
+
+    def _read_process_identity(self):
+        try:
+            xid = self.backend.targets[self.target].id
+            if getattr(self,'_target_queries',None) is not None and self.active is not None and self.deadline is not None:
+                value = self._target_query('process_identity',xid)
+            else:
+                value = read_linux_x11_process_identity(self.backend.d,xid)
+            if (type(value) is not str or len(value) != 64
+                    or any(c not in '0123456789abcdef' for c in value)):
+                raise ValueError('invalid process identity digest')
+            return value
+        except Exception as error:
+            self.review_required = True
+            raise X11BackendError('process identity unavailable; explicit review required') from error
+
+    def _verify_process_identity_for_press(self):
+        expected = getattr(self, '_active_process_identity', None)
+        if self.active is None or expected is None or self._read_process_identity() != expected:
+            self.review_required = True
+            raise X11BackendError('process identity changed or unbound before input press')
+        if getattr(self,'_window_lifecycle_guard',False):
+            expected_window = self._active_window_identity
+            if expected_window is None or self._read_window_identity()!=expected_window:
+                self.review_required = True
+                raise X11BackendError('window incarnation changed or unbound before input press')
 
     def _focus_within_target(self, window_id=None):
         """Read-only X11 ancestry, not title/PID similarity or input authority."""
         if window_id is None:
             window_id = self.backend.targets[self.target].id
-        try:
-            focus = self.backend.d.get_input_focus().focus
-            seen = set()
-            for _ in range(64):
-                identifier = getattr(focus, 'id', None)
-                if type(identifier) is not int or identifier <= 0 or identifier in seen:
-                    return False
-                if identifier == window_id:
-                    return True
-                seen.add(identifier)
-                focus = focus.query_tree().parent
-        except Exception:
-            return False
-        return False
+        if getattr(self,'_target_queries',None) is not None and self.active is not None and self.deadline is not None:
+            return self._target_query('focus',window_id) is True
+        return focus_within_target(self.backend.d,window_id)
 
     def observe(self):
-        started_ns = time.monotonic_ns()
-        before = self._binding()
-        screen = self.backend.d.screen()
-        report = observe_in_session(self.session, target=self.target,
-            frame="screen_physical_px",
-            region=[0, 0, screen.width_in_pixels, screen.height_in_pixels])
-        public_returned_ns = time.monotonic_ns()
-        self._save("public-observation-" + report["observation_id"] + ".json", report)
-        if report["status"] != "returned":
-            raise X11BackendError("public observation failed; inspect retained report: "
-                                  + str(report.get("error", report["status"])))
-        native = report["observation"]
-        after = self._binding()
-        if before != after:
+        isolated = self._isolated_observation_active()
+        lifecycle = getattr(self,'_window_lifecycle_guard',False)
+        try:
+            before_window = self._read_window_identity() if lifecycle else None
+            if isolated:
+                observation,image = self._observation_query('capture',dict(
+                    sequence=self.sequence+1,revision=self.binding_revision))
+            else:
+                observation,image = acquire_observation(self.backend,self.target,self._binding,
+                    self.sequence+1,self.binding_revision,self._save,observe=observe_in_session,session=self.session)
+            if lifecycle:
+                if self._read_window_identity()!=before_window:
+                    raise CaptureBindingChanged('window incarnation changed during capture')
+                observation['pointer_binding']['window_generation'] = before_window
+                if isolated:
+                    self._observation_query('qualified',observation)
+                    if self._read_window_identity()!=before_window:
+                        raise CaptureBindingChanged('window incarnation changed during qualified persistence')
+        except CaptureBindingChanged:
             self.review_required = True
-            self._save("capture-binding-changed-" + report["observation_id"] + ".json", {
-                "reason": "association_changed", "before": before, "after": after,
-                "public_report": "public-observation-" + report["observation_id"] + ".json",
-                "last_valid_sequence": self.sequence, "authority_granted": False,
-                "replay_allowed": False})
-            raise CaptureBindingChanged("binding changed during native capture")
-        binding_checked_ns = time.monotonic_ns()
-        artifact = native["artifact"]
-        data = Path(artifact["path"]).read_bytes()
-        if (hashlib.sha256(data).hexdigest() != artifact["sha256"] or
-                artifact["source_raw_sha256"] != native["sha256"]):
-            raise X11BackendError("native artifact identity mismatch")
-        artifact_verified_ns = time.monotonic_ns()
-        # Use the very RGB pixels that produced this verified PNG. No new
-        # capture, older-frame reuse or reduced target revalidation occurs.
-        image = self.backend.take_capture_rgb(artifact)
-        decoded_ns = time.monotonic_ns()
-        self.sequence += 1
-        observation = {"sequence": self.sequence, "observation_id": report["observation_id"],
-                       "binding_revision": self.binding_revision,
-                       "capture_ns": native["capture_started_ns"],
-                       "image_source": "exact_capture_rgb_handoff",
-                       "pointer_binding": before, "native": native,
-                       # Ends before history publication; not model-visible latency.
-                       "timing_ns": {"started": started_ns,
-                                     "public_returned": public_returned_ns,
-                                     "binding_checked": binding_checked_ns,
-                                     "artifact_verified": artifact_verified_ns,
-                                     "decoded": decoded_ns}}
+            raise
+        self.sequence = observation['sequence']
         self.history[self.sequence] = (observation, image)
-        self._save(f"observation-{self.sequence}.json", observation)
+        if not isolated: self._save(f"observation-{self.sequence}.json", observation)
         return observation
 
     def focused_client_window(self):
@@ -263,7 +445,7 @@ class NativeHandleBridge:
         Uses ordinary admission and the caller's lease. No editing, automatic
         replay, alias renewal or successful-task assertion follows activation.
         """
-        if (self.active is not None or self.session.recovery_required or
+        if (getattr(self,'_closed',False) or self.active is not None or self.session.recovery_required or
                 type(window_id) is not int or window_id != self.backend.targets[self.target].id or
                 type(source_sequence) is not int or source_sequence < 1 or source_sequence != self.sequence or
                 type(current_binding_revision) is not int or current_binding_revision != self.binding_revision or
@@ -271,6 +453,11 @@ class NativeHandleBridge:
                 type(timeout_ms) is not int or not 0 <= timeout_ms <= 2000):
             return {'status': 'refused', 'error': 'ACTIVATION_CONTEXT_MISMATCH',
                     'input_dispatched': False, 'task_success': None, 'replay_allowed': False}
+        try:
+            source = self._activation_evidence(window_id,source_sequence,current_binding_revision)
+        except Exception as error:
+            return dict(status='refused',error='ACTIVATION_SOURCE_UNAVAILABLE',detail=repr(error),
+                        input_dispatched=False,task_success=None,replay_allowed=False)
         program = {
             'schema': SCHEMA_PROGRAM, 'program_id': 'activate-' + uuid.uuid4().hex,
             'source': {'observation_seq': source_sequence, 'binding_revision': current_binding_revision},
@@ -282,6 +469,10 @@ class NativeHandleBridge:
         self._save('program-' + program['program_id'] + '.json', program)
         previous_review_required = self.review_required
         self.active = ('activation', None)
+        self.deadline = expires_at_ns
+        self._active_process_identity = source['pointer_binding'].get('process_generation')
+        self._active_window_identity = source['pointer_binding'].get('window_generation')
+        self._activation_context = (self.scope,current_binding_revision,source_sequence,window_id,expires_at_ns,source)
         try:
             # Any thrown exception here may follow a WM request. Keep editing
             # blocked until the caller explicitly reviews the current window.
@@ -300,6 +491,40 @@ class NativeHandleBridge:
             return result
         finally:
             self.active = None
+            self.deadline = None
+            self._active_process_identity = None
+            self._active_window_identity = None
+            self._activation_context = None
+
+    def _activation_evidence(self,window_id,sequence,revision):
+        source = self.history[sequence][0]
+        capture_ns = source['capture_ns']
+        if (type(source['sequence']) is not int or type(source['binding_revision']) is not int
+                or source['sequence']!=sequence or source['binding_revision']!=revision
+                or source['pointer_binding']['surface']!=window_id
+                or type(capture_ns) is not int or capture_ns<0 or capture_ns>time.monotonic_ns()):
+            raise X11BackendError('retained activation source association invalid')
+        if getattr(self,'_process_identity_guard',False):
+            digest = source['pointer_binding'].get('process_generation')
+            if type(digest) is not str or len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest):
+                raise X11BackendError('retained activation process generation required')
+        if getattr(self,'_window_lifecycle_guard',False):
+            digest = source['pointer_binding'].get('window_generation')
+            if type(digest) is not str or len(digest)!=64 or any(c not in '0123456789abcdef' for c in digest):
+                raise X11BackendError('retained activation window incarnation required')
+        return deepcopy(source)
+
+    def _check_activation_context(self,target,window_id):
+        context = getattr(self,'_activation_context',None)
+        if (context is None or self.active!=('activation',None) or getattr(self,'_closed',False)
+                or target!=self.target or context[:5]!=(self.scope,self.binding_revision,self.sequence,window_id,self.deadline)
+                or self.backend.targets[self.target].id!=window_id):
+            raise X11BackendError('guarded activation context changed')
+        try:
+            source = self._activation_evidence(window_id,self.sequence,self.binding_revision)
+            if source!=context[5]: raise X11BackendError('guarded activation source changed')
+        except Exception as error:
+            raise X11BackendError('guarded activation source unavailable before request') from error
 
     def review_window(self, window_id):
         """Explicit read-only handoff on this connection; revoke old aliases.
@@ -310,6 +535,14 @@ class NativeHandleBridge:
         """
         if self.active is not None:
             raise RuntimeError('cannot review another window during input')
+        if getattr(self,'_target_queries',None) is not None and self._target_queries.snapshot()['retired']:
+            self.review_required = True
+            return {'status':'needs_review','error':'TARGET_QUERY_WORKER_RETIRED_CLOSE_SESSION',
+                    'authority_granted':False,'input_dispatched':False,'replay_allowed':False}
+        if getattr(self,'_observations',None) is not None and self._observations.snapshot()['retired']:
+            self.review_required = True
+            return {'status':'needs_review','error':'OBSERVATION_WORKER_RETIRED_CLOSE_SESSION',
+                    'authority_granted':False,'input_dispatched':False,'replay_allowed':False}
         if type(window_id) is not int or window_id <= 0:
             raise ValueError('explicit positive window ID required')
         previous_scope = self.scope
@@ -343,6 +576,40 @@ class NativeHandleBridge:
         row['ended_ns'] = time.monotonic_ns()
         self._save('window-review-' + uuid.uuid4().hex + '.json', row)
         return row
+
+    def recover_input(self, current_binding_revision):
+        """One explicit release-only attempt on this owner, never a replay.
+
+        Revocation commits before native I/O. Even a failed/unknown attempt
+        consumes its revision; review and fresh grounding remain separate.
+        """
+        refused = dict(status='refused',release_attempted=False,authority_granted=False,
+                       task_success=None,replay_allowed=False,binding_revision=self.binding_revision)
+        if getattr(self,'_closed',False):
+            return dict(refused,error='RECOVERY_REQUIRES_OPEN_SESSION')
+        if self.active is not None:
+            return dict(refused,error='INPUT_OWNER_BUSY')
+        if type(current_binding_revision) is not int or current_binding_revision!=self.binding_revision:
+            return dict(refused,error='SESSION_BINDING_REVISION_MISMATCH')
+        if not self.session.recovery_required:
+            return dict(refused,error='INPUT_RECOVERY_NOT_REQUIRED',recovery_required=False)
+        previous = self.binding_revision
+        self.review_required = True
+        self.binding_revision += 1
+        self.scope = 'native-x11:' + uuid.uuid4().hex
+        self.store = TargetHandleStore(self.scope)
+        self.history.clear()
+        # No capture, source publication, reconnect, callback or program follows.
+        self.active = ('input-recovery',None)
+        try:
+            report = self.session.recover_input()
+        finally:
+            self.active = None
+        return dict(report,previous_binding_revision=previous,binding_revision=self.binding_revision,
+            review_required=True,authority_granted=False,task_success=None,replay_allowed=False,
+            task_effect_status='unknown',
+            note='One release-only attempt. Review this window and mint fresh aliases before new input; '
+                 'retired workers stay retired. Prior task effects remain unknown. No replay or lease issued.')
 
     def _window_title(self):
         window = self.backend.targets[self.target]
@@ -397,8 +664,8 @@ class NativeHandleBridge:
         return row
 
     @contextmanager
-    def input_guard(self, alias, offset, *, tail, verify):
-        """Explicit additional check for one frozen keyboard program.
+    def input_guard(self, alias, offset, *, tail, verify, interaction='keyboard'):
+        """Explicit additional check for one frozen guarded interaction.
 
         Trusted synchronous caller code, never authority or automatic renewal.
         The caller serializes this context with all other use of the owner.
@@ -408,13 +675,17 @@ class NativeHandleBridge:
             raise RuntimeError('input guard requires an idle, unguarded bridge')
         if self.review_required or self.session.recovery_required:
             raise RuntimeError('input guard requires reviewed, recovered bridge')
+        if interaction not in ('keyboard','click','move'):
+            raise ValueError('explicit keyboard/click/move interaction required')
         if (not isinstance(alias, str) or not alias or not isinstance(offset, list)
                 or len(offset) != 2 or any(type(v) is not int or v < 0 for v in offset)
-                or not isinstance(tail, (list, tuple)) or not tail or not callable(verify)):
+                or not isinstance(tail, (list, tuple))
+                or (interaction == 'keyboard' and not tail) or not callable(verify)):
             raise ValueError('explicit alias, integer offset, frozen tail and callable check required')
         self._input_guard = {'alias':alias, 'offset':deepcopy(offset),
                              'tail':deepcopy(list(tail)), 'verify':verify,
-                             'scope':self.scope, 'revision':self.binding_revision}
+                             'scope':self.scope, 'revision':self.binding_revision,
+                             'interaction':interaction}
         try:
             yield
         finally:
@@ -434,7 +705,9 @@ class NativeHandleBridge:
         try:
             if self.scope != guard['scope'] or self.binding_revision != guard['revision']:
                 raise X11BackendError('input guard binding changed')
-            decision = guard['verify'](stage, deepcopy(source), image.copy())
+            arguments = (guard['verify'],stage,deepcopy(source),image.copy())
+            decision = (self._observation_query('verify',arguments) if self._isolated_observation_active()
+                        else guard['verify'](*arguments[1:]))
             if decision is not True:
                 raise X11BackendError('additional input dependency refused')
             if (self.sequence != sequence or self.active != active
@@ -507,9 +780,9 @@ class NativeHandleBridge:
         if protected:
             if self.scope != guard['scope'] or self.binding_revision != guard['revision']:
                 raise X11BackendError('input guard binding changed before dispatch')
-            if (interaction != 'keyboard' or offset != guard['offset']
+            if (interaction != guard['interaction'] or offset != guard['offset']
                     or list(tail) != guard['tail']):
-                raise ValueError('protected input differs from frozen keyboard program')
+                raise ValueError('protected input differs from frozen guarded interaction')
         # An outer method may shorten, never renew, this input lease. The caller
         # must use this process's monotonic clock domain (not wall-clock time).
         if expires_at_ns is not None:
@@ -531,6 +804,8 @@ class NativeHandleBridge:
         if interaction == 'keyboard' and not any(op.get('op') in {'text', 'key_chord'} for op in tail):
             raise ValueError('keyboard continuation requires explicit keyboard input')
         self.active = (alias, offset)
+        self._active_process_identity = None
+        self._active_window_identity = None
         self.checks = []
         self.additional_checks = []
         self.deadline = time.monotonic_ns() + 5_000_000_000
@@ -540,6 +815,10 @@ class NativeHandleBridge:
         try:
             try:
                 point = self.check("before_admission")["point"]
+                if getattr(self, '_process_identity_guard', False):
+                    self._active_process_identity = self.history[self.sequence][0]['pointer_binding']['process_generation']
+                if getattr(self, '_window_lifecycle_guard', False):
+                    self._active_window_identity = self.history[self.sequence][0]['pointer_binding']['window_generation']
                 if time.monotonic_ns() >= self.deadline:
                     raise X11BackendError('native target guard lease expired before dispatch')
             except Exception as error:
@@ -578,3 +857,5 @@ class NativeHandleBridge:
         finally:
             self.active = None
             self.deadline = None
+            self._active_process_identity = None
+            self._active_window_identity = None

@@ -1,0 +1,8 @@
+[
+ {"case_id":"stable_target","observed_frame_id":"f1","observed_ns":1000000000,"decision_ns":1050000000,"contradiction_ns":null,"current_changed":false,"effect_status":"NONE","forecast_state":"target_stable","unknowns":[]},
+ {"case_id":"target_moved_after_capture","observed_frame_id":"f2","observed_ns":2000000000,"decision_ns":2220000000,"contradiction_ns":2150000000,"current_changed":true,"effect_status":"NONE","forecast_state":"target_right","unknowns":["CURRENT_TARGET"]},
+ {"case_id":"delayed_save_ack","observed_frame_id":"f3","observed_ns":3000000000,"decision_ns":3050000000,"contradiction_ns":null,"current_changed":false,"effect_status":"PENDING","forecast_state":"saved","unknowns":["SAVE_EFFECT"]},
+ {"case_id":"partial_unknown_effect","observed_frame_id":"f4","observed_ns":4000000000,"decision_ns":4060000000,"contradiction_ns":null,"current_changed":false,"effect_status":"PARTIAL","forecast_state":"complete","unknowns":["REMAINING_EFFECT"]},
+ {"case_id":"abrupt_regime_change","observed_frame_id":"f5","observed_ns":5000000000,"decision_ns":5120000000,"contradiction_ns":5080000000,"current_changed":true,"effect_status":"UNKNOWN","forecast_state":"continue","unknowns":["CURRENT_STATE","EFFECT"]},
+ {"case_id":"predictor_miss","observed_frame_id":"f6","observed_ns":6000000000,"decision_ns":6060000000,"contradiction_ns":null,"current_changed":false,"effect_status":"NONE","forecast_state":"wrong_target","unknowns":[]}
+]

@@ -446,6 +446,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             lease.focus_invalid = False
             display_instance.drop_keyreleases = 1
             backend = object.__new__(V15Backend)
+            backend._executor_custody_lock = threading.RLock()
+            backend._executor_custody_owner = None
+            backend._executor_release_obligation = None
             backend.owner = owner
             backend.held = set()
             backend.lease = lease
@@ -589,6 +592,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             lease.focus_invalid = False
             display_instance.drop_keyreleases = 12
             backend = object.__new__(V15Backend)
+            backend._executor_custody_lock = threading.RLock()
+            backend._executor_custody_owner = None
+            backend._executor_release_obligation = None
             backend.owner = owner
             backend.held = set()
             backend.lease = lease
@@ -733,6 +739,9 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             lease.expected_focus = 41
             lease.focus_invalid = False
             backend = object.__new__(V15Backend)
+            backend._executor_custody_lock = threading.RLock()
+            backend._executor_custody_owner = None
+            backend._executor_release_obligation = None
             backend.owner = owner
             backend.held = set()
             backend.lease = lease

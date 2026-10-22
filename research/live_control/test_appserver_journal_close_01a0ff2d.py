@@ -147,6 +147,7 @@ class JournalCloseTests(unittest.TestCase):
 
     def fake_client(self, journal):
         client = object.__new__(CodexAppServerClient)
+        client._condition = threading.Condition()
         client.process = DeadProcess()
         client._reader = RetiredReader()
         client._journal = journal

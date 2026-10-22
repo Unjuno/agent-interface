@@ -1,0 +1,22 @@
+{
+  "candidate_invocations": 1,
+  "classification": "PASS_METHOD_SCOPED for two simultaneous keys through actual V15 process backend raw path and isolated Xvfb process-death recovery",
+  "finding": "All frozen A10 gates are satisfied. Independent X11 observer saw both keycodes down before session-only SIGKILL and both KeyRelease/keymap-up after. Matching rpc_eof receipt is fsynced, recovery_verified=true, and has one verified empty close release with attempts for keycodes 38 and 40; owner thread stopped; service exit 0 without force kill; supervisor requested Xvfb termination and observed clean exit 0.",
+  "hashes": {
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/FREEZE.json": "7361990a71db80a555c91f93c4516b567135f30a842c5ff5bc5abb2bab4ae6e5",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/PLAN.md": "ba8e7bdf2b5d22d8dd33ede6a4db03e7d1add9c7166917efced4608df42c9a5f",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/candidate.py": "7be40ebcacfca298bcb01286558de590ab7a2e7ae1fec9cf644918519971d5de",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/results/A01/RAW.json": "b52da713a13e2b3d9f3412d1063a123ae23fd54ef6ddc772ed0e2accc9ba1d1a",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json": "411e3ada491e0a8c5a3de21042a6bf11c3712a45500280df5f00e5c6f63ac335",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/results/A01/session-events.jsonl": "22f484196c75a8167f053047d1a0d8470174816e53b383d9a4b04e4c378938fd",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/results/A01/session.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/results/A01/session.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/run_candidate.sh": "969c5920ffc6625ace469dbdbc4f2cf7e7854552856b9e9d3d000a523cb3e9e2"
+  },
+  "limitations": "One WSL2/Xvfb run with two keyboard keys only. No buttons, malformed RPC frames, owner-service death, full V15 CLI, outer V39 cleanup, display reuse gate, physical input, game/model, or task effect. Not product-level computer-control completion.",
+  "raw_sha256": "b52da713a13e2b3d9f3412d1063a123ae23fd54ef6ddc772ed0e2accc9ba1d1a",
+  "receipt_sha256": "411e3ada491e0a8c5a3de21042a6bf11c3712a45500280df5f00e5c6f63ac335",
+  "retries": 0,
+  "schema": "v39-v15-process-owner-xvfb-a10-audit-v1",
+  "status": "PASS_METHOD_SCOPED"
+}

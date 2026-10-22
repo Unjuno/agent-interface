@@ -42,6 +42,20 @@ class X11Backend:
         self.held_buttons: set[str] = set()
         self.emissions = 0
         self.capture_artifacts = None
+        self.interrupted_execution = None
+        self._input_obligation_publisher = None
+
+    def set_input_obligation_publisher(self, publisher) -> None:
+        if publisher is not None and not callable(publisher):
+            raise TypeError('input obligation publisher must be callable or None')
+        self._input_obligation_publisher = publisher
+        self._publish_input_obligations()
+
+    def _publish_input_obligations(self) -> None:
+        publisher = getattr(self, '_input_obligation_publisher', None)
+        if publisher is not None:
+            publisher(
+                dict(self.held_keycodes), sorted(self.held_buttons))
 
     def configure_capture_artifacts(self, directory, *, retain_rgb=False) -> None:
         from .capture_artifacts import CaptureArtifacts
@@ -124,6 +138,9 @@ class X11Backend:
             raise X11BackendError('activation target is not a managed client')
         return win
 
+    def _before_activation_request(self,target,window_id):
+        """Scoped subclasses may fence after all request-preparation queries."""
+
     def activate(self, target, timeout_ms, receipt):
         win = self._activation_target(target)
         started = time.monotonic_ns()
@@ -136,6 +153,7 @@ class X11Backend:
             client_type=self.d.intern_atom('_NET_ACTIVE_WINDOW'),
             data=(32, [2, X.CurrentTime, 0, 0, 0]))
         try:
+            self._before_activation_request(target,win.id)
             receipt['request_attempted'] = True
             self.root.send_event(event, event_mask=X.SubstructureRedirectMask | X.SubstructureNotifyMask)
             self.d.flush()
@@ -175,17 +193,36 @@ class X11Backend:
         self.emissions += 1
         self.d.sync()
 
+    def _before_input_press(self) -> None:
+        """Optional local admission fence after potentially blocking lookups.
+
+        The ordinary backend has no admission policy. Guarded adapters can
+        recheck their existing authority here, immediately before a new press.
+        Releases never invoke this fence.
+        """
+
+    def _track_key_press(self, key: str, code: int) -> None:
+        """Record the cleanup obligation immediately before emitting a press."""
+        self.held_keycodes[key] = code
+
+    def _track_button_press(self, button: str) -> None:
+        """Record the cleanup obligation immediately before emitting a press."""
+        self.held_buttons.add(button)
+
     def pointer_button(self, button: str, down: bool) -> None:
         number = BUTTON_MAP[button]
         # A request can reach the server even if sending/synchronizing raises.
         # Own the cleanup obligation before attempting the press.
         if down:
-            self.held_buttons.add(button)
+            self._before_input_press()
+            self._track_button_press(button)
+            self._publish_input_obligations()
         xtest.fake_input(self.d, X.ButtonPress if down else X.ButtonRelease, number)
         self.emissions += 1
         self.d.sync()
         if not down:
             self.held_buttons.discard(button)
+            self._publish_input_obligations()
 
     def _keycode(self, key: str) -> int:
         aliases = {
@@ -211,12 +248,15 @@ class X11Backend:
         if code is None:
             code = self._keycode(key)
         if down:
-            self.held_keycodes[key] = code
+            self._before_input_press()
+            self._track_key_press(key, code)
+            self._publish_input_obligations()
         xtest.fake_input(self.d, X.KeyPress if down else X.KeyRelease, code)
         self.emissions += 1
         self.d.sync()
         if not down:
             self.held_keycodes.pop(key, None)
+            self._publish_input_obligations()
 
     def _reject_held_nonmodifier_overlap(
         self, key_sequences: list[list[str]], *, held_keycodes: dict[str, int] | None = None
@@ -439,11 +479,19 @@ class X11Backend:
             self.emissions += 1
         self.d.sync()
         keys = self._physical_keys_down(tracked)
-        buttons = self._physical_buttons_down()
+        buttons = set(self._physical_buttons_down())
+        # Core QueryPointer exposes only buttons 1–5. The XTEST map also
+        # accepts extended buttons 8/9, whose state this readback cannot
+        # establish. Preserve those obligations as UNKNOWN instead of treating
+        # their absence from the core mask as a verified release.
+        observable_buttons = {'left', 'middle', 'right'}
+        buttons.update(self.held_buttons - observable_buttons)
+        buttons = sorted(buttons)
         # Preserve uncertain/down inputs until readback succeeds. A subsequent
         # explicit recovery must still know which releases it owes.
         self.held_keycodes = {name: code for name, code in tracked.items() if name in keys}
         self.held_buttons.intersection_update(buttons)
+        self._publish_input_obligations()
         return {
             "keys_down": keys,
             "buttons_down": buttons,
@@ -523,14 +571,25 @@ class X11Backend:
                 elif kind == "release_all": releases.append(self.release_all())
                 else: raise X11BackendError(f"unsupported op {kind}")
                 completed_ops.append(index)
-        except Exception as error:
+        except BaseException as error:
+            cleanup_interrupt = None
             try:
                 releases.append(self.release_all())
-            except Exception as release_error:
+            except BaseException as release_error:
                 releases.append({"verified": False, "error": repr(release_error),
                                  "monotonic_ns": time.monotonic_ns()})
+                if not isinstance(release_error, Exception):
+                    cleanup_interrupt = release_error
             partial = evidence()
             partial.update(error=repr(error), failed_op=index,
                            failed_op_effect="unknown; may have emitted partial input")
+            if not isinstance(error, Exception) or cleanup_interrupt is not None:
+                # Keep stop/exit semantics and the original execution failure.
+                # This snapshot survives a release exception; no program suffix
+                # or second input writer follows the interrupted operation.
+                self.interrupted_execution = partial
+                if not isinstance(error, Exception):
+                    raise
+                raise cleanup_interrupt from error
             raise X11ExecutionError(partial) from error
         return evidence()

@@ -1,0 +1,9 @@
+{
+  "schema": "agent-interface/standard-caller-xvfb-experiment-conditions-v1",
+  "run_id": "AI-XVFB-PRESTARTED-FRESH-RECOVERY-20261022-R03",
+  "frozen_at_local": "2026-10-22 Asia/Tokyo",
+  "source": {"repository":"Unjuno/agent-interface","commit":"6b276fcabfa11c060282e0714501a1057e75c0a6","test":"runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py::StandardCallerBlockedReleaseXvfbTests.test_standard_caller_cancels_blocked_sync_and_releases_on_xvfb"},
+  "environment": {"distribution":"Ubuntu 24.04 WSL2","python":"3.12.3","xvfb_package":"2:21.1.12-1ubuntu1.8","display":":88","xvfb_arguments":["-nolisten","tcp","-screen","0","1024x768x24","-ac"],"private_user_mount_namespace":true,"private_tmpfs_socket_dir_mode":1777,"wslc_used":false,"docker_used":false,"dependency_policy":"reuse existing R02 pinned local cache only; no install or network"},
+  "frozen_conditions": {"owner_ack_withheld_s":1.0,"delayed_keypress_ms":8000,"test_asserted_cancel_bound_ms":3000,"independent_research_cancel_target_ms":300,"terminal_result_bound_ms":5000,"runs":1,"no_retry_after_candidate_invocation":true},
+  "decision": {"require_unittest_pass":true,"require_caller_response_ms_lte":300,"require_independent_release_readback_all_up":true,"require_distinct_target_session_process_generation":true,"require_fresh_task_oracle_at_input_and_horizon":true,"require_old_unknown_fence_unchanged":true,"reliability_claim":false}
+}

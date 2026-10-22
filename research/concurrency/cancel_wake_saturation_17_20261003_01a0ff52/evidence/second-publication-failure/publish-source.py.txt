@@ -1,0 +1,33 @@
+import ast,datetime,hashlib,json,os,pathlib,subprocess
+root=pathlib.Path.cwd();repo=root/'work/agent-interface';prefix='research/concurrency/cancel_wake_saturation_17_20261003_01a0ff52';p=root/'work/cancel-wake-17'/prefix;out=root/'work/cancel-wake-17-intake/publication-v2';out.mkdir(exist_ok=False)
+source='3bccdf99f657cc6f7426090a202fd59bee494e67';base='effc43f8bd11f20f83c3410101c04f31c0c353f7';branch='refs/heads/research/17-cancel-wake-01a0ff52-70ab';env=dict(os.environ,GIT_INDEX_FILE=str(out/'index'),GIT_NO_LAZY_FETCH='1');rec=[]
+def sha(b):return hashlib.sha256(b).hexdigest()
+def git(*a,data=None):
+ s=datetime.datetime.now(datetime.timezone.utc).isoformat();q=subprocess.Popen(['git',*a],cwd=repo,env=env,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE);b,e=q.communicate(data);rec.append(dict(argv=['git',*a],pid=q.pid,start_utc=s,end_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),exit_code=q.returncode,stdout_sha256=sha(b),stderr_sha256=sha(e)));(out/'COMMANDS.json').write_text(json.dumps(rec,indent=2)+'\n')
+ if q.returncode:raise RuntimeError(e.decode())
+ return b
+freeze=json.loads((p/'FREEZE.json').read_bytes())
+for n,h in freeze['source_sha256'].items():
+ if sha((p/n).read_bytes())!=h or git('cat-file','blob',source+':'+prefix+'/'+n)!=(p/n).read_bytes():raise RuntimeError('frozen source changed')
+if git('cat-file','blob',source+':'+prefix+'/FREEZE.json')!=(p/'FREEZE.json').read_bytes():raise RuntimeError('freeze changed')
+for f in p.rglob('*.py.txt'):ast.parse(f.read_bytes())
+files=sorted(f for f in p.rglob('*') if f.is_file())
+if any(f.name=='SHA256SUMS' for f in files):raise RuntimeError('already manifested')
+(p/'SHA256SUMS').write_text(''.join(sha(f.read_bytes())+'  '+str(f.relative_to(p))+'\n' for f in files));files=sorted([*files,p/'SHA256SUMS'])
+if sum(f.stat().st_size for f in files)>=2097152:raise RuntimeError('publication byte ceiling')
+git('read-tree',source)
+for f in files:
+ n=prefix+'/'+str(f.relative_to(p));oid=git('hash-object','-w','--stdin',data=f.read_bytes()).decode().strip();git('update-index','--add','--cacheinfo','100644',oid,n)
+tree=git('write-tree','--missing-ok').decode().strip();delta=git('diff-tree','--no-commit-id','--name-status','-r',base,tree).decode().splitlines()
+if set(delta)!={'A\t'+prefix+'/'+str(f.relative_to(p)) for f in files}:raise RuntimeError('nonadditive scope')
+git('diff','--no-ext-diff','--no-textconv','--check',base,tree)
+head=git('-c','user.name=Unjuno','-c','user.email=241447786+Unjuno@users.noreply.github.com','commit-tree',tree,'-p',source,data=b'research: retain cancellation-wake saturation18 first cells [skip ci]\n\nOne fresh native Linux allocation; scoped independent saved-audit PASS. Inert evidence, source freeze and first construction failures retained. No runtime adoption or physical-release claim.\n').decode().strip()
+git('update-ref',branch,head,source)
+records=[]
+for f in files:
+ n=prefix+'/'+str(f.relative_to(p));b=git('cat-file','blob',head+':'+n)
+ if b!=f.read_bytes():raise RuntimeError('blob readback')
+ records.append(dict(path=n,before=None,after={'mode':'100644','oid':git('rev-parse',head+':'+n).decode().strip(),'bytes':len(b),'sha256':sha(b)}))
+blobmap=json.dumps(records,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode();(out/'CHANGED_BLOBS.json').write_bytes(blobmap)
+result=dict(base=base,source=source,head=head,tree=tree,branch=branch,prefix=prefix,files=len(files),bytes=sum(f.stat().st_size for f in files),manifest_targets=len(files)-1,changed_blobs_sha256=sha(blobmap),manifest_sha256=sha((p/'SHA256SUMS').read_bytes()),all_base_entries_retained=True,frozen9_unchanged=True,all_blobs_readback_exact=True,main_sends=0,formal_replays=0,whitespace_exit0=True)
+(out/'PUBLICATION_COMMIT.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))

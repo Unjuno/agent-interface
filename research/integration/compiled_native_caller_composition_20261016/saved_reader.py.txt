@@ -1,0 +1,58 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'compiled-native-caller-final-r4-20261016'
+KEY='test_compiled_native_caller_composition.ROWS'
+CHORD=[[2,1],[2,2],[3,2],[3,1]]
+def check(rows):
+    if len(rows)!=8 or {(r['fault'],r['outer']) for r in rows}!={('healthy','unavailable'),('healthy','failed'),('before','unavailable'),('during','unavailable'),('between','unavailable'),('wrong','unavailable'),('unknown','unavailable'),('sink','unavailable')}:raise ValueError('coverage')
+    for row in rows:
+        fault=row['fault'];r=row['result'];core=r['compiled_execution_receipt']
+        prefix=0 if fault in ('before','during') else 1 if fault in ('between','wrong','unknown') else 2
+        emissions=[] if fault=='before' else [[2,1],[3,1]] if fault=='during' else CHORD*(1 if prefix==1 else 2)
+        if row['emissions']!=emissions or row['down'] or row['pending_authorizations']:raise ValueError('input custody')
+        if core['completed_transitions']!=prefix:raise ValueError('prefix')
+        if row['built'][0]['target']!=r['selected_target'] or r['selected_target']!={'id':'final','field':'final_field','submit':'final_submit'}:raise ValueError('target')
+        if r['outcome']!=('TASK_NOT_VERIFIED' if fault=='healthy' else 'CALLER_FAILED' if fault=='sink' else 'EXECUTION_INCOMPLETE'):raise ValueError('false task success')
+        if len(row['outer_checks'])!=(1 if fault=='healthy' else 0):raise ValueError('outer check')
+        if fault=='healthy' and (core['outcome']!='TASK_SUCCEEDED' or r['task_effect']!=row['outer']):raise ValueError('outer effect')
+        if row['receipts']!=[core]:raise ValueError('retained receipt')
+        files={n:json.loads(bytes.fromhex(v)) for n,v in row['native_files_hex'].items() if n.endswith('.json')}
+        terminals=[v for n,v in files.items() if n.endswith('-terminal.json')]
+        if terminals!=row['terminals']:raise ValueError('terminal join')
+        for terminal in terminals:
+            execution=files['bridge/'+terminal['effect_ref']+'.json']
+            raw=execution['result']
+            if execution['action_id']!=terminal['action_id'] or raw['status']!=terminal['status']:raise ValueError('execution join')
+            if terminal['status']=='completed' and terminal['release']['verified'] is not True:raise ValueError('release')
+            if raw.get('execution') and terminal['release']['verified'] is not True:raise ValueError('returned cleanup')
+        if fault=='between':
+            refused=next(t for t in terminals if t['status']=='refused')
+            if refused.get('input_dispatched') is not False or refused['release']['verified'] is not False:raise ValueError('refusal flattened')
+        references=[v for n,v in files.items() if n.endswith('-reference.json')]
+        for reference in references:
+            expected='final_field' if reference['action']=='enter_token' else 'final_submit'
+            if reference['resolution']['handle']!=expected:raise ValueError('reference')
+    return len(rows)
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-records.json').read_text())[KEY]
+    meta=json.loads((OUT/f'{mode}-result.json').read_text())
+    if (meta['methods'],meta['failures'],meta['errors'],meta['skipped'],len(set(meta['selected'])))!=(374,0,0,0,374):raise ValueError('suite')
+    count=check(rows);mutations=[]
+    for name in ('hidden_input','lost_prefix','false_success','wrong_target','false_release','dropped_raw'):
+        bad=copy.deepcopy(rows);positive=next(r for r in bad if r['fault']=='healthy')
+        if name=='hidden_input':positive['emissions']=[]
+        elif name=='lost_prefix':positive['result']['compiled_execution_receipt']['completed_transitions']=0
+        elif name=='false_success':positive['result']['outcome']='TASK_SUCCEEDED'
+        elif name=='wrong_target':positive['built'][0]['target']['field']='old_field'
+        elif name=='false_release':positive['terminals'][0]['release']['verified']=False
+        else:positive['native_files_hex']={}
+        try:check(bad)
+        except (ValueError,KeyError,StopIteration) as e:mutations.append(dict(name=name,rejected=str(e)))
+        else:raise ValueError('mutation accepted')
+    control=json.loads((OUT/f'baseline-{mode}-result.json').read_text())
+    old=json.loads((OUT/f'baseline-{mode}-records.json').read_text())
+    if (control['methods'],control['failures'],control['errors'],control['skipped'])!=(8,7,0,0):raise ValueError('baseline')
+    if any(row['emissions'] for row in old):raise ValueError('baseline emitted')
+    report[mode]=dict(rows=count,methods=374,mutations=mutations,baseline=control)
+print(json.dumps(dict(scope='saved-only Fake X composition consistency; no candidate import or independent application scoring',modes=report),indent=2))
