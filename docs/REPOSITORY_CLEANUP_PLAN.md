@@ -12,7 +12,7 @@ and updated the [supervisor design record](architecture/PRESTARTED_CANCEL_SUPERV
 The modeled accepted-before-return schedule makes current recovery refuse
 without UP while the fake key remains down. It is not native Win32 release
 evidence. Issue #17 remains OPEN with the result and limits recorded.
-Draft PR #9363 contains a design proposal only; do not count its candidate
+Open PR #9363 contains a design proposal only; do not count its candidate
 process boundary as qualified or merge it as implementation approval.
 
 Another existing result changes the provider-integration map: [golden desktop
