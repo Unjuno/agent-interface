@@ -1,0 +1,24 @@
+{
+  "baseline_commit": "12682ef54389cb3e7fe66757ed5ece64220fbde7",
+  "source_blobs": {
+    "runtime/cli_v1/mcp_relay.py": "9d24cbb6a299b1de112ac158362920bd514b6432",
+    "runtime/cli_v1/test_mcp_relay.py": "e1af8102d365d0416d6d95aef013ff0fbdd4f16f",
+    "runtime/cli_v1/test_mcp_relay_composition.py": "c8660eb5fa1d3c828d0158fee414490714b8e2cf"
+  },
+  "commands": {
+    "normal": "py -3.11 -m unittest runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller",
+    "optimized": "py -3.11 -O -m unittest runtime.cli_v1.test_mcp_relay_composition.StandardMCPRelayCompositionTests.test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller"
+  },
+  "python": "3.11.9",
+  "host_os": "Windows",
+  "runs": 1,
+  "execution_modes": ["normal", "optimized"],
+  "ordinary_responses_before_cancel": 16,
+  "fake_x": true,
+  "native_x11": false,
+  "physical_input": false,
+  "model_calls": 0,
+  "wslc": false,
+  "docker": false,
+  "allocation_id": null
+}

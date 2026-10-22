@@ -1,0 +1,34 @@
+{
+  "cancel_dispatched_while_stdout_blocked": true,
+  "cancel_response_written_after_stdout_resumed": true,
+  "cleanup_status": "UNKNOWN",
+  "disposition": "PASS_FAKE_X_RELAY_COMPOSITION_ONLY",
+  "fake_key_down_after_release": [],
+  "fake_key_down_before_release": [
+    "a"
+  ],
+  "late_server_request_possible": true,
+  "ordinary_requests_before_cancel": 16,
+  "owner_release_attempt": {
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "monotonic_ns": 334885578000000,
+      "verified": true
+    },
+    "status": "readback_verified",
+    "worker_retired": true
+  },
+  "release_confirmed": false,
+  "replay_allowed": false,
+  "source": "standard_mcp_caller_and_public_relay_with_synthetic_fake_x",
+  "task_success": null,
+  "timestamps_monotonic_ns": {
+    "cancel_admission_ns": 334885578000000,
+    "cancel_response_write_ns": 334885671000000,
+    "cancel_return_ns": 334885656000000,
+    "first_stdout_write_resumed_ns": 334885656000000,
+    "first_stdout_write_started_ns": 334885578000000,
+    "release_readback_ns": 334885593000000
+  }
+}

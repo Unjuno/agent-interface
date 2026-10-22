@@ -20,6 +20,7 @@ PUBLIC_TOOLS = ('list_tools', 'interface_clock', 'interface_validate', 'interfac
                 'interface_guarded_cancel', 'interface_guarded_compiled')
 
 MAX_PENDING_STDOUT_RESPONSES = 16
+MAX_PENDING_CANCEL_RESPONSES = 1
 
 
 def _finite_float(value):
@@ -57,7 +58,7 @@ class Relay:
         self.tools = tools
         self.next_id = 1
 
-    async def request(self, line):
+    def _parse_request(self, line):
         try:
             if isinstance(line, (bytes, bytearray)):
                 line = line.decode('utf-8')
@@ -74,7 +75,20 @@ class Relay:
                 raise ValueError('arguments object required')
             if request['tool'] == 'list_tools' and request['arguments']:
                 raise ValueError('list_tools takes empty arguments')
+            return request
         except (ValueError, TypeError, RecursionError) as error:
+            raise ValueError(str(error)) from error
+
+    def is_cancellation_request(self, line):
+        try:
+            return self._parse_request(line)['tool'] == 'interface_guarded_cancel'
+        except ValueError:
+            return False
+
+    async def request(self, line):
+        try:
+            request = self._parse_request(line)
+        except ValueError as error:
             return {'status':'refused', 'dispatched':False, 'next_id':self.next_id, 'error':str(error)}
         self.next_id += 1  # Consume before dispatch, including ambiguous failures.
         response = {'id':request['id'], 'tool':request['tool'], 'sdk_entry_ns':time.monotonic_ns()}
@@ -104,6 +118,10 @@ async def serve(server_args):
             relay = Relay(client)
             output_lock = asyncio.Lock()
             pending_writes = set()
+            pending_cancel_writes = set()
+            deferred_line = None
+            stream = getattr(sys.stdin, 'buffer', sys.stdin)
+            input_task = None
 
             async def write_response(response):
                 encoded = await asyncio.to_thread(json.dumps, response, allow_nan=False)
@@ -128,17 +146,48 @@ async def serve(server_args):
 
             while True:
                 # JSON-lines pipes are UTF-8 bytes regardless of the locale text wrapper.
-                stream = getattr(sys.stdin, 'buffer', sys.stdin)
-                line = await asyncio.to_thread(stream.readline)
+                if deferred_line is not None:
+                    line, deferred_line = deferred_line, None
+                else:
+                    completed = {task for task in pending_writes if task.done()}
+                    pending_writes.difference_update(completed)
+                    pending_cancel_writes.difference_update(completed)
+                    for task in completed:
+                        await task
+
+                    if input_task is None:
+                        input_task = asyncio.create_task(asyncio.to_thread(stream.readline))
+                    if len(pending_writes) >= MAX_PENDING_STDOUT_RESPONSES:
+                        done, _ = await asyncio.wait(
+                            {input_task, *pending_writes}, return_when=asyncio.FIRST_COMPLETED)
+                        completed = done.intersection(pending_writes)
+                        pending_writes.difference_update(completed)
+                        pending_cancel_writes.difference_update(completed)
+                        for task in completed:
+                            await task
+                        if input_task not in done:
+                            continue
+                    line = await input_task
+                    input_task = None
                 if not line:
                     break
-                response = await relay.request(line)
-                pending_writes.add(asyncio.create_task(write_response(response)))
-                if len(pending_writes) >= MAX_PENDING_STDOUT_RESPONSES:
+
+                is_cancel = relay.is_cancellation_request(line)
+                if len(pending_writes) >= MAX_PENDING_STDOUT_RESPONSES and (
+                        not is_cancel or len(pending_cancel_writes) >= MAX_PENDING_CANCEL_RESPONSES):
+                    deferred_line = line
                     done, pending_writes = await asyncio.wait(
                         pending_writes, return_when=asyncio.FIRST_COMPLETED)
+                    pending_cancel_writes.difference_update(done)
                     for task in done:
                         await task
+                    continue
+
+                response = await relay.request(line)
+                write_task = asyncio.create_task(write_response(response))
+                pending_writes.add(write_task)
+                if is_cancel:
+                    pending_cancel_writes.add(write_task)
             if pending_writes:
                 await asyncio.gather(*pending_writes)
 

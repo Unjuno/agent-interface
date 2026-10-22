@@ -192,7 +192,7 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
             server_thread.start()
             try:
                 self.assertTrue(await asyncio.to_thread(output_entered.wait,2),
-                                'first response never reached the blocked stdout writer')
+                                f'first response never reached blocked stdout; errors={errors!r}')
                 self.assertTrue(await asyncio.to_thread(cancel_dispatched.wait,1),
                                 'queued cancellation did not reach the MCP server while stdout was blocked')
             finally:
@@ -202,18 +202,20 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(errors,[])
         self.assertEqual(client.calls,['interface_guarded_compiled','interface_guarded_cancel'])
 
-    async def test_pending_stdout_limit_delays_later_cancel_until_writer_recovers(self):
+    async def test_pending_stdout_limit_reserves_one_dispatch_for_later_cancel(self):
         from runtime.cli_v1 import mcp_relay as module
 
         output_entered=threading.Event();release_output=threading.Event()
-        cancel_dispatched=threading.Event();read_lock=threading.Lock()
+        cancel_dispatched=threading.Event();tail_dispatched=threading.Event();read_lock=threading.Lock()
         ordinary=[json.dumps({'id':i,'tool':'interface_guarded_compiled','arguments':{}}).encode()+b'\n'
                   for i in range(1,module.MAX_PENDING_STDOUT_RESPONSES+1)]
         cancel=(json.dumps({'id':len(ordinary)+1,'tool':'interface_guarded_cancel',
                             'arguments':{'call_id':'a'*32}}).encode()+b'\n')
+        tail=(json.dumps({'id':len(ordinary)+2,'tool':'interface_guarded_compiled',
+                          'arguments':{'marker':'tail'}}).encode()+b'\n')
         class TrackingInput:
             def __init__(self):
-                self.stream=io.BytesIO(b''.join(ordinary)+cancel);self.read_count=0
+                self.stream=io.BytesIO(b''.join(ordinary)+cancel+tail);self.read_count=0
             def readline(self):
                 row=self.stream.readline()
                 with read_lock:self.read_count+=1
@@ -239,8 +241,9 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
             def __init__(self):self.calls=[]
             async def initialize(self):pass
             async def call_tool(self,name,arguments):
-                self.calls.append(name)
+                self.calls.append((name,arguments))
                 if name=='interface_guarded_cancel':cancel_dispatched.set()
+                if arguments.get('marker')=='tail':tail_dispatched.set()
                 return CallToolResult(content=[TextContent(type='text',text=name)])
 
         client=Client();stdin=TrackingInput();stdout=BlockingOutput();errors=[]
@@ -260,18 +263,26 @@ class PublicRelayTests(unittest.IsolatedAsyncioTestCase):
                 while stdin.read_count<module.MAX_PENDING_STDOUT_RESPONSES and \
                         asyncio.get_running_loop().time()<deadline:
                     await asyncio.sleep(0.005)
-                self.assertEqual(stdin.read_count,module.MAX_PENDING_STDOUT_RESPONSES,
-                                 'relay did not reach its bounded pending-response limit')
-                await asyncio.sleep(0.05)
-                self.assertFalse(cancel_dispatched.is_set(),
-                                 'cancel unexpectedly bypassed the saturated response bound')
+                self.assertGreaterEqual(stdin.read_count,module.MAX_PENDING_STDOUT_RESPONSES,
+                                        'relay did not reach its bounded pending-response limit')
+                self.assertTrue(await asyncio.to_thread(cancel_dispatched.wait,1),
+                                'reserved cancellation was not dispatched at the saturated response bound')
+                deadline=asyncio.get_running_loop().time()+1
+                while stdin.read_count<module.MAX_PENDING_STDOUT_RESPONSES+2 and \
+                        asyncio.get_running_loop().time()<deadline:
+                    await asyncio.sleep(0.005)
+                self.assertFalse(tail_dispatched.is_set(),
+                                 'ordinary work consumed the reserved cancellation response slot')
             finally:
                 release_output.set()
                 await asyncio.to_thread(server_thread.join,2)
         self.assertFalse(server_thread.is_alive(),'relay did not finish after stdout resumed')
         self.assertEqual(errors,[])
-        self.assertEqual(client.calls,['interface_guarded_compiled']*module.MAX_PENDING_STDOUT_RESPONSES+
-                         ['interface_guarded_cancel'])
+        self.assertEqual(client.calls,
+                         [('interface_guarded_compiled',{})]*module.MAX_PENDING_STDOUT_RESPONSES+
+                         [('interface_guarded_cancel',{'call_id':'a'*32}),
+                          ('interface_guarded_compiled',{'marker':'tail'})])
+        self.assertTrue(tail_dispatched.is_set())
 
     async def test_exact_content_duplicate_and_ambiguous_failure(self):
         client=AsyncMock()
