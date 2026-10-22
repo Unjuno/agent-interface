@@ -1,0 +1,29 @@
+{
+  "run_id": "map01-v39-cancel-cleanup-receipt-flow-a04-20261005",
+  "base_commit": "0525b97350568f85d23d0c214f3bb83c376ae2f4",
+  "python_version": "3.11.9",
+  "sources": {
+    "running_action_guard_v3.py": {
+      "sha256": "bcc0dc5961a54a315a05558d800f94ff119fa6106ed91e0fa0ba14131d470732",
+      "git_blob": "bbefdba8edfd83e886baf556caf28aca66ac88fb",
+      "path": "research/live_control/running_action_guard_v3.py"
+    },
+    "a03_candidate_events.jsonl": {
+      "sha256": "36b60282cfc2a7c328cdb7c62ec0d37b029808dc7cf2f6e327d0fd954fd3c99d",
+      "git_blob": "b87846da9e055c41432bce5ca831a3492de93a85",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/results/a03/candidate-events.jsonl"
+    },
+    "run_a04.py": {
+      "sha256": "268c57c4202f6c997dba2a9d3bd918c861bd8ea0d80a535e670b90c59e3f9322",
+      "git_blob": "07ac0248d36dca5b50025dba6b7aa86fd37d34e9",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/run_a04.py"
+    },
+    "audit_a04.py": {
+      "sha256": "f09e94a0f72ab08f0e5dadda0f064730a03d4aef6921c71068a7348b32c18223",
+      "git_blob": "cb352bdb44cdc8a57289f6d0f35ea306206c80e3",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a04.py"
+    }
+  },
+  "method": "source-extract RunningActionGuardV3.record_input_released; replay retained A03 fake-display owner_release",
+  "retries": 0
+}
