@@ -490,13 +490,18 @@ Pipe stdin/stdout; terminal stdout is refused to preserve exact image JSON bytes
 
 Response writes are serialized on worker threads so a blocked client-facing
 stdout write does not immediately stop the JSON-lines reader. The relay keeps
-at most 16 response writes pending; once that bound is reached, input reading
-pauses until a write completes. This lets a later cancel request reach the MCP
-server only while the pending-response bound has room. It does not establish
+at most 16 ordinary response writes pending. At that bound it may read one
+bounded lookahead line past one deferred ordinary request, allowing a following
+valid `interface_guarded_cancel` to dispatch first. The earlier request keeps
+its ID and is considered after the cancellation response is successfully
+written. Only one cancellation response may use the reserved slot; while that
+response is pending, the relay dispatches no later tool. A failed cancellation
+response write terminates the relay. More than one ordinary request queued ahead
+can still delay cancellation until an output slot opens. This does not establish
 input release, server-side queue drainage, or a hard cancellation bound under
 sustained output blockage.
 
-Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by IDs 2, 3, and so on for accepted calls. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
+Each line is exactly `{"id":1,"tool":"list_tools","arguments":{}}`, followed by increasing IDs. During the single-line cancellation lookahead, one cancel ID may be accepted before the immediately preceding deferred ID; the relay tracks both and restores the sequence when it processes the deferred request. Public `interface_*` tools are forwarded unchanged, including image blocks and full/summary options. Inspect discovery to choose a tool. A refused envelope consumes no ID and reports `dispatched:false`; an accepted request consumes its ID before the SDK call, even if the outcome becomes unknown. Never resend an accepted ID or replay uncertain input. `sdk_entry_ns` and `sdk_return_ns` are execution-host monotonic boundaries, not model latency.
 
 Each request and response line is UTF-8 JSON, independent of the host locale.
 The pipe is read and written as bytes; malformed UTF-8 is refused before SDK
