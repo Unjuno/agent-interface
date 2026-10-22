@@ -1,0 +1,32 @@
+{
+  "schema": "map01-v39-cancel-release-bridge-result-v1",
+  "verdict": "PASS_BRIDGE_CANCELLATION_CLEANUP_COMPOSITION",
+  "source_base": "2e1df9a56a0b46c1733c731bde3409c68c8750c7",
+  "checks": {
+    "candidate_test_methods": 2,
+    "candidate_normal": "PASS",
+    "candidate_optimized": "PASS",
+    "mutations_rejected": 5,
+    "original_bridge_regressions": "2/2 PASS",
+    "python_compile": "PASS",
+    "git_diff_check": "PASS",
+    "source_pin_hashes": "PASS"
+  },
+  "observed": {
+    "matching_cancellation_up_receipt": true,
+    "up_actuation_matches_admission": true,
+    "program_step_preserved_from_admission": true,
+    "sampled_up_interval_ordered": true,
+    "fake_owner_state_empty": true,
+    "bridge_held_state_empty": true,
+    "input_authority_granted": false,
+    "application_consumption_observed": false
+  },
+  "scope": "Offline fake-display and source-adapter construction only; the inherited V39 backend is stubbed in the test.",
+  "limits": [
+    "No real X11, display, application, game, model, or physical input was used.",
+    "No task effect, useful feedback, bounded recovery, latency benefit, gameplay, MAP01 outcome, or live allocation is established.",
+    "The physical-up time is bounded by keymap samples and is not an exact edge timestamp.",
+    "The inherited V39 constructor and session_command were not exercised."
+  ]
+}
