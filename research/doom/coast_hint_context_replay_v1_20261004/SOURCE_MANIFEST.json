@@ -1,0 +1,51 @@
+{
+  "schema": "coast-hint-context-replay-manifest-v1",
+  "base_commit": "cc7467e09181c1547b5dcf8b182382be2adf6ca6",
+  "source": {
+    "controller_path": "research/doom/map01_overlap_controller_v39.py",
+    "controller_blob": "0f3dfcada36520acb24fceaf26a4124c96e050b3",
+    "regression_path": "research/doom/test_map01_overlap_controller_v39.py",
+    "regression_blob": "328e0c6a58fb824a64ba4a12ee6726e73df66dc5"
+  },
+  "files": {
+    "report.json": {
+      "sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+      "bytes": 344806
+    },
+    "events.jsonl": {
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+      "bytes": 565849
+    },
+    "audit-v2.json": {
+      "sha256": "bb03c350009169283f36c8f0c0a919bb18d46e828ac68b99f40a567d2f141bfc",
+      "bytes": 2025
+    },
+    "coast_hint_candidate.py": {
+      "sha256": "5262312125f9fd0d1b0951b2e5fd18ad56dcfab2ace2f2654233cb5e309740d3",
+      "bytes": 3782
+    },
+    "test_coast_hint_candidate.py": {
+      "sha256": "d11c45a9314ea77f2af2c957d3feadb76c64443efdc1139cb162ceda99e5c03b",
+      "bytes": 3038
+    },
+    "replay.py": {
+      "sha256": "9733588702fe01f3741a60a9fcb5dc9448b3223eebcc18af895a999378e63c21",
+      "bytes": 3733
+    },
+    "audit.py": {
+      "sha256": "f063867b2be3ede6527c12c6990459aed77c6ab7e8e81d090859754550e40f27",
+      "bytes": 3495
+    },
+    "coast-hint-exact-stream-replay.json": {
+      "sha256": "4354d542604df4cdf9b8999fa8c0c6ebf0c124fdc40c8ddf8edddcf23cb4ec82",
+      "bytes": 7950
+    }
+  },
+  "verification": {
+    "replay": "python research/doom/coast_hint_context_replay_v1_20261004/replay.py",
+    "candidate_tests": "python -m unittest discover -s research/doom/coast_hint_context_replay_v1_20261004 -v (5 passed)",
+    "independent_audit": "python research/doom/coast_hint_context_replay_v1_20261004/audit.py (passed)",
+    "controller_regression": "python research/doom/test_map01_overlap_controller_v39.py (2 passed with adjacent current_release_composition source path on PYTHONPATH)",
+    "limitations": "The controller regression imported checked-in controller/test code but used an adjacent frozen dependency snapshot because the sparse/current-main checkout lacks research/doom/live_control. No production files are changed."
+  }
+}
