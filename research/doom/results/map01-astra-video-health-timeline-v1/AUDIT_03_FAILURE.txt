@@ -1,0 +1,1 @@
+The independent audit was extended to verify attempt-01 crop preservation, then exited with FileNotFoundError because the auditor dropped the recorded `transition-crops/` subdirectory when resolving the prior partial-crop paths. No integrity discrepancy was indicated; lookup path construction was wrong. This failed check is retained.
