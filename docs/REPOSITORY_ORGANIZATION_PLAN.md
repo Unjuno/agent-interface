@@ -290,3 +290,22 @@ This is one paused-Xvfb schedule. It does not prove release while X11 is stopped
 A six-trial matched pilot on current main `cc5ef16c560cc985ee0951d3d53d659e892f5167` compared three no-pause controls with three 1.5 s pauses of the exact private Xvfb process. All six passed the frozen admission-based caller, release/readback, fresh-generation synthetic task, and old UNKNOWN/no-replay checks. Admission-to-response ranged 253.263–256.398 ms. Paused-arm independent all-up readback followed Xvfb resume by 101.874–127.834 ms. Full conditions, paired results and raw hashes are in the [pilot packet](../research/integration/standard_caller_xvfb_current_main_20261022/paused-server-matched-pilot-01/README.md).
 
 The test timestamp precedes a deliberate 50 ms stop-confirmation wait; it lacks a timestamp immediately before the caller tool invocation. Actual invocation-to-return and exact fresh-effect observation latency remain unqualified. This small three-pair pilot does not establish broad reliability, matched token/model efficiency, release while X11 is stopped, physical GUI/MAP01, or WSLc portability.
+
+## PR convergence follow-through: #7120 (2026-10-22)
+
+At current `origin/main` `31dd17fa83131d3cdf3c4f3703d98015e411e2e5`,
+PR [#7120](https://github.com/Unjuno/agent-interface/pull/7120) was an
+old-base draft with a conflicting merge state. Its overflow-safe caller-cost
+aggregation and focused aggregate/cost-coverage checks are already present on
+current main. The retained experiment packet is also present in the current
+tree from rescue commit `cb3fb7cea16ab57c5474164dc17b88f7ff51daa9`.
+Against the exact current-main source, 21 aggregate and cost-coverage tests
+passed in both normal and optimized Python 3.13.14. The stale PR was closed
+after this source/evidence check; the original branch, discussion, and saved
+results were retained. No experiment or WSLc/Docker allocation was used.
+
+This closes one historical duplicate PR, not the PR queue. The latest complete
+membership receipt remains r138 at its recorded older main SHA; no fresh
+full-queue count or semantic census is claimed here. Next cleanup batch: refresh
+the live queue, then select one open PR with a bounded source/evidence transfer
+or a computer-control family with a clearly finite canonical-record update.
