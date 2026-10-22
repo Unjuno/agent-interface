@@ -6,8 +6,8 @@ This directory is the public documentation map for Agent Interface. It organizes
 
 | Question | Canonical document |
 |---|---|
-| How are the repository and Issue backlog being consolidated? | [REPOSITORY_CONSOLIDATION.md](REPOSITORY_CONSOLIDATION.md) |
-| What sequence and exit criteria will make repository work parallelizable? | [REPOSITORY_CLEANUP_PLAN.md](REPOSITORY_CLEANUP_PLAN.md) |
+| What is the current repository-organization work order? | [REPOSITORY_ORGANIZATION_PLAN.md](REPOSITORY_ORGANIZATION_PLAN.md) |
+| Where are the detailed cleanup receipts and historical snapshots? | [REPOSITORY_CLEANUP_PLAN.md](REPOSITORY_CLEANUP_PLAN.md) and [REPOSITORY_CONSOLIDATION.md](REPOSITORY_CONSOLIDATION.md) |
 | What finite work can a worker select without reading all history? | [WORKER_WORK_MAP.md](WORKER_WORK_MAP.md) |
 | How should a worker start, avoid overlap, and hand off safely? | [WORKER_QUICKSTART.md](WORKER_QUICKSTART.md) |
 | What is the project trying to do? | [Project README](../README.md) and [principles](principles.md) |
