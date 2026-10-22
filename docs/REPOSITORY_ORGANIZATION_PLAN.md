@@ -172,12 +172,39 @@ WSLc or Docker allocation.
 The [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
 remains the canonical design/qualification record; no duplicate was created.
 
-**Next repository-convergence batch:** reconcile the active worker/worktree
-custody slice against live GitHub branches and the current repository worktree
-registry, without deleting or archiving anything. Preserve unknown owners and
-worktree state; produce a finite discrepancy list before choosing the next
-semantic Issue/PR batch. The r149 membership snapshot and its ID CSVs are
-current navigation until main changes or membership changes.
+## Worktree custody checkpoint after PR #9398 (2026-10-22)
+
+PR #9398 was docs-only and made no Issue or PR state changes. A fresh complete
+membership read at stable main `b57e140848087ab814db874f7dfe410926afd387`
+reproduced r149 exactly: 1,654 open Issues and 452 open PRs. See [r150](maintenance/repository-inventory-recheck-20261022-r150.md).
+
+The shared local Git worktree registry listed 48 worktrees; every registered
+path was reachable for this read. `git status --porcelain
+--untracked-files=all` reported 34 clean and 14 changed worktrees, including 5
+detached worktrees. No registered branch name exactly matched an open PR head.
+That mismatch does not prove abandonment: ownership, upstream relation and
+unique evidence have not been reconciled. Two changed worktrees stand out by
+reported change volume:
+
+- `research/owned-cancel-supervisor-prototype-r01`: 18,407 changed entries,
+  including 18,365 untracked. Status also warned that it could not open `lib64/`
+  (`Function not implemented`), so completeness is not established. It contains
+  changed shared docs and untracked research evidence.
+- `feat/prestarted-cancel-supervisor-r01`: 5,151 changed entries, including
+  5,135 untracked; it contains changed shared docs and untracked composition
+  evidence.
+
+No worktree was modified, cleaned, archived or deleted. The current evidence
+does not identify the owners or prove recoverability of these changes. Do not
+reset, clean, rebase or archive these worktrees until their owners, branch/PR
+relationships and unique evidence are identified and preserved.
+
+**Next bounded batch:** inspect those two worktrees' changed paths and commit
+ancestry, then correlate their exact branches with live PR/Issue records and
+recoverable experiment packets. Record ownership or an explicit unknown and a
+safe transfer path. After that, audit the remaining 12 changed worktrees. Do
+not dispose of any state in this audit. The [r150 membership snapshot](maintenance/repository-inventory-recheck-20261022-r150.md)
+is current navigation until main or queue membership changes.
 
 ## Earlier full-inventory checkpoint after PR #9390 (2026-10-22)
 
