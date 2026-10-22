@@ -1,0 +1,94 @@
+{
+  "a05_context": "A05 answer-level contrast existed but its supplemental review found 12/12 conflict states lacked explicit conflict claims and 9/9 history states flattened the delta; A06 freezes those as hard audit gates.",
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A06-TRANSITION-AUDIT-20261008",
+  "base_main_sha": "92f325cb3079d6d3c34aa92b0fc712e956cd5ca7",
+  "branch": "research/8406-schedule-t1-a06-transition-audit-20261008",
+  "companion_to": 7418,
+  "construction_tests": "6/6 PASS before freeze; no A06 model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED only for >=0.10 consistent paired answer contrast across all three seeds and a clean full transition/raw audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED only within equivalence margin with all audits passing; otherwise UNCERTAIN; failed transition/method gate => FAIL_METHOD",
+  "delta_from_A05": [
+    "fresh allocation and seeds 4601/4602/4603",
+    "explicit prompt representations for rare exception, contradictory facts/conflict claim, and history delta",
+    "frozen auditor now checks full source coverage, provenance, exception, conflict, and history transition contract on every consolidation state",
+    "no A05 model output reused"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 2048,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4601,
+      4602,
+      4603
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PRIVATE_MODEL_STORE.json": "1f29a776ed4558b8b98f34c8e0b86cd01ad0ad35d1ca06bf6c0689db4eb79a28",
+    "PROTOCOL.md": "7c5be21c9ccf69fc895277b8903467b5476f996aa0698ca32f2ae12aa57c1928",
+    "README.md": "36a0a1f04589edb9ed6970374051fd4bd3d65e56187ffb4eaac0a285cce0018a",
+    "auditor.py": "36cd3b93758d8bf8393b6e4bce8b8d7268b817d15a63fff277d5a739318c99cf",
+    "candidate.py": "e63d9cd1ce0e55b9b5a338a649dd156ed3086d4f17c33588c098547b3329db6a",
+    "episode_ledger.json": "ebf67a6cef0480edc10248f8dcc5027979b2422c3fb327443d203f16d4f1a483",
+    "prompts.json": "c0fdf72780d239e6fd09e09e75a263b227b78822953010dffd9227ea419e936d",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "f2388fd23d11b940c7fc115dedef29f7e7b2d916d52006d8f9f5e7b8b6400ca1"
+  },
+  "identity_gate": "Private /api/tags exact model/digest before and after every request; /api/ps empty only before first generation and exactly one runner at frozen digest thereafter, before/after each call.",
+  "issue": 8406,
+  "model": {
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "host": "127.0.0.1:11435",
+    "ollama_version": "0.40.0",
+    "parameters": "8.2B",
+    "private_store": "/tmp/unjuno-8406-t1-a06-ollama-store",
+    "quantization": "Q4_K_M",
+    "request_name": "qwen3:8b",
+    "size_bytes": 5225388164
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a06_transition_audit_20261008",
+  "pre_freeze_HEAD": "92f325cb3079d6d3c34aa92b0fc712e956cd5ca7",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a06_transition_audit_20261008/results/FORMAL_T1_A06/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local private Ollama",
+    "gui": "none",
+    "network": "loopback only",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  },
+  "transition_contract": [
+    "exact cumulative episode claim set; no drops/duplicates/inventions",
+    "exact per-episode source provenance and expected semantics",
+    "ep03 forbidden-effect exception retained with exact forbidden publish effect",
+    "ep04/ep05 retained and explicit conflict UNKNOWN claim with both source IDs when both visible",
+    "ep06 history delta exactly draft->published with baseline/current source IDs"
+  ]
+}

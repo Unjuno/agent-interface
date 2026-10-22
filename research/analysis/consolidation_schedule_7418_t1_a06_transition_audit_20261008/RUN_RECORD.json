@@ -1,0 +1,52 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A06-TRANSITION-AUDIT-20261008",
+  "artifacts": {
+    "AUDIT.json": {
+      "bytes": 5552,
+      "sha256": "f066c2f854f8e9b80d0295fe91b35ff3160fe91f5ab3a3a2a9e595d4b932a7e8"
+    },
+    "RAW.jsonl": {
+      "bytes": 1925599,
+      "sha256": "6ae1b0539f4e246e4d787ee5d8f1531f1a7eeaf121d8dae8fa61f7ea38bffe6a"
+    },
+    "auditor.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "auditor.stdout.txt": {
+      "bytes": 67,
+      "sha256": "fcadb0a9c1051c57d2dc3d7a6983e3b0942fa8022d0cea1063c660ee10fc02c0"
+    },
+    "candidate.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "candidate.stdout.txt": {
+      "bytes": 50,
+      "sha256": "bc789c3b9b077d6e4fe5a9813732ef5bbe37f7498d5cedc7bddc60fab79386e3"
+    }
+  },
+  "auditor_decision": "FAIL_METHOD",
+  "auditor_error_count": 12,
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_status": "FAIL_METHOD",
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "consolidation_output_cap": 2048,
+  "expected_calls": 390,
+  "formal_model_calls_observed": 390,
+  "formal_retries": 0,
+  "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "predecessor_stops": [
+    "T1 A01",
+    "T1 A02",
+    "T1 A03",
+    "T1 A04"
+  ],
+  "prior_result_holds": [
+    "T1 A05 answer endpoint scoped; transition audit failed"
+  ],
+  "raw_path": "results/FORMAL_T1_A06/RAW.jsonl",
+  "terminal_disposition": "FAIL_METHOD_PROMPT_LEAKAGE"
+}
