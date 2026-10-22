@@ -1,0 +1,30 @@
+{
+  "schema": "agent-interface/inert-prestarted-helper-red-observations-v1",
+  "candidate_base": "a8f504597ef6a8e097e93dd1cf64611030eea9f7",
+  "baseline_source_sha256": "21782778a195ce58b219ab87b6b0ad9702dccdd86336a141a5ab9221abd485ed",
+  "synthetic_only": true,
+  "observations": [
+    {
+      "test": "test_cancel_reuses_prestarted_recovery_and_observer_helpers",
+      "expected": "no child process creation after cancellation begins",
+      "observed": "process factory count changed from 1 before cancel to 3 after cancel",
+      "failure": "AssertionError: 3 != 1",
+      "classification": "RED; recovery and observer were spawned in the cancel path"
+    },
+    {
+      "test": "test_missing_prestarted_recovery_helper_refuses_before_producer_start",
+      "expected": "refused / prestarted_helper_unavailable / zero producer effects",
+      "observed": "admitted",
+      "failure": "AssertionError: 'admitted' != 'refused'",
+      "classification": "RED; admission did not require ready recovery custody"
+    },
+    {
+      "test": "test_accepted_then_blocked_retires_before_fake_up_and_readback",
+      "expected": "handler completion is acknowledged before request completion is reported",
+      "observed": "worker_retired was false",
+      "failure": "AssertionError: False is not true",
+      "classification": "RED; response receipt lacked a separate handler-completion boundary"
+    }
+  ],
+  "limits": "RED outputs are the first observed development-test failures recorded from the local tool session. They are not WSLc allocations or native-input trials."
+}
