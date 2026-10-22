@@ -5,9 +5,14 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 from PIL import Image
 
+from app_server_provider_to_public_mcp_v1 import (
+    AppServerPublicMcpModelCall,
+    parse_app_server_tool_request,
+)
 from ledger import summarize
 from provider_attempt_recorder import ProviderAttemptRecorder
 from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
@@ -26,6 +31,253 @@ from runtime.cli_v1.test_mcp_owned_process import (
 
 
 class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+    async def test_fake_app_server_turn_reaches_public_compiled_tool_and_effect_oracle(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            server_root = root / "server"
+            server_root.mkdir()
+            (server_root / "compiled-profile-mode").write_text("enabled")
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image_path = root / "observation.png"
+            image_path.write_bytes(b"synthetic observed image")
+            journal = root / "app-server" / "protocol.jsonl"
+            journal.parent.mkdir()
+            journal.write_bytes(
+                b'{"direction":"received","message":{"method":"thread/started"}}\n')
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            server = create_server(
+                {"app": 20}, server_root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+            )
+
+            class ServerClient:
+                async def call_tool(self, name, arguments):
+                    return await server.call_tool(name, arguments)
+
+            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder)
+            try:
+                observation = await caller.call_tool(
+                    None, "observe-appserver", "interface_guarded_observe", {})
+                observed = json.loads(
+                    observation["result"]["content"][0]["text"])
+                minted_call = await caller.call_tool(
+                    None, "mint-appserver", "interface_guarded_mint", {
+                        "alias": "field",
+                        "source_sequence": observed["source"]["sequence"],
+                        "point": [8, 8], "region_size": [12, 12],
+                    })
+                minted = json.loads(
+                    minted_call["result"]["content"][0]["text"])
+                payload = _compiled_profile_payload(
+                    observed["session"]["compiled_scope"],
+                    observed["session"]["compiled_surface"], minted["offset"])
+                payload["wait_for_result_ms"] = 10000
+                initial_state = (
+                    server_root / "synthetic-application-initial.rgb").read_bytes()
+                initial_pixel = Image.frombytes(
+                    "RGB", (32, 32), initial_state, "raw", "BGRX").getpixel((1, 1))
+                self.assertNotEqual(initial_pixel, (255, 0, 0))
+                completed_text = json.dumps(payload, separators=(",", ":"))
+
+                class FakePlanner:
+                    def begin_turn(self, prompt, *, output_schema, image_path):
+                        self.asserted_call = (prompt, output_schema, image_path)
+                        return SimpleNamespace(thread_id="thread-appserver",
+                                               turn_id="turn-appserver")
+
+                    def await_turn(self, handle, timeout):
+                        row = {"direction": "received", "observed_ns": 20,
+                               "message": {"method": "turn/completed", "params": {
+                                   "threadId": handle.thread_id, "turn": {
+                                       "id": handle.turn_id, "status": "completed",
+                                       "items": [{"type": "agentMessage",
+                                                  "text": completed_text}]}}}}
+                        with journal.open("ab") as stream:
+                            stream.write(json.dumps(
+                                row, separators=(",", ":")).encode() + b"\n")
+                        return SimpleNamespace(
+                            status="completed", answer_eligible=True,
+                            answer=payload, usage={"last": {
+                                "inputTokens": 42, "outputTokens": 12,
+                                "cachedInputTokens": 30,
+                                "cacheWriteInputTokens": 2,
+                                "reasoningOutputTokens": 3}})
+
+                planner = FakePlanner()
+                model = AppServerPublicMcpModelCall(
+                    planner, journal, workspace=workspace, contract="public-mcp",
+                    output_schema={"type": "object"}, model="synthetic-app-server",
+                    effort="low")
+                request, provider = build_model_provider_call(
+                    model_call=model.call, root=root / "model-attempt",
+                    prompt="apply the visible synthetic target", image=image_path,
+                    contract="public-mcp", workspace=workspace)
+                result = await caller.invoke_generation_to_tool(
+                    "appserver-generation", request, provider,
+                    "appserver-compiled-call", "interface_guarded_compiled",
+                    lambda generation: parse_app_server_tool_request(
+                        generation["response_bytes"], thread_id="thread-appserver",
+                        turn_id="turn-appserver"))
+
+                self.assertTrue(result["tool_call_submitted"], result["generation"])
+                self.assertEqual(result["generation"]["usage"]["input_tokens"], 42)
+                self.assertEqual(result["generation"]["usage"]["reasoning_output_tokens"], 3)
+                self.assertEqual(
+                    result["generation"]["response_bytes"],
+                    journal.read_bytes().split(b"\n", 1)[1])
+                method_receipt = json.loads(
+                    result["tool_response"]["result"]["content"][0]["text"])
+                self.assertEqual(method_receipt["method_receipt"]["outcome"],
+                                 "TASK_SUCCEEDED")
+                self.assertIsNone(method_receipt["task_success"])
+                self.assertFalse(method_receipt["replay_allowed"])
+
+                final_state = (
+                    server_root / "synthetic-application-state.rgb").read_bytes()
+                final_pixel = Image.frombytes(
+                    "RGB", (32, 32), final_state, "raw", "BGRX").getpixel((1, 1))
+                task_success = final_pixel == (255, 0, 0)
+                self.assertTrue(task_success)
+                recorder.record_task_score(
+                    "separate-fake-app-pixel-oracle-v1", task_success, final_state)
+                receipt = recorder.reconcile()
+                summary = summarize(receipt["events"])
+                self.assertTrue(receipt["complete"])
+                self.assertEqual(summary["model_attempt_count"], 1)
+                self.assertEqual(summary["tool_call_count"], 3)
+                self.assertEqual(summary["input_tokens"], 42)
+                self.assertEqual(summary["output_tokens"], 12)
+                self.assertTrue(summary["task_success"])
+            finally:
+                await server.call_tool("interface_close", {})
+                _preserve_fake_x_run("appserver-public-mcp-success", root)
+
+    async def test_fake_app_server_stale_target_is_refused_by_public_compiled_tool(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            server_root = root / "server"
+            server_root.mkdir()
+            (server_root / "compiled-profile-mode").write_text("enabled")
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image_path = root / "observation.png"
+            image_path.write_bytes(b"synthetic observed image")
+            journal = root / "app-server" / "protocol.jsonl"
+            journal.parent.mkdir()
+            journal.write_bytes(b"")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            server = create_server(
+                {"app": 20}, server_root, session_mode="guarded-x11",
+                guarded_process_identity=True, guarded_query_worker=True,
+                guarded_owned_process=True,
+                _guarded_owner_factory=_fake_owner_factory,
+            )
+
+            class ServerClient:
+                async def call_tool(self, name, arguments):
+                    return await server.call_tool(name, arguments)
+
+            caller = RecordedPublicMcpCaller(Relay(ServerClient()), recorder)
+            try:
+                observation = await caller.call_tool(
+                    None, "observe-stale-appserver", "interface_guarded_observe", {})
+                observed = json.loads(
+                    observation["result"]["content"][0]["text"])
+                minted_call = await caller.call_tool(
+                    None, "mint-stale-appserver", "interface_guarded_mint", {
+                        "alias": "field",
+                        "source_sequence": observed["source"]["sequence"],
+                        "point": [8, 8], "region_size": [12, 12],
+                    })
+                minted = json.loads(
+                    minted_call["result"]["content"][0]["text"])
+                payload = _compiled_profile_payload(
+                    observed["session"]["compiled_scope"],
+                    observed["session"]["compiled_surface"], minted["offset"])
+                initial_state = (
+                    server_root / "synthetic-application-initial.rgb").read_bytes()
+                payload["wait_for_result_ms"] = 10000
+                completed_text = json.dumps(payload, separators=(",", ":"))
+
+                class FakePlanner:
+                    def begin_turn(self, _prompt, *, output_schema, image_path):
+                        self.asserted_call = (output_schema, image_path)
+                        return SimpleNamespace(thread_id="thread-stale-appserver",
+                                               turn_id="turn-stale-appserver")
+
+                    def await_turn(self, handle, timeout):
+                        row = {"direction": "received", "observed_ns": 30,
+                               "message": {"method": "turn/completed", "params": {
+                                   "threadId": handle.thread_id, "turn": {
+                                       "id": handle.turn_id, "status": "completed",
+                                       "items": [{"type": "agentMessage",
+                                                  "text": completed_text}]}}}}
+                        with journal.open("ab") as stream:
+                            stream.write(json.dumps(
+                                row, separators=(",", ":")).encode() + b"\n")
+                        return SimpleNamespace(
+                            status="completed", answer_eligible=True,
+                            answer=payload, usage={"last": {
+                                "inputTokens": 40, "outputTokens": 9,
+                                "cachedInputTokens": 20,
+                                "cacheWriteInputTokens": 1,
+                                "reasoningOutputTokens": 2}})
+
+                model = AppServerPublicMcpModelCall(
+                    FakePlanner(), journal, workspace=workspace,
+                    contract="public-mcp", output_schema={"type": "object"},
+                    model="synthetic-app-server", effort="low")
+                request, provider = build_model_provider_call(
+                    model_call=model.call, root=root / "stale-model-attempt",
+                    prompt="act on the just observed target", image=image_path,
+                    contract="public-mcp", workspace=workspace)
+
+                def change_generation_after_provider(generation):
+                    (server_root / "fake-process-generation").write_text(
+                        "b" * 64, encoding="utf-8")
+                    return parse_app_server_tool_request(
+                        generation["response_bytes"],
+                        thread_id="thread-stale-appserver",
+                        turn_id="turn-stale-appserver")
+
+                composed = await caller.invoke_generation_to_tool(
+                    "stale-appserver-generation", request, provider,
+                    "stale-appserver-call", "interface_guarded_compiled",
+                    change_generation_after_provider)
+                self.assertTrue(composed["tool_call_submitted"])
+                self.assertEqual(composed["generation"]["status"], "completed")
+                result = json.loads(
+                    composed["tool_response"]["result"]["content"][0]["text"])
+                self.assertEqual(result["method_receipt"]["outcome"], "SAFE_YIELD")
+                self.assertEqual(result["method_receipt"]["reason"],
+                                 "execution_refused")
+                self.assertEqual(result["method_receipt"]["completed_transitions"], 0)
+                self.assertIsNone(result["task_success"])
+                self.assertFalse(result["replay_allowed"])
+                self.assertFalse(
+                    (server_root / "synthetic-application-state.rgb").exists())
+
+                task_success = Image.frombytes(
+                    "RGB", (32, 32), initial_state, "raw", "BGRX"
+                ).getpixel((1, 1)) == (255, 0, 0)
+                self.assertFalse(task_success)
+                recorder.record_task_score(
+                    "separate-fake-app-pixel-oracle-v1", task_success, initial_state)
+                receipt = recorder.reconcile()
+                summary = summarize(receipt["events"])
+                self.assertTrue(receipt["complete"])
+                self.assertEqual(summary["model_attempt_count"], 1)
+                self.assertEqual(summary["tool_call_count"], 3)
+                self.assertEqual(summary["input_tokens"], 40)
+                self.assertEqual(summary["output_tokens"], 9)
+                self.assertFalse(summary["task_success"])
+            finally:
+                await server.call_tool("interface_close", {})
+                _preserve_fake_x_run("appserver-public-mcp-stale-generation", root)
+
     async def test_failed_provider_generation_is_not_sent_to_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
