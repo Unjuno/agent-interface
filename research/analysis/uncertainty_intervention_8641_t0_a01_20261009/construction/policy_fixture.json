@@ -1,0 +1,149 @@
+{
+  "protocol_id": "UIA-8641-v1",
+  "replicate_seeds": [
+    30001,
+    30002,
+    30003,
+    30004,
+    30005,
+    30006,
+    30007,
+    30008,
+    30009,
+    30010,
+    30011,
+    30012,
+    30013,
+    30014,
+    30015,
+    30016,
+    30017,
+    30018,
+    30019,
+    30020
+  ],
+  "cases": [
+    {
+      "case_id": "resampled_noise",
+      "source_estimate": "ALEATORIC",
+      "source_confidence": 0.96,
+      "total_uncertainty": 0.93,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.93,
+      "estimated_correct_probability": {
+        "REPEAT": 0.94,
+        "ALTERNATE": 0.81,
+        "WAIT": 0.72,
+        "UNKNOWN": 0.84
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.78,
+        "ALTERNATE": 0.42,
+        "WAIT": 0.1,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "ontology_uncertainty",
+      "source_estimate": "EPISTEMIC",
+      "source_confidence": 0.92,
+      "total_uncertainty": 0.91,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.91,
+      "estimated_correct_probability": {
+        "REPEAT": 0.61,
+        "ALTERNATE": 0.91,
+        "WAIT": 0.63,
+        "UNKNOWN": 0.78
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.18,
+        "ALTERNATE": 0.82,
+        "WAIT": 0.06,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "stale_epoch",
+      "source_estimate": "DYNAMIC",
+      "source_confidence": 0.9,
+      "total_uncertainty": 0.89,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.9,
+      "estimated_correct_probability": {
+        "REPEAT": 0.55,
+        "ALTERNATE": 0.66,
+        "WAIT": 0.94,
+        "UNKNOWN": 0.72
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.12,
+        "ALTERNATE": 0.3,
+        "WAIT": 0.8,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "irreducible_intent",
+      "source_estimate": "INTENT",
+      "source_confidence": 0.93,
+      "total_uncertainty": 0.88,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.93,
+      "estimated_correct_probability": {
+        "REPEAT": 0.51,
+        "ALTERNATE": 0.5,
+        "WAIT": 0.51,
+        "UNKNOWN": 0.94
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.08,
+        "ALTERNATE": 0.1,
+        "WAIT": 0.02,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "correlated_duplicate",
+      "source_estimate": "ALEATORIC",
+      "source_confidence": 0.82,
+      "total_uncertainty": 0.86,
+      "dependency_warning": true,
+      "decision_value_confidence": 0.82,
+      "estimated_correct_probability": {
+        "REPEAT": 0.88,
+        "ALTERNATE": 0.89,
+        "WAIT": 0.75,
+        "UNKNOWN": 0.78
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.35,
+        "ALTERNATE": 0.6,
+        "WAIT": 0.18,
+        "UNKNOWN": 0.0
+      }
+    },
+    {
+      "case_id": "misspecified_decomposition",
+      "source_estimate": "EPISTEMIC",
+      "source_confidence": 0.31,
+      "total_uncertainty": 0.9,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.31,
+      "estimated_correct_probability": {
+        "REPEAT": 0.82,
+        "ALTERNATE": 0.85,
+        "WAIT": 0.72,
+        "UNKNOWN": 0.8
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.5,
+        "ALTERNATE": 0.55,
+        "WAIT": 0.2,
+        "UNKNOWN": 0.0
+      }
+    }
+  ],
+  "allocation": "CONSTRUCTION_ONLY",
+  "formal_evidence": false
+}

@@ -1,0 +1,24 @@
+"""Ordinary pinned-base inert regression; no archived experiment is executed."""
+import importlib
+import json
+import subprocess
+import sys
+import types
+import unittest
+
+BASE='3cf4b161100766e2e6b98ff485350f129d36f7e2'
+for leaf in ('backend','session'):
+    name='runtime.backends.x11_v1.'+leaf
+    source=subprocess.check_output(['git','show',f'{BASE}:runtime/backends/x11_v1/{leaf}.py'])
+    module=types.ModuleType(name)
+    module.__package__='runtime.backends.x11_v1'
+    module.__file__=f'{BASE}/runtime/backends/x11_v1/{leaf}.py'
+    sys.modules[name]=module
+    exec(compile(source,module.__file__,'exec'),module.__dict__)
+    package=importlib.import_module('runtime.backends.x11_v1')
+    setattr(package,leaf,module)
+suite=unittest.defaultTestLoader.loadTestsFromName('runtime.backends.x11_v1.test_interrupt_custody')
+result=unittest.TextTestRunner(verbosity=2).run(suite)
+print(json.dumps(dict(base=BASE,methods=result.testsRun,failures=len(result.failures),errors=len(result.errors),
+                     scope='current new Fake X tests against pinned original complete modules; no native calls')))
+raise SystemExit(1 if not result.wasSuccessful() else 0)

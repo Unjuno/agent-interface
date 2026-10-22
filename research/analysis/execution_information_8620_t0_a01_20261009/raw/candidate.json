@@ -1,0 +1,228 @@
+{
+  "contracts": {
+    "contract_v1": {
+      "eir_retained_fields": [
+        "selection"
+      ],
+      "equivalence_classes": [
+        [
+          "h00",
+          "h01",
+          "h03",
+          "h08",
+          "h10"
+        ],
+        [
+          "h02",
+          "h04",
+          "h09",
+          "h11"
+        ],
+        [
+          "h05",
+          "h06",
+          "h07"
+        ]
+      ],
+      "expected_reacquisition_units": 0.5,
+      "mandatory_retained_fields": [
+        "selection"
+      ],
+      "minimum_storage_bits": 24,
+      "policy_scores": {
+        "EIR_AWARE_RETAIN_OR_REACQUIRE": {
+          "error_count": 0,
+          "expected_reacquisition_units": 0.5,
+          "storage_bits": 24,
+          "unavailable_requirements": []
+        },
+        "FIXED_WINDOW": {
+          "error_count": 0,
+          "expected_reacquisition_units": 0.5,
+          "storage_bits": 60,
+          "unavailable_requirements": []
+        },
+        "FULL_HISTORY": {
+          "error_count": 0,
+          "expected_reacquisition_units": 0,
+          "storage_bits": 348,
+          "unavailable_requirements": []
+        },
+        "TASK_SUMMARY": {
+          "error_count": 1,
+          "expected_reacquisition_units": 0.5,
+          "storage_bits": 12,
+          "unavailable_requirements": [
+            {
+              "field": "selection",
+              "schedule": "apply_selection"
+            }
+          ]
+        }
+      },
+      "required_fields": [
+        "doc_id",
+        "selection"
+      ]
+    },
+    "contract_v2": {
+      "eir_retained_fields": [
+        "saved",
+        "selection",
+        "lineage",
+        "freshness",
+        "authority"
+      ],
+      "equivalence_classes": [
+        [
+          "h00"
+        ],
+        [
+          "h01"
+        ],
+        [
+          "h02"
+        ],
+        [
+          "h03"
+        ],
+        [
+          "h04"
+        ],
+        [
+          "h05"
+        ],
+        [
+          "h06"
+        ],
+        [
+          "h07"
+        ],
+        [
+          "h08"
+        ],
+        [
+          "h09"
+        ],
+        [
+          "h10"
+        ],
+        [
+          "h11"
+        ]
+      ],
+      "expected_reacquisition_units": 0.65,
+      "mandatory_retained_fields": [
+        "authority",
+        "freshness",
+        "lineage",
+        "saved",
+        "selection"
+      ],
+      "minimum_storage_bits": 132,
+      "policy_scores": {
+        "EIR_AWARE_RETAIN_OR_REACQUIRE": {
+          "error_count": 0,
+          "expected_reacquisition_units": 0.65,
+          "storage_bits": 132,
+          "unavailable_requirements": []
+        },
+        "FIXED_WINDOW": {
+          "error_count": 4,
+          "expected_reacquisition_units": 0.65,
+          "storage_bits": 60,
+          "unavailable_requirements": [
+            {
+              "field": "saved",
+              "schedule": "save_and_verify"
+            },
+            {
+              "field": "lineage",
+              "schedule": "proof"
+            },
+            {
+              "field": "freshness",
+              "schedule": "proof"
+            },
+            {
+              "field": "authority",
+              "schedule": "proof"
+            }
+          ]
+        },
+        "FULL_HISTORY": {
+          "error_count": 0,
+          "expected_reacquisition_units": 0,
+          "storage_bits": 348,
+          "unavailable_requirements": []
+        },
+        "TASK_SUMMARY": {
+          "error_count": 5,
+          "expected_reacquisition_units": 0.65,
+          "storage_bits": 12,
+          "unavailable_requirements": [
+            {
+              "field": "saved",
+              "schedule": "save_and_verify"
+            },
+            {
+              "field": "selection",
+              "schedule": "apply_selection"
+            },
+            {
+              "field": "lineage",
+              "schedule": "proof"
+            },
+            {
+              "field": "freshness",
+              "schedule": "proof"
+            },
+            {
+              "field": "authority",
+              "schedule": "proof"
+            }
+          ]
+        }
+      },
+      "required_fields": [
+        "authority",
+        "doc_id",
+        "freshness",
+        "lineage",
+        "modal_owner",
+        "saved",
+        "selection"
+      ]
+    }
+  },
+  "fixture_id": "EIR8620-A01-FIXTURE-v1",
+  "policies": {
+    "FIXED_WINDOW": {
+      "retained_fields": [
+        "viewport",
+        "cursor",
+        "selection"
+      ]
+    },
+    "FULL_HISTORY": {
+      "retained_fields": [
+        "current_screenshot",
+        "doc_id",
+        "saved",
+        "modal_owner",
+        "selection",
+        "lineage",
+        "freshness",
+        "authority",
+        "viewport",
+        "cursor",
+        "task_summary"
+      ]
+    },
+    "TASK_SUMMARY": {
+      "retained_fields": [
+        "task_summary"
+      ]
+    }
+  }
+}

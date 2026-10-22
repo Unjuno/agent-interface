@@ -1,0 +1,13 @@
+{
+  "schema": "map01-v39-live-threat-guard-a09-audit-reconciliation-v1",
+  "status": "HOLD",
+  "custody": {
+    "matched_cancel_count": 10,
+    "cancel_terminal_releases_empty": true,
+    "unaccounted_cancel_ids": [],
+    "guard_cancel_id": "cover-2",
+    "guard_has_explicit_verified_empty_release": true
+  },
+  "useful_feedback_during_pending_model": false,
+  "interpretation": "A cancellation without an active input lease is accounted for by its verified-empty terminal receipt; the hard-health guard itself must also have its explicit cancelled-release event."
+}

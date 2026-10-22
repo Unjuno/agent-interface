@@ -1,0 +1,57 @@
+EEF
+======================================================================
+ERROR: test_partial_startup_allocation_closes_every_acquired_descriptor (test_input_owner_process_v3.OwnedOwnerProcessTests.test_partial_startup_allocation_closes_every_acquired_descriptor) (fault='pipe')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 367, in test_partial_startup_allocation_closes_every_acquired_descriptor
+    api.launch_owner_service(display=':fake',out=Path(temp)/'service')
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 213, in launch_owner_service
+    channel,service=socket.socketpair();parent_ready,child_ready=ctx.Pipe(duplex=False)
+                                                                 ~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 362, in Pipe
+    if fault=='pipe':raise OSError('injected pipe construction')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: injected pipe construction
+
+======================================================================
+ERROR: test_partial_startup_allocation_closes_every_acquired_descriptor (test_input_owner_process_v3.OwnedOwnerProcessTests.test_partial_startup_allocation_closes_every_acquired_descriptor) (fault='process')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 367, in test_partial_startup_allocation_closes_every_acquired_descriptor
+    api.launch_owner_service(display=':fake',out=Path(temp)/'service')
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 215, in launch_owner_service
+    process=ctx.Process(target=_child_entry,args=(service,child_ready,display,out,service_id,
+                         supervisor_pid,_owner_factory or _default_owner),name='owned-input-owner-'+service_id[:8])
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 364, in Process
+    def Process(self,**_):raise OSError('injected process construction')
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: injected process construction
+
+======================================================================
+FAIL: test_recovery_publication_error_waits_for_same_unresolved_owner (test_input_owner_process_v3.OwnedOwnerProcessTests.test_recovery_publication_error_waits_for_same_unresolved_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_process_v3.py", line 397, in test_recovery_publication_error_waits_for_same_unresolved_owner
+    self.assertEqual(order,['wait','context-exit'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['context-exit'] != ['wait', 'context-exit']
+
+First differing element 0:
+'context-exit'
+'wait'
+
+Second list contains 1 additional elements.
+First extra element 1:
+'context-exit'
+
+- ['context-exit']
++ ['wait', 'context-exit']
+?  ++++++++
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.086s
+
+FAILED (failures=1, errors=2)

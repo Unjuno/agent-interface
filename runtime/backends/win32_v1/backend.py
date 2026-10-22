@@ -281,11 +281,20 @@ class Win32Backend:
         item.ki = KEYBDINPUT(vk, 0, 0 if down else KEYEVENTF_KEYUP, 0, 0)
         self._send(item)
 
-    def _key_is_down(self, vk: int) -> bool:
+    def _key_down_state(self, vk: int) -> bool | None:
         try:
-            return bool(self.user32.GetAsyncKeyState(vk) & 0x8000)
+            state = self.user32.GetAsyncKeyState(vk) & 0x8001
         except Exception as error:
             raise Win32BackendError(f"key state query failed for {vk}: {error}") from error
+        # Zero also denotes documented desktop/UIPI/access failure. With no
+        # separate availability witness it cannot discharge tracked custody.
+        return bool(state & 0x8000) if state else None
+
+    def _key_is_down(self, vk: int) -> bool:
+        state = self._key_down_state(vk)
+        if state is None:
+            raise Win32BackendError(f"key state is unknown for {vk}")
+        return state
 
     def _send_unicode_unit(self, unit: int, down: bool) -> None:
         item = INPUT(type=INPUT_KEYBOARD)
@@ -492,7 +501,7 @@ class Win32Backend:
                 self.pending_unicode_ups.remove(unit)
         tracked_keys = dict(self.held_keys)
         tracked_buttons = set(self.held_buttons)
-        for vk in list(self.held_keys.values()):
+        for vk in sorted(set(tracked_keys.values())):
             self._send_key(vk, False)
         for button in list(self.held_buttons):
             _, up_flag, _ = BUTTON_FLAGS[button]
@@ -500,20 +509,28 @@ class Win32Backend:
             item.mi = MOUSEINPUT(0, 0, 0, up_flag, 0, 0)
             self._send(item)
         time.sleep(0.01)
-        keys = sorted(name for name, vk in tracked_keys.items()
-                      if self._key_is_down(vk))
-        buttons = sorted(button for button in tracked_buttons
-                         if self._key_is_down(BUTTON_FLAGS[button][2]))
+        # Aliases share one sample: querying the same VK twice can consume the
+        # unreliable legacy low bit and create an artificial zero ambiguity.
+        states = {vk: self._key_down_state(vk)
+                  for vk in sorted(set(tracked_keys.values()))}
+        button_states = {button: self._key_down_state(BUTTON_FLAGS[button][2])
+                         for button in tracked_buttons}
+        keys = sorted(name for name, vk in tracked_keys.items() if states[vk] is True)
+        buttons = sorted(button for button in tracked_buttons if button_states[button] is True)
+        unknown_keys = sorted(name for name, vk in tracked_keys.items() if states[vk] is None)
+        unknown_buttons = sorted(button for button in tracked_buttons if button_states[button] is None)
         # A sent UP is not neutral-state evidence. Keep unverified obligations;
         # an incomplete state read leaves the entire previous ledger intact.
         if unicode_error is not None:
             raise unicode_error
         for name in tracked_keys:
-            if name not in keys:
+            if states[tracked_keys[name]] is False:
                 self.held_keys.pop(name, None)
-        self.held_buttons.difference_update(tracked_buttons - set(buttons))
+        self.held_buttons.difference_update(button for button in tracked_buttons
+                                            if button_states[button] is False)
         return {"keys_down": keys, "buttons_down": buttons,
-                "verified": not keys and not buttons,
+                "keys_unknown": unknown_keys, "buttons_unknown": unknown_buttons,
+                "verified": not keys and not buttons and not unknown_keys and not unknown_buttons,
                 "monotonic_ns": time.monotonic_ns()}
 
     def execute(self, program: dict[str, Any], *, bound_target=None, guard=None, preflight_guard=None) -> dict[str, Any]:

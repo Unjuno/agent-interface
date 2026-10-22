@@ -1,0 +1,66 @@
+{
+  "decision": "RETAIN_SERIALIZED_SAME_BACKEND_CUSTODY_AND_WRAPPER_ACKNOWLEDGEMENT",
+  "new_methods": 7,
+  "baseline": {
+    "methods": 6,
+    "failures": 7,
+    "errors": 0
+  },
+  "no_epoch_mutation": {
+    "methods": 1,
+    "failures": 1,
+    "errors": 0
+  },
+  "final_suites": {
+    "backend": {
+      "normal": {
+        "methods": 90,
+        "skipped": 14,
+        "result": "PASS"
+      },
+      "optimized": {
+        "methods": 90,
+        "skipped": 14,
+        "result": "PASS"
+      }
+    },
+    "guarded": {
+      "normal": {
+        "methods": 136,
+        "skipped": 0,
+        "result": "PASS"
+      },
+      "optimized": {
+        "methods": 136,
+        "skipped": 0,
+        "result": "PASS"
+      }
+    },
+    "cli": {
+      "normal": {
+        "methods": 428,
+        "skipped": 5,
+        "result": "PASS"
+      },
+      "optimized": {
+        "methods": 428,
+        "skipped": 5,
+        "result": "PASS"
+      }
+    },
+    "distribution": {
+      "normal": {
+        "methods": 21,
+        "skipped": 0,
+        "result": "PASS"
+      },
+      "optimized": {
+        "methods": 21,
+        "skipped": 0,
+        "result": "PASS"
+      }
+    }
+  },
+  "physical_release_bound_proved": false,
+  "task_success": null
+}

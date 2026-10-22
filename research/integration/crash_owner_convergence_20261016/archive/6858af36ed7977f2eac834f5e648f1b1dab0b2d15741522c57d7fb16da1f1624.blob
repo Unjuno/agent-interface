@@ -1,0 +1,32 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a16-freeze-v1",
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A16-20261012-01",
+  "successor_of": "V39-V15-PROCESS-OWNER-XVFB-A15-20261012-01",
+  "base_commit": "47e2a914ef7d81d07b69205d333f79f4151bc338",
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1,
+  "retries_allowed": 0,
+  "source_sha256": {
+    "research/live_control/input_owner_process_v1.py": "0a8b42ccc926ad5763bad4558603e4f5bdd258a6b7a153409fbd6e0f30c0c726",
+    "research/doom/doom_controller_failure_cleanup_v1.py": "1239ae4877747abe2932631dec3c5816b65964fc30f8133517f3c2bdc87dcecb",
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": "51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+    "research/doom/v39_v15_process_owner_xvfb_a16_20261012/PLAN.md": "0c07f0b19041ae91f5c3a478e141633ec1b82441ed472a56ba9756ac8dc34c1e",
+    "research/doom/v39_v15_process_owner_xvfb_a16_20261012/candidate.py": "e0fbe9c2694611fd1d6871050703c23889042144d5b26da8e8f86e1d26f1ed13",
+    "research/doom/v39_v15_process_owner_xvfb_a16_20261012/run_candidate.sh": "8ca04156ff0b4bdf5d74782a82c241dc0f755ff5451b26ccc83ce0035a24b09c"
+  },
+  "environment": {
+    "host": "WSL2 Ubuntu",
+    "python": "CPython 3.12.3",
+    "xvfb": "/usr/bin/Xvfb; TCP disabled",
+    "python_xlib": "available; version to be captured in raw environment",
+    "isolation": "private Xvfb display; fresh temporary auth file",
+    "physical_input": false,
+    "game_or_model": false,
+    "network_calls": 0
+  },
+  "hypothesis": "After owner service SIGKILL with two keys and Button1 held, the integrated outer recovery gate can reconstruct unresolved inputs from a fsynced ledger and, only after verifying service generation death and matching focus/surface/pointer binding, independently release the recorded inputs and persist a verified emergency receipt.",
+  "scope": "Isolated Xvfb recovery primitive and cleanup boundary only; no full V39 product effect or physical-device claim.",
+  "decision_rule": "PASS_LEDGER_BOUND_EMERGENCY_RECOVERY requires independent down observation for a/d and Button1 before SIGKILL; process death with exact service start ticks; ledger contains only a/d and Button1 active; recovery binds unchanged focus/surface geometry and pointer location; independent KeyRelease/ButtonRelease plus keymap/pointer up; fsynced emergency receipt binds the ledger hash; normal owner receipt absent; session survives recovery; Xvfb cleans up. Otherwise preserve STOP/FAIL.",
+  "command": "unshare --user --map-root-user --mount --fork bash research/doom/v39_v15_process_owner_xvfb_a16_20261012/run_candidate.sh",
+  "output": "research/doom/v39_v15_process_owner_xvfb_a16_20261012/results/A01"
+}

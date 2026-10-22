@@ -1,0 +1,120 @@
+{
+  "freeze": {
+    "allocation": "17-GIL-CANCEL-CONSTRUCTION-C01-20261003-70ab",
+    "probe_sha256": "6487c058ee4c41364d6bfaf3c7a9fcd1a8219007fc58be10e354425bda992564",
+    "auditor_sha256": "c1dfbdce679331530c06348d133f8b8b4087cb3286632360af2c51b41e21aaaf",
+    "case_count": 4,
+    "sequence": [
+      "released",
+      "held",
+      "held",
+      "released"
+    ],
+    "foreign_wait_us": 300000,
+    "cancel_nominal_offset_seconds": 0.05,
+    "clock": "same-host time.monotonic_ns, no wall-clock rate claim",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "prepared_utc": "2026-10-03T14:39:01.481526+00:00",
+    "limits": "first4 construction cases once; no discarded/replacement cells; no GUI/model/container/formal study; HOLD if cancellation send outside observed foreign-call bracket",
+    "decision": "PASS only all4 exact raw streams, exits, closure, observed send within call interval; both CDLL closes before foreign return and both PyDLL closes after return; this discriminates thread reachability under intentional GIL retention only"
+  },
+  "rows": [
+    {
+      "case": 0,
+      "mode": "released",
+      "pid": 24280,
+      "start_utc": "2026-10-03T14:39:01.563492+00:00",
+      "end_utc": "2026-10-03T14:39:01.913024+00:00",
+      "exit": 0,
+      "send_before_ns": 49306533748791,
+      "send_after_ns": 49306533760166,
+      "ready": {
+        "ready": true,
+        "pid": 24280
+      },
+      "raw": {
+        "call_start_ns": 49306473724125,
+        "received_ns": 49306533771666,
+        "closed_ns": 49306533779458,
+        "cancel_byte": "43",
+        "return_code": 0,
+        "call_end_ns": 49306779656458,
+        "fd_closed": true
+      },
+      "stderr_bytes": 0
+    },
+    {
+      "case": 1,
+      "mode": "held",
+      "pid": 24291,
+      "start_utc": "2026-10-03T14:39:01.913983+00:00",
+      "end_utc": "2026-10-03T14:39:02.268786+00:00",
+      "exit": 0,
+      "send_before_ns": 49306885493291,
+      "send_after_ns": 49306885500291,
+      "ready": {
+        "ready": true,
+        "pid": 24291
+      },
+      "raw": {
+        "call_start_ns": 49306825432666,
+        "received_ns": 49307135507083,
+        "closed_ns": 49307135517291,
+        "cancel_byte": "43",
+        "return_code": 0,
+        "call_end_ns": 49307135565375,
+        "fd_closed": true
+      },
+      "stderr_bytes": 0
+    },
+    {
+      "case": 2,
+      "mode": "held",
+      "pid": 24304,
+      "start_utc": "2026-10-03T14:39:02.269659+00:00",
+      "end_utc": "2026-10-03T14:39:02.622211+00:00",
+      "exit": 0,
+      "send_before_ns": 49307229654875,
+      "send_after_ns": 49307229663958,
+      "ready": {
+        "ready": true,
+        "pid": 24304
+      },
+      "raw": {
+        "call_start_ns": 49307179272375,
+        "received_ns": 49307488913083,
+        "return_code": 0,
+        "call_end_ns": 49307488921208,
+        "closed_ns": 49307488936041,
+        "cancel_byte": "43",
+        "fd_closed": true
+      },
+      "stderr_bytes": 0
+    },
+    {
+      "case": 3,
+      "mode": "released",
+      "pid": 24315,
+      "start_utc": "2026-10-03T14:39:02.623005+00:00",
+      "end_utc": "2026-10-03T14:39:02.969530+00:00",
+      "exit": 0,
+      "send_before_ns": 49307589425916,
+      "send_after_ns": 49307589435791,
+      "ready": {
+        "ready": true,
+        "pid": 24315
+      },
+      "raw": {
+        "call_start_ns": 49307533344250,
+        "received_ns": 49307589560541,
+        "closed_ns": 49307589567541,
+        "cancel_byte": "43",
+        "return_code": 0,
+        "call_end_ns": 49307835991708,
+        "fd_closed": true
+      },
+      "stderr_bytes": 0
+    }
+  ]
+}

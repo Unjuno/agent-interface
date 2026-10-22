@@ -1,0 +1,49 @@
+{
+  "experiment": "xvfb_held_key_disconnect_order_r02",
+  "status": "FROZEN_BEFORE_R02_LIVE_RUN",
+  "base_main": "61e9200d7fed3ddc8b489be40161828c48848086",
+  "r01_status": "PRELIMINARY_ONLY; retained raw omitted the keymap read after XRes disconnect and before independent KeyRelease, so the release transition is not causally attributed",
+  "server": "private X.Org Xvfb :88 from runtime-x11-v1 workflow",
+  "question": "After a client creates a held key and queues a later delayed KeyPress, does the exact owner's disconnect leave the held key down until an independent release, and can the queued later press appear after that release?",
+  "sequence": [
+    "independent client first reads both test keys up",
+    "one owner client sends immediate KeyPress(a), then delayed KeyPress(b) with 8000 ms XTEST delay, flushes, and blocks in sync",
+    "independent client reads a down and b up while XRes still identifies the owner PID",
+    "terminate the owner and require PID-qualified XRes disconnection within 2000 ms",
+    "before sending cleanup input, independently read and retain both key states after disconnect",
+    "a separate X client sends KeyRelease(a), syncs, and independently reads both keys before the delayed horizon",
+    "after owner-termination time plus 8500 ms, independently read both key states and retain either result",
+    "release both keys in final cleanup and independently verify both up"
+  ],
+  "observations": {
+    "required": [
+      "server vendor/release, XRes/XTEST versions, Xvfb binary hash/package provenance",
+      "exact owner PID/resource base and connected-before/disconnected-after receipts",
+      "initial held-state readback before owner termination",
+      "state immediately after XRes disconnect and before any independent KeyRelease",
+      "state after separate KeyRelease and before delayed horizon",
+      "independent readback after the delayed horizon",
+      "final key-up cleanup readback"
+    ],
+    "outcome_is_observational": true,
+    "late_keypress_after_cleanup": "retain whether key b is down; do not convert either outcome into a general server guarantee",
+    "disconnect_auto_release": "if a is already up before independent KeyRelease, report that separately and do not attribute the transition to the cleanup client"
+  },
+  "bounds": {
+    "owner_marker_seconds": 3,
+    "initial_held_readback_seconds": 2,
+    "xres_disconnect_seconds": 2,
+    "xtest_delay_ms": 8000,
+    "post_termination_observation_ms": 8500
+  },
+  "not_claimed": [
+    "standard MCP caller integration",
+    "blocked caller I/O release bound",
+    "physical/desktop key release",
+    "application task effect or success",
+    "MAP01 result",
+    "general recovery or cross-server guarantee",
+    "WSLc behavior"
+  ],
+  "allocation": "one private workflow-owned Xvfb; no WSLc, Docker, shared display, or desktop input"
+}

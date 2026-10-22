@@ -1,0 +1,6 @@
+# V39/V15 retained lost-key and release-identity audits
+
+- **Status:** Separate audit allocations ended on input/provenance gates; candidates were not rerun.
+- **Source:** Issues [#7933](https://github.com/Unjuno/agent-interface/issues/7933) and [#7921](https://github.com/Unjuno/agent-interface/issues/7921), under #59.
+- **Idea:** Independently reconstruct retained fake-X event chronology and post-sample lost-key evidence while keeping admission rows, release transitions, source identity, and terminal cleanup distinct.
+- **Outcome:** #7921 A02's one auditor invocation received the wrong PRE-RUN file and returned `STOP_PROTOCOL_INPUT_MISMATCH`; candidate/runtime invocation was zero. #7933 A07 records `STOP_AUDIT_RESULT_PROVENANCE_INCONSISTENT`: saved audit JSON/stdout, exit file, and independent reference output disagree. A separate #8192 read-only check found a manifest mismatch in retained #7933 A03 files. All source/raw artifacts remain preserved; no audit was retried and no live X, GUI, game, input, or release-safety claim is made. Open records: [#7928](https://github.com/Unjuno/agent-interface/pull/7928), [#8172](https://github.com/Unjuno/agent-interface/pull/8172), [#8192](https://github.com/Unjuno/agent-interface/pull/8192).

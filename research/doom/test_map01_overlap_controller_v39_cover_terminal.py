@@ -19,7 +19,9 @@ sys.path[:0] = [str(HERE), str(HERE.parent / "live_control")]
 import map01_overlap_controller_v39 as controller
 
 
-NEUTRAL = {"verified": True, "keys_down": [], "buttons_down": []}
+NEUTRAL = {"event": "owner_release", "verified": True,
+           "keys_down": [], "buttons_down": [],
+           "keys_unknown": [], "key_state_errors": []}
 
 
 class NextBoundary(RuntimeError):
@@ -32,6 +34,8 @@ class CoverTerminalTests(unittest.TestCase):
                  interrupt_failure=False, interrupt_request_error=False,
                  interrupt_ack_only=False, complete_during_interrupt=False,
                  abort_failure=False, abort_terminal_race=False,
+                 interrupt_blocks=False,
+                 invalidation_failure=False, fatal_receipt_collision=False,
                  planner_wait_cap=2):
         trace = {"case": name, "commands": [], "events": [], "timeline": []}
         started = threading.Event()
@@ -106,6 +110,14 @@ class CoverTerminalTests(unittest.TestCase):
                                   poll=lambda: None)
 
         class Planner:
+            def invalidate_turn(self, handle):
+                trace["timeline"].append("local_invalidation:" + handle.turn_id)
+                if fatal_receipt_collision:
+                    (Path(temp) / "out" / "fatal-cover-terminal.json").write_text(
+                        '{"original_evidence":true}\n')
+                if invalidation_failure:
+                    raise ValueError("synthetic invalidation fault")
+                return {"outcome": "locally_invalidated"}
             thread_id = "synthetic-thread"
             def initialize(self): pass
             def start_session(self): pass
@@ -122,6 +134,10 @@ class CoverTerminalTests(unittest.TestCase):
                                        answer_eligible=True, cancellation_requested=False)
             def interrupt(self, handle):
                 trace["timeline"].append("interrupt:" + handle.turn_id)
+                if interrupt_blocks:
+                    trace["timeline"].append("interrupt_wait_entered")
+                    time.sleep(.2)
+                    trace["timeline"].append("interrupt_wait_returned")
                 if interrupt_failure:
                     raise KeyboardInterrupt("synthetic interrupt transport error")
                 if interrupt_request_error:
@@ -134,6 +150,9 @@ class CoverTerminalTests(unittest.TestCase):
                 return {"status": "interrupted"}
             def abort_pending_turn(self):
                 trace["timeline"].append("abort_transport")
+                receipt_path = Path(temp) / "out" / "fatal-cover-terminal.json"
+                trace["fatal_receipt_at_abort"] = (
+                    json.loads(receipt_path.read_text()) if receipt_path.exists() else None)
                 complete.set()
                 if abort_failure:
                     raise OSError("synthetic close fault after waiter wakeup")
@@ -184,6 +203,7 @@ class CoverTerminalTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             argv = ["controller", "--out", str(Path(temp) / "out"),
                     "--iterations", "1", "--model", "synthetic", "--effort", "low",
+                    "--measurement-session",
                     "--load-fixture-manifest", str(Path(temp) / "fixture.json")]
             original_read = Path.read_text
 
@@ -194,6 +214,7 @@ class CoverTerminalTests(unittest.TestCase):
 
             replacements = [
                 patch.object(sys, "argv", argv),
+                patch.object(controller, "app_server_command", return_value=["offline-app-server"]),
                 patch.object(controller, "CodexAppServerClient", return_value=planner),
                 patch.object(controller, "PersistentPlannerAdapter", return_value=planner),
                 patch.object(controller, "ThreadPoolExecutor", Pool),
@@ -201,7 +222,7 @@ class CoverTerminalTests(unittest.TestCase):
                 patch.object(controller.queue, "Queue", return_value=incoming),
                 patch.object(controller, "ControllerFailureCleanup", CleanupSpy),
                 patch.object(controller, "DoomStatusNumberReader", Reader),
-                patch.object(controller, "refresh_source", side_effect=lambda latest, *a: (
+                patch.object(controller, "refresh_source", side_effect=lambda latest, *a, terminal_predicate=None: (
                     latest, {"status": "already_observed"})),
                 patch.object(controller, "build_cover_monitor", return_value=(
                     monitor, {"status": "admitted", "authored": None})),
@@ -221,6 +242,9 @@ class CoverTerminalTests(unittest.TestCase):
                     trace["error"] = {"type": type(error).__name__, "message": str(error)}
                     trace["error_notes"] = getattr(error, "__notes__", [])
                 finally:
+                    receipt_path = Path(temp) / "out" / "fatal-cover-terminal.json"
+                    trace["fatal_receipt"] = (
+                        json.loads(receipt_path.read_text()) if receipt_path.exists() else None)
                     trace["main_elapsed_ns"] = time.perf_counter_ns() - started_ns
                     complete.set()
                     if executor is not None:
@@ -244,8 +268,7 @@ class CoverTerminalTests(unittest.TestCase):
         self.assertEqual(sum(row["op"] == "submit" for row in trace["commands"]),
                          2 if renewed else 1)
         self.assertNotIn("final_admission", trace["timeline"])
-        self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"),
-                         1 if pending else 0)
+        self.assertEqual(trace["timeline"].count("interrupt:synthetic-turn"), 0)
         self.assertEqual(trace["cleanup_error"], "RuntimeError")
         self.assertTrue(trace["all_futures_done"])
 
@@ -257,8 +280,14 @@ class CoverTerminalTests(unittest.TestCase):
     def test_pending_rejects_bad_release(self):
         releases = {"unverified": dict(NEUTRAL, verified=False),
                     "numeric_verified": dict(NEUTRAL, verified=1),
+                    "wrong_event": dict(NEUTRAL, event="input_admission"),
+                    "missing_event": {key: value for key, value in NEUTRAL.items()
+                                      if key != "event"},
                     "keys": dict(NEUTRAL, keys_down=["a"]),
                     "buttons": dict(NEUTRAL, buttons_down=[1]),
+                    "unknown_keys": dict(NEUTRAL, keys_unknown=["a"]),
+                    "key_state_errors": dict(NEUTRAL,
+                                              key_state_errors=[{"source": "keymap_after"}]),
                     "missing_lists": {"verified": True}, "null": None}
         for name, release in releases.items():
             with self.subTest(release=name):
@@ -289,9 +318,7 @@ class CoverTerminalTests(unittest.TestCase):
                               interrupt_request_error=True, planner_wait_cap=0.15)
         self.assert_rejected(trace)
         self.assertIn("injected input error", trace["error"]["message"])
-        self.assertEqual(trace["error_notes"], [
-            "planner interrupt transport failed",
-            "pending planner turn transport aborted"])
+        self.assertEqual(trace["error_notes"], ["pending planner turn transport aborted"])
         self.assertEqual(trace["planner_timeout_requested"], 90)
         self.assertIn("abort_transport", trace["timeline"])
         self.assertLess(trace["main_elapsed_ns"], 100_000_000)
@@ -319,6 +346,8 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 if before_transport is not None:
                     before_transport()
@@ -354,8 +383,8 @@ class CoverTerminalTests(unittest.TestCase):
 
         self.assertFalse(worker.is_alive(), "cancel helper did not finish")
         self.assertEqual(failures, [])
-        self.assertEqual(trace, ["write:cancel", "flush", "interrupt_enter",
-                                 "interrupt_return", "terminal_wait"])
+        self.assertEqual(trace, ["write:cancel", "flush", "terminal_wait",
+                                 "interrupt_enter", "interrupt_return"])
 
     def test_planner_interrupt_is_attempted_if_cover_cancel_write_fails(self):
         trace = []
@@ -371,6 +400,8 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 trace.append("planner_interrupt")
                 before_transport_error = None
@@ -395,7 +426,7 @@ class CoverTerminalTests(unittest.TestCase):
             controller.cancel_invalidated_cover(
                 Planner(), object(), Process(), wait, "cover-0")
 
-        self.assertEqual(trace, ["planner_interrupt", "cancel_write", "terminal_wait"])
+        self.assertEqual(trace, ["cancel_write", "terminal_wait", "planner_interrupt"])
 
     def test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails(self):
         trace = []
@@ -411,6 +442,8 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
+            def invalidate_turn(self, handle):
+                return {"outcome": "locally_invalidated"}
             def interrupt(self, handle, before_transport=None):
                 trace.append("planner_interrupt")
                 try:
@@ -421,20 +454,62 @@ class CoverTerminalTests(unittest.TestCase):
 
         with self.assertRaisesRegex(OSError, "synthetic executor pipe failure") as raised:
             controller.cancel_invalidated_cover(
-                Planner(), object(), Process(), lambda predicate: None, "cover-0")
+                Planner(), object(), Process(), lambda predicate: {
+                    "event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": dict(NEUTRAL)}, "cover-0")
 
-        self.assertEqual(trace, ["planner_interrupt", "cancel_write"])
+        self.assertEqual(trace, ["cancel_write", "planner_interrupt"])
         self.assertIsInstance(raised.exception.__cause__, TimeoutError)
         self.assertIn("planner interrupt also failed: TimeoutError",
                       getattr(raised.exception, "__notes__", []))
+
+    def test_failed_cover_saves_original_terminal_before_abort_without_remote_ack(self):
+        trace = self.exercise("interrupt-would-block", "failed", NEUTRAL,
+                              interrupt_blocks=True)
+        self.assert_rejected(trace)
+        self.assertNotIn("interrupt:synthetic-turn", trace["timeline"])
+        self.assertNotIn("interrupt_wait_entered", trace["timeline"])
+        self.assertEqual(trace["fatal_receipt_at_abort"], trace["fatal_receipt"])
+        self.assertEqual(trace["fatal_receipt"]["terminal"]["status"], "failed")
+        self.assertFalse(trace["fatal_receipt"]["grants_input_authority"])
+        self.assertEqual(trace["fatal_receipt"]["physical_input_state"], "unverified")
+        self.assertLess(trace["timeline"].index("local_invalidation:synthetic-turn"),
+                        trace["timeline"].index("abort_transport"))
+
+    def test_fatal_receipt_is_retained_for_pending_completed_and_post_answer_paths(self):
+        for options in ({}, {"complete_at_terminal": True}, {"pending": False}):
+            with self.subTest(options=options):
+                trace = self.exercise("fatal-receipt-path", "failed", NEUTRAL, **options)
+                self.assert_rejected(trace, pending=options.get("pending", True))
+                receipt = trace["fatal_receipt"]
+                terminal = next(row for row in trace["events"] if row["event"] == "terminal")
+                self.assertEqual(receipt["terminal"], terminal)
+                self.assertFalse(receipt["grants_input_authority"])
+                self.assertEqual(receipt["physical_input_state"], "unverified")
+
+    def test_fatal_receipt_collision_keeps_evidence_and_aborts_without_ack(self):
+        trace = self.exercise("fatal-receipt-collision", "failed", NEUTRAL,
+                              fatal_receipt_collision=True)
+        self.assert_rejected(trace)
+        self.assertEqual(trace["fatal_receipt"], {"original_evidence": True})
+        self.assertEqual(trace["fatal_receipt_at_abort"], trace["fatal_receipt"])
+        self.assertIn("fatal cover receipt save failed: FileExistsError", trace["error_notes"])
+
+    def test_local_invalidation_fault_does_not_skip_saved_terminal_or_abort(self):
+        trace = self.exercise("fatal-invalidation-fault", "failed", NEUTRAL,
+                              invalidation_failure=True)
+        self.assert_rejected(trace)
+        self.assertEqual(trace["fatal_receipt"]["local_invalidation"],
+                         {"outcome": "failed", "error_type": "ValueError"})
+        self.assertIn("planner local invalidation failed: ValueError", trace["error_notes"])
+        self.assertIn("abort_transport", trace["timeline"])
 
     def test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary(self):
         trace = self.exercise("interrupt-exception", "failed", NEUTRAL,
                               interrupt_failure=True, planner_wait_cap=0.15)
         self.assert_rejected(trace)
         self.assertIn("injected input error", trace["error"]["message"])
-        self.assertEqual(trace["error_notes"], ["planner interrupt failed: KeyboardInterrupt",
-                                               "pending planner turn transport aborted"])
+        self.assertEqual(trace["error_notes"], ["pending planner turn transport aborted"])
         self.assertIn("abort_transport", trace["timeline"])
         self.assertLess(trace["main_elapsed_ns"], 100_000_000)
 
@@ -444,6 +519,9 @@ class CoverTerminalTests(unittest.TestCase):
                  "unverified": ("cancelled", dict(NEUTRAL, verified=False)),
                  "keys": ("completed", dict(NEUTRAL, keys_down=["a"])),
                  "buttons": ("expired", dict(NEUTRAL, buttons_down=[1])),
+                 "unknown_keys": ("completed", dict(NEUTRAL, keys_unknown=["a"])),
+                 "key_state_errors": ("expired", dict(
+                     NEUTRAL, key_state_errors=[{"source": "keymap_after"}])),
                  "null": ("cancelled", None)}
         for name, (status, release) in cases.items():
             with self.subTest(case=name):
@@ -460,11 +538,12 @@ class CoverTerminalTests(unittest.TestCase):
                         trace["timeline"].index("planner_return"))
         self.assertIn("pending planner turn transport aborted", trace["error_notes"])
 
-    def test_completion_during_interrupt_needs_no_transport_abort(self):
+    def test_fatal_cover_bypasses_completion_during_interrupt_and_aborts_instead(self):
         trace = self.exercise("interrupt-ack-complete", "failed", NEUTRAL,
                               complete_during_interrupt=True)
         self.assert_rejected(trace)
-        self.assertNotIn("abort_transport", trace["timeline"])
+        self.assertIn("abort_transport", trace["timeline"])
+        self.assertNotIn("interrupt:synthetic-turn", trace["timeline"])
         self.assertNotIn("planner_wait_expired", trace["timeline"])
 
     def test_abort_fault_after_ack_keeps_original_terminal_failure(self):

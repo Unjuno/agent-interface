@@ -1,0 +1,27 @@
+{
+  "current_generation": "f8481b03813516019bf820c15390211497b48e48f71f0df5aa2657a864f5b578",
+  "current_pid": 124,
+  "relay_press_seen": false,
+  "replay_allowed": false,
+  "result": {
+    "error": "X11BackendError('native target guard refused: SCOPE_MISMATCH')",
+    "guard_checks": [
+      {
+        "authority": "resolution only; ordinary admission remains required",
+        "eligible": false,
+        "handle": "field",
+        "observation_sequence": 2,
+        "private_registry_id_exposed": false,
+        "reason": "process_generation_changed_or_missing",
+        "reference_kind": "session_alias",
+        "stage": "before_admission",
+        "status": "SCOPE_MISMATCH"
+      }
+    ],
+    "input_dispatched": false,
+    "status": "refused"
+  },
+  "source_generation": "ad4a58886339c9bb9ea57ca0b347b3136574c8f9a1337ec4e50887064d8be43f",
+  "source_pid": 123,
+  "task_success": null
+}

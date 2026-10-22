@@ -1,6 +1,7 @@
 """Persistent app-server implementation of the integrated grounding call contract."""
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 import subprocess
@@ -58,6 +59,28 @@ def per_turn_usage(value):
     return result
 
 
+class GroundingCallError(RuntimeError):
+    """A failed call with the accounting already observed before its failure."""
+
+    def __init__(self, error, *, call_id, usage, visible_images_submitted, wait_ns,
+                 thread_id=None, requested_model=None, requested_effort=None,
+                 usage_error=None, publication_error=None):
+        try:
+            diagnostic = str.__str__(repr(error))
+        except BaseException:
+            diagnostic = '<exception repr unavailable>'
+        super().__init__('persistent grounding call failed; no retry: ' + diagnostic)
+        self.call_id = call_id
+        self.usage = copy.deepcopy(usage)
+        self.visible_images_submitted = visible_images_submitted
+        self.wait_ns = wait_ns
+        self.thread_id = thread_id
+        self.requested_model = requested_model
+        self.requested_effort = requested_effort
+        self.usage_error = usage_error
+        self.publication_error = publication_error
+
+
 class PersistentGroundingModel:
     """Keep one typed model thread across cold grounding and later repair."""
 
@@ -98,41 +121,79 @@ class PersistentGroundingModel:
         schema_path, _instructions, validator = CONTRACTS[contract]
         schema = json.loads(Path(schema_path).read_text(encoding="utf-8"))
         started = time.perf_counter_ns()
-        handle = self.planner.begin_turn(
-            prompt, output_schema=schema,
-            image_path=self.path_converter(Path(image).resolve()))
-        turn = self.planner.await_turn(handle, timeout=90)
-        elapsed = time.perf_counter_ns() - started
-        self.calls += 1
-        if not turn.answer_eligible:
-            failure = {
-                "thread_id": handle.thread_id, "turn_id": handle.turn_id,
-                "status": turn.status, "answer_eligible": False,
-                "error": turn.error, "usage": per_turn_usage(turn.usage),
-                "runner_ns": elapsed,
+        handle = None
+        known_usage = None
+        usage_error = None
+        try:
+            handle = self.planner.begin_turn(
+                prompt, output_schema=schema,
+                image_path=self.path_converter(Path(image).resolve()))
+            turn = self.planner.await_turn(handle, timeout=90)
+            elapsed = time.perf_counter_ns() - started
+            self.calls += 1
+            if not turn.answer_eligible:
+                try:
+                    known_usage = per_turn_usage(turn.usage)
+                except ValueError as error:
+                    known_usage = None
+                    usage_error = str(error)
+                failure = {
+                    "thread_id": handle.thread_id, "turn_id": handle.turn_id,
+                    "status": turn.status, "answer_eligible": False,
+                    "requested_model": self.model,
+                    "requested_effort": self.effort,
+                    "error": turn.error, "usage": known_usage,
+                    "usage_error": usage_error,
+                    "runner_ns": elapsed,
+                }
+                failure_error = RuntimeError(
+                    "persistent grounding answer ineligible; no retry")
+                failure_error.call_id = handle.turn_id
+                failure_error.thread_id = handle.thread_id
+                failure_error.usage = copy.deepcopy(known_usage)
+                failure_error.usage_error = usage_error
+                failure_error.wait_ns = elapsed
+                failure_error.visible_images_submitted = 1
+                try:
+                    (root / "failure.json").write_text(
+                        json.dumps(failure, indent=2) + "\n",
+                        encoding="utf-8", newline="\n")
+                except Exception as publication_error:
+                    failure_error.publication_error = publication_error
+                    raise failure_error from publication_error
+                raise failure_error
+            try:
+                known_usage = per_turn_usage(turn.usage)
+            except ValueError as error:
+                usage_error = str(error)
+                raise
+            raw = turn.answer
+            normalized = validator(raw)
+            result = {
+                "raw": raw, "grounding": normalized, "usage": known_usage,
+                "call_id": handle.turn_id, "thread_id": handle.thread_id,
+                "turn_id": handle.turn_id, "turn_status": turn.status,
+                "answer_eligible": True, "runner_ns": elapsed,
+                "requested_model": self.model, "requested_effort": self.effort,
+                "cost": None,
             }
-            (root / "failure.json").write_text(
-                json.dumps(failure, indent=2) + "\n", encoding="utf-8", newline="\n")
-            raise RuntimeError("persistent grounding answer ineligible; no retry")
-        raw = turn.answer
-        normalized = validator(raw)
-        result = {
-            "raw": raw,
-            "grounding": normalized,
-            "usage": per_turn_usage(turn.usage),
-            "call_id": handle.turn_id,
-            "thread_id": handle.thread_id,
-            "turn_id": handle.turn_id,
-            "turn_status": turn.status,
-            "answer_eligible": True,
-            "runner_ns": elapsed,
-            "requested_model": self.model,
-            "requested_effort": self.effort,
-            "cost": None,
-        }
-        (root / "result.json").write_text(
-            json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
-        return result
+            (root / "result.json").write_text(
+                json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
+            return result
+        except Exception as error:
+            # Publication/validation failure must not erase a returned turn or
+            # its observed usage. No additional RPC, retry or input is issued.
+            cause = getattr(error, "publication_error", error)
+            raise GroundingCallError(error,
+                call_id=handle.turn_id if handle is not None else None,
+                usage=known_usage,
+                visible_images_submitted=1 if handle is not None else None,
+                wait_ns=time.perf_counter_ns() - started,
+                thread_id=handle.thread_id if handle is not None else None,
+                requested_model=self.model,
+                requested_effort=self.effort,
+                usage_error=getattr(error, "usage_error", usage_error),
+                publication_error=getattr(error, "publication_error", None)) from cause
 
     def close(self):
         if self._owns_client:

@@ -1,5 +1,31 @@
 # Adaptive acquisition caller v3: local-first semantic repair
 
+Current-source navigation (2026-10-16): the [caller convergence crosswalk](../integration/caller_current_main_convergence_20261016/README.md)
+records the already-composed #7289/#7310 repair family, later effect receipts,
+76 selected normal/-O local methods and the remaining live provider/task-effect
+gates. The original evidence count below is historical, not the current total.
+
+The [persistent grounding failure-accounting repair](../integration/grounding_failure_accounting_20261016/README.md)
+also tests the actual model/planner/caller boundary with an inert RPC client:
+known failed-call accounting survives before the caller skips input/effect stages.
+This does not qualify live provider usage or independent application effects.
+
+The added [JSONL transport composition regression](test_grounding_appserver_usage_transport.py)
+uses the real `CodexAppServerClient` against a deterministic local protocol peer.
+It verifies that a failed completed turn's thread ID, turn/call ID and token usage
+survive into the adaptive caller's all-attempt ledger and match the retained
+protocol journal; requested model and effort also match the sent thread/turn
+requests. Failed-call receipts and attempts retain that requested configuration
+even when turn start fails before a call ID or image admission is known. The peer
+is synthetic: this checks transport-to-ledger plumbing, not provider billing,
+provider-log reconciliation, or task effects.
+
+The [explicit compiled v3 connection](COMPILED_CALLER_V3.md) builds from the final
+selected target and retains a returned core receipt across auxiliary sink
+failure. Trusted execute adapters can use `ExecutionReceiptError` with a
+validated detached decision; ordinary error attributes do not grant progress
+evidence. The caller records known delivery without promoting task success.
+
 ## Problem
 
 The retained matched v3 comparison established one narrow case in which a
@@ -33,8 +59,10 @@ The result retains the ordered statuses from reuse, local repair, model
 reacquisition and post-model revalidation so a later success cannot erase why
 the fallback was entered.
 
-The attempt ledger records provider usage, visible images submitted and
-model wait for completed and failed attempts when available. Coverage is
+The attempt ledger records provider thread and turn/call identity, requested
+model/effort, provider usage, visible images submitted and model wait for
+completed and failed attempts when available. Older adapters may omit thread
+identity. Coverage is
 reported independently; missing values remain unavailable rather than becoming
 zero. A typed upstream capacity refusal becomes `TASK_DEFERRED` rather than a
 generic caller failure, while failed upstream and malformed output remain

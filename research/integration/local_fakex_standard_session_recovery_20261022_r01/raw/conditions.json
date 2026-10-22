@@ -1,0 +1,16 @@
+{
+  "schema": "agent-interface/local-fakex-standard-session-recovery-check-v1",
+  "source_commit": "cdc8bd6b65bf976137db645c2be31e20090f7d67",
+  "origin_main_at_check": "cdc8bd6b65bf976137db645c2be31e20090f7d67",
+  "test": "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown",
+  "test_source_sha256": "b6cd8774fec60390f0da41f2d050119cac13f5c6bc7bb80498066967dbb5810f",
+  "host": "Windows-10-10.0.26300-SP0",
+  "python": "CPython 3.11.9",
+  "modes": [
+    {"command": "python -m unittest -v runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown", "result": "PASS", "elapsed_s": 3.485},
+    {"command": "python -O -m unittest -v runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_fresh_standard_session_recovers_after_prior_cancel_remains_unknown", "result": "PASS", "elapsed_s": 3.440}
+  ],
+  "scope": "composed public MCP caller with synthetic Fake X owner; old unknown cancellation fence and fresh process/session generation",
+  "not_covered": ["live X server ordering", "Xvfb blocked-I/O", "independent live key state", "physical desktop", "WSLc", "MAP01", "matched efficiency", "reliability"],
+  "wslc_or_docker_used": false
+}

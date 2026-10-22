@@ -1,0 +1,360 @@
+{
+  "pid": 40640,
+  "optimize": 0,
+  "rows": [
+    {
+      "arm": "current",
+      "change": "stable",
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "caller": "TASK_NOT_VERIFIED",
+      "core": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "prefix": 2,
+      "selected_value": true,
+      "first_native_value": true,
+      "additional_checks": []
+    },
+    {
+      "arm": "current",
+      "change": "false",
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "caller": "TASK_NOT_VERIFIED",
+      "core": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "prefix": 2,
+      "selected_value": true,
+      "first_native_value": false,
+      "additional_checks": []
+    },
+    {
+      "arm": "current",
+      "change": "unknown",
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "caller": "TASK_NOT_VERIFIED",
+      "core": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "prefix": 2,
+      "selected_value": true,
+      "first_native_value": "unknown",
+      "additional_checks": []
+    },
+    {
+      "arm": "current",
+      "change": "generation",
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "caller": "EXECUTION_INCOMPLETE",
+      "core": "SAFE_YIELD",
+      "reason": "execution_refused",
+      "prefix": 1,
+      "selected_value": true,
+      "first_native_value": true,
+      "additional_checks": []
+    },
+    {
+      "arm": "explicit_keyboard_guard",
+      "change": "stable",
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "caller": "TASK_NOT_VERIFIED",
+      "core": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "prefix": 2,
+      "selected_value": true,
+      "first_native_value": true,
+      "additional_checks": [
+        {
+          "stage": "before_admission",
+          "sequence": 5,
+          "predicates": {
+            "field_target_present": true,
+            "submit_target_present": true,
+            "field_pixels_changed": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false
+          }
+        },
+        {
+          "stage": "before_key_press:CTRL",
+          "sequence": 6,
+          "predicates": {
+            "field_target_present": true,
+            "submit_target_present": true,
+            "field_pixels_changed": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false
+          }
+        },
+        {
+          "stage": "before_key_press:a",
+          "sequence": 7,
+          "predicates": {
+            "field_target_present": true,
+            "submit_target_present": true,
+            "field_pixels_changed": true,
+            "field_value_matches_task": true,
+            "submission_pixels_changed": false
+          }
+        }
+      ]
+    },
+    {
+      "arm": "explicit_keyboard_guard",
+      "change": "false",
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "caller": "EXECUTION_INCOMPLETE",
+      "core": "SAFE_YIELD",
+      "reason": "execution_refused",
+      "prefix": 1,
+      "selected_value": true,
+      "first_native_value": false,
+      "additional_checks": [
+        {
+          "stage": "before_admission",
+          "sequence": 5,
+          "predicates": {
+            "field_target_present": true,
+            "submit_target_present": true,
+            "field_pixels_changed": false,
+            "field_value_matches_task": false,
+            "submission_pixels_changed": false
+          }
+        }
+      ]
+    },
+    {
+      "arm": "explicit_keyboard_guard",
+      "change": "unknown",
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "caller": "EXECUTION_INCOMPLETE",
+      "core": "SAFE_YIELD",
+      "reason": "execution_refused",
+      "prefix": 1,
+      "selected_value": true,
+      "first_native_value": "unknown",
+      "additional_checks": [
+        {
+          "stage": "before_admission",
+          "sequence": 5,
+          "predicates": {
+            "field_target_present": true,
+            "submit_target_present": true,
+            "field_pixels_changed": true,
+            "field_value_matches_task": "unknown",
+            "submission_pixels_changed": true
+          }
+        }
+      ]
+    },
+    {
+      "arm": "explicit_keyboard_guard",
+      "change": "generation",
+      "emissions": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "caller": "EXECUTION_INCOMPLETE",
+      "core": "SAFE_YIELD",
+      "reason": "execution_refused",
+      "prefix": 1,
+      "selected_value": true,
+      "first_native_value": true,
+      "additional_checks": []
+    }
+  ]
+}

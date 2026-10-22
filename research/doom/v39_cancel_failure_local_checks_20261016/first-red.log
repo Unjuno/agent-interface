@@ -1,0 +1,61 @@
+FEF
+======================================================================
+ERROR: test_healthy_and_early_release_keep_existing_guard_validation (research.doom.test_v39_cancel_release_failure.CancelFailureTests.test_healthy_and_early_release_keep_existing_guard_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cancel_release_failure.py", line 93, in test_healthy_and_early_release_keep_existing_guard_validation
+    result = controller.cancel_invalidated_action(process, waiter(values), 'p1', armed())
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\map01_overlap_controller_v39.py", line 669, in cancel_invalidated_action
+    released = wait(lambda row: row.get("event") == "input_released" and
+                    row.get("id") == identifier)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cancel_release_failure.py", line 51, in wait
+    raise TimeoutError('no matching boundary; supplied terminal was discarded')
+TimeoutError: no matching boundary; supplied terminal was discarded
+
+======================================================================
+FAIL: test_failed_terminal_is_not_discarded_waiting_for_success (research.doom.test_v39_cancel_release_failure.CancelFailureTests.test_failed_terminal_is_not_discarded_waiting_for_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cancel_release_failure.py", line 61, in test_failed_terminal_is_not_discarded_waiting_for_success
+    controller.cancel_invalidated_action(SimpleNamespace(stdin=Stream()),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        waiter([values[0], values[2]]), 'p1', armed(), failure_root=root)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: cancel_invalidated_action() got an unexpected keyword argument 'failure_root'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cancel_release_failure.py", line 65, in test_failed_terminal_is_not_discarded_waiting_for_success
+    self.assertIsNotNone(receipt, 'matching failed terminal must become retained failure')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : matching failed terminal must become retained failure
+
+======================================================================
+FAIL: test_unverified_release_does_not_wait_for_later_terminal (research.doom.test_v39_cancel_release_failure.CancelFailureTests.test_unverified_release_does_not_wait_for_later_terminal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cancel_release_failure.py", line 81, in test_unverified_release_does_not_wait_for_later_terminal
+    controller.cancel_invalidated_action(SimpleNamespace(stdin=Stream()),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        waiter(values[:2]), 'p1', armed())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\map01_overlap_controller_v39.py", line 669, in cancel_invalidated_action
+    released = wait(lambda row: row.get("event") == "input_released" and
+                    row.get("id") == identifier)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cancel_release_failure.py", line 51, in wait
+    raise TimeoutError('no matching boundary; supplied terminal was discarded')
+TimeoutError: no matching boundary; supplied terminal was discarded
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_v39_cancel_release_failure.py", line 84, in test_unverified_release_does_not_wait_for_later_terminal
+    self.assertEqual(getattr(error, 'receipt', {}).get('reason'), 'release_unverified')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'release_unverified'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.008s
+
+FAILED (failures=2, errors=1)

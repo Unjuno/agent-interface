@@ -64,6 +64,7 @@ def _controller_wait_with_rows(rows):
         ast.Return(value=ast.Name(id="wait", ctx=ast.Load())),
     ])
     namespace = {
+        "reject_control_boundary_failure": controller.reject_control_boundary_failure,
         "queue": queue,
         "time": time,
         "_WaitProcess": _WaitProcess,

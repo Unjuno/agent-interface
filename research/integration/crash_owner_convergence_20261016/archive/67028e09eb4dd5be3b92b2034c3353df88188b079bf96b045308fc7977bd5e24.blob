@@ -1,0 +1,19 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a02-run-v1",
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A02-20261012-01",
+  "candidate_command": "wsl.exe -d Ubuntu -- bash -lc cd /mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-5/work/v15-owner-integration-20261012 && PYTHONPATH=/tmp/v15-owner-a02-deps python3 -B research/doom/v39_v15_process_owner_xvfb_a02_20261012/candidate.py",
+  "candidate_invocations": 1,
+  "candidate_exit_code": 1,
+  "raw_path": "results/A01/RAW.json",
+  "raw_sha256": "c4d4789813d0d63d65e7eb2ec4b5048c85821c8562e0e5c6594d9df1279cd03a",
+  "preflight_attempts": [
+    "import preflight blocked: missing numpy",
+    "import preflight blocked: missing openpyxl",
+    "import preflight pass with /tmp NumPy target plus unused gui_suite stub"
+  ],
+  "xvfb_failure": "Xvfb could not create Unix listener because shared /tmp/.X11-unix mode was not 1777; no session child or input owner service started",
+  "xvfb_tcp_enabled": false,
+  "physical_input": false,
+  "game_or_model": false,
+  "retries": 0
+}

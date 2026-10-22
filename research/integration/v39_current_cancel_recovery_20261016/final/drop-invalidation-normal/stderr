@@ -1,0 +1,125 @@
+test_clean_new_planner_result_only_reaches_action_validation (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_clean_new_planner_result_only_reaches_action_validation) ... ok
+test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) ... 
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='cancelled') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='completed') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='expired') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='cancelled') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='completed') ... FAIL
+  test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='expired') ... FAIL
+test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) ... 
+  test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) (fault='unverified') ... FAIL
+  test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) (fault='held') ... FAIL
+  test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) (fault='cancel-write') ... FAIL
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='cancelled')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 111, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='completed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 111, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='health', status='expired')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 111, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='cancelled')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 111, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='completed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 111, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+======================================================================
+FAIL: test_recovery_during_cancel_preserves_old_refusal_and_new_full_source (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_recovery_during_cancel_preserves_old_refusal_and_new_full_source) (signal='ammo', status='expired')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 111, in test_recovery_during_cancel_preserves_old_refusal_and_new_full_source
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+======================================================================
+FAIL: test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) (fault='unverified')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 130, in test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+======================================================================
+FAIL: test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) (fault='held')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 130, in test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+======================================================================
+FAIL: test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence (test_map01_v39_cancel_recovery_composition.CancelRecoveryCompositionTests.test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence) (fault='cancel-write')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\outputs\repository-consolidation-20261015\v39-current-cancel-final-r2-20261016\control-root\research\doom\test_map01_v39_cancel_recovery_composition.py", line 130, in test_uncertain_closure_or_write_aborts_without_discarding_failure_evidence
+    self.assertEqual(r['final']['status'],'REJECTED_POLICY_INVALIDATED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'READY_FOR_ACTION_VALIDITY' != 'REJECTED_POLICY_INVALIDATED'
+- READY_FOR_ACTION_VALIDITY
++ REJECTED_POLICY_INVALIDATED
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.177s
+
+FAILED (failures=9)

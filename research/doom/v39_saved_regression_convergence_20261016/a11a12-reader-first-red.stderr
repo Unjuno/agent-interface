@@ -1,0 +1,21 @@
+test_audit_saved (unittest.loader._FailedTest.test_audit_saved) ... ERROR
+
+======================================================================
+ERROR: test_audit_saved (unittest.loader._FailedTest.test_audit_saved)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audit_saved
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\v39_saved_regression_convergence_20261016\test_audit_saved.py", line 7, in <module>
+    from audit_saved import EvidenceError, load_evidence, validate_records
+ModuleNotFoundError: No module named 'audit_saved'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

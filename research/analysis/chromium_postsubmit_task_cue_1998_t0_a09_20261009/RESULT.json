@@ -1,0 +1,59 @@
+{
+  "action_id": "submit",
+  "all_crop_ocr_exits_zero": true,
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A09-20261009",
+  "audit_errors": [],
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_stdout_sha256": "fb90e9f208a7d56c364b6fd5c4006eaba94e2c8a287c081a612be2cec3d28cb6",
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "candidate_stdout_sha256": "3b680972837ea9bbcd358cfe3b0daf1ba6cabb6b004a55fbc4166d1fbedc1f8e",
+  "crop_count": 20,
+  "crop_ocr_invocations": 20,
+  "crop_payload_bytes_max": 32457,
+  "crop_payload_bytes_min": 1149,
+  "disposition": "FAIL_NO_CROP_TOKEN",
+  "epoch": 8,
+  "exact_token_crop_ids": [],
+  "frame_id": "chromium-36563401256d",
+  "freeze_sha256": "ea67938e69711f56b3be54b4eaa08cdbcae48e846f8c68a8dea2e224459bba69",
+  "full_payload_bytes": 34982,
+  "mutation_controls": [
+    {
+      "detector_prefix": "coverage",
+      "name": "drop-row",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "case-identities",
+      "name": "duplicate-id",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "ocr-exit:",
+      "name": "false-exit",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "input-hash:",
+      "name": "wrong-input-hash",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "payload-accounting:",
+      "name": "wrong-payload",
+      "rejected": true
+    },
+    {
+      "detector_prefix": "ocr-bytes:",
+      "name": "ocr-text-tamper",
+      "rejected": true
+    }
+  ],
+  "pilot_exact_token_found": false,
+  "retries": 0,
+  "schema": "a09-result-v1",
+  "scope": "one retained Chromium post-submit/pre-public-effect frame; fixed Tesseract crop extractability only",
+  "target_token": "t001101"
+}

@@ -1,0 +1,173 @@
+{
+  "protocol_id": "UIA-8641-v1",
+  "replicate_seeds": [
+    30041,
+    30042,
+    30043,
+    30044,
+    30045,
+    30046,
+    30047,
+    30048,
+    30049,
+    30050,
+    30051,
+    30052,
+    30053,
+    30054,
+    30055,
+    30056,
+    30057,
+    30058,
+    30059,
+    30060
+  ],
+  "cases": [
+    {
+      "case_id": "resampled_noise",
+      "total_uncertainty": 0.93,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.93,
+      "estimated_correct_probability": {
+        "REPEAT": 0.94,
+        "ALTERNATE": 0.81,
+        "WAIT": 0.72,
+        "UNKNOWN": 0.84
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.78,
+        "ALTERNATE": 0.42,
+        "WAIT": 0.1,
+        "UNKNOWN": 0.0
+      },
+      "source_cues": {
+        "ALEATORIC": 0.96,
+        "EPISTEMIC": 0.12,
+        "DYNAMIC": 0.05,
+        "INTENT": 0.07
+      }
+    },
+    {
+      "case_id": "ontology_uncertainty",
+      "total_uncertainty": 0.91,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.91,
+      "estimated_correct_probability": {
+        "REPEAT": 0.61,
+        "ALTERNATE": 0.91,
+        "WAIT": 0.63,
+        "UNKNOWN": 0.78
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.18,
+        "ALTERNATE": 0.82,
+        "WAIT": 0.06,
+        "UNKNOWN": 0.0
+      },
+      "source_cues": {
+        "ALEATORIC": 0.1,
+        "EPISTEMIC": 0.92,
+        "DYNAMIC": 0.08,
+        "INTENT": 0.11
+      }
+    },
+    {
+      "case_id": "stale_epoch",
+      "total_uncertainty": 0.89,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.9,
+      "estimated_correct_probability": {
+        "REPEAT": 0.55,
+        "ALTERNATE": 0.66,
+        "WAIT": 0.94,
+        "UNKNOWN": 0.72
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.12,
+        "ALTERNATE": 0.3,
+        "WAIT": 0.8,
+        "UNKNOWN": 0.0
+      },
+      "source_cues": {
+        "ALEATORIC": 0.12,
+        "EPISTEMIC": 0.08,
+        "DYNAMIC": 0.9,
+        "INTENT": 0.06
+      }
+    },
+    {
+      "case_id": "irreducible_intent",
+      "total_uncertainty": 0.88,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.93,
+      "estimated_correct_probability": {
+        "REPEAT": 0.51,
+        "ALTERNATE": 0.5,
+        "WAIT": 0.51,
+        "UNKNOWN": 0.94
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.08,
+        "ALTERNATE": 0.1,
+        "WAIT": 0.02,
+        "UNKNOWN": 0.0
+      },
+      "source_cues": {
+        "ALEATORIC": 0.15,
+        "EPISTEMIC": 0.1,
+        "DYNAMIC": 0.07,
+        "INTENT": 0.93
+      }
+    },
+    {
+      "case_id": "correlated_duplicate",
+      "total_uncertainty": 0.86,
+      "dependency_warning": true,
+      "decision_value_confidence": 0.82,
+      "estimated_correct_probability": {
+        "REPEAT": 0.88,
+        "ALTERNATE": 0.89,
+        "WAIT": 0.75,
+        "UNKNOWN": 0.78
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.35,
+        "ALTERNATE": 0.6,
+        "WAIT": 0.18,
+        "UNKNOWN": 0.0
+      },
+      "source_cues": {
+        "ALEATORIC": 0.82,
+        "EPISTEMIC": 0.72,
+        "DYNAMIC": 0.3,
+        "INTENT": 0.1
+      }
+    },
+    {
+      "case_id": "misspecified_decomposition",
+      "total_uncertainty": 0.9,
+      "dependency_warning": false,
+      "decision_value_confidence": 0.31,
+      "estimated_correct_probability": {
+        "REPEAT": 0.82,
+        "ALTERNATE": 0.85,
+        "WAIT": 0.72,
+        "UNKNOWN": 0.8
+      },
+      "estimated_decision_change_probability": {
+        "REPEAT": 0.5,
+        "ALTERNATE": 0.55,
+        "WAIT": 0.2,
+        "UNKNOWN": 0.0
+      },
+      "source_cues": {
+        "ALEATORIC": 0.6,
+        "EPISTEMIC": 0.78,
+        "DYNAMIC": 0.8,
+        "INTENT": 0.25
+      }
+    }
+  ],
+  "allocation": "CONSTRUCTION_ONLY_SOURCE_ESTIMATOR",
+  "formal_evidence": false
+}

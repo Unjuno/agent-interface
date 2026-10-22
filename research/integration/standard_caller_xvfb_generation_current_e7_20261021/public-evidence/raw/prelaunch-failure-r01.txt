@@ -1,0 +1,3 @@
+PRELAUNCH STOP — no test or Xvfb started.
+Exact WSL stderr: fatal: not a git repository: <LOCAL_CHECKOUT>
+Cause: the Windows worktree .git pointer resolves to a Windows absolute path that Git-for-Windows understands but native WSL Git does not. This is a launcher provenance check failure, not a test outcome. r01 is closed without rerun.

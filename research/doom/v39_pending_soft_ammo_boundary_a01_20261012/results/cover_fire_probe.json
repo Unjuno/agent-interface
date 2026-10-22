@@ -1,0 +1,154 @@
+{
+  "checks": [
+    {
+      "name": "schema_allows_fire_in_next_cover",
+      "pass": true
+    },
+    {
+      "name": "cover_validity_has_no_ammo_floor",
+      "pass": true
+    },
+    {
+      "name": "next_action_has_ammo_floor",
+      "pass": true
+    },
+    {
+      "name": "fire_pulse_compiles_eight_repetitions",
+      "pass": true
+    },
+    {
+      "name": "bounded_cover_sums_to_ten_seconds",
+      "pass": true
+    },
+    {
+      "name": "cover_fire_dwell_is_eight_hundred_ms",
+      "pass": true
+    },
+    {
+      "name": "pending_planner_loop_contains_cover_renewal",
+      "pass": true
+    },
+    {
+      "name": "soft_ammo_case_does_not_cancel",
+      "pass": true
+    }
+  ],
+  "controller_sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+  "cover_program": [
+    {
+      "duration_ms": 100,
+      "keys": [
+        "space"
+      ],
+      "op": "hold"
+    },
+    {
+      "duration_ms": 1150,
+      "op": "coast",
+      "sample_ms": 250
+    },
+    {
+      "duration_ms": 100,
+      "keys": [
+        "space"
+      ],
+      "op": "hold"
+    },
+    {
+      "duration_ms": 1150,
+      "op": "coast",
+      "sample_ms": 250
+    },
+    {
+      "duration_ms": 100,
+      "keys": [
+        "space"
+      ],
+      "op": "hold"
+    },
+    {
+      "duration_ms": 1150,
+      "op": "coast",
+      "sample_ms": 250
+    },
+    {
+      "duration_ms": 100,
+      "keys": [
+        "space"
+      ],
+      "op": "hold"
+    },
+    {
+      "duration_ms": 1150,
+      "op": "coast",
+      "sample_ms": 250
+    },
+    {
+      "duration_ms": 100,
+      "keys": [
+        "space"
+      ],
+      "op": "hold"
+    },
+    {
+      "duration_ms": 1150,
+      "op": "coast",
+      "sample_ms": 250
+    },
+    {
+      "duration_ms": 100,
+      "keys": [
+        "space"
+      ],
+      "op": "hold"
+    },
+    {
+      "duration_ms": 1150,
+      "op": "coast",
+      "sample_ms": 250
+    },
+    {
+      "duration_ms": 100,
+      "keys": [
+        "space"
+      ],
+      "op": "hold"
+    },
+    {
+      "duration_ms": 1150,
+      "op": "coast",
+      "sample_ms": 250
+    },
+    {
+      "duration_ms": 100,
+      "keys": [
+        "space"
+      ],
+      "op": "hold"
+    },
+    {
+      "duration_ms": 1150,
+      "op": "coast",
+      "sample_ms": 250
+    }
+  ],
+  "fire_hold_count": 8,
+  "fire_hold_total_ms": 800,
+  "passed": 8,
+  "pending_loop_renewal_call": true,
+  "schema": "issue59-pending-soft-cover-fire-a02",
+  "schema_sha256": "a77d371468868eb216aeced1adb9b38ca9e1ccbb350fc1404069897686cd7bb1",
+  "scope": "exact current-main cover compiler/schema/controller renewal control flow plus synthetic ammo observations; no live game/model/Executor/OS input",
+  "soft_case": {
+    "cover_admission": "admitted",
+    "cover_guard_hard_ammo_floor": 1,
+    "current_ammo": 4,
+    "monitor_result": null,
+    "next_action_minimum_ammo": 5,
+    "pending_turn_cancel_signal": false,
+    "soft_event_count": 1,
+    "source_ammo": 6
+  },
+  "source_commit": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "total": 8
+}

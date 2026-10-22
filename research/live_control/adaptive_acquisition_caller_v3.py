@@ -51,7 +51,8 @@ def _aggregate_cost(costs, attempted_calls):
     return total
 
 class ModelFailure(RuntimeError):
-    def __init__(self, message, *, call_id=None, usage=None,
+    def __init__(self, message, *, call_id=None, thread_id=None, usage=None,
+                 requested_model=None, requested_effort=None,
                  visible_images_submitted=None, wait_ns=None,
                  typed_status="FAILED_UPSTREAM"):
         super().__init__(message)
@@ -59,6 +60,9 @@ class ModelFailure(RuntimeError):
                                 "FAILED_OUTPUT"}:
             raise ValueError("known typed model failure status required")
         self.call_id = call_id
+        self.thread_id = thread_id
+        self.requested_model = requested_model
+        self.requested_effort = requested_effort
         self.usage = usage
         self.visible_images_submitted = visible_images_submitted
         self.wait_ns = wait_ns
@@ -98,9 +102,9 @@ def _optional_count(value, name):
     return value
 
 
-def _optional_call_id(value):
+def _optional_identity(value, name):
     if value is not None and (type(value) is not str or not value):
-        raise ValueError("nonempty failure call id or unavailable required")
+        raise ValueError(f"nonempty {name} or unavailable required")
     return value
 
 
@@ -108,7 +112,7 @@ def _model_result(value):
     required = {"call_id", "output", "usage", "requested_model",
                 "requested_effort", "cost", "visible_images_submitted",
                 "wait_ns"}
-    if type(value) is not dict or set(value) != required:
+    if type(value) is not dict or set(value) not in (required, required | {"thread_id"}):
         raise ValueError("exact v3 model result fields required")
     if type(value["call_id"]) is not str or not value["call_id"]:
         raise ValueError("nonempty model call id required")
@@ -116,6 +120,9 @@ def _model_result(value):
         raise ValueError("requested model identity required")
     if type(value["requested_effort"]) is not str or not value["requested_effort"]:
         raise ValueError("requested effort required")
+    if "thread_id" in value and (type(value["thread_id"]) is not str or
+                                  not value["thread_id"]):
+        raise ValueError("nonempty thread id required when supplied")
     if value["cost"] is not None and not isinstance(value["cost"], (int, float)):
         raise ValueError("cost must be numeric or unavailable")
     result = copy.deepcopy(value)
@@ -215,6 +222,22 @@ def _execution_decision(value):
     return copy.deepcopy(value)
 
 
+class ExecutionReceiptError(RuntimeError):
+    """An adapter returned execution evidence before auxiliary work failed.
+
+    Trusted execute adapters may use this after obtaining a validated receipt;
+    an ordinary exception with a similarly named attribute is not evidence.
+    """
+
+    def __init__(self, execution_progress, error):
+        self._execution_progress = _execution_decision(execution_progress)
+        super().__init__('execution receipt auxiliary failure: ' + _error_text(error))
+
+    @property
+    def execution_progress(self):
+        return copy.deepcopy(self._execution_progress)
+
+
 def _effect_receipt(value):
     """Keep small, retrievable evidence references while dropping raw evidence."""
     decision = _decision(value, {"succeeded", "failed", "unavailable"})
@@ -287,6 +310,10 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                 execute_invoked = True
             value = callback(detached_payload)
         except Exception as error:
+            if name == "execute" and isinstance(error, ExecutionReceiptError):
+                # Capture the trusted adapter's returned receipt before the
+                # failure clock/journal can themselves fail.
+                returned_execution = _execution_decision(error.execution_progress)
             ended = clock(); stages[name] = {"status": "failed", "reason": _error_text(error)}
             phases.append({"stage": name, "started_ns": started, "ended_ns": ended,
                            "elapsed_ns": ended-started})
@@ -311,7 +338,9 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         attempt_id, started = id_factory(), clock()
         attempt = {"attempt_id": attempt_id, "stage": name, "status": "started",
                    "started_ns": started, "completed_ns": None, "call_id": None,
-                   "usage": None, "visible_images_submitted": None,
+                   "thread_id": None, "requested_model": None,
+                   "requested_effort": None, "usage": None,
+                   "visible_images_submitted": None,
                    "wait_ns": None, "error": None}
         attempts.append(attempt); stages[name] = {"status": "started", "reason": None}
         emit({"event": "model_attempt_started", **copy.deepcopy(attempt)})
@@ -327,11 +356,20 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
                            "elapsed_ns": ended-started})
             metadata_error = None
             try:
-                for field in ("call_id", "usage", "visible_images_submitted", "wait_ns"):
+                for field in ("call_id", "thread_id", "requested_model",
+                              "requested_effort", "usage",
+                              "visible_images_submitted", "wait_ns"):
                     try:
                         value = getattr(error, field, None)
-                        attempt[field] = (_optional_call_id(value) if field == "call_id" else
-                                          _usage(value) if field == "usage" else _optional_count(value, field))
+                        if field in ("call_id", "thread_id", "requested_model",
+                                     "requested_effort") and value is not None:
+                            attempt[field] = _optional_identity(value, field)
+                        elif field in ("call_id", "thread_id", "requested_model",
+                                       "requested_effort"):
+                            attempt[field] = None
+                        else:
+                            attempt[field] = (_usage(value) if field == "usage" else
+                                          _optional_count(value, field))
                     except ValueError as invalid_metadata:
                         metadata_error = invalid_metadata
             finally:
@@ -342,8 +380,12 @@ def run(spec, adapters, *, clock=time.perf_counter_ns, id_factory=None):
         ended = clock()
         attempt.update(status="completed", completed_ns=ended,
                        call_id=result["call_id"], usage=result["usage"],
+                       requested_model=result["requested_model"],
+                       requested_effort=result["requested_effort"],
                        visible_images_submitted=result["visible_images_submitted"],
                        wait_ns=result["wait_ns"])
+        if "thread_id" in result:
+            attempt["thread_id"] = result["thread_id"]
         stages[name] = {"status": "completed", "reason": None}
         model_calls.append({"attempt_id": attempt_id, "stage": name, **result})
         phases.append({"stage": name, "started_ns": started, "ended_ns": ended,

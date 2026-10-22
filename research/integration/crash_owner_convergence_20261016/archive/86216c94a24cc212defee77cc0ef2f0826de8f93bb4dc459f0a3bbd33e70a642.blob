@@ -1,0 +1,24 @@
+{
+  "schema": "v39-x11-shared-key-source-a33-freeze-v1",
+  "allocation_id": "V39-X11-SHARED-KEY-SOURCE-A33-20261012-01",
+  "source_commit": "b633b94595b81e3d315d0348f0cfa1c9266efdfb",
+  "candidate_invocations_allowed": 1,
+  "retries": 0,
+  "runtime": "WSL Ubuntu 24.04.3; private user+mount namespace; temporary tmpfs /tmp; Xvfb -nolisten tcp on :77; MIT-MAGIC-COOKIE Xauthority; Python 3.12.3 with python-xlib 0.33",
+  "hashes": {
+    "research/doom/v39_v15_xvfb_shared_key_source_a33_20261012/candidate.py": "5b8f0aa120bcfcbe3ef4aa7f23c3412bf641433c6791497bfd730bce32cbb434",
+    "research/doom/v39_v15_xvfb_shared_key_source_a33_20261012/PLAN.md": "c31f97ed829e13260a5da47739c45d84b7551370f156729f78f734aee0569b0c",
+    "research/doom/v39_v15_xvfb_shared_key_source_a33_20261012/run_candidate.sh": "7a8ed88e8c036e650f41b83ac8c73b6624ccc731caba82aaf9b5d7df739157a3",
+    "research/live_control/input_owner_process_v1.py": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+    "research/live_control/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "research/live_control/input_transition_owner_v3.py": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+    "research/live_control/input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "research/live_control/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "research/live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "research/live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "research/live_control/lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+  },
+  "decision_rule": "PASS only if two independent XTest clients both issue same-key KeyPress while global keymap remains down, the actual process owner verifies its KeyRelease, an independent observer receives KeyRelease, and global keymap becomes up while the external test-side logical hold remains true; controlled Xvfb exit 0. Otherwise STOP/FAIL with no retry."
+}

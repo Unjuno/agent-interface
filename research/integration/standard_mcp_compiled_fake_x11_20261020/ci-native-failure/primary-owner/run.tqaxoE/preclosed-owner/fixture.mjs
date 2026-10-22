@@ -1,0 +1,1 @@
+import {writeFileSync} from 'node:fs';writeFileSync("/home/runner/work/agent-interface/agent-interface/results-local/primary-owner/run.tqaxoE/preclosed-owner/host-started.json",'started');

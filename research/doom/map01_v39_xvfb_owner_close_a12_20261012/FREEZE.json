@@ -1,0 +1,21 @@
+{
+  "auditor": "SOURCE/audit.py",
+  "auditor_sha256": "6dc6bb0179b7b66cd5ed3c317dcc8f20ca20797ef1c0d734a894f5173cdc05ab",
+  "base_main": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "candidate": "SOURCE/candidate.py",
+  "candidate_sha256": "6dc10c5b7c500b8176eb086d2ebbe43e87b899e5f113e9c16b99cd3a25d4a3e1",
+  "delta_from_a10": "Uses isolated network namespace localhost TCP and disables Unix socket listener, avoiding read-only /tmp/.X11-unix; exact-main source bytes unchanged.",
+  "display": "127.0.0.1:134",
+  "hypothesis": "The exact current-main owner closure can close an admitted key on isolated Xvfb when its local TCP display is confined to a private network namespace.",
+  "one_shot_policy": "Candidate once to nonexistent results/A12; auditor once if RAW exists; preserve first result.",
+  "run_id": "MAP01-V39-XVFB-OWNER-CLOSE-A12-20261012",
+  "schema": "v39-owner-close-xvfb-freeze-a12-v1",
+  "scope": "Synthetic X server over namespace-local loopback only; no GUI/app/game/model/physical input/live lane.",
+  "server_display": ":134",
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "input_transition_owner_v3.py": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+  }
+}

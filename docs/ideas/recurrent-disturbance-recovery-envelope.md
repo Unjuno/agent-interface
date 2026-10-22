@@ -1,0 +1,9 @@
+# Recurrent-disturbance recovery envelope — #8872
+
+- **Status:** Open, unverified successor proposal; no allocation or result is recorded.
+- **Source:** [Issue #8872](https://github.com/Unjuno/agent-interface/issues/8872), successor to [#5776](https://github.com/Unjuno/agent-interface/issues/5776); its flow-kick framing cites [Meyer et al.](https://arxiv.org/abs/1803.07650).
+- **Idea:** For a fixed multi-stage pipeline, map the operating boundary across disturbance magnitude and inter-disturbance spacing. Compare recurrent disturbances with an isolated disturbance allowed to recover and an equal-total-work evenly spaced control. Keep mandatory safety service on a reserved lane and treat any missed safety work as failure.
+- **Prior result:** #5776 v2's audited recovery-rate statistic warned in 0/16 gradual-recovery cases and 16/16 demand-drift cases in its high-load group (`FAIL_METHOD_SCOPED`). Its 336 authored episodes and fixed four-probe schedule are retained; #8872 explicitly does not retune or replay that allocation.
+- **Relation to existing work:** #5372 studies safety-aware backpressure under overload, #5855 route congestion under a fixed offered stream, and #5707 pointwise boundary slack. The proposed response surface is distinct only if it adds a recoverable-freshness-envelope endpoint not already exposed by those models or #5776's retained simulator. Consolidate if an existing model can answer the exact question.
+- **Minimum test:** A deterministic discrete-event T0 with frozen service/load, magnitude-by-spacing grid, single-kick and equal-work controls, drift/breaker controls, held-out schedules, and an independent raw-event auditor. A method pass would remain a synthetic characterization, not a live threshold, safety guarantee, or real-incident rate.
+- **Limits:** No scheduler/controller change, model, GUI, live service, real-task disturbance, or production reliability claim is proposed.

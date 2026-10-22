@@ -1,0 +1,9 @@
+# Resource revalidation34 — observation only
+
+Read #5085 issue and scoped newest comment page, then the complete669-comment collection because the referenced HOLD's responsible scope was not available in the summary. No WSLc/VM/daemon invocation was used. Newest retrieved record5973779506 reports another owner's A14 completion/release and no current running containers at its own observation; it creates no grant for this worker.
+
+Relevant original boundaries remain5956579108 (formal WSLc HOLD until anomaly and exact allocation conditions reconciled),5957733253/5960384787 (individual tasks stop even diagnostics), and correction5960813110. Correction explicitly distinguishes original individual-task note5955720978 from a repository-wide prohibition; it asks to reconcile subsequent HOLD owner/host/session/allocation/expiry/conditions and does not itself lift that later HOLD. Source explanation5958756083 materially narrows the bridge anomaly, but grants no allocation. Other owner's explicit human-authorized scoped WSLc runs do not establish this worker's authorization or release another study's HOLD.
+
+Current WORKER_QUICKSTART unchanged blob82efd9698a27c3583efc7e34f255f1bd381aed14 prefers eligible CPU/single-container WSLc, cached pinned image/pullnever/networknone/RO source/separate outputs/bounded requests. This preference is not evidence of an acquired native/private-display boundary. The present worker has no verified live native allocation and did not infer one from container emptiness, past windows or peer releases. Unknown/HOLD applies only to that shared operation; small host-only source/data work continues.
+
+No new reservation or coordination Issue was created. A future exact private-Xvfb qualification should be prepared under #57/#7148, then acquire the existing host/session boundary after resolving which current HOLD applies. Do not duplicate old formal allocations or escalate HNS rights for bridge attribution.

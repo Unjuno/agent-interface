@@ -1,0 +1,18 @@
+test_sibling_recovery_cannot_revive_old_guarded_alias (runtime.cli_v1.test_guarded_shared_recovery.GuardedSharedRecoveryTests.test_sibling_recovery_cannot_revive_old_guarded_alias) ... FAIL
+
+======================================================================
+FAIL: test_sibling_recovery_cannot_revive_old_guarded_alias (runtime.cli_v1.test_guarded_shared_recovery.GuardedSharedRecoveryTests.test_sibling_recovery_cannot_revive_old_guarded_alias)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\runtime\cli_v1\test_guarded_shared_recovery.py", line 48, in test_sibling_recovery_cannot_revive_old_guarded_alias
+    self.assertEqual(refused['status'], 'refused')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'completed' != 'refused'
+- completed
++ refused
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+FAILED (failures=1)

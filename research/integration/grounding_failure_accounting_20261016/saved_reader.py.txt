@@ -1,0 +1,45 @@
+import copy, json
+from pathlib import Path
+OUT=Path(__file__).parent/'grounding-accounting-final-20261016'
+KEY='test_grounding_failure_accounting.ROWS'
+def check(rows):
+    if len(rows)!=10:raise ValueError('case coverage')
+    for row in rows:
+        r=row['result'];a=r['accounting'];attempt,=r['attempt_ledger']
+        healthy=row['status']=='completed' and not row['publication'] and not row['malformed']
+        started=row['status']!='start_failure'
+        raw=row['reported_usage'];known=raw is not None and all(type(v) is int and v>=0 for v in raw['last'].values())
+        expected=None if not known else {n:raw['last'][o] for o,n in [('inputTokens','input_tokens'),('cachedInputTokens','cached_input_tokens'),('cacheWriteInputTokens','cache_write_input_tokens'),('outputTokens','output_tokens'),('reasoningOutputTokens','reasoning_output_tokens')]}
+        if a['attempted_calls']!=1 or a['completed_calls']!=int(healthy):raise ValueError('attempt/completion')
+        if attempt['call_id']!=('turn-1' if started else None):raise ValueError('lost/invented turn')
+        if attempt['visible_images_submitted']!=(1 if started else None):raise ValueError('lost/invented image admission')
+        if attempt['usage']!=expected or a['usage_totals']['input_tokens']!=(expected['input_tokens'] if known else None):raise ValueError('lost/invented usage')
+        if a['usage_coverage']['input_tokens']!=int(known) or a['cost'] is not None:raise ValueError('coverage/cost')
+        if type(attempt['wait_ns']) is not int or attempt['wait_ns']<0:raise ValueError('missing wait')
+        if row['client_turns']!=int(started) or row['thread_starts']!=1 or row['borrowed_close_calls']!=0:raise ValueError('RPC/ownership')
+        if row['counts']!={'execute':int(healthy),'verify':int(healthy)}:raise ValueError('effect entry')
+        if r['outcome']!=('TASK_NOT_VERIFIED' if healthy else 'CALLER_FAILED'):raise ValueError('false success')
+        if r['task_effect']!=('unavailable' if healthy else None):raise ValueError('task effect')
+        if row['publication'] and row['errors'][0]['cause']!='PermissionError':raise ValueError('lost cause')
+    return len(rows)
+report={}
+for mode in ('normal','optimized'):
+    rows=json.loads((OUT/f'{mode}-records.json').read_text())[KEY]
+    result=json.loads((OUT/f'{mode}-result.json').read_text())
+    if (result['methods'],result['failures'],result['errors'],result['skipped'])!=(104,0,0,0):raise ValueError('suite result')
+    count=check(rows);mutations=[]
+    for name in ('lost_turn','lost_usage','false_completion','invented_start_image'):
+        bad=copy.deepcopy(rows)
+        if name=='lost_turn':bad[0]['result']['attempt_ledger'][0]['call_id']=None
+        elif name=='lost_usage':next(v for v in bad if v['reported_usage'] and v['reported_usage']['last']['inputTokens']==100)['result']['attempt_ledger'][0]['usage']=None
+        elif name=='false_completion':bad[0]['result']['outcome']='TASK_SUCCEEDED'
+        else:next(v for v in bad if v['status']=='start_failure')['result']['attempt_ledger'][0]['visible_images_submitted']=1
+        try:check(bad)
+        except ValueError as e:mutations.append({'name':name,'rejected':str(e)})
+        else:raise ValueError('mutation accepted')
+    baseline=json.loads((OUT/f'baseline-{mode}-records.json').read_text())
+    try:check(baseline)
+    except ValueError as e:baseline_rejected=str(e)
+    else:raise ValueError('baseline unexpectedly qualified')
+    report[mode]=dict(methods=104,new_rows=count,mutations=mutations,pinned_original_rejected=baseline_rejected)
+print(json.dumps(dict(scope='saved-only input-to-ledger oracle; synthetic RPC usage/effect; not provider/app verification',modes=report),indent=2))

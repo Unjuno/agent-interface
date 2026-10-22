@@ -1,0 +1,355 @@
+{
+  "arms": {
+    "same_frame_control": {
+      "admission": {
+        "admitted_ns": 146339676308,
+        "event": "input_admission",
+        "input_ack_ns": 146339739295,
+        "intent_token": "v39-visual-active-hold-a01:same_frame_control",
+        "key": "a",
+        "keycode": 38,
+        "valid_until_ns": 166337888692
+      },
+      "ammo_guard_outcome": {
+        "current_value": 48,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-active-hold-a01-ammo",
+        "hard_minimum": 1,
+        "keep_existing_policy": true,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "signal_unchanged",
+        "requires_new_decision": false,
+        "semantic_change_identified": false,
+        "signal_id": "ammo",
+        "source_age_ms": 356.487971,
+        "source_value": 48,
+        "status": "UNCHANGED",
+        "task_success_verified": false
+      },
+      "answer_eligible": true,
+      "client_window": 2097153,
+      "current_frame_rgb_sha256": "0ac32bcfe35504f4302754b3f3e0266cfa23c16bf07ad6b2cb412bfcd62745da",
+      "executor_admission": null,
+      "final_reason": "all_authored_observable_predicates_hold",
+      "final_status": "READY_FOR_FRESH_EXECUTOR_ADMISSION",
+      "health_guard_outcome": {
+        "current_value": 97,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-active-hold-a01",
+        "hard_minimum": 89,
+        "keep_existing_policy": true,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "signal_unchanged",
+        "requires_new_decision": false,
+        "semantic_change_identified": false,
+        "signal_id": "health",
+        "source_age_ms": 356.487971,
+        "source_value": 97,
+        "status": "UNCHANGED",
+        "task_success_verified": false
+      },
+      "input_authority_admitted": false,
+      "key_down_after_answer": true,
+      "key_down_before_new_frame": true,
+      "key_down_during_pending_turn": true,
+      "key_press_event": {
+        "keycode": 38,
+        "observed_ns": 146339853964,
+        "type": 2,
+        "window": 2097153
+      },
+      "key_release_event": {
+        "keycode": 38,
+        "observed_ns": 146341140249,
+        "type": 3,
+        "window": 2097153
+      },
+      "keycode": 38,
+      "monitor_invalidation": null,
+      "monitor_soft_event_count": 0,
+      "observer_key_up_after_close": true,
+      "owner_close_record": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "v39-visual-active-hold-a01:same_frame_control",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 146340823876,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 146340718846,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 146340778635
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              146340718846,
+              146340823876
+            ],
+            "keycode": 38
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 166337888692,
+        "verified": true,
+        "verified_ns": 146341004762
+      },
+      "owner_closed": true,
+      "owner_records": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "v39-visual-active-hold-a01:same_frame_control",
+          "key_release_attempts": {
+            "38": {
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "keymap_after_error": null,
+                  "keymap_before_error": null,
+                  "keymap_sampled_ns": 146340823876,
+                  "keyrelease_error": null,
+                  "keyrelease_started_ns": 146340718846,
+                  "server_key_down_after": false,
+                  "server_key_down_before": true,
+                  "sync_error": null,
+                  "sync_returned_ns": 146340778635
+                }
+              ],
+              "verified": true
+            }
+          },
+          "key_release_intervals_ns": [
+            {
+              "interval_ns": [
+                146340718846,
+                146340823876
+              ],
+              "keycode": 38
+            }
+          ],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "close",
+          "valid_until_ns": 166337888692,
+          "verified": true,
+          "verified_ns": 146341004762
+        }
+      ],
+      "owner_stopped": true,
+      "owner_thread_alive": false,
+      "planner_events": [
+        "planner_turn_started",
+        "new_frame_signal_delivered_while_turn_pending",
+        "monitor_preserved_existing_policy"
+      ]
+    },
+    "visual_changed": {
+      "admission": {
+        "admitted_ns": 146335318578,
+        "event": "input_admission",
+        "input_ack_ns": 146335418956,
+        "intent_token": "v39-visual-active-hold-a01:visual_changed",
+        "key": "a",
+        "keycode": 38,
+        "valid_until_ns": 166333388643
+      },
+      "ammo_guard_outcome": {
+        "current_value": 48,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-active-hold-a01-ammo",
+        "hard_minimum": 1,
+        "keep_existing_policy": true,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "signal_unchanged",
+        "requires_new_decision": false,
+        "semantic_change_identified": false,
+        "signal_id": "ammo",
+        "source_age_ms": 356.487971,
+        "source_value": 48,
+        "status": "UNCHANGED",
+        "task_success_verified": false
+      },
+      "answer_eligible": true,
+      "client_window": 2097152,
+      "current_frame_rgb_sha256": "0e06f6960654027e75d6a9f2904890fc12fa2ab773537e0d562d21ebb76d71c8",
+      "executor_admission": null,
+      "final_reason": "all_authored_observable_predicates_hold",
+      "final_status": "READY_FOR_FRESH_EXECUTOR_ADMISSION",
+      "health_guard_outcome": {
+        "current_value": 97,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-active-hold-a01",
+        "hard_minimum": 89,
+        "keep_existing_policy": true,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "signal_unchanged",
+        "requires_new_decision": false,
+        "semantic_change_identified": false,
+        "signal_id": "health",
+        "source_age_ms": 356.487971,
+        "source_value": 97,
+        "status": "UNCHANGED",
+        "task_success_verified": false
+      },
+      "input_authority_admitted": false,
+      "key_down_after_answer": true,
+      "key_down_before_new_frame": true,
+      "key_down_during_pending_turn": true,
+      "key_press_event": {
+        "keycode": 38,
+        "observed_ns": 146335565771,
+        "type": 2,
+        "window": 2097152
+      },
+      "key_release_event": {
+        "keycode": 38,
+        "observed_ns": 146337558095,
+        "type": 3,
+        "window": 2097152
+      },
+      "keycode": 38,
+      "monitor_invalidation": null,
+      "monitor_soft_event_count": 0,
+      "observer_key_up_after_close": true,
+      "owner_close_record": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "v39-visual-active-hold-a01:visual_changed",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 146337156117,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 146336922016,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 146337014874
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              146336922016,
+              146337156117
+            ],
+            "keycode": 38
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "close",
+        "valid_until_ns": 166333388643,
+        "verified": true,
+        "verified_ns": 146337392842
+      },
+      "owner_closed": true,
+      "owner_records": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "v39-visual-active-hold-a01:visual_changed",
+          "key_release_attempts": {
+            "38": {
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "keymap_after_error": null,
+                  "keymap_before_error": null,
+                  "keymap_sampled_ns": 146337156117,
+                  "keyrelease_error": null,
+                  "keyrelease_started_ns": 146336922016,
+                  "server_key_down_after": false,
+                  "server_key_down_before": true,
+                  "sync_error": null,
+                  "sync_returned_ns": 146337014874
+                }
+              ],
+              "verified": true
+            }
+          },
+          "key_release_intervals_ns": [
+            {
+              "interval_ns": [
+                146336922016,
+                146337156117
+              ],
+              "keycode": 38
+            }
+          ],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "close",
+          "valid_until_ns": 166333388643,
+          "verified": true,
+          "verified_ns": 146337392842
+        }
+      ],
+      "owner_stopped": true,
+      "owner_thread_alive": false,
+      "planner_events": [
+        "planner_turn_started",
+        "new_frame_signal_delivered_while_turn_pending",
+        "monitor_preserved_existing_policy"
+      ]
+    }
+  },
+  "cleanup": {
+    "xvfb_exit": 0
+  },
+  "display": ":132",
+  "errors": [],
+  "input_pair": {
+    "current_frame_rgb_sha256": "0e06f6960654027e75d6a9f2904890fc12fa2ab773537e0d562d21ebb76d71c8",
+    "current_health_ammo": [
+      97,
+      48
+    ],
+    "current_png_sha256": "3c48f02a43e2fd98e70357c90b39079f3934f67efeca164d74177ec4ba099706",
+    "current_sequence": 3,
+    "pointer_binding_equal": true,
+    "source_frame_rgb_sha256": "0ac32bcfe35504f4302754b3f3e0266cfa23c16bf07ad6b2cb412bfcd62745da",
+    "source_health_ammo": [
+      97,
+      48
+    ],
+    "source_png_sha256": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1",
+    "source_sequence": 2
+  },
+  "schema": "v39-visual-active-hold-xvfb-raw-a01-v1",
+  "scope": "two monitor/admission boundary cases with one actual Xvfb-held key each; no game/model/physical input",
+  "status": "STOP"
+}

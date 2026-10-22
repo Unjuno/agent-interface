@@ -1,0 +1,18 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A04-20261009",
+  "host": {
+    "os": "macOS 27.0.1",
+    "kernel": "Darwin 27.0.0",
+    "architecture": "arm64",
+    "python": "Codex bundled Python 3.12.14",
+    "pillow": "12.3.0"
+  },
+  "container_preflight": {
+    "docker_context": "orbstack",
+    "image_inventory": "STOP_BEFORE_LISTING_IMAGES",
+    "error": "containerd content blob open returned operation not supported",
+    "container_started": false
+  },
+  "formal_runtime": "Codex bundled Python 3.12.14 / Pillow 12.3.0 under macOS sandbox-exec profile (version 1; allow default; deny network*); host-only, not container evidence",
+  "source_runtime_context": "The four archived baseline-screen-02 observation ledgers record Linux 6.6.87.2 WSL2, Ubuntu 24.04.4, CPython 3.12.3, Pillow 10.2.0, and 1280x800 Xvfb captures. A04 re-encodes their retained pixels locally with Pillow 12.3.0; the source frame generation environment is provenance only, not the A04 execution environment."
+}

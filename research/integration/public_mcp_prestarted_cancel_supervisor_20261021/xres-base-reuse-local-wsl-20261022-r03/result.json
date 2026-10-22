@@ -1,0 +1,105 @@
+{
+  "scenarios": [
+    {
+      "display": ":89",
+      "include_replacement": false,
+      "keepers_resource_bases": [
+        2097152,
+        4194304
+      ],
+      "owner": {
+        "pid": 418,
+        "resource_base": 6291456
+      },
+      "owner_retired": true,
+      "replacement": null,
+      "worker_exitcode": 0,
+      "worker_outcome": {
+        "outcome": {
+          "binding_revision": 0,
+          "cleanup_status": "UNKNOWN",
+          "operation_id": "0b20dcf0a9f04df2a722b6b9c98953a1",
+          "owner_client_disconnect": {
+            "expected_pid": 418,
+            "observed_pid": 417,
+            "reason": "resource_base_reused",
+            "status": "unknown"
+          },
+          "reason": "stale_owner_identity",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session_id": "e70fd90a0ace40ed84d5cd9649a8a71c",
+          "status": "unknown",
+          "task_success": null,
+          "worker_started_monotonic_ns": 142834260744
+        },
+        "xres_observations": [
+          {
+            "observed_pid": 417,
+            "observer_resource_base": 6291456,
+            "target_resource_base": 6291456,
+            "worker_pid": 417
+          }
+        ]
+      },
+      "worker_pid": 417,
+      "worker_ready": {
+        "connected_to_x": false,
+        "pid": 417
+      }
+    },
+    {
+      "display": ":90",
+      "include_replacement": true,
+      "keepers_resource_bases": [
+        2097152,
+        4194304
+      ],
+      "owner": {
+        "pid": 424,
+        "resource_base": 6291456
+      },
+      "owner_retired": true,
+      "replacement": {
+        "pid": 426,
+        "resource_base": 6291456
+      },
+      "worker_exitcode": 0,
+      "worker_outcome": {
+        "outcome": {
+          "binding_revision": 0,
+          "cleanup_status": "UNKNOWN",
+          "operation_id": "35122c0d9f2348869e9921030ec8bf10",
+          "owner_client_disconnect": {
+            "expected_pid": 424,
+            "observed_pid": 426,
+            "reason": "resource_base_reused",
+            "status": "unknown"
+          },
+          "reason": "stale_owner_identity",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session_id": "37d1091d297549939a8515691467f43c",
+          "status": "unknown",
+          "task_success": null,
+          "worker_started_monotonic_ns": 143051063237
+        },
+        "xres_observations": [
+          {
+            "observed_pid": 426,
+            "observer_resource_base": 8388608,
+            "target_resource_base": 6291456,
+            "worker_pid": 421
+          }
+        ]
+      },
+      "worker_pid": 421,
+      "worker_ready": {
+        "connected_to_x": false,
+        "pid": 421
+      }
+    }
+  ],
+  "schema": "agent-interface/xres-base-reuse-diagnostic-v1",
+  "scope": "Private Xvfb, no input events; use current x11_cancel_worker with empty obligations only to identify observed XRes client."
+}

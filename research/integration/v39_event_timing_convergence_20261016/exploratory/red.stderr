@@ -1,0 +1,35 @@
+EEE
+======================================================================
+ERROR: test_reader_and_monitor_retain_ordered_parent_handoff_stages (test_map01_v39_event_transport_timing.EventTransportTimingTests.test_reader_and_monitor_retain_ordered_parent_handoff_stages)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_event_transport_timing.py", line 103, in test_reader_and_monitor_retain_ordered_parent_handoff_stages
+    values = [queued_row[name] for name in stages]
+              ~~~~~~~~~~^^^^^^
+KeyError: 'controller_parsed_ns'
+
+======================================================================
+ERROR: test_report_summary_keeps_each_boundary_and_marks_incomplete_rows (test_map01_v39_event_transport_timing.EventTransportTimingTests.test_report_summary_keeps_each_boundary_and_marks_incomplete_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_event_transport_timing.py", line 108, in test_report_summary_keeps_each_boundary_and_marks_incomplete_rows
+    summarize = load_timing_summary()
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_v39_event_transport_timing.py", line 52, in load_timing_summary
+    function = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and
+                    node.name == "typed_event_transport_timing_rows")
+StopIteration
+
+======================================================================
+ERROR: test_stdout_handoff_timestamp_follows_both_raw_log_appends (test_session_map01_v12_emit_timing.EmitTimingTests.test_stdout_handoff_timestamp_follows_both_raw_log_appends)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_session_map01_v12_emit_timing.py", line 80, in test_stdout_handoff_timestamp_follows_both_raw_log_appends
+    self.assertEqual(stream_row["stdout_handoff_started_ns"], 200)
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'stdout_handoff_started_ns'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.040s
+
+FAILED (errors=3)

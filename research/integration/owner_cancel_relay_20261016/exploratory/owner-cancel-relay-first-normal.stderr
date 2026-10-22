@@ -1,0 +1,34 @@
+test_actual_executor_receives_release_before_worker_resume (__main__.CancelRelayTests.test_actual_executor_receives_release_before_worker_resume) ... ok
+test_blocked_release_first_control_result_never_upgrades (__main__.CancelRelayTests.test_blocked_release_first_control_result_never_upgrades) ... ok
+test_cause_validation_rejects_unbound_or_false_release (__main__.CancelRelayTests.test_cause_validation_rejects_unbound_or_false_release) ... 
+  test_cause_validation_rejects_unbound_or_false_release (__main__.CancelRelayTests.test_cause_validation_rejects_unbound_or_false_release) (field='verified') ... FAIL
+test_control_is_serviced_while_ordinary_rpc_inflight (__main__.CancelRelayTests.test_control_is_serviced_while_ordinary_rpc_inflight) ... ok
+test_control_loss_cancels_known_lease_and_retires_admission (__main__.CancelRelayTests.test_control_loss_cancels_known_lease_and_retires_admission) ... Process owned-input-owner-72cca63f:
+Traceback (most recent call last):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\input_owner_process_v3.py", line 125, in _child_entry
+    if service_error is not None:raise RuntimeError(service_error)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: EOFError: RPC peer closed
+ok
+test_pending_cancel_is_sticky_and_changed_source_rejected (__main__.CancelRelayTests.test_pending_cancel_is_sticky_and_changed_source_rejected) ... ok
+test_relay_module_available (__main__.CancelRelayTests.test_relay_module_available) ... ok
+
+======================================================================
+FAIL: test_cause_validation_rejects_unbound_or_false_release (__main__.CancelRelayTests.test_cause_validation_rejects_unbound_or_false_release) (field='verified')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_cancel_v4.py", line 85, in test_cause_validation_rejects_unbound_or_false_release
+    with self.subTest(field=field),self.assertRaises(ValueError):api().validate_cause(bad,dto)
+                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 4.586s
+
+FAILED (failures=1)

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Local key event receiver A16</title>
+<style>
+body{font:16px/1.5 system-ui,sans-serif;margin:2rem;max-width:60rem;color:#18202a;background:#f5f7fa}
+main{background:white;padding:1.5rem;border:1px solid #ccd3dc;border-radius:8px}
+button{padding:.7rem 1rem;font:inherit}#receiver{margin:1rem 0;padding:1.2rem;border:2px solid #5276a7;border-radius:6px;background:#eef5ff;outline:none}#receiver:focus{border-color:#176b37;box-shadow:0 0 0 3px #bde4c8}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#101820;color:#e6edf3;padding:1rem;min-height:8rem}
+</style>
+</head>
+<body>
+<main>
+<h1>Local key event receiver A16</h1>
+<p>This offline fixture records trusted browser key events. Focus the receiver, then send <kbd>a</kbd>, <kbd>Space</kbd>, and <kbd>Left</kbd> once each. It prevents default behavior and records the receiver's key-held set.</p>
+<button id="focus" type="button">Focus receiver</button>
+<div id="receiver" tabindex="0" role="application" aria-label="Keyboard event receiver">Receiver focus target</div>
+<p>Current held keys: <output id="held">[]</output></p>
+<p>Events recorded: <output id="count">0</output></p>
+<pre id="events" role="log" aria-live="polite">[]</pre>
+<script>
+(() => {
+  const receiver = document.getElementById('receiver');
+  const heldNode = document.getElementById('held');
+  const countNode = document.getElementById('count');
+  const eventsNode = document.getElementById('events');
+  const held = new Set();
+  const events = [];
+  function record(event, type) {
+    event.preventDefault();
+    if (type === 'keydown') held.add(event.code);
+    if (type === 'keyup') held.delete(event.code);
+    events.push({
+      sequence: events.length + 1,
+      type,
+      key: event.key,
+      code: event.code,
+      trusted: event.isTrusted,
+      repeat: event.repeat,
+      activeElement: document.activeElement.id,
+      performanceMs: Number(performance.now().toFixed(3))
+    });
+    heldNode.textContent = JSON.stringify([...held].sort());
+    countNode.textContent = String(events.length);
+    eventsNode.textContent = JSON.stringify(events, null, 2);
+  }
+  receiver.addEventListener('keydown', event => record(event, 'keydown'));
+  receiver.addEventListener('keyup', event => record(event, 'keyup'));
+  document.getElementById('focus').addEventListener('click', () => receiver.focus());
+  window.a16 = {
+    reset() { events.length = 0; held.clear(); heldNode.textContent = '[]'; countNode.textContent = '0'; eventsNode.textContent = '[]'; },
+    snapshot() { return { events: [...events], held: [...held].sort(), activeElement: document.activeElement.id }; }
+  };
+})();
+</script>
+</main>
+</body>
+</html>

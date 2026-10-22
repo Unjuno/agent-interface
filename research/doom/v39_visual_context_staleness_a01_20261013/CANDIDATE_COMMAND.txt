@@ -1,0 +1,1 @@
+wslc run --rm --name visual-context-staleness-a01-20261013 --pull never --network none --cpus 1 --memory 512M --volume "<absolute-study-path>/results/a01-01:/out:rw" --workdir /opt/visual-a01 visual-context-staleness:a01-20261012 python3 -m unittest -v test_visual_context_staleness

@@ -1,0 +1,62 @@
+{
+  "status": "PASS_SCOPED_RAW_AUDIT",
+  "cases": [
+    {
+      "case": "v10-compact-broken",
+      "raw_records": 10,
+      "selected_records": 8,
+      "stdout_records": 0,
+      "successful_flush_receipts": 0
+    },
+    {
+      "case": "v10-compact-healthy",
+      "raw_records": 10,
+      "selected_records": 8,
+      "stdout_records": 8,
+      "successful_flush_receipts": 0
+    },
+    {
+      "case": "v10-full-broken",
+      "raw_records": 10,
+      "selected_records": 10,
+      "stdout_records": 0,
+      "successful_flush_receipts": 0
+    },
+    {
+      "case": "v10-full-healthy",
+      "raw_records": 10,
+      "selected_records": 10,
+      "stdout_records": 10,
+      "successful_flush_receipts": 0
+    },
+    {
+      "case": "v15-compact-broken",
+      "raw_records": 10,
+      "selected_records": 8,
+      "stdout_records": 0,
+      "successful_flush_receipts": 0
+    },
+    {
+      "case": "v15-compact-healthy",
+      "raw_records": 10,
+      "selected_records": 8,
+      "stdout_records": 8,
+      "successful_flush_receipts": 8
+    },
+    {
+      "case": "v15-full-broken",
+      "raw_records": 10,
+      "selected_records": 10,
+      "stdout_records": 0,
+      "successful_flush_receipts": 0
+    },
+    {
+      "case": "v15-full-healthy",
+      "raw_records": 10,
+      "selected_records": 10,
+      "stdout_records": 10,
+      "successful_flush_receipts": 10
+    }
+  ],
+  "scope": "synthetic CLI output only; no GUI, real Executor, task effect or model receipt"
+}
