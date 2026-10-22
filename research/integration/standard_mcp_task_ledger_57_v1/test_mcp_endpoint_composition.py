@@ -9,6 +9,7 @@ from PIL import Image
 
 from ledger import summarize
 from provider_attempt_recorder import ProviderAttemptRecorder
+from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
 from runtime.cli_v1.mcp_relay import Relay
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_owned_process import (
@@ -39,27 +40,10 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     return await server.call_tool(name, arguments)
 
             relay = Relay(ServerClient())
-
-            async def call_relay(attempt_id, call_id, tool, arguments):
-                request = {"id": relay.next_id, "tool": tool,
-                           "arguments": arguments}
-                request_bytes = json.dumps(
-                    request, allow_nan=False, separators=(",", ":"),
-                    sort_keys=True).encode("utf-8")
-
-                async def transport():
-                    response = await relay.request(request_bytes)
-                    response_bytes = json.dumps(
-                        response, allow_nan=False, separators=(",", ":"),
-                        sort_keys=True).encode("utf-8")
-                    return {"result": response,
-                            "response_bytes": response_bytes}
-
-                return await recorder.invoke_tool_async(
-                    attempt_id, call_id, tool, request_bytes, transport)
+            caller = RecordedPublicMcpCaller(relay, recorder)
 
             try:
-                observation = await call_relay(
+                observation = await caller.call_tool(
                     None, "observe-01", "interface_guarded_observe", {})
                 content = observation["result"]["content"]
                 images = [item for item in content if item.get("type") == "image"]
@@ -68,7 +52,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertTrue(image_data.startswith(b"\x89PNG\r\n\x1a\n"))
 
                 observed = json.loads(content[0]["text"])
-                minted_call = await call_relay(
+                minted_call = await caller.call_tool(
                     None, "mint-01", "interface_guarded_mint", {
                         "alias": "field",
                         "source_sequence": observed["source"]["sequence"],
@@ -99,7 +83,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                       "output_tokens": 12},
                             "response_bytes": generated_request}
 
-                generation = await recorder.invoke_async(
+                generation = await caller.invoke_provider(
                     "generation-stale-relay", provider_request, fake_provider)
                 self.assertEqual(generation["response_bytes"], generated_request)
 
@@ -107,7 +91,7 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 # before the standard relay admits the generated action.
                 (server_root / "fake-process-generation").write_text(
                     "b" * 64, encoding="utf-8")
-                response = await call_relay(
+                response = await caller.call_tool(
                     "generation-stale-relay", "compiled-stale-relay",
                     "interface_guarded_compiled", json.loads(generated_request))
                 result = json.loads(response["result"]["content"][0]["text"])
