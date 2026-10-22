@@ -1,0 +1,23 @@
+{
+  "schema": "issue-8157-a07-local-run-record-v1",
+  "allocation": "interval-ttc-retained-raw-local-decision-audit-a07-20261007",
+  "disposition": "AUDIT_INTEGRITY_FAILURE_MUTATION_CONTROLS",
+  "freeze": "research/vision/interval_ttc_bounded_error_v1/FREEZE_A07_LOCAL.json",
+  "auditor_sha256": "900b71531f36175a0bbbd053a486fceab74e8281c8605706af53b4d1ca5d3fd1",
+  "auditor_invocations": 1,
+  "retries": 0,
+  "exit_code": 2,
+  "a02_inputs_hash_verified": true,
+  "a04_report_hash_verified": true,
+  "candidate_prefix_reconstruction_errors": 0,
+  "structural_errors": 0,
+  "failed_mutation_controls": [
+    "calibration_threshold_uses_controls_only",
+    "paired_lead_loss_over_100ms_detected"
+  ],
+  "score_interpretation": "unusable; diagnostic disposition is not accepted because audit mutation controls failed",
+  "container_or_runtime_invocations": 0,
+  "candidate_or_generator_invocations": 0,
+  "prior_auditor_invocations": 0,
+  "note": "The first control used an incorrect expected threshold despite the observed evaluation control being excluded. The paired-lead mutation did not exceed the mutated calibration threshold. Preserve this allocation as failed; no retry or edit is permitted."
+}
