@@ -172,39 +172,16 @@ WSLc or Docker allocation.
 The [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
 remains the canonical design/qualification record; no duplicate was created.
 
-## Worktree custody checkpoint after PR #9398 (2026-10-22)
+## Worktree custody checkpoint after PR #9399 (2026-10-22)
 
-PR #9398 was docs-only and made no Issue or PR state changes. A fresh complete
-membership read at stable main `b57e140848087ab814db874f7dfe410926afd387`
-reproduced r149 exactly: 1,654 open Issues and 452 open PRs. See [r150](maintenance/repository-inventory-recheck-20261022-r150.md).
+The fresh complete membership read [r151](maintenance/repository-inventory-recheck-20261022-r151.md) at stable main `08064035460187ba5c8c5cbb2f4e9732ca622ada` again records 1,654 open Issues and 452 open PRs. Its ID sets match r150; PR #9399 was opened and merged between the reads, so it had no net effect on open membership.
 
-The shared local Git worktree registry listed 48 worktrees; every registered
-path was reachable for this read. `git status --porcelain
---untracked-files=all` reported 34 clean and 14 changed worktrees, including 5
-detached worktrees. No registered branch name exactly matched an open PR head.
-That mismatch does not prove abandonment: ownership, upstream relation and
-unique evidence have not been reconciled. Two changed worktrees stand out by
-reported change volume:
+A read-only audit of the two largest changed worktrees found clear branch history but not a safe cleanup/transfer decision. The detailed paths, commands and limits are in the [worktree custody receipt](maintenance/worktree-custody-recheck-20261022-r01.md).
 
-- `research/owned-cancel-supervisor-prototype-r01`: 18,407 changed entries,
-  including 18,365 untracked. Status also warned that it could not open `lib64/`
-  (`Function not implemented`), so completeness is not established. It contains
-  changed shared docs and untracked research evidence.
-- `feat/prestarted-cancel-supervisor-r01`: 5,151 changed entries, including
-  5,135 untracked; it contains changed shared docs and untracked composition
-  evidence.
+- `research/owned-cancel-supervisor-prototype-r01` is local-only at `24e5fbd0823f0a8adbbad85830da2e639b8ecc91`, seven patch-unique commits ahead and 141 behind main; neither a remote branch nor a PR exists. Its committed branch diff spans 112 paths. The worktree reports 42 tracked modifications and 18,365 untracked entries, mostly local integration evidence plus a Python 3.12 environment. `git status` warned it could not open `lib64/` (`Function not implemented`), so completeness is uncertain. Representative READMEs describe synthetic Fake X/App Server composition and explicitly exclude real provider calls, WSLc, Docker and matched efficiency.
+- `feat/prestarted-cancel-supervisor-r01` is the remote head of closed, unmerged PR #9315 at `76626da8b03df25024d12efb5f1dde2f12c53ed2`, 21 patch-unique commits ahead and 136 behind main. The PR was explicitly superseded; its comment says committed packet paths/manifests were transferred through #9333, merged at `4fe158d2f5e3774580c3812c3c589fbc64d4f8d2`. That does not cover this worktree's 15 tracked modifications and 5,135 untracked entries, including 4,809 in the standard-caller ledger and 315 in the supervisor packet. Its untracked WSLc snapshot notes are explicitly HOLD: an empty listing does not prove an unused lane. Issue #7924 is currently OPEN/STOP.
 
-No worktree was modified, cleaned, archived or deleted. The current evidence
-does not identify the owners or prove recoverability of these changes. Do not
-reset, clean, rebase or archive these worktrees until their owners, branch/PR
-relationships and unique evidence are identified and preserved.
-
-**Next bounded batch:** inspect those two worktrees' changed paths and commit
-ancestry, then correlate their exact branches with live PR/Issue records and
-recoverable experiment packets. Record ownership or an explicit unknown and a
-safe transfer path. After that, audit the remaining 12 changed worktrees. Do
-not dispose of any state in this audit. The [r150 membership snapshot](maintenance/repository-inventory-recheck-20261022-r150.md)
-is current navigation until main or queue membership changes.
+No files were copied, committed or removed from either worktree. PR #9315's supersession record does not establish custody for the later uncommitted state. The owner of each worktree remains unknown. Do not reset, clean, rebase or archive them. The next step is to identify each current task/worker owner, then compare untracked packet manifests with current main without running experiment runners. Only after that choose a focused current-main transfer PR for unique useful material. Keep the other 12 changed worktrees on hold for later batches. No WSLc or Docker allocation was used.
 
 ## Earlier full-inventory checkpoint after PR #9390 (2026-10-22)
 
