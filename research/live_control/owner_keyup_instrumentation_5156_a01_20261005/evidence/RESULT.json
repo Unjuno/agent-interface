@@ -1,0 +1,609 @@
+{
+  "cases": [
+    {
+      "calls": [
+        [
+          "input",
+          2,
+          38
+        ],
+        [
+          "sync",
+          1
+        ],
+        [
+          "input",
+          3,
+          38
+        ],
+        [
+          "sync",
+          2
+        ],
+        [
+          "sync",
+          3
+        ]
+      ],
+      "final_down": [],
+      "keys": [
+        "A"
+      ],
+      "name": "single",
+      "receipts": [
+        {
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "intent_token": "token-single",
+          "key": "A",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "operation": "up",
+          "ordinary_release_candidate": false,
+          "owner_cleanup_intervened": false,
+          "owner_id": "617a6f4d87a34edeb91134a6c44cdf32",
+          "owner_keyup_interval_ordered": true,
+          "owner_keyup_join": "MATCHED_EXPLICIT_KEYUP",
+          "owner_keyup_receipt": {
+            "batch_release_id": null,
+            "event": "owner_keyup",
+            "grants_input_authority": false,
+            "intent_token": "token-single",
+            "key": "A",
+            "key_down_after": null,
+            "key_state_after_known": false,
+            "keycode": 38,
+            "owner_id": "617a6f4d87a34edeb91134a6c44cdf32",
+            "owner_keyup_started_ns": 45781513045,
+            "owner_sync_returned_ns": 45781520776,
+            "physical_verification_authoritative": false,
+            "reason": "explicit_up",
+            "receipt_id": "ece4c71cc6d74851b079f9104f253a85",
+            "schema": "owner-keyup-v11",
+            "sync_error": null,
+            "xsync_completed": true
+          },
+          "owner_release_history_complete": false,
+          "owner_transition_verified": null,
+          "release_call_bracket_ns": 235051,
+          "release_call_returned_ns": 45781624607,
+          "release_call_started_ns": 45781389556,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 65774177424
+        }
+      ],
+      "records": [
+        {
+          "batch_release_id": null,
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-single",
+          "key": "A",
+          "key_down_after": null,
+          "key_state_after_known": false,
+          "keycode": 38,
+          "owner_id": "617a6f4d87a34edeb91134a6c44cdf32",
+          "owner_keyup_started_ns": 45781513045,
+          "owner_sync_returned_ns": 45781520776,
+          "physical_verification_authoritative": false,
+          "reason": "explicit_up",
+          "receipt_id": "ece4c71cc6d74851b079f9104f253a85",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_receipt_ids": [],
+          "reason": "close",
+          "valid_until_ns": 65774177424,
+          "verified": true,
+          "verified_ns": 45781716806
+        }
+      ],
+      "sync_calls": 3
+    },
+    {
+      "calls": [
+        [
+          "input",
+          2,
+          38
+        ],
+        [
+          "sync",
+          1
+        ],
+        [
+          "input",
+          2,
+          56
+        ],
+        [
+          "sync",
+          2
+        ],
+        [
+          "input",
+          3,
+          38
+        ],
+        [
+          "sync",
+          3
+        ],
+        [
+          "input",
+          3,
+          56
+        ],
+        [
+          "sync",
+          4
+        ],
+        [
+          "sync",
+          5
+        ]
+      ],
+      "final_down": [],
+      "keys": [
+        "A",
+        "B"
+      ],
+      "name": "ordered_two",
+      "receipts": [
+        {
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "intent_token": "token-ordered_two",
+          "key": "A",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "operation": "up",
+          "ordinary_release_candidate": false,
+          "owner_cleanup_intervened": false,
+          "owner_id": "9589a311aae246588b57660e52558db1",
+          "owner_keyup_interval_ordered": true,
+          "owner_keyup_join": "MATCHED_EXPLICIT_KEYUP",
+          "owner_keyup_receipt": {
+            "batch_release_id": null,
+            "event": "owner_keyup",
+            "grants_input_authority": false,
+            "intent_token": "token-ordered_two",
+            "key": "A",
+            "key_down_after": null,
+            "key_state_after_known": false,
+            "keycode": 38,
+            "owner_id": "9589a311aae246588b57660e52558db1",
+            "owner_keyup_started_ns": 45800711165,
+            "owner_sync_returned_ns": 45800721174,
+            "physical_verification_authoritative": false,
+            "reason": "explicit_up",
+            "receipt_id": "0c7ea7b4a1b440069cb9267b7252429b",
+            "schema": "owner-keyup-v11",
+            "sync_error": null,
+            "xsync_completed": true
+          },
+          "owner_release_history_complete": false,
+          "owner_transition_verified": null,
+          "release_call_bracket_ns": 501118,
+          "release_call_returned_ns": 45800951543,
+          "release_call_started_ns": 45800450425,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 65791776839
+        },
+        {
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "intent_token": "token-ordered_two",
+          "key": "B",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+          "operation": "up",
+          "ordinary_release_candidate": false,
+          "owner_cleanup_intervened": false,
+          "owner_id": "9589a311aae246588b57660e52558db1",
+          "owner_keyup_interval_ordered": true,
+          "owner_keyup_join": "MATCHED_EXPLICIT_KEYUP",
+          "owner_keyup_receipt": {
+            "batch_release_id": null,
+            "event": "owner_keyup",
+            "grants_input_authority": false,
+            "intent_token": "token-ordered_two",
+            "key": "B",
+            "key_down_after": null,
+            "key_state_after_known": false,
+            "keycode": 56,
+            "owner_id": "9589a311aae246588b57660e52558db1",
+            "owner_keyup_started_ns": 45801040237,
+            "owner_sync_returned_ns": 45801045581,
+            "physical_verification_authoritative": false,
+            "reason": "explicit_up",
+            "receipt_id": "b73afc9d19874c15b83aba683f5172b7",
+            "schema": "owner-keyup-v11",
+            "sync_error": null,
+            "xsync_completed": true
+          },
+          "owner_release_history_complete": false,
+          "owner_transition_verified": null,
+          "release_call_bracket_ns": 328340,
+          "release_call_returned_ns": 45801301419,
+          "release_call_started_ns": 45800973079,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 65791776839
+        }
+      ],
+      "records": [
+        {
+          "batch_release_id": null,
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-ordered_two",
+          "key": "A",
+          "key_down_after": null,
+          "key_state_after_known": false,
+          "keycode": 38,
+          "owner_id": "9589a311aae246588b57660e52558db1",
+          "owner_keyup_started_ns": 45800711165,
+          "owner_sync_returned_ns": 45800721174,
+          "physical_verification_authoritative": false,
+          "reason": "explicit_up",
+          "receipt_id": "0c7ea7b4a1b440069cb9267b7252429b",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "batch_release_id": null,
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-ordered_two",
+          "key": "B",
+          "key_down_after": null,
+          "key_state_after_known": false,
+          "keycode": 56,
+          "owner_id": "9589a311aae246588b57660e52558db1",
+          "owner_keyup_started_ns": 45801040237,
+          "owner_sync_returned_ns": 45801045581,
+          "physical_verification_authoritative": false,
+          "reason": "explicit_up",
+          "receipt_id": "b73afc9d19874c15b83aba683f5172b7",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_receipt_ids": [],
+          "reason": "close",
+          "valid_until_ns": 65791776839,
+          "verified": true,
+          "verified_ns": 45801508953
+        }
+      ],
+      "sync_calls": 5
+    },
+    {
+      "calls": [
+        [
+          "input",
+          2,
+          38
+        ],
+        [
+          "sync",
+          1
+        ],
+        [
+          "input",
+          2,
+          56
+        ],
+        [
+          "sync",
+          2
+        ],
+        [
+          "input",
+          3,
+          38
+        ],
+        [
+          "input",
+          3,
+          56
+        ],
+        [
+          "sync",
+          3
+        ],
+        [
+          "sync",
+          4
+        ]
+      ],
+      "final_down": [],
+      "keys": [
+        "A",
+        "B"
+      ],
+      "name": "bulk",
+      "records": [
+        {
+          "batch_release_id": "8693bd2e9eb04e998c860dc2f0c458b1",
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-bulk",
+          "key": null,
+          "key_down_after": false,
+          "key_state_after_known": true,
+          "keycode": 38,
+          "owner_id": "4a83bcc0474d49c78c5ae38adcb62b2a",
+          "owner_keyup_started_ns": 45814635414,
+          "owner_sync_returned_ns": 45814642174,
+          "physical_verification_authoritative": false,
+          "reason": "release",
+          "receipt_id": "0e7f9bb67a6b4634a7a0690eeb3c3203",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "batch_release_id": "8693bd2e9eb04e998c860dc2f0c458b1",
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-bulk",
+          "key": null,
+          "key_down_after": false,
+          "key_state_after_known": true,
+          "keycode": 56,
+          "owner_id": "4a83bcc0474d49c78c5ae38adcb62b2a",
+          "owner_keyup_started_ns": 45814638980,
+          "owner_sync_returned_ns": 45814642174,
+          "physical_verification_authoritative": false,
+          "reason": "release",
+          "receipt_id": "2cd3bbb25c9c4435b307571a3621dee5",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_receipt_ids": [
+            "0e7f9bb67a6b4634a7a0690eeb3c3203",
+            "2cd3bbb25c9c4435b307571a3621dee5"
+          ],
+          "reason": "release",
+          "valid_until_ns": 65814357513,
+          "verified": true,
+          "verified_ns": 45814670189
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_receipt_ids": [],
+          "reason": "close",
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 45814742122
+        }
+      ],
+      "sync_calls": 4
+    },
+    {
+      "calls": [
+        [
+          "input",
+          2,
+          38
+        ],
+        [
+          "sync",
+          1
+        ],
+        [
+          "input",
+          2,
+          56
+        ],
+        [
+          "sync",
+          2
+        ],
+        [
+          "input",
+          3,
+          38
+        ],
+        [
+          "input",
+          3,
+          56
+        ],
+        [
+          "sync",
+          3
+        ],
+        [
+          "sync",
+          4
+        ]
+      ],
+      "final_down": [],
+      "keys": [
+        "A",
+        "B"
+      ],
+      "name": "cancel",
+      "records": [
+        {
+          "batch_release_id": "45ac240e30fb42ff8d47dfd5e42bbefa",
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-cancel",
+          "key": null,
+          "key_down_after": false,
+          "key_state_after_known": true,
+          "keycode": 38,
+          "owner_id": "84d51b7a91604306900d759f9ccda33b",
+          "owner_keyup_started_ns": 45828769724,
+          "owner_sync_returned_ns": 45828779572,
+          "physical_verification_authoritative": false,
+          "reason": "cancelled",
+          "receipt_id": "b205049570ed4173a0bca8f8022ee1cd",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "batch_release_id": "45ac240e30fb42ff8d47dfd5e42bbefa",
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-cancel",
+          "key": null,
+          "key_down_after": false,
+          "key_state_after_known": true,
+          "keycode": 56,
+          "owner_id": "84d51b7a91604306900d759f9ccda33b",
+          "owner_keyup_started_ns": 45828775563,
+          "owner_sync_returned_ns": 45828779572,
+          "physical_verification_authoritative": false,
+          "reason": "cancelled",
+          "receipt_id": "887ee01543e3496abf3039a55470fb0f",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_receipt_ids": [
+            "b205049570ed4173a0bca8f8022ee1cd",
+            "887ee01543e3496abf3039a55470fb0f"
+          ],
+          "reason": "cancelled",
+          "valid_until_ns": 65826304929,
+          "verified": true,
+          "verified_ns": 45828831414
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_receipt_ids": [],
+          "reason": "close",
+          "valid_until_ns": null,
+          "verified": true,
+          "verified_ns": 45828936975
+        }
+      ],
+      "sync_calls": 4
+    },
+    {
+      "calls": [
+        [
+          "input",
+          2,
+          38
+        ],
+        [
+          "sync",
+          1
+        ],
+        [
+          "input",
+          3,
+          38
+        ],
+        [
+          "sync",
+          2
+        ],
+        [
+          "input",
+          3,
+          38
+        ],
+        [
+          "sync",
+          3
+        ]
+      ],
+      "final_down": [],
+      "keys": [
+        "A"
+      ],
+      "name": "sync_error",
+      "records": [
+        {
+          "batch_release_id": "f53d24d3bc654c9e991a7af0dc69b9c6",
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-sync_error",
+          "key": null,
+          "key_down_after": null,
+          "key_state_after_known": false,
+          "keycode": 38,
+          "owner_id": "86cf192b012f4d0590d71196c8c5f419",
+          "owner_keyup_started_ns": 45840635424,
+          "owner_sync_returned_ns": null,
+          "physical_verification_authoritative": false,
+          "reason": "release",
+          "receipt_id": "2d6d2df58dc34790845616c5942d1200",
+          "schema": "owner-keyup-v11",
+          "sync_error": "RuntimeError('injected XSync failure')",
+          "xsync_completed": false
+        },
+        {
+          "batch_release_id": "ac36a77ac34c47188e0ff2bfa91bf3bd",
+          "event": "owner_keyup",
+          "grants_input_authority": false,
+          "intent_token": "token-sync_error",
+          "key": null,
+          "key_down_after": false,
+          "key_state_after_known": true,
+          "keycode": 38,
+          "owner_id": "86cf192b012f4d0590d71196c8c5f419",
+          "owner_keyup_started_ns": 45840746307,
+          "owner_sync_returned_ns": 45840751250,
+          "physical_verification_authoritative": false,
+          "reason": "close",
+          "receipt_id": "5c998734dfd7439c93c6f92e7f89591e",
+          "schema": "owner-keyup-v11",
+          "sync_error": null,
+          "xsync_completed": true
+        },
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_receipt_ids": [
+            "5c998734dfd7439c93c6f92e7f89591e"
+          ],
+          "reason": "close",
+          "valid_until_ns": 65840440611,
+          "verified": true,
+          "verified_ns": 45840767585
+        }
+      ],
+      "sync_calls": 3
+    }
+  ],
+  "runner_error": null,
+  "schema": "owner-keyup-construction-result-v1"
+}
