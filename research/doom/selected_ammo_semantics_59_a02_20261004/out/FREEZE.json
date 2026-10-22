@@ -1,0 +1,12 @@
+{
+  "run_id": "59-selected-ammo-semantics-a02-20261004",
+  "predecessor": {"run_id":"59-selected-ammo-semantics-a01-20261004","disposition":"STOP_IMAGE_ASSET_MISSING_BEFORE_GAME_INIT","replayed":false},
+  "issue": 59,
+  "scope": "signal semantics construction only",
+  "H": "On one same-thread/tic observation, SELECTED_WEAPON_AMMO identifies ammunition for SELECTED_WEAPON while AMMO0..AMMO9 retain per-slot counts; HUD represents the selected slot.",
+  "T": "Initialize one fresh Doom episode using the image's explicit freedoom2.wad asset; sample direct APIs and GameState vector at startup and after 35 no-button tics; retain screenshots and raw JSON.",
+  "D": "No-input 35-tic coast within the same game instance; no model, planner, controller, GPU, action selection, or task-effect scoring.",
+  "C": "One fresh episode, exact image sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378; source mounted read-only; output in new run directory.",
+  "U": "If the selected weapon and selected ammo remain independently represented in the same tic bracket, retain slot mapping and HUD as candidate signal meanings; if unavailable or inconsistent, HOLD signal qualification. This cannot establish threat feedback, input release, useful progress, or recovery.",
+  "argv_template": ["wslc", "run", "--rm", "--network", "none", "--volume", "<repo>/research/doom/selected_ammo_semantics_59_a02_20261004/source:/study:ro", "--volume", "<repo>/research/doom/selected_ammo_semantics_59_a02_20261004/out:/out:rw", "post-guard-game-59-4d74:20261004", "python3", "/study/probe.py"]
+}
