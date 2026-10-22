@@ -1,0 +1,249 @@
+{
+  "assigned_opportunities": 24,
+  "controls": {
+    "benign_extreme_spike": {
+      "include_in_estimand": false,
+      "scope": "OUT_OF_SCOPE_BENIGN",
+      "value": 1000
+    },
+    "censored": {
+      "numeric_value": null,
+      "status": "UNRESOLVED_CENSORED"
+    },
+    "hard_safety_violation": {
+      "numeric_value": null,
+      "status": "FAIL_HARD_SAFETY"
+    },
+    "missing_truth": {
+      "numeric_value": null,
+      "status": "UNKNOWN"
+    }
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "hard_safety_violations": 0,
+  "mutation_controls": [
+    {
+      "name": "drop_row",
+      "rejected": true
+    },
+    {
+      "name": "duplicate_row",
+      "rejected": true
+    },
+    {
+      "name": "stratum_reassignment",
+      "rejected": true
+    },
+    {
+      "name": "loss_sign_flip",
+      "rejected": true
+    },
+    {
+      "name": "censor_as_zero",
+      "rejected": true
+    },
+    {
+      "name": "safety_to_scalar",
+      "rejected": true
+    }
+  ],
+  "opportunity_regret": {
+    "A": {
+      "S1-O01": 3,
+      "S1-O02": 3,
+      "S1-O03": 2,
+      "S1-O04": 2,
+      "S1-O05": 1,
+      "S1-O06": 1,
+      "S1-O07": 0,
+      "S1-O08": 0,
+      "S1-O09": 0,
+      "S1-O10": 0,
+      "S1-O11": 0,
+      "S1-O12": 0,
+      "S2-O01": 0,
+      "S2-O02": 0,
+      "S2-O03": 0,
+      "S2-O04": 0,
+      "S2-O05": 0,
+      "S2-O06": 0,
+      "S2-O07": 0,
+      "S2-O08": 0,
+      "S2-O09": 0,
+      "S2-O10": 0,
+      "S2-O11": 0,
+      "S2-O12": 0
+    },
+    "B": {
+      "S1-O01": 1,
+      "S1-O02": 1,
+      "S1-O03": 1,
+      "S1-O04": 1,
+      "S1-O05": 1,
+      "S1-O06": 1,
+      "S1-O07": 1,
+      "S1-O08": 1,
+      "S1-O09": 1,
+      "S1-O10": 1,
+      "S1-O11": 1,
+      "S1-O12": 1,
+      "S2-O01": 0,
+      "S2-O02": 0,
+      "S2-O03": 0,
+      "S2-O04": 0,
+      "S2-O05": 0,
+      "S2-O06": 0,
+      "S2-O07": 0,
+      "S2-O08": 0,
+      "S2-O09": 0,
+      "S2-O10": 0,
+      "S2-O11": 0,
+      "S2-O12": 0
+    },
+    "C": {
+      "S1-O01": 0,
+      "S1-O02": 0,
+      "S1-O03": 0,
+      "S1-O04": 0,
+      "S1-O05": 0,
+      "S1-O06": 0,
+      "S1-O07": 0,
+      "S1-O08": 0,
+      "S1-O09": 0,
+      "S1-O10": 0,
+      "S1-O11": 0,
+      "S1-O12": 0,
+      "S2-O01": 0,
+      "S2-O02": 0,
+      "S2-O03": 0,
+      "S2-O04": 0,
+      "S2-O05": 0,
+      "S2-O06": 0,
+      "S2-O07": 0,
+      "S2-O08": 0,
+      "S2-O09": 0,
+      "S2-O10": 0,
+      "S2-O11": 0,
+      "S2-O12": 0
+    }
+  },
+  "schema": "tail-regret-8597-independent-audit-v1",
+  "scope": "Finite synthetic method evidence only; no real route, task, causal, GUI, safety, or population-tail claim.",
+  "summaries": {
+    "A": {
+      "cluster_means": {
+        "CL01": 2.5,
+        "CL02": 0.5,
+        "CL03": 0.0,
+        "CL04": 0.0,
+        "CL05": 0.0,
+        "CL06": 0.0
+      },
+      "delete_one_cluster_pooled_mean_range": [
+        0.1,
+        0.6
+      ],
+      "es20": 2.2,
+      "exceedance_ge_3": {
+        "count": 2,
+        "denominator": 24,
+        "rate": 0.08333333333333333
+      },
+      "macro_es20": 1.3333333333333333,
+      "macro_mean": 0.5,
+      "n": 24,
+      "pooled_mean": 0.5,
+      "strata": {
+        "S1": {
+          "es20": 2.6666666666666665,
+          "exceedance_ge_3": 2,
+          "mean": 1.0,
+          "n": 12
+        },
+        "S2": {
+          "es20": 0.0,
+          "exceedance_ge_3": 0,
+          "mean": 0.0,
+          "n": 12
+        }
+      }
+    },
+    "B": {
+      "cluster_means": {
+        "CL01": 1.0,
+        "CL02": 1.0,
+        "CL03": 1.0,
+        "CL04": 0.0,
+        "CL05": 0.0,
+        "CL06": 0.0
+      },
+      "delete_one_cluster_pooled_mean_range": [
+        0.4,
+        0.6
+      ],
+      "es20": 1.0,
+      "exceedance_ge_3": {
+        "count": 0,
+        "denominator": 24,
+        "rate": 0.0
+      },
+      "macro_es20": 0.5,
+      "macro_mean": 0.5,
+      "n": 24,
+      "pooled_mean": 0.5,
+      "strata": {
+        "S1": {
+          "es20": 1.0,
+          "exceedance_ge_3": 0,
+          "mean": 1.0,
+          "n": 12
+        },
+        "S2": {
+          "es20": 0.0,
+          "exceedance_ge_3": 0,
+          "mean": 0.0,
+          "n": 12
+        }
+      }
+    },
+    "C": {
+      "cluster_means": {
+        "CL01": 0.0,
+        "CL02": 0.0,
+        "CL03": 0.0,
+        "CL04": 0.0,
+        "CL05": 0.0,
+        "CL06": 0.0
+      },
+      "delete_one_cluster_pooled_mean_range": [
+        0.0,
+        0.0
+      ],
+      "es20": 0.0,
+      "exceedance_ge_3": {
+        "count": 0,
+        "denominator": 24,
+        "rate": 0.0
+      },
+      "macro_es20": 0.0,
+      "macro_mean": 0.0,
+      "n": 24,
+      "pooled_mean": 0.0,
+      "strata": {
+        "S1": {
+          "es20": 0.0,
+          "exceedance_ge_3": 0,
+          "mean": 0.0,
+          "n": 12
+        },
+        "S2": {
+          "es20": 0.0,
+          "exceedance_ge_3": 0,
+          "mean": 0.0,
+          "n": 12
+        }
+      }
+    }
+  }
+}
