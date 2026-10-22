@@ -103,7 +103,8 @@ def build_model_provider_call(*, model_call, root, prompt, image, contract,
         if error is not None:
             status = ("timeout" if isinstance(
                 error, (TimeoutError, subprocess.TimeoutExpired)) else "failed")
-            return {"status": status, "usage": _usage(None),
+            return {"status": status,
+                    "usage": _usage({"usage": getattr(error, "usage", None)}),
                     "response_bytes": raw,
                     "error_type": type(error).__name__}
         return {"status": "completed", "usage": _usage(result),

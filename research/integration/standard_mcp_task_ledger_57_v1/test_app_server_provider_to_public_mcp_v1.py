@@ -30,6 +30,15 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                 "method": "interface_guarded_compiled",
                 "arguments": {"source_sequence": 4, "actions": []},
             }
+            usage_row = {
+                "direction": "received", "observed_ns": 9,
+                "message": {"method": "thread/tokenUsage/updated", "params": {
+                    "threadId": "thread-1", "turnId": "turn-1",
+                    "tokenUsage": {"last": {
+                        "inputTokens": 42, "outputTokens": 12,
+                        "cachedInputTokens": 30, "cacheWriteInputTokens": 2,
+                        "reasoningOutputTokens": 3}}}},
+            }
             protocol_row = {
                 "direction": "received", "observed_ns": 10,
                 "message": {"method": "turn/completed", "params": {
@@ -38,8 +47,9 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                         "items": [{"type": "agentMessage",
                                    "text": json.dumps(request_payload)}]}}},
             }
-            turn_bytes = json.dumps(
-                protocol_row, separators=(",", ":")).encode() + b"\n"
+            turn_bytes = b"".join(
+                json.dumps(row, separators=(",", ":")).encode() + b"\n"
+                for row in (usage_row, protocol_row))
 
             class FakePlanner:
                 def begin_turn(self, prompt, *, output_schema, image_path):
@@ -113,7 +123,7 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual((recorder.root / response_ref["path"]).read_bytes(),
                              turn_bytes)
 
-    async def test_missing_completed_turn_does_not_call_public_relay(self):
+    async def test_ineligible_turn_preserves_partial_usage_and_skips_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             workspace = root / "workspace"
@@ -129,11 +139,20 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                     return SimpleNamespace(thread_id="thread-1", turn_id="turn-1")
 
                 def await_turn(self, _handle, timeout):
+                    usage = {"last": {"inputTokens": 13,
+                                      "cachedInputTokens": 5}}
+                    usage_row = {"direction": "received", "message": {
+                        "method": "thread/tokenUsage/updated", "params": {
+                            "threadId": "thread-1", "turnId": "turn-1",
+                            "tokenUsage": usage}}}
+                    error_row = {"direction": "received", "message": {
+                        "method": "error"}}
                     with journal.open("ab") as stream:
-                        stream.write(b'{"direction":"received","message":{"method":"error"}}\n')
+                        for row in (usage_row, error_row):
+                            stream.write(json.dumps(row).encode() + b"\n")
                     return SimpleNamespace(
                         status="failed", answer_eligible=False, answer=None,
-                        error="provider failed", usage=None)
+                        error="provider failed", usage=usage)
 
             model = AppServerPublicMcpModelCall(
                 FailedPlanner(), journal, workspace=workspace, contract="public-mcp",
@@ -157,6 +176,83 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
 
             self.assertFalse(result["tool_call_submitted"])
             self.assertEqual(result["generation"]["status"], "failed")
+            self.assertEqual(result["generation"]["usage"], {
+                "status": "partial", "input_tokens": 13,
+                "output_tokens": None, "cached_input_tokens": 5})
+            receipt = recorder.reconcile()
+            self.assertTrue(receipt["complete"])
+            self.assertEqual([event["kind"] for event in receipt["events"]],
+                             ["model_attempt"])
+
+    async def test_usage_mismatch_with_protocol_journal_skips_public_relay(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            workspace = root / "workspace"
+            workspace.mkdir()
+            image = root / "observation.png"
+            image.write_bytes(b"synthetic image")
+            journal = root / "session" / "protocol.jsonl"
+            journal.parent.mkdir()
+            journal.write_bytes(b"")
+            payload = {"method": "interface_guarded_compiled", "arguments": {}}
+
+            class MismatchedPlanner:
+                def begin_turn(self, *_args, **_kwargs):
+                    return SimpleNamespace(thread_id="thread-mismatch",
+                                           turn_id="turn-mismatch")
+
+                def await_turn(self, _handle, timeout):
+                    rows = [
+                        {"direction": "received", "message": {
+                            "method": "thread/tokenUsage/updated", "params": {
+                                "threadId": "thread-mismatch", "turnId": "turn-mismatch",
+                                "tokenUsage": {"last": {
+                                    "inputTokens": 7, "outputTokens": 3,
+                                    "cachedInputTokens": 0, "cacheWriteInputTokens": 0,
+                                    "reasoningOutputTokens": 1}}}}},
+                        {"direction": "received", "message": {
+                            "method": "turn/completed", "params": {
+                                "threadId": "thread-mismatch", "turn": {
+                                    "id": "turn-mismatch", "status": "completed",
+                                    "items": [{"type": "agentMessage",
+                                               "text": json.dumps(payload)}]}}}},
+                    ]
+                    with journal.open("ab") as stream:
+                        for row in rows:
+                            stream.write(json.dumps(row).encode() + b"\n")
+                    return SimpleNamespace(
+                        status="completed", answer_eligible=True, answer=payload,
+                        usage={"last": {
+                            "inputTokens": 8, "outputTokens": 3,
+                            "cachedInputTokens": 0, "cacheWriteInputTokens": 0,
+                            "reasoningOutputTokens": 1}})
+
+            model = AppServerPublicMcpModelCall(
+                MismatchedPlanner(), journal, workspace=workspace,
+                contract="public-mcp", output_schema={"type": "object"},
+                model="gpt-test", effort="low")
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class RejectingRelay:
+                next_id = 1
+
+                async def request(self, _request_bytes):
+                    raise AssertionError("inconsistent usage must not reach public MCP")
+
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            request, provider = build_model_provider_call(
+                model_call=model.call, root=root / "mismatched-attempt",
+                prompt="task", image=image, contract="public-mcp",
+                workspace=workspace)
+            result = await caller.invoke_generation_to_tool(
+                "mismatched-attempt", request, provider, "call-mismatch",
+                "interface_guarded_compiled", json.loads)
+
+            self.assertFalse(result["tool_call_submitted"])
+            self.assertEqual(result["generation"]["status"], "failed")
+            self.assertEqual(result["generation"]["error_type"], "ValueError")
+            self.assertIn(b"thread/tokenUsage/updated",
+                          result["generation"]["response_bytes"])
             receipt = recorder.reconcile()
             self.assertTrue(receipt["complete"])
             self.assertEqual([event["kind"] for event in receipt["events"]],
