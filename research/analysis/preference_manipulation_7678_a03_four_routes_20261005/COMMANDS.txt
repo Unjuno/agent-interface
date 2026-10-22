@@ -1,0 +1,9 @@
+Construction (before freeze):
+python3 -B -m unittest discover -s research/analysis/preference_manipulation_7678_a03_four_routes_20261005 -p 'test_*.py' -v
+python3 -B -m py_compile research/analysis/preference_manipulation_7678_a03_four_routes_20261005/candidate.py research/analysis/preference_manipulation_7678_a03_four_routes_20261005/auditor.py
+
+Formal candidate (one invocation after freeze):
+docker run --rm --pull=never --network=none --platform linux/arm64 -v "$PWD":/src:ro -v "$PWD/research/analysis/preference_manipulation_7678_a03_four_routes_20261005/results/formal_01":/out:rw -w /src docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 python3 -B research/analysis/preference_manipulation_7678_a03_four_routes_20261005/candidate.py --out /out/candidate-output.json
+
+Formal independent auditor (one invocation after successful candidate):
+docker run --rm --pull=never --network=none --platform linux/arm64 -v "$PWD":/src:ro -v "$PWD/research/analysis/preference_manipulation_7678_a03_four_routes_20261005/results/formal_01":/candidate:ro -v "$PWD/research/analysis/preference_manipulation_7678_a03_four_routes_20261005/results/formal_01":/out:rw -w /src docker.io/library/python@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 python3 -B research/analysis/preference_manipulation_7678_a03_four_routes_20261005/auditor.py --candidate /candidate/candidate-output.json --out /out/audit-output.json
