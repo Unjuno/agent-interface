@@ -1,0 +1,42 @@
+{
+  "C": "This finite model and independent interpreter share explicit semantics and can share common-mode mistakes.",
+  "D": "PASS_TRANSLATION_VALIDATION_METHOD_SCOPED iff valid pairs are accepted; all seven mutations are rejected with matching independently replayed traces and visited-context counts; oversized input is UNKNOWN without certificate; certificates bind inputs; nominal baseline misses at least one mutation.",
+  "H": "Accurate visited-context accounting lets an independent auditor reproduce all early counterexample counts without weakening semantic gates.",
+  "T": "Same five valid pairs, seven mutations and oversized repeat from A01/A02; no GUI/model/runtime/user interaction.",
+  "U": "No proof of unbounded loops, real scheduler/timing, OS/backend behavior, application effects or source-intent correctness. No execution authority follows.",
+  "additive_path": "research/analysis/gui_macro_translation_validation_7827_a03_20261005/",
+  "allocation": "UNJUNO-7827-TV-A03-20261005-01",
+  "branch": "research/7827-tv-a01-result-20261005-recovery",
+  "branch_base_commit": "40f0cf2814873320ee8b64a8f06e3916c673e3cd",
+  "construction_checks": [
+    "valid_acceptance_and_counts",
+    "seven_mutations_replay_and_count",
+    "unknown_bound_and_early_exit_regression"
+  ],
+  "delta_from_A02": "No scientific/source delta from the A02 counter-count fix. The sole delta is output custody: outer orchestration parses plain JSON returned by the host and directly uploads each original base64 byte string; no nested base64 decode is used. A02 is not rerun.",
+  "formal_commands": {
+    "auditor": "python -B -c <auditor_bootstrap> audit.py fixture.json model.json; candidate stdout piped on stdin",
+    "auditor_bootstrap": "import sys; from pathlib import Path; ap,fp,mp=sys.argv[1:4]; raw=sys.stdin.buffer.read(); source=open(ap,'rb').read(); old=Path.read_bytes; Path.read_bytes=lambda self: raw if self.name=='candidate.raw' else old(self); sys.argv=[ap,fp,mp,'candidate.raw']; exec(compile(source,ap,'exec'),{'__name__':'__main__','__file__':ap})",
+    "candidate": "python -B -c <candidate_bootstrap> fixture.json model.json; frozen candidate.py bytes piped on stdin",
+    "candidate_bootstrap": "import sys; source=sys.stdin.buffer.read(); sys.argv=['candidate.py',sys.argv[1],sys.argv[2]]; exec(compile(source,'candidate.py','exec'),{'__name__':'__main__','__file__':'candidate.py'})"
+  },
+  "invocations": "Candidate once after freeze; independent auditor once after candidate; no retries.",
+  "issue": 7827,
+  "runtime": {
+    "container": "none; finite standard-library model needs no container boundary",
+    "formal_network": "none",
+    "platform": "win32",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "storage": "No local outputs; exact output bytes uploaded after run."
+  },
+  "schema": "gui-macro-tv-freeze-v1",
+  "sha256": {
+    "SOURCE_PLAN.md": "c1d748cb523c1605c981b24c61768782f1ffcf9104bd3eb62b2fa9b01ccee56d",
+    "audit.py": "6a54654db95121c522d0a8a2eca0fc40b942324b2bf0aabe260073776d27acf1",
+    "candidate.py": "7672d67faf723ca7385680bcc3f7229c65d2861f23c15f727582e14945cbe478",
+    "fixture.json": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+    "model.json": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+    "test_protocol.py": "2d67e7860cb3d7b836fea039208c7bdeeb19705493cd571300b5a1714c32b8a2"
+  },
+  "successor_of": "A02 custody HOLD; A01 remains the first scientific result."
+}

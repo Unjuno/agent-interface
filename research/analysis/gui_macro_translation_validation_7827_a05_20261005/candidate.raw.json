@@ -1,0 +1,376 @@
+{
+  "allocation": "UNJUNO-7827-TV-A05-20261005-01",
+  "candidate": "finite_trace_validator_v3",
+  "candidate_status": "PASS_TRANSLATION_VALIDATION_METHOD_SCOPED",
+  "fixture_sha256": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+  "gates": {
+    "all_mutations_rejected": true,
+    "all_valid_accepted": true,
+    "baseline_misses_mutation": true,
+    "certificates_bind_inputs": true,
+    "unknown_never_certifies": true
+  },
+  "model_sha256": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+  "mutations": [
+    {
+      "baseline_caught": false,
+      "certificate": null,
+      "contexts_checked": 1,
+      "counterexample": {
+        "context": {
+          "cancel_after": null,
+          "initial_state": {
+            "active_target": "editor",
+            "fresh": false
+          },
+          "transition_after": null,
+          "transition_state": null
+        },
+        "source_trace": [
+          [
+            "release"
+          ],
+          [
+            "abort",
+            "stale"
+          ]
+        ],
+        "target_trace": [
+          [
+            "effect",
+            "editor",
+            "save",
+            "note"
+          ],
+          [
+            "yield"
+          ]
+        ]
+      },
+      "id": "drop_freshness_guard",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "baseline_caught": true,
+      "certificate": null,
+      "contexts_checked": 53,
+      "counterexample": {
+        "context": {
+          "cancel_after": null,
+          "initial_state": {
+            "active_target": "editor",
+            "fresh": true
+          },
+          "transition_after": null,
+          "transition_state": null
+        },
+        "source_trace": [
+          [
+            "effect",
+            "editor",
+            "save",
+            "note"
+          ],
+          [
+            "yield"
+          ]
+        ],
+        "target_trace": [
+          [
+            "effect",
+            "browser",
+            "save",
+            "note"
+          ],
+          [
+            "yield"
+          ]
+        ]
+      },
+      "id": "change_effect_target",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "baseline_caught": true,
+      "certificate": null,
+      "contexts_checked": 1,
+      "counterexample": {
+        "context": {
+          "cancel_after": null,
+          "initial_state": {
+            "active_target": "editor",
+            "fresh": false
+          },
+          "transition_after": null,
+          "transition_state": null
+        },
+        "source_trace": [
+          [
+            "wait",
+            1
+          ],
+          [
+            "observe",
+            "screen"
+          ],
+          [
+            "release"
+          ],
+          [
+            "yield"
+          ]
+        ],
+        "target_trace": [
+          [
+            "observe",
+            "screen"
+          ],
+          [
+            "wait",
+            1
+          ],
+          [
+            "release"
+          ],
+          [
+            "yield"
+          ]
+        ]
+      },
+      "id": "reorder_noncommuting_events",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "baseline_caught": false,
+      "certificate": null,
+      "contexts_checked": 2,
+      "counterexample": {
+        "context": {
+          "cancel_after": 0,
+          "initial_state": {
+            "active_target": "editor",
+            "fresh": false
+          },
+          "transition_after": null,
+          "transition_state": null
+        },
+        "source_trace": [
+          [
+            "release"
+          ],
+          [
+            "abort",
+            "cancel"
+          ]
+        ],
+        "target_trace": [
+          [
+            "abort",
+            "cancel"
+          ]
+        ]
+      },
+      "id": "remove_cancel_release",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "baseline_caught": true,
+      "certificate": null,
+      "contexts_checked": 1,
+      "counterexample": {
+        "context": {
+          "cancel_after": null,
+          "initial_state": {
+            "active_target": "editor",
+            "fresh": false
+          },
+          "transition_after": null,
+          "transition_state": null
+        },
+        "source_trace": [
+          [
+            "observe",
+            "screen"
+          ],
+          [
+            "yield"
+          ]
+        ],
+        "target_trace": [
+          [
+            "forbidden",
+            {
+              "effect": "delete",
+              "target": "editor",
+              "value": "all"
+            }
+          ],
+          [
+            "observe",
+            "screen"
+          ],
+          [
+            "yield"
+          ]
+        ]
+      },
+      "id": "hide_forbidden_write_in_internal",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "baseline_caught": true,
+      "certificate": null,
+      "contexts_checked": 53,
+      "counterexample": {
+        "context": {
+          "cancel_after": null,
+          "initial_state": {
+            "active_target": "editor",
+            "fresh": true
+          },
+          "transition_after": null,
+          "transition_state": null
+        },
+        "source_trace": [
+          [
+            "effect",
+            "editor",
+            "save",
+            "note"
+          ],
+          [
+            "yield"
+          ]
+        ],
+        "target_trace": [
+          [
+            "effect",
+            "editor",
+            "save",
+            "note"
+          ],
+          [
+            "observe",
+            "after_yield"
+          ]
+        ]
+      },
+      "id": "yield_becomes_continue",
+      "status": "COUNTEREXAMPLE"
+    },
+    {
+      "baseline_caught": true,
+      "certificate": null,
+      "contexts_checked": 53,
+      "counterexample": {
+        "context": {
+          "cancel_after": null,
+          "initial_state": {
+            "active_target": "editor",
+            "fresh": true
+          },
+          "transition_after": null,
+          "transition_state": null
+        },
+        "source_trace": [
+          [
+            "effect",
+            "editor",
+            "save",
+            "note"
+          ],
+          [
+            "yield"
+          ]
+        ],
+        "target_trace": [
+          [
+            "effect",
+            "editor",
+            "save",
+            "other_note"
+          ],
+          [
+            "yield"
+          ]
+        ]
+      },
+      "id": "alter_effect_postcondition",
+      "status": "COUNTEREXAMPLE"
+    }
+  ],
+  "unknown": {
+    "certificate": null,
+    "contexts_checked": 0,
+    "counterexample": null,
+    "reason": "repeat_bound",
+    "status": "UNKNOWN"
+  },
+  "valid": [
+    {
+      "certificate": {
+        "contexts_checked": 208,
+        "fixture_sha256": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+        "model_sha256": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+        "source_sha256": "0e708e390e62f6d3e1bb49c2d646c8c6e85f711b92c99a15747b6b67f89627d2",
+        "target_sha256": "003f91e3ae2240ce62a3884fb78a000727daf3e230457c1468ca619470578e67"
+      },
+      "contexts_checked": 208,
+      "counterexample": null,
+      "id": "guarded_save",
+      "status": "VALID"
+    },
+    {
+      "certificate": {
+        "contexts_checked": 340,
+        "fixture_sha256": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+        "model_sha256": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+        "source_sha256": "2030b26a46fbd51c65657fb0fa3efcb4f7c47d3b3a4ade901b35c1a8ce591a96",
+        "target_sha256": "a499d0c8ca85c0b3381f8c164f0d528c4baf10a24dc8346e8b5379c4536bb3b9"
+      },
+      "contexts_checked": 340,
+      "counterexample": null,
+      "id": "wait_observe",
+      "status": "VALID"
+    },
+    {
+      "certificate": {
+        "contexts_checked": 700,
+        "fixture_sha256": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+        "model_sha256": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+        "source_sha256": "5f184f0bdb062f328d8a30a1f00c0f10c4f7a4bfdc08505c70dec4671f634145",
+        "target_sha256": "ee3639be1b3142311f0e7f2f84d2bfe4ff218a1795fe376a5a7319885e076137"
+      },
+      "contexts_checked": 700,
+      "counterexample": null,
+      "id": "bounded_repeat",
+      "status": "VALID"
+    },
+    {
+      "certificate": {
+        "contexts_checked": 40,
+        "fixture_sha256": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+        "model_sha256": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+        "source_sha256": "57aa747f24ce8436d24cc3f9279365a1574144323903aee3edc482fb7ef363cf",
+        "target_sha256": "fcb704de09e9750079cf1f43e48c34f77c7632461d70c8a929de2cf5217eb20e"
+      },
+      "contexts_checked": 40,
+      "counterexample": null,
+      "id": "explicit_abort",
+      "status": "VALID"
+    },
+    {
+      "certificate": {
+        "contexts_checked": 108,
+        "fixture_sha256": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+        "model_sha256": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+        "source_sha256": "b7fb561d6d050029cb1cb6a3e45f23ace59432cef5107900e6de2ad44c4fcd94",
+        "target_sha256": "73e1aff492dba23eeec8ea49dbe7e4b6459d648023370af22360b68af0006d91"
+      },
+      "contexts_checked": 108,
+      "counterexample": null,
+      "id": "declared_stutter",
+      "status": "VALID"
+    }
+  ]
+}

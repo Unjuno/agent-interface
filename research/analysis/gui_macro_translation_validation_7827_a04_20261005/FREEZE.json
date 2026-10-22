@@ -1,0 +1,40 @@
+{
+  "C": "Finite model and independent interpreter can share common-mode mistakes; allocation binding proves identity, not semantic adequacy.",
+  "D": "PASS_TRANSLATION_VALIDATION_METHOD_SCOPED iff candidate/auditor IDs equal frozen A04; all valid pairs accepted; all mutations rejected with independently replayed traces and matching checked-context counts; oversized repeat UNKNOWN without certificate; certificates bind inputs; baseline misses at least one mutation.",
+  "H": "A fully bound run with accurate visited-context accounting should satisfy the finite translation-validation method gate under the frozen model.",
+  "T": "Same five valid pairs, seven mutations and oversized repeat; add an audit gate that rejects a raw candidate result labeled with a stale allocation ID. No GUI/model/runtime/user action.",
+  "U": "No proof of unbounded loops, scheduler/timing, OS/backend behavior, actual application effects or source-intent correctness. No execution authority.",
+  "additive_path": "research/analysis/gui_macro_translation_validation_7827_a04_20261005/",
+  "allocation": "UNJUNO-7827-TV-A04-20261005-01",
+  "auditor_bootstrap": "import sys; from pathlib import Path; ap,fp,mp=sys.argv[1:4]; raw=sys.stdin.buffer.read(); source=open(ap,'rb').read(); old=Path.read_bytes; Path.read_bytes=lambda self: raw if self.name=='candidate.raw' else old(self); sys.argv=[ap,fp,mp,'candidate.raw']; exec(compile(source,ap,'exec'),{'__name__':'__main__','__file__':ap})",
+  "branch": "research/7827-tv-a01-result-20261005-recovery",
+  "branch_base_commit": "619ee8f6c953af731e0cb7d398197ab4f0af7255",
+  "candidate_bootstrap": "import sys; source=sys.stdin.buffer.read(); sys.argv=['candidate.py',sys.argv[1],sys.argv[2]]; exec(compile(source,'candidate.py','exec'),{'__name__':'__main__','__file__':'candidate.py'})",
+  "construction_checks": [
+    "allocation_binding_accepts_A04_rejects_A03",
+    "valid_pairs_match_independent_counts",
+    "mutations_match_independent_traces_and_counts",
+    "unknown_never_certifies"
+  ],
+  "delta_from_A03": "Bind candidate/auditor output to this allocation ID in source and require exact ID equality in independent audit. Keep the corrected visited-context count and same source/target/model semantics.",
+  "invocation_rule": "Candidate once after freeze; auditor once afterward; no retries.",
+  "issue": 7827,
+  "predecessor_disposition": "A01 candidate/audit mismatch on actual context counts; A02 output-custody HOLD; A03 raw bytes stored but mislabeled A01 and not rejected by its auditor. All predecessors remain immutable and are not rerun.",
+  "runtime": {
+    "container": "none; standard-library model needs no container boundary",
+    "formal_network": "none",
+    "outputs": "Exact stdout/stderr uploaded directly to GitHub from the in-memory runner payload.",
+    "platform": "win32",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "schema": "gui-macro-tv-freeze-v1",
+  "sha256": {
+    "SOURCE_PLAN.md": "c1d748cb523c1605c981b24c61768782f1ffcf9104bd3eb62b2fa9b01ccee56d",
+    "audit.py": "cdefa871547e86f98ad0a09a10ee56e4ad14c487e2e073e803b86d444b24ec54",
+    "candidate.py": "ded3ecd213bc83667978410e14a75d91d09539c0724ae17428e3332a518cb6b8",
+    "fixture.json": "724cde967e420aec62f45da57908962573946887a198edbfe1d24a0b8dd23796",
+    "model.json": "5048967c4ba8205d0e8f17e02a6a8cfd421528e944d89859d3483f7424da5ffb",
+    "test_audit.py": "cd98925e7f811ba9a7e356e8f0b329d458f92c9543b09b3d07755d30f7f34add",
+    "test_protocol.py": "b064785576218e75501c9ee64fe5ba8345ae08ab061dc11c4098869b46b13687"
+  }
+}
