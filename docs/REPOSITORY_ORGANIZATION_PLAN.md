@@ -128,9 +128,31 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9373 (2026-10-22)
+## Current execution checkpoint after PR #9377 (2026-10-22)
 
-Current main is `0ba19dc885d9531e6fc21c5ea9e26a624fb25bca` (PR #9373). The
+Current source main is `e698167ede85085b61446ad85dc6330fa1ba283d` (PR #9377).
+The last complete queue membership receipt is r146 at main
+`0ba19dc885d9531e6fc21c5ea9e26a624fb25bca`; its 1,654 Issue / 453 PR counts
+are a historical baseline, not a refreshed current count. Re-read complete
+membership before any queue-wide disposition. PR #9377 adds a research bridge
+from the existing model-call boundary to the durable attempt ledger and
+standard public MCP caller. Its 36 local ledger/provider-recorder/public-MCP
+tests pass in normal and optimized Windows CPython 3.11; the regression uses an
+injected model call and remains synthetic. The live provider route and external
+usage reconciliation remain open under #57.
+
+The selected [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+already exists as the canonical design/evidence page. Do not create a duplicate
+spec. Its operation-owner candidate remains unqualified: Win32 blocked-call
+packets use inert API fakes, while the X11 source audit leaves accepted-request
+effects during server unavailability unresolved. Keep runtime behavior
+experimental/default-off, and use only separately verified WSLc allocations;
+#7924 still records STOP/HOLD for shared ownership.
+
+The following PR #9373 checkpoint and r146 inventory details are retained as
+historical context, not current membership or source pointers.
+
+At PR #9373, main was `0ba19dc885d9531e6fc21c5ea9e26a624fb25bca`. The
 complete [r146 membership recheck](maintenance/repository-inventory-recheck-20261022-r146.md)
 records 1,654 open Issues and 453 open PRs. Both full ID sets were re-read
 before and after at the same main SHA and compared row-for-row with r145; no
