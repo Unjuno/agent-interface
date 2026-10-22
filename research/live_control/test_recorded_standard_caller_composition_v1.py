@@ -38,7 +38,7 @@ class RecordedStandardCallerTests(unittest.TestCase):
                 "else { const rows=" + json.dumps(events) + "; let input=''; "
                 "process.stdin.setEncoding('utf8'); "
                 "process.stdin.on('data', c => input += c); "
-                "process.stdin.on('end', () => process.stdout.write(" 
+                "process.stdin.on('end', () => process.stdout.write("
                 "rows.map(r => JSON.stringify(r)).join(String.fromCharCode(10)) + "
                 "String.fromCharCode(10))); }\n",
                 encoding="utf-8")
