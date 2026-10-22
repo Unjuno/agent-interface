@@ -1,0 +1,78 @@
+{
+  "H_T_D_C_U": {
+    "C": "This direct schema projection does not rule out a separately specified temporal reconstruction adapter. End-of-run score, controller-visible health/ammo, and viewport pixel deltas are not independent temporal scorer events. Program-level empty-key release is not a per-key release row.",
+    "D": "PASS_DATA_PRESENT only if exact samples, positive events, complete intervals, and nonempty attributable gate output exist; otherwise retain HOLD with exact missing counts. Candidate and audit must independently agree.",
+    "H": "Direct current trace may contain the independent scorer sample/event and per-key verified release records needed to apply the scorer attribution T0 gate.",
+    "T": "Freeze four source files from current main plus exact #7537 T0 module; project only records carrying frozen v2 schemas/fields and invoke T0 once. Run tests, then a separate raw-only auditor.",
+    "U": "Existing retained v39 episode only; no game/model/GUI/input run, no safety, causal, survival, recovery efficacy, human-tempo or MAP01-clear claim."
+  },
+  "base_commit": "27ba2445059e14589c69c36d09b675ac44fb7c6f",
+  "candidate_sources": {
+    "audit_t1.py": {
+      "bytes": 2689,
+      "sha256": "68eb0c5399dade54c29491de9305bc30a609c982eca323bd5daa167918649820"
+    },
+    "run_t1.py": {
+      "bytes": 4767,
+      "sha256": "33b91e855c526053b0b055ab94182f4f6b1d2a8cf30ddb711359a0799a98bf7a"
+    },
+    "scorer_feedback_attribution_v1.py": {
+      "bytes": 6930,
+      "sha256": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b"
+    },
+    "test_t1.py": {
+      "bytes": 1869,
+      "sha256": "a686a3bb7d8f852540a6199d63a1ba1f8586eeca5bfab05ba4e58b3ee59c6973"
+    }
+  },
+  "decision_gate": {
+    "hold": "No direct typed scorer sample/event and/or no complete explicit per-key verified release interval; empty gate output is NOT_EVALUABLE, not a PASS.",
+    "pass": "At least one independent positive scorer event has its own prior sample and at least one fully verified per-key intent interval, with gate output preserving NOT_ESTABLISHED causality."
+  },
+  "frozen_at_utc": "2026-10-04T08:10:16Z",
+  "gate_source": {
+    "commit": "b076890cbcd28f2889184055453f2868fd87c629",
+    "git_blob": "68d49857c49547585fdb313b00d08ae2969429be",
+    "path": "research/doom/scorer_feedback_attribution_59_t0_a01_20261004/scorer_feedback_attribution_v1.py",
+    "pr_number": 7537,
+    "sha256": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b"
+  },
+  "hypothesis": "Retained v39 data directly encodes the scorer sample/event and complete per-key interval schemas required by #7537 T0 so the attribution gate can produce event labels without fabricating data.",
+  "inputs": {
+    "inputs/events.jsonl": {
+      "bytes": 565849,
+      "git_blob": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+      "source_commit": "27ba2445059e14589c69c36d09b675ac44fb7c6f",
+      "source_path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl"
+    },
+    "inputs/occupancy-v39.json": {
+      "bytes": 24742,
+      "git_blob": "fff584a2c314c34bb54b5781a36887c55b31c75f",
+      "sha256": "1cd61f82a2ff832131be4a448bc90663f01c4acaab278807a969d2ef24a3b889",
+      "source_commit": "27ba2445059e14589c69c36d09b675ac44fb7c6f",
+      "source_path": "research/doom/results/map01-held-input-occupancy-fulltrace-v4/v39.json"
+    },
+    "inputs/owner-events.json": {
+      "bytes": 2575,
+      "git_blob": "596daf6e8f42669bd022c8dbe2d047929242e94c",
+      "sha256": "cdf628825312e6eb0cd810f7d0b3a77e52c1c2f646099bc07a34b4e3a90c08b7",
+      "source_commit": "27ba2445059e14589c69c36d09b675ac44fb7c6f",
+      "source_path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/owner-events.json"
+    },
+    "inputs/report.json": {
+      "bytes": 344806,
+      "git_blob": "bff2459036dcdcc44ed100b0c0bc657e1bb8e69a",
+      "sha256": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+      "source_commit": "27ba2445059e14589c69c36d09b675ac44fb7c6f",
+      "source_path": "research/doom/results/map01-v39-coast-liveness-live-01/report.json"
+    }
+  },
+  "runs_expected": {
+    "candidate": 1,
+    "independent_audit": 1,
+    "unit_tests": "once after freeze"
+  },
+  "schema": "map01-v39-feedback-sufficiency-freeze-v1",
+  "test": "One-shot, read-only projection of exact independent-progress v2 scorer samples/events and explicit verified per-key intervals from the immutable v39 report, runtime event trace, owner release trace and occupancy reconstruction. Controller-visible typed health/ammo, viewport-only receipts and terminal-only score are excluded. The frozen T0 gate is called on the exact projections; missing inputs yield HOLD, never PASS."
+}
