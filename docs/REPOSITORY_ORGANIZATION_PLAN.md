@@ -169,8 +169,11 @@ Keep the PR open, do not rerun A14, and recover only from the original frozen
 allocation source if its owner/location is identified. This batch used no
 WSLc or Docker allocation.
 
-The [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
-remains the canonical design/qualification record; no duplicate was created.
+The [prestarted X11 supervisor implementation and qualification record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+remains canonical; no duplicate was created. Keep the separate, still-proposed
+[Win32 operation-owner design](superpowers/specs/2026-10-22-win32-prestarted-supervisor-design.md)
+distinct from that implementation. Its input authority, process-generation,
+and blocked-I/O release evidence require platform-specific qualification.
 
 ## Worktree custody checkpoint after PR #9399 (2026-10-22)
 
