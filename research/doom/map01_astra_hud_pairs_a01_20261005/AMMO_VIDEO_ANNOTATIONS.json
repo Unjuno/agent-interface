@@ -1,0 +1,26 @@
+{
+  "schema": "map01-astra-ammo-video-manual-annotations-v1",
+  "analysis_kind": "posthoc_manual_transcription_from_retained_2x_video",
+  "source_fps": 10.0,
+  "source_playback_speed": 2.0,
+  "ammo_roi_xyxy": [0, 482, 100, 545],
+  "endpoint_samples": [
+    {"sequence": 117, "video_frame": 176, "ammo_manual": 50},
+    {"sequence": 148, "video_frame": 220, "ammo_manual": 48},
+    {"sequence": 211, "video_frame": 285, "ammo_manual": 37}
+  ],
+  "decrements": [
+    {"before_frame": 221, "after_frame": 222, "ammo_before": 48, "ammo_after": 47},
+    {"before_frame": 222, "after_frame": 223, "ammo_before": 47, "ammo_after": 46},
+    {"before_frame": 224, "after_frame": 225, "ammo_before": 46, "ammo_after": 45},
+    {"before_frame": 233, "after_frame": 234, "ammo_before": 45, "ammo_after": 44},
+    {"before_frame": 235, "after_frame": 236, "ammo_before": 44, "ammo_after": 43},
+    {"before_frame": 244, "after_frame": 245, "ammo_before": 43, "ammo_after": 42},
+    {"before_frame": 246, "after_frame": 247, "ammo_before": 42, "ammo_after": 41},
+    {"before_frame": 255, "after_frame": 256, "ammo_before": 41, "ammo_after": 40},
+    {"before_frame": 257, "after_frame": 258, "ammo_before": 40, "ammo_after": 39},
+    {"before_frame": 267, "after_frame": 268, "ammo_before": 39, "ammo_after": 38},
+    {"before_frame": 268, "after_frame": 269, "ammo_before": 38, "ammo_after": 37}
+  ],
+  "claim_boundary": "Manual HUD labels plus event timing establish video-bounded temporal association only; they do not prove that a particular input caused ammunition consumption."
+}

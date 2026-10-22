@@ -1,0 +1,95 @@
+{
+  "schema": "map01-astra-navigation-stage-a01-freeze-v1",
+  "base_main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "claim": "Distinct visible viewpoints occur in the retained failed MAP01 run; exact route progress remains unidentified.",
+  "method": "Manual retrospective viewpoint labels joined to retained primary command and terminal score evidence. No candidate, model, game, or OS input was rerun.",
+  "decision": "PASS_SCOPED_VIEWPOINT_STAGES_HOLD_EXACT_ROUTE iff 13 frame labels bind to contiguous retained source frames, raw source hashes match, command and terminal counters reconstruct; otherwise FAIL_MISMATCH.",
+  "scope": "Posthoc descriptive analysis of one retained failed Astra trajectory; viewpoint-stage labels only.",
+  "inputs": {
+    "research/doom/results/map01-astra-attempt-v1/report.json": {
+      "bytes": 67434,
+      "sha256": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894"
+    },
+    "research/doom/results/map01-astra-attempt-v1/events.jsonl": {
+      "bytes": 565997,
+      "sha256": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564"
+    },
+    "research/doom/results/map01-astra-attempt-v1/score.json": {
+      "bytes": 383,
+      "sha256": "e099ec0d4ba24e68aec503e2adaa7294fd92a0fb361cc717dc8e3c21656f6e9b"
+    },
+    "research/doom/results/map01-astra-attempt-v1/environment.json": {
+      "bytes": 403,
+      "sha256": "da37b86d971e2c41a966fafeb97f4696e99ac76469ffb6816a9e3e424c673ce2"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frame-manifest.json": {
+      "bytes": 1880,
+      "sha256": "e0cbb11901cedaae1283d228593307c0e771a51a31b21e7bb1de8db0650d2935"
+    },
+    "research/doom/results/map01-astra-attempt-v1/video.json": {
+      "bytes": 387,
+      "sha256": "adc28ec07940266a577ce4a1353dde7bee5810e3cb46e83afe006c3732f59779"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/00.png": {
+      "bytes": 123806,
+      "sha256": "d17b0cdb63c7a9b64513c512553cd7012890ee8d5588c8ce149f268329cfba71"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/01.png": {
+      "bytes": 158337,
+      "sha256": "e5370c4cc21b4cdc4ad2211bf13b7af268d04904a693991fbcc1368c64d9d1f1"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/02.png": {
+      "bytes": 67029,
+      "sha256": "ab866d22079953994ac4d2b2a96841f3d99beb1a4f79ddfcef8af42a54011f41"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/03.png": {
+      "bytes": 206465,
+      "sha256": "8829ca399a58012392ffc3f76066d43b31b09b7afcefe6be7693c5633e3f0ce4"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/04.png": {
+      "bytes": 73904,
+      "sha256": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/05.png": {
+      "bytes": 172726,
+      "sha256": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/06.png": {
+      "bytes": 48223,
+      "sha256": "5813b591566221a3753f9e6f1261907cd5289e0aaa987c4728987c959e331fc6"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/07.png": {
+      "bytes": 48250,
+      "sha256": "c56a2542b3dea4f863a87ff0387ae756d2922768cd43432f8bf0501365bed95a"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/08.png": {
+      "bytes": 152368,
+      "sha256": "76ee920671ef35600b631af08202dbffae09d5b7dd4487d90d418568c07e7866"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/09.png": {
+      "bytes": 158682,
+      "sha256": "762030fb454865797cfe6dbb526a6ab1297d36e05cb4ab413c2c7b0a2646cace"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/10.png": {
+      "bytes": 82118,
+      "sha256": "9f0c6ec5fd0be82ea60ec8790e4f83d34f6d4ddb183dbffef17f15b5714a83c0"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/11.png": {
+      "bytes": 47073,
+      "sha256": "6df9a66e2d658b95003ff776f105082329a9dbbb704eeedf926adc0c33459a31"
+    },
+    "research/doom/results/map01-astra-attempt-v1/frames/12.png": {
+      "bytes": 143207,
+      "sha256": "066db883b20bfd57270a87258eadd38cc816364d246c16db5ae586a01c14b366"
+    },
+    "research/doom/map01_astra_navigation_stage_a01_20261005/ANNOTATIONS.json": {
+      "bytes": 3376,
+      "sha256": "1e38de1b3bc85e0bddc82d2659006d0a9acef2b4dfc8e4abf1aba6644e5e819e"
+    },
+    "research/doom/map01_astra_navigation_stage_a01_20261005/README.md": {
+      "bytes": 2288,
+      "sha256": "180cfb5314535072251d9083fc528e9a91c4a4f515d6273deeaa37bb290bdd2f"
+    }
+  },
+  "analysis_code": "research/doom/map01_astra_navigation_stage_a01_20261005/audit_navigation_stages.py"
+}
