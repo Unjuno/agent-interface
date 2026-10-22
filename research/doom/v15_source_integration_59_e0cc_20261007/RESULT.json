@@ -1,0 +1,64 @@
+{
+  "scope": "ordinary current-main source integration and fake-X regressions; not a live/formal allocation",
+  "source_pr": 8094,
+  "source_head": "d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
+  "intake_main": "decc1896e3e85ab2fdbb7ec4678f958eb6561d0f",
+  "source_tree_before_evidence": "b111f2ffb5f831a3b077686b8b7b91ac5cef441b",
+  "source_paths": 11,
+  "extracted_test_paths": 14,
+  "new_test_paths": 1,
+  "lineage_check": "All 25 extracted paths match original text after CRLF/LF normalization, except the explicit four-line alias guard recorded in guard-patch.json. Historical source and evidence are unchanged.",
+  "regression": {
+    "runner_sha256": "bf916c22380cc5148c5c66019484cb4343cd6aeb83b10e53d621b287d9584886",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "executable": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "started_utc": "2026-10-07T08:43:04.517937+00:00",
+    "finished_utc": "2026-10-07T08:43:09.139612+00:00",
+    "sources_unchanged": true,
+    "total_test_executions": 183,
+    "distinct_test_ids": 174
+  },
+  "optimized_alias": {
+    "test_methods": 3,
+    "exit_code": 0
+  },
+  "local_ci": {
+    "workspace_tests": 22,
+    "workspace_index": "PASS, 160 top-level directories",
+    "scorer_replay_tests": 2,
+    "scorer_replay_included_in_183": true,
+    "retained_golden_source_integrity": {
+      "decision": "HOLD_SOURCE_HASH_DRIFT",
+      "source_count": 5,
+      "drift_count": 3,
+      "all_five_files_match_unchanged_base": true
+    },
+    "full_native_mcp_suite": "not run; broad path trigger covers unrelated explicit allowlisted modules, and is not evidence for this owner/DOOM delta"
+  },
+  "saved_raw_audit": {
+    "version": 4,
+    "status": "PASS",
+    "direct_alias_cases": 4,
+    "distinct_key_controls": 2,
+    "executor_cases": 1,
+    "mutations_rejected": 3,
+    "role": "separate saved-raw implementation by coauthor bugbot; not a nonauthor vote",
+    "original_auditor_failures_retained": true
+  },
+  "publication_main_comparison": {
+    "base": "decc1896e3e85ab2fdbb7ec4678f958eb6561d0f",
+    "publication_main": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+    "compared_paths": 95,
+    "intervening_changes_to_selected_closure": []
+  },
+  "original_native_audit": "#8094 native Executor construction remains FAIL 337/338; not rerun/reclassified",
+  "merge": "not performed; nonauthor quorum/exact-current-tree verification still required",
+  "artifact": {
+    "path": "validation.tar.xz",
+    "sha256": "b04aa6a5f22fe46921c81404f969d43cda66c23c6f5bbfe6116fc8a55986d2ae",
+    "bytes": 58104,
+    "members": 89,
+    "member_bytes": 1105537
+  }
+}
