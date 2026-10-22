@@ -1,0 +1,46 @@
+{
+  "admission": {
+    "admitted_ns": 96717103525083,
+    "event": "input_admission",
+    "input_ack_ns": 96717103526916,
+    "key": "a",
+    "valid_until_ns": 96722103507333
+  },
+  "candidate_exit_code": 0,
+  "case_id": "stop-overlap",
+  "overlap_stop_after_dequeue": true,
+  "owner_release_records_at_boundary": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "release",
+      "valid_until_ns": 96722103507333,
+      "verified": true,
+      "verified_ns": 96717103623000
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "stop_requested",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 96717103629000
+    }
+  ],
+  "owner_stopped_at_boundary": true,
+  "release_errors": [],
+  "release_reply_count": 1,
+  "remaining_fake_keycodes_down": [],
+  "xtest_events": [
+    [
+      2,
+      38
+    ],
+    [
+      3,
+      38
+    ]
+  ]
+}
