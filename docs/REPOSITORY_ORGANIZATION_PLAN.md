@@ -128,35 +128,38 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9363 (2026-10-22)
+## Current execution checkpoint after PR #8824 (2026-10-22)
 
-Current main is `930980a8daacf03f6e8a764105cd4d346308236c` (PR #9363).
-The complete [r140 membership recheck](maintenance/repository-inventory-recheck-20261022-r140.md)
-confirms 1,655 open Issues and 455 open PRs, with main unchanged across
-pagination. The Issue set matches r139; the only PR membership change is #9363
-leaving the open set after merge. Exact IDs and sorted-ID hashes are preserved
-in the r140 CSVs. Counts are discovery aids, not semantic disposition or
-readiness.
+Current main is `d56609f46aae0be91d593a111adca84fca5a2893` (PR #8824).
+The complete [r141 membership recheck](maintenance/repository-inventory-recheck-20261022-r141.md)
+confirms 1,655 open Issues and 454 open PRs, with main unchanged across
+pagination. The Issue set matches r140; #8824 is the only PR removed. Exact IDs
+and sorted-ID hashes are retained in the r141 CSVs. Counts are discovery aids,
+not semantic disposition or readiness.
 
-PR #9363 integrated a Win32 operation-owner recovery design and two inert-fake
-counterexamples. It documents why both blocked-before-acceptance and
-accepted-before-return schedules require fencing the old producer before any
-compensating UP can establish neutral state. Local audits pass against the
-immutable raw inputs in normal and optimized Python. The Windows checkout
-initially converted line endings and made those audits fail; exact Git blobs
-matched the recorded manifests, and `.gitattributes` now preserves byte-exact
-checkout for both packets. No raw outcome changed. These schedules are not
-native Windows behavior, physical release, target-effect, or reliability
-evidence; the Win32 design remains a proposal and the runtime supervisor stays
-opt-in.
+PR #8824 added the unique A03 audit-only result for Issue #8553: the older A01
+checker accepted unsupported branch labels and swapped `red`/`blue` child
+policies; independent replay rejected both mutations and accepted the unchanged
+policy across all five retained cases. The packet preserves A01 unchanged and
+does not claim A01's original policy was wrong. Local construction tests pass
+3/3, the 11 frozen-input hashes and results manifest match exact Git blobs, and
+the exact packet survives Windows checkout with a dedicated `.gitattributes`
+rule. This is finite synthetic evidence only. Issue #8553 stays OPEN because
+the unsafe policy-binding gap has not been repaired or qualified beyond its
+authored model.
 
-Issue #17, #57, and #7924 remain OPEN. The canonical
-[prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
-is now extended with the Win32 route and its missing standard-MCP and
-target-generation gates. The next bounded candidate is open PR #8824, an
-audit-only evidence packet for Issue #8553. Its exact head, old-base transfer,
-raw manifest, and issue-family relationship must be refreshed before any
-disposition. No WSLc/Docker allocation was used.
+PR #9363's Win32 supervisor design and two inert-fake counterexamples are also
+integrated. They require old-producer fencing before compensating UP can
+establish neutral state. Windows checkout now preserves those packet hashes;
+the two audits pass in normal and optimized Python. These are not native
+Windows behavior, physical release, task-effect, or reliability evidence.
+Issue #17, #57, and #7924 remain OPEN; the Win32 design remains a proposal and
+the runtime supervisor stays opt-in.
+
+The next bounded candidate is open PR #8819 for Issue #8493, an independent
+finite-model temporal-regime result. Refresh its exact head/base, unique raw
+packet hashes, current-main conflict state, and relation to predecessor #8152
+before disposition. No WSLc/Docker allocation was used.
 
 ## Historical execution checkpoint after PR #9356 (2026-10-22)
 
