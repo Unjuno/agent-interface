@@ -1,0 +1,10 @@
+{
+  "preflight_id": "codex-appserver-linux-wsl-interop-initialize-20261021-r01",
+  "purpose": "Verify the configured WSL2 Codex App Server handshake only; no thread, model turn, or GUI input",
+  "host": "Ubuntu native WSL2; local session, not WSLc",
+  "executables": {
+    "app_server": "/mnt/c/Users/user/AppData/Local/OpenAI/Codex/bin/896a0166b774037a/codex.exe app-server --stdio",
+    "code_home": "/mnt/c/Users/user/.codex"
+  },
+  "limits": "No Docker, provider turn, task, or external site"
+}

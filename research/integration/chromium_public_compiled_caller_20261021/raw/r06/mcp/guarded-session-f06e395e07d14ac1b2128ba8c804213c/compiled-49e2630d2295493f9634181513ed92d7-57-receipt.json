@@ -1,0 +1,192 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "chromium-public-caller-live-r06",
+  "method": "enter_then_submit",
+  "method_version": "1",
+  "session_scope": "native-x11:83673edfc3c646ec85df7d4db5a885e4",
+  "outcome": "TASK_SUCCEEDED",
+  "reason": "method_complete",
+  "completed_transitions": 2,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 3,
+      "captured_ns": 268865848089,
+      "evidence_ref": "observation-3",
+      "evidence_digest": "e3bbeae193270e0551a75843ba6a454f503f5de176474652621ed8b7fa02729b",
+      "predicates": {
+        "field_pixels_changed": false,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "observation_started_ns": 268864989958,
+      "observation_accepted_ns": 268894883248
+    },
+    {
+      "sequence": 28,
+      "captured_ns": 270031099437,
+      "evidence_ref": "observation-28",
+      "evidence_digest": "c04b6679c21df3083f5160d2a23ef03d3b2ce915dc312652a501575c8961dfab",
+      "predicates": {
+        "field_pixels_changed": true,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "observation_started_ns": 270030077456,
+      "observation_accepted_ns": 270057540021
+    },
+    {
+      "sequence": 33,
+      "captured_ns": 270205736861,
+      "evidence_ref": "observation-33",
+      "evidence_digest": "3d364f0062d75891010b8a4a5fc9dc4c753b7bedaa7be9f539beef14d43b04d4",
+      "predicates": {
+        "field_pixels_changed": true,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "observation_started_ns": 270204649394,
+      "observation_accepted_ns": 270235844432
+    },
+    {
+      "sequence": 34,
+      "captured_ns": 270266227956,
+      "evidence_ref": "observation-34",
+      "evidence_digest": "76e384b69298288c48700d206656784d0219355dfc8bfce7e360b1b876d21607",
+      "predicates": {
+        "field_pixels_changed": "unknown",
+        "field_target_present": "unknown",
+        "submit_target_present": "unknown",
+        "submission_pixels_changed": true
+      },
+      "observation_started_ns": 270265364257,
+      "observation_accepted_ns": 270305222846
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "empty",
+      "to_state": "filled",
+      "action": "enter_token",
+      "matched_conditions": {
+        "field_pixels_changed": false,
+        "field_target_present": true
+      },
+      "observation_sequence": 3,
+      "evidence_ref": "observation-3",
+      "action_id": "action-396386b89ffb440899cc806eb2a96799",
+      "effect_ref": "compiled-49e2630d2295493f9634181513ed92d7-31-execution",
+      "release_verified": true,
+      "execution_started_ns": 268903016995,
+      "execution_accepted_ns": 270027873994
+    },
+    {
+      "from_state": "filled",
+      "to_state": "submitted",
+      "action": "submit_form",
+      "matched_conditions": {
+        "field_pixels_changed": true,
+        "submit_target_present": true
+      },
+      "observation_sequence": 28,
+      "evidence_ref": "observation-28",
+      "action_id": "action-1e9b0278e29248cbb73a8f75aaaca9db",
+      "effect_ref": "compiled-49e2630d2295493f9634181513ed92d7-45-execution",
+      "release_verified": true,
+      "execution_started_ns": 270069777697,
+      "execution_accepted_ns": 270201890891
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "empty",
+      "outcome": "action",
+      "action": "enter_token",
+      "matched_conditions": {
+        "field_pixels_changed": false,
+        "field_target_present": true
+      },
+      "evidence_ref": "observation-3"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter_token",
+      "status": "completed",
+      "action_id": "action-396386b89ffb440899cc806eb2a96799",
+      "release_verified": true,
+      "execution_started_ns": 268903016995,
+      "execution_accepted_ns": 270027873994
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter_token",
+      "status": "succeeded",
+      "evidence_ref": "observation-28",
+      "action_id": "action-396386b89ffb440899cc806eb2a96799",
+      "execution_accepted_ns": 270027873994,
+      "effect_observation_captured_ns": 270031099437,
+      "effect_observation_accepted_ns": 270057540021,
+      "effect_verification_started_ns": 270059329319,
+      "effect_verification_accepted_ns": 270061742146
+    },
+    {
+      "event": "branch_selected",
+      "state": "filled",
+      "outcome": "action",
+      "action": "submit_form",
+      "matched_conditions": {
+        "field_pixels_changed": true,
+        "submit_target_present": true
+      },
+      "evidence_ref": "observation-28"
+    },
+    {
+      "event": "action_terminal",
+      "action": "submit_form",
+      "status": "completed",
+      "action_id": "action-1e9b0278e29248cbb73a8f75aaaca9db",
+      "release_verified": true,
+      "execution_started_ns": 270069777697,
+      "execution_accepted_ns": 270201890891
+    },
+    {
+      "event": "effect_checked",
+      "action": "submit_form",
+      "status": "succeeded",
+      "evidence_ref": "observation-34",
+      "action_id": "action-1e9b0278e29248cbb73a8f75aaaca9db",
+      "execution_accepted_ns": 270201890891,
+      "effect_observation_captured_ns": 270266227956,
+      "effect_observation_accepted_ns": 270305222846,
+      "effect_verification_started_ns": 270307572916,
+      "effect_verification_accepted_ns": 270310408858
+    },
+    {
+      "event": "branch_selected",
+      "state": "submitted",
+      "outcome": "complete",
+      "action": null,
+      "matched_conditions": {
+        "submission_pixels_changed": true
+      },
+      "evidence_ref": "observation-34"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "completed_transitions": 2
+    }
+  ],
+  "latest_evidence_ref": "observation-34",
+  "pending_effect": null,
+  "started_ns": 268864980113,
+  "ended_ns": 270314916819,
+  "elapsed_ns": 1449936706,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

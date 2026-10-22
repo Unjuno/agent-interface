@@ -1,0 +1,99 @@
+{
+  "actions": {
+    "enter_token": {
+      "expected_effect": {
+        "field_pixels_changed": true
+      },
+      "operation": "enter_exact_token",
+      "target_symbol": "value_field"
+    },
+    "submit_form": {
+      "expected_effect": {
+        "submission_pixels_changed": true
+      },
+      "operation": "activate_submit",
+      "target_symbol": "submit_control"
+    }
+  },
+  "format": "compiled-gui-interface-v1",
+  "interface_id": "chromium-public-caller-live-r07",
+  "method": {
+    "effect_poll_interval_ms": 25,
+    "effect_timeout_ms": 250,
+    "initial_state": "empty",
+    "max_runtime_ms": 10000,
+    "max_transitions": 2,
+    "name": "enter_then_submit",
+    "states": {
+      "empty": {
+        "branches": [
+          {
+            "action": "enter_token",
+            "next_state": "filled",
+            "outcome": "action",
+            "reason": null,
+            "when": {
+              "field_pixels_changed": false,
+              "field_target_present": true
+            }
+          }
+        ]
+      },
+      "filled": {
+        "branches": [
+          {
+            "action": "submit_form",
+            "next_state": "submitted",
+            "outcome": "action",
+            "reason": null,
+            "when": {
+              "field_pixels_changed": true,
+              "submit_target_present": true
+            }
+          }
+        ]
+      },
+      "submitted": {
+        "branches": [
+          {
+            "action": null,
+            "next_state": null,
+            "outcome": "complete",
+            "reason": null,
+            "when": {
+              "submission_pixels_changed": true
+            }
+          }
+        ]
+      }
+    },
+    "version": "1"
+  },
+  "predicates": [
+    "field_pixels_changed",
+    "field_target_present",
+    "submit_target_present",
+    "submission_pixels_changed"
+  ],
+  "session_scope": "native-x11:c1e5d4a7b58d4913a3182a9af5d4cc0d",
+  "surface": "x11-window-4194306",
+  "symbols": {
+    "submit_control": {
+      "dependencies": [
+        "submit_target_present",
+        "field_pixels_changed"
+      ],
+      "identity_predicate": "submit_target_present",
+      "kind": "target_reference",
+      "target_reference": "submit"
+    },
+    "value_field": {
+      "dependencies": [
+        "field_target_present"
+      ],
+      "identity_predicate": "field_target_present",
+      "kind": "target_reference",
+      "target_reference": "field"
+    }
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "call_directory": "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/work/repository-cleanup-plan-r01-20261020/research/integration/chromium_public_compiled_caller_20261021/raw/r03/mcp/570abb0ffc914ed0b4c3d42213730458",
+  "call_id": "570abb0ffc914ed0b4c3d42213730458",
+  "feedback": {
+    "error": "ValueError('final graph observation no longer matches this owner')",
+    "image": null,
+    "image_status": "needs_review",
+    "replay_allowed": false,
+    "scope": "Method receipt retained; final feedback unavailable. No replay."
+  },
+  "method_receipt": {
+    "completed_transitions": 0,
+    "critical_events": [
+      {
+        "action": "enter_token",
+        "event": "branch_selected",
+        "evidence_ref": "observation-3",
+        "matched_conditions": {
+          "field_pixels_changed": false,
+          "field_target_present": true
+        },
+        "outcome": "action",
+        "state": "empty"
+      },
+      {
+        "action": "enter_token",
+        "action_id": "action-6d1f25072f01424684c78f0b6ece4129",
+        "event": "action_terminal",
+        "execution_accepted_ns": 398129595307,
+        "execution_started_ns": 397378990585,
+        "release_verified": true,
+        "status": "execution_failed"
+      },
+      {
+        "completed_transitions": 0,
+        "event": "runtime_finished",
+        "outcome": "SAFE_YIELD",
+        "reason": "execution_failed"
+      }
+    ],
+    "elapsed_ns": 791424726,
+    "ended_ns": 398132141654,
+    "format": "compiled-gui-runtime-receipt-v1",
+    "frontier_model_resumptions": 0,
+    "input_authority": "admission_per_action_only",
+    "interface_id": "chromium-public-caller-live-r01",
+    "latest_evidence_ref": "observation-3",
+    "method": "enter_then_submit",
+    "method_version": "1",
+    "observations": [
+      {
+        "captured_ns": 397341605980,
+        "evidence_digest": "71a6494fac75ae5d82f75862f41a24cc922bab5a1381d489febe4a1c7cc699b8",
+        "evidence_ref": "observation-3",
+        "observation_accepted_ns": 397370389422,
+        "observation_started_ns": 397340725734,
+        "predicates": {
+          "field_pixels_changed": false,
+          "field_target_present": true,
+          "submission_pixels_changed": false,
+          "submit_target_present": true
+        },
+        "sequence": 3
+      }
+    ],
+    "outcome": "SAFE_YIELD",
+    "pending_effect": null,
+    "raw_evidence_retention": "adapter_responsibility_unverified",
+    "reason": "execution_failed",
+    "session_scope": "native-x11:b05bea3f75594a1b8ca35312fa6dc9b3",
+    "started_ns": 397340716928,
+    "transitions": []
+  },
+  "owner_timing": {
+    "clock": "time.monotonic_ns",
+    "completed_ns": 398137482545,
+    "effect_status": null,
+    "elapsed_ns": 804822491,
+    "error_type": null,
+    "method_outcome": "SAFE_YIELD",
+    "replay_allowed": false,
+    "schema": "agent-interface/compiled-owner-attempt-timing-v1",
+    "scope": "run_compiled method entry through graph, feedback and session snapshot",
+    "started_ns": 397332660054,
+    "status": "returned"
+  },
+  "owner_timing_retention": {
+    "status": "recorded"
+  },
+  "replay_allowed": false,
+  "session": {
+    "authority_granted": false,
+    "binding_revision": 0,
+    "cancellation_supervisor": {
+      "alive": true,
+      "armed_generation": {
+        "binding_revision": 0,
+        "owner_pid": 587,
+        "resource_base": 12582912,
+        "session_id": "7a738d417bc04e45a003f9fb59b4e74e"
+      },
+      "closed": false,
+      "exitcode": null,
+      "operation_id": null,
+      "pid": 585,
+      "ready_receipt": {
+        "pid": 585,
+        "ready": true,
+        "resource_base": 2097152
+      },
+      "resource_base": 2097152,
+      "retired": false,
+      "terminal_status": null
+    },
+    "cleanup_status": null,
+    "compiled_scope": "native-x11:b05bea3f75594a1b8ca35312fa6dc9b3",
+    "compiled_surface": "x11-window-4194306",
+    "error": null,
+    "interrupted_execution": null,
+    "mode": "guarded-x11-owned-process",
+    "observation_sequence": 20,
+    "observation_worker": false,
+    "observations": null,
+    "owner_client_disconnect": null,
+    "owner_input_obligations": {
+      "buttons": [],
+      "keys": {}
+    },
+    "owner_input_obligations_live_read": {
+      "status": "not_read"
+    },
+    "owner_input_obligations_source": "child_rpc_snapshot",
+    "owner_process": {
+      "alive": true,
+      "exitcode": null,
+      "liveness_observed_monotonic_ns": 398147278609,
+      "pid": 587,
+      "release_confirmed": null,
+      "retired": false,
+      "x_client_resource_base": 12582912
+    },
+    "owner_process_pid": 587,
+    "owner_release_attempt": null,
+    "owner_x_client_resource_base": 12582912,
+    "process_identity": true,
+    "query_worker": true,
+    "recovery_required": false,
+    "restart_allowed": false,
+    "review_required": true,
+    "session_id": "7a738d417bc04e45a003f9fb59b4e74e",
+    "state": "open",
+    "target": "app",
+    "target_queries": {
+      "close_error": null,
+      "pending": false,
+      "retired": false,
+      "thread_alive": true
+    },
+    "targets": {
+      "app": 4194306
+    },
+    "window_lifecycle": true
+  },
+  "task_success": null
+}

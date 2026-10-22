@@ -547,3 +547,42 @@ membership receipt remains r138 at its recorded older main SHA; no fresh
 full-queue count or semantic census is claimed here. Next cleanup batch: refresh
 the live queue, then select one open PR with a bounded source/evidence transfer
 or a computer-control family with a clearly finite canonical-record update.
+
+## Current continuation after PR #9400 and supervisor-design review (2026-10-22)
+
+The user selected the prestarted cancellation supervisor design as the first
+organization item. The canonical
+[design record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md) already
+contains the architecture options, implementation history, requirement/test
+crosswalk, and current qualification limits, so this work did not create a
+second design document. The supervisor remains opt-in; its open live-platform,
+authority, target-recovery, and efficiency boundaries remain research items.
+
+PR [#9400](https://github.com/Unjuno/agent-interface/pull/9400) merged at
+`632d3603a8df157c1e841dac7ca422c766c77e60`. It adds the custody recheck for
+two changed worktrees. It is documentation-only and does not change the r151
+membership counts (1,654 open Issues and 452 open PRs), so no fresh semantic
+queue classification is implied.
+
+An additive transfer of
+[`chromium_public_compiled_caller_20261021`](../research/integration/chromium_public_compiled_caller_20261021/README.md)
+preserves the one-shot r09 live Chromium/App Server result discovered in an
+dirty worktree whose current owner is unresolved. The source packet was not
+edited. Its earlier
+`audit-recheck-r09.json` reports a successful temporary-copy audit of all 317
+then-listed artifact entries. A later read-only comparison finds one current
+artifact-manifest mismatch (`README.md`, updated after that audit); the other
+316 files match, including the raw r09 evidence. The frozen 179-entry source
+manifest matches only 161 files in the extant source worktree; 18 runtime
+files differ. The exact dirty source snapshot is therefore not reconstructed,
+and the result is not represented as current-main evidence. The supplemental
+[custody recheck](../research/integration/chromium_public_compiled_caller_20261021/CUSTODY-RECHECK-20261022.md)
+records these limits. No experiment was rerun, and the source worktree was
+left intact.
+
+Next bounded work is to reconcile the frozen r09 source snapshot with the
+intended integration and identify the source worktree owner before any further
+branch/worktree disposition. Keep #57 open: this packet is one scoped polling
+result and does not satisfy its matched three-arm token/latency/correctness
+comparison. Continue the Issue/PR inventory from the r151 ID sets in disjoint
+batches; do not convert the large open queue into a closure target.

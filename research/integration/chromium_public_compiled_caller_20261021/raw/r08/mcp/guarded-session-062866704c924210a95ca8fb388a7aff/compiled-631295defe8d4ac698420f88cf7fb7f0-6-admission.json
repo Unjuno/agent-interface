@@ -1,0 +1,36 @@
+{
+  "request": {
+    "interface_id": "chromium-public-caller-live-r08",
+    "session_scope": "native-x11:7c6df64fd6ab458fb971b4c4b0187b1a",
+    "action": "enter_token",
+    "operation": "enter_exact_token",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "field",
+      "identity_predicate": "field_target_present",
+      "dependencies": [
+        "field_target_present"
+      ]
+    },
+    "observation": {
+      "sequence": 3,
+      "captured_ns": 473244758741,
+      "surface": "x11-window-4194306",
+      "predicates": {
+        "field_pixels_changed": false,
+        "field_target_present": true,
+        "submit_target_present": true,
+        "submission_pixels_changed": false
+      },
+      "evidence_ref": "observation-3",
+      "evidence_digest": "12f23ab214e01a43cf9e0c821fabfc91a306dc906da0dac4233efc9eb7701642"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "28a4154291d84d7daf57174c9696b4cc",
+    "expected_sequence": 3,
+    "valid_until_ns": 474744758741
+  }
+}
