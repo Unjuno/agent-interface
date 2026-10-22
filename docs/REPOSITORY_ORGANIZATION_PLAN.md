@@ -178,9 +178,7 @@ integrated release/effect gaps.
 The complete [r142 membership recheck](maintenance/repository-inventory-recheck-20261022-r142.md)
 captured main `7ee142d642de45c1129a138e01f3519ed4a1449c`, with 1,655 open
 Issues and 453 open PRs. The Issue set matched r141; #8819 was the only PR
-removed. The later r143 baseline records the scoped closure of #8493 and PR
-#9367's documentation integration; r144 reverified the same membership after
-PR #9368.
+removed. The later r143 baseline records the scoped closure of #8493 and PR #9367's documentation integration; r144 reverified the same membership after PR #9368.
 
 ## Historical execution checkpoint after PR #8824 (2026-10-22)
 
