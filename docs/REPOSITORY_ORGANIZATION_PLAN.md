@@ -323,13 +323,12 @@ before state changes.
 The prestarted-supervisor design remains the selected integration thread. Its
 standard-caller Xvfb evidence and limits are recorded in the
 [design page](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#design-review-checkpoint-2026-10-22).
-PR #9381 is merged and the design crosswalk now includes a bounded-cancel
-reserve candidate, PR #9382, with a retained Fake X composition packet. Local
-normal and optimized suites pass, but the code remains unmerged and its result
-only covers one immediately following cancel at a saturated relay; queued
-ordinary input, independent input-state readback, native GUI/MAP01, WSLc, and
-integrated efficiency remain unresolved. See the design page's saturated
-relay R01 section for the exact conditions and next discriminator.
+PR #9381 and PR #9382 are merged. PR #9382's retained Fake X composition
+packet and normal/optimized local tests support one immediately following
+cancel at a saturated relay. Queued ordinary input, independent input-state
+readback, native GUI/MAP01, WSLc, and integrated efficiency remain unresolved.
+See the design page's saturated relay R01 section for the exact conditions and
+next discriminator.
 The new [R02 trial](../research/integration/standard_caller_xvfb_current_main_20261022/prestarted-fresh-recovery-02/README.md)
 passed once against its frozen source: the cancellation response returned pending in
 252.924 ms; the supervisor release readback completed in 324.791 ms; independent
