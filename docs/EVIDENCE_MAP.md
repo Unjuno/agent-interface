@@ -48,6 +48,7 @@ The diagram shows document/evidence responsibility. It is not a claim that every
 | What evidence and scoped dispositions have been retained? | [`../RESEARCH.md`](../RESEARCH.md) | A product-support statement |
 | Where are analytical proof/identifiability artifacts? | [`../research/analysis/README.md`](../research/analysis/README.md) | A substitute for empirical measurements when the claim is environment-dependent |
 | Where are the experiment sources and raw artifacts? | [`../research/README.md`](../research/README.md) and [`../research/`](../research/) | A promotion list |
+| What do V39 typed-event timing stamps measure? | [Current caller timing/source checks](../research/integration/v39_event_timing_convergence_20261016/README.md) | Live performance improvement, isolated pipe latency or qualified task response |
 | When is discovery/convergence strong enough to consider freezing? | [`../research/evolution/freeze_criteria.md`](../research/evolution/freeze_criteria.md) | Automatic promotion |
 | What executable semantics are currently organized as runtime code? | [`../runtime/README.md`](../runtime/README.md) | Proof of general platform support |
 | What must a user-facing distribution satisfy? | [`../release/README.md`](../release/README.md) | The research ledger |

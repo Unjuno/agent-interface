@@ -1,0 +1,23 @@
+{
+  "audit_exit": 98,
+  "candidate_exit": 1,
+  "candidate_raw_created": false,
+  "candidate_stdout_excerpt": "ip: command not found; ln: /usr/bin/xkbcomp File exists; su: user user does not exist or user entry incomplete",
+  "conclusion": "Pre-dispatch environment construction failure. No input, Xvfb, candidate, or independent audit executed; no computer-control result was tested.",
+  "dispatch_attempted": false,
+  "experiment_id": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A30-20261014-01",
+  "observed_conditions": {
+    "image_id": "sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592",
+    "kernel_resource_warning": "Memory limited without swap; swap limit unsupported or cgroup not mounted.",
+    "network": "none",
+    "pull": "never",
+    "requested_cpus": "1",
+    "requested_memory": "1G",
+    "wsl": "2.7.13.0",
+    "wslc": "3.0.3.0"
+  },
+  "one_shot_policy": "Do not retry A30; use new allocation after setup is corrected.",
+  "runner_exit": 98,
+  "started_local": "2026-10-14 (timestamp not captured by command transcript)",
+  "status": "HOLD"
+}

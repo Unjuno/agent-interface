@@ -16,7 +16,8 @@ class Backend(Previous):
         self.images=ImageArtifactSink(out,compress_level=1,reuse=True)
         self.held=set();self.touched=set();self.sequence=0;self.last_context={}
         self.observed_focus=None;self.observed_pointer=None
-        self.owner=InputOwner(session.name)
+        provided=getattr(self,'_provided_input_owner',None)
+        self.owner=provided if provided is not None else InputOwner(session.name)
 
     def binding(self):
         focus=self.focus_id();root=self.session.d.screen().root

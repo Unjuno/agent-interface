@@ -1,0 +1,45 @@
+{
+  "experiment": "v39-action-validity-executor-acceptance-xvfb-a01-20261012",
+  "question": "Does current-main action validity reject a completed planner action after a hard health drop before any X input, while unchanged current health advances through fresh validity, observed Xvfb input acceptance, and verified owner keyup?",
+  "base_sha": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "environment": {
+    "host": "WSL2 Ubuntu 24.04.3",
+    "kernel": "6.18.40.1-microsoft-standard-WSL2",
+    "python": "CPython 3.12.3 system",
+    "python_xlib": "0.33-2 Ubuntu package",
+    "xvfb": "2:21.1.12-1ubuntu1.8",
+    "docker": "unavailable",
+    "network": "not isolated; candidate code makes no network calls",
+    "display": ":134",
+    "resource_limits": "no hard CPU or memory cap"
+  },
+  "hypothesis": "H: Given a completed structured planner answer and a newer typed health/ammo sample, current V39 final admission first returns READY_FOR_ACTION_VALIDITY. Recomputable V2 action validity then allows current signals to reach fresh Executor admission, after which an actual InputOwner keydown can be bound to first acceptance; if health falls below the authored envelope, admission rejects before any keydown.",
+  "test": "T: Two arms from retained typed seq2→seq3 with retained health/ammo values, and capture epochs rebased into current perf_counter monotonic domain (source age 200ms, current age initially 20ms): health=97 current control and synthetic health=80 drop (source=97, authored maximum loss=8, hard minimum=89). Because original frame binding names a different desktop window, both source/current typed bindings are explicitly rebound to the focused Xvfb test window with geometry [0,0,320,200]. A deterministic completed planner answer passes through AST-extracted current-main final_admission_from_planner_result, prepare_action_admission and bind_first_plan_acceptance. In the valid arm only, current-main V4/V12 owner produces XTest keydown after VALID_CURRENT, records first acceptance, then explicit verified keyup. In the invalid arm no input is issued. One candidate invocation total.",
+  "decision": "D: PASS_METHOD_SCOPED only if the control reaches READY_FOR_ACTION_VALIDITY then VALID_CURRENT/READY_FOR_FRESH_EXECUTOR_ADMISSION then observed Xvfb KeyPress and INPUT_ADMITTED receipt, followed by owner-verified X keyup; and health-drop reaches REJECTED_ACTION_NOT_CURRENT with no input admission, KeyPress, or executor acceptance; both owners stop and Xvfb exits 0. Any mismatch is STOP.",
+  "confounds": "C: Health=80 is synthetic from retained observation metadata. Window bindings are synthetic and point to the Xvfb fixture, not the retained game window. Fake planner and accepted-executor response are deterministic protocol fixtures, not model or production executor subprocess. Xvfb server/observer and InputOwner are real, but no game or physical device exists.",
+  "unknowns": "U: No semantic vision, live task effect, physical input, production executor process, failure recovery, scheduling stress, live MAP01 allocation, network isolation, or hard resource cap.",
+  "source_sha256": {
+    "final_action_admission_v1.py": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+    "doom_typed_observation_v1.py": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1",
+    "map01_stagnation_v1.py": "669d61eb473c486e693a478b1941a7b40102d2049e0a437e5982143544d60a54",
+    "action_validity_admission_v1.py": "16a67fab4e96cba123448483a7ce35bbb86d25ce069aef4d126e3c5252d98021",
+    "persistent_planner_adapter_v2.py": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674",
+    "final_action_admission_v2.py": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "doom_action_validity_contract_v1.py": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e",
+    "observable_signal_guard_v2.py": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+    "input_transition_owner_v3.py": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+    "audit_raw.py": "7f9bb8e00efa74d76f7f5b69a2925528788b8374b9c5f01b5e24fa152af6e782",
+    "doom_signal_value_domain_v1.py": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "candidate.py": "953218804af3976756b8e655fd6ab0f46f6fe292fbd80c38697048425d150c94",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "map01_overlap_controller_v39.py": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607"
+  },
+  "input_sha256": {
+    "events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "002.png": "786f939d94e5a6d6d2d43d3466af90c962c034cc0bbd1e84175f07d24630d2c1",
+    "003.png": "3c48f02a43e2fd98e70357c90b39079f3934f67efeca164d74177ec4ba099706"
+  },
+  "candidate_sha256": "953218804af3976756b8e655fd6ab0f46f6fe292fbd80c38697048425d150c94"
+}

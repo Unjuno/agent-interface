@@ -1,0 +1,15 @@
+{
+  "candidate_exit": 0,
+  "command": "wslc.exe run --rm --name map01-v39-wslc-a34-20261014-01 --network none --cpus 1 --memory 1G --pull never --volume D:\\codex-research\\v39-xvfb-a09-env-20261012:/mnt/d/codex-research/v39-xvfb-a09-env-20261012:ro --volume <INPUT>:/study/SOURCE:ro --volume <OUTPUT_PARENT>:/study/OUTPUT:rw --workdir /study/SOURCE sha256:d3e433793e1b6a0bc9fb821b0aa2648945aaf7ba91c3ecc4b8b74b5123d76592 /bin/bash /study/SOURCE/run-a34.sh",
+  "container_removed_by_rm": true,
+  "experiment_id": "MAP01-V39-WSLC-XVFB-APP-EFFECT-A34-20261014-01",
+  "independent_audit_exit": 0,
+  "network": "none",
+  "pull": "never",
+  "requested_cpus": 1,
+  "requested_memory": "1G",
+  "resource_warning": "Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "wsl": "2.7.13.0",
+  "wslc": "3.0.3.0",
+  "wslc_exit": 0
+}

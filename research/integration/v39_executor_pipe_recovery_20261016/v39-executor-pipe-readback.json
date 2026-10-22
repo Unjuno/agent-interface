@@ -1,0 +1,84 @@
+{
+  "normal": {
+    "tests": 67,
+    "pipe_cells": 8,
+    "explicit_drop_controls": 2,
+    "mutations": [
+      {
+        "name": "early_terminal",
+        "reason": "terminal barrier"
+      },
+      {
+        "name": "replay",
+        "reason": "input custody"
+      },
+      {
+        "name": "stale_frame",
+        "reason": "fresh full source"
+      },
+      {
+        "name": "false_neutral",
+        "reason": "unknown release"
+      },
+      {
+        "name": "old_answer_ready",
+        "reason": "policy status"
+      },
+      {
+        "name": "live_reader",
+        "reason": "process cleanup"
+      }
+    ],
+    "pids": [
+      53744,
+      22160,
+      42908,
+      53244,
+      61204,
+      1288,
+      61116,
+      6556
+    ]
+  },
+  "optimized": {
+    "tests": 67,
+    "pipe_cells": 8,
+    "explicit_drop_controls": 2,
+    "mutations": [
+      {
+        "name": "early_terminal",
+        "reason": "terminal barrier"
+      },
+      {
+        "name": "replay",
+        "reason": "input custody"
+      },
+      {
+        "name": "stale_frame",
+        "reason": "fresh full source"
+      },
+      {
+        "name": "false_neutral",
+        "reason": "unknown release"
+      },
+      {
+        "name": "old_answer_ready",
+        "reason": "policy status"
+      },
+      {
+        "name": "live_reader",
+        "reason": "process cleanup"
+      }
+    ],
+    "pids": [
+      11768,
+      50596,
+      24064,
+      18680,
+      57784,
+      58092,
+      25888,
+      46428
+    ]
+  }
+}

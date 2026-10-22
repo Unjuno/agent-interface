@@ -32,3 +32,9 @@ python -O -B -m unittest discover -s research/doom/v39_release_trace_source_attr
 ```
 
 Compare the two generated JSON files with checked-in `RESULT.json` and `AUDIT.json`. Inputs preserve the exact retained source manifest, owner-event rows, and all 20 source snapshots. No live runtime, game, model, GUI, OS input, container, or GPU was used.
+
+## Publication-byte correction (2026-10-15)
+
+Rechecking main `4062116ea4d70f1904cdea9669c8c2226acd7b9d` found five source-attribution test errors. A later `*.py text eol=lf` rule overrode the earlier frozen-bundle `-text` rule. Three published snapshots therefore lost original CRLF bytes, including mixed endings; their Git blobs no longer matched `inputs/sources.json`.
+
+The original frozen and historical Git sources still match all three manifest hashes. Those exact bytes were restored, and the bundle `-text` rule now follows the generic rules. [The reconciliation receipt](PUBLICATION_RECONCILIATION_20261015.json) records the old published hashes and restored source identities. The freeze, original result, audit and run records are unchanged. This corrects publication custody, with no new live exposure or change to the historical interpretation.

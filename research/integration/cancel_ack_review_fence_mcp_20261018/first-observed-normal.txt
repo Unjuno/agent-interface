@@ -1,0 +1,21 @@
+test_mcp_transport_cancellation (unittest.loader._FailedTest.test_mcp_transport_cancellation) ... ERROR
+
+======================================================================
+ERROR: test_mcp_transport_cancellation (unittest.loader._FailedTest.test_mcp_transport_cancellation)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_mcp_transport_cancellation
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\work\release-expiry-queued-press-mcp-20261018\runtime\cli_v1\test_mcp_transport_cancellation.py", line 13, in <module>
+    from runtime.cli_v1.mcp_server import create_server
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\work\release-expiry-queued-press-mcp-20261018\runtime\cli_v1\mcp_server.py", line 15, in <module>
+    from mcp.server.fastmcp import FastMCP
+ModuleNotFoundError: No module named 'mcp'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

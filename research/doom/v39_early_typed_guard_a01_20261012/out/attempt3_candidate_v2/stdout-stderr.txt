@@ -1,0 +1,19 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_typed_hard_health_change_invalidates_without_artifact_reader (test_typed_observation_guard_v2.TypedObservationGuardTests.test_typed_hard_health_change_invalidates_without_artifact_reader) ... ok
+test_typed_soft_change_advances_pair_but_preserves_policy (test_typed_observation_guard_v2.TypedObservationGuardTests.test_typed_soft_change_advances_pair_but_preserves_policy) ... FAIL
+test_typed_to_artifact_duplicate_epoch_content_conflict_fails_closed (test_typed_observation_guard_v2.TypedObservationGuardTests.test_typed_to_artifact_duplicate_epoch_content_conflict_fails_closed) ... ok
+test_unpaired_epoch_fails_closed (test_typed_observation_guard_v2.TypedObservationGuardTests.test_unpaired_epoch_fails_closed) ... ok
+
+======================================================================
+FAIL: test_typed_soft_change_advances_pair_but_preserves_policy (test_typed_observation_guard_v2.TypedObservationGuardTests.test_typed_soft_change_advances_pair_but_preserves_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/study/test_typed_observation_guard_v2.py", line 75, in test_typed_soft_change_advances_pair_but_preserves_policy
+    self.assertEqual(monitor.last_pair_sequence, 11)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 10 != 11
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (failures=1)

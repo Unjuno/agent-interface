@@ -1,0 +1,67 @@
+{
+  "experiment": "standard_caller_fake_x_relay_local_composition_r01",
+  "conditions": "conditions.json",
+  "source_identities": "source-identities.json",
+  "runs": [
+    {
+      "mode": "normal",
+      "command": "python -B -m unittest -v runtime.cli_v1.test_mcp_relay_composition",
+      "exit_code": 0,
+      "tests_passed": 2,
+      "unittest_reported_seconds": 3.507,
+      "raw_directory": "raw/normal",
+      "cancel_elapsed_ms": 1031.0,
+      "terminal_elapsed_ms": 32.0
+    },
+    {
+      "mode": "optimized",
+      "command": "python -B -O -m unittest -v runtime.cli_v1.test_mcp_relay_composition",
+      "exit_code": 0,
+      "tests_passed": 2,
+      "unittest_reported_seconds": 4.059,
+      "raw_directory": "raw/optimized",
+      "cancel_elapsed_ms": 1015.0,
+      "terminal_elapsed_ms": 16.0
+    }
+  ],
+  "raw_audit": {
+    "command_normal": "python -B audit_raw.py",
+    "command_optimized": "python -B -O audit_raw.py",
+    "exit_code_each": 0,
+    "classification": "PASS_RAW_CONSISTENCY_SCOPED",
+    "results": ["audit-normal.json", "audit-optimized.json"]
+  },
+  "combined_regression_validation": [
+    {
+      "mode": "normal",
+      "command": "python -B -m unittest -v research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate research.integration.offline_proxy_reply_framing_20261019.test_reply_gate research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay runtime.cli_v1.test_mcp_relay_composition",
+      "started_at_utc": "2026-10-19T04:59:15.841Z",
+      "finished_at_utc": "2026-10-19T04:59:20.756Z",
+      "exit_code": 0,
+      "tests_passed": 29,
+      "unittest_reported_seconds": 4.067,
+      "raw_log": "combined-normal.txt"
+    },
+    {
+      "mode": "optimized",
+      "command": "python -B -O -m unittest -v research.integration.offline_proxy_reply_framing_20261019.test_proxy_candidate research.integration.offline_proxy_reply_framing_20261019.test_reply_gate research.integration.offline_proxy_reply_framing_20261019.test_fake_socket_relay runtime.cli_v1.test_mcp_relay_composition",
+      "started_at_utc": "2026-10-19T04:59:20.771Z",
+      "finished_at_utc": "2026-10-19T04:59:26.497Z",
+      "exit_code": 0,
+      "tests_passed": 29,
+      "unittest_reported_seconds": 4.654,
+      "raw_log": "combined-optimized.txt"
+    }
+  ],
+  "outcome": {
+    "release": "UNKNOWN",
+    "release_confirmed": false,
+    "owner_release_attempt": "not_attempted",
+    "task_success": null,
+    "replay_allowed": false,
+    "input_obligation": {"keys": {"a": 2}, "buttons": []},
+    "late_server_request_possible": true
+  },
+  "allocation_type": "local regression/construction check; not a formal experiment allocation",
+  "not_used": ["WSLc", "Docker", "external network", "X server", "GUI", "OS input", "model"]
+}

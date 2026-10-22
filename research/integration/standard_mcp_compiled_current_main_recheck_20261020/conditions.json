@@ -1,0 +1,36 @@
+{
+  "schema": "agent-interface/current-main-local-test-recheck-v1",
+  "source_commit": "577ddc30c918c422ddebab8a12eb133649fc789a",
+  "source_ref": "origin/main",
+  "captured_at": "2026-10-20",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr 2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "test_selection": [
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_compiled_profile_tool_is_absent_without_owned_process",
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_invalid_compiled_profile_is_rejected_before_call_admission",
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_standard_compiled_profile_uses_generation_bound_owned_caller",
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_compiled_profile_stops_mid_action_on_process_generation_change",
+    "runtime.cli_v1.test_mcp_owned_process.OwnedProcessMCPTests.test_compiled_call_cancel_retires_owner_during_blocked_platform_sync"
+  ],
+  "commands": [
+    "python -B -m unittest <test_selection>",
+    "python -O -B -m unittest <test_selection>"
+  ],
+  "results": {
+    "normal": {"passed": 5, "failed": 0, "elapsed_seconds": 4.901},
+    "optimized": {"passed": 5, "failed": 0, "elapsed_seconds": 4.399}
+  },
+  "source_sha256": {
+    "runtime/cli_v1/mcp_guarded.py": "191913c48207a80a5475a75e6edf36a3e64bd52a799b348c20ca4137d4aab41e",
+    "runtime/cli_v1/mcp_server.py": "39e3d63b7eb25510ed5fadfc015f2bbc9614a0f2b32eaabbf07c57d4390a683b",
+    "runtime/cli_v1/owned_guarded_session.py": "acc9c378ddd88d75572071acfd612c76eaf282da9a918d52cb9da829b3890a1a",
+    "runtime/cli_v1/test_mcp_owned_process.py": "3f6bc4238b4d51dcb664c8bdca634ad7194f20bbe8ca220f3ca90c907b228745",
+    "runtime/guarded_x11_v1/compiled.py": "ce3caf40d967c62df2d7eea06fc5def4db42c06c50f4ed30f345e5605f9ea8bd",
+    "runtime/guarded_x11_v1/pixel_profile.py": "10470c068aec22a6c7ab3fe9dcc1dba9ba6a5de2d70598a6aa660db0dbc7e121"
+  },
+  "live_gui": false,
+  "xvfb": false,
+  "wslc": false,
+  "allocation": null,
+  "result_scope": "local Fake X public-caller construction only"
+}

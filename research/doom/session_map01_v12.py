@@ -77,6 +77,45 @@ def validate_fixture_manifest(manifest_path, vizdoom_version, iwad_sha256, skill
     return fixture, save_path
 
 
+def close_before_control_effect(executor, out, emit, operation):
+    """Retire the owned intent before engine refresh or fixture publication.
+
+    This is a logical caller fence, not a physical or global-neutrality claim.
+    In particular close() can return with an unstarted ambiguous admission or
+    a retained failed release. Neither state permits this effect boundary.
+    """
+    executor.close()
+    with executor.lock:
+        obligation = executor.release_obligation_snapshot()
+        active_intent = executor.active[0] if executor.active is not None else None
+        closed = executor.closed
+    backend=getattr(executor,'backend',None)
+    custody=getattr(backend,'executor_custody_snapshot',lambda:{})()
+    owner_service_obligation=custody.get('owner_service_obligation')
+    if closed and active_intent is None and obligation is None and owner_service_obligation is None:
+        return
+    failure = {
+        "event": "control_boundary_failed",
+        "schema": "map01-control-retirement-failure-v1",
+        "operation": operation,
+        "executor_closed": closed,
+        "active_intent": active_intent,
+        "release_obligation": obligation,
+        "owner_service_obligation":owner_service_obligation,
+        "input_recovery_required": True,
+        "task_effect": "unknown",
+        "grants_input_authority": False,
+    }
+    # Preserve failure before the external sink; collision/save/delivery errors
+    # also terminate this path before game refresh, Save or success publication.
+    with (Path(out) / "control-boundary-failure.json").open(
+            "x", encoding="utf-8", newline="\n") as stream:
+        json.dump(failure, stream, indent=2)
+        stream.write("\n")
+    emit(failure)
+    raise RuntimeError("input retirement is unresolved; control effect refused")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -105,7 +144,13 @@ def main():
                 stream.write(encoded + "\n")
             with (args.out / "delivered.jsonl").open("a") as stream:
                 stream.write(encoded + "\n")
-            print(encoded, flush=True)
+            if row.get("event") == "typed_observation":
+                # emit_ns is producer-side log start. The handoff marker is
+                # after both raw appends and before stdout serialization/write.
+                row["stdout_handoff_started_ns"] = time.perf_counter_ns()
+                print(json.dumps(row), flush=True)
+            else:
+                print(encoded, flush=True)
 
     sources = {}
     for path in (Path(__file__), HERE.parent / "live_control/session_v8.py",
@@ -278,7 +323,7 @@ def main():
                 elif command["op"] == "save_fixture":
                     if args.fixture_out is None:
                         raise ValueError("save_fixture is unavailable in measured control")
-                    executor.close()
+                    close_before_control_effect(executor, args.out, emit, "save_fixture")
                     backend.snapshot("fixture-source", 0)
                     save_path = args.fixture_out.resolve()
                     save_path.parent.mkdir(parents=True, exist_ok=True)
@@ -318,7 +363,7 @@ def main():
                           "source_sequence": latest_observation["sequence"]})
                     break
                 elif command["op"] == "finish":
-                    executor.close()
+                    close_before_control_effect(executor, args.out, emit, "finish")
                     if not game.is_episode_finished():
                         game.advance_action(1, True)
                     finished = game.is_episode_finished()

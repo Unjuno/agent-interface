@@ -1,0 +1,35 @@
+{
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A11-20261012-01",
+  "auditor_invocations_allowed": 1,
+  "base_commit": "c470f9065",
+  "candidate_invocations_allowed": 1,
+  "changed_factor": "one Button1 hold added concurrently with two existing keyboard holds; require independent pointer-mask/event evidence and receipt emptiness",
+  "decision_rule": "PASS_METHOD_SCOPED requires both keycodes and Button1 independently observed down before session return -9; both KeyRelease plus ButtonRelease and keymap/pointer-mask up after; identity-matched rpc_eof receipt fsynced, recovery_verified and empty verified release; owner thread stopped; service exit 0 without force kill; supervisor-requested clean Xvfb exit 0 or -15.",
+  "environment": {
+    "game_or_model": false,
+    "host": "WSL2 Ubuntu",
+    "isolation": "unshare user+mount namespace; 64MiB private tmpfs /tmp; private mode-1777 /tmp/.X11-unix",
+    "network_calls": 0,
+    "numpy": "2.5.4 user-cache target",
+    "physical_input": false,
+    "python": "CPython 3.12.3",
+    "python_xlib": "0.33",
+    "xvfb": "Xvfb -displayfd, TCP disabled"
+  },
+  "hypothesis": "The actual process-owner input RPC can recover a simultaneous Button1 and two-key hold after session-only SIGKILL, with independent X evidence and a matching fsynced verified-empty receipt.",
+  "retries_allowed": 0,
+  "schema": "v39-v15-process-owner-xvfb-a11-freeze-v1",
+  "scope": "Actual process-owner RPC button_down plus release recovery for two keys and one button; no full V15 CLI or outer V39 controller. Pillow/gui_suite import stubs only.",
+  "source_sha256": {
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": "cdad5849f54c020914dca46db9ff6ff5208c15938cb9b05edb7d05afb8af35f4",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/AUDIT.json": "7ee1d7575db6e310e41cf7a9417e8a018964aa3560546f4562ff521229959a05",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/RUN.json": "4f0927fb64ac93293ae22dbaad4b102e0dfe40a1b1c33e8a93f55b40ab09f688",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/results/A01/RAW.json": "b52da713a13e2b3d9f3412d1063a123ae23fd54ef6ddc772ed0e2accc9ba1d1a",
+    "research/doom/v39_v15_process_owner_xvfb_a10_20261012/results/A01/input-owner-process/input-owner-recovery-v1.json": "411e3ada491e0a8c5a3de21042a6bf11c3712a45500280df5f00e5c6f63ac335",
+    "research/doom/v39_v15_process_owner_xvfb_a11_20261012/PLAN.md": "11a9813af0d4e8a91c7f9ee39e2c14750b9c5c21fa2f6f16b9e4a165ef2c1927",
+    "research/doom/v39_v15_process_owner_xvfb_a11_20261012/candidate.py": "0612dd4b0e139f9629564eeb4b7b5f47716255d0c8b28af4b53cff8e737ca572",
+    "research/doom/v39_v15_process_owner_xvfb_a11_20261012/run_candidate.sh": "20fc7c7530ce723c0b875ca11fc73df4706391368d31edbbcbfe36879730cd54",
+    "research/live_control/input_owner_process_v1.py": "8e66140a01c9a9e49d8f5435dfdaf8cb6df85cf20e435b171397836d6c05ff83"
+  },
+  "successor_of": "V39-V15-PROCESS-OWNER-XVFB-A10-20261012-01"
+}

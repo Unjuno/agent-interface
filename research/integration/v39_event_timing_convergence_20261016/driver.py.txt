@@ -1,0 +1,31 @@
+import hashlib,json,sys,unittest
+from pathlib import Path
+R=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+sys.path[:0]=[str(R/'research/doom'),str(R/'research/live_control'),str(R)]
+def main():
+    names=['test_map01_v39_event_transport_timing','test_session_map01_v12_emit_timing',
+        'test_map01_v39_pair_wait_dispatch','test_overlap_controller_v39_wait',
+        'test_controller_retirement_failure','test_map01_session_retirement_boundary',
+        'test_doom_typed_artifact_reconciliation_v1','test_doom_typed_observation_epoch_exact',
+        'test_controller_failure_cleanup_v39','test_controller_failure_cleanup_stage_v1']
+    suite=unittest.defaultTestLoader.loadTestsFromNames(names)
+    def ids(s):
+        for item in s:
+            if isinstance(item,unittest.TestSuite):yield from ids(item)
+            else:yield item.id()
+    test_ids=list(ids(suite))
+    result=unittest.TextTestRunner(verbosity=2).run(suite)
+    pins={}
+    for module in list(sys.modules.values()):
+        filename=getattr(module,'__file__',None)
+        if filename:
+            path=Path(filename).resolve()
+            if path.is_relative_to(R) and path.is_file() and path.suffix=='.py':
+                pins[path.relative_to(R).as_posix()]=hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    for name in ('research/doom/session_map01_v12.py','research/doom/map01_overlap_controller_v39.py'):
+        pins[name]=hashlib.sha256((R/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    report=dict(modules=names,test_ids=test_ids,tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skips=[dict(test=str(t),reason=r) for t,r in result.skipped],source_sha256_lf=pins,optimize=sys.flags.optimize,python=sys.version,rows=sys.modules[names[0]].ROWS,ast_source_pins=['research/doom/session_map01_v12.py','research/doom/map01_overlap_controller_v39.py'])
+    Path(sys.argv[1]).write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({key:report[key] for key in ('tests','failures','errors','skips','optimize')}))
+    raise SystemExit(not result.wasSuccessful())
+if __name__=='__main__':main()

@@ -1,0 +1,79 @@
+[10/18/26 20:40:13] WARNING  Executing <Task pending        base_events.py:2055
+                             name='Task-2'
+                             coro=<WaitBudgetTests.test_blo
+                             cked_readback_returns_pending_
+                             without_cancelling_worker()
+                             running at
+                             C:\Users\user\Documents\Codex\
+                             2026-10-15\work\repository-con
+                             solidation\runtime\cli_v1\test
+                             _mcp_wait_budget.py:111>
+                             wait_for=<Future pending
+                             cb=[shield.<locals>._outer_don
+                             e_callback() at C:\Program
+                             Files\WindowsApps\PythonSoftwa
+                             reFoundation.Python.3.13_3.13.
+                             3824.0_x64__qbz5n2kfra8p0\Lib\
+                             asyncio\tasks.py:977,
+                             Task.task_wakeup()] created at
+                             C:\Program
+                             Files\WindowsApps\PythonSoftwa
+                             reFoundation.Python.3.13_3.13.
+                             3824.0_x64__qbz5n2kfra8p0\Lib\
+                             asyncio\base_events.py:459>
+                             cb=[_run_until_complete_cb()
+                             at C:\Program
+                             Files\WindowsApps\PythonSoftwa
+                             reFoundation.Python.3.13_3.13.
+                             3824.0_x64__qbz5n2kfra8p0\Lib\
+                             asyncio\base_events.py:181]
+                             created at C:\Program
+                             Files\WindowsApps\PythonSoftwa
+                             reFoundation.Python.3.13_3.13.
+                             3824.0_x64__qbz5n2kfra8p0\Lib\
+                             asyncio\runners.py:101> took
+                             0.425 seconds
+............[10/18/26 20:40:16] INFO     execute program                base_events.py:1816
+                             'C:\\Users\\user\\AppData\\Loc
+                             al\\Microsoft\\WindowsApps\\Py
+                             thonSoftwareFoundation.Python.
+                             3.13_qbz5n2kfra8p0\\python.exe
+                             ':
+                             <_WindowsSubprocessTransport
+                             pid=37572 running
+                             stdin=<_ProactorWritePipeTrans
+                             port fd=1240
+                             read=<_OverlappedFuture
+                             pending
+                             cb=[_ProactorWritePipeTranspor
+                             t._pipe_closed()] created at
+                             C:\Program
+                             Files\WindowsApps\PythonSoftwa
+                             reFoundation.Python.3.13_3.13.
+                             3824.0_x64__qbz5n2kfra8p0\Lib\
+                             asyncio\windows_events.py:494>
+                             >
+                             stdout=<_ProactorReadPipeTrans
+                             port fd=1244
+                             read=<_OverlappedFuture
+                             pending
+                             cb=[_ProactorReadPipeTransport
+                             ._loop_reading()] created at
+                             C:\Program
+                             Files\WindowsApps\PythonSoftwa
+                             reFoundation.Python.3.13_3.13.
+                             3824.0_x64__qbz5n2kfra8p0\Lib\
+                             asyncio\windows_events.py:507>
+                             >>
+[10/18/26 20:40:17] INFO     <_WindowsSubprocessTranspor base_subprocess.py:236
+                             t pid=37572 running
+                             stdin=<_ProactorWritePipeTr
+                             ansport closed>
+                             stdout=<_ProactorReadPipeTr
+                             ansport closed>> exited
+                             with return code 0
+.......
+----------------------------------------------------------------------
+Ran 19 tests in 8.209s
+
+OK

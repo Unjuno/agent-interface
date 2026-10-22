@@ -1,0 +1,134 @@
+{
+  "schema": "issue-8636-t0-a03-freeze-v1",
+  "allocation": "UNJUNO-8636-ROTATION-FEATURES-T0-A03-20261012",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8636",
+  "base_main_sha": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "source_lineage": {
+    "candidate.py": "A02 candidate algorithm carried forward byte-for-byte; matching A02 SHA-256 e058cdc69700b5cb08bbda13cb90c83caca36e238edcddbd9fde5cfced76d1a4",
+    "runner.py": "A02 runner with only new allocation ID, new output directory, and disjoint A03 seed range; LF line endings pinned",
+    "auditor.py": "A02 independent replay with oracle action-until-step-12 correction; A03 allocation identity/seed/output updates; LF line endings pinned",
+    "test_construction.py": "A02 construction suite plus A03 oracle-replay and source/seed custody regressions",
+    "prior_sources": "A01/A02 remain frozen in their existing PR packages; A03 source copies are individually hashed below"
+  },
+  "delta_from_A02": "Fresh disjoint seeds 30060-30089. Candidate, renderer, thresholds, controls, budgets and H gates unchanged. Correct auditor oracle replay to match runner unconditional clamped correction before step 12; add regression test. A01/A02 outputs and HOLD dispositions untouched.",
+  "predecessors": {
+    "A01": {
+      "seeds": [
+        30000,
+        30029
+      ],
+      "disposition": "HOLD_UNCERTAIN",
+      "candidate_or_auditor_reruns": 0
+    },
+    "A02": {
+      "seeds": [
+        30030,
+        30059
+      ],
+      "disposition": "HOLD_UNCERTAIN",
+      "candidate_or_auditor_reruns": 0
+    },
+    "A02_audit_only_A01": {
+      "disposition": "FAIL_AUDIT_ONLY_MISMATCH",
+      "candidate_reruns": 0
+    }
+  },
+  "environment": {
+    "os": "Windows 11 build 10.0.26300",
+    "architecture": "AMD64",
+    "python": "3.13.14 (tags/v3.13.14:fd17997, Jun 10 2026, 13:03:48) [MSC v.1944 64 bit (AMD64)]",
+    "python_executable": "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+    "python_executable_sha256": "ad169f4cb4bfb78c7a5c030a4529c19d6643276778e33994c93e145b6191c3ec",
+    "runtime": "local CPU-only; no container or external service required"
+  },
+  "construction_tests": {
+    "normal": "13/13",
+    "optimized": "13/13",
+    "py_compile": "PASS",
+    "includes_oracle_auditor_regression": true,
+    "includes_source_manifest_and_seed_disjointness_check": true
+  },
+  "seed_ranges": {
+    "pure_yaw": [
+      30060,
+      30089
+    ],
+    "combined_rotation": [
+      30060,
+      30089
+    ],
+    "focal_shift": [
+      30060,
+      30089
+    ],
+    "feature_loss": [
+      30060,
+      30089
+    ]
+  },
+  "design": {
+    "paired_seed_conditions": 120,
+    "arms": [
+      "raw_pixels",
+      "spherical_features",
+      "viewstate_oracle"
+    ],
+    "arm_trials": 360,
+    "primary_pairs": 60,
+    "max_corrections_per_arm": 12,
+    "per_axis_action_bound_rad": 0.08,
+    "gain": 0.72,
+    "image_arm_stop_tolerance_rad": 0.015,
+    "terminal_tolerance_rad": 0.025,
+    "shape_tolerance_rad": 0.09,
+    "bearing_condition_floor": 0.08,
+    "invalid_feature_loss_faults": 8,
+    "expected_image_arm_abstentions": 54
+  },
+  "commands": [
+    {
+      "role": "candidate",
+      "argv": [
+        "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+        "-B",
+        "runner.py",
+        "--output",
+        "results/a03-outcome"
+      ],
+      "max_invocations": 1
+    },
+    {
+      "role": "independent_auditor",
+      "argv": [
+        "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\\python3.13.exe",
+        "-B",
+        "auditor.py",
+        "--output",
+        "results/a03-outcome",
+        "--result",
+        "results/a03-outcome/audit.json"
+      ],
+      "max_invocations": 1
+    }
+  ],
+  "output": "results/a03-outcome",
+  "formal_invocations": {
+    "candidate": 0,
+    "auditor": 0,
+    "retry": 0,
+    "limits": {
+      "candidate": 1,
+      "auditor": 1,
+      "retry": 0
+    }
+  },
+  "source_sha256": {
+    "README.md": "b1ae06fd75b65fc970da5ed5afaadaf4fca054df53b316f942bb4fbde2a2697f",
+    "PROTOCOL.md": "314410c752701438092a2d1db220fe4942f335ca52540b68df5bf7c2d9e85c50",
+    "ENVIRONMENT.md": "2a369f82ca3eef847cd3b30a0cca20560a18b41a5d68e1bf0905e2ffdeee261d",
+    "candidate.py": "e058cdc69700b5cb08bbda13cb90c83caca36e238edcddbd9fde5cfced76d1a4",
+    "runner.py": "5b3e1bd3c0278e132585461b3402764adf8788a814fb0b071c12994e724c6247",
+    "auditor.py": "897fc2938e8f91aa8f9604d7243b892a74cc98af77314e41e943aabef47434db",
+    "test_construction.py": "85ef1293265428f110cdafef532f10930b69f13ff18ebf9182213c829bf7db1a"
+  }
+}

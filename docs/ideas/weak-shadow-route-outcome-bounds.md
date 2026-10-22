@@ -1,0 +1,9 @@
+# Weak-shadow bounds for unresolved route outcomes — #8903
+
+- **Status:** Unverified method-transfer proposal; no allocation or result is recorded.
+- **Source:** Open [Issue #8903](https://github.com/Unjuno/agent-interface/issues/8903).
+- **Idea:** Test whether a frozen, route-blind proxy prediction can tighten finite-population bounds for unresolved route outcomes when explicit weak-shadow-variable restrictions hold. The proxy is an auxiliary constraint, never a replacement label for missing outcomes.
+- **Relation to prior work:** #5590 supplies assumption-free bounds; #8640/#8846 examine ascertainment bias and sensitivity to selection odds. #8903 proposes a distinct LP restriction from auxiliary proxy strata/moments. #8887 concerns identifiability of fallible effect checkers, not outcomes missing from assigned attempts.
+- **Proposed minimum test:** On a synthetic finite population, compare observed-only diagnostics, #5590 bounds, #8846 sensitivity bounds, and weak-shadow LP bounds. Include valid informative and uninformative proxies, conditional-dependence, route shift, leakage, zero support, and outcome-dependent missingness. Freeze the generator and constraints; use an independent exhaustive oracle to check coverage, width, route-rank decisions, and corruption controls.
+- **Decision boundary:** A scoped pass requires truth coverage in eligible worlds and narrower bounds in preregistered informative cases, while invalid-assumption controls trigger fallback or `UNIDENTIFIED`. A narrower interval under a violated assumption is false precision; no incremental decision value remains a valid negative result.
+- **Limits:** Synthetic success cannot validate proxy restrictions on real GUI routes. Identification intervals are not sampling-confidence intervals. No live model, GUI, human, runtime policy, or historical ranking claim is part of this proposal.

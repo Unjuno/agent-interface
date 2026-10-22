@@ -11,6 +11,10 @@ class ActivationTests(unittest.TestCase):
   self.bridge.session=SimpleNamespace(recovery_required=False)
   self.bridge.sequence=4;self.bridge.binding_revision=2;self.bridge.scope='native-x11:test'
   self.bridge.active=None;self.bridge.review_required=False;self.bridge._save=Mock()
+  self.now=1000
+  clock=patch('time.monotonic_ns',side_effect=lambda:self.now);clock.start();self.addCleanup(clock.stop)
+  self.bridge.history={4:({'sequence':4,'binding_revision':2,'capture_ns':500,
+                          'pointer_binding':{'surface':123}},None)}
   p=patch('runtime.guarded_x11_v1.bridge.dispatch_in_session')
   self.dispatch=p.start();self.addCleanup(p.stop)
   self.dispatch.return_value={'status':'returned','result':{'status':'completed','execution':{'releases':[{'verified':True,'keys_down':[],'buttons_down':[]}]}}}
@@ -51,5 +55,25 @@ class ActivationTests(unittest.TestCase):
    self.dispatch.reset_mock();self.dispatch.return_value=reply;self.bridge.review_required=False
    result=self.activate();self.assertTrue(self.bridge.review_required)
    self.dispatch.assert_called_once();self.assertNotEqual(result['status'],'completed')
+ def test_evicted_or_recovery_invalidated_source_never_dispatches(self):
+  self.bridge.history.clear()
+  result=self.activate()
+  self.assertEqual(result['status'],'refused');self.assertFalse(result['input_dispatched'])
+  self.dispatch.assert_not_called()
+ def test_retained_source_must_match_revision_surface_and_capture_clock(self):
+  source=self.bridge.history[4][0]
+  for key,value in [('sequence',3),('binding_revision',1),('capture_ns',True),('capture_ns',2000)]:
+   with self.subTest(key=key,value=value):
+    original=source[key];source[key]=value
+    result=self.activate();source[key]=original
+    self.assertEqual(result['status'],'refused');self.dispatch.assert_not_called()
+  source['pointer_binding']['surface']=456
+  self.assertEqual(self.activate()['status'],'refused');self.dispatch.assert_not_called()
+ def test_selected_identity_requires_retained_digest(self):
+  self.bridge._process_identity_guard=True
+  self.assertEqual(self.activate()['status'],'refused');self.dispatch.assert_not_called()
+ def test_closed_bridge_never_activates(self):
+  self.bridge._closed=True
+  self.assertEqual(self.activate()['status'],'refused');self.dispatch.assert_not_called()
 
 if __name__=='__main__':unittest.main()

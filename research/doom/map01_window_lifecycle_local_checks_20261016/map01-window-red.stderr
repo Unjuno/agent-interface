@@ -1,0 +1,134 @@
+test_cancel_blocked_shared_lifecycle_releases_before_resume (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_cancel_blocked_shared_lifecycle_releases_before_resume) ... ERROR
+test_capture_query_overlap_refuses_without_second_monitor_or_release_wait (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_capture_query_overlap_refuses_without_second_monitor_or_release_wait) ... ERROR
+test_destroy_during_capture_cannot_publish_or_bind_source (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_destroy_during_capture_cannot_publish_or_bind_source) ... ERROR
+test_expiry_blocked_shared_lifecycle_releases_before_resume (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_expiry_blocked_shared_lifecycle_releases_before_resume) ... ERROR
+test_one_canonical_reader_transports_capture_lease_and_admission (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_one_canonical_reader_transports_capture_lease_and_admission) ... ERROR
+test_same_process_destroy_reuse_refuses_old_observation (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_same_process_destroy_reuse_refuses_old_observation) ... ERROR
+
+======================================================================
+ERROR: test_cancel_blocked_shared_lifecycle_releases_before_resume (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_cancel_blocked_shared_lifecycle_releases_before_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 115, in test_cancel_blocked_shared_lifecycle_releases_before_resume
+    def test_cancel_blocked_shared_lifecycle_releases_before_resume(self): self.blocked('cancel')
+                                                                           ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 88, in blocked
+    with fixture() as (backend, events, generation, fake, connections):
+         ~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 30, in fixture
+    with backend_fixture(window_lifecycle=True, query_factory=factory) as row:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_process_identity_backend.py", line 52, in backend_fixture
+    backend = Backend(session, Path(output), events.append,
+                      {name: SignalReader(name) for name in ('health', 'ammo')}, **options)
+TypeError: Backend.__init__() got an unexpected keyword argument 'window_lifecycle'
+
+======================================================================
+ERROR: test_capture_query_overlap_refuses_without_second_monitor_or_release_wait (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_capture_query_overlap_refuses_without_second_monitor_or_release_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 117, in test_capture_query_overlap_refuses_without_second_monitor_or_release_wait
+    def test_capture_query_overlap_refuses_without_second_monitor_or_release_wait(self): self.blocked('cancel', overlap=True)
+                                                                                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 88, in blocked
+    with fixture() as (backend, events, generation, fake, connections):
+         ~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 30, in fixture
+    with backend_fixture(window_lifecycle=True, query_factory=factory) as row:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_process_identity_backend.py", line 52, in backend_fixture
+    backend = Backend(session, Path(output), events.append,
+                      {name: SignalReader(name) for name in ('health', 'ammo')}, **options)
+TypeError: Backend.__init__() got an unexpected keyword argument 'window_lifecycle'
+
+======================================================================
+ERROR: test_destroy_during_capture_cannot_publish_or_bind_source (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_destroy_during_capture_cannot_publish_or_bind_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 79, in test_destroy_during_capture_cannot_publish_or_bind_source
+    with fixture() as (backend, events, generation, fake, connections):
+         ~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 30, in fixture
+    with backend_fixture(window_lifecycle=True, query_factory=factory) as row:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_process_identity_backend.py", line 52, in backend_fixture
+    backend = Backend(session, Path(output), events.append,
+                      {name: SignalReader(name) for name in ('health', 'ammo')}, **options)
+TypeError: Backend.__init__() got an unexpected keyword argument 'window_lifecycle'
+
+======================================================================
+ERROR: test_expiry_blocked_shared_lifecycle_releases_before_resume (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_expiry_blocked_shared_lifecycle_releases_before_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 116, in test_expiry_blocked_shared_lifecycle_releases_before_resume
+    def test_expiry_blocked_shared_lifecycle_releases_before_resume(self): self.blocked('expiry')
+                                                                           ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 88, in blocked
+    with fixture() as (backend, events, generation, fake, connections):
+         ~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 30, in fixture
+    with backend_fixture(window_lifecycle=True, query_factory=factory) as row:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_process_identity_backend.py", line 52, in backend_fixture
+    backend = Backend(session, Path(output), events.append,
+                      {name: SignalReader(name) for name in ('health', 'ammo')}, **options)
+TypeError: Backend.__init__() got an unexpected keyword argument 'window_lifecycle'
+
+======================================================================
+ERROR: test_one_canonical_reader_transports_capture_lease_and_admission (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_one_canonical_reader_transports_capture_lease_and_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 47, in test_one_canonical_reader_transports_capture_lease_and_admission
+    with fixture() as (backend, events, generation, fake, connections):
+         ~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 30, in fixture
+    with backend_fixture(window_lifecycle=True, query_factory=factory) as row:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_process_identity_backend.py", line 52, in backend_fixture
+    backend = Backend(session, Path(output), events.append,
+                      {name: SignalReader(name) for name in ('health', 'ammo')}, **options)
+TypeError: Backend.__init__() got an unexpected keyword argument 'window_lifecycle'
+
+======================================================================
+ERROR: test_same_process_destroy_reuse_refuses_old_observation (research.doom.test_map01_window_lifecycle.WindowLifecycleTests.test_same_process_destroy_reuse_refuses_old_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 66, in test_same_process_destroy_reuse_refuses_old_observation
+    with fixture() as (backend, events, generation, fake, connections):
+         ~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_window_lifecycle.py", line 30, in fixture
+    with backend_fixture(window_lifecycle=True, query_factory=factory) as row:
+         ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3824.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_map01_process_identity_backend.py", line 52, in backend_fixture
+    backend = Backend(session, Path(output), events.append,
+                      {name: SignalReader(name) for name in ('health', 'ammo')}, **options)
+TypeError: Backend.__init__() got an unexpected keyword argument 'window_lifecycle'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.011s
+
+FAILED (errors=6)

@@ -1,0 +1,56 @@
+...E.EE
+======================================================================
+ERROR: test_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts (research.live_control.test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_v12_explicit_up_cancel.py", line 600, in test_persistent_keyup_loss_preserves_v15_batch_and_v13_terminal_receipts
+    executor = Executor(backend, events.append)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v13.py", line 17, in __init__
+    super().__init__(backend, emit)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v12.py", line 30, in __init__
+    claim_custody(self._backend_custody_token)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 25, in claim_executor_custody
+    with self._executor_custody_lock:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Backend' object has no attribute '_executor_custody_lock'
+
+======================================================================
+ERROR: test_v15_batch_survives_pre_and_post_sample_failures_fail_closed (research.live_control.test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_v15_batch_survives_pre_and_post_sample_failures_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_v12_explicit_up_cancel.py", line 744, in test_v15_batch_survives_pre_and_post_sample_failures_fail_closed
+    executor = Executor(backend, events.append)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v13.py", line 17, in __init__
+    super().__init__(backend, emit)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v12.py", line 30, in __init__
+    claim_custody(self._backend_custody_token)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 25, in claim_executor_custody
+    with self._executor_custody_lock:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Backend' object has no attribute '_executor_custody_lock'
+
+======================================================================
+ERROR: test_v15_successful_two_key_batch_retries_after_ordered_original_ups (research.live_control.test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_v15_successful_two_key_batch_retries_after_ordered_original_ups)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_v12_explicit_up_cancel.py", line 457, in test_v15_successful_two_key_batch_retries_after_ordered_original_ups
+    executor = Executor(backend, events.append)
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v13.py", line 17, in __init__
+    super().__init__(backend, emit)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\executor_v12.py", line 30, in __init__
+    claim_custody(self._backend_custody_token)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\doom_owner_thread_release_batch_backend_v1.py", line 25, in claim_executor_custody
+    with self._executor_custody_lock:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Backend' object has no attribute '_executor_custody_lock'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.036s
+
+FAILED (errors=3)

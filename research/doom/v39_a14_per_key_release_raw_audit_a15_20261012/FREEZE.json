@@ -1,0 +1,10 @@
+{
+  "experiment_id": "v39_a14_per_key_release_raw_reaudit_a15_20261012",
+  "classification": "READ_ONLY_HISTORICAL_RAW_REAUDIT",
+  "source_artifact_commit": "2d16f5ff6387e3cdc8a6bb985c1b7a55bdcc0a34",
+  "strict_release_source_commit": "5d3fe94c6f4b8934e2d05012467545cbe55cd615",
+  "question": "Do the retained A14 per-key event records independently tie each XTest key-up to an admitted held key, successful server synchronization, a server keymap down-to-up transition, and the final strict known-empty cancellation receipt?",
+  "prohibited_inference": "This does not establish physical keyboard state outside X11, live efficacy, threat-triggered recovery, or MAP01 completion. A14 protocol deviation remains disqualifying.",
+  "live_allocation": false,
+  "retry": false
+}

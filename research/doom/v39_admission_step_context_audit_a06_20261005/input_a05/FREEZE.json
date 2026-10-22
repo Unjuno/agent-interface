@@ -1,0 +1,10 @@
+{
+  "schema": "map01-v39-admission-step-context-freeze-v1",
+  "source_commit": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+  "source_path": "research/doom/results/v39-control-telemetry-gap-audit-20261004/events.jsonl",
+  "source_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+  "expected_raw_rows": 634,
+  "expected_admissions": 39,
+  "expected_aggregate_receipts": 28,
+  "analysis": "join each per-key admission to a later same-key aggregate keys_held receipt scoped by the latest preceding hold step_started; retain unmatched cancellation-racing admissions separately"
+}

@@ -1,0 +1,20 @@
+{
+  "auditor": "SOURCE/audit.py",
+  "auditor_sha256": "8927c0011868e49e8261cf02f017234d743dcd128bd06a1ce3c1a3fc2e043b88",
+  "base_main": "f185a9059d485a4f8d5a65e9e7f6782897f67eae",
+  "candidate": "SOURCE/candidate.py",
+  "candidate_sha256": "004308f92985c7af5ce7a45a4d17b45fc2f91325849e08bbbf2c22b66db095bd",
+  "delta_from_a07": "Uses exact f185a905 current-main V10/V12/V3/V4 files and includes transitive input_owner_v10.py omitted from A07 freeze; new display and run ID.",
+  "display": ":130",
+  "hypothesis": "With a complete current-main transitive source closure, V4\u2192V3\u2192V12 can admit one key on an isolated focused Xvfb client and close with a verified terminal release.",
+  "one_shot_policy": "Candidate once to a nonexistent results/A08 directory; auditor once if RAW exists; preserve first outcome; no rerun or overwrite.",
+  "run_id": "MAP01-V39-XVFB-OWNER-CLOSE-A08-20261012",
+  "schema": "v39-owner-close-xvfb-freeze-a08-v1",
+  "scope": "one synthetic Xvfb shutdown; source files pinned to exact current main; no game/model/desktop input/physical keyboard/live lane",
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "input_owner_v12.py": "50062888c6ffa884842885f909b43f46c6631a03031ff71d8608302a5dbace19",
+    "input_transition_owner_v3.py": "7b166bceda5d959981909d50759ca4675f61f3d55c2409b10938c33881f1d2c2",
+    "input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598"
+  }
+}

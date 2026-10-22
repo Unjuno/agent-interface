@@ -1,0 +1,57 @@
+{
+  "allocation_id": "8641-T0-A01-20261009",
+  "protocol_id": "UIA-8641-v1",
+  "profiles": [
+    "resampled_noise",
+    "ontology_uncertainty",
+    "stale_epoch",
+    "irreducible_intent",
+    "correlated_duplicate",
+    "misspecified_decomposition"
+  ],
+  "actions": [
+    "REPEAT",
+    "ALTERNATE",
+    "WAIT",
+    "UNKNOWN"
+  ],
+  "policies": [
+    "DECOMPOSED",
+    "TOTAL_UNCERTAINTY",
+    "DECISION_VALUE",
+    "FIXED_REPEAT"
+  ],
+  "costs": {
+    "REPEAT": 0.2,
+    "ALTERNATE": 0.8,
+    "WAIT": 0.4,
+    "UNKNOWN": 0.05
+  },
+  "decision_value_cost_weight": 0.5,
+  "decomposition_confidence_floor": 0.75,
+  "decision_value_confidence_floor": 0.7,
+  "total_uncertainty_thresholds": {
+    "repeat_at_or_above": 0.8,
+    "alternate_at_or_above": 0.65,
+    "wait_at_or_above": 0.45
+  },
+  "hard_gates": {
+    "unsafe_action": 0,
+    "stale_epoch_admission": 0,
+    "integrity_violation": 0
+  },
+  "matched_correctness_tolerance": 0.01,
+  "minimum_cost_reduction": 0.02,
+  "minimum_source_classifier_accuracy": 0.7,
+  "mutation_controls": [
+    "action_choice",
+    "duplicate_row",
+    "hard_gate",
+    "oracle_label_leak"
+  ],
+  "scope": "finite synthetic policy-method test only; no user, GUI, model, live or product claim",
+  "formal_seed_range_inclusive": [
+    51001,
+    51200
+  ]
+}

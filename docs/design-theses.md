@@ -40,6 +40,8 @@ This map groups the existing durable theses for navigation. It does not assign p
 
 ### Interface bottleneck
 
+Source: open Issue [#4](https://github.com/Unjuno/agent-interface/issues/4) is the north-star design thesis; Issue [#57](https://github.com/Unjuno/agent-interface/issues/57) is a separate integrated-efficiency and task-effect objective. Issue #4 explicitly names architecture risks (#2) and selectable grids (#3) as examples, not a bundled implementation. The visual-address/feedback menu in #5 and composite observations in #8 also remain separate testable proposals.
+
 For a sufficiently capable planner, computer-control cost can be dominated by interface mechanics: repeated model boundaries, redundant observations, verbose serialization, input-delivery waits, recovery, and relearning. Clean tests hold model/task/environment/correctness fixed and change the interface.
 
 ### Universal fallback before specialization

@@ -1,0 +1,231 @@
+"""Explicit owned spawn boundary and file-fsynced recovery for owner RPC v2.
+
+No caller is selected automatically. Logical generation + exact owned process
+handle are used; this is not a native PID creation-time or power-loss proof.
+"""
+from contextlib import contextmanager
+import copy
+import base64
+import hashlib
+import json
+import multiprocessing
+import os
+from pathlib import Path
+import socket
+import sys
+import time
+import uuid
+
+import input_owner_rpc_v2 as rpc
+
+ROOT=Path(__file__).resolve().parents[2]
+
+
+def publish_json_exclusive(path,value):
+    """Publish complete file-fsynced bytes without replacing any existing file."""
+    path=Path(path)
+    raw=(json.dumps(value,indent=2,sort_keys=True,allow_nan=False)+'\n').encode('utf-8')
+    temp=path.with_name('.'+path.name+'.'+uuid.uuid4().hex+'.tmp')
+    fd=os.open(temp,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
+    try:
+        with os.fdopen(fd,'wb') as stream:
+            stream.write(raw);stream.flush();os.fsync(stream.fileno())
+        os.link(temp,path)  # Atomic and exclusive; no overwrite fallback.
+        if os.name=='posix':
+            directory=os.open(path.parent,os.O_RDONLY)
+            try:os.fsync(directory)
+            finally:os.close(directory)
+    finally:
+        try:temp.unlink()
+        except FileNotFoundError:pass
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _hash(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def _pins():
+    result={}
+    for module in list(sys.modules.values()):
+        filename=getattr(module,'__file__',None)
+        if filename:
+            path=Path(filename).resolve()
+            if path.is_relative_to(ROOT) and path.is_file() and path.suffix=='.py':
+                result[path.relative_to(ROOT).as_posix()]=hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    return result
+
+
+@contextmanager
+def _default_owner(*,display,out,service_id):
+    from functools import partial
+    from input_owner_v12 import InputOwner
+    from input_transition_owner_v4 import InputOwner as TransitionOwner
+    owner=TransitionOwner(display,_owner_cls=partial(InputOwner,process_identity=True))
+    try:yield owner
+    finally:owner.close()
+
+
+def _identity(startup):
+    return {k:startup[k] for k in ('service_id','display','pid','parent_pid','supervisor_pid','owner_id')}
+
+
+def _child_entry(channel,ready,display,out,service_id,supervisor_pid,factory):
+    out=Path(out);startup=None;recovery=None;native=None;service_error=None
+    context_ok=False;finish=None
+    try:
+        with factory(display=display,out=out,service_id=service_id) as owner:
+            native=getattr(owner,'_inner',owner)
+            startup=dict(schema='owned-owner-startup-v3',service_id=service_id,display=display,
+                         pid=os.getpid(),parent_pid=os.getppid(),supervisor_pid=supervisor_pid,
+                         owner_id=owner.owner_id,started_perf_ns=time.perf_counter_ns(),
+                         generation_kind='fresh logical launch UUID; no native PID start-time proof',
+                         source_sha256_lf=_pins())
+            startup_hash=publish_json_exclusive(out/'startup.json',startup)
+            ready.send(dict(ok=True,startup=startup));ready.close()
+            try:core=rpc.serve_owner(channel,owner,display=display,service_id=service_id)
+            except BaseException as error:
+                service_error=type(error).__name__+': '+str(error)
+                core=rpc._close_owner(owner,native,display,service_id,service_error)
+            recovery=dict(schema='owned-owner-recovery-v3',identity=_identity(startup),
+                          startup_sha256=startup_hash,core=core,service_error=service_error,
+                          verified=core['verified'] is True and service_error is None,
+                          file_fsync=True,directory_fsync_requested=os.name=='posix')
+            recovery_hash=publish_json_exclusive(out/'recovery.json',recovery)
+            # Do not abandon an unresolved owner thread because a caller timed out.
+            # The external owned handle remains available; wait() on the parent is finite.
+            if not native.stopped.is_set():native.stopped.wait()
+            stopped=native.stopped.is_set()
+        context_ok=True
+        finish=dict(schema='owned-owner-finish-v3',identity=_identity(startup),
+                    startup_sha256=startup_hash,recovery_sha256=recovery_hash,
+                    context_exit_success=True,owner_thread_stopped=stopped,
+                    initial_verification=recovery['verified'],service_error=service_error,
+                    verified=recovery['verified'] is True and stopped and service_error is None,
+                    file_fsync=True,directory_fsync_requested=os.name=='posix')
+        publish_json_exclusive(out/'finish.json',finish)
+        if service_error is not None:raise RuntimeError(service_error)
+    except BaseException as error:
+        if startup is None:
+            try:ready.send(dict(ok=False,error_type=type(error).__name__,message=str(error)[:1000]))
+            finally:ready.close()
+        diagnostic=dict(schema='owned-owner-failure-v3',service_id=service_id,display=display,
+                        pid=os.getpid(),parent_pid=os.getppid(),context_exit_success=context_ok,
+                        error_type=type(error).__name__,message=str(error)[:1000],verified=False)
+        try:publish_json_exclusive(out/'failure.json',diagnostic)
+        except BaseException as publication_error:
+            raise BaseExceptionGroup('owner service failure and failure publication failed',[error,publication_error])
+        raise
+    finally:
+        rpc._detach_socket(channel)
+
+
+def read_service_receipt(out,expected):
+    """Validate saved evidence only; caller still must verify its owned handle exit."""
+    out=Path(out)
+    startup_raw=(out/'startup.json').read_bytes()
+    startup=json.loads(startup_raw)
+    if startup!=expected or startup.get('schema')!='owned-owner-startup-v3':
+        raise ValueError('startup does not match owned launch identity')
+    identity=_identity(expected);startup_hash=hashlib.sha256(startup_raw).hexdigest()
+    result=dict(recovery=None,finish=None,receipt_verified=False)
+    path=out/'recovery.json'
+    if not path.exists():return result
+    raw=path.read_bytes();recovery=json.loads(raw)
+    if (recovery.get('schema')!='owned-owner-recovery-v3' or recovery.get('identity')!=identity
+            or recovery.get('startup_sha256')!=startup_hash or recovery.get('file_fsync') is not True
+            or type(recovery.get('verified')) is not bool):
+        raise ValueError('recovery identity/publication binding differs')
+    core=recovery['core']
+    rpc._validate_close_result(core,core['release_records'],expected['display'],expected['service_id'])
+    if recovery['verified'] is not (core['verified'] is True and recovery.get('service_error') is None):
+        raise ValueError('recovery verification contradicts core outcome')
+    result['recovery']=recovery
+    path=out/'finish.json'
+    if not path.exists():return result
+    finish=json.loads(path.read_bytes())
+    verified=(recovery['verified'] is True and finish.get('context_exit_success') is True
+              and finish.get('owner_thread_stopped') is True and finish.get('service_error') is None)
+    if (finish.get('schema')!='owned-owner-finish-v3' or finish.get('identity')!=identity
+            or finish.get('startup_sha256')!=startup_hash
+            or finish.get('recovery_sha256')!=hashlib.sha256(raw).hexdigest()
+            or finish.get('initial_verification') is not recovery['verified']
+            or finish.get('file_fsync') is not True or finish.get('verified') is not verified):
+        raise ValueError('finish identity/outcome binding differs')
+    result.update(finish=finish,receipt_verified=verified)
+    return result
+
+
+class ServiceStartupError(RuntimeError):
+    def __init__(self,message,handle):
+        super().__init__(message);self.handle=handle
+
+
+class OwnedOwnerService:
+    def __init__(self,process,channel,out,service_id,supervisor_pid):
+        self.process=process;self._channel=channel;self.out=Path(out)
+        self.service_id=service_id;self.supervisor_pid=supervisor_pid
+        self._startup=None;self._taken=False
+    @property
+    def startup(self):return copy.deepcopy(self._startup)
+    def take_socket(self):
+        if self._taken or self._channel is None or self._startup is None:
+            raise RuntimeError('service socket unavailable/already transferred')
+        self._taken=True
+        return self._channel
+    def close_channel(self):
+        if self._channel is not None:
+            try:self._channel.shutdown(socket.SHUT_RDWR)
+            except OSError:pass
+            self._channel.close()
+    def wait(self,timeout=5):
+        timeout=rpc._timeout(timeout)
+        self.process.join(timeout)
+        alive=self.process.is_alive()
+        report=dict(service_id=self.service_id,spawn_pid=self.process.pid,
+                    process_alive=alive,exit_code=self.process.exitcode,verified=False,
+                    recovery=None,finish=None,receipt_error=None)
+        if self._startup is None:
+            report['receipt_error']='no accepted startup';return report
+        try:
+            saved=read_service_receipt(self.out,self._startup)
+            report.update(saved)
+            report['verified']=(not alive and self.process.exitcode==0 and saved['receipt_verified'])
+        except (OSError,ValueError,KeyError,TypeError) as error:
+            report['receipt_error']=type(error).__name__+': '+str(error)
+        return report
+    def saved_files(self):
+        return {p.name:dict(sha256=_hash(p),bytes_b64=base64.b64encode(p.read_bytes()).decode('ascii'))
+                for p in sorted(self.out.iterdir()) if p.is_file() and p.suffix in ('.json','.jsonl')}
+
+
+def launch_owner_service(*,display,out,_owner_factory=None,startup_timeout=5):
+    """Launch only this owned spawn instance. Never terminate or retry automatically."""
+    display=rpc._identity(display);startup_timeout=rpc._timeout(startup_timeout)
+    out=Path(out).resolve();out.mkdir(parents=True,exist_ok=False)
+    ctx=multiprocessing.get_context('spawn')
+    channel,service=socket.socketpair();parent_ready,child_ready=ctx.Pipe(duplex=False)
+    service_id=uuid.uuid4().hex;supervisor_pid=os.getpid()
+    process=ctx.Process(target=_child_entry,args=(service,child_ready,display,out,service_id,
+                         supervisor_pid,_owner_factory or _default_owner),name='owned-input-owner-'+service_id[:8])
+    handle=OwnedOwnerService(process,channel,out,service_id,supervisor_pid)
+    try:
+        process.start();service.close();child_ready.close()
+        if not parent_ready.poll(startup_timeout):raise TimeoutError('owned owner readiness deadline')
+        message=parent_ready.recv()
+        if type(message) is not dict or message.get('ok') is not True:
+            raise RuntimeError('owned owner startup failed: '+repr(message))
+        startup=message['startup']
+        if (startup.get('service_id')!=service_id or startup.get('display')!=display
+                or startup.get('supervisor_pid')!=supervisor_pid
+                or type(startup.get('pid')) is not int or type(startup.get('parent_pid')) is not int
+                or not (startup['pid']==process.pid or startup['parent_pid']==process.pid)):
+            raise ValueError('owned process/interpreter lineage mismatch')
+        handle._startup=copy.deepcopy(startup)
+        if json.loads((out/'startup.json').read_bytes())!=startup:
+            raise ValueError('saved startup differs from private child handshake')
+        return handle
+    except BaseException as error:
+        service.close();child_ready.close();handle.close_channel()
+        if not isinstance(error,Exception):raise
+        raise ServiceStartupError(str(error),handle) from error
+    finally:parent_ready.close()

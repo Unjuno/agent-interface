@@ -1,0 +1,17 @@
+test_module_available (__main__.OwnerRpcTests.test_module_available) ... FAIL
+
+======================================================================
+FAIL: test_module_available (__main__.OwnerRpcTests.test_module_available)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_rpc_v2.py", line 50, in test_module_available
+    self.assertIsNotNone(importlib.util.find_spec('input_owner_rpc_v2'),
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         'Current-generation sticky-quarantine RPC implementation is absent')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : Current-generation sticky-quarantine RPC implementation is absent
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

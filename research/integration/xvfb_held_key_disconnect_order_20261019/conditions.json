@@ -1,0 +1,49 @@
+{
+  "experiment": "xvfb_held_key_disconnect_order_r01",
+  "status": "FROZEN_BEFORE_LIVE_RUN",
+  "base_main": "61e9200d7fed3ddc8b489be40161828c48848086",
+  "server": "private X.Org Xvfb :88 from runtime-x11-v1 workflow",
+  "question": "After a client creates a held key and queues a later delayed KeyPress, can XRes report that exact owner disconnected, an independent client release the held key and read it up, and the queued later KeyPress still appear after that readback?",
+  "sequence": [
+    "independent client first reads both test keys up",
+    "one owner client sends immediate KeyPress(a), then delayed KeyPress(b) with 8000 ms XTEST delay, flushes, and blocks in sync",
+    "independent client reads a down and b up while XRes still identifies the owner PID",
+    "terminate the owner and require PID-qualified XRes disconnection within 2000 ms",
+    "a separate X client sends KeyRelease(a), syncs, and independently reads a up before the scheduled horizon",
+    "after owner-termination time plus 8500 ms, independently read both key states and retain either result",
+    "release both keys in a final cleanup and independently verify both up"
+  ],
+  "observations": {
+    "required": [
+      "server vendor/release, XRes/XTEST versions, Xvfb binary hash/package provenance",
+      "exact owner PID/resource base and connected-before/disconnected-after receipts",
+      "initial held-state readback before owner termination",
+      "independent key-up readback after cleanup and before delayed horizon",
+      "independent readback after the delayed horizon",
+      "final key-up cleanup readback"
+    ],
+    "outcome_is_observational": true,
+    "late_keypress_after_cleanup": "retain whether key b is down; do not convert either outcome into a general server guarantee"
+  },
+  "bounds": {
+    "owner_marker_seconds": 3,
+    "initial_held_readback_seconds": 2,
+    "xres_disconnect_seconds": 2,
+    "xtest_delay_ms": 8000,
+    "post_termination_observation_ms": 8500
+  },
+  "controls": [
+    "same Xvfb workflow's existing delayed-request test with no initially held key",
+    "same independent observer and PID-qualified XRes path"
+  ],
+  "not_claimed": [
+    "standard MCP caller integration",
+    "blocked caller I/O release bound",
+    "physical/desktop key release",
+    "application task effect or success",
+    "MAP01 result",
+    "general recovery or cross-server guarantee",
+    "WSLc behavior"
+  ],
+  "allocation": "one private workflow-owned Xvfb; no WSLc, Docker, shared display, or desktop input"
+}

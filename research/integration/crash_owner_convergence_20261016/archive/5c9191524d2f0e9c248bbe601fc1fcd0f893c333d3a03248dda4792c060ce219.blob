@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 305, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 292, in main
+    return owner_service(*sys.argv[2:5], int(sys.argv[5]))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 74, in owner_service
+    lease, key = decode_down_request(request)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 49, in decode_down_request
+    raise ValueError("observed focus window required")
+ValueError: observed focus window required
+Traceback (most recent call last):
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 305, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 294, in main
+    session_child(*sys.argv[2:6])
+  File "/mnt/d/codex-research/worktrees/v39-visual-active-hold-xvfb-a01-20261012/research/doom/v39_v15_inputowner_process_xvfb_a06_20261012/candidate.py", line 143, in session_child
+    ack = json.loads(stream.readline())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

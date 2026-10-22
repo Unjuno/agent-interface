@@ -1,0 +1,46 @@
+import hashlib,json,os,re,shutil,subprocess
+from pathlib import Path
+
+ROOT=Path(r'C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation')
+OUT=Path(__file__).parent/'primary-presentation-final-r2-20261016'
+OUT.mkdir(exist_ok=False)
+tests=['test_primary_exchange.mjs','test_primary_exchange_effect_boundary.mjs',
+       'test_primary_caller.mjs','test_primary_input.mjs','test_primary_mint.mjs',
+       'test_primary_mint_many.mjs','test_primary_window_review.mjs']
+names=['primary_exchange.mjs','primary_caller.mjs']+tests
+pins=[]
+for name in names:
+ path='runtime/host_v1/'+name;b=(ROOT/path).read_bytes();git=subprocess.check_output(['git','show','HEAD:'+path],cwd=ROOT)
+ # Git autocrlf projection is explicit; no source behavior rewrite.
+ assert b.replace(b'\r\n',b'\n')==git.replace(b'\r\n',b'\n')
+ pins.append(dict(path=path,worktree_sha256=hashlib.sha256(b).hexdigest(),git_sha256=hashlib.sha256(git).hexdigest(),lf_equal=True))
+condition=dict(tested_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+ executable=shutil.which('node'),version=subprocess.check_output(['node','--version'],text=True).strip(),pins=pins,
+ scope='actual primary exchange/caller, synthetic host/release metadata and local file effects only; no native/process relay')
+(OUT/'CONDITIONS.json').write_text(json.dumps(condition,indent=2))
+receipts=[]
+for mode in ('current','missing_exchange_stop'):
+ destination=OUT/mode;destination.mkdir();env=os.environ.copy();env['PRIMARY_FAILURE_EVIDENCE']=str(destination/'evidence')
+ if mode=='current':
+  cwd=ROOT/'runtime/host_v1';selected=tests
+ else:
+  cwd=destination/'subject';cwd.mkdir()
+  for name in names:shutil.copyfile(ROOT/'runtime/host_v1'/name,cwd/name)
+  source=(cwd/'primary_exchange.mjs').read_text();old="stopped??=String(error)+'; inspect retained original files; never replay input';"
+  assert source.count(old)==1
+  source=source.replace(old,'/* directed control: omitted exchange STOP latch */')
+  (cwd/'primary_exchange.mjs').write_text(source)
+  (destination/'CONTROL.json').write_text(json.dumps(dict(replaced=old,replacement='/* directed control: omitted exchange STOP latch */',sha256=hashlib.sha256((cwd/'primary_exchange.mjs').read_bytes()).hexdigest()),indent=2))
+  selected=['test_primary_exchange_effect_boundary.mjs']
+ command=['node','--test','--test-reporter=tap',*selected]
+ with (destination/'stdout.txt').open('wb') as stdout,(destination/'stderr.txt').open('wb') as stderr:
+  process=subprocess.Popen(command,cwd=cwd,env=env,stdout=stdout,stderr=stderr)
+  code=process.wait(timeout=60)
+ text=(destination/'stdout.txt').read_text(encoding='utf-8')
+ counts={key:int(re.search(r'^# '+key+r' (\d+)$',text,re.M).group(1)) for key in ('tests','pass','fail','skipped')}
+ receipt=dict(mode=mode,pid=process.pid,command=command,cwd=str(cwd),returncode=code,counts=counts)
+ (destination/'RESULT.json').write_text(json.dumps(receipt,indent=2));receipts.append(receipt)
+ if mode=='current':assert code==0 and counts['fail']==counts['skipped']==0
+ else:assert code==1 and counts==dict(tests=4,**{'pass':0,'fail':4,'skipped':0})
+(OUT/'PROCESS_RECEIPTS.json').write_text(json.dumps(receipts,indent=2))
+print(json.dumps(receipts,indent=2))

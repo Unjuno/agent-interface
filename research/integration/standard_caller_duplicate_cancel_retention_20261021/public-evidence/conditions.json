@@ -1,0 +1,34 @@
+{
+  "allocation": "local Fake X only; no WSL/WSLc, Docker, real X server, physical input, model, or network provider",
+  "claim_scope": "one characterization trial of duplicate cancellation through the public guarded MCP caller and subsequent interface_results retrieval",
+  "current_question": "Does the standard caller return one stable cancellation-operation receipt for a duplicate cancel, and does interface_results retain cancellation evidence separately from the original action result?",
+  "expected_current_boundary": {
+    "one_cleanup_attempt": true,
+    "duplicate_returns_same_operation_receipt": false,
+    "interface_results_has_separate_cancellation_subrecord": false
+  },
+  "input": "Fake X owned caller dispatches CTRL+a, then blocks owner sync after KeyPress; no physical device is used",
+  "cancel_schedule": "invoke interface_guarded_cancel twice sequentially with the same call_id; first invocation uses controlled synthetic disconnect and release-worker receipts",
+  "cleanup_fixtures": {
+    "disconnect": {"status": "disconnected", "worker_retired": true, "elapsed_ms": 2.5},
+    "release": {"status": "readback_verified", "release": {"verified": true, "keys_down": [], "buttons_down": [], "monotonic_ns": 12}}
+  },
+  "result_retrieval": "poll interface_results for the original call until terminal or 3 seconds; preserve the original action result and all cancellation fields verbatim",
+  "trials": 1,
+  "execution_ledger": [
+    {
+      "run_id": "r01",
+      "result": "STOP_PRELAUNCH_IMPORT_PATH",
+      "detail": "Python could not import the repository runtime package when the script was invoked by path; no server or Fake X trial started. Raw traceback is preserved in raw/setup-failure-r01.txt. Do not rerun r01."
+    },
+    {
+      "run_id": "r02",
+      "result": "one fresh formal trial",
+      "launcher_fix": "set PYTHONPATH to repository root; no scientific source or trial condition changed"
+    }
+  ],
+  "reruns": "none; r01 prelaunch failure is immutable; r02 is a fresh first outcome",
+  "source_revision": "e892485a003a2cce62bb6ee6c4ee5bf29949b058",
+  "timestamp_basis": "time.monotonic_ns",
+  "independent_safety_predecessor": "Issue #814 PASS_DUPLICATE_CANCEL_IDEMPOTENCE_SCOPED is separate-owner semantics; this trial checks the public MCP caller/result integration seam only"
+}

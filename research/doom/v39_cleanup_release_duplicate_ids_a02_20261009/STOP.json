@@ -1,0 +1,12 @@
+{
+  "schema": "issue8681-cleanup-identity-stop-v1",
+  "allocation_id": "ISSUE8681-CLEANUP-IDENTITY-A02-20261009",
+  "classification": "STOP_CONSTRUCTION_IMPORT_PATH",
+  "candidate_invocations": 1,
+  "cases_executed": 0,
+  "auditor_invocations": 0,
+  "command": "python research/doom/v39_cleanup_release_duplicate_ids_a02_20261009/candidate.py",
+  "error": "ModuleNotFoundError: No module named 'doom_controller_failure_cleanup_v1'",
+  "cause": "Candidate computed the repository root one parent too high from the package directory.",
+  "retry_of_allocation": false
+}

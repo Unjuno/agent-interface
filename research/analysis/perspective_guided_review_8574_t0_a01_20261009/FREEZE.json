@@ -1,0 +1,33 @@
+{
+  "allocation": "8574-T0-A01-20261009",
+  "issue": 8574,
+  "base_main": "c995efeca4349353e1f5e13cd1b8aba29088b632",
+  "runtime": {
+    "python": "3.14.5",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O"
+  },
+  "reviewers": 6,
+  "reviewers_per_arm": 2,
+  "cases": 16,
+  "counterbalance": "Each arm reviewer A gets order A; reviewer B gets the reverse order B. All reviewers see all cases once.",
+  "invocations_before_dispatch": 0,
+  "candidate_invocations": 0,
+  "adjudicator_invocations": 0,
+  "raw_auditor_invocations": 0,
+  "retries": 0,
+  "source_and_protocol_sha256": {
+    "PLAN.md": "04adccbeb6f692028270cb3e18a76f359e8e7fd7f36244433a3050a88477eaa9",
+    "blind_packet_order_a.json": "1c4d009db3eeb5fe4aec907e9ef00895fe47e28d8f621fef9039f48a72f149cf",
+    "blind_packet_order_b.json": "2dc975bd826acc3b937a099274db081e7dc3110e3e6b85b05770d338ea981592",
+    "AUDIT_PROTOCOL.md": "4e84101fb49061a1c7746e5d05df199472f720c3af8dd0d6c1cd61082524ea51",
+    "audit.py": "c0ce8284be3d0b30e5e5157517364ea87f88aee9a904012b31883b94fafdd5c2",
+    "test_audit.py": "f2918c52a89805442d74d44f7696f449ed556b4c57637c99fa1794a06b6345b9",
+    "sealed/checklist_prompt.md": "70b02631b0915e3884d841c1d8e09c3d95268b46f3bcfa88becd12713845ed35",
+    "sealed/freeform_prompt.md": "f60d60fbf740e6d4c763f2a51339d211206c33abdef46f9bea7b410b07ef45c6",
+    "sealed/perspective_prompt.md": "122822f10f7f83bccb1de15b0666400ec6b53c572505728fac85634b254a40ca",
+    "sealed/gold.json": "bf11043f0069bd605bae5b108e40ba4d241866d3b4fe4a395478c37d0fd28753",
+    "sealed/assignment_manifest.json": "24fb0c6763bcb3595ad25adcd4029ab03cc96a0b195c2bad837cdd091dea0dd2"
+  },
+  "blinding": "Reviewer prompts and gold inventory are held outside the public packet. Each reviewer receives only one arm procedure and one assigned case-order packet. Adjudicator receives anonymized arm outputs without arm mapping or gold labels.",
+  "reviewer_scope": "Six independent Codex subagent contexts from the configured model family; same-family dependence limits inference. This does not estimate human-review performance. Exact subagent model identifier was not exposed by the reviewer tool."
+}

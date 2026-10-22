@@ -1,0 +1,15 @@
+test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait) ... FAIL
+
+======================================================================
+FAIL: test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait (research.doom.test_cancel_invalidated_cover_order.CancelOrderingTests.test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\doom\test_cancel_invalidated_cover_order.py", line 79, in test_executor_cancel_is_flushed_before_planner_interrupt_ack_wait
+    self.assertTrue(terminal_inspected.is_set(), "release verification must precede planner ACK wait")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : release verification must precede planner ACK wait
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

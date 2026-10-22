@@ -1,0 +1,51 @@
+{
+  "scope": "saved-only input-to-ledger oracle; synthetic RPC usage/effect; not provider/app verification",
+  "modes": {
+    "normal": {
+      "methods": 104,
+      "new_rows": 10,
+      "mutations": [
+        {
+          "name": "lost_turn",
+          "rejected": "lost/invented turn"
+        },
+        {
+          "name": "lost_usage",
+          "rejected": "lost/invented usage"
+        },
+        {
+          "name": "false_completion",
+          "rejected": "false success"
+        },
+        {
+          "name": "invented_start_image",
+          "rejected": "lost/invented image admission"
+        }
+      ],
+      "pinned_original_rejected": "lost/invented turn"
+    },
+    "optimized": {
+      "methods": 104,
+      "new_rows": 10,
+      "mutations": [
+        {
+          "name": "lost_turn",
+          "rejected": "lost/invented turn"
+        },
+        {
+          "name": "lost_usage",
+          "rejected": "lost/invented usage"
+        },
+        {
+          "name": "false_completion",
+          "rejected": "false success"
+        },
+        {
+          "name": "invented_start_image",
+          "rejected": "lost/invented image admission"
+        }
+      ],
+      "pinned_original_rejected": "lost/invented turn"
+    }
+  }
+}

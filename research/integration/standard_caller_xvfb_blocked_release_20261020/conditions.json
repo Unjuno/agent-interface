@@ -1,0 +1,58 @@
+{
+  "schema": "agent-interface/xvfb-blocked-release-conditions-v1",
+  "captured_for": "GitHub Actions run 39376306302; PR #9225 head ce72668b596df1b67dd58db4cf26d25a10d85a5b; merged main a8013b1bd24e9d55f45318e3b8f7d4dbfb31a1f9",
+  "source": {
+    "test": "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py",
+    "test_blob": "62364f6f0678549985b286f0946e639be99299bd",
+    "workflow": ".github/workflows/runtime-x11-v1.yml",
+    "workflow_blob": "7a55cdd03b0a21f595860d8ba9166b4863008106"
+  },
+  "environment": {
+    "platform": "Linux x86_64",
+    "python": "3.12.15",
+    "xvfb_package": "2:21.1.12-1ubuntu1.9",
+    "xvfb_binary_sha256": "0081b27338b510ec5e2068a93c6db31480872de9bb082f347f3747ef1648e794",
+    "display": ":88",
+    "wslc_or_docker_allocation_used": false
+  },
+  "protocol": {
+    "held_key": "a",
+    "delayed_key": "b",
+    "xtest_delay_ms": 8000,
+    "owner_block": "python-xlib Display.sync response wait",
+    "server_stopped": false,
+    "cancel_bound_ms": 3000,
+    "terminal_bound_ms": 5000,
+    "cancel_ack_withheld_s": [
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "owner_process_trace": [
+      "default",
+      "disabled",
+      "disabled",
+      "enabled",
+      "enabled"
+    ]
+  },
+  "task_oracle": {
+    "initial_and_final_synthetic_property": [
+      1
+    ],
+    "both_keys_must_be_up_after_release": true,
+    "both_keys_must_be_up_at_delayed_request_horizon": true,
+    "delayed_b_keypress_must_be_absent": true,
+    "separate_parent_x_client": true
+  },
+  "trials": [
+    "r01/standard-mcp-xvfb-blocked-release.json",
+    "trace-comparison/standard-mcp-xvfb-cancel-retirement-no-trace-1.json",
+    "trace-comparison/standard-mcp-xvfb-cancel-retirement-no-trace-2.json",
+    "trace-comparison/standard-mcp-xvfb-cancel-retirement-trace-1.json",
+    "trace-comparison/standard-mcp-xvfb-cancel-retirement-trace-2.json"
+  ],
+  "scope": "One CI job and one private Xvfb lifetime; repeated within-job observations, not independent environment replications."
+}

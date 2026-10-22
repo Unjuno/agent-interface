@@ -1,0 +1,29 @@
+{
+  "schema": "xvfb-xlib-select-buffering-freeze-v1",
+  "allocation": "construction-diagnostic-a03",
+  "hypothesis": "query_keymap on the same Python-Xlib connection that owns a selected event window can read socket bytes into Xlib's client queue, leaving fd select unreadable even though pending X events exist",
+  "source_main_at_preregistration": "a9352dc53c783f1501046d762bc36c34bc6ab480",
+  "upstream_probe_source": "research/doom/map01_v39_xvfb_per_key_release_identity_a03_20261005/SOURCE/candidate.py",
+  "upstream_probe_branch": "research/59-v39-xvfb-release-a03-20261005",
+  "upstream_probe_head": "f5e9b78103e9ecd039020adb69c457a971138713",
+  "probe_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac",
+  "environment": {
+    "execution": "WSL Ubuntu host; private Xvfb display :189",
+    "python": "3.12.3",
+    "python_xlib": "0.33",
+    "network": "no candidate network calls",
+    "input": "synthetic XTEST only; no physical keyboard events"
+  },
+  "conditions": [
+    "select on event-owning connection before any query_keymap round trip",
+    "query_keymap on event-owning connection before select",
+    "query_keymap on separate connection before select on event-owning connection"
+  ],
+  "replicates": 1,
+  "decision_rule": "PASS_METHOD_SCOPED only if all 6 expected KeyPress/KeyRelease events (type, keycode, target window) are received and Xvfb stops; otherwise FAIL_DIAGNOSTIC_CONTRACT; setup/environment exception is STOP",
+  "scope_limit": "Xvfb/Xlib queue behavior only; no actual integrated controller, game, model, physical input, task effect, threat response, safety, recovery, or MAP01 result",
+  "prior_attempts": {
+    "a01": "STOP: diagnostic harness AttributeError('detail'); preserved in issue conversation, not retried in place",
+    "a02": "FAIL: wrong client-connection ownership; recorded MappingNotify rather than the required KeyPress/KeyRelease; its unvalidated PASS label is rejected"
+  }
+}

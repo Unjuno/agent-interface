@@ -1,0 +1,43 @@
+import copy,json
+from pathlib import Path
+OUT=Path(__file__).parent/'v39-executor-pipe-final-r2-20261016'
+def check(rows):
+ if len(rows)!=8 or len({(r['version'],r['signal'],r['unknown'],r['drop']) for r in rows})!=8:raise ValueError('coverage')
+ for r in rows:
+  if r['exit_code']!=0 or r['forced_cleanup'] or r['reader_alive'] or r['cancel_thread_alive']:raise ValueError('process cleanup')
+  if r['barrier']!=dict(cancel_thread_alive=True,planner_events=['invalidate'],terminal_seen=False):raise ValueError('terminal barrier')
+  wire=r['wire'];ready=next(w for w in wire if w['event']=='fixture_ready')
+  if ready['pid']!=r['pid'] and ready['parent_pid']!=r['pid']:raise ValueError('launcher/interpreter parent identity')
+  terminal=next(w for w in wire if w['event']=='terminal');accepted=next(w for w in wire if w['event']=='accepted')
+  if terminal['id']!=accepted['id'] or sum(w['event']=='accepted' for w in wire)!=1 or sum(w['event']=='step_started' for w in wire)!=1:raise ValueError('input custody')
+  if r['latest']['event']!='observation' or r['latest']['sequence']!=12 or r['latest']['signals']['health']['value']!=96 or r['latest']['signals']['ammo']['value']!=4:raise ValueError('fresh full source')
+  if r['unknown']:
+   if terminal['release']['verified'] is not False or terminal['release']['keys_unknown']!=['CTRL'] or terminal['input_recovery_required'] is not True:raise ValueError('unknown release')
+   if r['planner_events']!=['invalidate','abort'] or r['result']['failure']['receipt']['input_recovery_required'] is not True:raise ValueError('abort custody')
+  else:
+   release=next(w for w in wire if w['event']=='input_released')
+   if release['intent_token']!=accepted['intent_token'] or wire.index(release)>=wire.index(terminal):raise ValueError('release ordering')
+   if terminal['status']!='cancelled' or terminal['release']['verified'] is not True or r['planner_events']!=['invalidate','interrupt']:raise ValueError('terminal closure')
+  final=r['final']
+  if final['status']!=('READY_FOR_ACTION_VALIDITY' if r['drop'] else 'REJECTED_POLICY_INVALIDATED'):raise ValueError('policy status')
+  if final['input_authority_admitted'] is not False or final['executor_admission'] is not None:raise ValueError('authority')
+report={}
+for mode in ('normal','optimized'):
+ raw=json.loads((OUT/mode/'RAW.json').read_text());check(raw['rows'])
+ if raw['tests']!=len(set(raw['method_ids'])) or raw['failures'] or raw['errors'] or raw['skips']:raise ValueError('suite')
+ pids=[r['pid'] for r in raw['rows']]
+ if len(set(pids))!=8:raise ValueError('distinct processes')
+ rejected=[]
+ for name in ('early_terminal','replay','stale_frame','false_neutral','old_answer_ready','live_reader'):
+  bad=copy.deepcopy(raw['rows']);r=next(r for r in bad if not r['unknown'] and not r['drop'])
+  if name=='early_terminal':r['barrier']['terminal_seen']=True
+  elif name=='replay':r['wire'].append(next(w for w in r['wire'] if w['event']=='accepted'))
+  elif name=='stale_frame':r['latest']['sequence']=10
+  elif name=='false_neutral':next(r for r in bad if r['unknown'])['wire']=[dict(w,release=dict(w['release'],verified=True)) if w['event']=='terminal' else w for w in next(r for r in bad if r['unknown'])['wire']]
+  elif name=='old_answer_ready':r['final']['status']='READY_FOR_ACTION_VALIDITY'
+  else:r['reader_alive']=True
+  try:check(bad)
+  except ValueError as error:rejected.append(dict(name=name,reason=str(error)))
+  else:raise ValueError('contradiction accepted')
+ report[mode]=dict(tests=raw['tests'],pipe_cells=8,explicit_drop_controls=2,mutations=rejected,pids=pids)
+print(json.dumps(report,indent=2))

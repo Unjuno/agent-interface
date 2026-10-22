@@ -1,0 +1,79 @@
+{
+  "audit_status": "PASS",
+  "checks": {
+    "admission_omits_owner_id": true,
+    "admission_to_release_receipt_identity": true,
+    "all_source_hashes_and_blobs_match": true,
+    "candidate_no_error": true,
+    "container_cleaned_after_rm": true,
+    "explicit_up_unverified_by_v10": true,
+    "independent_analyzer_reconstruction": true,
+    "independent_keymap_down_then_up": true,
+    "monotonic_release_bracket_inside_lease": true,
+    "owner_close_verified_empty_and_stopped": true,
+    "same_window_keypress_keyrelease": true,
+    "wslc_exit_zero": true,
+    "xvfb_exit_zero": true
+  },
+  "container_log_sha256": "5db549513764b9621891ceb2613f49a5c6eef848af9ed4a39097ef4bd9f4a71f",
+  "experiment_decision": "FAIL_ANALYZER_BRIDGE",
+  "independent_analyzer_reconstruction": {
+    "hold_count": 0,
+    "invalid_release_count": 1,
+    "malformed_admission_count": 1,
+    "measurement_ready": false
+  },
+  "observed": {
+    "admission_receipt_valid": true,
+    "client_events": [
+      {
+        "detail": 25,
+        "observed_ns": 184861257732,
+        "type": 2,
+        "window": 2097152
+      },
+      {
+        "detail": 25,
+        "observed_ns": 184861504421,
+        "type": 3,
+        "window": 2097152
+      }
+    ],
+    "keycode": 25,
+    "keymap": {
+      "after_explicit_up": false,
+      "while_held": true
+    },
+    "owner_terminal": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "close",
+      "valid_until_ns": 194858936248,
+      "verified": true,
+      "verified_ns": 184861786470
+    },
+    "release_ordinary_candidate": true,
+    "release_owner_transition_verified": null,
+    "retained_lower_ms": 0.233664,
+    "retained_upper_ms": 0.46392,
+    "top_level_admission_owner_id": null
+  },
+  "raw_sha256": "cc70e91a26c790f5288c9b168e694da5a5d6a72442f58ca6bf029d9c9735114d",
+  "schema": "pr8857-wslc-xvfb-receipt-a18-audit-v1",
+  "scope": "One synthetic XTEST key on private Xvfb. X server/client release observed; analyzer could not form a verified per-key measurement. No physical keyboard or task-effect claim.",
+  "source_checks": {
+    "INPUT/research/doom/analyze_map01_direct_retained_input_v2.py:blob": true,
+    "INPUT/research/doom/analyze_map01_direct_retained_input_v2.py:sha256": true,
+    "INPUT/research/doom/experiment_candidate.py:sha256": true,
+    "INPUT/research/live_control/executor_v3.py:blob": true,
+    "INPUT/research/live_control/executor_v3.py:sha256": true,
+    "INPUT/research/live_control/input_owner_v10.py:blob": true,
+    "INPUT/research/live_control/input_owner_v10.py:sha256": true,
+    "INPUT/research/live_control/input_transition_owner_v3.py:blob": true,
+    "INPUT/research/live_control/input_transition_owner_v3.py:sha256": true,
+    "INPUT/research/live_control/lease.py:blob": true,
+    "INPUT/research/live_control/lease.py:sha256": true,
+    "source_contract_explains_gap": true
+  }
+}

@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_started_then_interrupted_watcher_remains_owned_and_joined (test_input_owner_cancel_v4.CancelRelayTests.test_started_then_interrupted_watcher_remains_owned_and_joined)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-15\work\repository-consolidation\research\live_control\test_input_owner_cancel_v4.py", line 131, in test_started_then_interrupted_watcher_remains_owned_and_joined
+    self.assertTrue(control._stop.is_set())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

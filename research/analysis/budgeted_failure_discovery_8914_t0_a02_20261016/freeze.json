@@ -1,0 +1,20 @@
+{
+  "issue": 8914,
+  "allocation": "8914-t0-a02-20261016",
+  "seed": 8915,
+  "worlds": ["signal", "null", "family_shift"],
+  "training_families": ["train-0", "train-1", "train-2", "train-3"],
+  "evaluation_families": ["eval-0", "eval-1", "eval-2", "eval-3"],
+  "candidate_arms": ["uniform", "metadata", "feature"],
+  "deep_attempt_budget": 200,
+  "sentinel_fraction": 0.2,
+  "eligible_shallow_trials": 2,
+  "null_world_replicates": 100,
+  "null_lift_ci": "paired bootstrap percentile 95%, seed=8915",
+  "decision": {
+    "signal_feature_discovery_strictly_exceeds_uniform": true,
+    "null_two_sided_95pct_interval_contains_zero": true,
+    "null_95pct_upper_lift_per_attempt_at_most": 0.05,
+    "all_corruption_controls_rejected": true
+  }
+}

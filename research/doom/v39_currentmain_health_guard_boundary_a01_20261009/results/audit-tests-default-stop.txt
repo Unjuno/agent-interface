@@ -1,0 +1,4 @@
+Command: python3 -m unittest test_audit.py -v
+Disposition: STOP_IMPORT_NAME_COLLISION
+
+ImportError while importing test module test_audit: its unqualified `from audit import ...` resolved to the repository-level `research/doom/audit.py`, which requires `tile_transport` absent from this sparse checkout. No candidate or auditor result was changed. The package-local auditor was then loaded by exact file path and registered as module `audit`; the mutation suite passed 4/4 in normal and optimized Python. See RUN_RECORD.json.

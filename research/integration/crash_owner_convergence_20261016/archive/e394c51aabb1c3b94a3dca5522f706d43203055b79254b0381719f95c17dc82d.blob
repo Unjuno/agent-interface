@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "active_keypress_and_keymap_before_kill": true,
+    "candidate_complete_no_errors_xvfb_clean": true,
+    "candidate_hash_matches_freeze": true,
+    "executor_child_sigkilled": true,
+    "frozen_sources_match": true,
+    "independent_keyrelease_observed_after_kill": true,
+    "owner_attempted_keyup_after_kill": true,
+    "owner_release_receipt_verified_and_empty": true,
+    "owner_thread_stopped": true,
+    "surviving_supervisor_observed_eof_before_close": true,
+    "x_keymap_up_after_owner_close": true
+  },
+  "decision": "PASS_METHOD_SCOPED",
+  "schema": "v39-executor-hardkill-supervised-a04-audit-v1",
+  "scope": "single SIGKILLed Executor child with resident supervisor/InputOwner in isolated Xvfb; not production topology",
+  "timing_ns": {
+    "key_up_verified": 215236578924,
+    "owner_close_returned": 215236726320,
+    "owner_close_started": 215235799999,
+    "owner_keyrelease": 215235960332,
+    "rpc_eof": 215234922706,
+    "worker_kill": 215234641706,
+    "x_keypress": 215234345889,
+    "x_keyrelease_observed": 215236195879
+  }
+}

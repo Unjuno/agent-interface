@@ -1,0 +1,64 @@
+{
+  "schema": "v39-v15-process-owner-xvfb-a31-audit-v1",
+  "allocation_id": "V39-V15-PROCESS-OWNER-XVFB-A31-20261012-01",
+  "status": "STOP_STDOUT_NONJSON_XAUTH_WARNING",
+  "candidate_invocations": 1,
+  "retries": 0,
+  "frozen_hashes_match": true,
+  "hash_checks": {
+    "research/doom/v39_v15_process_owner_xvfb_a31_20261012/candidate.py": {
+      "match": true,
+      "expected": "22b48bda4d82d6d8846a592aaae5ec3225713a53335cfd4019195b62e0fd7195",
+      "actual": "22b48bda4d82d6d8846a592aaae5ec3225713a53335cfd4019195b62e0fd7195"
+    },
+    "research/doom/v39_v15_process_owner_xvfb_a31_20261012/PLAN.md": {
+      "match": true,
+      "expected": "9a44d547875cf1edf7d6e7886f57ab474d35afaf04ab6692419f6bfbc2257a31",
+      "actual": "9a44d547875cf1edf7d6e7886f57ab474d35afaf04ab6692419f6bfbc2257a31"
+    },
+    "research/doom/v39_v15_process_owner_xvfb_a31_20261012/run_candidate.sh": {
+      "match": true,
+      "expected": "28e07eb1473c91180183a567887788e3ce2075e0bb7c50adef1c947e1ca2fb05",
+      "actual": "28e07eb1473c91180183a567887788e3ce2075e0bb7c50adef1c947e1ca2fb05"
+    },
+    "research/doom/doom_controller_failure_cleanup_v1.py": {
+      "match": true,
+      "expected": "71090a40848f5bc2dff39f50cd114669d67255fb2852046fb71280fe1154bc46",
+      "actual": "71090a40848f5bc2dff39f50cd114669d67255fb2852046fb71280fe1154bc46"
+    },
+    "research/live_control/input_owner_process_v1.py": {
+      "match": true,
+      "expected": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050",
+      "actual": "7012aeaaf0dc092eb20ea3424bab84916fbdd4abca8ca441190176d25d2a6050"
+    },
+    "research/doom/doom_owner_thread_release_batch_backend_process_v1.py": {
+      "match": true,
+      "expected": "51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9",
+      "actual": "51e4d138c2438d2e69747e5bbaf56cb3b2bcd536a503e2dad2643bdb31ec24d9"
+    },
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": {
+      "match": true,
+      "expected": "2df84b632456388a488f2595347b6b37def29f66b47f97a44d89ed5c11b8d418",
+      "actual": "2df84b632456388a488f2595347b6b37def29f66b47f97a44d89ed5c11b8d418"
+    }
+  },
+  "raw_sha256": "df41b9c2436c0a823476cffa2601e2943d785e9564f87053e1b82192e85d2f79",
+  "candidate_error": {
+    "message": "process-owner ready event deadline",
+    "type": "TimeoutError"
+  },
+  "diagnostics": {
+    "child_poll_at_ready_timeout": null,
+    "errors": [
+      "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    ],
+    "events": [],
+    "reader_errors_at_ready_timeout": [
+      "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    ],
+    "stdout_lines": [
+      "Xlib.xauth: warning, no xauthority details available"
+    ]
+  },
+  "decision": "Preserve as STOP; no retry under this allocation."
+}

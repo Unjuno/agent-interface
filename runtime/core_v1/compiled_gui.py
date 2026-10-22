@@ -180,17 +180,31 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
     observations = []
     critical_events = []
     unresolved_execution = None
+    execution_attempted = False
+    journal_failure_type = None
 
     def emit(event):
+        nonlocal journal_failure_type
         row = copy.deepcopy(event)
-        # The sink may format or retain its payload; keep receipt evidence private.
-        journal(copy.deepcopy(row))
         if row["event"] in {"branch_selected", "admission_refused",
                             "action_terminal", "effect_checked",
-                            "cancellation_check_failed", "runtime_finished"}:
+                            "cancellation_check_failed", "effect_verification_failed",
+                            "runtime_finished"}:
             critical_events.append(row)
+        if journal_failure_type is not None:
+            return
+        try:
+            # Sink mutation cannot rewrite private returned evidence.
+            journal(copy.deepcopy(row))
+        except Exception as error:
+            if not execution_attempted:
+                # Preserve the existing pre-dispatch callback contract.
+                raise
+            journal_failure_type = type(error).__name__
 
     def finish(outcome, reason):
+        if journal_failure_type is not None:
+            outcome, reason = "RUNTIME_FAILED", "execution_failed"
         ended = clock()
         receipt = {
             "format": "compiled-gui-runtime-receipt-v1",
@@ -216,6 +230,14 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         final_event = {"event": "runtime_finished", "outcome": outcome,
                        "reason": reason, "completed_transitions": len(transitions)}
         emit(final_event)
+        if journal_failure_type is not None:
+            # A terminal sink can fail even when another failure already set
+            # RUNTIME_FAILED. Retain both facts and never retry that sink.
+            receipt["outcome"], receipt["reason"] = "RUNTIME_FAILED", "execution_failed"
+            critical_events[-1] = {"event": "runtime_finished", "outcome": "RUNTIME_FAILED",
+                                  "reason": "execution_failed", "completed_transitions": len(transitions)}
+            critical_events.insert(-1, {"event": "journal_write_failed",
+                                       "error_type": journal_failure_type})
         receipt["critical_events"] = critical_events
         if unresolved_execution is not None:
             receipt["unresolved_execution"] = unresolved_execution.copy()
@@ -243,6 +265,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return stopped
         if clock() >= deadline:
             return finish("SAFE_YIELD", "budget_exhausted")
+        observation_started_ns = clock()
         try:
             raw = adapters["observe"]({"state": state,
                                         "required_predicates": interface["predicates"].copy()})
@@ -255,7 +278,7 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             # observation. Return the verified prefix and never infer a branch.
             return finish("RUNTIME_FAILED", "observation_failed")
         observation, refusal = _observation(raw, interface, previous_sequence)
-        # Retain validated observation fields before the supplied clock callback.
+        # The parsed observation is privately copied before invoking the supplied clock.
         observed_ns = clock()
         if refusal:
             return finish("SAFE_YIELD", refusal)
@@ -264,17 +287,29 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                  observation["captured_ns"] < effect_not_before_ns)):
             return finish("SAFE_YIELD", "stale_observation")
         previous_sequence = observation["sequence"]
-        observations.append({key: copy.deepcopy(observation[key]) for key in
+        observations.append({**{key: copy.deepcopy(observation[key]) for key in
                              ("sequence", "captured_ns", "evidence_ref",
-                              "evidence_digest", "predicates")})
+                              "evidence_digest", "predicates")},
+                             "observation_started_ns": observation_started_ns,
+                             "observation_accepted_ns": observed_ns})
         emit({"event": "observation_recorded", "state": state,
               "sequence": observation["sequence"],
               "evidence_ref": observation["evidence_ref"]})
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
 
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
 
         if pending_effect is not None:
+            effect_timing = {
+                "action_id": transitions[-1]["action_id"],
+                "execution_accepted_ns": transitions[-1]["execution_accepted_ns"],
+                "effect_observation_captured_ns": observation["captured_ns"],
+                "effect_observation_accepted_ns": observed_ns,
+                "effect_verification_started_ns": None,
+                "effect_verification_accepted_ns": None,
+            }
             if observation["evidence_digest"] == previous_digest:
                 return finish("SAFE_YIELD", "no_progress")
             expected = pending_effect["expected_effect"]
@@ -289,22 +324,33 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
                 status = "unavailable" if unknown else "failed"
                 emit({"event": "effect_checked", "action": pending_effect["action"],
                       "status": status, "evidence_ref": observation["evidence_ref"],
-                      "verifier": "compiled_predicate_condition"})
+                      "verifier": "compiled_predicate_condition", **effect_timing})
                 return finish("SAFE_YIELD", "effect_" + status)
-            effect = adapters["verify_effect"]({
-                "expected_effect": copy.deepcopy(expected),
-                "action": pending_effect["action"],
-                "effect_ref": pending_effect["effect_ref"],
-                "observation": copy.deepcopy(observation),
-            })
+            effect_timing["effect_verification_started_ns"] = clock()
+            try:
+                effect = adapters["verify_effect"]({
+                    "expected_effect": copy.deepcopy(expected),
+                    "action": pending_effect["action"],
+                    "effect_ref": pending_effect["effect_ref"],
+                    "observation": copy.deepcopy(observation),
+                })
+            except Exception as error:
+                effect_timing["effect_verification_accepted_ns"] = clock()
+                emit({"event": "effect_verification_failed", "action": pending_effect["action"],
+                      "error_type": type(error).__name__, **effect_timing})
+                return finish("RUNTIME_FAILED", "effect_unavailable")
             _exact(effect, {"status", "evidence_ref"}, "effect verdict")
             effect = effect.copy()
             if effect["status"] not in {"succeeded", "failed", "unavailable"}:
                 raise ValueError("typed effect status required")
             if effect["status"] == "succeeded":
                 _name(effect["evidence_ref"], "effect evidence reference")
+            effect_timing["effect_verification_accepted_ns"] = clock()
             emit({"event": "effect_checked", "action": pending_effect["action"],
-                  "status": effect["status"], "evidence_ref": effect["evidence_ref"]})
+                  "status": effect["status"], "evidence_ref": effect["evidence_ref"],
+                  **effect_timing})
+            if journal_failure_type is not None:
+                return finish("RUNTIME_FAILED", "execution_failed")
             if effect["status"] != "succeeded":
                 reason = "effect_failed" if effect["status"] == "failed" else "effect_unavailable"
                 return finish("SAFE_YIELD", reason)
@@ -327,6 +373,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
               "outcome": branch["outcome"], "action": branch["action"],
               "matched_conditions": copy.deepcopy(branch["when"]),
               "evidence_ref": observation["evidence_ref"]})
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
         if branch["outcome"] == "complete":
@@ -380,6 +428,8 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             return stopped
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
+        execution_attempted = True
+        execution_started_ns = clock()
         terminal = adapters["execute"]({
             "action": action_name,
             "operation": action["operation"],
@@ -428,10 +478,12 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
         # Retain terminal scalars and release decisions before another supplied
         # callback can mutate the adapter's returned dictionaries or lists.
         # Sampling after local validation is a conservative effect lower bound.
-        execution_finished_ns = clock()
+        execution_accepted_ns = clock()
         emit({"event": "action_terminal", "action": action_name,
               "status": terminal["status"], "action_id": terminal["action_id"],
-              "release_verified": released, **delivery})
+              "release_verified": released,
+              "execution_started_ns": execution_started_ns,
+              "execution_accepted_ns": execution_accepted_ns, **delivery})
         # An explicitly attested pre-input refusal has no new release receipt.
         # Stop without inventing neutrality, a completed action or a replay.
         # Unknown delivery and reported held input keep the stricter failure path.
@@ -455,12 +507,16 @@ def run(interface, adapters, *, clock=time.perf_counter_ns):
             "action_id": terminal["action_id"],
             "effect_ref": terminal["effect_ref"],
             "release_verified": True,
+            "execution_started_ns": execution_started_ns,
+            "execution_accepted_ns": execution_accepted_ns,
         })
         pending_effect = {"action": action_name,
                           "expected_effect": copy.deepcopy(action["expected_effect"]),
                           "effect_ref": terminal["effect_ref"]}
-        effect_not_before_ns = execution_finished_ns
+        effect_not_before_ns = execution_accepted_ns
         previous_digest = observation["evidence_digest"]
         state = branch["next_state"]
+        if journal_failure_type is not None:
+            return finish("RUNTIME_FAILED", "execution_failed")
         if expired():
             return finish("SAFE_YIELD", "budget_exhausted")
