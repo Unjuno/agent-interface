@@ -124,8 +124,10 @@ neutral readback from a separately bounded observer child. Both children are
 identity-checked and use the same absolute deadline with time reserved for
 terminate/kill/reap. An unresolved producer, recovery child, receipt or
 observer stays UNKNOWN, with replay denied and task success unset. Its tests
-cover duplicate cancel, cancel-before-producer-registration, blocked recovery
-and blocked observer; the focused spawned-process suite passes 4/4 in normal
+cover pre- and post-acceptance blocks, duplicate cancel,
+cancel-before-producer-registration, unretired producer, blocked recovery,
+blocked observer, recovery identity mismatch, missing recovery IPC receipt and
+wrong-operation receipt; the focused spawned-process suite passes 9/9 in normal
 and optimized mode. The owner suite passes 7/7 in both.
 
 This validates only Python process ordering with inert shared test state. The
@@ -133,9 +135,10 @@ recovery/observer factories, native input adapter, public MCP caller, task
 oracle and real Windows `SendInput` behavior are not integrated or qualified.
 Child termination does not retract an already accepted OS input event and
 neither helper scheduling nor native effect is a hard real-time bound.
-Continue 2a with adversarial IPC, deadline, identity and observer failure cases
-before caller composition; do not count these tests as evidence of bounded
-input release.
+Remaining 2a work is before/after-accept fake input ordering, replay and
+overlapping-dispatch composition, and any adversarial receipt shape not already
+covered by these tests. Complete that crosswalk before caller composition; do
+not count these tests as evidence of bounded input release.
 
 Do not solve a blocked native call by calling `release_all()` from a second
 thread/process while the original producer may still emit input. The owner must
