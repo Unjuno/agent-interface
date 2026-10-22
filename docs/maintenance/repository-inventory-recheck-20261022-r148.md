@@ -23,3 +23,12 @@ disposition, exact-current PR readiness, owner, assignment, or artifact
 custody. Re-fetch each touched record before a later state change. This batch
 did not use WSLc or Docker; the already completed WSLc experiment inside #8845
 was not repeated.
+
+## Post-PR #9390 membership equivalence read
+
+After docs-only PR #9390 merged at `38b3d2f1c42b568851827cc969a242104f328366`,
+the complete open Issue and PR sets were fetched again with the same main SHA
+before and after. Both counts and every ID exactly matched r148 (1,654 Issues,
+452 PRs). #9390 has no closing Issue references; it opened and merged between
+the two reads, so it caused no net membership change. No research Issue was
+closed by PR #9390.

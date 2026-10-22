@@ -128,15 +128,14 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #8845 (2026-10-22)
+## Current execution checkpoint after PR #9390 (2026-10-22)
 
-Current main is `55ea8e991cd97a87c4a09016cec78caf821e92e7` (evidence-only
-merge of PR #8845). The complete [r148 membership recheck](maintenance/repository-inventory-recheck-20261022-r148.md)
-records 1,654 open Issues and 452 open PRs at a stable before/after SHA. The
-Issue ID set exactly matches r145; the PR set equals r145 minus merged #8845.
-The exact ID CSVs and byte hashes are retained in r148. Membership is routing
-metadata only; it does not establish semantic disposition, ownership, custody,
-or merge readiness.
+After docs-only PR #9390, a full membership reread at stable main
+`38b3d2f1c42b568851827cc969a242104f328366` exactly matched [r148](maintenance/repository-inventory-recheck-20261022-r148.md):
+1,654 open Issues and 452 open PRs. The Issue ID set matches r145; the PR set
+equals r145 minus merged #8845. The r148 receipt retains the full exact ID CSVs
+and Git-blob hashes. Membership is routing metadata only; it does not establish
+semantic disposition, ownership, custody, or merge readiness.
 
 PR #9389 narrows one saturated-relay boundary: at the 16-response cap a
 cancellation can pass one deferred ordinary request, consume one separately
@@ -158,14 +157,17 @@ difference, not proof of a defect or live MAP01 behavior. The packet is indexed
 in the [MAP01 family crosswalk](ideas/map01-live-guard-evidence-family.md);
 Issue #59 remains open.
 
-**Next repository-convergence batch:** choose one exact open PR with a unique
-evidence or merge decision, refresh its live head/base, linked Issue, full diff,
-checks and custody, then locally validate that exact source. A disjoint idea
-family or high-risk custody slice may proceed in its own paths. Do not select
-records by age/count, close research to empty the queue, or delete unknown-
-custody work. Preserve active computer-control gates (#17/#57 and platform-
-specific work) until evidence supports a scoped disposition. This batch used
-no WSLc allocation.
+**Next repository-convergence batch: PR #8800 / Issue #59 A14 custody.** The
+2026-10-22 live read found PR #8800 OPEN, non-Draft, base `main`, exact head
+`bf77bc4c1905bd99a5a99a138e897eededddd834`, replay-gate PASS, and no closing
+Issue references. Its body says the raw protocol and images remain local; the
+family crosswalk identifies `episode/report.json` as absent from the tracked
+packet. Resolve whether those exact originals and their recovery path can be
+verified against the frozen A14 records. Do not rerun A14. If custody remains
+unavailable, keep the PR open on that specific hold and preserve the first
+result. Then choose a disjoint exact-head PR, idea-family, or custody slice.
+Do not select records by age/count, close research to empty the queue, or
+delete unknown-custody work. This batch used no WSLc allocation.
 
 The following PR #9379 checkpoint is historical context, not a current source
 pointer.
