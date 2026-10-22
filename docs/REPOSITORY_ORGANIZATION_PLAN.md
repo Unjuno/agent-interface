@@ -128,7 +128,28 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9390 (2026-10-22)
+## Additive integration checkpoint after PR #9393 (2026-10-22)
+
+PR #9393 merged to main at `c0f2f6a1e7e0694b22c59bba45fd323d261fff24`.
+It adds an offline adapter from one persistent Codex App Server turn to the
+existing provider-attempt recorder and public-MCP caller, plus composed Fake X
+success and stale-generation refusal cases. On this exact merge commit, the
+related ledger/recorder/provider/public-caller suite passes 42/42 in normal and
+optimized Windows CPython 3.11.9; the deterministic replay-gate passes.
+Issue #57 was updated with the measured scope and remains OPEN. The work proves
+neither production provider routing nor upstream usage reconciliation, live
+desktop/MAP01 effect, blocked-platform-I/O release, matched efficiency, or
+reliability.
+
+This is a code/evidence checkpoint, not a new complete Issue/PR membership
+census or semantic disposition. [r148](maintenance/repository-inventory-recheck-20261022-r148.md)
+remains the last full membership receipt at main `38b3d2f1c42b568851827cc969a242104f328366`;
+refresh live membership and any touched record before queue or state changes.
+No WSLc allocation was used. The [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+remains the current design/qualification record; no duplicate design document
+was introduced.
+
+## Earlier full-inventory checkpoint after PR #9390 (2026-10-22)
 
 After docs-only PR #9390, a full membership reread at stable main
 `38b3d2f1c42b568851827cc969a242104f328366` exactly matched [r148](maintenance/repository-inventory-recheck-20261022-r148.md):
