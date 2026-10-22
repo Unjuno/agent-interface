@@ -1,0 +1,81 @@
+{
+  "study": "paced_text_overlap_57_e0cc_20261007",
+  "kind": "new native engineering construction",
+  "source_ref": "dae92e12097907e860f68d6ee22a10cb23ace442",
+  "cases": [
+    {
+      "id": "held_a_unpaced",
+      "held": "a",
+      "text": "ba",
+      "gap_ms": 0,
+      "expected_status": "execution_failed",
+      "expected_text": "a"
+    },
+    {
+      "id": "held_a_paced",
+      "held": "a",
+      "text": "ba",
+      "gap_ms": 20,
+      "expected_status": "execution_failed",
+      "expected_text": "ab"
+    },
+    {
+      "id": "unheld_unpaced",
+      "held": null,
+      "text": "ba",
+      "gap_ms": 0,
+      "expected_status": "completed",
+      "expected_text": "ba"
+    },
+    {
+      "id": "unheld_paced",
+      "held": null,
+      "text": "ba",
+      "gap_ms": 20,
+      "expected_status": "completed",
+      "expected_text": "ba"
+    },
+    {
+      "id": "held_shift_unpaced",
+      "held": "SHIFT",
+      "text": "AB",
+      "gap_ms": 0,
+      "expected_status": "completed",
+      "expected_text": "AB"
+    },
+    {
+      "id": "held_shift_paced",
+      "held": "SHIFT",
+      "text": "AB",
+      "gap_ms": 20,
+      "expected_status": "completed",
+      "expected_text": "AB"
+    }
+  ],
+  "rules": {
+    "invocations_per_case": 1,
+    "fresh_authenticated_xvfb_per_case": true,
+    "xvfb_tcp": false,
+    "xvfb_autorepeat": false,
+    "maximum_cell_wall_seconds": 15,
+    "maximum_run_wall_seconds": 120,
+    "evidence": "Exact source identities, core admission, native XTEST request journal, independent Tk content/events, separate observer keymaps, execution receipt, neutral final inputs and child exits.",
+    "decision": "SUPPORT_NATIVE_PREFIX_COUNTEREXAMPLE only if all six first records satisfy the declared observations and independent cleanup/process/source gates. Missing or inconsistent evidence is HOLD/FAIL; no replacement or retry of a consumed cell.",
+    "uncertainty": "Synthetic Tk effect only; no full CLI/MCP, model, physical keyboard, game, user task completion, efficiency, reliability population or current-main runtime adoption claim. One case per condition."
+  },
+  "runtime": {
+    "selected": "dedicated isolated OrbStack VM with systemd transient service",
+    "docker_setup": "Private Docker image build stopped before input: nested OCI cgroup BPF_CGROUP_DEVICE operation not permitted; first logs retained. Shared Docker image enumeration also failed; no daemon settings/privilege changes attempted.",
+    "effective_gate": {
+      "cpu_quota_fraction": 1,
+      "memory_bytes": 536870912,
+      "swap_bytes": 0,
+      "tasks": 128,
+      "uid": 501,
+      "network": "PrivateNetwork; loopback only active; other links allowed only DOWN/unaddressed, no IPv4 routes",
+      "source": "Root-owned /opt/paced-src, directories 0555/files 0444; verified unwritable by UID 501. ProtectSystem/PrivateTmp mount isolation is not claimed effective on this nested guest."
+    },
+    "vm_id": "01M4BD6K3B8BGXMVYA7RMM128R",
+    "preparation_failures": "Initial two import-closure failures, then observed study UID 501 instead of assumed 1000, then detected ineffective ProtectSystem. No Xvfb or input started. All first preparation records retained; source moved to root-owned /opt/paced-src before freeze."
+  }
+}
