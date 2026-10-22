@@ -128,7 +128,32 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9370 (2026-10-22)
+## Current execution checkpoint after PR #9373 (2026-10-22)
+
+Current main is `0ba19dc885d9531e6fc21c5ea9e26a624fb25bca` (PR #9373). The
+complete [r146 membership recheck](maintenance/repository-inventory-recheck-20261022-r146.md)
+records 1,654 open Issues and 453 open PRs. Both full ID sets were re-read
+before and after at the same main SHA and compared row-for-row with r145; no
+membership changed. The exact ID CSVs and hashes remain in r145, linked from
+the r146 receipt. Membership is not semantic disposition, PR readiness,
+ownership, or custody.
+
+PR #9373 aligned the root README and docs index with this organization plan as
+the single current execution pointer; the cleanup plan and consolidation
+record remain detailed receipts/history. The older r145 checkpoint below is
+historical. Its named next candidate, PR #8819 / Issue #8493, was already
+merged/closed before r145: the method-scoped result is in main, and the exact
+live states are `MERGED` and `CLOSED`. Do not reopen or rerun that completed
+finite result. The next cleanup batch must select a different item from r146's
+live sets and refresh that item's exact head/state/owner before disposition.
+
+The computer-control execution boundary remains the one recorded below: the
+selected supervisor design already exists; the live-Xvfb bystander negative
+path and broader release/effect/recovery/efficiency gates remain distinct.
+Keep experimental runtime behavior opt-in and do not use WSLc/Docker while
+Issue #7924's shared ownership STOP/HOLD remains in force.
+
+## Historical execution checkpoint after PR #9370 (2026-10-22)
 
 Current main is `dcc9e9ed4688b8b9dda71156e50b054b2a88297b` (PR #9370). The
 complete [r145 membership recheck](maintenance/repository-inventory-recheck-20261022-r145.md)
@@ -205,10 +230,11 @@ Windows behavior, physical release, task-effect, or reliability evidence.
 Issue #17, #57, and #7924 remain OPEN; the Win32 design remains a proposal and
 the runtime supervisor stays opt-in.
 
-The next bounded candidate is open PR #8819 for Issue #8493, an independent
-finite-model temporal-regime result. Refresh its exact head/base, unique raw
-packet hashes, current-main conflict state, and relation to predecessor #8152
-before disposition. No WSLc/Docker allocation was used.
+The prior draft of this plan incorrectly listed PR #8819 / Issue #8493 as the
+next candidate even though its result had already been integrated by PR #8819
+and the Issue closed. The r146 checkpoint above corrects that stale pointer;
+the completed result and its finite-model limits remain in the linked report
+and Issue record. No WSLc/Docker allocation was used.
 
 ## Historical execution checkpoint after PR #9356 (2026-10-22)
 
