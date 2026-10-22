@@ -145,12 +145,14 @@ injected model call and remains synthetic. The live provider route and external
 usage reconciliation remain open under #57.
 
 The selected [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
-already exists as the canonical design/evidence page. Do not create a duplicate
-spec. Its operation-owner candidate remains unqualified: Win32 blocked-call
-packets use inert API fakes, while the X11 source audit leaves accepted-request
-effects during server unavailability unresolved. Keep runtime behavior
-experimental/default-off, and use only separately verified WSLc allocations;
-#7924 still records STOP/HOLD for shared ownership.
+already exists as the canonical design/evidence page; its new
+[qualification crosswalk](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md#qualification-crosswalk-and-current-decision-2026-10-22)
+maps existing tests and retained outcomes to the open requirements. Do not
+create a duplicate spec. Its operation-owner candidate remains unqualified:
+Win32 blocked-call packets use inert API fakes, while the X11 source audit
+leaves accepted-request effects during server unavailability unresolved. Keep
+runtime behavior experimental/default-off, and use only separately verified
+WSLc allocations; #7924 still records STOP/HOLD for shared ownership.
 
 The following PR #9373 checkpoint and r146 inventory details are retained as
 historical context, not current membership or source pointers.
@@ -404,7 +406,7 @@ The retained [R02 standard-caller Xvfb result](../research/integration/standard_
 The result remains one schedule with the owner blocked in `Display.sync()` while the X server can serve the supervisor; whole-server unavailability, physical desktop/MAP01, owner-exclusive XTest state, matched efficiency, and reliability remain unqualified. Its independent task oracle is synthetic, and the canceled operation still has `task_success=null`, `release_confirmed=false`, and replay denied. No WSLc allocation was used.
 
 
-The independent [R02 raw/source audit](../research/audits/standard_caller_xvfb_r02_raw_audit_20261022_r01/README.md) verified all 17 raw hashes and five runtime source hashes, then reconstructed the 252.924 ms caller response, 324.791 ms supervisor readback, 379.339 ms parent-client readback, and 8.501 s delayed-request horizon from the raw JSON. It also checked distinct target/session/process-generation values and the fresh synthetic task oracle. This confirms the retained one-run outcome and does not add a second sample.
+The retained [R02 experiment packet](../research/integration/standard_caller_xvfb_current_main_20261022/prestarted-fresh-recovery-02/README.md) records the 252.924 ms caller response, 324.791 ms supervisor readback, 379.339 ms parent-client readback, and 8.501 s delayed-request horizon, along with its raw files and manifests. This is one retained outcome; no separate raw/source audit file is present in the current checkout, so none is claimed here.
 
 ## Current-main R03 Xvfb repeat (2026-10-22)
 
