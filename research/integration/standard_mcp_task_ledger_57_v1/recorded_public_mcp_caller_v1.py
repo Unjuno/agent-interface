@@ -31,6 +31,31 @@ class RecordedPublicMcpCaller:
         return await self.recorder.invoke_async(
             attempt_id, request_bytes, provider_call)
 
+    async def invoke_generation_to_tool(self, attempt_id, request_bytes,
+                                       provider_call, call_id, method,
+                                       prepare_arguments):
+        """Run one provider generation, then conditionally submit its tool call.
+
+        ``prepare_arguments`` runs only after the provider terminal record is
+        durable. A non-completed attempt or missing response bytes is retained
+        without submitting a tool call. This sequences the supplied outer
+        provider invocation; it does not enumerate hidden provider retries.
+        """
+        generation = await self.invoke_provider(
+            attempt_id, request_bytes, provider_call)
+        if (not isinstance(generation, dict) or
+                generation.get("status") != "completed" or
+                not isinstance(generation.get("response_bytes"), bytes)):
+            return {"generation": generation, "tool_response": None,
+                    "tool_call_submitted": False}
+        arguments = prepare_arguments(generation["response_bytes"])
+        if not isinstance(arguments, dict):
+            raise TypeError("prepared public MCP arguments must be an object")
+        response = await self.call_tool(
+            attempt_id, call_id, method, arguments)
+        return {"generation": generation, "tool_response": response,
+                "tool_call_submitted": True}
+
     async def call_tool(self, attempt_id, call_id, method, arguments):
         """Record the exact JSON request/response envelopes around Relay.request."""
         request = {"id": self.relay.next_id, "tool": method,

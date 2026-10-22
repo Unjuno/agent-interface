@@ -21,6 +21,38 @@ from runtime.cli_v1.test_mcp_owned_process import (
 
 
 class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
+    async def test_failed_provider_generation_is_not_sent_to_public_relay(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class RejectingRelay:
+                next_id = 1
+
+                async def request(self, _request_bytes):
+                    raise AssertionError("failed generation must not reach Relay")
+
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+
+            async def failed_provider():
+                return {"status": "failed",
+                        "usage": {"status": "unavailable",
+                                  "input_tokens": None,
+                                  "output_tokens": None},
+                        "response_bytes": None}
+
+            result = await caller.invoke_generation_to_tool(
+                "generation-failed", b"provider-request", failed_provider,
+                "tool-after-failure", "interface_guarded_compiled", json.loads)
+
+            self.assertFalse(result["tool_call_submitted"])
+            self.assertEqual(result["generation"]["status"], "failed")
+            receipt = recorder.reconcile()
+            summary = summarize(receipt["events"])
+            self.assertTrue(receipt["complete"])
+            self.assertEqual(summary["model_attempt_count"], 1)
+            self.assertEqual(summary["tool_call_count"], 0)
+
     async def test_fake_provider_image_and_stale_generation_roundtrip_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -83,17 +115,21 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                                       "output_tokens": 12},
                             "response_bytes": generated_request}
 
-                generation = await caller.invoke_provider(
-                    "generation-stale-relay", provider_request, fake_provider)
+                def prepare_arguments(response_bytes):
+                    # This callback runs after the provider terminal receipt but
+                    # before standard Relay admission.
+                    (server_root / "fake-process-generation").write_text(
+                        "b" * 64, encoding="utf-8")
+                    return json.loads(response_bytes)
+
+                composed = await caller.invoke_generation_to_tool(
+                    "generation-stale-relay", provider_request, fake_provider,
+                    "compiled-stale-relay", "interface_guarded_compiled",
+                    prepare_arguments)
+                generation = composed["generation"]
                 self.assertEqual(generation["response_bytes"], generated_request)
 
-                # Invalidate the exact process generation after model wait and
-                # before the standard relay admits the generated action.
-                (server_root / "fake-process-generation").write_text(
-                    "b" * 64, encoding="utf-8")
-                response = await caller.call_tool(
-                    "generation-stale-relay", "compiled-stale-relay",
-                    "interface_guarded_compiled", json.loads(generated_request))
+                response = composed["tool_response"]
                 result = json.loads(response["result"]["content"][0]["text"])
                 self.assertEqual(response["status"], "returned")
                 self.assertEqual(result["method_receipt"]["outcome"], "SAFE_YIELD")

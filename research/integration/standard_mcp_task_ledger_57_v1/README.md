@@ -100,7 +100,10 @@ entry point with the existing deterministic Fake X owner. The additive
 [`recorded_public_mcp_caller_v1.py`](recorded_public_mcp_caller_v1.py) adapter
 now supplies the reusable provider-attempt and public-Relay call boundaries
 used by the image/stale-generation composition cell; it persists each tool
-request before `Relay.request` and retains the complete returned envelope.
+request before `Relay.request` and retains the complete returned envelope. Its
+`invoke_generation_to_tool` path submits only completed generations with
+captured response bytes; a failed generation is durably recorded without a
+tool submission.
 This is a research composition adapter, not an automatic hook in the frozen
 integrated-efficiency runner or every production provider/orchestrator. The
 success cell joins the generation-bound profile request to the tool receipt,
