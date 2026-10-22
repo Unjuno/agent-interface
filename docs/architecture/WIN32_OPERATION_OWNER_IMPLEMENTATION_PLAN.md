@@ -98,6 +98,31 @@ selection unchanged and fail closed if the selected backend and recovery
 adapter disagree. Do not change the default backend or report a live release
 result from these tests.
 
+#### Approved implementation slice and file boundaries
+
+The next implementation slice is a **synthetic-only public-caller composition**.
+It does not enable native input, claim bounded release, or touch the WSLc
+allocation. Implement in this order, stopping on the first failing invariant:
+
+| Step | Intended code boundary | Required result |
+| --- | --- | --- |
+| 2a. Owner contract | New `runtime/guarded_win32_v1/operation_owner.py`; keep the inert research prototype as immutable evidence, not imported runtime code. | A spawn-safe parent owner admits one operation ID and immutable target-generation digest; owns monotonic operation/deadline state; closes admission before cancellation; treats missing/late receipts as UNKNOWN; does not launch compensating input while producer retirement is unresolved. Inject process factory, clock and observer so unit tests cannot reach native APIs. |
+| 2b. Caller adapter | New `runtime/cli_v1/owned_win32_session.py`, implementing the narrow owner/session operations consumed by `register_guarded_tools`; do not subclass or select the X11-specific `OwnedGuardedSessionOwner`. | Retain original action and cancellation as separate records; preserve pending/terminal retrieval through `interface_results`; cancellation returns within the caller bound while its one owner operation retains custody; fresh operation IDs never mutate old UNKNOWN receipts. |
+| 2c. Explicit route | `runtime/cli_v1/mcp_server.py` plus its focused tests. Add an opt-in `guarded-win32` route with explicit Windows-target construction and dependency-injected owner factory. Keep `guarded-x11`, its XRes worker selection and defaults byte-for-byte behaviorally unchanged. Reject the route on non-Windows hosts or invalid HWND/owner identity before admission. |
+| 2d. Composition and regression | New focused caller-composition tests beside `runtime/cli_v1/test_mcp_owned_process.py`; retain bridge checks in `runtime/guarded_win32_v1/test_compiled_core_composition.py`. | Drive a changed target generation during model wait, blocked child cancellation, delayed/lost IPC, overlapping dispatch, recovery failure, observer timeout, and a distinct fresh target. Assert returned MCP receipt, child lifecycle, fake input log/state, separate effect oracle, exact attempt count and completed prefix. Run normal and `python -O`; rerun existing Win32 and X11 owner tests locally. |
+
+Do not solve a blocked native call by calling `release_all()` from a second
+thread/process while the original producer may still emit input. The owner must
+establish producer retirement before any compensating sender is admitted. If
+the process boundary cannot safely contain a blocked `SendInput`, the composed
+result stays UNKNOWN and the route remains opt-in/disabled pending the native
+gate. Do not reinterpret a fake observer or a bridge-local effect callback as
+an independent application oracle.
+
+The caller integration is accepted only when all step 2d assertions pass on
+the same frozen source and the existing guarded-X11 regression suite remains
+green. This is a plan gate, not evidence that steps 2a–2d have been implemented.
+
 ### Phase 3: isolated native discriminator
 
 Before native input, require an identified disposable Windows target, a
