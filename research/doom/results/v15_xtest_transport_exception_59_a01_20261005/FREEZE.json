@@ -1,0 +1,31 @@
+{
+  "base": "d9bb339b0ba9285cdef57fc347437d25e5943ef1",
+  "competing_explanation": "The first attempt failed during setup because sync injection was armed before key-down; this was a harness setup defect, not candidate behavior. The corrected run arms injection only after both keys are held.",
+  "decision": "Finding reproduced if each injection raises from up_batch after only the first original KeyRelease, with no explicit keyup receipts before cleanup; cleanup recovery is reported separately.",
+  "environment": {
+    "mode": "native local process; CPU-only; Fake X; no GUI/game/input/container/GPU",
+    "os": "Windows 10 build 26200.9550",
+    "python": "3.12.10",
+    "wslc": "not used; pre-existing session 1 observed and left untouched; previous image-list query E_FAIL"
+  },
+  "head": "b5fbfed1c896f587dd5dfeb30c2735d63f670264",
+  "hypothesis": "When the first XTest KeyRelease send or its sync raises inside V15 owner up_batch, the batch aborts before later ordered UPs and before any per-key explicit-UP receipts are appended.",
+  "kind": "exploratory synthetic construction; not a formal allocation",
+  "pr": 7974,
+  "sources": {
+    "research/live_control/executor_v3.py": {
+      "bytes": 3794,
+      "sha256": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a"
+    },
+    "research/live_control/input_owner_v12.py": {
+      "bytes": 31865,
+      "sha256": "f8145816d80952b10249098625e31e72d42dd4c85b04180f82fe6640d83d1607"
+    },
+    "research/live_control/lease.py": {
+      "bytes": 899,
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    }
+  },
+  "test": "Against the exact PR-head input_owner_v12.py, use a deterministic fake X display with W and A held; inject one failure either at the first KeyRelease send or first sync; record batch result and then invoke a separate cleanup call.",
+  "uncertainty": "This synthetic direct-owner construction does not exercise V15/V13 executor terminal composition, button release, actual X11, GUI, physical input, game effects, or WSLc. Native Windows is an alternative environment and is not represented as WSLc success."
+}
