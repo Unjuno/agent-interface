@@ -128,7 +128,7 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Additive integration checkpoint after PR #9395 (2026-10-22)
+## Additive integration and organization checkpoint after PR #9397 (2026-10-22)
 
 PR #9393 merged the offline adapter from one persistent Codex App Server turn
 to the existing provider-attempt recorder and public-MCP caller, with Fake X
@@ -144,13 +144,40 @@ and remains OPEN. These offline checks prove neither production provider
 routing nor independent provider-log reconciliation, live desktop/MAP01
 effect, blocked-platform-I/O release, matched efficiency, or reliability.
 
-This is a code/evidence checkpoint, not a new complete Issue/PR membership
-census or semantic disposition. [r148](maintenance/repository-inventory-recheck-20261022-r148.md)
-remains the last full membership receipt at main `38b3d2f1c42b568851827cc969a242104f328366`;
-refresh live membership and any touched record before queue or state changes.
-No WSLc allocation was used. The [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
-remains the current design/qualification record; no duplicate design document
-was introduced.
+PR #9397 then added a composed public-caller regression for terminal receipt
+archival blocked after cancellation. On its exact merged source, 51/51 related
+owned-process/relay tests passed in normal and optimized Windows CPython 3.11.9;
+the remote Xvfb and relevant replay/caller checks passed. The separate evidence
+job failed before running tests because its Ubuntu 26.04 runner could not
+provide the pinned Python 3.13.5 runtime. This synthetic telemetry-stall test
+does not prove release while X11 itself is unavailable, physical input state,
+or live task effect. Issue #17 remains open.
+
+The fresh full membership receipt [r149](maintenance/repository-inventory-recheck-20261022-r149.md)
+was bracketed by stable main `b0e8c6c9b4cfb7917932f52e7a69d8267348aa89` and
+reproduced r148 exactly: 1,654 open Issues and 452 open PRs, with no ID-set
+deltas. It updates discovery only; no semantic disposition or ownership is
+implied. PR #8800 remains open at exact head
+`bf77bc4c1905bd99a5a99a138e897eededddd834` on an A14 raw-custody hold. Its
+public result/reconciliation preserve the aggregate and frozen hashes, but
+state that the raw `episode/report.json`, protocol and images remain in private
+allocation output. A targeted search of the accessible Codex workspace found
+no matching raw packet or owner record. A different historical #59 report is
+not a substitute. The live PR now records this scoped finding and a release
+condition at [comment 6334524921](https://github.com/Unjuno/agent-interface/pull/8800#issuecomment-6334524921).
+Keep the PR open, do not rerun A14, and recover only from the original frozen
+allocation source if its owner/location is identified. This batch used no
+WSLc or Docker allocation.
+
+The [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+remains the canonical design/qualification record; no duplicate was created.
+
+**Next repository-convergence batch:** reconcile the active worker/worktree
+custody slice against live GitHub branches and the current repository worktree
+registry, without deleting or archiving anything. Preserve unknown owners and
+worktree state; produce a finite discrepancy list before choosing the next
+semantic Issue/PR batch. The r149 membership snapshot and its ID CSVs are
+current navigation until main changes or membership changes.
 
 ## Earlier full-inventory checkpoint after PR #9390 (2026-10-22)
 
