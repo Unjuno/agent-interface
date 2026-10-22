@@ -68,6 +68,7 @@ class OperationOwner:
                 "release_confirmed": False,
                 "task_success": None,
                 "replay_allowed": False,
+                "uncertainty": None,
             }
             self._records[operation_id] = record
             self._active_operation_id = operation_id
@@ -178,13 +179,37 @@ class OperationOwner:
                     or current_identity != expected_identity
                     or record["producer_identity"] != expected_identity):
                 record["status"] = "unknown"
+                record["uncertainty"] = "producer_exit_or_identity_unconfirmed"
                 return False
             record["producer_exit_code"] = exit_code
             if self._clock_ns() >= record["cleanup_deadline_ns"]:
                 record["status"] = "unknown"
+                record["uncertainty"] = "cleanup_deadline_expired_before_retirement"
                 return False
             record["status"] = "producer_retired"
             return True
+
+    def mark_unknown(self, operation_id, target_generation, reason):
+        if type(reason) is not str or not reason:
+            raise OwnerRefused("uncertainty reason required")
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if record["status"] != "recovered":
+                record["status"] = "unknown"
+                record["uncertainty"] = reason
+            return self._public(record)
+
+    def expire_cleanup(self, operation_id, target_generation):
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["cleanup_deadline_ns"] is not None
+                    and type(record["cleanup_deadline_ns"]) is int
+                    and self._clock_ns() >= record["cleanup_deadline_ns"]
+                    and record["status"] in ("cancel_pending", "producer_retired",
+                                              "recovery_pending")):
+                record["status"] = "unknown"
+                record["uncertainty"] = "cleanup_deadline_expired"
+            return self._public(record)
 
     def claim_recovery(self, operation_id, target_generation):
         with self._lock:
@@ -226,6 +251,8 @@ class OperationOwner:
             )
             record["status"] = "recovered" if confirmed else "unknown"
             record["release_confirmed"] = bool(confirmed)
+            if not confirmed:
+                record["uncertainty"] = "recovery_or_neutral_readback_unconfirmed"
             return bool(confirmed)
 
     def result(self, operation_id):
@@ -233,6 +260,13 @@ class OperationOwner:
             record = self._records.get(operation_id)
             if record is None:
                 raise OwnerRefused("unknown operation ID")
+            if (record["cleanup_deadline_ns"] is not None
+                    and type(record["cleanup_deadline_ns"]) is int
+                    and self._clock_ns() >= record["cleanup_deadline_ns"]
+                    and record["status"] in ("cancel_pending", "producer_retired",
+                                              "recovery_pending")):
+                record["status"] = "unknown"
+                record["uncertainty"] = "cleanup_deadline_expired"
             return self._public(record)
 
     def _matching(self, operation_id, target_generation):
