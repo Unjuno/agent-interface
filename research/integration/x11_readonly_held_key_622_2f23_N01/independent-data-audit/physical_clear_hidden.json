@@ -1,0 +1,103 @@
+{
+  "started_utc": "2026-10-03T19:21:12.993045+00:00",
+  "input_operations": "recorded_in_events",
+  "scope": "N01 owned Xvfb native SHIFT down, two metadata observations, release; no task/generalized deadline proof",
+  "main_requests": 0,
+  "server_pid": 371,
+  "display": ":0",
+  "connection": "PASS",
+  "width": 320,
+  "height": 240,
+  "events": [
+    {
+      "label": "initial",
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "code": 50,
+      "down": false,
+      "tracking": {},
+      "emissions": 0
+    },
+    {
+      "label": "pressed",
+      "keymap_hex": "0000000000000400000000000000000000000000000000000000000000000000",
+      "code": 50,
+      "down": true,
+      "tracking": {
+        "SHIFT": 50
+      },
+      "emissions": 1
+    },
+    {
+      "label": "observation",
+      "frame": "window_client",
+      "result": {
+        "schema": "agent-interface/runtime-observation-v1",
+        "observation_id": "f0fa1dfa1db84359b1cdb6357c3295ed",
+        "side_effect_authority": false,
+        "input_dispatched": false,
+        "status": "returned",
+        "observation": {
+          "bytes": 256,
+          "sha256": "eb042ec4849465e7b97f6c023fab4bc2101e570672eaf875159b176f2bafabb8",
+          "width": 8,
+          "height": 8
+        }
+      }
+    },
+    {
+      "label": "after-window_client",
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "code": 50,
+      "down": true,
+      "tracking": {
+        "SHIFT": 50
+      },
+      "emissions": 1
+    },
+    {
+      "label": "observation",
+      "frame": "screen_physical_px",
+      "result": {
+        "schema": "agent-interface/runtime-observation-v1",
+        "observation_id": "456ba7234d9547dea94e34ceeba3a7f1",
+        "side_effect_authority": false,
+        "input_dispatched": false,
+        "status": "returned",
+        "observation": {
+          "bytes": 256,
+          "sha256": "eb042ec4849465e7b97f6c023fab4bc2101e570672eaf875159b176f2bafabb8",
+          "width": 8,
+          "height": 8
+        }
+      }
+    },
+    {
+      "label": "after-screen_physical_px",
+      "keymap_hex": "0000000000000400000000000000000000000000000000000000000000000000",
+      "code": 50,
+      "down": true,
+      "tracking": {
+        "SHIFT": 50
+      },
+      "emissions": 1
+    },
+    {
+      "label": "released",
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "code": 50,
+      "down": false,
+      "tracking": {},
+      "emissions": 2
+    }
+  ],
+  "release": {
+    "keys_down": [],
+    "buttons_down": [],
+    "verified": true,
+    "monotonic_ns": 36825613605
+  },
+  "experiment": "PASS",
+  "server_exit": 0,
+  "server_resolved": true,
+  "ended_utc": "2026-10-03T19:21:13.871986+00:00"
+}
