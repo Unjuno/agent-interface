@@ -1,9 +1,10 @@
 # Win32 operation-owner implementation plan
 
-Status: planned, not implemented or qualified. This plan follows the design
-decision in [the supervisor design record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
-It authorizes only local inert-fake work in the first phase; it does not
-authorize native input or a WSLc allocation.
+Status: Phase 1's inert prototype is implemented and passes its scoped local
+suite; Phase 2 onward is not implemented or qualified. This plan follows the
+design decision in [the supervisor design record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
+It authorizes only local inert-fake work in Phase 1; it does not authorize
+native input or a WSLc allocation.
 
 ## Problem and scope
 
@@ -109,6 +110,10 @@ with UNKNOWN is useful containment, but it does not satisfy bounded release.
 
 ## First deliverable
 
-Phase 1's tests and local receipts. The current fake packets remain immutable
-and are the baseline counterexamples. No Phase 1 pass, native qualification,
-matched efficiency, or reliability claim exists until its evidence is added.
+Phase 1's tests and local receipts are retained in the [R01 prototype
+packet](../../research/integration/win32_operation_owner_prototype_20261022_r01/README.md).
+The r01 attempt records one test expectation failure; r02 passes 12/12 in
+normal and optimized CPython 3.11.9. This is synthetic process ordering only.
+The current fake Win32 packets remain immutable and are the baseline
+counterexamples. Phase 2 composition, native qualification, matched
+efficiency, and reliability remain open.

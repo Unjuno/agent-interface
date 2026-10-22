@@ -1,0 +1,25 @@
+{
+  "schema": "agent-interface/win32-operation-owner-inert-r01-result-v1",
+  "normal_exit": 1,
+  "normal_tests": 12,
+  "optimized_exit": 1,
+  "optimized_tests": 12,
+  "status": "FAIL",
+  "claims": [
+    "exact worker retirement gates fake recovery",
+    "no overlapping fake producer while retirement unknown",
+    "target-generation mismatch refused",
+    "fake release/readback does not imply task success"
+  ],
+  "limits": [
+    "not Windows SendInput behavior",
+    "not OS input-queue drainage",
+    "not physical release",
+    "not standard-caller integration",
+    "not matched efficiency or reliability"
+  ],
+  "raw_files": [
+    "tests-normal.txt",
+    "tests-optimized.txt"
+  ]
+}
