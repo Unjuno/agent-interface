@@ -36,8 +36,9 @@ class RecordedPublicMcpCaller:
                                        prepare_arguments):
         """Run one provider generation, then conditionally submit its tool call.
 
-        ``prepare_arguments`` runs only after the provider terminal record is
-        durable. A non-completed attempt or missing response bytes is retained
+        ``prepare_arguments`` receives the full generation record only after
+        its provider terminal record is durable. A non-completed attempt or
+        missing response bytes is retained
         without submitting a tool call. This sequences the supplied outer
         provider invocation; it does not enumerate hidden provider retries.
         """
@@ -48,7 +49,7 @@ class RecordedPublicMcpCaller:
                 not isinstance(generation.get("response_bytes"), bytes)):
             return {"generation": generation, "tool_response": None,
                     "tool_call_submitted": False}
-        arguments = prepare_arguments(generation["response_bytes"])
+        arguments = prepare_arguments(generation)
         if not isinstance(arguments, dict):
             raise TypeError("prepared public MCP arguments must be an object")
         response = await self.call_tool(

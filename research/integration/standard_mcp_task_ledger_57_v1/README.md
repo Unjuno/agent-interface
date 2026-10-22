@@ -106,6 +106,15 @@ captured response bytes; a failed generation is durably recorded without a
 tool submission.
 This is a research composition adapter, not an automatic hook in the frozen
 integrated-efficiency runner or every production provider/orchestrator. The
+[`recorded_integrated_efficiency_model_call_v1.py`](recorded_integrated_efficiency_model_call_v1.py)
+bridge accepts the current model-call signature and records its wrapper inputs,
+turn-level usage, and returned `model/events.jsonl` bytes before the composed
+public tool call. The captured request is the wrapper's prompt/contract/workspace
+and base64 image input, not the upstream provider wire request. The response is
+the runner's turn-level JSONL, not hidden provider retry logs. The synchronous
+model call runs in a worker thread; cancellation waits for that call to finish
+before returning its retained outcome because Python cannot terminate a
+`to_thread` worker. The
 success cell joins the generation-bound profile request to the tool receipt,
 matches the returned MCP text payload to its result object, and counts
 reported usage. The
@@ -120,17 +129,18 @@ synthetic Fake X results only; the fixture has no real provider, production
 application, external scorer, native input, or live task. The saved response is
 the returned MCP text block, not a network-wire capture.
 
-The added `test_fake_provider_image_and_stale_generation_roundtrip_public_relay`
-also sends the observation and compiled action through `Relay.request` before
-the actual FastMCP server. It preserves the returned `ImageContent` base64
-payload byte-for-byte in the fake provider request, records the complete relay
-request/response envelopes, then changes process generation while the fake
-provider is complete but before the compiled tool call. The public caller
-returns `SAFE_YIELD` with zero transitions; the independent Fake X pixel
-oracle records false, and ledger reconciliation matches all three relay
-responses while retaining usage and request bytes. This is an in-process Relay
-composition test, not a stdio subprocess, real provider, external usage-log
-reconciliation, live application, or task qualification.
+The stale-generation composition now uses that bridge with an injected model
+call: it preserves the exact test image bytes in the wrapper-input receipt and
+captures synthetic JSONL generation events. The test sends the observation and
+compiled action through `Relay.request` before the actual FastMCP server, then
+changes process generation after model completion but before the compiled tool
+call. The public caller returns `SAFE_YIELD` with zero transitions; the
+independent Fake X pixel oracle records false, and ledger reconciliation matches
+all three relay responses while retaining usage and request bytes. A separate
+timeout case retains partial JSONL and unavailable usage and submits no tool
+call. These are injected-model/in-process Relay composition tests, not a real
+provider, stdio subprocess, external usage-log reconciliation, live
+application, or task qualification.
 
 One run of both composition cells, including the exact recorder journals,
 request/response bytes, Fake X owner receipts, and scorer-state bytes, is
@@ -159,9 +169,10 @@ The wrapper cannot prove that an external orchestrator routed every model call
 or MCP operation through it. The caller must pass exact captured wire bytes;
 when bytes are unavailable, the receipt says so. No actual provider, GUI, WSLc,
 Docker, allocation, application effect, release, or efficiency experiment ran.
-Next: adapt the current provider/orchestrator and standard caller to this
-boundary, then reconcile the emitted attempts and MCP calls against independent
-provider logs before claiming completeness.
+Next: run the bridge only through a separately authorized, fresh model
+allocation and reconcile every emitted attempt against independent provider
+logs before claiming completeness. No frozen comparison runner was edited or
+rerun by this bridge test.
 
 ## H / T / D / C / U
 
@@ -197,7 +208,8 @@ python -m unittest discover -s research/integration/standard_mcp_task_ledger_57_
 python -O -m unittest discover -s research/integration/standard_mcp_task_ledger_57_v1 -p test_mcp_endpoint_composition.py
 ```
 
-The next integration step is to adapt actual provider request/response receipts
-and the existing public MCP caller to this recorder, then independently
-reconcile its ledger against provider logs. A live comparison still requires a
-separately verified eligible allocation; #7924 remains STOP/HOLD.
+The next integration step is independent reconciliation of the wrapper-level
+generation receipts with actual provider request/response and usage logs. The
+bridge tests do not establish real provider retries or usage accounting. A live
+comparison still requires a separately verified eligible allocation; #7924
+remains STOP/HOLD.

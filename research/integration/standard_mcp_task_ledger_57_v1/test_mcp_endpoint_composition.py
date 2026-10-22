@@ -1,5 +1,6 @@
 import asyncio
 import base64
+import hashlib
 import json
 import tempfile
 import unittest
@@ -10,6 +11,10 @@ from PIL import Image
 from ledger import summarize
 from provider_attempt_recorder import ProviderAttemptRecorder
 from recorded_public_mcp_caller_v1 import RecordedPublicMcpCaller
+from recorded_integrated_efficiency_model_call_v1 import (
+    build_model_provider_call,
+    parse_agent_message,
+)
 from runtime.cli_v1.mcp_relay import Relay
 from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1.test_mcp_owned_process import (
@@ -99,35 +104,61 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                 generated_request = json.dumps(
                     payload, sort_keys=True, separators=(",", ":"),
                     allow_nan=False).encode("utf-8")
-                provider_request = json.dumps({
-                    "prompt": "apply the highlighted synthetic target",
-                    "image": {"mimeType": images[0]["mimeType"],
-                              "data": images[0]["data"]},
-                }, sort_keys=True, separators=(",", ":"),
-                    allow_nan=False).encode("utf-8")
+                image_path = root / "observed-image.bin"
+                image_path.write_bytes(image_data)
+                model_root = root / "model-call"
 
-                async def fake_provider():
-                    request = json.loads(provider_request)
-                    self.assertEqual(base64.b64decode(
-                        request["image"]["data"], validate=True), image_data)
-                    return {"status": "completed",
-                            "usage": {"status": "reported", "input_tokens": 42,
-                                      "output_tokens": 12},
-                            "response_bytes": generated_request}
+                def fake_model_call(call_root, prompt, image, contract, workspace):
+                    self.assertEqual(prompt, "apply the highlighted synthetic target")
+                    self.assertEqual(image.read_bytes(), image_data)
+                    self.assertEqual(contract, "compiled")
+                    self.assertEqual(workspace, root)
+                    events_path = call_root / "model" / "events.jsonl"
+                    events_path.parent.mkdir(parents=True)
+                    rows = [
+                        {"type": "thread.started", "thread_id": "synthetic-thread"},
+                        {"type": "item.completed", "item": {
+                            "type": "agent_message",
+                            "text": generated_request.decode("utf-8")}},
+                        {"type": "turn.completed", "usage": {
+                            "input_tokens": 42, "output_tokens": 12}},
+                    ]
+                    events_path.write_bytes(b"".join(
+                        json.dumps(row, separators=(",", ":")).encode() + b"\n"
+                        for row in rows))
+                    return {"usage": {"input_tokens": 42,
+                                      "output_tokens": 12}}
 
-                def prepare_arguments(response_bytes):
+                provider_request, fake_provider = build_model_provider_call(
+                    model_call=fake_model_call, root=model_root,
+                    prompt="apply the highlighted synthetic target",
+                    image=image_path, contract="compiled", workspace=root)
+
+                def prepare_arguments(generation):
                     # This callback runs after the provider terminal receipt but
                     # before standard Relay admission.
                     (server_root / "fake-process-generation").write_text(
                         "b" * 64, encoding="utf-8")
-                    return json.loads(response_bytes)
+                    return parse_agent_message(generation["response_bytes"])
 
                 composed = await caller.invoke_generation_to_tool(
                     "generation-stale-relay", provider_request, fake_provider,
                     "compiled-stale-relay", "interface_guarded_compiled",
                     prepare_arguments)
                 generation = composed["generation"]
-                self.assertEqual(generation["response_bytes"], generated_request)
+                self.assertEqual(generation["status"], "completed")
+                self.assertEqual(generation["usage"]["input_tokens"], 42)
+                self.assertEqual(generation["usage"]["output_tokens"], 12)
+                self.assertEqual(
+                    parse_agent_message(generation["response_bytes"]), payload)
+                recorded_input = json.loads(next(
+                    (recorder.root / ref["path"]).read_bytes()
+                    for event in recorder.reconcile()["events"]
+                    if event["kind"] == "model_attempt"
+                    for ref in event["raw_refs"]
+                    if ref["path"].endswith("generation-stale-relay.request.bin")))
+                self.assertEqual(base64.b64decode(
+                    recorded_input["image"]["data_base64"], validate=True), image_data)
 
                 response = composed["tool_response"]
                 result = json.loads(response["result"]["content"][0]["text"])
@@ -166,9 +197,13 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
                     for event in receipt["events"] if event["kind"] == "model_attempt"
                     for ref in event["raw_refs"]
                     if ref["path"].endswith("generation-stale-relay.request.bin"))
+                generation_input = json.loads(generation_raw.read_bytes())
+                self.assertEqual(base64.b64decode(
+                    generation_input["image"]["data_base64"], validate=True),
+                    image_data)
                 self.assertEqual(
-                    json.loads(generation_raw.read_bytes())["image"]["data"],
-                    images[0]["data"])
+                    generation_input["image"]["sha256"],
+                    hashlib.sha256(image_data).hexdigest())
                 task_score = next(event for event in receipt["events"]
                                   if event["kind"] == "task_score")
                 score_raw = recorder.root / task_score["raw_refs"][0]["path"]
@@ -176,6 +211,48 @@ class ProviderToPublicMcpCompositionTests(unittest.IsolatedAsyncioTestCase):
             finally:
                 await server.call_tool("interface_close", {})
                 _preserve_fake_x_run("provider-public-relay-stale-generation", root)
+
+    async def test_integrated_model_timeout_preserves_partial_events_and_skips_tool(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            image_path = root / "image.bin"
+            image_path.write_bytes(b"image-bytes")
+            model_root = root / "model-call"
+            partial = b'{"type":"thread.started"}\n'
+
+            def timed_out_model(call_root, *_args):
+                events = call_root / "model" / "events.jsonl"
+                events.parent.mkdir(parents=True)
+                events.write_bytes(partial)
+                raise TimeoutError("synthetic timeout")
+
+            request, provider = build_model_provider_call(
+                model_call=timed_out_model, root=model_root, prompt="p",
+                image=image_path, contract="compiled", workspace=root)
+            recorder = ProviderAttemptRecorder(root / "ledger")
+
+            class RejectingRelay:
+                next_id = 1
+
+                async def request(self, _request):
+                    raise AssertionError("timeout generation must not reach Relay")
+
+            caller = RecordedPublicMcpCaller(RejectingRelay(), recorder)
+            result = await caller.invoke_generation_to_tool(
+                "generation-timeout", request, provider, "tool-after-timeout",
+                "interface_guarded_compiled", parse_agent_message)
+            self.assertFalse(result["tool_call_submitted"])
+            self.assertEqual(result["generation"]["status"], "timeout")
+            self.assertEqual(result["generation"]["usage"]["status"], "unavailable")
+            receipt = recorder.reconcile()
+            attempt = next(event for event in receipt["events"]
+                           if event["kind"] == "model_attempt")
+            self.assertEqual(attempt["status"], "timeout")
+            response = next(ref for ref in attempt["raw_refs"]
+                            if ref["path"].endswith("response.bin"))
+            self.assertEqual((recorder.root / response["path"]).read_bytes(), partial)
+            self.assertEqual(sum(event["kind"] == "tool_call"
+                                 for event in receipt["events"]), 0)
 
     async def test_async_attempt_joins_generation_bound_public_compiled_tool(self):
         with tempfile.TemporaryDirectory() as temporary:
