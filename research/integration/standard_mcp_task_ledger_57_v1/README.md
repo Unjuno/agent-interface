@@ -96,9 +96,16 @@ caller must still provide a private, exclusively owned run directory.
 
 The local `test_mcp_endpoint_composition.py` tests drive asynchronous fake
 provider results into the actual public `interface_guarded_compiled` FastMCP
-entry point with the existing deterministic Fake X owner. The success cell
-joins the generation-bound profile request to the tool receipt, matches the
-returned MCP text payload to its result object, and counts reported usage. The
+entry point with the existing deterministic Fake X owner. The additive
+[`recorded_public_mcp_caller_v1.py`](recorded_public_mcp_caller_v1.py) adapter
+now supplies the reusable provider-attempt and public-Relay call boundaries
+used by the image/stale-generation composition cell; it persists each tool
+request before `Relay.request` and retains the complete returned envelope.
+This is a research composition adapter, not an automatic hook in the frozen
+integrated-efficiency runner or every production provider/orchestrator. The
+success cell joins the generation-bound profile request to the tool receipt,
+matches the returned MCP text payload to its result object, and counts
+reported usage. The
 Fake X child writes its initial and final 32x32 BGRX state to a test-only side
 channel. A separate pixel oracle verifies that pixel (1,1) changed from
 non-red to red, then records the final state bytes and score in the task
