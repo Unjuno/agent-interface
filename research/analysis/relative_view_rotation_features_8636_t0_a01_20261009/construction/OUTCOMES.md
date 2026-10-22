@@ -1,0 +1,14 @@
+# Construction outcomes (pre-formal; not pooled with T0 result)
+
+Formal seeds were not run during construction. These code/test diagnostics used only small unregistered fixtures and were permitted to be repaired before the source freeze. They are retained so the pre-freeze failures do not disappear from the research record.
+
+| Attempt | Command | First outcome | Disposition |
+|---|---|---|---|
+| C01 | `python3 -B -m unittest -v test_construction.py` | 4 tests; 3 failures and 1 error. Pixel-grid rounding exceeded exact invariance / 0.001-rad expectations; the near-singular visual fixture overlapped colored patches and was detected as missing/ambiguous; the chosen focal-shift sample did not cross the initial 0.12-rad shape guard. | Construction FAIL; no formal input or allocation consumed. Tight assertions and fixture/guard mismatch were identified. |
+| C02 | diagnostic-only render of focal values 50, 53, 58, 61 px and the four feature-loss controls | Focal 58/61 crossed the original guard, 43/53 remained below it; swapped IDs moved the oriented estimate by about 3.05 rad while pair-distance difference was 0.1023 rad; moved landmark crossed the guard; hidden/overlapping markers failed closed. | Construction observation only; informed a shared 0.09-rad correspondence gate. No formal seeds were accessed. |
+| C03 | `python3 -B -m unittest -v test_construction.py` | 6 tests; 5 passed and 1 errored because the test unpacked three values after the candidate feature function was extended to return a fourth angle-axis vector. | Construction FAIL; candidate/test interface mismatch, fixed before freeze. |
+| C04 | `python3 -B -m unittest -v test_construction.py`; `python3 -O -B -m unittest -v test_construction.py`; `python3 -B -m py_compile candidate.py runner.py auditor.py test_construction.py` | 6/6 passed in normal mode; 6/6 passed under `python -O`; syntax compilation exited 0. | Construction PASS only. Does not count as candidate/auditor formal execution. |
+| C05 | `python3 -B -m unittest -v test_construction.py`; `python3 -O -B -m unittest -v test_construction.py` | Final source after adding explicit raw `RELEASE` event receipts and auditor release/order mutations: 7/7 passed in normal mode and 7/7 under `python -O`. | Final construction PASS. Formal candidate/auditor executions remain 0/0. |
+| C06 | Same normal and optimized unittest commands after fast-forwarding the isolated branch to latest main `a5f53b6ef1810b74b5539dc0048e43b128b4cb7b`. | 7/7 passed in both modes; package source is unchanged by the main-only commits. | Fresh-main construction confirmation only; candidate/auditor formal invocations remain 0/0. |
+
+These outcomes exercise hand-selected mathematical fixtures, not held-out seeds. Earlier construction candidate/auditor invocations are zero. The final pre-freeze source identities are in `FREEZE.json`.
