@@ -1,0 +1,1 @@
+python -u audit.py 1> run/audit.stdout 2> run/audit.stderr; $code = $LASTEXITCODE; [IO.File]::WriteAllText('run/audit.exit', [string]$code + "`n")
