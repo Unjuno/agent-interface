@@ -1,0 +1,16 @@
+{
+  "allocation_id": "CPU-CONTROL-7722-T0-20261005-01",
+  "issue": 7722,
+  "method": "METHOD_PASS_SCOPED",
+  "hypothesis": "FAIL_HYPOTHESIS",
+  "formal_invocations": {"candidate": 1, "auditor": 1, "retries": 0},
+  "method_mutations_rejected": 6,
+  "schedulable": {
+    "sched_seed_7722": {"shared_priority_p99_ticks": 584, "reserved_p99_ticks": 166, "shared_deadline_misses": 10, "reserved_deadline_misses": 3, "shared_best_effort_completed": 192, "reserved_best_effort_completed": 190},
+    "sched_seed_7723": {"shared_priority_p99_ticks": 586, "reserved_p99_ticks": 168, "shared_deadline_misses": 10, "reserved_deadline_misses": 2, "shared_best_effort_completed": 192, "reserved_best_effort_completed": 190},
+    "sched_seed_7724": {"shared_priority_p99_ticks": 561, "reserved_p99_ticks": 131, "shared_deadline_misses": 10, "reserved_deadline_misses": 1, "shared_best_effort_completed": 192, "reserved_best_effort_completed": 190}
+  },
+  "negative_control_p99_ticks": {"shared_priority": 4, "reserved_server": 4},
+  "reserved_overload_and_boundary": "UNKNOWN_OVERLOAD; all control obligations retained",
+  "scope": "Deterministic scheduler simulation only; no host or physical key-release claim"
+}
