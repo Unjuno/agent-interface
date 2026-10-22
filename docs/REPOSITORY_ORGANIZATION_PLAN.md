@@ -128,7 +128,33 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9356 (2026-10-22)
+## Current execution checkpoint after PR #8833 (2026-10-22)
+
+Current main is `2b29ebe0ca6fe8214985a7e50c46a72f5f3af17f`, the fast-forward
+integration of PR #8833. The complete [r139 membership recheck](maintenance/repository-inventory-recheck-20261022-r139.md)
+confirms 1,655 open Issues and 456 open PRs, with main unchanged across the
+paginated reads. The Issue set matches r138. PR membership added #9363 and
+removed #7120 and #8833: #7120 was closed as superseded, #8833 merged, and
+#9363 opened. The exact sets and sorted-ID hashes are retained in the r139 CSVs.
+These counts and check states are discovery aids, not semantic disposition or
+merge readiness.
+
+Live reads at capture time show #17, #57, and #7924 OPEN. PR #9363 is an
+open, non-draft Win32 operation-owner recovery design that edits the canonical
+prestarted-supervisor design and adds two inert-fake schedule packets. Its base
+is the pre-#8833 main, while current main is its direct successor; both reported
+checks pass and GitHub reports it mergeable. The next bounded batch is an exact
+head/base and evidence audit of #9363 against current main, including its
+raw-manifest/custody and design-boundary cross-links. Keep the runtime proposal
+opt-in and do not merge solely on check status; the audit must establish that
+the uniquely useful evidence and current-main applicability are preserved.
+
+The canonical [prestarted supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md)
+already exists and remains the selected integration thread. Its design and
+qualification gates are separate from this membership snapshot. This update
+does not consume WSLc/Docker or change any Issue/PR state.
+
+## Historical execution checkpoint after PR #9356 (2026-10-22)
 
 Current main is `5a32f1e486b40103a1f24a6059ae78c8cb884e0f` (PR #9356).
 Membership recheck [r138](maintenance/repository-inventory-recheck-20261022-r138.md)
