@@ -79,6 +79,41 @@ class RecordedModelCallUsageTests(unittest.TestCase):
             event = recorder.reconcile()["events"][0]
             self.assertEqual(event["usage"], expected)
 
+    def test_failed_backend_retains_partial_usage_and_raw_events(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            image = root / "target.png"
+            image.write_bytes(b"synthetic image")
+            partial_events = b'{"type":"turn.failed"}\n'
+
+            def model_call(call_root, _prompt, _image, _contract, _workspace):
+                events = call_root / "model" / "events.jsonl"
+                events.parent.mkdir(parents=True)
+                events.write_bytes(partial_events)
+                error = RuntimeError("answer was ineligible")
+                error.usage = {"input_tokens": 17, "cached_input_tokens": 8}
+                raise error
+
+            request, provider_call = build_model_provider_call(
+                model_call=model_call, root=root / "call", prompt="ground target",
+                image=image, contract="compiled", workspace=root)
+            recorder = ProviderAttemptRecorder(root / "ledger")
+            result = asyncio.run(recorder.invoke_async(
+                "attempt-failed", request, provider_call))
+
+            self.assertEqual(result["status"], "failed")
+            self.assertEqual(result["usage"], {
+                "status": "partial", "input_tokens": 17, "output_tokens": None,
+                "cached_input_tokens": 8})
+            receipt = recorder.reconcile()
+            self.assertTrue(receipt["complete"])
+            event = receipt["events"][0]
+            self.assertEqual(event["usage"], result["usage"])
+            response_ref = next(ref for ref in event["raw_refs"]
+                                if ref["path"].endswith("attempt-failed.response.bin"))
+            self.assertEqual((recorder.root / response_ref["path"]).read_bytes(),
+                             partial_events)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -123,7 +123,7 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual((recorder.root / response_ref["path"]).read_bytes(),
                              turn_bytes)
 
-    async def test_missing_completed_turn_does_not_call_public_relay(self):
+    async def test_ineligible_turn_preserves_partial_usage_and_skips_public_relay(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             workspace = root / "workspace"
@@ -139,11 +139,20 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
                     return SimpleNamespace(thread_id="thread-1", turn_id="turn-1")
 
                 def await_turn(self, _handle, timeout):
+                    usage = {"last": {"inputTokens": 13,
+                                      "cachedInputTokens": 5}}
+                    usage_row = {"direction": "received", "message": {
+                        "method": "thread/tokenUsage/updated", "params": {
+                            "threadId": "thread-1", "turnId": "turn-1",
+                            "tokenUsage": usage}}}
+                    error_row = {"direction": "received", "message": {
+                        "method": "error"}}
                     with journal.open("ab") as stream:
-                        stream.write(b'{"direction":"received","message":{"method":"error"}}\n')
+                        for row in (usage_row, error_row):
+                            stream.write(json.dumps(row).encode() + b"\n")
                     return SimpleNamespace(
                         status="failed", answer_eligible=False, answer=None,
-                        error="provider failed", usage=None)
+                        error="provider failed", usage=usage)
 
             model = AppServerPublicMcpModelCall(
                 FailedPlanner(), journal, workspace=workspace, contract="public-mcp",
@@ -167,6 +176,9 @@ class AppServerProviderToPublicMcpTests(unittest.IsolatedAsyncioTestCase):
 
             self.assertFalse(result["tool_call_submitted"])
             self.assertEqual(result["generation"]["status"], "failed")
+            self.assertEqual(result["generation"]["usage"], {
+                "status": "partial", "input_tokens": 13,
+                "output_tokens": None, "cached_input_tokens": 5})
             receipt = recorder.reconcile()
             self.assertTrue(receipt["complete"])
             self.assertEqual([event["kind"] for event in receipt["events"]],
