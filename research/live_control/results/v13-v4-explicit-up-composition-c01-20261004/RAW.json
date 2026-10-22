@@ -1,0 +1,30 @@
+{
+  "classification": "one-shot wrapper-composition construction; no owner thread or Xlib calls",
+  "probe_id": "V13-V4-EXPLICIT-UP-COMPOSITION-C01",
+  "tries": 1,
+  "v13_call_result": {
+    "application_consumption_observed": false,
+    "call_returned_ns": 145,
+    "call_started_ns": 100,
+    "continuous_physical_state_sampled": false,
+    "event": "input_release_rpc",
+    "grants_input_authority": false,
+    "intent_token": "lease-v13",
+    "interval_width_ns": 45,
+    "operation": "up",
+    "owner_id": "owner-v13",
+    "payload": "space",
+    "release_transition_interval_ns": [
+      100,
+      145
+    ],
+    "valid_until_ns": 1000,
+    "x11_release_and_sync_completed_before_return": true
+  },
+  "v4_integration_result": {
+    "raised_message": "InputOwner v10 explicit release unexpectedly returned payload",
+    "raised_type": "AssertionError"
+  },
+  "xlib_display_started": false,
+  "xlib_input_called": false
+}
