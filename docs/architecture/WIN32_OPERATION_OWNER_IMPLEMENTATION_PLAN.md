@@ -111,16 +111,31 @@ allocation. Implement in this order, stopping on the first failing invariant:
 | 2c. Explicit route | `runtime/cli_v1/mcp_server.py` plus its focused tests. Add an opt-in `guarded-win32` route with explicit Windows-target construction and dependency-injected owner factory. Keep `guarded-x11`, its XRes worker selection and defaults byte-for-byte behaviorally unchanged. Reject the route on non-Windows hosts or invalid HWND/owner identity before admission. |
 | 2d. Composition and regression | New focused caller-composition tests beside `runtime/cli_v1/test_mcp_owned_process.py`; retain bridge checks in `runtime/guarded_win32_v1/test_compiled_core_composition.py`. | Drive a changed target generation during model wait, blocked child cancellation, delayed/lost IPC, overlapping dispatch, recovery failure, observer timeout, and a distinct fresh target. Assert returned MCP receipt, child lifecycle, fake input log/state, separate effect oracle, exact attempt count and completed prefix. Run normal and `python -O`; rerun existing Win32 and X11 owner tests locally. |
 
-The first local implementation slice now exists in
-`runtime/guarded_win32_v1/operation_owner.py`: a parent-side custody gate
-retains the exact process handle, PID/creation-time identity, operation and
-target generation; cancellation closes admission; recovery can be claimed only
-after the matching handle reports exit and the deadline remains open. Its
-normal/-O tests include one real spawned **inert** child. This does not yet
-create, terminate, or supervise a producer/recovery process, call Win32 APIs,
-or integrate with the MCP caller. Continue 2a by adding the spawn-safe process
-factory and bounded retirement/recovery adapter; do not count the state-gate
-tests as evidence of bounded input release.
+The 2a local implementation now has a parent-side custody gate in
+`runtime/guarded_win32_v1/operation_owner.py` and an opt-in inert process
+lifecycle controller in `process_cancellation.py`. The gate retains the exact
+producer handle and PID/creation-time identity; cancellation closes admission;
+recovery can be claimed only after matching producer exit and before the
+cleanup deadline. The controller returns a pending receipt without waiting
+for child retirement, terminates only the retained producer, starts a separate
+recovery process behind a parent-controlled start gate, verifies its identity,
+and accepts only a matching operation/generation/recovery receipt followed by
+neutral readback from a separately bounded observer child. Both children are
+identity-checked and use the same absolute deadline with time reserved for
+terminate/kill/reap. An unresolved producer, recovery child, receipt or
+observer stays UNKNOWN, with replay denied and task success unset. Its tests
+cover duplicate cancel, cancel-before-producer-registration, blocked recovery
+and blocked observer; the focused spawned-process suite passes 4/4 in normal
+and optimized mode. The owner suite passes 7/7 in both.
+
+This validates only Python process ordering with inert shared test state. The
+recovery/observer factories, native input adapter, public MCP caller, task
+oracle and real Windows `SendInput` behavior are not integrated or qualified.
+Child termination does not retract an already accepted OS input event and
+neither helper scheduling nor native effect is a hard real-time bound.
+Continue 2a with adversarial IPC, deadline, identity and observer failure cases
+before caller composition; do not count these tests as evidence of bounded
+input release.
 
 Do not solve a blocked native call by calling `release_all()` from a second
 thread/process while the original producer may still emit input. The owner must
