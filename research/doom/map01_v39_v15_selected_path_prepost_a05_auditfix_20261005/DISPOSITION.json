@@ -1,0 +1,27 @@
+{
+  "schema": "v39-v15-prepost-a05-disposition-v1",
+  "issue": 7933,
+  "allocation": "V39-V15-PREPOST-A05-AUDIT-FIX-20261005-01",
+  "status": "FAIL_BASELINE_EXPECTATION_MISMATCH",
+  "candidate_invocations": 0,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "container_exit": 1,
+  "auditor_source_sha256": "4eb14ceba50c01773349f3783c46ee8da4998deb87a03f53d6096a2573078701",
+  "freeze_sha256": "849a3c7b6b53517ac245d1a58ad961dc34123e1f5d6f656e2f84ec3985a3d49d",
+  "baseline_checks_passed": 51,
+  "baseline_checks_total": 52,
+  "mutation_controls_rejected": 12,
+  "mutation_controls_total": 12,
+  "failure": {
+    "check": "a05_normal_trace_sample_binding",
+    "expected_pre_query_and_result_keycodes_down": [],
+    "observed_pre_query_and_result_keycodes_down": [65, 74],
+    "raw_query_result_agree": true,
+    "classification": "AUDITOR_BASELINE_EXPECTATION_DEFECT"
+  },
+  "formal_stdout_sha256": "aa71aee28c51af4abf857f78d69618e15d07afcbfd4f14f737e0f6ef6c7e2118",
+  "formal_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scientific_result": "BASELINE_ASSERTION_FAILED; retained raw query and sample result agree",
+  "scope": "Audit implementation defect only. Does not change A02/A03 outcomes or establish behavior beyond immutable synthetic fake-X records."
+}
