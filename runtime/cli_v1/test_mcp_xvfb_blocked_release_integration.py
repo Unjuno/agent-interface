@@ -893,7 +893,17 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         'tail':[{'op':'key_chord','keys':['c']}]}))
                 fresh_input_returned_ns = time.monotonic_ns()
                 await self._wait_for_event(c_press_seen)
-                fresh_event_seen_ns = time.monotonic_ns()
+                fresh_event_signal_returned_ns = time.monotonic_ns()
+                with app_lock:
+                    fresh_effect_events = [dict(row) for row in app_events
+                        if row.get('type') == X.KeyPress
+                        and row.get('detail') == keycodes['c']
+                        and row.get('window') == fresh_window.id
+                        and type(row.get('effect_committed_ns')) is int]
+                self.assertEqual(len(fresh_effect_events), 1, app_events)
+                fresh_app_event = fresh_effect_events[0]
+                fresh_event_seen_ns = fresh_app_event['monotonic_ns']
+                fresh_effect_committed_ns = fresh_app_event['effect_committed_ns']
                 fresh_effect_readback_started_ns = time.monotonic_ns()
                 fresh_effect_after_action = observer.create_resource_object(
                     'window', fresh_window.id).get_full_property(
@@ -904,9 +914,17 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 fresh_effect_timing_ms = {
                     'input_invocation_to_keypress_observed':(
                         fresh_event_seen_ns-fresh_input_started_ns)/1_000_000,
-                    'keypress_observed_to_effect_readback_completed':(
-                        fresh_effect_readback_completed_ns-fresh_event_seen_ns
+                    'keypress_observed_to_application_effect_commit':(
+                        fresh_effect_committed_ns-fresh_event_seen_ns)/1_000_000,
+                    'input_invocation_to_application_effect_commit':(
+                        fresh_effect_committed_ns-fresh_input_started_ns
                         )/1_000_000,
+                    'application_effect_commit_to_independent_readback_completed':(
+                        fresh_effect_readback_completed_ns-fresh_effect_committed_ns
+                        )/1_000_000,
+                    'parent_event_signal_return_to_independent_readback_completed':(
+                        fresh_effect_readback_completed_ns
+                        -fresh_event_signal_returned_ns)/1_000_000,
                     'input_invocation_to_effect_readback_completed':(
                         fresh_effect_readback_completed_ns-fresh_input_started_ns
                         )/1_000_000,
@@ -939,6 +957,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'input_started_monotonic_ns':fresh_input_started_ns,
                     'input_returned_monotonic_ns':fresh_input_returned_ns,
                     'keypress_event_observed_monotonic_ns':fresh_event_seen_ns,
+                    'application_effect_committed_monotonic_ns':(
+                        fresh_effect_committed_ns),
+                    'parent_event_signal_returned_monotonic_ns':(
+                        fresh_event_signal_returned_ns),
                     'effect_readback_started_monotonic_ns':(
                         fresh_effect_readback_started_ns),
                     'effect_readback_completed_monotonic_ns':(
