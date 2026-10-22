@@ -1,0 +1,36 @@
+{
+  "allocation_id": "MAP01-V39-XLIB-QUERY-PREFETCH-A03-20261005-01",
+  "architecture": "arm64",
+  "auditor_invocations": "at most 1, only after candidate exit 0",
+  "candidate_invocations": 1,
+  "delta_from_a02": "fresh guest and explicit root workdir; A01/A02 setup STOPs preserved; candidate remains one-shot",
+  "expected_packages": {
+    "python3-xlib": "0.33-2",
+    "xvfb": "2:21.1.12-1ubuntu1.8"
+  },
+  "expected_python": "3.12.3",
+  "freeze_time_utc": "2026-10-04T20:04:12Z",
+  "guest_image": "ubuntu:noble",
+  "main_sha": "c520359ee10b8071d13f2e93e82bd840a81eabda",
+  "retries": 0,
+  "schema": "xlib-query-keymap-prefetch-freeze-a03-v1",
+  "setup_user": "root, OrbStack explicit workdir /home/taka/xlib-query-prefetch-a03",
+  "source_sha256": {
+    "COMMANDS.txt": "cf98841561da62e788b1edf1c29b61e91d1bb0b6dff49cf33f80235e2a569bbc",
+    "PLAN.md": "dee7a3f424a3b64a5cfcfe03521a2eaefd36663f574e7ddae87872f9e14be404",
+    "README.md": "0f79f938895bd3f5cfd4de2dd230f3d3338e6cf98761e740ced003c0acb8101f",
+    "audit.py": "97043ec994cdc684d70ae5230e6bc732143cb33cc8cfcf7ec6ce10bdf9c40c81",
+    "predecessor/A01/SETUP_STOP.json": "520cadb6180e750af69a6fa6e7b3f81f28f7d4ce97667741fd257115652ae8b4",
+    "predecessor/A01/SHA256SUMS": "5f296a6ebd698980fe1abce9569e3c1b3bc863430b69c8f652c93933ed532335",
+    "predecessor/A01/setup.log": "8bd5a9758be7ebbebf0d6bfab5cfd19b093f1566955321a5e4d67adbe1cb5df3",
+    "predecessor/A02-SETUP-STOP/SETUP_STOP.json": "b93ffb75e665f6de42517bc9c43d0b0f2b41b2a24dedd04cfe6238abf7c795c5",
+    "predecessor/A02-SETUP-STOP/SHA256SUMS": "ad4f389a3df6c4f973e45ccd969e2fe340294bc29f9d298ca5d527addebc8c41",
+    "predecessor/A02-SETUP-STOP/setup.exit": "743c7850cccfba5e53a9002663ec1ddd1079315a98bdbfdde10e6044f56abefe",
+    "predecessor/A02-SETUP-STOP/setup.log": "5cdf55dd9bab6428e4be142659abaeb350ffcac0de303f7beb2e7131053bfcd3",
+    "probe.py": "242087822cdc9a94b425dd0c1164bf26f40f7edeee1adb213ca7ced71b944bb4",
+    "run_candidate.sh": "71b6bff689bcb353b50d2595033181e8985c4bfa5ef4e49e3df53b30a3f8307f",
+    "setup_guest.sh": "c2158468bdc0d27cb50e168d9224725476a51b75be88cc4d074650b888aa57df",
+    "test_audit.py": "5f3323d0eb3fbec3167fc4796fd002a5658ee48364e863a6f37583c76fd50806",
+    "verify_bundle.py": "4702c4a459c2b6821bdaf95cd07849278e6ef29db4075bc375e54578f1e6fc83"
+  }
+}

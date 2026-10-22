@@ -1,0 +1,11 @@
+Frozen sequence:
+
+1. Create a fresh isolated OrbStack guest with these selected mounts:
+orb create --isolated --isolate-network --mount /private/tmp/agent-interface-59-xlib-pending-a01/research/doom/xlib_query_keymap_prefetch_diag_a03_20261005/bundle-transfer:/mnt/diag-bundle --mount /private/tmp/agent-interface-59-xlib-pending-a01/research/doom/xlib_query_keymap_prefetch_diag_a03_20261005/results:/mnt/diag-results -a arm64 ubuntu:noble map01-v39-xlib-prefetch-a03-20261005
+
+2. Verify `/mnt/diag-bundle/SHA256SUMS`, extract into `/home/taka/xlib-query-prefetch-a03`, and run the frozen bundle verifier plus five auditor mutation tests.
+
+3. Run setup exactly once as root with an explicit workdir, capturing the real exit status without a pipeline:
+orb run -u root -w /home/taka/xlib-query-prefetch-a03 -m map01-v39-xlib-prefetch-a03-20261005 bash -lc 'set +e; bash setup_guest.sh > /mnt/diag-results/A03-setup.log 2>&1; status=$?; printf "%s\n" "$status" > /mnt/diag-results/A03-setup.exit; exit "$status"'
+
+4. Only after setup exit 0, run the one-shot candidate runner as the default `taka` user from `/home/taka/xlib-query-prefetch-a03`. It invokes one candidate and the raw-only auditor only after candidate exit 0. No retries.
