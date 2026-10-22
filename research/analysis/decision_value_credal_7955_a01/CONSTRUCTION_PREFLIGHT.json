@@ -1,0 +1,2282 @@
+{
+  "cases": [
+    {
+      "admissibility": {
+        "check_A": {
+          "admissible": true,
+          "reasons": []
+        },
+        "check_B": {
+          "admissible": true,
+          "reasons": []
+        }
+      },
+      "case_id": "singleton_calibrated",
+      "credal_model_count": 1,
+      "evaluation": [
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "7/10"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_0"
+        }
+      ],
+      "fixed_measure_net_voi_by_model": {
+        "check_A=9/10,check_B=7/10": {
+          "check_A": "19/5",
+          "check_B": "9/5"
+        }
+      },
+      "fixed_measure_ranking": {
+        "envelopes": {
+          "check_A": {
+            "lower": "19/5",
+            "upper": "19/5"
+          },
+          "check_B": {
+            "lower": "9/5",
+            "upper": "9/5"
+          }
+        },
+        "selected": "check_A",
+        "status": "RANKING_INVARIANT"
+      },
+      "max_regret_over_in_set_truths": {
+        "cost_only": "0",
+        "fixed_measure_envelope": "0",
+        "information_gain": "0",
+        "point_model": "0"
+      },
+      "model_details": [
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "7/10"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.5310044064107189,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "9/10",
+                  "positive": "1/10"
+                },
+                "ready": {
+                  "negative": "1/10",
+                  "positive": "9/10"
+                }
+              },
+              "net_voi": "19/5",
+              "posterior_ready": {
+                "negative": "1/10",
+                "positive": "9/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.1187091007693073,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "7/10",
+                  "positive": "3/10"
+                },
+                "ready": {
+                  "negative": "3/10",
+                  "positive": "7/10"
+                }
+              },
+              "net_voi": "9/5",
+              "posterior_ready": {
+                "negative": "3/10",
+                "positive": "7/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=9/10,check_B=7/10"
+        }
+      ],
+      "point_model_information_gain_bits": {
+        "check_A": 0.5310044064107189,
+        "check_B": 0.1187091007693073
+      },
+      "point_model_net_voi": {
+        "check_A": "19/5",
+        "check_B": "9/5"
+      },
+      "policy_selections": {
+        "cost_only": "check_A",
+        "fixed_measure_envelope": "check_A",
+        "information_gain": "check_A",
+        "point_model": "check_A"
+      }
+    },
+    {
+      "admissibility": {
+        "check_A": {
+          "admissible": true,
+          "reasons": []
+        },
+        "check_B": {
+          "admissible": true,
+          "reasons": []
+        }
+      },
+      "case_id": "invariant_ranking",
+      "credal_model_count": 9,
+      "evaluation": [
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "11/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_0"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "13/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_1"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "7/10"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_2"
+        },
+        {
+          "accuracy": {
+            "check_A": "43/50",
+            "check_B": "11/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_3"
+        },
+        {
+          "accuracy": {
+            "check_A": "43/50",
+            "check_B": "13/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_4"
+        },
+        {
+          "accuracy": {
+            "check_A": "43/50",
+            "check_B": "7/10"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "17/5",
+              "oracle_net_utility": "17/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_5"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "11/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_6"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "13/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_7"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "7/10"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_8"
+        }
+      ],
+      "fixed_measure_net_voi_by_model": {
+        "check_A=41/50,check_B=11/20": {
+          "check_A": "3",
+          "check_B": "3/10"
+        },
+        "check_A=41/50,check_B=13/20": {
+          "check_A": "3",
+          "check_B": "13/10"
+        },
+        "check_A=41/50,check_B=7/10": {
+          "check_A": "3",
+          "check_B": "9/5"
+        },
+        "check_A=43/50,check_B=11/20": {
+          "check_A": "17/5",
+          "check_B": "3/10"
+        },
+        "check_A=43/50,check_B=13/20": {
+          "check_A": "17/5",
+          "check_B": "13/10"
+        },
+        "check_A=43/50,check_B=7/10": {
+          "check_A": "17/5",
+          "check_B": "9/5"
+        },
+        "check_A=9/10,check_B=11/20": {
+          "check_A": "19/5",
+          "check_B": "3/10"
+        },
+        "check_A=9/10,check_B=13/20": {
+          "check_A": "19/5",
+          "check_B": "13/10"
+        },
+        "check_A=9/10,check_B=7/10": {
+          "check_A": "19/5",
+          "check_B": "9/5"
+        }
+      },
+      "fixed_measure_ranking": {
+        "envelopes": {
+          "check_A": {
+            "lower": "3",
+            "upper": "19/5"
+          },
+          "check_B": {
+            "lower": "3/10",
+            "upper": "9/5"
+          }
+        },
+        "selected": "check_A",
+        "status": "RANKING_INVARIANT"
+      },
+      "max_regret_over_in_set_truths": {
+        "cost_only": "0",
+        "fixed_measure_envelope": "0",
+        "information_gain": "0",
+        "point_model": "0"
+      },
+      "model_details": [
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "11/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.31992295427172013,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "41/50",
+                  "positive": "9/50"
+                },
+                "ready": {
+                  "negative": "9/50",
+                  "positive": "41/50"
+                }
+              },
+              "net_voi": "3",
+              "posterior_ready": {
+                "negative": "9/50",
+                "positive": "41/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.007225546012191719,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "11/20",
+                  "positive": "9/20"
+                },
+                "ready": {
+                  "negative": "9/20",
+                  "positive": "11/20"
+                }
+              },
+              "net_voi": "3/10",
+              "posterior_ready": {
+                "negative": "9/20",
+                "positive": "11/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=41/50,check_B=11/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "13/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.31992295427172013,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "41/50",
+                  "positive": "9/50"
+                },
+                "ready": {
+                  "negative": "9/50",
+                  "positive": "41/50"
+                }
+              },
+              "net_voi": "3",
+              "posterior_ready": {
+                "negative": "9/50",
+                "positive": "41/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.06593194462450902,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "13/20",
+                  "positive": "7/20"
+                },
+                "ready": {
+                  "negative": "7/20",
+                  "positive": "13/20"
+                }
+              },
+              "net_voi": "13/10",
+              "posterior_ready": {
+                "negative": "7/20",
+                "positive": "13/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=41/50,check_B=13/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "7/10"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.31992295427172013,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "41/50",
+                  "positive": "9/50"
+                },
+                "ready": {
+                  "negative": "9/50",
+                  "positive": "41/50"
+                }
+              },
+              "net_voi": "3",
+              "posterior_ready": {
+                "negative": "9/50",
+                "positive": "41/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.1187091007693073,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "7/10",
+                  "positive": "3/10"
+                },
+                "ready": {
+                  "negative": "3/10",
+                  "positive": "7/10"
+                }
+              },
+              "net_voi": "9/5",
+              "posterior_ready": {
+                "negative": "3/10",
+                "positive": "7/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=41/50,check_B=7/10"
+        },
+        {
+          "accuracy": {
+            "check_A": "43/50",
+            "check_B": "11/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.41576118835714404,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "43/50",
+                  "positive": "7/50"
+                },
+                "ready": {
+                  "negative": "7/50",
+                  "positive": "43/50"
+                }
+              },
+              "net_voi": "17/5",
+              "posterior_ready": {
+                "negative": "7/50",
+                "positive": "43/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.007225546012191719,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "11/20",
+                  "positive": "9/20"
+                },
+                "ready": {
+                  "negative": "9/20",
+                  "positive": "11/20"
+                }
+              },
+              "net_voi": "3/10",
+              "posterior_ready": {
+                "negative": "9/20",
+                "positive": "11/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=43/50,check_B=11/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "43/50",
+            "check_B": "13/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.41576118835714404,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "43/50",
+                  "positive": "7/50"
+                },
+                "ready": {
+                  "negative": "7/50",
+                  "positive": "43/50"
+                }
+              },
+              "net_voi": "17/5",
+              "posterior_ready": {
+                "negative": "7/50",
+                "positive": "43/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.06593194462450902,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "13/20",
+                  "positive": "7/20"
+                },
+                "ready": {
+                  "negative": "7/20",
+                  "positive": "13/20"
+                }
+              },
+              "net_voi": "13/10",
+              "posterior_ready": {
+                "negative": "7/20",
+                "positive": "13/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=43/50,check_B=13/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "43/50",
+            "check_B": "7/10"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.41576118835714404,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "43/50",
+                  "positive": "7/50"
+                },
+                "ready": {
+                  "negative": "7/50",
+                  "positive": "43/50"
+                }
+              },
+              "net_voi": "17/5",
+              "posterior_ready": {
+                "negative": "7/50",
+                "positive": "43/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.1187091007693073,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "7/10",
+                  "positive": "3/10"
+                },
+                "ready": {
+                  "negative": "3/10",
+                  "positive": "7/10"
+                }
+              },
+              "net_voi": "9/5",
+              "posterior_ready": {
+                "negative": "3/10",
+                "positive": "7/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=43/50,check_B=7/10"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "11/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.5310044064107189,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "9/10",
+                  "positive": "1/10"
+                },
+                "ready": {
+                  "negative": "1/10",
+                  "positive": "9/10"
+                }
+              },
+              "net_voi": "19/5",
+              "posterior_ready": {
+                "negative": "1/10",
+                "positive": "9/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.007225546012191719,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "11/20",
+                  "positive": "9/20"
+                },
+                "ready": {
+                  "negative": "9/20",
+                  "positive": "11/20"
+                }
+              },
+              "net_voi": "3/10",
+              "posterior_ready": {
+                "negative": "9/20",
+                "positive": "11/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=9/10,check_B=11/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "13/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.5310044064107189,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "9/10",
+                  "positive": "1/10"
+                },
+                "ready": {
+                  "negative": "1/10",
+                  "positive": "9/10"
+                }
+              },
+              "net_voi": "19/5",
+              "posterior_ready": {
+                "negative": "1/10",
+                "positive": "9/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.06593194462450902,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "13/20",
+                  "positive": "7/20"
+                },
+                "ready": {
+                  "negative": "7/20",
+                  "positive": "13/20"
+                }
+              },
+              "net_voi": "13/10",
+              "posterior_ready": {
+                "negative": "7/20",
+                "positive": "13/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=9/10,check_B=13/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "7/10"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.5310044064107189,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "9/10",
+                  "positive": "1/10"
+                },
+                "ready": {
+                  "negative": "1/10",
+                  "positive": "9/10"
+                }
+              },
+              "net_voi": "19/5",
+              "posterior_ready": {
+                "negative": "1/10",
+                "positive": "9/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.1187091007693073,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "7/10",
+                  "positive": "3/10"
+                },
+                "ready": {
+                  "negative": "3/10",
+                  "positive": "7/10"
+                }
+              },
+              "net_voi": "9/5",
+              "posterior_ready": {
+                "negative": "3/10",
+                "positive": "7/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=9/10,check_B=7/10"
+        }
+      ],
+      "point_model_information_gain_bits": {
+        "check_A": 0.41576118835714404,
+        "check_B": 0.06593194462450902
+      },
+      "point_model_net_voi": {
+        "check_A": "17/5",
+        "check_B": "13/10"
+      },
+      "policy_selections": {
+        "cost_only": "check_A",
+        "fixed_measure_envelope": "check_A",
+        "information_gain": "check_A",
+        "point_model": "check_A"
+      }
+    },
+    {
+      "admissibility": {
+        "check_A": {
+          "admissible": true,
+          "reasons": []
+        },
+        "check_B": {
+          "admissible": true,
+          "reasons": []
+        }
+      },
+      "case_id": "ranking_reversal",
+      "credal_model_count": 9,
+      "evaluation": [
+        {
+          "accuracy": {
+            "check_A": "29/50",
+            "check_B": "13/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "13/10",
+              "regret": "7/10",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "13/10",
+              "oracle_net_utility": "13/10",
+              "regret": "0",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "13/10",
+              "regret": "7/10",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "13/10",
+              "regret": "7/10",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_0"
+        },
+        {
+          "accuracy": {
+            "check_A": "29/50",
+            "check_B": "3/4"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "23/10",
+              "regret": "17/10",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "23/10",
+              "oracle_net_utility": "23/10",
+              "regret": "0",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "23/10",
+              "regret": "17/10",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "23/10",
+              "regret": "17/10",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_1"
+        },
+        {
+          "accuracy": {
+            "check_A": "29/50",
+            "check_B": "17/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "33/10",
+              "regret": "27/10",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "33/10",
+              "oracle_net_utility": "33/10",
+              "regret": "0",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "33/10",
+              "regret": "27/10",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "33/10",
+              "regret": "27/10",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_2"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "13/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "13/10",
+              "oracle_net_utility": "3",
+              "regret": "17/10",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_3"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "3/4"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "23/10",
+              "oracle_net_utility": "3",
+              "regret": "7/10",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "3",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_4"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "17/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "33/10",
+              "regret": "3/10",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "33/10",
+              "oracle_net_utility": "33/10",
+              "regret": "0",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "33/10",
+              "regret": "3/10",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3",
+              "oracle_net_utility": "33/10",
+              "regret": "3/10",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_5"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "13/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "13/10",
+              "oracle_net_utility": "19/5",
+              "regret": "5/2",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_6"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "3/4"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "23/10",
+              "oracle_net_utility": "19/5",
+              "regret": "3/2",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_7"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "17/20"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "33/10",
+              "oracle_net_utility": "19/5",
+              "regret": "1/2",
+              "selected_check": "check_B"
+            },
+            "information_gain": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_8"
+        }
+      ],
+      "fixed_measure_net_voi_by_model": {
+        "check_A=29/50,check_B=13/20": {
+          "check_A": "3/5",
+          "check_B": "13/10"
+        },
+        "check_A=29/50,check_B=17/20": {
+          "check_A": "3/5",
+          "check_B": "33/10"
+        },
+        "check_A=29/50,check_B=3/4": {
+          "check_A": "3/5",
+          "check_B": "23/10"
+        },
+        "check_A=41/50,check_B=13/20": {
+          "check_A": "3",
+          "check_B": "13/10"
+        },
+        "check_A=41/50,check_B=17/20": {
+          "check_A": "3",
+          "check_B": "33/10"
+        },
+        "check_A=41/50,check_B=3/4": {
+          "check_A": "3",
+          "check_B": "23/10"
+        },
+        "check_A=9/10,check_B=13/20": {
+          "check_A": "19/5",
+          "check_B": "13/10"
+        },
+        "check_A=9/10,check_B=17/20": {
+          "check_A": "19/5",
+          "check_B": "33/10"
+        },
+        "check_A=9/10,check_B=3/4": {
+          "check_A": "19/5",
+          "check_B": "23/10"
+        }
+      },
+      "fixed_measure_ranking": {
+        "envelopes": {
+          "check_A": {
+            "lower": "3/5",
+            "upper": "19/5"
+          },
+          "check_B": {
+            "lower": "13/10",
+            "upper": "33/10"
+          }
+        },
+        "fallback": "MINIMAX_REGRET_SEPARATE_FROM_FIXED_MEASURE_ENVELOPE",
+        "fallback_worst_regret_by_choice": {
+          "check_A": "27/10",
+          "check_B": "5/2",
+          "no_check": "19/5"
+        },
+        "selected": "check_B",
+        "status": "UNCERTAIN_MODEL_DEPENDENT_RANKING"
+      },
+      "max_regret_over_in_set_truths": {
+        "cost_only": "27/10",
+        "fixed_measure_envelope": "5/2",
+        "information_gain": "27/10",
+        "point_model": "27/10"
+      },
+      "model_details": [
+        {
+          "accuracy": {
+            "check_A": "29/50",
+            "check_B": "13/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.018546104966346455,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "29/50",
+                  "positive": "21/50"
+                },
+                "ready": {
+                  "negative": "21/50",
+                  "positive": "29/50"
+                }
+              },
+              "net_voi": "3/5",
+              "posterior_ready": {
+                "negative": "21/50",
+                "positive": "29/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.06593194462450902,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "13/20",
+                  "positive": "7/20"
+                },
+                "ready": {
+                  "negative": "7/20",
+                  "positive": "13/20"
+                }
+              },
+              "net_voi": "13/10",
+              "posterior_ready": {
+                "negative": "7/20",
+                "positive": "13/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=29/50,check_B=13/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "29/50",
+            "check_B": "3/4"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.018546104966346455,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "29/50",
+                  "positive": "21/50"
+                },
+                "ready": {
+                  "negative": "21/50",
+                  "positive": "29/50"
+                }
+              },
+              "net_voi": "3/5",
+              "posterior_ready": {
+                "negative": "21/50",
+                "positive": "29/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.18872187554086717,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "3/4",
+                  "positive": "1/4"
+                },
+                "ready": {
+                  "negative": "1/4",
+                  "positive": "3/4"
+                }
+              },
+              "net_voi": "23/10",
+              "posterior_ready": {
+                "negative": "1/4",
+                "positive": "3/4"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=29/50,check_B=3/4"
+        },
+        {
+          "accuracy": {
+            "check_A": "29/50",
+            "check_B": "17/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.018546104966346455,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "29/50",
+                  "positive": "21/50"
+                },
+                "ready": {
+                  "negative": "21/50",
+                  "positive": "29/50"
+                }
+              },
+              "net_voi": "3/5",
+              "posterior_ready": {
+                "negative": "21/50",
+                "positive": "29/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.3901596952835995,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "17/20",
+                  "positive": "3/20"
+                },
+                "ready": {
+                  "negative": "3/20",
+                  "positive": "17/20"
+                }
+              },
+              "net_voi": "33/10",
+              "posterior_ready": {
+                "negative": "3/20",
+                "positive": "17/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=29/50,check_B=17/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "13/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.31992295427172013,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "41/50",
+                  "positive": "9/50"
+                },
+                "ready": {
+                  "negative": "9/50",
+                  "positive": "41/50"
+                }
+              },
+              "net_voi": "3",
+              "posterior_ready": {
+                "negative": "9/50",
+                "positive": "41/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.06593194462450902,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "13/20",
+                  "positive": "7/20"
+                },
+                "ready": {
+                  "negative": "7/20",
+                  "positive": "13/20"
+                }
+              },
+              "net_voi": "13/10",
+              "posterior_ready": {
+                "negative": "7/20",
+                "positive": "13/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=41/50,check_B=13/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "3/4"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.31992295427172013,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "41/50",
+                  "positive": "9/50"
+                },
+                "ready": {
+                  "negative": "9/50",
+                  "positive": "41/50"
+                }
+              },
+              "net_voi": "3",
+              "posterior_ready": {
+                "negative": "9/50",
+                "positive": "41/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.18872187554086717,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "3/4",
+                  "positive": "1/4"
+                },
+                "ready": {
+                  "negative": "1/4",
+                  "positive": "3/4"
+                }
+              },
+              "net_voi": "23/10",
+              "posterior_ready": {
+                "negative": "1/4",
+                "positive": "3/4"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=41/50,check_B=3/4"
+        },
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "17/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.31992295427172013,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "41/50",
+                  "positive": "9/50"
+                },
+                "ready": {
+                  "negative": "9/50",
+                  "positive": "41/50"
+                }
+              },
+              "net_voi": "3",
+              "posterior_ready": {
+                "negative": "9/50",
+                "positive": "41/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.3901596952835995,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "17/20",
+                  "positive": "3/20"
+                },
+                "ready": {
+                  "negative": "3/20",
+                  "positive": "17/20"
+                }
+              },
+              "net_voi": "33/10",
+              "posterior_ready": {
+                "negative": "3/20",
+                "positive": "17/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=41/50,check_B=17/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "13/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.5310044064107189,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "9/10",
+                  "positive": "1/10"
+                },
+                "ready": {
+                  "negative": "1/10",
+                  "positive": "9/10"
+                }
+              },
+              "net_voi": "19/5",
+              "posterior_ready": {
+                "negative": "1/10",
+                "positive": "9/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.06593194462450902,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "13/20",
+                  "positive": "7/20"
+                },
+                "ready": {
+                  "negative": "7/20",
+                  "positive": "13/20"
+                }
+              },
+              "net_voi": "13/10",
+              "posterior_ready": {
+                "negative": "7/20",
+                "positive": "13/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=9/10,check_B=13/20"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "3/4"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.5310044064107189,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "9/10",
+                  "positive": "1/10"
+                },
+                "ready": {
+                  "negative": "1/10",
+                  "positive": "9/10"
+                }
+              },
+              "net_voi": "19/5",
+              "posterior_ready": {
+                "negative": "1/10",
+                "positive": "9/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.18872187554086717,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "3/4",
+                  "positive": "1/4"
+                },
+                "ready": {
+                  "negative": "1/4",
+                  "positive": "3/4"
+                }
+              },
+              "net_voi": "23/10",
+              "posterior_ready": {
+                "negative": "1/4",
+                "positive": "3/4"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=9/10,check_B=3/4"
+        },
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B": "17/20"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.5310044064107189,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "9/10",
+                  "positive": "1/10"
+                },
+                "ready": {
+                  "negative": "1/10",
+                  "positive": "9/10"
+                }
+              },
+              "net_voi": "19/5",
+              "posterior_ready": {
+                "negative": "1/10",
+                "positive": "9/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.3901596952835995,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "17/20",
+                  "positive": "3/20"
+                },
+                "ready": {
+                  "negative": "3/20",
+                  "positive": "17/20"
+                }
+              },
+              "net_voi": "33/10",
+              "posterior_ready": {
+                "negative": "3/20",
+                "positive": "17/20"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=9/10,check_B=17/20"
+        }
+      ],
+      "point_model_information_gain_bits": {
+        "check_A": 0.31992295427172013,
+        "check_B": 0.18872187554086717
+      },
+      "point_model_net_voi": {
+        "check_A": "3",
+        "check_B": "23/10"
+      },
+      "policy_selections": {
+        "cost_only": "check_A",
+        "fixed_measure_envelope": "check_B",
+        "information_gain": "check_A",
+        "point_model": "check_A"
+      }
+    },
+    {
+      "admissibility": {
+        "check_A": {
+          "admissible": true,
+          "reasons": []
+        },
+        "check_B": {
+          "admissible": true,
+          "reasons": []
+        }
+      },
+      "case_id": "truth_outside_credal_set",
+      "credal_model_count": 1,
+      "evaluation": [
+        {
+          "accuracy": {
+            "check_A": "29/50",
+            "check_B": "17/20"
+          },
+          "in_credal_set": false,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "33/10",
+              "regret": "27/10",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "33/10",
+              "regret": "27/10",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "33/10",
+              "regret": "27/10",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "3/5",
+              "oracle_net_utility": "33/10",
+              "regret": "27/10",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "outside_set_truth_0"
+        }
+      ],
+      "fixed_measure_net_voi_by_model": {
+        "check_A=41/50,check_B=3/4": {
+          "check_A": "3",
+          "check_B": "23/10"
+        }
+      },
+      "fixed_measure_ranking": {
+        "envelopes": {
+          "check_A": {
+            "lower": "3",
+            "upper": "3"
+          },
+          "check_B": {
+            "lower": "23/10",
+            "upper": "23/10"
+          }
+        },
+        "selected": "check_A",
+        "status": "RANKING_INVARIANT"
+      },
+      "max_regret_over_in_set_truths": {
+        "cost_only": "0",
+        "fixed_measure_envelope": "0",
+        "information_gain": "0",
+        "point_model": "0"
+      },
+      "model_details": [
+        {
+          "accuracy": {
+            "check_A": "41/50",
+            "check_B": "3/4"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.31992295427172013,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "41/50",
+                  "positive": "9/50"
+                },
+                "ready": {
+                  "negative": "9/50",
+                  "positive": "41/50"
+                }
+              },
+              "net_voi": "3",
+              "posterior_ready": {
+                "negative": "9/50",
+                "positive": "41/50"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            },
+            "check_B": {
+              "information_gain_bits": 0.18872187554086717,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "3/4",
+                  "positive": "1/4"
+                },
+                "ready": {
+                  "negative": "1/4",
+                  "positive": "3/4"
+                }
+              },
+              "net_voi": "23/10",
+              "posterior_ready": {
+                "negative": "1/4",
+                "positive": "3/4"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=41/50,check_B=3/4"
+        }
+      ],
+      "point_model_information_gain_bits": {
+        "check_A": 0.31992295427172013,
+        "check_B": 0.18872187554086717
+      },
+      "point_model_net_voi": {
+        "check_A": "3",
+        "check_B": "23/10"
+      },
+      "policy_selections": {
+        "cost_only": "check_A",
+        "fixed_measure_envelope": "check_A",
+        "information_gain": "check_A",
+        "point_model": "check_A"
+      }
+    },
+    {
+      "admissibility": {
+        "check_A": {
+          "admissible": true,
+          "reasons": []
+        },
+        "check_B_dep": {
+          "admissible": false,
+          "reasons": [
+            "dependency_unresolved"
+          ]
+        },
+        "check_C_stale": {
+          "admissible": false,
+          "reasons": [
+            "stale_evidence"
+          ]
+        },
+        "check_D_hard": {
+          "admissible": false,
+          "reasons": [
+            "hard_gate_inadmissible"
+          ]
+        }
+      },
+      "case_id": "dependency_and_staleness_gates",
+      "credal_model_count": 1,
+      "evaluation": [
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B_dep": "4/5",
+            "check_C_stale": "9/10",
+            "check_D_hard": "99/100"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "information_gain": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            },
+            "point_model": {
+              "expected_net_utility": "19/5",
+              "oracle_net_utility": "19/5",
+              "regret": "0",
+              "selected_check": "check_A"
+            }
+          },
+          "truth_id": "in_set_truth_0"
+        }
+      ],
+      "fixed_measure_net_voi_by_model": {
+        "check_A=9/10,check_B_dep=4/5,check_C_stale=9/10,check_D_hard=99/100": {
+          "check_A": "19/5"
+        }
+      },
+      "fixed_measure_ranking": {
+        "envelopes": {
+          "check_A": {
+            "lower": "19/5",
+            "upper": "19/5"
+          }
+        },
+        "selected": "check_A",
+        "status": "RANKING_INVARIANT"
+      },
+      "max_regret_over_in_set_truths": {
+        "cost_only": "0",
+        "fixed_measure_envelope": "0",
+        "information_gain": "0",
+        "point_model": "0"
+      },
+      "model_details": [
+        {
+          "accuracy": {
+            "check_A": "9/10",
+            "check_B_dep": "4/5",
+            "check_C_stale": "9/10",
+            "check_D_hard": "99/100"
+          },
+          "checks": {
+            "check_A": {
+              "information_gain_bits": 0.5310044064107189,
+              "likelihood_matrix": {
+                "not_ready": {
+                  "negative": "9/10",
+                  "positive": "1/10"
+                },
+                "ready": {
+                  "negative": "1/10",
+                  "positive": "9/10"
+                }
+              },
+              "net_voi": "19/5",
+              "posterior_ready": {
+                "negative": "1/10",
+                "positive": "9/10"
+              },
+              "route_by_outcome": {
+                "negative": "yield",
+                "positive": "act"
+              }
+            }
+          },
+          "model_id": "check_A=9/10,check_B_dep=4/5,check_C_stale=9/10,check_D_hard=99/100"
+        }
+      ],
+      "point_model_information_gain_bits": {
+        "check_A": 0.5310044064107189
+      },
+      "point_model_net_voi": {
+        "check_A": "19/5"
+      },
+      "policy_selections": {
+        "cost_only": "check_A",
+        "fixed_measure_envelope": "check_A",
+        "information_gain": "check_A",
+        "point_model": "check_A"
+      }
+    },
+    {
+      "admissibility": {
+        "check_B_dep": {
+          "admissible": false,
+          "reasons": [
+            "dependency_unresolved"
+          ]
+        },
+        "check_C_stale": {
+          "admissible": false,
+          "reasons": [
+            "stale_evidence"
+          ]
+        },
+        "check_D_hard": {
+          "admissible": false,
+          "reasons": [
+            "hard_gate_inadmissible"
+          ]
+        }
+      },
+      "case_id": "no_admissible_check",
+      "credal_model_count": 1,
+      "evaluation": [
+        {
+          "accuracy": {
+            "check_B_dep": "4/5",
+            "check_C_stale": "9/10",
+            "check_D_hard": "99/100"
+          },
+          "in_credal_set": true,
+          "policies": {
+            "cost_only": {
+              "expected_net_utility": "0",
+              "oracle_net_utility": "0",
+              "regret": "0",
+              "selected_check": null
+            },
+            "fixed_measure_envelope": {
+              "expected_net_utility": "0",
+              "oracle_net_utility": "0",
+              "regret": "0",
+              "selected_check": null
+            },
+            "information_gain": {
+              "expected_net_utility": "0",
+              "oracle_net_utility": "0",
+              "regret": "0",
+              "selected_check": null
+            },
+            "point_model": {
+              "expected_net_utility": "0",
+              "oracle_net_utility": "0",
+              "regret": "0",
+              "selected_check": null
+            }
+          },
+          "truth_id": "in_set_truth_0"
+        }
+      ],
+      "fixed_measure_net_voi_by_model": {
+        "check_B_dep=4/5,check_C_stale=9/10,check_D_hard=99/100": {}
+      },
+      "fixed_measure_ranking": {
+        "envelopes": {},
+        "selected": null,
+        "status": "UNKNOWN_NO_ADMISSIBLE_CHECK"
+      },
+      "max_regret_over_in_set_truths": {
+        "cost_only": "0",
+        "fixed_measure_envelope": "0",
+        "information_gain": "0",
+        "point_model": "0"
+      },
+      "model_details": [
+        {
+          "accuracy": {
+            "check_B_dep": "4/5",
+            "check_C_stale": "9/10",
+            "check_D_hard": "99/100"
+          },
+          "checks": {},
+          "model_id": "check_B_dep=4/5,check_C_stale=9/10,check_D_hard=99/100"
+        }
+      ],
+      "point_model_information_gain_bits": {},
+      "point_model_net_voi": {},
+      "policy_selections": {
+        "cost_only": null,
+        "fixed_measure_envelope": null,
+        "information_gain": null,
+        "point_model": null
+      }
+    }
+  ],
+  "decision_rule": "A check is robustly top-ranked only when its minimum fixed-measure net VOI is strictly greater than every other check's maximum. Otherwise emit UNCERTAIN_MODEL_DEPENDENT_RANKING.",
+  "fallback_rule": "On an uncertain ranking, choose the action in {no_check} union admissible checks with minimum worst-case net-VOI regret across the frozen credal set; ties prefer lower cost, then lexical id. This is separate from the fixed-measure envelope.",
+  "h_pass_scoped": true,
+  "model_sha256": "815cbbbb8c30c98a852ef9aeefe800e87d55e4a00f5122df6db506458c3552bd",
+  "outside_set_not_flagged": true,
+  "pass_method_scoped": true,
+  "protocol": "issue-7955-t0-a01-v1",
+  "scope": "finite authored likelihood models only; no live calibration or GUI result"
+}
