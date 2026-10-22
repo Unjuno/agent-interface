@@ -278,10 +278,12 @@ The selected supervisor design already exists. The direct live-Xvfb
 `x11_cancel_worker` bystander-reuse discriminator now has one retained scoped
 pass in [R01](../research/integration/live_xres_bystander_reuse_20261022_r01/DISPOSITION.md):
 natural XRes-base reuse by an unrelated client was detected, cleanup refused,
-and independent key-state readback showed no release. Public-MCP live
-composition and the broader release/effect/recovery/efficiency gates remain
-distinct. Keep experimental runtime behavior opt-in and do not use WSLc/Docker
-while Issue #7924's shared ownership STOP/HOLD remains in force.
+and independent key-state readback showed no release. A separately retained
+[public-caller R02](../research/integration/live_xres_public_caller_bystander_20261022_r02/DISPOSITION.md)
+now shows one composed live-Xvfb sample with the same fail-closed result. The
+broader release/effect/recovery/efficiency gates remain distinct. Keep
+experimental runtime behavior opt-in and do not use WSLc/Docker while Issue
+#7924's shared ownership STOP/HOLD remains in force.
 
 ## Historical execution checkpoint after PR #9370 (2026-10-22)
 

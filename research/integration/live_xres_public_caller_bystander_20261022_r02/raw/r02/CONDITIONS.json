@@ -1,0 +1,57 @@
+{
+  "schema": "agent-interface/live-xres-public-caller-bystander-conditions-r02-v1",
+  "state": "FROZEN_BEFORE_RUN",
+  "created_utc": "2026-10-22T08:21:37Z",
+  "source_revision": "15760a07ff774d902d9a897fe33432a2e60054ba",
+  "source_blobs": {
+    "runtime/cli_v1/mcp_server.py": "385638ac8e120a6881f8fa95d27af012536c6d50",
+    "runtime/cli_v1/owned_guarded_session.py": "bd619265594124619af0610af6c828ea376edd1b",
+    "runtime/guarded_x11_v1/cancel_supervisor.py": "d817369d57abdd37ecb17a0afcf5b51531699174",
+    "runtime/guarded_x11_v1/xres_client_fence.py": "87f277cb62d01fe91425e636272b297af66ed4e8",
+    "runtime/backends/x11_v1/backend.py": "6fc5b338d98b882f0eff9db15a50b0cba0520eb8",
+    "runtime/cli_v1/test_mcp_xvfb_blocked_release_integration.py": "d53b0edc0b6044976c76fabd148932c01132f0d1"
+  },
+  "predecessor_preflight": {
+    "packet": "live_xres_public_caller_bystander_20261022_r01",
+    "status": "NOT_RUN_PREFLIGHT_ERROR",
+    "caller_or_input_started": false,
+    "reason": "python-xlib version tuple was concatenated with a string in the preflight banner; Xvfb cleanup was confirmed"
+  },
+  "harness": {
+    "runner": "run_live_xres_public_caller_bystander_r02.py",
+    "caller": "runtime.cli_v1.mcp_server.create_server over guarded-x11 public MCP tools",
+    "owner_factory": "unchanged _xvfb_blocking_owner_factory from test_mcp_xvfb_blocked_release_integration.py",
+    "supervisor_target": "wrapper starts a real separate bystander client and invokes unchanged x11_cancel_worker",
+    "expected_source_changes": "none"
+  },
+  "environment": {
+    "host": "Windows 10; local Ubuntu WSL2 distribution",
+    "python": "CPython 3.12.3",
+    "python_xlib": "0.33",
+    "pillow": "13.0.0",
+    "mcp_sdk": "1.30.0",
+    "xvfb_package": "2:21.1.12-1ubuntu1.8",
+    "display": ":179",
+    "preflight": "No /tmp/.X179-lock or /tmp/.X11-unix/X179; no exact Xvfb :179 process observed",
+    "container_or_wslc": "none"
+  },
+  "procedure": [
+    "Start exactly one private Xvfb :179 at 800x600x24 with TCP disabled.",
+    "Create a synthetic target window, observe and mint through standard public MCP tools, then admit one synthetic key action.",
+    "Use the existing integration owner factory to queue the delayed XTEST event and block its real python-xlib Display.sync call.",
+    "Invoke public interface_guarded_cancel and allow normal owner retirement and prestarted supervisor dispatch.",
+    "Inside the test-only supervisor wrapper, start one distinct process whose first X connection is the post-retirement bystander; record its PID and resource base.",
+    "If the bystander naturally reused the retired owner's exact XRes base, call unchanged x11_cancel_worker while that client remains connected; otherwise record HOLD and do not run cleanup worker.",
+    "Require the public terminal result to remain UNKNOWN/no-replay, worker to report resource_base_reused_by_unrelated_client and not_attempted, and independent keymap readback to retain the key-down state before harness cleanup.",
+    "Release isolated synthetic keys, wait through the declared delayed-request horizon, verify final neutral state, stop the exact private Xvfb, and preserve all raw files."
+  ],
+  "one_shot": {
+    "formal_cases": 1,
+    "resource_base_reuse_retries": 0,
+    "test_retries": 0,
+    "if_resource_base_not_reused": "HOLD; worker not invoked; no XID forcing or rerun",
+    "if_input_not_pending_or_held": "HOLD; no replacement trial",
+    "if_public_result_or_readback_differs": "retain first outcome; no retry"
+  },
+  "claim_boundary": "One public-caller live-Xvfb bystander-refusal sample only. No physical desktop/MAP01, global input exclusivity, task-success, hard OS bound, matched efficiency/reliability, or WSLc portability claim."
+}
