@@ -128,7 +128,47 @@ diff against current main, run relevant local validation, and verify actual
 branch protections. Optional CI may be reported as pending; do not wait for it
 when local evidence is sufficient and repository protections allow progress.
 
-## Current execution checkpoint after PR #9379 (2026-10-22)
+## Current execution checkpoint after PR #8845 (2026-10-22)
+
+Current main is `55ea8e991cd97a87c4a09016cec78caf821e92e7` (evidence-only
+merge of PR #8845). The complete [r148 membership recheck](maintenance/repository-inventory-recheck-20261022-r148.md)
+records 1,654 open Issues and 452 open PRs at a stable before/after SHA. The
+Issue ID set exactly matches r145; the PR set equals r145 minus merged #8845.
+The exact ID CSVs and byte hashes are retained in r148. Membership is routing
+metadata only; it does not establish semantic disposition, ownership, custody,
+or merge readiness.
+
+PR #9389 narrows one saturated-relay boundary: at the 16-response cap a
+cancellation can pass one deferred ordinary request, consume one separately
+bounded response slot, and stop later tool dispatch if its response writer
+fails. The relay and Fake X composition suites passed 26/26 in both normal and
+optimized Windows CPython 3.11. This is bounded stream/Fake X composition
+evidence; one or more queued ordinary requests can still delay cancellation,
+and it proves no native or physical input release. See the
+[supervisor design crosswalk](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
+
+PR #8845 preserved a separate frozen-source construction result for Issue #59:
+the planner's authored `minimum_ammo=5` rejects ammo 4 while the same-epoch
+cover monitor retains cover with its separate hard floor of 1; the zero-ammo
+control invalidates. The original WSLc run is retained and was not repeated.
+On its exact PR head, local Windows CPython 3.11 tests passed 2/2 in normal and
+optimized modes, the non-executing audit returned `PASS_SCOPED`, and the saved
+result JSONs were restored byte-for-byte after replay. This is a policy-boundary
+difference, not proof of a defect or live MAP01 behavior. The packet is indexed
+in the [MAP01 family crosswalk](ideas/map01-live-guard-evidence-family.md);
+Issue #59 remains open.
+
+**Next repository-convergence batch:** choose one exact open PR with a unique
+evidence or merge decision, refresh its live head/base, linked Issue, full diff,
+checks and custody, then locally validate that exact source. A disjoint idea
+family or high-risk custody slice may proceed in its own paths. Do not select
+records by age/count, close research to empty the queue, or delete unknown-
+custody work. Preserve active computer-control gates (#17/#57 and platform-
+specific work) until evidence supports a scoped disposition. This batch used
+no WSLc allocation.
+
+The following PR #9379 checkpoint is historical context, not a current source
+pointer.
 
 The last code-bearing main change is PR #9377 at
 `e698167ede85085b61446ad85dc6330fa1ba283d`. PRs #9378 and #9379 only refreshed

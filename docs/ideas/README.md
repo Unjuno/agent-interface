@@ -64,7 +64,7 @@ Closed Issues remain valid provenance and should not be omitted merely because t
 - [Historical open Issue/PR inventory r8 (2026-10-18)](../maintenance/repository-inventory-20261018-r8.md) — preserved metadata snapshot, not the current baseline; see r12 above.
 - [Historical open Issue/PR inventory r7](../maintenance/repository-inventory-20261018-r7.md) — preserved earlier snapshot against pre-#9029 main.
 
-- [MAP01 live threat-guard evidence family](map01-live-guard-evidence-family.md) — indexes eight #59 allocation packet groups through A15 and separates result/custody limits. #8678/#8701 tracked files are preserved, #8749/#8782/#8790/#8810 result packets are merged, and #8818 adds A15's manifest without raw contents. A10/#8759 and A14/#8800 remain open for distinct raw-custody gaps. No allocation was rerun.
+- [MAP01 live threat-guard evidence family](map01-live-guard-evidence-family.md) — indexes eight #59 allocation packet groups through A15 and separates result/custody limits. #8678/#8701 tracked files are preserved, #8749/#8782/#8790/#8810 result packets are merged, and #8818 adds A15's manifest without raw contents. A10/#8759 and A14/#8800 remain open for distinct raw-custody gaps. Separate frozen-source construction PR #8845 is merged; it does not qualify live control. No allocation was rerun during indexing.
 
 - [Open Issue inventory refresh (2026-10-17)](../maintenance/open-issues-inventory-20261017.md) — refreshes the paginated open-Issue metadata snapshot to 1,677, records its three-ID delta from r3, and states that inventory is not full semantic triage.
 

@@ -1,6 +1,12 @@
 # MAP01 live threat-guard evidence family
 
-**Status: active research; eight live-allocation packet groups are indexed through A15. Live result PRs #8759 (A10) and #8800 (A14) remain open; synthetic construction packet #8843 is merged, and #8848 has current-main successor PR #9234. #8678/#8701 are closed after tracked-file preservation, and #8749/#8782/#8790/#8810 result packets are merged. #8818 is the merged A15 custody-manifest follow-up. Issue #59 remains open.**
+**Status: active research; eight live-allocation packet groups are indexed through A15. Live result PRs #8759 (A10) and #8800 (A14) remain open; synthetic construction packet #8843 is merged, and #8848 has current-main successor PR #9234. #8678/#8701 are closed after tracked-file preservation, and #8749/#8782/#8790/#8810 result packets are merged. #8818 is the merged A15 custody-manifest follow-up. Separate frozen-source authored-ammo construction PR #8845 is also merged; it is not the live-allocation A11 packet #8782. Issue #59 remains open.**
+
+## Separate authored-ammo policy-boundary construction — PR #8845 (A11, merged 2026-10-22)
+
+Merged [PR #8845](https://github.com/Unjuno/agent-interface/pull/8845) preserves a frozen-source comparison: with source ammo 6, current ammo 4 and planner-authored `minimum_ammo=5`, actual action admission rejects with `ammo_minimum_failed`, while the same-epoch cover monitor keeps its separate hard floor of 1 and records a soft event. The zero-ammo boundary control invalidates the monitor. The original WSLc run, raw transcript, freeze, receipts and corrected non-executing audit remain in [`research/doom/v39_authored_ammo_propagation_a11_20261012`](../../research/doom/v39_authored_ammo_propagation_a11_20261012/README.md); the run was not repeated during integration. Local Windows CPython 3.11 replay of the two construction tests passed 2/2 in normal and optimized modes, and the audit returned `PASS_SCOPED` against the preserved source identities.
+
+This establishes a difference between two source-level policy boundaries, not that either contract is wrong or must be changed. It exercises no pending model, live game, GUI/OCR, OS input, release, feedback, recovery, task effect or MAP01 outcome. This packet's local label “A11” is distinct from live-allocation A11 in PR #8782. Keep Issue #59 open for its integrated threat/feedback/recovery evidence.
 
 ### A07 independent custody cross-check — 2026-10-19
 
