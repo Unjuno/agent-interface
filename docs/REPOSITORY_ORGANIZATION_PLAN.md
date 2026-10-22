@@ -274,11 +274,14 @@ live states are `MERGED` and `CLOSED`. Do not reopen or rerun that completed
 finite result. The next cleanup batch must select a different item from r146's
 live sets and refresh that item's exact head/state/owner before disposition.
 
-The computer-control execution boundary remains the one recorded below: the
-selected supervisor design already exists; the live-Xvfb bystander negative
-path and broader release/effect/recovery/efficiency gates remain distinct.
-Keep experimental runtime behavior opt-in and do not use WSLc/Docker while
-Issue #7924's shared ownership STOP/HOLD remains in force.
+The selected supervisor design already exists. The direct live-Xvfb
+`x11_cancel_worker` bystander-reuse discriminator now has one retained scoped
+pass in [R01](../research/integration/live_xres_bystander_reuse_20261022_r01/DISPOSITION.md):
+natural XRes-base reuse by an unrelated client was detected, cleanup refused,
+and independent key-state readback showed no release. Public-MCP live
+composition and the broader release/effect/recovery/efficiency gates remain
+distinct. Keep experimental runtime behavior opt-in and do not use WSLc/Docker
+while Issue #7924's shared ownership STOP/HOLD remains in force.
 
 ## Historical execution checkpoint after PR #9370 (2026-10-22)
 
@@ -301,16 +304,14 @@ from `UNKNOWN`, establish release while X11 is unavailable, prove shared
 desktop input authority, or qualify physical GUI/MAP01, matched efficiency,
 or reliability. Keep the supervisor default-off and keep #17/#57 open.
 
-The design page identifies the immediate technical boundary: global XTest
+The design page identifies the remaining technical boundaries: global XTest
 release lacks a proven exclusive-input capability; deadline expiry must also
-prevent a delayed supervisor from emitting a new effect. Fake-X bystander
-refusal exists, but the live-Xvfb bystander negative path is still open. The
-next computer-control batch is one isolated public-caller Xvfb test of that
-negative path, with an independent key-state readback and raw conditions; it
-must preserve `UNKNOWN`/no-replay and show that no release is emitted when an
-unrelated client owns the reused XRes base. If an isolated Xvfb target cannot
-be verified locally, do source/test design work only and retain the gate.
-WSLc remains STOP/HOLD under #7924; this batch does not use WSLc or Docker.
+prevent a delayed supervisor from emitting a new effect. The direct
+worker-path live-Xvfb bystander refusal has one pass, but public-caller live
+composition is still open. The next discriminator is to exercise natural
+resource-base reuse through the standard caller with independent key-state
+readback and raw conditions, preserving `UNKNOWN`/no-replay. WSLc remains
+STOP/HOLD under #7924; this batch does not use WSLc or Docker.
 
 PR #9367–#9370 updated the catalog, checkpoint, worktree census, and
 high-risk custody follow-up. The census found 45 local worktrees, including
