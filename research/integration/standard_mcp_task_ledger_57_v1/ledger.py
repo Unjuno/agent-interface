@@ -49,8 +49,9 @@ def _validate_usage(usage):
             raise LedgerValidationError(f"{name} must be a nonnegative integer or null")
     if status == "reported" and (input_tokens is None or output_tokens is None):
         raise LedgerValidationError("reported usage requires both token counts")
-    if status == "partial" and input_tokens is None and output_tokens is None:
-        raise LedgerValidationError("partial usage requires at least one token count")
+    if status == "partial" and input_tokens is None and output_tokens is None and not any(
+            usage.get(name) is not None for name in _DETAIL_USAGE_FIELDS):
+        raise LedgerValidationError("partial usage requires at least one known token count")
     if status == "unavailable" and (
             input_tokens is not None or output_tokens is not None or
             any(usage.get(name) is not None for name in _DETAIL_USAGE_FIELDS)):
