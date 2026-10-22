@@ -1,0 +1,26 @@
+{
+  "result": "PASS_SCOPED_NATIVE_DATA_AUDIT",
+  "source_images": 82,
+  "controls": [
+    {
+      "name": "physical_clear_hidden",
+      "refused": true
+    },
+    {
+      "name": "tracking_lost",
+      "refused": true
+    },
+    {
+      "name": "rescue_hidden",
+      "refused": true
+    }
+  ],
+  "native_replayed": false,
+  "auditor_timing": "POSTHOC_NOT_PROSPECTIVELY_FROZEN",
+  "limitations": [
+    "Loaded memory/Python/linked system libraries not fully attested",
+    "Synthetic recovery marker only",
+    "No app task,Window ownership,Windows,crash,deadline,concurrency or economics proof"
+  ],
+  "main_requests": 0
+}

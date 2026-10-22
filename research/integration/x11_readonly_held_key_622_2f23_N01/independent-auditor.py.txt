@@ -1,0 +1,32 @@
+import copy,hashlib,json,pathlib
+root=pathlib.Path('work/x11-key-observation-N01');freeze=json.loads((root/'FREEZE.json').read_text());raw=json.loads((root/'result/receipt.json').read_text());out=root/'independent-data-audit';out.mkdir(exist_ok=False)
+assert hashlib.sha256((root/'producer.py').read_bytes()).hexdigest()==freeze['producer_sha256']
+for f in freeze['sources']:
+    data=(root/'source'/f['path']).read_bytes();assert len(data)==f['bytes'] and hashlib.sha256(data).hexdigest()==f['sha256']
+def check(record):
+    assert record['experiment']=='PASS' and record['connection']=='PASS' and record['server_resolved'] is True and type(record['server_exit']) is int and record['server_exit']==0
+    assert 'rescue_release' not in record
+    events=record['events'];assert [e['label'] for e in events]==['initial','pressed','observation','after-window_client','observation','after-screen_physical_px','released']
+    samples=[events[i] for i in [0,1,3,5,6]];code=samples[1]['code'];assert type(code) is int and 8<=code<=255
+    for sample,down,count in zip(samples,[False,True,True,True,False],[0,1,1,1,2]):
+        assert sample['code']==code and type(sample['down']) is bool and sample['down']==down
+        keymap=bytes.fromhex(sample['keymap_hex']);assert len(keymap)==32
+        # Independent integer bitmap oracle, not producer's indexed byte expression.
+        assert bool((int.from_bytes(keymap,'little') >> code)&1)==down
+        assert sample['emissions']==count and sample['tracking']==({'SHIFT':code} if down else {})
+    for e,frame in zip([events[2],events[4]],['window_client','screen_physical_px']):
+        result=e['result'];assert e['frame']==frame and result['status']=='returned' and result['input_dispatched'] is False and result['side_effect_authority'] is False
+        assert result['observation']['width']==8 and result['observation']['height']==8 and result['observation']['bytes']==256
+    release=record['release'];assert release['verified'] is True and release['keys_down']==[] and release['buttons_down']==[]
+check(raw);controls=[]
+for name in ['physical_clear_hidden','tracking_lost','rescue_hidden']:
+    mutant=copy.deepcopy(raw)
+    if name=='physical_clear_hidden':mutant['events'][3]['keymap_hex']='00'*32
+    elif name=='tracking_lost':mutant['events'][5]['tracking']={}
+    else:mutant['rescue_release']={'verified':True}
+    (out/(name+'.json')).write_text(json.dumps(mutant,indent=2))
+    try:check(mutant)
+    except AssertionError:controls.append(dict(name=name,refused=True))
+    else:raise AssertionError('control accepted '+name)
+report=dict(result='PASS_SCOPED_NATIVE_DATA_AUDIT',source_images=len(freeze['sources']),controls=controls,native_replayed=False,auditor_timing='POSTHOC_NOT_PROSPECTIVELY_FROZEN',limitations=['Loaded memory/Python/linked system libraries not fully attested','Synthetic recovery marker only','No app task,Window ownership,Windows,crash,deadline,concurrency or economics proof'],main_requests=0)
+(out/'AUDIT.json').write_text(json.dumps(report,indent=2));print(json.dumps(report))

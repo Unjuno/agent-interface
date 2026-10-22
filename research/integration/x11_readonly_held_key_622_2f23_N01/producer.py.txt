@@ -1,0 +1,57 @@
+import datetime,json,os,pathlib,secrets,select,subprocess,sys
+work=pathlib.Path(__file__).resolve().parent.parent;dep=work/'x11-owned-dependencies/root';out=work/'x11-key-observation-N01/result';out.mkdir(exist_ok=False)
+env=dict(os.environ,LD_LIBRARY_PATH=str(dep/'usr/lib/x86_64-linux-gnu'),PYTHONPATH=str(dep/'usr/lib/python3/dist-packages'),OMP_NUM_THREADS='1',PATH=str(dep/'usr/bin')+os.pathsep+os.environ['PATH'],XKB_BINDIR=str(dep/'usr/bin'));sys.path.insert(0,env['PYTHONPATH'])
+auth=out/'private.Xauthority';auth.touch(mode=0o600);cookie=secrets.token_hex(16)
+subprocess.run([str(dep/'usr/bin/xauth'),'-f',str(auth),'add',':0','MIT-MAGIC-COOKIE-1',cookie],env=env,check=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+reader,writer=os.pipe();log=open(out/'server.stderr','wb');server=None;conn=None;record={'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'input_operations':'recorded_in_events','scope':'N01 owned Xvfb native SHIFT down, two metadata observations, release; no task/generalized deadline proof','main_requests':0}
+try:
+    argv=[str(dep/'usr/bin/Xvfb'),'-displayfd',str(writer),'-screen','0','320x240x24','-nolisten','tcp','-auth',str(auth),'-noreset']
+    server=subprocess.Popen(argv,env=env,pass_fds=(writer,),stdout=subprocess.DEVNULL,stderr=log);record['server_pid']=server.pid;os.close(writer);writer=None
+    assert select.select([reader],[],[],5)[0],'display readiness timeout'
+    raw=os.read(reader,128);assert raw.strip().isdigit(),repr(raw);display=':'+raw.decode().strip();record['display']=display
+    subprocess.run([str(dep/'usr/bin/xauth'),'-f',str(auth),'add',display,'MIT-MAGIC-COOKIE-1',cookie],env=env,check=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    os.environ['XAUTHORITY']=str(auth)
+    from Xlib import display as xdisplay
+    conn=xdisplay.Display(display);screen=conn.screen();record.update(connection='PASS',width=screen.width_in_pixels,height=screen.height_in_pixels);conn.sync()
+    sys.path.insert(0,str(work/'x11-key-observation-N01/source'))
+    from Xlib import X
+    from runtime.backends.x11_v1.backend import X11Backend
+    from runtime.cli_v1.observe import observe_in_session
+    from types import SimpleNamespace
+    window=screen.root.create_window(0,0,32,32,0,screen.root_depth,X.InputOutput,X.CopyFromParent,background_pixel=screen.white_pixel)
+    window.map();conn.sync()
+    backend=X11Backend(display,{'fixture':window.id})
+    record['events']=[]
+    def sample(label):
+        keymap=bytes(conn.query_keymap()); code=backend._keycode('SHIFT')
+        event=dict(label=label,keymap_hex=keymap.hex(),code=code,down=bool(keymap[code//8] & (1<<(code%8))),tracking=dict(backend.held_keycodes),emissions=backend.emissions)
+        record['events'].append(event);return event
+    try:
+        assert not sample('initial')['down']
+        backend.key_state('SHIFT',True);backend.d.sync();assert sample('pressed')['down']
+        session=SimpleNamespace(backend=backend,recovery_required=True)
+        for frame in ('window_client','screen_physical_px'):
+            observation=observe_in_session(session,target='fixture',frame=frame,region=[0,0,8,8]);record['events'].append(dict(label='observation',frame=frame,result=observation))
+            assert observation['status']=='returned' and not observation['input_dispatched'] and session.recovery_required
+            held=sample('after-'+frame);assert held['down'] and held['tracking'] and held['emissions']==1
+        record['release']=backend.release_all();assert record['release']['verified'] is True
+        final=sample('released');assert not final['down'] and not final['tracking'] and final['emissions']==2
+        record['experiment']='PASS'
+    finally:
+        if backend.held_keycodes:
+            record['rescue_release']=backend.release_all()
+        backend.close();window.destroy();conn.sync()
+
+except Exception as e:record.update(connection='FAIL',error_type=type(e).__name__,error=str(e))
+finally:
+    if conn is not None:conn.close()
+    if server is not None:
+        server.terminate()
+        try:server.wait(timeout=5)
+        except subprocess.TimeoutExpired:server.kill();server.wait(timeout=5)
+        record.update(server_exit=server.returncode,server_resolved=True)
+    os.close(reader)
+    if writer is not None:os.close(writer)
+    log.close();record['ended_utc']=datetime.datetime.now(datetime.timezone.utc).isoformat();(out/'receipt.json').write_text(json.dumps(record,indent=2));print(json.dumps(record))
+
+
