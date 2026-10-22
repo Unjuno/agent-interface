@@ -1,0 +1,16 @@
+baseline_commit=a2ad677c78aab119eed65884af8848103a292b8c
+baseline_controller_sha256=bb828303a2c97865e63600e7ad80d913e1870e21bde7fcd314438155073bfa66
+test_late_finish_writer_success_does_not_claim_delivery (v40_late_writer_test.Map01V40UnknownSourceTests.test_late_finish_writer_success_does_not_claim_delivery) ... FAIL
+
+======================================================================
+FAIL: test_late_finish_writer_success_does_not_claim_delivery (v40_late_writer_test.Map01V40UnknownSourceTests.test_late_finish_writer_success_does_not_claim_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-5\work\review-pr7586-59\research\doom\test_map01_overlap_controller_v40_unknown_source.py", line 596, in test_late_finish_writer_success_does_not_claim_delivery
+    self.assertFalse(receipt["finish_sent"])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.078s
+
+FAILED (failures=1)
