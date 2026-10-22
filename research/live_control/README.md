@@ -70,7 +70,7 @@ flowchart TD
 | Recovery, continuation, and durability | [`AUTO_RECOVER_INK.md`](AUTO_RECOVER_INK.md), [`CHECKPOINT_CONTINUATION.md`](CHECKPOINT_CONTINUATION.md) |
 | Adaptive caller / local repair | [`ADAPTIVE_ACQUISITION_CALLER_V3.md`](ADAPTIVE_ACQUISITION_CALLER_V3.md), [`ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md`](ADAPTIVE_SEMANTIC_REPAIR_LIVE_V2.md) |
 | App Server identity/usage through all-attempt ledger | [JSONL transport composition regression](test_grounding_appserver_usage_transport.py) — deterministic local peer; no live provider or task-effect claim |
-| Compiled / persistent interface | [`COMPILED_GUI_INTERFACE_LIVE_V5.md`](COMPILED_GUI_INTERFACE_LIVE_V5.md), [`INTEGRATED_EFFICIENCY_LIVE_V1.md`](INTEGRATED_EFFICIENCY_LIVE_V1.md) |
+| Compiled / persistent interface | [`COMPILED_GUI_INTERFACE_LIVE_V5.md`](COMPILED_GUI_INTERFACE_LIVE_V5.md), [`INTEGRATED_EFFICIENCY_LIVE_V1.md`](INTEGRATED_EFFICIENCY_LIVE_V1.md), [all-attempt runner recording seam](RECORDED_TARGET_HANDLE_MODEL_RUNNER_V1.md) |
 | Cross-domain transfer | OpenTTD reports under `OPENTTD_*`, plus retained Calc/Inkscape/browser/Mindustry studies in this directory |
 | Issue #3311 allocation-01 pre-test STOP (historical source and disposition) | [Recovery record](issue3311_termination_report_v1/RECOVERY_STATUS.md) |
 
