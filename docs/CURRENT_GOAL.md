@@ -1,18 +1,21 @@
 # Current objective and working direction
 
-**Latest repository checkpoint (2026-10-22):** PR #9400 is merged at
-`632d3603a8df157c1e841dac7ca422c766c77e60`; it adds a worktree-custody report
-and does not change runtime behavior or the r151 queue membership. The
+**Latest repository checkpoint (2026-10-22):** PR #9401 is merged at
+`b688ecd3fdb4726b59201f10753ca65d82942b2b`; it preserves the scoped r09
+Chromium/App Server polling packet with an explicit source-currency limit. PR
+#9400 at `632d3603a8df157c1e841dac7ca422c766c77e60` adds a worktree-custody
+report. Neither changes runtime behavior or the r151 queue membership. The
 user-selected prestarted-supervisor design is already documented in the
 canonical [design and qualification record](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md);
 it remains opt-in and unqualified at the limits recorded there. The current
 organization plan continues from that design and the [worktree custody
 report](maintenance/worktree-custody-recheck-20261022-r01.md). A read-only
-recheck of the unmerged r09 Chromium packet found 316/317 artifact hashes
-matching (README changed after its retained audit) and 161/179 frozen source
-files matching the extant dirty source worktree. Its scoped result is being
-preserved with an explicit source-currency limit; the source worktree remains
-untouched.
+recheck of the r09 Chromium packet found 316/317 artifact hashes matching
+(README changed after its retained audit); all 309 r09 raw files match. Of the
+179 frozen source files, 161 match the extant dirty source worktree. A
+read-only search across all 48 linked worktrees found no complete source
+snapshot: expected versions for 170/179 entries occur somewhere, while nine
+were not found. The source worktree remains untouched.
 
 **Current verified functional baseline (2026-10-22):** PR #9397 merged at `b0e8c6c9b4cfb7917932f52e7a69d8267348aa89`, #9398 at `b57e140848087ab814db874f7dfe410926afd387`, and #9399 at current main `08064035460187ba5c8c5cbb2f4e9732ca622ada`. The fresh r151 membership recheck at that SHA has 1,654 open Issues and 452 open PRs, exactly matching r150. PR #9397 adds a public-caller test for terminal receipt archival blocked after cancellation; its scope and limits are in the [supervisor design](architecture/PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). Latest runtime behavior remains the bounded MCP-relay cancellation read-ahead from PR #9389, with one deferred ordinary request, one reserved response and fail-closed later dispatch; its relay/Fake X composition suites passed 26/26 in normal and optimized Windows CPython 3.11. PR #9395 adds offline App Server usage reconciliation checks (44/44 related tests in both modes on its exact main source). These are synthetic/local evidence; production provider routing, external usage reconciliation, native/physical release, live MAP01 effect, matched efficiency and broad reliability remain open. PR #8800 remains on an A14 raw-custody hold: its public aggregate is preserved, but the original private report/protocol/images and their owner were not recoverable in the accessible workspace; no rerun was made. The linked-worktree review found 48 worktrees, 14 with changes, including two with thousands of changed entries and unresolved ownership; see the [custody report](maintenance/worktree-custody-recheck-20261022-r01.md). WSLc Issue #7924 remains OPEN/STOP. See [r151](maintenance/repository-inventory-recheck-20261022-r151.md) and the [repository organization plan](REPOSITORY_ORGANIZATION_PLAN.md); cleanup and consolidation records retain historical receipts.
 

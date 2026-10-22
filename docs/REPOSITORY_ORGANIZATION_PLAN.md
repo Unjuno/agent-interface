@@ -564,25 +564,30 @@ two changed worktrees. It is documentation-only and does not change the r151
 membership counts (1,654 open Issues and 452 open PRs), so no fresh semantic
 queue classification is implied.
 
-An additive transfer of
+PR [#9401](https://github.com/Unjuno/agent-interface/pull/9401) merged the
+additive transfer of
 [`chromium_public_compiled_caller_20261021`](../research/integration/chromium_public_compiled_caller_20261021/README.md)
-preserves the one-shot r09 live Chromium/App Server result discovered in an
-dirty worktree whose current owner is unresolved. The source packet was not
-edited. Its earlier
+and its supplemental custody record. The packet preserves the one-shot r09
+live Chromium/App Server result found in a dirty worktree whose current owner
+is unresolved. The original source packet was not edited. Its earlier
 `audit-recheck-r09.json` reports a successful temporary-copy audit of all 317
 then-listed artifact entries. A later read-only comparison finds one current
 artifact-manifest mismatch (`README.md`, updated after that audit); the other
 316 files match, including the raw r09 evidence. The frozen 179-entry source
 manifest matches only 161 files in the extant source worktree; 18 runtime
-files differ. The exact dirty source snapshot is therefore not reconstructed,
-and the result is not represented as current-main evidence. The supplemental
+files differ. A read-only comparison across all 48 linked worktrees found no
+complete 179-file match. Expected source versions for 170 entries exist in at
+least one worktree; nine expected versions were not found. The exact dirty
+source snapshot is therefore not reconstructed, and the result is not
+represented as current-main evidence. The supplemental
 [custody recheck](../research/integration/chromium_public_compiled_caller_20261021/CUSTODY-RECHECK-20261022.md)
 records these limits. No experiment was rerun, and the source worktree was
 left intact.
 
-Next bounded work is to reconcile the frozen r09 source snapshot with the
-intended integration and identify the source worktree owner before any further
-branch/worktree disposition. Keep #57 open: this packet is one scoped polling
+Next bounded work is to identify the source worktree owner and recover the
+nine unavailable source versions if they remain available outside the linked
+worktrees. Then reconcile the frozen source with the intended integration
+before any further branch/worktree disposition. Keep #57 open: this packet is one scoped polling
 result and does not satisfy its matched three-arm token/latency/correctness
 comparison. Continue the Issue/PR inventory from the r151 ID sets in disjoint
 batches; do not convert the large open queue into a closure target.
