@@ -1,0 +1,30 @@
+{
+  "attempt": "A01",
+  "command": "python run_cancel.py > candidate.log 2>&1; then python audit.py > audit.log 2>&1",
+  "display": "test_input_owner_v12 fake display; no X server",
+  "expected_gate": "one admission with actuation_id and id/step; one verified cancelled owner_release; fake physical key empty; zero matching bridge up receipts",
+  "experiment_sha256": {
+    "COMMANDS.txt": "369156b0265d52a0ed7244c9f751b2e4b4d9446ae23b12c329f1f677bf556366",
+    "PROTOCOL.md": "257bf10da4671dde89d88f46d6ce736c5410b2dfb2d817d5d0015b8fbee1f591",
+    "audit.py": "3863796ac109f5c6cf255b8f80e51b7d373c4dfb93738d7992a4af13b4c95134",
+    "run_cancel.py": "40562973934d1b5c633fe6ac28f273fdd48a7a54b0e08f97ae509f879c978163"
+  },
+  "frozen_at_local": "2026-10-05 Asia/Tokyo",
+  "host": "macOS 27.0 arm64",
+  "retry": "none",
+  "runtime": {
+    "path": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "version": "CPython 3.12.14"
+  },
+  "schema": "map01-cancel-release-measurement-freeze-v1",
+  "source_commit": "2e1df9a56a0b46c1733c731bde3409c68c8750c7",
+  "source_sha256": {
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+    "research/doom/map01_v39_perkey_bridge_a01/bridge.py": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "6e63390e5fa5a9dc7cf0fe2cd040ceaa3a21e0fc86366dbe67c21c41e6f937d7",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "timeout_seconds": 1.0
+}
