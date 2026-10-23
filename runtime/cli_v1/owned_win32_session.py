@@ -394,7 +394,8 @@ class OwnedWin32SessionOwner:
             if record["task_effect"] is not None:
                 return False
             record["task_effect"] = {"status": "pending", "task_success": None,
-                                     "receipt": None}
+                                     "receipt": None,
+                                     "requested_monotonic_ns": time.monotonic_ns()}
             return True
 
     def record_task_effect(self, call_id, receipt):
@@ -425,12 +426,18 @@ class OwnedWin32SessionOwner:
                     or receipt["operation_id"] != action["operation_id"]
                     or receipt["target_generation"] != action["target_generation"]):
                 raise ValueError("task-effect receipt belongs to a different action generation")
+            received_ns = time.monotonic_ns()
+            if not (existing["requested_monotonic_ns"]
+                    <= receipt["observed_monotonic_ns"] <= received_ns):
+                raise ValueError("task-effect observation is outside the oracle request/receipt window")
             outcome = receipt["outcome"]
             record["task_effect"] = {
                 "status": "unknown" if outcome == "unknown" else "verified",
                 "task_success": (True if outcome == "success" else
                                  False if outcome == "failure" else None),
                 "receipt": deepcopy(receipt),
+                "requested_monotonic_ns": existing["requested_monotonic_ns"],
+                "receipt_received_monotonic_ns": received_ns,
             }
             return deepcopy(record)
 
@@ -447,7 +454,8 @@ class OwnedWin32SessionOwner:
             if existing["status"] != "pending":
                 return deepcopy(record)
             record["task_effect"] = {"status": "unknown", "task_success": None,
-                                     "receipt": None, "uncertainty": reason}
+                                     "receipt": None, "uncertainty": reason,
+                                     "requested_monotonic_ns": existing["requested_monotonic_ns"]}
             return deepcopy(record)
 
     def interface_result(self, call_id):

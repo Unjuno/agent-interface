@@ -96,6 +96,56 @@ def _synthetic_process_identity(process):
 
 
 class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
+    async def test_public_task_oracle_rejects_stale_and_future_observation_times(self):
+        from runtime.cli_v1.test_owned_win32_session import FakeCancellationSupervisor
+
+        for observed in (1, 2**63):
+            with self.subTest(observed=observed), tempfile.TemporaryDirectory() as root:
+                adapters, oracle_calls = [], []
+
+                def make_owner(*_args):
+                    gate = OperationOwner(clock_ns=time.monotonic_ns,
+                                          process_identity_reader=lambda _process: None)
+                    adapter = OwnedWin32SessionOwner(gate, FakeCancellationSupervisor(gate))
+                    adapter.bind_target_generation_reader(lambda: "a" * 64)
+                    adapters.append(adapter)
+                    return adapter
+
+                def oracle(action):
+                    oracle_calls.append(action["operation_id"])
+                    return {"call_id": action["call_id"],
+                            "operation_id": action["operation_id"],
+                            "target_generation": action["target_generation"],
+                            "oracle_id": "7" * 32, "outcome": "success",
+                            "observed_monotonic_ns": observed,
+                            "evidence_ref": "synthetic-stale-or-future-state"}
+
+                server = create_server({"fixture": 123}, root, session_mode="guarded-win32",
+                    _guarded_win32_owner_factory=make_owner,
+                    _guarded_win32_producer_factory=lambda _action: None,
+                    _guarded_win32_task_oracle=oracle)
+                binding = json.loads((await server.call_tool(
+                    "interface_guarded_win32_bind_target", {})).content[0].text)
+                admitted = json.loads((await server.call_tool("interface_guarded_win32_admit", {
+                    "action_operation_id": "6" * 32,
+                    "target_binding_id": binding["target_binding_id"],
+                    "operation_deadline_ns": time.monotonic_ns() + 5_000_000_000,
+                    "obligations": [],
+                })).content[0].text)
+                result = json.loads((await server.call_tool("interface_guarded_win32_verify_task", {
+                    "call_id": admitted["call_id"], "wait_for_result_ms": 1000,
+                })).content[0].text)
+                self.assertEqual(result["status"], "unknown", result)
+                self.assertIsNone(result["task_success"])
+                self.assertFalse(result["replay_allowed"])
+                self.assertIn("outside the oracle request/receipt window",
+                              result["task_effect"]["uncertainty"])
+                retained = adapters[0].interface_result(admitted["call_id"])
+                await server.call_tool("interface_guarded_win32_verify_task", {
+                    "call_id": admitted["call_id"], "wait_for_result_ms": 1000})
+                self.assertEqual(oracle_calls, ["6" * 32])
+                self.assertEqual(adapters[0].interface_result(admitted["call_id"]), retained)
+
     async def test_target_generation_is_rechecked_after_admission_and_before_start_gate(self):
         from runtime.cli_v1.test_owned_win32_session import FakeCancellationSupervisor
 
