@@ -27,3 +27,18 @@ protection, the post-focus foreground race, hard release deadlines, blocked
 I/O recovery, MAP01, efficiency, or broad reliability. No WSLc or Docker
 allocation is used.
 
+## Frozen R03 outcome
+
+The public path reached a real input attempt: the public observation returned a
+matched generation, static validation accepted, the single standard dispatch
+completed, and its release receipt was verified with no keys or buttons down.
+The owned fixture independently journaled the text and save event, wrote
+`{"clicked":false,"saved":true,"text":"PUBLIC-MCP-OK-9C17"}`, and exited 0
+after its window was closed. However, the frozen `operations` text is
+`PUBLIC-MCP-OK-9C17` while the separately frozen `text_effect` acceptance field
+is `PUBLIC-MCP-OK-E5F0`. The probe and audit therefore score
+`FAIL_OR_UNKNOWN` (11/13 audit checks); the mismatch invalidates the predeclared
+acceptance condition. No retry was made. `raw.json`, `audit.json`, the public
+responses, call reports and artifact are retained under `run/` and covered by
+`SHA256SUMS`. R04 will add a pre-run consistency guard in its own packet.
+
