@@ -12,6 +12,19 @@ narrows duplicate-producer and premature-recovery behavior in one session; it
 does not interrupt a blocked native call, impose a hard release deadline,
 qualify physical input or task effect, or use WSLc.
 
+**Win32 public recovery-failure custody (2026-10-24, synthetic):** a new
+public-MCP test injects a recovery helper that returns a mismatched operation
+receipt. `interface_results` retains UNKNOWN, release confirmation/task success
+stay unset, replay remains denied, the observer is not run, and the fake DOWN
+state remains visible. Public admission also normalizes target-incarnation
+property/read failures to `TARGET_GENERATION_CHANGED`; an explicit fake
+`GetPropW` cookie fixed a test-fixture recursion through `ctypes.cast`. The
+[R01 packet](../research/integration/win32_public_recovery_unknown_20261024_r01/README.md)
+records the raw failure and repair plus 51 selected caller/backend/owner/
+supervisor tests passing in normal and optimized Python. This verifies one
+joined failure path only; native input, bounded physical release, live task
+effect, MAP01, WSLc, matched efficiency, and reliability remain open.
+
 **Win32 target-incarnation cookie lifecycle (2026-10-24):** production
 `target_generation()` now adds a per-HWND-lifetime property and fails closed if
 the property is denied, changed, or missing after binding. `close()` retains

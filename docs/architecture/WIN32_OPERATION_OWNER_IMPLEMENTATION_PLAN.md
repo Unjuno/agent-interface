@@ -10,6 +10,16 @@ record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). It authorizes local
 synthetic-fake work only; it does not authorize native input or a WSLc
 allocation.
 
+Current-main addendum (2026-10-24): the public MCP/backend composition suite
+now verifies a mismatched recovery receipt remains UNKNOWN through
+`interface_results`, does not start the observer, and cannot promote release
+or task success. A target-incarnation property/query failure during admission
+is normalized to `TARGET_GENERATION_CHANGED`. The [R01 packet](../../research/integration/win32_public_recovery_unknown_20261024_r01/README.md)
+records 51 focused public-caller, backend, owner, and supervisor tests passing
+in normal and optimized Python. This closes one public failure-path test gap;
+the live native producer/recovery composition and Phase 3 discriminator remain
+unqualified.
+
 ## Current implementation checkpoint (2026-10-23)
 
 The local branch `codex/win32-supervisor-implementation-plan` now implements

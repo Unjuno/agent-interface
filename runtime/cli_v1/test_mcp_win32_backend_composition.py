@@ -66,6 +66,7 @@ class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
             backend.targets = {"fixture": 123}
             backend.user32 = Mock()
             backend.user32.IsWindow.return_value = True
+            backend.user32.GetPropW.return_value = 1234
             backend._window_owner_identity_for_hwnd = Mock(return_value={
                 "pid": 5101, "creation_time_100ns": 7001,
                 "window_thread_id": 701})
