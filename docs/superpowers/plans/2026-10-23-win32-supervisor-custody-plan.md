@@ -43,12 +43,12 @@
 - Consumes: existing `OperationOwner`, recovery/observer process factories, process identity reader, and absolute cleanup deadline.
 - Produces: supervisor construction starts and verifies exactly one recovery helper and one observer helper before operation admission; accepted cancellation reuses them and starts no helper process. Failed startup/readiness prevents producer admission. A timed-out or lost helper is retired or marked unavailable, returns UNKNOWN, and is never silently replaced during cancel.
 
-- [ ] **Step 1: Add failing process-count/readiness tests** for normal startup, recovery startup failure, observer startup failure, readiness timeout, helper death before admission, and helper death during a request. Assert no producer can be admitted unless both helper processes are alive and have sent valid ready receipts.
-- [ ] **Step 2: Add failing cancel-order tests** asserting that the pre-admission process count is unchanged by cancellation, no UP precedes exact producer retirement, one request/complete receipt pair is required per reused helper, and a failed helper cannot authorize a new sender.
-- [ ] **Step 3: Run the new tests** with `python -m unittest runtime.guarded_win32_v1.test_process_cancellation -v` and verify failures are on process count/readiness/order rather than fixture setup.
-- [ ] **Step 4: Implement helper startup, readiness, request serialization, receipt validation, and deterministic close** in `OperationCancellationSupervisor`. Keep creation synchronous before admission; do not claim a server-start deadline from this work.
-- [ ] **Step 5: Run the full process-cancellation and owner suites** normally and under `python -O`; verify helper creation occurs only before producer admission and that cleanup handles all startup-failure paths.
-- [ ] **Step 6: Commit** the runtime lifecycle and its tests as one reviewable change.
+- [x] **Step 1: Add failing process-count/readiness tests** for normal startup, factory startup exception, malformed observer readiness, and helper death during a request. Assert construction fails unless both helpers provide valid ready receipts.
+- [x] **Step 2: Add failing cancel-order tests** asserting that the pre-admission process count is unchanged by cancellation, no UP precedes exact producer retirement, one request/complete receipt pair is required per reused helper, and a failed helper cannot authorize a new sender.
+- [x] **Step 3: Run the new tests** with `python -m unittest runtime.guarded_win32_v1.test_process_cancellation -v` and verify failures are on process count/readiness/order rather than fixture setup.
+- [x] **Step 4: Implement helper startup, readiness, request serialization, receipt validation, and deterministic close** in `OperationCancellationSupervisor`. Keep creation synchronous before admission; do not claim a server-start deadline from this work.
+- [x] **Step 5: Run the full process-cancellation and owner suites** normally and under `python -O`; verify helper creation occurs only before producer admission and that cleanup handles all startup-failure paths.
+- [x] **Step 6: Commit** the runtime lifecycle and its tests as one reviewable change (`d43b84be5`).
 
 ### Task 2: Close the public-caller custody failure matrix
 
