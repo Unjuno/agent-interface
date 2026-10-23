@@ -101,7 +101,7 @@
 - [x] **Step 3: Capture the complete focused test commands, exit codes, Python/platform versions, source revision, and raw outputs** into the new packet. Hash source files and all packet files; do not edit prior R01–R04 packets or the prestarted-helper R01 packet.
 - [x] **Step 4: Update the architecture checkpoint and current-goal summary** with only the observed synthetic result, exact local test counts, and remaining qualification boundary.
 - [x] **Step 5: Run `git diff --check`, the focused Win32 suite, the existing MCP-owned-process/guarded-X11 regression suite, and the relevant backend/owner suites** in normal and optimized modes; preserve failures as well as passes (79 focused + 67 compatibility tests per mode).
-- [ ] **Step 6: Verify every recorded source and packet hash, then commit** the test, packet, and concise status updates together.
+- [x] **Step 6: Verify every recorded source and packet hash, then commit** the test, packet, and concise status updates together (`d113673dd`, `eed35606c`; evidence packet was added in a follow-up because its path is outside the sparse checkout).
 
 ## Explicit later gates (not part of this implementation plan)
 
