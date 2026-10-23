@@ -48,6 +48,28 @@ suppressed=[e for e in events if e.get('message')==0x0100 and e.get('vk')==ord('
 check('held_injected_q_down_suppressed_on_callback_return',
     bool(suppressed) and all(type(e.get('callback_return_ns')) is int for e in suppressed),
     {'matching_suppressed_events':suppressed,'hook_trace_after_release':hook_after})
+blocked=raw.get('blocked_io_independent_readback') or {}
+hook_before=hold.get('hook_trace_before_release') or {}
+readback_witness=blocked.get('state_witness',[])
+check('same_generation_q_up_sample_occurred_before_blocked_down_was_forwarded',
+    blocked.get('status')=='observed' and blocked.get('q_down') is False
+    and blocked.get('generation_before')==hook_before.get('generation',blocked.get('expected_generation'))
+    and blocked.get('generation_after')==blocked.get('expected_generation')
+    and blocked.get('process_retired') is True
+    and type(blocked.get('returned_monotonic_ns')) is int
+    and type(hook_before.get('callback_entry_ns')) is int
+    and blocked['started_monotonic_ns'] >= hook_before['callback_entry_ns']
+    and type(callback_return) is int
+    and blocked['returned_monotonic_ns'] < callback_return
+    and bool(readback_witness)
+    and all(w.get('input_desktop_active') is True
+            and w.get('hwnd')==raw.get('fixture',{}).get('hwnd')
+            and w.get('target_integrity_rid')==w.get('probe_integrity_rid')
+            for w in readback_witness),
+    {'readback':blocked,'hook_callback_entry_ns':hook_before.get('callback_entry_ns'),
+     'hook_callback_return_ns':callback_return,
+     'interpretation':'q_down=false while this injected Q-down was still held before CallNextHookEx; this readback is not proof of release'})
+
 passed=sum(x['passed'] for x in checks)
 result={'schema':'win32-supervised-standard-caller-r20-posthoc-audit-v1',
     'attempt_id':raw.get('attempt_id'),'source_commit':raw.get('source_commit'),
