@@ -10,6 +10,7 @@ import multiprocessing
 import os
 from pathlib import Path
 import tempfile
+import threading
 import time
 import unittest
 
@@ -57,13 +58,22 @@ def _caller_producer(action, start_gate, state, events, entered, accept):
 
 
 class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
-    async def _run_case(self, *, accept, stubborn=False):
+    async def _run_case(self, *, accept, stubborn=False, cancel_before_gate=False):
         context = multiprocessing.get_context("spawn")
         with context.Manager() as manager, tempfile.TemporaryDirectory() as root:
             state, events = manager.dict(), manager.list()
             entered, start_gate = context.Event(), context.Event()
             helpers, producers, adapters, factory_calls, supervisors = [], [], [], [], []
             generation, operation_id = "c" * 64, "d" * 32
+            query_entered, query_release = threading.Event(), threading.Event()
+            start_task = None
+
+            def read_generation():
+                if cancel_before_gate and producers:
+                    query_entered.set()
+                    if not query_release.wait(8):
+                        raise TimeoutError("test generation query timeout")
+                return generation
 
             def helper_factory(role):
                 parent, child = context.Pipe(duplex=True)
@@ -82,7 +92,7 @@ class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
                     terminate_grace_s=0.05, kill_grace_s=0.05)
                 supervisors.append(supervisor)
                 adapter = OwnedWin32SessionOwner(gate, supervisor)
-                adapter.bind_target_generation_reader(lambda: generation)
+                adapter.bind_target_generation_reader(read_generation)
                 adapters.append(adapter)
                 return adapter
 
@@ -114,11 +124,17 @@ class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
                     operation_deadline_ns=time.monotonic_ns() + 15_000_000_000,
                     obligations=["key:CTRL"])
                 call_id = admitted["call_id"]
-                started = await call("interface_guarded_win32_start",
-                    call_id=call_id, wait_for_result_ms=2000)
-                self.assertEqual(started["status"], "running", started)
-                self.assertTrue(await asyncio.to_thread(entered.wait, 5))
-                self.assertEqual(bool(state.get(VK_CONTROL, False)), accept)
+                start_task = asyncio.create_task(call("interface_guarded_win32_start",
+                    call_id=call_id, wait_for_result_ms=10000))
+                if cancel_before_gate:
+                    self.assertTrue(await asyncio.to_thread(query_entered.wait, 5))
+                    self.assertFalse(start_gate.is_set())
+                    self.assertFalse(entered.is_set())
+                else:
+                    started = await start_task
+                    self.assertEqual(started["status"], "running", started)
+                    self.assertTrue(await asyncio.to_thread(entered.wait, 5))
+                    self.assertEqual(bool(state.get(VK_CONTROL, False)), accept)
                 await call("interface_guarded_win32_start",
                     call_id=call_id, wait_for_result_ms=2000)
                 self.assertEqual(factory_calls, [operation_id])
@@ -143,6 +159,28 @@ class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIsNone(cancellation["task_success"])
                 self.assertEqual([process.pid for process, _, _ in helpers], helper_pids)
                 trace = list(events)
+                trace_dir = os.environ.get("WIN32_COMPOSITION_TRACE_DIR")
+                if trace_dir:
+                    path = Path(trace_dir)
+                    path.mkdir(parents=True, exist_ok=True)
+                    (path / (self._testMethodName + ".json")).write_text(json.dumps({
+                        "scope": "synthetic_only", "accept_before_block": accept,
+                        "stubborn_producer": stubborn, "cancel_before_gate": cancel_before_gate,
+                        "result": result, "events": trace, "helper_pids": helper_pids,
+                        "producer_factory_calls": factory_calls,
+                    }, indent=2) + "\n", encoding="utf-8")
+                if cancel_before_gate:
+                    self.assertEqual(cancellation["status"], "unknown", result)
+                    self.assertFalse(cancellation["release_confirmed"])
+                    self.assertFalse(producers[0].is_alive())
+                    self.assertFalse(start_gate.is_set())
+                    self.assertEqual(cancellation["result"]["producer_gate_state"], "closed")
+                    self.assertEqual([row["kind"] for row in trace],
+                                     ["producer_exit_confirmed"])
+                    query_release.set()
+                    await start_task
+                    self.assertFalse(start_gate.is_set())
+                    return
                 authorization = next(row for row in trace
                                      if row["kind"] == "producer_authorized")
                 self.assertEqual(authorization["action"]["operation_id"], operation_id)
@@ -180,17 +218,10 @@ class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
                     self.assertNotEqual(requests[0]["pid"], requests[1]["pid"])
                     self.assertEqual(requests[0]["request"]["recovery_id"],
                                      requests[1]["request"]["recovery_id"])
-                trace_dir = os.environ.get("WIN32_COMPOSITION_TRACE_DIR")
-                if trace_dir:
-                    path = Path(trace_dir)
-                    path.mkdir(parents=True, exist_ok=True)
-                    (path / (self._testMethodName + ".json")).write_text(json.dumps({
-                        "scope": "synthetic_only", "accept_before_block": accept,
-                        "stubborn_producer": stubborn, "result": result,
-                        "events": trace, "helper_pids": helper_pids,
-                        "producer_factory_calls": factory_calls,
-                    }, indent=2) + "\n", encoding="utf-8")
             finally:
+                query_release.set()
+                if start_task is not None:
+                    await start_task
                 for adapter in adapters:
                     adapter.close()
                 # UNKNOWN intentionally keeps the adapter busy; reclaim test helpers
@@ -218,6 +249,9 @@ class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_public_caller_backend_unretired_producer_stays_unknown(self):
         await self._run_case(accept=True, stubborn=True)
+
+    async def test_cancel_during_final_generation_read_sends_no_compensating_input(self):
+        await self._run_case(accept=False, cancel_before_gate=True)
 
 
 if __name__ == "__main__":

@@ -143,7 +143,8 @@ class OwnedWin32SessionOwner:
                     or action_operation_id in self._cancellation_ids):
                 raise ValueError("call or action operation ID already used")
             custody = self._owner.admit(action_operation_id, target_generation,
-                                        operation_deadline_ns, obligations)
+                                        operation_deadline_ns, obligations,
+                                        start_gate_required=True)
             self._calls[call_id] = {
                 "call_id": call_id,
                 "action": {

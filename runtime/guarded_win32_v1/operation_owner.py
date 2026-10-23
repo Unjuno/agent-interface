@@ -37,8 +37,11 @@ class OperationOwner:
         self._orphan_handles = []
         self._active_operation_id = None
 
-    def admit(self, operation_id, target_generation, deadline_ns, obligations):
+    def admit(self, operation_id, target_generation, deadline_ns, obligations,
+              *, start_gate_required=False):
         self._validate_operation(operation_id, target_generation)
+        if type(start_gate_required) is not bool:
+            raise OwnerRefused("start gate requirement must be boolean")
         if type(deadline_ns) is not int or deadline_ns <= self._clock_ns():
             raise OwnerRefused("operation deadline must be in the future")
         if (not isinstance(obligations, (list, tuple))
@@ -63,6 +66,9 @@ class OperationOwner:
                 "status": "admitted",
                 "producer_identity": None,
                 "producer_exit_code": None,
+                # Direct producers have no known closed gate. Only a caller
+                # that guarantees a parent-owned gate may declare it closed.
+                "producer_gate_state": "closed" if start_gate_required else "untracked",
                 "cleanup_deadline_ns": None,
                 "recovery_id": None,
                 "release_confirmed": False,
@@ -143,6 +149,9 @@ class OperationOwner:
                     or self._clock_ns() >= record["deadline_ns"]):
                 return False
             try:
+                # A gate callback could open the gate and then raise. Never
+                # reinterpret an attempted callback as proof it stayed closed.
+                record["producer_gate_state"] = "authorization_attempted"
                 open_start_gate()
             except Exception:
                 record["status"] = "unknown"
@@ -243,6 +252,10 @@ class OperationOwner:
                     or self._clock_ns() >= record["cleanup_deadline_ns"]):
                 if record["status"] == "producer_retired":
                     record["status"] = "unknown"
+                return None
+            if record["producer_gate_state"] == "closed":
+                record["status"] = "unknown"
+                record["uncertainty"] = "producer_retired_without_start_authorization"
                 return None
             recovery_id = uuid.uuid4().hex
             record["recovery_id"] = recovery_id

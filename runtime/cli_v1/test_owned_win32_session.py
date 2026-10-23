@@ -73,6 +73,8 @@ class OwnedWin32SessionTests(unittest.TestCase):
             obligations=["key:a"], action_metadata={"operation":"guarded_input"})
         self.assertTrue(self.session.producer_started(CALL_ID, self.process,
                                                       process_identity=self.identity))
+        self.assertTrue(self.owner.authorize_producer_start(
+            ACTION_ID, GEN_A, self.process, lambda: None))
 
     def test_duplicate_cancel_keeps_action_and_cancellation_receipts_separate(self):
         self.start_action()
