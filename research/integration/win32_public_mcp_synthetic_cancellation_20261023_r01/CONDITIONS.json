@@ -1,0 +1,50 @@
+{
+  "run_id": "AI-WIN32-PUBLIC-MCP-SYNTHETIC-CANCEL-20261023-R01",
+  "classification": "local synthetic process-composition test; not a live experiment",
+  "base_main": "05340f6edc8818d166df0d75ddc1a357f6f74e6c",
+  "implementation_commit": "2d8a6b897",
+  "host": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9",
+    "architecture": "64-bit AMD64"
+  },
+  "test": "runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_public_cancel_composes_spawned_recovery_and_independent_readback",
+  "runs": [
+    {
+      "mode": "normal",
+      "command": "python -m unittest runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_public_cancel_composes_spawned_recovery_and_independent_readback",
+      "raw_output": "raw/normal.log",
+      "result": "pass; 1 test"
+    },
+    {
+      "mode": "optimized",
+      "command": "python -O -m unittest runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_public_cancel_composes_spawned_recovery_and_independent_readback",
+      "raw_output": "raw/optimized.log",
+      "result": "pass; 1 test"
+    }
+  ],
+  "fault_model": {
+    "producer": "spawned Python child blocked behind a parent-owned multiprocessing.Event start gate; after authorization it sets a shared fake down-state and blocks",
+    "recovery": "separate spawned Python process clears the shared fake down-state and returns an operation/generation/recovery-bound receipt",
+    "observer": "another spawned Python process independently reads the shared neutral-state event and returns a bound receipt",
+    "public_cancel_response_assertion_ms": 500,
+    "task_oracle": "not present; task_success is required to remain null",
+    "native_input": false,
+    "win32_api": false,
+    "desktop_or_application": false
+  },
+  "allocation": {
+    "wslc": "not inspected or consumed",
+    "docker": "not inspected or consumed"
+  },
+  "source_sha256": {
+    "runtime/cli_v1/mcp_server.py": "68bd629a1f11153acfea3e72915ce47bb9214a39796423c9dd21dcef30f3e4e6",
+    "runtime/cli_v1/mcp_win32.py": "3dba868db1dd5aa7f7ccb72070a5e2e95716aa88d661071aac46e5e15976180b",
+    "runtime/cli_v1/owned_win32_session.py": "13666c86364609531d16fc3eaf1a21ef8898079d199b20d432e73367f583347e",
+    "runtime/cli_v1/test_mcp_win32_composition.py": "dee706b751f737aa27b932c6ae069ab54fe037543b8c02afe83a821a9ec78f6a",
+    "runtime/cli_v1/test_owned_win32_session.py": "95332a7494dbfb733385c1177a08d1e760da72c21692250b60729c67ba46db71",
+    "runtime/guarded_win32_v1/operation_owner.py": "8f8cfd0ea035fb5af342da9947d383dbd362634b89300bfb5a87a64326a05a87",
+    "runtime/guarded_win32_v1/process_cancellation.py": "296f3cf3f3d0e273b59841de5a32b99349f2cb3118be3d06e0d05abc9457175f"
+  },
+  "interpretation": "synthetic process-ordering evidence only; not bounded Windows input release, late-DOWN exclusion, independent task success, efficiency, or reliability evidence"
+}
