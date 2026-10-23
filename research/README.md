@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Local paused-Xvfb caller: [release/recovery endpoints and task-oracle counterexample](integration/xvfb_blocked_release_local_20261023_r01/README.md) — one test passed, but three old keypress handlers are masked by an idempotent property. No exactly-once or general task-success claim.
+
 - Local WSL2 observation prerequisite: [public MCP private-Xvfb R01](integration/xvfb_public_observation_20261023_r01/README.md) — two exact fixture images, timestamp ordering, retained PNG identity and clean close; no input or task-success claim.
 
 - Issue #57 P01 (one sample per arm): [native three-arm live usage comparison](audits/native_three_arm_57_p01_5884_20261004/REPORT.md) — persistent input+output was 39,329 tokens versus plain 109,373 and ephemeral 111,226; task-4 repair was bounded with zero stale-pointer admissions. Disposition remains HOLD: fixed order, one fixture/sample, weaker coordinate/plain baseline, and no broad correctness or speed claim. A later one-shot keyboard-only reference used zero model calls ([PR #7224](https://github.com/Unjuno/agent-interface/pull/7224)); P01 does not establish superiority over that reference.
