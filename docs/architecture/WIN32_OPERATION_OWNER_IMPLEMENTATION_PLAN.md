@@ -6,9 +6,9 @@ generation, admits a gated synthetic producer, composes cancellation with
 separate recovery and neutral-state observation, and retains an independently
 spawned task-effect oracle receipt. This does not qualify native input or
 physical release. This plan follows the design decision in [the supervisor design
-record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). It authorizes local
-synthetic-fake work only; it does not authorize native input or a WSLc
-allocation.
+record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). Its original implementation
+slice was synthetic-only. Separate user-authorized Windows-PC native evidence
+is recorded below; WSLc remains governed by #7924.
 
 Current-main addendum (2026-10-24): the public MCP/backend composition suite
 now verifies a mismatched recovery receipt remains UNKNOWN through
@@ -16,9 +16,10 @@ now verifies a mismatched recovery receipt remains UNKNOWN through
 or task success. A target-incarnation property/query failure during admission
 is normalized to `TARGET_GENERATION_CHANGED`. The [R01 packet](../../research/integration/win32_public_recovery_unknown_20261024_r01/README.md)
 records 51 focused public-caller, backend, owner, and supervisor tests passing
-in normal and optimized Python. This closes one public failure-path test gap;
-the live native producer/recovery composition and Phase 3 discriminator remain
-unqualified.
+in normal and optimized Python. This closes one public failure-path test gap.
+At that dated checkpoint, live native producer/recovery evidence had not yet
+been added; the later R04/R03 packets below provide scoped Phase 3 evidence,
+while standard-caller composition remains open.
 
 Current-main continuation (2026-10-24): PR #9460 makes admission refusal while
 an earlier producer remains unresolved machine-readable at the public
@@ -31,15 +32,23 @@ admission, recovery/readback failures, fresh-generation isolation, and exact
 producer/oracle attempts. All 57 selected tests pass in normal and optimized
 Python. This closes the synthetic Phase 2d test gap only.
 
-The separate [R03 native packet](../../research/integration/win32_native_supervised_sendinput_hook_20261024_r03/README.md)
-passes one finite schedule with a real hook-blocked F13 `SendInput`, exact
-producer retirement, one same-generation recovery UP, independent readback,
-and a 1.5 s horizon. R01/R02 are retained construction aborts. R03 does not
-cover the required before-acceptance and after-acceptance pair, does not use
-the public MCP caller, and has no task-effect oracle. It therefore does not
-satisfy Phase 3. Issue #7924 remains OPEN/STOP/HOLD: the last WSLc run lacked
-the pinned image, cleanup was unverified, and no unused slot is verified.
-Do not run or wire native input on the strength of R03 alone.
+The [R04 native packet](../../research/integration/win32_native_sendinput_recovery_20261023_r04/README.md)
+passes 17/17 independent checks for a pre-call schedule, an accepted-DOWN
+schedule, exact producer retirement before recovery, independent all-up
+observation through 1.5 s, and a separate fresh-fixture public-MCP task effect.
+Its input stalls were outside the `SendInput` call. The later
+[R03 hook packet](../../research/integration/win32_native_supervised_sendinput_hook_20261024_r03/README.md)
+passes 20/20 for a producer stopped inside `SendInput` by a low-level-hook
+callback, followed by exact retirement, same-generation recovery, independent
+readback, and a 1.5 s horizon. Together these are scoped native Phase 3
+evidence; they are separate trials, not a single standard-caller integration.
+R04 binds source commit `0aceb89`; R03 binds `3a198067`. R03's frozen backend
+and cancellation source hashes match current main; its owner source differs
+only by the later typed refusal metadata. This supports moving into Phase 4
+implementation, but does not establish hard real-time bounds, MAP01, the
+standard `interface_dispatch` recovery path, matched efficiency, or broad
+reliability. Issue #7924 remains OPEN/STOP/HOLD: the last WSLc run lacked the
+pinned image, cleanup was unverified, and no unused WSLc slot is verified.
 
 ## Current implementation checkpoint (2026-10-23)
 
@@ -68,11 +77,13 @@ records 79/79 selected pure/fake tests and 67/67 MCP-owned-process/guarded-X11
 compatibility tests passing in normal and optimized CPython 3.11.9, raw output,
 conditions, source hashes, and an invalid native-test execution incident. The
 native fixture integration class is excluded from valid verification. This
-branch has no native `SendInput` adapter, physical
-release proof, late-DOWN horizon, live MAP01 oracle, exclusive input
-authority, matched efficiency result, or repeated reliability result. The
-mechanism remains opt-in and synthetic only. Issue #7924 remains STOP/HOLD;
-this work used no WSLc allocation or Docker.
+At this checkpoint the branch had no native `SendInput` adapter. Later local
+Windows-PC packets provide bounded fixture evidence for physical release and
+late-DOWN observation, but not a production adapter, live MAP01 oracle,
+exclusive input authority, matched efficiency result, or repeated reliability
+result. The public implementation mechanism remains opt-in and synthetic
+only. Issue #7924 remains STOP/HOLD; this work used no WSLc allocation or
+Docker.
 
 ## Problem and scope
 
@@ -255,16 +266,18 @@ gate. Do not reinterpret a fake observer or a bridge-local effect callback as
 an independent application oracle.
 
 The current-main synthetic public-caller slice now has the bounded 2d
-failure-schedule and attempt-accounting matrix described above. Its tests do
-not establish native release behavior. Phase 2 remains a synthetic contract;
-Phase 3 requires an isolated allocation and the separately frozen native
-before/after-acceptance discriminator with an independent task oracle.
+failure-schedule and attempt-accounting matrix described above. Phase 2 remains
+a synthetic contract. The local native fixture packets provide a scoped Phase
+3 PASS across two acceptance schedules and the additional blocked-call
+schedule. Phase 4 remains open: native supervisor recovery is not connected to
+the standard `interface_dispatch` caller, and no matched efficiency or
+reliability result exists.
 
 #### Current-main regression recheck (2026-10-23)
 
-The preceding status predates the [additive current-main R02 packet](../../research/integration/win32_public_backend_composition_currentmain_20261023_r02/README.md). On current main `4c0fe4d31`, 48 selected public-caller, backend-composition, operation-owner, and cancellation-supervisor tests pass in both normal and optimized Python. Eight retained traces independently confirm one producer attempt, exact target-generation and operation binding, retirement before synthetic recovery UP, observer ordering, and conservative UNKNOWN results for a closed start gate or unretired producer. The packet binds 13 source blobs and preserves both raw runs and traces. This rechecks the listed synthetic regression paths; it does not qualify native SendInput, physical release, a real task oracle, WSLc, matched efficiency, or reliability. Phase 3 remains gated on a verified isolated allocation and native discriminator.
+The preceding status predates the [additive current-main R02 packet](../../research/integration/win32_public_backend_composition_currentmain_20261023_r02/README.md). On current main `4c0fe4d31`, 48 selected public-caller, backend-composition, operation-owner, and cancellation-supervisor tests pass in both normal and optimized Python. Eight retained traces independently confirm one producer attempt, exact target-generation and operation binding, retirement before synthetic recovery UP, observer ordering, and conservative UNKNOWN results for a closed start gate or unretired producer. The packet binds 13 source blobs and preserves both raw runs and traces. This rechecks the listed synthetic regression paths; it does not qualify native SendInput, physical release, a real task oracle, WSLc, matched efficiency, or reliability. At this dated checkpoint, Phase 3 was gated on the native discriminator; later R04/R03 packets below close that scoped local fixture gate.
 
-PR #9435 adds `Win32Backend.target_generation()` as a reader suitable for `OwnedWin32SessionOwner.bind_target_generation_reader()`. Its SHA-256 input includes the configured HWND, GUI-thread ID, owner PID, and process creation time; the PID/TID association is sampled on both sides of the process-time query. A public `mcp_server.create_server()` regression changes only the GUI-thread ID after binding while keeping the HWND and process identity constant; admission returns `TARGET_GENERATION_CHANGED`, creates no operation record, and calls no producer factory. The backend, adapter, and public-server suites pass 25/25 in normal and optimized Python. APIs remain mocked. Same-numeric-HWND reuse on the same thread can alias; `mcp_server` still requires an explicitly injected synthetic-only owner/producer. Native input composition and Phase 3 remain open.
+PR #9435 adds `Win32Backend.target_generation()` as a reader suitable for `OwnedWin32SessionOwner.bind_target_generation_reader()`. Its SHA-256 input includes the configured HWND, GUI-thread ID, owner PID, and process creation time; the PID/TID association is sampled on both sides of the process-time query. A public `mcp_server.create_server()` regression changes only the GUI-thread ID after binding while keeping the HWND and process identity constant; admission returns `TARGET_GENERATION_CHANGED`, creates no operation record, and calls no producer factory. The backend, adapter, and public-server suites pass 25/25 in normal and optimized Python. APIs remain mocked. Same-numeric-HWND reuse on the same thread can alias; `mcp_server` still requires an explicitly injected synthetic-only owner/producer. At this checkpoint native input composition and Phase 3 were open; later packets qualify local fixtures, while standard-caller composition remains open.
 
 #### Live Win32 follow-up on the user-authorized PC (2026-10-23)
 
@@ -272,19 +285,18 @@ PR #9448 retains the R04 native fixture experiment: the existing operation owner
 
 The [R03 public live-generation packet](../../research/integration/win32_public_live_generation_20261023_r03/README.md) then used real `Win32Backend.target_generation()` reads for two owned HWND generations through the registered `mcp_server.create_server()` guarded-Win32 tools. After Generation A was admitted and the current target changed to Generation B, the public start handler returned UNKNOWN before invoking its injected producer factory; `interface_results` retained UNKNOWN, the producer gate stayed closed, and task success/replay remained denied. Its independent audit passes 8/8. The calls used in-process `server.call_tool`, and no input was emitted. R01 exploratory and R02 harness-failure records remain preserved.
 
-These samples strengthen native-state and public target-generation evidence separately. They do not join native producer/recovery with the standard public caller. `mcp_win32` still labels its route synthetic-only and `mcp_server.create_server()` requires an injected synthetic owner/producer. Do not wire a native producer into this route until Phase 3 proves both native acceptance schedules, bounded neutral readback, late-DOWN absence, and independent task success on a verified isolated allocation. Preserve UNKNOWN, generation binding, and retirement-before-recovery in that future composition. Issue #7924 remains STOP/HOLD; Docker is unused.
+These samples strengthen native-state and public target-generation evidence separately. They do not join native producer/recovery with the standard public caller. `mcp_win32` still labels its route synthetic-only and `mcp_server.create_server()` requires an injected synthetic owner/producer. The later R04/R03 packets satisfy the scoped local fixture gate: both acceptance schedules, a blocked-call schedule, bounded neutral readback, late-DOWN horizon, and independent task effect are recorded. This evidence supports proceeding to standard-caller implementation on the authorized Windows PC; it does not itself qualify that integration or establish WSLc allocation. Preserve UNKNOWN, generation binding, and retirement-before-recovery. Issue #7924 remains STOP/HOLD; Docker is unused.
 
-### Phase 3: isolated native discriminator
+### Phase 3: local native discriminator — scoped PASS; WSLc unresolved
 
-Before native input, require an identified disposable Windows target, a
-separate output location, a reviewed stop/cleanup procedure, independent
-platform-state observation, and a verified exclusive allocation. Run the
-before-acceptance and after-acceptance schedules; after confirmed child exit
-and recovery UP, observe through a declared horizon for any late DOWN. Then
-verify a fresh target's independent task effect. Preserve all first outcomes.
-If the target, ownership, observer, or stop path is unavailable, do not run;
-keep the result UNKNOWN. This plan grants no WSLc access and does not override
-Issue #7924 STOP.
+The local Windows-PC fixture packets satisfy the bounded experiment described
+above: R04 covers before-acceptance and accepted-DOWN schedules plus fresh
+public-MCP task effect; R03 adds the hook-blocked `SendInput` schedule. Their
+raw, conditions, cleanup and audit results remain in the linked immutable
+packets. This is a scoped PASS for those local fixtures. It does not prove a
+standard-caller integration, hard real-time bound, MAP01, or broad reliability.
+WSLc remains STOP/HOLD under Issue #7924 until a fresh unused allocation is
+verified; this plan grants no WSLc access.
 
 ### Phase 4: standard-caller qualification
 
