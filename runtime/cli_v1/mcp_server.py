@@ -395,15 +395,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                 or getattr(owner, 'synthetic_only', None) is not True):
             raise ValueError('guarded-win32 requires the inert synthetic operation owner')
     elif supervised_win32:
+        producer_root = root / 'supervised-win32-producers'
         if callable(_supervised_win32_owner_factory):
             owner = _supervised_win32_owner_factory(
                 deepcopy(targets), root, display_name)
             supervised_win32_producer_factory = _supervised_win32_producer_factory(
-                deepcopy(targets), root, display_name)
+                deepcopy(targets), producer_root, display_name)
         else:
             from .win32_supervisor_helpers import create_native_win32_components
             owner, supervised_win32_producer_factory = create_native_win32_components(
-                deepcopy(targets), root)
+                deepcopy(targets), producer_root)
         required = ('bind_target_generation', 'admit_standard_action',
                     'start_producer', 'complete_exited_action', 'cancel_guarded',
                     'interface_result', 'list_results', 'close')

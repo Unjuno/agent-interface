@@ -144,6 +144,30 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             await server.call_tool("interface_close", {})
         self.assertTrue(supervisor.closed)
 
+    async def test_native_producer_directory_is_disjoint_from_public_call_receipts(self):
+        owner, producer, _ = self.make_components()
+        producer_roots = []
+
+        def producer_factory(_targets, output_directory, *_args):
+            producer_roots.append(Path(output_directory))
+            return producer
+
+        with TemporaryDirectory() as root:
+            server = create_server({"fixture": 123}, root,
+                session_mode="supervised-win32",
+                _supervised_win32_owner_factory=lambda *_args: owner,
+                _supervised_win32_producer_factory=producer_factory)
+            result = self.row(await server.call_tool("interface_dispatch", {
+                "program": self.valid_program(),
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 5000}))
+            call_directory = Path(root) / result["call_id"]
+            producer_directory = producer_roots[0] / result["call_id"]
+            self.assertTrue((call_directory / "report.json").exists())
+            self.assertNotEqual(producer_directory, call_directory)
+            await server.call_tool("interface_close", {})
+
     async def test_transport_shutdown_closes_supervised_owner_and_helpers(self):
         owner, producer, supervisor = self.make_components()
         with TemporaryDirectory() as root:
