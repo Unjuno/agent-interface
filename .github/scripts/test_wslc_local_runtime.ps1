@@ -1,4 +1,40 @@
+param(
+    [ValidateRange(1, 3600)][int]$CliTimeoutSeconds = 10,
+    [ValidateRange(1, 3600)][int]$RunTimeoutSeconds = 90,
+    [ValidateRange(1, 3600)][int]$CleanupTimeoutSeconds = 15
+)
+
 $ErrorActionPreference = 'Stop'
+Import-Module (Join-Path $PSScriptRoot 'wslc_bounded_process.psm1') -Force
+
+function Invoke-ProbeCli {
+    param(
+        [Parameter(Mandatory)][string]$FilePath,
+        [Parameter(Mandatory)][string[]]$Arguments,
+        [Parameter(Mandatory)][ValidateRange(1, 3600)][int]$TimeoutSeconds,
+        [Parameter(Mandatory)][string]$LogName
+    )
+
+    $result = Invoke-WslcBoundedProcess -FilePath $FilePath `
+        -ArgumentList $Arguments -TimeoutSeconds $TimeoutSeconds
+    [System.IO.File]::WriteAllText((Join-Path $probePath "$LogName.stdout.txt"),
+        $result.StandardOutput, [System.Text.UTF8Encoding]::new($false))
+    [System.IO.File]::WriteAllText((Join-Path $probePath "$LogName.stderr.txt"),
+        $result.StandardError, [System.Text.UTF8Encoding]::new($false))
+    if (-not [string]::IsNullOrEmpty($result.StandardOutput)) {
+        [Console]::Out.Write($result.StandardOutput)
+    }
+    if (-not [string]::IsNullOrEmpty($result.StandardError)) {
+        [Console]::Error.Write($result.StandardError)
+    }
+    if ($result.TimedOut) {
+        throw "CLI timed out after ${TimeoutSeconds}s (pid=$($result.ProcessId)); runtime outcome is UNKNOWN."
+    }
+    if ($result.ExitCode -ne 0) {
+        throw "CLI exited $($result.ExitCode); runtime outcome may be UNKNOWN."
+    }
+    return $result
+}
 
 $wslc = Get-Command wslc.exe -ErrorAction SilentlyContinue
 if (-not $wslc) {
@@ -7,17 +43,6 @@ if (-not $wslc) {
 $wsl = Get-Command wsl.exe -ErrorAction SilentlyContinue
 if (-not $wsl) {
     throw 'wsl.exe is required to record the WSL runtime version.'
-}
-
-Write-Output 'WSL version:'
-& $wsl.Source --version
-if ($LASTEXITCODE -ne 0) {
-    throw "Could not read WSL version (exit code $LASTEXITCODE)."
-}
-Write-Output 'WSLc version:'
-& $wslc.Source version
-if ($LASTEXITCODE -ne 0) {
-    throw "Could not read WSLc version (exit code $LASTEXITCODE)."
 }
 
 $image = 'python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f'
@@ -30,6 +55,7 @@ if (-not $probePath.StartsWith($tempRoot, [System.StringComparison]::OrdinalIgno
 $containerName = "agent-interface-wslc-probe-$([guid]::NewGuid().ToString('N'))"
 $cidPath = Join-Path $probePath 'container.cid'
 $sentinelPath = Join-Path $probePath 'sentinel.bin'
+$preserveProbePath = $false
 $probeCode = @'
 import errno
 from pathlib import Path
@@ -49,13 +75,23 @@ else:
 
 try {
     [void](New-Item -ItemType Directory -Path $probePath)
+    Write-Output 'WSL version:'
+    Invoke-ProbeCli -FilePath $wsl.Source -Arguments @('--version') `
+        -TimeoutSeconds $CliTimeoutSeconds -LogName 'wsl-version' | Out-Null
+    Write-Output 'WSLc version:'
+    Invoke-ProbeCli -FilePath $wslc.Source -Arguments @('version') `
+        -TimeoutSeconds $CliTimeoutSeconds -LogName 'wslc-version' | Out-Null
+
     [System.IO.File]::WriteAllBytes($sentinelPath, [System.Text.Encoding]::UTF8.GetBytes('wslc-readonly-probe'))
 
-    & $wslc.Source run --rm --name $containerName --cidfile $cidPath --pull never --network none --memory 512M --cpus 1 `
-        --volume "${probePath}:/probe:ro" $image python -B -c $probeCode
-    if ($LASTEXITCODE -ne 0) {
-        throw "WSLc probe failed with exit code $LASTEXITCODE. Preserve the output above for diagnosis."
-    }
+    # Once run starts, retain the unique probe directory until exact-container
+    # cleanup has been confirmed. A timed-out CLI exit does not cancel server work.
+    $preserveProbePath = $true
+    Invoke-ProbeCli -FilePath $wslc.Source -Arguments @('run', '--rm', '--name',
+        $containerName, '--cidfile', $cidPath, '--pull', 'never', '--network',
+        'none', '--memory', '512M', '--cpus', '1', '--volume',
+        "${probePath}:/probe:ro", $image, 'python', '-B', '-c', $probeCode) `
+        -TimeoutSeconds $RunTimeoutSeconds -LogName 'wslc-run' | Out-Null
 
     if (-not (Test-Path -LiteralPath $cidPath -PathType Leaf)) {
         throw 'WSLc probe completed without writing its requested container ID receipt.'
@@ -67,10 +103,10 @@ try {
     }
 
     # Query only this run's exact container ID; never enumerate unrelated shared containers.
-    $matchingContainers = & $wslc.Source container list --all --filter "id=$containerId" --format json
-    if ($LASTEXITCODE -ne 0) {
-        throw "Could not verify WSLc cleanup for this run's container ID (exit code $LASTEXITCODE)."
-    }
+    $cleanupQuery = Invoke-ProbeCli -FilePath $wslc.Source `
+        -Arguments @('container', 'list', '--all', '--filter', "id=$containerId", '--format', 'json') `
+        -TimeoutSeconds $CleanupTimeoutSeconds -LogName 'wslc-cleanup-query'
+    $matchingContainers = $cleanupQuery.StandardOutput -split "`r?`n"
     $listing = ($matchingContainers -join "`n").Trim()
     # WSLc 3.0.1 emits no stdout for a successful zero-match filtered query.
     # PowerShell also unwraps ConvertFrom-Json's empty array to $null, so
@@ -94,9 +130,15 @@ try {
     Write-Output "Image: $image"
     Write-Output 'Network: none; memory: 512M; CPUs: 1; source mount: read-only; cleanup: verified'
     Write-Output 'Note: WSL may report that swap/cgroup memory limits are unavailable; this probe does not test swap isolation or peak-memory enforcement.'
+    $preserveProbePath = $false
 }
 finally {
     if (Test-Path -LiteralPath $probePath) {
-        Remove-Item -LiteralPath $probePath -Recurse -Force
+        if ($preserveProbePath) {
+            Write-Warning "Probe/runtime outcome is unconfirmed. Preserved receipts and logs at $probePath; do not retry before reconciling this unique probe."
+        }
+        else {
+            Remove-Item -LiteralPath $probePath -Recurse -Force
+        }
     }
 }
