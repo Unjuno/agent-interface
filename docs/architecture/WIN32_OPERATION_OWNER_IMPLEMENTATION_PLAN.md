@@ -45,6 +45,24 @@ this work used no WSLc allocation or Docker.
 
 ## Problem and scope
 
+### Joined public-caller/backend verification (2026-10-23)
+
+The [joined-path R01 packet](../../research/integration/win32_public_backend_composition_20261023_r01/README.md)
+closes the separate-test gap through the existing injected producer factory.
+Three new tests drive public MCP bind/admit/start/cancel/results through the
+actual Win32 session/backend with an inert API. Both blocked-DOWN schedules
+record exact producer retirement before recovery UP and independent readback;
+an unretired producer stays UNKNOWN with no UP. Duplicate public start/cancel
+preserve one attempt, generation/operation links survive the full path, and
+task success remains null. The 15 related tests pass normally and under `-O`.
+A deliberately premature fake UP fails the ordering assertion.
+
+This is test-only composition, not a production native-input adapter. The
+public route still requires injected factories; live target identity, physical
+release, task effect, timing, efficiency and reliability remain open.
+
+### Platform call boundary
+
 The current `Win32RuntimeSession.dispatch()` and `Win32Backend.execute()` call
 `SendInput` synchronously. Existing fault-injection packets show that the
 session can have no recorded release obligation while a fake `SendInput` has
