@@ -60,11 +60,11 @@
 - Consumes: `register_guarded_win32_tools(server, owner, content, *, producer_factory, task_oracle=None)` and the owner methods `bind_target_generation`, `admit_action_from_binding`, `start_producer`, `cancel_action`, `interface_result`.
 - Produces: public receipts that preserve helper custody, action/cancellation/recovery/observation/effect separation, attempt count, target generation, and replay denial.
 
-- [ ] **Step 1: Add named failing public-route regressions** for lost/malformed recovery receipt, observer timeout, repeated cancel, duplicate start, oracle timeout followed by late success, and a mismatched operation/generation receipt. Assert `UNKNOWN`, `task_success is None`, `replay_allowed is False`, and no producer start where custody is unresolved.
-- [ ] **Step 2: Run the new tests** with `python -m unittest runtime.cli_v1.test_mcp_win32_composition` and verify each fails for the intended invariant, not fixture setup.
-- [ ] **Step 3: Make the smallest caller/owner changes** needed to satisfy those assertions. Do not add native backend construction to the route.
-- [ ] **Step 4: Re-run the focused suite** normally and under `python -O`; preserve the generation-A immutability regression.
-- [ ] **Step 5: Commit** the test and any required runtime correction as one reviewable custody change.
+- [x] **Step 1: Add named public-route regressions** for observer timeout, repeated cancel, duplicate start, oracle timeout followed by late success, and mismatched recovery operation/generation; lower-level process tests cover missing/malformed recovery receipts. Assert immutable `UNKNOWN`, `task_success is None`, `replay_allowed is False`, and one producer/oracle reservation.
+- [x] **Step 2: Run the new tests** with `python -m unittest runtime.cli_v1.test_mcp_win32_composition`; all observed behaviors matched the required invariants.
+- [x] **Step 3: Make the smallest caller/owner changes** needed to satisfy those assertions. No caller/owner change was required; the route already enforces the tested behavior.
+- [x] **Step 4: Re-run the focused suite** normally and under `python -O`; both runs passed and the generation-A immutability regression remained green.
+- [x] **Step 5: Commit** the tests as one reviewable custody change (no runtime correction was needed; commit `7dfea017b`).
 
 ### Task 3: Prove process custody through the actual Win32 session/backend with an inert API
 
@@ -77,12 +77,12 @@
 - Consumes: `Win32RuntimeSession.dispatch()` and `Win32Backend.execute()` with a fake `user32.SendInput`; process ownership and receipt protocol from Task 1's existing supervisor.
 - Produces: a deterministic composed test trace for block-before-accept and accept-before-return schedules; no exported API change is allowed unless a current interface makes dependency injection impossible.
 
-- [ ] **Step 1: Add two failing spawned-process tests** that invoke the actual session/backend using only a fake API: (a) DOWN is blocked before acceptance, and (b) DOWN is accepted into fake state before the call blocks. Keep the fake API state in process-safe test storage and record event order.
-- [ ] **Step 2: Assert the custody order**: cancellation closes admission; the fake event log contains no recovery UP before exact producer exit; a retirement timeout yields UNKNOWN and blocks a second dispatch; confirmed retirement permits only the matching recovery receipt and independent fake neutral-state readback.
-- [ ] **Step 3: Run the tests** normally and under `python -O`; check process cleanup in `finally` paths and ensure the tests fail if recovery is moved before producer exit.
-- [ ] **Step 4: Add the minimal injectable construction seam only if required** to build `Win32Backend` with the fake API; default production construction must still use the existing native path and remain unreachable on non-Windows tests.
-- [ ] **Step 5: Re-run Win32 backend, owner, and process-cancellation tests** in both modes; retain separate raw logs and source hashes for this synthetic packet.
-- [ ] **Step 6: Commit** the isolated actual-backend/fake-API composition test and any minimal injection seam.
+- [x] **Step 1: Add two spawned-process tests** that invoke the actual session/backend using only a fake API: (a) DOWN is blocked before acceptance, and (b) DOWN is accepted into fake state before the call blocks. Keep the fake API state in process-safe test storage and record event order.
+- [x] **Step 2: Assert the custody order**: cancellation closes admission; the fake event log contains no recovery UP before exact producer exit; a retirement timeout yields UNKNOWN and blocks a second dispatch; confirmed retirement permits only the matching recovery receipt and independent fake neutral-state readback.
+- [x] **Step 3: Run the tests** normally and under `python -O`; check process cleanup in `finally` paths and ensure the tests fail if recovery is moved before producer exit.
+- [x] **Step 4: No construction seam was needed**: the test creates `Win32Backend` via `__new__` and assigns a fake `user32`; production construction remains unchanged.
+- [x] **Step 5: Re-run Win32 pure helper, backend ledger, owner, process-cancellation, and public-route tests** in both modes. The native fixture integration class was excluded from the valid verification set.
+- [ ] **Step 6: Commit** the isolated actual-backend/fake-API composition test.
 
 ### Task 4: Make attempt accounting and retained evidence auditable
 
