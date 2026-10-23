@@ -1,0 +1,69 @@
+{
+  "scope": "synthetic_only",
+  "accept_before_block": false,
+  "stubborn_producer": false,
+  "cancel_before_gate": true,
+  "result": {
+    "call_id": "3b4e215f420e4fe78033d1cf4a532043",
+    "action": {
+      "operation_id": "dddddddddddddddddddddddddddddddd",
+      "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "status": "running",
+      "metadata": {
+        "source": "synthetic_public_mcp_admission"
+      },
+      "result": null
+    },
+    "cancellation": {
+      "operation_id": "cb91c7d2883142a78794bff7569f3c79",
+      "action_operation_id": "dddddddddddddddddddddddddddddddd",
+      "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "status": "unknown",
+      "release_confirmed": false,
+      "task_success": null,
+      "replay_allowed": false,
+      "result": {
+        "operation_id": "dddddddddddddddddddddddddddddddd",
+        "target_generation": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "deadline_ns": 450346437000000,
+        "obligations": [
+          "key:CTRL"
+        ],
+        "status": "unknown",
+        "producer_identity": {
+          "pid": 48352,
+          "creation_time_100ns": 1000048352
+        },
+        "producer_exit_code": -15,
+        "producer_gate_state": "closed",
+        "cleanup_deadline_ns": 450336453000000,
+        "recovery_id": null,
+        "release_confirmed": false,
+        "task_success": null,
+        "replay_allowed": false,
+        "uncertainty": "producer_retired_without_start_authorization",
+        "phase": "unknown"
+      },
+      "owner_phase": "unknown"
+    },
+    "task_effect": null,
+    "operation_invoked": false,
+    "input_dispatched": false,
+    "task_success": null,
+    "replay_allowed": false
+  },
+  "events": [
+    {
+      "kind": "producer_exit_confirmed",
+      "pid": 48352,
+      "exitcode": -15
+    }
+  ],
+  "helper_pids": [
+    21356,
+    26696
+  ],
+  "producer_factory_calls": [
+    "dddddddddddddddddddddddddddddddd"
+  ]
+}
