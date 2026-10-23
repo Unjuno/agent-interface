@@ -1,0 +1,47 @@
+{
+  "checks": {
+    "cancel_response_at_most_250ms": false,
+    "cleanup_complete": false,
+    "frozen_conditions_hash": true,
+    "frozen_source_hashes": true,
+    "independent_immediate_readback_up": false,
+    "injected_f13_callback_entered": false,
+    "late_state_observer_after_1500ms": false,
+    "native_release_verified": false,
+    "no_emergency_release_required": false,
+    "no_runner_errors": false,
+    "one_prestarted_recovery_and_observer": false,
+    "owner_recovered_and_kept_task_unknown": false,
+    "producer_did_not_return_from_blocked_sendinput": true,
+    "producer_exit_confirmed": false,
+    "producer_retired_before_recovery_up": false,
+    "producer_target_generation_matched": false,
+    "real_target_generation_bound": false,
+    "recovery_generation_matches": false,
+    "recovery_requested_exactly_once": false,
+    "recovery_within_2500ms": false
+  },
+  "disposition": "UNKNOWN",
+  "hashes": {
+    "audit.py": "c3803702cbdeed7d8e7091ce593d6a7a3111b2fb70c52ef778e7c5ec547544c0",
+    "conditions.json": "c8f17bbab851f16dc21147bcbc774fdc3228cab27a2689af2eae0f091f485c43",
+    "probe.py": "b66fc4c0dcafb855f8ba66a25a1e439e2da188a4a678b9da04081f6f0e677827",
+    "raw.json": "c75cad766b7e2aa87afbc05adab03667ecf1dae80877bab14632fd96cb57c012",
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/guarded_win32_v1/operation_owner.py": "3a3d868510d1c41250516aacaddac9daed428a7eab72ca336d3b9684c90ba342",
+    "runtime/guarded_win32_v1/process_cancellation.py": "49202af88ced51a73c4218d113f118a57ad9f63f73fdd3b134cd31f41f9dfec6"
+  },
+  "measurements": {
+    "callback_entry_ns": null,
+    "cancel_response_ms": null,
+    "horizon_observer_ns": null,
+    "independent_readback_ns": null,
+    "producer_exit_observed_ns": null,
+    "recovery_elapsed_ms": null,
+    "recovery_up_returned_ns": null,
+    "recovery_up_started_ns": null
+  },
+  "method": "independent read-only hashes, IPC receipts, process timing, runtime release receipt, and backend state readback",
+  "packet": "win32_native_supervised_sendinput_hook_20261024_r02",
+  "scope": "one Windows host and one finite WH_KEYBOARD_LL callback-stall schedule; no standard public caller or task-effect qualification"
+}

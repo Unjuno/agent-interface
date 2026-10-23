@@ -1,0 +1,81 @@
+{
+  "cleanup": {
+    "backend_close": {
+      "property_cleanup": [
+        {
+          "hwnd": 62652728,
+          "status": "retained_until_window_destroyed"
+        }
+      ],
+      "status": "closed"
+    },
+    "fixture_destroyed": true,
+    "prior_foreground_restored": true
+  },
+  "errors": [
+    {
+      "error": "RuntimeError('prestarted cancellation helper failed readiness: recovery helper readiness or identity mismatched')",
+      "stage": "runner_exception"
+    }
+  ],
+  "finished_ns": 470726128729500,
+  "fixture_hwnd": 62652728,
+  "fixture_pid": 48916,
+  "foreground_after_setup": 62652728,
+  "helper_trace": {
+    "recovery_exit_observed_ns": 470726098730900,
+    "recovery_exitcode": -15,
+    "recovery_messages": [
+      {
+        "helper": "recovery",
+        "pid": 56296,
+        "ready_ns": 470726096415000,
+        "status": "ready"
+      }
+    ],
+    "recovery_terminate_ns": 470726096537900
+  },
+  "host": {
+    "machine": "AMD64",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "pointer_bits": 64,
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "windows_build": "10.0.26300"
+  },
+  "initial_f13_down": false,
+  "initial_state_witness": [
+    {
+      "desktop_hookcontrol_opened": true,
+      "hwnd": 62652728,
+      "input_desktop": "Default",
+      "input_desktop_active": true,
+      "pid": 48916,
+      "probe_integrity_rid": 8192,
+      "target": "fixture",
+      "target_integrity_rid": 8192,
+      "thread_id": 24396
+    },
+    {
+      "desktop_hookcontrol_opened": true,
+      "hwnd": 62652728,
+      "input_desktop": "Default",
+      "input_desktop_active": true,
+      "pid": 48916,
+      "probe_integrity_rid": 8192,
+      "target": "fixture",
+      "target_integrity_rid": 8192,
+      "thread_id": 24396
+    }
+  ],
+  "low_level_hooks_timeout_hkcu": null,
+  "old_foreground_hwnd": 393882,
+  "operation_id": "3e1bc64481b244a7ba160bfce6cb8697",
+  "packet": "win32_native_supervised_sendinput_hook_20261024_r02",
+  "producer_events": [],
+  "started_ns": 470725830546200,
+  "target_generation": "43f01f253da29d7644adb23c0a047f2edc569513cc3e4051418766f10004f82a",
+  "target_process_identity": {
+    "creation_time_100ns": 134372530177152845,
+    "pid": 48916
+  }
+}
