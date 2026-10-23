@@ -1,5 +1,16 @@
 # Current objective and working direction
 
+**Native Win32 low-level hook delay probe (2026-10-24):** the frozen one-run
+[R01 packet](../research/integration/win32_sendinput_lowlevel_hook_20261024_r01/README.md)
+delayed one injected F13 key-down in `WH_KEYBOARD_LL`. `SendInput` returned
+0.9093 ms after callback return; one UP was observed, F13 was up, and unhook and
+thread cleanup succeeded. The callback lasted 64.4284 ms against the predeclared
+60 ms maximum, so the independent audit records **FAIL**. The one-shot raw,
+conditions, source hashes, and audit are preserved. This supports the narrow
+ordering observation for one finite callback stall only; it does not establish
+a hard release deadline, indefinite-block recovery, public MCP recovery, MAP01,
+or matched efficiency. Do not rerun this allocation.
+
 **Public Win32 effect and timing (2026-10-24):** R01 was refused before input
 with `TARGET_GENERATION_REQUIRED`; its raw, audit, and clean fixture exit are
 preserved. R02 forwarded the matching generation from public observe to the
