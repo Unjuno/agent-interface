@@ -1,0 +1,66 @@
+{
+  "schema": "wslc-local-runtime-smoke-s02-v1",
+  "attempt_id": "wslc-local-runtime-smoke-20261024-s02",
+  "preregistered_utc": "2026-10-23T23:20:20.8347076Z",
+  "source_commit": "64543a8ac5b01ac8acff3910e4fc2e0458276f6c",
+  "session_name": "agent-interface-wslc-s02-e8fb33d5af824e7eb4496edd27c5116d",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "question": "Can a fresh isolated WSLc session run a pinned Python image with network disabled and a read-only host bind mount, verify bytes, and reject writes?",
+  "success_criteria": [
+    "pinned image metadata resolves after one explicit pull in the named session",
+    "one container run exits zero with expected marker and EROFS for write attempt",
+    "full CID receipt captured",
+    "exact-CID cleanup query confirms no match",
+    "named session termination succeeds"
+  ],
+  "failure_criteria": [
+    "any timeout, session start failure, missing/malformed CID, nonzero run, unexpected write success, cleanup ambiguity, or session termination ambiguity => HOLD/UNKNOWN; no retry"
+  ],
+  "allowed_operations": [
+    "read local version and resource facts",
+    "create/start one named nonpersistent session with wslc system session enter --name and this attempt-owned storage path",
+    "inspect exact image within that named session",
+    "one pull of the exact pinned image into that session",
+    "one bounded run with network none, requested 512M memory and 1 CPU, read-only mount, --rm, exact unique name and cidfile",
+    "query exact CID only if receipt exists",
+    "remove only this session exact image and terminate only this named session after verified container absence"
+  ],
+  "prohibited_operations": [
+    "Docker",
+    "global container/session inventory",
+    "access or cleanup of any other session/container",
+    "run with network",
+    "write to host probe mount",
+    "retry after attempt starts",
+    "GUI/provider/computer-control claims"
+  ],
+  "limits": {
+    "pull_timeout_seconds": 600,
+    "inspect_timeout_seconds": 20,
+    "run_timeout_seconds": 90,
+    "cleanup_timeout_seconds": 20,
+    "session_terminate_timeout_seconds": 30,
+    "memory": "512M requested (hard enforcement not established)",
+    "cpus": "1 requested",
+    "network": "none",
+    "source_mount": "read-only",
+    "container_run_count": 1,
+    "pull_count": 1
+  },
+  "cleanup": "verify exact CID absence then remove exact pinned image in named session; terminate only named session; preserve logs and receipts",
+  "nonclaims": [
+    "does not test Windows GUI input delivery or release",
+    "does not test environment reaction or finite recovery",
+    "does not test task success/effect",
+    "does not establish cgroup or swap enforcement",
+    "one smoke sample does not establish reliability"
+  ],
+  "sentinel_sha256": "b6226bcdfb1e25639d1b443906d7cc227c81fbac974fbb1d2c9d058795b0c14d",
+  "probe_sha256": "8c42f0728a5f852d35a4a209ce97446e66ed70a7e79508fdf4d53899c306d099",
+  "allocation": {
+    "session_creation": "wslc system session enter --name <unique-session> <attempt-owned-storage-path>; keep shell open until commands and cleanup finish; exit only at the end",
+    "session_storage_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\wslc_local_runtime_smoke_20261024_s02\\run\\wslc-session-storage",
+    "no_global_inventory": true,
+    "initial_session_inspect_result": "WSLC_E_SESSION_NOT_FOUND because the new named session had not yet been created; no image pull or container run occurred"
+  }
+}
