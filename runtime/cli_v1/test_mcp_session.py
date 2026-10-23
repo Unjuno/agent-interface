@@ -643,6 +643,19 @@ class OwnedMCPTests(unittest.IsolatedAsyncioTestCase):
             self.assertIn('release_error',first);self.assertIn('close_error',first)
             session.backend.release_all.assert_called_once();session.backend.close.assert_called_once()
 
+    async def test_backend_property_cleanup_uncertainty_is_retained_as_close_failure(self):
+        session=self.fixture()
+        session.backend.close.return_value={
+            'status':'cleanup_unverified',
+            'property_cleanup':[{'hwnd':123,'status':'property_value_changed'}],
+        }
+        with self.selection(), patch(
+                'runtime.cli_v1.mcp_session.open_session',return_value=session):
+            owner=MCPSessionOwner({'fixture':123});owner.get()
+            report=owner.close()
+            self.assertEqual(report['status'],'cleanup_failed')
+            self.assertEqual(report['backend_close']['status'],'cleanup_unverified')
+
     async def test_cancelled_transport_waits_for_worker_before_shutdown_close(self):
         session=self.fixture();entered=threading.Event();release=threading.Event()
         def reader(*args):

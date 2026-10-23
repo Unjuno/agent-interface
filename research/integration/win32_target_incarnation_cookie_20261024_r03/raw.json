@@ -1,0 +1,40 @@
+{
+  "actions": [
+    "create_hidden_owned_static_window",
+    "read_generation_twice",
+    "read_native_property",
+    "backend_close_and_verify_removal",
+    "reject_generation_after_close",
+    "destroy_owned_window"
+  ],
+  "close_report": {
+    "property_cleanup": [
+      {
+        "hwnd": 20251332,
+        "status": "removed"
+      }
+    ],
+    "status": "closed"
+  },
+  "destroy_succeeded": true,
+  "finished_utc": "2026-10-23T17:15:55.217001+00:00",
+  "generation_after_close_error": "target generation unavailable after backend close",
+  "generation_after_close_rejected": true,
+  "generation_first": "b38677e38e534debef13a4527eaccf0726b3f3c6bbb46f8ab91c2142f78def33",
+  "generation_second": "b38677e38e534debef13a4527eaccf0726b3f3c6bbb46f8ab91c2142f78def33",
+  "hwnd": 20251332,
+  "input_sent": false,
+  "is_window_after_create": true,
+  "is_window_after_destroy": false,
+  "native_property_after_close": 0,
+  "native_property_present": true,
+  "native_property_value": 6918875402447799945,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "schema": "win32-target-incarnation-cookie-probe-v1",
+  "source_commit": "257d1d31c6614dc922057f1c83d49ea81c12b762",
+  "started_utc": "2026-10-23T17:15:55.173355+00:00",
+  "status": "PASS",
+  "targeted_existing_user_window": false,
+  "window_activated": false
+}

@@ -1,0 +1,54 @@
+{
+  "actions": [
+    "create_hidden_owned_static_window",
+    "read_generation",
+    "open_second_backend_and_read_shared_generation",
+    "close_first_backend",
+    "verify_second_backend_still_works",
+    "close_second_backend",
+    "verify_property_until_window_destroy",
+    "destroy_owned_window",
+    "verify_property_removed_by_os"
+  ],
+  "close_report": {
+    "property_cleanup": [
+      {
+        "hwnd": 20316868,
+        "status": "retained_until_window_destroyed"
+      }
+    ],
+    "status": "closed"
+  },
+  "destroy_succeeded": true,
+  "finished_utc": "2026-10-23T17:20:11.904662+00:00",
+  "generation_first": "88f63b32f4326d6973f7026f918f0f3746c1ff94f3be92ca69ce7c0e3a903876",
+  "generation_second_backend": "88f63b32f4326d6973f7026f918f0f3746c1ff94f3be92ca69ce7c0e3a903876",
+  "hwnd": 20316868,
+  "input_sent": false,
+  "is_window_after_create": true,
+  "is_window_after_destroy": false,
+  "native_property_after_both_close": 2369427168339912831,
+  "native_property_after_destroy": 0,
+  "native_property_after_first_close": 2369427168339912831,
+  "native_property_present": true,
+  "native_property_value": 2369427168339912831,
+  "platform": "Windows-10-10.0.26300-SP0",
+  "property_removed_by_window_destroy": true,
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "schema": "win32-target-incarnation-cookie-shared-lifecycle-probe-v1",
+  "second_backend_generation_after_first_close": "88f63b32f4326d6973f7026f918f0f3746c1ff94f3be92ca69ce7c0e3a903876",
+  "second_close_report": {
+    "property_cleanup": [
+      {
+        "hwnd": 20316868,
+        "status": "retained_until_window_destroyed"
+      }
+    ],
+    "status": "closed"
+  },
+  "source_commit": "257d1d31c6614dc922057f1c83d49ea81c12b762",
+  "started_utc": "2026-10-23T17:20:11.856419+00:00",
+  "status": "PASS",
+  "targeted_existing_user_window": false,
+  "window_activated": false
+}

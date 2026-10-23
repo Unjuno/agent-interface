@@ -83,6 +83,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
         backend.targets = {'fixture': 42}
         backend.user32 = Mock()
         backend.user32.IsWindow.return_value = True
+        backend.user32.GetPropW.return_value = 98765
         backend._window_owner_identity_for_hwnd = Mock(return_value={
             'pid': 51, 'creation_time_100ns': 7001,
             'window_thread_id': 701})
