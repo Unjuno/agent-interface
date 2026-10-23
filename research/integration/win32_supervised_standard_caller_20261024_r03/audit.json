@@ -1,0 +1,386 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r03",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-supervised-standard-caller-20261024-r03",
+        "session_mode": "supervised-win32",
+        "source_commit": "a448064ec27fcc67b8da6663cb9f01a646629039",
+        "tracked_tree_clean": true
+      },
+      "name": "attempt_and_source_identity",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "interface_cancel",
+        "interface_clock",
+        "interface_close",
+        "interface_dispatch",
+        "interface_inspect_target",
+        "interface_observe",
+        "interface_recover_input",
+        "interface_results",
+        "interface_review_target",
+        "interface_validate"
+      ],
+      "name": "public_tool_surface",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "generation": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2",
+        "hwnd": 133892452,
+        "owner": {
+          "creation_time_100ns": 134372578345533820,
+          "pid": 9824,
+          "window_thread_id": 43392
+        },
+        "pid": 9824
+      },
+      "name": "one_owned_fixture",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "consistency": "matched",
+        "observed_generation": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2",
+        "owned_generation": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2"
+      },
+      "name": "public_observation_generation_matches_owned_target",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "operations": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "text",
+            "text": "SUPERVISED-MCP-OK-20261024-R03"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-effect-r03",
+        "source_generations": {
+          "fixture": "2f396c34e2ccc0d00fa9997d52c43056f978082a348d76523a8f0001f921ffc2"
+        }
+      },
+      "name": "exact_program_and_generation_forwarding",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 7,
+        "required_capabilities": [
+          "display.geometry",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 7,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      },
+      "name": "public_static_validation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempts": 1,
+        "call_id": null,
+        "dispatch_error": true,
+        "dispatch_status": "invalid_request",
+        "input_dispatched": null,
+        "operation_invoked": false,
+        "replay_allowed": false,
+        "wait_for_result_ms": 30000
+      },
+      "name": "single_public_dispatch",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action_status": null,
+        "dispatch_call_id": null,
+        "dispatch_status": "invalid_request",
+        "input_dispatched": null,
+        "operation_id": null,
+        "retained_call_id": null,
+        "retained_status": null,
+        "terminal_readback_call_id": null
+      },
+      "name": "same_call_terminal_readback",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action_status": null,
+        "call_id": null,
+        "completion_phase": null,
+        "operation_id": null,
+        "result_status": null,
+        "target_generation": null
+      },
+      "name": "retained_standard_action_completed",
+      "passed": false
+    },
+    {
+      "evidence": null,
+      "name": "verified_empty_release_receipt_retained",
+      "passed": false
+    },
+    {
+      "evidence": null,
+      "name": "independent_neutral_readback_retained",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "effect_readback": null,
+        "expected_effect": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024-R03"
+        },
+        "fixture_effect_after_close": null,
+        "runtime_task_success": null
+      },
+      "name": "task_effect_independent_of_runtime_success",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "actual": [
+          {
+            "hwnd": 133892452,
+            "kind": "ready"
+          }
+        ],
+        "expected": [
+          {
+            "hwnd": 133892452,
+            "kind": "ready"
+          },
+          {
+            "kind": "click"
+          },
+          {
+            "code": 83,
+            "kind": "char"
+          },
+          {
+            "code": 85,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 82,
+            "kind": "char"
+          },
+          {
+            "code": 86,
+            "kind": "char"
+          },
+          {
+            "code": 73,
+            "kind": "char"
+          },
+          {
+            "code": 83,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 68,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 77,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 79,
+            "kind": "char"
+          },
+          {
+            "code": 75,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 54,
+            "kind": "char"
+          },
+          {
+            "code": 49,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 52,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 82,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 51,
+            "kind": "char"
+          },
+          {
+            "clicked": true,
+            "kind": "save",
+            "saved": true,
+            "text": "SUPERVISED-MCP-OK-20261024-R03"
+          }
+        ]
+      },
+      "name": "event_journal_exact",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "close_posted": true,
+        "exit_code": 0,
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "window_exists_after_exit": false
+      },
+      "name": "fixture_shutdown_and_foreground_restore",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close_report": null,
+        "public_close": {
+          "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r03\\run\\calls\\de06a56cef01446eb31f3977f6def57f",
+          "call_id": "de06a56cef01446eb31f3977f6def57f",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 0,
+            "mode": "supervised-win32",
+            "session_id": "dbfa917af55d49809d0afec8c81cd8cd",
+            "state": "closed",
+            "synthetic_only": false,
+            "unresolved_call_ids": []
+          },
+          "status": "closed",
+          "task_success": null
+        }
+      },
+      "name": "supervised_session_closed",
+      "passed": false
+    }
+  ],
+  "passed": 7,
+  "schema": "win32-supervised-standard-caller-audit-v3",
+  "source_commit": "a448064ec27fcc67b8da6663cb9f01a646629039",
+  "status": "FAIL_OR_UNKNOWN",
+  "timing": {
+    "public_close_ms": 101.9463,
+    "public_dispatch_ms": 0.8785,
+    "public_observation_ms": 21.5189,
+    "public_results_readback_count": 0,
+    "public_validation_ms": 1.3096
+  },
+  "total": 15
+}

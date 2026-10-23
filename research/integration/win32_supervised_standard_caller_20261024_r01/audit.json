@@ -1,0 +1,356 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r01",
+  "checks": [
+    {
+      "evidence": {
+        "attempt_id": "win32-supervised-standard-caller-20261024-r01",
+        "session_mode": "supervised-win32",
+        "source_commit": "2cfcb11abacf55cf1bb9328f0f0945ddb80fe299",
+        "tracked_tree_clean": true
+      },
+      "name": "attempt_and_source_identity",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "interface_cancel",
+        "interface_clock",
+        "interface_close",
+        "interface_dispatch",
+        "interface_inspect_target",
+        "interface_observe",
+        "interface_recover_input",
+        "interface_results",
+        "interface_review_target",
+        "interface_validate"
+      ],
+      "name": "public_tool_surface",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "generation": "70f274ebee3b8e199f7b4c87a9f070b09ed285e1fd7b1825e92551efd14adf78",
+        "hwnd": 58525078,
+        "owner": {
+          "creation_time_100ns": 134372572671785481,
+          "pid": 27364,
+          "window_thread_id": 33812
+        },
+        "pid": 27364
+      },
+      "name": "one_owned_fixture",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "consistency": "matched",
+        "observed_generation": "70f274ebee3b8e199f7b4c87a9f070b09ed285e1fd7b1825e92551efd14adf78",
+        "owned_generation": "70f274ebee3b8e199f7b4c87a9f070b09ed285e1fd7b1825e92551efd14adf78"
+      },
+      "name": "public_observation_generation_matches_owned_target",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "operations": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "frame": "window_client",
+            "op": "pointer_move",
+            "x": 70,
+            "y": 70
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "text",
+            "text": "SUPERVISED-MCP-OK-20261024"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "S"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "supervised-standard-effect-r01",
+        "source_generations": {
+          "fixture": "70f274ebee3b8e199f7b4c87a9f070b09ed285e1fd7b1825e92551efd14adf78"
+        }
+      },
+      "name": "exact_program_and_generation_forwarding",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "backend_checked": false,
+        "compilation": null,
+        "expanded_operation_count": 7,
+        "required_capabilities": [
+          "display.geometry",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "runtime_admission": "not_evaluated",
+        "schema": "agent-interface/static-program-validation-v1",
+        "side_effect_authority": false,
+        "source_operation_count": 7,
+        "static_valid": true,
+        "status": "valid",
+        "task_success": null
+      },
+      "name": "public_static_validation",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "attempts": 1,
+        "call_id": "8bfb16edfb0148d8b8d9ffa68efefd67",
+        "dispatch_error": false,
+        "input_dispatched": null,
+        "operation_invoked": null,
+        "replay_allowed": null
+      },
+      "name": "single_public_dispatch",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "action_status": null,
+        "call_id": null,
+        "completion_phase": null,
+        "operation_id": null,
+        "result_status": null,
+        "target_generation": null
+      },
+      "name": "retained_standard_action_completed",
+      "passed": false
+    },
+    {
+      "evidence": null,
+      "name": "verified_empty_release_receipt_retained",
+      "passed": false
+    },
+    {
+      "evidence": null,
+      "name": "independent_neutral_readback_retained",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "effect_readback": null,
+        "expected_effect": {
+          "clicked": true,
+          "saved": true,
+          "text": "SUPERVISED-MCP-OK-20261024"
+        },
+        "fixture_effect_after_close": null,
+        "runtime_task_success": null
+      },
+      "name": "task_effect_independent_of_runtime_success",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "actual": [
+          {
+            "hwnd": 58525078,
+            "kind": "ready"
+          }
+        ],
+        "expected": [
+          {
+            "hwnd": 58525078,
+            "kind": "ready"
+          },
+          {
+            "kind": "click"
+          },
+          {
+            "code": 83,
+            "kind": "char"
+          },
+          {
+            "code": 85,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 82,
+            "kind": "char"
+          },
+          {
+            "code": 86,
+            "kind": "char"
+          },
+          {
+            "code": 73,
+            "kind": "char"
+          },
+          {
+            "code": 83,
+            "kind": "char"
+          },
+          {
+            "code": 69,
+            "kind": "char"
+          },
+          {
+            "code": 68,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 77,
+            "kind": "char"
+          },
+          {
+            "code": 67,
+            "kind": "char"
+          },
+          {
+            "code": 80,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 79,
+            "kind": "char"
+          },
+          {
+            "code": 75,
+            "kind": "char"
+          },
+          {
+            "code": 45,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 54,
+            "kind": "char"
+          },
+          {
+            "code": 49,
+            "kind": "char"
+          },
+          {
+            "code": 48,
+            "kind": "char"
+          },
+          {
+            "code": 50,
+            "kind": "char"
+          },
+          {
+            "code": 52,
+            "kind": "char"
+          },
+          {
+            "clicked": true,
+            "kind": "save",
+            "saved": true,
+            "text": "SUPERVISED-MCP-OK-20261024"
+          }
+        ]
+      },
+      "name": "event_journal_exact",
+      "passed": false
+    },
+    {
+      "evidence": {
+        "close_posted": true,
+        "exit_code": 0,
+        "foreground_restore": {
+          "attempted": true,
+          "observed_hwnd": 393882,
+          "prior_hwnd_exists": true,
+          "restored": true,
+          "set_foreground_return": true
+        },
+        "window_exists_after_exit": false
+      },
+      "name": "fixture_shutdown_and_foreground_restore",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "close_report": {
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "status": "busy",
+          "task_success": null,
+          "unresolved_operation_id": "9fcc0196779048c6bde0142bda1d2f0b"
+        },
+        "public_close": {
+          "call_directory": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac\\research\\integration\\win32_supervised_standard_caller_20261024_r01\\run\\calls\\843d73b0c8d74eb1a325ec96b7f7e224",
+          "call_id": "843d73b0c8d74eb1a325ec96b7f7e224",
+          "release_confirmed": false,
+          "replay_allowed": false,
+          "session": {
+            "call_count": 1,
+            "mode": "supervised-win32",
+            "session_id": "7adbcb40e6ac40acb31dfaf3c99918e1",
+            "state": "open",
+            "synthetic_only": false,
+            "unresolved_call_ids": [
+              "8bfb16edfb0148d8b8d9ffa68efefd67"
+            ]
+          },
+          "status": "busy",
+          "task_success": null,
+          "unresolved_operation_id": "9fcc0196779048c6bde0142bda1d2f0b"
+        }
+      },
+      "name": "supervised_session_closed",
+      "passed": false
+    }
+  ],
+  "passed": 7,
+  "schema": "win32-supervised-standard-caller-audit-v1",
+  "source_commit": "2cfcb11abacf55cf1bb9328f0f0945ddb80fe299",
+  "status": "FAIL_OR_UNKNOWN",
+  "total": 14
+}
