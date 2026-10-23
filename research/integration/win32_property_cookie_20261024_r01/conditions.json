@@ -1,0 +1,29 @@
+{
+  "schema": "win32-cross-process-window-property-conditions-v1",
+  "attempt_id": "win32-property-cookie-20261024-r01",
+  "source_commit": "838a2b9b4a8be8d346526050fe32298ad4a76edc",
+  "target": "one hidden STATIC HWND owned by a spawned same-user, same-integrity child process",
+  "actions": [
+    "child creates one hidden window without activating it",
+    "parent reads production owner identity and sets a unique SetPropW value",
+    "parent reads the property back",
+    "child destroys the window and confirms IsWindow is false",
+    "parent observes GetPropW on the stale handle",
+    "child recreates one window on the same process and GUI thread",
+    "parent tests whether numeric HWND and property value recur",
+    "child destroys its final window and exits"
+  ],
+  "input_sent": false,
+  "window_activated": false,
+  "max_simultaneous_test_windows": 1,
+  "timeout_seconds": 10,
+  "retry_policy": "one frozen attempt; preserve refusal or no-reuse as scoped outcome; no retry",
+  "discriminator": {
+    "set_and_readback_succeed_then_same_hwnd_retains_token": "PROPERTY_COOKIE_ALIAS_COUNTEREXAMPLE",
+    "set_and_readback_succeed_then_same_hwnd_loses_token": "REUSED_HWND_COOKIE_CLEARED",
+    "set_and_readback_succeed_without_hwnd_reuse": "CROSS_PROCESS_PROPERTY_WORKS_NO_REUSE_OBSERVED",
+    "UIPI_or_SetProp_refusal": "PROPERTY_COOKIE_UNAVAILABLE_FOR_THIS_TARGET",
+    "identity_or_cleanup_mismatch_or_timeout": "HOLD_UNKNOWN"
+  },
+  "scope": "Tests same-integrity cross-process SetPropW/GetPropW and window-lifetime cleanup on this Windows host. It does not qualify elevated targets, all UIPI configurations, other desktops, or production runtime integration."
+}
