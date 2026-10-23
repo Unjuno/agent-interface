@@ -154,6 +154,7 @@ class OwnedWin32SessionOwner:
                     "result": None,
                 },
                 "cancellation": None,
+                "task_effect": None,
             }
             return self.interface_result(call_id)
 
@@ -351,6 +352,71 @@ class OwnedWin32SessionOwner:
             action["result"] = deepcopy(result)
             action["status"] = result.get("status", "unknown")
             return self.interface_result(call_id)
+
+    def begin_task_effect_verification(self, call_id):
+        """Reserve one independent oracle attempt without changing action/cancel."""
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("unknown caller action")
+            if record["task_effect"] is not None:
+                return False
+            record["task_effect"] = {"status": "pending", "task_success": None,
+                                     "receipt": None}
+            return True
+
+    def record_task_effect(self, call_id, receipt):
+        required = {"call_id", "operation_id", "target_generation", "oracle_id",
+                    "outcome", "observed_monotonic_ns", "evidence_ref"}
+        if type(receipt) is not dict or set(receipt) != required:
+            raise ValueError("independent task-effect receipt has an invalid schema")
+        self._validate_id(receipt["oracle_id"], "oracle_id")
+        if (receipt["outcome"] not in ("success", "failure", "unknown")
+                or type(receipt["observed_monotonic_ns"]) is not int
+                or receipt["observed_monotonic_ns"] <= 0
+                or type(receipt["evidence_ref"]) is not str
+                or not receipt["evidence_ref"]):
+            raise ValueError("independent task-effect receipt has invalid fields")
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("unknown caller action")
+            existing = record["task_effect"]
+            if existing is None:
+                raise ValueError("task-effect oracle attempt was not reserved")
+            if existing["status"] != "pending":
+                if existing.get("receipt") == receipt:
+                    return deepcopy(record)
+                raise ValueError("task-effect receipt is immutable")
+            action = record["action"]
+            if (receipt["call_id"] != call_id
+                    or receipt["operation_id"] != action["operation_id"]
+                    or receipt["target_generation"] != action["target_generation"]):
+                raise ValueError("task-effect receipt belongs to a different action generation")
+            outcome = receipt["outcome"]
+            record["task_effect"] = {
+                "status": "unknown" if outcome == "unknown" else "verified",
+                "task_success": (True if outcome == "success" else
+                                 False if outcome == "failure" else None),
+                "receipt": deepcopy(receipt),
+            }
+            return deepcopy(record)
+
+    def fail_task_effect_verification(self, call_id, reason):
+        if type(reason) is not str or not reason:
+            raise ValueError("task-effect failure reason required")
+        with self._lock:
+            record = self._calls.get(call_id)
+            if record is None:
+                raise ValueError("unknown caller action")
+            existing = record["task_effect"]
+            if existing is None:
+                raise ValueError("task-effect oracle attempt was not reserved")
+            if existing["status"] != "pending":
+                return deepcopy(record)
+            record["task_effect"] = {"status": "unknown", "task_success": None,
+                                     "receipt": None, "uncertainty": reason}
+            return deepcopy(record)
 
     def interface_result(self, call_id):
         with self._lock:

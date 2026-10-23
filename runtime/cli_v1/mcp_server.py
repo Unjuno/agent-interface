@@ -170,7 +170,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   _guarded_cancel_transaction_timeout_s=3.0,
                   _guarded_owner_factory=None,
                   _guarded_win32_owner_factory=None,
-                  _guarded_win32_producer_factory=None):
+                  _guarded_win32_producer_factory=None,
+                  _guarded_win32_task_oracle=None):
     if session_mode not in ("one-shot", "persistent-x11", "guarded-x11", "guarded-win32"):
         raise ValueError("unknown session mode")
     guarded_win32 = session_mode == 'guarded-win32'
@@ -257,7 +258,9 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         owner = _guarded_win32_owner_factory(deepcopy(targets), root, display_name)
         required_win32 = ('current_target_generation', 'bind_target_generation',
                           'admit_action_from_binding', 'start_producer',
-                          'cancel_guarded', 'interface_result', 'list_results', 'close')
+                          'cancel_guarded', 'interface_result', 'list_results', 'close',
+                          'begin_task_effect_verification', 'record_task_effect',
+                          'fail_task_effect_verification')
         if any(not callable(getattr(owner, name, None)) for name in required_win32):
             raise ValueError('guarded-win32 owner factory returned an incomplete synthetic owner')
         if (getattr(owner, 'mode', None) != 'guarded-win32'
@@ -955,7 +958,8 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
     elif guarded_win32:
         from .mcp_win32 import register_guarded_win32_tools
         register_guarded_win32_tools(server, owner, content,
-            producer_factory=_guarded_win32_producer_factory)
+            producer_factory=_guarded_win32_producer_factory,
+            task_oracle=_guarded_win32_task_oracle)
     else:
         @server.tool()
         async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],
@@ -1083,7 +1087,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             row = deepcopy(row)
             row['operation_invoked'] = False
             row['input_dispatched'] = False
-            row['task_success'] = None
+            effect = row.get('task_effect')
+            row['task_success'] = (effect.get('task_success')
+                if isinstance(effect, dict) and effect.get('status') == 'verified'
+                else None)
             row['replay_allowed'] = False
             return content(row)
         with calls_lock:

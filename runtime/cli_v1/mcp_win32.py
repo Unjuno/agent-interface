@@ -10,12 +10,13 @@ from mcp.types import CallToolResult
 _START_RESPONSE_HANDOFF_NS = 50_000_000
 
 
-def register_guarded_win32_tools(server, owner, content, *, producer_factory):
+def register_guarded_win32_tools(server, owner, content, *, producer_factory,
+                                task_oracle=None):
     """Expose only admission and cancellation custody; never native input.
 
-    The injected owner must derive target generation from its configured
-    Windows target. The public caller cannot supply or replace that digest.
-    This surface does not launch a producer and cannot report task success.
+    The injected owner derives target generation from its configured target.
+    The public caller cannot supply or replace that digest. Producer and task
+    oracle callbacks are injected and must remain synthetic in this route.
     """
     @server.tool()
     async def interface_guarded_win32_bind_target() -> CallToolResult:
@@ -79,7 +80,8 @@ def register_guarded_win32_tools(server, owner, content, *, producer_factory):
 
         The injected factory must return an inert child waiting on its start
         gate. A pending reply names the original action; it does not authorize
-        replay. This route has no native-input producer or task-effect claim.
+        replay. This route has no native-input producer. Task effect is scored
+        only by the separate optional independent-oracle tool.
         """
         task = asyncio.create_task(asyncio.to_thread(
             owner.start_producer, call_id, producer_factory))
@@ -115,6 +117,81 @@ def register_guarded_win32_tools(server, owner, content, *, producer_factory):
         return content(row)
 
     start_tasks = set()
+
+    if callable(task_oracle):
+        @server.tool()
+        async def interface_guarded_win32_verify_task(
+                call_id: Annotated[StrictStr, Field(pattern=r'^[0-9a-f]{32}$')],
+                wait_for_result_ms: Annotated[StrictInt, Field(ge=0, le=10000)] = 2000
+                ) -> CallToolResult:
+            """Ask a separate injected oracle to score this action's task effect.
+
+            This is distinct from producer completion, cancellation recovery,
+            and neutral-input readback. The receipt is one-use and bound to the
+            action's call, operation and target generation. Unknown or timed-out
+            oracle results remain unknown; they cannot be replaced or replayed.
+            """
+            try:
+                reserved = owner.begin_task_effect_verification(call_id)
+            except ValueError:
+                return content({'status': 'unknown_call', 'call_id': call_id,
+                    'operation_invoked': False, 'task_success': None,
+                    'replay_allowed': False}, error=True)
+            if not reserved:
+                existing = owner.interface_result(call_id)
+                if existing is None:
+                    return content({'status': 'unknown_call', 'call_id': call_id,
+                        'operation_invoked': False, 'task_success': None,
+                        'replay_allowed': False}, error=True)
+                effect = existing.get('task_effect')
+                if not isinstance(effect, dict):
+                    effect = {'status': 'unknown', 'task_success': None}
+                return content({'status': effect.get('status', 'unknown'),
+                    'call_id': call_id, 'task_effect': effect,
+                    'task_success': effect.get('task_success'),
+                    'operation_invoked': False, 'input_dispatched': False,
+                    'replay_allowed': False, 'scope': 'synthetic_only'})
+
+            existing = owner.interface_result(call_id)
+            if existing is None:
+                row = owner.fail_task_effect_verification(
+                    call_id, 'action_disappeared_after_oracle_reservation')
+                return content({'status': 'unknown', 'call_id': call_id,
+                    'task_effect': row['task_effect'], 'task_success': None,
+                    'operation_invoked': False, 'input_dispatched': False,
+                    'replay_allowed': False, 'scope': 'synthetic_only'}, error=True)
+            action = existing['action']
+            task = asyncio.create_task(asyncio.to_thread(task_oracle,
+                {'call_id': call_id, **action}))
+            task_oracle_tasks.add(task)
+
+            def oracle_finished(done):
+                task_oracle_tasks.discard(done)
+                if not done.cancelled():
+                    done.exception()
+
+            task.add_done_callback(oracle_finished)
+            done, _ = await asyncio.wait({task},
+                timeout=max(0, wait_for_result_ms * 1_000_000
+                            - _START_RESPONSE_HANDOFF_NS) / 1_000_000_000)
+            if not done:
+                row = owner.fail_task_effect_verification(
+                    call_id, 'independent_task_oracle_response_timeout')
+            else:
+                try:
+                    receipt = task.result()
+                    row = owner.record_task_effect(call_id, receipt)
+                except Exception as error:
+                    row = owner.fail_task_effect_verification(
+                        call_id, 'independent_task_oracle_receipt_invalid: ' + repr(error))
+            effect = row['task_effect']
+            return content({'status': effect['status'], 'call_id': call_id,
+                'task_effect': effect, 'task_success': effect['task_success'],
+                'operation_invoked': False, 'input_dispatched': False,
+                'replay_allowed': False, 'scope': 'synthetic_only'},
+                error=effect['status'] == 'unknown')
+
+        task_oracle_tasks = set()
 
     @server.tool()
     async def interface_guarded_win32_cancel(

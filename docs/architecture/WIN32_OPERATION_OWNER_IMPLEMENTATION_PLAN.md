@@ -1,12 +1,51 @@
 # Win32 operation-owner implementation plan
 
-Status: Phase 1's inert prototype is implemented and passes its scoped local
-suite. Phase 2 has a partial target-generation prerequisite in the private
-Win32 move bridge; public standard-caller/supervisor composition is not
-implemented or qualified. This plan follows the
-design decision in [the supervisor design record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
-It authorizes only local inert-fake work in Phase 1; it does not authorize
-native input or a WSLc allocation.
+Status: Phase 1 and a synthetic-only public MCP composition slice are locally
+implemented. The route binds/rechecks an injected target generation, admits a
+gated synthetic producer, composes cancellation with separate recovery and
+neutral-state observation, and can retain a distinct independently spawned
+task-effect oracle receipt. This does not qualify native input or physical
+release. This plan follows the design decision in [the supervisor design
+record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). It authorizes local
+synthetic-fake work only; it does not authorize native input or a WSLc
+allocation.
+
+## Current implementation checkpoint (2026-10-23)
+
+The approved synthetic integration slice now reaches the standard public MCP
+caller on branch `codex/win32-supervisor-implementation-plan`. The opt-in
+`guarded-win32` route remains explicitly dependency-injected and has no native
+input backend. It rejects non-Windows host startup and requires one configured
+target plus an owner marked synthetic-only. The target-generation binding is
+single-use and admission re-reads generation before creating the action.
+
+The public composition test starts a gated producer in a spawned process,
+records its synthetic task event, obtains a separate receipt from a distinct
+spawned oracle process, requests public cancellation, then verifies producer
+retirement, separate recovery, and independent neutral-state observation. The
+retained result keeps action state, cancellation state, and task effect in
+separate fields: neutral readback and cancellation do not set task success;
+only the generation-bound independent oracle receipt does. An oracle timeout
+or malformed/mismatched receipt remains unknown and cannot be retried into a
+replacement result. The oracle tool is absent unless an explicit injected
+oracle is supplied.
+
+Local verification on this checkpoint passes the focused Win32 adapter,
+public-composition, and cancellation suite 23/23 in normal and optimized
+CPython 3.11.9. The existing MCP owned-process and guarded-X11 regression suite
+passes 90/90 in both modes. The exact public-caller result and raw test output
+are recorded in the [R02 synthetic composition packet](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r02/README.md).
+
+This completes only the current synthetic composition slice of phases 2b–2d.
+It does not supply the full failure-schedule/attempt-accounting matrix, a
+production HWND identity adapter, native `SendInput`, exclusive input
+authority, late-DOWN exclusion, an application-backed task oracle, MAP01, or a
+matched efficiency/reliability comparison. The next local implementation
+slice is to finish the uncovered synthetic failure schedules and standard
+caller accounting before any native qualification request. Native testing
+remains a separate HOLD pending an independently verified disposable target,
+exclusive allocation, observer, and cleanup procedure; no WSLc allocation is
+granted here, and Issue #7924 STOP/HOLD remains in force.
 
 ## Problem and scope
 

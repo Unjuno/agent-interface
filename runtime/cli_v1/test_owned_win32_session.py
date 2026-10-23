@@ -188,6 +188,32 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertFalse(start_gate.is_set())
         self.assertEqual(self.owner.result(ACTION_ID)["phase"], "cancel_pending")
 
+    def test_independent_task_effect_receipt_stays_separate_from_cancel_result(self):
+        self.start_action()
+        self.assertTrue(self.session.begin_task_effect_verification(CALL_ID))
+        receipt = {
+            "call_id": CALL_ID,
+            "operation_id": ACTION_ID,
+            "target_generation": GEN_A,
+            "oracle_id": "4" * 32,
+            "outcome": "success",
+            "observed_monotonic_ns": self.clock(),
+            "evidence_ref": "synthetic-task-state:completed",
+        }
+        row = self.session.record_task_effect(CALL_ID, receipt)
+        self.assertEqual(row["task_effect"]["task_success"], True)
+        self.assertEqual(row["action"]["status"], "running")
+        cancellation = self.session.cancel_guarded(CALL_ID,
+            cancellation_operation_id="5" * 32,
+            cleanup_deadline_ns=self.clock() + 3_000_000_000)
+        self.assertIsNone(cancellation["task_success"])
+        retained = self.session.interface_result(CALL_ID)
+        self.assertTrue(retained["task_effect"]["task_success"])
+        self.assertIsNone(retained["cancellation"]["task_success"])
+        changed = dict(receipt, outcome="failure")
+        with self.assertRaisesRegex(ValueError, "immutable"):
+            self.session.record_task_effect(CALL_ID, changed)
+
     def test_registered_public_cancel_callback_uses_the_same_retained_operation(self):
         self.start_action()
         server = FakeToolServer()
