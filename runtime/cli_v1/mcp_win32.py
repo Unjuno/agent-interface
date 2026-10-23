@@ -130,6 +130,9 @@ def register_guarded_win32_tools(server, owner, content, *, producer_factory,
             and neutral-input readback. The receipt is one-use and bound to the
             action's call, operation and target generation. Unknown or timed-out
             oracle results remain unknown; they cannot be replaced or replayed.
+            Observation timestamps must use this host's monotonic clock and
+            lie between oracle reservation and receipt processing. This time
+            check does not authenticate the external evidence or prove causality.
             """
             try:
                 reserved = owner.begin_task_effect_verification(call_id)

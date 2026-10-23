@@ -265,6 +265,28 @@ class OwnedWin32SessionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "immutable"):
             self.session.record_task_effect(CALL_ID, changed)
 
+    def _check_oracle_timing_endpoint(self, observed):
+        from unittest.mock import patch
+        self.start_action()
+        receipt = {"call_id": CALL_ID, "operation_id": ACTION_ID,
+                   "target_generation": GEN_A, "oracle_id": "9" * 32,
+                   "outcome": "success", "observed_monotonic_ns": observed,
+                   "evidence_ref": "synthetic-same-clock-state"}
+        with patch("runtime.cli_v1.owned_win32_session.time.monotonic_ns",
+                   side_effect=[100, 200]):
+            self.assertTrue(self.session.begin_task_effect_verification(CALL_ID))
+            row = self.session.record_task_effect(CALL_ID, receipt)
+        self.assertTrue(row["task_effect"]["task_success"])
+        self.assertEqual(row["task_effect"]["requested_monotonic_ns"], 100)
+        self.assertEqual(row["task_effect"]["receipt_received_monotonic_ns"], 200)
+        self.assertEqual(self.session.record_task_effect(CALL_ID, receipt), row)
+
+    def test_oracle_observation_at_request_endpoint_is_valid(self):
+        self._check_oracle_timing_endpoint(100)
+
+    def test_oracle_observation_at_receive_endpoint_is_valid(self):
+        self._check_oracle_timing_endpoint(200)
+
     def test_task_oracle_timeout_cannot_be_promoted_by_late_receipt(self):
         self.start_action()
         self.assertTrue(self.session.begin_task_effect_verification(CALL_ID))
