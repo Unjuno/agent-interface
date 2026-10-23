@@ -1153,8 +1153,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         'scope':'same-Xvfb fresh session while old cancel fence remains UNKNOWN',
                         'expected_effect':[3],
                         'checks':fresh_checks,
-                        'status':'pass' if all(fresh_checks.values()) else 'fail',
-                        'task_success':all(fresh_checks.values()),
+                        'status':('unknown' if fresh_count_oracle['task_success'] is None
+                                  else 'pass' if all(fresh_checks.values()) else 'fail'),
+                        'task_success':(None if fresh_count_oracle['task_success'] is None
+                                        else all(fresh_checks.values())),
                         'runtime_task_success':None,
                     },
                 })
