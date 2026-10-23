@@ -132,6 +132,29 @@ def _run_supervised_win32_dispatch(owner, producer_factory, call_id, arguments,
             'release_confirmed': False, 'effect_status': 'unknown',
             'task_success': None, 'replay_allowed': False})
         action = row['action']
+    elif (action.get('status') in ('running', 'cancel_pending')
+            and isinstance(cancellation, dict)
+            and cancellation.get('status') == 'recovered'):
+        # A verified recovery ends the dispatch worker too. Persist that
+        # terminal action receipt separately from the cancellation receipt;
+        # task effect and input-dispatched state remain unknown after cancel.
+        custody = cancellation.get('result')
+        confirmed = (cancellation.get('release_confirmed') is True
+            and cancellation.get('action_operation_id') == action.get('operation_id')
+            and cancellation.get('target_generation') == action.get('target_generation')
+            and isinstance(custody, dict)
+            and custody.get('operation_id') == action.get('operation_id')
+            and custody.get('target_generation') == action.get('target_generation')
+            and custody.get('phase') == 'recovered'
+            and custody.get('status') == 'recovered'
+            and custody.get('release_confirmed') is True)
+        row = owner.record_action_result(call_id, {
+            'status': 'recovered' if confirmed else 'unknown',
+            'input_dispatched': None,
+            'release_confirmed': confirmed,
+            'effect_status': 'unknown', 'task_success': None,
+            'replay_allowed': False})
+        action = row['action']
     result = action.get('result') or {'status': action.get('status', 'unknown'),
         'task_success': None, 'replay_allowed': False}
     cancellation = row.get('cancellation')
