@@ -800,6 +800,20 @@ class Win32Backend:
             self.preflight(program)
         else:
             self.preflight(program, bound_target=bound_target, guard=guard if preflight_guard is None else preflight_guard)
+        source = program.get("source")
+        source = source if isinstance(source, dict) else {}
+        expected_generations = source.get("target_generations")
+        expected_generations = expected_generations if isinstance(expected_generations, dict) else {}
+
+        def check_target_generation(target):
+            if not isinstance(target, str) or target not in expected_generations:
+                return
+            reader = getattr(self, "target_generation", None)
+            if not callable(reader):
+                raise Win32BackendError("TARGET_GENERATION_UNAVAILABLE")
+            if reader(target) != expected_generations[target]:
+                raise Win32BackendError("TARGET_GENERATION_CHANGED")
+
         current_target: str | None = bound_target
         observations: list[dict[str, Any]] = []
         releases: list[dict[str, Any]] = []
@@ -810,25 +824,37 @@ class Win32Backend:
                 if bound_target is not None and kind != "release_all" and guard() is not True:
                     raise Win32BackendError("bound execution guard refused before operation")
                 if kind == "focus":
-                    current_target = op["target"]
-                    self.focus(current_target)
+                    next_target = op["target"]
+                    check_target_generation(next_target)
+                    self.focus(next_target)
+                    current_target = next_target
+                    # Focus is a visible side effect; pin the same HWND owner
+                    # again before any later input can reach the foreground.
+                    check_target_generation(current_target)
                 elif kind == "key_chord":
+                    check_target_generation(current_target)
                     self.key_chord(op["keys"])
                 elif kind == "key_state":
+                    check_target_generation(current_target)
                     self.key_state(op["key"], op["down"])
                 elif kind == "text":
+                    check_target_generation(current_target)
                     self.text(op["text"])
                 elif kind == "pointer_move":
                     if current_target is None:
                         raise Win32BackendError("pointer_move requires focused target")
+                    check_target_generation(current_target)
                     self.pointer_move(current_target, op["frame"], op["x"], op["y"])
                 elif kind == "pointer_button":
+                    check_target_generation(current_target)
                     self.pointer_button(op["button"], op["down"])
                 elif kind == "scroll":
+                    check_target_generation(current_target)
                     self.scroll(op["dx"], op["dy"])
                 elif kind == "observe":
                     if current_target is None:
                         raise Win32BackendError("observe requires focused target")
+                    check_target_generation(current_target)
                     observations.append(self.capture(
                         current_target, op["frame"], op["x"], op["y"],
                         op["w"], op["h"],
