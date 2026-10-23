@@ -1,5 +1,25 @@
 # Current objective and working direction
 
+**Supervised Win32 standard-caller effect path (2026-10-24):** the fresh [R04
+packet](../research/integration/win32_supervised_standard_caller_20261024_r04/README.md)
+passes its 15-check audit on the public stdio-MCP route. Observation and the
+owned fixture share a target generation; one dispatch returned pending after
+10.0028 s, and same-call readback showed `operation_invoked=true`,
+`input_dispatched=true`, verified empty release, and completed action. An
+independent neutral readback followed producer-exit confirmation, though both
+timestamps rounded to the same monotonic tick. The exact fixture journal and
+saved effect match, fixture cleanup restored the previous foreground, and the
+session closed. Runtime task success remains `null`. R01's producer-directory
+collision is repaired in `5da333c6`; R02's missing input-dispatch summary is
+repaired in `a448064e`. R01 and R03 are preserved pre-effect failures: R01 hit
+the path collision; R03 exceeded the public 10000 ms wait bound and was refused
+before input. R02 independently passes a supplemental audit after its first
+audit's pending-response assumption mis-scored the same-call terminal result.
+Across this sequence, 84 related local tests pass in normal and optimized
+Python. These results do not establish blocked-I/O release/recovery, a hard
+deadline, atomic generation fencing, MAP01, integrated task success, matched
+efficiency, or broad reliability. No WSLc/Docker allocation was used.
+
 **Native Win32 low-level hook delay probe (2026-10-24):** the frozen one-run
 [R01 packet](../research/integration/win32_sendinput_lowlevel_hook_20261024_r01/README.md)
 delayed one injected F13 key-down in `WH_KEYBOARD_LL`. `SendInput` returned
