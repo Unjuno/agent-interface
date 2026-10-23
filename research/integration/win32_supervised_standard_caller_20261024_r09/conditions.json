@@ -1,0 +1,128 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r09",
+  "claims_excluded": [
+    "indefinite native blocking",
+    "hard real-time bound beyond the frozen finite windows",
+    "atomic capture-to-input fencing",
+    "runtime-integrated task_success (must remain null)",
+    "MAP01",
+    "matched efficiency",
+    "broad reliability"
+  ],
+  "decision": {
+    "fail_or_unknown": "any mismatch, absent hook entry, uncertain call ID, completed dispatch before cancel, extra dispatch/cancel/recovery, unknown release/readback, timeout, effect mismatch, or incomplete cleanup; preserve raw and do not rerun.",
+    "pass": "exactly one dispatch and one cancel; observed generation matches owned fixture; hook confirms injected Q-down inside callback; public cancel returns without error within 1000ms while the same-call public result reports action running; final same-call result shows recovered cancellation bound to the same operation/generation, exact producer exit before one recovery UP, independent same-generation all-up readback within 2500ms and after callback release; saved fixture effect and exact pre-cancel journal match; hook, fixture, session and child cleanup are confirmed."
+  },
+  "environment": {
+    "container_or_wslc": false,
+    "python": "CPython 3.11.9",
+    "session_mode": "supervised-win32"
+  },
+  "host": "user-authorized local Windows PC; one owned fixture process/window",
+  "hypothesis": "A public stdio MCP dispatch that first returns pending with its call ID can be cancelled by exact call ID while its native Win32 SendInput Q-down is paused in one low-level-hook callback; same-generation supervised release and independent all-up readback occur after exact producer exit, while a previously saved fixture effect remains independently observable.",
+  "resource_boundary": "Only this PC and one owned fixture. Only VK_Q is delayed by the probe-owned hook; release callback immediately after cancel response. No WSLc or Docker. Restore the foreground HWND captured before fixture creation.",
+  "retry_policy": "one validation and at most one public dispatch; retrieve its call ID from the zero-wait response; issue one cancel only after hook entry and a same-call running readback; no fallback input, replay, retry, or rerun",
+  "schema": "win32-supervised-standard-caller-conditions-v2",
+  "source_commit": "a9d77f02d645b1ba2354b772422d9fbf670b95d2",
+  "source_sha256": {
+    "audit.py": "9e021981f40a2248aa26dcefb42115159a57e7bdbceea68303661acaf49cb969",
+    "probe.py": "90586685f408e484ce931fd7128f04865b927b8de535a57889e2e84514750312",
+    "runtime/backends/win32_v1/backend.py": "7d936a1cff39b38ec695eb97c90c706f38c91b650faa9adf3c6950270a5334e0",
+    "runtime/backends/win32_v1/fixture_app.py": "7fdae425fc20cb5bad1debe2773d38b42878f73d0cd642c210ca71d76f346ed6",
+    "runtime/backends/win32_v1/session.py": "324a7759ae34be08e67f6b2de94f3072e2fb2c6d25612118368ad8cae9481245",
+    "runtime/cli_v1/mcp_server.py": "cc47e861c499699ccaa1fa9ef98a52d44e0560423c30755790b150a817a41ff4",
+    "runtime/cli_v1/owned_win32_session.py": "5dc0437a4c5ffcbec53f98534620bf845d1e6d8de12d17ee5f35d02dcb4aa4c6",
+    "runtime/cli_v1/win32_standard_producer.py": "3d28c41b9a72a8e2dc9ea7dcad1396a9bdf5da173de32b272bfbb765be996acb",
+    "runtime/guarded_win32_v1/operation_owner.py": "9c73a3b8f30af339784a1050ea815ad56caa090abcc1afcd85470a0265591600",
+    "runtime/guarded_win32_v1/process_cancellation.py": "249b8dcd2d0b52d7e84057da19019d3c847af8f5cdbafbeb0a1bb45f464b274e"
+  },
+  "timeouts_seconds": {
+    "attempt_total": 150,
+    "cancel_response": 5,
+    "dispatch_response": 20,
+    "effect_readback": 3,
+    "fixture_close": 5,
+    "fixture_ready": 10,
+    "hook_entry": 75,
+    "independent_readback": 8,
+    "mcp_initialize": 10,
+    "observe": 15,
+    "owned_process_terminate": 2,
+    "pre_cancel_readback": 5,
+    "producer_exit": 2.5,
+    "recovery_up_observation": 4,
+    "result_readback": 12,
+    "validate": 10
+  },
+  "trial": {
+    "admission": {
+      "binding_revision": 1,
+      "observation_seq": 1,
+      "target_generation": "exact generation returned by this attempt public interface_observe"
+    },
+    "caller": "public stdio MCP interface_observe/interface_validate/interface_dispatch/interface_cancel/interface_results/interface_close",
+    "cancel": "one public interface_cancel for the exact dispatch call_id; no second cancel",
+    "effect_order": "fixture click, sentinel text and CTRL+S save happen before the Q-down cancellation point; task effect is read independently after the recovery flow.",
+    "expected_effect": {
+      "clicked": true,
+      "saved": true,
+      "text": "SUPERVISED-MCP-OK-20261024-R09"
+    },
+    "lease_duration_seconds": 150,
+    "lease_id": "supervised-standard-cancel-r09",
+    "native_stimulus": {
+      "event": "first injected VK_Q WM_KEYDOWN only",
+      "hook": "one WH_KEYBOARD_LL hook in the probe process",
+      "max_callback_hold_ms": 1500,
+      "release": "immediately after interface_cancel returns; callback has a fixed 1500ms self-release cap"
+    },
+    "operations": [
+      {
+        "op": "focus",
+        "target": "fixture"
+      },
+      {
+        "frame": "window_client",
+        "op": "pointer_move",
+        "x": 70,
+        "y": 70
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "text",
+        "text": "SUPERVISED-MCP-OK-20261024-R09"
+      },
+      {
+        "keys": [
+          "CTRL",
+          "S"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "keys": [
+          "Q"
+        ],
+        "op": "key_chord"
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "pre_cancel_readback": "After hook entry, interface_results must show action status running before one interface_cancel call.",
+    "program_id": "supervised-standard-cancel-effect-r09",
+    "recovery_deadline_ms": 2500,
+    "target": "one fresh owned fixture process/window; exact call_id obtained from the public zero-wait pending-or-terminal dispatch response",
+    "text_effect": "SUPERVISED-MCP-OK-20261024-R09",
+    "wait_for_result_ms": 0
+  }
+}
