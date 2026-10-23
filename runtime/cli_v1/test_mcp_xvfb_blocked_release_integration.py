@@ -8,6 +8,10 @@ and fresh-client release path. Before the delayed-request horizon ends, a new
 MCP server targets a distinct synthetic window on the same X server. The
 independent oracle records whether a late old-session request contaminates its
 task. No arbitrary developer DISPLAY is used.
+
+Control-path assertions and task-oracle outcomes are separate: a completed test
+does not imply either counted application task succeeded. Repeated effects are
+retained as task failures even when cancellation and release checks complete.
 """
 
 import asyncio
@@ -36,7 +40,8 @@ from runtime.cli_v1.mcp_server import create_server
 from runtime.cli_v1 import owned_guarded_session as owned_session_module
 from runtime.cli_v1.owned_guarded_session import OwnedGuardedSessionOwner
 from runtime.cli_v1.test_synthetic_task_oracle import (
-    score_synthetic_application_task,
+    score_counted_synthetic_application_task,
+    score_synthetic_effect_counts,
 )
 
 
@@ -253,6 +258,12 @@ def _key_down(observer, keycode):
     return bool(keymap[keycode//8] & (1 << (keycode % 8)))
 
 
+def _effect_count(observer, window_id, atom):
+    row = observer.create_resource_object('window', window_id).get_full_property(
+        atom, X.AnyPropertyType)
+    return list(row.value) if row is not None else None
+
+
 @unittest.skipUnless(
     sys.platform == 'linux' and os.environ.get('DISPLAY') == ':88'
     and os.environ.get('AGENT_INTERFACE_MCP_XVFB_TEST') == '1',
@@ -325,6 +336,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 'fresh_task_key':'c',
                 'fresh_task_expected_effect':[3],
                 'xvfb_server_pause_ms':_SERVER_PAUSE_MS,
+                'effect_multiplicity_evidence':'per-handler CARDINAL count; separate X-client readback',
             },
             'xvfb':_xvfb_provenance(),
             'source_identity':{
@@ -384,7 +396,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 effect_atom = app_display.intern_atom('AI_BLOCKED_RELEASE_EFFECT')
                 fresh_effect_atom = app_display.intern_atom(
                     'AI_BLOCKED_RELEASE_FRESH_SESSION_EFFECT')
+                count_atom = app_display.intern_atom('AI_BLOCKED_RELEASE_EFFECT_COUNT')
+                effect_counts = {window.id:0}
                 window.change_property(effect_atom, Xatom.CARDINAL, 32, [0])
+                window.change_property(count_atom, Xatom.CARDINAL, 32, [0])
                 window.map()
                 window.set_input_focus(X.RevertToParent, X.CurrentTime)
                 screen.root.warp_pointer(x+48, y+48)
@@ -402,6 +417,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                                 X.StructureNotifyMask))
                 fresh_window.change_property(fresh_effect_atom,
                                              Xatom.CARDINAL, 32, [0])
+                effect_counts[fresh_window.id] = 0
+                fresh_window.change_property(count_atom, Xatom.CARDINAL, 32, [0])
                 fresh_window.map()
                 fresh_gc = fresh_window.create_gc(foreground=0xFFFFFF)
                 for row in range((height+15)//16):
@@ -446,6 +463,9 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         if (event.type == X.KeyPress
                                 and event.detail == keycodes['a']
                                 and event_window_id == window.id):
+                            effect_counts[window.id] += 1
+                            window.change_property(count_atom, Xatom.CARDINAL,
+                                                   32, [effect_counts[window.id]])
                             window.change_property(effect_atom, Xatom.CARDINAL,
                                                    32, [1])
                             app_display.sync()
@@ -458,9 +478,15 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                                 and event.detail == keycodes['b']):
                             if (fresh_task_started.is_set()
                                     and event_window_id == fresh_window.id):
+                                effect_counts[fresh_window.id] += 1
+                                fresh_window.change_property(count_atom, Xatom.CARDINAL,
+                                    32, [effect_counts[fresh_window.id]])
                                 fresh_window.change_property(fresh_effect_atom,
                                     Xatom.CARDINAL, 32, [2])
                             elif event_window_id == window.id:
+                                effect_counts[window.id] += 1
+                                window.change_property(count_atom, Xatom.CARDINAL,
+                                    32, [effect_counts[window.id]])
                                 window.change_property(effect_atom,
                                     Xatom.CARDINAL, 32, [2])
                             app_display.sync()
@@ -470,6 +496,9 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         elif (event.type == X.KeyPress
                                 and event.detail == keycodes['c']
                                 and event_window_id == fresh_window.id):
+                            effect_counts[fresh_window.id] += 1
+                            fresh_window.change_property(count_atom, Xatom.CARDINAL,
+                                32, [effect_counts[fresh_window.id]])
                             fresh_window.change_property(fresh_effect_atom,
                                 Xatom.CARDINAL, 32, [3])
                             app_display.sync()
@@ -562,8 +591,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'window', window.id).get_full_property(effect_atom, X.AnyPropertyType)
                 before_cancel_value = (
                     list(before_cancel_effect.value) if before_cancel_effect is not None else None)
+                before_cancel_count = _effect_count(observer, window.id, count_atom)
                 report['effect_before_cancel'] = {
                     'property_value':before_cancel_value,
+                    'effect_count':before_cancel_count,
                     'reader':'separate parent X client',
                     'observed_ns':time.monotonic_ns(),
                 }
@@ -910,6 +941,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 fresh_effect_before_input = (
                     list(fresh_effect_before_input.value)
                     if fresh_effect_before_input is not None else None)
+                fresh_count_before_input = _effect_count(observer, fresh_window.id, count_atom)
                 fresh_start_ns = time.monotonic_ns()
                 fresh_input_started_ns = time.monotonic_ns()
                 fresh_input = _metadata(await fresh_server.call_tool(
@@ -937,6 +969,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         fresh_effect_atom, X.AnyPropertyType)
                 fresh_effect_after_action = (list(fresh_effect_after_action.value)
                     if fresh_effect_after_action is not None else None)
+                fresh_count_after_action = _effect_count(observer, fresh_window.id, count_atom)
                 fresh_effect_readback_completed_ns = time.monotonic_ns()
                 fresh_effect_timing_ms = {
                     'input_invocation_to_keypress_observed':(
@@ -981,6 +1014,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'input_call_id':fresh_input.get('call_id'),
                     'effect_before_input':fresh_effect_before_input,
                     'effect_after_input':fresh_effect_after_action,
+                    'effect_count_before_input':fresh_count_before_input,
+                    'effect_count_after_input':fresh_count_after_action,
                     'input_started_monotonic_ns':fresh_input_started_ns,
                     'input_returned_monotonic_ns':fresh_input_returned_ns,
                     'keypress_event_observed_monotonic_ns':fresh_event_seen_ns,
@@ -1011,6 +1046,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 effect = observer.create_resource_object('window', window.id).get_full_property(
                     effect_atom, X.AnyPropertyType)
                 effect_value = list(effect.value) if effect is not None else None
+                final_effect_count = _effect_count(observer, window.id, count_atom)
                 report['late_request_horizon_readback'] = {
                     'keys_down':late,
                     'late_keypress_b_observed':late['b'],
@@ -1022,6 +1058,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 report['synthetic_application_effect'] = {
                     'before_cancel_property_value':before_cancel_value,
                     'property_value':effect_value,
+                    'effect_count_before_cancel':before_cancel_count,
+                    'effect_count_at_horizon':final_effect_count,
                     'expected_initial_key_effect':[1],
                     'task_success':None,
                     'independent_reader':'separate parent X client',
@@ -1040,12 +1078,16 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                     'measurements':{
                         'initial_effect':before_cancel_value,
                         'final_effect':effect_value,
+                        'initial_effect_count':before_cancel_count,
+                        'final_effect_count':final_effect_count,
                         'release_readback':release_readback,
                         'horizon_readback':late,
                     },
-                    **score_synthetic_application_task(
+                    **score_counted_synthetic_application_task(
                         initial_effect=before_cancel_value,
                         final_effect=effect_value,
+                        initial_effect_count=before_cancel_count,
+                        final_effect_count=final_effect_count,
                         release_readback=release_readback,
                         horizon_readback={'a':late['a'], 'b':late['b']}),
                 }
@@ -1054,6 +1096,10 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         fresh_effect_atom, X.AnyPropertyType)
                 final_fresh_effect = (list(final_fresh_effect.value)
                     if final_fresh_effect is not None else None)
+                final_fresh_count = _effect_count(observer, fresh_window.id, count_atom)
+                fresh_count_oracle = score_synthetic_effect_counts(
+                    before_count=fresh_count_before_input, after_count=fresh_count_after_action,
+                    horizon_count=final_fresh_count)
                 with app_lock:
                     late_b_after_fresh_start = any(
                         row.get('type') == X.KeyPress
@@ -1071,6 +1117,7 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 old_fence = report['fresh_session_recovery'][
                     'old_cancellation_fence']
                 fresh_checks = {
+                    'non_idempotent_effect_count_exact':fresh_count_oracle['task_success'] is True,
                     'old_unknown_fence_preserved':(
                         old_fence['cleanup_status'] == 'UNKNOWN'
                         and old_fence['late_server_request_possible'] is True
@@ -1097,6 +1144,8 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                 }
                 report['fresh_session_recovery'].update({
                     'effect_at_horizon':final_fresh_effect,
+                    'effect_count_at_horizon':final_fresh_count,
+                    'effect_count_oracle':fresh_count_oracle,
                     'late_old_keypress_after_new_session':late_b_after_fresh_start,
                     'horizon_readback':fresh_horizon_readback,
                     'old_cancellation_after_fresh_task':old_after_fresh_cancel,
@@ -1109,6 +1158,11 @@ class StandardCallerBlockedReleaseXvfbTests(unittest.IsolatedAsyncioTestCase):
                         'runtime_task_success':None,
                     },
                 })
+                report['counted_task_outcomes'] = {
+                    'old_task':report['independent_task_oracle']['status'],
+                    'fresh_task':report['fresh_session_recovery']['task_oracle']['status'],
+                    'scope':'Separate from control-path test completion and runtime UNKNOWN receipts',
+                }
                 # Either delayed-b outcome is evidence. Do not convert a live
                 # result into an assumed general queue-drain guarantee.
                 self.assertFalse(late['a'], report)
