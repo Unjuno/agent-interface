@@ -604,4 +604,8 @@ focused parser, relay, composition, supervised-Win32 and lifecycle set passed
 limitations are in the [R01 packet](../research/integration/offline_proxy_reply_framing_20261019/standard-caller-order-r01/README.md).
 These are local synthetic checks only. The public-caller Win32 path has not
 been live-retested; a new run still requires a verified unused WSLc allocation
-under the active goal.
+under the active goal. The newest [#7924 readiness update](https://github.com/Unjuno/agent-interface/issues/7924#issuecomment-6370065073)
+records `WSLC_E_IMAGE_NOT_FOUND` before application code ran and no full
+container-ID cleanup receipt; it retains STOP/HOLD and must not be retried as
+the same allocation. A separate #9451 change repairs WSL version-log decoding,
+not that image or ownership condition.
