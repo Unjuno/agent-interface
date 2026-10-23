@@ -1,7 +1,5 @@
-# Live target-generation recheck through the public Win32 MCP route R01
+# Exploratory live target-generation check through the public Win32 MCP route R01
 
-This one-shot Windows test binds and admits an action against one owned `fixture_app` HWND, then changes the owner-supplied current-target reader to a second owned fixture generation before calling the registered public `interface_guarded_win32_start` tool. The existing caller must return UNKNOWN before producer-factory work, retain that result through `interface_results`, and deny task success and replay.
+This run created two owned `fixture_app` HWND generations, bound and admitted a public `guarded-win32` action to generation A, switched the injected live-target reader to generation B, and called the registered start and `interface_results` tools. The caller returned UNKNOWN with `target_generation_changed_before_start`; the producer factory was never called, task success stayed null, and replay was denied. Both owned fixtures exited and their HWNDs were gone.
 
-The probe calls registered `mcp_server.create_server()` tool handlers in-process with `server.call_tool`; it does not exercise the stdio transport. A producer factory that raises and records invocation is supplied as a guard. No SendInput call, foreground change, or other application target is used. Raw fixture identities, both generations, MCP replies, owner state, cleanup and exit codes are saved.
-
-This qualifies one live target-generation change through the standard caller before producer start. It does not prove atomic HWND fencing, native input dispatch, blocked SendInput recovery, MAP01, WSLc portability, efficiency, or broad reliability.
+This is exploratory evidence only. The invocation occurred before the packet files were frozen because a syntax/help check unintentionally called the one-shot runner; the raw is retained unchanged and is not counted as a preregistered result. R02 repeats the same discriminator after freezing conditions, runner, and audit. The call used in-process `server.call_tool`, not stdio transport, and emitted no input.

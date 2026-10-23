@@ -108,13 +108,13 @@ def run():
             admitted=_json(asyncio.run(server.call_tool('interface_guarded_win32_admit',{
                 'action_operation_id':'a'*32,'target_binding_id':binding['target_binding_id'],
                 'operation_deadline_ns':time.monotonic_ns()+10_000_000_000,
-                'obligations':['key:CTRL']}))
+                'obligations':['key:CTRL']})))
             record['admit']=admitted
             b=start_fixture('generation-b',out/'generation-b'); record['fixtures'].append(b)
             active['hwnd']=b['hwnd']
             record['generation_b']=reader()
             started=_json(asyncio.run(server.call_tool('interface_guarded_win32_start',{
-                'call_id':admitted['data']['call_id'],'wait_for_result_ms':1000}))
+                'call_id':admitted['data']['call_id'],'wait_for_result_ms':1000})))
             record['start']=started
             retained=_json(asyncio.run(server.call_tool('interface_results',{
                 'call_id':admitted['data']['call_id']})))
@@ -133,7 +133,7 @@ def run():
                 and d.get('input_dispatched') is False
                 and d.get('task_success') is None and d.get('replay_allowed') is False
                 and record['owner_result'].get('phase')=='unknown'
-                and record['owner_result'].get('replay_allowed') is False)
+                and record['owner_result'].get('replay_allowed') is False) else 'FAIL_OR_UNKNOWN'
     except BaseException as error:
         record['error']={'type':type(error).__name__,'detail':str(error)}
         record['traceback']=traceback.format_exc()
