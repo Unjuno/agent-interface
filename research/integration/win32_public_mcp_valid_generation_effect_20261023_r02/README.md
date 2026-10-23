@@ -25,3 +25,15 @@ this fixture and this sample; it cannot establish atomic HWND lifetime
 protection, the post-focus foreground race, hard release deadlines, blocked
 I/O recovery, MAP01, efficiency, or broad reliability. No WSLc or Docker
 allocation is used.
+
+## Frozen R02 outcome
+
+R02 is `FAIL_OR_UNKNOWN` (3/13 frozen audit checks). The repository import
+path worked, and the probe verified that the fixture HWND belonged to its
+owned process and generated a valid native identity. It then raised
+`AttributeError` because `Win32Backend` has no `close()` method. No MCP
+observation, validation, or dispatch ran; the fixture journal contains only
+`ready`, no effect file exists, and the owned window/process closed cleanly.
+No input was emitted and this frozen attempt was not retried. `raw.json`,
+`audit.json`, and `run/` retain the result. R03 removes that invalid close call
+in a separate frozen one-shot attempt.
