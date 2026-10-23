@@ -1,0 +1,14 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r35",
+  "callback_return_ns": 490582093578900,
+  "event_count": 40,
+  "exact_q_up_sendinput_spans": [],
+  "helper_processes": {
+    "32188": "recovery",
+    "48160": "observer"
+  },
+  "interpretation": "This packet has no text operations, so the exact recovery Q-up is isolated from Unicode compensation. The wrapper records entry and return from Win32Backend._send around SendInput, not the kernel/application physical state. A call interval spanning callback return is timing evidence only.",
+  "schema": "win32-supervised-standard-caller-r35-trace-analysis-v1",
+  "spans_overlapping_or_open_at_callback": [],
+  "strict_action_audit_status": "FAIL_OR_UNKNOWN"
+}
