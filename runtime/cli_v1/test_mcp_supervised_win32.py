@@ -262,8 +262,14 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
             cancelled = self.row(await server.call_tool("interface_cancel", {
                 "call_id": pending["call_id"]}))
             self.assertEqual(cancelled["status"], "recovered")
-            retained = self.row(await server.call_tool("interface_results", {
-                "call_id": pending["call_id"]}))
+            deadline = time.monotonic() + 2
+            while True:
+                retained = self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                if retained["action"]["status"] != "running":
+                    break
+                self.assertLess(time.monotonic(), deadline, retained)
+                await asyncio.sleep(0.01)
             self.assertEqual(retained["cancellation"]["status"], "recovered")
 
             close_statuses = []
@@ -278,6 +284,67 @@ class SupervisedWin32MCPTests(unittest.IsolatedAsyncioTestCase):
                     if closed.get("status") == "closed":
                         break
                     await asyncio.sleep(0.05)
+                self.assertEqual(close_statuses[-1], "closed", close_statuses)
+            finally:
+                if owner.state != "closed":
+                    await asyncio.sleep(0.55)
+                    self.row(await server.call_tool("interface_close", {}))
+
+    async def test_recovered_cancel_persists_terminal_action_receipt(self):
+        process = FakeProcess()
+        identity = {"pid": 7101, "creation_time_100ns": 90101}
+        op_owner = OperationOwner(clock_ns=time.monotonic_ns,
+            process_identity_reader=lambda handle: identity if handle is process else None)
+        supervisor = RecoveringFakeSupervisor(op_owner, process)
+        owner = OwnedWin32SessionOwner(op_owner, supervisor, synthetic_only=False)
+        owner.bind_target_generation_reader(lambda: GENERATION)
+        producer = HeldProducerFactory(process, identity)
+        with TemporaryDirectory() as root:
+            server = self.make_server(root, owner, producer)
+            program = self.valid_program()
+            program["authority"]["expires_at_ns"] = time.monotonic_ns() + 5_000_000_000
+            pending = self.row(await server.call_tool("interface_dispatch", {
+                "program": program,
+                "current_observation_seq": 1,
+                "current_binding_revision": 1,
+                "wait_for_result_ms": 0}))
+            self.assertEqual(pending["status"], "pending")
+            self.assertTrue(await asyncio.wait_for(
+                asyncio.to_thread(producer.started.wait, 1), 1))
+
+            cancelled = self.row(await server.call_tool("interface_cancel", {
+                "call_id": pending["call_id"]}))
+            self.assertEqual(cancelled["status"], "recovered")
+            deadline = time.monotonic() + 2
+            while True:
+                retained = self.row(await server.call_tool("interface_results", {
+                    "call_id": pending["call_id"]}))
+                if retained["action"]["status"] != "running":
+                    break
+                self.assertLess(time.monotonic(), deadline, retained)
+                await asyncio.sleep(0.01)
+            self.assertEqual(retained["cancellation"]["status"], "recovered")
+            self.assertTrue(retained["cancellation"]["release_confirmed"])
+            self.assertEqual(retained["action"]["status"], "recovered", retained)
+            action_result = retained["action"]["result"]
+            self.assertEqual(action_result["status"], "recovered")
+            self.assertTrue(action_result["release_confirmed"])
+            self.assertIsNone(action_result["input_dispatched"])
+            self.assertEqual(action_result["effect_status"], "unknown")
+            self.assertIsNone(action_result["task_success"])
+            self.assertFalse(action_result["replay_allowed"])
+            self.assertIsNone(retained["task_success"])
+            self.assertFalse(retained["replay_allowed"])
+
+            close_statuses = []
+            deadline = time.monotonic() + 2
+            try:
+                while time.monotonic() < deadline:
+                    closed = self.row(await server.call_tool("interface_close", {}))
+                    close_statuses.append(closed.get("status"))
+                    if closed.get("status") == "closed":
+                        break
+                    await asyncio.sleep(0.02)
                 self.assertEqual(close_statuses[-1], "closed", close_statuses)
             finally:
                 if owner.state != "closed":
