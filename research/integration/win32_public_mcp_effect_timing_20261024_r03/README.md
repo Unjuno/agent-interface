@@ -30,6 +30,14 @@ The public observation returned a matched target generation, which the probe for
 
 The recorded coarse-clock intervals are 78 ms from dispatch start to save-file close, 141 ms to public response, and 94 ms from save close to independent read start; the read took 15 ms. Windows Python reports this host's `time.monotonic_ns()` implementation as `GetTickCount64()` with 15.625 ms resolution. The save-write duration measured as 0 ms, which is below that resolution and must not be read as zero physical time. R03 uses the available `QueryPerformanceCounter()`-backed `perf_counter_ns()` for finer endpoints. R02 establishes only one positive caller/generation/effect/release path; the coarse timing values are retained as bounded-resolution observations.
 
+## Frozen R03 outcome
+
+The frozen high-resolution trial passed 25/25 checks. Its matching observation generation was forwarded unchanged; the standard public stdio-MCP call completed once. The independent file and event journal agree on one click, all 23 exact characters, and one save. The verified release receipt has no keys or buttons down or unknown, and the owned fixture exited 0 after close.
+
+Using the recorded `QueryPerformanceCounter()` clock (100 ns reported resolution), click arrived 5.5515 ms after public dispatch start, first text at 46.9063 ms, last text at 60.5935 ms, and the file write closed at 61.8722 ms. The file write interval measured 0.3032 ms. Public dispatch returned at 122.9508 ms; the independent read started 106.1251 ms after file close and took 4.1535 ms. This remains one sample and includes scheduling, message handling, and serialization; no comparison, tail estimate, or general performance claim follows.
+
+The retained post-action MCP image shows the fixture reflecting typed input, but its 300 px crop clips the tail of the sentinel after the visible `MCP-LIVE` prefix. R03 therefore confirms a visual response began, while the exact full on-screen sentinel remains unverified. The independent file and complete event journal still confirm the exact task effect.
+
 ## Frozen R01 outcome
 
 The single public dispatch was refused with `TARGET_GENERATION_REQUIRED` before invoking input. The public observation had returned a matched target generation, but the probe omitted it from `program.source.target_generations`. The independent journal contains only the fixture's `ready` event; no click or character event was received, no effect file was written, and the owned fixture exited 0 after close was posted. The retained runtime result reports `input_dispatched=false`, `operation_invoked=false`, and `replay_allowed=false`. This is a failed compatibility attempt, not a timing sample, and it was not replayed.
