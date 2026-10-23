@@ -20,8 +20,9 @@ target plus an owner marked synthetic-only. The target-generation binding is
 single-use and admission re-reads generation before creating the action.
 
 The public composition test starts a gated producer in a spawned process,
-records its synthetic task event, obtains a separate receipt from a distinct
-spawned oracle process, requests public cancellation, then verifies producer
+passes its synthetic request to a separate application-simulator process, and
+obtains a task-effect receipt from a third process that reads the simulator's
+completion state. It then requests public cancellation and verifies producer
 retirement, separate recovery, and independent neutral-state observation. The
 retained result keeps action state, cancellation state, and task effect in
 separate fields: neutral readback and cancellation do not set task success;
@@ -31,10 +32,10 @@ replacement result. The oracle tool is absent unless an explicit injected
 oracle is supplied.
 
 Local verification on this checkpoint passes the focused Win32 adapter,
-public-composition, and cancellation suite 23/23 in normal and optimized
+public-composition, and cancellation suite 24/24 in normal and optimized
 CPython 3.11.9. The existing MCP owned-process and guarded-X11 regression suite
 passes 90/90 in both modes. The exact public-caller result and raw test output
-are recorded in the [R02 synthetic composition packet](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r02/README.md).
+are recorded in the [R03 independent application-effect packet](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r03/README.md); the [R02 predecessor](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r02/README.md) remains immutable. A regression also confirms that a late oracle receipt cannot promote an earlier timeout from UNKNOWN.
 
 This completes only the current synthetic composition slice of phases 2b–2d.
 It does not supply the full failure-schedule/attempt-accounting matrix, a

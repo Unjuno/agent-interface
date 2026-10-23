@@ -1,0 +1,7 @@
+# Win32 public MCP synthetic application-effect composition — R03
+
+R03 strengthens the R02 public-MCP task-effect path on source commit `90f756bf1de2ce5cf2d5f43bfae700b1d45f2a31`. The producer now emits a synthetic request; a separate application-simulator process consumes it and updates completion state; a third process acting as the injected oracle reads that state and returns a generation-bound receipt. Public cancellation then composes producer retirement, separate recovery, and separate neutral-state observation. The runtime retains action, cancellation, and task-effect results independently.
+
+A timeout-immutability regression also verifies that a late success receipt cannot promote an oracle timeout from UNKNOWN. The focused Win32 adapter/public-composition/cancellation suite passes 24/24 in normal and optimized CPython 3.11.9. Raw results are in [`raw/normal.log`](raw/normal.log) and [`raw/optimized.log`](raw/optimized.log); conditions and source hashes are in [`CONDITIONS.json`](CONDITIONS.json).
+
+This is still synthetic process evidence. The application simulator is not a live supported application, and the oracle does not establish product-level task semantics. No native `SendInput`, physical release, late-DOWN exclusion, exclusive desktop-input ownership, MAP01, matched efficiency comparison, or reliability population is qualified. No WSLc allocation, Docker use, or native input occurred. Issue #7924 remains STOP/HOLD.
