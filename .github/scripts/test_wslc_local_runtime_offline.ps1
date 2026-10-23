@@ -29,6 +29,9 @@ public static class FakeWslcCli
         }
         if (args.Length >= 3 && args[0] == "container" && args[1] == "list")
         {
+            int filterIndex = Array.IndexOf(args, "--filter");
+            if (filterIndex < 0 || filterIndex + 1 >= args.Length ||
+                args[filterIndex + 1] != "id=" + new string('a', 64)) return 46;
             string cleanupMode = Environment.GetEnvironmentVariable("FAKE_WSLC_MODE") ?? "success";
             if (cleanupMode == "cleanup-timeout")
             {
@@ -149,12 +152,21 @@ try {
                 -not (Test-Path -LiteralPath (Join-Path $preserved 'wslc-cleanup-query.stdout.txt'))) {
             throw "Unconfirmed $mode outcome lost its scoped cleanup output file."
         }
+        if ($mode -eq 'failure') {
+            $cleanupOutput = Join-Path $preserved 'wslc-cleanup-query.stdout.txt'
+            if (-not (Test-Path -LiteralPath $cleanupOutput)) {
+                throw 'Failed run with a full container ID did not perform its scoped cleanup query.'
+            }
+            if ((Get-Content -LiteralPath $cleanupOutput -Raw).Trim() -ne '[]') {
+                throw 'Failed run scoped cleanup query did not retain its empty result.'
+            }
+        }
         # The fake executable cannot create a real container. Remove only this
         # test's GUID-owned directory after its receipt/log assertions pass.
         Remove-Item -LiteralPath $preserved -Recurse -Force
     }
 
-    Write-Output 'Offline WSLc smoke harness: PASS (success cleanup, failed-run retention, run/cleanup timeouts, non-empty cleanup retention)'
+    Write-Output 'Offline WSLc smoke harness: PASS (success cleanup, failed-run exact-CID query and retention, run/cleanup timeouts, non-empty cleanup retention)'
 }
 finally {
     $env:PATH = $oldPath

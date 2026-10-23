@@ -38,6 +38,33 @@ function Invoke-ProbeCli {
     return $result
 }
 
+function Confirm-ProbeContainerAbsent {
+    param([Parameter(Mandatory)][ValidatePattern('^[0-9a-fA-F]{64}$')][string]$ContainerId)
+
+    # Query only this run's exact container ID; never enumerate unrelated shared containers.
+    $cleanupQuery = Invoke-ProbeCli -FilePath $wslc.Source `
+        -Arguments @('container', 'list', '--all', '--filter', "id=$ContainerId", '--format', 'json') `
+        -TimeoutSeconds $CleanupTimeoutSeconds -LogName 'wslc-cleanup-query'
+    $listing = ($cleanupQuery.StandardOutput -split "`r?`n" -join "`n").Trim()
+    # WSLc 3.0.1 emits no stdout for a successful zero-match filtered query.
+    # PowerShell also unwraps ConvertFrom-Json's empty array to $null, so
+    # recognize only the exact empty JSON array before parsing other responses.
+    if ($listing -match '^\[\s*\]$') {
+        $listing = ''
+    }
+    if (-not [string]::IsNullOrWhiteSpace($listing)) {
+        try {
+            $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
+        }
+        catch {
+            throw 'The scoped WSLc cleanup query returned invalid JSON; cleanup is unverified.'
+        }
+        if ($null -eq $listedContainers -or @($listedContainers).Count -gt 0) {
+            throw 'The scoped WSLc cleanup query returned a matching container; cleanup is unverified.'
+        }
+    }
+}
+
 $wslc = Get-Command wslc.exe -ErrorAction SilentlyContinue
 if (-not $wslc) {
     throw 'wslc.exe is required. Update WSL to 2.9.3 or later, then reopen PowerShell.'
@@ -90,44 +117,44 @@ try {
     # Once run starts, retain the unique probe directory until exact-container
     # cleanup has been confirmed. A timed-out CLI exit does not cancel server work.
     $preserveProbePath = $true
-    Invoke-ProbeCli -FilePath $wslc.Source -Arguments @('run', '--rm', '--name',
-        $containerName, '--cidfile', $cidPath, '--pull', 'never', '--network',
-        'none', '--memory', '512M', '--cpus', '1', '--volume',
-        "${probePath}:/probe:ro", $image, 'python', '-B', '-c', $probeCode) `
-        -TimeoutSeconds $RunTimeoutSeconds -LogName 'wslc-run' | Out-Null
+    $runFailure = $null
+    try {
+        Invoke-ProbeCli -FilePath $wslc.Source -Arguments @('run', '--rm', '--name',
+            $containerName, '--cidfile', $cidPath, '--pull', 'never', '--network',
+            'none', '--memory', '512M', '--cpus', '1', '--volume',
+            "${probePath}:/probe:ro", $image, 'python', '-B', '-c', $probeCode) `
+            -TimeoutSeconds $RunTimeoutSeconds -LogName 'wslc-run' | Out-Null
+    }
+    catch {
+        $runFailure = $_.Exception.Message
+    }
 
     if (-not (Test-Path -LiteralPath $cidPath -PathType Leaf)) {
+        if ($runFailure) {
+            throw "WSLc run failed: $runFailure; no full container ID receipt exists, so cleanup is unverified."
+        }
         throw 'WSLc probe completed without writing its requested container ID receipt.'
     }
 
     $containerId = (Get-Content -LiteralPath $cidPath -Raw).Trim()
     if ($containerId -notmatch '^[0-9a-fA-F]{64}$') {
+        if ($runFailure) {
+            throw "WSLc run failed: $runFailure; the container ID receipt is malformed, so cleanup is unverified."
+        }
         throw 'WSLc probe wrote a missing or malformed full container ID receipt.'
     }
 
-    # Query only this run's exact container ID; never enumerate unrelated shared containers.
-    $cleanupQuery = Invoke-ProbeCli -FilePath $wslc.Source `
-        -Arguments @('container', 'list', '--all', '--filter', "id=$containerId", '--format', 'json') `
-        -TimeoutSeconds $CleanupTimeoutSeconds -LogName 'wslc-cleanup-query'
-    $matchingContainers = $cleanupQuery.StandardOutput -split "`r?`n"
-    $listing = ($matchingContainers -join "`n").Trim()
-    # WSLc 3.0.1 emits no stdout for a successful zero-match filtered query.
-    # PowerShell also unwraps ConvertFrom-Json's empty array to $null, so
-    # recognize only the exact empty JSON array before parsing other responses.
-    if ($listing -match '^\[\s*\]$') {
-        $listing = ''
-    }
-    if (-not [string]::IsNullOrWhiteSpace($listing)) {
+    if ($runFailure) {
         try {
-            $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
+            Confirm-ProbeContainerAbsent -ContainerId $containerId
         }
         catch {
-            throw 'The scoped WSLc cleanup query returned invalid JSON; cleanup is unverified.'
+            throw "WSLc run failed: $runFailure; exact-CID cleanup query was inconclusive: $($_.Exception.Message)"
         }
-        if ($null -eq $listedContainers -or @($listedContainers).Count -gt 0) {
-            throw 'The scoped WSLc cleanup query returned a matching container; cleanup is unverified.'
-        }
+        throw "WSLc run failed: $runFailure; exact-CID cleanup query found no matching container. Runtime-side timeout completion and application outcome remain unverified."
     }
+
+    Confirm-ProbeContainerAbsent -ContainerId $containerId
 
     Write-Output 'WSLc local runtime probe: PASS'
     Write-Output "Image: $image"
