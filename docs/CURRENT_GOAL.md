@@ -1,3 +1,13 @@
+**Win32 recovery-boundary trace R31 (2026-10-24):** one fresh fixture retained
+its Q-down callback for 1245.455 ms; all 20 same-call polls stayed
+pending/release-unconfirmed and strict audit was FAIL_OR_UNKNOWN (18/20).
+The recovery helper's `release_all` spanned the callback; four initial Unicode
+compensating key-up `SendInput` calls each took about 299–314 ms, and the fourth
+crossed callback return. The exact Q-up returned about 8.3 ms after callback
+return. This timing is consistent with a blocked native injection boundary but
+does not prove kernel causality. The R31 task-effect oracle also had a copied
+R30 text operation; actual click/save/text are preserved raw but the declared
+R31 sentinel mismatched, so no retry was made. See [R31](../research/integration/win32_supervised_standard_caller_20261024_r31/RESULT.md).
 **Win32 retirement-call trace R30 (2026-10-24):** with one fresh native
 fixture and a 1,253.867 ms blocked-hook hold, all 20 same-call polls remained
 `running / pending / release_confirmed=false`; strict audit 19/20

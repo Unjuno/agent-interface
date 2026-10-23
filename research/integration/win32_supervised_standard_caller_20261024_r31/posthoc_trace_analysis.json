@@ -1,0 +1,263 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r31",
+  "callback_hold_ms": 1250,
+  "callback_return_ns": 487497808919400,
+  "helper_processes": {
+    "18384": "recovery",
+    "25296": "observer"
+  },
+  "posthoc_interpretation": "Four recovery-process SendInput calls carrying KEYEVENTF_UNICODE|KEYEVENTF_KEYUP (flags=6) each remained inside the API wrapper for roughly 299\u2013314 ms; the fourth interval crossed the callback return. This timing is consistent with the blocked low-level hook delaying native injection, but a single trace does not prove causal kernel behavior. No claim is made that the Q key-up itself was accepted before callback return; the recorded 4 long calls are Unicode compensating key-ups. The trace shows SendInput call intervals and later Q-up; OS application timing remains unobserved.",
+  "schema": "win32-supervised-standard-caller-r31-posthoc-trace-analysis-v1",
+  "span_count": 20,
+  "spans_overlapping_callback_block": [
+    {
+      "boundary": "recover",
+      "elapsed_ns": 1262737700,
+      "end_ns": 487497830028600,
+      "event_fields": {
+        "recovery_id": "0beba5a187f54e7fa391b83efe6d27ef"
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": true,
+      "pid": 18384,
+      "start_ns": 487496567096000,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "release_all",
+      "elapsed_ns": 1261696700,
+      "end_ns": 487497829720100,
+      "event_fields": {},
+      "helper_role": "recovery",
+      "overlaps_callback_block": true,
+      "pid": 18384,
+      "start_ns": 487496567840100,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 298875700,
+      "end_ns": 487497809704400,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": true,
+      "pid": 18384,
+      "start_ns": 487497510538900,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "exchange",
+      "elapsed_ns": 1263339000,
+      "end_ns": 487497830318200,
+      "event_fields": {
+        "helper": "recovery",
+        "recovery_id": "0beba5a187f54e7fa391b83efe6d27ef",
+        "request_id": "0beba5a187f54e7fa391b83efe6d27ef"
+      },
+      "helper_role": null,
+      "overlaps_callback_block": true,
+      "pid": 39156,
+      "start_ns": 487496566780500,
+      "unreturned_at_end": false
+    }
+  ],
+  "unicode_keyup_sendinput_calls": [
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 312991000,
+      "end_ns": 487496881194300,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487496568037400,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 313830700,
+      "end_ns": 487497195926500,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487496881872200,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 312903100,
+      "end_ns": 487497510226700,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497196358400,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 298875700,
+      "end_ns": 487497809704400,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": true,
+      "pid": 18384,
+      "start_ns": 487497510538900,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 346300,
+      "end_ns": 487497810654700,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497810071600,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 411500,
+      "end_ns": 487497811798200,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497811053400,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 322300,
+      "end_ns": 487497812781900,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497812195100,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 196800,
+      "end_ns": 487497813310500,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497812978800,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 223000,
+      "end_ns": 487497813871700,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497813498700,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 177900,
+      "end_ns": 487497814373100,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497814047200,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 264900,
+      "end_ns": 487497814957700,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497814542000,
+      "unreturned_at_end": false
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 194200,
+      "end_ns": 487497815483600,
+      "event_fields": {
+        "flags": 6,
+        "input_type": 1,
+        "key_up": true,
+        "vk": 0
+      },
+      "helper_role": "recovery",
+      "overlaps_callback_block": false,
+      "pid": 18384,
+      "start_ns": 487497815150900,
+      "unreturned_at_end": false
+    }
+  ]
+}
