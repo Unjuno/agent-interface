@@ -7,7 +7,7 @@
     "32188": "recovery",
     "48160": "observer"
   },
-  "interpretation": "This packet has no text operations, so the exact recovery Q-up is isolated from Unicode compensation. The wrapper records entry and return from Win32Backend._send around SendInput, not the kernel/application physical state. A call interval spanning callback return is timing evidence only.",
+  "interpretation": "R35 contains no public interface_cancel result or cancel call artifact. These VK_Q key-up calls are part of the normally completed producer action and terminal release_all. The timed intervals and same-generation state samples describe normal terminal-release behavior during a held low-level callback, not cancellation recovery. The wrapper records entry/return around SendInput; this is not a physical application-time or cancel-causality claim.",
   "schema": "win32-supervised-standard-caller-r35-trace-analysis-v1",
   "spans_overlapping_or_open_at_callback": [],
   "strict_action_audit_status": "FAIL_OR_UNKNOWN"
