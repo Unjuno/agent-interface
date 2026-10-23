@@ -150,6 +150,7 @@ class OwnedWin32SessionTests(unittest.TestCase):
 
     def test_cancel_during_producer_factory_never_opens_the_child_start_gate(self):
         import threading
+        self.session.bind_target_generation_reader(lambda: GEN_A)
         self.session.admit_action(CALL_ID, ACTION_ID, GEN_A,
             operation_deadline_ns=self.clock() + 5_000_000_000,
             obligations=["key:a"])
@@ -186,6 +187,54 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertFalse(worker.is_alive())
         self.assertEqual(failures, [])
         self.assertFalse(start_gate.is_set())
+        self.assertEqual(self.owner.result(ACTION_ID)["phase"], "cancel_pending")
+
+    def test_cancel_during_generation_recheck_keeps_child_gated_without_waiting_for_reader(self):
+        import threading
+        from runtime.cli_v1.test_mcp_win32_composition import GatedSyntheticProcess
+
+        entered, release, authorized = threading.Event(), threading.Event(), threading.Event()
+        reads = []
+
+        def generation():
+            reads.append(1)
+            if len(reads) == 2:
+                entered.set()
+                if not release.wait(2):
+                    raise TimeoutError("test generation read deadline")
+            return GEN_A
+
+        self.session.bind_target_generation_reader(generation)
+        self.session.admit_action(CALL_ID, ACTION_ID, GEN_A,
+            operation_deadline_ns=self.clock() + 5_000_000_000, obligations=["key:a"])
+        process = GatedSyntheticProcess(4201)
+        identity = {"pid": 4201, "creation_time_100ns": 9201}
+        self.owner._process_identity_reader = lambda handle: identity if handle is process else None
+        failures = []
+
+        def start():
+            try:
+                self.session.start_producer(CALL_ID, lambda _action:
+                    (process, identity, authorized.set))
+            except BaseException as error:
+                failures.append(error)
+
+        worker = threading.Thread(target=start, daemon=True)
+        worker.start()
+        try:
+            self.assertTrue(entered.wait(1))
+            before = time.monotonic()
+            canceled = self.session.cancel_guarded(CALL_ID,
+                cleanup_deadline_ns=self.clock() + 3_000_000_000)
+            self.assertLess(time.monotonic() - before, 0.5)
+            self.assertEqual(canceled["status"], "pending")
+        finally:
+            release.set()
+            worker.join(3)
+            process.terminate()
+        self.assertFalse(worker.is_alive())
+        self.assertEqual(failures, [])
+        self.assertFalse(authorized.is_set())
         self.assertEqual(self.owner.result(ACTION_ID)["phase"], "cancel_pending")
 
     def test_independent_task_effect_receipt_stays_separate_from_cancel_result(self):

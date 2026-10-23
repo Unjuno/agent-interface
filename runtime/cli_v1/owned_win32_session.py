@@ -193,6 +193,8 @@ class OwnedWin32SessionOwner:
         authorize_start is called after the parent has retained and verified
         the exact child identity. A concurrent cancel wins that race and leaves
         the child gated for the cancellation supervisor to retire.
+        Recheck target generation before factory work and after process-identity
+        waits. These point checks are not atomic with native target changes.
         """
         if not callable(producer_factory):
             raise ValueError("producer factory required")
@@ -206,6 +208,9 @@ class OwnedWin32SessionOwner:
             record["action"]["status"] = "starting"
         process = None
         try:
+            generation_error = self._start_generation_error(action)
+            if generation_error is not None:
+                return self._refuse_start_generation(call_id, action, generation_error)
             produced = producer_factory(action)
             if (not isinstance(produced, tuple) or len(produced) != 3):
                 raise ValueError("producer factory must return process, identity and start gate")
@@ -225,6 +230,13 @@ class OwnedWin32SessionOwner:
                 process_identity=process_identity)
             phase = self._owner.result(action["operation_id"]).get("phase")
             if accepted:
+                # Factory/start/identity queries may block. Recheck after those
+                # waits, outside custody locks, while the child is still gated.
+                generation_error = self._start_generation_error(action)
+                if generation_error is not None:
+                    result = self._refuse_start_generation(call_id, action, generation_error)
+                    self._retire_gated_process(process)
+                    return result
                 authorized = self._owner.authorize_producer_start(
                     action["operation_id"], action["target_generation"],
                     process, authorize_start)
@@ -261,6 +273,25 @@ class OwnedWin32SessionOwner:
                 elif phase not in ("running", "cancel_pending"):
                     self._retire_gated_process(process)
             return self.interface_result(call_id)
+
+    def _start_generation_error(self, action):
+        try:
+            current = self.current_target_generation()
+        except Exception:
+            return "target_generation_unavailable_before_start"
+        if current != action["target_generation"]:
+            return "target_generation_changed_before_start"
+        return None
+
+    def _refuse_start_generation(self, call_id, action, reason):
+        # The start gate has never opened. Do not request compensating input
+        # against a target whose current identity is no longer established.
+        self._owner.mark_unknown(action["operation_id"], action["target_generation"], reason)
+        with self._lock:
+            self._calls[call_id]["action"].update(status="unknown", result={
+                "status": "unknown", "error": reason,
+                "task_success": None, "replay_allowed": False})
+        return self.interface_result(call_id)
 
     @staticmethod
     def _close_unstarted_process(process):

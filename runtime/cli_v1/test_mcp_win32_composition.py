@@ -96,6 +96,78 @@ def _synthetic_process_identity(process):
 
 
 class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
+    async def test_target_generation_is_rechecked_after_admission_and_before_start_gate(self):
+        from runtime.cli_v1.test_owned_win32_session import FakeCancellationSupervisor
+
+        for change_at in ("admission", "factory", "identity", "unavailable", "unavailable_identity"):
+            with self.subTest(change_at=change_at), tempfile.TemporaryDirectory() as root:
+                current = ["a" * 64]
+                processes, adapters, supervisors, invocations = [], [], [], []
+
+                def read_generation():
+                    if current[0] is None:
+                        raise RuntimeError("target identity query failed")
+                    return current[0]
+
+                def identity(process):
+                    if change_at in ("identity", "unavailable_identity"):
+                        current[0] = "b" * 64 if change_at == "identity" else None
+                    return {"pid": process.pid, "creation_time_100ns": 9301}
+
+                def make_owner(*_args):
+                    gate = OperationOwner(clock_ns=time.monotonic_ns,
+                                          process_identity_reader=identity)
+                    supervisor = FakeCancellationSupervisor(gate)
+                    adapter = OwnedWin32SessionOwner(gate, supervisor)
+                    adapter.bind_target_generation_reader(read_generation)
+                    adapters.append(adapter)
+                    supervisors.append(supervisor)
+                    return adapter
+
+                def make_producer(action):
+                    invocations.append(action["operation_id"])
+                    if change_at == "factory":
+                        current[0] = "b" * 64
+                    process = GatedSyntheticProcess(4301)
+                    process.authorized = False
+                    processes.append(process)
+                    return (process, lambda: identity(process),
+                            lambda: setattr(process, "authorized", True))
+
+                server = create_server({"fixture": 123}, root,
+                    session_mode="guarded-win32", _guarded_win32_owner_factory=make_owner,
+                    _guarded_win32_producer_factory=make_producer)
+                binding = json.loads((await server.call_tool(
+                    "interface_guarded_win32_bind_target", {})).content[0].text)
+                admitted = json.loads((await server.call_tool("interface_guarded_win32_admit", {
+                    "action_operation_id": "8" * 32,
+                    "target_binding_id": binding["target_binding_id"],
+                    "operation_deadline_ns": time.monotonic_ns() + 5_000_000_000,
+                    "obligations": ["key:CTRL"],
+                })).content[0].text)
+                if change_at in ("admission", "unavailable"):
+                    current[0] = "b" * 64 if change_at == "admission" else None
+                response = json.loads((await server.call_tool("interface_guarded_win32_start", {
+                    "call_id": admitted["call_id"], "wait_for_result_ms": 1000,
+                })).content[0].text)
+                self.assertEqual(response["status"], "unknown", response)
+                self.assertFalse(any(process.authorized for process in processes))
+                self.assertFalse(any(process.is_alive() for process in processes))
+                self.assertEqual(len(invocations), 0 if change_at in
+                                 ("admission", "unavailable") else 1)
+                self.assertEqual(supervisors[0].calls, [])
+                retained = adapters[0].interface_result(admitted["call_id"])
+                self.assertIsNone(retained["cancellation"])
+                self.assertFalse(response["replay_allowed"])
+                self.assertEqual(retained["action"]["result"]["error"],
+                    "target_generation_unavailable_before_start" if "unavailable" in change_at
+                    else "target_generation_changed_before_start")
+                previous_invocations = list(invocations)
+                await server.call_tool("interface_guarded_win32_start", {
+                    "call_id": admitted["call_id"], "wait_for_result_ms": 1000})
+                self.assertEqual(invocations, previous_invocations)
+                self.assertEqual(adapters[0].interface_result(admitted["call_id"]), retained)
+
     def test_route_requires_an_explicit_inert_owner_factory_and_one_target(self):
         with tempfile.TemporaryDirectory() as root:
             with self.assertRaisesRegex(ValueError, "explicit injected owner factory"):
