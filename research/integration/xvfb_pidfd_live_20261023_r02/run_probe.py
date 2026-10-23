@@ -63,6 +63,8 @@ def run():
             "function_ast_sha256": hashlib.sha256(ast.dump(function,
                 include_attributes=False).encode()).hexdigest()}
         conditions = json.loads((OUT / "conditions.json").read_text())
+        if report["xvfb"]["sha256"] != conditions["xvfb_sha256"]:
+            raise RuntimeError("frozen Xvfb executable changed before process start")
         if report["source"]["normalized_sha256"] != conditions["helper_normalized_sha256"]:
             raise RuntimeError("frozen helper source changed before execution")
         code = compile(ast.Module(body=[function], type_ignores=[]), str(source_path), "exec")
