@@ -51,6 +51,26 @@ class OperationOwnerTests(unittest.TestCase):
                                     process_identity=PRODUCER)
         return self.owner.request_cancel("op-1", GEN_A, cleanup_deadline_ns=900)
 
+    def test_gate_callback_that_opens_then_raises_cannot_claim_gate_remained_closed(self):
+        self.owner.admit("op-gate-error", GEN_A, 1_000, ["key:a"], start_gate_required=True)
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(self.owner.producer_started("op-gate-error", GEN_A, process,
+                                                   process_identity=PRODUCER))
+        gate = threading.Event()
+
+        def open_then_raise():
+            gate.set()
+            raise RuntimeError("gate result lost after opening")
+
+        self.assertFalse(self.owner.authorize_producer_start(
+            "op-gate-error", GEN_A, process, open_then_raise))
+        self.assertTrue(gate.is_set())
+        result = self.owner.result("op-gate-error")
+        self.assertEqual(result["status"], "unknown")
+        self.assertEqual(result["producer_gate_state"], "authorization_attempted")
+        self.assertFalse(result["release_confirmed"])
+        self.assertFalse(result["replay_allowed"])
+
     def test_cancel_closes_admission_until_exact_producer_retirement_and_readback(self):
         pending = self.start_cancelled_operation()
         self.assertEqual(pending["status"], "pending")
@@ -96,6 +116,17 @@ class OperationOwnerTests(unittest.TestCase):
         self.owner.admit("op-2", GEN_B, 1_000, ["key:a"])
         with self.assertRaises(OwnerRefused):
             self.owner.admit("op-1", GEN_B, 1_000, ["key:a"])
+
+    def test_cancel_winning_before_start_authorization_keeps_child_gate_closed(self):
+        self.owner.admit("op-gate", GEN_A, 1_000, ["key:a"])
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(self.owner.producer_started("op-gate", GEN_A, process,
+            process_identity=PRODUCER))
+        self.owner.request_cancel("op-gate", GEN_A, cleanup_deadline_ns=900)
+        released = []
+        self.assertFalse(self.owner.authorize_producer_start(
+            "op-gate", GEN_A, process, lambda: released.append(True)))
+        self.assertEqual(released, [])
 
     def test_failed_readback_retains_unknown_custody_and_refuses_new_operation(self):
         self.start_cancelled_operation()

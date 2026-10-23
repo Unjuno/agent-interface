@@ -1,16 +1,15 @@
 """Inert process-lifecycle supervisor for the Win32 operation custody gate.
 
-This module does not import Win32 APIs or send input. Cancellation closes
-admission synchronously; a dedicated helper retires the exact producer and
-only then starts a gated recovery child. Recovery is accepted only from an
-exact child receipt plus independent parent-side neutral readback before the
-same cleanup deadline. This synthetic mechanism is not evidence of native
-input release or an OS-level hard real-time bound.
+This module does not import Win32 APIs or send input. Recovery and observation
+helpers start and report ready before operations are admitted. Cancellation
+closes admission synchronously, retires the exact producer, then reuses those
+helpers for recovery and independent neutral-state readback. This synthetic
+mechanism is not evidence of native input release or an OS-level hard
+real-time bound.
 """
 from __future__ import annotations
 
 import queue
-import multiprocessing
 import threading
 import time
 
@@ -54,13 +53,77 @@ class OperationCancellationSupervisor:
         self._lock = threading.Lock()
         self._scheduled = set()
         self._closed = False
+        self._startup_timeout_s = float(startup_timeout_s)
+        self._helpers = {}
+        self._thread = None
+        try:
+            self._helpers["recovery"] = self._start_helper(
+                "recovery", self._recovery_process_factory)
+            self._helpers["observer"] = self._start_helper(
+                "observer", self._observer_process_factory)
+        except BaseException as error:
+            self._close_helpers()
+            raise RuntimeError(
+                "prestarted cancellation helper failed readiness: " + str(error)
+            ) from error
         self._ready = threading.Event()
         self._thread = threading.Thread(target=self._serve,
             name="win32-operation-cancel-supervisor", daemon=True)
         self._thread.start()
-        if not self._ready.wait(float(startup_timeout_s)):
+        if not self._ready.wait(self._startup_timeout_s):
             self.close()
             raise RuntimeError("cancellation helper did not start before deadline")
+
+    def _start_helper(self, name, factory):
+        process = connection = None
+        try:
+            process, connection = factory()
+            if (not callable(getattr(process, "start", None))
+                    or not callable(getattr(process, "join", None))
+                    or not callable(getattr(process, "is_alive", None))
+                    or not hasattr(process, "exitcode")
+                    or getattr(process, "pid", None) is not None
+                    or not all(callable(getattr(connection, attr, None))
+                               for attr in ("poll", "recv", "send", "close"))):
+                raise ValueError("helper factory must return an unstarted process and duplex connection")
+            process.start()
+            identity = self._process_identity_reader(process)
+            if not self._valid_process_identity(process, identity):
+                raise ValueError(name + " helper process identity is invalid")
+            if (not connection.poll(self._startup_timeout_s)
+                    or not process.is_alive()):
+                raise TimeoutError(name + " helper readiness timed out")
+            ready = connection.recv()
+            if (ready != {"status": "ready", "helper": name}
+                    or not process.is_alive()
+                    or self._process_identity_reader(process) != identity):
+                raise ValueError(name + " helper readiness or identity mismatched")
+            return {"process": process, "connection": connection,
+                    "identity": identity, "available": True,
+                    "lock": threading.Lock()}
+        except BaseException:
+            if process is not None:
+                self._stop_gated_child(process)
+                try:
+                    if not process.is_alive():
+                        process.close()
+                except BaseException:
+                    pass
+            if connection is not None:
+                try:
+                    connection.close()
+                except BaseException:
+                    pass
+            raise
+
+    @staticmethod
+    def _valid_process_identity(process, identity):
+        return (type(identity) is dict
+            and set(identity) == {"pid", "creation_time_100ns"}
+            and type(identity["pid"]) is int
+            and identity["pid"] == process.pid
+            and type(identity["creation_time_100ns"]) is int
+            and identity["creation_time_100ns"] > 0)
 
     def cancel(self, operation_id, target_generation, *, cleanup_deadline_ns):
         receipt = self._owner.request_cancel(operation_id, target_generation,
@@ -155,152 +218,111 @@ class OperationCancellationSupervisor:
         except BaseException:
             return False
 
+    def _exchange_helper(self, name, request, deadline_ns):
+        helper = self._helpers[name]
+        process = helper["process"]
+        connection = helper["connection"]
+        request_id = request["request_id"]
+        cutoff_ns = deadline_ns - int(
+            (self._terminate_grace_s + self._kill_grace_s) * 1_000_000_000)
+        with helper["lock"]:
+            try:
+                if (not helper["available"] or not process.is_alive()
+                        or self._process_identity_reader(process) != helper["identity"]):
+                    raise RuntimeError("prestarted helper is unavailable or identity changed")
+                connection.send(request)
+                result = completion = None
+                while self._clock_ns() < cutoff_ns:
+                    if not connection.poll(self._bounded_wait(cutoff_ns,
+                                                               self._poll_interval_s)):
+                        continue
+                    message = connection.recv()
+                    if type(message) is not dict:
+                        raise ValueError("helper returned a non-object message")
+                    if message.get("control") == "operation_complete":
+                        if (completion is not None
+                                or message.get("request_id") != request_id):
+                            raise ValueError("helper completion identity mismatched")
+                        completion = message
+                    elif result is None:
+                        result = message
+                    else:
+                        raise ValueError("helper returned duplicate result messages")
+                    if result is not None and completion is not None:
+                        break
+                if (result is None or completion is None
+                        or self._clock_ns() >= deadline_ns
+                        or not process.is_alive()
+                        or self._process_identity_reader(process) != helper["identity"]):
+                    raise TimeoutError("helper result, completion or identity unconfirmed")
+                return result
+            except BaseException:
+                helper["available"] = False
+                self._retire_process(process, deadline_ns)
+                raise
+
+    def _invalidate_helper(self, name, deadline_ns):
+        helper = self._helpers[name]
+        with helper["lock"]:
+            helper["available"] = False
+            self._retire_process(helper["process"], deadline_ns)
+
     def _run_recovery(self, operation_id, generation, request):
-        process = receive = None
-        start_gate = multiprocessing.get_context().Event()
+        if self._clock_ns() >= request["deadline_ns"]:
+            self._owner.expire_cleanup(operation_id, generation)
+            return
+        recovery_request = dict(request)
+        recovery_request["request_id"] = request["recovery_id"]
         try:
-            if self._clock_ns() >= request["deadline_ns"]:
-                self._owner.expire_cleanup(operation_id, generation)
-                return
-            process, receive = self._recovery_process_factory(request, start_gate)
-            if (not callable(getattr(process, "start", None))
-                    or not callable(getattr(process, "join", None))
-                    or not callable(getattr(process, "is_alive", None))
-                    or not hasattr(process, "exitcode")
-                    or getattr(process, "pid", None) is not None
-                    or not callable(getattr(receive, "poll", None))
-                    or not callable(getattr(receive, "recv", None))):
-                raise ValueError("factory must return unstarted process and receive pipe")
-            process.start()
-            identity = self._process_identity_reader(process)
-            if (type(identity) is not dict
-                    or set(identity) != {"pid", "creation_time_100ns"}
-                    or type(identity["pid"]) is not int or identity["pid"] != process.pid
-                    or type(identity["creation_time_100ns"]) is not int
-                    or identity["creation_time_100ns"] <= 0):
-                raise ValueError("recovery process identity not verified on retained handle")
-            if self._clock_ns() >= request["deadline_ns"]:
-                self._retire_process(process, request["deadline_ns"])
-                self._owner.expire_cleanup(operation_id, generation)
-                return
-            # Recovery worker must wait on this gate before any input effect.
-            start_gate.set()
-            # Reserve the terminal slice for terminate/kill/reap instead of
-            # waiting until the whole transaction budget has already elapsed.
-            recovery_cutoff_ns = request["deadline_ns"] - int(
-                (self._terminate_grace_s + self._kill_grace_s) * 1_000_000_000)
-            while process.is_alive() and self._clock_ns() < recovery_cutoff_ns:
-                process.join(self._bounded_wait(request["deadline_ns"],
-                                                 self._poll_interval_s))
-            if process.is_alive():
-                self._retire_process(process, request["deadline_ns"])
-                self._owner.mark_unknown(operation_id, generation,
-                    "recovery_process_exceeded_execution_window")
-                return
-            if (process.exitcode != 0 or self._clock_ns() >= request["deadline_ns"]
-                    or not receive.poll(self._bounded_wait(request["deadline_ns"], 0))):
-                self._owner.mark_unknown(operation_id, generation,
-                    "recovery_child_exit_or_receipt_unconfirmed")
-                return
-            receipt = receive.recv()
-            valid = (type(receipt) is dict
-                and receipt.get("operation_id") == operation_id
-                and receipt.get("target_generation") == generation
-                and receipt.get("recovery_id") == request["recovery_id"]
-                and receipt.get("release_accepted") is True)
-            if not valid or self._clock_ns() >= request["deadline_ns"]:
-                self._owner.mark_unknown(operation_id, generation,
-                    "recovery_receipt_invalid_or_late")
-                return
-            readback = self._run_observer(operation_id, generation, request)
-            if readback is None:
-                return
-            self._owner.recovery_completed(operation_id, generation,
-                request["recovery_id"], release_accepted=True, readback=readback)
+            receipt = self._exchange_helper("recovery", recovery_request,
+                                            request["deadline_ns"])
+        except TimeoutError:
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_process_exceeded_execution_window")
+            return
         except BaseException:
-            # The start gate is still closed unless normal validation reached
-            # its explicit set(). Retire any child whose factory/start/identity
-            # path failed, so a gated worker is not left behind as an orphan.
-            if process is not None:
-                self._stop_gated_child(process)
             self._owner.mark_unknown(operation_id, generation,
                 "recovery_process_or_readback_unconfirmed")
-        finally:
-            start_gate.clear()
-            if receive is not None:
-                try:
-                    receive.close()
-                except BaseException:
-                    pass
-            if process is not None:
-                try:
-                    if not process.is_alive():
-                        process.close()
-                except BaseException:
-                    pass
+            return
+        valid = (type(receipt) is dict
+            and receipt.get("operation_id") == operation_id
+            and receipt.get("target_generation") == generation
+            and receipt.get("recovery_id") == request["recovery_id"]
+            and receipt.get("release_accepted") is True)
+        if not valid or self._clock_ns() >= request["deadline_ns"]:
+            self._invalidate_helper("recovery", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "recovery_receipt_invalid_or_late")
+            return
+        readback = self._run_observer(operation_id, generation, request)
+        if readback is None:
+            return
+        self._owner.recovery_completed(operation_id, generation,
+            request["recovery_id"], release_accepted=True, readback=readback)
 
     def _run_observer(self, operation_id, generation, request):
-        process = receive = None
+        observation_request = dict(request)
+        observation_request["request_id"] = request["recovery_id"]
         try:
-            process, receive = self._observer_process_factory(request)
-            if (not callable(getattr(process, "start", None))
-                    or not callable(getattr(process, "join", None))
-                    or not callable(getattr(process, "is_alive", None))
-                    or not hasattr(process, "exitcode")
-                    or getattr(process, "pid", None) is not None
-                    or not callable(getattr(receive, "poll", None))
-                    or not callable(getattr(receive, "recv", None))):
-                raise ValueError("observer factory must return unstarted process and pipe")
-            process.start()
-            identity = self._process_identity_reader(process)
-            if (type(identity) is not dict
-                    or set(identity) != {"pid", "creation_time_100ns"}
-                    or type(identity["pid"]) is not int or identity["pid"] != process.pid
-                    or type(identity["creation_time_100ns"]) is not int
-                    or identity["creation_time_100ns"] <= 0):
-                raise ValueError("observer identity not verified on retained handle")
-            cutoff = request["deadline_ns"] - int(
-                (self._terminate_grace_s + self._kill_grace_s) * 1_000_000_000)
-            while process.is_alive() and self._clock_ns() < cutoff:
-                process.join(self._bounded_wait(request["deadline_ns"],
-                                                 self._poll_interval_s))
-            if process.is_alive():
-                self._retire_process(process, request["deadline_ns"])
-                self._owner.mark_unknown(operation_id, generation,
-                    "independent_readback_observer_exceeded_execution_window")
-                return None
-            if (process.exitcode != 0 or self._clock_ns() >= request["deadline_ns"]
-                    or not receive.poll(self._bounded_wait(request["deadline_ns"], 0))):
-                self._owner.mark_unknown(operation_id, generation,
-                    "independent_readback_receipt_missing_or_late")
-                return None
-            readback = receive.recv()
-            if (type(readback) is not dict
-                    or readback.get("operation_id") != operation_id
-                    or readback.get("target_generation") != generation
-                    or readback.get("recovery_id") != request["recovery_id"]):
-                self._owner.mark_unknown(operation_id, generation,
-                    "independent_readback_identity_mismatch")
-                return None
-            return readback
+            readback = self._exchange_helper("observer", observation_request,
+                                             request["deadline_ns"])
+        except TimeoutError:
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_observer_exceeded_execution_window")
+            return None
         except BaseException:
-            if process is not None:
-                self._stop_gated_child(process)
             self._owner.mark_unknown(operation_id, generation,
                 "independent_readback_observer_unconfirmed")
             return None
-        finally:
-            if receive is not None:
-                try:
-                    receive.close()
-                except BaseException:
-                    pass
-            if process is not None:
-                try:
-                    if not process.is_alive():
-                        process.close()
-                except BaseException:
-                    pass
+        if (type(readback) is not dict
+                or readback.get("operation_id") != operation_id
+                or readback.get("target_generation") != generation
+                or readback.get("recovery_id") != request["recovery_id"]):
+            self._invalidate_helper("observer", request["deadline_ns"])
+            self._owner.mark_unknown(operation_id, generation,
+                "independent_readback_identity_mismatch")
+            return None
+        return readback
 
     @staticmethod
     def _stop_gated_child(process):
@@ -330,4 +352,33 @@ class OperationCancellationSupervisor:
                 self._queue.put_nowait(None)
             except queue.Full:
                 pass
-        self._thread.join(1.0)
+        if self._thread is not None:
+            self._thread.join(1.0)
+        self._close_helpers()
+
+    def _close_helpers(self):
+        for helper in self._helpers.values():
+            process = helper["process"]
+            connection = helper["connection"]
+            helper["available"] = False
+            if process.is_alive():
+                try:
+                    connection.send(None)
+                    process.join(min(0.1, self._startup_timeout_s))
+                except BaseException:
+                    pass
+            if process.is_alive():
+                deadline_ns = self._clock_ns() + int(
+                    (self._terminate_grace_s + self._kill_grace_s + 0.1)
+                    * 1_000_000_000)
+                self._retire_process(process, deadline_ns)
+            try:
+                connection.close()
+            except BaseException:
+                pass
+            try:
+                if not process.is_alive():
+                    process.close()
+            except BaseException:
+                pass
+        self._helpers.clear()

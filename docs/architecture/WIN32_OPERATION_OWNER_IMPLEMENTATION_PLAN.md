@@ -1,14 +1,76 @@
 # Win32 operation-owner implementation plan
 
-Status: Phase 1's inert prototype is implemented and passes its scoped local
-suite. Phase 2 has a partial target-generation prerequisite in the private
-Win32 move bridge; public standard-caller/supervisor composition is not
-implemented or qualified. This plan follows the
-design decision in [the supervisor design record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md).
-It authorizes only local inert-fake work in Phase 1; it does not authorize
-native input or a WSLc allocation.
+Status: Phase 1 and a synthetic-only public MCP composition slice are locally
+implemented. The route binds/rechecks an injected target generation, admits a
+gated synthetic producer, composes cancellation with separate recovery and
+neutral-state observation, and can retain a distinct independently spawned
+task-effect oracle receipt. This does not qualify native input or physical
+release. This plan follows the design decision in [the supervisor design
+record](PRESTARTED_CANCEL_SUPERVISOR_DESIGN.md). It authorizes local
+synthetic-fake work only; it does not authorize native input or a WSLc
+allocation.
+
+## Current implementation checkpoint (2026-10-23)
+
+The local branch `codex/win32-supervisor-implementation-plan` now implements
+the approved persistent-helper candidate and extends the synthetic public
+caller slice. `OperationCancellationSupervisor` starts one recovery and one
+observer process before the first producer can be admitted, checks exact
+readiness receipts and retained process identities, and reuses the helpers
+through request/result/completion receipts. A missing, malformed, late, or
+mismatched response keeps custody UNKNOWN; invalid helpers are retired and
+never replaced during cancellation. The public caller retains one producer
+start and one oracle reservation per call. A late Generation-A oracle success
+cannot promote the earlier timeout, duplicate cancellation returns the same
+attempt, and Generation B scores as a distinct attempt.
+
+The new fake-API test dispatches through the actual `Win32RuntimeSession` and
+`Win32Backend.execute()` paths. It covers blocked-before-acceptance and
+accepted-before-return schedules plus producer-retirement timeout. The
+process-shared fake key state and parent event log show confirmed exact
+producer exit before the fake backend recovery UP; an independent helper then
+reads neutral state. Timeout remains UNKNOWN and emits no recovery UP. No
+production injection seam was required.
+
+The source-bound [R01 custody packet](../../research/integration/win32_supervisor_custody_20261023_r01/README.md)
+records 79/79 selected pure/fake tests and 67/67 MCP-owned-process/guarded-X11
+compatibility tests passing in normal and optimized CPython 3.11.9, raw output,
+conditions, source hashes, and an invalid native-test execution incident. The
+native fixture integration class is excluded from valid verification. This
+branch has no native `SendInput` adapter, physical
+release proof, late-DOWN horizon, live MAP01 oracle, exclusive input
+authority, matched efficiency result, or repeated reliability result. The
+mechanism remains opt-in and synthetic only. Issue #7924 remains STOP/HOLD;
+this work used no WSLc allocation or Docker.
 
 ## Problem and scope
+
+### Joined public-caller/backend verification (2026-10-23)
+
+The [joined-path R01 packet](../../research/integration/win32_public_backend_composition_20261023_r01/README.md)
+closes the separate-test gap through the existing injected producer factory.
+Three new tests drive public MCP bind/admit/start/cancel/results through the
+actual Win32 session/backend with an inert API. Both blocked-DOWN schedules
+record exact producer retirement before recovery UP and independent readback;
+an unretired producer stays UNKNOWN with no UP. Duplicate public start/cancel
+preserve one attempt, generation/operation links survive the full path, and
+task success remains null. The 15 related tests pass normally and under `-O`.
+A deliberately premature fake UP fails the ordering assertion.
+
+This is test-only composition, not a production native-input adapter. The
+public route still requires injected factories; live target identity, physical
+release, task effect, timing, efficiency and reliability remain open.
+
+The [closed-gate cancellation packet](../../research/integration/win32_unopened_gate_cancel_20261023_r01/README.md)
+additionally reproduces a cancellation during the final generation query that
+previously sent an UP despite the producer gate never opening. Public caller
+admission now declares that a parent gate is required. The owner tracks closed
+versus attempted authorization; retiring a known-closed producer stays UNKNOWN
+without claiming recovery or emitting UP. Direct clients without a declared
+gate remain untracked, not presumed closed. Native recovery-time authority
+after authorized input is still an open qualification boundary.
+
+### Platform call boundary
 
 The current `Win32RuntimeSession.dispatch()` and `Win32Backend.execute()` call
 `SendInput` synchronously. Existing fault-injection packets show that the
@@ -83,20 +145,21 @@ model, not a replacement for the frozen baseline or evidence of release.
 
 ### Phase 2: current-main composition
 
-Only after Phase 1 passes, connect the opt-in owner to the standard guarded
-caller through an explicit Win32 adapter. The private `MoveBridge` now pins a
-digest of the HWND owner's PID and process creation time in its observation
-binding and refuses if that generation cannot be queried or changes before
-bound input. This is only a target-generation prerequisite: `mcp_server`
-still has no guarded-Win32 route, `MoveBridge` still executes synchronously,
-and neither is connected to the inert operation owner. The remaining Phase 2
-gate is an explicit opt-in standard-caller adapter with executable composed
-tests for target-generation change after model wait, cancellation while a
-child is blocked, bounded caller response, separate effect scoring, exact
-attempt accounting, and preservation of the completed prefix. Keep X11 worker
-selection unchanged and fail closed if the selected backend and recovery
-adapter disagree. Do not change the default backend or report a live release
-result from these tests.
+Historical checkpoint: the private `MoveBridge` pinned a digest of the HWND
+owner's PID and process creation time and refused if that generation could
+not be queried or changed before bound input. At that point there was no
+guarded-Win32 public route and the synchronous bridge was not connected to the
+inert operation owner. That gap is now closed for a synthetic-only slice:
+`mcp_server` exposes an opt-in dependency-injected route, target generation is
+rechecked before admission, cancellation composes spawned recovery and
+independent neutral-state observation, and a distinct process can score task
+effect. R04 also verifies that generation A remains UNKNOWN/replay-denied
+while generation B succeeds as a separate public session. See the
+[2026-10-23 implementation plan](../superpowers/plans/2026-10-23-win32-supervisor-custody-plan.md)
+for the remaining failure-matrix, actual-backend-with-inert-API and exact
+attempt-accounting work. Keep X11 worker selection unchanged and fail closed
+if the selected backend and recovery adapter disagree. Do not change the
+default backend or report a live release result from these tests.
 
 #### Approved implementation slice and file boundaries
 
@@ -160,9 +223,10 @@ result stays UNKNOWN and the route remains opt-in/disabled pending the native
 gate. Do not reinterpret a fake observer or a bridge-local effect callback as
 an independent application oracle.
 
-The caller integration is accepted only when all step 2d assertions pass on
-the same frozen source and the existing guarded-X11 regression suite remains
-green. This is a plan gate, not evidence that steps 2a–2d have been implemented.
+The synthetic public-caller slice passed its retained R04 suite, but the
+broader 2d failure-schedule and attempt-accounting matrix remains open. Its
+local tests do not establish native release behavior. The new implementation
+plan defines the next bounded synthetic work and its local regression gates.
 
 ### Phase 3: isolated native discriminator
 

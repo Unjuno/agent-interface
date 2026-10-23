@@ -37,8 +37,11 @@ class OperationOwner:
         self._orphan_handles = []
         self._active_operation_id = None
 
-    def admit(self, operation_id, target_generation, deadline_ns, obligations):
+    def admit(self, operation_id, target_generation, deadline_ns, obligations,
+              *, start_gate_required=False):
         self._validate_operation(operation_id, target_generation)
+        if type(start_gate_required) is not bool:
+            raise OwnerRefused("start gate requirement must be boolean")
         if type(deadline_ns) is not int or deadline_ns <= self._clock_ns():
             raise OwnerRefused("operation deadline must be in the future")
         if (not isinstance(obligations, (list, tuple))
@@ -63,6 +66,9 @@ class OperationOwner:
                 "status": "admitted",
                 "producer_identity": None,
                 "producer_exit_code": None,
+                # Direct producers have no known closed gate. Only a caller
+                # that guarantees a parent-owned gate may declare it closed.
+                "producer_gate_state": "closed" if start_gate_required else "untracked",
                 "cleanup_deadline_ns": None,
                 "recovery_id": None,
                 "release_confirmed": False,
@@ -124,6 +130,34 @@ class OperationOwner:
             # Cancellation won the race with child startup. Retain its exact
             # identity so the owner can await retirement, but never authorize it.
             return False
+
+    def authorize_producer_start(self, operation_id, target_generation,
+                                 process_handle, open_start_gate):
+        """Atomically open the child gate only while this producer is admitted.
+
+        ``open_start_gate`` must be a nonblocking parent-owned event/set call.
+        Running it under the custody lock orders authorization against cancel:
+        either the gate opens before cancellation closes admission, or cancel
+        wins and the gated child remains unable to emit input.
+        """
+        if not callable(open_start_gate):
+            raise OwnerRefused("parent-owned producer start gate required")
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["status"] != "running"
+                    or self._producer_handles.get(operation_id) is not process_handle
+                    or self._clock_ns() >= record["deadline_ns"]):
+                return False
+            try:
+                # A gate callback could open the gate and then raise. Never
+                # reinterpret an attempted callback as proof it stayed closed.
+                record["producer_gate_state"] = "authorization_attempted"
+                open_start_gate()
+            except Exception:
+                record["status"] = "unknown"
+                record["uncertainty"] = "producer_start_gate_unconfirmed"
+                return False
+            return True
 
     def producer_handle_for_retirement(self, operation_id, target_generation):
         """Return the parent's retained handle for cancellation cleanup only."""
@@ -218,6 +252,10 @@ class OperationOwner:
                     or self._clock_ns() >= record["cleanup_deadline_ns"]):
                 if record["status"] == "producer_retired":
                     record["status"] = "unknown"
+                return None
+            if record["producer_gate_state"] == "closed":
+                record["status"] = "unknown"
+                record["uncertainty"] = "producer_retired_without_start_authorization"
                 return None
             recovery_id = uuid.uuid4().hex
             record["recovery_id"] = recovery_id

@@ -1,0 +1,55 @@
+{
+  "source_commit": "de457b73e62dd1258be5590ab0f7aefd75b25b1d",
+  "scope": "synthetic_only",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "runs": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_win32_backend_composition",
+        "runtime.cli_v1.test_mcp_win32_composition",
+        "runtime.backends.win32_v1.test_supervised_session",
+        "-v"
+      ],
+      "trace_directory_env": "WIN32_COMPOSITION_TRACE_DIR=research/integration/win32_public_backend_composition_20261023_r01/traces-normal",
+      "raw": "raw-normal.txt",
+      "tests": 15,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_win32_backend_composition",
+        "runtime.cli_v1.test_mcp_win32_composition",
+        "runtime.backends.win32_v1.test_supervised_session",
+        "-v"
+      ],
+      "trace_directory_env": "WIN32_COMPOSITION_TRACE_DIR=research/integration/win32_public_backend_composition_20261023_r01/traces-optimized",
+      "raw": "raw-optimized.txt",
+      "tests": 15,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python",
+        "research\\integration\\win32_public_backend_composition_20261023_r01\\mutation_probe.py"
+      ],
+      "raw": "raw-mutation.txt",
+      "tests": 1,
+      "exit_code": 1,
+      "expected_failure": "producer_exit_confirmed must precede recovery_up; AssertionError: 5 not less than 4"
+    }
+  ],
+  "native_input": false,
+  "wslc": false,
+  "docker": false,
+  "synthetic_identity": true,
+  "production_code_changed": false,
+  "development_errors": "Initial 3 KeyError(call_id) harness errors, corrected to outer caller record; output not retained as raw."
+}

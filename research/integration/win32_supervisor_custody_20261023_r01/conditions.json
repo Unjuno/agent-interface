@@ -1,0 +1,59 @@
+{
+  "packet": "win32_supervisor_custody_20261023_r01",
+  "captured_at_local": "2026-10-23 Asia/Tokyo",
+  "source_commit": "4121be2296b304ece502b4c49f1ba479861bf4bd",
+  "python": "Python 3.11.9",
+  "os": "Microsoft Windows 10.0.26300",
+  "scope": "Synthetic process ordering with actual Win32RuntimeSession and Win32Backend code using an inert fake user32 API and process-shared fake key state.",
+  "valid_suite": {
+    "normal": {
+      "pure_integration_session_tests": 22,
+      "other_custody_backend_caller_tests": 57,
+      "total": 79,
+      "exit_code": 0
+    },
+    "optimized": {
+      "pure_integration_session_tests": 22,
+      "other_custody_backend_caller_tests": 57,
+      "total": 79,
+      "exit_code": 0
+    }
+  },
+  "suites": [
+    "PureWin32HelperTests",
+    "Win32SessionRecoveryTests",
+    "test_supervised_session",
+    "test_release_ledger",
+    "test_explicit_up_ledger",
+    "test_unknown_release_custody",
+    "test_process_identity",
+    "test_process_cancellation",
+    "test_operation_owner",
+    "test_mcp_win32_composition"
+  ],
+  "valid_suite_native_win32_calls": false,
+  "valid_suite_physical_desktop_input": false,
+  "wslc_or_docker_used": false,
+  "qualification": "Synthetic only. Does not prove Win32 OS input acceptance/release, late-DOWN absence, physical target behavior, live provider/application effect, MAP01, hard real-time limits, matched efficiency, or repeated reliability.",
+  "incident": {
+    "invalid_native_integration_command_ran": true,
+    "successful_backend_emission_recorded_before_failure": false,
+    "native_call_or_other_fixture_side_effect_excluded": false,
+    "fixture_process_remaining_afterward": false,
+    "disposition": "Do not rerun the native integration class; retain as a non-qualifying execution incident."
+  },
+  "compatibility_regressions": {
+    "suites": [
+      "runtime.cli_v1.test_mcp_owned_process",
+      "runtime.guarded_x11_v1.test_process_identity"
+    ],
+    "normal": {
+      "tests": 67,
+      "exit_code": 0
+    },
+    "optimized": {
+      "tests": 67,
+      "exit_code": 0
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "source_commit": "aa891d55fafd29a7d498ee37b35ad503debe99d7",
+  "baseline_commit": "572b86b6b1119d537d3fac20d2e6610e7e161a4f",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "scope": "synthetic_only",
+  "runs": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_win32_composition",
+        "runtime.cli_v1.test_owned_win32_session",
+        "runtime.cli_v1.test_mcp_win32_backend_composition",
+        "runtime.guarded_win32_v1.test_process_cancellation",
+        "runtime.guarded_win32_v1.test_operation_owner",
+        "runtime.cli_v1.test_mcp_owned_process",
+        "runtime.guarded_x11_v1.test_process_identity",
+        "-v"
+      ],
+      "raw": "raw-normal.txt",
+      "exit_code": 0,
+      "tests": 112,
+      "trace_env": {
+        "WIN32_COMPOSITION_TRACE_DIR": "research\\integration\\win32_unopened_gate_cancel_20261023_r01\\traces-normal"
+      }
+    },
+    {
+      "command": [
+        "python",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.cli_v1.test_mcp_win32_composition",
+        "runtime.cli_v1.test_owned_win32_session",
+        "runtime.cli_v1.test_mcp_win32_backend_composition",
+        "runtime.guarded_win32_v1.test_process_cancellation",
+        "runtime.guarded_win32_v1.test_operation_owner",
+        "runtime.cli_v1.test_mcp_owned_process",
+        "runtime.guarded_x11_v1.test_process_identity",
+        "-v"
+      ],
+      "raw": "raw-optimized.txt",
+      "exit_code": 0,
+      "tests": 112,
+      "trace_env": {
+        "WIN32_COMPOSITION_TRACE_DIR": "research\\integration\\win32_unopened_gate_cancel_20261023_r01\\traces-optimized"
+      }
+    },
+    {
+      "command": [
+        "python",
+        "research\\integration\\win32_unopened_gate_cancel_20261023_r01\\reproduce_baseline.py"
+      ],
+      "raw": "raw-baseline.txt",
+      "exit_code": 1,
+      "expected_failures": 1,
+      "trace_env": {
+        "WIN32_COMPOSITION_TRACE_DIR": "research\\integration\\win32_unopened_gate_cancel_20261023_r01\\traces-baseline"
+      }
+    }
+  ],
+  "preliminary_runs": {
+    "raw-red.txt": "Initial expected failure before trace enhancement",
+    "raw-first-green.txt": "22 passes on first repair before final trace recording and callback-exception test"
+  },
+  "native_input": false,
+  "wslc": false,
+  "docker": false
+}
