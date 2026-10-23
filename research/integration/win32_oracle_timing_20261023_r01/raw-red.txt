@@ -1,0 +1,54 @@
+test_public_task_oracle_rejects_stale_and_future_observation_times (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_public_task_oracle_rejects_stale_and_future_observation_times) ... 
+  test_public_task_oracle_rejects_stale_and_future_observation_times (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_public_task_oracle_rejects_stale_and_future_observation_times) (observed=1) ... FAIL
+  test_public_task_oracle_rejects_stale_and_future_observation_times (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_public_task_oracle_rejects_stale_and_future_observation_times) (observed=9223372036854775808) ... FAIL
+test_oracle_observation_at_request_endpoint_is_valid (runtime.cli_v1.test_owned_win32_session.OwnedWin32SessionTests.test_oracle_observation_at_request_endpoint_is_valid) ... ERROR
+test_oracle_observation_at_receive_endpoint_is_valid (runtime.cli_v1.test_owned_win32_session.OwnedWin32SessionTests.test_oracle_observation_at_receive_endpoint_is_valid) ... ERROR
+
+======================================================================
+ERROR: test_oracle_observation_at_request_endpoint_is_valid (runtime.cli_v1.test_owned_win32_session.OwnedWin32SessionTests.test_oracle_observation_at_request_endpoint_is_valid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_owned_win32_session.py", line 285, in test_oracle_observation_at_request_endpoint_is_valid
+    self._check_oracle_timing_endpoint(100)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_owned_win32_session.py", line 280, in _check_oracle_timing_endpoint
+    self.assertEqual(row["task_effect"]["requested_monotonic_ns"], 100)
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'requested_monotonic_ns'
+
+======================================================================
+ERROR: test_oracle_observation_at_receive_endpoint_is_valid (runtime.cli_v1.test_owned_win32_session.OwnedWin32SessionTests.test_oracle_observation_at_receive_endpoint_is_valid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_owned_win32_session.py", line 288, in test_oracle_observation_at_receive_endpoint_is_valid
+    self._check_oracle_timing_endpoint(200)
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_owned_win32_session.py", line 280, in _check_oracle_timing_endpoint
+    self.assertEqual(row["task_effect"]["requested_monotonic_ns"], 100)
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'requested_monotonic_ns'
+
+======================================================================
+FAIL: test_public_task_oracle_rejects_stale_and_future_observation_times (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_public_task_oracle_rejects_stale_and_future_observation_times) (observed=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 138, in test_public_task_oracle_rejects_stale_and_future_observation_times
+    self.assertEqual(result["status"], "unknown", result)
+AssertionError: 'verified' != 'unknown'
+- verified
++ unknown
+ : {'status': 'verified', 'call_id': '874b71190a5f4d42ade8344a606446d4', 'task_effect': {'status': 'verified', 'task_success': True, 'receipt': {'call_id': '874b71190a5f4d42ade8344a606446d4', 'operation_id': '66666666666666666666666666666666', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'oracle_id': '77777777777777777777777777777777', 'outcome': 'success', 'observed_monotonic_ns': 1, 'evidence_ref': 'synthetic-stale-or-future-state'}}, 'task_success': True, 'operation_invoked': False, 'input_dispatched': False, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+======================================================================
+FAIL: test_public_task_oracle_rejects_stale_and_future_observation_times (runtime.cli_v1.test_mcp_win32_composition.GuardedWin32PublicRouteTests.test_public_task_oracle_rejects_stale_and_future_observation_times) (observed=9223372036854775808)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_mcp_win32_composition.py", line 138, in test_public_task_oracle_rejects_stale_and_future_observation_times
+    self.assertEqual(result["status"], "unknown", result)
+AssertionError: 'verified' != 'unknown'
+- verified
++ unknown
+ : {'status': 'verified', 'call_id': 'cc2a64f11f204ba997130b3564e8fa38', 'task_effect': {'status': 'verified', 'task_success': True, 'receipt': {'call_id': 'cc2a64f11f204ba997130b3564e8fa38', 'operation_id': '66666666666666666666666666666666', 'target_generation': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'oracle_id': '77777777777777777777777777777777', 'outcome': 'success', 'observed_monotonic_ns': 9223372036854775808, 'evidence_ref': 'synthetic-stale-or-future-state'}}, 'task_success': True, 'operation_invoked': False, 'input_dispatched': False, 'replay_allowed': False, 'scope': 'synthetic_only'}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.056s
+
+FAILED (failures=2, errors=2)
