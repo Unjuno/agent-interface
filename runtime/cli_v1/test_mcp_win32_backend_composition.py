@@ -59,15 +59,16 @@ def _caller_producer(action, start_gate, state, events, entered, accept):
 
 
 class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
-    async def test_public_mcp_rejects_changed_hwnd_before_operation_creation(self):
+    async def test_public_mcp_rejects_changed_window_thread_before_operation_creation(self):
         """Compose native identity reads through the public route with fake APIs."""
         with tempfile.TemporaryDirectory() as root:
             backend = object.__new__(Win32Backend)
             backend.targets = {"fixture": 123}
             backend.user32 = Mock()
             backend.user32.IsWindow.return_value = True
-            backend.process_identity = Mock(return_value={
-                "pid": 5101, "creation_time_100ns": 7001})
+            backend._window_owner_identity_for_hwnd = Mock(return_value={
+                "pid": 5101, "creation_time_100ns": 7001,
+                "window_thread_id": 701})
             process_factory_calls = []
 
             class Supervisor:
@@ -107,7 +108,8 @@ class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
             try:
                 _, binding = await call("interface_guarded_win32_bind_target")
                 self.assertEqual(binding["status"], "bound")
-                backend.targets["fixture"] = 124
+                # Model numeric HWND reuse by another thread in the same process.
+                backend._window_owner_identity_for_hwnd.return_value["window_thread_id"] = 702
                 response, result = await call("interface_guarded_win32_admit",
                     action_operation_id="d" * 32,
                     target_binding_id=binding["target_binding_id"],
