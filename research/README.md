@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- [Counted task-oracle repair](integration/xvfb_effect_count_oracle_20261023_r01/README.md) and [independent live X count reads](integration/xvfb_counted_effect_local_20261023_r01/README.md) — old task count4 now fails despite stable value; fresh count1 passes; control completion remains separate.
+
 - Local paused-Xvfb caller: [release/recovery endpoints and task-oracle counterexample](integration/xvfb_blocked_release_local_20261023_r01/README.md) — one test passed, but three old keypress handlers are masked by an idempotent property. No exactly-once or general task-success claim.
 
 - Local WSL2 observation prerequisite: [public MCP private-Xvfb R01](integration/xvfb_public_observation_20261023_r01/README.md) — two exact fixture images, timestamp ordering, retained PNG identity and clean close; no input or task-success claim.
