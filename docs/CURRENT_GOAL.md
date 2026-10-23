@@ -1,17 +1,26 @@
 # Current objective and working direction
 
-**Standard-caller cancellation R13 preparation (2026-10-24):** the dispatch
-worker now exits after a verified `recovered` or terminal `unknown` cancellation,
-so its shared MCP operation lock can be released before the lease deadline. A
-public-path regression reproduces recovered cancellation and requires session
-close to succeed within a 150 ms bounded retry window. The targeted supervised
-Win32, owned-session and composition modules pass 42 tests in normal and `-O`
-Python. A broader CLI `unittest` run reached a separate saturated-relay test
-that failed and then left an owned IPC worker blocked during asyncio executor
-shutdown; the run was interrupted before a complete summary. R13 will freeze
-the repaired source and use one fresh fixture attempt to audit cancel, effect,
-independent Q-up, and close.
+**Dispatch lock repair (2026-10-24):** the dispatch worker now exits after a
+verified `recovered` or terminal `unknown` cancellation, allowing its shared MCP
+operation lock to be released before the lease deadline. A public-path
+regression reproduces recovered cancellation and requires session close within
+a 150 ms bounded retry window. The targeted supervised Win32, owned-session and
+composition modules pass 42 tests in normal and `-O` Python. A broader CLI
+`unittest` run reached `test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller`,
+which raises `KeyError: 'source'` because its expected observation shape is
+absent, then leaves an owned IPC worker blocked during asyncio executor
+shutdown. The complete suite has not yet produced a summary.
 
+**Standard-caller cancellation R13 (2026-10-24):** the repaired public stdio-MCP
+path passed its frozen auditor 19/19 on one fresh owned fixture. Same-call
+polling reached injected Q-down in 775.292 ms; one cancel returned in 1.495 ms,
+then exact producer exit, `recovered / release_confirmed=true`, and independent
+same-generation Q-up were observed within 235.151 ms of cancel. `interface_close`
+returned `closed` on its first call in 90.154 ms; fixture exit, hook exit and
+foreground restore passed. The fixture saved the exact R13 sentinel while
+runtime `task_success` remained null. This verifies the specific R12 lock-release
+repair for one Windows fixture; it does not establish MAP01, efficiency, broad
+reliability, or WSLc transfer. See the [R13 packet](../research/integration/win32_supervised_standard_caller_20261024_r13/RESULT.md).
 **Standard-caller cancellation R12 (2026-10-24):** the first pre-admission
 `unknown_call` was recorded, subsequent same-call polling reached the hook in
 1.003 s, and one cancel returned in 1.479 ms. Exact producer exit preceded hook
