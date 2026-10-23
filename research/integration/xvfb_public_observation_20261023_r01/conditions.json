@@ -1,0 +1,38 @@
+{
+  "run_id": "AI-LOCAL-WSL2-XVFB-PUBLIC-OBSERVE-20261023-R01",
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "frozen_at_utc": "2026-10-23T10:11:28.645845+00:00",
+  "source_commit": "e06535d5ce75997637ce838a66de127a7bfcf1a4",
+  "base_main": "706e28bdcbfd3cfc4dc95df2dbf63107c8d10958",
+  "runtime": "Ubuntu WSL2, native process; no WSLc or Docker",
+  "environment_authority": "User selected this PC; dedicated authenticated Xvfb, no Windows desktop input",
+  "hypothesis": "After fixture sync, public persistent-X11 MCP captures two distinct exact 64x64 fixture colors and retained lookup returns identical PNG without recapture.",
+  "schedule": [
+    "new owned authenticated Xvfb :188, TCP disabled, 500ms settle",
+    "draw red, sync, one public observe, retained result lookup",
+    "draw green, sync, one public observe, retained result lookup",
+    "public close, owned pidfd TERM, reap, independent cleanup check"
+  ],
+  "pass": "Both images 64x64; every pixel exact red then green; sync <= invocation <= capture start <= capture end <= return; retained PNG identical and operation_invoked false; public close closed, release_attempted false and connection closed; Xvfb reaped, independent absence check",
+  "fail": "Any unmet condition; no retry after attempt marker, retain first failure",
+  "construction": "Source compile only; old /tmp dependency setup lost across WSL restart, recreated in persistent home cache before formal freeze; pip install report and all resolved versions preserved",
+  "xvfb_sha256": "6b27845931670c8c9b3ce7423696a452ce3cab1c7f316ce5f7ea7f1297fa2f84",
+  "finite_limits": {
+    "internal_alarm_seconds": 45,
+    "host_timeout_seconds": 90,
+    "max_result_polls_per_call": 100,
+    "result_poll_interval_seconds": 0.05
+  },
+  "input_operations": 0,
+  "wslc_allocations_consumed": 0,
+  "scope_limit": "Observation/environment-readiness sample only, not input-caused task success, release, recovery, MAP01, model/provider efficiency, hard deadline or repeated reliability.",
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--",
+    "/home/user/.cache/agent-interface/xvfb-observation-20261023-r01-venv/bin/python",
+    "-B",
+    "/mnt/c/Users/user/Documents/Codex/2026-10-03/new-chat-2/worktrees/win32-supervisor-plan/research/integration/xvfb_public_observation_20261023_r01/run_probe.py"
+  ]
+}
