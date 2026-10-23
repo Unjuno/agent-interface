@@ -3,10 +3,12 @@ import copy
 import asyncio
 import time
 import unittest
+from unittest.mock import Mock
 
 from runtime.guarded_win32_v1.operation_owner import OperationOwner, OwnerRefused
 from runtime.cli_v1.owned_win32_session import OwnedWin32SessionOwner
 from runtime.cli_v1.mcp_guarded import register_guarded_tools
+from runtime.backends.win32_v1.backend import Win32Backend
 
 
 GEN_A = "a" * 64
@@ -75,6 +77,25 @@ class OwnedWin32SessionTests(unittest.TestCase):
                                                       process_identity=self.identity))
         self.assertTrue(self.owner.authorize_producer_start(
             ACTION_ID, GEN_A, self.process, lambda: None))
+
+    def test_backend_target_generation_rejects_same_process_new_hwnd_at_public_admission(self):
+        backend = object.__new__(Win32Backend)
+        backend.targets = {'fixture': 42}
+        backend.user32 = Mock()
+        backend.user32.IsWindow.return_value = True
+        backend.process_identity = Mock(return_value={
+            'pid': 51, 'creation_time_100ns': 7001})
+        self.session.bind_target_generation_reader(
+            lambda: backend.target_generation('fixture'))
+
+        binding = self.session.bind_target_generation()
+        backend.targets['fixture'] = 43
+        with self.assertRaisesRegex(RuntimeError, 'TARGET_GENERATION_CHANGED'):
+            self.session.admit_action_from_binding(CALL_ID, ACTION_ID,
+                binding['target_binding_id'],
+                operation_deadline_ns=self.clock() + 5_000_000_000,
+                obligations=['key:a'])
+        self.assertEqual(self.owner._records, {})
 
     def test_duplicate_cancel_keeps_action_and_cancellation_receipts_separate(self):
         self.start_action()

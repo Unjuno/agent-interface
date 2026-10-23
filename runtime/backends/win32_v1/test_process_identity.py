@@ -1,3 +1,5 @@
+import hashlib
+import json
 import unittest
 from unittest.mock import Mock
 
@@ -41,6 +43,37 @@ class ProcessIdentityTests(unittest.TestCase):
         })
         backend.kernel32.OpenProcess.assert_called_once_with(0x1000, False, 51)
         backend.kernel32.CloseHandle.assert_called_once_with(99)
+
+    def test_target_generation_binds_hwnd_and_process_creation_identity(self):
+        backend = self.backend()
+        pids = iter([51, 51])
+        backend.user32.GetWindowThreadProcessId.side_effect = (
+            lambda hwnd, out: self.set_pid(out, next(pids)))
+        backend.kernel32.OpenProcess.return_value = 99
+
+        def process_times(handle, creation, exited, kernel, user):
+            creation._obj.dwLowDateTime = 0x12345678
+            creation._obj.dwHighDateTime = 0x9ABCDEF0
+            return 1
+
+        backend.kernel32.GetProcessTimes.side_effect = process_times
+        expected = hashlib.sha256(json.dumps(
+            [42, 51, 0x9ABCDEF012345678], separators=(',', ':')
+        ).encode('ascii')).hexdigest()
+
+        self.assertEqual(backend.target_generation('fixture'), expected)
+        backend.kernel32.CloseHandle.assert_called_once_with(99)
+
+    def test_target_generation_changes_when_hwnd_changes_with_same_process(self):
+        backend = self.backend()
+        backend.process_identity = Mock(return_value={
+            'pid': 51, 'creation_time_100ns': 7001})
+        first = backend.target_generation('fixture')
+        backend.targets['fixture'] = 43
+        second = backend.target_generation('fixture')
+
+        self.assertNotEqual(first, second)
+        self.assertEqual(backend.process_identity.call_count, 2)
 
     def test_owner_change_during_identity_query_fails_closed_and_closes_handle(self):
         backend = self.backend()
