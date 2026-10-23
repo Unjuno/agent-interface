@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import hashlib
-import io
+import binascii
+import struct
 import time
 import uuid
+import zlib
 from pathlib import Path
 
 
@@ -16,8 +18,27 @@ class CaptureArtifacts:
             raise ValueError("Win32 capture artifacts do not retain RGB handoff state")
         self.directory = Path(directory).resolve()
         self.directory.mkdir(parents=True, exist_ok=True)
-        from PIL import Image
-        self.image = Image
+
+    @staticmethod
+    def _encode_png(raw, width, height):
+        rows = bytearray()
+        for y in range(height):
+            rows.append(0)  # PNG filter: None
+            start = y * width * 4
+            for offset in range(start, start + width * 4, 4):
+                blue, green, red = raw[offset:offset + 3]
+                rows.extend((red, green, blue))
+
+        def chunk(kind, data):
+            body = kind + data
+            return (struct.pack(">I", len(data)) + body
+                    + struct.pack(">I", binascii.crc32(body) & 0xffffffff))
+
+        converted_ns = time.monotonic_ns()
+        header = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        data = (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", header)
+                + chunk(b"IDAT", zlib.compress(rows)) + chunk(b"IEND", b""))
+        return data, converted_ns, time.monotonic_ns()
 
     def write(self, raw, width, height):
         if (type(width) is not int or type(height) is not int
@@ -26,12 +47,7 @@ class CaptureArtifacts:
             raise ValueError("Win32 artifact pixel dimensions mismatch")
         started_ns = time.monotonic_ns()
         # GetDIBits uses top-down 32-bit BI_RGB with B,G,R,unused byte order.
-        image = self.image.frombytes("RGB", (width, height), raw, "raw", "BGRX")
-        converted_ns = time.monotonic_ns()
-        encoded = io.BytesIO()
-        image.save(encoded, format="PNG")
-        data = encoded.getvalue()
-        encoded_ns = time.monotonic_ns()
+        data, converted_ns, encoded_ns = self._encode_png(raw, width, height)
         path = self.directory / (uuid.uuid4().hex + ".png")
         with path.open("xb") as handle:
             handle.write(data)

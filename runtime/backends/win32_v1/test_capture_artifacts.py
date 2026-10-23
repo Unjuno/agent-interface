@@ -1,10 +1,11 @@
+import binascii
 import hashlib
+import struct
 import tempfile
 import unittest
+import zlib
 from pathlib import Path
 from unittest.mock import Mock
-
-from PIL import Image
 
 from runtime.backends.win32_v1.backend import Win32Backend
 from runtime.backends.win32_v1.capture_artifacts import CaptureArtifacts
@@ -33,9 +34,23 @@ class Win32CaptureArtifactTests(unittest.TestCase):
             self.assertEqual(artifact["sha256"], hashlib.sha256(data).hexdigest())
             self.assertEqual(artifact["bytes"], len(data))
             self.assertEqual((artifact["width"], artifact["height"]), (2, 1))
-            with Image.open(path) as image:
-                self.assertEqual(image.mode, "RGB")
-                self.assertEqual(list(image.getdata()), [(255, 0, 0), (0, 255, 0)])
+            self.assertEqual(data[:8], b"\x89PNG\r\n\x1a\n")
+            offset = 8
+            chunks = []
+            while offset < len(data):
+                size = struct.unpack(">I", data[offset:offset + 4])[0]
+                kind = data[offset + 4:offset + 8]
+                payload = data[offset + 8:offset + 8 + size]
+                stored_crc = struct.unpack(">I", data[offset + 8 + size:offset + 12 + size])[0]
+                self.assertEqual(stored_crc, binascii.crc32(kind + payload) & 0xffffffff)
+                chunks.append((kind, payload))
+                offset += size + 12
+            self.assertEqual(chunks[0][0], b"IHDR")
+            self.assertEqual(struct.unpack(">IIBBBBB", chunks[0][1]),
+                             (2, 1, 8, 2, 0, 0, 0))
+            pixels = zlib.decompress(b"".join(payload for kind, payload in chunks
+                                                if kind == b"IDAT"))
+            self.assertEqual(pixels, bytes((0, 255, 0, 0, 0, 255, 0)))
             self.assertEqual(row["sha256"], hashlib.sha256(raw).hexdigest())
             self.assertEqual(row["native_window_id"], 1234)
             self.assertEqual(row["region"], [3, 4, 2, 1])

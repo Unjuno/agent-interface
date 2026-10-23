@@ -32,15 +32,17 @@ zero character and save events, no effect file, and no release attempt to
 score. The fixture process exited cleanly; target identity before/after was
 unchanged. The raw response and failed frozen audit are preserved unchanged.
 
-The repair adds Win32 PNG artifact output from the exact top-down GDI BGRX
-capture, preserving raw and PNG hashes and capture metadata. The existing
-read-only observation test now verifies that the image is saved without input;
-28 focused tests pass in normal and optimized Python. The first two repair-suite
-runs each failed one old assertion that required this now-supported artifact
-request to refuse; those logs are retained. The corrected regression now
-requires a saved PNG and verifies its hash against the exact raw Win32 capture.
-R01 remains a failure; only a new, separately identified R02 can test whether
-the repaired public caller reaches input.
+The repair adds dependency-free Win32 PNG artifact output from the exact
+top-down GDI BGRX capture, preserving raw and PNG hashes and capture metadata.
+The read-only observation regression verifies saved PNG bytes, decoded pixels,
+chunk CRCs and no input side effects. The final focused suite passes 28/28 in
+normal and optimized Python, and the full CLI/API suite from CI passes 131/131
+(7 platform skips) in both modes. Initial repair-suite runs failed old
+assertions that required supported artifact requests to refuse; those logs are
+retained. The first PNG implementation relied on Pillow, which was absent from
+CI on all three OSes; the CI failures prompted a standard-library encoder and
+are preserved in the CI logs. R01 remains a failure. Separate R02 and R03
+results are in their own packets.
 
 The standard `runtime.cli_v1.test_mcp_server` suite also passes 24/24 in normal
 and optimized Python after expanding this sparse checkout to include its
