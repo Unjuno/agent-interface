@@ -13,8 +13,9 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import Mock
 
-from runtime.backends.win32_v1.backend import VK_CONTROL
+from runtime.backends.win32_v1.backend import VK_CONTROL, Win32Backend
 from runtime.backends.win32_v1.test_supervised_session import (
     RetainedProcess, _identity, _producer_session, _recovery_observer_server,
 )
@@ -58,6 +59,71 @@ def _caller_producer(action, start_gate, state, events, entered, accept):
 
 
 class GuardedWin32BackendCompositionTests(unittest.IsolatedAsyncioTestCase):
+    async def test_public_mcp_rejects_changed_hwnd_before_operation_creation(self):
+        """Compose native identity reads through the public route with fake APIs."""
+        with tempfile.TemporaryDirectory() as root:
+            backend = object.__new__(Win32Backend)
+            backend.targets = {"fixture": 123}
+            backend.user32 = Mock()
+            backend.user32.IsWindow.return_value = True
+            backend.process_identity = Mock(return_value={
+                "pid": 5101, "creation_time_100ns": 7001})
+            process_factory_calls = []
+
+            class Supervisor:
+                def cancel(self, *_args, **_kwargs):
+                    raise AssertionError("cancel is outside this admission test")
+
+                def producer_started(self, *_args, **_kwargs):
+                    raise AssertionError("producer start is outside this admission test")
+
+                def close(self):
+                    return None
+
+            owner = None
+
+            def owner_factory(*_args):
+                nonlocal owner
+                operation_owner = OperationOwner(clock_ns=time.monotonic_ns,
+                    process_identity_reader=_identity)
+                owner = OwnedWin32SessionOwner(operation_owner, Supervisor())
+                owner.bind_target_generation_reader(
+                    lambda: backend.target_generation("fixture"))
+                return owner
+
+            def producer_factory(action):
+                process_factory_calls.append(action)
+                raise AssertionError("generation refusal must precede producer factory")
+
+            server = create_server({"fixture": 123}, root,
+                session_mode="guarded-win32",
+                _guarded_win32_owner_factory=owner_factory,
+                _guarded_win32_producer_factory=producer_factory)
+
+            async def call(name, **arguments):
+                response = await server.call_tool(name, arguments)
+                return response, json.loads(response.content[0].text)
+
+            try:
+                _, binding = await call("interface_guarded_win32_bind_target")
+                self.assertEqual(binding["status"], "bound")
+                backend.targets["fixture"] = 124
+                response, result = await call("interface_guarded_win32_admit",
+                    action_operation_id="d" * 32,
+                    target_binding_id=binding["target_binding_id"],
+                    operation_deadline_ns=time.monotonic_ns() + 5_000_000_000,
+                    obligations=["key:CTRL"])
+
+                self.assertTrue(response.isError)
+                self.assertEqual(result["error"], "TARGET_GENERATION_CHANGED")
+                self.assertFalse(result["operation_invoked"])
+                self.assertFalse(result["input_dispatched"])
+                self.assertEqual(owner._calls, {})
+                self.assertEqual(owner._owner._records, {})
+                self.assertEqual(process_factory_calls, [])
+            finally:
+                owner.close()
+
     async def _run_case(self, *, accept, stubborn=False, cancel_before_gate=False):
         context = multiprocessing.get_context("spawn")
         with context.Manager() as manager, tempfile.TemporaryDirectory() as root:
