@@ -1,0 +1,236 @@
+{
+  "status": "PASS_COMPLETION_HOLD_DISCRIMINATOR_SCOPED",
+  "checks": [
+    {
+      "check": "independent owned cleanup",
+      "passed": true
+    },
+    {
+      "check": "actual host exit",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: actual arm and cleanup",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: one declared completion hold",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: at least one second sampled interval",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: literal request prefix",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: conservative obligation while completion withheld",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: initial neutral/zero",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: key-state discriminator",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: candidate one effect / baseline observed count",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: independent final count matches handler trace",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: final neutral with no held keys",
+      "passed": true
+    },
+    {
+      "check": "0-baseline: public input and close completed",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: actual arm and cleanup",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: one declared completion hold",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: at least one second sampled interval",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: literal request prefix",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: conservative obligation while completion withheld",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: initial neutral/zero",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: key-state discriminator",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: candidate one effect / baseline observed count",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: independent final count matches handler trace",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: final neutral with no held keys",
+      "passed": true
+    },
+    {
+      "check": "1-candidate: public input and close completed",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: actual arm and cleanup",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: one declared completion hold",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: at least one second sampled interval",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: literal request prefix",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: conservative obligation while completion withheld",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: initial neutral/zero",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: key-state discriminator",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: candidate one effect / baseline observed count",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: independent final count matches handler trace",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: final neutral with no held keys",
+      "passed": true
+    },
+    {
+      "check": "2-candidate: public input and close completed",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: actual arm and cleanup",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: one declared completion hold",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: at least one second sampled interval",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: literal request prefix",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: conservative obligation while completion withheld",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: initial neutral/zero",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: key-state discriminator",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: candidate one effect / baseline observed count",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: independent final count matches handler trace",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: final neutral with no held keys",
+      "passed": true
+    },
+    {
+      "check": "3-baseline: public input and close completed",
+      "passed": true
+    },
+    {
+      "check": "same keyboard repeat controls",
+      "passed": true
+    }
+  ],
+  "measurements": [
+    {
+      "index": 0,
+      "arm": "baseline",
+      "held_start_count": 1,
+      "held_end_count": 10,
+      "final_count": 10,
+      "hold_ms": 1005.57128,
+      "call_ms": 1057.481246,
+      "baseline_repeat_observed": true
+    },
+    {
+      "index": 1,
+      "arm": "candidate",
+      "held_start_count": 1,
+      "held_end_count": 1,
+      "final_count": 1,
+      "hold_ms": 1007.249239,
+      "call_ms": 1059.670793,
+      "baseline_repeat_observed": false
+    },
+    {
+      "index": 2,
+      "arm": "candidate",
+      "held_start_count": 1,
+      "held_end_count": 1,
+      "final_count": 1,
+      "hold_ms": 1006.448918,
+      "call_ms": 1054.185851,
+      "baseline_repeat_observed": false
+    },
+    {
+      "index": 3,
+      "arm": "baseline",
+      "held_start_count": 1,
+      "held_end_count": 10,
+      "final_count": 10,
+      "hold_ms": 1007.108662,
+      "call_ms": 1062.65541,
+      "baseline_repeat_observed": true
+    }
+  ],
+  "scope": "Two matched samples per method, ABBA, injected completion hold after actual sync; not network reply loss, blocked send, production reliability or general task economics."
+}
