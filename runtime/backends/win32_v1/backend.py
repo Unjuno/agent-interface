@@ -505,6 +505,8 @@ class Win32Backend:
         if state & 1:
             return False
         before = self._async_key_state_query_witness(target)
+        if before is None:
+            return None
         try:
             confirmed = int(self.user32.GetAsyncKeyState(vk)) & 0x8001
         except Exception as error:
