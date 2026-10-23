@@ -1,5 +1,18 @@
 # Current objective and working direction
 
+**Standard-caller cancellation R12 (2026-10-24):** the first pre-admission
+`unknown_call` was recorded, subsequent same-call polling reached the hook in
+1.003 s, and one cancel returned in 1.479 ms. Exact producer exit preceded hook
+UP; public results reached `recovered / release_confirmed=true`, independent
+same-generation readback observed Q-up, and the exact fixture effect was saved.
+The audit is FAIL_OR_UNKNOWN 18/19 because close stayed busy through 37
+attempts/4 s. Source inspection locates the likely cause: the dispatch worker
+continues while action status is `running` after cancellation has reached
+`recovered`, retaining the shared MCP operation lock. No local child remained;
+public close still did not confirm. The next step is a local regression and
+minimal exit-condition repair before another one-shot live check. See the
+[R12 result](../research/integration/win32_supervised_standard_caller_20261024_r12/RESULT.md).
+
 **Standard-caller cancellation R11 (2026-10-24):** 250 ms polling of the
 returned public call ID advanced execution to injected Q-down in 984.654 ms.
 The callback was held through a 1.699 ms public cancel response; the exact
