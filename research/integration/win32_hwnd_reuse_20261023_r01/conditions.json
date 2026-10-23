@@ -1,0 +1,23 @@
+{
+  "schema": "win32-hidden-hwnd-reuse-conditions-v1",
+  "attempt_id": "win32-hwnd-reuse-20261023-r01",
+  "source_commit": "721a14717319b364e00e9e817c6212f0585b64fe",
+  "target": "two sequential hidden STATIC HWNDs created by this probe on one thread",
+  "actions": [
+    "create first hidden HWND",
+    "read native owner identity and production target_generation",
+    "destroy first HWND and confirm IsWindow false",
+    "create second hidden HWND on same thread",
+    "read native owner identity and production target_generation",
+    "destroy second HWND and confirm IsWindow false"
+  ],
+  "input_sent": false,
+  "window_activated": false,
+  "retry_policy": "one attempt; retain non-reuse as inconclusive; no retry",
+  "discriminator": "If numeric HWND, PID, GUI-thread ID, and process creation time all match and target_generation is equal, record a demonstrated generation alias across HWND destruction/recreation.",
+  "decision": {
+    "same_hwnd_same_identity_same_generation": "COUNTEREXAMPLE_CONFIRMED",
+    "same_hwnd_but_generation_differs": "REUSE_OBSERVED_NO_ALIAS",
+    "different_hwnd": "NO_REUSE_OBSERVED_IN_THIS_SINGLE_TRIAL"
+  }
+}
