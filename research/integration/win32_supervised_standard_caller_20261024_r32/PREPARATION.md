@@ -1,0 +1,5 @@
+# R32 preparation and custody
+
+R32 starts from current main `f9c9411d0ee19f8cc478286e4d7fc3cadd23c75e` after R31 merged. The input-free preflight verifies R31 raw/audit/post-hoc trace hashes and semantics, current runtime and instrumentation hashes, the read-only absent `LowLevelHooksTimeout`, the fake helper/backend/SendInput wrappers, and exact alignment between the frozen task-effect oracle and the operation list. This attempt removes the R31 text operation, so recovery should have only the intercepted Q key to release.
+
+After preflight PASS, the live attempt permits one owned fixture, one public standard-program dispatch, one cancellation after the exact hook callback entry, 20 read-only exact-call polls during the 1250 ms hold, and no retry/replay or second cancellation. The callback has a 1500 ms self-release cap. The target is owned by the fixture PID and process creation time; the prior foreground window is restored. Registry is read only. No WSLc/Docker operation is included in this Win32 trial.

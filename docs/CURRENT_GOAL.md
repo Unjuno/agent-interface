@@ -1,3 +1,18 @@
+**Win32 exact Q-up isolation R32 (2026-10-24):** the corrected no-text fixture
+matched click/save/empty-text exactly. During a 1258.489 ms held Q-down callback,
+the exact recovery Q-up `SendInput` returned after 310.487 ms; `release_all`,
+recovery receipt, observer neutral receipt, and four public recovered polls all
+arrived before callback return. The hook never observed Q-up, the early separate
+state sample preceded recovery, and the producer exited after callback return;
+strict audit remains FAIL_OR_UNKNOWN (17/20). This separates software release
+receipts from proof that Q-up reached the target. See [R32](../research/integration/win32_supervised_standard_caller_20261024_r32/RESULT.md).
+
+**WSLc isolated local runtime smoke S01 (2026-10-24):** WSL/WSLc 3.0.3.0; the
+exact pinned Python image inspect returned not found. One unique-name `--pull
+never` run stopped with `WSLC_E_IMAGE_NOT_FOUND` before writing a full CID or
+executing application code. A read-only query for that generated name returned
+no match; no container mutation or unrelated inventory query occurred. This is
+HOLD/UNKNOWN, not a WSLc pass or shared-allocation clearance. See [S01](../research/integration/wslc_local_runtime_smoke_20261024_s01/RESULT.md).
 **Win32 recovery-boundary trace R31 (2026-10-24):** one fresh fixture retained
 its Q-down callback for 1245.455 ms; all 20 same-call polls stayed
 pending/release-unconfirmed and strict audit was FAIL_OR_UNKNOWN (18/20).
