@@ -46,17 +46,25 @@ class GatedSyntheticProcess:
         return None
 
 
-def _spawned_gate_producer(start_gate, down, task_done, started):
+def _spawned_gate_producer(start_gate, down, application_request, started):
     if start_gate.wait(5):
         down.set()
-        task_done.set()
+        application_request.set()
         started.set()
         while True:
             time.sleep(0.01)
 
 
-def _synthetic_task_effect_oracle(task_done, action, oracle_id, send):
-    outcome = "success" if task_done.wait(5) else "unknown"
+def _synthetic_application_worker(application_request, application_completed,
+                                  application_ready, stop):
+    application_ready.set()
+    if application_request.wait(5):
+        application_completed.set()
+    stop.wait(5)
+
+
+def _synthetic_task_effect_oracle(application_completed, action, oracle_id, send):
+    outcome = "success" if application_completed.wait(5) else "unknown"
     send.send({
         "call_id": action["call_id"],
         "operation_id": action["operation_id"],
@@ -64,8 +72,8 @@ def _synthetic_task_effect_oracle(task_done, action, oracle_id, send):
         "oracle_id": oracle_id,
         "outcome": outcome,
         "observed_monotonic_ns": time.monotonic_ns(),
-        "evidence_ref": "synthetic-task-event:completed" if outcome == "success"
-            else "synthetic-task-event:timeout",
+        "evidence_ref": "synthetic-application-state:completed" if outcome == "success"
+            else "synthetic-application-state:timeout",
     })
     send.close()
 
@@ -320,11 +328,20 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_public_cancel_composes_spawned_recovery_and_independent_readback(self):
         context = multiprocessing.get_context("spawn")
-        down, neutral, task_done, producer_started = (
+        down, neutral, application_request, application_completed = (
             context.Event(), context.Event(), context.Event(), context.Event())
+        application_ready, application_stop, producer_started = (
+            context.Event(), context.Event(), context.Event())
         child_handles = []
         adapter_holder = []
         generation = "a" * 64
+
+        application = context.Process(target=_synthetic_application_worker,
+            args=(application_request, application_completed,
+                  application_ready, application_stop))
+        child_handles.append((application, None, None))
+        application.start()
+        self.assertTrue(application_ready.wait(5))
 
         def make_owner(*_args):
             gate = OperationOwner(clock_ns=time.monotonic_ns,
@@ -356,14 +373,14 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
         def producer_factory(_action):
             start_gate = context.Event()
             process = context.Process(target=_spawned_gate_producer,
-                args=(start_gate, down, task_done, producer_started))
+                args=(start_gate, down, application_request, producer_started))
             child_handles.append((process, None, None))
             return process, lambda: _synthetic_process_identity(process), start_gate.set
 
         def task_oracle(action):
             receive, send = context.Pipe(duplex=False)
             process = context.Process(target=_synthetic_task_effect_oracle,
-                args=(task_done, action, "b" * 32, send))
+                args=(application_completed, action, "b" * 32, send))
             child_handles.append((process, receive, send))
             process.start()
             try:
@@ -398,6 +415,8 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(started["status"], "running")
                 self.assertTrue(await asyncio.to_thread(producer_started.wait, 5))
                 self.assertTrue(down.is_set())
+                self.assertTrue(await asyncio.to_thread(
+                    application_completed.wait, 5))
 
                 effect = json.loads((await server.call_tool(
                     "interface_guarded_win32_verify_task", {
@@ -442,6 +461,7 @@ class GuardedWin32PublicRouteTests(unittest.IsolatedAsyncioTestCase):
                 self.assertTrue(neutral.is_set())
                 self.assertIsInstance(cancellation["result"]["producer_exit_code"], int)
             finally:
+                application_stop.set()
                 if adapter_holder:
                     adapter_holder[0].close()
                 for process, receive, send in child_handles:

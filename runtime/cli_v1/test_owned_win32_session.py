@@ -214,6 +214,27 @@ class OwnedWin32SessionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "immutable"):
             self.session.record_task_effect(CALL_ID, changed)
 
+    def test_task_oracle_timeout_cannot_be_promoted_by_late_receipt(self):
+        self.start_action()
+        self.assertTrue(self.session.begin_task_effect_verification(CALL_ID))
+        timed_out = self.session.fail_task_effect_verification(
+            CALL_ID, "independent_task_oracle_response_timeout")
+        receipt = {
+            "call_id": CALL_ID,
+            "operation_id": ACTION_ID,
+            "target_generation": GEN_A,
+            "oracle_id": "6" * 32,
+            "outcome": "success",
+            "observed_monotonic_ns": self.clock(),
+            "evidence_ref": "synthetic-application-state:completed",
+        }
+        with self.assertRaisesRegex(ValueError, "immutable"):
+            self.session.record_task_effect(CALL_ID, receipt)
+        retained = self.session.interface_result(CALL_ID)
+        self.assertEqual(timed_out["task_effect"]["status"], "unknown")
+        self.assertEqual(retained["task_effect"]["status"], "unknown")
+        self.assertIsNone(retained["task_effect"]["task_success"])
+
     def test_registered_public_cancel_callback_uses_the_same_retained_operation(self):
         self.start_action()
         server = FakeToolServer()
