@@ -29,13 +29,16 @@ separate fields: neutral readback and cancellation do not set task success;
 only the generation-bound independent oracle receipt does. An oracle timeout
 or malformed/mismatched receipt remains unknown and cannot be retried into a
 replacement result. The oracle tool is absent unless an explicit injected
-oracle is supplied.
+oracle is supplied. R04 further exercises two standard-caller generations:
+generation A remains UNKNOWN/replay-denied after a mismatched recovery receipt;
+a separate server/session admits generation B and receives a distinct oracle
+receipt, while a final lookup confirms generation A did not change.
 
 Local verification on this checkpoint passes the focused Win32 adapter,
-public-composition, and cancellation suite 24/24 in normal and optimized
+public-composition, and cancellation suite 25/25 in normal and optimized
 CPython 3.11.9. The existing MCP owned-process and guarded-X11 regression suite
 passes 90/90 in both modes. The exact public-caller result and raw test output
-are recorded in the [R03 independent application-effect packet](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r03/README.md); the [R02 predecessor](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r02/README.md) remains immutable. A regression also confirms that a late oracle receipt cannot promote an earlier timeout from UNKNOWN.
+are recorded in the [R04 two-generation public-caller packet](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r04/README.md); the [R03 application-effect packet](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r03/README.md) and [R02 predecessor](../../research/integration/win32_public_mcp_synthetic_cancellation_20261023_r02/README.md) remain immutable. A regression also confirms that a late oracle receipt cannot promote an earlier timeout from UNKNOWN.
 
 This completes only the current synthetic composition slice of phases 2b–2d.
 It does not supply the full failure-schedule/attempt-accounting matrix, a
@@ -123,20 +126,21 @@ model, not a replacement for the frozen baseline or evidence of release.
 
 ### Phase 2: current-main composition
 
-Only after Phase 1 passes, connect the opt-in owner to the standard guarded
-caller through an explicit Win32 adapter. The private `MoveBridge` now pins a
-digest of the HWND owner's PID and process creation time in its observation
-binding and refuses if that generation cannot be queried or changes before
-bound input. This is only a target-generation prerequisite: `mcp_server`
-still has no guarded-Win32 route, `MoveBridge` still executes synchronously,
-and neither is connected to the inert operation owner. The remaining Phase 2
-gate is an explicit opt-in standard-caller adapter with executable composed
-tests for target-generation change after model wait, cancellation while a
-child is blocked, bounded caller response, separate effect scoring, exact
-attempt accounting, and preservation of the completed prefix. Keep X11 worker
-selection unchanged and fail closed if the selected backend and recovery
-adapter disagree. Do not change the default backend or report a live release
-result from these tests.
+Historical checkpoint: the private `MoveBridge` pinned a digest of the HWND
+owner's PID and process creation time and refused if that generation could
+not be queried or changed before bound input. At that point there was no
+guarded-Win32 public route and the synchronous bridge was not connected to the
+inert operation owner. That gap is now closed for a synthetic-only slice:
+`mcp_server` exposes an opt-in dependency-injected route, target generation is
+rechecked before admission, cancellation composes spawned recovery and
+independent neutral-state observation, and a distinct process can score task
+effect. R04 also verifies that generation A remains UNKNOWN/replay-denied
+while generation B succeeds as a separate public session. See the
+[2026-10-23 implementation plan](../superpowers/plans/2026-10-23-win32-supervisor-custody-plan.md)
+for the remaining failure-matrix, actual-backend-with-inert-API and exact
+attempt-accounting work. Keep X11 worker selection unchanged and fail closed
+if the selected backend and recovery adapter disagree. Do not change the
+default backend or report a live release result from these tests.
 
 #### Approved implementation slice and file boundaries
 
@@ -200,9 +204,10 @@ result stays UNKNOWN and the route remains opt-in/disabled pending the native
 gate. Do not reinterpret a fake observer or a bridge-local effect callback as
 an independent application oracle.
 
-The caller integration is accepted only when all step 2d assertions pass on
-the same frozen source and the existing guarded-X11 regression suite remains
-green. This is a plan gate, not evidence that steps 2a–2d have been implemented.
+The synthetic public-caller slice passed its retained R04 suite, but the
+broader 2d failure-schedule and attempt-accounting matrix remains open. Its
+local tests do not establish native release behavior. The new implementation
+plan defines the next bounded synthetic work and its local regression gates.
 
 ### Phase 3: isolated native discriminator
 
