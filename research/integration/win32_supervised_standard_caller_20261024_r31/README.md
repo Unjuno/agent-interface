@@ -1,0 +1,7 @@
+# Win32 cancellation R31 — recovery helper and SendInput boundary trace
+
+R30 established that exact producer retirement completed about 8.6 ms after cancel began, while the hook callback remained blocked for roughly 1.25 s and all same-call polls stayed pending. R31 keeps the frozen stimulus and strict release gate, then records the exact supervisor helper exchange, helper process role, `_recover`, `Win32Backend.release_all`, and each Q-up `Win32Backend._send` entry/return/exception. The wrappers delegate once, preserve the original values, and issue no input themselves.
+
+The trace is emitted as short append-only JSONL records from each process, tagged with PID and helper role. An input-free subprocess self-test exercises the wrappers against fake processes, pipe messages, backend, and `SendInput`, proving installation without native effects. One new fixture, one dispatch, at most one cancel, and one frozen callback hold are permitted after preflight passes. The strict release outcome remains FAIL_OR_UNKNOWN unless recovery confirmation and independent same-generation Q-up arrive while the callback is still blocked.
+
+The packet retains the R30 predecessor hashes, all preflight attempts, raw results, trace, read-only audit, and final content manifest. No runtime source, registry setting, WSLc allocation, or Docker state is changed.
