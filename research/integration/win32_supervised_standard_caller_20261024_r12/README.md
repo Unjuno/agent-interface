@@ -1,0 +1,7 @@
+# Win32 supervised standard MCP cancellation and bounded close drain — R12
+
+R12 is a one-shot local Windows trial through the public stdio-MCP caller, frozen at source `7c5abc28f3f2dc06b9c2f7c1b113b4779539e756`. It carries forward R11's 250 ms polling of the exact pending call. A first `unknown_call` may occur before the public call ID is admitted to the Win32 session; the runner records its status and accepts only that initial, no-operation response. Later polls must return the exact call ID without error.
+
+After the hook confirms injected Q-down, the runner requires a fresh same-call `running` result, sends exactly one cancel, and releases the hook after the cancel response. It then observes the exact producer exit, terminal recovery result, and independent same-generation Q-up. Session close is attempted until it succeeds or the 4-second finite drain ends; only explicit `busy` refusals are retried, every attempt is retained, each response is capped at 1 second, and retry spacing is 100 ms.
+
+PASS requires a callback held through cancel, exact producer retirement before recovery UP, recovered release and independent neutral readback within 2500 ms, exact fixture effect, bounded close to `closed`, and complete local cleanup. Any mismatch is preserved as FAIL_OR_UNKNOWN; no replay or rerun. Only this user-authorized PC and one owned fixture are used. No WSLc or Docker allocation is used.
