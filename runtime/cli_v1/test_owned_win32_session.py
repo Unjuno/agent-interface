@@ -29,6 +29,7 @@ class FakeCancellationSupervisor:
     def __init__(self, owner):
         self.owner = owner
         self.calls = []
+        self.closed = False
 
     def producer_started(self, operation_id, generation, process, *, process_identity):
         return self.owner.producer_started(operation_id, generation, process,
@@ -39,6 +40,9 @@ class FakeCancellationSupervisor:
         self.owner.request_cancel(operation_id, generation,
                                   cleanup_deadline_ns=cleanup_deadline_ns)
         return self.owner.result(operation_id)
+
+    def close(self):
+        self.closed = True
 
 
 class FakeToolServer:
@@ -136,6 +140,53 @@ class OwnedWin32SessionTests(unittest.TestCase):
         self.assertEqual(self.session.interface_result(CALL_ID), old)
         self.assertEqual(new_session.interface_result("7" * 32)["action"]["status"],
                          "admitted")
+
+    def test_close_keeps_custody_open_while_action_is_unresolved(self):
+        self.start_action()
+        result = self.session.close()
+        self.assertEqual(result["status"], "busy")
+        self.assertEqual(self.session.state, "open")
+        self.assertFalse(self.supervisor.closed)
+
+    def test_cancel_during_producer_factory_never_opens_the_child_start_gate(self):
+        import threading
+        self.session.admit_action(CALL_ID, ACTION_ID, GEN_A,
+            operation_deadline_ns=self.clock() + 5_000_000_000,
+            obligations=["key:a"])
+        factory_entered, factory_release = threading.Event(), threading.Event()
+        start_gate = threading.Event()
+
+        class GatedProcess(FakeProcess):
+            def start(self):
+                self.alive = True
+
+        process = GatedProcess(4201)
+        identity = {"pid": process.pid, "creation_time_100ns": 9201}
+        self.owner._process_identity_reader = lambda handle: identity if handle is process else None
+        failures = []
+        def factory(_action):
+            factory_entered.set()
+            self.assertTrue(factory_release.wait(2))
+            return process, identity, start_gate.set
+
+        def start():
+            try:
+                self.session.start_producer(CALL_ID, factory)
+            except BaseException as error:
+                failures.append(error)
+        worker = threading.Thread(target=start, daemon=True)
+        worker.start()
+        self.assertTrue(factory_entered.wait(1))
+        canceled = self.session.cancel_guarded(CALL_ID,
+            cancellation_operation_id="3" * 32,
+            cleanup_deadline_ns=self.clock() + 2_000_000_000)
+        self.assertEqual(canceled["status"], "pending")
+        factory_release.set()
+        worker.join(2)
+        self.assertFalse(worker.is_alive())
+        self.assertEqual(failures, [])
+        self.assertFalse(start_gate.is_set())
+        self.assertEqual(self.owner.result(ACTION_ID)["phase"], "cancel_pending")
 
     def test_registered_public_cancel_callback_uses_the_same_retained_operation(self):
         self.start_action()

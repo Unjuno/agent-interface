@@ -8,6 +8,7 @@ from contextlib import asynccontextmanager
 import json
 from itertools import islice, dropwhile
 import math
+import os
 from pathlib import Path
 import threading
 import time
@@ -167,9 +168,20 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                   guarded_prestarted_cancel_supervisor=False,
                   _guarded_cancel_supervisor_target=None,
                   _guarded_cancel_transaction_timeout_s=3.0,
-                  _guarded_owner_factory=None):
-    if session_mode not in ("one-shot", "persistent-x11", "guarded-x11"):
+                  _guarded_owner_factory=None,
+                  _guarded_win32_owner_factory=None,
+                  _guarded_win32_producer_factory=None):
+    if session_mode not in ("one-shot", "persistent-x11", "guarded-x11", "guarded-win32"):
         raise ValueError("unknown session mode")
+    guarded_win32 = session_mode == 'guarded-win32'
+    if guarded_win32 and os.name != 'nt':
+        raise ValueError('guarded-win32 requires a Windows host')
+    if guarded_win32 and (not isinstance(targets, dict) or len(targets) != 1):
+        raise ValueError('guarded-win32 requires exactly one explicitly configured target')
+    if guarded_win32 and not callable(_guarded_win32_owner_factory):
+        raise ValueError('guarded-win32 requires an explicit injected owner factory')
+    if guarded_win32 and not callable(_guarded_win32_producer_factory):
+        raise ValueError('guarded-win32 requires an explicit gated synthetic producer factory')
     if type(guarded_process_identity) is not bool:
         raise ValueError('guarded_process_identity must be a boolean')
     if guarded_process_identity and session_mode != 'guarded-x11':
@@ -241,6 +253,16 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         cancellation_executor.submit(lambda: None).result(timeout=5)
     owner = MCPSessionOwner(targets, display_name) if session_mode == 'persistent-x11' else None
     guarded = session_mode == 'guarded-x11'
+    if guarded_win32:
+        owner = _guarded_win32_owner_factory(deepcopy(targets), root, display_name)
+        required_win32 = ('current_target_generation', 'bind_target_generation',
+                          'admit_action_from_binding', 'start_producer',
+                          'cancel_guarded', 'interface_result', 'list_results', 'close')
+        if any(not callable(getattr(owner, name, None)) for name in required_win32):
+            raise ValueError('guarded-win32 owner factory returned an incomplete synthetic owner')
+        if (getattr(owner, 'mode', None) != 'guarded-win32'
+                or getattr(owner, 'synthetic_only', None) is not True):
+            raise ValueError('guarded-win32 requires the inert synthetic operation owner')
     if guarded:
         from .mcp_guarded import GuardedSessionOwner
         owner_options = dict(process_identity=guarded_process_identity,
@@ -618,7 +640,7 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
                          'Inspect this call ID. Never replay or assume cleanup from this error.'),error=True)
             raise
 
-    if owner is not None and not guarded:
+    if owner is not None and not guarded and not guarded_win32:
         @server.tool()
         async def interface_recover_input(current_binding_revision: StrictInt,
                                           target: StrictStr | None = None,
@@ -930,6 +952,10 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
         register_guarded_tools(server, submit,
             cancel=cancel_guarded if guarded_query_worker else None,
             compiled_enabled=guarded_owned_process)
+    elif guarded_win32:
+        from .mcp_win32 import register_guarded_win32_tools
+        register_guarded_win32_tools(server, owner, content,
+            producer_factory=_guarded_win32_producer_factory)
     else:
         @server.tool()
         async def interface_observe(target: StrictStr, frame: Literal['window_client', 'screen_physical_px'],
@@ -1039,6 +1065,27 @@ def create_server(targets, output_directory, *, display_name=None, session_mode=
             return content({'status': 'invalid_request',
                 'error': 'report_refs requires compact=true',
                 'operation_invoked': False}, error=True)
+        if guarded_win32:
+            if call_id is None:
+                rows = owner.list_results()
+                return content({'status': 'call_list', 'scope': 'current_server',
+                    'total_calls': len(rows), 'calls': rows[:20],
+                    'operation_invoked': False,
+                    'note': 'Win32 action receipt lookup requires its exact call_id.'})
+            if before_call_id is not None:
+                return content({'status': 'invalid_request',
+                    'error': 'call_id and before_call_id are mutually exclusive',
+                    'operation_invoked': False}, error=True)
+            row = owner.interface_result(call_id)
+            if row is None:
+                return content({'status': 'unknown_call', 'operation_invoked': False,
+                    'replay_allowed': False}, error=True)
+            row = deepcopy(row)
+            row['operation_invoked'] = False
+            row['input_dispatched'] = False
+            row['task_success'] = None
+            row['replay_allowed'] = False
+            return content(row)
         with calls_lock:
             if call_id is None:
                 # Most recent calls first, bounded; request details are available by ID.

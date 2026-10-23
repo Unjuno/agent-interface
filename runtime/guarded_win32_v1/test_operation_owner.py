@@ -97,6 +97,17 @@ class OperationOwnerTests(unittest.TestCase):
         with self.assertRaises(OwnerRefused):
             self.owner.admit("op-1", GEN_B, 1_000, ["key:a"])
 
+    def test_cancel_winning_before_start_authorization_keeps_child_gate_closed(self):
+        self.owner.admit("op-gate", GEN_A, 1_000, ["key:a"])
+        process = FakeProcess(PRODUCER)
+        self.assertTrue(self.owner.producer_started("op-gate", GEN_A, process,
+            process_identity=PRODUCER))
+        self.owner.request_cancel("op-gate", GEN_A, cleanup_deadline_ns=900)
+        released = []
+        self.assertFalse(self.owner.authorize_producer_start(
+            "op-gate", GEN_A, process, lambda: released.append(True)))
+        self.assertEqual(released, [])
+
     def test_failed_readback_retains_unknown_custody_and_refuses_new_operation(self):
         self.start_cancelled_operation()
         self.process.alive = False

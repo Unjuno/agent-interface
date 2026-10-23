@@ -125,6 +125,31 @@ class OperationOwner:
             # identity so the owner can await retirement, but never authorize it.
             return False
 
+    def authorize_producer_start(self, operation_id, target_generation,
+                                 process_handle, open_start_gate):
+        """Atomically open the child gate only while this producer is admitted.
+
+        ``open_start_gate`` must be a nonblocking parent-owned event/set call.
+        Running it under the custody lock orders authorization against cancel:
+        either the gate opens before cancellation closes admission, or cancel
+        wins and the gated child remains unable to emit input.
+        """
+        if not callable(open_start_gate):
+            raise OwnerRefused("parent-owned producer start gate required")
+        with self._lock:
+            record = self._matching(operation_id, target_generation)
+            if (record["status"] != "running"
+                    or self._producer_handles.get(operation_id) is not process_handle
+                    or self._clock_ns() >= record["deadline_ns"]):
+                return False
+            try:
+                open_start_gate()
+            except Exception:
+                record["status"] = "unknown"
+                record["uncertainty"] = "producer_start_gate_unconfirmed"
+                return False
+            return True
+
     def producer_handle_for_retirement(self, operation_id, target_generation):
         """Return the parent's retained handle for cancellation cleanup only."""
         with self._lock:
