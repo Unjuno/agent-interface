@@ -1,0 +1,41 @@
+{
+  "attempt_id": "wslc-local-runtime-smoke-20261024-s01",
+  "conditions_sha256": "77b8b315848be127223ef09b5006ffa5644f8922e5074d5e3de2d7093a1ac9c5",
+  "container_name": "agent-interface-wslc-s01-e32757835b36416dbeeaa54c41532894",
+  "ended_utc": "2026-10-23T23:01:46.4336153Z",
+  "final_outcome": "HOLD_IMAGE_NOT_CACHED_APPLICATION_DID_NOT_RUN",
+  "full_container_id": null,
+  "outer_exit_code": 1,
+  "outer_process_id": 22864,
+  "outer_timed_out": false,
+  "resource_disposition": "no_matching container found for the unique S01 name in scoped query; no CID was written; no cleanup mutation was issued",
+  "run_cleanup_query_stderr": null,
+  "run_cleanup_query_stdout": null,
+  "run_exit_status": "HOLD_NO_CID",
+  "run_log_sha256": {
+    "wslc-run.stderr.txt": "497ee77132596d17bf26d1264443b0703cb1e0f86832985efee9828fb3658f4b",
+    "wslc-run.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source_commit": "f9c9411d0ee19f8cc478286e4d7fc3cadd23c75e",
+  "started_utc": "2026-10-23T23:01:46.4274500Z",
+  "stderr": "\u30a8\u30f3\u30b8\u30f3\u304b\u3089\u306e\u30a8\u30e9\u30fc\u60c1E\ufffd\ufffd: No such image: python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f\r\n\u30a8\u30e9\u30fc \u30b3\u30fc\u30c1E WSLC_E_IMAGE_NOT_FOUND\r\n\u3053\ufffdE\u30a8\u30e9\u30fc\u304c\u4e88\u671f\u3057\u306a\u3041E\ufffd\ufffd\u306e\u3067\u3042\u308b\u5834\u5408\ufffdE\u3001\u65e2\u5b58\ufffdE\u554f\u984c\u3092\u691c\u7d22\u3059\u308b\u304b\u3001https://github.com/microsoft/WSL/issues \u3067\u65b0\u3057\u3044\u554f\u984c\u3092\u63d0\ufffdE\u3059\u308b\u3053\u3068\u3092\u691c\u8a0e\u3057\u3066\u304f\u3060\u3055\u3044\u3001E\nWSLc run failed: CLI exited 1; runtime outcome may be UNKNOWN.; no full container ID receipt exists, so cleanup is unve\r\nrified.\r\n\ufffd\ufffd\ufffd\ufffd\ufffd\ua3ca C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\wslc_local\r\n_runtime_smoke_20261024_s01\\wslc_probe_retained.ps1:136 \ufffd\ufffd\ufffd\ufffd:13\r\n+             throw \"WSLc run failed: $runFailure; no full container ID ...\r\n+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : OperationStopped: (WSLc run failed... is unverified.:String) [], RuntimeException\r\n    + FullyQualifiedErrorId : WSLc run failed: CLI exited 1; runtime outcome may be UNKNOWN.; no full container ID rec \r\n   eipt exists, so cleanup is unverified.\r\n \r\n",
+  "stdout": "WSL version:\r\nWSL \ufffdo\ufffd[\ufffdW\ufffd\ufffd\ufffd\ufffd: 3.0.3.0\r\n\ufffdJ\ufffd[\ufffdl\ufffd\ufffd \ufffdo\ufffd[\ufffdW\ufffd\ufffd\ufffd\ufffd: 6.18.54.1-1\r\nWSLg \ufffdo\ufffd[\ufffdW\ufffd\ufffd\ufffd\ufffd: 1.0.79\r\nMSRDC \ufffdo\ufffd[\ufffdW\ufffd\ufffd\ufffd\ufffd: 1.2.7391\r\nDirect3D \ufffdo\ufffd[\ufffdW\ufffd\ufffd\ufffd\ufffd: 1.611.1-81528511\r\nDXCore \ufffdo\ufffd[\ufffdW\ufffd\ufffd\ufffd\ufffd: 10.0.26100.1-240331-1435.ge-release\r\nWindows \ufffdo\ufffd[\ufffdW\ufffd\ufffd\ufffd\ufffd: 10.0.26300.9711\r\nWSLc version:\r\nwslc 3.0.3.0\r\n\ufffdx\ufffd\ufffd: Probe/runtime outcome is unconfirmed. Preserved receipts and logs at \r\nC:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-2\\worktrees\\main-a396aac-r28\\research\\integration\\wslc_local_runtime_\r\nsmoke_20261024_s01\\run; do not retry before reconciling this unique probe.\n",
+  "unique_name_read_only_followup": {
+    "command": [
+      "wslc",
+      "container",
+      "list",
+      "--all",
+      "--filter",
+      "name=agent-interface-wslc-s01-e32757835b36416dbeeaa54c41532894",
+      "--format",
+      "json"
+    ],
+    "exit_code": 0,
+    "queried_exact_unique_name": "agent-interface-wslc-s01-e32757835b36416dbeeaa54c41532894",
+    "query_utc": "2026-10-23T23:02:08.5414178Z",
+    "stderr": "",
+    "stdout": "",
+    "timed_out": false
+  }
+}

@@ -1,0 +1,5 @@
+# WSLc local runtime smoke S01 — preparation
+
+This is one fresh, isolated WSLc runtime capability check on the user-authorized Windows PC. It is not the Win32 GUI/control experiment. WSL and WSLc both report 3.0.3.0. The exact digest-pinned Python image was checked with `wslc inspect --type image`; it returned `[]` and a not-found diagnostic, so the image is currently not cached. The offline fake-CLI qualification passed its success, exact-CID failure query, timeout, and non-empty retention cases before the real attempt.
+
+The retained runner is copied from `.github/scripts/test_wslc_local_runtime.ps1`. Its only scoped changes are to use this packet's one-shot `run/` receipt directory, generate a fresh S01 container name, and preserve successful CLI/CID/cleanup logs. It still uses `--pull never`, `--network none`, a read-only bind, requested 512M/1 CPU, a bounded runner, `--rm`, and a read-only exact-full-CID absence query. It never lists or alters unrelated containers. One run only; no retry. Source and command hashes are frozen in `conditions.json`.

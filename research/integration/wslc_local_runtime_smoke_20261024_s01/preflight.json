@@ -1,0 +1,38 @@
+{
+  "container_or_docker_operation": false,
+  "exact_digest_image_inspect": {
+    "command": [
+      "wslc",
+      "inspect",
+      "--type",
+      "image",
+      "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+      "--format",
+      "json"
+    ],
+    "exit_code": 1,
+    "stderr": "\u30aa\u30d6\u30b8\u30a7\u30af\u30c8\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093: python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "stdout": "[]",
+    "timed_out": false
+  },
+  "offline_fake_cli_harness": {
+    "scope": "fake CLI only; success cleanup, failed-run exact-CID query, timeouts, non-empty cleanup retention",
+    "status": "PASS"
+  },
+  "parser_invocation_note": "An initial -Command argument-binding invocation failed before parsing; the corrected standalone validator then passed.",
+  "retained_runner_source_sha256": {
+    ".github/scripts/test_wslc_local_runtime.ps1": "59949b65c81d44718a776d11865025337f6b12de1585df3ea962f6cd29aefbd9",
+    ".github/scripts/test_wslc_local_runtime_offline.ps1": "108f657986deb52b5651a6667f1fce1e344ea84cd7314f5849396f22f9a76745",
+    ".github/scripts/wslc_bounded_process.psm1": "6ca4ecb44f692ebf4afc9ee42840bc7c23e342aef4634f923e3a611330a3e617",
+    "wslc_bounded_process.psm1": "6ca4ecb44f692ebf4afc9ee42840bc7c23e342aef4634f923e3a611330a3e617",
+    "wslc_probe_retained.ps1": "975ddd5ce55a93ca22a1819cf95519b52bcd45963617077e46ac04860abac096"
+  },
+  "runner_syntax": "PASS under Windows PowerShell 5.1 parser",
+  "schema": "wslc-local-runtime-smoke-s01-preflight-v1",
+  "source_commit": "f9c9411d0ee19f8cc478286e4d7fc3cadd23c75e",
+  "versions": {
+    "wsl": "3.0.3.0",
+    "wslc": "3.0.3.0"
+  },
+  "windows_powershell_51_parser": "PASS"
+}

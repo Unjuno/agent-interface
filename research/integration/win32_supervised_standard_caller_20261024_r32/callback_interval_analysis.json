@@ -1,0 +1,420 @@
+{
+  "attempt_id": "win32-supervised-standard-caller-20261024-r32",
+  "boundary_spans": [
+    {
+      "boundary": "recover",
+      "elapsed_ns": 954200400,
+      "end_ns": 487974627872700,
+      "end_offset_from_cancel_ms": 959.2815,
+      "fields": {
+        "operation_id": "ea2a12f1308841c18876c037bdba51ed",
+        "recovery_id": "04b87f6aebec416bb25feed15325d19c"
+      },
+      "helper_role": "recovery",
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 17000,
+      "start_ns": 487973673470600,
+      "start_offset_from_cancel_ms": 4.8794
+    },
+    {
+      "boundary": "release_all",
+      "elapsed_ns": 953094900,
+      "end_ns": 487974627597400,
+      "end_offset_from_cancel_ms": 959.0062,
+      "fields": {},
+      "helper_role": "recovery",
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 17000,
+      "start_ns": 487973674281100,
+      "start_offset_from_cancel_ms": 5.6899
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 310486700,
+      "end_ns": 487974298487300,
+      "end_offset_from_cancel_ms": 629.8961,
+      "fields": {
+        "flags": 2,
+        "input_type": 1,
+        "key_up": true,
+        "scan_code": 0,
+        "vk": 81
+      },
+      "helper_role": "recovery",
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 17000,
+      "start_ns": 487973987237800,
+      "start_offset_from_cancel_ms": 318.6466
+    },
+    {
+      "boundary": "exchange",
+      "elapsed_ns": 954763600,
+      "end_ns": 487974628139600,
+      "end_offset_from_cancel_ms": 959.5484,
+      "fields": {
+        "helper": "recovery",
+        "recovery_id": "04b87f6aebec416bb25feed15325d19c",
+        "request_id": "04b87f6aebec416bb25feed15325d19c"
+      },
+      "helper_role": null,
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 16656,
+      "start_ns": 487973673190000,
+      "start_offset_from_cancel_ms": 4.5988
+    },
+    {
+      "boundary": "exchange",
+      "elapsed_ns": 1231100,
+      "end_ns": 487974629729800,
+      "end_offset_from_cancel_ms": 961.1386,
+      "fields": {
+        "helper": "observer",
+        "recovery_id": "04b87f6aebec416bb25feed15325d19c",
+        "request_id": "04b87f6aebec416bb25feed15325d19c"
+      },
+      "helper_role": null,
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 16656,
+      "start_ns": 487974628348900,
+      "start_offset_from_cancel_ms": 959.7577
+    }
+  ],
+  "callback_entry_ns": 487973666854900,
+  "callback_interval_ms": 1261.651,
+  "callback_return_ns": 487974928505900,
+  "hook_event_list": [
+    {
+      "callback_entry_ns": 487973666854900,
+      "callback_return_ns": 487974928505900,
+      "flags": 16,
+      "message": 256,
+      "vk": 81
+    }
+  ],
+  "interpretation": "Intervals inside the callback lifetime do not establish that the injected event reached the target. The separate Q-up hook event and task state remain independent evidence; this analysis preserves timing only.",
+  "observer_exchange_returns": [
+    {
+      "elapsed_ns": 1231100,
+      "event": "exchange_return",
+      "helper": "observer",
+      "monotonic_ns": 487974629729800,
+      "pid": 16656,
+      "request_id": "04b87f6aebec416bb25feed15325d19c",
+      "result_neutral": true,
+      "result_release_accepted": null
+    }
+  ],
+  "public_hold_polls": [
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487973670960900,
+      "started_monotonic_ns": 487973669821100,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487973737259600,
+      "started_monotonic_ns": 487973735726700,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487973799153100,
+      "started_monotonic_ns": 487973797600600,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487973861279600,
+      "started_monotonic_ns": 487973859536100,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487973924291500,
+      "started_monotonic_ns": 487973922558200,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487973988664300,
+      "started_monotonic_ns": 487973985072300,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974051141000,
+      "started_monotonic_ns": 487974047556800,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974113598900,
+      "started_monotonic_ns": 487974110543500,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974176917700,
+      "started_monotonic_ns": 487974173597800,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974238936700,
+      "started_monotonic_ns": 487974236059900,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974299898900,
+      "started_monotonic_ns": 487974298303800,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974363121300,
+      "started_monotonic_ns": 487974361268200,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974428416000,
+      "started_monotonic_ns": 487974424021600,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974490089500,
+      "started_monotonic_ns": 487974486659700,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974552473300,
+      "started_monotonic_ns": 487974548971200,
+      "status": null
+    },
+    {
+      "action_status": "running",
+      "cancellation_release_confirmed": false,
+      "cancellation_status": "pending",
+      "is_error": false,
+      "owner_release_confirmed": false,
+      "returned_monotonic_ns": 487974616149000,
+      "started_monotonic_ns": 487974611507600,
+      "status": null
+    },
+    {
+      "action_status": "recovered",
+      "cancellation_release_confirmed": true,
+      "cancellation_status": "recovered",
+      "is_error": false,
+      "owner_release_confirmed": true,
+      "returned_monotonic_ns": 487974679639500,
+      "started_monotonic_ns": 487974674756600,
+      "status": null
+    },
+    {
+      "action_status": "recovered",
+      "cancellation_release_confirmed": true,
+      "cancellation_status": "recovered",
+      "is_error": false,
+      "owner_release_confirmed": true,
+      "returned_monotonic_ns": 487974740305700,
+      "started_monotonic_ns": 487974736996600,
+      "status": null
+    },
+    {
+      "action_status": "recovered",
+      "cancellation_release_confirmed": true,
+      "cancellation_status": "recovered",
+      "is_error": false,
+      "owner_release_confirmed": true,
+      "returned_monotonic_ns": 487974802898500,
+      "started_monotonic_ns": 487974801020300,
+      "status": null
+    },
+    {
+      "action_status": "recovered",
+      "cancellation_release_confirmed": true,
+      "cancellation_status": "recovered",
+      "is_error": false,
+      "owner_release_confirmed": true,
+      "returned_monotonic_ns": 487974866919700,
+      "started_monotonic_ns": 487974864121400,
+      "status": null
+    }
+  ],
+  "q_up_calls": [
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 310486700,
+      "end_ns": 487974298487300,
+      "end_offset_from_cancel_ms": 629.8961,
+      "fields": {
+        "flags": 2,
+        "input_type": 1,
+        "key_up": true,
+        "scan_code": 0,
+        "vk": 81
+      },
+      "helper_role": "recovery",
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 17000,
+      "start_ns": 487973987237800,
+      "start_offset_from_cancel_ms": 318.6466
+    }
+  ],
+  "schema": "win32-supervised-standard-caller-r32-callback-interval-analysis-v1",
+  "spans_inside_block": [
+    {
+      "boundary": "recover",
+      "elapsed_ns": 954200400,
+      "end_ns": 487974627872700,
+      "end_offset_from_cancel_ms": 959.2815,
+      "fields": {
+        "operation_id": "ea2a12f1308841c18876c037bdba51ed",
+        "recovery_id": "04b87f6aebec416bb25feed15325d19c"
+      },
+      "helper_role": "recovery",
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 17000,
+      "start_ns": 487973673470600,
+      "start_offset_from_cancel_ms": 4.8794
+    },
+    {
+      "boundary": "release_all",
+      "elapsed_ns": 953094900,
+      "end_ns": 487974627597400,
+      "end_offset_from_cancel_ms": 959.0062,
+      "fields": {},
+      "helper_role": "recovery",
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 17000,
+      "start_ns": 487973674281100,
+      "start_offset_from_cancel_ms": 5.6899
+    },
+    {
+      "boundary": "sendinput",
+      "elapsed_ns": 310486700,
+      "end_ns": 487974298487300,
+      "end_offset_from_cancel_ms": 629.8961,
+      "fields": {
+        "flags": 2,
+        "input_type": 1,
+        "key_up": true,
+        "scan_code": 0,
+        "vk": 81
+      },
+      "helper_role": "recovery",
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 17000,
+      "start_ns": 487973987237800,
+      "start_offset_from_cancel_ms": 318.6466
+    },
+    {
+      "boundary": "exchange",
+      "elapsed_ns": 954763600,
+      "end_ns": 487974628139600,
+      "end_offset_from_cancel_ms": 959.5484,
+      "fields": {
+        "helper": "recovery",
+        "recovery_id": "04b87f6aebec416bb25feed15325d19c",
+        "request_id": "04b87f6aebec416bb25feed15325d19c"
+      },
+      "helper_role": null,
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 16656,
+      "start_ns": 487973673190000,
+      "start_offset_from_cancel_ms": 4.5988
+    },
+    {
+      "boundary": "exchange",
+      "elapsed_ns": 1231100,
+      "end_ns": 487974629729800,
+      "end_offset_from_cancel_ms": 961.1386,
+      "fields": {
+        "helper": "observer",
+        "recovery_id": "04b87f6aebec416bb25feed15325d19c",
+        "request_id": "04b87f6aebec416bb25feed15325d19c"
+      },
+      "helper_role": null,
+      "inside_callback_interval": true,
+      "overlaps_callback_interval": true,
+      "pid": 16656,
+      "start_ns": 487974628348900,
+      "start_offset_from_cancel_ms": 959.7577
+    }
+  ]
+}
