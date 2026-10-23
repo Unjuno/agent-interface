@@ -1,0 +1,23 @@
+test_status_read_error_after_stop_resumes_exact_handle_and_closes_it (runtime.cli_v1.test_xvfb_pause_cleanup.XvfbPauseCleanupTests.test_status_read_error_after_stop_resumes_exact_handle_and_closes_it) ... FAIL
+test_timer_start_failure_after_stop_resumes_exact_handle (runtime.cli_v1.test_xvfb_pause_cleanup.XvfbPauseCleanupTests.test_timer_start_failure_after_stop_resumes_exact_handle) ... FAIL
+
+======================================================================
+FAIL: test_status_read_error_after_stop_resumes_exact_handle_and_closes_it (runtime.cli_v1.test_xvfb_pause_cleanup.XvfbPauseCleanupTests.test_status_read_error_after_stop_resumes_exact_handle_and_closes_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_xvfb_pause_cleanup.py", line 35, in test_status_read_error_after_stop_resumes_exact_handle_and_closes_it
+    self.assertEqual(self.send.call_args_list, [call(901, 19), call(901, 18)])
+AssertionError: [] != [call(901, 19), call(901, 18)]
+
+======================================================================
+FAIL: test_timer_start_failure_after_stop_resumes_exact_handle (runtime.cli_v1.test_xvfb_pause_cleanup.XvfbPauseCleanupTests.test_timer_start_failure_after_stop_resumes_exact_handle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-2\worktrees\win32-supervisor-plan\runtime\cli_v1\test_xvfb_pause_cleanup.py", line 43, in test_timer_start_failure_after_stop_resumes_exact_handle
+    self.assertEqual(self.send.call_args_list, [call(901, 19), call(901, 18)])
+AssertionError: [] != [call(901, 19), call(901, 18)]
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+FAILED (failures=2)
