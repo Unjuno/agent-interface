@@ -5,11 +5,17 @@ verified `recovered` or terminal `unknown` cancellation, allowing its shared MCP
 operation lock to be released before the lease deadline. A public-path
 regression reproduces recovered cancellation and requires session close within
 a 150 ms bounded retry window. The targeted supervised Win32, owned-session and
-composition modules pass 42 tests in normal and `-O` Python. A broader CLI
-`unittest` run reached `test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller`,
-which raises `KeyError: 'source'` because its expected observation shape is
-absent, then leaves an owned IPC worker blocked during asyncio executor
-shutdown. The complete suite has not yet produced a summary.
+composition modules pass 42 tests in normal and `-O` Python. The relay test's
+observation does contain `source.sequence` and a process-generation digest; a
+minimal public observe/close call confirms that contract. The full CLI run's
+actual failure is later: `test_saturated_relay_stdout_dispatches_cancel_to_held_fake_x_caller`
+times out waiting for `held-reply.json`. Its Fake X caller emits a KeyPress and
+then a KeyRelease before `GetPointerControl`; the offline proxy candidate clears
+its pending-press association on that intervening request, so it forwards the
+later sync reply instead of holding it. The test then leaves an owner IPC worker
+blocked during executor shutdown. This is an unresolved event-order mismatch
+between the composed caller and test-only relay candidate, not a missing public
+observation field. The complete suite has not produced a summary.
 
 **Standard-caller cancellation R13 (2026-10-24):** the repaired public stdio-MCP
 path passed its frozen auditor 19/19 on one fresh owned fixture. Same-call
